@@ -47,6 +47,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.FinalShipCodeName = entityPOCO.FinalCustomsShip.LocalName;
             }
+
             
         }
    }

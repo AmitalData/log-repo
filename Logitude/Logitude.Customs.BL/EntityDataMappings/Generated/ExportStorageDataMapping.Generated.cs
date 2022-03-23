@@ -39,7 +39,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ThirdCargoID, 
 	         StorErrorXML, 
 	         StorageNo, 
-	         ExportDealIdentification,
+	         ExportDealIdentification, 
+	         PackageQuantity, 
+	         GrossMassMeasure, 
+	         MarksNumbers, 
+	         ExportLoadingPortcode, 
+	         StorageSiteCode, 
+	         ExportUnloadingPortCode, 
+	         FinalDestinationPortCode, 
+	         IsDangerousGoods,
 	      }
 
 
@@ -75,7 +83,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DeclarationCustomFileNo, 
 	         DeclarationNumber, 
 	         ExporterCode, 
-	         StorageStatusIsOpen,
+	         StorageStatusIsOpen,	          
+	         PackageQuantity, 
+	         GrossMassMeasure, 
+	         MarksNumbers, 
+	         ExportLoadingPortcode, 
+	         StorageSiteCode, 
+	         ExportUnloadingPortCode, 
+	         FinalDestinationPortCode, 
+	         IsDangerousGoods,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -167,6 +183,46 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDealIdentification))
             {
 				entityPOCO.ExportDealIdentification = entityPM.ExportDealIdentification;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageQuantity))
+            {
+				entityPOCO.PackageQuantity = entityPM.PackageQuantity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossMassMeasure))
+            {
+				entityPOCO.GrossMassMeasure = entityPM.GrossMassMeasure;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MarksNumbers))
+            {
+				entityPOCO.MarksNumbers = entityPM.MarksNumbers;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportLoadingPortcode))
+            {
+				entityPOCO.ExportLoadingPortcode = entityPM.ExportLoadingPortcode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageSiteCode))
+            {
+				entityPOCO.StorageSiteCode = entityPM.StorageSiteCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportUnloadingPortCode))
+            {
+				entityPOCO.ExportUnloadingPortCode = entityPM.ExportUnloadingPortCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalDestinationPortCode))
+            {
+				entityPOCO.FinalDestinationPortCode = entityPM.FinalDestinationPortCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDangerousGoods))
+            {
+				entityPOCO.IsDangerousGoods = entityPM.IsDangerousGoods;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -265,6 +321,46 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportDealIdentification = entityPOCO.ExportDealIdentification;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackageQuantity))
+            {
+					entityPM.PackageQuantity = entityPOCO.PackageQuantity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossMassMeasure))
+            {
+					entityPM.GrossMassMeasure = entityPOCO.GrossMassMeasure;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MarksNumbers))
+            {
+					entityPM.MarksNumbers = entityPOCO.MarksNumbers;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportLoadingPortcode))
+            {
+					entityPM.ExportLoadingPortcode = entityPOCO.ExportLoadingPortcode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StorageSiteCode))
+            {
+					entityPM.StorageSiteCode = entityPOCO.StorageSiteCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportUnloadingPortCode))
+            {
+					entityPM.ExportUnloadingPortCode = entityPOCO.ExportUnloadingPortCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FinalDestinationPortCode))
+            {
+					entityPM.FinalDestinationPortCode = entityPOCO.FinalDestinationPortCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDangerousGoods))
+            {
+					entityPM.IsDangerousGoods = entityPOCO.IsDangerousGoods;
+            }
+
 		}
 
 		public void PMToOldPM(ExportStoragePM entityPM, ExportStoragePM oldEntityPM)
@@ -354,6 +450,46 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDealIdentification))
             {
                 oldEntityPM.ExportDealIdentification = entityPM.ExportDealIdentification;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageQuantity))
+            {
+                oldEntityPM.PackageQuantity = entityPM.PackageQuantity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossMassMeasure))
+            {
+                oldEntityPM.GrossMassMeasure = entityPM.GrossMassMeasure;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MarksNumbers))
+            {
+                oldEntityPM.MarksNumbers = entityPM.MarksNumbers;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportLoadingPortcode))
+            {
+                oldEntityPM.ExportLoadingPortcode = entityPM.ExportLoadingPortcode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageSiteCode))
+            {
+                oldEntityPM.StorageSiteCode = entityPM.StorageSiteCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportUnloadingPortCode))
+            {
+                oldEntityPM.ExportUnloadingPortCode = entityPM.ExportUnloadingPortCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalDestinationPortCode))
+            {
+                oldEntityPM.FinalDestinationPortCode = entityPM.FinalDestinationPortCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDangerousGoods))
+            {
+                oldEntityPM.IsDangerousGoods = entityPM.IsDangerousGoods;
             }
 			
 		}

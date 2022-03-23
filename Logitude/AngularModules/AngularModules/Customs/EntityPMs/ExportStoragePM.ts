@@ -169,6 +169,46 @@ export class ExportStoragePM {
     public set ExporterCode(newValue: string) { if (this.exporterCode != newValue) { this.exporterCode = newValue; this.MarkAsDirty("ExporterCode"); } }
        
 	 
+    private packageQuantity: number;
+    public get PackageQuantity() { return this.packageQuantity; }
+    public set PackageQuantity(newValue: number) { if (this.packageQuantity != newValue) { this.packageQuantity = newValue; this.MarkAsDirty("PackageQuantity"); } }
+       
+	 
+    private grossMassMeasure: number;
+    public get GrossMassMeasure() { return this.grossMassMeasure; }
+    public set GrossMassMeasure(newValue: number) { if (this.grossMassMeasure != newValue) { this.grossMassMeasure = newValue; this.MarkAsDirty("GrossMassMeasure"); } }
+       
+	 
+    private marksNumbers: string;
+    public get MarksNumbers() { return this.marksNumbers; }
+    public set MarksNumbers(newValue: string) { if (this.marksNumbers != newValue) { this.marksNumbers = newValue; this.MarkAsDirty("MarksNumbers"); } }
+       
+	 
+    private exportLoadingPortcode: string;
+    public get ExportLoadingPortcode() { return this.exportLoadingPortcode; }
+    public set ExportLoadingPortcode(newValue: string) { if (this.exportLoadingPortcode != newValue) { this.exportLoadingPortcode = newValue; this.MarkAsDirty("ExportLoadingPortcode"); } }
+       
+	 
+    private storageSiteCode: string;
+    public get StorageSiteCode() { return this.storageSiteCode; }
+    public set StorageSiteCode(newValue: string) { if (this.storageSiteCode != newValue) { this.storageSiteCode = newValue; this.MarkAsDirty("StorageSiteCode"); } }
+       
+	 
+    private exportUnloadingPortCode: string;
+    public get ExportUnloadingPortCode() { return this.exportUnloadingPortCode; }
+    public set ExportUnloadingPortCode(newValue: string) { if (this.exportUnloadingPortCode != newValue) { this.exportUnloadingPortCode = newValue; this.MarkAsDirty("ExportUnloadingPortCode"); } }
+       
+	 
+    private finalDestinationPortCode: string;
+    public get FinalDestinationPortCode() { return this.finalDestinationPortCode; }
+    public set FinalDestinationPortCode(newValue: string) { if (this.finalDestinationPortCode != newValue) { this.finalDestinationPortCode = newValue; this.MarkAsDirty("FinalDestinationPortCode"); } }
+       
+	 
+    private isDangerousGoods: number;
+    public get IsDangerousGoods() { return this.isDangerousGoods; }
+    public set IsDangerousGoods(newValue: number) { if (this.isDangerousGoods != newValue) { this.isDangerousGoods = newValue; this.MarkAsDirty("IsDangerousGoods"); } }
+       
+	 
     private storageStatusIsOpen: boolean;
     public get StorageStatusIsOpen() { return this.storageStatusIsOpen; }
     public set StorageStatusIsOpen(newValue: boolean) { if (this.storageStatusIsOpen != newValue) { this.storageStatusIsOpen = newValue; this.MarkAsDirty("StorageStatusIsOpen"); } }

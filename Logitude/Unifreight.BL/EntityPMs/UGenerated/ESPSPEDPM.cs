@@ -12,5 +12,7 @@ namespace Unifreight.BL.EntityPMs
         public int SPD_NO { get; set; }
 
         public string MAIN_AWB { get; set; }
+
+        public string MAINCARRIER { get; set; }
     }
 }
