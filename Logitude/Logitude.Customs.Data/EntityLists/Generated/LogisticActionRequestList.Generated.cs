@@ -74,6 +74,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string RequestCancelStatus  { get; set; }
        [DataMember]
        public bool? HaveDeclarationId  { get; set; }
+       [DataMember]
+       public string CalculatedExporterName  { get; set; }
    }
 
 }
