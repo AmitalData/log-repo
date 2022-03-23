@@ -29,6 +29,13 @@ export class ChooseDatesComponent {
     }
     SetWindowArgs(args: any) {
         this.QueryCode = args.QueryCode;
+        if(args.LastYearFromDate) {
+            this.SelectedFromDate = args.LastYearFromDate;
+        }
+
+        if(args.LastYearToDate) {
+            this.SelectedToDate = args.LastYearToDate;
+        }
     }
 
     OnSelectedFromDateChanged(value) {
