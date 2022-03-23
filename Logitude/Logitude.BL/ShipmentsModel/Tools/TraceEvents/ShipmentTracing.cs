@@ -1546,7 +1546,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 case "ARR":
                     {
-                        if (entityPM.DirectionId == "I" && entityPM.DirectionId == "D")
+                        if (entityPM.TransportModeId == "I" && entityPM.DirectionId == "D")
                         {
                             var domesticInlandargs = new
                             {
@@ -1566,7 +1566,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 case "DEP":
                     {
-                        if (entityPM.DirectionId == "I" && entityPM.DirectionId == "D")
+                        if (entityPM.TransportModeId == "I" && entityPM.DirectionId == "D")
                         {
                             var domesticInlandargs = new
                             {
