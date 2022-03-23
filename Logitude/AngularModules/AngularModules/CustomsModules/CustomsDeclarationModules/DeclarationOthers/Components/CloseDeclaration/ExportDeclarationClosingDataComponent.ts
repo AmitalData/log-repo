@@ -78,14 +78,12 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     GetExportDeclarationClosingData(id: string) {
         if (id != null) {
-            this.exportDeclarationClosingDataPMService.get(id).subscribe((response: any) => {
-                this.EntityPM = response.Result;
-                if (this.EntityPM == null) {
+            
                     this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
+                        
                         this.EntityPM = response.Result;
                         this.IsNew = true;
 
-                    });
                     /*this.EntityPM = new ExportDeclarationClosingDataPM();
                     this.EntityPM.DeclarationId = id;
                     this.EntityPM.Tenant = this.DecPM.Tenant;
@@ -99,9 +97,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         this.EntityPM.FinalLoadingSite = consignments[0].ExportLoadingPortCode;
                     }
                     this.IsNew = true;*/
-                }
+                
                 this.IsReady = true;
-            });
+          });
         }
     }
 
@@ -232,7 +230,6 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.ValidationErrors.push(response.Result.UserMessage);
                 this.FillValidationErrors("Errors");
             }
-            debugger;
             //DOTO
 
             //if success
