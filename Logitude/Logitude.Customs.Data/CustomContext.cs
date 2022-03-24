@@ -460,6 +460,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ExporterRoleTypeMap());
 	
+            modelBuilder.Configurations.Add(new ExportLogisticPermitActionMap());
+	
             modelBuilder.Configurations.Add(new ExportReferenceMap());
 	
             modelBuilder.Configurations.Add(new ExportStorageMap());
@@ -2498,6 +2500,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ExporterRoleType> ExporterRoleTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExportLogisticPermitAction> ExportLogisticPermitActions 
 	 {
 	      get; set;
 	 
