@@ -24,8 +24,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         Code, 
 	         LocalName, 
-	         EnglishName, 
 	         SearchFields, 
+	         EnglishName, 
 	         Inactive,
 	      }
 
@@ -35,8 +35,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         Code, 
 	         LocalName, 
-	         EnglishName, 
 	         SearchFields, 
+	         EnglishName, 
 	         Inactive,
 	      }
 
@@ -51,14 +51,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.LocalName = entityPM.LocalName;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
-            {
-				entityPOCO.EnglishName = entityPM.EnglishName;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
 				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
+            {
+				entityPOCO.EnglishName = entityPM.EnglishName;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
@@ -82,14 +82,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.LocalName = entityPOCO.LocalName;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EnglishName))
-            {
-					entityPM.EnglishName = entityPOCO.EnglishName;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
             {
 					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EnglishName))
+            {
+					entityPM.EnglishName = entityPOCO.EnglishName;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
@@ -108,14 +108,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.LocalName = entityPM.LocalName;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
-            {
-                oldEntityPM.EnglishName = entityPM.EnglishName;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
+            {
+                oldEntityPM.EnglishName = entityPM.EnglishName;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))

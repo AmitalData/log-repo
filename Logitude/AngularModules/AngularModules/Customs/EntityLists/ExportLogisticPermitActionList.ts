@@ -10,8 +10,8 @@ export class ExportLogisticPermitActionList {
    
 	Code: string;
 	LocalName: string;
-	EnglishName: string;
 	SearchFields: string;
+	EnglishName: string;
 	Inactive: boolean;
 	
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportLogisticPermitActionUpdateClass
    {  		
-		public const string HashString = "122ca152e377e5e19782683696d87ad8";
+		public const string HashString = "2d3c478637993a9054dea9248d89c74c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -93,10 +93,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
 			
 	             				    ObjectTableName =  "Customs.ExportLogisticPermitAction",
-			      				    IsNew =  false,
+			      				    IsNew =  true,
 			      				    DBTableName =  "Customs.ExportLogisticPermitActions",
-			      				    ObjectTableSingular =  "Customs.ExportLogisticPermitAction",
-			      				    ObjectTablePlural =  "Customs.ExportLogisticPermitActions",
+			      				    ObjectTableSingular =  "ExportLogisticPermitAction",
+			      				    ObjectTablePlural =  "ExportLogisticPermitActions",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -115,20 +115,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  false,
-			      				    IsAutoComplete =  false,
+			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Code",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  true,
+			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Vendor Type",
-			      				    Code =  "VENT",
-			      				    Name =  "Customs.ExportLogisticPermitAction",
+			      				    LocalDefaultText =  "קוד היתר לוגיסטי ליצוא",
+			      				    DefaultText =  "Update Code",
+			      				    Code =  "c8e2",
+			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -168,10 +169,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
 					  						DisplayInLookUpIndex =  0,
@@ -184,12 +185,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.ExportLogisticPermitAction",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
+					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
@@ -247,12 +247,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.ExportLogisticPermitAction",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
+					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
@@ -261,6 +260,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
 					  						ListLocalDefaultText =  "שם מקומי",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SearchFields",
+					  						ObjectTableName =  "Customs.ExportLogisticPermitAction",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchFields",
+					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExportLogisticPermitAction",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search Fields",
+					  						ListFieldLable =  "SearchFieldsListLable",
+					  						ListLableDefaultText =  "Search Fields",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -300,69 +358,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnglishName",
 					  						ListPropertyPath =  "EnglishName",
-					  						DisplayInLookUpIndex =  1,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportLogisticPermitAction",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "EnglishName",
-					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
-					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.ExportLogisticPermitAction",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  1000,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  40,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Contains",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SearchFields",
-					  						ListPropertyPath =  "SearchFields",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -372,22 +367,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.ExportLogisticPermitAction",
-					  						ValidForQuerySection2 =  "Customs.ExportLogisticPermitActionFollowUp",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
+					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search codes/ names",
-					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "SearchFields",
-					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
+					  						FullFieldLable =  "EnglishName",
+					  						DefaultText =  "English Name",
+					  						FullLocalDefaultText =  "שם אנגלית",
+					  						ListFieldLable =  "EnglishNameListLable",
+					  						ListLableDefaultText =  "English Name",
+					  						ListLocalDefaultText =  "שם אנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -445,7 +438,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  "Inactive ",
+					  						DefaultText =  "Inactive",
 					  						FullLocalDefaultText =  "לא פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
@@ -470,8 +463,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup ExportLogisticPermitActionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VENT", Name = "Customs.ExportLogisticPermitAction" }, queryGroupRepository,tenantQueryGroups);
-						QueryGroup ExportLogisticPermitActionQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "addc", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup ExportLogisticPermitActionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c8e2", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ExportLogisticPermitActionQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3e16", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ExportLogisticPermitActionObjectTable = objectTables.ContainsKey("Customs.ExportLogisticPermitAction") ? objectTables["Customs.ExportLogisticPermitAction"] : null;
             if (ExportLogisticPermitActionObjectTable == null)
@@ -489,22 +482,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ExportLogisticPermitActionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportLogisticPermitAction.Q.ExportLogisticPermitActionQuery", DefaultText = @"Vendor Types",LocalDefaultText = "סוג ספק", ObjectTableId = ExportLogisticPermitActionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ExportLogisticPermitActionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTLOGISTICPERMITACTION", ObjectTableId = ExportLogisticPermitActionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ExportLogisticPermitAction.Features.ExportLogisticPermitActions", NameTextCodeDefaultText = "Vendor Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportLogisticPermitActionObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ExportLogisticPermitActionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportLogisticPermitAction.Q.ExportLogisticPermitAction", DefaultText = @"Export Logistic Permit Action",LocalDefaultText = "קוד היתר לוגיסטי ליצוא", ObjectTableId = ExportLogisticPermitActionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ExportLogisticPermitActionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportLogisticPermitAction.Q.ExportLogisticPermitAction", ObjectTableId = ExportLogisticPermitActionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportLogisticPermitAction.Features.ExportLogisticPermitAction", NameTextCodeDefaultText = "ExportLogisticPermitAction", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportLogisticPermitActionObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ExportLogisticPermitActionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportLogisticPermitActionTextCode_0.Id, NameTextCodeCode = ExportLogisticPermitActionTextCode_0.Code, ObjectTableName = "Customs.ExportLogisticPermitAction", Code = "ExportLogisticPermitAction",  QueryGroupCode = "VENT", IndexOrder = 0, Tenant = 0, ObjectTableId = ExportLogisticPermitActionObjectTable.Id, QuerySection = "Customs.ExportLogisticPermitAction", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportLogisticPermitActionFeature_0.Id,FeatureUniqeCode= ExportLogisticPermitActionFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query ExportLogisticPermitActionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportLogisticPermitActionTextCode_0.Id, NameTextCodeCode = ExportLogisticPermitActionTextCode_0.Code, ObjectTableName = "Customs.ExportLogisticPermitAction", Code = "ExportLogisticPermitAction",  QueryGroupCode = "c8e2", IndexOrder = 0, Tenant = 0, ObjectTableId = ExportLogisticPermitActionObjectTable.Id, QuerySection = "Customs.ExportLogisticPermitAction", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportLogisticPermitActionFeature_0.Id,FeatureUniqeCode= ExportLogisticPermitActionFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ExportLogisticPermitActionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLogisticPermitActionQuery.Id,QueryCode = ExportLogisticPermitActionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportLogisticPermitAction.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ExportLogisticPermitActionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLogisticPermitActionQuery.Id,QueryCode = ExportLogisticPermitActionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportLogisticPermitAction.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ExportLogisticPermitActionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLogisticPermitActionQuery.Id,QueryCode = ExportLogisticPermitActionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ExportLogisticPermitAction.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ExportLogisticPermitActionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLogisticPermitActionQuery.Id,QueryCode = ExportLogisticPermitActionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ExportLogisticPermitAction.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportLogisticPermitActionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLogisticPermitActionQuery.Id,QueryCode = ExportLogisticPermitActionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ExportLogisticPermitAction.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ExportLogisticPermitActionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLogisticPermitActionQuery.Id,QueryCode = ExportLogisticPermitActionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ExportLogisticPermitAction.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportLogisticPermitActionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLogisticPermitActionQuery.Id,QueryCode = ExportLogisticPermitActionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ExportLogisticPermitAction.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ExportLogisticPermitActionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLogisticPermitActionQuery.Id,QueryCode = ExportLogisticPermitActionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ExportLogisticPermitAction.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
