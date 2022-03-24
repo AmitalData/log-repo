@@ -16,6 +16,42 @@
         <LogTextBox [ObjectFieldName]="'SecondCargoID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
         [DataContext]="DataContext" [Text]="SecondCargoID"></LogTextBox>
     </div>
+
+    <div class="row">        
+        <LogLabel  [ObjectFieldName]="'ExportLoadingPortcode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>        
+     
+            <LogLov style="width: 100px;" [ObjectFieldName]="'ExportLoadingPortcode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+            [HideColumns]="true"
+            [LookUpTableName]="'Customs.UnloadingSiteType'"
+            [SelectedValue]="ExportLoadingPortcode">
+            </LogLov>
+            
+    </div>
+
+    <div class="row">        
+            <LogLabel [ObjectFieldName]="'StorageSiteCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+            <LogLov style="width: 100px;" [ObjectFieldName]="'StorageSiteCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+            [HideColumns]="true"
+            [LookUpTableName]="'Customs.DeliverySiteType'"
+            [SelectedValue]="ExportLoadingPortcode">
+            </LogLov>
+    </div>
+
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="PackageQuantity"></LogTextBox>
+    </div>
+
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'MarksNumbers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'MarksNumbers'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="MarksNumbers"></LogTextBox>
+    </div>
 </div>
 
 <div class="col">
@@ -36,12 +72,46 @@
         <LogTextBox [ObjectFieldName]="'ThirdCargoID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
         [DataContext]="DataContext" [Text]="ThirdCargoID"></LogTextBox>
     </div>
+
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'ExportUnloadingPortCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogLov style="width: 100px;" [ObjectFieldName]="'ExportUnloadingPortCode'"
+        [ObjectTableName]="ObjectTableName"
+        [DataContext]="DataContext"
+        [HideColumns]="true"
+        [LookUpTableName]="'Customs.InternationalSite'"
+        [SelectedValue]="ExportLoadingPortcode">
+        </LogLov>
+    </div>
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'FinalDestinationPortCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogLov style="width: 100px;" [ObjectFieldName]="'FinalDestinationPortCode'"
+        [ObjectTableName]="ObjectTableName"
+        [DataContext]="DataContext"
+        [HideColumns]="true"
+        [LookUpTableName]="'Customs.InternationalSite'"
+        [SelectedValue]="ExportLoadingPortcode">
+        </LogLov>
+    </div>
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'GrossMassMeasure'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'GrossMassMeasure'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="GrossMassMeasure"></LogTextBox>
+    </div>
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'IsDangerousGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogCheckBox style="width: 100px;" [ObjectFieldName]="'IsDangerousGoods'" [Checked]="IsDangerousGoods===1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" ></LogCheckBox>
+    </div>
 </div>
 
 <div class="col">
     <div class="row">        
         <LogLabel [ObjectFieldName]="'ExportDealIdentification'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox class="export-deal-identification" [ObjectFieldName]="'ExportDealIdentification'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        <LogTextBox  class="export-deal-identification" [ObjectFieldName]="'ExportDealIdentification'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
         [DataContext]="DataContext" [Text]="ExportDealIdentification"></LogTextBox>
     </div>
 </div>
+
+
+
+
