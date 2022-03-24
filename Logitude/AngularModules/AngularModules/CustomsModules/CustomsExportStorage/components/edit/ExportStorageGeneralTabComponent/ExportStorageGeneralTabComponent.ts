@@ -42,6 +42,13 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
       'ThirdCargoID',
       'ExportDealIdentification',
       'PackageQuantity',
+        'GrossMassMeasure',
+        'MarksNumbers',
+        'ExportLoadingPortcode',
+        'StorageSiteCode',
+        'ExportUnloadingPortCode',
+        'FinalDestinationPortCode',
+        'IsDangerousGoods'
     ].forEach(fieldName => this.UIProperties.SetEnabled(fieldName, this.ObjectTableName, false))
   }
 

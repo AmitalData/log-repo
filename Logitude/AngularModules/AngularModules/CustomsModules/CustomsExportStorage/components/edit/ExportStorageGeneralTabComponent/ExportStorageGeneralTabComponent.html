@@ -18,9 +18,9 @@
     </div>
 
     <div class="row">        
-        <LogLabel style="width: 150px;" [ObjectFieldName]="'ExportLoadingPortcode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>        
+        <LogLabel  [ObjectFieldName]="'ExportLoadingPortcode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>        
      
-            <LogLov style="width: 160px;" [ObjectFieldName]="'ExportLoadingPortcode'"
+            <LogLov style="width: 100px;" [ObjectFieldName]="'ExportLoadingPortcode'"
             [ObjectTableName]="ObjectTableName"
             [DataContext]="DataContext"
             [HideColumns]="true"
@@ -32,7 +32,13 @@
 
     <div class="row">        
             <LogLabel [ObjectFieldName]="'StorageSiteCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-            <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedMonth" (SelectedItemChanged)="SelectedMonth=$event"></ComboBox>
+            <LogLov style="width: 100px;" [ObjectFieldName]="'StorageSiteCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+            [HideColumns]="true"
+            [LookUpTableName]="'Customs.DeliverySiteType'"
+            [SelectedValue]="ExportLoadingPortcode">
+            </LogLov>
     </div>
 
     <div class="row">        
@@ -69,11 +75,23 @@
 
     <div class="row">        
         <LogLabel [ObjectFieldName]="'ExportUnloadingPortCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedMonth" (SelectedItemChanged)="SelectedMonth=$event"></ComboBox>
+        <LogLov style="width: 100px;" [ObjectFieldName]="'ExportUnloadingPortCode'"
+        [ObjectTableName]="ObjectTableName"
+        [DataContext]="DataContext"
+        [HideColumns]="true"
+        [LookUpTableName]="'Customs.InternationalSite'"
+        [SelectedValue]="ExportLoadingPortcode">
+        </LogLov>
     </div>
     <div class="row">        
         <LogLabel [ObjectFieldName]="'FinalDestinationPortCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedMonth" (SelectedItemChanged)="SelectedMonth=$event"></ComboBox>
+        <LogLov style="width: 100px;" [ObjectFieldName]="'FinalDestinationPortCode'"
+        [ObjectTableName]="ObjectTableName"
+        [DataContext]="DataContext"
+        [HideColumns]="true"
+        [LookUpTableName]="'Customs.InternationalSite'"
+        [SelectedValue]="ExportLoadingPortcode">
+        </LogLov>
     </div>
     <div class="row">        
         <LogLabel [ObjectFieldName]="'GrossMassMeasure'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -82,15 +100,14 @@
     </div>
     <div class="row">        
         <LogLabel [ObjectFieldName]="'IsDangerousGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogCheckBox [ObjectFieldName]="'IsDangerousGoods'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" ></LogCheckBox>
+        <LogCheckBox style="width: 100px;" [ObjectFieldName]="'IsDangerousGoods'" [Checked]="IsDangerousGoods===1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" ></LogCheckBox>
     </div>
 </div>
 
 <div class="col">
     <div class="row">        
         <LogLabel [ObjectFieldName]="'ExportDealIdentification'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox class="export-deal-identification" [ObjectFieldName]="'ExportDealIdentification'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        <LogTextBox  class="export-deal-identification" [ObjectFieldName]="'ExportDealIdentification'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
         [DataContext]="DataContext" [Text]="ExportDealIdentification"></LogTextBox>
     </div>
 </div>
