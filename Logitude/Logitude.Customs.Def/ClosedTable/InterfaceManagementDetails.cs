@@ -1809,6 +1809,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 InOut = InOutEnum.I.ToString(),
                 Description = "היתר לוגיסטי",
                 DcaPrefixName = "SendLP_NG_8400_MSG01_LogisticPermitMessage_Out.",
+                DcaPrefixName2 = "SendLP_NG_8400_MSG01_LogisticPermitMessage_EX_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = CONST_DefaultPriority,
                 AllowRestore = true,
