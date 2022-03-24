@@ -211,7 +211,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             PostalCodeQuery postalCodeQuery = new PostalCodeQuery(arInvoicePM.Tenant);
             PostalCodePM postalCodePM = postalCodeQuery.GetSinglePM(billToAddress.ZipCode);
-            if (postalCodePM == null)
+            string billToCountryCode = GetBillToCountryCode(billToAddress);
+            if (postalCodePM == null && IsMexicoCountry(billToCountryCode))
             {
                 throw new ApplicationException("Bill To Address Zip Code is not valid");
             }
@@ -219,6 +220,22 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             {
                 return billToAddress.ZipCode;
             }
+        }
+
+        private string GetBillToCountryCode(Address billToAddress)
+        {
+            string billToCountryCode = (billToAddress != null ? (billToAddress.Country != null ? billToAddress.Country.Code : null) : null);
+            if (billToAddress.Country != null)
+            {
+                billToCountryCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(billToAddress.Country.Code, SATData.ComputingPartnerCode, SATData.CountryObjectTableName);
+            }
+
+            return billToCountryCode;
+        }
+
+        private bool IsMexicoCountry(string countryCode)
+        {
+            return countryCode == "MEX" || countryCode == "MX";
         }
 
         private void ValidateARInvoiceLines(List<ChargesType> allChargesTypes)
