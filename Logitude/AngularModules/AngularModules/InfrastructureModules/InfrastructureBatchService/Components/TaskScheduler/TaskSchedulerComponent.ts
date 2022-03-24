@@ -36,6 +36,7 @@ export class TaskSchedulerComponent implements OnInit {
     ShowUTCTimeEnabled: boolean = false;
     HasUTCFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    SearchFilter: string = "";
     constructor(private _entityListService: EntityListService) {
         this.infraDomainService = new InfrastructureDomainService();
         if (FeatureLocator.HasFeaturePermession("TasksScheduler", "SHOWUTCBUTTON")) {
@@ -356,6 +357,11 @@ export class TaskSchedulerComponent implements OnInit {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "Type");
         }
         filters.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
+
+        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
+            filters.addAdditionalFilter("Name", this.SearchFilter, null, null, "Contains", true, false, false, "String");
+        }
+
         filters.GetCount = getCount;
         filters.PageIndex = skip;
         filters.PageSize = take;
@@ -392,6 +398,10 @@ export class TaskSchedulerComponent implements OnInit {
         }
         this.filterAgrs.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
 
+        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
+            this.filterAgrs.addAdditionalFilter("Name", this.SearchFilter, null, null, "Contains", true, false, false, "String");
+        }
+
         this.MenuHeaderchangeeventTasks.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
 
@@ -424,6 +434,12 @@ export class TaskSchedulerComponent implements OnInit {
             //    this.ItemsSource = this.FixedItemsSource;
             //}
         }
+    }
+
+    onSearchTextChangeEvent(searchText: string) {
+        if (!searchText) searchText = "";
+        this.SearchFilter = searchText.replace(/\s+$/, '');
+        this.LoadTaskSchedulers();
     }
 }
 

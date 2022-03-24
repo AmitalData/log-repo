@@ -30,6 +30,15 @@
                         <td>
                             <div></div>
                         </td>
+
+                        <td style="height:20px">
+                            <span><SearchTextBox style="float: right;margin-top:0px;margin-right:0px;width:200px" [ObjectTableName]="'TasksScheduler'" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox></span>
+                        </td>
+
+                        <td style="width:10px;">
+                            <div></div>
+                        </td>
+
                         <td style="width:40px;" class="Label">Status:</td>
 
                         <td style="width:5px;">
