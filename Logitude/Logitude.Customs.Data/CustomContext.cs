@@ -534,6 +534,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new LogisticActionResponseReqSMap());
 	
+            modelBuilder.Configurations.Add(new LogisticPermitMap());
+	
             modelBuilder.Configurations.Add(new LogisticsReferenceTypeMap());
 	
             modelBuilder.Configurations.Add(new MamanSpecialActionMap());
@@ -2720,6 +2722,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<LogisticActionResponseReqS> LogisticActionResponseReqSes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LogisticPermit> LogisticPermits 
 	 {
 	      get; set;
 	 
