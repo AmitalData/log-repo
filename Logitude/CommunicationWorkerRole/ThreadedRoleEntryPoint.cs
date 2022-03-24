@@ -419,6 +419,7 @@ namespace CommunicationWorkerRole
         private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
         {
             UpdateRunningWR();
+            SetWorkerRoleName();
         }
         List<BatchServicesDefinitionPM> BatchServicesDefinitions;
         private void UpdateRunningWR()
