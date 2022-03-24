@@ -117,18 +117,25 @@
 
 </style>
 
-<div *ngIf="!IsAreasMenu" tabindex="0" class="ToggleButton" (mousedown)="mousedown()" [class.ComboBoxDisabled]="IsDisabled" >
+<div *ngIf="!IsAreasMenu" tabindex="0" [id]="ControlId+'-wrapper'" class="ToggleButton" (mousedown)="mousedown()" [class.ComboBoxDisabled]="IsDisabled" >
+
+
     <label class="TextTrimming" style="width: calc(100% - 10px);padding-right:5px;" [title]="TotalPickedItems">{{TotalPickedItems}}</label>
-    <img src="./Images/ToggleIcon.png" />
-    <div *ngIf="!WithinImage && !CheckBoxOnly" [id]="ControlId" class="ToggleButtonMenu" style="width: 200px;-webkit-box-sizing: border-box;">
-        <div style="overflow-x: hidden;overflow-y: auto;height: 200px;z-index:10;background-color:white;border:solid;border-color:lightgray;border-width:1px" [attr.id]="DropdownId">
+
+    <img [class.left]="isRTL" src="./Images/ToggleIcon.png" />
+
+    <div [id]="ControlId" *ngIf="!WithinImage && !CheckBoxOnly" class="ToggleButtonMenu"
+        style="width: 200px;-webkit-box-sizing: border-box;">
+        <div style="overflow-x: hidden;overflow-y: auto;height: 200px;z-index:10;background-color:white;border:solid;border-color:lightgray;border-width:1px;position: fixed;"
+            [attr.id]="DropdownId">
             <table style="max-width:200px;height:1px">
                 <tr style="height:10px">
                     <td></td>
                 </tr>
                 <tr>
-                    <td>
-                        <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+'All'" [IsChecked]="IsAll" (Checked)="isAllClicked()"></RadioButton>
+                    <td style="padding: 0 10px;">
+                        <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="'Accounting.General.O.All' | TextCodeTranslationPipe"
+                            [IsChecked]="IsAll" (Checked)="isAllClicked()"></RadioButton>
                     </td>
                 </tr>
             </table>
@@ -137,8 +144,9 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>
-                        <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType" [IsChecked]="!IsAll" (Checked)="isSelectedClicked()"></RadioButton>
+                    <td style="padding: 0 10px;">
+                        <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType"
+                            [IsChecked]="!IsAll" (Checked)="isSelectedClicked()"></RadioButton>
                     </td>
 
 
@@ -149,19 +157,25 @@
             </table>
 
 
-            <div *ngFor="let item of ItemsSource; let i = index" style="margin-left:25px">
+            <div *ngFor="let item of ItemsSource; let i = index">
                 <table>
                     <tr>
-                        <td style="width:100px" (mouseover)="IsMouseOverInput = true;" (mouseleave)="IsMouseOverInput = false;">
+                        <td style="width:100px" (mouseover)="IsMouseOverInput = true;"
+                            (mouseleave)="IsMouseOverInput = false;">
                             <table>
                                 <tr>
+                                    <td style="width:25px">
+                                    </td>
                                     <td style="width:20px">
-                                        <CheckBox (Checked)="clickItem(item,i)" [IsChecked]="item.Checked" [IsEnabled]="ShowSelected"></CheckBox>
+                                        <CheckBox (Checked)="clickItem(item,i)" [IsChecked]="item.Checked"
+                                            [IsEnabled]="ShowSelected"></CheckBox>
 
                                     </td>
 
                                     <td>
-                                        <label style="float:left;" [attr.for]="item.Code" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.Name}}</label>
+                                        <label [class.right]="isRTL" [attr.for]="item.Code"
+                                            (focus)="setToggleButtonMenuTemp();"
+                                            (blur)="setToggleButtonMenu();">{{item.Name}}</label>
 
                                     </td>
                                 </tr>
@@ -179,6 +193,7 @@
                 </table>
             </div>
         </div>
+
     </div>
 
 
@@ -301,5 +316,6 @@
         </div>
     </div>
 </div>
+
 
 
