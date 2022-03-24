@@ -230,11 +230,11 @@ export class TaxReportMenuButtonsHandler {
         this.CurrentSession.StopBusyIndicator();
     }
     CreateClosingJournalButtonClicked(){
-        this.taxReportExtendedPMService.CheckIfTaxReportCanHaveClosingJournal(this.EntityPM.Id)
+        this.taxReportExtendedPMService.GetTaxReportReconciledLines(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) =>
             {
-                let canHaveClosingJournal: boolean = response.Result;
-                if (canHaveClosingJournal) {
+                let reconciledTaxReportLines: any = response.Result;
+                if (!reconciledTaxReportLines) {
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Show(TextCodeTranslator.Translate(TextCode.TaxReportClosingJournalConfirmationMessage))
                     confirmWindow.Width = 400;
@@ -246,8 +246,11 @@ export class TaxReportMenuButtonsHandler {
                     });
                 } else {
                     var messageWindow = new MessageWindow();
-                    messageWindow.Width = 400;
-                    messageWindow.Show(TextCodeTranslator.Translate(TextCode.TaxReportCantBeClosedValidationMessage));
+                    messageWindow.Width = 500;
+                    messageWindow.IsMessageMultiLine = true;
+                    let message: string = TextCodeTranslator.Translate(TextCode.TaxReportCantBeClosedValidationMessage);
+                    message += '\n(' + reconciledTaxReportLines + ')'
+                    messageWindow.Show(message);
                 }
             });
     }

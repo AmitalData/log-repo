@@ -16,8 +16,10 @@ namespace Logitude.Accounting.Data.Repositories
 {
    public partial class TaxReportRepository:IRepository<TaxReport>
    {
-        
-		public List<TaxReport> GetMulti(EntityKeyFields entityKeys)
+        private const string TaxReportTransmittedAndJournalCreatedStatus = "J";
+        private const string TaxReportTransmittedStatus = "T";
+
+        public List<TaxReport> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();
@@ -50,7 +52,7 @@ namespace Logitude.Accounting.Data.Repositories
             return (from a in context.TaxReports
                      where DbFunctions.TruncateTime(a.TaxReportMonth) == (VATreportEveryTwoMonths == true ?
                      taxReportDateWithPreviousTwoMonths.Date : taxReportDateWithPreviousMonth.Date)
-                            && a.Tenant == tenant && a.StatusCode == "T" && a.IsCancelled == false
+                            && a.Tenant == tenant && (a.StatusCode == TaxReportTransmittedStatus || a.StatusCode == TaxReportTransmittedAndJournalCreatedStatus) && a.IsCancelled == false
                      select a).Any();
         }
 
@@ -61,7 +63,7 @@ namespace Logitude.Accounting.Data.Repositories
             return (from a in context.TaxReports
                     where DbFunctions.TruncateTime(a.TaxReportMonth) == (VATreportEveryTwoMonths == true ?
                     taxReportDateWithPreviousTwoMonths.Date : taxReportDateWithPreviousMonth.Date)
-                           && a.Tenant == tenant && a.StatusCode != "T" && a.IsCancelled == false
+                           && a.Tenant == tenant && a.StatusCode != TaxReportTransmittedStatus && a.StatusCode != TaxReportTransmittedAndJournalCreatedStatus && a.IsCancelled == false
                     select a).Any();
         }
 
