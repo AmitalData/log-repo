@@ -44,7 +44,7 @@ export class DeclarationCancellationCustomsDocumentsController implements ICusto
             customsDocumentsTicketViewModels.forEach((ticket) => {
                 this.originalCustomsDocumentTicketViewModel.push(ticket);
             });
-            debugger;
+            
             var IL_81exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == 'IL_679')[0];
             if (!IL_81exists) {
                 var entityParams: RelatedEntityParams = new RelatedEntityParams()

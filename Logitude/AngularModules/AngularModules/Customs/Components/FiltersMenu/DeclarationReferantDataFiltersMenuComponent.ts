@@ -62,6 +62,7 @@ export class DeclarationReferantDataFiltersMenuComponent
      //   ("ReferentUserId", UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
   //  }
     ngAfterViewInit() {
+        //old
         this.ApplyTransportSelectedStyle();
         //
         //this.LOVListUsers.push(SessionLocator.LoggedUserPM); // by default is the grid filtered by the current user

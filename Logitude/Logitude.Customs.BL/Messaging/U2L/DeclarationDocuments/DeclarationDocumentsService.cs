@@ -93,6 +93,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                 
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(_MyDeclarationPM.Tenant);
                 DocumentsFilingPM documentIn = documentsFilingQuery.GetSinglePM(this._LogitudeDocs.COM_ID, _MyDeclarationPM.Tenant);
+                var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+
                 if (documentIn != null)
                 {
                     if (this._LogitudeDocs.DOC_ID == null)
@@ -123,8 +125,38 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 
                                     if (customsDocumentPM!= null && String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId) && customsDocumentPM.DocumentStatusCode!="7")
                                     {
-                                        var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
-                                        updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
+                                        customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
+                                        customsDocumentPM.IsSendToQueue = false;
+                                        myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
+                                        myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+
+
+
+                                        customsDocumentPM.IsSendToQueue = true;
+                                        myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+                                        AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
+                                        if (customsDocumentPM.ChangeSetOp != ChangeSetOperation.Update) customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
+                                        myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+                                        throw new BusinessErrorException("Ticket already Exist for this Document" + "-- Send To Mehes");
+
+                                    }
+
+
+                                    string log = "";
+                                    if (customsDocumentPM == null)
+                                    {
+                                        log = "customsDocumentPM is null";
+                                    }
+                                    else
+                                    {
+                                        if (!String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                                            log = "customsDocumentPM.CustomsDocId:" + customsDocumentPM.CustomsDocId;
+
+                                        if (!String.IsNullOrWhiteSpace(customsDocumentPM.DocumentStatusCode))
+                                            log = "customsDocumentPM.DocumentStatusCode:" + customsDocumentPM.DocumentStatusCode;
+
+
+
                                     }
                                     throw new BusinessErrorException("Ticket already Exist for this Document");
                                 }
@@ -185,7 +217,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
-                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                    // var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     
                     CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQuery = new CustomsDocumentMetaDataValueQueryService(_context);
 
@@ -290,6 +322,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             //MyGenericResponseObj.ResponseXml ;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+            MessageOut = GetLog();
         }
 
         private void DeserilazeObject(string xmlLOGIDOCS)

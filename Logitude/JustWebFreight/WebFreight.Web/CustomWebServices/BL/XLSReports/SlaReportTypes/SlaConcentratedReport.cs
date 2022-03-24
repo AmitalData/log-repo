@@ -41,10 +41,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
                     concentratedReportData.NoOfCourierHawb = item.NoOfCourierHawb;
                     concentratedReportData.LandingDate = item.LandingDate?.Date.ToShortDateString();
                     concentratedReportData.SlaDaysCount = new SlaDaysCounted();
-                    var DeclarationIdList = qs.GetByMasterID_DeclarationIdList(this.tenant, item.Id);
-                    foreach (string decId in DeclarationIdList)
+                    var DeclarationDataForSlaReportList = qs.GetDeclarationDataForSlaReportByMasterId(this.tenant, item.Id);
+                    foreach (DeclarationDataForSlaReport DeclarationDataForSlaReport in DeclarationDataForSlaReportList)
                     {
-                        var days = GetSlaDaysForDecId(decId, item.LandingDate, qs);
+                        var days = GetSlaDaysForDecId(DeclarationDataForSlaReport, item.LandingDate);
                         concentratedReportData = SetConcentratedSlaDays(concentratedReportData, days);
                     }
                     concentratedReportData = GetConcentratedSlaProzents(concentratedReportData);
@@ -111,30 +111,27 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
             return (d.ToString() + "%");
         }
 
-        private int GetSlaDaysForDecId(string decId, DateTime? landingDate, DeclarationCourierStatusQueryService qs)
+        private int GetSlaDaysForDecId(DeclarationDataForSlaReport declarationDataForSlaReport, DateTime? landingDate)
         {
-            DeclarationCourierStatusPM decStatus = qs.GetSingle(decId, false, false);
             int SlaDays = 0;
-            if (decStatus != null)
-            {
-                if (decStatus.Delivered && decStatus.LastMileStatusDate.HasValue)
-                {
-                    double daysBetween = (decStatus.LastMileStatusDate.Value - landingDate.Value).TotalDays;
-                    if (daysBetween > 0)
-                    {
-                        DateTime day = (DateTime)(landingDate?.Date);
-                        while (daysBetween >= 0)
-                        {
-                            if (daysBetween > 1 && day.DayOfWeek != DayOfWeek.Friday && day.DayOfWeek != DayOfWeek.Saturday && this.holidayList.Find(x => x.HOLIDAY.Day == day.Day && x.HOLIDAY.Month == day.Month && x.HOLIDAY.Year == day.Year) == null)
-                            {
-                                SlaDays++;
-                            }
-                            daysBetween--;
-                            day = day.AddDays(1);
-                        }
-                    }
 
+            if (declarationDataForSlaReport.Delivered && declarationDataForSlaReport.LastMileStatusDate.HasValue)
+            {
+                double daysBetween = (declarationDataForSlaReport.LastMileStatusDate.Value - landingDate.Value).TotalDays;
+                if (daysBetween > 0)
+                {
+                    DateTime day = (DateTime)(landingDate?.Date);
+                    while (daysBetween >= 0)
+                    {
+                        if (daysBetween > 1 && day.DayOfWeek != DayOfWeek.Friday && day.DayOfWeek != DayOfWeek.Saturday && this.holidayList.Find(x => x.HOLIDAY.Day == day.Day && x.HOLIDAY.Month == day.Month && x.HOLIDAY.Year == day.Year) == null)
+                        {
+                            SlaDays++;
+                        }
+                        daysBetween--;
+                        day = day.AddDays(1);
+                    }
                 }
+
             }
             return SlaDays;
         }

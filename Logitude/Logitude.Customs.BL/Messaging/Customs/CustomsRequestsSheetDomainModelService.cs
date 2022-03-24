@@ -362,6 +362,17 @@ namespace Logitude.Customs.BL.Messaging.Customs
             try
             {
                 FeatureQuery featureQuery = new FeatureQuery();
+
+
+                //SHOULD BE - 
+                //var sw = Stopwatch.StartNew();
+                //bool exist = ProxyUtil.SecurityUtilityCheckFeature("Customs.Declaration", "EscapeSign", requestParams.Tenant);
+                //Debug.WriteLine($"SecurityUtilityCheckFeature({sw.Elapsed})");
+                //if (exist)
+                //{
+                //    return true;
+                //}
+
                 var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
                 var feature = features.Features.FirstOrDefault(x => x.Code == "EscapeSign");
                 if (feature != null)

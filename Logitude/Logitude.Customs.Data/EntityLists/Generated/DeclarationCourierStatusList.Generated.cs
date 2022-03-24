@@ -180,6 +180,14 @@ namespace Logitude.Customs.Data.EntityLists
        public bool FinalRelease  { get; set; }
        [DataMember]
        public DateTime? HatraDate  { get; set; }
+       [DataMember]
+       public string CasualSupplierAddress  { get; set; }
+       [DataMember]
+       public string CasualImporterCity  { get; set; }
+       [DataMember]
+       public decimal GrossMassMeasure  { get; set; }
+       [DataMember]
+       public string IncoTermCode  { get; set; }
    }
 
 }

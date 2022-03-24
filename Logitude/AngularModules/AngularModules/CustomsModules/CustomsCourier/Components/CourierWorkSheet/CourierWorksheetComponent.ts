@@ -110,6 +110,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     IsFiltered: boolean = false;
     IsMamanEnabled: boolean = false;
     isAllowAccounting: boolean = false;
+    isAllowBulkPendind: boolean = false;
     IsILOVLEnabled: boolean = false;
     IsILSWSEnabled: boolean = false;
 
@@ -148,6 +149,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.GetMamanPUR();
         this.GetIsSendDocumentsFromQueueButton();
         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
+        this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -657,6 +659,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
+   // _DecWithoutHaTra = 0;
+
     _PendingCodes: KeyValuePair[] = [];
 
     private _SelectedDECToBatchSendButtonText: string = "";
@@ -827,6 +831,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                             this._ACC_WS_Total = item.Value;
                             break;
                         }
+                        //case "DecWithoutHaTra": {
+                        //    this._DecWithoutHaTra = item.Value;
+                        //    break;
+                        //}
                         /*
                     case "PAY": {
                         this._PAY_Total = item.Value;
@@ -1651,6 +1659,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             }
             case "N": {
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
+1
                 break;
             }
         }
@@ -1959,7 +1968,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             if (!AppTool.IsNullOrEmpty(currentScreenCode)) {
 
                 if (objectTableName == "Customs.Declaration") {
-                    debugger;
+                    
                     if (currentScreenCode == "DEGC" && selected.IsAmendment == true) currentScreenCode = "DCCR";
 
                     SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
@@ -2083,7 +2092,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
-            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            myMessageWindow.Show("לם ניתן לבצע גייטפס העברות ללם מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
 
@@ -2175,7 +2184,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי אתר פריקה";
+        logitudeWindow.Title = "שינוי םתר פריקה";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetUnloadPortCodeComponent');
         this.ChangedUnloadPortSite = true;
@@ -2235,7 +2244,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי אתר אחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.Title = "שינוי םתר םחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetStorageSiteCodeComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
@@ -2332,7 +2341,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר אחסון/פריקה ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי םתר םחסון/פריקה ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
@@ -2461,6 +2470,17 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     }
 
+    openBulkFeedPending() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 1500;
+        logitudeWindow.Height = 800;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "הזנה גורפת PENDING";
+        logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };        
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent');
+        this.ChangedUnloadPortSite = true;
+        logitudeWindow.WindowClosed.subscribe(($event: any) => this.RefreshButtonClicked());
+    }
 }
 
 

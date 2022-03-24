@@ -21,6 +21,8 @@ using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.BL.BL;
 using System.Diagnostics;
+using Logitude.Server.Tools.Contracts;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -75,18 +77,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPM.Tenant);
                 CourierMasterUpdateService CourierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                 var courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);
-                courierMasterPM.OpenDeclarations = rep.CountOpenDeclarations(courierMasterPM.Id, courierMasterPM.Tenant);
-                if (entityPM.IsClosedForFollowUp && !entityPOCO.IsClosedForFollowUp)
+                bool useCRS = true;
+                if (useCRS)
                 {
-                    courierMasterPM.OpenDeclarations -= 1;
+                    IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", entityPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
+                    myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(entityPM.Tenant, courierMasterPM.Id, null);
+
                 }
-                if (!entityPM.IsClosedForFollowUp && entityPOCO.IsClosedForFollowUp)
+                else
                 {
-                    courierMasterPM.OpenDeclarations += 1;
+
+
+                    courierMasterPM.OpenDeclarations = rep.CountOpenDeclarations(courierMasterPM.Id, courierMasterPM.Tenant);
+                    if (entityPM.IsClosedForFollowUp && !entityPOCO.IsClosedForFollowUp)
+                    {
+                        courierMasterPM.OpenDeclarations -= 1;
+                    }
+                    if (!entityPM.IsClosedForFollowUp && entityPOCO.IsClosedForFollowUp)
+                    {
+                        courierMasterPM.OpenDeclarations += 1;
+                    }
+                    courierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
+                    //if (!entityPM.IsClosedForFollowUp && !courierMasterPM.IsOpen)courierMasterPM.IsOpen = true;
+                    CourierMasterUpdateService.Update(courierMasterPM, true);
                 }
-                courierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
-                //if (!entityPM.IsClosedForFollowUp && !courierMasterPM.IsOpen)courierMasterPM.IsOpen = true;
-                CourierMasterUpdateService.Update(courierMasterPM, true);
             }
 
             DateTime stopLogAt = new DateTime(2020, 03, 01);

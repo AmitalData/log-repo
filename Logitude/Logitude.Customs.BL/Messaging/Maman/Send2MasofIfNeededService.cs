@@ -60,6 +60,15 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 {
                     dataHaveChangeSendIt = true;
                 }
+                if (dbPM != null)
+                {
+                    var prev_site = dbPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().StorageSiteCode;
+                    var current_site = drityEntityPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().StorageSiteCode;
+                    if(prev_site != current_site)
+                    {
+                        dataHaveChangeSendIt = true;
+                    }
+                }
                 string drityMessage = "";
                 string dbMessage = "";
 

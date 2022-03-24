@@ -606,7 +606,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     }
 
     Add() {
-        debugger;
+        
         if (this.IsDisplayOnly) return;
 
         var errors = [];

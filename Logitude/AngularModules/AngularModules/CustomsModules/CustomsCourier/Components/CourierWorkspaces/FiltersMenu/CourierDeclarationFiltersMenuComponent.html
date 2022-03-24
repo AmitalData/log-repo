@@ -1,0 +1,20 @@
+<div style="width: 400px;">
+    <table *ngIf="this.DataContext?.showFilter">
+        <tr>
+            <td style="width: 100px;">
+                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'IntegratorCode'"
+                    [ObjectTableName]="'Customs.Declaration'" [DataContext]="DataContext"
+                    [TextCode]="'Customs.DeclarationCourierStatus.O.Integrator'"></LogLabel>
+            </td>
+            <td colspan="2">
+                <div>
+                    <LogLov [ObjectFieldName]="'IntegratorCode'" [ObjectTableName]="'Customs.Declaration'"
+                        [DataContext]="DataContext" [DependencyFilter1Value]="'CS'" [LookUpTableName]="'Card'"
+                        [SelectedValue]="IntegratorCode" (SelectedItemChanged)="SelectedValueChangedEmitIntegrator()"
+                        [DisplayFieldsFromList]="'Code,LocalName,EnglishName,CityName,CountryName,PartnerTypeName'">
+                    </LogLov>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -27,7 +27,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierPendingReasonCode, 
 	         KeywordsList, 
 	         SearchFields, 
-	         SearchByFieldCode,
+	         SearchByFieldCode, 
+	         SearchType,
 	      }
 
 
@@ -41,7 +42,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         KeywordsList, 
 	         SearchFields, 
 	         SearchByFieldCode, 
-	         SearchByFieldName,
+	         SearchByFieldName, 
+	         SearchType, 
+	         SearchTypesName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -73,6 +76,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchByFieldCode))
             {
 				entityPOCO.SearchByFieldCode = entityPM.SearchByFieldCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchType))
+            {
+				entityPOCO.SearchType = entityPM.SearchType;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -111,6 +119,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.SearchByFieldCode = entityPOCO.SearchByFieldCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchType))
+            {
+					entityPM.SearchType = entityPOCO.SearchType;
+            }
+
 		}
 
 		public void PMToOldPM(PendingByKeywordPM entityPM, PendingByKeywordPM oldEntityPM)
@@ -140,6 +153,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchByFieldCode))
             {
                 oldEntityPM.SearchByFieldCode = entityPM.SearchByFieldCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchType))
+            {
+                oldEntityPM.SearchType = entityPM.SearchType;
             }
 			
 		}

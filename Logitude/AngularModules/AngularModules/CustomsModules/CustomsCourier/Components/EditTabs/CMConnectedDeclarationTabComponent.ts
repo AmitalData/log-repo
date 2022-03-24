@@ -463,6 +463,16 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
                 }
             }
         });
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCADPE", this.entityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCADPE")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לעדכון פנדינג ברקע ";
+                }
+            }
+        });
     }
 
     RefreshEntity() {

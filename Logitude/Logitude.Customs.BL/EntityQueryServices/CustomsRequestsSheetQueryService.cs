@@ -178,6 +178,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCTZIP", // Unifreight Table Custom ZIP
 "UCB2750", // שידור הצהרות בלדר
 "DCAMU", // multi update 
+"UCADPE", // הזנה גורפת PENDING
 
             };
 
@@ -305,8 +306,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2892",
 "2450",
 
-"UCUDO", 
-"UCBNDCD",///  Send bonded filing
+ "UCBNDCD",///  Send bonded filing
 ///"8302", //בקשה לטופס הצהרה
 
 "2751"//הצהרת יצוא- מסר יוצא
@@ -321,13 +321,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB9999", // ניתוח מחדש
 "8326", // שאילתא לתצהיר יבואן
 "DCAMU", // multi update 
-"DCAUAC" // multi update 
+"DCAUAC", // multi update 
+"UCADPE" // add multi pending
 
 
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
-            if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode))
+            if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode) &&  !(requestInProgressParams.InterfaceTypeCode== "UCUDO"))
             {
                 return new List<CustomsRequestsSheetPM>();
             }
@@ -438,15 +439,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "1171", // - מסר תשובה מצהר
 "1172", // - מסר תשובה מצהר - נדחף
 "8373",//"שאילתא לשחזור נתוני הצהרה"
-"UCUDO", 
- "UCB8212"
+  "UCB8212"
  ,"2892" ,
  "ClosePending",//סגירה גורפת ל-Pending
 "UCB9999",
 "2751",
 "2757",
 "DCAMU", // multi update 
-"DCAUAC"
+"DCAUAC",
+"UCADPE"
 //"8302" //בקשה לטופס הצהרה
 };
 

@@ -157,7 +157,7 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
     }
 
     SetWindowArgs(windowArgs) {
-        debugger;
+        
         this.declarationPM = windowArgs;
 
         if (this.declarationPM != null && this.declarationPM.Direction == 'E' && !AppTool.IsNullOrEmpty(this.declarationPM.ImporterCode)) {
@@ -239,7 +239,7 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
         if (this.SearchFieldsFilter) {
             filters.AdditionalFilters.push(this.SearchFieldsFilter);
         }
-      debugger;
+      
       if (this.CustomersList) {
 
           var CustomersListString = "";

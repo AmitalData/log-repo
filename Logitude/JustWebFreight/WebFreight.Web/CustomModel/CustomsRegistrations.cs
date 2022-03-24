@@ -6,6 +6,7 @@ using Logitude.Customs.CustomsMessaging.Tasks;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Contracts;
 using Microsoft.Practices.Unity;
@@ -36,6 +37,10 @@ namespace WebFreight.Web.CustomModel
             ContainerAccessor.Container.RegisterType<ICustomsCloseCourierMasterService, CloseCourierMasterService>("CloseCourierMasterService", new InjectionFactory(c => new CloseCourierMasterService()));
             ContainerAccessor.Container.RegisterType<ICustomsSendManifestService, SendManifestService>("SendManifestService", new InjectionFactory(c => new SendManifestService()));
             ContainerAccessor.Container.RegisterType<ICustomsSendDeclarationStatus, SendDeclarationStatus>("SendDeclarationStatus", new InjectionFactory(c => new SendDeclarationStatus()));
+
+
+            ContainerAccessor.Container.RegisterType<IUpdateOpenDeclarationInCourierMasterService, UpdateOpenDeclarationInCourierMasterService>("UpdateOpenDeclarationInCourierMasterService", new InjectionFactory(c => new UpdateOpenDeclarationInCourierMasterService()));
+
 
 
 

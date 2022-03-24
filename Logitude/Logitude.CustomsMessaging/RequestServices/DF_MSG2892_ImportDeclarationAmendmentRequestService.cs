@@ -1225,7 +1225,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
             }
 
-            return goodsItemAdditionalDocumentList.ToArray();
+            return goodsItemAdditionalDocumentList.OrderBy(x => x.DMExtensions.SequenceNumeric).ToArray();
         }
 
         private DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocument[] GetGoodsItemAdditionalDocument(List<SupplierInvioceItemCertificatPM> supplierInvoiceItemsCertificatesPM)

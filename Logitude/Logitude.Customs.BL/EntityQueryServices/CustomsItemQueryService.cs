@@ -31,6 +31,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pm;
         }
 
+        public List<CustomsItemPM> GetAllCustomsItemByClassificationCode(string classificationCode)
+        {
+            var pm=new List<CustomsItemPM>();
+
+            var poco = repository.GetAllCustomsItemByClassificationCode(classificationCode);
+
+            foreach(var item in poco)
+            {
+                pm.Add(GetEntityPM(item));
+            }
+            return pm;
+        }
+
         public string GetQuantityTypeByClassificationCode(string classificationCode, int tenant)
         {
             if (string.IsNullOrWhiteSpace(classificationCode)) return null;
@@ -64,6 +77,46 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return QuantityTypeCode;
         }
+
+        public string GetQuantityTypeByClassificationWithMultiCustomItems(string classificationCode, int tenant)
+        {
+            if (string.IsNullOrWhiteSpace(classificationCode)) return null;
+            if (classificationCode.Length > 10)
+            {
+                classificationCode = classificationCode.Substring(0, 10);
+            }
+            CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
+            var customsItems = customsItemQueryService.GetAllCustomsItemByClassificationCode(classificationCode);
+
+            PropertiesDetailsHistoryPM propertiesDetailsHistory = null;
+            MeasurmentUnitPM measurmentUnit = null;
+            string QuantityTypeCode = null;
+
+            PropertiesDetailsHistoryQueryService propertiesDetailsHistoryQueryService = new PropertiesDetailsHistoryQueryService(tenant);
+
+
+            foreach(var customsItem in customsItems)
+            {
+                propertiesDetailsHistory = propertiesDetailsHistoryQueryService.GetPropertiesDetailsHistoryByCustomsItemId(customsItem.ID);
+                if(propertiesDetailsHistory != null && propertiesDetailsHistory.StartDate < DateTime.Now && propertiesDetailsHistory.EndDate > DateTime.Now)
+                {
+                    break;
+                }
+            }
+            MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
+
+            if (propertiesDetailsHistory != null && propertiesDetailsHistory.MeasurementUnitID.HasValue)
+            {
+                measurmentUnit = measurmentUnitQueryService.GetMeasurmentUnitByMalamId(propertiesDetailsHistory.MeasurementUnitID.Value);
+            }
+
+            if (measurmentUnit != null)
+            {
+                QuantityTypeCode = measurmentUnit.Code;
+            }
+            return QuantityTypeCode;
+        }
+
 
     }
 }

@@ -44,6 +44,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             CustomMappedPMProperties.Add(PMPropertyNames.BuyerCountryName);
             CustomMappedPMProperties.Add(PMPropertyNames.PartyRelationshipName);
             CustomMappedPMProperties.Add(PMPropertyNames.BuyerRoleName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.VendorNumber);
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.BuyerCountryCode))
             {
@@ -85,6 +86,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(entityPOCO.Tenant);
                 CustomsVendorPM vendor = vendorQueryService.GetSingle(entityPOCO.VendorId, false, true);
                 entityPM.VendorName = vendor.VendorName;
+                if (vendor != null) entityPM.VendorNumber = vendor.VendorNumber;
             }
 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);

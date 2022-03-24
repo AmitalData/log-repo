@@ -119,6 +119,25 @@ export class DeclarationDisplayOnlyChecks {
             });
         }
 
+        //Check if changing panding
+        if (this.entityPM.IsCourierDeclaration) {
+            this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCADPE", this.entityPM.CourierMasterId).subscribe((response: any) => {
+                var displayOnlyCheckResult = response.Result;
+                if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                    let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCADPE")[0];
+                    if (customsRequestsSheetPM != null) {
+                        var errorMessage: string = "קיימת בקשה לשינוי קוד עיכוב ברקע ";
+                        SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                        SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
+                        editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
+                        SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
+                        serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                        return serviceResponse;
+                    }
+                }
+            });
+        }
+
         // check if multiupdating supplierinvocieitem
         this.CheckIfRequestInProgressByDecID(this.entityPM.Tenant, "DCAMU", this.entityPM.Id).subscribe((response: any) => {
             var displayOnlyCheckResult = response.Result;

@@ -39,10 +39,10 @@ namespace Unifreight.BL.EntityQueryServices
             return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
-        public GGGQPM GetByPrimary(string primary, string entity, string originQue, string formId)
+        public GGGQPM GetByPrimary(string primary, string entity, string originQue, string formId, string status)
         {
             if (string.IsNullOrWhiteSpace(primary) || string.IsNullOrWhiteSpace(entity) || string.IsNullOrWhiteSpace(originQue) || string.IsNullOrWhiteSpace(formId)) return null;
-            var gggq = (this.Repository as GGGQRepository).GetByPrimary(primary,  entity,  originQue,  formId);
+            var gggq = (this.Repository as GGGQRepository).GetByPrimary(primary,  entity,  originQue,  formId, status);
             return this.GetEntityPM(gggq, false, null);
         }
 

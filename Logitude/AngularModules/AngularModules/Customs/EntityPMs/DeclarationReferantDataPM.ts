@@ -224,6 +224,11 @@ export class DeclarationReferantDataPM {
     public set IsManualPayment(newValue: boolean) { if (this.isManualPayment != newValue) { this.isManualPayment = newValue; this.MarkAsDirty("IsManualPayment"); } }
        
 	 
+    private packageTypeCode: string;
+    public get PackageTypeCode() { return this.packageTypeCode; }
+    public set PackageTypeCode(newValue: string) { if (this.packageTypeCode != newValue) { this.packageTypeCode = newValue; this.MarkAsDirty("PackageTypeCode"); } }
+       
+	 
     private commodity: string;
     public get Commodity() { return this.commodity; }
     public set Commodity(newValue: string) { if (this.commodity != newValue) { this.commodity = newValue; this.MarkAsDirty("Commodity"); } }

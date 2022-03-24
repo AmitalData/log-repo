@@ -159,7 +159,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                         _IQueueService = new DbQueueService();
                         _IQueueService.InitializeQueue(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString(), 0);
 
-                        _ReceivedBrokeredMessage = _IQueueService.Receive();
+                        _ReceivedBrokeredMessage = _IQueueService.Receive(nextRunDelayInSec: 120);
 
                         if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
                         {
@@ -224,16 +224,20 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
             catch (Exception exc)
             {
-                ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
+                //ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
                 _WaitingCommLog.Retries++;
+                if (_WaitingCommLog.Retries>5)
+                {
+                    _WaitingCommLog.CommunicationStatusTypeCode = "F";
+                }
+                _WaitingCommLog.LastStatusDate = DateTime.Now;
+                _WaitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
 
-                _WaitingCommLog.CommunicationStatusTypeCode = "F";
-
-                var s = "ProccessReceivedMessage()Exception:" + exc.Message;
+                var s = $" Retries:{_WaitingCommLog.Retries}  ProccessReceivedMessage()Exception:" + exc.Message;
                 _WaitingCommLog.ExceptionMessage = s.Substring(0, Math.Min(7999, s.Length));
                 _CommunicationLogRep.Update(_WaitingCommLog);
                 _CommunicationLogRep.SubmitChanges();
-                _IQueueService.Delay(TimeSpan.FromMinutes(1));
+                //_IQueueService.Delay(TimeSpan.FromMinutes(1));
                 //throw;
 
             }

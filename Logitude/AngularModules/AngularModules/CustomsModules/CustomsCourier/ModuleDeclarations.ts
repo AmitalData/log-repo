@@ -22,6 +22,9 @@ import { AutonomyKeywordComponent } from './Components/AutonomyKeyword/AutonomyK
 //import { CourierWorksheetNGTComponent } from './Components/CourierWorkspaces/CourierWorksheetNGTComponent';
 import { CourierWorksheetNGComponent } from './Components/CourierWorkSheet/CourierWorksheetNGComponent';
 import { CourierWorksheetNGListTemplate } from '../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
+import { BulkFeedPendingComponent } from './Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent';
+import { DeclarationPendingsBulkFeedingComponent } from './Components/CourierPendingReason/DeclarationPendingsBulkFeedingComponent';
+import { CourierDeclarationFiltersMenuComponent } from './Components/CourierWorkspaces/FiltersMenu/CourierDeclarationFiltersMenuComponent';
 
 export const Components =
     [
@@ -41,14 +44,17 @@ export const Components =
         GetStorageSiteCodeComponent,
         AddEditPendingByKeywordComponent,
         DeclarationPendingsGeneralComponent,
+        DeclarationPendingsBulkFeedingComponent,
         CourierDeclarationWorkspaceComponent,
         AutonomyKeywordComponent,
         GetUnloadPortCodeComponent,
+        BulkFeedPendingComponent,
         //VirtualScrollNG,
         //VirtualScrollNGScroll,
         //CourierWorksheetNGTComponent,
         CourierWorksheetNGComponent,
         CourierWorksheetNGListTemplate,
+        CourierDeclarationFiltersMenuComponent,
     ];
 
 export class ModuleDeclarations {
@@ -74,7 +80,9 @@ export class ModuleDeclarations {
             case "GetUnloadPortCodeComponent": { myResult = GetUnloadPortCodeComponent; break; }
             case "AddEditPendingByKeywordComponent": { myResult = AddEditPendingByKeywordComponent; break; }
             case "DeclarationPendingsGeneralComponent": { myResult = DeclarationPendingsGeneralComponent; break; }
+            case "DeclarationPendingsBulkFeedingComponent": { myResult = DeclarationPendingsBulkFeedingComponent; break; }
             case "CourierDeclarationWorkspaceComponent": { myResult = CourierDeclarationWorkspaceComponent; break; }
+            case "BulkFeedPendingComponent": { myResult = BulkFeedPendingComponent; break; }
                 
             case "AutonomyKeywordComponent": { myResult = AutonomyKeywordComponent; break; }
             //case "VirtualScrollNG": { myResult = VirtualScrollNG; break; }
@@ -82,7 +90,8 @@ export class ModuleDeclarations {
             //case "CourierWorksheetNGTComponent": { myResult = CourierWorksheetNGTComponent; break; }
             case "CourierWorksheetNGComponent": { myResult = CourierWorksheetNGComponent; break; }
             case "CourierWorksheetNGListTemplate": { myResult = CourierWorksheetNGListTemplate; break; }
-                
+            case "CourierDeclarationFiltersMenuComponent": { myResult = CourierDeclarationFiltersMenuComponent; break; }
+
                 
                 
                 

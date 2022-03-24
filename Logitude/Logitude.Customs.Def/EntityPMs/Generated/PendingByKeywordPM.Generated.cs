@@ -204,6 +204,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string searchType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchType  
+	   {
+	    
+	     get
+		{
+		   return searchType;
+		 }
+		 set
+		 {
+		   if(searchType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchType",OldValue=searchType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchType=value;
+		   }
+			
+		 }
+	   }
+	  private string searchTypesName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchTypesName  
+	   {
+	    
+	     get
+		{
+		   return searchTypesName;
+		 }
+		 set
+		 {
+		   if(searchTypesName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchTypesName",OldValue=searchTypesName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchTypesName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

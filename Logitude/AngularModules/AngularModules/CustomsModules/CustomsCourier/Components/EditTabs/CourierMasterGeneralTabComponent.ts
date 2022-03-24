@@ -289,6 +289,24 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
                 }
             }
         });
+
+        this.CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.EntityPM.Tenant, "UCADPE", this.EntityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCADPE")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לעדכון פנדינג ברקע ";
+                    this.SetScreenFieldsEditability();
+
+                    this.timerToken = setTimeout(() => {
+                        this.SetScreenFieldsEditability();
+                        clearTimeout(this.timerToken);
+                        //this.CD.detectChanges();
+                    }, 900);
+                }
+            }
+        });
     }
 
     SetScreenFieldsEditability() {
