@@ -28,6 +28,8 @@ namespace Logitude.Accounting.BL.CoreBL
         FullAccountingSettingPM fullAccountingSettings;
         TenantPM tenantPM;
         public JournalPM journalPM;
+        const string TaxReportLineInputType = "I";
+        const string TaxReportLineOutType = "O";
         public TaxReportClosingService(int tenant, string taxReportId)
         {
             this.tenant = tenant;
@@ -335,26 +337,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void CreateInternalReconciliationForVATOutputGLAccount(JournalLinePM journalLinePM) {
             // GetReportLinesPMs
-            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-            var outputLines = taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == "O").ToList();
-            
+            var outputLines = GetTaxReportLines(TaxReportLineInputType);
+
             if (outputLines.Any()) {
-                LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
-                var journalIds = outputLines.Select(x => x.JournalId).ToList();
-                var ledgerTranasctions = ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsAndAccountId(journalIds, fullAccountingSettings.VATOutputGLAccountId, tenant);
+                var ledgerTranasctions = GetLedgerTransactionsForOutputTaxReportLines(outputLines);
                 AddJournalReconciles(ledgerTranasctions, journalLinePM);
             }
         }
 
         private void CreateInternalReconciliationForVATInputGLAccount(JournalLinePM journalLinePM)
         {
-            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-            var inputLines = taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == "I").ToList();
+            var inputLines = GetTaxReportLines(TaxReportLineInputType);
             if (inputLines.Any())
             {
-                LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
-                var ledgerTranasctionsIds = inputLines.Select(x => x.LedgerTransactionId).ToList();
-                var ledgerTranasctions = ledgerTransactionRepository.GetLedgerTransactionsByIds(ledgerTranasctionsIds, tenant).ToList();
+                var ledgerTranasctions = GetLedgerTransactionsForInputTaxReportLines(inputLines);
                 AddJournalReconciles(ledgerTranasctions, journalLinePM);
             }
 
@@ -376,6 +372,27 @@ namespace Logitude.Accounting.BL.CoreBL
                     IsPartial = false
                 });
             }
+        }
+
+        private List<TaxReportLine> GetTaxReportLines(string taxReportLineType)
+        {
+            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
+            return taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == taxReportLineType).ToList();
+        }
+
+        private List<LedgerTransaction> GetLedgerTransactionsForOutputTaxReportLines(List<TaxReportLine> taxReportLines)
+        {
+            LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
+            var journalIds = taxReportLines.Select(x => x.JournalId).ToList();
+            return ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsAndAccountId(journalIds, fullAccountingSettings.VATOutputGLAccountId, tenant);
+        }
+
+        private List<LedgerTransaction> GetLedgerTransactionsForInputTaxReportLines(List<TaxReportLine> taxReportLines)
+        {
+
+            LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
+            var ledgerTranasctionsIds = taxReportLines.Select(x => x.LedgerTransactionId).ToList();
+            return ledgerTransactionRepository.GetLedgerTransactionsByIds(ledgerTranasctionsIds, tenant).ToList();
         }
     }
     public class TaxReportClosingJournalServiceArguments

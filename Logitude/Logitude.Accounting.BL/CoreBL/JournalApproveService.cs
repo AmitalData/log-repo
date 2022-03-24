@@ -301,7 +301,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         //    UpdateInReconcileProgressToFalse();
                         //}
                         UpdateJournalWithReconcileNumber(myCreateAutoReconcileWhileStreamingService);
-                        UpdateTaxReportWithReconcileNumber(myCreateAutoReconcileWhileStreamingService);
+                        UpdateTaxReportWithReconcileNumber(myCreateAutoReconcileWhileStreamingService.ReconciliationList);
 
                     }
                     //}
@@ -515,21 +515,27 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private void UpdateTaxReportWithReconcileNumber(ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService)
+        private void UpdateTaxReportWithReconcileNumber(List<ReconciliationPM> reconciliationsList)
         {
-            if (this._JournalPM.AccountingEntityCode == "13" && this._JournalPM.JournalReconciles.Count > 0 && 
-                myCreateAutoReconcileWhileStreamingService.ReconciliationList.Count > 0)
+            if (this._JournalPM.AccountingEntityCode == AccountingEntityValues.TaxReport && this._JournalPM.JournalReconciles.Count > 0 &&
+                reconciliationsList.Count > 0)
             {
-                TaxReportQueryService taxReportQueryService = new TaxReportQueryService(_JournalPM.Tenant);
-                var taxReportPM = taxReportQueryService.GetSingle(_JournalPM.AccountingEntityId, false, false);
+                var taxReportPM = GetTaxReportPM(_JournalPM.AccountingEntityId);
                 
 
-                var reconciliationNumbersList = myCreateAutoReconcileWhileStreamingService.ReconciliationList.Select(x => x.Number).ToList();
+                var reconciliationNumbersList = reconciliationsList.Select(x => x.Number).ToList();
                 taxReportPM.ReconciliationsNumbers = String.Join(",", reconciliationNumbersList);
                 TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(this._AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
                 taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
                 taxReportUpdateService.Update(taxReportPM, true);
             }
+
+        }
+
+        private TaxReportPM GetTaxReportPM(string taxReportId)
+        {
+            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(_JournalPM.Tenant);
+            return taxReportQueryService.GetSingle(taxReportId, false, false);
         }
 
         private static TimeSpan? GetTimeout(List<LedgerTransactionPM> myLedgerTransactionsWithCounters, bool HaveJournalReconciles)
