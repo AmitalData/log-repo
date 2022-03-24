@@ -15,32 +15,31 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
-    public partial class CustomsDocumentUploadListQueryService
-    {
-	    private IQueryable<CustomsDocumentUploadList> GetIqueryableList(IQueryable<CustomsDocumentUpload> iQueryable)
-        {
-		IQueryable<CustomsDocumentUploadList> query = (from a in iQueryable
-                                            select new CustomsDocumentUploadList()
-											{
-                     
-					                          Code = a.Code,
-					
-					                          LocalName = a.LocalName,
-					
-					                          SearchFields = a.SearchFields,
-					
-		                    	            });
-            return query;
+	public partial class CustomsDocumentUploadListQueryService
+	{
+		private IQueryable<CustomsDocumentUploadList> GetIqueryableList(IQueryable<CustomsDocumentUpload> iQueryable)
+		{
+			IQueryable<CustomsDocumentUploadList> query = (from a in iQueryable
+														   select new CustomsDocumentUploadList()
+														   {
+
+															   Code = a.Code,
+
+															   LocalName = a.LocalName,
+
+															   SearchFields = a.SearchFields,
+
+														   });
+			return query;
 		}
 
-		private IQueryable<CustomsDocumentUpload> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CustomsDocumentUpload> iQueryable)
-        {
-			throw new NotImplementedException();
+		private IQueryable<CustomsDocumentUpload> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CustomsDocumentUpload> iQueryable)
+		{
+			return iQueryable;
 		}
-			}
-
+	}
 
 }
 	
