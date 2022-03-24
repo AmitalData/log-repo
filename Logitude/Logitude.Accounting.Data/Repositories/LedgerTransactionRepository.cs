@@ -1498,6 +1498,18 @@ on record.JournalId equals j.Id
 
 
         }
+        public List<LedgerTransaction> GetLedgerTransactionsByJournalIdsAndAccountId(List<string> journalIds, string accountId, int tenant)
+        {
+
+
+            return (from a in context.LedgerTransactions.Include("Account")
+                    where journalIds.Contains(a.JournalId) && a.Tenant == tenant && a.AccountId == accountId
+
+                    select a
+                    ).ToList();
+
+
+        }
         public IQueryable<LedgerTransaction> GetLedgerTransactionsInputsNotIncludedInTaxReports(LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter, FullAccountingSettingList setting)
         {
            

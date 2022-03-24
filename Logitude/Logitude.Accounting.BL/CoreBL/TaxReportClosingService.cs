@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -260,8 +261,9 @@ namespace Logitude.Accounting.BL.CoreBL
             };
 
             journalPM.JournalLines.Add(line);
-
-            CreateInternalReconciliationForVATOutputGLAccount(line);
+            if (line.LocalAmount > 0 || line.ForeignAmount > 0) {
+                CreateInternalReconciliationForVATOutputGLAccount(line);
+            }
         }
         private void CreateVatInputCreditLine()
         {
@@ -289,7 +291,10 @@ namespace Logitude.Accounting.BL.CoreBL
             };
 
             journalPM.JournalLines.Add(line);
-            CreateInternalReconciliationForVATInputGLAccount(line);
+            if (line.LocalAmount > 0 || line.ForeignAmount > 0)
+            {
+                CreateInternalReconciliationForVATInputGLAccount(line);
+            }
         }
         private void CreateDifferencesCreditLine()
         {
@@ -335,26 +340,12 @@ namespace Logitude.Accounting.BL.CoreBL
             
             if (outputLines.Any()) {
                 LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
-                var ledgerTranasctionsIds = outputLines.Select(x => x.LedgerTransactionId).ToList();
-                var ledgerTranasctions = ledgerTransactionRepository.GetLedgerTransactionsByIds(ledgerTranasctionsIds, tenant);
-                foreach (var transaction in ledgerTranasctions) {
-                    if (!journalPM.JournalReconciles.Any(x => x.LedgerTransactionId == transaction.Id)) { 
-                        journalPM.JournalReconciles.Add(new JournalReconcilePM()
-                        {
-                            Tenant = tenant,
-                            ChangeSetOp = ChangeSetOperation.Insert,
-                            JournalId = journalPM.Id,
-                            Line = journalLinePM.Line,
-                            LedgerTransactionId = transaction.Id,
-                            CurrencyId = transaction.OpenAmountCurrencyId,
-                            ReconciliationAmount = transaction.OpenAmount,
-                            IsPartial = false
-                        });
-                    }
-                }
+                var journalIds = outputLines.Select(x => x.JournalId).ToList();
+                var ledgerTranasctions = ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsAndAccountId(journalIds, fullAccountingSettings.VATOutputGLAccountId, tenant);
+                AddJournalReconciles(ledgerTranasctions, journalLinePM);
             }
         }
-        
+
         private void CreateInternalReconciliationForVATInputGLAccount(JournalLinePM journalLinePM)
         {
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
@@ -363,27 +354,28 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
                 var ledgerTranasctionsIds = inputLines.Select(x => x.LedgerTransactionId).ToList();
-                var ledgerTranasctions = ledgerTransactionRepository.GetLedgerTransactionsByIds(ledgerTranasctionsIds, tenant);
-                foreach (var transaction in ledgerTranasctions)
-                {
-                    if (!journalPM.JournalReconciles.Any(x => x.LedgerTransactionId == transaction.Id))
-                    {
-                        journalPM.JournalReconciles.Add(new JournalReconcilePM()
-                        {
-                            Tenant = tenant,
-                            ChangeSetOp = ChangeSetOperation.Insert,
-                            JournalId = journalPM.Id,
-                            Line = journalLinePM.Line,
-                            LedgerTransactionId = transaction.Id,
-                            CurrencyId = transaction.OpenAmountCurrencyId,
-                            ReconciliationAmount = transaction.OpenAmount,
-                            IsPartial = false
-                        });
-                    }
-                    
-                }
+                var ledgerTranasctions = ledgerTransactionRepository.GetLedgerTransactionsByIds(ledgerTranasctionsIds, tenant).ToList();
+                AddJournalReconciles(ledgerTranasctions, journalLinePM);
             }
 
+        }
+
+        private void AddJournalReconciles(List<LedgerTransaction> ledgerTranasctions, JournalLinePM journalLinePM)
+        {
+            foreach (var transaction in ledgerTranasctions)
+            {
+                journalPM.JournalReconciles.Add(new JournalReconcilePM()
+                {
+                    Tenant = tenant,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    JournalId = journalPM.Id,
+                    Line = journalLinePM.Line,
+                    LedgerTransactionId = transaction.Id,
+                    CurrencyId = transaction.OpenAmountCurrencyId,
+                    ReconciliationAmount = transaction.OpenAmount,
+                    IsPartial = false
+                });
+            }
         }
     }
     public class TaxReportClosingJournalServiceArguments
