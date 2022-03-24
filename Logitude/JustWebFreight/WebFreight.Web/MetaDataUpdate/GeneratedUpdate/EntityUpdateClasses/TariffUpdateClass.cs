@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "97463dab6e233b8ec6075998c9d3a418";
+		public const string HashString = "50e48a50f85d3e19367c1079f31056a5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -637,12 +637,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4237,7 +4238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  100,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4252,7 +4253,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Tariff",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -4263,8 +4263,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomsBrokerName",
 					  						DefaultText =  "Customs Broker",
-					  						ListFieldLable =  "CustomsBrokerNameListLable",
-					  						ListLableDefaultText =  "Customs Broker",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4360,6 +4358,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UnitOfMeasurementCode",
 					  						ListPropertyPath =  "UnitOfMeasurementCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4476,7 +4475,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AirFreightCostTariffsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id,QueryCode = AirFreightCostTariffsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter AirFreightCostTariffsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "AFC",PredefinedValue2 = null, QueryId = AirFreightCostTariffsQuery.Id,QueryCode = AirFreightCostTariffsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter AirFreightCostTariffsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "AFC",PredefinedValue2 = null, CustomPredefined = false, QueryId = AirFreightCostTariffsQuery.Id,QueryCode = AirFreightCostTariffsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -4499,7 +4498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AirSurchargesCostTariffsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id,QueryCode = AirSurchargesCostTariffsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter AirSurchargesCostTariffsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ASC",PredefinedValue2 = null, QueryId = AirSurchargesCostTariffsQuery.Id,QueryCode = AirSurchargesCostTariffsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter AirSurchargesCostTariffsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ASC",PredefinedValue2 = null, CustomPredefined = false, QueryId = AirSurchargesCostTariffsQuery.Id,QueryCode = AirSurchargesCostTariffsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -4522,7 +4521,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn Ocean_LCL_Surcharges_CostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Ocean_LCL_Surcharges_CostQuery.Id,QueryCode = Ocean_LCL_Surcharges_CostQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter Ocean_LCL_Surcharges_CostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "OSC",PredefinedValue2 = null, QueryId = Ocean_LCL_Surcharges_CostQuery.Id,QueryCode = Ocean_LCL_Surcharges_CostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter Ocean_LCL_Surcharges_CostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "OSC",PredefinedValue2 = null, CustomPredefined = false, QueryId = Ocean_LCL_Surcharges_CostQuery.Id,QueryCode = Ocean_LCL_Surcharges_CostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -4545,7 +4544,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OceanLCLFreightCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanLCLFreightCostQuery.Id,QueryCode = OceanLCLFreightCostQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter OceanLCLFreightCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "OLC",PredefinedValue2 = null, QueryId = OceanLCLFreightCostQuery.Id,QueryCode = OceanLCLFreightCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter OceanLCLFreightCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "OLC",PredefinedValue2 = null, CustomPredefined = false, QueryId = OceanLCLFreightCostQuery.Id,QueryCode = OceanLCLFreightCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -4568,7 +4567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OceanFCLFreightCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLFreightCostQuery.Id,QueryCode = OceanFCLFreightCostQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter OceanFCLFreightCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "OFC",PredefinedValue2 = null, QueryId = OceanFCLFreightCostQuery.Id,QueryCode = OceanFCLFreightCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter OceanFCLFreightCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "OFC",PredefinedValue2 = null, CustomPredefined = false, QueryId = OceanFCLFreightCostQuery.Id,QueryCode = OceanFCLFreightCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -4591,7 +4590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OceanFCLSurchargesCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanFCLSurchargesCostQuery.Id,QueryCode = OceanFCLSurchargesCostQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter OceanFCLSurchargesCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "OFS",PredefinedValue2 = null, QueryId = OceanFCLSurchargesCostQuery.Id,QueryCode = OceanFCLSurchargesCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter OceanFCLSurchargesCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "OFS",PredefinedValue2 = null, CustomPredefined = false, QueryId = OceanFCLSurchargesCostQuery.Id,QueryCode = OceanFCLSurchargesCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -4602,7 +4601,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ExportCustomsChargesCostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Tariff.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ExportCustomsChargesCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.CustomsBrokerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ExportCustomsChargesCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.SellerName" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn ExportCustomsChargesCostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Tariff.Notes" , ColumnWidth = 150 }, addedQueryColumns);
 
@@ -4614,7 +4613,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ExportCustomsChargesCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter ExportCustomsChargesCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ECC",PredefinedValue2 = null, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter ExportCustomsChargesCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ECC",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -4625,7 +4624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ImportCustomsChargesCostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Tariff.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ImportCustomsChargesCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.CustomsBrokerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ImportCustomsChargesCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.SellerName" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn ImportCustomsChargesCostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Tariff.Notes" , ColumnWidth = 150 }, addedQueryColumns);
 
@@ -4637,7 +4636,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ImportCustomsChargesCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter ImportCustomsChargesCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ICC",PredefinedValue2 = null, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter ImportCustomsChargesCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ICC",PredefinedValue2 = null, CustomPredefined = false, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

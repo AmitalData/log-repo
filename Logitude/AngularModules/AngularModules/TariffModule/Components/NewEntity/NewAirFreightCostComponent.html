@@ -43,7 +43,7 @@
                                 </tr>
 
                                 <!-- Seller -->
-                                <tr class="FormFieldRow" *ngIf="IsSellerVisible">
+                                <tr class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'SellerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -55,27 +55,6 @@
                                                 [DependencyFilter1IsList]="true"
                                                 [HideMaintenanceIcon]="true"
                                                 [DependencyFilter1Value]="SellerDependancy"
-                                                [LookUpTableName]="'Card'">
-                                        </LogLov>
-                                    </td>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-
-                                <!-- CustomsBrokerId -->
-                                <tr class="FormFieldRow" *ngIf="IsCustomsBrokerVisible">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'CustomsBrokerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'CustomsBrokerId'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [SelectedValue]="CustomsBrokerId"
-                                                [DataContext]="DataContext"
-                                                [DependencyFilter1IsList]="true"
-                                                [HideMaintenanceIcon]="true"
-                                                [DependencyFilter1Value]="CustomsBrokerDependancy"
                                                 [LookUpTableName]="'Card'">
                                         </LogLov>
                                     </td>
