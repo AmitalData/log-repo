@@ -13,6 +13,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {   
@@ -37,8 +38,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
             if(entityPOCO.ResponseStatusCode != null)
                 entityPM.RequestCancelStatus =  new LogisticActionResponseReqSRepository(entityPOCO.Tenant).GetSingle(entityPOCO.ResponseStatusCode).LocalName;
+            if (entityPOCO.ExporterNumber != null)
+            {
+                ClientQueryService clientQueryService = new ClientQueryService(entityPOCO.Tenant);
+                ClientPM client = clientQueryService.GetClientByCode(entityPOCO.ExporterNumber, entityPOCO.Tenant);
+                if (client != null)
+                {
+                    entityPM.CalculatedExporterName = client.FullName;
+                }
+            }
         }
-
+        
 
         private void BuildSearchFields(LogisticActionRequestPM entityPM, LogisticActionRequest entityPOCO, bool isNewEntity)
         {

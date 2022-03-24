@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
@@ -17,6 +17,10 @@ import { LogisticActionRequestRequestParams } from 'Customs/DataContract/Request
 import { LogisticActionRequestWebService } from 'Customs/Services/WebServices/LogisticActionRequestWebService';
 import { ResponseDataBase } from 'Customs/DataContract/ResponseData/ResponseDataBase';
 import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { AppTool } from '../../../../../Infrastructure/Tools';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClientListService } from 'Customs/Services/StandardLists/ClientListService'
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -39,6 +43,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     // syncDeclaration$ = new Subject();
     subscriber: Subscription;
     ValidationErrorsList: any[] = [];
+    private clientListService: ClientListService = null;
+    @Input() QueryFilterItems: ApiQueryFilters;
     FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
     requierdFieldsList = [
         'ExportFileNo',
@@ -51,6 +57,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         'Quantity',
         'DeliverySiteID',
     ]
+    
 
     get ExportFileNo() { return this.entityPM?.ExportFileNo }
     set ExportFileNo(value: string) {
@@ -120,6 +127,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     get DecisionRmarks() { return this.entityPM?.DecisionRmarks }
     set DecisionRmarks(value: string) { this.entityPM.DecisionRmarks = value; }
+
+    get CalculatedExporterName() { return this.entityPM?.CalculatedExporterName }
+    set CalculatedExporterName(newValue: string) { this.entityPM.CalculatedExporterName = newValue; }
 
 
     constructor(
@@ -264,6 +274,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("DecisionRmarks", this.ObjectTableName, false);
 
         this.setRequiredFields();
+        this.clientListService = new ClientListService();
     }
 
 
@@ -293,16 +304,78 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
             this.entityPM.TransportmodeId = value;
     }
 
-
+    private isImporterClicked: boolean = false;
+    private currentClient: ClientList;
     ImporterClicked(type, client: ClientList) {
         this.ExporterNumber = client?.Code;
         this.exporterName = client?.FullName;
+        if (client)this.isImporterClicked = true;
+        if (client && !AppTool.IsNullOrEmpty(client.FullName)) {
+            this.CalculatedExporterName = client.FullName;
+            this.currentClient = client;
+        }
+        else {
+            this.CalculatedExporterName = "";
+            this.currentClient = null;
+        }
     }
 
-
-    ImporterTextChanged(type, item) {
+    
+    ImporterTextChanged(type, item: any) {
+        if (this.currentClient != null && !AppTool.IsNullOrEmpty(item) && this.ExporterNumber == this.currentClient.Code) {
+            this.CalculatedExporterName = this.currentClient.FullName;
+        }
+        else {
+            this.CalculatedExporterName = "";
+        }
     }
 
+    ImporterLostFocus(type: any, item: any) {
+        this.isImporterClicked = false;
+        if (this.currentClient == null && !AppTool.IsNullOrEmpty(item)) {
+            var filters = new ApiQueryFilters();
+            filters.PageIndex = 0;
+            filters.PageSize = 10;
+
+            filters.addAdditionalFilter("Code", item, null, null, "Equal", false, false, false, "string");
+            
+            this.clientListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+
+                var itemsCount = 0;
+
+                if (myResponse != null) {
+                    itemsCount = myResponse.Result.length;
+                    if (itemsCount == 1) {
+                        this.currentClient = myResponse.Result;
+                        if (this.currentClient != null) {
+                            if (!AppTool.IsNullOrEmpty(this.currentClient.Code)) {
+                                this.ExporterNumber = this.currentClient.Code;
+                            }
+                            else {
+                                this.ExporterNumber = myResponse.Result[0].Code;
+                            }
+                            if (!AppTool.IsNullOrEmpty(this.currentClient.FullName)) {
+                                this.CalculatedExporterName = this.currentClient.FullName;
+                            }
+                            else {
+                                this.CalculatedExporterName = myResponse.Result[0].FullName;
+                            }
+                        }
+                        else {
+                            this.CalculatedExporterName = "";
+                        }
+                    }
+                }
+            });
+        }
+        
+        if (this.currentClient != null && !AppTool.IsNullOrEmpty(item) && this.ExporterNumber == this.currentClient.Code) {
+            this.CalculatedExporterName = this.currentClient.FullName;
+        }
+        else {
+            this.CalculatedExporterName = "";
+        }
+    }
 
     SendButtonClicked() {
         if (this.invalidate()) return;
