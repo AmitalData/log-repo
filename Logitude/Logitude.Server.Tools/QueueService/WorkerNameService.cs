@@ -5,11 +5,13 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
+using System.Xml.Linq;
 
 namespace Logitude.Server.Tools.QueueService
 {
@@ -67,7 +69,7 @@ namespace Logitude.Server.Tools.QueueService
             }
             else
             {
-                workerName = LogitudeSettings.WorkerRoleName;
+                workerName = LogitudeSettings.WorkerRoleName = GetWorkerRoleNameFromConfiguration();
             }
 
             return workerName;
@@ -151,5 +153,28 @@ namespace Logitude.Server.Tools.QueueService
 
             return entity;
         }
+
+
+        private static string GetWorkerRoleNameFromConfiguration()
+        {
+            try
+            {
+                var bundleAssembly = AppDomain.CurrentDomain.GetAssemblies()
+                                 .First(x => x.FullName.Contains("CommunicationWorkerRole"));
+                var filePath = new Uri(bundleAssembly.CodeBase).LocalPath;
+                var xsdPath = Path.Combine(Path.GetDirectoryName(filePath), "WorkerRoleName.xml");
+                XElement workerRoleNameElement = XElement.Load(filePath);
+                if (workerRoleNameElement == null) return LogitudeSettings.WorkerRoleName;
+                var workerName = workerRoleNameElement.Element("WorkerName").Value;
+                return !string.IsNullOrEmpty(workerName) ? workerName : LogitudeSettings.WorkerRoleName;
+            }
+            catch (Exception exception)
+            {
+                return LogitudeSettings.WorkerRoleName;
+            }
+        }
+
+
+
     }
 }
