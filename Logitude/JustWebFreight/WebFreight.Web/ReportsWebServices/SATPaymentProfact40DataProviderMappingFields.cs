@@ -61,6 +61,7 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 paymentDataProvider.SAT.RegimenFiscal = comprobante.Emisor.RegimenFiscal;
             }
+            MapRegimenFiscalReceptor(currentPayment, paymentDataProvider, comprobante);
             paymentDataProvider.SAT.LugarExpedicion = comprobante.LugarExpedicion;
             paymentDataProvider.SAT.NoCertificado = comprobante.NoCertificado;
             paymentDataProvider.SAT.Certificado = comprobante.Certificado;
@@ -76,6 +77,14 @@ namespace WebFreight.Web.ReportsWebServices
 
             MapAdditionalFields(currentPayment, paymentDataProvider);
             MapPagosFields(paymentDataProvider, comprobante);
+        }
+
+        private static void MapRegimenFiscalReceptor(ARPayment currentPayment, PaymentDataProvider paymentDataProvider, Comprobante comprobante)
+        {
+            if (!string.IsNullOrEmpty(comprobante.Receptor.RegimenFiscalReceptor))
+            {
+                paymentDataProvider.SAT.RegimenFiscalReceptor = SATInvoiceProfact40DataProviderMappingFields.GetRegimenFiscalReceptor(comprobante.Receptor.RegimenFiscalReceptor, currentPayment.Tenant);
+            }
         }
 
         private static void MapPagosFields(PaymentDataProvider paymentDataProvider, Profact.TimbraCFDI40.Comprobante comprobante)

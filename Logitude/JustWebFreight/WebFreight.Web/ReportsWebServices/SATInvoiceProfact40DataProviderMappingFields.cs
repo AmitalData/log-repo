@@ -47,6 +47,7 @@ namespace WebFreight.Web.ReportsWebServices
             invoicedataprovider.SAT.LugardeExpedicion = comprobante.LugarExpedicion;
             MapMetodoPago(invoicedataprovider, comprobante);
             MapUsoCFDI(invoicedataprovider, allUsoCFDIs, comprobante);
+            invoicedataprovider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptor(comprobante.Receptor.RegimenFiscalReceptor, currentInvoice.Tenant);
             MapCadenaOriginal(currentInvoice, invoicedataprovider);
             MapCFDIRelacionadoDetails(invoicedataprovider, comprobante);
         }
@@ -97,6 +98,16 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 invoicedataprovider.SAT.usoCFDI = usoCFDI.Code + " " + usoCFDI.Name;
             }
+        }
+
+        public static string GetRegimenFiscalReceptor(string regimenFiscalReceptorCode, int tenant)
+        {
+            RegimenFiscalRepository regimenFiscalRepository = new RegimenFiscalRepository(tenant);
+            RegimenFiscal regimenFiscalReceptor = regimenFiscalRepository.GetRegimenFiscals().Where(reg => reg.Code == regimenFiscalReceptorCode).FirstOrDefault();
+            if (regimenFiscalReceptor != null) {
+                return regimenFiscalReceptor.Name; 
+            }
+            return null;
         }
 
         private static void MapCFDIRelacionadoDetails(InvoiceDataProvider invoicedataprovider, Comprobante comprobante)

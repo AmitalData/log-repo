@@ -166,6 +166,7 @@ namespace WebFreight.Web.DataProviders
         public string CertPago { get; set; }
         public string CadPago { get; set; }
         public string SelloPago { get; set; }
+        public string RegimenFiscalReceptor { get; set; }
 
         //public string UUID { get; set; }
         //public string QR { get; set; }
