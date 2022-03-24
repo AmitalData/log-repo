@@ -34,14 +34,14 @@ export class ExportLogisticPermitActionPM {
     public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
        
 	 
-    private englishName: string;
-    public get EnglishName() { return this.englishName; }
-    public set EnglishName(newValue: string) { if (this.englishName != newValue) { this.englishName = newValue; this.MarkAsDirty("EnglishName"); } }
-       
-	 
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+    private englishName: string;
+    public get EnglishName() { return this.englishName; }
+    public set EnglishName(newValue: string) { if (this.englishName != newValue) { this.englishName = newValue; this.MarkAsDirty("EnglishName"); } }
        
 	 
     private inactive: boolean;

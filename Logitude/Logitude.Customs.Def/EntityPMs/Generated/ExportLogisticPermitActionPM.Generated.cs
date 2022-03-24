@@ -66,29 +66,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string englishName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EnglishName  
-	   {
-	    
-	     get
-		{
-		   return englishName;
-		 }
-		 set
-		 {
-		   if(englishName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishName",OldValue=englishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   englishName=value;
-		   }
-			
-		 }
-	   }
 	  private string searchFields ;
 	  	  
        
@@ -108,6 +85,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   searchFields=value;
+		   }
+			
+		 }
+	   }
+	  private string englishName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishName  
+	   {
+	    
+	     get
+		{
+		   return englishName;
+		 }
+		 set
+		 {
+		   if(englishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishName",OldValue=englishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   englishName=value;
 		   }
 			
 		 }

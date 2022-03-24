@@ -20,39 +20,17 @@ namespace Logitude.Customs.BL
    {
        public List<ExportLogisticPermitActionDetails> GetAll()
        {
-		    var all = new List<ExportLogisticPermitActionDetails>();  
-            all.Add(new ExportLogisticPermitActionDetails()
-            {    
-                Code = "1", 
-                SearchFields = "1,ספק", 
-                Inactive = false, 
-                LocalName = "ספק", 
-                EnglishName = "lll", 
-			});
-			 
-            all.Add(new ExportLogisticPermitActionDetails()
-            {    
-                Code = "2", 
-                SearchFields = "2,לקוח חו''ל", 
-                Inactive = false, 
-                LocalName = "לקוח חו''ל", 
-			});
-			
+		    var all = new List<ExportLogisticPermitActionDetails>(); 
             return all;
        }
 
 	    public void MapPoco(ExportLogisticPermitAction newPoco)
-        {   
-		    newPoco.Code = this.Code;  
-			newPoco.SearchFields = GetSearchFields(this);   
-		    newPoco.Inactive = this.Inactive;  
-		    newPoco.LocalName = this.LocalName;  
-		    newPoco.EnglishName = this.EnglishName;   
+        {    
         }
 
 		public string GetSearchFields(ExportLogisticPermitAction rec)
         {   
-           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
+           return string.Empty;
         }
    }
 }
