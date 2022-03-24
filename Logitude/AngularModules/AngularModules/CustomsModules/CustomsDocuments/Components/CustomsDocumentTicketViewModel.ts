@@ -424,7 +424,7 @@ export class CustomsDocumentTicketViewModel {
             messageWindow.Width = 400;
             messageWindow.Height = 200;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("ההצהרה כבר שולמה - לא ניתן לקשר מסמכים חדשים");
+            messageWindow.Show("ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים");
             messageWindow.WindowClosed.subscribe((event: any) => {
 
                 messageWindow.Close();
@@ -1144,7 +1144,7 @@ export class CustomsDocumentTicketViewModel {
             messageWindow.Width = 400;
             messageWindow.Height = 200;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("ההצהרה כבר שולמה - לא ניתן לקשר מסמכים חדשים");
+            messageWindow.Show("ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים");
             messageWindow.WindowClosed.subscribe((event: any) => {
 
                 messageWindow.Close();
