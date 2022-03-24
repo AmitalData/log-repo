@@ -16,6 +16,36 @@
         <LogTextBox [ObjectFieldName]="'SecondCargoID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
         [DataContext]="DataContext" [Text]="SecondCargoID"></LogTextBox>
     </div>
+
+    <div class="row">        
+        <LogLabel style="width: 150px;" [ObjectFieldName]="'ExportLoadingPortcode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>        
+     
+            <LogLov style="width: 160px;" [ObjectFieldName]="'ExportLoadingPortcode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+            [HideColumns]="true"
+            [LookUpTableName]="'Customs.UnloadingSiteType'"
+            [SelectedValue]="ExportLoadingPortcode">
+            </LogLov>
+            
+    </div>
+
+    <div class="row">        
+            <LogLabel [ObjectFieldName]="'StorageSiteCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+            <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedMonth" (SelectedItemChanged)="SelectedMonth=$event"></ComboBox>
+    </div>
+
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="PackageQuantity"></LogTextBox>
+    </div>
+
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'MarksNumbers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'MarksNumbers'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="MarksNumbers"></LogTextBox>
+    </div>
 </div>
 
 <div class="col">
@@ -36,6 +66,25 @@
         <LogTextBox [ObjectFieldName]="'ThirdCargoID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
         [DataContext]="DataContext" [Text]="ThirdCargoID"></LogTextBox>
     </div>
+
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'ExportUnloadingPortCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedMonth" (SelectedItemChanged)="SelectedMonth=$event"></ComboBox>
+    </div>
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'FinalDestinationPortCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedMonth" (SelectedItemChanged)="SelectedMonth=$event"></ComboBox>
+    </div>
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'GrossMassMeasure'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'GrossMassMeasure'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="GrossMassMeasure"></LogTextBox>
+    </div>
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'IsDangerousGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogCheckBox [ObjectFieldName]="'IsDangerousGoods'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" ></LogCheckBox>
+    </div>
 </div>
 
 <div class="col">
@@ -45,3 +94,7 @@
         [DataContext]="DataContext" [Text]="ExportDealIdentification"></LogTextBox>
     </div>
 </div>
+
+
+
+

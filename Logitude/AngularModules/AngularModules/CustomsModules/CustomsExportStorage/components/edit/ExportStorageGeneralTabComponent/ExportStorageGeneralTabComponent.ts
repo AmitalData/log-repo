@@ -41,6 +41,7 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
       'FirstCargoID',
       'ThirdCargoID',
       'ExportDealIdentification',
+      'PackageQuantity',
     ].forEach(fieldName => this.UIProperties.SetEnabled(fieldName, this.ObjectTableName, false))
   }
 
@@ -53,4 +54,21 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
   public get ThirdCargoID() { return this.EntityPM.ThirdCargoID; }
   public get ExportDealIdentification() { return this.EntityPM.ExportDealIdentification; }
   public get ExporterCode() { return this.EntityPM.ExporterCode; }
+
+  public get PackageQuantity() {return this.EntityPM.PackageQuantity}
+  
+  public get GrossMassMeasure() {return this.EntityPM.GrossMassMeasure}
+  
+  public get MarksNumbers() {return this.EntityPM.MarksNumbers}
+  
+  public get ExportLoadingPortcode() {return this.EntityPM.ExportLoadingPortcode}
+  
+  public get StorageSiteCode() {return this.EntityPM.StorageSiteCode}
+  
+  public get ExportUnloadingPortCode() {return this.EntityPM.ExportUnloadingPortCode}
+  
+  public get FinalDestinationPortCode() {return this.EntityPM.FinalDestinationPortCode}
+  
+  public get IsDangerousGoods() {return this.EntityPM.IsDangerousGoods}
+
 }
