@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportLogisticPermitActionUpdateClass
    {  		
-		public const string HashString = "2d3c478637993a9054dea9248d89c74c";
+		public const string HashString = "a2527ef6e14a40ed2db2ed9cd6524d52";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "קוד היתר לוגיסטי ליצוא",
 			      				    DefaultText =  "Update Code",
-			      				    Code =  "c8e2",
+			      				    Code =  "c8e3",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -463,7 +463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup ExportLogisticPermitActionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c8e2", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup ExportLogisticPermitActionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c8e3", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 						QueryGroup ExportLogisticPermitActionQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3e16", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ExportLogisticPermitActionObjectTable = objectTables.ContainsKey("Customs.ExportLogisticPermitAction") ? objectTables["Customs.ExportLogisticPermitAction"] : null;
@@ -489,7 +489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ExportLogisticPermitActionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportLogisticPermitActionTextCode_0.Id, NameTextCodeCode = ExportLogisticPermitActionTextCode_0.Code, ObjectTableName = "Customs.ExportLogisticPermitAction", Code = "ExportLogisticPermitAction",  QueryGroupCode = "c8e2", IndexOrder = 0, Tenant = 0, ObjectTableId = ExportLogisticPermitActionObjectTable.Id, QuerySection = "Customs.ExportLogisticPermitAction", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportLogisticPermitActionFeature_0.Id,FeatureUniqeCode= ExportLogisticPermitActionFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query ExportLogisticPermitActionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportLogisticPermitActionTextCode_0.Id, NameTextCodeCode = ExportLogisticPermitActionTextCode_0.Code, ObjectTableName = "Customs.ExportLogisticPermitAction", Code = "ExportLogisticPermitAction",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = ExportLogisticPermitActionObjectTable.Id, QuerySection = "Customs.ExportLogisticPermitAction", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportLogisticPermitActionFeature_0.Id,FeatureUniqeCode= ExportLogisticPermitActionFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn ExportLogisticPermitActionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLogisticPermitActionQuery.Id,QueryCode = ExportLogisticPermitActionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportLogisticPermitAction.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
