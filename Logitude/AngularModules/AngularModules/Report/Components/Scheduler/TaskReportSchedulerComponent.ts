@@ -35,6 +35,7 @@ export class TaskReportSchedulerComponent implements OnInit {
 
     schedulerExtendedPMService: SchedulerExtendedPMService;
     public isExceedsScheduledTasksLimitPerReport = false;
+    SearchFilter: string = "";
 
     constructor(private _entityListService: EntityListService) {
 
@@ -283,6 +284,12 @@ export class TaskReportSchedulerComponent implements OnInit {
         }
         filters.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
         filters.addAdditionalFilter("EntityId", this.ReportList.Id, null, null, "Equals", true, false, false, "String");
+
+        
+        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
+            filters.addAdditionalFilter("Name", this.SearchFilter, null, null, "Contains", true, false, false, "String");
+        }
+
         filters.GetCount = getCount;
         filters.PageIndex = skip;
         filters.PageSize = 100;
@@ -318,6 +325,10 @@ export class TaskReportSchedulerComponent implements OnInit {
 
         this.filterAgrs.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
 
+        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
+            this.filterAgrs.addAdditionalFilter("Name", this.SearchFilter, null, null, "Contains", true, false, false, "String");
+        }
+
         this.MenuHeaderchangeeventTasks.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
 
@@ -328,6 +339,12 @@ export class TaskReportSchedulerComponent implements OnInit {
             this.filterTypeCode = value;
             this.LoadTaskSchedulers();
         }
+    }
+
+    onSearchTextChangeEvent(searchText: string) {
+        if (!searchText) searchText = "";
+        this.SearchFilter = searchText.replace(/\s+$/, '');
+        this.LoadTaskSchedulers();
     }
 }
 
