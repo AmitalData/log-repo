@@ -50,6 +50,10 @@ namespace CommunicationWorkerRole
         private string QBOIDSuccess = null;
         private string APInvoiceId = null;
         private string OldTransferStatusCode;
+        private string CreditNoteCode = "CD";
+        private string InvoiceTxnType = "Invoice";
+        private string CreditMemoTxnType = "CreditMemo";
+
         public override void Run()
         {
             while (IsRunning)
@@ -590,6 +594,7 @@ namespace CommunicationWorkerRole
                             else
                             {
                                 SendingSuccessfully(waitingCommLog, tenant, Result.Id, null, null);
+                                SendPaymentForCloseTheCreditMemoWithIncoive(waitingCommLog, Result);
                             }
                         }
                         else
@@ -926,6 +931,39 @@ namespace CommunicationWorkerRole
             }
         }
 
+        private void SendPaymentForCloseTheCreditMemoWithIncoive(CommunicationLog waitingCommLog, Invoice result)
+        {
+            var arInvoiceRepository = new ARInvoiceRepository(waitingCommLog.Tenant);
+            var autoCreditARInvoice = arInvoiceRepository.GetARInvoiceByInvoiceNumber(waitingCommLog.Tenant, waitingCommLog.EntityReference);
+            if (!autoCreditARInvoice.IsAutoCredit)
+                return;
+
+            var creditMemo = arInvoiceRepository.GetARInvoiceById(waitingCommLog.Tenant, autoCreditARInvoice.CreditedByARInvoiceId).FirstOrDefault();
+            if (creditMemo == null || creditMemo.ARInvoiceTypeCode != CreditNoteCode)
+                return;
+            Intuit.Ipp.Data.Payment QBOPayment = CreateQBOPaymentFromInvoice(result, creditMemo);
+            ServiceContext serviceContext = GetServiceContext(waitingCommLog.Tenant + "");
+            DataService service = new DataService(serviceContext);
+            Payment Result = service.Add(QBOPayment) as Payment;
+        }
+
+        private Payment CreateQBOPaymentFromInvoice(Invoice invoice, ARInvoice creditMemo)
+        {
+            var QBOPayment = new Payment();
+            QBOPayment.CustomerRef = new ReferenceType { Value = invoice.CustomerRef.Value };
+            QBOPayment.TotalAmt = 0;
+            QBOPayment.TotalAmtSpecified = true;
+            List<Line> lineList = new List<Line>();
+            var invoiceLine = CreateLine(invoice.TotalAmt, invoice.Id, InvoiceTxnType);
+            var creditMemoLine = CreateLine(decimal.Parse(creditMemo.AmountInInvoiceCurrency.Value.ToString()), creditMemo.ExternalAccountingEntityId,CreditMemoTxnType);
+            lineList.Add(invoiceLine);
+            lineList.Add(creditMemoLine);
+            QBOPayment.Line = lineList.ToArray();
+            return QBOPayment;
+        }
+
+       
+
         private void SendPaymentForCloseTheIncoiveWithCreditMemo(CommunicationLog waitingCommLog, CreditMemo creditMemo)
         {
             var arInvoiceRepository = new ARInvoiceRepository(waitingCommLog.Tenant);
@@ -950,38 +988,23 @@ namespace CommunicationWorkerRole
             QBOPayment.TotalAmt = 0;
             QBOPayment.TotalAmtSpecified = true;
             List<Line> lineList = new List<Line>();
-            var invoiceLine = CreateInvoiceLine(arInvoice);
-            var creditMemoLine = CreateCreditMemoLine(creditMemo);
+            var invoiceLine = CreateLine(decimal.Parse(arInvoice.AmountInInvoiceCurrency.Value.ToString()), arInvoice.ExternalAccountingEntityId, InvoiceTxnType);
+            var creditMemoLine = CreateLine(creditMemo.TotalAmt, creditMemo.Id, CreditMemoTxnType);
             lineList.Add(invoiceLine);
             lineList.Add(creditMemoLine);
             QBOPayment.Line = lineList.ToArray();
             return QBOPayment;
         }
-
-        private Line CreateCreditMemoLine(CreditMemo creditMemo)
-        {
-            return new Line()
-            {
-                Amount = Math.Abs(creditMemo.TotalAmt),
-                AmountSpecified = true,
-                LinkedTxn = new LinkedTxn[] { new LinkedTxn()
-                {
-                    TxnId = creditMemo.Id,
-                    TxnType = "CreditMemo"
-                }}
-            };
-        }
-
-        private Line CreateInvoiceLine(ARInvoice arInvoice)
+        private Line CreateLine(decimal amount,string txnId,string txnType)
         {
              return new Line()
             {
-                Amount = Math.Abs(decimal.Parse(arInvoice.AmountInInvoiceCurrency.Value.ToString())),
+                Amount = Math.Abs(amount),
                 AmountSpecified = true,
                 LinkedTxn = new LinkedTxn[] { new LinkedTxn()
                 {
-                    TxnId = arInvoice.ExternalAccountingEntityId,
-                    TxnType = "Invoice"
+                    TxnId = txnId,
+                    TxnType = txnType
                 }}
             };
         }
