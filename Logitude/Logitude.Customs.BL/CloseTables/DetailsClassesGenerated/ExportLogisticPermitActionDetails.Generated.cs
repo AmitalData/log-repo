@@ -1,0 +1,59 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL
+{
+   public class ExportLogisticPermitActionDetails : ExportLogisticPermitAction, ICloseTable<ExportLogisticPermitAction, ExportLogisticPermitActionDetails>
+   {
+       public List<ExportLogisticPermitActionDetails> GetAll()
+       {
+		    var all = new List<ExportLogisticPermitActionDetails>();  
+            all.Add(new ExportLogisticPermitActionDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,ספק", 
+                Inactive = false, 
+                LocalName = "ספק", 
+                EnglishName = "lll", 
+			});
+			 
+            all.Add(new ExportLogisticPermitActionDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,לקוח חו''ל", 
+                Inactive = false, 
+                LocalName = "לקוח חו''ל", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(ExportLogisticPermitAction newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;   
+        }
+
+		public string GetSearchFields(ExportLogisticPermitAction rec)
+        {   
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
+        }
+   }
+}
+
