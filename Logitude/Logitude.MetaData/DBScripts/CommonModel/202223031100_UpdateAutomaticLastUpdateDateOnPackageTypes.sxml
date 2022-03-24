@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Common" AOT="true" TargetTableName="PackageTypes">
+	<Sql Version="1">
+		<![CDATA[
+
+    update PackageTypes set AutomaticLastUpdateDate = GETDATE() where AutomaticLastUpdateDate is null and $LastCounterWhere$
+
+    ]]>
+	</Sql>
+</Script>
