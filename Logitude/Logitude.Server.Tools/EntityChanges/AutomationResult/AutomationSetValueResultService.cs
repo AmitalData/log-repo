@@ -226,8 +226,10 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 var dateSplitParts = item.Value.Split('*');
                 result = ConvertToDate(dateSplitParts[dateSplitParts.Length - 1]);
             }
-
-
+            else if (item.IsCustomField)
+            {
+                return GetNewCustomFieldClass(item);
+            }
             else if (item.DataTypeCode.Trim() == "Boolean")
             {
                 if (!string.IsNullOrEmpty(item.Value)) result = !string.IsNullOrEmpty(item.Value) && item.Value.ToLower() == "true" ? true : false;
@@ -240,10 +242,6 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             else if (item.DataTypeCode.Trim() == "Double")
             {
                 result = !string.IsNullOrEmpty(item.Value) ? double.Parse(item.Value, System.Globalization.CultureInfo.InvariantCulture) : 0;
-            }
-            else if (item.IsCustomField)
-            {
-                result = GetNewCustomFieldClass(item);
             }
             else result = item.Value;
 
