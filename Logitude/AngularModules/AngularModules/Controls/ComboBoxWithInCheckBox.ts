@@ -1,7 +1,10 @@
 import {Component, OnInit, Output, EventEmitter,AfterViewInit, Input} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../Infrastructure/Tools';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
+const SelectedHebrewLabel: string = 'בחירת';
 @Component({
     selector: 'ComboBoxWithInCheckBox',
 
@@ -41,6 +44,10 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public IsAreasMenu: boolean = false;
     public SearchAreasId: string = "SearchAreasId";
     public InitialItemsSource: any[];
+    isOpen: boolean = false;
+    get isRTL() { return ObjectsLocator?.GlobalSetting?.LayoutDirection == "rtl" }
+    public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    allText = TextCodeTranslator.Translate("Accounting.General.O.All");
 
     public selectionType: string = " Products";
     get SelectionType(): string {
@@ -48,7 +55,10 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     }
     set SelectionType(value: string) {
         this.selectionType = value;
-        this.ProductsSelectionType = " Selected " + this.SelectionType;
+        if(this.showLocal)
+            this.ProductsSelectionType = SelectedHebrewLabel + ' ' + this.SelectionType;
+        else
+            this.ProductsSelectionType = " Selected " + this.SelectionType;
     }
     public ProductsSelectionType: string = " Selected " + this.SelectionType;
 
@@ -76,7 +86,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         this.InitialItemsSource = this.ItemsSource;
         this.SetDefaultTotalPickedItems();
         if (!this.IsAreasMenu) {
-            this.TotalPickedItems = " All";
+            this.TotalPickedItems = ' ' + this.allText;
         }
     }
 
@@ -130,11 +140,19 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
 
         var ToggleBTN = document.getElementById(this.ControlId) as HTMLDivElement;
         ToggleBTN.className = "ToggleButtonMenuTemp";
+        this.isOpen = true;
+
+        if (this.AutoHeight) {
+            document.getElementById(this.DropdownId).style.height = "auto";
+            document.getElementById(this.DropdownId).style.maxHeight = this.MaxHeight + "px";
+            document.getElementById(this.DropdownId).style.minHeight = this.MinHeight + "px";
+        }
 
     }
     setToggleButtonMenu() {
         var ToggleBTN = document.getElementById(this.ControlId) as HTMLDivElement;
         ToggleBTN.className = "ToggleButtonMenu";
+        this.isOpen = false;
     }
     ngOnInit() {
 
@@ -178,7 +196,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         this.TotalPickedItems = "";
         if (!this.WithinImage) {
             if (this.ItemsSource.filter(i => i.Checked)[0] == null) {
-                this.TotalPickedItems = " All";
+                this.TotalPickedItems = " " + this.allText;
             } else {
                 for (var i = 0; i < this.ItemsSource.length; i++) {
                     if (this.ItemsSource[i].Checked) {
@@ -214,6 +232,17 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         }
     }
 
+    toggleMenu(){
+        var ToggleBTN = document.getElementById(this.ControlId) as HTMLDivElement;
+
+            if(ToggleBTN.className == "ToggleButtonMenuTemp")
+                ToggleBTN.className = "ToggleButtonMenu";
+            else
+                ToggleBTN.className = "ToggleButtonMenuTemp";
+
+        this.isOpen = !this.isOpen;
+    }
+
     isSelectedClicked() {
         this.ShowSelected = true;
         this.SelectedItem = "NotAll";
@@ -225,7 +254,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     isAllClicked() {
         this.ShowSelected = false;
         this.SelectedItem = "All";
-        this.TotalPickedItems = "All";
+        this.TotalPickedItems = this.allText;
         this.IsAll = true;
         if (this.ItemsSource != null) {
             this.ItemsSource.forEach(item => {
@@ -240,7 +269,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     SetDefaultTotalPickedItems() {
         if (!this.WithinImage) {
             if (this.ItemsSource.filter(i => i.Checked)[0] == null) {
-                this.TotalPickedItems = " All";
+                this.TotalPickedItems = " " + TextCodeTranslator.Translate("Accounting.General.O.All");
             } else {
                 for (var i = 0; i < this.ItemsSource.length; i++) {
                     if (this.ItemsSource[i].Checked) {
