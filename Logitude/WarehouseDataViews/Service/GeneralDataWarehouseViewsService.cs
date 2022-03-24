@@ -97,7 +97,9 @@ namespace WarehouseDataViews.Service
             else if (dataTypeCode == "Boolean") sqlFieldtype += " bit";
             else if (dataTypeCode == "Decimal" || dataTypeCode == "Double") sqlFieldtype += " float";
             else if (dataTypeCode == "Integer") sqlFieldtype += " int";
+            else if (dataTypeCode == "BigInteger") sqlFieldtype += " bigint";
             else if (dataTypeCode == "DateTime") sqlFieldtype += " dateTime";
+            else if (dataTypeCode == "Time") sqlFieldtype += " time";
             else if (dataTypeCode == "Date") sqlFieldtype += " date";
             else if (dataTypeCode == "PickList") sqlFieldtype += " varchar(15)";
             return sqlFieldtype;
