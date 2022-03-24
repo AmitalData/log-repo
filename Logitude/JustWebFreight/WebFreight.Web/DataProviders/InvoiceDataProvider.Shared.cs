@@ -642,6 +642,7 @@ namespace WebFreight.Web.DataProviders
         public string CFDIRelacionado { get; set; }
         
         public Image QRImage { get; set; }
+        public string RegimenFiscalReceptor { get; set; }
     }
 
     public class ReportConstituentInvoiceLine

@@ -2329,6 +2329,10 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             invoicedataprovider.SAT.MetodoPago = (currentInvoice.MetodoPagoCode == "PUE" ? "PUE Pago en una sola exhibición" : "PPD Pago en parcialidades o diferido");
                         }
+                        if (!string.IsNullOrEmpty(currentInvoice.RegimenFiscalCode))
+                        {
+                            invoicedataprovider.SAT.RegimenFiscalReceptor = SATInvoiceProfact40DataProviderMappingFields.GetRegimenFiscalReceptor(currentInvoice.RegimenFiscalCode, currentInvoice.Tenant);
+                        }
                         invoicedataprovider.SAT.FormadePago = currentInvoice.SATPaymentMethodCode;
 
 
@@ -4080,6 +4084,10 @@ namespace WebFreight.Web.ReportsWebServices
                         if (!string.IsNullOrEmpty(entityPM.MetodoPagoCode))
                         {
                             invoiceDataProvider.SAT.MetodoPago = (entityPM.MetodoPagoCode == "PUE" ? "PUE Pago en una sola exhibición" : "PPD Pago en parcialidades o diferido");
+                        }
+                        if (!string.IsNullOrEmpty(entityPM.RegimenFiscalCode))
+                        {
+                            invoiceDataProvider.SAT.RegimenFiscalReceptor = SATInvoiceProfact40DataProviderMappingFields.GetRegimenFiscalReceptor(entityPM.RegimenFiscalCode, entityPM.Tenant);
                         }
                         invoiceDataProvider.SAT.FormadePago = entityPOCO.SATPaymentMethodCode;
 
