@@ -39,7 +39,7 @@
             box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
         }
 </style>
-<table>
+<table style="height: 210px;">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="3">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -53,7 +53,6 @@
 
     <tr>
         <td>
-
             <table>
                 <tr>
                     <td style="width:450px" *ngIf="isReady">
@@ -127,6 +126,7 @@
                                                     <div style="width: 150px;" *ngIf="chartOfAccountsTypes.length > 0">
                                                         <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccountsTypes" [IsDisabled]="isChartOfAccountsTypesDisabled"
                                                             [SelectedItem]="ChartOfAccountsTypeComboboxValue" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
+                                                            [SelectionType]="showLocal?'קבוצה':'Product'"
                                                             (SelectedItemChanged)="ChartOfAccountsTypeComboboxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
                                                     </div>
                                                     <div style="width: 50px;"></div>
@@ -134,6 +134,7 @@
                                                     <div style="width: 150px;" *ngIf="chartOfAccounts.length > 0">
                                                         <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccounts" [IsDisabled]="isChartOfAccountsDisabled"
                                                             [SelectedItem]="ChartOfAccountsComboBoxValue" (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
+                                                            [SelectionType]="showLocal?'קבוצה':'Product'"
                                                             (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
                                                     </div>
                                                 </div>

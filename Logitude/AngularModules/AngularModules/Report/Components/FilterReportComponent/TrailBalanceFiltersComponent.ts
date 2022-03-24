@@ -59,6 +59,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     selectedChartOfAccountsTypes: any[] = [];
     isChartOfAccountsTypesDisabled: boolean = false;
     isChartOfAccountsDisabled: boolean = false;
+    isOpened: boolean = false;
 
     constructor()
     {
