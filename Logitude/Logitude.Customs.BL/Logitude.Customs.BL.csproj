@@ -170,6 +170,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\DocumentRejectTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ExportDeliveryDocumentMessageDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ExporterRoleTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ExportLogisticPermitActionDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FclLclCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FullnessCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\HandingCodeDetails.Generated.cs" />
@@ -509,6 +510,7 @@
     <Compile Include="EntityDataMappings\ExportDeclarationClosingDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExportDeliveryDocumentMessageDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExporterRoleTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ExportLogisticPermitActionDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExportReferenceDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExportStorageDataMapping.cs" />
     <Compile Include="EntityDataMappings\FacilitationTypeDataMapping.cs" />
@@ -717,6 +719,7 @@
     <Compile Include="EntityDataMappings\Generated\ExportDeclarationClosingDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExportDeliveryDocumentMessageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExporterRoleTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ExportLogisticPermitActionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExportReferenceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExportStorageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FacilitationTypeDataMapping.Generated.cs" />
@@ -1078,6 +1081,7 @@
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsDocumentUploadQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExportLogisticPermitActionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticActionRequestQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticActionRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticActionResponseReqSQueryService.Generated.cs" />
@@ -1582,6 +1586,7 @@
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ExportLogisticPermitActionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionResponseReqSUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LogisticActionRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsDocumentUploadUpdateService.Generated.cs" />
