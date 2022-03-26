@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr>
         <td>
             <div></div>
@@ -128,7 +128,7 @@
                                                                                                         class="MediaFillRelative">
                                                                                                         <div class="CenterCenter"
                                                                                                             style="width: 16px;">
-                                                                                                            <CheckBox
+                                                                                                            <CheckBox [DataCy]="item.DocumentTypeName+'_Master'"
                                                                                                                 [IsChecked]="item.IsAgentSharedInMaster"
                                                                                                                 (Checked)="item.IsAgentSharedInMaster = $event"
                                                                                                                 [IsEnabled]="item.IsAgentSharedInMasterEnable">
@@ -149,7 +149,7 @@
                                                                                                         class="MediaFillRelative">
                                                                                                         <div class="CenterCenter"
                                                                                                             style="width: 16px;">
-                                                                                                            <CheckBox
+                                                                                                            <CheckBox [DataCy]="item.DocumentTypeName+'_Direct'"
                                                                                                                 [IsChecked]="item.IsAgentSharedInDirect"
                                                                                                                 (Checked)="item.IsAgentSharedInDirect = $event"
                                                                                                                 [IsEnabled]="item.IsAgentSharedInDirectEnable">
@@ -167,7 +167,7 @@
                                                                                                         class="MediaFillRelative">
                                                                                                         <div class="CenterCenter"
                                                                                                             style="width: 16px;">
-                                                                                                            <CheckBox
+                                                                                                            <CheckBox [DataCy]="item.DocumentTypeName+'_House'"
                                                                                                                 [IsChecked]="item.IsAgentSharedInHouse"
                                                                                                                 (Checked)="item.IsAgentSharedInHouse = $event"
                                                                                                                 [IsEnabled]="item.IsAgentSharedInHouseEnable">
