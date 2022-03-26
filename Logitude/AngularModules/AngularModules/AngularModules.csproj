@@ -1494,6 +1494,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\CustomerIndicationTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAirlineList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAutonomyKeywordList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CustomsDocumentUploadList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsPartnerFtpList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsShipList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DecisionTypeList.ts" />
@@ -1577,6 +1578,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\CustomerIndicationTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAirlinePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAutonomyKeywordPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CustomsDocumentUploadPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsPartnerFtpPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsShipPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConPM.ts" />
@@ -1698,6 +1700,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomerIndicationTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAirlineListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAutonomyKeywordListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsDocumentUploadListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPartnerFtpListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsShipListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPaymentTermsListService.ts" />
