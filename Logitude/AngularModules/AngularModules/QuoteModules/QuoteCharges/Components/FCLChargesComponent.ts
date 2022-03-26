@@ -712,6 +712,13 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.ComputeTotals();
     }
 
+    get MainCarriageCarrierId() { return this.EntityPM.MainCarriageCarrierId; }
+    set MainCarriageCarrierId(newValue: string) {
+        if (this.EntityPM.MainCarriageCarrierId != newValue) {
+            this.EntityPM.MainCarriageCarrierId = newValue;
+        }
+    }
+
     private selectedCurrencyCode: string;
     get SelectedCurrencyCode() { return this.selectedCurrencyCode; }
     set SelectedCurrencyCode(value: string) {

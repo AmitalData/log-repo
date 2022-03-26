@@ -1403,7 +1403,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.SetUIProperties_AllIn();
             this.FatherComponent.ItemsSource.Insert(chargeItem);
         });
-        this.ReloadTariffCharges();
+        this.ReloadTariffCharges(null);
     }
 
     AssignTariffChargesToQuote_FCL() {
@@ -1465,8 +1465,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     }
     UpdateQuoteTrucker(truckerId) {
-        if (this.TariffType == "IFT" && this.FatherComponent.EntityPM?.MainCarriageCarrierId == null) {
-            this.FatherComponent.EntityPM?.MainCarriageCarrierId == truckerId;
+        if (truckerId && this.TariffType == "IFT" && this.FatherComponent.MainCarriageCarrierId == null) {
+            this.FatherComponent.MainCarriageCarrierId = truckerId;
         }
     }
     CheckTariffChargesDuplicate(): any {
@@ -1607,6 +1607,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     ValidateExistChargesConnectedToTariff(item: TariffSearchSummary) {
         var isValid = true;
+        if (this.TariffType == "IFT") {
+            return isValid;
+        }
         var existsPayableOnAirFreight: QuoteChargePM = this.FatherComponent.EntityPM.QuoteCharges.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
         var quoteChargesOnSurcharges: QuoteChargePM[] = [];
         item.SurchargesWithoutAllIn.forEach(surcharge => {
@@ -1621,8 +1624,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             isValid = false;
             messageWindow.Show("Can't have more than one tariff connected to the same line.");
         }
-
-
         return isValid;
     }
 
