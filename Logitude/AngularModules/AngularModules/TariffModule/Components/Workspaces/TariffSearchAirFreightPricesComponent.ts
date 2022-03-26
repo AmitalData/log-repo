@@ -1269,15 +1269,16 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             if (this.TariffType == "OFC" || this.TariffType == "IFT") {
                 isOFC = true;
             }
-
-            this.AddNewTariffQuoteCharge(item, isOFC, false);
+            if (this.TariffType != "IFT") {
+                this.AddNewTariffQuoteCharge(item, isOFC, false);
+            }
             if (item != null && item.SurchargesWithoutAllIn != null) {
                 item.SurchargesWithoutAllIn.forEach(surcharge => {
                     this.AddNewTariffQuoteCharge(surcharge, isOFC, true);
                 });
             }
             // Generate AllIn Surcharges
-            if (item != null && item.AllInSurcharges != null) {
+            if (this.TariffType != "IFT" && item != null && item.AllInSurcharges != null) {
                 item.AllInSurcharges.forEach(surcharge => {
                     this.AddNewTariffQuoteCharge(surcharge, false, true);
                 });
