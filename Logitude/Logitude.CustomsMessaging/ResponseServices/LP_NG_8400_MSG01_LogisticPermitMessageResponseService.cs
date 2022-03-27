@@ -33,7 +33,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(LP_NG_8400_MSG01_LogisticPermitMessage customResponse, GenericRequestParams requestParams)
         {
-
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myQueryService = new DeclarationQueryService(context);
             LogMessagingUtil.Instance.AppendLine("Analyze Logistic Permit Message (Declaration Id:" + customResponse.GeneralDetails.declarationID + ")");
@@ -129,10 +128,52 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 UpdateNotification(this._MyDeclarationPM, notificationCode, notificationDeclaration, requestParams.Tenant, notificationRemarks, logisticPermitId);
             }
 
+            UpdateLogisticPermit(customResponse, requestParams);
+
             MyResponseData.Succeeded = true;
 
         }
 
+
+        private void UpdateLogisticPermit(LP_NG_8400_MSG01_LogisticPermitMessage customResponse, GenericRequestParams requestParams)
+        {
+
+            ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+            var logisticPermitQueryService = new LogisticPermitQueryService(dbContext);
+
+            Logitude.Customs.BL.EntityQueryServices.LogisticPermitQueryService query;
+            query = new Logitude.Customs.BL.EntityQueryServices.LogisticPermitQueryService(requestParams.Tenant);
+
+            LogisticPermitPM logisticpermit = query.GetSinglePM(customResponse.CargoIdentifier.cargoIdentifierType, customResponse.CargoIdentifier.cargoIdentifierKey1, customResponse.CargoIdentifier.cargoIdentifierKey2, customResponse.CargoIdentifier.cargoIdentifierKey3 ,requestParams.Tenant);
+
+            var logisticPermitUpdateService = new LogisticPermitUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            if (logisticpermit != null)
+            {
+                //update
+                logisticpermit.ChangeSetOp = ChangeSetOperation.Update;
+                logisticpermit.TransmitDate = customResponse?.ResponseContentHeader?.TransmitionDateTime;
+                logisticpermit.ActionCode = customResponse?.GeneralDetails?.actionCode.ToString();
+               
+                logisticPermitUpdateService.Update(logisticpermit, true);
+
+            }
+            else
+            {
+                //insert
+                var newLogisticPermitPM = new LogisticPermitPM();
+                newLogisticPermitPM.ChangeSetOp = ChangeSetOperation.Insert;
+                newLogisticPermitPM.Tenant = requestParams.Tenant;
+                newLogisticPermitPM.TransmitDate = customResponse?.ResponseContentHeader?.TransmitionDateTime;
+                newLogisticPermitPM.ActionCode = customResponse?.GeneralDetails?.actionCode.ToString();
+                newLogisticPermitPM.CargoIdentifierType = customResponse?.CargoIdentifier?.cargoIdentifierType.ToString();
+                newLogisticPermitPM.CargoIdentifierKey1 = customResponse?.CargoIdentifier?.cargoIdentifierKey1;
+                newLogisticPermitPM.CargoIdentifierKey2 = customResponse?.CargoIdentifier?.cargoIdentifierKey2;
+                newLogisticPermitPM.CargoIdentifierKey3 = customResponse?.CargoIdentifier?.cargoIdentifierKey3;
+
+                logisticPermitUpdateService.Update(newLogisticPermitPM, true);
+            }
+        }
+    
         private void RaiseEvent(DeclarationPM _MyDeclarationPM, string loggingUserId, string eventCode, string remarks)
         {
 
@@ -239,7 +280,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 NotificationBase.CloseAllRelatedNotification(dbContext, newNotificationPM, "8400A");
             }
-            notificationUpdateService.Update(newNotificationPM, true);
+            notificationUpdateService.Update(newNotificationPM, true); 
 
         }
 
