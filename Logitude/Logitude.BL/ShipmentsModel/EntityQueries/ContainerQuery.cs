@@ -277,6 +277,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                     OnCarriageGateOut = container.OnCarriageGateOut,
                     PreCarriageGateIn = container.PreCarriageGateIn,
+                    ConcurrencyGUID = container.ConcurrencyGUID,
                 };
 
                 if (container.EntityStatus != null)
@@ -302,6 +303,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             containerPM.Field8 = new CustomFieldClass("Field8", "Container", entityPoco.Field8);
             containerPM.Field9 = new CustomFieldClass("Field9", "Container", entityPoco.Field9);
             containerPM.Field10 = new CustomFieldClass("Field10", "Container", entityPoco.Field10);
+            containerPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
         public List<ContainerPM> GetContainers(string id , int tenant)

@@ -515,4 +515,4 @@ export class ShipmentList {
 		FirstPickupFullAddress: string;
 		LastDeliveryFullAddress: string;
 	
-}
+}

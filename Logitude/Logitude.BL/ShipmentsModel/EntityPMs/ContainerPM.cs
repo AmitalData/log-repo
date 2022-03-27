@@ -346,5 +346,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdateEntityException { get; set; }
         public DateTime? OnCarriageGateOut { get; set; }
         public DateTime? PreCarriageGateIn { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConcurrencyGUID { get; set; }
+        public string NewConcurrencyGUID { get; set; }
     }
 }

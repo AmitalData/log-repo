@@ -3,6 +3,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
+using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
@@ -44,6 +45,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.containerPm.Id = IdCounter.GetNumber("Container", tenant).ToString();
             this.containerPoco = new Container { Id = this.containerPm.Id, Tenant = this.containerPm.Tenant };
             RunAutomation("OnCreate", entityPM);
+            ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
@@ -61,6 +63,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.SetUpdatedByUser();
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
             this.MapContainerClosedDate(entityPM, containerPoco);
+            ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
             if (!entityPM.IsUpdateByAutomation)

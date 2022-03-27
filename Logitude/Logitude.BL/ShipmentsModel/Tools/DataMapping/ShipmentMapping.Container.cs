@@ -243,7 +243,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.PreCarriageGateIn = containerPM.PreCarriageGateIn;
             container.OnCarriageGateOut = containerPM.OnCarriageGateOut;
             container.VesselName = containerPM.VesselName;
-
+            ShipmentMapping.MapContainerConcurrencyFields(containerPM, container, isNewEntity);
             BuildSearchField(containerPM, container);
         }
 

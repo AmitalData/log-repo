@@ -1316,6 +1316,16 @@ export class ContainerPM {
     public set PreCarriageGateIn(newValue: Date) { if (this.preCarriageGateIn != newValue) { this.preCarriageGateIn = newValue; this.MarkAsDirty("PreCarriageGateIn"); } }
        
 	 
+    private concurrencyGUID: string;
+    public get ConcurrencyGUID() { return this.concurrencyGUID; }
+    public set ConcurrencyGUID(newValue: string) { if (this.concurrencyGUID != newValue) { this.concurrencyGUID = newValue; this.MarkAsDirty("ConcurrencyGUID"); } }
+       
+	 
+    private newConcurrencyGUID: string;
+    public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
+    public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		
