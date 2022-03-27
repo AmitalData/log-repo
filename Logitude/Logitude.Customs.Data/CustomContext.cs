@@ -394,6 +394,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationCargoSplitMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationCasualDetailsMap());
+	
             modelBuilder.Configurations.Add(new DeclarationConsAcceptanceMap());
 	
             modelBuilder.Configurations.Add(new DeclarationConstraintMap());
@@ -2304,6 +2306,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationCargoSplit> DeclarationCargoSplits 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationCasualDetails> DeclarationCasualDetailses 
 	 {
 	      get; set;
 	 
