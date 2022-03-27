@@ -2237,7 +2237,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                         this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
                                             this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                 res.subscribe((myResponse: any) => {
-
                                                     if (myResponse.HasError) {
                                                         console.log("Error while getting EntityPM", myResponse);
                                                     }
@@ -3002,7 +3001,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     }
                 case "Customs.DeclarationCargoSplit":
                     {
-                        logWindow.Width = 770;
+                        logWindow.Width = 970;
                         logWindow.Height = 750;
                         logWindow.ShowCloseButton = true;
                         break;
