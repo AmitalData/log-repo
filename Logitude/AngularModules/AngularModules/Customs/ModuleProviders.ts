@@ -246,6 +246,7 @@ import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListSe
 import { CancelRequestRejectReasonTypeListService } from './Services/StandardLists/CancelRequestRejectReasonTypeListService';
 import { SecurityClearenceTypeCodeListService } from './Services/StandardLists/SecurityClearenceTypeCodeListService';
 import { CargoTypeListService } from './Services/StandardLists/CargoTypeListService';
+import { CustomsDocumentUploadListService } from './Services/StandardLists/CustomsDocumentUploadListService';
 
 import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
 import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
@@ -691,7 +692,7 @@ export class ModuleProviders {
             case "LogisticActionRequestListService": { myResult = new LogisticActionRequestListService(); break; }
             case "LogisticActionRequestTypeListService": { myResult = new LogisticActionRequestTypeListService(); break; }
             case "LogisticActionResponseReqSListService": { myResult = new LogisticActionResponseReqSListService(); break; }
-
+            case "CustomsDocumentUploadListService": { myResult = new CustomsDocumentUploadListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
