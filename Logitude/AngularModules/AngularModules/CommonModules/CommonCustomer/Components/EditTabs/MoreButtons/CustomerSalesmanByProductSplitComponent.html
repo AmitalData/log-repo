@@ -20,7 +20,7 @@
                                     {{item.PartnerName}}
                                 </div>
 
-                                <div *ngIf="logcelltemplate.IsEditMode">
+                                <div *ngIf="!IsDisabled && logcelltemplate.IsEditMode">
                                     <LogLov [FocusOnMe]="true"
                                             [ObjectFieldName]="'PartnerId'"
                                             [DisplayMemberPath]="'EnglishName'"
@@ -56,7 +56,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button [disabled]="IsDisabled" class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

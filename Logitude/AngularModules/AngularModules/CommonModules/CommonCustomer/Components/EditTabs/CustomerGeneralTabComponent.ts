@@ -1261,7 +1261,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         if (windowComponent != null) {
             var window = new LogitudeWindow();
             window.Title = windowTitle;
-            window.WindowArgs = { EntityPM: this.EntityPM, ProductTypes: this.AllProductTypes, IsUnifreightEditable :this.IsUnifreightEditable }
+            window.WindowArgs = { EntityPM: this.EntityPM, ProductTypes: this.AllProductTypes, IsUnifreightEditable :this.IsUnifreightEditable, IsDisabled : this.IsBlockMessageVisible }
             window.Show(windowComponent);
             window.WindowClosed.subscribe(s => {
                 if (s == "OK") {         
