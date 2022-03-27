@@ -183,7 +183,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 _DBExportStoragePM.ShipCode = _UnifreigntExportStorage.General.ShipCode;
                 _DBExportStoragePM.ExportLoadingPortcode = _UnifreigntExportStorage.General.LoadingSite;
                 _DBExportStoragePM.StorageSiteCode = _UnifreigntExportStorage.General.StorageSite;
-                _DBExportStoragePM.ExportLoadingPortcode = _UnifreigntExportStorage.General.FirstDestinationInternationalSiteID;
+                _DBExportStoragePM.ExportUnloadingPortCode = _UnifreigntExportStorage.General.FirstDestinationInternationalSiteID;
                 _DBExportStoragePM.FinalDestinationPortCode = _UnifreigntExportStorage.General.FinalDestinationInternationalSiteID;
 
                 if (_UnifreigntExportStorage.CargoIdentifier != null)
