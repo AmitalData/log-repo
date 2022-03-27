@@ -35,7 +35,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                   join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
                                                   join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
                                                   join AgingDatas in context.GLAccountAgingDatas on a.Id equals AgingDatas.AccountId
+
                                                   join RecocileDatas in context.GLAccountRecocileDatas on a.Id equals RecocileDatas.AccountId
+                                                  into RecocileDatasjoin
+                                                  from RecocileDatas in RecocileDatasjoin.DefaultIfEmpty()
 
                                                   join fullAccountingSettings in context.FullAccountingSettings on a.Tenant equals fullAccountingSettings.Tenant
 
@@ -218,8 +221,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
                                                       // GLAccount Recocile Datas
-                                                      LastReconciledBy = RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
-                                                      LastReconcileDate = RecocileDatas.LastReconcileDateTime,
+                                                      LastReconciledBy = RecocileDatas == null ? null : RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
+                                                      LastReconcileDate = RecocileDatas == null ? null : RecocileDatas.LastReconcileDateTime,
 
                                                       // GLAccount Cards Datas
                                                       CreditLimit = CardsDatas != null ? CardsDatas.CreditLimit : null,
