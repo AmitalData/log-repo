@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.BL.CloseTables;
+﻿#if false
+using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using Logitude.CustomsMessaging.RabbitMQ;
@@ -65,6 +66,7 @@ namespace RabbitMQSRV
         private DateTime _LastCreateFtpDefinition;
         
         private int _SeedTenant = 1;
+        private DateTime _LastReprtAt;
 
         public  bool OnStart()
         {
@@ -125,6 +127,8 @@ namespace RabbitMQSRV
 
             EventHandler<BasicDeliverEventArgs> consumerEventArgs = null;
             EventingBasicConsumer consumer = null;
+            bool isConnectionShutdown = false;
+            DateTime lastworkAt= DateTime.Now;
 
             var factory = RabbitmqHelper.GetConnectionFactory();
 
@@ -161,6 +165,7 @@ namespace RabbitMQSRV
                             string messageId = "";
                             try
                             {
+                                lastworkAt = DateTime.Now;
                                 var body = ea.Body.ToArray();
                                 var message = Encoding.UTF8.GetString(body);
                                 messageId = ea.BasicProperties.MessageId;
@@ -229,6 +234,9 @@ namespace RabbitMQSRV
 
                         consumer = new EventingBasicConsumer(channel);
                         consumer.Received += consumerEventArgs;
+                        consumer.Shutdown += (sender, e) => { isConnectionShutdown = true;
+                            Logger.LogMe("Connection broke!", false, RabbitMQLogFILE);
+                            };
 
                         channel.BasicConsume(queue: rabbitMQCode,
                                             autoAck: false,
@@ -237,12 +245,37 @@ namespace RabbitMQSRV
                         while (!WorkerRoleServiceLocator.PleaseShutDown)
                         {
 
-                            Thread.Sleep(100);
+                            if (
+                        isConnectionShutdown ||
+                        connection?.IsOpen== false ||
+                        channel?.IsOpen == false
+                        
+                        )
+                            {
+                                
+                                Logger.LogMe("Connection broke!", false, RabbitMQLogFILE);
+                                break;
+                            }
+
+                            if (DateTime.Now.Subtract(lastworkAt) > TimeSpan.FromMinutes(10))
+                            {
+                                Thread.Sleep(1000);
+                                Logger.LogMe("No work (FromMinutes(10)) or connection fail ??! - dispose old create new one", false, RabbitMQLogFILE);
+                                break;
+
+                            }
+                            Thread.Sleep(200);
                             bool getOut = false;
                             if (getOut)
                             {
                                 break;
                             }
+                            if (DateTime.Now.Subtract(_LastReprtAt) > TimeSpan.FromHours(1))
+                            {
+                                _LastReprtAt = DateTime.Now;
+                                Logger.LogMe(this.GetType().FullName + ":Still Alive", false);
+                            }
+
                         }
 
 
@@ -255,6 +288,13 @@ namespace RabbitMQSRV
 
                     finally
                     {
+                        if (consumer != null)
+                        {
+                            consumer.Shutdown -= (sender, e) => { };
+                            consumer.Received -= (model, ea) => { };
+                            consumer = null;
+
+                        }
                         channel.Close();
                         connection.Close();
                     }
@@ -272,7 +312,6 @@ namespace RabbitMQSRV
 
         }
 
-        
 
         private static void Connection_ConnectionShutdown(object sender, ShutdownEventArgs e)
         {
@@ -497,3 +536,6 @@ namespace RabbitMQSRV
 
 
 }
+
+
+#endif
