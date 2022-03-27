@@ -144,6 +144,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                             {
                                 MapCustomClearance();
                             }
+                            else if (entityPM.CustomerId == entityPM.TruckerId)
+                            {
+                                MapTrucker();
+                            }
+
                         }
 
                         break;
@@ -155,6 +160,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (!entityPM.IsExternalAPI)
             {
+                if (entityPM.CustomerId == entityPM.TruckerId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "TRK";
+                }
+
                 if (entityPM.CustomerId == entityPM.ShipperId)
                 {
                     entityPM.ShipmentCustomerTypeCode = "SHI";
@@ -380,6 +390,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerReference1 = entityPM.CustomClearancePointReference1;
             entityPM.CustomerReference2 = null;
         }
+
+        private void MapTrucker()
+        {
+            entityPM.TruckerName = entityPM.TruckerName;
+            entityPM.TruckerNote = entityPM.TruckerNote;
+            entityPM.TruckerContactId = entityPM.TruckerContactId;
+            entityPM.TruckerAddressId = entityPM.TruckerAddressId;
+            entityPM.TruckerReference1 = entityPM.TruckerReference1;
+            entityPM.TruckerReference2 = entityPM.TruckerReference2;
+        }
+
 
         private void GetCustomerEntity()
         {

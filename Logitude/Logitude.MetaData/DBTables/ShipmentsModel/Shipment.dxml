@@ -3441,10 +3441,37 @@
       Nullable="true" />
   </Column>
   <Column
-
     Name="LastDeliveryFullAddress"
     Type="varchar"
     Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckerAddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckerContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckerReference1"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckerReference2"
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
@@ -4186,6 +4213,16 @@
   <Relation
     ForeignKeyColumn="WarehouseLeg2WarehouseId"
     ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TruckerAddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TruckerContactId"
+    ReferencedTable="Contacts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

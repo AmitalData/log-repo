@@ -627,6 +627,16 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.ReleasingAgentReference1 = oldEntity.ReleasingAgentReference1;
             entityPM.ReleasingAgentReference2 = oldEntity.ReleasingAgentReference2;
             #endregion
+
+            #region Trucker
+            entityPM.TruckerId = oldEntity.TruckerId;
+            entityPM.TruckerAddressId = oldEntity.TruckerAddressId;
+            entityPM.TruckerContactId = oldEntity.TruckerContactId;
+            entityPM.TruckerName = oldEntity.TruckerName;
+            entityPM.TruckerNote = oldEntity.TruckerNote;
+            entityPM.TruckerReference1 = oldEntity.TruckerReference1;
+            entityPM.TruckerReference2 = oldEntity.TruckerReference2;
+            #endregion
         }
         private void CopyPickups(ShipmentPM entityPM, ShipmentPM oldEntity)
         {

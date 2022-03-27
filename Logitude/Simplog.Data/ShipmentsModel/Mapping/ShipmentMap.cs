@@ -338,7 +338,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChargeStorageCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.WeightMeasurementCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.WeightRoundingCode).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.TruckerId).HasMaxLength(15).IsUnicode(false); 
+            this.Property(t => t.TruckerId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.TruckerAddressId).HasMaxLength(15).IsUnicode(true);
+            this.Property(t => t.TruckerContactId).HasMaxLength(15).IsUnicode(true);
+            this.Property(t => t.TruckerReference1).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.TruckerReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.PreForwardingTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.PreForwardingFromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PreForwardingToPortId).HasMaxLength(15).IsUnicode(false);
@@ -746,6 +750,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FBLIsFromStock).HasColumnName("FBLIsFromStock");
             this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
             this.Property(t => t.TruckerId).HasColumnName("TruckerId");
+            this.Property(t => t.TruckerAddressId).HasColumnName("TruckerAddressId");
+            this.Property(t => t.TruckerContactId).HasColumnName("TruckerContactId");
+            this.Property(t => t.TruckerReference1).HasColumnName("TruckerReference1");
+            this.Property(t => t.TruckerReference2).HasColumnName("TruckerReference2");
             this.Property(t => t.AssignedToTruckerDate).HasColumnName("AssignedToTruckerDate"); 
             this.Property(t => t.AssginedToCustomsAgentDate).HasColumnName("AssginedToCustomsAgentDate");
             this.Property(t => t.IsPODReceived).HasColumnName("IsPODReceived");
@@ -1057,7 +1065,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.BillingStatus).WithMany().HasForeignKey(d => d.BillingStatusId);
             this.HasOptional(t => t.OperationalStatus).WithMany().HasForeignKey(d => d.OperationalStatusId);
             this.HasOptional(t => t.DestinationWarehouseCard).WithMany().HasForeignKey(d => d.DestinationWarehouseId);
-
+            this.HasOptional(t => t.TruckerAddress).WithMany().HasForeignKey(d => d.TruckerAddressId);
+            this.HasOptional(t => t.TruckerContact).WithMany().HasForeignKey(d => d.TruckerContactId);
+            this.HasOptional(t => t.TruckerCard).WithMany().HasForeignKey(d => d.TruckerId);
         }
     }
 }

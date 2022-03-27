@@ -188,6 +188,10 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
         if (this.EntityPM.ReleasingAgentId != null) {
             this.ItemsCollection.push(new PartnerItem(this, "REAGT"));
         }
+
+        if (this.EntityPM.TruckerId != null) {
+            this.ItemsCollection.push(new PartnerItem(this, "TRUCK"));
+        }
     }
 
     LoadAllRates() {
@@ -206,7 +210,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     get IsEditDisabled() {
         return SessionLocator.TenantPM.IsHybrid ? true : false;
     }
-   
+    public IsAddDisabled_TRUCK: boolean = false;
     public IsAddDisabled_SHIPR: boolean = false;
     public IsAddDisabled_CONSI: boolean = false;
     public IsAddDisabled_AGENT: boolean = false;
@@ -238,6 +242,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
         this.IsAddDisabled_CLERN = this.EntityPM.CustomClearancePointId == null ? false : true;
         this.IsAddDisabled_CONSL = this.EntityPM.ConsolidatorId == null ? false : true;
         this.IsAddDisabled_REAGT = this.EntityPM.ReleasingAgentId == null ? false : true;
+        this.IsAddDisabled_TRUCK = this.EntityPM.TruckerId == null ? false : true;
     }
 
     AddPartner(myCode: string) {
@@ -569,6 +574,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { this.PartnerIndex = 13; this.FullCode = "CustomClearancePoint"; break }
             case "CONSL": { this.PartnerIndex = 14; this.FullCode = "Consolidator"; break }
             case "REAGT": { this.PartnerIndex = 15; this.FullCode = "ReleasingAgent"; break }
+            case "TRUCK": { this.PartnerIndex = 15; this.FullCode = "Trucker"; break }
         }
 
         this.PartnerTypeName = TextCodeTranslator.Translate("Shipment.F." + this.FullCode + "Id");
@@ -617,6 +623,11 @@ export class PartnerItem extends BaseComponent {
         var myResult: string = null;
 
         switch (this.Code) {
+            case "TRUCK":
+                {
+                    myResult = "TR";
+                    break;
+                }
             case "SHIPR":
             case "CONSI":
             case "CSTMR":
@@ -780,12 +791,19 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return this.EntityPM.CustomClearancePointName; }
             case "CONSL": { return this.EntityPM.ConsolidatorName; }
             case "REAGT": { return this.EntityPM.ReleasingAgentName; }
+            case "TRUCK": { return this.EntityPM.TruckerName; }
             default: { return null; }
         }
     }
     set Name(newValue: string) {
         switch (this.Code) {
+            case "TRUCK": {
+                if (this.EntityPM.TruckerName != newValue) {
+                    this.EntityPM.TruckerName = newValue
+                }
 
+                break;
+            }
             case "SHIPR": {
                 if (this.EntityPM.ShipperName != newValue) {
                     this.EntityPM.ShipperName = newValue
@@ -931,12 +949,19 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return this.EntityPM.CustomClearancePointNote; }
             case "CONSL": { return this.EntityPM.ConsolidatorNote; }
             case "REAGT": { return this.EntityPM.ReleasingAgentNote; }
+            case "TRUCK": { return this.EntityPM.TruckerNote; }
             default: { return null; }
         }
     }
     set Note(newValue: string) {
         switch (this.Code) {
+            case "TRUCK": {
+                if (this.EntityPM.TruckerNote != newValue) {
+                    this.EntityPM.TruckerNote = newValue
+                }
 
+                break;
+            }
             case "SHIPR": {
                 if (this.EntityPM.ShipperNote != newValue) {
                     this.EntityPM.ShipperNote = newValue
@@ -1135,6 +1160,8 @@ export class PartnerItem extends BaseComponent {
                 case "CLERN": { this.EntityPM.ShipmentCustomerTypeCode = "CCP"; break; }
                 case "CONSL": { this.EntityPM.ShipmentCustomerTypeCode = "CSD"; break; }
                 case "REAGT": { this.EntityPM.ShipmentCustomerTypeCode = "REA"; break; }
+                case "TRUCK": { this.EntityPM.ShipmentCustomerTypeCode = "TRK"; break; }
+
                 default: { this.EntityPM.ShipmentCustomerTypeCode = "OTH"; break; }
             }
         }
@@ -1184,6 +1211,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return "CustomClearancePointId"; }
             case "CONSL": { return "ConsolidatorId"; }
             case "REAGT": { return "ReleasingAgentId"; }
+            case "TRUCK": { return "TruckerId"; }
             default: { return null; }
         }
     }
@@ -1205,6 +1233,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return "CCP"; }
             case "CONSL": { return "CSD"; }
             case "REAGT": { return "REA"; }
+            case "TRUCK": { return "TRK";}
             default: { return "OTH"; }
         }
     }
@@ -1227,6 +1256,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return this.CustomClearancePointId; }
             case "CONSL": { return this.ConsolidatorId; }
             case "REAGT": { return this.ReleasingAgentId; }
+            case "TRUCK": { return this.TruckerId; }
             default: { return null; }
         }
     }
@@ -1248,6 +1278,17 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { this.CustomClearancePointId = newValue; break; }
             case "CONSL": { this.ConsolidatorId = newValue; break; }
             case "REAGT": { this.ReleasingAgentId = newValue; break; }
+            case "TRUCK": { this.TruckerId = newValue; break; }
+        }
+    }
+
+    get TruckerId() {
+        return this.EntityPM.TruckerId;
+    }
+    set TruckerId(newValue: string) {
+        if (this.EntityPM.TruckerId != newValue) {
+            this.EntityPM.TruckerId = newValue;
+            this.GetPartnerCard();
         }
     }
 
@@ -1432,6 +1473,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return "CustomClearancePointAddressId"; }
             case "CONSL": { return "ConsolidatorAddressId"; }
             case "REAGT": { return "ReleasingAgentAddressId"; }
+            case "TRUCK": { return "TruckerAddressId"; }
             default: { return null; }
         }
     }
@@ -1454,7 +1496,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return this.CustomClearancePointAddressId; }
             case "CONSL": { return this.ConsolidatorAddressId; }
             case "REAGT": { return this.ReleasingAgentAddressId; }
-
+            case "TRUCK": { return this.TruckerAddressId; }
             default: { return null; }
         }
     }
@@ -1476,10 +1518,18 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { this.CustomClearancePointAddressId = newValue; break; }
             case "CONSL": { this.ConsolidatorAddressId = newValue; break; }
             case "REAGT": { this.ReleasingAgentAddressId = newValue; break; }
-
+            case "TRUCK": { this.TruckerAddressId = newValue; break; }
         }
     }
-
+    get TruckerAddressId() {
+        return this.EntityPM.TruckerAddressId;
+    }
+    set TruckerAddressId(newValue: string) {
+        if (this.EntityPM.TruckerAddressId != newValue) {
+            this.EntityPM.TruckerAddressId = newValue;
+            this.GetPartnerAddress();
+        }
+    }
     get ShipperAddressId() {
         return this.EntityPM.ShipperAddressId;
     }
@@ -1658,6 +1708,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return "CustomClearancePointContactId"; }
             case "CONSL": { return "ConsolidatorContactId"; }
             case "REAGT": { return "ReleasingAgentContactId"; }
+            case "TRUCK": { return "TruckerContactId"; }
             default: { return null; }
         }
     }
@@ -1680,7 +1731,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return this.CustomClearancePointContactId; }
             case "CONSL": { return this.ConsolidatorContactId; }
             case "REAGT": { return this.ReleasingAgentContactId; }
-
+            case "TRUCK": { return this.TruckerContactId; }
             default: { return null; }
         }
     }
@@ -1702,6 +1753,17 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { this.CustomClearancePointContactId = newValue; break; }
             case "CONSL": { this.ConsolidatorContactId = newValue; break; }
             case "REAGT": { this.ReleasingAgentContactId = newValue; break; }
+            case "TRUCK": { this.TruckerContactId = newValue; break; }
+        }
+    }
+
+    get TruckerContactId() {
+        return this.EntityPM.TruckerContactId;
+    }
+    set TruckerContactId(newValue: string) {
+        if (this.EntityPM.TruckerContactId != newValue) {
+            this.EntityPM.TruckerContactId = newValue;
+            this.GetPartnerContact();
         }
     }
 
@@ -1860,6 +1922,7 @@ export class PartnerItem extends BaseComponent {
         var myResult: boolean = false;
 
         switch (this.Code) {
+            case "TRUCK":
             case "SHIPR":
             case "CONSI":
             case "AGENT":
@@ -1901,6 +1964,7 @@ export class PartnerItem extends BaseComponent {
             case "NOTF2": { return "Notify2Reference"; }
             case "SHPNT": { return "ShipperNotExporterReference1"; }
             case "CONNT": { return "ConsigneeNotImporterReference"; }
+            case "TRUCK": { return "TruckerReference1"; }
             default: { return null; }
         }
     }
@@ -1922,6 +1986,7 @@ export class PartnerItem extends BaseComponent {
             case "NOTF2": { return this.Notify2Reference; }
             case "SHPNT": { return this.ShipperNotExporterReference1; }
             case "CONNT": { return this.ConsigneeNotImporterReference; }
+            case "TRUCK": { return this.TruckerReference1; }
             default: { return null; }
         }
     }
@@ -1943,6 +2008,16 @@ export class PartnerItem extends BaseComponent {
             case "NOTF2": { this.Notify2Reference = newValue; break; }
             case "SHPNT": { this.ShipperNotExporterReference1 = newValue; break; }
             case "CONNT": { this.ConsigneeNotImporterReference = newValue; break; }
+            case "TRUCK": { this.TruckerReference1 = newValue; break; }
+        }
+    }
+
+    get TruckerReference1() {
+        return this.EntityPM.TruckerReference1;
+    }
+    set TruckerReference1(newValue: string) {
+        if (this.EntityPM.TruckerReference1 != newValue) {
+            this.EntityPM.TruckerReference1 = newValue;
         }
     }
 
@@ -2090,6 +2165,7 @@ export class PartnerItem extends BaseComponent {
         var myResult: boolean = false;
 
         switch (this.Code) {
+            case "TRUCK":
             case "SHIPR":
             case "CONSI":
             case "AGENT":
@@ -2113,7 +2189,7 @@ export class PartnerItem extends BaseComponent {
             case "REAGT": { return "ReleasingAgentReference2"; }
             case "NOTF1": { return "Notify1Reference2"; }
             case "SHPNT": { return "ShipperNotExporterReference2"; }
-
+            case "TRUCK": { return "TruckerReference2"; }
             default: { return null; }
         }
     }
@@ -2126,7 +2202,7 @@ export class PartnerItem extends BaseComponent {
             case "REAGT": { return this.ReleasingAgentReference2; }
             case "NOTF1": { return this.Notify1Reference2; }
             case "SHPNT": { return this.ShipperNotExporterReference2; }
-
+            case "TRUCK": { return this.TruckerReference2; }
             default: { return null; }
         }
     }
@@ -2139,7 +2215,17 @@ export class PartnerItem extends BaseComponent {
             case "REAGT": { this.ReleasingAgentReference2 = newValue; break; }
             case "NOTF1": { this.Notify1Reference2 = newValue; break; }
             case "SHPNT": { this.ShipperNotExporterReference2; }
+            case "TRUCK": { this.TruckerReference2; }
 
+        }
+    }
+
+    get TruckerReference2() {
+        return this.EntityPM.TruckerReference2;
+    }
+    set TruckerReference2(newValue: string) {
+        if (this.EntityPM.TruckerReference2 != newValue) {
+            this.EntityPM.TruckerReference2 = newValue;
         }
     }
 
@@ -2492,6 +2578,7 @@ export class PartnerItem extends BaseComponent {
                                             objectTableName = "Warehouse";
                                             break;
                                         }
+                                    case "TR": { objectTableName = "Trucker"; break; }
                                 }
 
                                 if (objectTableName != null) {

@@ -493,6 +493,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int NumberOfInsidePackages { get; set; }
         public string NumberOfInsidePackagesDetails { get; set; }
         public bool ViaColoader { get; set; }
+       
         public string ShipperName { get; set; }
         public string ConsigneeName { get; set; }
         public string ForwarderShipmentNumber { get; set; }
@@ -657,7 +658,14 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? HousesACCTReceivablesInLocal { get; set; }
         public double? HousesACCTReceivablesInProfit { get; set; }
         public DateTime? INTTRALastEBbookingSendDate { get; set; }
-        public string TruckerId { get; set; } 
+        public string TruckerId { get; set; }
+        public virtual Address TruckerAddress { get; set; }
+        public string TruckerAddressId { get; set; }
+        public virtual Contact TruckerContact { get; set; }
+        public string TruckerContactId { get; set; }
+        public string TruckerReference1 { get; set; }
+        public string TruckerReference2 { get; set; }
+
         public DateTime? AssignedToTruckerDate { get; set; }
         public virtual Card TruckerCard { get; set; } 
         public DateTime? AssginedToCustomsAgentDate { get; set; } 
