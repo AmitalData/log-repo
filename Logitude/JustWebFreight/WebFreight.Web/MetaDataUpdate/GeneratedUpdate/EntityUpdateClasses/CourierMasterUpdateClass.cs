@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "5bc83d91ea6933f011a10016f745b5bb";
+		public const string HashString = "baed4761a2f9e87ec8ae49d779c145cf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2953,10 +2953,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalcPendingCustoms",
 					  						DefaultText =  "Calc Pending Customs",
-					  						FullLocalDefaultText =  "כמות הצהרות מעוכב מכס",
+					  						FullLocalDefaultText =  "הצהרות מעוכב מכס",
 					  						ListFieldLable =  "CalcPendingCustomsListLable",
 					  						ListLableDefaultText =  "Calc Pending Customs",
-					  						ListLocalDefaultText =  "כמות הצהרות מעוכב מכס",
+					  						ListLocalDefaultText =  "הצהרות מעוכב מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

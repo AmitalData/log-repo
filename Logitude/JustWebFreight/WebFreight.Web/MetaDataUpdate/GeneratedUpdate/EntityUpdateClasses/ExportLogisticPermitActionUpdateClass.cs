@@ -126,7 +126,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-
 			      				    LocalDefaultText =  "קוד היתר לוגיסטי ליצוא",
 			      				    DefaultText =  "Update Code",
 			      				    Code =  "c8e3",
@@ -195,10 +194,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  "Code",
-					  						FullLocalDefaultText =  "×§×•×“",
+					  						FullLocalDefaultText =  "קוד",
 					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  "Code",
-					  						ListLocalDefaultText =  "×§×•×“",
+					  						ListLocalDefaultText =  "קוד",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -257,10 +256,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "×©×� ×ž×§×•×ž×™",
+					  						FullLocalDefaultText =  "שם מקומי",
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "×©×� ×ž×§×•×ž×™",
+					  						ListLocalDefaultText =  "שם מקומי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -378,10 +377,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "×©×� ×�× ×’×œ×™×ª",
+					  						FullLocalDefaultText =  "שם אנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "×©×� ×�× ×’×œ×™×ª",
+					  						ListLocalDefaultText =  "שם אנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -440,10 +439,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "×œ×� ×¤Ö¼×¢×™×œ",
+					  						FullLocalDefaultText =  "לא פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "×œ×� ×¤Ö¼×¢×™×œ",
+					  						ListLocalDefaultText =  "לא פּעיל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -483,7 +482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ExportLogisticPermitActionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportLogisticPermitAction.Q.ExportLogisticPermitAction", DefaultText = @"Export Logistic Permit Action",LocalDefaultText = "×§×•×“ ×”×™×ª×¨ ×œ×•×’×™×¡×˜×™ ×œ×™×¦×•×�", ObjectTableId = ExportLogisticPermitActionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ExportLogisticPermitActionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportLogisticPermitAction.Q.ExportLogisticPermitAction", DefaultText = @"Export Logistic Permit Action",LocalDefaultText = "קוד היתר לוגיסטי ליצוא", ObjectTableId = ExportLogisticPermitActionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ExportLogisticPermitActionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportLogisticPermitAction.Q.ExportLogisticPermitAction", ObjectTableId = ExportLogisticPermitActionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportLogisticPermitAction.Features.ExportLogisticPermitAction", NameTextCodeDefaultText = "ExportLogisticPermitAction", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportLogisticPermitActionObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();

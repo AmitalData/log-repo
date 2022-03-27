@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  LogisticPermit GetSingle(string id, DateTime transmitdate, int tenant)
+		public  LogisticPermit GetSingle(string id, int tenant)
         {
             return (from a in context.LogisticPermits
-                    where a.Id == id && a.TransmitDate == transmitdate && a.Tenant == tenant
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             LogisticPermitKeys keys = entityKeys as LogisticPermitKeys;
             return (from a in context.LogisticPermits
-                    where a.Id == keys.Id && a.TransmitDate == keys.TransmitDate
+                    where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		         
