@@ -180,11 +180,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     dec.ChangeSetOp = ChangeSetOperation.Update;
                                     //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                                     //declarationUpdateService.Update(dec, true);
-                                    DeclarationUpdateService.DeclarationRepositoryUpdatePOCO(dec,true);
-
+                                    
                                     casual.ChangeSetOp = ChangeSetOperation.Delete;
                                     DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                                     declarationCasualDetailsUpdateService.Update(casual, true);
+                                    DeclarationUpdateService.DeclarationRepositoryUpdatePOCO(dec, true);
 
                                 }
                             }
