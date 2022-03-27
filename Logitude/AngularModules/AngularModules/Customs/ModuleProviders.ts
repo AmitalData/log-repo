@@ -435,6 +435,7 @@ import { LogisticActionRequestListService } from './Services/StandardLists/Logis
 import { LogisticActionRequestTypeListService } from './Services/StandardLists/LogisticActionRequestTypeListService';
 import { LogisticActionResponseReqSListService } from './Services/StandardLists/LogisticActionResponseReqSListService';
 import { LogisticActionRequestPMService } from './Services/StandardPMs/LogisticActionRequestPMService';
+import { LogisticPermitListService } from './Services/StandardLists/LogisticPermitListService';
 
 
 export class ModuleProviders {
@@ -717,7 +718,9 @@ export class ModuleProviders {
             case "CoolingReportingMethodListService": { myResult = new CoolingReportingMethodListService(); break; } 
             case "NDMessageActionCodeListService": { myResult = new NDMessageActionCodeListService(); break; } 
             case "HandingCodeListService": { myResult = new HandingCodeListService(); break; } 
-            case "ExportStorageListService": { myResult = new ExportStorageListService(); break; } 
+            case "ExportStorageListService": { myResult = new ExportStorageListService(); break; }
+            case "LogisticPermitListService": { myResult = new LogisticPermitListService(); break; }
+
 
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
             case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
