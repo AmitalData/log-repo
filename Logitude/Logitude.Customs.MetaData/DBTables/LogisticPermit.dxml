@@ -1,14 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="LogisticPermits"
-  OldNames="CargoSeals"
-  Schema="Customs"
+    Schema="Customs"
   DBType="Main"
   Module="Customs">
   <Column
     Name="Id"
-    OldNames="CargoSealIdentifierId"
-    Type="varchar"
+        Type="varchar"
     Size="15">
     <Constraints
       PrimaryKey="true"
@@ -22,47 +20,41 @@
   </Column>
   <Column
     Name="TransmitDate"
-    OldNames="SealNumber"
-    Type="datetime">
+      Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ActionCode"
-    OldNames="Remarks"
-    Type="nvarchar"
+       Type="nvarchar"
     Size="1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CargoIdentifierType"
-    OldNames="SealCompletenessStateCode"
-    Type="varchar"
+        Type="varchar"
     Size="4">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CargoIdentifierKey1"
-    OldNames="SealCompletenessStateName"
-    Type="nvarchar"
+        Type="nvarchar"
     Size="35">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CargoIdentifierKey2"
-    OldNames="SealTypeCode"
-    Type="nvarchar"
+       Type="nvarchar"
     Size="35">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CargoIdentifierKey3"
-    OldNames="SealTypeName"
-    Type="nvarchar"
+        Type="nvarchar"
     Size="35">
     <Constraints
       Nullable="true" />
