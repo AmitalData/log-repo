@@ -83,7 +83,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 return;
             }
-
+            
             if (isSetVoided || (entityPM.StatusCode == "VD" && SetReSendQBO == true))
             {
                 bool isTransferingVoiding = true;
