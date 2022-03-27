@@ -73,6 +73,8 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string PreviousReference  { get; set; }
        [DataMember]
+       public decimal? VatAmountRound  { get; set; }
+       [DataMember]
        public string LedgerTransactionId  { get; set; }
    }
 

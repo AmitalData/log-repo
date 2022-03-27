@@ -177,6 +177,14 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="VatAmountRound"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="LedgerTransactionId"
     Type="varchar"
     Size="15">
