@@ -337,7 +337,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void CreateInternalReconciliationForVATOutputGLAccount(JournalLinePM journalLinePM) {
             // GetReportLinesPMs
-            var outputLines = GetTaxReportLines(TaxReportLineInputType);
+            var outputLines = GetTaxReportLines(TaxReportLineOutType);
 
             if (outputLines.Any()) {
                 var ledgerTranasctions = GetLedgerTransactionsForOutputTaxReportLines(outputLines);
