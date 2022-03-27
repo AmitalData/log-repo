@@ -83,6 +83,9 @@ namespace Logitude.AmitalMessaging.Customs.CustomFile.ExportStorageDTD
 		[XmlElement(ElementName = "LoadingSite")]
 		public string LoadingSite { get; set; }
 
+		[XmlElement(ElementName = "StorageSite")]
+		public string StorageSite { get; set; }
+
 		[XmlElement(ElementName = "FinalDestinationInternationalSiteID")]
 		public string FinalDestinationInternationalSiteID { get; set; }
 
