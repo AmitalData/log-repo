@@ -700,7 +700,7 @@ export class QuoteUtilities {
                 myResult = true;
             }
         }
-       
+
         return myResult;
-    }
+    } 
 }

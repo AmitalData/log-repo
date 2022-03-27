@@ -159,7 +159,7 @@ namespace Logitude.TariffModule.BL.Helpers
                 //containerType4Id = shipment.PackageTypeId4;
                 //containerType5Id = shipment.PackageTypeId5;
 
-                if (tariffType == "OFC")
+                if (tariffType == "OFC" || tariffType == "IFT")
                 {
                     this.SetContainersInitialValues(shipment);
                 }
@@ -261,7 +261,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
             IQueryable<TariffLine> iQueryable = this.tariffRepository.GetAllTariffLines(tenant);
 
-            if (tariffType == "OFC")
+            if (tariffType == "OFC" || tariffType == "IFT")
             {
                 myResult = this.GetTariffSearchSummary_FCL(iQueryable);
             }
@@ -279,7 +279,7 @@ namespace Logitude.TariffModule.BL.Helpers
             IQueryable<TariffLine> iQueryable = this.tariffRepository.GetAllTariffLinesByTariffId(freightTariffId, tenant);
             int count = iQueryable.Count();
 
-            if (tariffType == "OFC")
+            if (tariffType == "OFC" || tariffType == "IFT")
             {
                 myResult = this.GetTariffSearchSummary_FCL(iQueryable);
             }
@@ -1031,23 +1031,9 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.SellerName = tarrifSellerName;
                     tariffsSummary.EffictiveDate = trariff.ExpirationDate;
 
-                    if (trariff.StartDate != null)
-                    {
-                        tariffsSummary.ValidityDate = String.Format("{0:dd/MM/yyyy}", trariff.StartDate.Value);
-                    }
-
-                    if (trariff.ExpirationDate != null)
-                    {
-                        if (string.IsNullOrEmpty(tariffsSummary.ValidityDate))
-                        {
-                            tariffsSummary.ValidityDate = String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
-                        }
-
-                        else
-                        {
-                            tariffsSummary.ValidityDate = tariffsSummary.ValidityDate + " - " + String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
-                        }
-                    }
+                    if (tariffType != "IFT")
+                        tariffsSummary.ValidityDate =  this.SetValidityDate(trariff);
+                   
                     tariffsSummary.Remarks = trariff.Notes;
                     if (CurrentSurcharge != null)
                     {
@@ -1117,6 +1103,27 @@ namespace Logitude.TariffModule.BL.Helpers
                                                    .Select(group => new { Item = group.OrderBy(o => o.decimalprice).ToList() }).SelectMany(list => list.Item)
                                                    .ToList();                                                            
             return tariffSearchSummaries;
+        }
+
+        private string SetValidityDate(Tariff trariff)
+        {
+            var validityDate = "";
+            if (trariff.StartDate != null)
+            {
+                validityDate = String.Format("{0:dd/MM/yyyy}", trariff.StartDate.Value);
+            }
+            if (trariff.ExpirationDate != null)
+            {
+                if (string.IsNullOrEmpty(tariffsSummary.ValidityDate))
+                {
+                    validityDate = String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
+                }
+                else
+                {
+                    validityDate = tariffsSummary.ValidityDate + " - " + String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
+                }
+            }
+            return validityDate;
         }
 
         private void Initialization(TariffSearchArgs args, IQueryable<TariffLine> iQueryable)
@@ -1253,7 +1260,9 @@ namespace Logitude.TariffModule.BL.Helpers
 
                         tariffsSummary.AllInSurcharges = surchargesList.Where(a => a.IsAllIn).ToList();
                         tariffsSummary.SurchargesWithoutAllIn = surchargesList.Where(a => !a.IsAllIn).ToList();
-                        tariffsSummary.SurchargesPrice = tariffsSummary.SurchargesWithoutAllIn.Sum(s => s.Price).ToString();      
+                        tariffsSummary.SurchargesPrice = tariffsSummary.SurchargesWithoutAllIn.Sum(s => s.Price).ToString();
+                        if (tariffType == "IFT")
+                            tariffsSummary.ValidityDate = this.SetValidityDate(CurrentSurcharge);
                     }
                 }
             }

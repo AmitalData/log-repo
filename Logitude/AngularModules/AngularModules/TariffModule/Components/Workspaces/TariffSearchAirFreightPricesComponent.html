@@ -204,7 +204,7 @@
                                 </td>
                             </tr>
 
-                            <tr class="FormFieldRow" *ngIf="TariffType != 'OFC'">
+                            <tr class="FormFieldRow" *ngIf="TariffType != 'OFC' && TariffType !='IFT'" >
                                 <td>
                                     <table>
                                         <tr>
@@ -252,13 +252,13 @@
                                 </td>
                             </tr>
 
-                            <tr style="height:5px;" *ngIf="TariffType != 'OFC'">
+                            <tr style="height:5px;" *ngIf="TariffType != 'OFC' && TariffType !='IFT'">
                                 <td>
                                     <div></div>
                                 </td>
                             </tr>
 
-                            <tr class="FormFieldRow" *ngIf="TariffType == 'OFC'">
+                            <tr class="FormFieldRow" *ngIf="TariffType == 'OFC' || TariffType =='IFT'">
                                 <td>
                                     <table>
                                         <tr>
@@ -606,7 +606,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr *ngIf="TariffType == 'OFC'">
+                                        <tr *ngIf="TariffType == 'OFC' || TariffType =='IFT'">
                                             <td>
                                                 <table>
                                                     <tr>
@@ -717,7 +717,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr *ngIf="TariffType != 'OFC'">
+                                        <tr *ngIf="TariffType != 'OFC' && TariffType !='IFT'">
                                             <td>
                                                 <table>
                                                     <tr>
@@ -908,7 +908,7 @@
                                                                         <td>
                                                                             <table style="border-radius: 8px; border:1px solid rgba(149, 149, 149, 0.5);">
                                                                                 <tr>
-                                                                                    <td style="width:150px;min-width:150px">
+                                                                                    <td *ngIf="TariffType != 'IFT'" style="width:150px;min-width:150px">
                                                                                         <div>
                                                                                             <img style="width:120px;height:100px;" *ngIf="item.ImageId" class="CenterCenter" [attr.id]="item.Name" src="{{item.ImageId}}" />
                                                                                         </div>
@@ -1139,7 +1139,7 @@
                                                                             <div></div>
                                                                         </td>
 
-                                                                        <td style="width:150px;">
+                                                                        <td *ngIf="TariffType != 'IFT'" style="width:150px;">
                                                                             <table>
                                                                                 <tr class="FormFieldRow">
                                                                                     <td class="Value" style="font-size:16px; font-weight: 700;">{{FreightLabel}}</td>
@@ -1171,7 +1171,7 @@
                                                                             <div></div>
                                                                         </td>
 
-                                                                        <td style="width:220px;" class="SmallLabel">
+                                                                        <td *ngIf="TariffType != 'IFT'"  style="width:220px;" class="SmallLabel">
                                                                             <ScrollViewer [Small]="true">
                                                                                 <table>
                                                                                     <tr style="height:5px;">
@@ -1216,7 +1216,7 @@
                                                                         <td style="width:100px;">
                                                                             <table>
                                                                                 <tr class="FormFieldRow">
-                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;">Surcharges</td>
+                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;">{{SurchargesLable}}</td>
                                                                                 </tr>
 
                                                                                 <tr class="FormFieldRow">

@@ -572,7 +572,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 betweenDateHelpIconMassage = this.EntityPM.ETD != null ? "ETD Date" : betweenDateHelpIconMassage;
             }
 
-            var tariffType = "OFC";
+            var tariffType = this.GetTariffTye();
             var WindowArgs: any =
             {
                 BetweenDate: betweenDate,
@@ -587,7 +587,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 VolumeUnit: this.EntityPM.VolumeUnitCode,
                 IsQuote: true,
                 FatherComponent: this,
-                TariffType: tariffType
+                TariffType: tariffType,
+                IsPortsEnabled : this.IsPriceCheckPortsEnabled(tariffType),
             };
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
@@ -604,6 +605,25 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });
     }
+    GetTariffTye(): string {
+        var type = "OFC";
+        if (this.EntityPM.TransportModeId.toUpperCase() == "I" && this.EntityPM.ShipmentTypeId.toUpperCase() == "FTL")
+            type = "IFT";
+        return type;
+    }
+    IsPriceCheckPortsEnabled(tariffType: string) {
+        var isPortsEnabled = false;
+        var inlandFTLTraiffCode = "IFT";
+        if (tariffType == inlandFTLTraiffCode) {
+            var isInlandDomestic = QuoteUtilities.IsInlandDomestic(this.EntityPM);
+            if (isInlandDomestic)
+                isPortsEnabled = false;
+            else
+                isPortsEnabled = true;
+        }
+        return isPortsEnabled;
+    }
+
     EditTariffClicked(item: FCLQuoteChargeItem) {
         if (item != null) {
             var editWindow = new LogitudeWindow();
@@ -690,6 +710,13 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         });
 
         this.ComputeTotals();
+    }
+
+    get MainCarriageCarrierId() { return this.EntityPM.MainCarriageCarrierId; }
+    set MainCarriageCarrierId(newValue: string) {
+        if (this.EntityPM.MainCarriageCarrierId != newValue) {
+            this.EntityPM.MainCarriageCarrierId = newValue;
+        }
     }
 
     private selectedCurrencyCode: string;

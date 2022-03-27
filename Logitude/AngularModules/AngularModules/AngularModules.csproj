@@ -369,6 +369,8 @@
     <Content Include="Shipment\Components\Helpers\ContainerHelperComponent.html" />
     <Content Include="Shipment\Components\UnassigedData\UpdateUnassigedDataComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\CustomChargesVersionTabComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\LocalChargesVersionTabComponent.html" />
+    <Content Include="TariffModule\Components\Workspaces\SaleWorkspaceComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
     <Content Include="_Resources\css\PrimeWebComponent.css" />
@@ -7742,6 +7744,7 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\ChooseCountryComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\CustomChargesVersionTabComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\LocalChargesVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\OceanFCLSurchargeVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\OceanFCLVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffLineData.ts" />
@@ -7763,6 +7766,7 @@
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\ContainerDefaultsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\CostWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\Workspaces\SaleWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSearchAirFreightPricesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSettingComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\SettingsWorkspaceComponent.ts" />

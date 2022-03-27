@@ -64,7 +64,10 @@ namespace Logitude.TariffModule.Data.Repositories
             {
                 code = "OFS";
             }
-
+            else if (typeCode == "IFT")
+            {
+                code = "IFT";
+            }
             return from a in context.Tariffs
                    where a.Tenant == tenant && ids.Contains(a.SellerId) && a.TypeCode== code
                    select a;
