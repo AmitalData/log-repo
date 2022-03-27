@@ -871,6 +871,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string reconciliationsNumbers ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReconciliationsNumbers  
+	   {
+	    
+	     get
+		{
+		   return reconciliationsNumbers;
+		 }
+		 set
+		 {
+		   if(reconciliationsNumbers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReconciliationsNumbers",OldValue=reconciliationsNumbers,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   reconciliationsNumbers=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

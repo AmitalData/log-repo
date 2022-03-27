@@ -213,6 +213,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReconciliationsNumbers"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
