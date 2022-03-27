@@ -227,13 +227,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return (from a in context.ReconcileExternalPages
                    where  
                    a.PageNo > pageNo 
-                   && a.StatusCode != "3" 
+                   && a.StatusCode == ReconcileExternalPageStatusValues.Approved
                     && a.EntityId == entityId
                     && a.ObjectTableId == objectTable.Id && a.Tenant == tenant
 
              select a).Any();
 
         }
+    }
+
+
+    public struct ReconcileExternalPageStatusValues
+    {
+        public const string Draft = "1";
+        public const string Approved = "2";
+        public const string Cancelled = "3";
     }
 
 }
