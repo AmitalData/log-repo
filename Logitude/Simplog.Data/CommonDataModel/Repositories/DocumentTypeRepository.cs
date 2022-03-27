@@ -146,5 +146,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.DocumentTypes where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
         }
+
+        public DocumentType GetByCodeAndObjectTable(string code, string objectTableId, int tenant)
+        {
+            return (from record in context.DocumentTypes where record.Code == code && record.Tenant == tenant && record.ObjectTableId == objectTableId select record).FirstOrDefault();
+        }
     }
 }
