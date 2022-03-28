@@ -306,7 +306,6 @@ import { CustomsAirlinePMService } from './Services/StandardPMs/CustomsAirlinePM
 import { CustomsCountryPMService } from './Services/StandardPMs/CustomsCountryPMService';
 import { PendingByKeywordPMService } from './Services/StandardPMs/PendingByKeywordPMService';
 import { ReferantTeamPMService } from './Services/StandardPMs/ReferantTeamPMService';
-
 import { ExportStorgePMService } from './Services/StandardPMs/ExportStorgePMService';
 
 //#endregion
@@ -342,6 +341,7 @@ import { CustomsRequestSheetExtendedPMService } from './Services/ExtendedPMs/Cus
 import { PaymentOrderConnectionTableExtendedPMService } from './Services/ExtendedPMs/PaymentOrderConnectionTableExtendedPMService';
 import { SupplierInvoiceExtendedPMService } from './Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { ReferantExceptionExtendedPMService } from './Services/ExtendedPMs/ReferantExceptionExtendedPMService';
+import { ExportDeclarationClosingDatasExtendPMService } from './Services/ExtendedPMs/ExportDeclarationClosingDatasExtendPMService';
 
 ///????  import { CustomsRequestSheetExtendedPMService } from './Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
  
@@ -827,6 +827,7 @@ export class ModuleProviders {
             case "PaymentOrderConnectionTableExtendedPMService": { myResult = new PaymentOrderConnectionTableExtendedPMService(); break; }
             case "SupplierInvoiceExtendedPMService": { myResult = new SupplierInvoiceExtendedPMService(); break; }
             case "ReferantExceptionExtendedPMService": { myResult = new ReferantExceptionExtendedPMService(); break; }
+            case "ExportDeclarationClosingDatasExtendPMService": { myResult = new ExportDeclarationClosingDatasExtendPMService(); break; }
 
             //#endregion
 

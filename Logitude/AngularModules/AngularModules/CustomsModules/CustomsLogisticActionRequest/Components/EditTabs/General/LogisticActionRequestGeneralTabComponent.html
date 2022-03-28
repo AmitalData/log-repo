@@ -4,8 +4,12 @@
             <table style="height:250px">
                 <tr style="height:30px">
                     <td>
-                        <LogLabel [NoObjectField]="true" [Text]="'יבוא/יצוא'" [ObjectFieldName]="'Direction'"
-                            [DataContext]="DataContext"></LogLabel>
+                        <LogLabel 
+                            [NoObjectField]="true" 
+                            [Text]=" ('Customs.General.O.Import' | TextCodeTranslationPipe) + ' / ' + ('Customs.General.O.Export' | TextCodeTranslationPipe)" 
+                            [ObjectFieldName]="'Direction'" 
+                            [DataContext]="DataContext">
+                        </LogLabel>
                     </td>
                 </tr>
                 <tr style="height:30px">
@@ -183,7 +187,7 @@
 
                                 <td style="text-align: right; padding-right: 20px;">
                                     <LogLabel [ObjectFieldName]="'CargoIdentifierKey1'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
+                                        [DataContext]="DataContext" ></LogLabel>
                                 </td>
                                 <td style="width:130px">
                                     <div style="width:135px">
@@ -192,11 +196,13 @@
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"
-                                                    [Text]="CargoIdentifierKey1"></LogTextBox>
+                                            [Text]="CargoIdentifierKey1"
+                                            [Placeholder]="ManifestNumberPlaceholder"
+                                        ></LogTextBox>
                                     </div>
                                 </td>
                             </tr>
-                            <tr class="FormFieldRow" style="width:200px;text-align: right;">
+                            <tr class="FormFieldRow" style="width:250px;text-align: right;">
                                 <td style="text-align: right; padding-right: 20px;">
                                     <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
@@ -208,7 +214,9 @@
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"
-                                                    [Text]="CargoIdentifierKey2"></LogTextBox>
+                                            [Text]="CargoIdentifierKey2"
+                                            [Placeholder]="SecondCargoIDPlaceholder"
+                                        ></LogTextBox>
                                     </div>
                                 </td>
 
@@ -222,7 +230,9 @@
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"
-                                                    [Text]="CargoIdentifierKey3"></LogTextBox>
+                                        [Text]="CargoIdentifierKey3"
+                                        [Placeholder]="ThirdCargoIdPlaceholder"
+                                        ></LogTextBox>
                                     </div>
                                 </td>
                             </tr>
@@ -340,8 +350,9 @@
                                         {{'Customs.LogisticActionRequest.F.DecisionRmarks' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
-                                <td rowspan="1" colspan="3" style="">
-                                    <LogTextBox [ObjectFieldName]="'DecisionRmarks'"
+                                <td  rowspan="1" colspan="3">                                    
+                                    <LogTextBox 
+                                        [ObjectFieldName]="'DecisionRmarks'" 
                                                 [DataContext]="DataContext"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [HideColumns]="true"

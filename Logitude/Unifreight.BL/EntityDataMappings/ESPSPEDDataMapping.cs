@@ -20,6 +20,7 @@ namespace Unifreight.BL.EntityDataMappings
         {
             entityPOCO.SPDNO = entityPM.SPD_NO;
             entityPOCO.MAINAWB = entityPM.MAIN_AWB;
+            entityPOCO.MAINCARRIER = entityPM.MAINCARRIER;
 
         }
 
@@ -27,6 +28,7 @@ namespace Unifreight.BL.EntityDataMappings
         {
             entityPM.SPD_NO = entityPOCO.SPDNO;
             entityPM.MAIN_AWB = entityPOCO.MAINAWB;
+            entityPM.MAINCARRIER = entityPOCO.MAINCARRIER;
 
         }
 

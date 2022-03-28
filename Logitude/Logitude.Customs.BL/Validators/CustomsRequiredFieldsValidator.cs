@@ -437,7 +437,7 @@ namespace Logitude.Customs.BL.Validators
 
                 }
 
-                if (supplierInvoice.IncotermCode != null)
+                if (supplierInvoice.IncotermCode != null && declaration.Direction == "E")
                 {
                     var incotemrsFileValidationFilters = incotemrsFileValidationPMs.Where(x => x.EnglishName == supplierInvoice.IncotermCode && x.LeadDocumentTypeName == "הצהרת יצוא");
 
