@@ -48,6 +48,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ExporterNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.DeclarationNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.RequestNumber);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CargoIdentifierKey1);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CargoIdentifierKey2);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CargoIdentifierKey3);
 
             mySearchFields = mySearchFields.ToLower();
             entityPM.SearchFields = mySearchFields;
