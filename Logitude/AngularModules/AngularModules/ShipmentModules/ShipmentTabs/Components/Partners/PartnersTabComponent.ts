@@ -255,14 +255,18 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             case "CLERN": { myWindowTitle = "Add Custom Clearance Point"; break }
             case "CONSL": { myWindowTitle = "Add Consolidator"; break }
             case "REAGT": { myWindowTitle = "Add Releasing Agent"; break }
+            case "TRUCK": { myWindowTitle = "Add Trucker"; break }
+
             default: {
                 myWindowTitle = TextCodeTranslator.Translate("Shipment.S.Partners.Add" + newPartnerItem.FullCode);
                 break;
+
             }
         }
 
         this.RunAddEditPartner(newPartnerItem, myWindowTitle);       
-    };
+    };            
+
     EditPartner(myPartnerItem: PartnerItem) {
 
         var myWindowTitle: string;
@@ -271,6 +275,8 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             case "CLERN": { myWindowTitle = "Edit Custom Clearance Point"; break }
             case "CONSL": { myWindowTitle = "Edit Consolidator"; break }
             case "REAGT": { myWindowTitle = "Edit Releasing Agent"; break }
+            case "TRUCK": { myWindowTitle = "Edit Trucker"; break }
+
             default: {
                 myWindowTitle = TextCodeTranslator.Translate("Shipment.S.Partners.Edit" + myPartnerItem.FullCode);
                 break;
