@@ -219,6 +219,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                             }
                         }
                     }
+                    else
+                    {
+                        entityLists = entityLists.OrderByDescending(d => d.CreateDate).ThenBy(f => f.Code);
+                    }
                 }
                 else
                 {
