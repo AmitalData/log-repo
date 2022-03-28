@@ -19,9 +19,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
             {
-                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-                throw new OptimisticConcurrencyException(msg);
+                ThrowConcurrencyException(entityPM);
             }
+        }
+
+        private static void ThrowConcurrencyException(ContainerPM entityPM)
+        {
+            string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+            throw new OptimisticConcurrencyException(msg);
         }
     }
 }
