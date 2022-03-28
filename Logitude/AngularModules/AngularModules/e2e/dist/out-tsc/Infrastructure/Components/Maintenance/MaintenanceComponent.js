@@ -422,6 +422,17 @@ var MaintenanceComponent = /** @class */ (function () {
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
         }
+        if (window.ObjectTables.filter(function (d) { return d.Name == "Customs.CustomsRequiredField"; })[0] != null) {
+            if (FeatureLocator_1.FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "EXPREQFIELDMTC")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CSM";
+                item.Icon = "Settings";
+                item.Code = "EXPR";
+                item.ObjectTableName = "Customs.CustomsRequiredField";
+                item.ObjectTableId = window.ObjectTables.filter(function (d) { return d.Name == "Customs.CustomsRequiredField"; })[0].Id;
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+        }
         var yaronWantWithoutLogiUpdate = false; // in "customs" branch do not use it !!
         if (yaronWantWithoutLogiUpdate ||
             (SessionLocator_1.SessionLocator.Tenant == 0 && !SessionLocator_1.SessionLocator.LoggedUserPM.IsDistributor && window.ObjectTables.filter(function (d) { return d.Name == "Customs.CustomsSetting"; })[0] != null)) {
@@ -989,6 +1000,15 @@ var MaintenanceComponent = /** @class */ (function () {
                 case "REFI": {
                     var logitudeWindow = new LogitudeWindow_1.LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator_1.TextCodeTranslator.Translate("Customs.General.O.RequiredFields");
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Height = 525;
+                    logitudeWindow.Width = 750;
+                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/RequiredFields/RequiredFieldsComponent');
+                    break;
+                }
+                case "EXPR": {
+                    var logitudeWindow = new LogitudeWindow_1.LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator_1.TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields");
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 525;
                     logitudeWindow.Width = 750;
