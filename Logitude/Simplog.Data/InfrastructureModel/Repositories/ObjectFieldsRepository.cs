@@ -472,7 +472,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public ObjectField GetSingleObjectFieldByFieldCode(string fieldCode, int tenant)
         {
-            return (from a in context.ObjectFields
+            return (from a in context.ObjectFields.Include("FullNameTextCode")
                     where a.FieldCode == fieldCode
                     select a).FirstOrDefault();
         }
