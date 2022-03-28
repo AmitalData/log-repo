@@ -23,11 +23,11 @@ import { EntityListService } from '../../../../Infrastructure/Services/EntityLis
 @Component({
     
     selector: 'AddEditExportRequiredFieldsComponent',
-    templateUrl: './AddEditRequiredFieldsComponent.html',
+    templateUrl: './AddEditExportRequiredFieldsComponent.html',
 })
 
-export class AddEditRequiredFieldsComponent extends BaseComponent {
-    public DataContext: AddEditRequiredFieldsComponent = this;
+export class AddEditExportRequiredFieldsComponent extends BaseComponent {
+    public DataContext: AddEditExportRequiredFieldsComponent = this;
     public ObjectTableName: string;
     public ValidationErrorsList: string[];
     OriginalFieldsList: ObservableCollection;

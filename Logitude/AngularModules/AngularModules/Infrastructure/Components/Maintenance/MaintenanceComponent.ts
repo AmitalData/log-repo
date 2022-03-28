@@ -495,6 +495,15 @@ export class MaintenanceComponent {
                 item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+            if (FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "CSTMREQFIELDMTC")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CSM";
+                item.Icon = "Settings"
+                item.Code = "EXPR";
+                item.ObjectTableName = "Customs.CustomsRequiredField";
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
 
         }
 
@@ -1230,6 +1239,15 @@ export class MaintenanceComponent {
                     logitudeWindow.Height = 525;
                     logitudeWindow.Width = 750;
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/RequiredFields/RequiredFieldsComponent');
+                    break;
+                }
+                case "EXPR": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields");
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Height = 525;
+                    logitudeWindow.Width = 750;
+                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/RequiredFields/ExportRequiredFieldsComponent');
                     break;
                 }
                 case "SECP": {

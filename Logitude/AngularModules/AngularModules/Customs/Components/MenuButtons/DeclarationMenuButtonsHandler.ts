@@ -197,7 +197,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
                     if (button.EventCode == "CloseDeclaration") {
                         button.Width = 100;
-                        if (this.EntityPM.Direction == "E" && this.EntityPM.DeclarationNumber != null) {
+                        if (this.EntityPM.Direction == "E") {
                             button.IsHidden = false;
                             if (this.EntityPM.IsSubmitDeclaration)
                                 button.IsDisabled = false
@@ -1085,14 +1085,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                     "DeclarationNumber": this.EntityPM.DeclarationNumber,
                                     "CustomsFile": this.EntityPM.CustomFileNo,
                                     "DeclarationId": this.EntityPM.Id,
-                                    "LoggingEntityReference": this.EntityPM.Direction,
                                 };
                                 customsRequestMenuService.WindowClosed.subscribe(
                                     (myarg) => { this.CurrentSession.CurrentEditComponent.ReloadEntityPM() }
                                 );
-                                
                                 customsRequestMenuService.ShowModalAsEditMenuAction('8373', my);
-                               
                             }
                         });
                 }
