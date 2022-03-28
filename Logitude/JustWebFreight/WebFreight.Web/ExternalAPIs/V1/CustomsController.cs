@@ -610,6 +610,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             entityPM.MainCarriageToPortId = customsPM.MainCarriageToPortId;
             entityPM.DeclarationNumber = customsPM.DeclarationNumber;
             entityPM.DeclarationXMLData = customsPM.DeclarationXMLData;
+            entityPM.CustomerReference3 = customsPM.CustomerReference3;
         }
     }
 }
