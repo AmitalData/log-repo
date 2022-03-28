@@ -871,10 +871,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;RequestReason&quot;"
     DefaultText="&quot;Request Reason&quot;"
-    FullLocalDefaultText="&quot;הסבר לבקשה&quot;"
+    FullLocalDefaultText="&quot;הסבר לבקשת ביטול&quot;"
     ListFieldLable="&quot;RequestReasonListLable&quot;"
     ListLableDefaultText="&quot;Request Reason&quot;"
-    ListLocalDefaultText="&quot;הסבר לבקשה&quot;"
+    ListLocalDefaultText="&quot;הסבר לבקשת ביטול&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -2880,6 +2880,30 @@
       Code="&quot;Customs.LogisticActionRequest.O.CustomsResponse&quot;"
       DefaultText="&quot;Customs Response&quot;"
       LocalDefaultText="&quot;תשובת המכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.LogisticActionRequest.O.CancelRequestImporter&quot;"
+      DefaultText="&quot;Cancel Request Importer&quot;"
+      LocalDefaultText="&quot;בקשת ביטול יצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.LogisticActionRequest.O.ForImporter&quot;"
+      DefaultText="&quot;For Importer&quot;"
+      LocalDefaultText="&quot;ליצואן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.LogisticActionRequest.O.FindDeclaration&quot;"
+      DefaultText="&quot;Find Declaration&quot;"
+      LocalDefaultText="&quot;אותרה הצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.LogisticActionRequest.O.FindDeclaration2&quot;"
+      DefaultText="&quot;According to the file number, whether to make a link&quot;"
+      LocalDefaultText="&quot;לפי מס' התיק , האם לבצע קישור&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

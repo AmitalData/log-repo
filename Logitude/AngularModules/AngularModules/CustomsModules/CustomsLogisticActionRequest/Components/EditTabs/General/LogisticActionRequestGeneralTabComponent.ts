@@ -255,11 +255,11 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     private async confirmSyncDeclaration() {
-        const exporterName = this.exporterName ? 'ליצוםן ' + this.exporterName + ' ' : '';
+        const exporterName = this.exporterName ? TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.ForImporter') + ' ' + this.exporterName + ' ' : '';
 
         const myConfirmWindow = new ConfirmWindow();
         myConfirmWindow.Width = 400;
-        myConfirmWindow.Show(`םותרה הצהרה ${exporterName}לפי מס' התיק , הםם לבצע קישור ?`);
+        myConfirmWindow.Show(`${TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.FindDeclaration')} ${exporterName} ${TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.FindDeclaration2')}?`);
 
         return new Promise(resolve =>
             myConfirmWindow.WindowClosed.subscribe(event =>
@@ -441,7 +441,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
 
         CustomMessageProgressComponent
-            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, "בקשת ביטול יצום", true)
+            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), true)
             .catch((err) => this.ValidationErrorsList.push(err));
     }
 
@@ -494,7 +494,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 350;
         logWindow.Height = 230;
-        logWindow.Title = 'נתונים נוספים ליצוםן';
+        logWindow.Title = TextCodeTranslator.Translate('Customs.General.O.MoreDetailsForImporter');
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/MoreDetailesforImporterComponent/MoreDetailesforImporterComponent');
         logWindow.WindowClosed.subscribe(() => {

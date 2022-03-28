@@ -4,8 +4,12 @@
             <table style="height:250px">
                 <tr style="height:30px">
                     <td>
-                        <LogLabel [NoObjectField]="true" [Text]="'????/????'" [ObjectFieldName]="'Direction'"
-                            [DataContext]="DataContext"></LogLabel>
+                        <LogLabel 
+                            [NoObjectField]="true" 
+                            [Text]=" ('Customs.General.O.Import' | TextCodeTranslationPipe) + ' / ' + ('Customs.General.O.Export' | TextCodeTranslationPipe)" 
+                            [ObjectFieldName]="'Direction'" 
+                            [DataContext]="DataContext">
+                        </LogLabel>
                     </td>
                 </tr>
                 <tr style="height:30px">
