@@ -49,7 +49,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             if (reconciliationLinesQueryOperations == null)
                 return iQueryable;
             var reconcileExternalPageLineQuery = CreateReconcileExternalPageLineQuery(reconciliationLinesQueryOperations, tenant);
-            var ledgerTransactionQuery = CreateLedgerTransactionQuery(reconciliationLinesQueryOperations, tenant);
+            var ledgerTransactionQuery = CreateLedgerTransactionQueryForCalculatedLocalAmount(reconciliationLinesQueryOperations, tenant);
+            var ledgerTransactionQuery2 = CreateLedgerTransactionQueryForCalculatedForeignAmount(reconciliationLinesQueryOperations, tenant);
             var externalReconciliationLines = context.ExternalReconciliationLines.AsQueryable();
             iQueryable = iQueryable
                 .Where(l =>
@@ -61,6 +62,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                             reconcileExternalPageLineQuery.Where(pl => pl.Id == p.ExternalPageLineId).Any()
                             ||
                             ledgerTransactionQuery.Where(lt => lt.Id == p.LedgerTransactionId).Any()
+                            ||
+                            ledgerTransactionQuery2.Where(lt => lt.Id == p.LedgerTransactionId).Any()
                             )
                         ).Any()
                 );
@@ -103,9 +106,19 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             });
         }
 
-        private IQueryable<LedgerTransactionList> CreateLedgerTransactionQuery(QueryFilterItem reconciliationLinesQueryOperations, int tenant)
+        private IQueryable<LedgerTransactionList> CreateLedgerTransactionQueryForCalculatedLocalAmount(QueryFilterItem reconciliationLinesQueryOperations, int tenant)
         {
             var fieldName = "CalculatedLocalAmount";
+            GenericFilter filter = new GenericFilter();
+            var externalReconciliationQuery = GetIQueryableLedgerTransactionList(tenant);
+            var queryOperations = CreateReconciliationLinesQueryOperations(reconciliationLinesQueryOperations, fieldName);
+            externalReconciliationQuery = filter.GetFilteredQuery(queryOperations, externalReconciliationQuery);
+            return externalReconciliationQuery;
+        }
+
+        private IQueryable<LedgerTransactionList> CreateLedgerTransactionQueryForCalculatedForeignAmount(QueryFilterItem reconciliationLinesQueryOperations, int tenant)
+        {
+            var fieldName = "CalculatedForeignAmount";
             GenericFilter filter = new GenericFilter();
             var externalReconciliationQuery = GetIQueryableLedgerTransactionList(tenant);
             var queryOperations = CreateReconciliationLinesQueryOperations(reconciliationLinesQueryOperations, fieldName);
