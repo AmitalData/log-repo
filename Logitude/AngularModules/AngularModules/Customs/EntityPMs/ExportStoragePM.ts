@@ -214,11 +214,6 @@ export class ExportStoragePM {
     public set StorageStatusIsOpen(newValue: boolean) { if (this.storageStatusIsOpen != newValue) { this.storageStatusIsOpen = newValue; this.MarkAsDirty("StorageStatusIsOpen"); } }
        
 	 
-    private storageStatusIsOpen: boolean;
-    public get StorageStatusIsOpen() { return this.storageStatusIsOpen; }
-    public set StorageStatusIsOpen(newValue: boolean) { if (this.storageStatusIsOpen != newValue) { this.storageStatusIsOpen = newValue; this.MarkAsDirty("StorageStatusIsOpen"); } }
-       
-	 
 
     public OldEntityPM: ExportStoragePM;
 		

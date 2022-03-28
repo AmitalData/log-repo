@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "41c2f9818cb653e6153fe80f040317e6";
+		public const string HashString = "06dad75a497af61fd3b8e7a6fdc84d4b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1363,6 +1363,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter OpenContainerizationQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Containerization.OpenContainerization", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter OpenContainerizationQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Containerization.ContainerizationStatus", PredefinedValue = "4",PredefinedValue2 = null, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
