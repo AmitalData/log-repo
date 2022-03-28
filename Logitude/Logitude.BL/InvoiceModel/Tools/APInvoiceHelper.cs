@@ -89,7 +89,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 return;
             }
-
+            
             if (IsSetApproved)
             {
                 commonContext = CommonContext;
@@ -102,6 +102,10 @@ namespace Logitude.BL.InvoiceModel.Tools
                 if (loggedTenant.AccountingSetting != null)
                     if (IsQuickBooksAccoutingSystemTransfer(entityPM))
                     {
+                        if(entityPM.TotalVATOnly)
+                        {
+                            throw new ApplicationException("Total VAT option is not compatible with QBO , if they you want to transfer this invoice to Quickbooks, please disable the total vat and make sure each invoice line has a VAT");
+                        }
                         APInvoice = entityPM;
                         APInvoiceId = entityPM.Id;
                         documentRepository = new DocumentRepository(commonContext);
