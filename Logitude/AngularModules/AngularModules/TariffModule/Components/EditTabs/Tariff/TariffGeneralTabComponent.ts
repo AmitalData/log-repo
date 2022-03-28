@@ -33,6 +33,8 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public IsContainersAreaVisible: boolean = false;
     public IsUnitOfMeasurementFieldVisible: boolean = false;
     private draftVersion: TariffVersionPM;
+    public SellerToolTip: string;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -50,6 +52,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
             this.FillContainersIDs();
             this.IsContainersAreaVisible = true;
+        }
+
+        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+            this.SellerToolTip = "Customs Broker";
         }
 
         this.Listen();
