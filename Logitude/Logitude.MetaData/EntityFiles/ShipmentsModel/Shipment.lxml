@@ -85840,20 +85840,22 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Shipment&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;Card&quot;"
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -85877,7 +85879,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;TruckerId&quot;"
-    DefaultText="&quot;Assigned To Trucker&quot;"
+    DefaultText="&quot;Trucker&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="Card"
@@ -97123,6 +97125,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsShipmentOrder&quot;"
     ListPropertyPath="&quot;IsShipmentOrder&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -97311,6 +97314,443 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;1a2eaa5d-af18-44e7-9231-5bc57ba25702&quot;"
+    FieldName="&quot;TruckerName&quot;"
+    OldNames="TruckerName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Shipment&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="70"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;TruckerName&quot;"
+    ListPropertyPath="&quot;TruckerName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Shipment&quot;"
+    ValidForQuerySection2="&quot;ShipmentFollowUp&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;TruckerName&quot;"
+    DefaultText="&quot;Trucker Name&quot;"
+    ListFieldLable="&quot;TruckerNameListLable&quot;"
+    ListLableDefaultText="&quot;Trucker Name&quot;"
+    ListLocalDefaultText="&quot;Trucker Name&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="true"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;62bf6c7d-2fb7-4846-9c34-ef56bae093a0&quot;"
+    FieldName="&quot;TruckerNote&quot;"
+    OldNames="TruckerNote"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Shipment&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="250"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;TruckerNote&quot;"
+    ListPropertyPath="&quot;TruckerNote&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;TruckerNote&quot;"
+    DefaultText="&quot;Trucker Note&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;779f75d2-979c-43d2-969e-251d0d89fac4&quot;"
+    FieldName="&quot;TruckerAddressId&quot;"
+    OldNames="TruckerAddressId"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Shipment&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;Address&quot;"
+    MinLength="0"
+    MaxLength="15"
+    IsRequired="false"
+    CopyToDW="true"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;TruckerAddressId&quot;"
+    ListPropertyPath="&quot;TruckerAddressId&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Shipment&quot;"
+    ValidForQuerySection2="&quot;ShipmentFollowUp&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;TruckerAddressId&quot;"
+    DefaultText="&quot;Trucker Address&quot;"
+    IsNullable="false"
+    IsForeignKey="true"
+    ForeignEntity="Address"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="TruckerAddress"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;354ad5ff-aadb-4ba6-9c48-ea020299547b&quot;"
+    FieldName="&quot;TruckerContactId&quot;"
+    OldNames="TruckerContactId"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Shipment&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;Contact&quot;"
+    MinLength="0"
+    MaxLength="15"
+    IsRequired="false"
+    CopyToDW="true"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;TruckerContactId&quot;"
+    ListPropertyPath="&quot;TruckerContactId&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Shipment&quot;"
+    ValidForQuerySection2="&quot;ShipmentFollowUp&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;TruckerContactId&quot;"
+    DefaultText="&quot;Trucker Contact&quot;"
+    IsNullable="false"
+    IsForeignKey="true"
+    ForeignEntity="Contact"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="TruckerContact"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;74b4bd1c-8994-4142-8cd8-f45f978249f8&quot;"
+    FieldName="&quot;TruckerReference1&quot;"
+    OldNames="TruckerReference1"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Shipment&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="50"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;TruckerReference1&quot;"
+    ListPropertyPath="&quot;TruckerReference1&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Shipment&quot;"
+    ValidForQuerySection2="&quot;ShipmentFollowUp&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;TruckerReference1&quot;"
+    DefaultText="&quot;Trucker Reference1&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;64182ca8-04fb-4161-bca4-ef77c0b1837e&quot;"
+    FieldName="&quot;TruckerReference2&quot;"
+    OldNames="TruckerReference2"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Shipment&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="50"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;TruckerReference2&quot;"
+    ListPropertyPath="&quot;TruckerReference2&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Shipment&quot;"
+    ValidForQuerySection2="&quot;ShipmentFollowUp&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;TruckerReference2&quot;"
+    DefaultText="&quot;Trucker Reference2&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;Shipments&quot;"
     TextCode="&quot;Shipments&quot;"
@@ -97396,8 +97836,7 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;OperationalOpenHousesDirects&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -97485,8 +97924,7 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;OperationalOpenMastersDirects&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -97576,8 +98014,7 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;AccountingOpenHousesDirects&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -97667,8 +98104,7 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;AccountingOpenMastersDirects&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -97768,8 +98204,7 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;ExpectedDepartures&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -97869,8 +98304,7 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;AirlinesUpdates&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -97963,8 +98397,7 @@
         PredefinedValue="&quot;12/4/2018 12:00:00 AM&quot;"
         ObjectFieldName="&quot;AllFollowUps&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98057,8 +98490,7 @@
         PredefinedValue="&quot;12/4/2018 12:00:00 AM&quot;"
         ObjectFieldName="&quot;MyFollowUps&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98146,8 +98578,7 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;AllShipments&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98235,8 +98666,7 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;AllMasters&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98324,8 +98754,7 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;ImportShipments&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98413,8 +98842,7 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98479,8 +98907,7 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;SentFSR&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98573,8 +99000,7 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;CustomerActualDataShipments&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98662,8 +99088,7 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsNewARInvoiceBlocked&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98751,8 +99176,7 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;ExpectedDeparturesNotTransmitted&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98835,8 +99259,7 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;ShippingInstructionsLast7Days&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98914,8 +99337,7 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;ContainerStatusLast7Days&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -98996,8 +99418,7 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;EBookingInProgress&quot;"
         IsPredefined="true"
-        IndexOrder="0"
-        CustomPredefined="false" />
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -101968,8 +102389,7 @@
   <DataContracts>
     <DataContract
       Name="&quot;House&quot;"
-      Version="&quot;ApiV1&quot;"
-      IncludeTenant0Data="false">
+      Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -103269,8 +103689,7 @@
     </DataContract>
     <DataContract
       Name="&quot;Direct&quot;"
-      Version="&quot;ApiV1&quot;"
-      IncludeTenant0Data="false">
+      Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -105386,8 +105805,7 @@
     </DataContract>
     <DataContract
       Name="&quot;Customs&quot;"
-      Version="&quot;ApiV1&quot;"
-      IncludeTenant0Data="false">
+      Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -106065,8 +106483,7 @@
     </DataContract>
     <DataContract
       Name="&quot;Master&quot;"
-      Version="&quot;ApiV1&quot;"
-      IncludeTenant0Data="false">
+      Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"

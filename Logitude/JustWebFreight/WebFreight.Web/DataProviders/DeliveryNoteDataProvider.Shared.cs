@@ -113,6 +113,14 @@ namespace WebFreight.Web.DataProviders
         public string MasterNumber { get; set; }
         public string ConsigneeRef1 { get; set; }
         public string ShipmentNotes { get; set; }
+        public string ShipmentTruckerVATNumber { get; set; }
+        public string ShipmentTruckerName { get; set; }
+        public string ShipmentTruckerAddress { get; set; }
+        public string ShipmentTruckerReference2 { get; set; }
+        public string ShipmentTruckerReference1 { get; set; }
+        public string ShipmentTruckerContactName { get; set; }
+        public string ShipmentTruckerContactMobileNumber { get; set; }
+
         public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
         public string ShipperReference2 { get; set; }

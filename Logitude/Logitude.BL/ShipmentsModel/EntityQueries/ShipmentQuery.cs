@@ -1193,6 +1193,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ReleasingAgentNote = loadedCard.Notes;
             }
             #endregion
+
+            #region Trucker
+            shipmentPM.TruckerId = shipment.TruckerId;
+            shipmentPM.TruckerAddressId = shipment.TruckerAddressId;
+            shipmentPM.TruckerContactId = shipment.TruckerContactId;
+            shipmentPM.TruckerReference1 = shipment.TruckerReference1;
+            shipmentPM.TruckerReference2 = shipment.TruckerReference2;
+            if (shipment.TruckerId != null)
+            {
+                Card loadedCard = CardRepository.GetSingleCard(shipment.TruckerId, shipment.Tenant, true);
+                shipmentPM.TruckerName = GetCardName(byLocalName, loadedCard);
+                shipmentPM.TruckerNote = loadedCard.Notes;
+            }
+            #endregion
+
             #endregion
 
             #region Fields
@@ -3604,6 +3619,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ReleasingAgentReference2 = shipment.ReleasingAgentReference2;
 
             #endregion
+
+            #region Trucker
+            shipmentPM.TruckerId = shipment.TruckerId;
+            shipmentPM.TruckerAddressId = shipment.TruckerAddressId;
+            shipmentPM.TruckerContactId = shipment.TruckerContactId;
+            shipmentPM.TruckerReference1 = shipment.TruckerReference1;
+            shipmentPM.TruckerReference2 = shipment.TruckerReference2;
+
+            #endregion
             #endregion
 
             #region Properties
@@ -4533,7 +4557,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             #region shipmentpm temp code
             IQueryable<ShipmentPM> shipmentPMList = from s in repository.context.Shipments.Include("MainCarriageFromPort").Include("MainCarriageFromPort.Country").Include("Incoterm").Include("MainCarriageCarrierCard").Include("MainCarriageToPort").Include("MainCarriageToPort.Country").Include("NextLeg").Include("Notify1Card").Include("Notify2Card").Include("Notify2Card").Include("FreelancerCard")
-.Include("OnCarriageCarrierCard").Include("OnCarriageFromPort").Include("OnCarriageFromPort.Country").Include("OnCarriageToPort").Include("OnCarriageToPort.Country").Include("PreCarriageCarrierCard").Include("PreCarriageFromPort").Include("PreCarriageFromPort.Country").Include("PreCarriageToPort").Include("PreCarriageToPort.Country").Include("MainCarriageToPort").Include("MainCarriageToPort.Country").Include("Transshipment1CarrierCard").Include("Transshipment1FromPort").Include("Transshipment1FromPort.Country").Include("Transshipment1FromPort").Include("Transshipment1ToPort").Include("Transshipment1ToPort.Country").Include("Transshipment2CarrierCard").Include("Transshipment2FromPort").Include("Transshipment2FromPort.Country").Include("Transshipment2ToPort").Include("Transshipment2ToPort.Country").Include("Transshipment3CarrierCard").Include("Transshipment3FromPort").Include("Transshipment3FromPort.Country").Include("ShipmentPayableStatus").Include("ShipmentReceivableStatus").Include("ShipperCard").Include("ShipperNotExporterCard").Include("EntityStatus").Include("UpdatedByUser.Contact").Include("Coloader").Include("CustomClearancePoint")
+.Include("OnCarriageCarrierCard").Include("OnCarriageFromPort").Include("OnCarriageFromPort.Country").Include("OnCarriageToPort").Include("OnCarriageToPort.Country").Include("PreCarriageCarrierCard").Include("PreCarriageFromPort").Include("PreCarriageFromPort.Country").Include("PreCarriageToPort").Include("PreCarriageToPort.Country").Include("MainCarriageToPort").Include("MainCarriageToPort.Country").Include("Transshipment1CarrierCard").Include("Transshipment1FromPort").Include("Transshipment1FromPort.Country").Include("Transshipment1FromPort").Include("Transshipment1ToPort").Include("Transshipment1ToPort.Country").Include("Transshipment2CarrierCard").Include("Transshipment2FromPort").Include("Transshipment2FromPort.Country").Include("Transshipment2ToPort").Include("Transshipment2ToPort.Country").Include("Transshipment3CarrierCard").Include("Transshipment3FromPort").Include("Transshipment3FromPort.Country").Include("ShipmentPayableStatus").Include("ShipmentReceivableStatus").Include("ShipperCard").Include("ShipperNotExporterCard").Include("EntityStatus").Include("UpdatedByUser.Contact").Include("Coloader").Include("CustomClearancePoint").Include("TruckerCard")
                                                     join sm in repository.context.ShipmentMasterDatas.Include("Port").Include("Port.Country")
                                                     on s.MasterShipmentDataId equals sm.Id into shipmentJoin
                                                     from m in shipmentJoin.DefaultIfEmpty()
@@ -4890,6 +4914,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         CustomClearancePointAddressId = s.CustomClearancePointAddressId,
                                                         CustomClearancePointContactId = s.CustomClearancePointContactId,
                                                         CustomClearancePointReference1 = s.CustomClearancePointReference1,
+                                                        TruckerName = s.TruckerCard != null ? s.TruckerCard.EnglishName : null,
+                                                        TruckerNote = s.TruckerCard != null ? s.TruckerCard.Notes : null,
+                                                        TruckerId = s.TruckerId,
+                                                        TruckerAddressId = s.TruckerAddressId,
+                                                        TruckerContactId = s.TruckerContactId,
+                                                        TruckerReference1 = s.TruckerReference1,
+                                                        TruckerReference2 = s.TruckerReference2,
                                                         CASSCode = s.CASSCode,
                                                         SLAC = s.SLAC,
                                                         FreelancerId = s.FreelancerId,

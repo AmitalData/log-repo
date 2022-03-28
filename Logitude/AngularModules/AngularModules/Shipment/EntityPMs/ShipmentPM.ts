@@ -5039,6 +5039,39 @@ export class ShipmentPM {
     public get OnForwardingATA_Original() { return this.onForwardingATA_Original; }
     public set OnForwardingATA_Original(newValue: Date) { if (this.onForwardingATA_Original != newValue) { this.onForwardingATA_Original = newValue; this.MarkAsDirty("OnForwardingATA_Original"); } }
 
+    private assignedToTruckerDate: Date;
+    public get AssignedToTruckerDate() { return this.assignedToTruckerDate; }
+    public set AssignedToTruckerDate(newValue: Date) { if (this.assignedToTruckerDate != newValue) { this.assignedToTruckerDate = newValue; this.MarkAsDirty("AssignedToTruckerDate"); } }
+
+    private truckerId: string;
+    public get TruckerId() { return this.truckerId; }
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+     
+    private truckerAddressId: string;
+    public get TruckerAddressId() { return this.truckerAddressId; }
+    public set TruckerAddressId(newValue: string) { if (this.truckerAddressId != newValue) { this.truckerAddressId = newValue; this.MarkAsDirty("TruckerAddressId"); } }
+
+    private truckerContactId: string;
+    public get TruckerContactId() { return this.truckerContactId; }
+    public set TruckerContactId(newValue: string) { if (this.truckerContactId != newValue) { this.truckerContactId = newValue; this.MarkAsDirty("TruckerContactId"); } }
+
+    private truckerReference1: string;
+    public get TruckerReference1() { return this.truckerReference1; }
+    public set TruckerReference1(newValue: string) { if (this.truckerReference1 != newValue) { this.truckerReference1 = newValue; this.MarkAsDirty("TruckerReference1"); } }
+
+    private truckerReference2: string;
+    public get TruckerReference2() { return this.truckerReference2; }
+    public set TruckerReference2(newValue: string) { if (this.truckerReference2 != newValue) { this.truckerReference2 = newValue; this.MarkAsDirty("TruckerReference2"); } }
+
+    private truckerName: string;
+    public get TruckerName() { return this.truckerName; }
+    public set TruckerName(newValue: string) { if (this.truckerName != newValue) { this.truckerName = newValue; this.MarkAsDirty("TruckerName"); } }
+
+
+    private truckerNote: string;
+    public get TruckerNote() { return this.truckerNote; }
+    public set TruckerNote(newValue: string) { if (this.truckerNote != newValue) { this.truckerNote = newValue; this.MarkAsDirty("TruckerNote"); } }
+
     private originPreCarriageFromPortId: string;
     public get OriginPreCarriageFromPortId() { return this.originPreCarriageFromPortId; }
     public set OriginPreCarriageFromPortId(newValue: string) {

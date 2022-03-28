@@ -645,7 +645,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string FreightForwarderNote { get; set; }
-
+       
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipperId { get; set; }
 
@@ -2162,6 +2162,19 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string TruckerId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string TruckerName { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string TruckerNote { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string TruckerAddressId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string TruckerContactId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string TruckerReference1 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string TruckerReference2 { get; set; }
+        
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? AssignedToTruckerDate { get; set; }
@@ -2898,5 +2911,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ATD { get; set; }
         public DateTime? ATA { get; set; }
         public string CarrierTypeName { get; set; }
+
     }
 }

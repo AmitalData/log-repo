@@ -243,6 +243,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentCustomsAgent();
             this.MapMasterShipmentNumber();
             this.MapShipmentType();
+            this.MapShipmentTrucker();
         }
 
         private void MapSealNumbers()
@@ -374,6 +375,75 @@ namespace WebFreight.Web.ReportsWebServices
                     dataProvider.OnForwardingCarrier = shipment.OnForwardingCarrierName;
                 }
             }
+        }
+
+        private void MapShipmentTrucker()
+        {
+            if (string.IsNullOrEmpty(shipment.TruckerId))
+            {
+                return;
+            }
+            this.MapTruckerReferences();
+            this.MapTruckerAddress();
+            this.MapTruckerContact();
+            this.MapTruckerCard();
+
+        }
+        private void MapTruckerReferences()
+        {
+            dataProvider.ShipmentTruckerReference1 = shipment.TruckerReference1;
+            dataProvider.ShipmentTruckerReference2 = shipment.TruckerReference2;
+        }
+        private void MapTruckerAddress()
+        {
+            if (string.IsNullOrEmpty(shipment.TruckerAddressId))
+            {
+                return;
+            }
+            Address address = addressRepository.GetSingleAddress(shipment.TruckerAddressId, tenant);
+            if (address == null)
+            {
+                return;
+            }
+            dataProvider.ShipmentTruckerAddress = DataProviders.General.GetAddress(address);
+            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
+            {
+                dataProvider.ShipmentTruckerAddress += Environment.NewLine;
+            }
+
+            if (!string.IsNullOrEmpty(address.PhoneNumber))
+            {
+                dataProvider.ShipmentTruckerAddress += "Tel: " + address.PhoneNumber + " ";
+            }
+
+            if (!string.IsNullOrEmpty(address.FaxNumber))
+            {
+                dataProvider.ShipmentTruckerAddress += "Fax: " + address.FaxNumber;
+            }
+        }
+        private void MapTruckerContact()
+        {
+            if (string.IsNullOrEmpty(shipment.TruckerContactId))
+            {
+                return;
+            }
+            Contact contact = ContactRepository.GetSingleContact(shipment.TruckerContactId, tenant, true);
+            if (contact == null)
+            {
+                return;
+            }
+            dataProvider.ShipmentTruckerContactName = contact.EnglishName;
+            dataProvider.ShipmentTruckerContactMobileNumber = contact.Mobile;
+        }
+        private void MapTruckerCard()
+        {
+            Card card = CardRepository.GetSingleCard(shipment.TruckerId, tenant, true);
+            if (card == null)
+            {
+                return;
+            }
+            dataProvider.ShipmentTruckerName = card.EnglishName;
+            dataProvider.ShipmentTruckerVATNumber = card.VatNumber;
         }
         private void MapShipmentShipper()
         {
