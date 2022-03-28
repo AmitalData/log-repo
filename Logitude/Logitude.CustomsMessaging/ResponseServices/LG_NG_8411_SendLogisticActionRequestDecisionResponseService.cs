@@ -32,7 +32,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             LogisticActionRequestQueryService larQs = new LogisticActionRequestQueryService(requestParams.Tenant);
             var cargoIdentifier = customResponse.LogisticActionRequestDecision.CargoIdentifier;
             LogisticActionRequestPM larPM = larQs.GetByCargoKey(cargoIdentifier.cargoIdentifierKey1, cargoIdentifier.cargoIdentifierKey2, cargoIdentifier.cargoIdentifierKey3, cargoIdentifier.cargoIdentifierType);
-            
+
             if (larPM == null) return;
 
             var resData = customResponse.LogisticActionRequestDecision;
@@ -41,9 +41,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             larPM.ResponseStatusCode = resData.ResponseStatus.ToString();
             larPM.CustomsUserName = resData.UserName;
             larPM.DecisionRmarks = resData.DecisionRmarks;
+            larPM.IsClosed = CheckIsClosed(resData);
 
             UpdateLARPM(requestParams, larPM);
         }
+
+        private static bool CheckIsClosed(LG_NG_8411_SendLogisticActionRequestDecisionLogisticActionRequestDecision resData) =>
+            (new List<int> { 1, 2, 5, 6, 7 }.Contains(resData.ResponseStatus));        
 
         private static void UpdateLARPM(GenericRequestParams requestParams, LogisticActionRequestPM larPM)
         {
