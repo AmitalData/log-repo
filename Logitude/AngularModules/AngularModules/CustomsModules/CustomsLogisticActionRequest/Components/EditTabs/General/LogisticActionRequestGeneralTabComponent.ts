@@ -370,7 +370,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
 
         CustomMessageProgressComponent
-            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), true)
+            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), false)
             .catch((err) => this.ValidationErrorsList.push(err));
     }
 
