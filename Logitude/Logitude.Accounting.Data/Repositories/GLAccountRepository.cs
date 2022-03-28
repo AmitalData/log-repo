@@ -118,7 +118,7 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public List<GLAccount> GetByGLAccountsIdList(List<String> GLAccountsIdList, int tenant)
+        public List<GLAccount> GetByGLAccountsIdList(List<string> GLAccountsIdList, int tenant)
         {
             return (from a in context.GLAccounts
                     where GLAccountsIdList.Contains(a.Id) && a.Tenant == tenant

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "05ab78f7cf263c96e0c90074986acbed";
+		public const string HashString = "aa38974667d1739dd7cdca32d275c84d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5911,7 +5911,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn AllGeneralAPInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "APInvoice.DueDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllGeneralAPInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.IsGeneralInvoice", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter AllGeneralAPInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.IsGeneralInvoice", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
@@ -5942,7 +5942,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn DraftGeneralAPInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftGeneralAPInvoicesQuery.Id,QueryCode = DraftGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "APInvoice.DueDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter DraftGeneralAPInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.DraftGeneralAPInvoices", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DraftGeneralAPInvoicesQuery.Id,QueryCode = DraftGeneralAPInvoicesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter DraftGeneralAPInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.DraftGeneralAPInvoices", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = DraftGeneralAPInvoicesQuery.Id,QueryCode = DraftGeneralAPInvoicesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
@@ -5973,7 +5973,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn ApprovalGeneralAPInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovalGeneralAPInvoicesQuery.Id,QueryCode = ApprovalGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "APInvoice.DueDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ApprovalGeneralAPInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.ApprovalGeneralAPInvoices", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ApprovalGeneralAPInvoicesQuery.Id,QueryCode = ApprovalGeneralAPInvoicesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter ApprovalGeneralAPInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.ApprovalGeneralAPInvoices", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ApprovalGeneralAPInvoicesQuery.Id,QueryCode = ApprovalGeneralAPInvoicesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
@@ -6026,7 +6026,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn WaitingforApprovalQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WaitingforApprovalQuery.Id,QueryCode = WaitingforApprovalQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APInvoice.InternalNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter WaitingforApprovalQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.StatusCode", PredefinedValue = "WA",PredefinedValue2 = null, QueryId = WaitingforApprovalQuery.Id,QueryCode = WaitingforApprovalQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter WaitingforApprovalQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.StatusCode", PredefinedValue = "WA",PredefinedValue2 = null, CustomPredefined = false, QueryId = WaitingforApprovalQuery.Id,QueryCode = WaitingforApprovalQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -6051,7 +6051,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn UnpaidInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APInvoice.InternalNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter UnpaidInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.UnpaidInvoices", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter UnpaidInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.UnpaidInvoices", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = UnpaidInvoicesQuery.Id,QueryCode = UnpaidInvoicesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -6074,7 +6074,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn NotReadyInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APInvoice.TransferError" , ColumnWidth = 500 }, addedQueryColumns);
 
-             AdvancedQueryFilter NotReadyInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.NotReadyInvoices", PredefinedValue = "true",PredefinedValue2 = null, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter NotReadyInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.NotReadyInvoices", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = NotReadyInvoicesQuery.Id,QueryCode = NotReadyInvoicesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -6093,7 +6093,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn MarkedasblockedfortransferQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "APInvoice.AmountInInvoiceCurrency" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.MarkedAsBlockedForTransfer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.MarkedAsBlockedForTransfer", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -6116,7 +6116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn ErrorInTransferInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APInvoice.TransferError" , ColumnWidth = 500 }, addedQueryColumns);
 
-             AdvancedQueryFilter ErrorInTransferInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.ErrorInTransferInvoices", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ErrorInTransferInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.ErrorInTransferInvoices", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ErrorInTransferInvoicesQuery.Id,QueryCode = ErrorInTransferInvoicesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -6147,7 +6147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn ErrorInTransferQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "APInvoice.AmountDue" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ErrorInTransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.TransferStatusCode", PredefinedValue = "ET",PredefinedValue2 = null, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter ErrorInTransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.TransferStatusCode", PredefinedValue = "ET",PredefinedValue2 = null, CustomPredefined = false, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -6806,6 +6806,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APInvoiceTextCode_APInvoiceOCopyAmounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CopyAmounts", DefaultText = "Copy Amounts",LocalDefaultText = @"העתקת סכומים", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APInvoiceTextCode_APInvoiceMCopiedFromAPInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.CopiedFromAPInvoiceNumber", DefaultText = "Copied from APInvoice number",LocalDefaultText = @" הועתקה מחשבונית", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APInvoiceTextCode_APInvoiceOCantVoidWithInactiveGLA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CantVoidWithInactiveGLA", DefaultText = "You can't void an invoice that is connected to an Inactive GL Account",LocalDefaultText = @"לא ניתן לבטל חשבונית שמחוברת לכרטסת חסומה", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

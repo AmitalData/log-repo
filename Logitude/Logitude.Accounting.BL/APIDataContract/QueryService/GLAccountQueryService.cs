@@ -601,7 +601,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             var gLAccountCurrencies = gLAccountCurrencyRepository.GetRelatedCurrenciesAccountByCustomerGLAccountAll(tenant, glaccount.Id);
             return gLAccountCurrencies;
         }
-    }
 
+    }
 
 }
