@@ -10,10 +10,10 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
     internal class ComplementoPagosPagoImpuestosPs : ComplementoPagosPago
     {
         private const string taxCode = "002";
-        private static decimal taxValue; 
+        private static decimal paymentTaxAmount; 
         public static List<PagosPagoImpuestosP> Get(PagosPago pagoItem)
         {
-            taxValue = pagoItem.TipoCambioP;
+            paymentTaxAmount = pagoItem.TipoCambioP;
             List<PagosPagoImpuestosP> impuestosPs = new List<PagosPagoImpuestosP>();
             List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs = new List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR>();
             List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs = new List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR>();
@@ -21,6 +21,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             {
                 pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs = d.ImpuestosDR.TrasladosDR != null ? pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.Concat(d.ImpuestosDR.TrasladosDR.ToArray()).ToList() : pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs;
                 pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs = d.ImpuestosDR.RetencionesDR != null ? pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.Concat(d.ImpuestosDR.RetencionesDR.ToArray()).ToList() : pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs;
+                BuildPagosTotales(d);
             });
 
             PagosPagoImpuestosP pagosPagoImpuestosP = new PagosPagoImpuestosP();
@@ -34,6 +35,19 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             return impuestosPs;
         }
 
+        private static void BuildPagosTotales(PagosPagoDoctoRelacionado pagosPagoDoctoRelacionado)
+        {
+            decimal invoiceTaxAmount = pagosPagoDoctoRelacionado.EquivalenciaDR;
+
+            pagosPagoDoctoRelacionado?.ImpuestosDR?.TrasladosDR?.ToList()?.ForEach(pTDR => {
+                BuildTrasladoPagosTotales(pTDR, invoiceTaxAmount);
+            });
+
+            pagosPagoDoctoRelacionado?.ImpuestosDR?.RetencionesDR?.ToList()?.ForEach(pRDR => {
+                BuildRetencionPagosTotales(pRDR, invoiceTaxAmount);
+            });
+        }
+
         private static List<PagosPagoImpuestosPTrasladoP> GetPagosPagoImpuestosPTrasladoPs(List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs)
         {
             List<PagosPagoImpuestosPTrasladoP> trasladosP = new List<PagosPagoImpuestosPTrasladoP>();
@@ -41,7 +55,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             foreach (var group in groups)
             {
                 PagosPagoImpuestosPTrasladoP pagosPagoImpuestosPTrasladoP = GetNewPagosPagoImpuestosPTrasladoP(group);
-                BuildTrasladoPagosTotales(pagosPagoImpuestosPTrasladoP);
                 trasladosP.Add(pagosPagoImpuestosPTrasladoP);
             }
 
@@ -49,27 +62,27 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             return trasladosP;
         }
 
-        private static void BuildTrasladoPagosTotales(PagosPagoImpuestosPTrasladoP pagosPagoImpuestosPTrasladoP)
+        private static void BuildTrasladoPagosTotales(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR, decimal invoiceTaxAmount)
         {
-            switch (pagosPagoImpuestosPTrasladoP.TasaOCuotaP.ToString())
+            switch (pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.TasaOCuotaDR.ToString())
             {
                 case "0.160000":
-                    pagos.Totales.TotalTrasladosBaseIVA16 += pagosPagoImpuestosPTrasladoP.BaseP;
-                    pagos.Totales.TotalTrasladosImpuestoIVA16 += pagosPagoImpuestosPTrasladoP.ImporteP;
+                    pagos.Totales.TotalTrasladosBaseIVA16 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR * invoiceTaxAmount;
+                    pagos.Totales.TotalTrasladosImpuestoIVA16 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.ImporteDR * invoiceTaxAmount;
                     break;
                 case "0.080000":
-                    pagos.Totales.TotalTrasladosBaseIVA8 += pagosPagoImpuestosPTrasladoP.BaseP;
-                    pagos.Totales.TotalTrasladosImpuestoIVA8 += pagosPagoImpuestosPTrasladoP.ImporteP;
+                    pagos.Totales.TotalTrasladosBaseIVA8 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR * invoiceTaxAmount;
+                    pagos.Totales.TotalTrasladosImpuestoIVA8 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.ImporteDR * invoiceTaxAmount;
                     break;
                 case "0.000000":case "0":
-                    if (pagosPagoImpuestosPTrasladoP.TipoFactorP == "Exento")
+                    if (pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.TipoFactorDR == "Exento")
                     {
-                        pagos.Totales.TotalTrasladosBaseIVAExento += pagosPagoImpuestosPTrasladoP.BaseP;
+                        pagos.Totales.TotalTrasladosBaseIVAExento += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR * invoiceTaxAmount;
                     }
                     else
                     {
-                        pagos.Totales.TotalTrasladosBaseIVA0 += pagosPagoImpuestosPTrasladoP.BaseP;
-                        pagos.Totales.TotalTrasladosImpuestoIVA0 += pagosPagoImpuestosPTrasladoP.ImporteP;
+                        pagos.Totales.TotalTrasladosBaseIVA0 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR * invoiceTaxAmount;
+                        pagos.Totales.TotalTrasladosImpuestoIVA0 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.ImporteDR * invoiceTaxAmount;
                     } break;
             }
         }
@@ -96,30 +109,30 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
         private static void SetTotalTrasladosIVAExento()
         {
-            pagos.Totales.TotalTrasladosBaseIVAExento = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosBaseIVAExento * taxValue);
+            pagos.Totales.TotalTrasladosBaseIVAExento = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosBaseIVAExento * paymentTaxAmount);
             pagos.Totales.TotalTrasladosBaseIVAExentoSpecified = true;
         }
 
         private static void SetTotalTrasladosIVA0()
         {
-            pagos.Totales.TotalTrasladosBaseIVA0 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosBaseIVA0 * taxValue); 
-            pagos.Totales.TotalTrasladosImpuestoIVA0 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosImpuestoIVA0 * taxValue);
+            pagos.Totales.TotalTrasladosBaseIVA0 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosBaseIVA0 * paymentTaxAmount); 
+            pagos.Totales.TotalTrasladosImpuestoIVA0 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosImpuestoIVA0 * paymentTaxAmount);
             pagos.Totales.TotalTrasladosBaseIVA0Specified = true;
             pagos.Totales.TotalTrasladosImpuestoIVA0Specified = true;
         }
 
         private static void SetTotalTrasladosIVA8()
         {
-            pagos.Totales.TotalTrasladosBaseIVA8 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosBaseIVA8 * taxValue);
-            pagos.Totales.TotalTrasladosImpuestoIVA8 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosImpuestoIVA8 * taxValue);
+            pagos.Totales.TotalTrasladosBaseIVA8 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosBaseIVA8 * paymentTaxAmount);
+            pagos.Totales.TotalTrasladosImpuestoIVA8 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosImpuestoIVA8 * paymentTaxAmount);
             pagos.Totales.TotalTrasladosBaseIVA8Specified = true;
             pagos.Totales.TotalTrasladosImpuestoIVA8Specified = true;
         }
 
         private static void SetTotalTrasladosIVA16()
         {
-            pagos.Totales.TotalTrasladosBaseIVA16 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosBaseIVA16 * taxValue);
-            pagos.Totales.TotalTrasladosImpuestoIVA16 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosImpuestoIVA16 * taxValue);
+            pagos.Totales.TotalTrasladosBaseIVA16 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosBaseIVA16 * paymentTaxAmount);
+            pagos.Totales.TotalTrasladosImpuestoIVA16 = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalTrasladosImpuestoIVA16 * paymentTaxAmount);
             pagos.Totales.TotalTrasladosBaseIVA16Specified = true;
             pagos.Totales.TotalTrasladosImpuestoIVA16Specified = true;
         }
@@ -156,7 +169,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             foreach (var group in groups)
             {
                 PagosPagoImpuestosPRetencionP pagoImpuestosPRetencionP = GetNewPagosPagoImpuestosPRetencionP(group);
-                BuildRetencionPagosTotales(pagoImpuestosPRetencionP);
                 retencionesP.Add(pagoImpuestosPRetencionP);
             }
 
@@ -179,16 +191,16 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             };
         }
 
-        private static void BuildRetencionPagosTotales(PagosPagoImpuestosPRetencionP pagosPagoImpuestosPRetencionP)
+        private static void BuildRetencionPagosTotales(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR pagosPagoDoctoRelacionadoImpuestosDRRetencionDR, decimal invoiceTaxAmount)
         {
-            pagos.Totales.TotalRetencionesIVA += pagosPagoImpuestosPRetencionP.ImporteP;
+            pagos.Totales.TotalRetencionesIVA += pagosPagoDoctoRelacionadoImpuestosDRRetencionDR.ImporteDR * invoiceTaxAmount;
         }
 
         private static void SetRetencionPagosTotalesSpecified()
         {
             if (pagos.Totales.TotalRetencionesIVA > 0)
             {
-                pagos.Totales.TotalRetencionesIVA = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalRetencionesIVA * taxValue);
+                pagos.Totales.TotalRetencionesIVA = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagos.Totales.TotalRetencionesIVA * paymentTaxAmount);
                 pagos.Totales.TotalRetencionesIVASpecified = true;
             }
         }
