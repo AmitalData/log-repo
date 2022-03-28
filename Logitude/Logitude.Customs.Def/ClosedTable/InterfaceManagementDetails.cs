@@ -517,6 +517,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 InOut = InOutEnum.I.ToString(),
                 Description = "מענה לבקשת ביטול הצהרה",
                 DcaPrefixName = "SendDF_MSG5118_DeclarationCancellationReplyMsg_Out.",
+                DcaPrefixName2 = "SendDF_MSG5118_DeclarationCancellationReplyMsg_EX_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = CONST_DefaultPriority,
                 AllowRestore = true,
