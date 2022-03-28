@@ -33,6 +33,10 @@ export class FieldTemplateComponent {
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
 
+            if (this.FieldName == "SharedLogisticsInvitationStatusName" && this.ObjectTableName == "Card") {
+                this.SetSharedLogisticsInvitationStatusTemplate();
+            }
+
             if (this.ObjectTableName == "Customer") {
                 if (this.FieldName == "RankCode") {
                     this.SetRanksSource();

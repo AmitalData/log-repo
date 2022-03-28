@@ -940,7 +940,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
     ResourcesLoaded: boolean = false;
-
   MenuTableQuerySection: string;
   Run(args: ListComponentArgs) {
     this.CurrentSession.AddMenuReference(this.ComponentRef);
@@ -1073,7 +1072,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
 
-        if(!this.ObjectTable.IsClosed){
+        if (!this.ObjectTable.IsClosed && !this.listArgs.DontCheckQueryFeature){
             this.Queries = allQueries.filter(x =>  FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode) );
 
         }
@@ -1114,6 +1113,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
 
         else {
+            this.SelectedQuery = this.Queries[0];
+        }
+
+        if (this.listArgs.DontCheckQueryFeature && this.IFSelectedQueryEmpty()) {
             this.SelectedQuery = this.Queries[0];
         }
 
@@ -1179,6 +1182,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
         this.SetNewEntityButton();
         this.SetAddButton();
+    }
+
+    IFSelectedQueryEmpty() {
+        return (!this.SelectedQuery && this.Queries && this.Queries.length > 0) ? true : false;
     }
 
 
@@ -2024,7 +2031,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                                     break;
                                 }
-                                case 'Customer': {
+                                case 'Customer': 
+                                case 'Card': {
+
                                     var windowArgs: any = {};
 
                                     windowArgs.CurrentEntity = entityList;
@@ -2032,8 +2041,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     var logWindow = new LogitudeWindow();
                                     logWindow.Width = 960;
                                     logWindow.Height = 570;
-                                    logWindow.Title = "Invite Customers";
-                                    logWindow.WindowArgs = windowArgs;
+                                    logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Customers" ;
+                                    logWindow.WindowArgs =  windowArgs;
                                     logWindow.IsShowCloseButton = true;
                                     logWindow.Show('./SharedLogistics/Components/InviteCustomersComponent');
 
@@ -2825,6 +2834,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
 
                     case "OccasionContact":
+                        {
+                            isVisible = false;
+                            break;
+                        }
+                    case "Card":
                         {
                             isVisible = false;
                             break;

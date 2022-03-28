@@ -81,6 +81,17 @@ export class SharedLogisticsMainComponent implements OnInit {
     myTenantPM: TenantPM;
     public tenantPMService: TenantPMService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public LastMonthAccessVisibility: boolean = false;
+    public LastActivityVisibility: boolean = false;
+    public InviteLinkLable: string = "Invite Customers";
+    public IsCtoolSetting: boolean = false;
+    private ObjectTableInviteName: string = "Customer";
+    public DisplayObjectTableInviteName: string = "Customers";
+    private InviteQueryCode: string = "Shared Logistics Customers";
+    public IsShowDisplaySetting: boolean = false;
+    public IsShowActivatedMobileArea: boolean = false;
+    public IsShowAgentStatisticsArea: boolean = false;
+    public ActivatedLabel = "Activated Shared Logistics";
     constructor(public _sharedLogisticsService: SharedLogisticsService, public _documentTypeListService: DocumentTypeListService) {
         if (this.tenantPMService == null) {
             this.tenantPMService = new TenantPMService();
@@ -88,14 +99,44 @@ export class SharedLogisticsMainComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.SetVisibility();
+        this.SetSettings();
+        this.SetTitles();
         this.LoadData();
 
-        this.SetTitles();
+    }
+
+
+    SetSettings() {
+
+        if (this.SharedTitleType != "CTool") return;
+        this.ObjectTableInviteName = "Card";
+        this.DisplayObjectTableInviteName = "Partners";
+        this.InviteQueryCode = "Ctool Partners";
+        this.IsCtoolSetting = true
+
+    }
+
+
+    SetVisibility() {
+
+        if (this.SharedTitleType == "CTool") return;
+        this.LastMonthAccessVisibility = this.LastActivityVisibility = true;
+        this.IsShowDisplaySetting = true;
+        this.IsShowActivatedMobileArea = true;
+        this.IsShowAgentStatisticsArea = true;
+        
+
+    }
+
+    GetInviteToolTipMessage() {
+        return this.IsCtoolSetting ? "View shows all partners except customers" : "";
     }
 
     SetTitles() {
 
-        if (this.SharedTitleType == "CargoTracking")
+
+          if (this.SharedTitleType == "CargoTracking")
         {
             this.TitleSettings = "Cargo Tracking Settings";
         }
@@ -107,12 +148,21 @@ export class SharedLogisticsMainComponent implements OnInit {
             else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
                 this.TitleSettings = "Shared Logistics Settings";
         }
+
         if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
             this.TitleStatus = "Shared Logistics & Mobile Status";
         else if (FeatureLocator.HasFeaturePermession("General", "MOBILE"))
             this.TitleStatus = "Mobile Status";
         else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
             this.TitleStatus = "Shared Logistics Status";
+
+
+        if (this.SharedTitleType != "CTool") return;
+        this.TitleSettings = "CTool Settings";
+        this.InviteLinkLable = "Invite CTool Partners";
+        this.TitleStatus = "CTool Status";
+        this.ActivatedLabel = "Activated Ctool";
+
     }
 
 
@@ -122,7 +172,9 @@ export class SharedLogisticsMainComponent implements OnInit {
 
     LoadData() {
         this.LoadCurrentTenant();
-        this.LoadLastLoginPartners();
+        if (this.LastMonthAccessVisibility) {
+            this.LoadLastLoginPartners();
+        }
     }
 
     LoadCurrentTenant() {
@@ -163,7 +215,10 @@ export class SharedLogisticsMainComponent implements OnInit {
 
         //this.MobileActivatedEnabled = false;
         this.LoadCardData();
-        this.LoadSharedLogisticsSummary();
+
+        if (this.LastActivityVisibility || this.LastMonthAccessVisibility) {
+            this.LoadSharedLogisticsSummary();
+        }
     }
 
     LoadCardData() {
@@ -173,11 +228,12 @@ export class SharedLogisticsMainComponent implements OnInit {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     var data: SharedLogisticsStatusStatistics = myResult;
-
+                  
                     if (data != null) {
-                        this.InvitedCustomersCount = data.InvitedCustomersCount;
-                        this.NotInvitedCustomersCount = data.NotInvitedCustomersCount;
-                        this.ActivatedCustomersCount = data.ActivatedCustomersCount + data.ActivatedCustomersForMobileCount;
+                        this.InvitedCustomersCount = !this.IsCtoolSetting ? data.InvitedCustomersCount : data.InvitedCToolPartnersCount;
+                        this.NotInvitedCustomersCount = !this.IsCtoolSetting ? data.NotInvitedCustomersCount : data.NotInvitedCToolPartnersCount;
+
+                        this.ActivatedCustomersCount = !this.IsCtoolSetting ? data.ActivatedCustomersCount : data.ActivatedCToolPartnersCount;
                         this.ActivatedCustomersForMobileCount = data.ActivatedCustomersForMobileCount;
 
                         this.InvitedAgentsCount = data.InvitedAgentsCount;
@@ -349,7 +405,8 @@ export class SharedLogisticsMainComponent implements OnInit {
     }
 
     InviteLinkClick(code: string) {
-        var backButtonTitle = "Shared Logistics";
+
+        var backButtonTitle = this.IsCtoolSetting ?"Ctool": "Shared Logistics";
         var queryCode = "";
         var displayTitle = "";
         var objectTableName = "";
@@ -358,9 +415,9 @@ export class SharedLogisticsMainComponent implements OnInit {
             switch (code) {
                 case "Customers":
                     {
-                        displayTitle = "Customers";
-                        objectTableName = "Customer";
-                        queryCode = "Shared Logistics Customers";
+                        displayTitle = this.DisplayObjectTableInviteName;
+                        objectTableName = this.ObjectTableInviteName;
+                        queryCode = this.InviteQueryCode;
                         break;
                     }
 
@@ -375,6 +432,9 @@ export class SharedLogisticsMainComponent implements OnInit {
             }
 
             this.filterAgrs = new ApiQueryFilters();
+            if (this.IsCtoolSetting) {
+                this.filterAgrs.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "boolean");
+            }
             var listArgs = new ListComponentArgs();
             listArgs.Filters = this.filterAgrs;
             listArgs.QueryCode = queryCode;
@@ -382,7 +442,7 @@ export class SharedLogisticsMainComponent implements OnInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
             listArgs.IsCargoTrackingMenuClicked = this.SharedTitleType == "CargoTracking";
-            //listArgs.ShowViews = false;
+            listArgs.DontCheckQueryFeature = this.IsCtoolSetting ? true : false;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
@@ -396,13 +456,11 @@ export class SharedLogisticsMainComponent implements OnInit {
 
     CustomersZoomLinkClcik(code: string) {
         this.filterAgrs = new ApiQueryFilters();
-        this.filterAgrs.addAdditionalFilter("CustomerStatusCode", "ACT", null, null, "Equals", false, true, false, "string");
-        this.filterAgrs.addAdditionalFilter("PartnerTypeId", "CS", null, null, "Equals", false, true, false, "string");
-
-        var backButtonTitle = "Shared Logistics";
-        var queryCode = "Shared Logistics Customers";
+        this.SetAddAdditionalFilters();
+        var backButtonTitle = !this.IsCtoolSetting ? "Shared Logistics" :"Ctool";
+        var queryCode = this.InviteQueryCode;
         var displayTitle = "";
-        var objectTableName = "Customer";
+        var displayObjectTableName = this.DisplayObjectTableInviteName;
         var navigate: boolean = true;
         switch (code) {
             case "invited":
@@ -414,7 +472,7 @@ export class SharedLogisticsMainComponent implements OnInit {
                         this.filterAgrs.SortBy = "InvitationDate";
                         this.filterAgrs.SortDirection = "Descending";
                         this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 2, null, null, "Equals", false, true, false, "string");
-                        displayTitle = "Invited Customers";
+                        displayTitle = "Invited " + displayObjectTableName;
                     }
                     break;
                 }
@@ -424,10 +482,11 @@ export class SharedLogisticsMainComponent implements OnInit {
                         navigate = false;
                     }
                     else {
-                        this.filterAgrs.SortBy = "LastShipmentDate";
+                        this.filterAgrs.SortBy = this.IsCtoolSetting ? "InvitationDate" : "LastShipmentDate";
                         this.filterAgrs.SortDirection = "Descending";
                         this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 1, null, null, "Equals", false, true, false, "string");
-                        displayTitle = "Not Invited Customers";
+                        displayTitle = "Not Invited " + displayObjectTableName;
+
                     }
                     break;
                 }
@@ -442,7 +501,9 @@ export class SharedLogisticsMainComponent implements OnInit {
                         this.filterAgrs.SortDirection = "Descending";
 
                         this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 3, null, null, "Equals", false, true, false, "string");
-                        displayTitle = "Activated Customers";
+
+                        displayTitle = "Activated " + displayObjectTableName;
+
 
                     }
                     break;
@@ -471,10 +532,11 @@ export class SharedLogisticsMainComponent implements OnInit {
             var listArgs = new ListComponentArgs();
             listArgs.Filters = this.filterAgrs;
             listArgs.QueryCode = queryCode;
-            listArgs.ObjectTableName = objectTableName;
+            listArgs.ObjectTableName = this.ObjectTableInviteName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
             listArgs.ShowViews = false;
+            listArgs.DontCheckQueryFeature = this.IsCtoolSetting ? true : false;
 
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
@@ -483,6 +545,19 @@ export class SharedLogisticsMainComponent implements OnInit {
                     this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
+    }
+
+
+
+
+
+    private SetAddAdditionalFilters() {
+        if (this.IsCtoolSetting) {
+            this.filterAgrs.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "boolean");
+            return;
+        }
+        this.filterAgrs.addAdditionalFilter("CustomerStatusCode", "ACT", null, null, "Equals", false, true, false, "string");
+        this.filterAgrs.addAdditionalFilter("PartnerTypeId", "CS", null, null, "Equals", false, true, false, "string");
     }
 
     ActivityZoomLinkClick(m: string) {

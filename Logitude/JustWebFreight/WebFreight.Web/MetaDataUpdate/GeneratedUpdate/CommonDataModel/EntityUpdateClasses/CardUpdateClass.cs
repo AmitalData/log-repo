@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "42bbd3f083b8d77851e921899e9c9c68";
+		public const string HashString = "dfc642a2be1cbb01b9ac42342c85ed82";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Card",
-			      				    Code =  "42f3",
+			      				    Code =  "1561",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -424,7 +424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -451,7 +451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PartnerTypeName",
-					  						DefaultText =  "Type",
+					  						DefaultText =  "Partner Type",
 					  						ListFieldLable =  "PartnerTypeNameListLable",
 					  						ListLableDefaultText =  "Type",
 					  						IsMaxLength =  false,
@@ -549,6 +549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
+					  						DataTemplateName =  "SharedLogisticsInvitationStatusDataTemplate",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -588,7 +589,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SharedLogisticsInvitationStatusName",
 					  						EnableFullscreenTextBox =  false,
@@ -2035,7 +2036,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "PartnerTypeId",
 					  						ObjectTableName =  "Card",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "PartnerType",
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  true,
@@ -4282,6 +4284,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RegimenFiscalCode",
 					  						ListPropertyPath =  "RegimenFiscalCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4380,7 +4383,56 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup CardQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1561", Name = "Card" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CardQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "573b", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable CardObjectTable = objectTables.ContainsKey("Card") ? objectTables["Card"] : null;
+            if (CardObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                CardObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Card" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode CardTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Card.Q.CToolPartners", DefaultText = @"CTool Partners",LocalDefaultText = null, ObjectTableId = CardObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CardFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Card.Q.CToolPartners", ObjectTableId = CardObjectTable.Id, Tenant = 0, NameTextCodeCode = "CardFeatures.CToolPartners", NameTextCodeDefaultText = "CTool Partners", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CardObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query CToolPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CardTextCode_0.Id, NameTextCodeCode = CardTextCode_0.Code, ObjectTableName = "Card", Code = "CTool Partners",  EditWizardName = "SharedLogistics.Views.InviteCustomersControl",
+			   QueryGroupCode = "1561", IndexOrder = 0, Tenant = 0, ObjectTableId = CardObjectTable.Id, QuerySection = "Card", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CardFeature_0.Id,FeatureUniqeCode= CardFeature_0.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Desending", Perspective = "Cards" }, addedQueries);
+	
+			 QueryColumn CToolPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Card.SharedLogisticsInvitationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CToolPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Card.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CToolPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Card.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CToolPartnersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Card.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CToolPartnersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Card.PartnerTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+
+             AdvancedQueryFilter CToolPartnersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Card.PartnerTypeId", PredefinedValue = "CS",PredefinedValue2 = null, CustomPredefined = false, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
