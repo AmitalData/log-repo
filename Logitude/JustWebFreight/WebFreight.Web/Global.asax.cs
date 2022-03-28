@@ -648,6 +648,13 @@ namespace WebFreight.Web
             //  }
 
 
+            var systemUrl = SecurityUtility.getLoggedDomain();
+            if (!string.IsNullOrEmpty(systemUrl) &&  systemUrl.ToLower().Contains("staging"))
+            {
+                HttpContext.Current.Items.Add("workerrolename", "staging");
+                return;
+            }
+
             if (!string.IsNullOrEmpty(HttpContext.Current.Request.CurrentExecutionFilePath) && HttpContext.Current.Request.CurrentExecutionFilePath.ToLower().Contains("/wcfapi/"))
             {
                 if (!HttpContext.Current.Items.Contains("workerrolename"))
