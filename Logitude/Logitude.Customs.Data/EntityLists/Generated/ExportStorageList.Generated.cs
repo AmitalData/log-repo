@@ -88,6 +88,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string FinalDestinationPortCode  { get; set; }
        [DataMember]
        public decimal? IsDangerousGoods  { get; set; }
+       [DataMember]
+       public bool? StorageStatusIsOpen  { get; set; }
    }
 
 }

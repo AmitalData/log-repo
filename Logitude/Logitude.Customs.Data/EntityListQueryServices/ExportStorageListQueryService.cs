@@ -128,7 +128,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        DeclarationNumber = declaration.DeclarationNumber,
 
                                                        //ExporterCode = card.VatNumber
-                                                       ExporterCode = client.Code
+                                                       ExporterCode = client.Code,
+
+                                                       StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open", 
                                                    });
             return query;
         }
