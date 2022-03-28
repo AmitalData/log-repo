@@ -8,7 +8,7 @@ import { SharedManifestsRequestAliases } from "../../constants/SharedManifestsUR
 import { DocumentsPermissionsDetails } from "../../models/SharedManifestsDetails/DocumentsPermissionsDetails"
 import * as Actions from "../Actions"
 import { SendDocs } from "../../../../Shipment/cypress/actions/Actions";
-
+import * as Authentication from "./../../../../Base/cypress/commands/Authentication"
 
 let SharedKey:string
 
@@ -82,23 +82,17 @@ export function GetSharedKey(){
     })
 }
 
-export function Login(){
+export function LoginSecondTenant(){
      
-    cy.visit('http://localhost:4200/'),
-    cy.get('#Email').clear(),
-    cy.get('#Password').clear(),
-    cy.get('#Email').type('sondos@customer.com'),
-    cy.get('#Password').type('Gute2020'),
-    cy.get('#cmdLogin').click(),
+    cy.fixture("Login.json").then(loginData => {
+        let email = loginData.customerCareEmail;
+        let password = loginData.customerCarePassword ;
+        let url = loginData.url;
+        let tenant = loginData.secondTenant ;
+        Authentication.CompleteLoginProcess(email, password, url, tenant);
+    });
 
-    cy.server();
-    
-    cy.route('**/ObjectTableLastUpdate/**').as('LoadPageCompleted');
-    cy.window().then(win=> {win.sessionStorage.setItem('controlledByCypress','true')});
-
-    cy.wait('@LoadPageCompleted')
-
-  }
+}
 
   export function FillSharedKey(){
     cy.get(SharedManifestsSelectors.AgentTHSharedLogistics).click()

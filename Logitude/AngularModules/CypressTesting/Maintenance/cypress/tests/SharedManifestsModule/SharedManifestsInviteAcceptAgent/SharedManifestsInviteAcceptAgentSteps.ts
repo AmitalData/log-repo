@@ -7,11 +7,11 @@ import { CardDetails } from "../../../models/CardDetails";
 import { Constants } from "../../../constants/Constants";
 import * as MaintenanceBaseActions from "../../../actions/BaseActions"
 import * as SharedManifestsActions from "../../../actions/SharedManifestsActions/SharedManifestsActions";
-import * as Authentication from "./../../../../../Base/cypress/commands/Authentication"
+
 let code = null
 //#region Create new Agent
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
-    cy.Login()
+    cy.Login(true)
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.AgentMaintenanceItem)
 });
 
@@ -80,16 +80,10 @@ Then("the Invitation should sent successfully", () => {
     SharedManifestsActions.SignOut()
     
 });
-
 Given("the user logged in to another tenant and open {string} in maintenance menu", (maintenanceItemName) => {
-    //cy.Login()
-    //SharedManifestsActions.Login() 
-    Authentication.CompleteLoginProcess('specflowdev@mail.com', '!Cypress1', "https://test.logitudeworld.com/test/", null) 
-    //Authentication.CompleteLoginProcess('specflowstable@mail.com', '!Cypress1', "https://test.logitudeworld.com/test/", null) 
+    SharedManifestsActions.LoginSecondTenant() 
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.AgentMaintenanceItem)
 });
-
-
 When ("Accept Invitation from Shared Logistics with the shared key from the previouse agent", () => {
     SharedManifestsActions.FillSharedKey()
     SharedManifestsActions.AcceptInvitation()
