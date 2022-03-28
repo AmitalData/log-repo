@@ -207,10 +207,6 @@ export class ExportStoragePM {
     private isDangerousGoods: number;
     public get IsDangerousGoods() { return this.isDangerousGoods; }
     public set IsDangerousGoods(newValue: number) { if (this.isDangerousGoods != newValue) { this.isDangerousGoods = newValue; this.MarkAsDirty("IsDangerousGoods"); } }
-
-    private storageStatusIsOpen: boolean;
-    public get StorageStatusIsOpen() { return this.storageStatusIsOpen; }
-    public set StorageStatusIsOpen(newValue: boolean) { if (this.storageStatusIsOpen != newValue) { this.storageStatusIsOpen = newValue; this.MarkAsDirty("StorageStatusIsOpen"); } }
        
 	 
     private storageStatusIsOpen: boolean;
@@ -246,4 +242,4 @@ export class ExportStoragePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
