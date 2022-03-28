@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsRequiredFieldUpdateClass
    {  		
-		public const string HashString = "2ab4d8b597b0517b5eac2ae4869be51b";
+		public const string HashString = "63611ef1fe7e005d9a20d7bb2319739f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שדה חובה מכס",
 			      				    DefaultText =  "Customs Required Field",
-			      				    Code =  "a143",
+			      				    Code =  "631c",
 			      				    Name =  "Customs.CustomsRequiredField Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -657,7 +657,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature CustomsRequiredFieldFeature_CSTMREQFIELDMTC = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CSTMREQFIELDMTC", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsRequiredField.Features.CSTMREQFIELDMTC", NameTextCodeDefaultText = @"שדות חובה ביצוא" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsRequiredFieldObjectTable);
+		   Feature CustomsRequiredFieldFeature_CSTMREQFIELDMTC = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CSTMREQFIELDMTC", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsRequiredField.Features.CSTMREQFIELDMTC", NameTextCodeDefaultText = @"Requierd Fields selection window" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsRequiredFieldObjectTable);
+
+		   Feature CustomsRequiredFieldFeature_EXPREQFIELDMTC = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPREQFIELDMTC", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsRequiredField.Features.EXPREQFIELDMTC", NameTextCodeDefaultText = @"שדות חובה ביצוא" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsRequiredFieldObjectTable);
 
    
 	    
@@ -709,7 +711,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CustomsRequiredFieldObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsRequiredField" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CustomsRequiredFieldTextCode_CustomsCustomsRequiredFieldOExportRequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsRequiredField.O.ExportRequiredFields", DefaultText = "Required Export Fields",LocalDefaultText = @"שדות חובה ביצוא", ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
