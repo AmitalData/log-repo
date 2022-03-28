@@ -87,8 +87,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.entityPM.CargoIdentifierType = value;
         
         if (value) {
-            this.setPlaceholderForCargoKey();
             this.setRequiredCargoKey();
+            this.setPlaceholderForCargoKey();
         }
     }
 
@@ -162,6 +162,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
         this.setTransportModeId();
         this.setRequiredCargoKey();
+        this.setPlaceholderForCargoKey()
     }
 
 
