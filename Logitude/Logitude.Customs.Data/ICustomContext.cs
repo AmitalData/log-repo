@@ -148,7 +148,6 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsDocumentStatusType> CustomsDocumentStatusTypes { get; }
 		 IDbSet<CustomsDocumentsTicket> CustomsDocumentsTickets { get; }
 		 IDbSet<CustomsDocumentUpload> CustomsDocumentUploads { get; }
-		 IDbSet<CustomsEnvironmentSetting> CustomsEnvironmentSettings { get; }
 		 IDbSet<CustomsEnvoirmentType> CustomsEnvoirmentTypes { get; }
 		 IDbSet<CustomsExchangeRate> CustomsExchangeRates { get; }
 		 IDbSet<CustomsGeneral> CustomsGenerals { get; }
