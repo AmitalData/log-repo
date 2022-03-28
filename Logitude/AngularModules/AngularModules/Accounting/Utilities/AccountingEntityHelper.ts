@@ -144,9 +144,9 @@ export class AccountingEntityHelper {
 
                 break;
             }
-            // 10-InterestReport
+            // 10-YearTransfer
             case "11": {
-                tableName = "InterestReport";
+                tableName = "Journal";
 
                 break;
             }
