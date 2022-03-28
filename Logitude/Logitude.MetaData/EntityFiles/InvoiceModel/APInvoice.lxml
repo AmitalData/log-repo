@@ -12270,6 +12270,12 @@
       LocalDefaultText="&quot; הועתקה מחשבונית&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.O.CantVoidWithInactiveGLA&quot;"
+      DefaultText="&quot;You can't void an invoice that is connected to an Inactive GL Account&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל חשבונית שמחוברת לכרטסת חסומה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -41,11 +41,13 @@ using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class APInvoiceNormalService
     {
+        private const string CantVoidWithInactiveGLAccount = "APInvoice.O.CantVoidWithInactiveGLA";
         private int tenant;
         public APInvoice invoice { get; set; }
         private APInvoicePM entityPM;
@@ -373,8 +375,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
                 JournalPM journalPM = journalQuery.GetJournalByAccountingEntityIdAndCode(entityPM.Id, "4", entityPM.Tenant);
+
                 if (journalPM != null)
                 {
+                    CheckJournalInactiveAccounts(entityPM, journalPM);
+
                     var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
                     AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.APInvoiceVoid, journalPM.Id);
                     journalUpdate.Update(journalPM, new StornoOverrideM()
@@ -385,6 +390,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     });
                 }
             }
+        }
+
+        private void CheckJournalInactiveAccounts(APInvoicePM entityPM, JournalPM journalPM)
+        {
+            List<string> accountIds = GetJournalAccounts(journalPM);
+
+            bool hasInactiveGLAccounts = CheckInactiveGLAccounts(entityPM, accountIds);
+            if (hasInactiveGLAccounts)
+                throw new ApplicationException(TextCodesTranslator.TranslateText(CantVoidWithInactiveGLAccount, entityPM.Tenant,LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant)));
+        }
+
+        private static List<string> GetJournalAccounts(JournalPM journalPM)
+        {
+            var creditAccounts = journalPM.JournalLines.Where(d => d.CreditAccountId != null).Select(d => d.CreditAccountId).ToList();
+            var debitAccounts = journalPM.JournalLines.Where(d => d.DebitAccountId != null).Select(d => d.DebitAccountId).ToList();
+            var accountIds = creditAccounts.Union(debitAccounts).ToList();
+            return accountIds;
+        }
+
+        private static bool CheckInactiveGLAccounts(APInvoicePM entityPM, List<string> accountIds)
+        {
+            IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            bool hasInactiveGLAccounts = gLAccountQueryServiceExt.CheckInactiveGLAccounts(accountIds, entityPM.Tenant);
+            return hasInactiveGLAccounts;
         }
 
         public void Update(bool mapComposition = false)
