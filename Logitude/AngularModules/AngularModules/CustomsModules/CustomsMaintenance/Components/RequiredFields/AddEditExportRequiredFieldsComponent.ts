@@ -1,0 +1,286 @@
+declare var window: any;
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ValidationSummary} from '../../../../Controls/All/ValidationSummary';
+import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import {AppTool} from '../../../../Infrastructure/Tools';
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {CustomsRequiredFieldList} from '../../../../Customs/EntityLists/CustomsRequiredFieldList';
+import { CustomsRequierdFieldsWebService } from '../../../../Customs/Services/WebServices/CustomsRequierdFieldsWebService';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+
+
+@Component({
+    
+    selector: 'AddEditExportRequiredFieldsComponent',
+    templateUrl: './AddEditRequiredFieldsComponent.html',
+})
+
+export class AddEditRequiredFieldsComponent extends BaseComponent {
+    public DataContext: AddEditRequiredFieldsComponent = this;
+    public ObjectTableName: string;
+    public ValidationErrorsList: string[];
+    OriginalFieldsList: ObservableCollection;
+    FieldsList: ObservableCollection;
+    SelectedObjectFields: CustomsRequiredFieldList[] = [];
+
+    customsRequierdFieldsWebService: CustomsRequierdFieldsWebService = new CustomsRequierdFieldsWebService();
+    _EntityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor(private _entityResourceService: EntityResourceService) {
+        super();
+        this.FieldsList = new ObservableCollection([]);
+        this.OriginalFieldsList = new ObservableCollection([]);
+
+    }
+
+    SetWindowArgs(args: any) {
+        if (!AppTool.IsNullOrEmpty(args)) {
+            this.ObjectTableName = args.SelectedObjectTableName;
+            //this.SelectedObjectFields = args.SelectedObjectFields;
+            if (args.SelectedObjectFields) {
+                args.SelectedObjectFields.forEach((el) => {
+                    this.SelectedObjectFields.push(el);
+                });
+            }
+
+            //this.CurrentSession.StartBusyIndicatorLoading();
+            this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((res: any) => {
+                this.GetObjectFields();
+            });
+        }
+    }
+
+    GetObjectFields() {
+        var objectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+        var objectFields: any[] = window.ObjectFields.filter(x => x.ObjectTableId == objectTable.Id && (!x.IsMulti && x.FieldName != "ImporterId" && x.FieldName != "TransferImporterId" && x.FieldName != "EntitleImporterId"));
+
+        this.FieldsList.Clear();
+        var items = [];
+
+        objectFields.forEach((objectField) => {
+
+            var requierdField = new CustomsRequiredFieldList();
+            requierdField.ObjectfieldId = objectField.Id;
+            requierdField.ObjectfieldCode = objectField.FieldCode;
+
+            requierdField.ObjectFieldName = objectField.FieldName;
+            requierdField.ObjectTableId = objectField.ObjectTableId
+            requierdField.Tenant = SessionLocator.Tenant;
+
+            var item = new RequiredFieldItemModel(objectField, requierdField);
+            item.TranslatedName = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode);
+
+            //if (this.SelectedObjectFields.find(d => d.ObjectfieldCode == objectField.FieldCode)) {
+            //    item.Active = true;
+            //}
+            var selectObjectField = this.SelectedObjectFields.find(d => d.ObjectfieldCode == objectField.FieldCode);
+            if (!AppTool.IsNullOrEmpty(selectObjectField)) {
+                if (selectObjectField.IsExport)
+                    item.IsExport = true;
+
+                if (selectObjectField.IsImport)
+                    item.IsImport = true;
+                 item.Active = true;
+            }
+
+            items.push(item);
+
+        });
+
+        this.FieldsList.InsertCollection(items);
+        this.OriginalFieldsList.InsertCollection(items);
+        //this.CurrentSession.StopBusyIndicator();
+
+        //BuildSelectedList();
+    }
+
+    TextChanged(text: string) {
+        if (text) {
+            //console.log("Searching for " + text + " ...");
+            var originalList = this.OriginalFieldsList.Collection;
+            var filteredList = originalList.filter(d => d.TranslatedName.toLocaleLowerCase().includes(text.trim().toLocaleLowerCase()));
+            this.FieldsList.Clear();
+            this.FieldsList.InsertCollection(filteredList);
+        } else {
+            this.FieldsList.InsertCollection(this.OriginalFieldsList.Collection);
+        }
+    }
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
+    OkButtonClicked() {
+        this.CurrentSession.StartBusyIndicatorSaving();
+
+        var items: RequierdFieldObject[] = [];
+        // 1- 
+        this.OriginalFieldsList.Collection.forEach((field: RequiredFieldItemModel) => {
+            var i = new RequierdFieldObject();
+            i.ObjectfieldId = field.ObjectfieldId;
+            i.ObjectfieldCode = field.ObjectfieldCode;
+
+            i.ObjectTableId = field.ObjectField.ObjectTableId;
+            i.ObjectFieldName = field.ObjectField.FieldName;
+            i.Active = field.Active;
+            i.IsExport = field.IsExport;
+            i.IsImport = field.IsImport;
+
+            items.push(i);
+        });
+
+
+        this.customsRequierdFieldsWebService.PostRequiredFields(items).subscribe((response: ServiceResponse) => {
+            var res = response.Result;
+            console.log("[Response] customsRequierdFieldsWebService.PostRequiredFields: ", res);
+
+
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CloseCurrentWindow();
+        });
+
+    }
+
+    //row selection on grid
+    public SelectedRow: any = null;
+    OnRowSelected(itemComponent: any) {
+        this.SelectedRow = itemComponent;
+    }
+
+    CheckBoxChanged(event, itemModel: RequiredFieldItemModel) {
+        console.log("<CheckBoxChanged> ", event, itemModel);
+        if (itemModel) {
+             if (event == true) {
+                this.SelectedObjectFields.push(itemModel.RequierdField);
+                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
+                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
+
+                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
+                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
+            }
+            else {
+                var index = this.SelectedObjectFields.findIndex(d => d.ObjectFieldName == itemModel.ObjectField.FieldName);
+                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
+                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
+
+                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
+                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
+
+            }
+
+            if (this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport == true || this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport == true) {
+                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = true;
+            }
+            else {
+                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = false;
+
+            }
+
+
+            if (this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport == true || this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport == true) {
+                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = true;
+            }
+            else {
+                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = false;
+
+            }
+            if (this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active == false)
+            this.SelectedObjectFields.splice(index, 1);
+
+        }
+    }
+
+}
+
+export class RequiredFieldItemModel extends BaseComponent {
+    
+    public DataContext = this;
+
+    constructor(public ObjectField: any, public RequierdField: CustomsRequiredFieldList) {
+        super();
+        this.ObjectfieldId = ObjectField.Id;
+        this.ObjectfieldCode = ObjectField.FieldCode;
+     }
+
+    //#region PropertiesObjectfieldId
+
+    objectfieldId: string;
+    get ObjectfieldId() { return this.objectfieldId; }
+    set ObjectfieldId(value: string) {
+        if (this.objectfieldId != value) {
+            this.objectfieldId = value;
+        }
+    }
+
+    objectfieldCode: string;
+    get ObjectfieldCode() { return this.objectfieldCode; }
+    set ObjectfieldCode(value: string) {
+        if (this.objectfieldCode != value) {
+            this.objectfieldCode = value;
+        }
+    }
+
+    get Name() { return this.ObjectField.FullNameTextCodeCode; }
+    set Name(value: string) {
+        if (this.ObjectField.FullNameTextCodeCode != value) {
+            this.ObjectField.FullNameTextCodeCode = value;
+        }
+    }
+
+    translatedName: string;
+    get TranslatedName() { return this.translatedName; }
+    set TranslatedName(value: string) {
+        if (this.translatedName != value) {
+            this.translatedName = value;
+
+        }
+    }
+
+    active: boolean = false;
+    get Active() { return this.active; }
+    set Active(value: boolean) {
+        if (this.active != value) {
+            this.active = value;
+
+        }
+    }
+
+    isImport: boolean = false;
+    get IsImport() {return this.isImport; }
+    set IsImport(value: boolean) {
+    if (this.isImport != value) {
+        this.isImport = value;
+
+        }
+    }
+
+    isExport: boolean = false;
+    get IsExport() { return this.isExport; }
+    set IsExport(value: boolean) {
+        if (this.isExport != value) {
+            this.isExport = value;
+
+        }
+    }
+
+    //#endregion
+}
+
+export class RequierdFieldObject {
+    ObjectfieldId: string;
+    ObjectfieldCode: string;
+    ObjectTableId: string;
+    ObjectFieldName: string;
+    IsExport: boolean;
+    IsImport: boolean;
+    Active: boolean;
+}
