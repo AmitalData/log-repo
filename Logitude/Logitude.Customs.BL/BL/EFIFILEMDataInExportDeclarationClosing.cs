@@ -54,7 +54,7 @@ namespace Logitude.Customs.BL.BL
                         var ESPSPEDdata = new ESPSPEDQueryService(tenantAmitalContext).GetSingle(EFIFILEMData.SPEDNO.GetValueOrDefault(), false);
                         if (ESPSPEDdata != null)
                         {
-                            entityPM.MAIN_AWB =  ESPSPEDdata.MAIN_AWB;
+                            entityPM.MAIN_AWB = ESPSPEDdata.MAINCARRIER + "-"+ ESPSPEDdata.MAIN_AWB;
                         }
                     }
                 }
