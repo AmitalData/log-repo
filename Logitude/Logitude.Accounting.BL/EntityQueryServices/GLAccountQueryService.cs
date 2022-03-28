@@ -1288,7 +1288,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public bool CheckInactiveGLAccounts(List<string> glaccountIds, int tenant)
         {
             List<GLAccount> glaccounts = GetGLAccountsByIdsList(glaccountIds, tenant);
-            var hasInactiveAccounts = glaccounts.Where(a => a.Inactive == true).Any();
+            var hasInactiveAccounts = glaccounts.Any(a => a.Inactive == true);
             return hasInactiveAccounts;
         }
 
