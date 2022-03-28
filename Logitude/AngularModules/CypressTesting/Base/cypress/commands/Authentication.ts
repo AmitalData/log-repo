@@ -76,7 +76,7 @@ Cypress.Commands.add("RedirectToLogin", () => {
     }
 })
 
-function CompleteLoginProcess(Email: string, Password: string, URL: string, Tenant?: number) {
+export function CompleteLoginProcess(Email: string, Password: string, URL: string, Tenant?: number) {
     cy.visit(URL)
     cy.intercept("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
     cy.window().then(win => { win.sessionStorage.setItem("ControlledByCypress", "true") })

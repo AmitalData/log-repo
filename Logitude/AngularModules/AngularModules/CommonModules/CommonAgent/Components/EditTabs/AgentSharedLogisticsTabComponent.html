@@ -1,4 +1,4 @@
-﻿
+
 <style>
      .TemplateSection {
 
@@ -52,7 +52,7 @@
                         <tr style="height:25px">
 
                             <td>
-                                <button class="Button" style="width:120px;" (click)="SendInvitation()">Send Invitation</button>
+                                <button [attr.data-cy]="'Send Invitation'" class="Button" style="width:120px;" (click)="SendInvitation()">Send Invitation</button>
                             </td>
                         </tr>
 
@@ -60,7 +60,7 @@
                         <tr style="height:35px">
 
                             <td>
-                                <button class="Button" style="width:120px;" (click)="Acceptinvitation()">Accept invitation</button>
+                                <button [attr.data-cy]="'Accept invitation'" class="Button" style="width:120px;" (click)="Acceptinvitation()">Accept invitation</button>
                             </td>
                         </tr>
                     </table>
@@ -80,7 +80,7 @@
                             <div style="font-size:11px">Key</div>
                         </td>
 
-                        <td style="width:220px;"><input [disabled]="true" type="text" [(ngModel)]="agentSharedLogisticsKey.SharedKey" style="height:22px;border-radius:3px;border:1px solid black;width:100%;color:black" /></td>
+                        <td style="width:220px;"><input [attr.data-cy]="'SharedKey'" [disabled]="true" type="text" [(ngModel)]="agentSharedLogisticsKey.SharedKey" style="height:22px;border-radius:3px;border:1px solid black;width:100%;color:black" /></td>
                        
                         <td style="width:10px"></td>
 
