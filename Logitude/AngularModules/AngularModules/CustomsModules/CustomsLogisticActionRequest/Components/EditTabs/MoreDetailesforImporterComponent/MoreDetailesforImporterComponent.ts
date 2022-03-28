@@ -10,7 +10,7 @@ import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator"
 export class MoreDetailesforImporterComponent extends BaseComponent {
     public DataContext: any = this;
     entityPM: LogisticActionRequestPM;
-    public ObjectTableName: string = "Customs.LogisticActionRequestGeneralTabComponent";
+    public ObjectTableName: string = "Customs.LogisticActionRequest";
     public OriginalEntityPM: LogisticActionRequestPM;
     public ClonedEntityPM: LogisticActionRequestPM;
     FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -52,7 +52,7 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
 
 
     setRequiredField(name: string, fieldIsRequired: boolean) {
-        this.UIProperties.SetRequired(name, this.ObjectTableName, fieldIsRequired);
+        this.UIProperties.SetWarning(name, this.ObjectTableName, fieldIsRequired);
 
         if (fieldIsRequired) {
             if (this.requierdFieldsList.every(x => x != name))
@@ -60,7 +60,7 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
         } else
             this.removeFromArray(this.requierdFieldsList, name)
         
-        this.invalidate();
+        // this.invalidate();
     }
 
 
@@ -102,7 +102,7 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
     
     OkButtonClicked() {
         this.isSubmit = true;
-        if (this.invalidate()) return;
+        // if (this.invalidate()) return;
 
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
     }
