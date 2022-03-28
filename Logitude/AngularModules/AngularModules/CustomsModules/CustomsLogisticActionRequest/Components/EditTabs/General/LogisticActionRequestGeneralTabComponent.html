@@ -106,14 +106,13 @@
                                 </td>
                                 <td style="width:130px">
                                     <div style="width:135px">
-                                        <LogTextBox 
-                                            [ObjectFieldName]="'ExportFileNo'" 
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext" 
-                                            [HideColumns]="true"
+                                        <LogTextBox [ObjectFieldName]="'ExportFileNo'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [HideColumns]="true"
                                             [Text]="ExportFileNo"
                                             (LostFocus)="onBlurExportFileNo()"                                         
-                                        ></LogTextBox>
+                                                    (LostFocus)="onBlurExportFileNo()"></LogTextBox>
                                     </div>
                                 </td>
 
@@ -262,11 +261,10 @@
                                 </td>
                                 <td style="width:130px">
                                     <div style="width:135px">
-                                        <LogTextBox 
-                                            [ObjectFieldName]="'Quantity'" 
-                                            [InputType]="'integertext'"                                            
-                                            [DataContext]="DataContext" 
-                                            [ObjectTableName]="ObjectTableName"
+                                        <LogTextBox [ObjectFieldName]="'Quantity'"
+                                                    [InputType]="'integertext'"
+                                                    [DataContext]="DataContext"
+                                                    [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"
                                             [Text]="Quantity"
                                         ></LogTextBox>
