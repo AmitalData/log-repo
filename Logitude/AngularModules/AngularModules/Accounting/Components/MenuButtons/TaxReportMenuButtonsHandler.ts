@@ -233,7 +233,7 @@ export class TaxReportMenuButtonsHandler {
         this.taxReportExtendedPMService.GetTaxReportReconciledLines(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) =>
             {
-                let reconciledTaxReportLines: any = response.Result;
+                let reconciledTaxReportLines: any = response?.Result;
                 if (!reconciledTaxReportLines) {
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Show(TextCodeTranslator.Translate(TextCode.TaxReportClosingJournalConfirmationMessage))
