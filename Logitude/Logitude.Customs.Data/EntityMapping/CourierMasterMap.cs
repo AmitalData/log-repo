@@ -90,6 +90,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CourierMasterRemarks).HasColumnName("CourierMasterRemarks").HasMaxLength(512).IsUnicode(true);
 
             this.Property(t => t.OpenDeclarations).HasColumnName("OpenDeclarations");
+
+            this.Property(t => t.NoOfCourierHawbwWithoutHatara).HasColumnName("NoOfCourierHawbwWithoutHatara").HasMaxLength(5).IsUnicode(true);
+
+            this.Property(t => t.NoOfCourierHawbWithoutDelivery).HasColumnName("NoOfCourierHawbWithoutDelivery").HasMaxLength(5).IsUnicode(true);
         }
     }
 }

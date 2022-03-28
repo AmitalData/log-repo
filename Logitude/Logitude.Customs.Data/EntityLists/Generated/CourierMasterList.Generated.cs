@@ -130,6 +130,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierMasterRemarks  { get; set; }
        [DataMember]
        public int OpenDeclarations  { get; set; }
+       [DataMember]
+       public string NoOfCourierHawbwWithoutHatara  { get; set; }
+       [DataMember]
+       public string NoOfCourierHawbWithoutDelivery  { get; set; }
    }
 
 }
