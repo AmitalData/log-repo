@@ -27,6 +27,8 @@ import { DocumentTypeCustomsDataListService } from '../../../Customs/Services/St
 import { DocumentTypeCustomsDataExtendPMService } from '../../../Customs/Services/ExtendedPMs/DocumentTypeCustomsDataExtendPMService';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { DocumentTypePM } from '../../../Common/EntityPMs/DocumentTypePM';
+import { CustomDocumentTypePM } from '../../../Customs/EntityPMs/CustomDocumentTypePM';
+import { CustomDocumentTypeListService } from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
 
 
 @Component({
@@ -51,6 +53,7 @@ export class DocumentTypeCustomsDataComponent
     private _DocumentTypeCustomsDataPMService: DocumentTypeCustomsDataPMService = new DocumentTypeCustomsDataPMService();
     private _DocumentTypeCustomsDataListService: DocumentTypeCustomsDataListService = new DocumentTypeCustomsDataListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private customDocumentTypeListService: CustomDocumentTypeListService = new CustomDocumentTypeListService();
     
 
     
@@ -91,6 +94,10 @@ export class DocumentTypeCustomsDataComponent
                         if (this.entityPM) {
                             //  this.DocumentTypeId = this.entityPM.;
                             //  this.UnifaceNAME_HEB = this.entityPM.u;
+                            var customDocumentTypePM: CustomDocumentTypePM;
+                            this.customDocumentTypeListService.getSingle(this.entityPM.CustomsDoucumentTypeCode).subscribe((docTypeRes: ServiceResponse) => {
+                                customDocumentTypePM = docTypeRes.Result;
+                            });
                             this.Loaded = true;
                         }
 
@@ -111,6 +118,21 @@ export class DocumentTypeCustomsDataComponent
             //this.RefreshBtnClick()
         });
 
+        //var customDocumentTypeListService: CustomDocumentTypeListService = new CustomDocumentTypeListService();
+        //var _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
+        //custDocTypeMetaDataWebService.GetCustomDocumentTypeMetaDataByType(this.CustomsDocument.DocumentTypeCode).subscribe((res: ServiceResponse) => {
+        //    this.customDocumentTypeMetaDataList = res.Result;
+        //    this.customDocumentMetaDataValueList = this.CustomsDocument.CustomsDocumentMetaDataValues;
+        //    var customsClosedTableListService: CustomsClosedTableListService = new CustomsClosedTableListService();
+        //    customsClosedTableListService.getAll().subscribe((resp: ServiceResponse) => {
+        //        this.customsClosedTableList = resp.Result;
+        //        customDocumentTypeListService.getSingle(this.CustomsDocument.DocumentTypeCode).subscribe((docTypeRes: ServiceResponse) => {
+        //            if (this.previousValueList != null) {
+        //                this.customDocumentTypeMetaDataList.forEach((metaData) => {
+        //                    if (!AppTool.IsNullOrEmpty(this.customDocumentMetaDataValueList) && this.customDocumentMetaDataValueList.length > 0) {
+        //                        var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d != null && d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
+        //                        if (value == null) {
+                                    
     }
     DocumentTypeId: string;
     UnifaceNAME_HEB: string;

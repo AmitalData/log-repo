@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CustomDocumentTypeList> GetIqueryableList(IQueryable<CustomDocumentType> iQueryable)
         {
-            IQueryable<CustomDocumentTypeList> query = (from a in iQueryable.Include("Pointer")
+            IQueryable<CustomDocumentTypeList> query = (from a in iQueryable.Include("Pointer").Include("CustomsDocumentUploadT")
                                                         select new CustomDocumentTypeList()
                                                         {
                                                             Code = a.Code,
@@ -33,7 +33,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                             PointerLevelName = a.Pointer.LocalName != null ? a.Pointer.LocalName : null,
                                                             AutoSetOriginalDocumentTrue = a.AutoSetOriginalDocumentTrue,
                                                             IsCourierManadatory= a.IsCourierManadatory,
-                                                            IsDiamondManadatory= a.IsDiamondManadatory
+                                                            IsDiamondManadatory= a.IsDiamondManadatory,
+                                                            CustomsDocumentUpload = a.CustomsDocumentUpload,
+                                                            CustomsDocumentUploadName = a.CustomsDocumentUploadT.LocalName != null ? a.CustomsDocumentUploadT.LocalName : null,
                                                         });
 
             return query;

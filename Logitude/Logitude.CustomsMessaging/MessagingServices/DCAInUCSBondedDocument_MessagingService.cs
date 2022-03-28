@@ -22,9 +22,11 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -288,7 +290,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public void
             JustDoIt(object documentsFilingPM)
         {
-            DateTime stopLogAt = new DateTime(2020, 09, 01);
+            DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
 
             Debug.WriteLine("SendBondedCustomDocument");
             string logData = "";
@@ -305,38 +315,45 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     return;
                 }
+ 
                 var DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(_DocumentsFilingPM.Tenant);
                 var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", _DocumentsFilingPM.Tenant);
-                if (ENDOC == null)
+                var myDocumentsFilingMetaDataValueReferenceAsDocType = "";
+                if (!CheckIsSendByDocType(logData))
                 {
-                    LogitudeSettings.HandleLogMe("ENDOC not exist in DocumentsMetaDataType", false, "SendBondedCustomDocument", stopLogAt);
-                    Debug.WriteLine("_DocumentsFilingPM == null");
-                    return;
+                    if (ENDOC == null)
+                    {
+                        LogitudeSettings.HandleLogMe("ENDOC not exist in DocumentsMetaDataType", false, "SendBondedCustomDocument", stopLogAt);
+                        Debug.WriteLine("_DocumentsFilingPM == null");
+                        return;
 
+                    }
+                    var myDocumentsFilingMetaDataValue = _DocumentsFilingPM.DocumentsFilingMetaDataValues
+                        .FirstOrDefault(r => r.DocumentsMetaDataTypeCode == "ENDOC" || r.DocumentsMetaDataTypeId == ENDOC.Id);
+                    if (myDocumentsFilingMetaDataValue == null)
+                    {
+                        LogitudeSettings.HandleLogMe("ENDOC not exist in DocumentsFilingMetaDataValues", false, "SendBondedCustomDocument", stopLogAt);
+                        Debug.WriteLine("ENDOC not exist in DocumentsFilingMetaDataValues");
+                        return;
+
+                    }
+
+                    myDocumentsFilingMetaDataValueReferenceAsDocType = myDocumentsFilingMetaDataValue.MetaDataValue;// <MetaDataValue>380</MetaDataValue>
+
+                    if (!HaveTransDocumentTypeCode(myDocumentsFilingMetaDataValueReferenceAsDocType, stopLogAt))
+                    {
+                        return;
+                    }
                 }
-                var myDocumentsFilingMetaDataValue = _DocumentsFilingPM.DocumentsFilingMetaDataValues
-                    .FirstOrDefault(r => r.DocumentsMetaDataTypeCode == "ENDOC" || r.DocumentsMetaDataTypeId == ENDOC.Id);
-                if (myDocumentsFilingMetaDataValue == null)
+                if(!String.IsNullOrWhiteSpace(logData))
                 {
-                    LogitudeSettings.HandleLogMe("ENDOC not exist in DocumentsFilingMetaDataValues", false, "SendBondedCustomDocument", stopLogAt);
-                    Debug.WriteLine("ENDOC not exist in DocumentsFilingMetaDataValues");
-                    return;
-
+                    LogitudeSettings.HandleLogMe(logData , false, "after checks", stopLogAt);
                 }
-
-                var myDocumentsFilingMetaDataValueReferenceAsDocType = myDocumentsFilingMetaDataValue.MetaDataValue;// <MetaDataValue>380</MetaDataValue>
-
                 CustomsDocumentPM customsDocumentPM;
                 if (!IscustomsDocumentSent(stopLogAt, out customsDocumentPM))
                 {
                     return;
                 }
-                DocumentTypeCustomsDataPM myDocumentTypeCustomsData;
-                if (!HaveTransDocumentTypeCode(myDocumentsFilingMetaDataValueReferenceAsDocType,stopLogAt))
-                {
-                    return;
-                }
-
 
                 Debug.WriteLine("Create.....");
 
@@ -385,7 +402,41 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         }
 
-       
+        private bool CheckIsSendByDocType(string logData)
+        {
+            bool IsSendByDocType = false;
+            string CustomsDocumentUpload = "";
+            try
+            {
+                DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
+                DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(_DocumentsFilingPM.DocumentTypeId, false, true);
+
+                if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
+                {
+                    CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                    CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, true);
+
+                    if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
+                    {
+                        CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
+                        if (customDocumentTypePM.CustomsDocumentUpload == "C" || customDocumentTypePM.CustomsDocumentUpload == "U")
+                        {
+                            IsSendByDocType = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ee)
+            {
+                logData += $"CheckIsSendByDocType:error:{ee.Message}";
+            }
+            finally
+            {
+                logData += $"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
+            }
+            return IsSendByDocType;
+        }
+
         private bool HaveTransDocumentTypeCode(string myDocumentsFilingMetaDataValueReferenceAsDocType ,DateTime stopLogAt)
         {
 
