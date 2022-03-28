@@ -17,6 +17,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
         private static void ValidateConcurrencyGUID(ContainerPM entityPM, Container entityPoco)
         {
+            if(string.IsNullOrEmpty( entityPM.ConcurrencyGUID) || string.IsNullOrEmpty(entityPM.NewConcurrencyGUID))
+            {
+                return;
+            }
             if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
             {
                 ThrowConcurrencyException(entityPM);
