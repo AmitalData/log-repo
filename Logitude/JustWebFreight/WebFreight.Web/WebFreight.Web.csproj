@@ -1098,6 +1098,7 @@
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ImporterShipmentOrderDocumentsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\ImporterShipmentOrdersController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
@@ -2717,6 +2718,8 @@
     <Compile Include="Helpers\BaseDataProviderService.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\DWObjectTableAdditionalConditionService.cs" />
+    <Compile Include="Helpers\ImporterShipmentOrderDocuments\ImporterShipmentOrderDocumentsService.cs" />
+    <Compile Include="Helpers\ImporterShipmentOrderDocuments\ShipmentOrderDocumentAmMapping.cs" />
     <Compile Include="Helpers\ImporterShipmentOrders\ImporterShipmentOrdersService.cs" />
     <Compile Include="Helpers\ImporterShipmentOrders\ShipmentOrderAmToShipmentMapping.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />

@@ -391,6 +391,7 @@
     <Compile Include="ContainerUpdateWR.cs" />
     <Compile Include="EntityMapping\ShipmentOrderPmToAmMapping.cs" />
     <Compile Include="CargoTrackingImporterApprovalReceivedWR.cs" />
+    <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
     <Compile Include="ImporterShipmentOrdersWorkerRole.cs" />
     <Compile Include="MultiEntityUpdate\IMultiEntityUpdater.cs" />
     <Compile Include="MultiEntityUpdate\MultiEntityUpdater.cs" />
@@ -406,6 +407,8 @@
     <Compile Include="Services\SAT\SATInvoiceProfact40CancellationService.cs" />
     <Compile Include="Services\SAT\SATPaymentProfact40CancellationService.cs" />
     <Compile Include="Services\SAT\SATProfact40Service.cs" />
+    <Compile Include="Services\ShipmentOrderDocuments\ShipmentOrderDocumentsFilingAMMap.cs" />
+    <Compile Include="Services\ShipmentOrderDocuments\ShipmentOrderDocumentsService.cs" />
     <Compile Include="Stimulsoft\fonts\StimulsoftFontsService.cs" />
     <Compile Include="Tasks\ContainerAutomaticallyClosingTask.cs" />
     <Compile Include="Tasks\RecalculateCashbooksTotalsTask.cs" />

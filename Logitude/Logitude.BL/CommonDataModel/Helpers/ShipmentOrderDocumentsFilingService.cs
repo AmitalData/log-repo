@@ -14,11 +14,15 @@ namespace Logitude.BL.CommonDataModel.Helpers
 {
     public class ShipmentOrderDocumentsFilingService
     {
+        private DocumentTypeRepository documentTypeRepository;
         public string GetDocumentTypeId(DocumentsFiling documentsFiling, int tenant)
         {
             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
             var shipmentOrderObjectTableId = ObjectTableRepository.GetObjectTableByName(documentsFiling.EntityType.Name);
-            var documentTypeId = documentTypeRepository.GetDocumentTypeIdByCodeAndObjectTable(documentsFiling.DocumentType.Code, shipmentOrderObjectTableId, tenant);
+            string documentTypeId = GetDocumentTypeId(documentsFiling.DocumentType.Code, tenant, shipmentOrderObjectTableId);
+            if (!string.IsNullOrEmpty(documentTypeId)) return documentTypeId;
+
+            documentTypeId = GetDocumentTypeId("SO" + documentsFiling.DocumentType.Code, tenant, shipmentOrderObjectTableId);
             if (!string.IsNullOrEmpty(documentTypeId)) return documentTypeId;
 
             var shipmentObjectTableId = ObjectTableRepository.GetObjectTableByName("shipment");
@@ -34,18 +38,23 @@ namespace Logitude.BL.CommonDataModel.Helpers
 
             return documentType.Id;
         }
+
+        private string GetDocumentTypeId(string documentTypeCode, int tenant, string objectTableId)
+        {     
+            if (documentTypeRepository == null) documentTypeRepository = new DocumentTypeRepository(tenant);
+            return documentTypeRepository.GetDocumentTypeIdByCodeAndObjectTable(documentTypeCode, objectTableId, tenant);
+        }
+
         public void BuildDocumentQueue(DocumentsFilingPM documentsFiling)
         {
             if (string.IsNullOrEmpty(documentsFiling.EntityId)) return;
 
-            var shipmentOrder = new ShipmentOrderRepository(documentsFiling.Tenant).GetSinglesById(documentsFiling.EntityId, documentsFiling.Tenant);  
-            if (!ValidForLogBoxTransfer(shipmentOrder))
-                return;
+            var shipmentOrder = new ShipmentOrderRepository(documentsFiling.Tenant).GetSingleById(documentsFiling.EntityId, documentsFiling.Tenant);  
+            if (!ValidForLogBoxTransfer(shipmentOrder)) return;
 
-            //IQueueService queueservice = new DbQueueService();
-            //queueservice.InitializeQueue("ImporterShipmentOrderQueue", 0);
-            //queueservice.Send(
-            //    new Dictionary<string, string>() { { "ShipmentOrderId", shipmentOrder.Id }, { "Tenant", shipmentOrder.Tenant.ToString() } }, shipmentOrder.Tenant);
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ImporterShipmentOrderDocumentsQueue", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "ShipmentOrderId", documentsFiling.EntityId }, { "DocumentFilingId", documentsFiling.Id }, { "Tenant", documentsFiling.Tenant.ToString() }, }, documentsFiling.Tenant);
         }
         private bool ValidForLogBoxTransfer(ShipmentOrder shipmentOrder)
         {
