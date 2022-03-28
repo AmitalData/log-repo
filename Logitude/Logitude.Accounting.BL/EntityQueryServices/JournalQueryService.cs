@@ -293,7 +293,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public JournalPM GetByAccountingEntityIdAndAccountingEntityCode(string entityId, string accountingEntityCode, int tenant)
         {
             Journal poco = repository.GetByAccountingEntityId(entityId, accountingEntityCode, tenant);
-            return GetEntityPM(poco);
+
+            var keys = new JournalKeys() { Id = poco.Id };
+            return GetEntityPM(poco,true, keys);
         }
         public List<JournalPM> GetJournalsByAccountingEntityIdAndTypeCode(string entityId, string accountingEntityCode, int tenant)
         {

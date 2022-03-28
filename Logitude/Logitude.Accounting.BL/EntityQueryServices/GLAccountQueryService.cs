@@ -1283,6 +1283,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                            }).ToList();
             return gLAccountPMs;
         }
+
+
+        public bool CheckInactiveGLAccounts(List<string> glaccountIds, int tenant)
+        {
+            List<GLAccount> glaccounts = GetGLAccountsByIdsList(glaccountIds, tenant);
+            var hasInactiveAccounts = glaccounts.Where(a => a.Inactive == true).Any();
+            return hasInactiveAccounts;
+        }
+
+        private List<GLAccount> GetGLAccountsByIdsList(List<string> glaccountIds, int tenant)
+        {
+            GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
+            return gLAccountRepository.GetByGLAccountsIdList(glaccountIds, tenant);
+        }
+
     }
     public class GLAccountCurrencyBalance
     {

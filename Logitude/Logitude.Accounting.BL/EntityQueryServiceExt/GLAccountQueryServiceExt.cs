@@ -92,8 +92,12 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
             IQueryable<GLAccountPM> gLAccounts = query.GetSplittedByCurrencyGLAccounts(accountId, tenant);
 
             return gLAccounts;
+        }
 
-
+        public bool CheckInactiveGLAccounts(List<string> glaccountIds, int tenant)
+        {
+            EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
+            return query.CheckInactiveGLAccounts(glaccountIds, tenant);
         }
     }
 }
