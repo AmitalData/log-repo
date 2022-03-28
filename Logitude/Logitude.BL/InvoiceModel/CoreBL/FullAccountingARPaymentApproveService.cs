@@ -51,16 +51,17 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         bool IsCashPayment { get { return paymentPM.AccountingPaymentMethodCode == "CA"; } }
         bool IsChequePayment { get { return paymentPM.AccountingPaymentMethodCode == "CH"; } }
         bool IsBankTransferPayment { get { return paymentPM.AccountingPaymentMethodCode == "BT"; } }
+        bool IsDraft = false;
         private ARPaymentBankTranferRepository paymentBankTranferRepository;
 
         JournalPM journal;
-        public FullAccountingARPaymentApproveService(ARPaymentPM paymentPM, int tenant, bool isNewEntity)
+        public FullAccountingARPaymentApproveService(ARPaymentPM paymentPM, int tenant, bool isNewEntity, bool isDraft)
         {
             this.paymentPM = paymentPM;
             this.tenant = tenant;
             this.isNewEntity = isNewEntity;
             paymentBankTranferRepository = new ARPaymentBankTranferRepository(tenant);
-
+            this.IsDraft = isDraft;
             GetPaymentRelatedEntities();
         }
 
@@ -109,6 +110,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         }
         private void AddNewChequesToCashbook()
         {
+            DeleteARPaymentCheques();
             bool haveReplica = paymentPM.ARPaymentChequeReplicas.Count > 0;
             if (haveReplica)
             {
@@ -127,6 +129,21 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             }
 
         }
+
+        public void AddNewChequesForDraftARPayment()
+        {
+            DeleteARPaymentCheques();
+            bool haveReplica = paymentPM.ARPaymentChequeReplicas.Count > 0;
+            if (haveReplica)
+            {
+                AddNewChequesForEachReplica();
+            }
+            else
+            {
+                CreateARPaymentCheque();
+            }
+        }
+
         private int originalEntityLineNumber = 0;
         private void CreateInterestTransactionLine(ARPaymentChequePM cheque, ARPaymentPM payment)
         {
@@ -212,33 +229,44 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             paymentPM.ValueDate = value;
         }
 
-        private void AddNewChequesForEachReplica()
+        public void AddNewChequesForEachReplica()
         {
             int LineNumberCounter = GetInitialLineNumberForCheque(paymentPM);
             foreach (ARPaymentChequeReplicaPM chequeReplica in paymentPM.ARPaymentChequeReplicas)
             {
+                
                 ARPaymentChequePM cheque = CreateARPaymentChequeForReplica(paymentPM, ref LineNumberCounter, chequeReplica);
-                AddChequeToCashbook(cheque);
-                CreateInterestTransactionLine(cheque, paymentPM);
+                if (!IsDraft)
+                {
+                    AddChequeToCashbook(cheque);
+                    CreateInterestTransactionLine(cheque, paymentPM);
+                }
             }
         }
 
         public void AddNewBankTransfers()
         {
+            DeleteARPaymentBankTranfer();
             int LineNumberCounter = GetInitialLineNumberForBankTransfer(paymentPM);
             if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Any()) {
                 foreach (ARPaymentBankTranferPM bankTransfer in paymentPM.ARPaymentBankTranfers)
                 {
                     ARPaymentBankTranferPM aRPaymentBankTranferPM = InitializeARPaymentBankTransfer(paymentPM, bankTransfer, ref LineNumberCounter);
                     SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
-                    CreateInterestTransactionLineForBankTransfer(aRPaymentBankTranferPM, paymentPM);
+                    if (!IsDraft) {
+                        CreateInterestTransactionLineForBankTransfer(aRPaymentBankTranferPM, paymentPM);
+                    }
+                    
                 }
             }
             else
             {
                 ARPaymentBankTranferPM aRPaymentBankTranferPM = CreateFirstARPaymentBankTransfer(paymentPM);
                 SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
-                CreateInterestTransactionLineForBankTransfer(aRPaymentBankTranferPM, paymentPM);
+                if (!IsDraft)
+                {
+                    CreateInterestTransactionLineForBankTransfer(aRPaymentBankTranferPM, paymentPM);
+                }
             }
         }
         private void SaveARPaymentBankTranfer(ARPaymentBankTranferPM aRPaymentBankTranfer)
@@ -250,10 +278,23 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             paymentBankTranferRepository.SubmitChanges();
         }
 
+        private void DeleteARPaymentBankTranfer()
+        {
+            paymentBankTranferRepository.RemoveARPaymentBankTransfers(paymentPM.Id, tenant);
+            paymentBankTranferRepository.SubmitChanges();
+        }
+
+        private void DeleteARPaymentCheques()
+        {
+            ARPaymentChequeRepository chequeRepository = new ARPaymentChequeRepository(tenant);
+            chequeRepository.RemoveARPaymentsCheques(paymentPM.Id, tenant);
+            chequeRepository.SubmitChanges();
+        }
+        
         private int GetInitialLineNumberForBankTransfer(ARPaymentPM arpaymentPM)
         {
             int LineNumberCounter = 1;
-            if (!isNewEntity)
+            if (!isNewEntity && !IsDraft)
                 LineNumberCounter = arpaymentPM.ARPaymentBankTranfers.Max(d => d.LineNumber) + 1;
             return LineNumberCounter;
         }
@@ -337,7 +378,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private int GetInitialLineNumberForCheque(ARPaymentPM arpaymentPM)
         {
             int LineNumberCounter = 1;
-            if (!isNewEntity)
+            if (!isNewEntity && !IsDraft)
                 LineNumberCounter = arpaymentPM.ARPaymentChequeReplicas.Max(d => d.LineNumber) + 1;
             return LineNumberCounter;
         }

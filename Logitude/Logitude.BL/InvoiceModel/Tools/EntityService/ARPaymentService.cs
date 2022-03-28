@@ -175,10 +175,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (IsAccountingActivated && setApproved || (IsAccountingActivated && _arpaymentPM.IsExternalEntity && !_arpaymentPM.UpdateAmountAndStatuses))
             {
-                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(_arpaymentPM, tenant, isNewEntity);
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(_arpaymentPM, tenant, isNewEntity, false);
                 approveService.ApproveARPayment();
             }
-
+            else if (IsAccountingActivated && paymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod)
+            {
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(_arpaymentPM, tenant, isNewEntity, true);
+                approveService.AddNewBankTransfers();
+            }
+            else if (IsAccountingActivated && paymentPM.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod)
+            {
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(_arpaymentPM, tenant, isNewEntity, true);
+                approveService.AddNewChequesForDraftARPayment();
+            }
 
             paymentPoco.ValueDate = _arpaymentPM.ValueDate;
             paymentRepository.Update(paymentPoco);
@@ -396,11 +405,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (IsAccountingActivated && setApproved || (IsAccountingActivated && theEntityPm.IsExternalEntity && !theEntityPm.UpdateAmountAndStatuses))
             {
-                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(theEntityPm, tenant, isNewEntity);
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(theEntityPm, tenant, isNewEntity, false);
                 approveService.ApproveARPayment();
             }
-
-
+            else if (IsAccountingActivated && paymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod)
+            {
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(theEntityPm, tenant, isNewEntity, true);
+                approveService.AddNewBankTransfers();
+            }
+            else if (IsAccountingActivated && paymentPM.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod)
+            {
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(theEntityPm, tenant, isNewEntity, true);
+                approveService.AddNewChequesForDraftARPayment();
+            }
+            
             this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
 
             this.InitializeTransferComponents();  
