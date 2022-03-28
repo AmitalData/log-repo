@@ -6682,7 +6682,7 @@
       <ScreenField
         Column="1"
         Row="0"
-        ObjectFieldName="&quot;CustomsBrokerId&quot;"
+        ObjectFieldName="&quot;SellerId&quot;"
         ScreenName="CustomsChargesHeaderScreen" />
       <ScreenField
         Column="1"

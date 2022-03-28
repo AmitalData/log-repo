@@ -50,6 +50,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     public SellerDependancy: string = "AL";
     public HasAContainerTypeUOM: boolean = false;
     private firstVersion: TariffVersionPM;
+    public SellerToolTip: string;
     constructor() {
         super();
         this.myService = new TariffPMService();
@@ -114,6 +115,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.VisibleContainerTypeAreaInOFS = true;
             this.HasAContainerTypeUOM = false;
         }
+
+        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+            this.SellerToolTip = "Customs Broker";
+        }
+
         this.SetDefaultFreightChargeId();
         this.BuildQueryFilters();
         this.BuildFreightChargesQueryFilters();

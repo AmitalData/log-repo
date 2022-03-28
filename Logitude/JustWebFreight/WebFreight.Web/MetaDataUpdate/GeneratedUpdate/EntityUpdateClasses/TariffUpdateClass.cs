@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "50e48a50f85d3e19367c1079f31056a5";
+		public const string HashString = "f186f5ae2cdac0b779326dbfe2240ee1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4702,7 +4702,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	          
              ScreenField TariffTariffCustomsChargesHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.CustomsBrokerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.SellerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField TariffTariffCustomsChargesHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
