@@ -1326,6 +1326,16 @@ export class ContainerPM {
     public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
        
 	 
+    private shipmentConcurrencyGUID: string;
+    public get ShipmentConcurrencyGUID() { return this.shipmentConcurrencyGUID; }
+    public set ShipmentConcurrencyGUID(newValue: string) { if (this.shipmentConcurrencyGUID != newValue) { this.shipmentConcurrencyGUID = newValue; this.MarkAsDirty("ShipmentConcurrencyGUID"); } }
+       
+	 
+    private shipmentNewConcurrencyGUID: string;
+    public get ShipmentNewConcurrencyGUID() { return this.shipmentNewConcurrencyGUID; }
+    public set ShipmentNewConcurrencyGUID(newValue: string) { if (this.shipmentNewConcurrencyGUID != newValue) { this.shipmentNewConcurrencyGUID = newValue; this.MarkAsDirty("ShipmentNewConcurrencyGUID"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

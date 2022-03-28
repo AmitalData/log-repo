@@ -30,14 +30,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private IShipmentsContext shipmentsContext;
         private ContainerRepository entityRepository;
         private Container containerPoco { get; set; }
-
         public ContainerService(IShipmentsContext shipmentsContext, int tenant)
         {
             this.tenant = tenant;
             this.shipmentsContext = shipmentsContext;
             this.entityRepository = new ContainerRepository(shipmentsContext);
         }
-
         public void Create(ContainerPM entityPM)
         {
             this.isNewEntity = true;
@@ -53,8 +51,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
             AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
+            MapShipmentConcurrencyFields();
         }
-
         public void Update(ContainerPM entityPM, ContainersExternal containersExternal = null)
         {
             this.isNewEntity = false;
@@ -76,6 +74,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
             AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
+            MapShipmentConcurrencyFields();
         }
         private void SetUpdatedByUser()
         {
@@ -108,7 +107,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ContainersExternalDataBehaviour containersExternalDataBehaviour = new ContainersExternalDataBehaviour(entityPM, shipmentsContext, containersExternal);
             containersExternalDataBehaviour.Handle();
         }
-
         private void GetForeignFields_Status(ContainerPM entityPM, Container entityPoco)
         {
             entityPM.StatusName = null;
@@ -122,7 +120,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.StatusName = iEntityStatus.Name;
             }
         }
-
         private void MapContainerClosedDate(ContainerPM containerPM, Container container)
         {
             if (containerPM.IsClosed != container.IsClosed)
@@ -137,7 +134,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
         private void AddShipmentUpdateKafkaQueueMessage(string queueName)
         {
             if (!FeatureToggleHelper.HasFeatureToggle("CTL", containerPm.Tenant))
@@ -146,7 +142,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
             AddKafkaQueueMessage(queueName);
         }
-
         private void AddKafkaQueueMessage(string queueName)
         {
             IQueueService queueservice = new DbQueueService();
@@ -157,7 +152,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             queueservice.Send(queueMessage, tenant);
         }
-
         public void Delete(ContainerPM entityPM)
         {
             this.containerPm = entityPM;
@@ -167,11 +161,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.Remove(containerPoco);
             entityRepository.SubmitChanges();
         }
-
         private void RunAutomation(string processType, ContainerPM entityPM)
         {
             var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, ProcessType = processType, ObjectTableName = "Container", EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now });
             mainEntityChangeService.AddEntityChange();
+        }
+        private void MapShipmentConcurrencyFields()
+        {
+            if (string.IsNullOrEmpty(this.containerPm.ShipmentId))
+            {
+                return;
+            }
+            this.containerPm.ShipmentConcurrencyGUID = entityRepository.GetConcurrencyGUIDByShipmentId(this.containerPm.ShipmentId, this.containerPm.Tenant);
+            this.containerPm.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
         }
     }
 }

@@ -24,6 +24,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             }
             MapContainerConcurrencyFields_OnEdited(entityPM, entityPoco);
             MapContainerConcurrencyFields_Client(entityPM, entityPoco);
+
+            // Add all fileds when the simulator work
+
         }
         private static void MapContainerConcurrencyFields_Client(ContainerPM entityPM, Container entityPoco)
         {

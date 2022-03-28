@@ -349,5 +349,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ConcurrencyGUID { get; set; }
         public string NewConcurrencyGUID { get; set; }
+        public string ShipmentConcurrencyGUID { get; set; }
+        public string ShipmentNewConcurrencyGUID { get; set; }
     }
 }

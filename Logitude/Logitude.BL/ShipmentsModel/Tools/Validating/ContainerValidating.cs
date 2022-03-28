@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 using System.Data.Entity.Core;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Validating
@@ -13,6 +14,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 ValidateConcurrencyGUID(entityPM, entityPoco);
             }
+            ValidateShipmentConcurrencyGUID(entityPM);
         }
 
         private static void ValidateConcurrencyGUID(ContainerPM entityPM, Container entityPoco)
@@ -25,6 +27,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 ThrowConcurrencyException(entityPM);
             }
+        }
+        private static void ValidateShipmentConcurrencyGUID(ContainerPM entityPM)
+        {
+            var shipmentConcurrencyGUID = GetShipmentConcurrencyGUID(entityPM.ShipmentId, entityPM.Tenant);
+            if (!string.IsNullOrEmpty(entityPM.ShipmentConcurrencyGUID) && !string.IsNullOrEmpty(entityPM.ShipmentNewConcurrencyGUID) && !string.IsNullOrEmpty(shipmentConcurrencyGUID))
+            {
+                if (!entityPM.ShipmentConcurrencyGUID.Equals(shipmentConcurrencyGUID) && !entityPM.ShipmentNewConcurrencyGUID.Equals(shipmentConcurrencyGUID))
+                {
+                    ThrowConcurrencyException(entityPM);
+                }
+            }
+        }
+
+        private static string GetShipmentConcurrencyGUID(string shipmentId, int tenant)
+        {
+            var containerRepository = new ContainerRepository(tenant);
+            string shipmentConcurrencyGUID = containerRepository.GetConcurrencyGUIDByShipmentId(shipmentId, tenant);
+            return shipmentConcurrencyGUID;
         }
 
         private static void ThrowConcurrencyException(ContainerPM entityPM)

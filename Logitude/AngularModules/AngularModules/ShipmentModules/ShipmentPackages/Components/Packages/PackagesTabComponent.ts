@@ -1927,18 +1927,44 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    ViewContainerEntity(item: ShipmentPackageItem) {
+    public ViewContainerEntity(item: ShipmentPackageItem) {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Container";
         logWindow.IsFillScreen = true;
         var containerEntityId = item.EntityPM?.ContainerEntityId;
         if (!AppTool.IsNullOrEmpty(containerEntityId)) {
-            logWindow.ShowEditComponent(containerEntityId, "Container");
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(s => {
+
+            this.RunContainerEntity(item);
+            //logWindow.ShowEditComponent(containerEntityId, "Container");
+            //logWindow.ComponentLoaded.subscribe(comp => {
+            //    logWindow.WindowClosed.subscribe(s => {
+
+
+            //    });
+            //});
+        }
+    }
+
+    RunContainerEntity(item: ShipmentPackageItem) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                var entityId = item.EntityPM?.ContainerEntityId;
+                var concurrencyGUID = this.EntityPM.ConcurrencyGUID;
+                var newConcurrencyGUID = this.EntityPM.NewConcurrencyGUID;
+                var iFields: any[] = [];
+                iFields.push({ FieldName: "ShipmentConcurrencyGUID", FieldValue: concurrencyGUID });
+                iFields.push({ FieldName: "ShipmentNewConcurrencyGUID", FieldValue: newConcurrencyGUID });
+
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'Container', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber, EntityFields: iFields });
+
+                let isEditComponentSaved = false;
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
                 });
             });
-        }
     }
 
     ViewStatusesClicked(item: ShipmentPackageItem) {

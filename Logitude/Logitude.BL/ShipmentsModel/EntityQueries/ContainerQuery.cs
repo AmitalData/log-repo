@@ -291,7 +291,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return containerPM;
         }
 
-        private static void MapCustomFields(ContainerPM containerPM, Container entityPoco)
+        private void MapCustomFields(ContainerPM containerPM, Container entityPoco)
         {
             containerPM.Field1 = new CustomFieldClass("Field1", "Container", entityPoco.Field1);
             containerPM.Field2 = new CustomFieldClass("Field2", "Container", entityPoco.Field2);
@@ -303,7 +303,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             containerPM.Field8 = new CustomFieldClass("Field8", "Container", entityPoco.Field8);
             containerPM.Field9 = new CustomFieldClass("Field9", "Container", entityPoco.Field9);
             containerPM.Field10 = new CustomFieldClass("Field10", "Container", entityPoco.Field10);
+            MapConcurrencyFields(containerPM);
+        }
+
+        private void MapConcurrencyFields(ContainerPM containerPM)
+        {
             containerPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            if (string.IsNullOrEmpty(containerPM.ShipmentId))
+            {
+                return;
+            }
+            containerPM.ShipmentConcurrencyGUID = repository.GetConcurrencyGUIDByShipmentId(containerPM.ShipmentId, containerPM.Tenant);
+            containerPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
         public List<ContainerPM> GetContainers(string id , int tenant)
