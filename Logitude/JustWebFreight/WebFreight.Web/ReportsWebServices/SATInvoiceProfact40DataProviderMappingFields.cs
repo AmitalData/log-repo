@@ -112,6 +112,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private static void MapCFDIRelacionadoDetails(InvoiceDataProvider invoicedataprovider, Comprobante comprobante)
         {
+            if (comprobante.CfdiRelacionados == null) return;
             if (comprobante.CfdiRelacionados.Length == 0) return;
 
             invoicedataprovider.SAT.TipoRelacion = comprobante.CfdiRelacionados[0].TipoRelacion;
