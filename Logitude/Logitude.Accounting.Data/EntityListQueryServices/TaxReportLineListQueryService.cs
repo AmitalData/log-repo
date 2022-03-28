@@ -71,7 +71,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        JournalId = a.JournalId,
 
                                                        IsManuallyChanged = a.IsManuallyChanged,
-                                                       
+                                                       VatAmountRound = a.VatAmountRound,
 
                                                        IsEquipment = a.IsEquipment,
 

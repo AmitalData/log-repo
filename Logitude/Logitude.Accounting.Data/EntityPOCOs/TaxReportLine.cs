@@ -88,6 +88,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int JournalLineNumber { get; set; }
         [Column("PreviousReference")]
 	    public string PreviousReference { get; set; }
+        [Column("VatAmountRound")]
+	    public decimal? VatAmountRound { get; set; }
         [Column("LedgerTransactionId")]
 	    public string LedgerTransactionId { get; set; }
     }

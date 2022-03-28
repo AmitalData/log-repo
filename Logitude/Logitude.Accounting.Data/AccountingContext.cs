@@ -440,6 +440,8 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<TaxReportLine>().Property(x => x.VatableInvoiceAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<TaxReportLine>().Property(x => x.TotalInvoiceAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<TaxReportLine>().Property(x => x.VatAmountRound).HasPrecision(16, 2);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());

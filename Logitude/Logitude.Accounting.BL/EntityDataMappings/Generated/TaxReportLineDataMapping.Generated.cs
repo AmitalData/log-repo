@@ -47,6 +47,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         OriginalReference, 
 	         JournalLineNumber, 
 	         PreviousReference, 
+	         VatAmountRound, 
 	         LedgerTransactionId,
 	      }
 
@@ -208,6 +209,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.PreviousReference = entityPM.PreviousReference;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VatAmountRound))
+            {
+				entityPOCO.VatAmountRound = entityPM.VatAmountRound;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LedgerTransactionId))
             {
 				entityPOCO.LedgerTransactionId = entityPM.LedgerTransactionId;
@@ -344,6 +350,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.PreviousReference = entityPOCO.PreviousReference;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VatAmountRound))
+            {
+					entityPM.VatAmountRound = entityPOCO.VatAmountRound;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LedgerTransactionId))
             {
 					entityPM.LedgerTransactionId = entityPOCO.LedgerTransactionId;
@@ -468,6 +479,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PreviousReference))
             {
                 oldEntityPM.PreviousReference = entityPM.PreviousReference;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VatAmountRound))
+            {
+                oldEntityPM.VatAmountRound = entityPM.VatAmountRound;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LedgerTransactionId))
