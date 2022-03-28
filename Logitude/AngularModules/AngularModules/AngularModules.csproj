@@ -1511,6 +1511,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\CustomsPartnerFtpList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsShipList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DecisionTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\DeclarationCasualDetailsList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationMamanSpecialActionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationPendingList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationRefernatDataList.ts" />
@@ -1601,6 +1602,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsPackDetPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecDangersContactPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecisionTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\DeclarationCasualDetailsPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationMamanSpecialActionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationPendingPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationRefernatDataPM.ts" />
@@ -1723,6 +1725,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPaymentTermsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DBMigrationListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DecisionTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationCasualDetailsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationConsAcceptanceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationMamanSpecialActionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationPendingListService.ts" />
@@ -1802,6 +1805,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsCountryPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsPartnerFtpPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DBMigrationPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationCasualDetailsPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationPendingPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationReferantDataPMService.ts" />
