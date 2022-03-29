@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "d2fa1af88eab36c6d7c0924f3f4f113c";
+		public const string HashString = "09c6342d2fcafe44495f0649d65df9ef";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -682,10 +682,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalAmountDebit",
 					  						DefaultText =  "Local Amount Debit",
-					  						FullLocalDefaultText =  "סכום חובה",
+					  						FullLocalDefaultText =  "חובה בשח",
 					  						ListFieldLable =  "LocalAmountDebitListLable",
 					  						ListLableDefaultText =  "Local Amount Debit",
-					  						ListLocalDefaultText =  "סכום חובה",
+					  						ListLocalDefaultText =  "חובה בשח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -746,10 +746,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalAmountCredit",
 					  						DefaultText =  "Local Amount Credit",
-					  						FullLocalDefaultText =  "סכום בזכות",
+					  						FullLocalDefaultText =  "זכות בשח",
 					  						ListFieldLable =  "LocalAmountCreditListLable",
 					  						ListLableDefaultText =  "Local Amount Credit",
-					  						ListLocalDefaultText =  "סכום בזכות",
+					  						ListLocalDefaultText =  "זכות בשח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -873,10 +873,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignAmountDebit",
 					  						DefaultText =  "Foreign Amount Debit",
-					  						FullLocalDefaultText =  "סכום חובה במטבע",
+					  						FullLocalDefaultText =  "חובה מט\"ז",
 					  						ListFieldLable =  "ForeignAmountDebitListLable",
 					  						ListLableDefaultText =  "Foreign Amount Debit",
-					  						ListLocalDefaultText =  "סכום חובה במטבע",
+					  						ListLocalDefaultText =  "חובה מט\"ז",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -937,10 +937,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignAmountCredit",
 					  						DefaultText =  "Foreign Amount Credit",
-					  						FullLocalDefaultText =  "סכום מט''ז",
+					  						FullLocalDefaultText =  "זכות מט\"ז",
 					  						ListFieldLable =  "ForeignAmountCreditListLable",
 					  						ListLableDefaultText =  "Foreign Amount Credit",
-					  						ListLocalDefaultText =  "סכום מט''ז",
+					  						ListLocalDefaultText =  "זכות מט\"ז",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
