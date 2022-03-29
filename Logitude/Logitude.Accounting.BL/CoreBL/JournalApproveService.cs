@@ -1205,7 +1205,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                         {
-                            if (DateTime.Now < new DateTime(2022, 06, 01))
+                            if (DateTime.Now < new DateTime(2050, 06, 01))
                             {
                                 CreateBatchAccountingIntegrityCheck();
                             }
@@ -1259,7 +1259,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             // serialize
                             string xmlString = LogitudeXmlSerializer.SerializeObjectToXmlElementString<AccountingIntegrityInParam>(paramsObj);
 
-                            service.DelayQueueInMinutes = iCount * 45;
+                            service.DelayQueueInMinutes = iCount * 10;
                             service.Update(new AccountingIntegrityCheckPM()
                             {
                                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -1274,7 +1274,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                             , true);
                             scope.Complete();
-                            iCount++;//more 45 min
+                            iCount++;//more 10 min
                         }
 
                     }
