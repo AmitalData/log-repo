@@ -22,7 +22,7 @@
                     <td class="CellStretch">
                         <div style="height:100%;">
 
-                            <div [ngStyle]="IsEnableReportTemplateExcel && {'height': '28.3%'}"  style="height:45%;vertical-align:top;">
+                            <div *ngIf="IsEnableRegularReportTemplate" [ngStyle]="IsEnableReportTemplateExcel && {'height': '28.3%'}"  style="height:45%;vertical-align:top;">
 
                               <table>
 
@@ -219,7 +219,7 @@
 
                             </div>
 
-                            <div style="height:5%;"></div>
+                            <div *ngIf="IsEnableRegularReportTemplate" style="height:5%;"></div>
 
 
                             <div  style="height:28.3%;vertical-align:top;" *ngIf="IsEnableReportTemplateExcel">

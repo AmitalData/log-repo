@@ -20,6 +20,7 @@ import { EntityResourceService } from '../../Infrastructure/Services/EntityResou
 
 import { ReportsTemplatePMService } from '../../Common/Services/StandardPMs/ReportsTemplatePMService';
 import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 @Component({
 
@@ -41,6 +42,7 @@ export class ReportTemplateComponent implements OnInit {
     IsEnableEditUserReportTemplate: boolean = false;
     IsEnableEditAllReportTemplate: boolean = false;
     IsEnableReportTemplateExcel: boolean = false;
+    IsEnableRegularReportTemplate: boolean = false;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     ReportsTemplatePMLists: ReportsTemplatePM[] = [];
@@ -81,7 +83,10 @@ export class ReportTemplateComponent implements OnInit {
             this.IsEnableReportTemplateExcel = true;
         }
 
-
+        if (this.RegularReportTemplateEnabled()) {
+            this.IsEnableRegularReportTemplate = true;
+        }
+        
         this._entityResourceService.getEntityResourceByTableName("ReportsTemplate", 0).subscribe((response: any) => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
@@ -93,6 +98,11 @@ export class ReportTemplateComponent implements OnInit {
 
     }
 
+
+    private RegularReportTemplateEnabled() : boolean {
+        return SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" ||
+         SessionLocator.LoggedUserPM.IsDistributor || FeatureLocator.HasFeaturePermession("ReportsTemplate", "REGULARREPORTTEMPLATE");
+    }
 
     public ShowMessage(message: string) {
 
