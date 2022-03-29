@@ -90,6 +90,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? IsDangerousGoods  { get; set; }
        [DataMember]
        public bool? StorageStatusIsOpen  { get; set; }
+       [DataMember]
+       public string ActionCode  { get; set; }
    }
 
 }

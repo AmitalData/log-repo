@@ -148,5 +148,47 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 throw;
             }
         }
+        public static void RaiseExportStorageStatus(string statusId, string unifrieghtStatus, ExportStoragePM dirtyEntityPM, string FUStatusRemarks, DateTime date)
+        {
+            try
+            {
+                string loggingUserId = "";
+                loggingUserId = AuthenticationUtil.ResolveUserId(dirtyEntityPM.Tenant);
+
+                var eventContextTagModel = dirtyEntityPM.CurrentContextTag as EventContextTagModel;
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = dirtyEntityPM.Tenant,
+                    objectTableName = "Customs.ExportStorage",
+                    EventCode = statusId,
+                    notes = "DO_NOT_RAISE_EVENT",
+                    CommunicationLoggingEntityReference = dirtyEntityPM.Id.ToString(),
+                    EntityId = dirtyEntityPM.Id,
+                    UserId = loggingUserId,
+                    CommunicationSubject = "FU Status from logitude ",
+                };
+
+                if (!string.IsNullOrWhiteSpace(dirtyEntityPM.StorageNo))
+                {
+                    myAmitalEventTracerModel.MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "MSCSTORAGE",
+                        primary_number = dirtyEntityPM.StorageNo,
+                        status = "new",
+                        xml_status = "new",
+                        status_id = unifrieghtStatus,
+                        status_DateTime = date,
+                        //status_save = "no_fail",
+                        comments = FUStatusRemarks,
+                    };
+                }
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+            }
+            catch (System.Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
+        }
     }
 }
