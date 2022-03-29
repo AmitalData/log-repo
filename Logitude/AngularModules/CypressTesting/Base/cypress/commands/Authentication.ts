@@ -9,7 +9,7 @@ declare namespace Cypress {
     }
 }
 
-Cypress.Commands.add("Login", (customerCareUser = false) => {
+Cypress.Commands.add("Login", (customerCareUser = false ) => {
     let mode = Cypress.env("Mode");
     if (mode.toLowerCase() === "development") {
         cy.fixture("Login.json").then(loginData => {
