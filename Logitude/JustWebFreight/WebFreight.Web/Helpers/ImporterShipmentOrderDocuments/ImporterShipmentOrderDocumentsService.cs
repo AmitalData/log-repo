@@ -63,7 +63,7 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrderDocuments
         {
             this.documentsFilingAM = documentsFilingAM;
             GetApiLog();
-            APILogsUtility.UpdateAPILogStatus(apiLog.Id, apiLog.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Insert Documents To Importer Tenant From Shipment Order " + DateTime.Now, GetObjectString(documentsFilingAM), null, null, "");
+            APILogsUtility.UpdateAPILogStatus(apiLog.Id, apiLog.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Insert Documents To Importer Tenant From Shipment Order " + DateTime.Now, TrimXmlString(documentsFilingAM), null, null, "");
             try
             {
                 ShipmentPM shipment = shipmentQuery.GetSingleShipmentPMByNumber(documentsFilingAM.EntityNumber, tenant);
@@ -87,7 +87,7 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrderDocuments
             APILogsUtility.UpdateAPILogStatus(apiLog.Id, apiLog.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, msg, null, documentsFilingPM.Id, null, "");
         }
 
-        private static string GetObjectString(DocumentsFilingAM documentFilingAM)
+        private static string TrimXmlString(DocumentsFilingAM documentFilingAM)
         {
             var objectString = LogitudeXmlSerializer.SerializeObjectToXmlString(documentFilingAM);
             int start = objectString.IndexOf("<FileData>");

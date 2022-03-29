@@ -43,6 +43,7 @@ using Logitude.BL.Security;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools.EntityChanges;
+using Logitude.BL.CommonDataModel.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -374,6 +375,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
+            new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
 
             if (!string.IsNullOrEmpty(this.entityPM.DocumentId))
             {
@@ -689,6 +691,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
+            new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
 
             if (addBackupQueue)
             {
@@ -894,7 +897,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
-            
+            new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
+
             if (entityPM.IsUpdateSharedDocument)
             {
                 IQueueService queueservice = new DbQueueService();

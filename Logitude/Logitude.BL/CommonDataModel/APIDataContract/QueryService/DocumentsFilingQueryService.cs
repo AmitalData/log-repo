@@ -8,18 +8,14 @@ using Logitude.CRM.Data.Repsitories;
 using Logitude.ShipmentOrderModule.Data.Repositories;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Logitude.BL.CommonDataModel.Helpers;
 
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
     public partial class DocumentsFilingQueryService
     {
 
-        private ShipmentOrderDocumentsFilingService shipmentOrderDocumentsFilingService;
-
         public DocumentsFilingPM DocumentsFilingCustomDataMappingAndValidating(DocumentsFiling documentsFiling, int Tenant, bool isNew, string ComputingPartnerCode = "")
         {
-            shipmentOrderDocumentsFilingService = new ShipmentOrderDocumentsFilingService();
 
             DocumentsFilingValidating.Validate(documentsFiling);
             documentsFiling.DocumentType.Id = GetDocumentTypeId(documentsFiling, Tenant);
@@ -46,22 +42,17 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
         private string GetDocumentTypeId(DocumentsFiling documentsFiling, int tenant)
         {
-            if (!string.IsNullOrEmpty(documentsFiling.DocumentType.Id) && string.IsNullOrEmpty(documentsFiling.DocumentType.Code)) return documentsFiling.Id;
+            if (!string.IsNullOrEmpty(documentsFiling.DocumentType.Id) && string.IsNullOrEmpty(documentsFiling.DocumentType.Code))
+                return documentsFiling.Id;
 
-            string documentTypeId = GetDocumentTypeIdForObjectTable(documentsFiling, tenant);
-            if (string.IsNullOrEmpty(documentTypeId)) throw new ApplicationException("DocumentType with Code " + documentsFiling.DocumentType.Code + " doesn't exist");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName(documentsFiling.EntityType.Name);
+            if (objectTableId == null) throw new ApplicationException("Invalid entity type");
+
+            var documentTypeId = new DocumentTypeRepository(tenant).GetDocumentTypeIdByCodeAndObjectTable(documentsFiling.DocumentType.Code, objectTableId, tenant);
+            if (string.IsNullOrEmpty(documentTypeId))
+                throw new ApplicationException("DocumentType with Code " + documentsFiling.DocumentType.Code + " doesn't exist");
 
             return documentTypeId;
-        }
-
-        private string GetDocumentTypeIdForObjectTable(DocumentsFiling documentsFiling, int tenant)
-        {
-            if (documentsFiling.EntityType.Name.ToLower() == "shipmentorder")
-            {
-                return shipmentOrderDocumentsFilingService.GetDocumentTypeId(documentsFiling, tenant);
-            }
-            var objectTableId = ObjectTableRepository.GetObjectTableByName(documentsFiling.EntityType.Name);
-            return new DocumentTypeRepository(tenant).GetDocumentTypeIdByCodeAndObjectTable(documentsFiling.DocumentType.Code, objectTableId, tenant);
         }
 
         public string GetEntityIdForType(DocumentsFiling documentsFiling, int tenant)
@@ -103,12 +94,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 shipmentId = shipmentRepository.GetShipmentIdByShipmentNumber(("AF/" + shipmentNumber.Substring(2)), tenant);
             }
             return shipmentId;
-        }
-
-        public void BuildDocumentQueue(DocumentsFilingPM documentsFiling)
-        {
-            var objectTableName = ObjectTableRepository.GetSingleObjectTableById(documentsFiling.ObjectTableId, documentsFiling.Tenant).Name;
-            if (objectTableName == "ShipmentOrder") shipmentOrderDocumentsFilingService.BuildDocumentQueue(documentsFiling);
         }
     }
 }

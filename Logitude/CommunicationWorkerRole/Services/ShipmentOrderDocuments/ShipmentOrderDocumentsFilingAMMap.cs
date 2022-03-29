@@ -14,6 +14,7 @@ namespace CommunicationWorkerRole.Services.ShipmentOrderDocuments
 {
     public class ShipmentOrderDocumentsFilingAMMap
     {
+        private const string shipmentOrderCodePrefix = "SO";
         private readonly int tenant;
         private readonly ObjectTableRepository objectTableRepository;
         private readonly ShipmentOrderQueryService shipmentOrderQueryService;
@@ -74,25 +75,21 @@ namespace CommunicationWorkerRole.Services.ShipmentOrderDocuments
                 Extension = documentsFiling.FileExtension,
                 Tenant = tenant,
                 FileSize = documentsFiling.FileSize,
-
             };
         }
 
         private byte[] GetDataInByte(DocumentsFilingPM documentFilingPM, BlobFileInfo fileInfo)
         {
-            byte[] datainByte = null;
-            if (documentFilingPM.HasFile)
-            {
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                datainByte = storageservice.Read(fileInfo);
-                if (datainByte == null) throw new Exception("The physical file for this Document may be Damaged or not exists. ");
-            }
+            if (!documentFilingPM.HasFile) return null;
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            byte[] datainByte = storageservice.Read(fileInfo);
+            if (datainByte == null) throw new Exception("The physical file for this Document may be Damaged or not exists. ");
             return datainByte;
         }
 
         private static string GetDocumentTypeCode(DocumentsFilingPM documentsFiling)
         {
-            return documentsFiling.DocumentTypeCode.StartsWith("SO") ? documentsFiling.DocumentTypeCode.Replace("SO", "") : documentsFiling.DocumentTypeCode;
+            return documentsFiling.DocumentTypeCode.StartsWith(shipmentOrderCodePrefix) ? documentsFiling.DocumentTypeCode.Replace(shipmentOrderCodePrefix, "") : documentsFiling.DocumentTypeCode;
         }
     }
 

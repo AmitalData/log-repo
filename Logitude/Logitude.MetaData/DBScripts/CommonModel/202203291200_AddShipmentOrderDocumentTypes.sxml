@@ -1,0 +1,74 @@
+﻿<Script DBType="Main" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+declare @Id as varchar(15)
+declare @ObjectTableId as varchar(15)
+set @ObjectTableId = (select Id from ObjectTables where Name = 'ShipmentOrder')
+
+
+IF NOT exists (select Code from DocumentTypes where Code = 'SO380' and Tenant = 0)
+BEGIN  
+    EXECUTE usp_GetNextTableIdValue @Id OUTPUT,'DocumentType'
+	insert into DocumentTypes (Id, Tenant, ObjectTableId, TemplateFormatCode, IsEnabledForCustomers, IsCopiedAtSignup, DocumentTypeCategoryCode,
+	Name, Code, IsDocIn, IsDocOut, SearchFields)
+	values (@Id, 0, @ObjectTableId, 'M', 1, 1, 'O',
+	'Commercial invoice', 'SO380', 1, 0, 'SO380,Commercial invoice')
+END
+
+IF NOT exists (select Code from DocumentTypes where Code = 'SODST' and Tenant = 0)
+BEGIN  
+    EXECUTE usp_GetNextTableIdValue @Id OUTPUT,'DocumentType'
+	insert into DocumentTypes (Id, Tenant, ObjectTableId, TemplateFormatCode, IsEnabledForCustomers, IsCopiedAtSignup, DocumentTypeCategoryCode,
+	Name, Code, IsDocIn, IsDocOut, SearchFields)
+	values (@Id, 0, @ObjectTableId, 'M', 1, 1, 'O',
+	'Document Set', 'SODST', 1, 0, 'SODST,Document Set')
+END
+
+IF NOT exists (select Code from DocumentTypes where Code = 'SO721' and Tenant = 0)
+BEGIN  
+    EXECUTE usp_GetNextTableIdValue @Id OUTPUT,'DocumentType'
+	insert into DocumentTypes (Id, Tenant, ObjectTableId, TemplateFormatCode, IsEnabledForCustomers, IsCopiedAtSignup, DocumentTypeCategoryCode,
+	Name, Code, IsDocIn, IsDocOut, SearchFields)
+	values (@Id, 0, @ObjectTableId, 'M', 1, 1, 'O',
+	'Packing List', 'SO721', 1, 0, 'SO721,Packing List')
+END
+
+IF NOT exists (select Code from DocumentTypes where Code = 'SO740' and Tenant = 0)
+BEGIN  
+    EXECUTE usp_GetNextTableIdValue @Id OUTPUT,'DocumentType'
+	insert into DocumentTypes (Id, Tenant, ObjectTableId, TemplateFormatCode, IsEnabledForCustomers, IsCopiedAtSignup, DocumentTypeCategoryCode,
+	Name, Code, IsDocIn, IsDocOut, SearchFields)
+	values (@Id, 0, @ObjectTableId, 'M', 1, 1, 'O',
+	'Plain Paper AWB', 'SO740', 1, 0, 'SO740,Plain Paper AWB')
+END
+
+IF NOT exists (select Code from DocumentTypes where Code = 'SO780' and Tenant = 0)
+BEGIN  
+    EXECUTE usp_GetNextTableIdValue @Id OUTPUT,'DocumentType'
+	insert into DocumentTypes (Id, Tenant, ObjectTableId, TemplateFormatCode, IsEnabledForCustomers, IsCopiedAtSignup, DocumentTypeCategoryCode,
+	Name, Code, IsDocIn, IsDocOut, SearchFields)
+	values (@Id, 0, @ObjectTableId, 'M', 1, 1, 'O',
+	'Freight invoice', 'SO780', 1, 0, 'SO780,Freight invoice')
+END
+
+IF NOT exists (select Code from DocumentTypes where Code = 'SOCOO' and Tenant = 0)
+BEGIN  
+    EXECUTE usp_GetNextTableIdValue @Id OUTPUT,'DocumentType'
+	insert into DocumentTypes (Id, Tenant, ObjectTableId, TemplateFormatCode, IsEnabledForCustomers, IsCopiedAtSignup, DocumentTypeCategoryCode,
+	Name, Code, IsDocIn, IsDocOut, SearchFields)
+	values (@Id, 0, @ObjectTableId, 'M', 1, 1, 'O',
+	'Certificate of Origin', 'SOCOO', 1, 0, 'SOCOO,Certificate of Origin')
+END
+
+IF NOT exists (select Code from DocumentTypes where Code = 'SOVSI' and Tenant = 0)
+BEGIN  
+    EXECUTE usp_GetNextTableIdValue @Id OUTPUT,'DocumentType'
+	insert into DocumentTypes (Id, Tenant, ObjectTableId, TemplateFormatCode, IsEnabledForCustomers, IsCopiedAtSignup, DocumentTypeCategoryCode,
+	Name, Code, IsDocIn, IsDocOut, SearchFields)
+	values (@Id, 0, @ObjectTableId, 'M', 1, 1, 'O',
+	'3rd Party Signed Invoices', 'SOVSI', 1, 0, 'SOVSI,3rd Party Signed Invoices')
+END
+
+    ]]>
+  </Sql>
+</Script>
