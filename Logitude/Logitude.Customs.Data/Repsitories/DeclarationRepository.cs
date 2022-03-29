@@ -155,13 +155,16 @@ namespace Logitude.Customs.Data.Repsitories
             //          select a).Max(rec => Convert.ToInt32( rec.AmendmentRequestNumber));
 
             var list = (from a in context.Declarations
-                        where a.Tenant == tenant && a.AmendmentRequestNumber != null
-                        select a.AmendmentRequestNumber).ToList();
+                        where a.Tenant == tenant && (a.AmendmentRequestNumber != null || a.CancelRequestNumber != null)
+                        select new { a.AmendmentRequestNumber, a.CancelRequestNumber }).ToList();
 
             int max = 0;
 
-            if (list.Count() != 0)
-                max = list.Select(int.Parse).ToList().Max();
+            if (list.Count() != 0) {
+                var maxAmendmentRequestNumber = list.Select(r => (int.TryParse(r.AmendmentRequestNumber, out var a)) ?int.Parse(r.AmendmentRequestNumber):0).ToList().Max();
+                var maxCancelRequestNumber = list.Select(r => ((r.CancelRequestNumber).HasValue)?r.CancelRequestNumber.Value:0).ToList().Max();
+                max = (maxAmendmentRequestNumber > maxCancelRequestNumber) ? maxAmendmentRequestNumber : maxCancelRequestNumber;
+            }
 
             return max;
         }
