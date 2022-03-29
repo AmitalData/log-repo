@@ -29,6 +29,7 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
 
 const localLanguageCode = 'L';
 const englishLanguageCode = 'E';
+const AccountingPartnerTypeCode = "AC";
 @Component({
 
 
@@ -206,6 +207,8 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
                         this.IsAddBtnVisible = false;
                     }
 
+
+
                 }
                 else
                 {
@@ -226,6 +229,9 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
                     this.IsAddToggleVisible = true;
                     this.IsAddBtnVisible = false;
                 }
+                
+                if(!this.TenantPM.AccountingActivated)
+                    this.LovPartnerTypes = this.LovPartnerTypes.filter(d => d.Id != AccountingPartnerTypeCode);
 
             }
 
