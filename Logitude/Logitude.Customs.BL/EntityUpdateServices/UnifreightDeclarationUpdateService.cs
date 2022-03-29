@@ -990,7 +990,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 DeclarationCasualDetailsQueryService declarationCasualDetailsQueryService = new DeclarationCasualDetailsQueryService(_DirtyDeclarationPM.Tenant);
                 var casual = declarationCasualDetailsQueryService.GetSingle(_DirtyDeclarationPM.Id, false, true);
-                if (casual != null)
+                if (casual != null && casual.ChangeSetOp != ChangeSetOperation.Delete)
                 {
                     myCFIDATA_DATA.ImporterName = "CAP";
                     myCFIDATA_DATA.COUWTVAL = _DirtyDeclarationPM.WeightValue;
