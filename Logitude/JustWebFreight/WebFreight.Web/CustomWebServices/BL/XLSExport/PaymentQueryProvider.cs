@@ -29,8 +29,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
     <AvoidSign>false</AvoidSign>
     <AgentExternalId>510120041</AgentExternalId>
     <PaymentID>460381479</PaymentID>
-    <paymentDateFrom xsi:nil=""true"" />
-    <paymentDateTo xsi:nil=""true"" />
+    <paymentDateFrom>2018-02-25T00:00:00Z</paymentDateFrom>
+    <paymentDateTo>2018-02-25T00:00:00Z</paymentDateTo>
     <EffectiveDateFrom xsi:nil=""true"" />
     <EffectiveDateTo xsi:nil=""true"" />
 </TSH_NG_8285_Web01_PaymentRequestParams>".Trim();
@@ -46,14 +46,14 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
     <ContinueProcessInBackground>false</ContinueProcessInBackground>
     <PaymentsDetailsList>
         <PaymentsDetailsResult>
-            <PaymentlD>460381479</PaymentlD>
+            <PaymentID>460381479</PaymentID>
             <PaymentType>הכנסה</PaymentType>
             <PaymentAmount>14534</PaymentAmount>
             <Importer>55024335625משירי תנועה ומשאיות-שותפות מוגבל-</Importer>
             <Agent>510120041-עמילות מכס ותחבורה בעמ</Agent>
                 <PaymentMethodType>קופה</PaymentMethodType>
                 <PaymentStatus>הוכן</PaymentStatus>
-                <EntityExternallD>0002302841206</EntityExternallD>
+                <EntityExternalID>0002302841206</EntityExternalID>
                 <EntityType>תיק גרעון מוביל</EntityType>
         </PaymentsDetailsResult>
     </PaymentsDetailsList>

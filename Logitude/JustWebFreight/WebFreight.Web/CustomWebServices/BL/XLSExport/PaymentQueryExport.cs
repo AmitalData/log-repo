@@ -82,7 +82,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                       new XLSExport.GridColumnMetaData()
                       {
                             Header="יבואן",
-                            length=80,
+                            length=280,
                             PropName =nameof(paymentsDetailsResult.Importer),
                             GridColumnType  = GridColumnTypeEnum.Object
                       },
@@ -111,9 +111,9 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 resultHeader);
 
             var last = GuaranteeLettersList;
-            var responseSection = _MainWorksheet[firstLine.Row - 1, firstLine.Column, last.LastRow + 1, this.ReportWidth / 10];
+            var responseSection = _MainWorksheet[firstLine.Row - 1, firstLine.Column - 1, last.LastRow + 1, this.ReportWidth / 10];
 
-            var destRange = _MainWorksheet[firstLine.Row - 1, firstLine.Column + 1, last.LastRow + 1, this.ReportWidth / 10];
+            var destRange = _MainWorksheet[firstLine.Row - 1, firstLine.Column, last.LastRow + 1, this.ReportWidth / 10];
             responseSection.MoveTo(destRange);
 
             MakeBorderSection(destRange);
@@ -132,7 +132,11 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 {
                     new LabelEditBox()
                     {
-                         Header="תאריך תשלום:",LabelSize=12,length=13,PropName="PaymentDate" , GridColumnType = GridColumnTypeEnum.Object
+                         Header="תאריך תשלום מ:",LabelSize=12,length=13,PropName="paymentDateFrom" , GridColumnType = GridColumnTypeEnum.Object
+                    },
+                    new LabelEditBox()
+                    {
+                         Header="עד:",LabelSize=12,length=13,PropName="paymentDateTo" , GridColumnType = GridColumnTypeEnum.Object
                     },
                 });
 
