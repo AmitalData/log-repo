@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "40ae0d4ae880a7f94fd7a2fd7dd74989";
+		public const string HashString = "b68b161a13c814502c9f351d52501a8e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -637,12 +637,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4237,7 +4238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  100,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4252,7 +4253,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Tariff",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -4263,8 +4263,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomsBrokerName",
 					  						DefaultText =  "Customs Broker",
-					  						ListFieldLable =  "CustomsBrokerNameListLable",
-					  						ListLableDefaultText =  "Customs Broker",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4735,7 +4733,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ExportCustomsChargesCostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Tariff.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ExportCustomsChargesCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.CustomsBrokerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ExportCustomsChargesCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.SellerName" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn ExportCustomsChargesCostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportCustomsChargesCostQuery.Id,QueryCode = ExportCustomsChargesCostQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Tariff.Notes" , ColumnWidth = 150 }, addedQueryColumns);
 
@@ -4758,7 +4756,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ImportCustomsChargesCostQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Tariff.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ImportCustomsChargesCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.CustomsBrokerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ImportCustomsChargesCostQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.SellerName" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn ImportCustomsChargesCostQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Tariff.Notes" , ColumnWidth = 150 }, addedQueryColumns);
 
@@ -4905,7 +4903,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	          
              ScreenField TariffTariffCustomsChargesHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.CustomsBrokerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.SellerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField TariffTariffCustomsChargesHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          

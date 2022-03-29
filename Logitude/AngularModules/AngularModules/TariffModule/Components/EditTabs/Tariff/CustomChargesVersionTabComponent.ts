@@ -523,9 +523,9 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
 
     AddTariffLine() {
         var addressService: PartnersDomainService = new PartnersDomainService();
-        addressService.GetMainAddressListByCardId(this.EntityPM.CustomsBrokerId).subscribe((response: any) => {
+        addressService.GetMainAddressListByCardId(this.EntityPM.SellerId).subscribe((response: any) => {
             if (!response.HasError) {
-                var customsBrokerAddress = response;
+                var sellerAddress = response;
 
                 var logWindow = new LogitudeWindow();
                 var itemPM = new TariffLinePM(null);
@@ -537,15 +537,15 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
                 itemPM.CurrencyId = this.EntityPM.CurrencyId;
 
                 if (this.EntityPM.TypeCode == "ECC") {
-                    itemPM.FromCountryId = customsBrokerAddress.CountryId;
-                    itemPM.FromCountryCode = customsBrokerAddress.CountryCode;
-                    itemPM.FromCountryName = customsBrokerAddress.CountryName;
+                    itemPM.FromCountryId = sellerAddress.CountryId;
+                    itemPM.FromCountryCode = sellerAddress.CountryCode;
+                    itemPM.FromCountryName = sellerAddress.CountryName;
                 }
 
                 else if (this.EntityPM.TypeCode == "ICC") {
-                    itemPM.ToCountryId = customsBrokerAddress.CountryId;
-                    itemPM.ToCountryCode = customsBrokerAddress.CountryCode;
-                    itemPM.ToCountryName = customsBrokerAddress.CountryName;
+                    itemPM.ToCountryId = sellerAddress.CountryId;
+                    itemPM.ToCountryCode = sellerAddress.CountryCode;
+                    itemPM.ToCountryName = sellerAddress.CountryName;
                 }
 
                 var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];

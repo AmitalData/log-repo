@@ -815,13 +815,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -5694,7 +5695,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="100"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -5709,7 +5710,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Tariff&quot;"
+    ValidForQuerySection1="&quot;&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -5720,8 +5721,6 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CustomsBrokerName&quot;"
     DefaultText="&quot;Customs Broker&quot;"
-    ListFieldLable="&quot;CustomsBrokerNameListLable&quot;"
-    ListLableDefaultText="&quot;Customs Broker&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -6249,7 +6248,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6315,7 +6315,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6381,7 +6382,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6447,7 +6449,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6513,7 +6516,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6579,7 +6583,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6610,7 +6615,7 @@
       <QueryColumn
         QueryCode="&quot;Export Customs Charges Cost&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CustomsBrokerName&quot;"
+        ObjectFieldName="&quot;SellerName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;Export Customs Charges Cost&quot;"
@@ -6645,7 +6650,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6676,7 +6682,7 @@
       <QueryColumn
         QueryCode="&quot;Import Customs Charges Cost&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CustomsBrokerName&quot;"
+        ObjectFieldName="&quot;SellerName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;Import Customs Charges Cost&quot;"
@@ -6711,7 +6717,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -7021,7 +7028,7 @@
       <ScreenField
         Column="1"
         Row="0"
-        ObjectFieldName="&quot;CustomsBrokerId&quot;"
+        ObjectFieldName="&quot;SellerId&quot;"
         ScreenName="CustomsChargesHeaderScreen" />
       <ScreenField
         Column="1"
