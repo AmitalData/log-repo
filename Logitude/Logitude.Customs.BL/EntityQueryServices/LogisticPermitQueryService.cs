@@ -32,5 +32,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return entityPM;
         }
+       
     }
+
+ 
 }
