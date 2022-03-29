@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Common" TargetTableName="CustomerGroups">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
         declare @Tenant as int
 		declare @NewId as varchar(15)
@@ -23,6 +23,7 @@
 					set @TenantString = CONVERT(varchar(50), @Tenant)
 					set @UserEmail = 'system@tenant'+ @TenantString + '.com'
 					set @UserId = (select top(1) Id from Contacts where Email = @UserEmail and Tenant = @Tenant) 
+					set @UserId = (select top(1) Id from Users where Id = @UserId) 
 					if (@UserId is not null)
 					BEGIN
 						insert into CustomerGroups(Id, Tenant, Name,CreateDate,UpdateDate,CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
