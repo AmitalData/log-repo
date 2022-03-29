@@ -9,6 +9,8 @@
 
 
 import {CardContactAdditionalServicePM} from './CardContactAdditionalServicePM';
+
+import {CardContactProductPM} from './CardContactProductPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -368,6 +370,42 @@ export class ContactPM {
         }
     }
 	    //public CardContactAdditionalServices: Array<CardContactAdditionalServicePMPM>= [];
+      
+	private cardContactProducts: CardContactProductPM[];
+    get  CardContactProducts() {
+        if (this.cardContactProducts == null) {
+            this.cardContactProducts = [];
+        }
+
+        return this.cardContactProducts;
+    }
+    set  CardContactProducts(newValue: CardContactProductPM[]) {
+        if (this.cardContactProducts != newValue) {
+            this.cardContactProducts = newValue;
+        }
+    }
+    public AddCardContactProductPM(item: CardContactProductPM) {
+        if (item != null) {
+            var index = this.CardContactProducts.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. CardContactProducts.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveCardContactProductPM(item: CardContactProductPM) {
+        if (item != null) {
+            var index = this.CardContactProducts.indexOf(item);
+            if (index > -1) {
+                this. CardContactProducts.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public CardContactProducts: Array<CardContactProductPMPM>= [];
      private oldSimilarInactiveContactId: string;
     public get OldSimilarInactiveContactId() { return this.oldSimilarInactiveContactId; }
     public set OldSimilarInactiveContactId(newValue: string) { if (this.oldSimilarInactiveContactId != newValue) { this.oldSimilarInactiveContactId = newValue; this.MarkAsDirty("OldSimilarInactiveContactId"); } }
