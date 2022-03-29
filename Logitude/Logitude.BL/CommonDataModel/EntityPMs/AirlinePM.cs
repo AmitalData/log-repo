@@ -366,6 +366,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string GLAccountNumber { get; set; }
         [DataMember]
         public string BillToId { get; set; }
+        [DataMember]
+        public string RegimenFiscalCode { get; set; }
 
     }
 }

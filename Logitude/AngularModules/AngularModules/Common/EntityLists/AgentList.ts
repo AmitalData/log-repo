@@ -53,6 +53,7 @@ export class AgentList {
 		StateName: string;
 		StorageFreeDays: number;
 		GLAccountNumber: string;
+		RegimenFiscalCode: string;
 		Field1: string;
 		Field2: string;
 		Field3: string;

@@ -54,6 +54,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public int? StorageFreeDays { get; set; }
 
         public string GLAccountNumber { get; set; }
+        public string RegimenFiscalCode { get; set; }
 
         public string Field1 { get; set; }
         public string Field2 { get; set; }

@@ -41,6 +41,7 @@ export class TruckerList {
 		PrimaryContactPhone: string;
 		StateName: string;
 		GLAccountNumber: string;
+		RegimenFiscalCode: string;
 		Field1: string;
 		Field2: string;
 		Field3: string;

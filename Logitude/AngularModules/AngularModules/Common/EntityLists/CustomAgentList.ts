@@ -38,6 +38,7 @@ export class CustomAgentList {
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
 		StateName: string;
+		RegimenFiscalCode: string;
 		GLAccountNumber: string;
 		Field1: string;
 		Field2: string;

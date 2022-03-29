@@ -397,6 +397,11 @@ export class AccountingPartnerPM {
     public set InsuredCreditlimit(newValue: number) { if (this.insuredCreditlimit != newValue) { this.insuredCreditlimit = newValue; this.MarkAsDirty("InsuredCreditlimit"); } }
        
 	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
 
     public OldEntityPM: AccountingPartnerPM;
 		

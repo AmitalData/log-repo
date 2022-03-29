@@ -80,6 +80,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          SATForeignRFC = a.Card.SATForeignRFC,
                                          GLAccountId = a.Card.GLAccountId,
                                          GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                         RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                          Card = new CardPM()
                                          {
                                              Id = a.Id,
@@ -181,6 +182,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          SATForeignRFC = a.Card.SATForeignRFC,
                                          GLAccountId = a.Card.GLAccountId,
                                          GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                         RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                          Card = new CardPM()
                                          {
                                              Id = a.Id,
@@ -265,6 +267,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              MetodoPagoCode = a.Card.MetodoPagoCode,
                                                              UsoCFDICode = a.Card.UsoCFDICode,
                                                              SATForeignRFC = a.Card.SATForeignRFC,
+                                                             RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                              Card = new CardPM()
                                                              {
                                                                  Id = a.Id,
@@ -327,6 +330,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              MetodoPagoCode = a.Card.MetodoPagoCode,
                              UsoCFDICode = a.Card.UsoCFDICode,
                              SATForeignRFC = a.Card.SATForeignRFC,
+                             RegimenFiscalCode = a.Card.RegimenFiscalCode,
                              Card = new CardPM()
                              {
                                  Id = a.Id,
@@ -406,6 +410,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         PrimaryContactPhone = a.PrimaryContactPhone,
                                                         StateName = a.Card.StateName,
                                                         GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                        RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                         Field1 = a.Field1,
                                                         Field2 = a.Field2,
                                                         Field3 = a.Field3,
@@ -462,6 +467,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        PrimaryContactName = a.PrimaryContactName,
                                                        PrimaryContactEmail = a.PrimaryContactEmail,
                                                        PrimaryContactPhone = a.PrimaryContactPhone,
+                                                       RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                        Field1 = a.Field1,
                                                        Field2 = a.Field2,
                                                        Field3 = a.Field3,

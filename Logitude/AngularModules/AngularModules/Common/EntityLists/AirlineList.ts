@@ -82,5 +82,6 @@ export class AirlineList {
 		PrimaryContactPhone: string;
 		StateName: string;
 		GLAccountNumber: string;
+		RegimenFiscalCode: string;
 	
 }

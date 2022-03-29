@@ -81,6 +81,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          UsoCFDICode = a.Card.UsoCFDICode,
                                                          GLAccountId = a.Card.GLAccountId,
                                                          GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                         RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                          Card = new CardPM()
                                                          {
                                                              Id = a.Id,
@@ -162,6 +163,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          SATForeignRFC = a.Card.SATForeignRFC,
                                                          MetodoPagoCode = a.Card.MetodoPagoCode,
                                                          UsoCFDICode = a.Card.UsoCFDICode,
+                                                         RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                          Card = new CardPM()
                                                          {
                                                              Id = a.Id,
@@ -239,6 +241,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          SATForeignRFC = a.Card.SATForeignRFC,
                                                          MetodoPagoCode = a.Card.MetodoPagoCode,
                                                          UsoCFDICode = a.Card.UsoCFDICode,
+                                                         RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                          Card = new CardPM()
                                                          {
                                                              Id = a.Id,
@@ -311,6 +314,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                      SATForeignRFC = a.Card.SATForeignRFC,
                                                                      MetodoPagoCode = a.Card.MetodoPagoCode,
                                                                      UsoCFDICode = a.Card.UsoCFDICode,
+                                                                     RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                                      Card = new CardPM()
                                                                      {
                                                                          Id = a.Id,
@@ -364,6 +368,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              SATForeignRFC = a.Card.SATForeignRFC,
                              MetodoPagoCode = a.Card.MetodoPagoCode,
                              UsoCFDICode = a.Card.UsoCFDICode,
+                             RegimenFiscalCode = a.Card.RegimenFiscalCode,
                              Card = new CardPM()
                              {
                                  Id = a.Id,
@@ -442,6 +447,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             CollectorId = a.Card.CollectorId, 
                                                             CreditLimit = a.CreditLimit,
                                                             InsuredCreditlimit = a.InsuredCreditlimit,
+                                                            RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                         });
 
 
@@ -489,6 +495,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          SATForeignRFC = a.Card.SATForeignRFC,
                                                          MetodoPagoCode = a.Card.MetodoPagoCode,
                                                          UsoCFDICode = a.Card.UsoCFDICode,
+                                                         RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                          Card = new CardPM()
                                                          {
                                                              Id = a.Id,

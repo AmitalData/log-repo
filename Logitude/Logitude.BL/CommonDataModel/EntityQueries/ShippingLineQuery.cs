@@ -85,6 +85,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     ImageDetailId = a.Card.ImageDetailId,
                                     IsSendingByContainer = a.IsSendingByContainer,
                                     IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                    RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -173,6 +174,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     ImageDetailId = a.Card.ImageDetailId,
                                     IsSendingByContainer = a.IsSendingByContainer,
                                     IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                    RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -248,6 +250,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     ImageDetailId = a.Card.ImageDetailId,
                                     IsSendingByContainer = a.IsSendingByContainer,
                                     IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                    RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -312,6 +315,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            BillToId = a.Card.BillToId,
                                                            IsSendingByContainer = a.IsSendingByContainer,
                                                            IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                                           RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                        };
             return shippingLines;
         }
@@ -373,6 +377,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              BillToId = a.Card.BillToId,
                              IsSendingByContainer = a.IsSendingByContainer,
                              IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                             RegimenFiscalCode = a.Card.RegimenFiscalCode,
                          }).AsQueryable();
 
             IQueryable<ShippingLinePM> query2 = null;
@@ -451,6 +456,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                                        IsSendingByContainer = a.IsSendingByContainer,
                                                        IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                                       RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                    });
 
 

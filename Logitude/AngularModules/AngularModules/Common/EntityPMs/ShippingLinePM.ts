@@ -408,6 +408,11 @@ export class ShippingLinePM {
     public set IsSendingByBillOfLading(newValue: boolean) { if (this.isSendingByBillOfLading != newValue) { this.isSendingByBillOfLading = newValue; this.MarkAsDirty("IsSendingByBillOfLading"); } }
        
 	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
 
     public OldEntityPM: ShippingLinePM;
 		
