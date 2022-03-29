@@ -79,6 +79,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidatePartnerTypes(entityPM);
                 ValidateShipmentSubType(entityPM);
                 ValidateShipmentOperationalClose(entityPM, entityPoco);
+                ValidateShipmentAccountingClose(entityPM, entityPoco);
             }
         }
         public static string GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote, int tenant)
@@ -1466,55 +1467,198 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             if(entityPM.IsOperationalClosed && !entityPoco.IsOperationalClosed)
             {
-                string errorMessage = "";
-
-                IRulesValidator ruleValidator = ContainerAccessor.Container.Resolve(typeof(IRulesValidator), "RulesValidator", new ParameterOverride("", 1)) as IRulesValidator;
-                ruleValidator.Initialize(entityPM.Tenant);
-
-                List<ObjectTableRuleField> requiredFields = ruleValidator.ValidateAllRequiredFieldRules(entityPM, "Shipment", entityPM.Tenant);
-                string errorMessage_Master = GenerateErrorMessage(requiredFields, entityPM.Tenant);
-                string errorMessage_Houses = "";
-                if (entityPM.ShipmentLevelCode == "C" && entityPM.ShipmentConsoleShipments.Count > 0)
-                {
-                    List<ObjectTableRuleField> requiredFields_houses = ValidateShipmentOperationalClose_House(entityPM, ruleValidator);
-                    errorMessage_Houses = GenerateErrorMessage(requiredFields_houses, entityPM.Tenant);
-                }
+                OperationalCloseValidator operationalCloseValidator = new OperationalCloseValidator(entityPM);
+                string errorMessage = operationalCloseValidator.StartValidating();
 
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
-                    errorMessage = errorMessage.TrimStart(',');
                     throw new ApplicationException(errorMessage);
                 }
             }
-        }
-
-        private static List<ObjectTableRuleField> ValidateShipmentOperationalClose_House(ShipmentPM master, IRulesValidator ruleValidator)
+        }   
+        private static void ValidateShipmentAccountingClose(ShipmentPM entityPM, Shipment entityPoco)
         {
-            List<ObjectTableRuleField> requiredFields_house = new List<ObjectTableRuleField>();
-            ShipmentQuery shipmentQuery = new ShipmentQuery(master.Tenant);
-            foreach (ConsoleShipmentPM house in master.ShipmentConsoleShipments)
+            if (entityPM.IsAccountingClosed && !entityPoco.IsAccountingClosed)
             {
-                ShipmentPM shipmentPM = shipmentQuery.GetSinglePMByShipmentNumber(house.ShipmentNumber, master.Tenant);
-                shipmentPM.IsOperationalClosed = true;
-                requiredFields_house.AddRange(ruleValidator.ValidateAllRequiredFieldRules(shipmentPM, "Shipment", master.Tenant));
+                AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(entityPM.Tenant);
+                AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(entityPM.Tenant);
+
+                bool hasOpenPayables = CheckOpenPayables(entityPM, accountingSetting);
+                bool hasOpenReceivables = CheckOpenReceivables(entityPM.ShipmentReceivables);
+
+                if (hasOpenPayables || hasOpenReceivables)
+                {
+                    ValidateAcocuntingCloseDueToShipmentLevel(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
+                }
+            }
+        }        
+        private static bool CheckOpenPayables(ShipmentPM entityPM, AccountingSetting accountingSetting)
+        {
+            bool hasOpenPayables = false;
+            if (!accountingSetting.AllowClosureWithoutPayables && entityPM.ShipmentPayables.Count > 0)
+            {
+                foreach (ShipmentPayablePM shipmentPayable in entityPM.ShipmentPayables.Where(d => d.ShipmentPayableLineStatusCode != "ACCT" && d.ShipmentPayableLineStatusCode != "EMPT"))
+                {
+                    if (shipmentPayable.ShipmentPayableAmountTypeCode == "NEXP"
+                        && (shipmentPayable.AccountedAmount != null && shipmentPayable.AccountedAmount != null
+                        || shipmentPayable.ExpectedAmount != null && shipmentPayable.ExpectedAmount != 0))
+                    {
+                        hasOpenPayables = true;
+
+                    }
+
+                    else if (shipmentPayable.ExpectedAmount != null && shipmentPayable.ExpectedAmount != 0)
+                    {
+                        hasOpenPayables = true;
+                    }
+                }
             }
 
-            return requiredFields_house;
+            return hasOpenPayables;
         }
-
-        private static string GenerateErrorMessage(List<ObjectTableRuleField> requiredFields, int tenant)
+        private static bool CheckOpenReceivables(List<ShipmentReceivablePM> shipmentReceivables)
         {
-            string errorMessage = "";
-            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
-            ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(webFreightContext);
-
-            foreach (ObjectTableRuleField field in requiredFields)
+            if (shipmentReceivables.Count > 0)
             {
-                ObjectField f = objectFieldRepository.GetSingleObjectFieldByFieldCode(field.ObjectFieldCode, tenant);
-                errorMessage = errorMessage + ", " + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
+                if (shipmentReceivables.Where(d => d.ShipmentReceivableLineStatusCode != "ACCT" && d.ShipmentReceivableLineStatusCode != "EMPT"
+                 && d.TotalAmount != null && d.TotalAmount != 0).Any())
+                {
+                    return true;
+                }
             }
 
-            return errorMessage;
+            return false;
+        }
+        private static void ValidateAcocuntingCloseDueToShipmentLevel(ShipmentPM entityPM, bool hasOpenPayables, bool hasOpenReceivables, AccountingSetting accountingSetting)
+        {
+            if (entityPM.ShipmentLevelCode == "C")
+            {
+                if (hasOpenPayables && hasOpenReceivables)
+                {
+                    ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
+                }
+                else
+                {
+                    string myResult = CheckHousesOpenAmounts(entityPM.Id, entityPM.Tenant);
+
+                    if (!string.IsNullOrEmpty(myResult))
+                    {
+                        if (myResult.Contains('R'))
+                        {
+                            hasOpenReceivables = true;
+                        }
+
+                        if (accountingSetting.AllowClosureWithoutPayables)
+                        {
+                            if (myResult.Contains('P'))
+                                hasOpenPayables = true;
+                        }
+                    }
+
+                    ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
+                }
+            }
+            else
+            {
+                ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
+            }
+        }
+        private static void ThrowAccountingCloseException(bool hasOpenPayables, bool hasOpenReceivables, string levelCode)
+        {
+            if (hasOpenPayables || hasOpenReceivables)
+            {
+                string error = "can’t close for accounting if there are any open payables/receivables";
+                if (levelCode == "C")
+                {
+                    error = "can’t close for accounting if there are any open payables/receivables in the Master or one \nof the connected shipments. Please check and fix this issue and try again";
+                }
+
+                throw new ApplicationException(error);
+            }
+        }
+        private static string CheckHousesOpenAmounts(string masterId, int tenant)
+        {
+            bool hasOpenPayables = false;
+            bool hasOpenReceivables = false;
+
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            ShipmentPM masterPM = shipmentQuery.GetSinglePM(masterId, tenant);
+
+            if (masterPM != null)
+            {
+                foreach (ConsoleShipmentPM consoleShipmentPM in masterPM.ShipmentConsoleShipments)
+                {
+                    ShipmentPM consoleShipment = shipmentQuery.GetSinglePM(consoleShipmentPM.Id, tenant);
+
+                    if (consoleShipment != null)
+                    {
+                        if (!hasOpenReceivables)
+                        {
+                            #region
+                            if (consoleShipment.ShipmentReceivables.Count > 0)
+                            {
+                                foreach (ShipmentReceivablePM item in consoleShipment.ShipmentReceivables)
+                                {
+                                    if (item.ShipmentReceivableLineStatusCode != "ACCT" && item.ShipmentReceivableLineStatusCode != "EMPT")
+                                    {
+                                        if (item.TotalAmount != null && item.TotalAmount != 0)
+                                        {
+                                            hasOpenReceivables = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            #endregion
+                        }
+
+                        if (!hasOpenPayables)
+                        {
+                            #region
+                            if (consoleShipment.ShipmentPayables.Count > 0)
+                            {
+                                foreach (ShipmentPayablePM item in consoleShipment.ShipmentPayables)
+                                {
+                                    if (item.ShipmentPayableLineStatusCode != "ACCT" && item.ShipmentPayableLineStatusCode != "EMPT" && item.ShipmentPayableParentId == null)
+                                    {
+                                        if (item.ShipmentPayableAmountTypeCode == "NEXP")
+                                        {
+                                            if (item.AccountedAmount != null && item.AccountedAmount != 0)
+                                            {
+                                                hasOpenPayables = true;
+                                                break;
+                                            }
+                                        }
+
+                                        else
+                                        {
+                                            if (item.ExpectedAmount != null && item.ExpectedAmount != 0)
+                                            {
+                                                hasOpenPayables = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            #endregion
+                        }
+                    }
+                }
+            }
+
+            string myResult = "";
+            if (hasOpenPayables)
+            {
+                myResult += "P";
+            }
+
+            if (hasOpenReceivables)
+            {
+                myResult += "R";
+            }
+
+            return myResult;
         }
     }
     public class DomesticCountry
@@ -1525,5 +1669,114 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         public bool CountryIsNorthAmerica { get; set; }
         public bool CountryIsGreaterChinese { get; set; }
 
+    }
+    public class OperationalCloseValidator
+    {
+        private ShipmentPM shipmentPM;
+        private IRulesValidator ruleValidator;
+        private int tenant;
+        private ObjectFieldRepository objectFieldRepository;
+        public OperationalCloseValidator(ShipmentPM shipmentPM)
+        {
+            this.shipmentPM = shipmentPM;
+            this.tenant = shipmentPM.Tenant;
+            this.objectFieldRepository = new ObjectFieldRepository(tenant);
+            this.InitializeRulesValidator();
+        }
+
+        private void InitializeRulesValidator()
+        {
+            ruleValidator = ContainerAccessor.Container.Resolve(typeof(IRulesValidator), "RulesValidator", new ParameterOverride("", 1)) as IRulesValidator;
+            ruleValidator.Initialize(tenant);
+        }
+
+        public string StartValidating()
+        {
+            string errorMessage = ValidateShipment(shipmentPM);
+
+            if (shipmentPM.ShipmentLevelCode == "C" && shipmentPM.ShipmentConsoleShipments.Count > 0)
+            {
+                string housesErrors = ValidateHouses();
+
+                if (string.IsNullOrEmpty(errorMessage))
+                {
+                    errorMessage = housesErrors;
+                }
+
+                else
+                {
+                    errorMessage = errorMessage + ", " + housesErrors;
+                }
+            }
+
+            return errorMessage;
+        }
+        private string ValidateShipment(ShipmentPM shipment)
+        {
+            List<ObjectTableRuleField> requiredFields = ruleValidator.ValidateAllRequiredFieldRules(shipment, "Shipment", tenant);
+            return GenerateErrorMessage(requiredFields);
+        }
+        private string ValidateHouses()
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            Dictionary<string, string> housesErrors = new Dictionary<string, string>();
+            foreach (ConsoleShipmentPM consoleShipment in shipmentPM.ShipmentConsoleShipments)
+            {
+                string houseError = ValidateSingleHouse(consoleShipment, shipmentQuery);
+
+                if (!string.IsNullOrEmpty(houseError))
+                {
+                    housesErrors.Add(consoleShipment.ShipmentNumber, houseError);
+                }
+            }
+
+            return this.BuildHousesErrorMessage(housesErrors);
+        }        
+        private string ValidateSingleHouse(ConsoleShipmentPM consoleShipment, ShipmentQuery shipmentQuery)
+        {
+            ShipmentPM house = shipmentQuery.GetSinglePMByShipmentNumber(consoleShipment.ShipmentNumber, tenant);
+            house.IsOperationalClosed = true;
+            return ValidateShipment(house);
+        }
+        private string GenerateErrorMessage(List<ObjectTableRuleField> requiredFields)
+        {
+            string errorMessage = "";            
+            foreach (ObjectTableRuleField field in requiredFields)
+            {
+                ObjectField f = objectFieldRepository.GetSingleObjectFieldByFieldCode(field.ObjectFieldCode, tenant);
+                if (string.IsNullOrEmpty(errorMessage))
+                {
+                    errorMessage = TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
+                }
+
+                else
+                {
+                    errorMessage += ", " + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
+                }
+            }
+
+            return errorMessage;
+        }        
+        private string BuildHousesErrorMessage(Dictionary<string, string> housesErrors)
+        {
+            string errorMessage = "";
+
+            foreach(KeyValuePair<string, string> item in housesErrors)
+            {
+                string houseError = "House " + item.Key + ": " + item.Value;
+
+                if (string.IsNullOrEmpty(errorMessage))
+                {
+                    errorMessage = houseError;
+                }
+
+                else
+                {
+                    errorMessage = errorMessage +  ", " + houseError;
+                }
+            }
+
+            return errorMessage;
+        }
     }
 }
