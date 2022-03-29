@@ -87,7 +87,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             && ObjectsLocator.AccountingSettingPM.AccountingSystemCode != this.QBOGlobalAccountingSystemCode) {
             return false;
         }
-        if(!this.EntityPM.TotalVATOnly){
+        if(this.EntityPM.TotalVATOnly){
             return true;
         }
         return false;
@@ -1220,7 +1220,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     item.SetUIProperties();
                 });
             }
-            this.CheckIsTotalVatDim();
+            this.IsTotalVatEnabled = this.CheckIsTotalVatDim();
         });
 
         logWindow.Show('./InvoiceModules/APInvoice/Components/Others/APInvoiceTotalVATOnlyComponent');
