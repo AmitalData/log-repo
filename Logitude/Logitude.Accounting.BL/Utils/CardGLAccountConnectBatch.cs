@@ -116,9 +116,9 @@ namespace Logitude.Accounting.BL.Utils
 
                 _ResponseText = $"Made Customers: {_CustomersMade},  Vendors: {_VendorsMade},   All others: {_AllOthersMade}, Errors: {String.Join(", \n", _badList.ToArray())}";
             }
-            catch (Exception e)
+            catch //(Exception e)
             {
-                throw new Exception("CardGLAccountConnectBatch failure ", e);
+                throw;// new Exception("CardGLAccountConnectBatch failure ", e);
             }
         }
         private void TryAllOthers( IAccountingContext context, int tenant, int timeoutinmin)
