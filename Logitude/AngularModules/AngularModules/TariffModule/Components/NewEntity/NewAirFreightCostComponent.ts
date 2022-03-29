@@ -223,8 +223,6 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         this.UIProperties.SetRequired("SellerId", this.ObjectTableName, isSellerRequired)
     }
 
-        
-
     private SetUIProperties_CustomerGroup() {
         var isCustomerGroupVisible: boolean = false;
         var isisCustomerGroupRequired: boolean = false;

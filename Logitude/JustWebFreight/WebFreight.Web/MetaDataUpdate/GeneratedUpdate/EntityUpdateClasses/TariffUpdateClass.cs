@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "f186f5ae2cdac0b779326dbfe2240ee1";
+		public const string HashString = "b68b161a13c814502c9f351d52501a8e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4768,7 +4768,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ImportCustomsChargesCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             
              AdvancedQueryFilter ImportCustomsChargesCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ICC",PredefinedValue2 = null, CustomPredefined = false, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   

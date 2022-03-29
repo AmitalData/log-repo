@@ -182,7 +182,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         }
 
         else if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
-            entityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
+            entityType = this.EntityPM.TypeCode == "ECS" ? "IsExport" : "IsImport";
         }
 
         else if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC") {
@@ -190,8 +190,8 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.SellerDependancy = "AG,CG";
         }
 
-        if (this.EntityPM.TypeCode == "IFT") {
-            EntityType = "IsInland";
+        else if (this.EntityPM.TypeCode == "IFT") {
+            entityType = "IsInland";
             this.SellerDependancy = "TR";
         }
 
