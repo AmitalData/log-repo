@@ -130,8 +130,13 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }
-
         public bool IsRegionalTax { get; set; }
 
+        public double? VATAmountInLocalCurrency { get; set; }
+        public double? VATAmountInQuoteSaleCurrency { get; set; }
+        public double? VATAmountInLineSaleCurrency { get; set; }
+        public double? SaleTotalAmountLocalIncludingVAT { get; set; }
+        public double? SaleAmountInSaleCurrencyIncludingVAT { get; set; }
+        public double? SaleTotalAmountIncludingVAT { get; set; }
     }
 }

@@ -613,6 +613,36 @@ export class QuoteChargePM {
     public set QuoteChargesGroupCode(newValue: string) { if (this.quoteChargesGroupCode != newValue) { this.quoteChargesGroupCode = newValue; this.MarkAsDirty("QuoteChargesGroupCode"); } }
        
 	 
+    private vATAmountInLocalCurrency: number;
+    public get VATAmountInLocalCurrency() { return this.vATAmountInLocalCurrency; }
+    public set VATAmountInLocalCurrency(newValue: number) { if (this.vATAmountInLocalCurrency != newValue) { this.vATAmountInLocalCurrency = newValue; this.MarkAsDirty("VATAmountInLocalCurrency"); } }
+       
+	 
+    private vATAmountInQuoteSaleCurrency: number;
+    public get VATAmountInQuoteSaleCurrency() { return this.vATAmountInQuoteSaleCurrency; }
+    public set VATAmountInQuoteSaleCurrency(newValue: number) { if (this.vATAmountInQuoteSaleCurrency != newValue) { this.vATAmountInQuoteSaleCurrency = newValue; this.MarkAsDirty("VATAmountInQuoteSaleCurrency"); } }
+       
+	 
+    private vATAmountInLineSaleCurrency: number;
+    public get VATAmountInLineSaleCurrency() { return this.vATAmountInLineSaleCurrency; }
+    public set VATAmountInLineSaleCurrency(newValue: number) { if (this.vATAmountInLineSaleCurrency != newValue) { this.vATAmountInLineSaleCurrency = newValue; this.MarkAsDirty("VATAmountInLineSaleCurrency"); } }
+       
+	 
+    private saleTotalAmountLocalIncludingVAT: number;
+    public get SaleTotalAmountLocalIncludingVAT() { return this.saleTotalAmountLocalIncludingVAT; }
+    public set SaleTotalAmountLocalIncludingVAT(newValue: number) { if (this.saleTotalAmountLocalIncludingVAT != newValue) { this.saleTotalAmountLocalIncludingVAT = newValue; this.MarkAsDirty("SaleTotalAmountLocalIncludingVAT"); } }
+       
+	 
+    private saleAmountInSaleCurrencyIncludingVAT: number;
+    public get SaleAmountInSaleCurrencyIncludingVAT() { return this.saleAmountInSaleCurrencyIncludingVAT; }
+    public set SaleAmountInSaleCurrencyIncludingVAT(newValue: number) { if (this.saleAmountInSaleCurrencyIncludingVAT != newValue) { this.saleAmountInSaleCurrencyIncludingVAT = newValue; this.MarkAsDirty("SaleAmountInSaleCurrencyIncludingVAT"); } }
+       
+	 
+    private saleTotalAmountIncludingVAT: number;
+    public get SaleTotalAmountIncludingVAT() { return this.saleTotalAmountIncludingVAT; }
+    public set SaleTotalAmountIncludingVAT(newValue: number) { if (this.saleTotalAmountIncludingVAT != newValue) { this.saleTotalAmountIncludingVAT = newValue; this.MarkAsDirty("SaleTotalAmountIncludingVAT"); } }
+       
+	 
 
     public OldEntityPM: QuoteChargePM;
 	    

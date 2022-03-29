@@ -129,6 +129,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                           SaleRatio = (a.SaleMeasurement!=null && a.SaleMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
                                           CostRatio   = (a.CostMeasurement != null && a.CostMeasurement.Code == "PDCW")  ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
                                           QuoteChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.QuoteChargesGroupCode,
+                                          VATAmountInLocalCurrency = a.VATAmountInLocalCurrency,
+                                          VATAmountInQuoteSaleCurrency = a.VATAmountInQuoteSaleCurrency,
+                                          VATAmountInLineSaleCurrency = a.VATAmountInLineSaleCurrency,
+                                          SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
+                                          SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
+                                          SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
                                       }).FirstOrDefault();
 
             return myResult;
@@ -235,6 +241,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 SaleRatio = (a.SaleMeasurement != null && a.SaleMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
                                                 CostRatio = (a.CostMeasurement != null && a.CostMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
                                                 QuoteChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.QuoteChargesGroupCode,
+                                                VATAmountInLocalCurrency = a.VATAmountInLocalCurrency,
+                                                VATAmountInQuoteSaleCurrency = a.VATAmountInQuoteSaleCurrency,
+                                                VATAmountInLineSaleCurrency = a.VATAmountInLineSaleCurrency,
+                                                SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
+                                                SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
+                                                SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
                                             }).ToList();
 
             QuotePriceStepsRepository quotePriceStepsRepository = new QuotePriceStepsRepository(this.repository.context);
@@ -417,6 +429,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 TariffVersion = a.TariffVersion,
                                                 IsRegionalTax = a.IsRegionalTax,
                                                 QuoteChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.QuoteChargesGroupCode,
+                                                VATAmountInLocalCurrency = a.VATAmountInLocalCurrency,
+                                                VATAmountInQuoteSaleCurrency = a.VATAmountInQuoteSaleCurrency,
+                                                VATAmountInLineSaleCurrency = a.VATAmountInLineSaleCurrency,
+                                                SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
+                                                SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
+                                                SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
                                             }).ToList();
 
             return output.OrderBy(d => d.ViewOrder).ThenBy(d => d.ChargesTypeCode).ToList();
