@@ -1078,6 +1078,7 @@
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\LogisticPermitQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsDocumentUploadQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticActionRequestQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticActionRequestTypeQueryService.Generated.cs" />
