@@ -50,6 +50,7 @@ import { WarehouseStoragePricingPM } from '../EntityPMs/WarehouseStoragePricingP
 import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
 import { ProductItemPM } from '../EntityPMs/ProductItemPM';
 import { HTSCodePM } from '../EntityPMs/HTSCodePM';
+import { CardContactProductPM } from '../EntityPMs/CardContactProductPM';
 
 @Injectable()
 
@@ -777,8 +778,10 @@ export class PartnersDomainService {
 
             if (!AppTool.IsNullOrEmpty(entityPM.CardId)) {
                 var oldContactServices: CardContactAdditionalServicePM[] = [];
+                var oldContactProducts: CardContactProductPM[] = [];
                 if (entityPM.OldEntityPM && !mapParent) {
                     oldContactServices = entityPM.OldEntityPM.CardContactAdditionalServices;
+                    oldContactProducts = entityPM.OldEntityPM.CardContactProducts;
                 }
 
                 entityPM.CardContactAdditionalServices = new Array<CardContactAdditionalServicePM>();
@@ -846,6 +849,71 @@ export class PartnersDomainService {
                         }
                     }
                 }
+
+                entityPM.CardContactProducts = new Array<CardContactProductPM>();
+                for (var item in jsonList.CardContactProducts) {
+
+                    var jItem = jsonList.CardContactProducts[item];
+                    if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                        continue;
+                    }
+                    var newProductPM: CardContactProductPM;
+                    if (mapParent) {
+                        newProductPM = new CardContactProductPM(entityPM);
+                    }
+                    else {
+                        newProductPM = new CardContactProductPM(null);
+                    }
+
+                    var pmKeysArray = Object.keys(jItem);
+                    for (var pmKey in pmKeysArray) {
+
+                        if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties") {
+                            continue;
+                        }
+                        var pmProperty = pmKeysArray[pmKey];
+                        newProductPM[pmProperty] = jItem[pmProperty];
+                    }
+
+                    newProductPM.IsDirty = false;
+
+                    if (mapParent) {
+                        newProductPM.OldEntityPM = this.clone(newProductPM);
+                        newProductPM.UniqueKey = Guid.newGuid();
+                        newProductPM.ChangeSetOp = "None";
+                        jItem.ChangeSetOp = "None";
+
+                    }
+                    else {
+
+                        if (newProductPM.UniqueKey) {
+
+                            if (jItem.IsDirty)
+                                newProductPM.ChangeSetOp = "Update";
+                        }
+                        else {
+                            newProductPM.ChangeSetOp = "Insert";
+                        }
+
+                        newProductPM.OldEntityPM = null;
+                        newProductPM.EntityParentPM = null;
+                    }
+
+                    entityPM.CardContactProducts.push(newProductPM);
+                }
+
+                if (oldContactProducts) {
+
+                    for (var itemKey in oldContactProducts) {
+                        if (entityPM.CardContactProducts.filter(p => p.UniqueKey === oldContactProducts[itemKey].UniqueKey).length === 0) {
+
+                            if (oldContactProducts[itemKey]) {
+                                oldContactProducts[itemKey].ChangeSetOp = "Delete";
+                                entityPM.CardContactProducts.push(oldContactProducts[itemKey]);
+                            }
+                        }
+                    }
+                }
             }
             
             entityPM.IsDirty = false;
@@ -855,6 +923,11 @@ export class PartnersDomainService {
                 entityPM.OldEntityPM.CardContactAdditionalServices = [];
                 for (var m in entityPM.CardContactAdditionalServices) {
                     entityPM.OldEntityPM.CardContactAdditionalServices.push(this.clone(entityPM.CardContactAdditionalServices[m]));
+                }
+
+                entityPM.OldEntityPM.CardContactProducts = [];
+                for (var m in entityPM.CardContactProducts) {
+                    entityPM.OldEntityPM.CardContactProducts.push(this.clone(entityPM.CardContactProducts[m]));
                 }
             }
             else {

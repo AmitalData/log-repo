@@ -246,6 +246,31 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             }
         }
 
+        private List<CardContactProductPM> cardContactProducts;
+        [Include]
+        [Association("CardContactProductContact", "Id", "ContactId")]
+        [Composition]
+        [DataMember]
+        public virtual List<CardContactProductPM> CardContactProducts
+        {
+            get
+            {
+
+                if (this.cardContactProducts == null)
+                {
+                    cardContactProducts = new List<CardContactProductPM>();
+                }
+                return this.cardContactProducts;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    cardContactProducts = value;
+                }
+            }
+        }
+
         public string OldSimilarInactiveContactId { get; set; }
     }
 }
