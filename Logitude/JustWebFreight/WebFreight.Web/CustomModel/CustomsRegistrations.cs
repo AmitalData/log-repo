@@ -43,6 +43,7 @@ namespace WebFreight.Web.CustomModel
 
 
 
+            ContainerAccessor.Container.RegisterType<IDICustomsSettingQueryService, Logitude.Customs.BL.EntityQueryServices.DICustomsSettingQueryService>("DICustomsSettingQueryService", new InjectionFactory(c => new Logitude.Customs.BL.EntityQueryServices.DICustomsSettingQueryService()));
 
         }
     }

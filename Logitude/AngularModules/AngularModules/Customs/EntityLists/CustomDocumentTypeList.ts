@@ -18,6 +18,8 @@ export class CustomDocumentTypeList {
 	PointerLevelName: string;
 	IsCourierManadatory: boolean;
 	IsDiamondManadatory: boolean;
+	CustomsDocumentUpload: string;
+	CustomsDocumentUploadName: string;
 	
 }
  

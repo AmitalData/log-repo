@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -103,6 +104,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public List<CustomsSetting> GetAll(int tenant)
         {
             return repository.GetAll(tenant).ToList();
+        }
+        public bool IsCourierTenant(int tenant)
+        {
+            var pm = GetSettingByTenantN(tenant, fromCache: true);
+            return (pm.CompanyType == "B");
+
+
         }
         public CustomsSettingPM GetSettingByTenantN(int tenant, bool fromCache = true)
         {
@@ -217,5 +225,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }   
     }
 #endif
+
+    public class DICustomsSettingQueryService: IDICustomsSettingQueryService
+    {
+
+        public bool IsCourierTenant(int tenant)
+        {
+            var customsSettingQueryService = new CustomsSettingQueryService(tenant);
+            return customsSettingQueryService.IsCourierTenant(tenant);
+        }
+    }
 
 }

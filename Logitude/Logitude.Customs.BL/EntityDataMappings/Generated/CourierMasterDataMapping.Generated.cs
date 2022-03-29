@@ -55,7 +55,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LandingDate, 
 	         UnifreightLeadingFile, 
 	         CourierMasterRemarks, 
-	         OpenDeclarations,
+	         OpenDeclarations, 
+	         NoOfCourierHawbwWithoutHatara, 
+	         NoOfCourierHawbWithoutDelivery,
 	      }
 
 
@@ -120,7 +122,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LandingDateDateOnly, 
 	         LandingDateTimeOnly, 
 	         CourierMasterRemarks, 
-	         OpenDeclarations,
+	         OpenDeclarations, 
+	         NoOfCourierHawbwWithoutHatara, 
+	         NoOfCourierHawbWithoutDelivery,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -292,6 +296,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpenDeclarations))
             {
 				entityPOCO.OpenDeclarations = entityPM.OpenDeclarations;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NoOfCourierHawbwWithoutHatara))
+            {
+				entityPOCO.NoOfCourierHawbwWithoutHatara = entityPM.NoOfCourierHawbwWithoutHatara;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NoOfCourierHawbWithoutDelivery))
+            {
+				entityPOCO.NoOfCourierHawbWithoutDelivery = entityPM.NoOfCourierHawbWithoutDelivery;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -470,6 +484,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.OpenDeclarations = entityPOCO.OpenDeclarations;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NoOfCourierHawbwWithoutHatara))
+            {
+					entityPM.NoOfCourierHawbwWithoutHatara = entityPOCO.NoOfCourierHawbwWithoutHatara;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NoOfCourierHawbWithoutDelivery))
+            {
+					entityPM.NoOfCourierHawbWithoutDelivery = entityPOCO.NoOfCourierHawbWithoutDelivery;
+            }
+
 		}
 
 		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
@@ -641,6 +665,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.OpenDeclarations = entityPM.OpenDeclarations;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NoOfCourierHawbwWithoutHatara))
+            {
+                oldEntityPM.NoOfCourierHawbwWithoutHatara = entityPM.NoOfCourierHawbwWithoutHatara;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NoOfCourierHawbWithoutDelivery))
+            {
+                oldEntityPM.NoOfCourierHawbWithoutDelivery = entityPM.NoOfCourierHawbWithoutDelivery;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CourierMasterPM entityPM)
@@ -677,6 +711,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CourierMasterRemarks)) //T4 find type == nText 
             {
                 entityPM.CourierMasterRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CourierMasterRemarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.NoOfCourierHawbwWithoutHatara)) //T4 find type == nText 
+            {
+                entityPM.NoOfCourierHawbwWithoutHatara = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.NoOfCourierHawbwWithoutHatara));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.NoOfCourierHawbWithoutDelivery)) //T4 find type == nText 
+            {
+                entityPM.NoOfCourierHawbWithoutDelivery = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.NoOfCourierHawbWithoutDelivery));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

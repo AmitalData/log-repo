@@ -3272,5 +3272,31 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 mamanSpecialActionStatusRepository.Add(newMamanSpecialActionStatus);
             }
         }
+
+        
+        public static void AddCustomsDocumentUpload(CustomsDocumentUpload customsDocumentUploadDetails, CustomsDocumentUploadRepository customsDocumentUploadRepository)
+        {
+            Dictionary<string, CustomsDocumentUpload> tenant = customsDocumentUploadRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(customsDocumentUploadDetails.Code))
+            {
+                CustomsDocumentUpload customsDocumentUpload = customsDocumentUploadRepository.GetSingle(customsDocumentUploadDetails.Code);
+                customsDocumentUpload.LocalName = customsDocumentUploadDetails.LocalName;
+                customsDocumentUpload.EnglishName = customsDocumentUploadDetails.EnglishName;
+                customsDocumentUpload.SearchFields = (customsDocumentUploadDetails.Code + "," + customsDocumentUploadDetails.LocalName).ToLower();
+                customsDocumentUploadRepository.Update(customsDocumentUpload);
+            }
+            else
+            {
+                CustomsDocumentUpload customsDocumentUpload = new CustomsDocumentUpload()
+                {
+                    Code = customsDocumentUploadDetails.Code,
+                    LocalName = customsDocumentUploadDetails.LocalName,
+                    EnglishName = customsDocumentUploadDetails.EnglishName,
+                    SearchFields = (customsDocumentUploadDetails.Code + "," + customsDocumentUploadDetails.LocalName).ToLower()
+                };
+                customsDocumentUploadRepository.Add(customsDocumentUploadDetails);
+            }
+        }
     }
 }

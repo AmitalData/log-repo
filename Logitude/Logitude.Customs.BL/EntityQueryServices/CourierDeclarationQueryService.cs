@@ -54,5 +54,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(context);
             return courierDeclarationRepository.GetDeclarationIdsByCourierMasterID(courierMasterid, tenant);
         }
+        public int CountNoOfCourierHawbwWithoutHatara(string couriermasterid, int tenant)
+        {
+            CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(context);
+            return courierDeclarationRepository.CounNoOfCourierHawbwWithoutHatara(couriermasterid, tenant);
+        }
+        public int CountNoOfCourierHawbWithoutDelivery(string couriermasterid, int tenant)
+        {
+            CourierDeclarationRepository courierMasterRepository = new CourierDeclarationRepository(context);
+            return courierMasterRepository.CountNoOfCourierHawbWithoutDelivery(couriermasterid, tenant);
+        }
     }
 }

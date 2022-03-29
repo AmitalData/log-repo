@@ -38,5 +38,15 @@
                 <span style="font-weight: bold">{{_CourierMasterList.CalcPending900}}</span>
             </div>
         </div>
+        <div class="TextTrimming" *ngIf="fieldName == 'NoOfCourierHawbWithoutDelivery'" style="text-align:center;">
+            <div (click)="ShowCourierWorkSheet($event, _CourierMasterList['Id'],'NoOfCourierHawbWithoutDelivery')">
+                <span style="font-weight: bold">{{_CourierMasterList.NoOfCourierHawbWithoutDelivery}}</span>
+            </div>
+        </div>
+        <div class="TextTrimming" *ngIf="fieldName == 'NoOfCourierHawbwWithoutHatara'" style="text-align:center;">
+            <div (click)="ShowCourierWorkSheet($event, _CourierMasterList['Id'],'NoOfCourierHawbwWithoutHatara')">
+                <span style="font-weight: bold">{{_CourierMasterList.NoOfCourierHawbwWithoutHatara}}</span>
+            </div>
+        </div>
 
     </div>

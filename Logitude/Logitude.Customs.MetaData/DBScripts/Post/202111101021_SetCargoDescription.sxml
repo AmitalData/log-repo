@@ -3,7 +3,7 @@
 	<Sql Version="1">
 	</Sql>
 
-	<Oracle Version="3">
+	<Oracle Version="6">
 		<![CDATA[
 EXECUTE IMMEDIATE 'update declarations set cargodescription =
 (select cargodescription from CONSIGNMENTS

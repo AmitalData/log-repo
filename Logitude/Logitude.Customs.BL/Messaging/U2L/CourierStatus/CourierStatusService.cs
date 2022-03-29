@@ -28,7 +28,8 @@ using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
-
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
 {
@@ -109,10 +110,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
                 {
                     //newDeclarationCourierStatusPM.Delivered = false;
 
+                    //Update NoOfCourierHawbwWithoutDeliverys
+                    var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+                    CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+                    IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", _MyDeclarationPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
+                    myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(_MyDeclarationPM.Tenant, _CourierMasterPM.Id, null);
+
                 }
                 else
                 {
                     newDeclarationCourierStatusPM.Delivered = true;
+
                 }
                 if (string.IsNullOrWhiteSpace(_LogitudeCourierStatus.IsClosedForFollowUp) || (!string.IsNullOrWhiteSpace(_LogitudeCourierStatus.IsClosedForFollowUp) && _LogitudeCourierStatus.IsClosedForFollowUp.ToLower().Substring(0, 1) != "t"))
                 {
@@ -150,6 +158,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             
         }
+
 
         private void GetDeclarationPMByCustomsFile(string CustomFileNo)
         {

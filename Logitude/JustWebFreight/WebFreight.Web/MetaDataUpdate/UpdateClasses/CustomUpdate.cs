@@ -8851,7 +8851,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn customDocumentTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = customDocumentTypeQuery.Id, IndexOrder = 3, ObjectFieldId = customDocumentTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == customDocumentTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn customDocumentTypeQueryColumn5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = customDocumentTypeQuery.Id, IndexOrder = 4, ObjectFieldId = customDocumentTypeFields.Where(d => d.FieldName == "PointerLevelName" && d.ObjectTableId == customDocumentTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn customDocumentTypeQueryColumn6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = customDocumentTypeQuery.Id, IndexOrder = 5, ObjectFieldId = customDocumentTypeFields.Where(d => d.FieldName == "AutoSetOriginalDocumentTrue" && d.ObjectTableId == customDocumentTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn customDocumentTypeQueryColumn7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = customDocumentTypeQuery.Id, IndexOrder = 5, ObjectFieldId = customDocumentTypeFields.Where(d => d.FieldName == "IsCourierManadatory" && d.ObjectTableId == customDocumentTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn customDocumentTypeQueryColumn7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = customDocumentTypeQuery.Id, IndexOrder = 6, ObjectFieldId = customDocumentTypeFields.Where(d => d.FieldName == "IsCourierManadatory" && d.ObjectTableId == customDocumentTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn customDocumentTypeQueryColumn8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = customDocumentTypeQuery.Id, IndexOrder = 7, ObjectFieldId = customDocumentTypeFields.Where(d => d.FieldName == "CustomsDocumentUploadName" && d.ObjectTableId == customDocumentTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
+            
 
             #endregion
 
@@ -17989,6 +17991,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             manifestCargoStatusRepository.SubmitChanges();
 
+        }
+
+        public void FillCustomsDocumentUploadTable()
+        {
+            CustomsDocumentUploadRepository customsDocumentUploadRepository = new CustomsDocumentUploadRepository(0);
+            AddClosedTables.AddCustomsDocumentUpload(new CustomsDocumentUpload() { Code = "U", EnglishName = "Customs Document Upload", LocalName = "העלאת מסמך למכס" }, customsDocumentUploadRepository);
+            AddClosedTables.AddCustomsDocumentUpload(new CustomsDocumentUpload() { Code = "C", EnglishName = "Connect to Ticket and Upload", LocalName = "קישור לטיקט והעלאת מסמך" }, customsDocumentUploadRepository);
+            AddClosedTables.AddCustomsDocumentUpload(new CustomsDocumentUpload() { Code = "W", EnglishName = "Without Ticket", LocalName = "ללא טיקט" }, customsDocumentUploadRepository);
+            customsDocumentUploadRepository.SubmitChanges();
         }
 
         public void FillPendingErrorPlaceTable()

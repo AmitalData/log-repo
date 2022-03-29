@@ -97,6 +97,19 @@ namespace Logitude.Customs.Data.Repsitories
             return decList;
 
         }
+        public int CounNoOfCourierHawbwWithoutHatara(string couriermasterid, int tenant)
+        {
+            return (from a in context.CourierDeclarations
+                           where a.CourierMasterId == couriermasterid && a.Tenant == tenant && a.Declaration.HatraDate == null
+                           select a).Count();
+        }
+        public int CountNoOfCourierHawbWithoutDelivery(string couriermasterid, int tenant)
+        {
+            return (from a in context.CourierDeclarations
+                    join s in context.DeclarationCourierStatuses on a.DeclarationId equals s.DeclarationId 
+                    where a.CourierMasterId == couriermasterid && a.Tenant == tenant && a.Declaration.HatraDate != null && !s.Delivered 
+                    select a).Count();
+        }
     }
 
 }
