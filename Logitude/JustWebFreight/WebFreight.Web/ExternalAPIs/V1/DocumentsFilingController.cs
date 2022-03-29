@@ -111,7 +111,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         service.Update(entityPM, null, null, true);
 
                         var result = mappingService.GetDocumentsFilingById(entityPM.Id, authToken.Tenant);
-
                         APIHelper.AddCommunicationLog("D", entity, result, "DocumentsFiling", entityPM.Id, "Documents Filing API", authToken.Tenant);
 
                         scope.Complete();

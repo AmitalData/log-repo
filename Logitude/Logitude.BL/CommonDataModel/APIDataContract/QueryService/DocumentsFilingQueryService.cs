@@ -7,13 +7,13 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.ShipmentOrderModule.Data.Repositories;
 using Logitude.BL.CommonDataModel.Tools.Validating;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
     public partial class DocumentsFilingQueryService
     {
+
         public DocumentsFilingPM DocumentsFilingCustomDataMappingAndValidating(DocumentsFiling documentsFiling, int Tenant, bool isNew, string ComputingPartnerCode = "")
         {
 
@@ -55,23 +55,23 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             return documentTypeId;
         }
 
-        public string GetEntityIdForType(DocumentsFiling documentsFiling, int Tenant)
+        public string GetEntityIdForType(DocumentsFiling documentsFiling, int tenant)
         {
             string entityId;
             switch (documentsFiling.EntityType.Name.ToLower())
             {
                 case "shipment":
-                    entityId = GetShipmentIdByShipmentNumber(documentsFiling.EntityNumber, Tenant);
+                    entityId = GetShipmentIdByShipmentNumber(documentsFiling.EntityNumber, tenant);
                     break;
 
                 case "ticket":
-                    TicketRepository ticketRepository = new TicketRepository(Tenant);
-                    entityId = ticketRepository.GetTicketId(documentsFiling.EntityNumber, Tenant);
+                    TicketRepository ticketRepository = new TicketRepository(tenant);
+                    entityId = ticketRepository.GetTicketId(documentsFiling.EntityNumber, tenant);
                     break;
 
                 case "shipmentorder":
-                    ShipmentOrderRepository shipmentRepository = new ShipmentOrderRepository(Tenant);
-                    entityId = shipmentRepository.GetIdByCode(documentsFiling.EntityNumber, Tenant);
+                    ShipmentOrderRepository shipmentRepository = new ShipmentOrderRepository(tenant);
+                    entityId = shipmentRepository.GetIdByCode(documentsFiling.EntityNumber, tenant);
                     break;
 
                 default:

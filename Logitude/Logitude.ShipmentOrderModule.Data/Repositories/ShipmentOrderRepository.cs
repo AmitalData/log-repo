@@ -38,6 +38,11 @@ namespace Logitude.ShipmentOrderModule.Data.Repositories
             context.GetActiveDbContext().Database.ExecuteSqlCommand(query);
         }
 
+        public ShipmentOrder GetSingleById(string id, int tenant)
+        {
+            return (from a in context.ShipmentOrders where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
+        }
+
     }
 
 }
