@@ -64,27 +64,7 @@
                         </td>
                     </tr>
 
-                    <!-- CustomsBrokerId -->
-                    <tr class="FormFieldRow" *ngIf="IsCustomsBrokerVisible">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'CustomsBrokerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-                        <td>
-                            <LogLov [ObjectFieldName]="'CustomsBrokerId'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [SelectedValue]="CustomsBrokerId"
-                                    [DataContext]="DataContext"
-                                    [DependencyFilter1IsList]="true"
-                                    [HideMaintenanceIcon]="true"
-                                    [DependencyFilter1Value]="CustomsBrokerDependancy"
-                                    [LookUpTableName]="'Card'"
-                                    (SelectedItemChanged)="CustomsBroker = $event">
-                            </LogLov>
-                        </td>
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
+                   
 
                     <!-- CustomerGroupId -->
                     <tr class="FormFieldRow" *ngIf="IsCustomerGroupVisible">

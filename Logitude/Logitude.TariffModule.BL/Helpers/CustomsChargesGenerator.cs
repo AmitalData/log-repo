@@ -153,7 +153,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
             if (!string.IsNullOrEmpty(this.customAgentExportId))
             {
-                Tariff exportTariff = tariffs.Where(d => d.CustomsBrokerId == this.customAgentExportId && d.TypeCode == "ECC").FirstOrDefault();
+                Tariff exportTariff = tariffs.Where(d => d.SellerId == this.customAgentExportId && d.TypeCode == "ECC").FirstOrDefault();
                 if (exportTariff != null)
                 {
                     myResult.Add(exportTariff);
@@ -162,7 +162,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
             if (!string.IsNullOrEmpty(this.customAgentImportId))
             {
-                Tariff importTariff = tariffs.Where(d => d.CustomsBrokerId == this.customAgentImportId && d.TypeCode == "ICC").FirstOrDefault();
+                Tariff importTariff = tariffs.Where(d => d.SellerId == this.customAgentImportId && d.TypeCode == "ICC").FirstOrDefault();
                 if (importTariff != null)
                 {
                     myResult.Add(importTariff);
@@ -304,8 +304,8 @@ namespace Logitude.TariffModule.BL.Helpers
                                 UnitOfMesurmentId = measurement.Id,
                                 IsDifferentCurrency = tariffLine.IsDifferentCurrenciesPerCharge,
                                 Notes = tariffLine.Notes,
-                                CustomsBrokerId = tariff.CustomsBrokerId,
-                                CustomsBrokerName = tariff.CustomsBroker?.EnglishName,
+                                SellerId = tariff.SellerId,
+                                SellerName = tariff.Seller?.EnglishName,
                                 CurrencyId = tariffLine.CurrencyId != null ? tariffLine.CurrencyId : tariff.CurrencyId,
                                 Quantity = byPckageType.Quantity,
                             };
@@ -385,8 +385,8 @@ namespace Logitude.TariffModule.BL.Helpers
                         UnitOfMesurmentId = measurement.Id,
                         IsDifferentCurrency = tariffLine.IsDifferentCurrenciesPerCharge,
                         Notes = tariffLine.Notes,
-                        CustomsBrokerId = tariff.CustomsBrokerId,
-                        CustomsBrokerName = tariff.CustomsBroker?.EnglishName,
+                        SellerId = tariff.SellerId,
+                        SellerName = tariff.Seller?.EnglishName,
                     };
 
                     payable.CurrencyId = tariffLine.CurrencyId != null ? tariffLine.CurrencyId : tariff.CurrencyId;
@@ -635,7 +635,7 @@ namespace Logitude.TariffModule.BL.Helpers
         public bool IsDifferentCurrency { get; set; }
         public string Notes { get; set; }
         public double? Rate { get; set; }
-        public string CustomsBrokerId { get; set; }
-        public string CustomsBrokerName { get; set; }
+        public string SellerId { get; set; }
+        public string SellerName { get; set; }
     }
 }

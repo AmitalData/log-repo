@@ -34,10 +34,8 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public IsContainersAreaVisible: boolean = false;
     public IsUnitOfMeasurementFieldVisible: boolean = false;
     private draftVersion: TariffVersionPM;
-    public IsSellerVisible: boolean = false;
-    public IsCustomsBrokerVisible: boolean = false;
+    public IsSellerVisible: boolean = false;    
     public IsCustomerGroupVisible: boolean = false;
-    public CustomsBrokerDependancy: string = "AG,CG";
     public IsSurchargeTariff: boolean = false;
     public IsCustomsTariff: boolean = false;
     public IsInlandFTLTariff: boolean = false;
@@ -91,7 +89,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
     SetUIProperties() {
         this.SetUIProperties_Seller();
-        this.SetUIProperties_CustomsBroker();
         this.CheckCurrancyEnabledProperty();
         this.SetUIProperties_CustomerGroup();
     }
@@ -99,7 +96,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         var isSellerVisible: boolean = true;
         var isSellerRequired: boolean = false;
 
-        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+        if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
             isSellerVisible = false;
         }
 
@@ -111,22 +108,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         this.UIProperties.SetVisibility("SellerId", this.ObjectTableName, isSellerVisible);
         this.UIProperties.SetRequired("SellerId", this.ObjectTableName, isSellerRequired)
     }
-    private SetUIProperties_CustomsBroker() {
-        var isBrokerVisible: boolean = false;
-        var isBrokerRequired: boolean = false;
-
-        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
-            isBrokerVisible = true;
-        }
-
-        if (isBrokerVisible) {
-            isBrokerRequired = AppTool.IsNullOrEmpty(this.CustomsBrokerId);
-        }
-
-        this.IsCustomsBrokerVisible = isBrokerVisible;
-        this.UIProperties.SetVisibility("CustomsBrokerId", this.ObjectTableName, isBrokerVisible);
-        this.UIProperties.SetRequired("CustomsBrokerId", this.ObjectTableName, isBrokerRequired)
-    }
+    
     private SetUIProperties_CustomerGroup() {
         var isCustomerGroupVisible: boolean = false;
         var isisCustomerGroupRequired: boolean = false;
@@ -188,19 +170,24 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     BuildQueryFilters() {
-        var EntityType: string = "IsAir";
+        var entityType: string = "IsAir";
         if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
-            EntityType = "IsOcean";
+            entityType = "IsOcean";
             this.SellerDependancy = "SL";
         }
 
         else if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
-            EntityType = "IsOcean";
+            entityType = "IsOcean";
             this.SellerDependancy = "SL,AG,SG";
         }
 
-        else if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
-            EntityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
+        else if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            entityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
+        }
+
+        else if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC") {
+            entityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
+            this.SellerDependancy = "AG,CG";
         }
 
         if (this.EntityPM.TypeCode == "IFT") {
@@ -218,7 +205,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter(entityType, true, null, null, "Equals", false, false, false, "Boolean");
 
         if (this.EntityPM.TypeCode != "IFT") {
             this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
@@ -858,17 +845,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             else {
                 this.EntityPM.SellerName = null;
             }
-        }
-    }
-
-    get CustomsBrokerId() {
-        return this.EntityPM.CustomsBrokerId;
-    }
-    set CustomsBrokerId(value: string) {
-        if (this.EntityPM.CustomsBrokerId != value) {
-            this.EntityPM.CustomsBrokerId = value;
-
-            this.SetUIProperties_CustomsBroker();
         }
     }
 

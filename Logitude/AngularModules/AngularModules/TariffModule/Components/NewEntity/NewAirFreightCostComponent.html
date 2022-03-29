@@ -44,7 +44,7 @@
 
                                 <!-- Seller -->
                                 <tr class="FormFieldRow" *ngIf="IsSellerVisible">
-                                    <td>
+                                    <td [attr.title]="SellerToolTip">
                                         <LogLabel [ObjectFieldName]="'SellerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
@@ -63,26 +63,7 @@
                                     </td>
                                 </tr>
 
-                                <!-- CustomsBrokerId -->
-                                <tr class="FormFieldRow" *ngIf="IsCustomsBrokerVisible">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'CustomsBrokerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'CustomsBrokerId'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [SelectedValue]="CustomsBrokerId"
-                                                [DataContext]="DataContext"
-                                                [DependencyFilter1IsList]="true"
-                                                [HideMaintenanceIcon]="true"
-                                                [DependencyFilter1Value]="CustomsBrokerDependancy"
-                                                [LookUpTableName]="'Card'">
-                                        </LogLov>
-                                    </td>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
+                                
 
                                 <!-- CustomerGroupId -->
                                 <tr class="FormFieldRow" *ngIf="IsCustomerGroupVisible">

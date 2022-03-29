@@ -91,6 +91,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="DBScripts\202203160925_AddLocalCustomsTariffTypes.sxml" />
+    <None Include="DBScripts\202203231600_MapTariffCustomsBrokerToSeller.sxml" />
     <None Include="DBTables\Tariff.dxml" />
     <None Include="DBTables\TariffLine.dxml" />
     <None Include="DBTables\TariffLinesContainersPrice.dxml" />

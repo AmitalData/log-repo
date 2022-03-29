@@ -27,12 +27,7 @@ export class TariffValidator {
         if (entityPM != null) {
             Validator.TryValidateObject(this.entityPM, "Tariff", this.Errors);
 
-            if (entityPM.TypeCode == "ICC" || entityPM.TypeCode == "ECC") {
-                if (AppTool.IsNullOrEmpty(entityPM.CustomsBrokerId)) {
-                    this.Errors.push("Customs Broker Field is Required");
-                }
-            }
-            else if (entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS") {
+            if (entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS") {
                 if (AppTool.IsNullOrEmpty(entityPM.CustomerGroupId)) {
                     this.Errors.push("Customer Group Field is Required");
                 }
