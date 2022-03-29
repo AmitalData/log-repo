@@ -67,7 +67,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
-            entityCard.CreatedByPartner = entityPM.CreatedByPartner; 
+            entityCard.CreatedByPartner = entityPM.CreatedByPartner;
+            entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
 
             if (!entityPM.IsFirstContactToAdd)
             {

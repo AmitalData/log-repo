@@ -682,7 +682,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn EndsNext30DaysQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id,QueryCode = EndsNext30DaysQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsShipper.ValidityEndDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter EndsNext30DaysQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CustomsShipper.DepositionsDateFilter", PredefinedValue = "EndNext30Days",PredefinedValue2 = null, QueryId = EndsNext30DaysQueryQuery.Id,QueryCode = EndsNext30DaysQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter EndsNext30DaysQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CustomsShipper.DepositionsDateFilter", PredefinedValue = "EndNext30Days",PredefinedValue2 = null, CustomPredefined = false, QueryId = EndsNext30DaysQueryQuery.Id,QueryCode = EndsNext30DaysQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -701,7 +701,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn InValidDepositionsQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id,QueryCode = InValidDepositionsQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsShipper.ValidityEndDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter InValidDepositionsQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CustomsShipper.DepositionsDateFilter", PredefinedValue = "InValidDepositions",PredefinedValue2 = null, QueryId = InValidDepositionsQueryQuery.Id,QueryCode = InValidDepositionsQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter InValidDepositionsQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CustomsShipper.DepositionsDateFilter", PredefinedValue = "InValidDepositions",PredefinedValue2 = null, CustomPredefined = false, QueryId = InValidDepositionsQueryQuery.Id,QueryCode = InValidDepositionsQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

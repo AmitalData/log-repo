@@ -281,5 +281,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public double? CreditLimit { get; set; }
         [DataMember]
         public double? InsuredCreditlimit { get; set; }
+        [DataMember]
+        public string RegimenFiscalCode { get; set; }
     }
 }

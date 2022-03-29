@@ -343,6 +343,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Address2 { get; set; }
         [DataMember]
         public string BillToId { get; set; }
+        [DataMember]
+        public string RegimenFiscalCode { get; set; }
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

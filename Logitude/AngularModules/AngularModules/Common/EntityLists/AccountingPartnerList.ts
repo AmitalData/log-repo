@@ -41,5 +41,6 @@ export class AccountingPartnerList {
 		CollectorId: string;
 		CreditLimit: number;
 		InsuredCreditlimit: number;
+		RegimenFiscalCode: string;
 	
 }

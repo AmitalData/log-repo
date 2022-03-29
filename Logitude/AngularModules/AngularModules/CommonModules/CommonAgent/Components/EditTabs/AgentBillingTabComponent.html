@@ -23,7 +23,7 @@
                         <td style="width: 380px;">
 
                             <table>
-                                 
+
                                 <tr class="FormFieldRow">
                                     <td style="width: 140px;">
                                         <LogLabel [ObjectFieldName]="'PaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -66,6 +66,21 @@
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'UsoCFDI'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="ShowRegimenFiscalField" class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'RegimenFiscalCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'RegimenFiscalCode'"
+                                                [SelectedValue]="RegimenFiscalCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'RegimenFiscal'">
                                         </LogLov>
                                     </td>
                                 </tr>

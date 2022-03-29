@@ -19,6 +19,7 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
     public HasCreditLimitFeature: boolean = false;
     public IsCreditLimitActivated: boolean = false;
     public DisplaySATSettings: boolean = false;
+    public ShowRegimenFiscalField: boolean = false;
     @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -32,8 +33,16 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+            this.SetShowRegimenFiscalField();
         }
 
+    }
+
+    private SetShowRegimenFiscalField() {
+        var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
+        if (RegimenFiscalFieldFeatureToggle) {
+            this.ShowRegimenFiscalField = true;
+        }
     }
 
     ngOnInit() {
@@ -149,6 +158,13 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
     set UsoCFDICode(newValue: string) {
         if (this.EntityPM.UsoCFDICode != newValue) {
             this.EntityPM.UsoCFDICode = newValue; 
+        }
+    }
+
+    get RegimenFiscalCode() { return this.EntityPM.RegimenFiscalCode; }
+    set RegimenFiscalCode(newValue: string) {
+        if (this.EntityPM.RegimenFiscalCode != newValue) {
+            this.EntityPM.RegimenFiscalCode = newValue;
         }
     }
 

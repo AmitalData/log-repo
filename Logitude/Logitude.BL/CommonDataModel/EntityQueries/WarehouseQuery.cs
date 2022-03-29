@@ -87,6 +87,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          InlandWeightRoundingCode = a.InlandWeightRoundingCode,
                                          GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                          StorageFreeDays = a.Card.StorageFreeDays,
+                                         RegimenFiscalCode = a.Card.RegimenFiscalCode,
 
                                          Card = new CardPM()
                                          {
@@ -201,6 +202,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                                          InlandWeightRoundingCode = a.InlandWeightRoundingCode,
                                          StorageFreeDays = a.Card.StorageFreeDays,
+                                         RegimenFiscalCode = a.Card.RegimenFiscalCode,
 
                                          Card = new CardPM()
                                          {
@@ -293,7 +295,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                        InlandWeightRoundingCode = a.InlandWeightRoundingCode,
                        StorageFreeDays = a.Card.StorageFreeDays,
-                       
+                       RegimenFiscalCode = a.Card.RegimenFiscalCode,
+
                        Card = new CardPM()
                        {
                            Id = a.Id,
@@ -356,6 +359,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     InlandWeightRoundingCode = a.InlandWeightRoundingCode,
                                                     GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                                     StorageFreeDays = a.Card.StorageFreeDays,
+                                                    RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                     Field1 = a.Field1,
                                                     Field2 = a.Field2,
                                                     Field3 = a.Field3,
@@ -423,6 +427,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                                InlandWeightRoundingCode = a.InlandWeightRoundingCode,
                                StorageFreeDays = a.Card.StorageFreeDays,
+                               RegimenFiscalCode = a.Card.RegimenFiscalCode,
 
                                Card = new CardPM()
                                {
