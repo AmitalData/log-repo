@@ -128,7 +128,7 @@ namespace CommunicationWorkerRole.Services.ShipmentOrderDocuments
         }
         private void SendDocumentsFilingAM(DocumentsFilingAM documentFilingAM)
         {
-            APILogsUtility.UpdateAPILogStatus(apiLog.Id, apiLog.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Sending Shipment Order Document" + DateTime.Now, GetObjectString(documentFilingAM), null, null, "");
+            APILogsUtility.UpdateAPILogStatus(apiLog.Id, apiLog.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Sending Shipment Order Document" + DateTime.Now, TrimXmlString(documentFilingAM), null, null, "");
             using (var client = new HttpClient())
             {
            
@@ -151,7 +151,7 @@ namespace CommunicationWorkerRole.Services.ShipmentOrderDocuments
             }
         }
 
-        private static string GetObjectString(DocumentsFilingAM documentFilingAM)
+        private static string TrimXmlString(DocumentsFilingAM documentFilingAM)
         {
             var objectString = LogitudeXmlSerializer.SerializeObjectToXmlString(documentFilingAM);
             int start = objectString.IndexOf("<FileData>");
