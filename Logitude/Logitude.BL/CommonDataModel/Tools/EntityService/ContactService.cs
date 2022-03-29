@@ -43,6 +43,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private Contact oldSimilarContact = null;
         private List<CardContact> allCardContact;
         private CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository;
+        private CardContactProductRepository cardContactProductRepository;
         public ContactService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -54,6 +55,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactTenantRoleRepository = new ContactTenantRoleRepository(objectContext);
             this.allCardContact = new List<CardContact>();
             this.cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(objectContext);
+            this.cardContactProductRepository = new CardContactProductRepository(objectContext);
         }
 
         public void Create(ContactPM entityPM)
@@ -161,6 +163,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             this.DeleteAdditionalService(service);
                         }
 
+                        foreach (CardContactProductPM product in entityPM.CardContactProducts)
+                        {
+                            this.DeleteProduct(product);
+                        }
+
                         AddDisconectFromContactKafkaQueueMessage(myCardContact);
                         CardContactRepository.Remove(myCardContact);
                         CardContactRepository.SubmitChanges();
@@ -169,7 +176,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     else
                     {
                         this.UpdateAdditionalServicesCollection(entityPM.CardContactAdditionalServices, myCardContact);
-
+                        this.UpdateProductsCollection(entityPM.CardContactProducts, myCardContact);
                         MapCardContactToContact(myCardContact, entityPM);
                         CardContactRepository.Update(myCardContact);
                     }
@@ -658,6 +665,72 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (itemPoco != null)
             {
                 cardContactAdditionalServiceRepository.Remove(itemPoco);
+            }
+        }
+
+        private void UpdateProductsCollection(List<CardContactProductPM> productPMs, CardContact cardContact)
+        {
+            if (productPMs != null)
+            {
+                foreach (CardContactProductPM itemPM in productPMs)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateProduct(itemPM, cardContact);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateProduct(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteProduct(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+        private void CreateProduct(CardContactProductPM itemPM, CardContact cardContact)
+        {
+            itemPM.Id = IdCounter.GetNumber("CardContactProduct", tenant).ToString();
+            itemPM.CardContactId = cardContact.Id;
+            itemPM.Tenant = tenant;
+
+            CardContactProduct itemPoco = new CardContactProduct()
+            {
+                Id = itemPM.Id,
+                CardContactId = itemPM.CardContactId,
+                ProductTypeCode = itemPM.ProductTypeCode,
+                Tenant = tenant
+            };
+
+            CardContactProductMapping.MapEntity(itemPM, itemPoco, true);
+            cardContactProductRepository.Add(itemPoco);
+        }
+        private void UpdateProduct(CardContactProductPM itemPM)
+        {
+            CardContactProduct itemPoco = cardContactProductRepository.GetSingleCardContactProduct(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                CardContactProductMapping.MapEntity(itemPM, itemPoco, false);
+                cardContactProductRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteProduct(CardContactProductPM itemPM)
+        {
+            CardContactProduct itemPoco = cardContactProductRepository.GetSingleCardContactProduct(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                cardContactProductRepository.Remove(itemPoco);
             }
         }
 

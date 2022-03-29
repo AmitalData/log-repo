@@ -1363,6 +1363,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             CardContactRepository cardContactRepository = new CardContactRepository(tenant);
             CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(tenant);
+            CardContactProductQuery cardContactProductQuery = new CardContactProductQuery(tenant);
             IQueryable<CardContact> cardContacts = cardContactRepository.GetCardContacts(tenant);
 
             IQueryable<ContactPM> contacts = from a in cardContacts
@@ -1408,6 +1409,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 if (cardContact != null)
                 {
                     contact.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardContact.Id, tenant);
+                    contact.CardContactProducts = cardContactProductQuery.GetCardContactProductPMsByCardContactId(cardContact.Id, tenant);
                 }
             }
 
