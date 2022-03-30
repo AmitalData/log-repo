@@ -177,14 +177,14 @@ namespace WebFreight.Web.Helpers.BIReport
             return reportData;
         }
 
-        private bool IncludeColumnInTotal(Column c, List<DWObjectFieldPM> dWObjectMaxMeasurementFieldPMs)
+        private bool IncludeColumnInTotal(Column selectedColumn, List<DWObjectFieldPM> dWObjectMaxMeasurementFieldPMs)
         {
             if(this.FactTable == "Fact_Charges" || this.FactTable == "Fact_MasterCharges")
             {
-                return !ChargesFactMeasurementFields.Any(f => f == c.Name);
+                return !ChargesFactMeasurementFields.Any(f => f == selectedColumn.Name);
             }
 
-            return !dWObjectMaxMeasurementFieldPMs.Any(f => f.Code == c.FieldCode);
+            return !dWObjectMaxMeasurementFieldPMs.Any(f => f.Code == selectedColumn.FieldCode);
         }
           
         private DataTable RemoveTenantColumnFromDataTableColumns(DataTable dataTable)
