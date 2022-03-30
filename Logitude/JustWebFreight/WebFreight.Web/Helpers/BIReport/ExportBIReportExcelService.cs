@@ -1,4 +1,6 @@
-﻿using Logitude.Infrastructure.BL.EntityPMs;
+﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -33,9 +35,11 @@ namespace WebFreight.Web.Helpers.BIReport
             List<string> MeasurmentColumns = null;
             List<ExcelTotals> excelTotals = new List<ExcelTotals>();
             this.FactTable = biReportEntityPM.FactTableName;
+            DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(tenant);
+            List<DWObjectFieldPM> dWObjectMaxMeasurementFieldPMs =  dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, this.FactTable).Where(dwField => dwField.IsMeasurement && dwField.AggregationTypeCode == "MAX").ToList();
             if (bIReportXMLData.IncludeTotals)
             {
-                MeasurmentColumns = bITabularViewSettings.Columns.Where(c => (c.DataTypeCode == "Double" || c.DataTypeCode == "Decimal" || c.DataTypeCode == "Integer") && NotInFactChargesMeasurementFields(c)).Select(c => c.Code).ToList();
+                MeasurmentColumns = bITabularViewSettings.Columns.Where(c => (c.DataTypeCode == "Double" || c.DataTypeCode == "Decimal" || c.DataTypeCode == "Integer") && IncludeColumnInTotal(c, dWObjectMaxMeasurementFieldPMs)).Select(c => c.Code).ToList();
                
             }
 
@@ -142,7 +146,7 @@ namespace WebFreight.Web.Helpers.BIReport
                             string value = Convert.ToString(row[agColumn.Name]);
                             sheet.Range[cellRow, cellCol].Text = value;
                         }
-                        else if (bIReportXMLData.IncludeTotals && ((agColumn.DataTypeCode == "Double" || agColumn.DataTypeCode == "Decimal" || agColumn.DataTypeCode == "Integer") && (NotInFactChargesMeasurementFields(agColumn))))
+                        else if (bIReportXMLData.IncludeTotals && ((agColumn.DataTypeCode == "Double" || agColumn.DataTypeCode == "Decimal" || agColumn.DataTypeCode == "Integer") && IncludeColumnInTotal(agColumn, dWObjectMaxMeasurementFieldPMs)))
                         {
                             string value = row[agColumn.Name].ToString();
                             if (!string.IsNullOrEmpty(value))
@@ -173,12 +177,14 @@ namespace WebFreight.Web.Helpers.BIReport
             return reportData;
         }
 
-        private bool NotInFactChargesMeasurementFields(Column c)
+        private bool IncludeColumnInTotal(Column selectedColumn, List<DWObjectFieldPM> dWObjectMaxMeasurementFieldPMs)
         {
-            var chargesFactMeasurementField = ChargesFactMeasurementFields.Where(a=> a == c.Name).FirstOrDefault();
+            if(this.FactTable == "Fact_Charges" || this.FactTable == "Fact_MasterCharges")
+            {
+                return !ChargesFactMeasurementFields.Any(f => f == selectedColumn.Name);
+            }
 
-            return (!(chargesFactMeasurementField != null && ( this.FactTable == "Fact_Charges" || this.FactTable == "Fact_MasterCharges")));
-            
+            return !dWObjectMaxMeasurementFieldPMs.Any(f => f.Code == selectedColumn.FieldCode);
         }
           
         private DataTable RemoveTenantColumnFromDataTableColumns(DataTable dataTable)
