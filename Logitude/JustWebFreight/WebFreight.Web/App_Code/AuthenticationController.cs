@@ -62,7 +62,7 @@ namespace WebFreight.Web
     /// </summary>
 
 #endif
-    public class AuthenticationController : ApiController 
+    public partial class AuthenticationController : ApiController 
     {
         public AuthenticationController()
         {
@@ -94,9 +94,9 @@ namespace WebFreight.Web
             AuthenticationController authenticationController = new AuthenticationController();
             return authenticationController.PostLoginData(loginParameters, loginParameters.Tenant);
         }
-
+        
         [ActionName("PostLoginUsingAuthenticaionTokenForCTool")]
-        public UserData PostLoginUsingAuthenticaionTokenForCTool(LoginTokenParameter logintokenparam)
+        public UserData PostLoginUsingAuthenticaionTokenForCTool(LoginTokenParameter logintokenparam,int summyfornaming)
         {
             LoginParameters loginParameters = BuildLoginParameters(logintokenparam);
             if(loginParameters == null)
