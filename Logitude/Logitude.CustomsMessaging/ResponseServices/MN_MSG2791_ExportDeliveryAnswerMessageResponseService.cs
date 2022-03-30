@@ -86,7 +86,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     entity.StorErrorXML = xml;
                 }
-                
+                else
+                {
+                    entity.StorErrorXML = null;
+                }
+
                 entity.CustomsStatus = customResponse.CargoDetails?.CargoStatusID?.ToString();
                 entity.ChangeSetOp = ChangeSetOperation.Update;
                 var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
