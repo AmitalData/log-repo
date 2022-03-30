@@ -45,7 +45,6 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     public Height: number = 110;
     public IconSize: number = 17;
 
-    private FactARInvoiceGroupedMeasurmentField:string = "Invoice Number";
     private IsCopy: boolean = false;
     private CopyBIReportsFromTenant: number;
     private FactTableName: string;
@@ -756,7 +755,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     private ShowValidateFactARInvoicesMessage(fieldName: string, fieldType: string) {
-        this.ShowValidateMessage("You are not allowed to add " + fieldName + " " + fieldType + " unless you add the " + this.FactARInvoiceGroupedMeasurmentField +" Number column");
+        this.ShowValidateMessage("You are not allowed to add " + fieldName + " " + fieldType + " unless you add the Invoice Number column");
     }
 
     RootGroups: DWObjectFieldsDetails[] = [];
