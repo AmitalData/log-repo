@@ -426,7 +426,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
                 break;
             }
 
-            case 'I': {
+            case 'I':
+            case 'C': {
                 direction = "Import"
                 break;
             }
@@ -1013,7 +1014,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.virtualScroll.checkViewportSize();
     }
 
-    setViews() 
+    setViews()
     {
         if(this.IsWebView) {
             this.isMobileView = window.innerWidth <= 479;
