@@ -1,4 +1,3 @@
-
  
 using System;
 using System.Collections.Generic;
@@ -13,10 +12,10 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class LogisticPermitRepository:IRepository<LogisticPermit>
+   public partial class ExportLogisticPermitActionRepository:IRepository<ExportLogisticPermitAction>
    {
         
-		public List<LogisticPermit> GetMulti(EntityKeyFields entityKeys)
+		public List<ExportLogisticPermitAction> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();
