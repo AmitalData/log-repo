@@ -265,8 +265,8 @@ export class MultiUpdateDecComponent extends BaseComponent {
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         var errors = [];
-        if (this.ProcessTypeCode == null && this.TaxExemptCode == null ) {
-            errors.push("חובה להזין שדה קוד");
+        if (this.ProcessTypeCode == null && this.TaxExemptCode == null && this.classificationCode == null) {
+            errors.push("חובה להזין אחד מהשדות לעדכון");
         }
        
         this.ValidationErrorsList = errors;
