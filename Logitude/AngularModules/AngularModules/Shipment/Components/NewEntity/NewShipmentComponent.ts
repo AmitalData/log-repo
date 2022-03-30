@@ -1644,7 +1644,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.CustomerDependencyProperty1IsList = false;
                 break;
             }
-
+            case "TRK": {
+                this.CustomerDependencyProperty1 = "TR";
+                this.CustomerDependencyProperty1IsList = false;
+                break;
+            }
             case "OTH": {
                 this.CustomerDependencyProperty1 = "CS";
                 this.CustomerDependencyProperty1IsList = false;
@@ -1820,7 +1824,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.EntityPM.CustomClearancePointContactId = this.CustomerContactId;
                 break;
             }
-
+            case "TRK": {
+                this.EntityPM.TruckerId = this.CustomerId;
+                this.EntityPM.TruckerAddressId = this.CustomerAddressId;
+                this.EntityPM.TruckerContactId = this.CustomerContactId;
+                break;
+            }
             case "OTH": {
 
                 break;
@@ -1906,7 +1915,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 else if (this.ShipmentCustomerTypeCode == "CAE" || this.ShipmentCustomerTypeCode == "CAI") {
                     myComponentPath = "./CommonModules/CommonPartners/Components/NewEntity/NewCustomAgentComponent";
                 }
-
+                else if (this.ShipmentCustomerTypeCode == "TRK") {
+                    myComponentPath = "./CommonModules/CommonPartners/Components/NewEntity/NewTruckerComponent";
+                }
                 else {
                     myComponentPath = "./CommonModules/CommonCustomer/Components/NewEntity/NewCustomerComponent";
 
@@ -1988,6 +1999,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         var myResult: string = "";
 
         switch (this.ShipmentCustomerTypeCode) {
+            case "TRK":
+                {
+                    myResult = "Trucker";
+                    break
+                }
             case "AGT":
                 {
                     myResult = "Agent";
