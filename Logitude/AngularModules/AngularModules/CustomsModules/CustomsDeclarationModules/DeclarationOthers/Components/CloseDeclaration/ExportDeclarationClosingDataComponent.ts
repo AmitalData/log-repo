@@ -30,7 +30,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public DeclarationIsClosed: boolean = false;
     public ObjectTableName: string = "Customs.ExportDeclarationClosingData";
     public IsReady: boolean = false;
-    ValidationErrors: string[];
+    ValidationErrors: string[] = [];
     DeclarationService: DeclarationWebService = new DeclarationWebService();;
     exportDeclarationClosingDataPMService: ExportDeclarationClosingDataPMService = new ExportDeclarationClosingDataPMService();
     exportDeclarationClosingDatasExtendPMService: ExportDeclarationClosingDatasExtendPMService = new ExportDeclarationClosingDatasExtendPMService();
@@ -80,9 +80,15 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if (id != null) {
             
                     this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
-                        
                         this.EntityPM = response.Result;
-                        this.IsNew = true;
+                        if (response.Result.ChangeSetOp == "1") {
+                            this.EntityPM.IsDirty = true;
+                            this.IsNew = true;
+                        }
+                        else {
+                            this.EntityPM.IsDirty = false;
+
+                        }
 
                     /*this.EntityPM = new ExportDeclarationClosingDataPM();
                     this.EntityPM.DeclarationId = id;
@@ -106,8 +112,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     get LoadingDateTime() { return this.EntityPM ? this.EntityPM.LoadingDateTime : null; }
     set LoadingDateTime(value: Date) {
+        debugger;
         if (this.EntityPM.LoadingDateTime != value) {
             this.EntityPM.LoadingDateTime = value;
+            this.EntityPM.IsDirty = true;
         }
     }
 
@@ -115,6 +123,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     set FinalShipCode(value: string) {
         if (this.EntityPM.FinalShipCode != value) {
             this.EntityPM.FinalShipCode = value;
+            this.EntityPM.IsDirty = true;
         }
     }
 
@@ -122,6 +131,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     set FinalLoadingSite(value: string) {
         if (this.EntityPM.FinalLoadingSite != value) {
             this.EntityPM.FinalLoadingSite = value;
+            this.EntityPM.IsDirty = true;
         }
     }
     get MainAWB() { return this.EntityPM ? this.EntityPM.MAIN_AWB : null; }
@@ -150,6 +160,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     set FinalCargoTypeCode(value: string) {
         if (this.EntityPM.FinalCargoTypeCode != value) {
             this.EntityPM.FinalCargoTypeCode = value;
+            this.EntityPM.IsDirty = true;
         }
     }
 
@@ -157,23 +168,27 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     set FinalManifestNumber(value: string) {
         if (this.EntityPM.FinalManifestNumber != value) {
             this.EntityPM.FinalManifestNumber = value;
+            this.EntityPM.IsDirty = true;
         }
     }
     get FinalSecondCargoId() { return this.EntityPM ? this.EntityPM.FinalSecondCargoId : null; }
     set FinalSecondCargoId(value: string) {
         if (this.EntityPM.FinalSecondCargoId != value) {
             this.EntityPM.FinalSecondCargoId = value;
+            this.EntityPM.IsDirty = true;
         }
     }
     get FinalThirdCargoId() { return this.EntityPM ? this.EntityPM.FinalThirdCargoId : null; }
     set FinalThirdCargoId(value: string) {
         if (this.EntityPM.FinalThirdCargoId != value) {
             this.EntityPM.FinalThirdCargoId = value;
+            this.EntityPM.IsDirty = true;
         }
     }
 
 
     SendButtonClicked(event: CustomSendOptionsArgs) {
+        debugger;
         if (this.EntityPM.IsDirty) {
             if (this.IsNew) {
                 this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
@@ -213,7 +228,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         searchParams.IsExportClose = true;
         //searchParams.TestCase = event.TestCase;
         let myShowProgressBarParams: ShowProgressBarParams = null;
-
+        debugger;
         CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
             .then((res) => {
 
@@ -226,14 +241,14 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             });
 
         this.DeclarationService.PostSendDeclarationClosingAmendment(searchParams).subscribe((response: ServiceResponse) => {
-            if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && !AppTool.IsNullOrEmpty(response.Result.UserMessage)) {
+            if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && !AppTool.IsNullOrEmpty(response.Result.UserMessage) && response.Result.HasException) {
                 this.ValidationErrors.push(response.Result.UserMessage);
                 this.FillValidationErrors("Errors");
             }
             //DOTO
-
+            debugger;
             //if success
-            if (response.Result) {
+            if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && (response.Result.IsExportCloseApprove || response.Result.HasException)) {
 
 
                 this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DEGC";
@@ -248,7 +263,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             }
 
 
-            //  SessionLocator.SelectedSession.CloseCurrentWindow();
+              SessionLocator.SelectedSession.CloseCurrentWindow();
         });
 
     }

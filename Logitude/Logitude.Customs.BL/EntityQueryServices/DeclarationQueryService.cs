@@ -613,9 +613,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             else if (IsAmendmentErrors )
             {
-                if (!string.IsNullOrEmpty(declaration.AmendmentErrorXml))
+                if (!string.IsNullOrEmpty(declaration.AmendmentErrorXml) || !string.IsNullOrEmpty(declaration.ExportClosedErrorXML))
                 {
-                    byte[] errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml);
+                    byte[] errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml ?? declaration.ExportClosedErrorXML);
                     MemoryStream memorystream = new MemoryStream(errorsByte);
                     XmlSerializer serializer = new XmlSerializer(typeof(DeclarationError));
                     DeclarationError declarationError = (DeclarationError)serializer.Deserialize(memorystream);
