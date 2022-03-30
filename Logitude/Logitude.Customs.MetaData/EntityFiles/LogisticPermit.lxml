@@ -4,15 +4,15 @@
   ObjectTableName="&quot;Customs.LogisticPermit&quot;"
   IsNew="true"
   DBTableName="&quot;Customs.LogisticPermits&quot;"
-  
+  DBTableOldNames="Customs.LogisticPermits"
   ObjectTableSingular="&quot;LogisticPermit&quot;"
   ObjectTablePlural="&quot;LogisticPermits&quot;"
-  HasCustomFilter="true"
+  HasCustomFilter="false"
   HasCustomFields="false"
   HasHelper="false"
   HasShortTitle="true"
-  HasFiltersMenu="true"
-  HasCustomValidator="true"
+  HasFiltersMenu="false"
+  HasCustomValidator="false"
   IsEditable="false"
   IsNewWizard="false"
   LookUp1="&quot;Id&quot;"
@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;אישור לוגיסטי&quot;"
   DefaultText="&quot;Logistic Permit&quot;"
-  Code="&quot;615c&quot;"
+  Code="&quot;ac1e&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -68,7 +68,7 @@
   <field
     Id="&quot;0f2fd8d8-d487-4932-bf96-4694f361bde0&quot;"
     FieldName="&quot;Id&quot;"
-    
+    OldNames="Id"
     IsNew="false"
     IsChecked="true"
     IsDeleted="true"
@@ -145,7 +145,7 @@
   <field
     Id="&quot;2fe2c230-f67b-4990-8de1-146cda0b5579&quot;"
     FieldName="&quot;Tenant&quot;"
-   
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -220,7 +220,7 @@
   <field
     Id="&quot;1fae53a1-6226-4a01-90e1-da8b1df67cfb&quot;"
     FieldName="&quot;TransmitDate&quot;"
-    
+    OldNames="TransmitDate"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -298,7 +298,7 @@
   <field
     Id="&quot;11f1782b-145d-45fc-986f-408edf6f0013&quot;"
     FieldName="&quot;ActionCode&quot;"
-    
+    OldNames="ActionCode"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -372,7 +372,7 @@
   <field
     Id="&quot;b053fc51-ad72-46f2-b5e8-f0ca6a24d35a&quot;"
     FieldName="&quot;CargoIdentifierType&quot;"
-    
+    OldNames="CargoIdentifierType"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -450,7 +450,7 @@
   <field
     Id="&quot;cc4ae9b9-9ad6-4fc4-8f98-88d1f6e06314&quot;"
     FieldName="&quot;CargoIdentifierKey1&quot;"
-   
+    OldNames="CargoIdentifierKey1"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -524,7 +524,7 @@
   <field
     Id="&quot;82142f2b-657b-41bf-ae6e-dfaede49f9dd&quot;"
     FieldName="&quot;CargoIdentifierKey2&quot;"
-    
+    OldNames="CargoIdentifierKey2"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -599,7 +599,7 @@
   <field
     Id="&quot;c3b1bc9f-1639-4af0-bb05-8d78fd284027&quot;"
     FieldName="&quot;CargoIdentifierKey3&quot;"
-   
+    OldNames="CargoIdentifierKey3"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -673,7 +673,7 @@
   <field
     Id="&quot;009eed45-5137-41f4-9e04-4fcd5031d3e4&quot;"
     FieldName="&quot;SearchFields&quot;"
-    
+    OldNames="SearchFields"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"

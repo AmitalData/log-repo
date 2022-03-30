@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticPermitUpdateClass
    {  		
-		public const string HashString = "f1a0501d8aea4e3609f6b1ade4f4d8c1";
+		public const string HashString = "f8802a6e0f3377ebada90f233cf38f86";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -97,11 +97,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DBTableName =  "Customs.LogisticPermits",
 			      				    ObjectTableSingular =  "LogisticPermit",
 			      				    ObjectTablePlural =  "LogisticPermits",
-			      				    HasCustomFilter =  true,
+			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
-			      				    HasFiltersMenu =  true,
+			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Id",
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "אישור לוגיסטי",
 			      				    DefaultText =  "Logistic Permit",
-			      				    Code =  "615c",
+			      				    Code =  "ac1e",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

@@ -21,7 +21,6 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {LogisticPermitPM} from '../../EntityPMs/LogisticPermitPM';
 
-import {LogisticPermitValidator} from '../../Validators/LogisticPermitValidator';
 
 @Injectable()
 
@@ -72,12 +71,6 @@ export class LogisticPermitPMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
 			var errorsArray = validator.Validate("Customs.LogisticPermit", entityPM);
 
-			var customValidator :LogisticPermitValidator = new LogisticPermitValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
 
 			if (errorsArray.length == 0) {
 
@@ -120,12 +113,6 @@ export class LogisticPermitPMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
 			var errorsArray = validator.Validate("Customs.LogisticPermit", entityPM);
 
-			var customValidator :LogisticPermitValidator = new LogisticPermitValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
 
 			if (errorsArray.length == 0) {
 

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="LogisticPermits"
-    Schema="Customs"
+  Schema="Customs"
   DBType="Main"
   Module="Customs">
   <Column
     Name="Id"
-        Type="varchar"
+    Type="varchar"
     Size="15">
     <Constraints
       PrimaryKey="true"
@@ -20,41 +20,41 @@
   </Column>
   <Column
     Name="TransmitDate"
-      Type="datetime">
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ActionCode"
-       Type="nvarchar"
+    Type="nvarchar"
     Size="1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CargoIdentifierType"
-        Type="varchar"
+    Type="varchar"
     Size="4">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CargoIdentifierKey1"
-        Type="nvarchar"
+    Type="nvarchar"
     Size="35">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CargoIdentifierKey2"
-       Type="nvarchar"
+    Type="nvarchar"
     Size="35">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CargoIdentifierKey3"
-        Type="nvarchar"
+    Type="nvarchar"
     Size="35">
     <Constraints
       Nullable="true" />
