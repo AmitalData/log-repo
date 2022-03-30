@@ -24,6 +24,7 @@ namespace WebFreight.Web.Helpers
         public bool GetInvalidDocumentToken { get; set; }
         public bool IsCargoTracking { get; set; }
         public bool IsFromPLSignApp { get; set; }
+        public int Tenant { get; set; }
 
     }
 }
