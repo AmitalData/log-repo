@@ -221,7 +221,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     }
                     else
                     {
-                        entityLists = entityLists.OrderByDescending(d => d.CreateDate).ThenBy(f => f.Code);
+                        entityLists = sortClass.GetSorterQuery<DocumentsFilingList, string>(queryOperations, entityLists);
                     }
                 }
                 else
