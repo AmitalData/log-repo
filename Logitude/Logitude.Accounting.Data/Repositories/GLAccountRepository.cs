@@ -32,6 +32,21 @@ namespace Logitude.Accounting.Data.Repositories
              select a).ToList();
         }
 
+        public List<KeyValuePair<string,string>> GetDisplayNumberList(HashSet<string> GLAccountIdSet, int tenant)
+        {
+            if (GLAccountIdSet?.Count<1)
+            {
+                return new List<KeyValuePair<string, string>>();
+            }
+            var l = (from a in context.GLAccounts
+                     where GLAccountIdSet.Contains(a.Id) && a.Tenant == tenant
+                     select new { a.Id, a.DisplayNumber })
+                     .ToList();
+            return l.Select(r => new KeyValuePair<string, string>(r.Id, r.DisplayNumber))
+                .ToList();
+                    
+        }
+
         public List<GLAccount> GetChildAccountsList(List<String> gLAccountIdList, int tenant)
         {
             return (from a in context.GLAccounts
@@ -103,7 +118,7 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public List<GLAccount> GetByGLAccountsIdList(List<String> GLAccountsIdList, int tenant)
+        public List<GLAccount> GetByGLAccountsIdList(List<string> GLAccountsIdList, int tenant)
         {
             return (from a in context.GLAccounts
                     where GLAccountsIdList.Contains(a.Id) && a.Tenant == tenant

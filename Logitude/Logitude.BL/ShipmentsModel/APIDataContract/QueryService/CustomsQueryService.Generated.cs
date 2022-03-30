@@ -260,8 +260,9 @@ using Simplog.Data.ShipmentsModel;
 				   temp.DeclarationXMLData = MyEntityPM.DeclarationXMLData;
 				   temp.DeclarationDate = MyEntityPM.DeclarationDate;
 				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
-				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;					
-				   return temp;
+				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;
+				   temp.CustomerReference3 = MyEntityPM.CustomerReference3;
+				return temp;
 			}
             catch (Exception ex)
             {
@@ -810,6 +811,7 @@ using Simplog.Data.ShipmentsModel;
 					if(!IsUpdate)
 					{							
 						temp.ShipperName = MyEntity.ShipperName;
+						temp.CustomerReference3 = MyEntity.CustomerReference3;
 
 										}  
 

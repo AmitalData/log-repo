@@ -67,7 +67,7 @@ Test:hover {
 
 
                                                 <!-- Display Settings -->
-                                                <div class="QueriesSection">
+                                                <div *ngIf="IsShowDisplaySetting" class="QueriesSection">
                                                     <div>Display Settings</div>
                                                     <div>
                                                         <p *ngIf="SharedTitleType != 'CargoTracking'"[class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="EventsPermissionsLinkClick()">Events Permissions</p>
@@ -82,7 +82,10 @@ Test:hover {
                                                 <div *ngIf="EAWBQueryGroupVisibility" class="QueriesSection">
                                                     <div>Invitations</div>
                                                     <div>
-                                                        <p [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="InviteLinkClick('Customers')">Invite Customers</p>   
+                                                        <p [attr.title]="GetInviteToolTipMessage()" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="InviteLinkClick('Customers')">{{InviteLinkLable}}</p>
+                                                        
+
+
                                                     </div>
                                                 </div>
 
@@ -128,10 +131,10 @@ Test:hover {
                                                         <div>
                                                         <table>
                                                             <tr style="height:23px"><td></td></tr>
-                                                            <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:#6E7172;font-size:13px;vertical-align:central;">Not Invited</td></tr>
-                                                            <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:#6E7172;font-size:13px;vertical-align:central;">Invited</td></tr>
-                                                            <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:#6E7172;font-size:13px;vertical-align:central;">Activated Shared Logistics</td></tr>
-                                                            <tr *ngIf="MobileActivatedEnabled" style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:#6E7172;font-size:13px;vertical-align:central;">Activated Mobile</td></tr>
+                                                            <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td  style="color:#6E7172;font-size:13px;vertical-align:central;">Not Invited</td></tr>
+                                                            <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td  style="color:#6E7172;font-size:13px;vertical-align:central;">Invited</td></tr>
+                                                            <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:#6E7172;font-size:13px;vertical-align:central;">{{ActivatedLabel}}</td></tr>
+                                                            <tr *ngIf="MobileActivatedEnabled && IsShowActivatedMobileArea" style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:#6E7172;font-size:13px;vertical-align:central;">Activated Mobile</td></tr>
                                               
                                                           </table>
                                                         
@@ -146,17 +149,18 @@ Test:hover {
 
                                                         <div style="text-align:center">
                                                             <table style="text-align:center;border-radius:3px;">
-                                                               <tr style="height:23px;background-color:#EBEBEB;vertical-align:bottom;border:1px solid #EBEBEB;border-top-left-radius:2px;border-top-right-radius:2px;"><td style="color:#6E7172;font-size:10px;">Customers</td></tr>
-                                                                <tr style="height:41px;background-color:#EBEBEB;text-align:center"><td style="text-align:center"><p class="CustomQueryLink" [class.HyperlinkDisabled]="!NotInvitedCustomersCountIsEnabled"  style="font-size:20px;text-align:center;" (click)="CustomersZoomLinkClcik('not invited')">{{NotInvitedCustomersCount}}</p></td></tr>
-                                                                <tr style="height:41px;background-color:#EBEBEB;text-align:center"><td style="text-align:center"><p [class.HyperlinkDisabled]="!InvitedCustomersCountIsEnabled" class="CustomQueryLink" style="font-size:20px;text-align:center;" (click)="CustomersZoomLinkClcik('invited')">{{InvitedCustomersCount}}</p></td></tr>
+
+                                                                <tr  style="height:23px;background-color:#EBEBEB;vertical-align:bottom;border:1px solid #EBEBEB;border-top-left-radius:2px;border-top-right-radius:2px;"><td [attr.title]="GetInviteToolTipMessage()" style="color:#6E7172;font-size:10px;">{{DisplayObjectTableInviteName}}</td></tr>
+                                                                <tr style="height:41px;background-color:#EBEBEB;text-align:center"><td style="text-align:center"><p class="CustomQueryLink" [class.HyperlinkDisabled]="!NotInvitedCustomersCountIsEnabled" style="font-size:20px;text-align:center;" [attr.title]="GetInviteToolTipMessage()" (click)="CustomersZoomLinkClcik('not invited')">{{NotInvitedCustomersCount}}</p></td></tr>
+                                                                <tr style="height:41px;background-color:#EBEBEB;text-align:center"><td style="text-align:center"><p [class.HyperlinkDisabled]="!InvitedCustomersCountIsEnabled" class="CustomQueryLink" style="font-size:20px;text-align:center;" [attr.title]="GetInviteToolTipMessage()" (click)="CustomersZoomLinkClcik('invited')">{{InvitedCustomersCount}}</p></td></tr>
 
 
-                                                                <tr style="height:41px;background-color:#EBEBEB;text-align:center"><td style="text-align:center"><p [class.HyperlinkDisabled]="!ActivatedCustomersCountIsEnabled" class="CustomQueryLink" style="font-size:20px;text-align:center" (click)="CustomersZoomLinkClcik('activated')">{{ActivatedCustomersCount}}</p></td></tr>
+                                                                <tr style="height:41px;background-color:#EBEBEB;text-align:center"><td style="text-align:center"><p [class.HyperlinkDisabled]="!ActivatedCustomersCountIsEnabled" class="CustomQueryLink" style="font-size:20px;text-align:center" [attr.title]="GetInviteToolTipMessage()" (click)="CustomersZoomLinkClcik('activated')">{{ActivatedCustomersCount}}</p></td></tr>
 
 
-                                                                <tr *ngIf="MobileActivatedEnabled" style="height:41px;border:1px solid #EBEBEB;border-bottom-left-radius:2px;border-bottom-right-radius:2px;text-align:center;background-color:#EBEBEB"><td style="text-align:center"><p [class.HyperlinkDisabled]="!ActivatedCustomersForMobileCountIsEnabled" class="CustomQueryLink" style="font-size:20px;text-align:center;" (click)="CustomersZoomLinkClcik('activatedmobile')">{{ActivatedCustomersForMobileCount}}</p></td></tr>
-                                                        
-                                                          
+                                                                <tr *ngIf="MobileActivatedEnabled && IsShowActivatedMobileArea" style="height:41px;border:1px solid #EBEBEB;border-bottom-left-radius:2px;border-bottom-right-radius:2px;text-align:center;background-color:#EBEBEB"><td style="text-align:center"><p [class.HyperlinkDisabled]="!ActivatedCustomersForMobileCountIsEnabled" class="CustomQueryLink" style="font-size:20px;text-align:center;" (click)="CustomersZoomLinkClcik('activatedmobile')">{{ActivatedCustomersForMobileCount}}</p></td></tr>
+
+
                                                             </table>
 
                                                         </div>
@@ -168,7 +172,7 @@ Test:hover {
                 
                                                     <td style="width:90px;vertical-align:top">
 
-                                                        <div style="text-align:center">
+                                                        <div *ngIf="IsShowAgentStatisticsArea" style="text-align:center">
                                                             <table style="text-align:center;border-radius:3px;border:1px solid #EBEBEB">
                                                                 <tr style="height:23px;background-color:#EBEBEB;border:1px solid #EBEBEB;border-top-left-radius:2px;border-top-right-radius:2px;"><td style="color:#6E7172;font-size:10px;">Agents</td></tr>
                                                                 <tr style="height:41px;text-align:center;background-color:#EBEBEB"><td style="text-align:center"><p  style="font-size:20px;text-align:center;color:gray" (click)="AgentsZoomLinkClcik('not invited')">0</p></td></tr>
@@ -217,7 +221,7 @@ Test:hover {
 
                         <!--table-->
                         <td>
-                            <table>
+                            <table *ngIf="LastMonthAccessVisibility">
                                 <tr class="SectionHeader">
                                     <td>
                                         <label>Last Month Access</label>
@@ -343,7 +347,7 @@ Test:hover {
                     <tr style="vertical-align:top;height:50%;">
                         <td style="vertical-align:top">
 
-                            <table>
+                            <table *ngIf="LastActivityVisibility">
                                 <tr class="SectionHeader">
                                     <td>
                                         <label>Last Activities</label>

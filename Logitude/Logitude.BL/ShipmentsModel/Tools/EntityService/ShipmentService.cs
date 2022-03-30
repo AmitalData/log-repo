@@ -6457,17 +6457,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void CreateShipmentProductItem(ShipmentProductItemPM itemPM)
         {
-            itemPM.Id = IdCounter.GetNumber("ShipmentProductItem", tenant).ToString();
-            itemPM.ShipmentId = entityPM.Id;
-            itemPM.Tenant = tenant;
-
-            ShipmentProductItem itemPoco = new ShipmentProductItem()
+            if (!itemPM.IsEmptyLine)
             {
-                Id = itemPM.Id,
-            };
+                itemPM.Id = IdCounter.GetNumber("ShipmentProductItem", tenant).ToString();
+                itemPM.ShipmentId = entityPM.Id;
+                itemPM.Tenant = tenant;
 
-            ShipmentMapping.MapProductItem(itemPM, itemPoco, true);
-            shipmentProductItemRepository.Add(itemPoco);
+                ShipmentProductItem itemPoco = new ShipmentProductItem()
+                {
+                    Id = itemPM.Id,
+                };
+
+                ShipmentMapping.MapProductItem(itemPM, itemPoco, true);
+                shipmentProductItemRepository.Add(itemPoco);
+            }
         }
         private void UpdateShipmentProductItem(ShipmentProductItemPM itemPM)
         {

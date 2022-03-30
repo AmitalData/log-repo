@@ -128,7 +128,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         var itemsCollection: ProductItem[] = [];
 
         this.EntityPM.ShipmentProductItems.forEach(item => {            
-            itemsCollection.push(new ProductItem(item, this, false, false));
+            itemsCollection.push(new ProductItem(item, this, false));
         });
 
         this.ProductItems.InsertCollection(itemsCollection);
@@ -140,8 +140,9 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
             var item: ShipmentProductItemPM = new ShipmentProductItemPM(null);
             item.Tenant = SessionLocator.Tenant;
             item.ShipmentId = this.EntityPM.Id;
+            item.IsEmptyLine = true;
 
-            this.ProductItems.Insert(new ProductItem(item, this, true, true));
+            this.ProductItems.Insert(new ProductItem(item, this, true));
         }
     }
 
@@ -172,9 +173,9 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
             var item: ShipmentProductItemPM = new ShipmentProductItemPM(null);
             item.Tenant = SessionLocator.Tenant;
             item.ShipmentId = this.EntityPM.Id;
+            item.IsEmptyLine = true;
 
-            this.ProductItems.Insert(new ProductItem(item, this, true, false));
-            this.EntityPM.AddProductItem(item);            
+            this.ProductItems.Insert(new ProductItem(item, this, true));        
         }        
     }
     EditCustomerProductItem(item: ProductItem) {
@@ -265,7 +266,7 @@ export class ProductItem extends BaseComponent {
     public EntityPM: ShipmentProductItemPM;
     public ObjectTableName: string = "ShipmentProductItem";
     public IsNewEntity: boolean = false;
-    constructor(entity: ShipmentProductItemPM, public fatherComponent: ProductItemsTabComponent, isNew: boolean, public isFirstLine: boolean) {
+    constructor(entity: ShipmentProductItemPM, public fatherComponent: ProductItemsTabComponent, isNew: boolean) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
@@ -276,7 +277,19 @@ export class ProductItem extends BaseComponent {
         if (this.EntityPM.ProductItemId != newValue) {
             this.EntityPM.ProductItemId = newValue;
 
-            this.GetCustomerProductItemHTSCode();          
+            if (!AppTool.IsNullOrEmpty(newValue)) {
+                this.EntityPM.IsEmptyLine = false;
+                this.fatherComponent.EntityPM.AddProductItem(this.EntityPM);
+            }
+
+            else {
+                this.EntityPM.IsEmptyLine = true;
+                if (this.fatherComponent.EntityPM.ShipmentProductItems.indexOf(this.EntityPM) != -1) {
+                    this.fatherComponent.EntityPM.RemoveProductItem(this.EntityPM);
+                }
+            }
+
+            this.GetCustomerProductItemHTSCode();
         }
     }
 
@@ -316,7 +329,7 @@ export class ProductItem extends BaseComponent {
         }
     }
 
-    productItem: ProductItemList;
+    private productItem: ProductItemList;
     get ProductItem() { return this.productItem; }
     set ProductItem(value: ProductItemList) {
         if (this.productItem != value) {
@@ -335,9 +348,6 @@ export class ProductItem extends BaseComponent {
             this.ShipperId = value.ShipperId;
             this.ShipperName = value.ShipperName;
 
-            if (this.isFirstLine) {
-                this.fatherComponent.EntityPM.AddProductItem(this.EntityPM);
-            }
         }
 
         else {
@@ -351,16 +361,6 @@ export class ProductItem extends BaseComponent {
             this.OriginCountryName = null;
             this.ShipperId = null;
             this.ShipperName = null;
-
-            if (this.isFirstLine) {
-                if (this.fatherComponent.EntityPM.ShipmentProductItems.indexOf(this.EntityPM) != -1) {
-                    this.fatherComponent.EntityPM.RemoveProductItem(this.EntityPM);
-                }
-
-                if (this.fatherComponent.ProductItems.Collection.indexOf(this) != -1) {
-                    this.fatherComponent.ProductItems.Remove(this);
-                }
-            }
         }
 
         this.fatherComponent.BuildQueryFilters();

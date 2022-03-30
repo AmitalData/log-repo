@@ -81,6 +81,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     data.Add(new ARPaymentChequeFutureData { GLAccountId = item, PaymentId = null });
                 }
             }
+            var glAccounts = data.Select(x => x.GLAccountId).ToList();
+            var gLAccountsDontHaveARPaymentCheques = (from a in context.GLAccountMoreDatas
+                       where a.Tenant == tenant && a.TotFutureOpenChequesInLocalCur > 0 && !glAccounts.Contains(a.AccountId)
+                       select a.AccountId).ToList();
+            foreach (var item in gLAccountsDontHaveARPaymentCheques)
+            {
+                if (!data.Any(x => x.GLAccountId == item))
+                {
+                    data.Add(new ARPaymentChequeFutureData { GLAccountId = item, PaymentId = null });
+                }
+            }
             return data;
 
 

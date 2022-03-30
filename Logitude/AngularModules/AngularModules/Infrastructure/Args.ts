@@ -22,6 +22,9 @@ export class ListComponentArgs {
     public BIReportFolderId: string;
     public QuerySection: string;
     public IsCargoTrackingMenuClicked: boolean = false;
+    public DontCheckQueryFeature: boolean = false;
+
+    
 }
 
 export class NewEntityArgs {

@@ -437,7 +437,8 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
 
         var windowArgs: any = {};
         windowArgs.QueryCode = this.QueryCode;
-
+        windowArgs.LastYearFromDate = this.LastYearFromDate;
+        windowArgs.LastYearToDate = this.LastYearToDate;
 
         logitudeWindow.Width = 408;
         logitudeWindow.Height = 330;

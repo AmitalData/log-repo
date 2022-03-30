@@ -59,6 +59,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     selectedChartOfAccountsTypes: any[] = [];
     isChartOfAccountsTypesDisabled: boolean = false;
     isChartOfAccountsDisabled: boolean = false;
+    isOpened: boolean = false;
 
     constructor()
     {
@@ -118,7 +119,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
             .subscribe((arg: any) =>
             {
                 this.chartOfAccounts = arg.Result;
-                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,Name: item.EnglishName}});
+                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,Name: item.LocalName||item.EnglishName}});
             });
     }
     private getChartOfAccountsTypes()
@@ -129,7 +130,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
             .subscribe((arg: any) =>
             {
                 this.chartOfAccountsTypes = arg.Result;
-                this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item=>{return{...item,Name: item.EnglishName}});
+                this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item=>{return{...item,Name: item.LocalName||item.EnglishName}});
             });
     }
 

@@ -381,6 +381,9 @@ namespace Logitude.Accounting.BL.CoreBL
                          select a);
                     var myDiffList = qDiff.Take(30).ToList();
                     myDiffList = myDiffList.Where(a => !a.CalcDueInLocal.Equals(a.DBDueInLocal) || !a.CalcDueInForeign.Equals(a.DBDueInForeign) || !a.CalcNextDueDate.Date.Equals(a.DBNextDueDate.Date)).ToList();
+
+                    Convert2DisplayNumber(myDiffList, tenant);
+
                     return myDiffList;
 
 
@@ -396,7 +399,33 @@ namespace Logitude.Accounting.BL.CoreBL
                 LogMessagingUtil.Instance.AppendLine("DueLocalBalanceService tenant= " + tenant + " took:" + sw.Elapsed.ToString());
             }
         }
+        private void Convert2DisplayNumber(List<DueLocalBalanceDiffM> rows, int tenant)
+        {
+            if (rows == null)
+            {
+                return;
+            }
+            try
+            {
+                var AccountIdList = rows.Where(r => !string.IsNullOrWhiteSpace(r.AccountId)).Select(x => x.AccountId).Distinct().ToList();
+                var repo = new GLAccountRepository(tenant);
+                var res = repo.GetDisplayNumberList(AccountIdList.ToHashSet(), tenant);
+                foreach (var item in rows)
+                {
+                    var display = res.FirstOrDefault(r => r.Key == item.AccountId);
+                    if (string.IsNullOrEmpty(display.Value))
+                    {
+                        continue;
+                    }
+                    item.AccountId = display.Value;
+                }
+            }
+            catch (Exception)
+            {
 
+
+            }
+        }
         private void InitDueLocalBalanceListToUpdate(IAccountingContext accountingContext, int tenant, string AccountId, bool filterByNextDueDate, bool onlyWithActivity)
         {
             //using (var scope = TransactionFactory.GetTransaction())

@@ -44,8 +44,9 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 SharedLogisticsStatusStatistics dataClass = new SharedLogisticsStatusStatistics() { Id = "0001" };
 
                 CardQuery cardQuery = new CardQuery(tenant);
-                IQueryable<CardList> cards = cardQuery.GetCustomerCardPMsByTenant(tenant);
+                IQueryable<CardList> cards = cardQuery.GetCardPMsByTenant(tenant);
                 IQueryable<CardList> agents = null;
+                IQueryable<CardList> ctoolPartners = null;
 
                 CustomerRepository CustomerRepository = new CustomerRepository(tenant);
                 IQueryable<CustomersDataView> customers = CustomerRepository.GetCustomersDataViews(tenant);
@@ -62,10 +63,10 @@ namespace WebFreight.Web.Controllers.ShardLogistics
 
                 if (cards != null)
                 {
-                    cards = cards.Where(d => d.PartnerTypeId != "PO");
-
                     agents = cards.Where(d => d.PartnerTypeId == "AG" && !d.InActive);
+                    ctoolPartners = cards.Where(d => d.PartnerTypeId != "CS" && !d.InActive);
                 }
+
 
                 if (agents != null && agents.Count() > 0)
                 {
@@ -73,6 +74,12 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                     dataClass.NotInvitedAgentsCount = agents.Where(d => d.SharedLogisticsInvitationStatusCode == 1).Count();
                     dataClass.ActivatedAgentsCount = agents.Where(d => d.SharedLogisticsInvitationStatusCode == 3).Count();
                 }
+
+                if (ctoolPartners != null && ctoolPartners.Count() > 0)
+                {
+                    SetCtoolpartnersStatistics(dataClass, ctoolPartners);
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, dataClass);
             }
 
@@ -80,6 +87,15 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private void SetCtoolpartnersStatistics(SharedLogisticsStatusStatistics sharedLogisticsStatusStatistics, IQueryable<CardList> ctoolPartners)
+        {
+
+            sharedLogisticsStatusStatistics.InvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 2).Count();
+            sharedLogisticsStatusStatistics.NotInvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 1).Count();
+            sharedLogisticsStatusStatistics.ActivatedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 3).Count();
+
         }
 
         public HttpResponseMessage GetSharedLogisticsSummaryData(int tenant)

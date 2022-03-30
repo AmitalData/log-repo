@@ -20,5 +20,6 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
         string GetGLAccountDisplayNoAndLocalName(string glAccountId, int tenant);
         GLAccountPM GetSingleGLAccountWithComposition(string glAccountId, int tenant);
         IQueryable<GLAccountPM> GetSplittedByCurrencyGLAccounts(string accountId, int tenant);
+        bool CheckInactiveGLAccounts(List<string> glaccountIds, int tenant);
     }
 }

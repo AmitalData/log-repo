@@ -363,16 +363,16 @@ namespace Logitude.Accounting.BL.CoreBL
                             foreach (JournalLinePM journalLine in journalPM.JournalLines)
                             {
                                 if ((journalLine.ActionCode == "1" || journalLine.ActionCode == "3") && itLine.CreditAmount != 0m && journalLine.CreditAccountId == itLine.GLAccountId
-                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference))
-                                    && (journalLine.LocalAmount == itLine.CreditAmount))
+                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference))) 
+                                //    && (journalLine.LocalAmount == itLine.CreditAmount))
                                 {
                                     lineFound = true;
                                     jlPM = journalLine;
                                     break;
                                 }
                                 else if ((journalLine.ActionCode == "2" || journalLine.ActionCode == "3") && itLine.DebitAmount != 0m && journalLine.DebitAccountId == itLine.GLAccountId
-                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference))
-                                    && (journalLine.LocalAmount == itLine.DebitAmount))
+                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
+                                //    && (journalLine.LocalAmount == itLine.DebitAmount))
                                 {
                                     lineFound = true;
                                     jlPM = journalLine;
@@ -404,6 +404,9 @@ namespace Logitude.Accounting.BL.CoreBL
                                     InterestEntityTypeCode = "3", //(Journal)
                                     EntityId = jlPM.JournalId,
                                     OriginalEntityLineNumber = jlPM.Line,
+                                    ForeignAmount = itLine.ForeignAmount,
+                                    LocalAmount = itLine.LocalAmount,
+                                    CurrencyId = itLine.CurrencyId,
                                 };
                                 InterestTransactionPM itPM = itQueryService.GetTransactionByUniqueConstraintFields(uniqueConstraintFields);
                                 if (itPM != null)

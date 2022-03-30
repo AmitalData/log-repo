@@ -60,7 +60,7 @@ export class ShipmentValidator implements IShipmentValidator {
             this.ValidateDeliveries();
             this.ValidatePayables();
             this.ValidateReceivables();
-            this.ValidateProductItems();
+            //this.ValidateProductItems();
             RoutingHelper.ValidateRoutingsActualDates(entityPM, this.Errors);
             RoutingHelper.ValidateRoutingsSeriesDates(entityPM, this.Errors);
         }
@@ -280,7 +280,7 @@ export class ShipmentValidator implements IShipmentValidator {
         });
     }
     private ValidateProductItems() {
-        this.entityPM.ShipmentProductItems.forEach(item => {
+        this.entityPM.ShipmentProductItems.filter(d => !d.IsEmptyLine).forEach(item => {
             Validator.TryValidateObject(item, "ShipmentProductItem", this.Errors);
 
             if (AppTool.IsNullOrEmpty(item.SKU)) {
