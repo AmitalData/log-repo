@@ -62,7 +62,7 @@
                         </span>
                     </li>
                 </ul>
-               
+
 
             </div>
         </div>
@@ -93,7 +93,7 @@
                         <div class="start">
                             <svg width="34px" height="31px" viewBox="0 0 34 31" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                
+
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <g id="Shipment-1-future-steps" transform="translate(-357.000000, -330.000000)"
                                         fill="var(--secondaryColor)">
@@ -112,7 +112,7 @@
                             <!--<img class="path " [attr.src]="GetModeIcon()" alt=" " />-->
                             <svg *ngIf="Shipment.CurrentMilestoneCode != '2'" width="47px" height="24px" viewBox="0 0 39 24" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                
+
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <g id="Search-Results" transform="translate(-375.000000, -1009.000000)"
                                        fill="var(--secondaryColor)">
@@ -289,7 +289,7 @@
 
                 </div>
 
-                <div class="field" *ngIf="!isShipmentOrder">
+                <div class="field" *ngIf="!isShipmentOrder && Shipment?.DirectionId != 'E'">
                     <div class="label">Import Manifest</div>
                     <div class="value">{{Shipment.ImportManifest}}</div>
                 </div>
