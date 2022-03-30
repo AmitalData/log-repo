@@ -435,6 +435,7 @@ import { LogisticActionRequestListService } from './Services/StandardLists/Logis
 import { LogisticActionRequestTypeListService } from './Services/StandardLists/LogisticActionRequestTypeListService';
 import { LogisticActionResponseReqSListService } from './Services/StandardLists/LogisticActionResponseReqSListService';
 import { LogisticActionRequestPMService } from './Services/StandardPMs/LogisticActionRequestPMService';
+import { ExportLogisticPermitActionListService } from './Services/StandardLists/ExportLogisticPermitActionListService';
 
 
 export class ModuleProviders {
@@ -690,6 +691,7 @@ export class ModuleProviders {
             case "LogisticActionRequestListService": { myResult = new LogisticActionRequestListService(); break; }
             case "LogisticActionRequestTypeListService": { myResult = new LogisticActionRequestTypeListService(); break; }
             case "LogisticActionResponseReqSListService": { myResult = new LogisticActionResponseReqSListService(); break; }
+            case "ExportLogisticPermitActionListService": { myResult = new ExportLogisticPermitActionListService(); break; }
 
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
