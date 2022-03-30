@@ -421,6 +421,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
 
                     DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
+                    _dF_MSG10000_ImportDeclarationRequestService.IsFromOpenNewAmendment = true;
                     var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
                     string error = "";
                     DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
