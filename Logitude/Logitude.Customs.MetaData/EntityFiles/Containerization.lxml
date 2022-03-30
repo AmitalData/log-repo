@@ -1681,13 +1681,6 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
-      <QueryFilter
-        QueryCode="&quot;OpenContainerization&quot;"
-        PredefinedValue="&quot;4&quot;"
-        ObjectFieldName="&quot;ContainerizationStatus&quot;"
-        IsPredefined="true"
-        Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
