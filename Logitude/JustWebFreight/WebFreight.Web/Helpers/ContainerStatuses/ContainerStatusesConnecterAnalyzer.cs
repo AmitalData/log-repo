@@ -1163,7 +1163,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.FillFieldsNewValues("ActualPOLArrival", containerUpdatedFields.ActualPOLArrival, container);
                 this.FillFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation, container);
                 this.FillFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation, container);
-
+                container.IsUpdatedOceanInsightsAnalyzer = true;
                 container.CurrentStatus = containerUpdatedFields.CurrentStatus;
                 container.CurrentLocation = containerUpdatedFields.CurrentLocation;
                 container.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;

@@ -11,34 +11,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
     public partial class ShipmentMapping
     {
-        private static bool isContainerMappingEntityPM;
         private static bool isNew;
-        public static void MapContainerConcurrencyFields(ContainerPM entityPM, Container entityPoco, bool isNewEntity, bool isMappingPM = true)
+        public static void MapContainerConcurrencyFields(ContainerPM entityPM, Container entityPoco, bool isNewEntity)
         {
             isNew = isNewEntity;
-            isContainerMappingEntityPM = isMappingPM;
             if (isNew)
             {
                 MapContainerConcurrencyFields_Client(entityPM, entityPoco);
                 return;
             }
-            MapContainerConcurrencyFields_OnEdited(entityPM, entityPoco);
+            if (entityPM.IsUpdatedOceanInsightsAnalyzer)
+            {
+                MapConcurrencyFields_OceanInsightsFields(entityPM, entityPoco);
+                return;
+            }
             MapContainerConcurrencyFields_Client(entityPM, entityPoco);
-
-            // Add all fileds when the simulator work
-
         }
         private static void MapContainerConcurrencyFields_Client(ContainerPM entityPM, Container entityPoco)
         {
-            if (isContainerMappingEntityPM)
-            {
-                entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
-            }
+            entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            ShipmentMapping.MapContainerFields(entityPM, entityPoco, isNew);
+            ShipmentMapping.MapContainerShipmentFields(entityPM, entityPoco);
         }
-        private static void MapContainerConcurrencyFields_OnEdited(ContainerPM entityPM, Container entityPoco)
+        private static void MapConcurrencyFields_OceanInsightsFields(ContainerPM entityPM, Container entityPoco)
         {
-           
+            ShipmentMapping.MapContainerFields(entityPM, entityPoco, isNew);
         }
     }
 }

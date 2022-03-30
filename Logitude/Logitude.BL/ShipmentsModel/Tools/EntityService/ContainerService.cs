@@ -78,22 +78,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void SetUpdatedByUser()
         {
-            if (string.IsNullOrEmpty(containerPm.UpdatedByUserId))
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            ContactRepository contactRep = new ContactRepository(commonContext);
+            string email = "system@tenant" + tenant + ".com";
+
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
             {
-                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-                ContactRepository contactRep = new ContactRepository(commonContext);
-                string email = "system@tenant" + tenant + ".com";
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
 
-                if (AuthenticationUtil.IsAuthenticatedUserExists())
-                {
-                    email = AuthenticationUtil.GetAuthenticatedUser();
-                }
-
-                Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
-                if (contact != null)
-                {
-                    containerPm.UpdatedByUserId = contact.Id;
-                }
+            Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
+            if (contact != null)
+            {
+                containerPm.UpdatedByUserId = contact.Id;
             }
         }
         private void HandleContainersExternalData(ContainerPM entityPM, ContainersExternal containersExternal)
@@ -175,5 +172,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.containerPm.ShipmentConcurrencyGUID = entityRepository.GetConcurrencyGUIDByShipmentId(this.containerPm.ShipmentId, this.containerPm.Tenant);
             this.containerPm.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
         }
+        //private void MapUpdatedByPartnerField(ContainerPM entityPM)
+        //{
+        //    entityPM.UpdatedByPartner = entityPM.UpdatedByUserName;
+        //    if (entityPM.IsUpdatedOceanInsightsAnalyzer)
+        //    {
+        //        entityPM.UpdatedByPartner = "Ocean Insights Transmission";
+        //    }
+        //}
     }
 }

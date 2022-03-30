@@ -19,6 +19,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
         private static void ValidateConcurrencyGUID(ContainerPM entityPM, Container entityPoco)
         {
+            if (entityPM.IsUpdatedOceanInsightsAnalyzer == true)
+                return;
+
             if(string.IsNullOrEmpty( entityPM.ConcurrencyGUID) || string.IsNullOrEmpty(entityPM.NewConcurrencyGUID))
             {
                 return;
@@ -30,13 +33,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentConcurrencyGUID(ContainerPM entityPM)
         {
+            if (entityPM.IsUpdatedOceanInsightsAnalyzer == true)
+                return;
+
             var shipmentConcurrencyGUID = GetShipmentConcurrencyGUID(entityPM.ShipmentId, entityPM.Tenant);
-            if (!string.IsNullOrEmpty(entityPM.ShipmentConcurrencyGUID) && !string.IsNullOrEmpty(entityPM.ShipmentNewConcurrencyGUID) && !string.IsNullOrEmpty(shipmentConcurrencyGUID))
+            if (string.IsNullOrEmpty(entityPM.ShipmentConcurrencyGUID) || string.IsNullOrEmpty(entityPM.ShipmentNewConcurrencyGUID) || string.IsNullOrEmpty(shipmentConcurrencyGUID))
             {
-                if (!entityPM.ShipmentConcurrencyGUID.Equals(shipmentConcurrencyGUID) && !entityPM.ShipmentNewConcurrencyGUID.Equals(shipmentConcurrencyGUID))
-                {
-                    ThrowConcurrencyException(entityPM);
-                }
+                return;
+            }
+            if (!entityPM.ShipmentConcurrencyGUID.Equals(shipmentConcurrencyGUID) && !entityPM.ShipmentNewConcurrencyGUID.Equals(shipmentConcurrencyGUID))
+            {
+                ThrowConcurrencyException(entityPM);
             }
         }
 
