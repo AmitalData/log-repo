@@ -532,7 +532,9 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\LogisticPermit.lxml" />
     <None Include="EntityFiles\CustomsDocumentUpload.lxml" />
+    <None Include="EntityFiles\ExportLogisticPermitAction.lxml" />
     <None Include="EntityFiles\ExportStorage.lxml" />
     <None Include="EntityFiles\LogisticActionRequest.lxml" />
     <None Include="EntityFiles\LogisticActionRequestType.lxml" />

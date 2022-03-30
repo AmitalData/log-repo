@@ -21,6 +21,9 @@ import { AppTool } from '../../../../../Infrastructure/Tools';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClientListService } from 'Customs/Services/StandardLists/ClientListService'
+import { CargoIdentifireTypeListService } from 'Customs/Services/StandardLists/CargoIdentifireTypeListService';
+import { CargoIdentifireTypePM } from 'Customs/EntityPMs/CargoIdentifireTypePM';
+import { Validator } from 'Infrastructure/Validators/Validator';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -56,8 +59,12 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         'PackagingTypeCode',
         'Quantity',
         'DeliverySiteID',
+        'RequestReason',
     ]
-    
+    public SecondCargoIDPlaceholder: string = " ";
+    public ThirdCargoIdPlaceholder: string = " ";
+    public ManifestNumberPlaceholder: string = " ";
+    _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
 
     get ExportFileNo() { return this.entityPM?.ExportFileNo }
     set ExportFileNo(value: string) {
@@ -68,19 +75,26 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     get ExporterNumber() { return this.entityPM?.ExporterNumber }
     set ExporterNumber(value: string) {
         this.entityPM.ExporterNumber = value;
+        this.setRequiredField('ExporterNumber', !value)
     }
 
     get RequestDate() { return this.entityPM?.RequestDate }
     set RequestDate(value: Date) { this.entityPM.RequestDate = value; }
 
     get RequestType() { return this.entityPM?.RequestType }
-    set RequestType(value: string) { this.entityPM.RequestType = value; }
+    set RequestType(value: string) { 
+        this.entityPM.RequestType = value; 
+        this.setRequiredField('RequestType', !value)
+    }
 
     get CargoIdentifierType() { return this.entityPM?.CargoIdentifierType }
     set CargoIdentifierType(value: string) {
         this.entityPM.CargoIdentifierType = value;
-        if (value)
+        
+        if (value) {
             this.setRequiredCargoKey();
+            this.setPlaceholderForCargoKey();
+        }
     }
 
     get CargoIdentifierKey1() { return this.entityPM?.CargoIdentifierKey1 }
@@ -102,7 +116,10 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
     get PackagingTypeCode() { return this.entityPM?.PackagingTypeCode }
-    set PackagingTypeCode(value: string) { this.entityPM.PackagingTypeCode = value; }
+    set PackagingTypeCode(value: string) { 
+        this.entityPM.PackagingTypeCode = value;
+        this.setRequiredField('PackagingTypeCode', !value)
+    }
 
     get Quantity() { return this.entityPM?.Quantity }
     set Quantity(value: number) {
@@ -153,11 +170,12 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
         this.setTransportModeId();
         this.setRequiredCargoKey();
+        this.setPlaceholderForCargoKey()
     }
 
 
     private setRequiredFields() {
-        this.requierdFieldsList.forEach(fieldName => this.UIProperties.SetRequired(fieldName, this.ObjectTableName, !this[fieldName]));
+        this.requierdFieldsList.forEach(fieldName => this.UIProperties.SetWarning(fieldName, this.ObjectTableName, !this[fieldName]));
     }
 
 
@@ -165,14 +183,12 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         const cargoIdentifireTypeTable: CargoIdentifireTypeList[] = await this.logtuideTableDataService.getTable("Customs.CargoIdentifireType")
         const cargoIdentifireType: CargoIdentifireTypeList = cargoIdentifireTypeTable.find(x => x.Code == this.entityPM.CargoIdentifierType);
         this.setRequiredField('CargoIdentifierKey2', !this.entityPM.CargoIdentifierKey2 && cargoIdentifireType.IsKey2Mandatory)
-        this.setRequiredField('CargoIdentifierKey3', !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)       
-        // this.UIProperties.SetWarning('CargoIdentifierKey2', this.ObjectTableName, !this.entityPM.CargoIdentifierKey2 && cargoIdentifireType.IsKey2Mandatory);
-        // this.UIProperties.SetWarning('CargoIdentifierKey3', this.ObjectTableName, !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)
+        this.setRequiredField('CargoIdentifierKey3', !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)
     }
 
 
     setRequiredField(name: string, fieldIsRequired: boolean) {
-        this.UIProperties.SetRequired(name, this.ObjectTableName, fieldIsRequired);
+        this.UIProperties.SetWarning(name, this.ObjectTableName, fieldIsRequired);
 
         if (fieldIsRequired) {
             if (this.requierdFieldsList.every(x => x != name))
@@ -180,7 +196,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         } else
             this.removeFromArray(this.requierdFieldsList, name)
 
-        this.invalidate()
+        // this.invalidate()
     }
 
 
@@ -239,11 +255,11 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     private async confirmSyncDeclaration() {
-        const exporterName = this.exporterName ? 'ליצואן ' + this.exporterName + ' ' : '';
+        const exporterName = this.exporterName ? TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.ForImporter') + ' ' + this.exporterName + ' ' : '';
 
         const myConfirmWindow = new ConfirmWindow();
         myConfirmWindow.Width = 400;
-        myConfirmWindow.Show(`אותרה הצהרה ${exporterName}לפי מס' התיק , האם לבצע קישור ?`);
+        myConfirmWindow.Show(`${TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.FindDeclaration')} ${exporterName} ${TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.FindDeclaration2')}?`);
 
         return new Promise(resolve =>
             myConfirmWindow.WindowClosed.subscribe(event =>
@@ -295,7 +311,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     onBlurExportFileNo() {
         if (this.entityPM.ExportFileNo)
             this.syncDeclaration()
-            // this.syncDeclaration$.next()
+        // this.syncDeclaration$.next()
     }
 
 
@@ -378,7 +394,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
     SendButtonClicked() {
-        if (this.invalidate()) return;
+        // if (this.invalidate()) return;
         SessionLocator.SelectedSession.StartBusyIndicator("");
     }
 
@@ -405,7 +421,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
             .filter(filed => !this[filed])
             .forEach(filed =>
                 this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.LogisticActionRequest.F." + filed))));
-
+        
         // Validator.TryValidateObject(this.entityPM, this.ObjectTableName,  this.ValidationErrorsList);
         return !!this.ValidationErrorsList.length;
     }
@@ -425,7 +441,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
 
         CustomMessageProgressComponent
-            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, "בקשת ביטול יצוא", true)
+            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), false)
             .catch((err) => this.ValidationErrorsList.push(err));
     }
 
@@ -453,7 +469,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     OkButtonClicked() {
         this.submit = true;
-        if (this.invalidate()) return;
+        // if (this.invalidate()) return;
 
         this.SaveEntityChanges();
     }
@@ -478,7 +494,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 350;
         logWindow.Height = 230;
-        logWindow.Title = 'נתונים נוספים ליצואן';
+        logWindow.Title = TextCodeTranslator.Translate('Customs.General.O.MoreDetailsForImporter');
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/MoreDetailesforImporterComponent/MoreDetailesforImporterComponent');
         logWindow.WindowClosed.subscribe(() => {
@@ -511,5 +527,14 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     OnDocumentsWindowClosed(event) {
         this.entityArgs.SkipCtor = false;
+    }
+
+
+    private async setPlaceholderForCargoKey() {        
+        const res: CargoIdentifireTypePM = await this.logtuideTableDataService.getDataFromService(this._CargoIdentifireTypeListService.getSingleFromCache(this.entityPM.CargoIdentifierType))
+        
+        this.ManifestNumberPlaceholder = res.CargoIdentifierKey1Name;
+        this.SecondCargoIDPlaceholder = res.CargoIdentifierKey2Name ?? '';
+        this.ThirdCargoIdPlaceholder = res.CargoIdentifierKey3Name ?? '';
     }
 }

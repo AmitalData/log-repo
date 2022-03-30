@@ -323,6 +323,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.Direction))
                 {
                     this._MyDeclarationPM.Direction = _AmitalCustomsFile.Direction;
+                    this._MyDeclarationPM.Consignments[0].ConsignmentType = "E";
                     if (this._MyDeclarationPM.Direction == "E" && string.IsNullOrWhiteSpace(this._MyDeclarationPM.AgentRoleCode)) this._MyDeclarationPM.AgentRoleCode = "A";
                 }
                 if (mode == "UpdateNotEmpty" || this._MyDeclarationPM.CustomerId != DBcustomer) // moran 12.7.15 - Task 14510 - insert into 'if'

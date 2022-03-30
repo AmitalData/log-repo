@@ -213,6 +213,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ExportDeclarationClosingData> ExportDeclarationClosingDatas { get; }
 		 IDbSet<ExportDeliveryDocumentMessage> ExportDeliveryDocumentMessages { get; }
 		 IDbSet<ExporterRoleType> ExporterRoleTypes { get; }
+		 IDbSet<ExportLogisticPermitAction> ExportLogisticPermitActions { get; }
 		 IDbSet<ExportReference> ExportReferences { get; }
 		 IDbSet<ExportStorage> ExportStorages { get; }
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
@@ -250,6 +251,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<LogisticActionRequest> LogisticActionRequests { get; }
 		 IDbSet<LogisticActionRequestType> LogisticActionRequestTypes { get; }
 		 IDbSet<LogisticActionResponseReqS> LogisticActionResponseReqSes { get; }
+		 IDbSet<LogisticPermit> LogisticPermits { get; }
 		 IDbSet<LogisticsReferenceType> LogisticsReferenceTypes { get; }
 		 IDbSet<MamanSpecialAction> MamanSpecialActions { get; }
 		 IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses { get; }

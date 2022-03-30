@@ -12,6 +12,7 @@ using Unifreight.BL.EntityDataMappings;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 
+
 namespace Unifreight.BL.EntityQueryServices
 {
     public class EFIFILEMQueryService : EntityQueryService<EFIFILEM, EFIFILEMKeys, EFIFILEMPM, object, EFIFILEMKeys>
@@ -33,6 +34,7 @@ namespace Unifreight.BL.EntityQueryServices
         {
             return new EFIFILEMKeys() { FILENO = entityPOCO.FILENO };
         }
+        
     }
 }
 

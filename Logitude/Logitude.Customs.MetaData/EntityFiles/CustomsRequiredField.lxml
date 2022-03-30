@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;שדה חובה מכס&quot;"
   DefaultText="&quot;Customs Required Field&quot;"
-  Code="&quot;a143&quot;"
+  Code="&quot;631c&quot;"
   Name="&quot;Customs.CustomsRequiredField Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -682,12 +682,28 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.CustomsRequiredField.O.ExportRequiredFields&quot;"
+      DefaultText="&quot;Required Export Fields&quot;"
+      LocalDefaultText="&quot;שדות חובה ביצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;CSTMREQFIELDMTC&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;Customs.CustomsRequiredField.Features.CSTMREQFIELDMTC&quot;"
+      FeatureDefaultText="&quot;Requierd Fields selection window&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;EXPREQFIELDMTC&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;Customs.CustomsRequiredField.Features.EXPREQFIELDMTC&quot;"
       FeatureDefaultText="&quot;שדות חובה ביצוא&quot;"
       IsPackagable="true"
       IsOld="false"
