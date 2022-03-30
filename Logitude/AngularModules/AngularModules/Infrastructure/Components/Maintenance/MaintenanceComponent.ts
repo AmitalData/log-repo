@@ -94,6 +94,10 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("ACC", TextCodeTranslator.Translate("General.MC.Accounting.Accounting")));
         }
 
+        if (FeatureLocator.HasFeaturePermession("General", "QUOTES")) {
+            this.PagesMenu.push(new Menu("QUO", "Quotation"));
+        }
+
         this.isTransmissionsPageVisible = false;
         if (SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.InttraSettings")) {
             this.isTransmissionsPageVisible = true;
@@ -415,10 +419,11 @@ export class MaintenanceComponent {
             }
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.QuoteSettings")) {
                 var item = new MenusTablePM();
-                item.CategoryTypeCode = "CMS";
+                item.CategoryTypeCode = "QUO";
                 item.Icon = "Settings"
                 item.Code = "QuoteSettings";
                 item.ObjectTableName = "Quote Settings";
+                item.IndexOfOrder = 5;
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
 
