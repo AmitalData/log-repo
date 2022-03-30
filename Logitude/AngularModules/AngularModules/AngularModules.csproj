@@ -1480,6 +1480,7 @@
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSealsRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\GatepassRequestMessageRequestParams.ts" />
+    <TypeScriptCompile Include="Customs\DataContract\RequestParams\LogisticActionRequestRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendALLStorageSiteRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendCollateralRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\ContainerizationResponseData.ts" />
@@ -1538,6 +1539,8 @@
     <TypeScriptCompile Include="Customs\EntityLists\HazardousSubstanceList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\IncotemrsFileValidationList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\LoadingSiteTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\LogisticActionRequestList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\LogisticActionRequestTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\LogisticActionResponseReqSList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\LogisticPermitList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\LogisticsReferenceTypeList.ts" />
@@ -1632,6 +1635,8 @@
     <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\IncotemrsFileValidationPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\LoadingSiteTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\LogisticActionRequestPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\LogisticActionRequestTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\LogisticActionResponseReqSPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\LogisticPermitPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\LogisticsReferenceTypePM.ts" />
@@ -1689,6 +1694,7 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\PendingByKeywordWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\ReferantExceptionExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\CacheCourierPendingReasonService.ts" />
+    <TypeScriptCompile Include="Customs\Services\Others\LogisticActionRequestService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AcceptanceStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmedmentTypeListService.ts" />
@@ -1756,6 +1762,8 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\HazardousSubstanceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\IncotemrsFileValidationListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\LoadingSiteTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\LogisticActionRequestListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\LogisticActionRequestTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\LogisticActionResponseReqSListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\LogisticPermitListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\LogisticsReferenceTypeListService.ts" />
@@ -1818,6 +1826,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ExportStorgePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestsPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\LogisticActionRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\LogisticPermitPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\LogisticsReferenceTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\NbcDeclarationTypePMService.ts" />
@@ -1835,10 +1844,12 @@
     <TypeScriptCompile Include="Customs\Services\WebServices\CustomsRequestsSheetWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationReferantDataWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\LogisticActionRequestWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\NewQuoteOPWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\PendingWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\SupplierInvioceItemCertificatsService.ts" />
     <TypeScriptCompile Include="Customs\Utilities\LuhnAlgorithm.ts" />
+    <TypeScriptCompile Include="Customs\Validators\LogisticActionRequestValidator.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.ts" />
