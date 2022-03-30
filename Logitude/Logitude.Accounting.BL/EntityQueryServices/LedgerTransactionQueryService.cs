@@ -1029,6 +1029,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     public class JournalLineLedgerDTO
     {
         public string JournalId { get; set; }
+        public string JournalNumber { get; set; }
         public int JournalLineNumber { get; set; }
         public string AccountId { get; set; }
         public string CurrencyId { get; set; }
