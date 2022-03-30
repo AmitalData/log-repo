@@ -36,6 +36,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         }
         private static void MapConcurrencyFields_OceanInsightsFields(ContainerPM entityPM, Container entityPoco)
         {
+            entityPM.ConcurrencyGUID = Guid.NewGuid().ToString();
+            entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             ShipmentMapping.MapContainerFields(entityPM, entityPoco, isNew);
         }
     }
