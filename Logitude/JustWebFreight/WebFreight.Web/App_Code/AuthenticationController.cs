@@ -95,6 +95,7 @@ namespace WebFreight.Web
             return authenticationController.PostLoginData(loginParameters, loginParameters.Tenant);
         }
 
+        [ActionName("PostLoginUsingAuthenticaionTokenForCTool")]
         public UserData PostLoginUsingAuthenticaionTokenForCTool(LoginTokenParameter logintokenparam)
         {
             LoginParameters loginParameters = BuildLoginParameters(logintokenparam);
@@ -644,6 +645,8 @@ namespace WebFreight.Web
 
             return Request.CreateResponse(HttpStatusCode.OK, Url);
         }
+
+        [ActionName("PostUserValidation")]
         public UserData PostUserValidation(LoginParameters loginParameters)
         {
 
