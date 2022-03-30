@@ -172,13 +172,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.containerPm.ShipmentConcurrencyGUID = entityRepository.GetConcurrencyGUIDByShipmentId(this.containerPm.ShipmentId, this.containerPm.Tenant);
             this.containerPm.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
         }
-        //private void MapUpdatedByPartnerField(ContainerPM entityPM)
-        //{
-        //    entityPM.UpdatedByPartner = entityPM.UpdatedByUserName;
-        //    if (entityPM.IsUpdatedOceanInsightsAnalyzer)
-        //    {
-        //        entityPM.UpdatedByPartner = "Ocean Insights Transmission";
-        //    }
-        //}
+      
     }
 }
