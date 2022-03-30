@@ -10,53 +10,55 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
-import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {DeclarationList} from '../../EntityLists/DeclarationList';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
+import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { LocalStorageManager } from '../../../Infrastructure/Utilities/LocalStorageManager';
+import { DeclarationList } from '../../EntityLists/DeclarationList';
 
 @Injectable()
 
 export class DeclarationListService {
 	private _http: HttpClient;
-    private _apiUrl: string;   
+	private _apiUrl: string;
+	private _apiUrlConsignment: string;
 	public static CachedData: Array<DeclarationList> = [];
-    constructor() {
-        this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/declarationviews';  
-    }
+	constructor() {
+		this._http = ServiceHelper.HttpClient;
+		this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/declarationviews';
+		this._apiUrlConsignment = ServiceHelper.GetLogitudeURL() + 'api/consignmentviews';
+	}
 
 	getSingle(id: string) {
-	   
+
 		var callTime = new Date();
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-				.pipe(			
+				.pipe(
 					map((response: HttpResponse<any>) => {
 
-						var list = response.body;                   
+						var list = response.body;
 						var entity: DeclarationList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
-						}   
+						}
 
-						var serviceResponse: ServiceResponse = new ServiceResponse(); 
-						serviceResponse.Result = entity;  
+						var serviceResponse: ServiceResponse = new ServiceResponse();
+						serviceResponse.Result = entity;
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Declaration", "GetSingleList", 'id=' + id); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Declaration", "GetSingleList", 'id=' + id);
 
 						return serviceResponse;
 					}),
-			
+
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
@@ -73,29 +75,29 @@ export class DeclarationListService {
 						var allLists = response.body;
 						var _mappedListsArray: Array<DeclarationList> = [];
 						if (allLists) {
-							for (var key in allLists) {				
+							for (var key in allLists) {
 								var entity: DeclarationList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
 
-						var serviceResponse: ServiceResponse = new ServiceResponse(); 
+						var serviceResponse: ServiceResponse = new ServiceResponse();
 						serviceResponse.Result = _mappedListsArray;
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Declaration", "GetAllLists", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Declaration", "GetAllLists", "");
 
 						return serviceResponse;
 					}),
-			
+
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
-	
+
 	getByFilters(filters: ApiQueryFilters) {
 
-		var callTime = new Date();		                        
+		var callTime = new Date();
 		var urlparameters = '/getbyfilters?';
 		var mykeys = Object.keys(filters);
 		var addtionalFiltersValues = null;
@@ -105,11 +107,11 @@ export class DeclarationListService {
 			var propValue = filters[propName];
 			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
-            if (urlparameters != "?") {
+			if (urlparameters != "?") {
 				urlparameters = urlparameters.concat('&');
-            }
+			}
 
-            if (!ignoreFilter) {
+			if (!ignoreFilter) {
 				propValue = encodeURIComponent(propValue);
 				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
 			}
@@ -117,14 +119,14 @@ export class DeclarationListService {
 			if (propName == "AdditionalFilters" && propValue.length > 0) {
 				addtionalFiltersValues = JSON.stringify(propValue);
 			}
-        }
+		}
 
 		if (addtionalFiltersValues) {
 			urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
 		}
 
 		var callUrl = this._apiUrl.concat(urlparameters);
-        		
+
 		return defer(() => {
 			return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
@@ -134,40 +136,68 @@ export class DeclarationListService {
 						var _mappedListsArray: Array<DeclarationList> = [];
 
 						if (serviceResponse.Result) {
-							for (var key in serviceResponse.Result) {				
+							for (var key in serviceResponse.Result) {
 								var entity: DeclarationList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
-						}   
+						}
 
-						serviceResponse.Result = _mappedListsArray;       
+						serviceResponse.Result = _mappedListsArray;
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Declaration", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
-				           
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Declaration", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
+
 						return serviceResponse;
 					}),
-			
+
 					catchError(ServiceHelper.HandleServiceError));
-		});        
+		});
 	}
 
-	
-	    MapJsonToEntityList(jsonList: any) {
-       
-            var entityList: DeclarationList;
-            entityList = new DeclarationList();
-            var jsonListKeys = Object.keys(jsonList);
 
-            for (var key in jsonListKeys) {
-                var property = jsonListKeys[key];
-                entityList[property] = jsonList[property];
-            }
-			
+	MapJsonToEntityList(jsonList: any) {
 
-        return entityList;
-    }
+		var entityList: DeclarationList;
+		entityList = new DeclarationList();
+		var jsonListKeys = Object.keys(jsonList);
+
+		for (var key in jsonListKeys) {
+			var property = jsonListKeys[key];
+			entityList[property] = jsonList[property];
+		}
+
+
+		return entityList;
+	}
+	getSingleConsignment(declarationId: string) {
+
+		var callTime = new Date();
+		debugger;
+		return defer(() => {
+			return this._http.get(this._apiUrlConsignment + '/GetSingle/?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpFullHeaders())
+				.pipe(
+					map((response: HttpResponse<any>) => {
+
+						var list = response.body;
+						var entity: DeclarationList;
+						if (list) {
+							entity = this.MapJsonToEntityList(list);
+						}
+
+						var serviceResponse: ServiceResponse = new ServiceResponse();
+						serviceResponse.Result = entity;
+						serviceResponse.CallTime = callTime;
+
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Consignment", "getSingleConsignmentList", 'declarationId=' + declarationId);
+
+						return serviceResponse;
+					}),
+
+					catchError(ServiceHelper.HandleServiceError));
+		});
+	}
 
 }
 
