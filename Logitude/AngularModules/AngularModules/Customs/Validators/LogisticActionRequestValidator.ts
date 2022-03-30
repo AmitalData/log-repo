@@ -7,6 +7,7 @@ import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
 import { defer, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LogisticActionRequestService } from 'Customs/Services/Others/LogisticActionRequestService';
+import { AppTool } from "../../Infrastructure/Tools";
 @Injectable()
 
 export class LogisticActionRequestValidator {
@@ -26,8 +27,8 @@ export class LogisticActionRequestValidator {
     }
 
     public Validate(entityPM: any) {
-        this.CheckIfLogisticActionRequestExist();
         this._LogisticActionRequestPM = entityPM;
+        this.CheckIfLogisticActionRequestExist();
         return this.OriginalValidationErrorMessageCodes;
     }
 
@@ -40,7 +41,8 @@ export class LogisticActionRequestValidator {
             var mm: ServiceResponse = Result;
             if (!mm.HasError) {
                 if (mm.Result) {
-                    var errorMsg: string = "קיימת בקשה לביטול יצוא עם אותם מזהי מטען";
+                    var errorMsg: string = TextCodeTranslator.Translate("Customs.General.O.LogisticActionRequestAlreadyExist");
+                    if (AppTool.IsNullOrEmpty(errorMsg)) errorMsg = "קיימת בקשה לביטול יצוא עם אותם מזהי מטען";
                     this.ValidationErrorMessageCodes.push(errorMsg);
                 }
             }
