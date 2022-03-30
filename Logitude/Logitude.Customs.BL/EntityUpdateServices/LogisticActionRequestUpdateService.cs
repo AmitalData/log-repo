@@ -46,9 +46,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             LogisticActionRequestQueryService logisticActionRequestQueryService = new LogisticActionRequestQueryService(context);
             if (!string.IsNullOrWhiteSpace(myLogisticActionRequestPM.Id))
             {
-                LogisticActionRequestPM ExistLogisticActionRequestPM = new LogisticActionRequestPM();
-                ExistLogisticActionRequestPM = logisticActionRequestQueryService.GetExistByCargoKey(myLogisticActionRequestPM.Id, myLogisticActionRequestPM.CargoIdentifierKey1, myLogisticActionRequestPM.CargoIdentifierKey2, myLogisticActionRequestPM.CargoIdentifierKey3, myLogisticActionRequestPM.CargoIdentifierType);
-                if (ExistLogisticActionRequestPM != null) text = "קיימת בקשה לביטול יצוא עם אותם מזהי מטען";
+                var exist = logisticActionRequestQueryService.GetExistByCargoKey(myLogisticActionRequestPM.Id, myLogisticActionRequestPM.CargoIdentifierKey1, myLogisticActionRequestPM.CargoIdentifierKey2, myLogisticActionRequestPM.CargoIdentifierKey3, myLogisticActionRequestPM.CargoIdentifierType);
+                if (exist) text = "קיימת בקשה לביטול יצוא עם אותם מזהי מטען";
             }
 
             if (!string.IsNullOrWhiteSpace(text))
