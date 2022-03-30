@@ -89,9 +89,9 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                       new XLSExport.GridColumnMetaData()
                       {
                             Header="מספר ישות",
-                            length=80,
+                            length=160,
                             PropName =nameof(paymentsDetailsResult.EntityExternalID),
-                            GridColumnType  = GridColumnTypeEnum.Object
+                            GridColumnType  = GridColumnTypeEnum.Text
                       },
                       new XLSExport.GridColumnMetaData()
                       {
