@@ -385,24 +385,31 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     onMousewheelOnMilestonesSlider(event: WheelEvent)
     {
-        event.preventDefault();
+        let scrollEnds = false;
         if (event.deltaY > 0) {
-            this.MoveSlider('left');
+            scrollEnds = this.MoveSlider('left');
         }
         if (event.deltaY < 0) {
-            this.MoveSlider('right');
+            scrollEnds = this.MoveSlider('right');
         }
+
+        if(!scrollEnds)
+            event.preventDefault();
+
     }
 
     onMousewheelOnRoutingSlider(event: WheelEvent)
     {
-        event.preventDefault();
+        let scrollEnds = false;
         if (event.deltaY > 0) {
-            this.MoveRoutingSlider('left');
+            scrollEnds = this.MoveRoutingSlider('left');
         }
         if (event.deltaY < 0) {
-            this.MoveRoutingSlider('right');
+            scrollEnds = this.MoveRoutingSlider('right');
         }
+        
+        if(!scrollEnds)
+            event.preventDefault();
     }
 
     logPan(i)
@@ -624,10 +631,10 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     {
 
         if (dir == 'right' && this.sliderMarginLeft == 0)
-            return;
+            return true;
 
         if (dir == 'left' && ((this.sliderMarginCardCount + this.sliderVisibleCardsCount) >= this.SliderCards.length) || (this.sliderVisibleCardsCount >= this.SliderCards.length))
-            return;
+            return true;
 
         let margin = this.sliderMarginLeft;
         const cardWidth = this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth
@@ -676,10 +683,10 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     MoveRoutingSlider(direction) {
 
         if (direction == 'right' && this.routingSliderMarginLeft == 0)
-            return;
+            return true;
 
         if (direction == 'left' && ((this.routingSliderMarginCardCount + this.routingSliderVisibleCardsCount) >= this.cargoTrackingShipmentPM.RoutingSteps.length) || (this.routingSliderVisibleCardsCount >= this.cargoTrackingShipmentPM.RoutingSteps.length))
-            return;
+            return true;
 
         var margin = this.SetRoutingSliderMarginBasedOnDirection(direction);
 
