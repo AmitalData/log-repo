@@ -2357,6 +2357,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CalculatedExporterName&quot;"
     ListPropertyPath="&quot;CalculatedExporterName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2410,7 +2411,7 @@
     IsAddNewEntity="true"
     IsPackagable="false"
     DefaultSortName="&quot;RequestDate&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -2497,7 +2498,7 @@
     IsAddNewEntity="true"
     IsPackagable="false"
     DefaultSortName="&quot;RequestDate&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -2584,7 +2585,7 @@
     IsAddNewEntity="true"
     IsPackagable="false"
     DefaultSortName="&quot;RequestDate&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -2663,7 +2664,7 @@
     IsAddNewEntity="true"
     IsPackagable="false"
     DefaultSortName="&quot;RequestDate&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -2750,7 +2751,7 @@
     IsAddNewEntity="true"
     IsPackagable="false"
     DefaultSortName="&quot;RequestDate&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
     <QueryColumns>
