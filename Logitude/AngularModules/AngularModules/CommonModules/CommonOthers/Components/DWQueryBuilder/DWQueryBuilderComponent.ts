@@ -45,6 +45,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     public Height: number = 110;
     public IconSize: number = 17;
 
+    private FactARInvoiceGroupedMeasurmentField:string = "Invoice Number";
     private IsCopy: boolean = false;
     private CopyBIReportsFromTenant: number;
     private FactTableName: string;
@@ -665,10 +666,22 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
 
+        if (!this.IsValidToAddMeasurementFactARInvoiceField(item)) {
+            this.ShowValidateFactARInvoicesMessage(item.DisplayName, "column");
+            return;
+        }
+
         if (this.MatchAddColumnConditions(myCurrentItem) && this.ValidateQuereyFields()) {
             this.AddSelectedField();
             this.ClearData();
         }
+    }
+
+    private IsValidToAddMeasurementFactARInvoiceField(item: any) {
+        if (this.FactTableName == "Fact_ARInvoices" && item.IsMeasurement) {
+            return this.haveInvoiceNumberField();
+        }
+        return true;
     }
 
     private ValidateQuereyFields() {
@@ -742,6 +755,10 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         }
     }
 
+    private ShowValidateFactARInvoicesMessage(fieldName: string, fieldType: string) {
+        this.ShowValidateMessage("You are not allowed to add " + fieldName + " " + fieldType + " unless you add the " + this.FactARInvoiceGroupedMeasurmentField +" Number column");
+    }
+
     RootGroups: DWObjectFieldsDetails[] = [];
     btnAddFilter_Click(item: DWObjectFieldsDetails) {
 
@@ -762,6 +779,12 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
             return;
         }
+
+        if (!this.IsValidToAddMeasurementFactARInvoiceField(item)) {
+            this.ShowValidateFactARInvoicesMessage(selectedItem.DisplayName, "filter");
+            return;
+        }
+
         var view = new DWObjectFieldsDetails(item.BaseDWObjectField, this);
         if (item.HasTree && item.DataTypeCode != "DateTime") {
             var defaultItem: any = this.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
@@ -1011,6 +1034,11 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             return;
         }
 
+        if (!this.IsValidGroupedFactARInvoice()) {
+            this.ShowValidateMessage("Please add Invoice Number column to load the data");
+            return;
+        }
+
         if (this.SelectedFieldsDataSource.length > 0) {
             this.StartBusyIndicator("Loading ..");
             this.IsPreview = !StopPreview;
@@ -1036,6 +1064,14 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     SampleData: any[] = [];
+
+    private IsValidGroupedFactARInvoice() {
+        if (this.FactTableName == "Fact_ARInvoices" && this.haveMeasurmentFields()) {
+            return this.haveInvoiceNumberField();
+        }
+
+        return true;
+    }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("cancel");
@@ -1120,6 +1156,11 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             return;
         }
 
+        if (!this.IsValidGroupedFactARInvoice()) {
+            this.ShowValidateMessage("You are not allowed to save changes unless you add the Invoice Number column");
+            return;
+        }
+
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
         this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult:any) => {
             if (!myResult.HasError) {
@@ -1168,6 +1209,14 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     NotExist: boolean = true;
     private hasShipmentOrMasterNumberField() {
         return this.SelectedFieldsDataSource.filter(a => a.DisplayName == "Shipment Number" || a.DisplayName == "Master Shipment Number")[0];
+    }
+
+    private haveInvoiceNumberField() {
+        return this.SelectedFieldsDataSource.some(a => a.Code == "[Invoice Number]");
+    }
+
+    private haveMeasurmentFields() {
+        return this.SelectedFieldsDataSource.some(a => a.IsMeasurement);
     }
 
     private hasMeasurementFieldsInFactCharges() {

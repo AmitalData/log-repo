@@ -196,7 +196,7 @@ namespace DW_Editor_Tool.ViewModels
 
 
         public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension", "SqlVariant" }; } }
-        public List<string> AggregationTypesList { get { return new List<string>() { "SUM", "COUNT" }; } }
+        public List<string> AggregationTypesList { get { return new List<string>() { "SUM", "COUNT", "MAX" }; } }
 
         Visibility errorsVisibility = Visibility.Collapsed;
         public Visibility ErrorsVisibility
