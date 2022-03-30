@@ -592,6 +592,8 @@ namespace Logitude.Accounting.BL.CoreBL
     public class DueLocalBalanceDiffM
     {
         public string AccountId { get; set; }
+        public string DisplayNumber { get; set; }
+        public string LocalName { get; set; }
 
         public decimal CalcDueInLocal { get; set; }
         public decimal CalcDueInForeign { get; set; }
