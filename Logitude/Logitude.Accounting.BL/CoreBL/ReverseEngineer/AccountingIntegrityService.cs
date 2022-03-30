@@ -1,7 +1,9 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
@@ -295,6 +297,23 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                 myAccountingIntegrityResult.DueLocalBalance = myAccountingIntegrityResult.DueLocalBalance ?? new List<DueLocalBalanceDiffM>();
                 myAccountingIntegrityResult.DueLocalBalance.AddRange(listDiff);
+                IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
+                GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
+                if (myAccountingIntegrityResult.DueLocalBalance.Count > 0)
+                {
+                    myAccountingIntegrityResult.DueLocalBalance.ForEach(r =>
+                    {
+                        if (!String.IsNullOrEmpty(r.AccountId))
+                        {
+                            GLAccountPM gLAccountPM = gLAccountQueryService.GetSingle(r.AccountId, false, true);
+                            if (gLAccountPM != null)
+                            {
+                                r.DisplayNumber = gLAccountPM.DisplayNumber;
+                                r.LocalName = gLAccountPM.LocalName;
+                            }
+                        }
+                    });
+                }
                 badRows = listDiff.Count();
             }
             catch (Exception ee)
@@ -354,6 +373,23 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     var ReverseEngineerCashBook = new ReverseEngineerCashBook(accountingIntegrityInParam.Tenant);
                     ReverseEngineerCashBook.CheckDbIntegrity();
                     myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(ReverseEngineerCashBook.CompareReport.GLAccountBalanceList);
+                    IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
+                    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
+                    if (myAccountingIntegrityResult.TotalOpenReconciliationResult.Count > 0)
+                    {
+                        myAccountingIntegrityResult.TotalOpenReconciliationResult.ForEach(r =>
+                        {
+                            if (!String.IsNullOrEmpty(r.AccountId))
+                            {
+                                GLAccountPM gLAccountPM = gLAccountQueryService.GetSingle(r.AccountId, false, true);
+                                if (gLAccountPM != null)
+                                {
+                                    r.DisplayNumber = gLAccountPM.DisplayNumber;
+                                    r.LocalName = gLAccountPM.LocalName;
+                                }
+                            }
+                        });
+                    }
 
                 }
                 catch (Exception ee)
@@ -407,6 +443,23 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                         reverseEngineerTotalByMonthService.CheckDbIntegrity();
                         myAccountingIntegrityResult.LedgerToMounthTotalResult = myAccountingIntegrityResult.LedgerToMounthTotalResult ?? new List<GLAccountTotalByMonthsDTO>();
                         myAccountingIntegrityResult.LedgerToMounthTotalResult.AddRange(reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList);
+                        IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
+                        GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
+                        if (myAccountingIntegrityResult.LedgerToMounthTotalResult.Count > 0)
+                        {
+                            myAccountingIntegrityResult.LedgerToMounthTotalResult.ForEach(r =>
+                            {
+                                if (!String.IsNullOrEmpty(r.AccountId))
+                                {
+                                    GLAccountPM gLAccountPM = gLAccountQueryService.GetSingle(r.AccountId, false, true);
+                                    if (gLAccountPM != null)
+                                    {
+                                        r.DisplayNumber = gLAccountPM.DisplayNumber; 
+                                        r.LocalName = gLAccountPM.LocalName;
+                                    }
+                                }
+                            });
+                        }
                         badRows = reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList.Count();
                     }
                     catch (Exception ee)
@@ -462,6 +515,18 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                         reverseEngineerLedgerTransactionService.CheckDbIntegrity();
                         myAccountingIntegrityResult.JournalLineToLedgerResult = myAccountingIntegrityResult.JournalLineToLedgerResult ?? new List<JournalLineLedgerDTO>();
                         myAccountingIntegrityResult.JournalLineToLedgerResult.AddRange(reverseEngineerLedgerTransactionService.CompareReport.rows);
+                        IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
+                        JournalQueryService journalQueryService = new JournalQueryService(context);
+                        if (myAccountingIntegrityResult.JournalLineToLedgerResult.Count > 0)
+                        {
+                            myAccountingIntegrityResult.JournalLineToLedgerResult.ForEach(r => 
+                            { 
+                                if (!String.IsNullOrEmpty(r.JournalId))
+                                {
+                                    r.JournalNumber = journalQueryService.GetSingle(r.JournalId, false, true).JournalNumber;
+                                }
+                            });
+                        }
                         badRows = reverseEngineerLedgerTransactionService.CompareReport.rows.Count();
                     }
                     catch (Exception ee)
