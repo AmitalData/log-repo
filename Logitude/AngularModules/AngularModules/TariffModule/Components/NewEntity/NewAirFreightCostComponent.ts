@@ -48,11 +48,9 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     public PriceStepsText: string;
     public TariffCurrencyTextCode: string;
     public SellerDependancy: string = "AL";
-    public CustomsBrokerDependancy: string = "AG,CG";
     public HasAContainerTypeUOM: boolean = false;
     private firstVersion: TariffVersionPM;
-    public IsSellerVisible: boolean = false;
-    public IsCustomsBrokerVisible: boolean = false;
+    public SellerToolTip: string;
     constructor() {
         super();
         this.myService = new TariffPMService();
@@ -117,6 +115,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.VisibleContainerTypeAreaInOFS = true;
             this.HasAContainerTypeUOM = false;
         }
+
+        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+            this.SellerToolTip = "Customs Broker";
+        }
+
         this.SetDefaultFreightChargeId();
         this.BuildQueryFilters();
         this.BuildFreightChargesQueryFilters();
@@ -149,7 +152,6 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
         this.SetUIProperties_FreightCharges();
         this.SetUIProperties_Seller();
-        this.SetUIProperties_CustomsBroker();
     }
     private SetUIProperties_FreightCharges() {
         var isFreightChargeVisible: boolean = false;
@@ -160,36 +162,8 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         this.UIProperties.SetVisibility("FreightChargeId", this.ObjectTableName, isFreightChargeVisible);
     }
     private SetUIProperties_Seller() {
-        var isSellerVisible: boolean = true;
-        var isSellerRequired: boolean = false;
-
-        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
-            isSellerVisible = false;
-        }
-
-        if (isSellerVisible) {
-            isSellerRequired = AppTool.IsNullOrEmpty(this.SellerId);
-        }
-
-        this.IsSellerVisible = isSellerVisible;
-        this.UIProperties.SetVisibility("SellerId", this.ObjectTableName, isSellerVisible);
+        var isSellerRequired: boolean = isSellerRequired = AppTool.IsNullOrEmpty(this.SellerId);        
         this.UIProperties.SetRequired("SellerId", this.ObjectTableName, isSellerRequired)
-    }
-    private SetUIProperties_CustomsBroker() {
-        var isBrokerVisible: boolean = false;
-        var isBrokerRequired: boolean = false;
-
-        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
-            isBrokerVisible = true;
-        }
-
-        if (isBrokerVisible) {
-            isBrokerRequired = AppTool.IsNullOrEmpty(this.CustomsBrokerId);
-        }
-
-        this.IsCustomsBrokerVisible = isBrokerVisible;
-        this.UIProperties.SetVisibility("CustomsBrokerId", this.ObjectTableName, isBrokerVisible);
-        this.UIProperties.SetRequired("CustomsBrokerId", this.ObjectTableName, isBrokerRequired)
     }
 
     FillChargesIDsAndUOMS() {
@@ -206,19 +180,20 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     }
 
     BuildQueryFilters() {
-        var EntityType: string = "IsAir";
+        var entityType: string = "IsAir";
         if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
-            EntityType = "IsOcean";
+            entityType = "IsOcean";
             this.SellerDependancy = "SL";
         }
 
         else if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
-            EntityType = "IsOcean";
+            entityType = "IsOcean";
             this.SellerDependancy = "SL,AG,SG";
         }
 
         else if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC") {
-            EntityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
+            entityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
+            this.SellerDependancy = "AG,CG";
         }
 
         this.MeasurementsQueryFilters = new ApiQueryFilters();
@@ -232,7 +207,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter(entityType, true, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
         this.Validate(true);
         this.SetContainerTypeUIProperties(true);
@@ -307,17 +282,6 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.EntityPM.SellerId = value;
 
             this.SetUIProperties_Seller();
-        }
-    }
-
-    get CustomsBrokerId() {
-        return this.EntityPM.CustomsBrokerId;
-    }
-    set CustomsBrokerId(value: string) {
-        if (this.EntityPM.CustomsBrokerId != value) {
-            this.EntityPM.CustomsBrokerId = value;
-
-            this.SetUIProperties_CustomsBroker();
         }
     }
 
@@ -909,16 +873,8 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         this.ValidationErrorsList = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
 
-        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
-            if (AppTool.IsNullOrEmpty(this.CustomsBrokerId)) {
-                this.ValidationErrorsList.push("Customs Broker Field is Required");
-            }
-        }
-
-        else {
-            if (AppTool.IsNullOrEmpty(this.SellerId)) {
-                this.ValidationErrorsList.push("Seller Field is Required");
-            }
+        if (AppTool.IsNullOrEmpty(this.SellerId)) {
+            this.ValidationErrorsList.push("Seller Field is Required");
         }
 
         if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {

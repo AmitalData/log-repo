@@ -1653,8 +1653,8 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     shipmentPayable.Notes = payable.Notes;
                     shipmentPayable.MinAmount = AppTool.Round(payable.MinAmount, 2);
                     shipmentPayable.UnitPrice = AppTool.Round(payable.Price, 3);
-                    shipmentPayable.VendorId = payable.CustomsBrokerId;
-                    shipmentPayable.VendorName = payable.CustomsBrokerName;
+                    shipmentPayable.VendorId = payable.SellerId;
+                    shipmentPayable.VendorName = payable.SellerName;
                     this.ShipmentGenerator.CalculatePayableVatAmount(shipmentPayable);
                     this.EntityPM.AddPayable(shipmentPayable);
                 }

@@ -60,7 +60,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 
                 this.ValidateSurchargeUniqueSeller(entityPM);
                 this.ValidateFCLSurchargeUniqueSeller(entityPM);
-                this.ValidateCustomsChargesUniqueBroker(entityPM);
+                this.ValidateCustomsChargesUniqueSeller(entityPM);
             }
         }
         
@@ -118,7 +118,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             this.ValidateSurchargeUniqueSeller(entityPM);
             this.ValidateFCLSurchargeUniqueSeller(entityPM);
-            this.ValidateCustomsChargesUniqueBroker(entityPM);
+            this.ValidateCustomsChargesUniqueSeller(entityPM);
 
             if (entityPM.IsApprovingDraftVersion)
             {
@@ -675,7 +675,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 }
             }
         }
-        private void ValidateCustomsChargesUniqueBroker(TariffPM entityPM)
+        private void ValidateCustomsChargesUniqueSeller(TariffPM entityPM)
         {
             if (entityPM.TypeCode == "ICC" || entityPM.TypeCode == "ECC")
             {
@@ -684,13 +684,13 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                               where d.Tenant == entityPM.Tenant
                               && !d.InActive
                               && d.Id != entityPM.Id
-                              && d.CustomsBrokerId == entityPM.CustomsBrokerId
+                              && d.SellerId == entityPM.SellerId
                               && d.TypeCode == entityPM.TypeCode
                               select d).Count();
 
                 if (iCount >= 1)
                 {
-                    throw new ApplicationException("Tariff customs broker should be unique");
+                    throw new ApplicationException("Tariff seller should be unique");
                 }
             }
         }
