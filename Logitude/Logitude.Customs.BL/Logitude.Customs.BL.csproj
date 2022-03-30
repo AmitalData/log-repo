@@ -755,6 +755,7 @@
     <Compile Include="EntityDataMappings\Generated\LogisticActionRequestDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LogisticActionRequestTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LogisticActionResponseReqSDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LogisticPermitDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LogisticsReferenceTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MamanSpecialActionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MamanSpecialActionStatusDataMapping.Generated.cs" />
@@ -928,6 +929,7 @@
     <Compile Include="EntityDataMappings\LogisticActionRequestDataMapping.cs" />
     <Compile Include="EntityDataMappings\LogisticActionRequestTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\LogisticActionResponseReqSDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LogisticPermitDataMapping.cs" />
     <Compile Include="EntityDataMappings\LogisticsReferenceTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\MamanSpecialActionDataMapping.cs" />
     <Compile Include="EntityDataMappings\MamanSpecialActionStatusDataMapping.cs" />
@@ -1083,6 +1085,7 @@
     <Compile Include="EntityQueryServices\Generated\LogisticActionRequestQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticActionRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticActionResponseReqSQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\LogisticPermitQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\IncotemrsFileValidationQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientsPoaQueryService.cs" />
     <Compile Include="EntityQueryServices\ContainerizationQueryService.cs" />
@@ -1585,6 +1588,7 @@
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionResponseReqSUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\LogisticPermitUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LogisticActionRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsDocumentUploadUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionRequestTypeUpdateService.Generated.cs" />
