@@ -34,7 +34,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPOCOToPM(ExportDeclarationClosingDataPM entityPM, ExportDeclarationClosingData entityPOCO)
         {
             var eFIFILEMDataInExportDeclarationClosing = new EFIFILEMDataInExportDeclarationClosing();
-            entityPM = eFIFILEMDataInExportDeclarationClosing.GetEFIFILEMDataInExportDeclarationClosingDataPM(entityPOCO.DeclarationId, entityPOCO.Tenant);
+            entityPM = eFIFILEMDataInExportDeclarationClosing.SetEFIFILEMData(entityPOCO.DeclarationId, entityPOCO.Tenant, entityPM);
             if (entityPOCO.FinalCargoType != null)
             {
                 entityPM.FinalCargoTypeName = entityPOCO.FinalCargoType.LocalName;

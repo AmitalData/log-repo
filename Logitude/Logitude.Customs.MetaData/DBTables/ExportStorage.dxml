@@ -192,7 +192,7 @@
   <Column
     Name="ActionCode"
     Type="varchar"
-    Size="1">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>

@@ -19,8 +19,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(LogisticPermitPM entityPM, LogisticPermit entityPOCO)
         {
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
-            entityPOCO.Id = entityPM.Id;
+            //throw new NotImplementedException();
         }
 
         public void CustomPOCOToPM(LogisticPermitPM entityPM, LogisticPermit entityPOCO)

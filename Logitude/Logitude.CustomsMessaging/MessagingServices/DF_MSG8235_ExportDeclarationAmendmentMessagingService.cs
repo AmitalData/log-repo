@@ -24,7 +24,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
     public class DF_MSG8235_ExportDeclarationAmendmentMessagingService
         : MessagingServiceBase<
         AmendmentRequestParams,
-        INF_MSG_GenericResponseData,
+        ExportDeclarationAmendmentResponseData,
         DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg,
         DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg,
         DF_MSG8235_ExportDeclarationAmendmentRequestService,
@@ -61,7 +61,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return new AmendmentRequestParams() {   RequestName="Should not Use !!"};
         }
 
-        protected override INF_MSG_GenericResponseData GetIIGBLExceptionFromReponseHeader(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customsResponse)
+        protected override ExportDeclarationAmendmentResponseData GetIIGBLExceptionFromReponseHeader(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customsResponse)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         }
                         break;
                     default:
-                        return new INF_MSG_GenericResponseData() { UserMessage = FormattedMessage, HasException = true };
+                        return new ExportDeclarationAmendmentResponseData() { UserMessage = FormattedMessage, HasException = true };
                 }
             }
 
