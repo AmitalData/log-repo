@@ -43,7 +43,6 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
-import { AuthenticateService } from "collaboration-tool-core";
 
 @Component({
     
@@ -312,30 +311,8 @@ export class LoginComponent implements OnInit {
                     });
                 });
             }
-
-            this.WarmupCToolLogitudeAuthenticate(userData);
         }
         window.sessionStorage.setItem("userdata", "");
-    }
-
-    WarmupCToolLogitudeAuthenticate(userData: any) {
-        this.myInfrastructureDomainService.GetFeatureToggles().subscribe((featureTogglesResponse: ServiceResponse) => {
-            if (!featureTogglesResponse.HasError) {
-                var userTenant = Number(userData.CurrentTenant + "");
-                var ctoolFeatureToggle = featureTogglesResponse.Result
-                .filter((f: any) => (f.TenantNumber == userTenant || (userTenant >= f.FromTenantNumber && userTenant <= f.ToTenantNumber)) && f.ToggleCode === "CTL")[0];
-
-                if(ctoolFeatureToggle){
-                    const authenticateService = new AuthenticateService();
-                    if(authenticateService){
-                        var logitudeAuthenticate = "logitudeAuthenticate";
-                        if(authenticateService.hasOwnProperty(logitudeAuthenticate)){
-                            authenticateService[logitudeAuthenticate]({ Tenant: userTenant, Token: userData.Token });
-                        }
-                    }
-                }
-            }
-        });
     }
 
     FillProtractorEmails() {

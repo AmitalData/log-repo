@@ -86,24 +86,45 @@ namespace WebFreight.Web
 
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool isAngular)
         {
-            UserData userData = null;
-            AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
-            AuthenticationToken auttoken = authenticationTokenRepository.GetSingleToken(logintokenparam.Token);
-            if (auttoken != null)
-            { 
-                LoginParameters loginParameters = new LoginParameters() { Email = auttoken.Email, GetToken = true, IsUser = true, Password = auttoken.Password + "@HashPassword" };
-                if (!string.IsNullOrEmpty(logintokenparam.CardId))
-                {
-                    loginParameters.CardId = logintokenparam.CardId;
-                    loginParameters.IsUser = false;
-                }
-                AuthenticationController authenticationController = new AuthenticationController();
-                userData = authenticationController.PostLoginData(loginParameters, auttoken.Tenant);
+            LoginParameters loginParameters = BuildLoginParameters(logintokenparam);
+            if (loginParameters == null)
+            {
+                return null;
             }
-            return userData;
+            AuthenticationController authenticationController = new AuthenticationController();
+            return authenticationController.PostLoginData(loginParameters, loginParameters.Tenant);
         }
 
-         
+        public UserData PostLoginUsingAuthenticaionTokenForCTool(LoginTokenParameter logintokenparam)
+        {
+            LoginParameters loginParameters = BuildLoginParameters(logintokenparam);
+            if(loginParameters == null)
+            {
+                return null;
+            }
+            AuthenticationController authenticationController = new AuthenticationController();
+            return authenticationController.PostLoginData(loginParameters, loginParameters.Tenant, true);
+        }
+
+        private LoginParameters BuildLoginParameters(LoginTokenParameter logintokenparam)
+        {
+            AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
+            AuthenticationToken auttoken = authenticationTokenRepository.GetSingleToken(logintokenparam.Token);
+            if (auttoken == null)
+            {
+                return null;
+            }
+
+            LoginParameters loginParameters = new LoginParameters() { Email = auttoken.Email, GetToken = true, IsUser = true, Password = auttoken.Password + "@HashPassword", Tenant = auttoken.Tenant };
+            if (!string.IsNullOrEmpty(logintokenparam.CardId))
+            {
+                loginParameters.CardId = logintokenparam.CardId;
+                loginParameters.IsUser = false;
+            }
+            return loginParameters;
+        }
+
+
         public UserData PostTrayLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool fromTray, bool useTenant)
         {
             UserData userdata;
@@ -1314,7 +1335,7 @@ namespace WebFreight.Web
         }
 
         bool OneTimePassword = false;
-        public UserData PostLoginData(LoginParameters parameters, int tenant)
+        public UserData PostLoginData(LoginParameters parameters, int tenant, bool ignoreAddLoginHistory = false)
         {
 
 
@@ -1399,7 +1420,7 @@ namespace WebFreight.Web
 
 
 
-                        user = ValidateUser(email, password, customData, out userData, isUser, cardId, cardType, parameters.ByToken, via, parameters.IsAngularLogin, parameters.ClientType);
+                        user = ValidateUser(email, password, customData, out userData, isUser, cardId, cardType, parameters.ByToken, via, parameters.IsAngularLogin, parameters.ClientType, ignoreAddLoginHistory);
 
 
 
@@ -1955,7 +1976,7 @@ namespace WebFreight.Web
             return result;
         }
 
-        private UserData ValidateUser(string name, string password, string customData, out string userData, bool isUser, string cardId, string cardType, bool byToken, string via, bool isAngularLogin,string clientType)
+        private UserData ValidateUser(string name, string password, string customData, out string userData, bool isUser, string cardId, string cardType, bool byToken, string via, bool isAngularLogin,string clientType, bool ignoreAddLoginHistory)
         {
             ContactPassword contactPassword = null;
             UserData user = null;
@@ -2190,45 +2211,48 @@ namespace WebFreight.Web
                             ActivityLog.SendTotangoContactActivity(contact.Email, "Miscellaneous", "Login", tenant, false, cardId, via);
                         }
 
-                        UserLoginLog userLog = new UserLoginLog()
+                        if (!ignoreAddLoginHistory)
                         {
-                            Id = IdCounter.GetNumber("UserLoginLog", tenant).ToString(),
-                            Tenant = tenant,
-                            Browser = HttpContext.Current.Request.Browser.Type,
-                            IP = AuthenticationUtil.GetIP4Address(),// HttpContext.Current.Request.UserHostAddress,
-                            UserId = user.Id,
-                            GMTDateTime = DateTime.Now,
-                            LocalDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
-                            UserAgent = userAgent,
-                            ComputerId = computerId,
-                        };
-                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                        if (!string.IsNullOrEmpty(currentIP))
-                        {
-                            userLog.Browser = userLog.Browser.ToUpper();
-                        }
-                        UserLastLogin lastLogin = (from a in commonDataContext.UserLastLogins
-                                                   where a.Id == user.Id
-                                                   select a).FirstOrDefault();
-                        if (lastLogin == null)
-                        {
-                            lastLogin = new UserLastLogin()
+                            UserLoginLog userLog = new UserLoginLog()
                             {
-                                Id = user.Id,
+                                Id = IdCounter.GetNumber("UserLoginLog", tenant).ToString(),
                                 Tenant = tenant,
+                                Browser = HttpContext.Current.Request.Browser.Type,
+                                IP = AuthenticationUtil.GetIP4Address(),// HttpContext.Current.Request.UserHostAddress,
+                                UserId = user.Id,
+                                GMTDateTime = DateTime.Now,
+                                LocalDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
+                                UserAgent = userAgent,
                                 ComputerId = computerId,
-                                WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment(),
-                        };
+                            };
+                            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                            if (!string.IsNullOrEmpty(currentIP))
+                            {
+                                userLog.Browser = userLog.Browser.ToUpper();
+                            }
+                            UserLastLogin lastLogin = (from a in commonDataContext.UserLastLogins
+                                                       where a.Id == user.Id
+                                                       select a).FirstOrDefault();
+                            if (lastLogin == null)
+                            {
+                                lastLogin = new UserLastLogin()
+                                {
+                                    Id = user.Id,
+                                    Tenant = tenant,
+                                    ComputerId = computerId,
+                                    WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment(),
+                                };
 
-                            commonDataContext.UserLastLogins.Add(lastLogin);
+                                commonDataContext.UserLastLogins.Add(lastLogin);
+                            }
+
+                            user.LastLoginDateTime = lastLogin.LoginDateTime;
+
+                            lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            lastLogin.Tenant = tenant;
+                            commonDataContext.UserLoginLogs.Add(userLog);
+                            commonDataContext.SaveChanges();
                         }
-
-                        user.LastLoginDateTime = lastLogin.LoginDateTime;
-
-                        lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        lastLogin.Tenant = tenant;
-                        commonDataContext.UserLoginLogs.Add(userLog);
-                        commonDataContext.SaveChanges();
                     }
                     else
                     {
