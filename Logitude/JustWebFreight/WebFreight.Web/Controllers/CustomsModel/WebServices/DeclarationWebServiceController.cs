@@ -539,7 +539,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 //requestParamsData.AppicationId = declarationPM.Id;
                 //requestParamsData.LoggingEntityId = declarationPM.Id;
-                INF_MSG_GenericResponseData responseData;
+                ExportDeclarationAmendmentResponseData responseData;
                 //var messagingService = new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService();
                 var messagingService = new DF_MSG8235_ExportDeclarationAmendmentMessagingService();
                 responseData = messagingService.Send(requestParamsData);
