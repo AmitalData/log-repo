@@ -60,6 +60,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StateName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.GLAccountDisplayNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.SATCustomerName).HasMaxLength(200).IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("Cards");
@@ -121,6 +122,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
             this.Property(t => t.AccountingVATSplit).HasColumnName("AccountingVATSplit");
+            this.Property(t => t.SATCustomerName).HasColumnName("SATCustomerName");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

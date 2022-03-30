@@ -67,7 +67,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             this.sATCommunicationLogBuilder = new SATCommunicationLogBuilder(tenant);
         }
 
-        public void SendRequest()
+        public void SendRequest(SATInterfaceSetting satSetting)
         {
             ARPaymentPM arPaymentPM = GetARPaymentPM();
             ARPaymentRepository arPaymentRepository = new ARPaymentRepository(arPaymentPM.Tenant);
@@ -76,7 +76,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             SATPaymentComprobanteValidator sATPaymentComprobanteValidator = new SATPaymentComprobanteValidator(arPaymentPM);
             sATPaymentComprobanteValidator.Validate();
 
-            SATComprobante sATPaymentComprobante = new SATComprobante(arPaymentPM);
+            SATComprobante sATPaymentComprobante = new SATComprobante(arPaymentPM, satSetting);
             Comprobante comprobante = sATPaymentComprobante.Get();
 
             sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = comprobante, EntityReference = arPaymentPM.PaymentNo.ToString(), EntityId = paymentId, IsCancellation = false, IsPayment = true });

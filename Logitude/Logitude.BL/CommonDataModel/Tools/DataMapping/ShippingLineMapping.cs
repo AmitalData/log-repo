@@ -70,6 +70,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.ImageDetailId = entityPM.ImageDetailId;
             entityPOCO.IsSendingByContainer = entityPM.IsSendingByContainer;
             entityPOCO.IsSendingByBillOfLading = entityPM.IsSendingByBillOfLading;
+            entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
 
             if (!entityPM.IsFirstContactToAdd)
             {

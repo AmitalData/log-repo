@@ -1443,6 +1443,11 @@ export class CustomerPM {
     public set AddLogboxCustomerQueue(newValue: boolean) { if (this.addLogboxCustomerQueue != newValue) { this.addLogboxCustomerQueue = newValue; this.MarkAsDirty("AddLogboxCustomerQueue"); } }
        
 	 
+    private sATCustomerName: string;
+    public get SATCustomerName() { return this.sATCustomerName; }
+    public set SATCustomerName(newValue: string) { if (this.sATCustomerName != newValue) { this.sATCustomerName = newValue; this.MarkAsDirty("SATCustomerName"); } }
+       
+	 
 
     public OldEntityPM: CustomerPM;
 		

@@ -42,6 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
         public string StateName { get; set; }
+        public string RegimenFiscalCode { get; set; }
 
         public string GLAccountNumber { get; set; }
         public string Field1 { get; set; }

@@ -55,6 +55,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
+            entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
 
             entityPOCO.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
             entityPOCO.Field2 = entityPM.Field2 != null ? entityPM.Field2.Value : null;

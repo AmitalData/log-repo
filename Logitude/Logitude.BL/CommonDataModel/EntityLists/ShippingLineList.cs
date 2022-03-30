@@ -51,5 +51,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string GLAccountNumber { get; set; }
         public bool IsSendingByContainer { get; set; }
         public bool IsSendingByBillOfLading { get; set; }
+        public string RegimenFiscalCode { get; set; }
     }
 }

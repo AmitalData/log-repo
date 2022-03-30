@@ -83,6 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string StateName { get; set; }
 
         public string GLAccountNumber { get; set; }
+        public string RegimenFiscalCode { get; set; }
 
     }
 }

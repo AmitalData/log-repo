@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "5fd7f1f5c234ac496bbd662feda242ed";
+		public const string HashString = "5d3ec292b55832ff9bea95ccc76098cc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9709,6 +9709,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SATCustomerName",
+					  						ObjectTableName =  "Customer",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  200,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SATCustomerName",
+					  						ListPropertyPath =  "SATCustomerName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customer",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SATCustomerName",
+					  						DefaultText =  "SAT Customer Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -9793,7 +9849,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn ByLastShipmentQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.LastShipmentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter ByLastShipmentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ByLastShipmentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -9847,7 +9903,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn SharedLogisticsCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter SharedLogisticsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.SharedLogisticsCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter SharedLogisticsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.SharedLogisticsCustomers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -9886,7 +9942,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn CustomersQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customer.Notes" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter CustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -9915,10 +9971,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.MyCustomersAsAccountManager", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.MyCustomersAsAccountManager", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -9947,10 +10003,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_MyCustomersQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_MyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.MyCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter Customer_MyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.MyCustomers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter Customer_MyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter Customer_MyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -9975,10 +10031,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_ReadyCustomersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.ReadyCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.ReadyCustomers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10001,7 +10057,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_PotentialCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_PotentialCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.PotentialCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter Customer_PotentialCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.PotentialCustomers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10024,7 +10080,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_ActiveCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_ActiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.ActiveCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter Customer_ActiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.ActiveCustomers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10047,7 +10103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_InactiveCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_InactiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.InactiveCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter Customer_InactiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.InactiveCustomers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

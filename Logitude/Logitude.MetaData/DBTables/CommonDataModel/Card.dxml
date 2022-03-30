@@ -452,6 +452,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SATCustomerName"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"

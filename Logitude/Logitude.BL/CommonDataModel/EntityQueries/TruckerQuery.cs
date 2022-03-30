@@ -78,6 +78,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                UsoCFDICode = a.Card.UsoCFDICode,
                                GLAccountId = a.Card.GLAccountId,
                                GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                               RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -172,6 +173,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  SATForeignRFC = a.Card.SATForeignRFC,
                                                  MetodoPagoCode = a.Card.MetodoPagoCode,
                                                  UsoCFDICode = a.Card.UsoCFDICode,
+                                                 RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                              };
             return truckers;
         }
@@ -222,6 +224,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              SATForeignRFC = a.Card.SATForeignRFC,
                              MetodoPagoCode = a.Card.MetodoPagoCode,
                              UsoCFDICode = a.Card.UsoCFDICode,
+                             RegimenFiscalCode = a.Card.RegimenFiscalCode,
                          }).AsQueryable();
 
             IQueryable<TruckerPM> query2 = null;
@@ -290,6 +293,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   PrimaryContactPhone = a.PrimaryContactPhone,
                                                   StateName = a.Card.StateName,
                                                   GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                  RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                   Field1 = a.Field1,
                                                   Field2 = a.Field2,
                                                   Field3 = a.Field3,
@@ -348,6 +352,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     SATForeignRFC = a.Card.SATForeignRFC,
                                     MetodoPagoCode = a.Card.MetodoPagoCode,
                                     UsoCFDICode = a.Card.UsoCFDICode,
+                                    RegimenFiscalCode = a.Card.RegimenFiscalCode,
 
                                     Card = new CardPM()
                                     {

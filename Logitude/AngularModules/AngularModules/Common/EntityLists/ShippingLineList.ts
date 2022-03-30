@@ -51,5 +51,6 @@ export class ShippingLineList {
 		GLAccountNumber: string;
 		IsSendingByContainer: boolean;
 		IsSendingByBillOfLading: boolean;
+		RegimenFiscalCode: string;
 	
 }

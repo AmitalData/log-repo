@@ -24,7 +24,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
             comprobanteReceptor.RegimenFiscalReceptor = billToCard.RegimenFiscalCode;
             comprobanteReceptor.DomicilioFiscalReceptor = billToAddressZipCode;
-            comprobanteReceptor.Nombre = billToCard.EnglishName;
+            comprobanteReceptor.Nombre = GetSATCustomerName(billToCard);
             comprobanteReceptor.UsoCFDI = electronicPaymentReceiptCode;
 
 
@@ -38,8 +38,17 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             comprobanteReceptor.Rfc = !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : SATData.OutSideMexicoRfc;
             comprobanteReceptor.ResidenciaFiscal = billToCountryCode;
             comprobanteReceptor.ResidenciaFiscalSpecified = true;
+            comprobanteReceptor.NumRegIdTrib = comprobanteReceptor.Rfc;
 
             return comprobanteReceptor;
+        }
+
+        private static string GetSATCustomerName(Card billToCard)
+        {
+            if (!String.IsNullOrEmpty(billToCard.SATCustomerName))
+                return billToCard.SATCustomerName;
+
+            return billToCard.EnglishName;
         }
 
         private static string GetMexicoReceptorRfc(Card billToCard)

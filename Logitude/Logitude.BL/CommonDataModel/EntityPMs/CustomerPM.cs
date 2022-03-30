@@ -1039,6 +1039,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool AddLogboxCustomerQueue { get; set; }
+        [DataMember]
+        public string SATCustomerName { get; set; }
 
     }
 }

@@ -15,6 +15,7 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: any;
     public ObjectTableName: string;
     public DataContext = this;
+    public ShowRegimenFiscalField: boolean = false;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -23,6 +24,14 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+            this.SetShowRegimenFiscalField();
+        }
+    }
+
+    private SetShowRegimenFiscalField() {
+        var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
+        if (RegimenFiscalFieldFeatureToggle) {
+            this.ShowRegimenFiscalField = true;
         }
     }
 
@@ -99,6 +108,13 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
     set UsoCFDICode(newValue: string) {
         if (this.EntityPM.UsoCFDICode != newValue) {
             this.EntityPM.UsoCFDICode = newValue;
+        }
+    }
+
+    get RegimenFiscalCode() { return this.EntityPM.RegimenFiscalCode; }
+    set RegimenFiscalCode(newValue: string) {
+        if (this.EntityPM.RegimenFiscalCode != newValue) {
+            this.EntityPM.RegimenFiscalCode = newValue;
         }
     }
 

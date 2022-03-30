@@ -485,6 +485,11 @@ export class WarehousePM {
     public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
        
 	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
     private field1: CustomFieldClass;
     public get Field1() {if(!this.field1){ this.field1 = new CustomFieldClass(null, "Field1", "Warehouse");} return this.field1; }
     public set Field1(newValue: CustomFieldClass) {  this.field1 = newValue; this.MarkAsDirty("Field1");  }

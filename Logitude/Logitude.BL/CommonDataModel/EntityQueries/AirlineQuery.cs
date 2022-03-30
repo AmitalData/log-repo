@@ -120,6 +120,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                UsoCFDICode = a.Card.UsoCFDICode,
                                ImageDetailId = a.Card.ImageDetailId,
                                GLAccountId = a.Card.GLAccountId,
+                               RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -223,6 +224,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                MetodoPagoCode = a.Card.MetodoPagoCode,
                                UsoCFDICode = a.Card.UsoCFDICode,
                                ImageDetailId = a.Card.ImageDetailId,
+                               RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -327,6 +329,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                GLAccountId = a.Card.GLAccountId,
                                ImageDetailId = a.Card.ImageDetailId,
                                GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                               RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -452,6 +455,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  UsoCFDICode = a.Card.UsoCFDICode,
                                                  ImageDetailId = a.Card.ImageDetailId,
                                                  BillToId = a.Card.BillToId,
+                                                 RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                              };
             return airlines;
         }
@@ -541,6 +545,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              UsoCFDICode = a.Card.UsoCFDICode,
                              ImageDetailId = a.Card.ImageDetailId,
                              BillToId = a.Card.BillToId,
+                             RegimenFiscalCode = a.Card.RegimenFiscalCode,
                          }).AsQueryable();
 
             IQueryable<AirlinePM> query2 = null;
@@ -647,7 +652,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   PrimaryContactEmail = a.PrimaryContactEmail,
                                                   PrimaryContactPhone = a.PrimaryContactPhone,
                                                   StateName = a.Card.StateName,
-                                                  GLAccountNumber = a.Card.GLAccountDisplayNumber
+                                                  GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                  RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                               });
 
 

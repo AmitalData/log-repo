@@ -293,5 +293,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsSendingByBillOfLading { get; set; }
+        [DataMember]
+        public string RegimenFiscalCode { get; set; }
     }
 }

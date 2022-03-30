@@ -143,5 +143,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsAutonomy { get; set; }
         public string BillToId { get; set; }
         public string BillToName { get; set; }
+        public string SATCustomerName { get; set; }
     }
 }

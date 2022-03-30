@@ -65,6 +65,11 @@ export class SATInterfaceSettingPM {
     public set IsCartaPorteTransferEnabled(newValue: boolean) { if (this.isCartaPorteTransferEnabled != newValue) { this.isCartaPorteTransferEnabled = newValue; this.MarkAsDirty("IsCartaPorteTransferEnabled"); } }
        
 	 
+    private sATCompanyName: string;
+    public get SATCompanyName() { return this.sATCompanyName; }
+    public set SATCompanyName(newValue: string) { if (this.sATCompanyName != newValue) { this.sATCompanyName = newValue; this.MarkAsDirty("SATCompanyName"); } }
+       
+	 
 
     public OldEntityPM: SATInterfaceSettingPM;
 		

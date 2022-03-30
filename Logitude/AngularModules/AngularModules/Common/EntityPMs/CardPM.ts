@@ -519,6 +519,11 @@ export class CardPM {
     public set AllowUnassignedEntry(newValue: boolean) { if (this.allowUnassignedEntry != newValue) { this.allowUnassignedEntry = newValue; this.MarkAsDirty("AllowUnassignedEntry"); } }
        
 	 
+    private sATCustomerName: string;
+    public get SATCustomerName() { return this.sATCustomerName; }
+    public set SATCustomerName(newValue: string) { if (this.sATCustomerName != newValue) { this.sATCustomerName = newValue; this.MarkAsDirty("SATCustomerName"); } }
+       
+	 
 
     public OldEntityPM: CardPM;
 		

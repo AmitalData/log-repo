@@ -2329,6 +2329,7 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             invoicedataprovider.SAT.MetodoPago = (currentInvoice.MetodoPagoCode == "PUE" ? "PUE Pago en una sola exhibición" : "PPD Pago en parcialidades o diferido");
                         }
+                        invoicedataprovider.SAT.RegimenFiscalReceptor = GetRegimenFiscalCodeFromARInvoice(currentInvoice, billToCard);
                         invoicedataprovider.SAT.FormadePago = currentInvoice.SATPaymentMethodCode;
 
 
@@ -2444,6 +2445,35 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return invoicedataprovider;
+        }
+
+        private static string GetRegimenFiscalCodeFromARInvoice(ARInvoice currentInvoice, Card billToCard)
+        {
+            return GetRegimenFiscalReceptor(currentInvoice.RegimenFiscalCode, billToCard.RegimenFiscalCode, currentInvoice.Tenant);
+        }
+
+        private static string GetRegimenFiscalReceptor(string arInvoiceRegimenFiscalCode, string billToCardRegimenFiscalCode, int tenant)
+        {
+
+            if (!string.IsNullOrEmpty(arInvoiceRegimenFiscalCode))
+            {
+                return SATInvoiceProfact40DataProviderMappingFields.GetRegimenFiscalReceptor(arInvoiceRegimenFiscalCode, tenant);
+            }
+            if (!string.IsNullOrEmpty(billToCardRegimenFiscalCode))
+            {
+                return SATInvoiceProfact40DataProviderMappingFields.GetRegimenFiscalReceptor(billToCardRegimenFiscalCode, tenant);
+            }
+
+            return null;
+        }
+
+        private static string GetRegimenFiscalCodeFromARInvoicePM(ARInvoicePM currentInvoice)
+        {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(currentInvoice.Tenant);
+            Card billToCard = (from a in commonContext.Cards where a.Id == currentInvoice.BillToId select a).FirstOrDefault();
+
+            return GetRegimenFiscalReceptor(currentInvoice.RegimenFiscalCode, billToCard.RegimenFiscalCode, currentInvoice.Tenant);
+
         }
 
         private string SetToLocationFromInlanDomesticPartner(string addressId, int tenant)
@@ -4081,6 +4111,7 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             invoiceDataProvider.SAT.MetodoPago = (entityPM.MetodoPagoCode == "PUE" ? "PUE Pago en una sola exhibición" : "PPD Pago en parcialidades o diferido");
                         }
+                        invoiceDataProvider.SAT.RegimenFiscalReceptor = GetRegimenFiscalCodeFromARInvoicePM(entityPM);
                         invoiceDataProvider.SAT.FormadePago = entityPOCO.SATPaymentMethodCode;
 
                         invoiceDataProvider.WaterMark = "Draft";
