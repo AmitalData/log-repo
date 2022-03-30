@@ -250,6 +250,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<LogisticActionRequest> LogisticActionRequests { get; }
 		 IDbSet<LogisticActionRequestType> LogisticActionRequestTypes { get; }
 		 IDbSet<LogisticActionResponseReqS> LogisticActionResponseReqSes { get; }
+		 IDbSet<LogisticPermit> LogisticPermits { get; }
 		 IDbSet<LogisticsReferenceType> LogisticsReferenceTypes { get; }
 		 IDbSet<MamanSpecialAction> MamanSpecialActions { get; }
 		 IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses { get; }
