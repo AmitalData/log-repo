@@ -74,7 +74,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private bool isFCLQuote;
         private bool isInlandDomestic;
         private QuoteServiceInitializer initializer;
-        private QuoteFollowUpUpdateService quoteFollowUpUpdateService; 
+        private QuoteFollowUpUpdateService quoteFollowUpUpdateService;
         public QuoteService(IQuotesContext objectContext, int tenant)
         {
             this.initializer = new QuoteServiceInitializer(objectContext, tenant, HttpContext.Current.User.Identity.Name);
@@ -173,7 +173,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 this.CreateQuotePackage(itemPM);
             }
 
-            this.UpdateTotalVats(); 
+            this.UpdateTotalVats();
             QuoteTracing.Trace(entityPM, entityPoco, initializer.LoggedContactId, isNewEntity);
             QuoteMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
@@ -191,7 +191,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuotePM(), AutomationType = "OnCreate", ObjectTableName = "Quote", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
             entityAutomationService.RunAutomation();
-        }      
+        }
 
         public class QuoteChangeTracking
         {
@@ -202,7 +202,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
         private void ComputeProfit()
         {
-            if(entityPM.EstimateProfit != null && entityPM.ExchangeRate != null)
+            if (entityPM.EstimateProfit != null && entityPM.ExchangeRate != null)
             {
                 entityPM.EstimatedProfitInLocal = MethodHelper.Round(entityPM.EstimateProfit * entityPM.ExchangeRate, 2);
                 entityPM.EstimatedProfitInProfit = MethodHelper.Round(entityPM.EstimatedProfitInLocal / entityPM.ProfitExchangeRate, 2);
@@ -233,7 +233,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
 
                 this.InitializeComponent();
-                
+
                 initializer.HandleBehaviours();
 
                 QuotetValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext);
@@ -308,8 +308,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.FollowUps = new List<QuoteFollowUpPM>();
             }
 
-            this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(entityPM, entityPM.Tenant); 
-            quoteFollowUpUpdateService.RefreshFollowUps(); 
+            this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(entityPM, entityPM.Tenant);
+            quoteFollowUpUpdateService.RefreshFollowUps();
         }
 
         public QuotePM DisconnectQuoteFromOpportunity(string quoteId)
@@ -548,7 +548,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-            this.entityPM.MarkFollowUpsAsDone = false; 
+            this.entityPM.MarkFollowUpsAsDone = false;
 
             this.isAdhoc = entityPM.QuoteTypeCode == "A" ? true : false;
             this.isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
@@ -619,7 +619,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     }
                 }
             }
-            
+
             entityPM.UpdatedByUserId = initializer.LoggedContactId;
             entityPM.UpdateDate = todayDateTime;
 
@@ -633,12 +633,12 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.RatingCode = "N";
             }
 
-            InitializePartners();            
+            InitializePartners();
             InitializeInlandDomestic();
             InitializePickupDelivery();
             SetCustomerDateFields(entityPM, entityPoco);
             ComputeChargesSaleFieldsInSaleCurrency();
-            ComputeCountryForStatisticsId();            
+            ComputeCountryForStatisticsId();
 
             if (!entityPM.IsHybrid)
             {
@@ -648,7 +648,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             InitializeExpirationValues();
             InitializeAutomaticallyClose();
             InitializeQuoteConversionProcess();
-           
+
             this.ComputeExpectedProfit();
             this.ComputeProfit();
             this.FillDefaultSubType();
@@ -665,7 +665,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     this.isLCLQuote = false;
                     entityPM.ShipmentTypeId = "FCLD";
                 }
-                else 
+                else
                 {
                     this.isLCLQuote = true;
                     entityPM.ShipmentTypeId = "LCLD";
@@ -890,13 +890,13 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 CardRepository cardRepository = new CardRepository(tenant);
                 Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, tenant);
-                if(customer != null)
+                if (customer != null)
                 {
-                    entityPM.CustomerName = customer.EnglishName;                    
+                    entityPM.CustomerName = customer.EnglishName;
                 }
             }
         }
-       
+
         private void InitializeSaleCurrency()
         {
             if (isNewEntity)
@@ -968,7 +968,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private void InitializeInlandDomestic()
         {
             if (isInlandDomestic)
-            {                
+            {
                 entityPM.IncludePickUp = false;
                 entityPM.IncludeDelivery = false;
 
@@ -1063,7 +1063,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             if (isAutomaticUpdate)
             {
                 QuoteSubjectService iSubjectService = new QuoteSubjectService(entityPM);
-                entityPM.Subject = iSubjectService.GetSubject();                
+                entityPM.Subject = iSubjectService.GetSubject();
             }
         }
         private void InitializeExpirationValues()
@@ -1112,7 +1112,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private void CloseEntityAutomatically()
         {
             var quoteClosingReasonRepository = new QuoteClosingReasonRepository(tenant);
-            var quoteClosing = quoteClosingReasonRepository.GetSingleQuoteClosingReasonByCode("XQ", tenant); 
+            var quoteClosing = quoteClosingReasonRepository.GetSingleQuoteClosingReasonByCode("XQ", tenant);
             entityPM.QuoteClosingReasonId = quoteClosing.Id;
             entityPM.IsClosed = true;
             entityPM.QuoteClosingReasonCode = "XQ";
@@ -1328,6 +1328,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 this.UpdateTariffUsedDate(itemPM.TariffId);
             }
 
+            this.ComputeQuoteChargesVATAmounts(itemPM);
             QuoteMapping.MapQuoteCharge(itemPM, itemPoco, true, this.entityPM);
             quoteChargeRepository.Add(itemPoco);
 
@@ -1354,6 +1355,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     this.UpdateTariffUsedDate(itemPM.TariffId);
                 }
 
+                this.ComputeQuoteChargesVATAmounts(itemPM);
                 QuoteMapping.MapQuoteCharge(itemPM, itemPoco, false, this.entityPM);
                 quoteChargeRepository.Update(itemPoco);
 
@@ -1457,7 +1459,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             itemPM.QuoteId = entityPM.Id;
             itemPM.Tenant = tenant;
             itemPM.IsNew = false;
-       
+
             if (itemPM.LegType != null)
             {
                 if (itemPM.LegType.Contains("PickUp") || itemPM.LegType.Contains("Delivery"))
@@ -1536,7 +1538,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 itemPM.VersionNumber = 1;
             }
 
-          
+
             itemPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
             itemPM.UpdateDate = itemPM.CreateDate;
 
@@ -1580,7 +1582,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             this.entityPM.LastVersionNumber = itemPM.VersionNumber;
             this.entityPM.QuoteTemplateId = itemPM.QuoteTemplateId;
-     
+
             QuoteDocumentVersionMapping.MappingQuoteDocumentVersion(itemPM, itemPoco, true);
             quoteDocumentVersionRepository.Add(itemPoco);
             quoteDocumentVersionRepository.SubmitChanges();
@@ -1692,8 +1694,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
 
                     DocumentsFiling documentsFiling = (from a in myCommonContext.DocumentsFilings
-                                                      where a.Id == documentout.Id && a.Tenant == tenant
-                                                      select a).FirstOrDefault();
+                                                       where a.Id == documentout.Id && a.Tenant == tenant
+                                                       select a).FirstOrDefault();
                     if (documentsFiling != null)
                     {
                         if (documentsFiling.DocumentId != document.Id)
@@ -1859,7 +1861,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     {
                                         newItem.QuoteCurrencyAmount = item.SaleAmountInSaleCurrency + item.SaleAmountInSaleCurrency * (entityPM.RegionalTaxPercentage / 100);
                                         newItem.LocalCurrencyAmount = item.SaleTotalAmountLocal + item.SaleTotalAmountLocal * (entityPM.RegionalTaxPercentage / 100);
-
+                                        
                                         QuoteTotalsClass newRegionalTaxItem = new QuoteTotalsClass()
                                         {
                                             Id = entityPM.RegionalTaxId,
@@ -1869,7 +1871,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                             LocalCurrencyAmount = item.SaleTotalAmountLocal,
                                             ExternalVATCard = newItem.ExternalVATCard,
                                             ExternalTAXItemId = newItem.ExternalTAXItemId,
-                                            //IsRegionalTax = true,
                                         };
 
                                         group_Source.Add(newRegionalTaxItem);
@@ -1923,7 +1924,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                  ExternalTAXItemId = g.Key.ExternalTAXItemId,
                                  QuoteCurrencyAmount = g.Sum(s => s.QuoteCurrencyAmount),
                                  LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
-                             }).ToList();                       
+                             }).ToList();
 
                         foreach (var item in group_data)
                         {
@@ -2091,7 +2092,68 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             }
         }
 
+        private void ComputeQuoteChargesVATAmounts(QuoteChargePM quoteCharge)
+        {
+            quoteCharge.VATAmountInLocalCurrency = null;
+            quoteCharge.VATAmountInQuoteSaleCurrency = null;
+            quoteCharge.VATAmountInLineSaleCurrency = null;
+            quoteCharge.SaleTotalAmountLocalIncludingVAT = null;
+            quoteCharge.SaleAmountInSaleCurrencyIncludingVAT = null;
+            quoteCharge.SaleTotalAmountIncludingVAT = null;
 
+            VatType lineVatType = this.allVatTypes.Where(d => d.Id == quoteCharge.VatTypeId).FirstOrDefault();
+            if (lineVatType == null)
+            {
+                return;
+            }
+
+            double? VATPercentage = this.GetQuoteChargeVATPercentage(quoteCharge, lineVatType);            
+            if(VATPercentage != null)
+            {
+                quoteCharge.VATAmountInLocalCurrency = MethodHelper.Round((quoteCharge.SaleTotalAmountLocal * VATPercentage / 100), 2);
+                quoteCharge.VATAmountInQuoteSaleCurrency = MethodHelper.Round((quoteCharge.SaleAmountInSaleCurrency * VATPercentage / 100), 2);
+                quoteCharge.VATAmountInLineSaleCurrency = MethodHelper.Round((quoteCharge.SaleTotalAmount * VATPercentage / 100), 2);
+                quoteCharge.SaleTotalAmountLocalIncludingVAT = quoteCharge.SaleTotalAmountLocal + quoteCharge.VATAmountInLocalCurrency;
+                quoteCharge.SaleAmountInSaleCurrencyIncludingVAT = quoteCharge.SaleAmountInSaleCurrency + quoteCharge.VATAmountInQuoteSaleCurrency;
+                quoteCharge.SaleTotalAmountIncludingVAT = quoteCharge.SaleTotalAmount + quoteCharge.VATAmountInLineSaleCurrency;                
+            }
+        }
+
+        private double? GetQuoteChargeVATPercentage(QuoteChargePM quoteCharge, VatType lineVatType)
+        {
+            double? VATPercentage = quoteCharge.VatPercentage;
+            if (lineVatType.IsMultiPercentage)
+            {
+                List<VATTypesGroup> myVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant && d.GroupVATTypeId == lineVatType.Id select d).ToList();
+                foreach (VATTypesGroup itemGroup in myVatGroups)
+                {
+                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                    if (myPercentagePM != null)
+                    {
+                        if (VATPercentage == null)
+                        {
+                            VATPercentage = myPercentagePM.Percentage;
+                        }
+
+                        else
+                        {
+                            VATPercentage += myPercentagePM.Percentage;
+                        }
+                    }
+                }
+            }
+
+            if (quoteCharge.IsRegionalTax && !string.IsNullOrEmpty(entityPM.RegionalTaxId))
+            {
+                VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == entityPM.RegionalTaxId).FirstOrDefault();
+                if (myPercentagePM != null)
+                {
+                    VATPercentage += myPercentagePM.Percentage;
+                }
+            }
+
+            return VATPercentage;
+        }
     }
     public class QuoteTotalsClass
     {
