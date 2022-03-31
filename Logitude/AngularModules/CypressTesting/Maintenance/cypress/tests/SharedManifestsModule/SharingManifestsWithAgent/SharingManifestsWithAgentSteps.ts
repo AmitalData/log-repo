@@ -25,7 +25,7 @@ let Secondcode = null
 
 //#region Create new Agent
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
-    cy.Login()
+    cy.Login(true)
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.AgentMaintenanceItem)
 });
 
@@ -144,15 +144,15 @@ Then("the Invitation should sent successfully", () => {
     SharedManifestsActions.AssertSendInvitation()
     SharedManifestsActions.GetSharedKey()
      /** SHOULD includeed BEFORE MERGE TO MASTER  */
-    //SharedManifestsActions.SignOut()
+    SharedManifestsActions.SignOut()
     
 });
 
 
  Given("the user logged in to another tenant and open {string} in maintenance menu", (maintenanceItemName) => {
      /** SHOULD CHANGED BEFORE MERGE TO MASTER  */
-    //SharedManifestsActions.LoginSecondTenant() 
-    cy.Login()
+    SharedManifestsActions.LoginSecondTenant() 
+    //cy.Login()
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.AgentMaintenanceItem)
 });
 When ("Accept Invitation from Shared Logistics with the shared key from the previouse agent", () => {
@@ -165,8 +165,8 @@ Then ("the Invitation should accepted successfully", () => {
 
 Given ("the user logged in to the first tenant and open the created shipment", () => {
      /** SHOULD CHANGED BEFORE MERGE TO MASTER  */
-    //cy.Login(true)
-    cy.Login()
+    cy.Login(true)
+    //cy.Login()
     ShipmentActions.NavigatesToShipmentsWorkspace()
     ShipmentActions.OpenShipment(ShipmentContext.MasterNumber);
  });
@@ -180,8 +180,8 @@ Then ("the Manifest should shared successfully", () => {
 
  Given("the user logged in to the second tenant", () => { 
    /** SHOULD CHANGED BEFORE MERGE TO MASTER  */
-    //SharedManifestsActions.LoginSecondTenant() 
-    cy.Login()
+    SharedManifestsActions.LoginSecondTenant() 
+    //cy.Login()
 });
 Given("the user navigates to operations", () => { 
     SharedManifestsActions.ToOperations()
