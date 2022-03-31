@@ -88,7 +88,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
-
+        
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe((response:any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
