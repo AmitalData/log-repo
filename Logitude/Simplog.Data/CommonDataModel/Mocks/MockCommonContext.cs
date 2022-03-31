@@ -2851,6 +2851,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
         public IDbSet<UnassignedEntity> UnassignedEntitys => throw new NotImplementedException();
 
         IDbSet<UnassignedEntity> ICommonDataContext.UnassignedEntitys { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<Mention> Mentions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 

@@ -414,6 +414,7 @@
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DocumentFile.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomerTeamList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\MentionList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\PortTimeZoneList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\PostalCodeList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ProductItemList.ts" />
@@ -425,6 +426,7 @@
     <TypeScriptCompile Include="Common\EntityPMInitServices\ShippingLinePMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerTeamPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HTSCodePM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\MentionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\PortTimeZonePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\PostalCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
@@ -434,12 +436,14 @@
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CarrierAreaExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ShippingLineExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerTeamListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\MentionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\PortTimeZoneListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\PostalCodeListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\RegimenFiscalListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerTeamPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\MentionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\PortTimeZonePMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\PostalCodePMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />

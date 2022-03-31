@@ -976,6 +976,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
         public IDbSet<UserLastSettings> UserLastSettings { get; set; }
         public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
+        public IDbSet<Mention> Mentions { get; set; }
 
 
         #endregion
@@ -5257,6 +5258,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DocumentStatusMap());
             
             modelBuilder.Configurations.Add(new CourierCustomStatusMap());
+            modelBuilder.Configurations.Add(new MentionMap());
             #endregion
 
             #region Missing Map Files For Customs Pocos

@@ -151,6 +151,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature quoteChargesGroupFeature = tenantFeatures.Where(d => d.Code == "QUOTECHARGESGROUP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature imageLibrariesFeature = tenantFeatures.Where(d => d.Code == "IMAGELIBRARIES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature customerGroupFeature = tenantFeatures.Where(d => d.Code == "CustomerGroups" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature mentionFeature = tenantFeatures.Where(d => d.Code == "MENTIONS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #endregion
 
@@ -301,6 +302,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "QTCG", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 2, CategoryTypeCode = "QUO", TextCode = "General.MC.Billings.QuoteChargesGroups", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "QuoteChargesGroup").FirstOrDefault().Id, FeatureId = quoteChargesGroupFeature.Id, FeatureUniqeCode = quoteChargesGroupFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTQS", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 3, CategoryTypeCode = "QUO", TextCode = "General.MC.Others.QuoteStages", Icon = "QuoteStages.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "QuoteStage").FirstOrDefault().Id, FeatureId = QuoteStageFeature.Id, FeatureUniqeCode = QuoteStageFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTQC", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 4, CategoryTypeCode = "QUO", TextCode = "General.MC.Others.QuoteClosingReasons", Icon = "QuoteClosingReasons.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "QuoteClosingReason").FirstOrDefault().Id, FeatureId = QuoteClosingReasonFeature.Id, FeatureUniqeCode = QuoteClosingReasonFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTMN", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 5, CategoryTypeCode = "QUO", TextCode = "General.MC.Quotation.Mentions", Icon = "Mentions.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Mention").FirstOrDefault().Id, FeatureId = mentionFeature.Id, FeatureUniqeCode = mentionFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             #endregion
 
             if (!LogitudeSettings.IsCostomsDeploy)// TODO MOHAMMAD
