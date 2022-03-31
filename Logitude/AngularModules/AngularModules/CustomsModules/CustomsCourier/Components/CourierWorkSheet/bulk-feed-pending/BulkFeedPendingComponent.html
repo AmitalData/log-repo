@@ -331,6 +331,15 @@
         <SearchTextBox [ObjectTableName]="'Customs.CourierMaster'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"
                        [SearchText]="SearchFilter" [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'">
         </SearchTextBox>
+        
+        <div style="width: 30px; margin-right: 10px; cursor: pointer;">
+            <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
+            <img (click)="RefreshButtonClicked()"
+                title="Refresh" class="DocumentsButton"
+                src="./Images/Buttons/BlueRefresh.png"
+                alt="RefreshButtonClicked" />
+        </div>
+                                                            
 
 
     </div>

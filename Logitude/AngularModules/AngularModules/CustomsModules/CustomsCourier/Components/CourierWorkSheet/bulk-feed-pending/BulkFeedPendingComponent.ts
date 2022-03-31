@@ -230,6 +230,11 @@ export class BulkFeedPendingComponent extends BaseComponent {
         //this.SelectedValueChanged.emit({ Filters: this.getFilter(), RemoveFilter: RemoveFilter });
     }
 
+    RefreshButtonClicked() {
+        this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+        this.RefreshList();
+    }
+
     OpenMultiUpdateWindow() {
         if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
             return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
