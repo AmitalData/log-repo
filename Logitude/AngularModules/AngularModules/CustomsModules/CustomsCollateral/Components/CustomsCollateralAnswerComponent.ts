@@ -412,7 +412,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
                                     if (!AppTool.IsNullOrEmpty(response.Result.DefaultValue)) {
                                         this.IsGuaranteeDefaultList = true;
                                     }
-                                    var result = response.Result.DefaultValue.split(";");
+                                    var result = response.Result.DefaultValue?.split(";") || [];
                                     result.forEach((item) => {
                                         this.GuaranteeDefaultList.push(item);
                                     });
