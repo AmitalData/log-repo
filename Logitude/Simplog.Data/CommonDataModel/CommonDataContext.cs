@@ -469,6 +469,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new UnassignedEntityMap());
             modelBuilder.Configurations.Add(new HTSCodeMap());
             modelBuilder.Configurations.Add(new ProductItemMap());
+            modelBuilder.Configurations.Add(new MentionMap());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -1045,6 +1046,7 @@ namespace Simplog.Data.CommonDataModel
 
         public IDbSet<PortTimeZone> PortTimeZones { get; set; }
         public IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
+        public IDbSet<Mention> Mentions { get; set; }
 
 
         public DbConnection GetConnection()

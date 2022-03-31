@@ -386,6 +386,7 @@
     <Compile Include="CommonDataModel\EntityLists\CustomerGroupList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerTeamList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HTSCodeList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\MentionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PortTimeZoneList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PostalCodeList.cs" />
@@ -397,6 +398,7 @@
     <Compile Include="CommonDataModel\EntityPMs\CustomerGroupPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CustomerTeamPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ExtendedContactPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\MentionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PortTimeZonePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PostalCodePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
@@ -409,6 +411,7 @@
     <Compile Include="CommonDataModel\EntityQueries\CustomerGroupQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CustomerTeamQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\MentionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PortTimeZoneQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PostalCodeQuery.cs" />
@@ -484,6 +487,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerOpenFilesAmountMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\HorseMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\MentionMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\PaymentGatewayPartnerMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\HTSCodeMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\PortTimeZoneMapping.cs" />
@@ -505,6 +509,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HorseService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\MentionService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\UnassignedEntityService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HTSCodeService.cs" />

@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;c1ca&quot;"
+  Code="&quot;822f&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5132,6 +5132,11 @@
       LocalDefaultText="&quot;בין&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Quotation.Mentions&quot;"
+      DefaultText="&quot;Mentions&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7264,6 +7269,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.CustomerGroups&quot;"
       FeatureDefaultText="&quot;Customer Groups&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;MENTIONS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.MENTIONS&quot;"
+      FeatureDefaultText="&quot;Mentions&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

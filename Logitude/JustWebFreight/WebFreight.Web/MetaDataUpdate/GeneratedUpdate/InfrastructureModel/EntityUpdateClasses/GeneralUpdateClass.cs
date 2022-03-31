@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "c5f989fc1cd2b637b2fb12a3dec74c69";
+		public const string HashString = "a50fbe29c3bc01479e030940f2c1f994";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "c1ca",
+			      				    Code =  "822f",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -650,6 +650,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_IMAGELIBRARIES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IMAGELIBRARIES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.IMAGELIBRARIES", NameTextCodeDefaultText = @"Image Libraries" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_CustomerGroups = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerGroups", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CustomerGroups", NameTextCodeDefaultText = @"Customer Groups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_MENTIONS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MENTIONS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.MENTIONS", NameTextCodeDefaultText = @"Mentions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
@@ -2473,12 +2475,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMCOthersImageLibraries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.ImageLibraries", DefaultText = "Image Library",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-
  		   TextCode GeneralTextCode_AccountingGeneralOLedgerTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LedgerTransactions", DefaultText = "Ledger Transactions",LocalDefaultText = @"תנועות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
 
  		   TextCode GeneralTextCode_AccountingGeneralOBetween = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Between", DefaultText = "Between",LocalDefaultText = @"בין", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GeneralTextCode_GeneralMCQuotationMentions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Quotation.Mentions", DefaultText = "Mentions",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
