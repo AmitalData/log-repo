@@ -86,17 +86,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     entity.StorErrorXML = xml;
                 }
-                
+                else
+                {
+                    entity.StorErrorXML = null;
+                }
+
                 entity.CustomsStatus = customResponse.CargoDetails?.CargoStatusID?.ToString();
                 entity.ChangeSetOp = ChangeSetOperation.Update;
                 var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
                 updateService.Update(entity, true);
                 MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 MyRequestSheetParam.EntityId2 = entity.DeclarationId;
+                MyRequestSheetParam.EntityId1 = entity.Id;
 
             }
-            
-            MyRequestSheetParam.EntityId1 = entity.Id;
+
             MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
             
