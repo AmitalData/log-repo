@@ -546,7 +546,7 @@
                                                     {{ transaction.AccountingDate | DateTimePipe:'SD' }}
                                                 </div>
                                                 <div class="TextTrimming" style="width: 110px;    font-size: 12px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;"
-                                                    >
+                                                [class.red]="transaction.LocalAmountCredit!=0" >
                                                     {{ GetTransAmount(transaction) | NumbersPipe:'N2' }}
                                                 </div>
 
