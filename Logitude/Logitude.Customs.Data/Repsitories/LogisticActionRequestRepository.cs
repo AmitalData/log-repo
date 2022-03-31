@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.Repsitories
             string sType = type.ToString();
 
             var res = (from x in context.LogisticActionRequests
-                     where x.CargoIdentifierKey1 == key1 && x.CargoIdentifierKey1 == key1 && x.CargoIdentifierKey1 == key1 && x.CargoIdentifierType == sType
+                     where x.CargoIdentifierKey1 == key1 && x.CargoIdentifierKey2 == key2 && x.CargoIdentifierKey3 == key3 && x.CargoIdentifierType == sType
                      select x
                      ).FirstOrDefault();
             
