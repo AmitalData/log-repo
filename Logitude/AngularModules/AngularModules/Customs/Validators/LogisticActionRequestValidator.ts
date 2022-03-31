@@ -28,7 +28,7 @@ export class LogisticActionRequestValidator {
 
     public Validate(entityPM: any) {
         this._LogisticActionRequestPM = entityPM;
-        this.CheckIfLogisticActionRequestExist();
+        // this.CheckIfLogisticActionRequestExist();
         return this.OriginalValidationErrorMessageCodes;
     }
 
