@@ -2094,56 +2094,41 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
         private void ComputeQuoteChargesVATAmounts(QuoteChargePM quoteCharge)
         {
+            this.ResetVATAmounts(quoteCharge);
+                       
+            VatType lineVatType = this.allVatTypes.Where(d => d.Id == quoteCharge.VatTypeId).FirstOrDefault();
+            if (lineVatType == null) return;
+
+            double? VATPercentage = this.GetQuoteChargeVATPercentage(quoteCharge, lineVatType);
+            if (VATPercentage == null) return;
+
+            quoteCharge.VATAmountInLocalCurrency = MethodHelper.Round((quoteCharge.SaleTotalAmountLocal * VATPercentage / 100), 2);
+            quoteCharge.VATAmountInQuoteSaleCurrency = MethodHelper.Round((quoteCharge.SaleAmountInSaleCurrency * VATPercentage / 100), 2);
+            quoteCharge.VATAmountInLineSaleCurrency = MethodHelper.Round((quoteCharge.SaleTotalAmount * VATPercentage / 100), 2);
+            quoteCharge.SaleTotalAmountLocalIncludingVAT = quoteCharge.SaleTotalAmountLocal + quoteCharge.VATAmountInLocalCurrency;
+            quoteCharge.SaleAmountInSaleCurrencyIncludingVAT = quoteCharge.SaleAmountInSaleCurrency + quoteCharge.VATAmountInQuoteSaleCurrency;
+            quoteCharge.SaleTotalAmountIncludingVAT = quoteCharge.SaleTotalAmount + quoteCharge.VATAmountInLineSaleCurrency;
+
+        }
+        private void ResetVATAmounts(QuoteChargePM quoteCharge)
+        {
             quoteCharge.VATAmountInLocalCurrency = null;
             quoteCharge.VATAmountInQuoteSaleCurrency = null;
             quoteCharge.VATAmountInLineSaleCurrency = null;
             quoteCharge.SaleTotalAmountLocalIncludingVAT = null;
             quoteCharge.SaleAmountInSaleCurrencyIncludingVAT = null;
             quoteCharge.SaleTotalAmountIncludingVAT = null;
-
-            VatType lineVatType = this.allVatTypes.Where(d => d.Id == quoteCharge.VatTypeId).FirstOrDefault();
-            if (lineVatType == null)
-            {
-                return;
-            }
-
-            double? VATPercentage = this.GetQuoteChargeVATPercentage(quoteCharge, lineVatType);            
-            if(VATPercentage != null)
-            {
-                quoteCharge.VATAmountInLocalCurrency = MethodHelper.Round((quoteCharge.SaleTotalAmountLocal * VATPercentage / 100), 2);
-                quoteCharge.VATAmountInQuoteSaleCurrency = MethodHelper.Round((quoteCharge.SaleAmountInSaleCurrency * VATPercentage / 100), 2);
-                quoteCharge.VATAmountInLineSaleCurrency = MethodHelper.Round((quoteCharge.SaleTotalAmount * VATPercentage / 100), 2);
-                quoteCharge.SaleTotalAmountLocalIncludingVAT = quoteCharge.SaleTotalAmountLocal + quoteCharge.VATAmountInLocalCurrency;
-                quoteCharge.SaleAmountInSaleCurrencyIncludingVAT = quoteCharge.SaleAmountInSaleCurrency + quoteCharge.VATAmountInQuoteSaleCurrency;
-                quoteCharge.SaleTotalAmountIncludingVAT = quoteCharge.SaleTotalAmount + quoteCharge.VATAmountInLineSaleCurrency;                
-            }
         }
-
         private double? GetQuoteChargeVATPercentage(QuoteChargePM quoteCharge, VatType lineVatType)
         {
             double? VATPercentage = quoteCharge.VatPercentage;
             if (lineVatType.IsMultiPercentage)
             {
                 List<VATTypesGroup> myVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant && d.GroupVATTypeId == lineVatType.Id select d).ToList();
-                foreach (VATTypesGroup itemGroup in myVatGroups)
-                {
-                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
-                    if (myPercentagePM != null)
-                    {
-                        if (VATPercentage == null)
-                        {
-                            VATPercentage = myPercentagePM.Percentage;
-                        }
-
-                        else
-                        {
-                            VATPercentage += myPercentagePM.Percentage;
-                        }
-                    }
-                }
+                VATPercentage = this.ComputeMultiVATPercentages(myVatGroups);                
             }
 
-            if (quoteCharge.IsRegionalTax && !string.IsNullOrEmpty(entityPM.RegionalTaxId))
+            if (this.IsQuoteHasRegionalTax(quoteCharge))
             {
                 VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == entityPM.RegionalTaxId).FirstOrDefault();
                 if (myPercentagePM != null)
@@ -2154,7 +2139,43 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             return VATPercentage;
         }
-    }
+        private double? ComputeMultiVATPercentages(List<VATTypesGroup> myVatGroups)
+        {
+            double? multiVATPercentages = null;
+            foreach (VATTypesGroup itemGroup in myVatGroups)
+            {
+                VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                if (myPercentagePM != null)
+                {
+                    if (multiVATPercentages == null)
+                    {
+                        multiVATPercentages = myPercentagePM.Percentage;
+                    }
+
+                    else
+                    {
+                        multiVATPercentages += myPercentagePM.Percentage;
+                    }
+                }
+            }
+
+            return multiVATPercentages;
+        }
+        private bool IsQuoteHasRegionalTax(QuoteChargePM quoteCharge)
+        {
+            if (!quoteCharge.IsRegionalTax)
+            {
+                return false;
+            }
+
+            else if (string.IsNullOrEmpty(entityPM.RegionalTaxId))
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }    
     public class QuoteTotalsClass
     {
         [Key]
