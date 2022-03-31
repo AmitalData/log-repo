@@ -2007,30 +2007,12 @@ namespace MeatadataGeneratorTool
                     if (File.Exists(dxmlFilePath))
                     {
                         XDocument oldDoc = XDocument.Load(dxmlFilePath);
-                        foreach (var indexElement in oldDoc.Descendants("Index").ToList())
-                        {
-                            indexElements.Add(indexElement);
-                        }
 
-                        foreach (var uniqueConstraintElement in oldDoc.Descendants("UniqueConstraint").ToList())
-                        {
-                            uniqueConstraintElements.Add(uniqueConstraintElement);
-                        }
-
-                        foreach (var columnWithDefaultValueElement in oldDoc.Descendants("Column").Where(x => x.Attribute("DefaultValue") != null).ToList())
-                        {
-                            columnWithDefaultValueElements.Add(columnWithDefaultValueElement);
-                        }
-
-                        foreach (var columnWithIdentityElement in oldDoc.Descendants("Column").Where(x => x.Attribute("Identity") != null).ToList())
-                        {
-                            columnWithIdentityElements.Add(columnWithIdentityElement);
-                        }
-
-                        foreach (var columnWithInitialValueScriptElement in oldDoc.Descendants("Column").Where(x => x.Attribute("InitialValueScript") != null).ToList())
-                        {
-                            columnWithInitialValueScriptElements.Add(columnWithInitialValueScriptElement);
-                        }
+                        indexElements = oldDoc.Descendants("Index").ToList();
+                        uniqueConstraintElements = oldDoc.Descendants("UniqueConstraint").ToList();
+                        columnWithDefaultValueElements = oldDoc.Descendants("Column").Where(x => x.Attribute("DefaultValue") != null).ToList();
+                        columnWithIdentityElements = oldDoc.Descendants("Column").Where(x => x.Attribute("Identity") != null).ToList();
+                        columnWithInitialValueScriptElements = oldDoc.Descendants("Column").Where(x => x.Attribute("InitialValueScript") != null).ToList();
                     }
 
                     XmlDocument doc = new XmlDocument();
@@ -2247,15 +2229,10 @@ namespace MeatadataGeneratorTool
                     {
                         XmlElement indexXmlElement = doc.CreateElement("Index");
 
-                        if (indexElement.Attribute("Columns") != null)
+                        indexElement.Attributes().ToList().ForEach(element =>
                         {
-                            indexXmlElement.SetAttribute("Columns", indexElement.Attribute("Columns").Value);
-                        }
-
-                        if (indexElement.Attribute("Include") != null)
-                        {
-                            indexXmlElement.SetAttribute("Include", indexElement.Attribute("Include").Value);
-                        }
+                            indexXmlElement.SetAttribute(element.Name.LocalName, element.Value);
+                        });
 
                         tableElement.AppendChild(indexXmlElement);
                     }
@@ -2264,10 +2241,10 @@ namespace MeatadataGeneratorTool
                     {
                         XmlElement uniqueConstraintXmlElement = doc.CreateElement("UniqueConstraint");
 
-                        if (uniqueConstraintElement.Attribute("Columns") != null)
+                        uniqueConstraintElement.Attributes().ToList().ForEach(element =>
                         {
-                            uniqueConstraintXmlElement.SetAttribute("Columns", uniqueConstraintElement.Attribute("Columns").Value);
-                        }
+                            uniqueConstraintXmlElement.SetAttribute(element.Name.LocalName, element.Value);
+                        });
 
                         tableElement.AppendChild(uniqueConstraintXmlElement);
                     }
