@@ -43,6 +43,9 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             ContainerAccessor.Container.RegisterType<IExcelExport, ImporterDeclarationExport>
    ((new ImporterDeclarationExport()).MainInterfaceCode);
 
+                        ContainerAccessor.Container.RegisterType<IExcelExport, PaymentQueryExport>
+   ((new PaymentQueryExport()).MainInterfaceCode);
+
         }
 
         public static IExcelExport GetExcelFormator(string mainInterfaceCode, string correlationId = "")
@@ -52,7 +55,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             if (!ContainerAccessor.Container.IsRegistered<IExcelExport>(mainInterfaceCode))
             {
                 var inst = new InterfaceManagementDetails();
-                var row = inst.GetAll().FirstOrDefault(r => r.ResponseInterfaceCode == mainInterfaceCode);
+                var all = inst.GetAll();
+                var row = all.FirstOrDefault(r => r.ResponseInterfaceCode == mainInterfaceCode);
                 if (row == null)
                 {
                     throw new System.Exception("ResolveAndExecute(" + mainInterfaceCode + " , " + correlationId + ") But if (!ContainerAccessor.Container.IsRegistered<IExcelFormator>(mainInterfaceCode)), No ResponseInterfaceCode");

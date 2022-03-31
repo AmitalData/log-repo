@@ -138,11 +138,11 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  IsExceptionReasonsListNull = string.IsNullOrEmpty( a.ExceptionReasonsList) , 
                                                                  IsManualPayment = a.IsManualPayment,
                                                                  Commodity=a.Commodity,
-                                                                 LastStatusRemarks=a.LastStatusRemarks,
-                                                                 PackageTypeCode = a.PackageType.LocalName,
                                                                  ReferantUserName="",
                                                                  DepartmentName="",
-                                                                 RemoveInclusiveVisibility = "",
+                                                                 PackageTypeCode = a.PackageType.LocalName,
+                                                                 LastStatusRemarks=a.LastStatusRemarks,
+                                                                RemoveInclusiveVisibility = "",                                                                
                                                               }) ;
                                                                 
                                               return query;

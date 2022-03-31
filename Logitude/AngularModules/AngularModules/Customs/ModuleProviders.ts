@@ -678,7 +678,7 @@ export class ModuleProviders {
             case "CustomerClassificationTypeListService": { myResult = new CustomerClassificationTypeListService(); break; }
             case "LogisticsReferenceTypeListService": { myResult = new LogisticsReferenceTypeListService(); break; }
             case "PoaStatusTypeLookUpListService": { myResult = new PoaStatusTypeLookUpListService(); break; }
-            case "CustomsDocumentUploadListService": { myResult = new CustomsDocumentUploadListService(); break; }
+            case "CustomsDocumentUploadListService": { myResult = new CustomsDocumentUploadListService(); break; }    
 
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
