@@ -377,7 +377,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 foreach (ShipmentDeliveryPM item in dataList)
                 {
                     item.ShipmentPickUpDeliveryPackages = packagesQuery.GetShipmentPickUpDeliveryPackages(item.Id, tenant);
-                    this.GetPickUpDeliveryIndexes(item, shipmentNumber);
+                    //this.GetPickUpDeliveryIndexes(item, shipmentNumber);
 
                     #region From PART
                     if (item.PickUpDeliveryFromTypeCode == "PART")
