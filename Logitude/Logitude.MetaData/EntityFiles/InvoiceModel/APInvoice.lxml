@@ -12199,6 +12199,12 @@
       LocalDefaultText="&quot; הועתקה מחשבונית&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Apinvoice.O.TotalVATwithQBO&quot;"
+      DefaultText="&quot;Total VAT option is not compatible with QBO , if they you want to transfer this invoice to Quickbooks, please disable the total vat and make sure each invoice line has a VAT&quot;"
+      LocalDefaultText="&quot;Total VAT option is not compatible with QBO , if they you want to transfer this invoice to Quickbooks, please disable the total vat and make sure each invoice line has a VAT&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

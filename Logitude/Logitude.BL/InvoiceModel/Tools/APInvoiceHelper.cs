@@ -3,8 +3,10 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.DataMapping;
+using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -104,7 +106,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                     {
                         if(entityPM.TotalVATOnly)
                         {
-                            throw new ApplicationException("Total VAT option is not compatible with QBO , if they you want to transfer this invoice to Quickbooks, please disable the total vat and make sure each invoice line has a VAT");
+                            var showLocals = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                            throw new ApplicationException(TranslateTextsClass.Translate("Apinvoice.O.TotalVATwithQBO", entityPM.Tenant, showLocals));
                         }
                         APInvoice = entityPM;
                         APInvoiceId = entityPM.Id;
