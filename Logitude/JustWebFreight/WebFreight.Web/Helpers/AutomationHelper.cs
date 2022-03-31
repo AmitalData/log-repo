@@ -94,6 +94,10 @@ namespace WebFreight.Web.Helpers
                                 {
                                     if (!Emails.Split(';').Contains(entityContactVariable.Value)) Emails += entityContactVariable.Value + ";";
                                 }
+                                else if (automationResultEmail.RecipientType == "AllCardContacts")
+                                {
+                                    contactIds = contactIds.Concat(new CardContactQuery(automationSendEmailArgs.Tenant).GetContactsIdsByCardId(entityContactVariable.Value, automationSendEmailArgs.Tenant)).ToList();
+                                }
                                 else
                                 {
                                     if (!contactIds.Contains(entityContactVariable.Value)) contactIds.Add(entityContactVariable.Value);
