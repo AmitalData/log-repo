@@ -1,6 +1,6 @@
 {
   
-  "url": "https://test.logitudeworld.com/test/",
+  "url": "http://localhost:4200/",
   "email": "specflowstable@mail.com",
   "password": "!Cypress1",
   "customerCareEmail": "specflowtest_customercare@logitudeworld.com",

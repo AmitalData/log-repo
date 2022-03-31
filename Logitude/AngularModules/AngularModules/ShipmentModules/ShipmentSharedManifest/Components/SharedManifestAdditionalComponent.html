@@ -1,4 +1,4 @@
-﻿
+
 
 
 
@@ -5006,7 +5006,7 @@
                             </td>
 
                             <td style="width: 85px;">
-                                <button class="RedButton" (click)="CreateButtonClicked()">{{LableCreateButton}}</button>
+                                <button [attr.data-cy]="LableCreateButton" class="RedButton" (click)="CreateButtonClicked()">{{LableCreateButton}}</button>
                             </td>
                         </tr>
                     </table>
