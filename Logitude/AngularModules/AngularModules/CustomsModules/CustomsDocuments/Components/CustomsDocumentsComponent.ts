@@ -29,6 +29,8 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 @Component({
 
@@ -86,6 +88,7 @@ export class CustomsDocumentsComponent
     DocumentRequestCodeText: string = "";
     ParentEntityCode_args: string = "";
     DontClear: boolean = false;
+    bulkUploadDocumentsPermission: boolean = true;
 
     public customs:string = "עמילות";
     public forwarding: string = "שילוח";
@@ -101,6 +104,8 @@ export class CustomsDocumentsComponent
         if (entityArgs.EntityPM && !entityArgs.SkipCtor) {
             this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName, entityArgs.EntityParentPM, entityArgs.IsFromStandAloneScreen);
         }
+
+        this.bulkUploadDocumentsPermission =FeatureLocator.HasFeaturePermession("General", "General.Features.BulkUploadDocuments") || true;
     }
     ngOnDestroy() {
         console.log("CustomsDocumentsComponent:ngOnDestroy");
@@ -855,6 +860,62 @@ export class CustomsDocumentsComponent
             });
     }
 
+
+    confirmCheckOrginalDocWindow() {
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CheckOrginalDoc") || 'האם לסמן מסמך מקורי');
+
+        return new Promise<boolean>((resolve, reject) => 
+            myConfirmWindow.WindowClosed.subscribe(event => 
+                resolve(myConfirmWindow.Yes)))                    
+    }
+
+    
+    async BulkUploadDocuments() {
+        // console.log('CustomsDocumentsTicketViewModels', this.CustomsDocumentsTicketViewModels);
+        // console.log('StaticCustomsDocumentsTicketViewModels', this.StaticCustomsDocumentsTicketViewModels);
+        // console.log('RelatedDocuments', this.RelatedDocuments);
+        // console.log('MetadataValues', this.MetadataValues);
+        // console.log('CustomsDocumentsTickets', this.CustomsDocumentsTickets);
+        
+        const orginalDocIsCheck: boolean = await this.checkOrginalDoc();
+        if(!orginalDocIsCheck) return;
+        
+
+        const documnetUpload: CustomsDocumentTicketViewModel[] = this.CustomsDocumentsTicketViewModels.filter((customDocument: CustomsDocumentTicketViewModel) => {            
+            customDocument.CustomDocumentTypeMetaDataLists.every((type) => {
+                if(!type.Mandatory) return true;
+                
+                const value: CustomsDocumentMetaDataValuePM = customDocument.CustomsDocumentMetaDataValuePMs.find(d => d != null && d.MetaDataTypeCode == type.MetaDataTypeCode);
+                return value.MetaDataValue || value.MetaDataValue == '';
+            })
+        });
+
+        if(documnetUpload.length !== this.CustomsDocumentsTicketViewModels.length)
+            new MessageWindow().Show(TextCodeTranslator.Translate("Customs.Declaration.O.HaveMandatory") || 'יש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים אילו לא יעלו למכס');
+                
+        new CustomsDocumentPMService().update(this.EntityPM).subscribe((docRes: ServiceResponse) =>{})
+    }
+
+    private async checkOrginalDoc() {
+        const metaDataValues: CustomsDocumentMetaDataValuePM[] = this.CustomsDocumentsTicketViewModels.reduce((res: CustomsDocumentMetaDataValuePM[], customDocument: CustomsDocumentTicketViewModel) => {
+            const haveIsOrginalDoc: boolean = customDocument.CustomDocumentTypeMetaDataLists.some(type => type.MetaDataTypeCode === '87');
+            const value: CustomsDocumentMetaDataValuePM = customDocument.CustomsDocumentMetaDataValuePMs.find(d => d?.MetaDataTypeCode === '87');
+            if(haveIsOrginalDoc && !value.MetaDataValue)
+                res.push(value)
+
+            return res;
+        },[]);
+
+        if (metaDataValues.length === 0) return true;
+
+        const isApprove: boolean = await this.confirmCheckOrginalDocWindow();        
+        if(isApprove) 
+            metaDataValues.forEach(val=> val.MetaDataValue = 'True')        
+        
+        return isApprove;
+    }
 }
 
 export class RelatedEntityParams {
