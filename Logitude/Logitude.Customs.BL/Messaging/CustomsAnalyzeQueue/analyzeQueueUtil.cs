@@ -107,14 +107,30 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         {
             try
             {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue(SBQueueNames.AnalyzeQueueMQ.ToString(), 0);
-                queueservice.Send(new Dictionary<string, string>() {
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+                bool UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;
+
+                CustomDbQueueService.SendCommunicationLogMessageToQueue(
+                    SBQueueNames.AnalyzeQueueMQ.ToString(),
+                    new Dictionary<string, string>() {
                     { "AnalyzeQueueID", analyzeQueueID },
                     { "InterfaceCode", InterfaceCode },
                     { "InterfacePartner", InterfacePartner},
                     { "Tenant", tenant.ToString() }
-                },tenant);
+                }, tenant
+                , UseRabbitMQ
+                    );
+                return;
+
+                //IQueueService queueservice = new DbQueueService();
+                //queueservice.InitializeQueue(SBQueueNames.AnalyzeQueueMQ.ToString(), 0);
+                //queueservice.Send(new Dictionary<string, string>() {
+                //    { "AnalyzeQueueID", analyzeQueueID },
+                //    { "InterfaceCode", InterfaceCode },
+                //    { "InterfacePartner", InterfacePartner},
+                //    { "Tenant", tenant.ToString() }
+                //},tenant);
 
             }
             catch (Exception ex)
@@ -251,7 +267,11 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             bool useQueueMessage = false;
             if (useQueueMessage)
             {
-                SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant);
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+                bool UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;//currInterfaceTenantDefinition.UseRabbitMQ;
+
+                CustomDbQueueService.SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant, UseRabbitMQ);
             }
 
 
@@ -259,19 +279,19 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         }
 
-        private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
-        {
-            try
-            {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
+        //private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
+        //{
+        //    try
+        //    {
+        //        IQueueService queueservice = new DbQueueService();
+        //        queueservice.InitializeQueue(queueName, 0);
+        //        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
 
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Send FTP CommunicationLog Queue", null, null);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Send FTP CommunicationLog Queue", null, null);
+        //    }
+        //}
     }
 }

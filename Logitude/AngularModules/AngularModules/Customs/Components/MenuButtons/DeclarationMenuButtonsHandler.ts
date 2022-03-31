@@ -214,6 +214,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 button.IsHidden = false;
                                 if(!AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)){
                                     button.DisplayText = "הומכל";
+                                    button.LabelTextCodeCode=""
+                                    
+                                    
+                                   
                                 }
                         } else {
                             button.IsHidden = true;

@@ -2,35 +2,35 @@
 * Contains a functions used in customs answers like:
 *  GetDeclarationErrors, constraints , ....
 */
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, Observable, of } from 'rxjs';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {DeclarationList} from '../../EntityLists/DeclarationList';
-import {DeclarationErrorView} from '../../EntityPMs/Extended/DeclarationErrorView';
-import {DeclarationCorrectionView} from '../../EntityPMs/Extended/DeclarationCorrectionView';
-import {SupplierInvoicePM} from '../../EntityPMs/SupplierInvoicePM';
-import {CertificateTicket} from '../../DataContract/CertificateTicket';
-import {DeclarationPaymentPM} from '../../EntityPMs/DeclarationPaymentPM';
-import {SupplierInvoiceItemPM} from '../../EntityPMs/SupplierInvoiceItemPM';
-import {SupplierInvioceItemCertificatPM} from '../../EntityPMs/SupplierInvioceItemCertificatPM';
-import {SupplierInvoiceModificationPM} from '../../EntityPMs/SupplierInvoiceModificationPM';
-import {SupplierInvoiceFreightAmountPM} from '../../EntityPMs/SupplierInvoiceFreightAmountPM';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {GenericRequestParams} from '../../DataContract/RequestParams/GenericRequestParams';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { DeclarationList } from '../../EntityLists/DeclarationList';
+import { DeclarationErrorView } from '../../EntityPMs/Extended/DeclarationErrorView';
+import { DeclarationCorrectionView } from '../../EntityPMs/Extended/DeclarationCorrectionView';
+import { SupplierInvoicePM } from '../../EntityPMs/SupplierInvoicePM';
+import { CertificateTicket } from '../../DataContract/CertificateTicket';
+import { DeclarationPaymentPM } from '../../EntityPMs/DeclarationPaymentPM';
+import { SupplierInvoiceItemPM } from '../../EntityPMs/SupplierInvoiceItemPM';
+import { SupplierInvioceItemCertificatPM } from '../../EntityPMs/SupplierInvioceItemCertificatPM';
+import { SupplierInvoiceModificationPM } from '../../EntityPMs/SupplierInvoiceModificationPM';
+import { SupplierInvoiceFreightAmountPM } from '../../EntityPMs/SupplierInvoiceFreightAmountPM';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
 import { CargoSealsRequestParams } from '../../DataContract/RequestParams/CargoSealsRequestParams';
-import {SupplierInvoicePMService} from '../../Services/StandardPMs/SupplierInvoicePMService';
-import {DeclarationPaymentPMService} from '../../Services/StandardPMs/DeclarationPaymentPMService';
+import { SupplierInvoicePMService } from '../../Services/StandardPMs/SupplierInvoicePMService';
+import { DeclarationPaymentPMService } from '../../Services/StandardPMs/DeclarationPaymentPMService';
 
-import {CustomsCollateralPM} from '../../EntityPMs/CustomsCollateralPM';
-import {CollateralsRequestFileCondPM} from '../../EntityPMs/CollateralsRequestFileCondPM';
-import {CustomsCollateralsAnswerPM} from '../../EntityPMs/CustomsCollateralsAnswerPM';
-import {CustomsCollateralsConditionPM} from '../../EntityPMs/CustomsCollateralsConditionPM';
+import { CustomsCollateralPM } from '../../EntityPMs/CustomsCollateralPM';
+import { CollateralsRequestFileCondPM } from '../../EntityPMs/CollateralsRequestFileCondPM';
+import { CustomsCollateralsAnswerPM } from '../../EntityPMs/CustomsCollateralsAnswerPM';
+import { CustomsCollateralsConditionPM } from '../../EntityPMs/CustomsCollateralsConditionPM';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
@@ -48,7 +48,7 @@ export class DeclarationWebService {
     _SupplierInvoicePMService: SupplierInvoicePMService = new SupplierInvoicePMService();
     _DeclarationPaymentPMService: DeclarationPaymentPMService = new DeclarationPaymentPMService();
     private logtuideTableDataService: LogtuideTableDataService = new LogtuideTableDataService(new EntityListService(), new EntityResourceService());
-    
+
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationWebService';
@@ -77,13 +77,38 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
         );
     }
-    GetDeclarationErrors(declarationId: string, listVersionId: string, courierFilter: string, IsAmendmentErrors: boolean=false) {
+    GetDeclarationByConsignmentParames(ArrayDeclartiosId: string[]) {
+        debugger;
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            debugger;
+            return this._http.post(this._apiUrl + "/GetDeclarationByConsignmentParames/",{ArrayDeclartiosId:ArrayDeclartiosId}, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                //serviceResponse = response;
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+
+        }
+
+        );
+    }
+    GetDeclarationErrors(declarationId: string, listVersionId: string, courierFilter: string, IsAmendmentErrors: boolean = false) {
 
         return defer(() => {
 
@@ -99,24 +124,24 @@ export class DeclarationWebService {
             return this._http.get(this._apiUrl + "/GetDeclarationErrors/?declarationId=" + declarationId
                 + "&listVersionId=" + listVersionId + "&courierFilter=" + courierFilter + "&IsAmendmentErrors=" + IsAmendmentErrors, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response;
-                var _mappedListsArray: Array<DeclarationErrorView> = [];
-                if (allLists) {
-                    for (var key in allLists) {
+                    var allLists = response;
+                    var _mappedListsArray: Array<DeclarationErrorView> = [];
+                    if (allLists) {
+                        for (var key in allLists) {
 
-                        var entity: DeclarationErrorView;
-                        entity = this.MapJsonToEntity(allLists[key]);
-                        _mappedListsArray.push(entity);
+                            var entity: DeclarationErrorView;
+                            entity = this.MapJsonToEntity(allLists[key]);
+                            _mappedListsArray.push(entity);
 
+                        }
                     }
-                }
 
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-                //serviceResponse = response;
-                serviceResponse.Result = _mappedListsArray;
-                return serviceResponse;
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    //serviceResponse = response;
+                    serviceResponse.Result = _mappedListsArray;
+                    return serviceResponse;
                 }), catchError(ServiceHelper.HandleServiceError));
-            
+
         }
 
         );
@@ -136,18 +161,18 @@ export class DeclarationWebService {
 
             return this._http.get(this._apiUrl + "/GetSingleCustomsCollateral/?id=" + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    var entity: CustomsCollateralPM;
-                    var pm = response;
-                    if (pm) {
-                        entity = this.MapJsonToCustomsCollateralPM(pm);
-                    }
+                var entity: CustomsCollateralPM;
+                var pm = response;
+                if (pm) {
+                    entity = this.MapJsonToCustomsCollateralPM(pm);
+                }
 
-                    
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    //serviceResponse = response;
-                    serviceResponse.Result = entity;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                //serviceResponse = response;
+                serviceResponse.Result = entity;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -169,12 +194,12 @@ export class DeclarationWebService {
             return this._http.get(this._apiUrl + "/GetCheckIfDocumentPointerExistsForConstraint/?constraintNumber=" + constraintNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var res = response;
-               
+
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -201,22 +226,22 @@ export class DeclarationWebService {
                 + "&take=" + take
                 , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var res = response;
-                if (res) {
-                    res = this._SupplierInvoicePMService.MapJsonToEntityPM(res, true);
-                }
+                    var res = response;
+                    if (res) {
+                        res = this._SupplierInvoicePMService.MapJsonToEntityPM(res, true);
+                    }
 
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-                //serviceResponse = response;
-                serviceResponse.Result = res;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    //serviceResponse = response;
+                    serviceResponse.Result = res;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
         );
     }
-    GetSupplierInvoiceWithItemBySequenceNumber(declarationId: string, invoiceSequence: number, itemSequence: number, skip: number, take: number, type:string = null) {
+    GetSupplierInvoiceWithItemBySequenceNumber(declarationId: string, invoiceSequence: number, itemSequence: number, skip: number, take: number, type: string = null) {
 
         return defer(() => {
 
@@ -238,21 +263,21 @@ export class DeclarationWebService {
                 , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var res = response;
-                    if(res)
+                    if (res)
                         res = this._SupplierInvoicePMService.MapJsonToEntityPM(res, true);
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse = response;
                     serviceResponse.Result = res;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
         );
     }
 
-  
+
 
 
     GetSupplierInvoiceWithSpecificItemByCounterKey(declarationId: string, counterKey: number, itemSequence: number) {
@@ -271,19 +296,19 @@ export class DeclarationWebService {
             return this._http.get(this._apiUrl + "/GetSupplierInvoiceWithSpecificItemByCounterKey/?declarationId=" + declarationId
                 + "&counterKey=" + counterKey
                 + "&itemSequence=" + itemSequence
-               
+
                 , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var res = response;
                     //res = this.MapJsonToEntityPM(res, true);
-                    if(res)
+                    if (res)
                         res = this._SupplierInvoicePMService.MapJsonToEntityPM(res, true);
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse = response;
                     serviceResponse.Result = res;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -309,25 +334,25 @@ export class DeclarationWebService {
                 + "&invoiceNumber=" + invoiceNumber
                 + "&invoiceCounterKey=" + invoiceCounterKey
                 + "&demandState=" + demandState
-                ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response;
-                var _mappedListsArray: Array<CertificateTicket> = [];
-                if (allLists) {
-                    for (var key in allLists) {
+                    var allLists = response;
+                    var _mappedListsArray: Array<CertificateTicket> = [];
+                    if (allLists) {
+                        for (var key in allLists) {
 
-                        var entity: CertificateTicket;
-                        entity = this.MapJsonToCertificateTicket(allLists[key]);
-                        _mappedListsArray.push(entity);
+                            var entity: CertificateTicket;
+                            entity = this.MapJsonToCertificateTicket(allLists[key]);
+                            _mappedListsArray.push(entity);
 
+                        }
                     }
-                }
 
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-                //serviceResponse = response;
-                serviceResponse.Result = _mappedListsArray;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    //serviceResponse = response;
+                    serviceResponse.Result = _mappedListsArray;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -353,7 +378,7 @@ export class DeclarationWebService {
                     //serviceResponse = response;
                     serviceResponse.Result = response;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -382,7 +407,7 @@ export class DeclarationWebService {
                     //serviceResponse = response;
                     serviceResponse.Result = response;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -411,7 +436,7 @@ export class DeclarationWebService {
                     //serviceResponse = response;
                     serviceResponse.Result = response;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -438,7 +463,7 @@ export class DeclarationWebService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = response;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -487,7 +512,7 @@ export class DeclarationWebService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = response;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -511,7 +536,7 @@ export class DeclarationWebService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = response;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -535,7 +560,7 @@ export class DeclarationWebService {
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -555,13 +580,13 @@ export class DeclarationWebService {
             return this._http.post(
                 this._apiUrl + '/PostSendExportDeclaration/',
                 JSON.stringify(genericRequestParams),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res:any) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res: any) => {
 
                     serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -587,7 +612,7 @@ export class DeclarationWebService {
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -630,13 +655,13 @@ export class DeclarationWebService {
                 this._apiUrl + '/PostNewAmendmentDeclaration/',
                 JSON.stringify(genericRequestParams),
                 ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                   
+
                     serviceResponse.Result = this.MapJsonToEntityPM(res, true);
-               
+
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -661,7 +686,7 @@ export class DeclarationWebService {
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -685,7 +710,7 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
 
         }
@@ -711,7 +736,7 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
 
         }
@@ -737,7 +762,7 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
 
         }
@@ -763,7 +788,7 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
 
         }
@@ -786,7 +811,7 @@ export class DeclarationWebService {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -794,34 +819,34 @@ export class DeclarationWebService {
     }
 
     GetDocumentDeclarationId(declarationId: string) {
-    return defer(() => {
+        return defer(() => {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        authHeader.append('Content-Type', 'application/json');
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
-        var serviceResponse: ServiceResponse;
-        serviceResponse = new ServiceResponse();
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
 
-        return this._http.get(this._apiUrl + "/GetDocumentDeclarationId/?DeclarationId=" + declarationId
-            
-            , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetDocumentDeclarationId/?DeclarationId=" + declarationId
 
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-                //serviceResponse = response;
-                serviceResponse.Result = response;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-    });
-}
-    
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    //serviceResponse = response;
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     GetDeclarationDocumentList(parentEntityId: string, parentEntityCode: string) {
         return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
-            
+
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
@@ -833,7 +858,7 @@ export class DeclarationWebService {
                     //serviceResponse = response;
                     serviceResponse.Result = response;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetDeclarationDocumentWithConnectNotValid(parentEntityId: string, parentEntityCode: string) {
@@ -876,7 +901,7 @@ export class DeclarationWebService {
                     //serviceResponse = response;
                     serviceResponse.Result = response;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -890,13 +915,13 @@ export class DeclarationWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetCheckFreightAmountsByIncoterm/?declarationId=" + declarationId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetCheckFreightAmountsByIncoterm/?declarationId=" + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
 
         }
@@ -920,7 +945,7 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
         });
     }
@@ -940,7 +965,7 @@ export class DeclarationWebService {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -959,7 +984,7 @@ export class DeclarationWebService {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -993,7 +1018,7 @@ export class DeclarationWebService {
                     //serviceResponse = response;
                     serviceResponse.Result = entity;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -1018,7 +1043,7 @@ export class DeclarationWebService {
                 ////serviceResponse = response;
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -1043,7 +1068,7 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -1066,15 +1091,15 @@ export class DeclarationWebService {
 
             return this._http.get(this._apiUrl + "/GetDeclarationCorrection/?declarationId=" + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    var mappedEntity;
-                    var allLists = response;
-                    if (allLists)
-                        mappedEntity = this.MapJsonToCorrectionView(allLists);
+                var mappedEntity;
+                var allLists = response;
+                if (allLists)
+                    mappedEntity = this.MapJsonToCorrectionView(allLists);
 
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = mappedEntity;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = mappedEntity;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -1098,7 +1123,7 @@ export class DeclarationWebService {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -1116,7 +1141,7 @@ export class DeclarationWebService {
                 var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -1130,12 +1155,12 @@ export class DeclarationWebService {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetDeclarationCargoSealLists/?declarationId=" + declarationId + "&tenant=" + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetDeclarationCargoSealLists/?declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -1149,12 +1174,12 @@ export class DeclarationWebService {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetAcceptDeclarationAmendment/?declarationId=" + declarationId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetAcceptDeclarationAmendment/?declarationId=" + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -1173,7 +1198,7 @@ export class DeclarationWebService {
                 var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -1191,7 +1216,7 @@ export class DeclarationWebService {
                 var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -1234,7 +1259,7 @@ export class DeclarationWebService {
                     serviceResponse.Result = res;
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -1308,7 +1333,7 @@ export class DeclarationWebService {
         }
 
         this.MapSupplierInvoiceItems(entityPM, jsonPM, mapParent); // Call composition tables map methods
-     
+
 
         entityPM.IsDirty = false;
 
@@ -1320,7 +1345,7 @@ export class DeclarationWebService {
                 var mySupplierInvoiceItemPM = entityPM.SupplierInvoiceItems[item];
                 var newSupplierInvoiceItemPM: SupplierInvoiceItemPM = this.clone(mySupplierInvoiceItemPM);
 
-              
+
 
                 entityPM.OldEntityPM.SupplierInvoiceItems.push(newSupplierInvoiceItemPM);
             }
@@ -1371,9 +1396,9 @@ export class DeclarationWebService {
         }
 
 
-      //  entity.IsDirty = false;
+        //  entity.IsDirty = false;
 
-     
+
 
         return entity;
     }
@@ -1425,7 +1450,7 @@ export class DeclarationWebService {
                 else {
                     newSupplierInvoiceItemPM.ChangeSetOp = "Insert";
                 }
-                
+
                 newSupplierInvoiceItemPM.OldEntityPM = null;
                 newSupplierInvoiceItemPM.EntityParentPM = null;
             }
@@ -1457,7 +1482,7 @@ export class DeclarationWebService {
 
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
+
                         deletedPM.OldEntityPM = null;
                         entityPM.SupplierInvoiceItems.push(deletedPM);
                     }
@@ -1617,7 +1642,7 @@ export class DeclarationWebService {
     }
 
 
-    GetCLSHWBEventHandle(DeclarationID: string,  a_tenent: number, a_Mode: number) {
+    GetCLSHWBEventHandle(DeclarationID: string, a_tenent: number, a_Mode: number) {
         return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -1892,7 +1917,7 @@ export class DeclarationWebService {
     }
 
 
-    public getDeclarationConsignment(exportfile: string) : Promise<ConsignmentDeclartion>{
+    public getDeclarationConsignment(exportfile: string): Promise<ConsignmentDeclartion> {
         const ajax: Observable<any> = this._http.get(
             this._apiUrl + "/DeclarationConsignment",
             {
@@ -1907,10 +1932,10 @@ export class DeclarationWebService {
 }
 
 
-export interface  ConsignmentDeclartion {
+export interface ConsignmentDeclartion {
     Consignment: ConsignmentDeclartion2
-} 
+}
 
 interface ConsignmentDeclartion2 extends ConsignmentPM {
     Declaration: DeclarationPM
-} 
+}

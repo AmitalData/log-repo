@@ -18,11 +18,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return logisticActionRequest == null ? null : GetEntityPM(logisticActionRequest);
         }
 
-        internal LogisticActionRequestPM GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType)
+        public bool GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType)
         {
-            LogisticActionRequest logisticActionRequest = new LogisticActionRequestRepository(Tenant).GetExistByCargoKey(id, cargoIdentifierKey1, cargoIdentifierKey2, cargoIdentifierKey3, cargoIdentifierType);
-
-            return logisticActionRequest == null ? null : GetEntityPM(logisticActionRequest);
+            return new LogisticActionRequestRepository(Tenant).GetExistByCargoKey(id, cargoIdentifierKey1, cargoIdentifierKey2, cargoIdentifierKey3, cargoIdentifierType);
+            
         }
     }
 }

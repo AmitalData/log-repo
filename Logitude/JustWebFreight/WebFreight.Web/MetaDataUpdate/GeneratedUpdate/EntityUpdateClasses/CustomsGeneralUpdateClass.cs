@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "3e4ad7ee3c8a743fb5d0401375850e4b";
+		public const string HashString = "3bac3cbc3bd516bfbdadfd1f6afd8cc8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "cdde",
+			      				    Code =  "99a8",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2073,6 +2073,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Export", DefaultText = "Export",LocalDefaultText = @"יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOMoreDetailsForImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.MoreDetailsForImporter", DefaultText = "More Details For Importer",LocalDefaultText = @"נתונים נוספים ליצואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOLogisticActionRequestAlreadyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.LogisticActionRequestAlreadyExist", DefaultText = "Logistic action request with the same cargo Identifiers already exist",LocalDefaultText = @"קיימת בקשה לביטול יצוא עם אותם מזהי מטען", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

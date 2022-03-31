@@ -85,7 +85,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        [HttpPost]
+        public HttpResponseMessage GetDeclarationByConsignmentParames(Request ArrayDeclartiosId)
+        {
+            try
+            {
+                
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
 
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                DeclarationConstraintQueryService query = new DeclarationConstraintQueryService(customContext);
+                int countDeclartions = query.GetDeclarationByConsignmentParames(ArrayDeclartiosId.ArrayDeclartiosId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, countDeclartions);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        
         public HttpResponseMessage GetDeclarationErrors(string declarationId, string listVersionId, string courierFilter,bool IsAmendmentErrors)
         {
             try
@@ -518,7 +539,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 //requestParamsData.AppicationId = declarationPM.Id;
                 //requestParamsData.LoggingEntityId = declarationPM.Id;
-                INF_MSG_GenericResponseData responseData;
+                ExportDeclarationAmendmentResponseData responseData;
                 //var messagingService = new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService();
                 var messagingService = new DF_MSG8235_ExportDeclarationAmendmentMessagingService();
                 responseData = messagingService.Send(requestParamsData);
@@ -2223,5 +2244,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public string Id { get; set; }
         public string REMARKS { get; set; }
         public string REQCERT { get; set; }
+    }
+    public class Request
+    {
+        public string[] ArrayDeclartiosId { get; set; }
     }
 }

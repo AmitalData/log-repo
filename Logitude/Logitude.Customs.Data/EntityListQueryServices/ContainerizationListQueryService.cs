@@ -59,7 +59,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 														  ContainerizationStatus = a.ContainerizationStatusCode.Code,
 
 														  HataraStatus = a.HataraStatus,
-														  OpenContainerization= a.ContainerizationStatusCode.Code != "3" && a.ContainerizationStatusCode.Code != "4",
+														  OpenContainerization= a.ContainerizationStatusCode.Code != "3" ,
 														  OperationMode = a.OperationMode,
 
 														  ContainerizationStatusName = a.ContainerizationStatusCode != null ? a.ContainerizationStatusCode.Name :null,

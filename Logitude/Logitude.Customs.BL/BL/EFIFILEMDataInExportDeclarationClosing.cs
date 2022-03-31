@@ -18,24 +18,39 @@ namespace Logitude.Customs.BL.BL
     {
         public ExportDeclarationClosingDataPM GetEFIFILEMDataInExportDeclarationClosingDataPM(string declarationid, int tenant)
         {
-            ExportDeclarationClosingDataPM entityPM=new ExportDeclarationClosingDataPM();
             var dec = new DeclarationQueryService(tenant).GetSingle(declarationid, true, false);
-            entityPM.DeclarationId = dec.Id;
-            dec.Tenant = tenant;
-            foreach(var con in dec.Consignments)
+            var entityPM = new ExportDeclarationClosingDataQueryService(tenant).GetSingle(declarationid, true, false);
+            if (entityPM == null)
             {
-                if(con.ConsignmentType == "E")
+                entityPM = new ExportDeclarationClosingDataPM();
+                entityPM.DeclarationId = dec.Id;
+                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                entityPM.Tenant = tenant;
+                foreach (var con in dec.Consignments)
                 {
-                    entityPM.FinalCargoTypeCode = con.CargoTypeCode;
-                    entityPM.FinalSecondCargoId = con.SecondCargoID;
-                    entityPM.FinalThirdCargoId = con.ThirdCargoID;
-                    entityPM.FinalManifestNumber = con.ManifestNumber;
-                    entityPM.FinalShipCode = con.ShipCode;
-                    entityPM.FinalLoadingSite = con.ExportLoadingPortCode;
+                    if (con.ConsignmentType == "E")
+                    {
+                        entityPM.FinalCargoTypeCode = con.CargoTypeCode;
+                        entityPM.FinalSecondCargoId = con.SecondCargoID;
+                        entityPM.FinalThirdCargoId = con.ThirdCargoID;
+                        entityPM.FinalManifestNumber = con.ManifestNumber;
+                        entityPM.FinalShipCode = con.ShipCode;
+                        entityPM.FinalLoadingSite = con.ExportLoadingPortCode;
+                    }
                 }
+                entityPM = SetEFIFILEMData(declarationid, tenant, entityPM, dec);
             }
+
+            return entityPM;
+        }
+
+        public ExportDeclarationClosingDataPM SetEFIFILEMData(string declarationid, int tenant, ExportDeclarationClosingDataPM entityPM, DeclarationPM dec = null)
+        {
+            if (dec == null)
+                dec = new DeclarationQueryService(tenant).GetSingle(declarationid, true, false);
+
             if (dec != null && dec.ExportFile != null && dec.Direction == "E" && dec.TransportModeId == "A")
-            { // only if transportmode= A and direction = export 
+            { 
                 List<AmitalContext> _AmitalContextList = new List<AmitalContext>();
                 var tenantAmitalContext = _AmitalContextList.FirstOrDefault(rec => rec.TenantSeed == tenant);
                 if (tenantAmitalContext == null)
@@ -54,7 +69,7 @@ namespace Logitude.Customs.BL.BL
                         var ESPSPEDdata = new ESPSPEDQueryService(tenantAmitalContext).GetSingle(EFIFILEMData.SPEDNO.GetValueOrDefault(), false);
                         if (ESPSPEDdata != null)
                         {
-                            entityPM.MAIN_AWB = ESPSPEDdata.MAINCARRIER + "-"+ ESPSPEDdata.MAIN_AWB;
+                            entityPM.MAIN_AWB = ESPSPEDdata.MAINCARRIER + "-" + ESPSPEDdata.MAIN_AWB;
                         }
                     }
                 }

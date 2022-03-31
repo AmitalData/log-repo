@@ -34,14 +34,13 @@ namespace Logitude.Customs.Data.Repsitories
             return res;
         }
 
-        public LogisticActionRequest GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType)
+        public bool GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType)
         {
-            var res = (from x in context.LogisticActionRequests
+            return (from x in context.LogisticActionRequests
                        where x.Id != id && x.CargoIdentifierKey1 == cargoIdentifierKey1 && x.CargoIdentifierKey2 == cargoIdentifierKey2 && x.CargoIdentifierKey3 == cargoIdentifierKey3 && x.CargoIdentifierType == cargoIdentifierType
                        select x
-                     ).FirstOrDefault();
+                     ).Any();
 
-            return res;
         }
     }
 

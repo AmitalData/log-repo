@@ -2421,7 +2421,7 @@
     IsAddNewEntity="true"
     IsPackagable="false"
     DefaultSortName="&quot;RequestDate&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -2508,7 +2508,7 @@
     IsAddNewEntity="true"
     IsPackagable="false"
     DefaultSortName="&quot;RequestDate&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -2595,7 +2595,7 @@
     IsAddNewEntity="true"
     IsPackagable="false"
     DefaultSortName="&quot;RequestDate&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -2674,7 +2674,7 @@
     IsAddNewEntity="true"
     IsPackagable="false"
     DefaultSortName="&quot;RequestDate&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -2761,7 +2761,7 @@
     IsAddNewEntity="true"
     IsPackagable="false"
     DefaultSortName="&quot;RequestDate&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
     IsSpellChecked="false">
     <QueryColumns>
