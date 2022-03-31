@@ -7,8 +7,10 @@ import { SharedManifestsURLs } from "../../constants/SharedManifestsURLs/SharedM
 import { SharedManifestsRequestAliases } from "../../constants/SharedManifestsURLs/SharedManifestsRequestAliases";
 import { DocumentsPermissionsDetails } from "../../models/SharedManifestsDetails/DocumentsPermissionsDetails"
 import * as Actions from "../Actions"
+import * as MaintenanceBaseActions from "../BaseActions"
 import { SendDocs } from "../../../../Shipment/cypress/actions/Actions";
 import * as Authentication from "./../../../../Base/cypress/commands/Authentication"
+import { ValidateSingleErrorMessage } from "../BaseActions";
 
 let SharedKey:string
 
@@ -120,4 +122,86 @@ function AssertPutAgentSharedLogisticsKeys() {
 
 export function SignOut(){
     cy.get(SharedManifestsSelectors.SignOut).click()
+}
+
+export function ShareManifestAction(){
+    cy.get(SharedManifestsSelectors.SharingActions).click()
+    cy.get(SharedManifestsSelectors.ShareManifest).click()
+
+}
+export function ExitShipment(){
+    cy.get(SharedManifestsSelectors.BackBottonBody).click()
+}
+export function ValidateShareManifestErrorMessage(ErrorMessage:string){
+    MaintenanceBaseActions.ValidateSingleErrorMessage(ErrorMessage)
+    cy.get(SharedManifestsSelectors.Cancel).click()
+}
+
+export function UpdateShipment(masterNumber:string){
+    AddMasterNumber(masterNumber)
+    DeleteConsignee()
+}
+
+function AddMasterNumber(masterNumber:string){
+    cy.get(SharedManifestsSelectors.ShipmentRoutings).click()
+    cy.get(SharedManifestsSelectors.MainCarriage).click()
+    SelectFirstDropDownListItem(SharedManifestsSelectors.MainCarriageCarrier,'A')
+    cy.get(SharedManifestsSelectors.ShipmentMasterNo).type(masterNumber)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+    
+}
+function DeleteConsignee(){
+cy.get(SharedManifestsSelectors.ShipmentPartners).click()
+cy.get(SharedManifestsSelectors.DeleteConsignee).click()
+cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+export function  SelectFirstDropDownListItem(selector:string , text:string)  {
+    cy.get(selector).click({force : true}),
+    cy.get(selector).type(text)
+    .should('have.value',text)
+    cy.get('.DropDownListItem:first').click()
+}
+
+
+export function SaveMasterShipment(){
+    DefinePutMasterShipmentRequest();
+    cy.get(SharedManifestsSelectors.ShipmentSave).click();
+}
+
+function DefinePutMasterShipmentRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, SharedManifestsURLs.Shipment, SharedManifestsRequestAliases.PutShipment);
+}
+
+export function AssertSaveMasterShipment(){
+    AssertPutMasterShipment();
+}
+function AssertPutMasterShipment() {
+    BaseAssertion.AssertStatusCode(SharedManifestsRequestAliases.PutShipment, 200).then((interception) => {
+    });
+}
+export function AddConsignee(code:string){
+    cy.get(SharedManifestsSelectors.ShipmentPartners).click()
+    cy.get(SharedManifestsSelectors.AddPartner).click()
+    cy.get(SharedManifestsSelectors.AddConsignee).click()
+    SelectFirstDropDownListItem(SharedManifestsSelectors.ConsigneeId,code)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function ShareManifest(){
+    DefineGetSharedAgentManifestRequest();
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+function DefineGetSharedAgentManifestRequest() {
+    cy.DefineRequestWait(RestAPI.GET, SharedManifestsURLs.SharedAgentManifest, SharedManifestsRequestAliases.GetSharedAgentManifest);
+}
+
+export function AssertShareManifest(){
+    AssertGetSharedAgentManifest();
+    cy.contains('Your Manifest shared successfully')
+    cy.get(SharedManifestsSelectors.Close).click()
+}
+function AssertGetSharedAgentManifest() {
+    BaseAssertion.AssertStatusCode(SharedManifestsRequestAliases.GetSharedAgentManifest, 200).then((interception) => {
+    });
 }
