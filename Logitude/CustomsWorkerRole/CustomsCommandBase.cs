@@ -295,11 +295,20 @@ namespace CustomsWorkerRole
                                 {
                                     //throw;
                                 }
-                                Queue_scope.Dispose();//remove lock !!
+                                try
+                                {
+                                    Queue_scope.Dispose();//remove lock !!
+                                }
+                                catch (Exception)
+                                {
+
+                                    
+                                }
+                                
                                 using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
                                 {
 
-                                    _CustomDbQueueService.SafeAbandon();
+                                    _CustomDbQueueService.SafeAbandon();//if (CurrentCustomQueueResponse.Retries > 10)
                                     Abandon_Queue_scope.Complete();
                                 }
 
