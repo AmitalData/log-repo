@@ -55,6 +55,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationPM _DeclarationPM;
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
+        public bool IsFromOpenNewAmendment = false;
         public override void OnRequestFail(GenericRequestParams requestParams)
         {
             if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -2392,6 +2393,19 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                         }
                 }
+            }
+            if (_DeclarationPM.IsCourierDeclaration && IsFromOpenNewAmendment)
+            {
+                errorMessage = "";
+                //var courierMasterPM = courierMasterQueryService.GetByDeclarationId(_DeclarationPM.Id, tenant);
+                //var repository = new CardRepository(tenant);
+                //var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, tenant);
+                //if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
+                //{
+                //    string defValue = GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, tenant);
+                //    if (defValue == "Y")
+                //    { }
+                //}
             }
             if (!string.IsNullOrWhiteSpace(errorMessage))
             {
