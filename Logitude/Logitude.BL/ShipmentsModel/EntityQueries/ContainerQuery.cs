@@ -309,12 +309,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private void MapConcurrencyFields(ContainerPM containerPM)
         {
             containerPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            if (string.IsNullOrEmpty(containerPM.ShipmentId))
-            {
-                return;
-            }
-            containerPM.ShipmentConcurrencyGUID = repository.GetConcurrencyGUIDByShipmentId(containerPM.ShipmentId, containerPM.Tenant);
-            containerPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
         public List<ContainerPM> GetContainers(string id , int tenant)
