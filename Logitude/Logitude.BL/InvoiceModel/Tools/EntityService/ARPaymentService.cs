@@ -67,6 +67,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private string cashBookMethodType = "";
         SATInterfaceHelper sATInterfaceHelper;
         private bool SetVoided = false;
+        private string DraftStatusCode = "DR";
         private  ARPaymentBankTranferRepository paymentBankTranferRepository;
         public ARPaymentService(IInvoiceContext objectContext, int tenant)
         {
@@ -326,7 +327,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.SetVoided = theEntityPm.SetVoided;
 
             this.paymentPoco = paymentRepository.GetSingleARPayment(theEntityPm.Id);
-
+            var isDraftPayment = paymentPoco.StatusCode == DraftStatusCode;
             bool isErrorInTransfer = this.paymentPoco.TransferStatusCode == "ET" ? true : false;
 
             this.ValidateHigherStatus();
@@ -424,7 +425,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 service.ARPaymentQuickbooksValidating(theEntityPm, true, false, paymentPoco, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }
-            else
+            else if(!isDraftPayment)
             {
                 service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, paymentPoco, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }
