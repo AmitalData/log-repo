@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "aa38974667d1739dd7cdca32d275c84d";
+
+		public const string HashString = "e46bee6430bb5a8c95219efb8b017bcd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6866,6 +6867,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APInvoiceTextCode_APInvoiceMCopiedFromAPInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.CopiedFromAPInvoiceNumber", DefaultText = "Copied from APInvoice number",LocalDefaultText = @" הועתקה מחשבונית", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APInvoiceTextCode_APInvoiceOCantVoidWithInactiveGLA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CantVoidWithInactiveGLA", DefaultText = "You can't void an invoice that is connected to an Inactive GL Account",LocalDefaultText = @"לם ניתן לבטל חשבונית שמחוברת לכרטסת חסומה", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APInvoiceTextCode_ApinvoiceOTotalVATwithQBO = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Apinvoice.O.TotalVATwithQBO", DefaultText = "Total VAT option is not compatible with QBO , if they you want to transfer this invoice to Quickbooks, please disable the total vat and make sure each invoice line has a VAT",LocalDefaultText = @"Total VAT option is not compatible with QBO , if they you want to transfer this invoice to Quickbooks, please disable the total vat and make sure each invoice line has a VAT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
