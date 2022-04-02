@@ -29,6 +29,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                         when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NOT NULL then ShipperCard.EnglishName 
                         when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NULL then C.ShipperName end) 
                     as ShipperName");
+            updatedShipmentFields = updatedShipmentFields.Replace("C.ToPortId", $@"(case 
+                when (C.MasterShipmentDataId is null)  then C.ToPortId 
+                when (C.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is not null) then Mas.Transshipment3ToPortId
+                when (C.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is not null) then Mas.Transshipment2ToPortId
+                when (C.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is null AND Mas.Transshipment1ToPortId is not null) then Mas.Transshipment1ToPortId
+                when (C.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is null AND Mas.Transshipment1ToPortId is null) then Mas.MainCarriageToPortId
+            end)
+            as ToPortId");
 
             var shipmentComputedFields =
                  "com.ContainersNumbers as ContainersNumbers," +
@@ -195,6 +203,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 					Mas.Transshipment3ETD,
 					Mas.Transshipment2ETD,
 					Mas.Transshipment1ETD,
+					Mas.Transshipment3ToPortId,
+					Mas.Transshipment2ToPortId,
+					Mas.Transshipment1ToPortId,
+					Mas.MainCarriageToPortId,
+					Mas.MainCarriageFromPortId,
                     ConsigneeCard.LocalName,
                     ShipperCard.LocalName";
 
@@ -232,7 +245,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             as FromPortId");
             updatedShipmentFields = updatedShipmentFields.Replace("P.ToPortId", $@"(case 
                 when (P.MasterShipmentDataId is null)  then P.ToPortId 
-                when (P.MasterShipmentDataId is not null) then Mas.MainCarriageToPortId
+                when (P.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is not null) then Mas.Transshipment3ToPortId
+                when (P.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is not null) then Mas.Transshipment2ToPortId
+                when (P.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is null AND Mas.Transshipment1ToPortId is not null) then Mas.Transshipment1ToPortId
+                when (P.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is null AND Mas.Transshipment1ToPortId is null) then Mas.MainCarriageToPortId
             end)
             as ToPortId");
 
@@ -402,6 +418,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 					Mas.Transshipment3ETD,
 					Mas.Transshipment2ETD,
 					Mas.Transshipment1ETD,
+					Mas.Transshipment3ToPortId,
+					Mas.Transshipment2ToPortId,
+					Mas.Transshipment1ToPortId,
 					Mas.MainCarriageToPortId,
 					Mas.MainCarriageFromPortId,
                     ShipperCard.LocalName,
