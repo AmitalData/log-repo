@@ -52,7 +52,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreatedInTwoMonthsLogic, 
 	         OutputTaxAmountRound, 
 	         InputsTaxAmountRound, 
-	         ReconciliationsNumbers,
+	         ReconciliationsNumbers
 	      }
 
 
@@ -97,6 +97,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         OutputTaxAmountRound, 
 	         InputsTaxAmountRound, 
 	         ReconciliationsNumbers,
+	         ClosingJournalNumber, 
+	         ClosingJournalId
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -2290,6 +2290,122 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "ClosingJournalNumber",
+					  						ObjectTableName =  "TaxReport",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  202,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  202,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ClosingJournalNumber",
+					  						ListPropertyPath =  "ClosingJournalNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ClosingJournalNumber",
+					  						DefaultText =  "Journal No.",
+					  						FullLocalDefaultText =  "מספר פקודה",
+					  						ListFieldLable =  "ClosingJournalNumberListLable",
+					  						ListLableDefaultText =  "Journal No.",
+					  						ListLocalDefaultText =  "מספר פקודה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ClosingJournalId",
+					  						ObjectTableName =  "TaxReport",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ClosingJournalId",
+					  						ListPropertyPath =  "ClosingJournalId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ClosingJournalId",
+					  						DefaultText =  "Closing Journal Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "ReconciliationsNumbers",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Text",
@@ -2405,6 +2521,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              ScreenField TaxReportTaxReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id,ScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code, ObjectFieldCode = "TaxReport.TaxReportMonth", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField TaxReportTaxReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id,ScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code, ObjectFieldCode = "TaxReport.StatusEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TaxReportTaxReportHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id,ScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code, ObjectFieldCode = "TaxReport.ClosingJournalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
 		    TaxReportObjectTable.HeaderScreenId = TaxReportTaxReportHeaderScreenScreen0.Id;
 		    TaxReportObjectTable.HeaderScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code;

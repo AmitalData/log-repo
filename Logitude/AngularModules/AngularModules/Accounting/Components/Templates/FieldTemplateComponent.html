@@ -426,6 +426,11 @@
                             }}
                         </div>
                     </div>
+                    <div *ngIf="FieldName == 'ClosingJournalNumber'">
+                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            <a href="#" (click)="OpenJournal(Entity.ClosingJournalId)">{{FieldValue}}</a>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -616,22 +621,7 @@
                     </div>
                 </div>
 
-                <!-- Tax Report -->
-                <!--<div *ngIf="ObjectTableName == 'TaxReport'">
 
-                    <div *ngIf="FieldName == 'StatusEnglishName'">
-                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                            {{
-                            FieldValue
-                            }}
-                        </div>
-                        <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                            {{
-                            FieldValue
-                            }}
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </td>
     </tr>

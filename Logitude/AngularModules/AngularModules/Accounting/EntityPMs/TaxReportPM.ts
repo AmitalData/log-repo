@@ -212,6 +212,15 @@ export class TaxReportPM {
     private reconciliationsNumbers: string;
     public get ReconciliationsNumbers() { return this.reconciliationsNumbers; }
     public set ReconciliationsNumbers(newValue: string) { if (this.reconciliationsNumbers != newValue) { this.reconciliationsNumbers = newValue; this.MarkAsDirty("ReconciliationsNumbers"); } }
+    
+    private closingJournalNumber: string;
+    public get ClosingJournalNumber() { return this.closingJournalNumber; }
+    public set ClosingJournalNumber(newValue: string) { if (this.closingJournalNumber != newValue) { this.closingJournalNumber = newValue; this.MarkAsDirty("ClosingJournalNumber"); } }
+       
+	 
+    private closingJournalId: string;
+    public get ClosingJournalId() { return this.closingJournalId; }
+    public set ClosingJournalId(newValue: string) { if (this.closingJournalId != newValue) { this.closingJournalId = newValue; this.MarkAsDirty("ClosingJournalId"); } }
        
 	 
 
@@ -242,4 +251,4 @@ export class TaxReportPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

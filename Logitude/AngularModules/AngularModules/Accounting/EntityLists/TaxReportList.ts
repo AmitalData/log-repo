@@ -41,6 +41,8 @@ export class TaxReportList {
 	UpdatedByUserName: string;
 	OutputTaxAmountRound: number;
 	InputsTaxAmountRound: number;
+	ClosingJournalNumber: string;
+	ClosingJournalId: string;
 	
 }
  

@@ -157,9 +157,9 @@ export class TaxReportExtendedPMService {
     }
 
 
-    CheckIfTaxReportCanHaveClosingJournal(taxReportId: string)
+    GetTaxReportReconciledLines(taxReportId: string)
     {
-        return this.httpClient.get(this._apiUrl + '/GetTaxReportClosingJournalAbility?taxReportId=' + taxReportId, ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetTaxReportReconciledLines?taxReportId=' + taxReportId, ServiceHelper.GetHttpHeaders()).pipe(
             map(response =>
             {
                 let serviceResponse = response;

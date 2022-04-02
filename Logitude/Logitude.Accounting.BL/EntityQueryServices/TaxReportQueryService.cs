@@ -120,11 +120,24 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             bool hasReconciledLines = (from line in context.TaxReportLines
                                        join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
-                                       where line.TaxReportId == taxReportId && line.Tenant == tenant
+                                       where line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0
                                                 && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
                                        select line).Any();
             return !hasReconciledLines;
         }
+
+        public List<TaxReportLine> GetTaxReportReconciledLines(string taxReportId, int tenant)
+        {
+            List<TaxReportLine> reconciledLines = (from line in context.TaxReportLines
+                                                   join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
+                                                   where line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0
+                                                            && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                                   select line).ToList();
+            return reconciledLines;
+        }
+
     }
+
+
 
 }

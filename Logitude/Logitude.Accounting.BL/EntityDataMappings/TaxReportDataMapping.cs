@@ -12,6 +12,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -41,13 +42,31 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.StatusCode != null)
             {
                 VatReportStatusQueryService queryService = new VatReportStatusQueryService(entityPOCO.Tenant);
-                VatReportStatusPM status = queryService.GetSingle(entityPOCO.StatusCode,false,false);
+                VatReportStatusPM status = queryService.GetSingle(entityPOCO.StatusCode, false, false);
                 if (status != null)
                 {
                     entityPM.StatusEnglishName = status.EnglishName;
                     entityPM.StatusLocalName = status.LocalName;
                 }
             }
+
+            MapClosingJournalFields(entityPM, entityPOCO);
+        }
+
+        private void MapClosingJournalFields(TaxReportPM entityPM, TaxReport entityPOCO)
+        {
+            JournalPM closingJournal = GetClosingJournalOfTaxReport(entityPOCO);
+            if (closingJournal != null)
+            {
+                entityPM.ClosingJournalNumber = closingJournal.JournalNumber;
+                entityPM.ClosingJournalId = closingJournal.Id;
+            }
+        }
+
+        private JournalPM GetClosingJournalOfTaxReport(TaxReport entityPOCO)
+        {
+            JournalQueryService journalQueryService = new JournalQueryService(entityPOCO.Tenant);
+            return journalQueryService.GetSingleWithLinesByEntityIdAndCode(entityPOCO.Id, AccountingEntityValues.TaxReport, entityPOCO.Tenant);
         }
 
         private static void BuildSearchFields(TaxReportPM entityPM, TaxReport poco, bool isNewEntity)

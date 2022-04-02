@@ -445,7 +445,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage GetTaxReportClosingJournalAbility(string taxReportId)
+        public HttpResponseMessage GetTaxReportReconciledLines(string taxReportId)
         {
             try
             {
@@ -454,16 +454,17 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                 IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
                 TaxReportQueryService reportService = new TaxReportQueryService(accountingContext);
-                var canHaveClosingJournal = reportService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, tenant);
+                var reconciledLines = reportService.GetTaxReportReconciledLines(taxReportId, tenant);
 
-                ServiceResponse response = new ServiceResponse
+                if(reconciledLines != null && reconciledLines.Count() > 0)
                 {
-                    Result = canHaveClosingJournal
-                };
+                    string linesNumbersCS = string.Join(",", reconciledLines.Select(d=>d.Line));
 
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                    return Request.CreateResponse(HttpStatusCode.OK, new ServiceResponse { Result = linesNumbersCS });
+                }
 
-                return reponseMessage;
+
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
