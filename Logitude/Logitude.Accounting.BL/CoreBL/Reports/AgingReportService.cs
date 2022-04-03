@@ -1986,9 +1986,9 @@ TRUE= כאשר מבקשים עם ריכוז לפי כרטיס אב (פיצול �
 
         public string ChartOfAccountsId { get; set; }
 
-        
-        
+        public string CurrencyOrgiginalLocalValue { get; set; }
 
+        
 
 
         //public string ChartOfAccountIdV1NotInUse { get; set; }
