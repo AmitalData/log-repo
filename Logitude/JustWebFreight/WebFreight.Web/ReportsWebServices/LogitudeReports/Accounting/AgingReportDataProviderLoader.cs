@@ -59,8 +59,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             SetLocalCurrency(dataProvider);
             AddTotalBalancePeriods(filteredPeriods, dataProvider);
             AddTotalLocalBalancePeriods(filteredPeriods, dataProvider);
-            string currencyOrgiginalLocalValue = GetFilterValue<string>("CurrencyOrgiginalLocalValue");
-            if (currencyOrgiginalLocalValue == filterReportByLocalCurrency)
+            string currencyOriginalLocalValue = GetFilterValue<string>("CurrencyOriginalLocalValue");
+            if (currencyOriginalLocalValue == filterReportByLocalCurrency)
                 AddCalculatedRatePeriods(filteredPeriods, dataProvider);
 
             CalculateReportLocalBalanceTotal(dataProvider);
@@ -858,7 +858,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             reportParameters.ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode");
             reportParameters.ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountsId");
-            reportParameters.CurrencyOrgiginalLocalValue = GetFilterValue<string>("CurrencyOrgiginalLocalValue");
+            reportParameters.CurrencyOriginalLocalValue = GetFilterValue<string>("CurrencyOriginalLocalValue");
             
             SetReportCategoryParameters(reportParameters);
 

@@ -416,7 +416,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
             myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
             myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
-            myFilterItems.push(new QueryFilterItem("CurrencyOrgiginalLocalValue", this.currencyFilterSelectedValue));
+            myFilterItems.push(new QueryFilterItem("CurrencyOriginalLocalValue", this.currencyFilterSelectedValue));
 
             myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
             myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
@@ -576,7 +576,6 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     {
         if (this.currencyFilterSelectedValue != itemValue) {
             this.currencyFilterSelectedValue = itemValue;
-            this.BalanceFilterChanged();
         }
     }
 
