@@ -64,7 +64,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 ValidateFromPort(entityPM, loggedTenant);
                 ValidateToPort(entityPM, loggedTenant);
-                ValidateCarrierPrefix(entityPM); 
+                ValidateCarrierPrefix(entityPM);
                 ValidateAirlineRestriction(entityPM);
                 ValidateShipmentBookingFields(entityPM, isNewEntity);
                 ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
@@ -126,7 +126,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     LimitAmount = MethodHelper.Roundd(LimitAmount, 2);
                     ActualBalance = MethodHelper.Roundd(ActualBalance, 2);
 
-                    if (WarningPercentage != null && (ActualBalance > (WarningPercentage * LimitAmount / 100))&& ActualBalance <= LimitAmount)
+                    if (WarningPercentage != null && (ActualBalance > (WarningPercentage * LimitAmount / 100)) && ActualBalance <= LimitAmount)
                     {
                         if (mySettings.ShipmentCreationWarning)
                         {
@@ -214,7 +214,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
                             bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
 
-                            if (!isAllPortsEC && !isAllPortsNA &&!isAllPortsChina)
+                            if (!isAllPortsEC && !isAllPortsNA && !isAllPortsChina)
                             {
                                 throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
                             }
@@ -1028,7 +1028,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     }
                 }
             }
-        }       
+        }
         private static void ValidateMasterTypeDueToTransportMode(ShipmentPM entityPM)
         {
             if (entityPM.ShipmentLevelCode == "C")
@@ -1181,7 +1181,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (myCard.PartnerTypeId != "AG" && myCard.PartnerTypeId != "CS")
                     {
-                       throw new ApplicationException("Shipper not exporter partner type should be agent or customer");
+                        throw new ApplicationException("Shipper not exporter partner type should be agent or customer");
                     }
                 }
             }
@@ -1193,7 +1193,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (myCard.PartnerTypeId != "AG" && myCard.PartnerTypeId != "CS")
                     {
-                       throw new ApplicationException("Consignee not importer partner type should be agent or customer");
+                        throw new ApplicationException("Consignee not importer partner type should be agent or customer");
                     }
                 }
             }
@@ -1431,14 +1431,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentSubType(ShipmentPM entityPM)
         {
-            if(!string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+            if (!string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
             {
                 ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
                 ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(entityPM.ShipmentSubTypeId, entityPM.Tenant);
 
                 if (subType != null && subType.Code?.ToLower() != "horse")
                 {
-                    if(entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode?.ToLower())
+                    if (entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode?.ToLower())
                     {
                         throw new ApplicationException("Sub Type is not allowed with this shipment type");
                     }
@@ -1448,7 +1448,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         private static bool HasPayablesAmounts(ShipmentPM entityPM)
         {
             bool hasAnyPayableAmount = false;
-            if(entityPM.ShipmentPayables != null)
+            if (entityPM.ShipmentPayables != null)
             {
                 hasAnyPayableAmount = entityPM.ShipmentPayables.Select(payable => payable.ExpectedAmount).Where(payable => payable != null && payable != 0.0).Any();
             }
@@ -1465,7 +1465,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentOperationalClose(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if(entityPM.IsOperationalClosed && !entityPoco.IsOperationalClosed)
+            if (entityPM.IsOperationalClosed && !entityPoco.IsOperationalClosed)
             {
                 OperationalCloseValidator operationalCloseValidator = new OperationalCloseValidator(entityPM);
                 string errorMessage = operationalCloseValidator.StartValidating();
@@ -1475,7 +1475,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     throw new ApplicationException(errorMessage);
                 }
             }
-        }   
+        }
         private static void ValidateShipmentAccountingClose(ShipmentPM entityPM, Shipment entityPoco)
         {
             if (entityPM.IsAccountingClosed && !entityPoco.IsAccountingClosed)
@@ -1491,13 +1491,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     ValidateAcocuntingCloseDueToShipmentLevel(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
                 }
             }
-        }        
+        }
         private static bool CheckOpenPayables(ShipmentPM entityPM, AccountingSetting accountingSetting)
         {
             bool hasOpenPayables = false;
             if (!accountingSetting.AllowClosureWithoutPayables && entityPM.ShipmentPayables.Count > 0)
             {
-                foreach (ShipmentPayablePM shipmentPayable in entityPM.ShipmentPayables.Where(d => d.ShipmentPayableLineStatusCode != "ACCT" && d.ShipmentPayableLineStatusCode != "EMPT"))
+                foreach (ShipmentPayablePM shipmentPayable in entityPM.ShipmentPayables.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ShipmentPayableLineStatusCode != "ACCT" && d.ShipmentPayableLineStatusCode != "EMPT"))
                 {
                     if (shipmentPayable.ShipmentPayableAmountTypeCode == "NEXP"
                         && (shipmentPayable.AccountedAmount != null && shipmentPayable.AccountedAmount != null
@@ -1518,13 +1518,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static bool CheckOpenReceivables(List<ShipmentReceivablePM> shipmentReceivables)
         {
-            if (shipmentReceivables.Count > 0)
+            if (shipmentReceivables.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ShipmentReceivableLineStatusCode != "ACCT" && d.ShipmentReceivableLineStatusCode != "EMPT"
+             && d.TotalAmount != null && d.TotalAmount != 0).Any())
             {
-                if (shipmentReceivables.Where(d => d.ShipmentReceivableLineStatusCode != "ACCT" && d.ShipmentReceivableLineStatusCode != "EMPT"
-                 && d.TotalAmount != null && d.TotalAmount != 0).Any())
-                {
-                    return true;
-                }
+                return true;
             }
 
             return false;
@@ -1533,33 +1530,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             if (entityPM.ShipmentLevelCode == "C")
             {
-                if (hasOpenPayables && hasOpenReceivables)
-                {
-                    ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
-                }
-                else
-                {
-                    string myResult = CheckHousesOpenAmounts(entityPM.Id, entityPM.Tenant);
+                ValidateMasterAccountingClose(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
+            }
 
-                    if (!string.IsNullOrEmpty(myResult))
-                    {
-                        if (myResult.Contains('R'))
-                        {
-                            hasOpenReceivables = true;
-                        }
-
-                        if (accountingSetting.AllowClosureWithoutPayables)
-                        {
-                            if (myResult.Contains('P'))
-                                hasOpenPayables = true;
-                        }
-                    }
-
-                    ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
-                }
+            else
+            {
+                ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
+            }
+        }
+        private static void ValidateMasterAccountingClose(ShipmentPM entityPM, bool hasOpenPayables, bool hasOpenReceivables, AccountingSetting accountingSetting)
+        {
+            if (hasOpenPayables && hasOpenReceivables)
+            {
+                ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
             }
             else
             {
+                string myResult = CheckHousesOpenAmounts(entityPM.Id, entityPM.Tenant);
+                if (string.IsNullOrEmpty(myResult)) return;
+
+                if (myResult.Contains('R'))
+                {
+                    hasOpenReceivables = true;
+                }
+
+                if (accountingSetting.AllowClosureWithoutPayables && myResult.Contains('P'))
+                {
+                    hasOpenPayables = true;
+                }
+
                 ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
             }
         }
@@ -1567,10 +1566,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             if (hasOpenPayables || hasOpenReceivables)
             {
-                string error = "can’t close for accounting if there are any open payables/receivables";
+                string error = "Can’t close for accounting if there are any open payables/receivables";
                 if (levelCode == "C")
                 {
-                    error = "can’t close for accounting if there are any open payables/receivables in the Master or one \nof the connected shipments. Please check and fix this issue and try again";
+                    error = "Can’t close for accounting if there are any open payables/receivables in the Master or one \nof the connected shipments. Please check and fix this issue and try again";
                 }
 
                 throw new ApplicationException(error);
@@ -1583,67 +1582,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             ShipmentPM masterPM = shipmentQuery.GetSinglePM(masterId, tenant);
+            if (masterPM == null) return null;
 
-            if (masterPM != null)
+            foreach (ConsoleShipmentPM consoleShipmentPM in masterPM.ShipmentConsoleShipments)
             {
-                foreach (ConsoleShipmentPM consoleShipmentPM in masterPM.ShipmentConsoleShipments)
+                ShipmentPM consoleShipment = shipmentQuery.GetSinglePM(consoleShipmentPM.Id, tenant);
+                if (consoleShipment != null)
                 {
-                    ShipmentPM consoleShipment = shipmentQuery.GetSinglePM(consoleShipmentPM.Id, tenant);
-
-                    if (consoleShipment != null)
-                    {
-                        if (!hasOpenReceivables)
-                        {
-                            #region
-                            if (consoleShipment.ShipmentReceivables.Count > 0)
-                            {
-                                foreach (ShipmentReceivablePM item in consoleShipment.ShipmentReceivables)
-                                {
-                                    if (item.ShipmentReceivableLineStatusCode != "ACCT" && item.ShipmentReceivableLineStatusCode != "EMPT")
-                                    {
-                                        if (item.TotalAmount != null && item.TotalAmount != 0)
-                                        {
-                                            hasOpenReceivables = true;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            #endregion
-                        }
-
-                        if (!hasOpenPayables)
-                        {
-                            #region
-                            if (consoleShipment.ShipmentPayables.Count > 0)
-                            {
-                                foreach (ShipmentPayablePM item in consoleShipment.ShipmentPayables)
-                                {
-                                    if (item.ShipmentPayableLineStatusCode != "ACCT" && item.ShipmentPayableLineStatusCode != "EMPT" && item.ShipmentPayableParentId == null)
-                                    {
-                                        if (item.ShipmentPayableAmountTypeCode == "NEXP")
-                                        {
-                                            if (item.AccountedAmount != null && item.AccountedAmount != 0)
-                                            {
-                                                hasOpenPayables = true;
-                                                break;
-                                            }
-                                        }
-
-                                        else
-                                        {
-                                            if (item.ExpectedAmount != null && item.ExpectedAmount != 0)
-                                            {
-                                                hasOpenPayables = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            #endregion
-                        }
-                    }
+                    hasOpenReceivables = CheckHouseReceivablesOpenAmounts(consoleShipment, hasOpenReceivables);
+                    hasOpenPayables = CheckHousePayablesOpenAmounts(consoleShipment, hasOpenPayables);
                 }
             }
 
@@ -1659,6 +1606,48 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             }
 
             return myResult;
+        }
+        private static bool CheckHouseReceivablesOpenAmounts(ShipmentPM consoleShipment, bool hasOpenReceivables)
+        {
+            if (!hasOpenReceivables)
+            {
+                foreach (ShipmentReceivablePM item in consoleShipment.ShipmentReceivables)
+                {
+                    if (item.ShipmentReceivableLineStatusCode != "ACCT" && item.ShipmentReceivableLineStatusCode != "EMPT"
+                        && item.TotalAmount != null && item.TotalAmount != 0)
+                    {
+                        hasOpenReceivables = true;
+                        break;
+                    }
+                }
+            }
+
+            return hasOpenReceivables;
+        }
+        private static bool CheckHousePayablesOpenAmounts(ShipmentPM consoleShipment, bool hasOpenPayables)
+        {
+            if (!hasOpenPayables)
+            {
+                foreach (ShipmentPayablePM item in consoleShipment.ShipmentPayables)
+                {
+                    if (item.ShipmentPayableLineStatusCode != "ACCT" && item.ShipmentPayableLineStatusCode != "EMPT" && item.ShipmentPayableParentId == null)
+                    {
+                        if (item.ShipmentPayableAmountTypeCode == "NEXP" && item.AccountedAmount != null && item.AccountedAmount != 0)
+                        {
+                            hasOpenPayables = true;
+                            break;
+                        }
+
+                        else if (item.ExpectedAmount != null && item.ExpectedAmount != 0)
+                        {
+                            hasOpenPayables = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return hasOpenPayables;
         }
     }
     public class DomesticCountry

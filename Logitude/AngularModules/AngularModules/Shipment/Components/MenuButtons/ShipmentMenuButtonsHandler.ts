@@ -690,52 +690,59 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.currentActionName = "AccountingClose";
         var hasOpenPayables: boolean = false;
         var hasOpenReceivables: boolean = false;
-        if (this.EntityPM.ShipmentReceivables.length > 0) {
-            this.EntityPM.ShipmentReceivables.forEach(p => {
-                if (p.ShipmentReceivableLineStatusCode != "ACCT" && p.ShipmentReceivableLineStatusCode != "EMPT")
-                    if (p.TotalAmount != null && p.TotalAmount != 0) hasOpenReceivables = true;
-            });
-        }
 
-        if (!SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables) {
-            if (this.EntityPM.ShipmentPayables.length > 0)
-                this.EntityPM.ShipmentPayables.forEach(p => {
-                    if (p.ShipmentPayableLineStatusCode != "ACCT" && p.ShipmentPayableLineStatusCode != "EMPT")
-                        if (p.ShipmentPayableAmountTypeCode == "NEXP") {
-                            p.AccountedAmount != null && p.AccountedAmount != null ? hasOpenPayables = true : p.ExpectedAmount != null && p.ExpectedAmount != 0 ? hasOpenPayables = true : -1;
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TSV")[0] == null) {
+            if (this.EntityPM.ShipmentReceivables.length > 0) {
+                this.EntityPM.ShipmentReceivables.forEach(p => {
+                    if (p.ShipmentReceivableLineStatusCode != "ACCT" && p.ShipmentReceivableLineStatusCode != "EMPT")
+                        if (p.TotalAmount != null && p.TotalAmount != 0) hasOpenReceivables = true;
+                });
+            }
 
-                        }
-                        else {
-                            if (p.ExpectedAmount != null && p.ExpectedAmount != 0) {
-                                hasOpenPayables = true;
+            if (!SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables) {
+                if (this.EntityPM.ShipmentPayables.length > 0)
+                    this.EntityPM.ShipmentPayables.forEach(p => {
+                        if (p.ShipmentPayableLineStatusCode != "ACCT" && p.ShipmentPayableLineStatusCode != "EMPT")
+                            if (p.ShipmentPayableAmountTypeCode == "NEXP") {
+                                p.AccountedAmount != null && p.AccountedAmount != null ? hasOpenPayables = true : p.ExpectedAmount != null && p.ExpectedAmount != 0 ? hasOpenPayables = true : -1;
+
+                            }
+                            else {
+                                if (p.ExpectedAmount != null && p.ExpectedAmount != 0) {
+                                    hasOpenPayables = true;
+                                }
+                            }
+                    });
+            }
+
+            if (this.EntityPM.ShipmentLevelCode == "C") {
+                if (hasOpenPayables && hasOpenReceivables) {
+                    this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
+
+                }
+                else {
+                    this.shipmentService.CheckHousesOpenAmounts(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                        if (myResponse != null) {
+                            if (myResponse.Result != null && myResponse.Result != "") {
+                                var Result: string = myResponse.Result;
+                                if (Result.includes('R'))
+                                    hasOpenReceivables = true;
+                                if (SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables) {
+                                    if (Result.includes('P'))
+                                        hasOpenPayables = true;
+                                }
                             }
                         }
-                });
-        }
+                    });
 
-        if (this.EntityPM.ShipmentLevelCode == "C") {
-            if (hasOpenPayables && hasOpenReceivables) {
-                this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
-
+                    this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
+                }
             }
             else {
-                this.shipmentService.CheckHousesOpenAmounts(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                    if (myResponse != null) {
-                        if (myResponse.Result != null && myResponse.Result != "") {
-                            var Result: string = myResponse.Result;
-                            if (Result.includes('R'))
-                                hasOpenReceivables = true;
-                            if (SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables) {
-                                if (Result.includes('P'))
-                                    hasOpenPayables = true;
-                            }
-                        }
-                    }
-                });
-
                 this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
             }
         }
+
         else {
             this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
         }
