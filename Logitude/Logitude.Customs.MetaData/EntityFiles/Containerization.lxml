@@ -1549,7 +1549,7 @@
   <field
     Id="&quot;5660ca7e-c543-4d27-b044-a979bee26d40&quot;"
     FieldName="&quot;IsMultiExportFiles&quot;"
-    OldNames="IsMultiCustomers,IsMultiExportFiles"
+    OldNames="IsMultiExportFiles"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
