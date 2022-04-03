@@ -128,7 +128,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        DeclarationNumber = declaration.DeclarationNumber,
 
                                                        //ExporterCode = card.VatNumber
-                                                       ExporterCode = client.Code
+                                                       ExporterCode = client.Code,
+                                                       //ActionCode = en.ExportLogisticPermitAction.LocalName,
+
+
                                                    });
             return query;
         }
