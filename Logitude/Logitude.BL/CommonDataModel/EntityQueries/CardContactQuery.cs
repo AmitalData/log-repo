@@ -236,5 +236,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return myResult;
         }
+
+        public List<string> GetContactsIdsByCardId(string cardId, int tenant)
+        {
+            List<string> cardContactsIds = (from a in repository.context.CardContacts
+                                      where a.CardId == cardId && a.Tenant == tenant
+                                      select a.ContactId).ToList();
+            return cardContactsIds;
+        }
     }
 }
