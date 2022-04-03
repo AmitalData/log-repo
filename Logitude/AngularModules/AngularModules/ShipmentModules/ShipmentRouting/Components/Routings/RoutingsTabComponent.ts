@@ -1648,6 +1648,27 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
+    get Transshipment1TrailerNumber() { return this.EntityPM.Transshipment1TrailerNumber; }
+    set Transshipment1TrailerNumber(value: string) {
+        if (this.EntityPM.Transshipment1TrailerNumber != value) {
+            this.EntityPM.Transshipment1TrailerNumber = value;
+        }
+    }
+
+    get Transshipment2TrailerNumber() { return this.EntityPM.Transshipment2TrailerNumber; }
+    set Transshipment2TrailerNumber(value: string) {
+        if (this.EntityPM.Transshipment2TrailerNumber != value) {
+            this.EntityPM.Transshipment2TrailerNumber = value;
+        }
+    }
+
+    get Transshipment3TrailerNumber() { return this.EntityPM.Transshipment3TrailerNumber; }
+    set Transshipment3TrailerNumber(value: string) {
+        if (this.EntityPM.Transshipment3TrailerNumber != value) {
+            this.EntityPM.Transshipment3TrailerNumber = value;
+        }
+    }
+
     get Master() { return this.EntityPM.Master; }
     set Master(value: string) {
         if (this.EntityPM.Master != value) {

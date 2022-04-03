@@ -3755,7 +3755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ArrivedNotDeliveredQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter ArrivedNotDeliveredQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.ArrivedNotDelivered", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ArrivedNotDeliveredQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.ArrivedNotDelivered", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -3785,7 +3785,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn DeliveredNotReturnedQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter DeliveredNotReturnedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.DeliveredNotReturned", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DeliveredNotReturnedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.DeliveredNotReturned", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -3815,7 +3815,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn InTransitQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter InTransitQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.InTransit", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter InTransitQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.InTransit", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

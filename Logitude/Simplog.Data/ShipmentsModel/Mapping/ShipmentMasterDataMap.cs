@@ -50,6 +50,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Driver).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.TruckNumber).HasMaxLength(15).IsUnicode(true);
             this.Property(t => t.TrailerNumber).HasMaxLength(15).IsUnicode(true);
+            this.Property(t => t.Transshipment1TrailerNumber).HasMaxLength(15).IsUnicode(true);
+            this.Property(t => t.Transshipment2TrailerNumber).HasMaxLength(15).IsUnicode(true);
+            this.Property(t => t.Transshipment3TrailerNumber).HasMaxLength(15).IsUnicode(true);
             this.Property(t => t.ImportManifest).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CarrierTransportDocumentNumber).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CargonautFWBStatusCode).HasMaxLength(4).IsUnicode(false);
@@ -145,6 +148,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Driver).HasColumnName("Driver");
             this.Property(t => t.TruckNumber).HasColumnName("TruckNumber");
             this.Property(t => t.TrailerNumber).HasColumnName("TrailerNumber");
+            this.Property(t => t.Transshipment1TrailerNumber).HasColumnName("Transshipment1TrailerNumber");
+            this.Property(t => t.Transshipment2TrailerNumber).HasColumnName("Transshipment2TrailerNumber");
+            this.Property(t => t.Transshipment3TrailerNumber).HasColumnName("Transshipment3TrailerNumber");
             this.Property(t => t.MainCarriageSTA).HasColumnName("MainCarriageSTA");
             this.Property(t => t.MainCarriageSTD).HasColumnName("MainCarriageSTD");
             this.Property(t => t.Transshipment1STA).HasColumnName("Transshipment1STA");

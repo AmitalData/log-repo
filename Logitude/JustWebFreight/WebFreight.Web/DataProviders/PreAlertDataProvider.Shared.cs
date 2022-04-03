@@ -168,7 +168,6 @@ namespace WebFreight.Web.DataProviders
         public string PreCarriageTo { get; set; }
         public DateTime? PreCarriageETA { get; set; }
         public DateTime? PreCarriageATA { get; set; }
-
         public DateTime? PreForwardingETD { get; set; }
         public DateTime? PreForwardingATD { get; set; }
         public string PreForwardingCarrierCode { get; set; }
@@ -177,8 +176,6 @@ namespace WebFreight.Web.DataProviders
         public string PreForwardingTo { get; set; }
         public DateTime? PreForwardingETA { get; set; }
         public DateTime? PreForwardingATA { get; set; }
-
-
         public string OnForwardingFrom { get; set; }
         public string OnForwardingTo { get; set; }
         public DateTime? OnForwardingETD { get; set; }
@@ -187,7 +184,6 @@ namespace WebFreight.Web.DataProviders
         public DateTime? OnForwardingATA { get; set; }
         public string OnForwardingCarrierCode { get; set; }
         public string OnForwardingCarrierNumber { get; set; }
-
         public string OnCarriageFrom { get; set; }
         public string OnCarriageTo { get; set; }
         public DateTime? OnCarriageETD { get; set; }
@@ -271,6 +267,10 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeContactPhone { get; set; }
         public string ConsigneeAddress { get; set; }
         public string MasterShipmentNumber { get; set; }
+        public string TrailerNumber { get; set; }
+        public string Transshipment1TrailerNumber { get; set; }
+        public string Transshipment2TrailerNumber { get; set; }
+        public string Transshipment3TrailerNumber { get; set; }
     }
 
     public class Packages

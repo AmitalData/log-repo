@@ -992,9 +992,28 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     set TrailerNumber(value: string) {
         if (this.EntityPM.TrailerNumber != value) {
             this.EntityPM.TrailerNumber = value;
-
         }
+    }
 
+    get Transshipment1TrailerNumber() { return this.EntityPM.Transshipment1TrailerNumber; }
+    set Transshipment1TrailerNumber(value: string) {
+        if (this.EntityPM.Transshipment1TrailerNumber != value) {
+            this.EntityPM.Transshipment1TrailerNumber = value;
+        }
+    }
+
+    get Transshipment2TrailerNumber() { return this.EntityPM.Transshipment2TrailerNumber; }
+    set Transshipment2TrailerNumber(value: string) {
+        if (this.EntityPM.Transshipment2TrailerNumber != value) {
+            this.EntityPM.Transshipment2TrailerNumber = value;
+        }
+    }
+
+    get Transshipment3TrailerNumber() { return this.EntityPM.Transshipment3TrailerNumber; }
+    set Transshipment3TrailerNumber(value: string) {
+        if (this.EntityPM.Transshipment3TrailerNumber != value) {
+            this.EntityPM.Transshipment3TrailerNumber = value;
+        }
     }
 
     get LongMaster() { return this.EntityPM.LongMaster; }
@@ -2033,6 +2052,9 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
         if (this.TransportModeId == "I") {
             this.myCloner.AddField('TrailerNumber');
+            this.myCloner.AddField('Transshipment1TrailerNumber');
+            this.myCloner.AddField('Transshipment2TrailerNumber');
+            this.myCloner.AddField('Transshipment3TrailerNumber');
         }
 
         this.myCloner.AddEntity(this.EntityPM);

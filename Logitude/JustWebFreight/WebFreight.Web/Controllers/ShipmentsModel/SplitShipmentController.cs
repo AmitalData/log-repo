@@ -310,6 +310,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Transshipment1CarrierNumber = oldEntity.Transshipment1CarrierNumber,
                 Transshipment1CarrierCode = oldEntity.Transshipment1CarrierCode,
                 Transshipment1CarrierPrefix = oldEntity.Transshipment1CarrierPrefix,
+                Transshipment1TrailerNumber = oldEntity.Transshipment1TrailerNumber,
 
                 Transshipment2FromPortId = oldEntity.Transshipment2FromPortId,
                 Transshipment2FromPortCode = oldEntity.Transshipment2FromPortCode,
@@ -325,6 +326,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Transshipment2CarrierNumber = oldEntity.Transshipment2CarrierNumber,
                 Transshipment2CarrierCode = oldEntity.Transshipment2CarrierCode,
                 Transshipment2CarrierPrefix = oldEntity.Transshipment2CarrierPrefix,
+                Transshipment2TrailerNumber = oldEntity.Transshipment2TrailerNumber,
 
                 Transshipment3FromPortId = oldEntity.Transshipment3FromPortId,
                 Transshipment3FromPortCode = oldEntity.Transshipment3FromPortCode,
@@ -340,6 +342,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Transshipment3CarrierNumber = oldEntity.Transshipment3CarrierNumber,
                 Transshipment3CarrierCode = oldEntity.Transshipment3CarrierCode,
                 Transshipment3CarrierPrefix = oldEntity.Transshipment3CarrierPrefix,
+                Transshipment3TrailerNumber = oldEntity.Transshipment3TrailerNumber,
 
                 Field1 = oldEntity.Field1,
                 Field2 = oldEntity.Field2,
