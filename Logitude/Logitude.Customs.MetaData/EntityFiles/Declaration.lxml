@@ -22635,7 +22635,7 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="15"
         LocalDefaultText="&quot;קישור אחסנות להצהרה&quot;"
-        IsPackagable="false" />
+        IsPackagable="true" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"
