@@ -1032,9 +1032,13 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.EffictiveDate = trariff.ExpirationDate;
 
                     if (tariffType != "IFT")
-                        tariffsSummary.ValidityDate =  this.SetValidityDate(trariff);
-                   
-                    tariffsSummary.Remarks = trariff.Notes;
+                    {
+                        tariffsSummary.ValidityDate = this.SetValidityDate(trariff);
+                        tariffsSummary.Remarks = trariff.Notes;
+                        tariffsSummary.UpdateDate = trariff.UpdateDate;
+                        tariffsSummary.LastUsedDate = trariff.LastUsedDate;
+                    }
+
                     if (CurrentSurcharge != null)
                     {
                         if (!string.IsNullOrEmpty(tariffsSummary.Remarks) && !string.IsNullOrEmpty(CurrentSurcharge.Notes))
@@ -1262,7 +1266,11 @@ namespace Logitude.TariffModule.BL.Helpers
                         tariffsSummary.SurchargesWithoutAllIn = surchargesList.Where(a => !a.IsAllIn).ToList();
                         tariffsSummary.SurchargesPrice = tariffsSummary.SurchargesWithoutAllIn.Sum(s => s.Price).ToString();
                         if (tariffType == "IFT")
+                        {
                             tariffsSummary.ValidityDate = this.SetValidityDate(CurrentSurcharge);
+                            tariffsSummary.UpdateDate = CurrentSurcharge.UpdateDate;
+                            tariffsSummary.LastUsedDate = CurrentSurcharge.LastUsedDate;
+                        }
                     }
                 }
             }
