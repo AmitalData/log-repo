@@ -79,7 +79,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "a50fbe29c3bc01479e030940f2c1f994";
+
+		public const string HashString = "64048bc8fb20d589a0a96dbb06165b17";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "822f",
+			      				    Code =  "4787",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2480,6 +2482,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingGeneralOBetween = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Between", DefaultText = "Between",LocalDefaultText = @"בין", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCQuotationMentions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Quotation.Mentions", DefaultText = "Mentions",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOLocal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Local", DefaultText = "Local",LocalDefaultText = @"מקומ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOOriginal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Original", DefaultText = "Original",LocalDefaultText = @"מקור", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

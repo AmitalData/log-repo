@@ -24,6 +24,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private bool showLocals = false;
         private bool isFromGLAccountAgingData = false;
         private int tenant;
+        string filterReportByLocalCurrency = "filter_LocalCurr";
 
         public AgingReportDataProviderLoader(int _tenant)
         {
@@ -60,9 +61,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             SetLocalCurrency(dataProvider);
             AddTotalBalancePeriods(filteredPeriods, dataProvider);
             AddTotalLocalBalancePeriods(filteredPeriods, dataProvider);
-
-            var showAgingReportWithCalculatedRates = FeatureToggleHelper.HasFeatureToggle("ARR", tenant);
-            if(showAgingReportWithCalculatedRates == true)
+            string currencyOriginalLocalValue = GetFilterValue<string>("CurrencyOriginalLocalValue");
+            if (currencyOriginalLocalValue == filterReportByLocalCurrency)
                 AddCalculatedRatePeriods(filteredPeriods, dataProvider);
 
             CalculateReportLocalBalanceTotal(dataProvider);
@@ -860,6 +860,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             reportParameters.ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode");
             reportParameters.ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountsId");
+            reportParameters.CurrencyOriginalLocalValue = GetFilterValue<string>("CurrencyOriginalLocalValue");
+            
 
             SetFromGLAccountAgingDataServiceParameter(reportParameters);
 

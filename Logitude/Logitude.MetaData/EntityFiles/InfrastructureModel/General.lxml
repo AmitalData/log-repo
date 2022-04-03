@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;822f&quot;"
+  Code="&quot;4787&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5136,6 +5136,18 @@
       Code="&quot;General.MC.Quotation.Mentions&quot;"
       DefaultText="&quot;Mentions&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Local&quot;"
+      DefaultText="&quot;Local&quot;"
+      LocalDefaultText="&quot;מקומ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Original&quot;"
+      DefaultText="&quot;Original&quot;"
+      LocalDefaultText="&quot;מקור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
