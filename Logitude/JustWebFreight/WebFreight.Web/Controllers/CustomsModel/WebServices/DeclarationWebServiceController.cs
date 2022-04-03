@@ -97,7 +97,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 DeclarationConstraintQueryService query = new DeclarationConstraintQueryService(customContext);
-                int countDeclartions = query.GetDeclarationByConsignmentParames(ArrayDeclartiosId.ArrayDeclartiosId);
+                List<string> countDeclartions = query.GetDeclarationByConsignmentParames(ArrayDeclartiosId.ArrayDeclartiosId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, countDeclartions);
             }

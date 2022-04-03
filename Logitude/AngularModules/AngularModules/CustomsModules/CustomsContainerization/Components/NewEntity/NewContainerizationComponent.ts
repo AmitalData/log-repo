@@ -456,7 +456,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
         if (this.entityPM.Id != null) {
             this.declarationWebService.GetDeclarationByConsignmentParames(ArrayDeclartiosId).subscribe(res => {
-                if (res.Result > 0) {
+                if (res.Result !=null) {
                     debugger;
                     myConfirmWindow.Show(`שים לב ישנם ${res.Result} הצהרות נוספות  בעלות אותה מזהים שלא צורפה להמכלה הנוכחית`);
                     myConfirmWindow.WindowClosed.subscribe(event => {
@@ -481,8 +481,8 @@ export class NewContainerizationComponent extends BaseComponent {
             this.declarationWebService.GetDeclarationByConsignmentParames(ArrayDeclartiosId).subscribe(res => {
 
 
-                if (res.Result > 0) {
-                    myConfirmWindow.Show(`שים לב ישנם ${res.Result} הצהרות נוספות  בעלות אותה מזהים שלא צורפה להמכלה הנוכחית`);
+                if (res.Result !=null && res.Result!=0) {
+                    myConfirmWindow.Show(`שים לב ישנם ${res.Result} הצהרות נוספות  בעלות אותה מזהים שלא צורפו להמכלה הנוכחית`);
                     myConfirmWindow.WindowClosed.subscribe(event => {
 
                         if (myConfirmWindow.Yes == true) {
