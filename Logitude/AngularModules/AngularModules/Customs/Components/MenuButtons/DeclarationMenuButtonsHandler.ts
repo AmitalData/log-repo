@@ -212,6 +212,13 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.DisplayText = "המכלה";
                         if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentCode && this.EntityPM.ProcedureCurrentName && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
                                 button.IsHidden = false;
+                                if(!AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)){
+                                    button.DisplayText = "הומכל";
+                                    button.LabelTextCodeCode=""
+                                    
+                                    
+                                   
+                                }
                         } else {
                             button.IsHidden = true;
                         }
