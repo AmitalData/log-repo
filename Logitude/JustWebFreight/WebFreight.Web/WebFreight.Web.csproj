@@ -1153,6 +1153,7 @@
     <Compile Include="Controllers\WebDomainControllers\QuoteOPDomainController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\LogisticActionRequestTypeDomainService.Generated.cs" />
+    <Compile Include="CustomModel\DomainServices\CustomDomainService.CustomsDocumentUpload.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\LastMileReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReportTypes\SlaDetailedReport.cs" />

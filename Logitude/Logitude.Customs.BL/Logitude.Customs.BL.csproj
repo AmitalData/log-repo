@@ -1118,6 +1118,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomsEnvironmentSettingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomerIndicationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCasualDetailsQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsDocumentUploadQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeliveryTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancelRequestRejectReasonTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DocumentRejectTypeQueryService.Generated.cs" />
@@ -1672,6 +1673,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomerIdentificationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsEnvironmentSettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomerIndicationTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsDocumentUploadUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationCasualDetailsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationExportRecipientUpdateService.Generated.cs" />
