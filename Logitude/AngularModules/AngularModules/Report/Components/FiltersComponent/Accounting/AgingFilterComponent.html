@@ -372,6 +372,28 @@
                                 (SelectedItemChanged)="SelectedAgingMethod = $event"></ComboBox>
                             </td>
 
+                            <td></td>
+                             <!-- Currency -->
+                             <td style="width: 120px; ">
+                             <LogLabel [TextCode]="'Accounting.General.O.Currency'" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td style="width: 230px;"  colspan="2">
+                                <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
+                                    <li float-start id="filter_OriginalCurr" (click)="CurrencyFilterClicked('filter_OriginalCurr')"
+                                        style="height: 22px;width: 120px;"
+                                        [class.SelectedFilter]="currencyFilterSelectedValue === 'filter_OriginalCurr'">
+                                        &nbsp;&nbsp;
+                                        {{ 'Accounting.General.O.Original' | TextCodeTranslationPipe }}
+                                        &nbsp;&nbsp;
+                                    </li>
+                                    <li float-start id="filter_LocalCurr"
+                                        (click)="CurrencyFilterClicked('filter_LocalCurr')"
+                                        style="height: 22px;width: 110px;"
+                                        [class.SelectedFilter]="currencyFilterSelectedValue === 'filter_LocalCurr'">
+                                        {{ 'Accounting.General.O.Local' | TextCodeTranslationPipe }}
+                                    </li>
+                                </ul>
+                            </td>
                             <td style="width: 35px;" ></td>
 
                             <!-- Aging methods -->
