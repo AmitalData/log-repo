@@ -933,7 +933,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;ALME&quot;"
+    Code="&quot;All Mentions&quot;"
     TextCode="&quot;All Mentions&quot;"
     QueryGroupCode="&quot;d9b9&quot;"
     IndexOrder="0"
@@ -947,27 +947,27 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;ALME&quot;"
+        QueryCode="&quot;All Mentions&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Name&quot;"
         ColumnWidth="300" />
       <QueryColumn
-        QueryCode="&quot;ALME&quot;"
+        QueryCode="&quot;All Mentions&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;Description&quot;"
         ColumnWidth="500" />
       <QueryColumn
-        QueryCode="&quot;ALME&quot;"
+        QueryCode="&quot;All Mentions&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;InActive&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;ALME&quot;"
+        QueryCode="&quot;All Mentions&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="200" />
       <QueryColumn
-        QueryCode="&quot;ALME&quot;"
+        QueryCode="&quot;All Mentions&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;UpdateDate&quot;"
         ColumnWidth="200" />

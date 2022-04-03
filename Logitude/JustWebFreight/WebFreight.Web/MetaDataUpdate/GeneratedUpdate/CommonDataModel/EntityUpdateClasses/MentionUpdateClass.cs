@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class MentionUpdateClass
    {  		
-		public const string HashString = "bbc3d6180085190cf97c8c459b53bdfc";
+		public const string HashString = "8a0bae5d67f82716178a77d7c9960ff5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -756,24 +756,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode MentionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Mention.Q.ALME", DefaultText = @"All Mentions",LocalDefaultText = null, ObjectTableId = MentionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature MentionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Mention.Q.ALME", ObjectTableId = MentionObjectTable.Id, Tenant = 0, NameTextCodeCode = "MentionFeatures.ALME", NameTextCodeDefaultText = "ALME", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,MentionObjectTable, addedFeatures, addedTextCodes);
+			   TextCode MentionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Mention.Q.AllMentions", DefaultText = @"All Mentions",LocalDefaultText = null, ObjectTableId = MentionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature MentionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Mention.Q.AllMentions", ObjectTableId = MentionObjectTable.Id, Tenant = 0, NameTextCodeCode = "MentionFeatures.AllMentions", NameTextCodeDefaultText = "All Mentions", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,MentionObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ALMEQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MentionTextCode_0.Id, NameTextCodeCode = MentionTextCode_0.Code, ObjectTableName = "Mention", Code = "ALME",  QueryGroupCode = "d9b9", IndexOrder = 0, Tenant = 0, ObjectTableId = MentionObjectTable.Id, QuerySection = "Mention", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MentionFeature_0.Id,FeatureUniqeCode= MentionFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllMentionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MentionTextCode_0.Id, NameTextCodeCode = MentionTextCode_0.Code, ObjectTableName = "Mention", Code = "All Mentions",  QueryGroupCode = "d9b9", IndexOrder = 0, Tenant = 0, ObjectTableId = MentionObjectTable.Id, QuerySection = "Mention", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MentionFeature_0.Id,FeatureUniqeCode= MentionFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ALMEQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALMEQuery.Id,QueryCode = ALMEQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Mention.Name" , ColumnWidth = 300 }, addedQueryColumns);
+			 QueryColumn AllMentionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMentionsQuery.Id,QueryCode = AllMentionsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Mention.Name" , ColumnWidth = 300 }, addedQueryColumns);
 
-			 QueryColumn ALMEQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALMEQuery.Id,QueryCode = ALMEQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Mention.Description" , ColumnWidth = 500 }, addedQueryColumns);
+			 QueryColumn AllMentionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMentionsQuery.Id,QueryCode = AllMentionsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Mention.Description" , ColumnWidth = 500 }, addedQueryColumns);
 
-			 QueryColumn ALMEQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALMEQuery.Id,QueryCode = ALMEQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Mention.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllMentionsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMentionsQuery.Id,QueryCode = AllMentionsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Mention.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALMEQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALMEQuery.Id,QueryCode = ALMEQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Mention.CreateDate" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn AllMentionsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMentionsQuery.Id,QueryCode = AllMentionsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Mention.CreateDate" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn ALMEQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALMEQuery.Id,QueryCode = ALMEQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Mention.UpdateDate" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn AllMentionsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMentionsQuery.Id,QueryCode = AllMentionsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Mention.UpdateDate" , ColumnWidth = 200 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
