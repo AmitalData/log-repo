@@ -621,6 +621,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.DeclarationCustomsRequestsMethod();
                         break;
                     }
+                case "ExportStorageDecleration":
+                    {
+                        this.OpenDeclarationCancellationWindow();
+                        break;
+                    }
             }
         }
     }
