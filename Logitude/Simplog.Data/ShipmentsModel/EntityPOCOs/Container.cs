@@ -347,5 +347,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? PreCarriageGateIn { get; set; }
         public ContainersExternalData ContainersExternalData { get; set; }
         public string ConcurrencyGUID { get; set; }
+        public string UpdatedByPartner { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 ValidateConcurrencyGUID(entityPM, entityPoco);
             }
-            ValidateShipmentConcurrencyGUID(entityPM);
+            ValidateShipmentConcurrencyGUID(entityPM, entityPoco);
         }
 
         private static void ValidateConcurrencyGUID(ContainerPM entityPM, Container entityPoco)
@@ -28,10 +28,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             }
             if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
             {
-                ThrowConcurrencyException(entityPM);
+                ThrowConcurrencyException(entityPM, entityPoco.UpdatedByPartner);
             }
         }
-        private static void ValidateShipmentConcurrencyGUID(ContainerPM entityPM)
+        private static void ValidateShipmentConcurrencyGUID(ContainerPM entityPM, Container entityPoco)
         {
             if (entityPM.IsUpdatedOceanInsightsAnalyzer == true)
                 return;
@@ -43,7 +43,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             }
             if (!entityPM.ShipmentConcurrencyGUID.Equals(shipmentConcurrencyGUID) && !entityPM.ShipmentNewConcurrencyGUID.Equals(shipmentConcurrencyGUID))
             {
-                ThrowConcurrencyException(entityPM);
+                ThrowConcurrencyException(entityPM, entityPoco.UpdatedByPartner);
             }
         }
 
@@ -54,9 +54,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             return shipmentConcurrencyGUID;
         }
 
-        private static void ThrowConcurrencyException(ContainerPM entityPM)
+        private static void ThrowConcurrencyException(ContainerPM entityPM, string updatedByPartner)
         {
             string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+            if (updatedByPartner != null)
+            {
+                msg = msg.Replace("another user", updatedByPartner);
+            }
             throw new OptimisticConcurrencyException(msg);
         }
     }

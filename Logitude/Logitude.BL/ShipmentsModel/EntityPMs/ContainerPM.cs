@@ -352,5 +352,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipmentConcurrencyGUID { get; set; }
         public string ShipmentNewConcurrencyGUID { get; set; }
         public bool IsUpdatedOceanInsightsAnalyzer { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string UpdatedByPartner { get; set; }
     }
 }
