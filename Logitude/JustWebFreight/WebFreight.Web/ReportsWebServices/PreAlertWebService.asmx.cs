@@ -246,7 +246,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.TrailerNumber = shipmentpm.TrailerNumber;
                 prealertDataProvider.Transshipment1TrailerNumber = shipmentpm.Transshipment1TrailerNumber;
                 prealertDataProvider.Transshipment2TrailerNumber = shipmentpm.Transshipment2TrailerNumber;
-                prealertDataProvider.Transshipment3TrailerNumber = shipmentpm.Transshipment2TrailerNumber;
+                prealertDataProvider.Transshipment3TrailerNumber = shipmentpm.Transshipment3TrailerNumber;
 
                 if (shipmentpm.DocumentsClosingDate != null)
                 {
