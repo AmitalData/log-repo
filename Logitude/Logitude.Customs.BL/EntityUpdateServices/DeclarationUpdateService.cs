@@ -1748,7 +1748,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
                 //<--Eitan H 23/5/17 29726
-                myDeclarationPM.IsConnectedToUnifreight = true;
+                if (string.IsNullOrWhiteSpace(myDeclarationPM.Direction) || myDeclarationPM.Direction == "I") myDeclarationPM.IsConnectedToUnifreight = true;
             }
             this.Update(myDeclarationPM, true);
 
