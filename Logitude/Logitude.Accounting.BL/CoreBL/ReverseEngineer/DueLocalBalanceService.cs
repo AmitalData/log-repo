@@ -389,9 +389,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
             }
-            catch (Exception e)
+            catch //(Exception e)
             {
-                LogMessagingUtil.Instance.AppendLine("DueLocalBalanceService Exception e=" + e.ToString());
+              //  LogMessagingUtil.Instance.AppendLine("DueLocalBalanceService Exception e=" + e.ToString());
                 throw;
             }
             finally
