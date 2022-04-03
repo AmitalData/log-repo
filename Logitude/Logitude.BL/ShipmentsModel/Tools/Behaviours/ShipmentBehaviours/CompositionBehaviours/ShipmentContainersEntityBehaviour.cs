@@ -118,6 +118,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.PreCarriageToPortId != this.initializer.EntityMasterData.PreCarriageToPortId)
                 return true;
+            if (this.initializer.EntityPM.PreCarriageETA != this.initializer.EntityMasterData.PreCarriageETA)
+                return true;
+            if (this.initializer.EntityPM.PreCarriageETD != this.initializer.EntityMasterData.PreCarriageETD)
+                return true;
+            if (this.initializer.EntityPM.PreCarriageATA != this.initializer.EntityMasterData.PreCarriageATA)
+                return true;
+            if (this.initializer.EntityPM.PreCarriageATD != this.initializer.EntityMasterData.PreCarriageATD)
+                return true;
             if (this.initializer.EntityPM.MainCarriageToPortId != this.initializer.EntityMasterData.MainCarriageToPortId)
                 return true;
             if (this.initializer.EntityPM.MainCarriageFromPortId != this.initializer.EntityMasterData.MainCarriageFromPortId)
@@ -126,17 +134,49 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.Transshipment1FromPortId != this.initializer.EntityMasterData.Transshipment1FromPortId)
                 return true;
+            if (this.initializer.EntityPM.Transshipment1ETA != this.initializer.EntityMasterData.Transshipment1ETA)
+                return true;
+            if (this.initializer.EntityPM.Transshipment1ETD != this.initializer.EntityMasterData.Transshipment1ETD)
+                return true;
+            if (this.initializer.EntityPM.Transshipment1ATA != this.initializer.EntityMasterData.Transshipment1ATA)
+                return true;
+            if (this.initializer.EntityPM.Transshipment1ATD != this.initializer.EntityMasterData.Transshipment1ATD)
+                return true;
             if (this.initializer.EntityPM.Transshipment2ToPortId != this.initializer.EntityMasterData.Transshipment2ToPortId)
                 return true;
             if (this.initializer.EntityPM.Transshipment2FromPortId != this.initializer.EntityMasterData.Transshipment2FromPortId)
+                return true;
+            if (this.initializer.EntityPM.Transshipment2ETA != this.initializer.EntityMasterData.Transshipment2ETA)
+                return true;
+            if (this.initializer.EntityPM.Transshipment2ETD != this.initializer.EntityMasterData.Transshipment2ETD)
+                return true;
+            if (this.initializer.EntityPM.Transshipment2ATA != this.initializer.EntityMasterData.Transshipment2ATA)
+                return true;
+            if (this.initializer.EntityPM.Transshipment2ATD != this.initializer.EntityMasterData.Transshipment2ATD)
                 return true;
             if (this.initializer.EntityPM.Transshipment3ToPortId != this.initializer.EntityMasterData.Transshipment3ToPortId)
                 return true;
             if (this.initializer.EntityPM.Transshipment3FromPortId != this.initializer.EntityMasterData.Transshipment3FromPortId)
                 return true;
+            if (this.initializer.EntityPM.Transshipment3ETA != this.initializer.EntityMasterData.Transshipment3ETA)
+                return true;
+            if (this.initializer.EntityPM.Transshipment3ETD != this.initializer.EntityMasterData.Transshipment3ETD)
+                return true;
+            if (this.initializer.EntityPM.Transshipment3ATA != this.initializer.EntityMasterData.Transshipment3ATA)
+                return true;
+            if (this.initializer.EntityPM.Transshipment3ATD != this.initializer.EntityMasterData.Transshipment3ATD)
+                return true;
             if (this.initializer.EntityPM.OnCarriageToPortId != this.initializer.EntityMasterData.OnCarriageToPortId)
                 return true;
             if (this.initializer.EntityPM.OnCarriageFromPortId != this.initializer.EntityMasterData.OnCarriageFromPortId)
+                return true;
+            if (this.initializer.EntityPM.OnCarriageETA != this.initializer.EntityMasterData.OnCarriageETA)
+                return true;
+            if (this.initializer.EntityPM.OnCarriageETD != this.initializer.EntityMasterData.OnCarriageETD)
+                return true;
+            if (this.initializer.EntityPM.OnCarriageATA != this.initializer.EntityMasterData.OnCarriageATA)
+                return true;
+            if (this.initializer.EntityPM.OnCarriageATD != this.initializer.EntityMasterData.OnCarriageATD)
                 return true;
             if (this.initializer.EntityPM.StatusId != this.initializer.EntityMasterData.StatusId)
                 return true;
