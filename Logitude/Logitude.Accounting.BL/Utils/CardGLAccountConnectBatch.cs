@@ -79,7 +79,7 @@ namespace Logitude.Accounting.BL.Utils
                     }
                     catch (Exception e)
                     {
-                        throw new Exception("RunCardGLAccountConnect failed while performing TryCustomers ", e);
+                        throw; // new Exception("RunCardGLAccountConnect failed while performing TryCustomers ", e);
                     }
                 }
 
@@ -93,7 +93,7 @@ namespace Logitude.Accounting.BL.Utils
                     }
                     catch (Exception e)
                     {
-                        throw new Exception("RunCardGLAccountConnect failed while performing TryVendors ", e);
+                        throw; // new Exception("RunCardGLAccountConnect failed while performing TryVendors ", e);
                     }
                 }
 
@@ -107,7 +107,7 @@ namespace Logitude.Accounting.BL.Utils
                     }
                     catch (Exception e)
                     {
-                        throw new Exception("RunCardGLAccountConnect failed while performing TryAllOthers ", e);
+                        throw; // new Exception("RunCardGLAccountConnect failed while performing TryAllOthers ", e);
                     }
                 }
 
