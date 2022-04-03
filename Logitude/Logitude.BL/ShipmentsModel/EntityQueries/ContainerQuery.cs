@@ -278,6 +278,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OnCarriageGateOut = container.OnCarriageGateOut,
                     PreCarriageGateIn = container.PreCarriageGateIn,
                     ConcurrencyGUID = container.ConcurrencyGUID,
+                    UpdatedByPartner = container.UpdatedByPartner,
                 };
 
                 if (container.EntityStatus != null)
@@ -566,6 +567,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                         OnCarriageGateOut = container.OnCarriageGateOut,
                         PreCarriageGateIn = container.PreCarriageGateIn,
+                        UpdatedByPartner = container.UpdatedByPartner,
                     }).ToList();
         }
 
@@ -826,6 +828,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                                                    OnCarriageGateOut = container.OnCarriageGateOut,
                                                    PreCarriageGateIn = container.PreCarriageGateIn,
+                                                   UpdatedByPartner = container.UpdatedByPartner,
                                                };
             return result;
         }
@@ -1072,6 +1075,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                     OnCarriageGateOut = container.OnCarriageGateOut,
                     PreCarriageGateIn = container.PreCarriageGateIn,
+                    UpdatedByPartner = container.UpdatedByPartner,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1332,6 +1336,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                     OnCarriageGateOut = container.OnCarriageGateOut,
                     PreCarriageGateIn = container.PreCarriageGateIn,
+                    UpdatedByPartner = container.UpdatedByPartner,
                 };
             }
 
@@ -1580,6 +1585,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                     OnCarriageGateOut = container.OnCarriageGateOut,
                     PreCarriageGateIn = container.PreCarriageGateIn,
+                    UpdatedByPartner = container.UpdatedByPartner,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1840,6 +1846,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                     OnCarriageGateOut = container.OnCarriageGateOut,
                     PreCarriageGateIn = container.PreCarriageGateIn,
+                    UpdatedByPartner = container.UpdatedByPartner,
                 };
             }
 

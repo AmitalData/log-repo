@@ -257,5 +257,6 @@ export class ContainerList {
 		IsUpdateEntityException: boolean;
 		OnCarriageGateOut: Date;
 		PreCarriageGateIn: Date;
+		UpdatedByPartner: string;
 	
 }

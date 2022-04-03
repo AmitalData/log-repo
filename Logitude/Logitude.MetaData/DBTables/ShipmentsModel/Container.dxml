@@ -1502,6 +1502,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="UpdatedByPartner"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

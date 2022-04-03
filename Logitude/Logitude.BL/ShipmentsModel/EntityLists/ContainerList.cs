@@ -263,5 +263,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool IsUpdateEntityException { get; set; }
         public DateTime? OnCarriageGateOut { get; set; }
         public DateTime? PreCarriageGateIn { get; set; }
+        public string UpdatedByPartner { get; set; }
     }
 }

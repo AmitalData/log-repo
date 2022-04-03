@@ -1,6 +1,9 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -166,7 +169,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.IsExceptionResolved = containerPM.IsExceptionResolved;
             container.PreCarriageGateIn = containerPM.PreCarriageGateIn;
             container.OnCarriageGateOut = containerPM.OnCarriageGateOut;
+            container.UpdatedByPartner = SetUpdatedByPartner(containerPM);
         }
+        private static string SetUpdatedByPartner(ContainerPM entityPM)
+        {
+            string updatedByPartner = null;
+            if (entityPM.IsUpdatedOceanInsightsAnalyzer)
+            {
+                updatedByPartner = "Ocean Insights";
+            }
+            else
+            {
+                updatedByPartner = GetUserName(entityPM.UpdatedByUserId, entityPM.Tenant);
+            }
+            return updatedByPartner;
+        }
+        private static string GetUserName(string UpdatedByUserId, int tenant)
+        {
+            string userName = null;
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            ContactRepository contactRep = new ContactRepository(commonContext);
+            string email = "system@tenant" + tenant + ".com";
+
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
+            {
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
+
+            Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
+            if (contact != null)
+            {
+                userName = contact.EnglishName;
+            }
+
+            return userName;
+        }
+
         public static void MapContainerShipmentFields(ContainerPM containerPM, Container container)
         {
             container.ShipmentId = containerPM.ShipmentId;
