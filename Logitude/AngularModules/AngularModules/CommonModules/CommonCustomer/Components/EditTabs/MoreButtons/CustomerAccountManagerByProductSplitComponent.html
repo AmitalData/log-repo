@@ -16,7 +16,7 @@
                     <log-column [width]="'200'" [header]="'Account Manager'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEnabled]="true">
-                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
+                                <div *ngIf="IsDisabled || logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
                                     {{item.PartnerName}}
                                 </div>
 
