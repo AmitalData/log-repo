@@ -254,17 +254,7 @@ export class AddEditOceanPackageComponent {
     }
 
     OpenContainerEntityWindow() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Container";
-        logWindow.IsFillScreen = true;
-        var ContainerEntityId = this.EntityPM?.ContainerEntityId;
-        if (!AppTool.IsNullOrEmpty(ContainerEntityId)) {
-            logWindow.ShowEditComponent(ContainerEntityId, "Container");
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(s => {
-                });
-            });
-        }
+        this.DataContext.fatherComponent.ViewContainerEntity(this.DataContext);
     }
 
     private myCloner: Cloner;

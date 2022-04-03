@@ -12,8 +12,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
     public partial class ShipmentMapping
     {
-        private static CardQuery cardQuery;
         public static void MapContainer(ContainerPM containerPM, Container container, bool isNewEntity)
+        {
+            ShipmentMapping.MapContainerConcurrencyFields(containerPM, container, isNewEntity);
+            BuildSearchField(containerPM, container);
+        }
+        public static void MapContainerFields(ContainerPM containerPM, Container container, bool isNewEntity)
         {
             if (isNewEntity)
             {
@@ -22,21 +26,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 container.CreateDate = containerPM.CreateDate;
                 container.CreatedByUserId = containerPM.CreatedByUserId;
             }
-
             container.UpdateDate = containerPM.UpdateDate;
             container.UpdatedByUserId = containerPM.UpdatedByUserId;
-            container.MainCarriageCarrierId = containerPM.MainCarriageCarrierId;
-            container.MainCarriageCarrierNumber = containerPM.MainCarriageCarrierNumber;
-            container.MainCarriageATA = containerPM.MainCarriageATA;
-            container.MainCarriageATD = containerPM.MainCarriageATD;
-            container.MainCarriageETA = containerPM.MainCarriageETA;
-            container.MainCarriageETD = containerPM.MainCarriageETD;
-            container.MainCarriageVesselId = containerPM.MainCarriageVesselId;
             container.DischargeDate = containerPM.DischargeDate;
-            container.Master = containerPM.Master;
-            container.ShipmentPackagesId = containerPM.ShipmentPackagesId;
             container.ContainerNumber = containerPM.ContainerNumber;
-            container.ShipmentId = containerPM.ShipmentId;
             container.ActualEmptyPickupDate = containerPM.ActualEmptyPickupDate;
             container.EstimatedEmptyPickupDate = containerPM.EstimatedEmptyPickupDate;
             container.CurrentStatus = containerPM.CurrentStatus;
@@ -46,22 +39,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.EmptyPickupLocation = containerPM.EmptyPickupLocation;
             container.DepartureLocation = containerPM.DepartureLocation;
             container.DestinationLocation = containerPM.DestinationLocation;
-            container.ShipmentPickupFrom = containerPM.ShipmentPickupFrom;
-            container.ShipmentPickupTo = containerPM.ShipmentPickupTo;
-            container.ShipmentPreCarriageFromId = containerPM.ShipmentPreCarriageFromId;
-            container.ShipmentPreCarriageToId = containerPM.ShipmentPreCarriageToId;
-            container.ShipmentMainCarriageFromId = containerPM.ShipmentMainCarriageFromId;
-            container.ShipmentMainCarriageToId = containerPM.ShipmentMainCarriageToId;
-            container.ShipmentTransshipment1FromId = containerPM.ShipmentTransshipment1FromId;
-            container.ShipmentTransshipment1ToId = containerPM.ShipmentTransshipment1ToId;
-            container.ShipmentTransshipment2FromId = containerPM.ShipmentTransshipment2FromId;
-            container.ShipmentTransshipment2ToId = containerPM.ShipmentTransshipment2ToId;
-            container.ShipmentTransshipment3FromId = containerPM.ShipmentTransshipment3FromId;
-            container.ShipmentTransshipment3ToId = containerPM.ShipmentTransshipment3ToId;
-            container.ShipmentOnCarriageFromId = containerPM.ShipmentOnCarriageFromId;
-            container.ShipmentOnCarriageToId = containerPM.ShipmentOnCarriageToId;
-            container.ShipmentDeliveryFrom = containerPM.ShipmentDeliveryFrom;
-            container.ShipmentDeliveryTo = containerPM.ShipmentDeliveryTo;
             container.OnCarriageLocation = containerPM.OnCarriageLocation;
             container.OnCarriageETD = containerPM.OnCarriageETD;
             container.OnCarriageATD = containerPM.OnCarriageATD;
@@ -140,14 +117,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.EstimatedEmptyReturn = containerPM.EstimatedEmptyReturn;
             container.ActualEmptyReturn = containerPM.ActualEmptyReturn;
             container.CustomsReleaseState = containerPM.CustomsReleaseState;
-            container.CustomsReleaseDate = containerPM.CustomsReleaseDate;
             container.CarrierReleaseState = containerPM.CarrierReleaseState;
-            container.CarrierReleaseDate = containerPM.CarrierReleaseDate;
             container.AvailablityDate = containerPM.AvailablityDate;
             container.AvailabilityLocation = containerPM.AvailabilityLocation;
             container.FreeDays = containerPM.FreeDays;
             container.LastFreeDayDate = containerPM.LastFreeDayDate;
-            container.ShipmentStatusId = containerPM.ShipmentStatusId;
             container.EmptyPickupLocationPortId = containerPM.EmptyPickupLocationPortId;
             container.PreCarriageLocationPortId = containerPM.PreCarriageLocationPortId;
             container.EmptyReturnLocationPortId = containerPM.EmptyReturnLocationPortId;
@@ -170,10 +144,45 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.Field8 = containerPM.Field8 != null ? containerPM.Field8.Value : null;
             container.Field9 = containerPM.Field9 != null ? containerPM.Field9.Value : null;
             container.Field10 = containerPM.Field10 != null ? containerPM.Field10.Value : null;
-            container.TerminalId = containerPM.TerminalId;
-            container.TerminalAddress = containerPM.TerminalAddress; 
+            container.TerminalAddress = containerPM.TerminalAddress;
             container.TerminalPhone = containerPM.TerminalPhone;
             container.TerminalAddressId = containerPM.TerminalAddressId;
+            container.IsAutomaticUpdates = containerPM.IsAutomaticUpdates;
+            container.IsClosed = containerPM.IsClosed;
+            container.ClosedDate = containerPM.ClosedDate;
+            container.StatusId = containerPM.StatusId;
+            container.IsCancelled = containerPM.IsCancelled;
+            container.CancelledDate = containerPM.CancelledDate;
+            container.Leg1VesselId = containerPM.Leg1VesselId;
+            container.Leg2VesselId = containerPM.Leg2VesselId;
+            container.Leg3VesselId = containerPM.Leg3VesselId;
+            container.Leg4VesselId = containerPM.Leg4VesselId;
+            container.Leg5VesselId = containerPM.Leg5VesselId;
+            container.ExceptionDate = containerPM.ExceptionDate;
+            container.ExceptionDescription = containerPM.ExceptionDescription;
+            container.ExceptionResolvedDescription = containerPM.ExceptionResolvedDescription;
+            container.HasException = containerPM.HasException;
+            container.LastExceptionDescription = containerPM.LastExceptionDescription;
+            container.IsExceptionResolved = containerPM.IsExceptionResolved;
+            container.PreCarriageGateIn = containerPM.PreCarriageGateIn;
+            container.OnCarriageGateOut = containerPM.OnCarriageGateOut;
+        }
+        public static void MapContainerShipmentFields(ContainerPM containerPM, Container container)
+        {
+            container.ShipmentId = containerPM.ShipmentId;
+            container.CustomsReleaseDate = containerPM.CustomsReleaseDate;
+            container.CarrierReleaseDate = containerPM.CarrierReleaseDate;
+            container.Master = containerPM.Master;
+            container.VesselName = containerPM.VesselName;
+            container.MainCarriageCarrierId = containerPM.MainCarriageCarrierId;
+            container.MainCarriageCarrierNumber = containerPM.MainCarriageCarrierNumber;
+            container.MainCarriageATA = containerPM.MainCarriageATA;
+            container.MainCarriageATD = containerPM.MainCarriageATD;
+            container.MainCarriageETA = containerPM.MainCarriageETA;
+            container.MainCarriageETD = containerPM.MainCarriageETD;
+            container.MainCarriageVesselId = containerPM.MainCarriageVesselId;
+            container.ShipmentPackagesId = containerPM.ShipmentPackagesId;
+            container.ShipmentStatusId = containerPM.ShipmentStatusId;
             container.ShipmentPickupETA = containerPM.ShipmentPickupETA;
             container.ShipmentPickupETD = containerPM.ShipmentPickupETD;
             container.ShipmentPickupATA = containerPM.ShipmentPickupATA;
@@ -209,44 +218,38 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.ShipmentOriginAgentId = containerPM.ShipmentOriginAgentId;
             container.ShipmentDestinationAgentId = containerPM.ShipmentDestinationAgentId;
             container.ShipmentNumber = containerPM.ShipmentNumber;
+            container.ShipmentTypeId = containerPM.ShipmentTypeId;
+            container.ShipmentCreateDate = containerPM.ShipmentCreateDate;
+            container.ShipmentDeliveryTruckerId = containerPM.ShipmentDeliveryTruckerId;
+            container.ShipmentPickupFrom = containerPM.ShipmentPickupFrom;
+            container.ShipmentPickupTo = containerPM.ShipmentPickupTo;
+            container.ShipmentPreCarriageFromId = containerPM.ShipmentPreCarriageFromId;
+            container.ShipmentPreCarriageToId = containerPM.ShipmentPreCarriageToId;
+            container.ShipmentMainCarriageFromId = containerPM.ShipmentMainCarriageFromId;
+            container.ShipmentMainCarriageToId = containerPM.ShipmentMainCarriageToId;
+            container.ShipmentTransshipment1FromId = containerPM.ShipmentTransshipment1FromId;
+            container.ShipmentTransshipment1ToId = containerPM.ShipmentTransshipment1ToId;
+            container.ShipmentTransshipment2FromId = containerPM.ShipmentTransshipment2FromId;
+            container.ShipmentTransshipment2ToId = containerPM.ShipmentTransshipment2ToId;
+            container.ShipmentTransshipment3FromId = containerPM.ShipmentTransshipment3FromId;
+            container.ShipmentTransshipment3ToId = containerPM.ShipmentTransshipment3ToId;
+            container.ShipmentOnCarriageFromId = containerPM.ShipmentOnCarriageFromId;
+            container.ShipmentOnCarriageToId = containerPM.ShipmentOnCarriageToId;
+            container.ShipmentDeliveryFrom = containerPM.ShipmentDeliveryFrom;
+            container.ShipmentDeliveryTo = containerPM.ShipmentDeliveryTo;
             container.ContainersCount = containerPM.ContainersCount;
             container.HandlerId = containerPM.HandlerId;
             container.CustomerId = containerPM.CustomerId;
             container.OPClosed = containerPM.OPClosed;
-            container.ShipmentTypeId = containerPM.ShipmentTypeId;
-            container.ShipmentCreateDate = containerPM.ShipmentCreateDate;
+            container.TerminalId = containerPM.TerminalId;
             container.PODReceivedOnDate = containerPM.PODReceivedOnDate;
-            container.IsAutomaticUpdates = containerPM.IsAutomaticUpdates;
-            container.IsClosed = containerPM.IsClosed;
-            container.ClosedDate = containerPM.ClosedDate;
-            container.StatusId = containerPM.StatusId;
-            container.IsCancelled = containerPM.IsCancelled;
-            container.CancelledDate = containerPM.CancelledDate;
-            container.ShipmentDeliveryTruckerId = containerPM.ShipmentDeliveryTruckerId;
-            container.Leg1VesselId = containerPM.Leg1VesselId;
-            container.Leg2VesselId = containerPM.Leg2VesselId;
-            container.Leg3VesselId = containerPM.Leg3VesselId;
-            container.Leg4VesselId = containerPM.Leg4VesselId;
-            container.Leg5VesselId = containerPM.Leg5VesselId;
-            container.ExceptionDate = containerPM.ExceptionDate;
-            container.ExceptionDescription = containerPM.ExceptionDescription;
-            container.ExceptionResolvedDescription = containerPM.ExceptionResolvedDescription;
-            container.HasException = containerPM.HasException;
-            container.LastExceptionDescription = containerPM.LastExceptionDescription;
-            container.IsExceptionResolved = containerPM.IsExceptionResolved;
             container.EmptyContainerReturnETA = containerPM.EmptyContainerReturnETA;
             container.EmptyContainerReturnATA = containerPM.EmptyContainerReturnATA;
             container.EmptyContainerReturnETD = containerPM.EmptyContainerReturnETD;
             container.EmptyContainerReturnATD = containerPM.EmptyContainerReturnATD;
             container.EmptyContainerReturnFrom = containerPM.EmptyContainerReturnFrom;
             container.EmptyContainerReturnTo = containerPM.EmptyContainerReturnTo;
-            container.PreCarriageGateIn = containerPM.PreCarriageGateIn;
-            container.OnCarriageGateOut = containerPM.OnCarriageGateOut;
-            container.VesselName = containerPM.VesselName;
-
-            BuildSearchField(containerPM, container);
         }
-
         public static void BuildSearchField(ContainerPM containerPM, Container container)
         {
             string mySearchFields = "";

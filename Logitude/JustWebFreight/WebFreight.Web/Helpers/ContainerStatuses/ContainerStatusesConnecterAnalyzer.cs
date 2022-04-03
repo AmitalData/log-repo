@@ -1163,7 +1163,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.FillFieldsNewValues("ActualPOLArrival", containerUpdatedFields.ActualPOLArrival, container);
                 this.FillFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation, container);
                 this.FillFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation, container);
-
+                container.IsUpdatedOceanInsightsAnalyzer = true;
                 container.CurrentStatus = containerUpdatedFields.CurrentStatus;
                 container.CurrentLocation = containerUpdatedFields.CurrentLocation;
                 container.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
@@ -1267,10 +1267,20 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.Transshipment3LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment3Location);
                 container.Transshipment4LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment4Location);
                 container.IsAutomaticUpdates = true;
+                MapConcurrencyFields(container);
                 this.SaveContainer();
             }
         }
-
+        private void MapConcurrencyFields(ContainerPM containerPM)
+        {
+            containerPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            if (string.IsNullOrEmpty(containerPM.ShipmentId))
+            {
+                return;
+            }
+            containerPM.ShipmentConcurrencyGUID = containerRepository.GetConcurrencyGUIDByShipmentId(containerPM.ShipmentId, containerPM.Tenant);
+            containerPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
+        }
         private void GetContainersExternalData()
         {
             this.containersExternal = new ContainersExternal();

@@ -146,7 +146,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.DestinationWarehouseId != this.initializer.EntityPOCO.DestinationWarehouseId)
                 return true;
-
+            if (this.initializer.ShipmentPickUpsChangeSet != null && this.initializer.ShipmentPickUpsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())
+                return true;
+            if (this.initializer.ShipmentDeliveriesChangeSet != null && this.initializer.ShipmentDeliveriesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())
+                return true;
+            if (this.initializer.ShipmentPackagesChangeSet != null && this.initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())
+                return true;
             return false;
         }
 
@@ -287,22 +292,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 ContainerPM containerPM = new ContainerPM();
                 MapContainerPMFields(containerPM, shipmentPackage, true);
+                MapConcurrencyFields(containerPM);
                 containerService.Create(containerPM);
                 UpdateShipmentPackage(containerPM.Id, shipmentPackage.Id);
+                return;
             }
-            else
-            {
-                UpdateContainer(shipmentPackage);
-            }
+            if (!CheckIfShipmentMasterDataFieldsUpdated())
+                return;
+
+            UpdateContainer(shipmentPackage);
         }
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)
         {
             var container = CheckIfContainerExists(shipmentPackage);
-            if (container != null)
+            if (container == null)
             {
-                MapContainerPMFields(container, shipmentPackage, false);
-                containerService.Update(container);
+                return;
             }
+            MapContainerPMFields(container, shipmentPackage, false);
+            containerService.Update(container);
         }
 
         private void MapContainerPMFields(ContainerPM container, ShipmentPackagePM shipmentPackage, bool isNew)
@@ -608,7 +616,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 MapEmptyContainerReturnFields(shipmentPackagePM, containerPM);
             }
         }
-
+        private void MapConcurrencyFields(ContainerPM containerPM)
+        {
+            containerPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            if (string.IsNullOrEmpty(containerPM.ShipmentId))
+            {
+                return;
+            }
+            containerPM.ShipmentConcurrencyGUID = containerRepository.GetConcurrencyGUIDByShipmentId(containerPM.ShipmentId, containerPM.Tenant);
+            containerPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
+        }
         private bool IsShipmentPackageDisconnectingToEmptyContainerReturn(ShipmentPackage shipmentPackage, ShipmentPackagePM shipmentPackagePM)
         {
             if (shipmentPackage == null)

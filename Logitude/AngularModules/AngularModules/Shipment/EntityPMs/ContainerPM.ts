@@ -1316,6 +1316,26 @@ export class ContainerPM {
     public set PreCarriageGateIn(newValue: Date) { if (this.preCarriageGateIn != newValue) { this.preCarriageGateIn = newValue; this.MarkAsDirty("PreCarriageGateIn"); } }
        
 	 
+    private concurrencyGUID: string;
+    public get ConcurrencyGUID() { return this.concurrencyGUID; }
+    public set ConcurrencyGUID(newValue: string) { if (this.concurrencyGUID != newValue) { this.concurrencyGUID = newValue; this.MarkAsDirty("ConcurrencyGUID"); } }
+       
+	 
+    private newConcurrencyGUID: string;
+    public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
+    public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
+       
+	 
+    private shipmentConcurrencyGUID: string;
+    public get ShipmentConcurrencyGUID() { return this.shipmentConcurrencyGUID; }
+    public set ShipmentConcurrencyGUID(newValue: string) { if (this.shipmentConcurrencyGUID != newValue) { this.shipmentConcurrencyGUID = newValue; this.MarkAsDirty("ShipmentConcurrencyGUID"); } }
+       
+	 
+    private shipmentNewConcurrencyGUID: string;
+    public get ShipmentNewConcurrencyGUID() { return this.shipmentNewConcurrencyGUID; }
+    public set ShipmentNewConcurrencyGUID(newValue: string) { if (this.shipmentNewConcurrencyGUID != newValue) { this.shipmentNewConcurrencyGUID = newValue; this.MarkAsDirty("ShipmentNewConcurrencyGUID"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

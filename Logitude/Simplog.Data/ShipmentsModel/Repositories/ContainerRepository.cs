@@ -111,5 +111,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     where container.ContainerNumber == containerNumber && container.Tenant == tenant && container.ShipmentId == shipmentId && container.IsCancelled
                     select container).FirstOrDefault();
         }
+
+        public string GetConcurrencyGUIDByShipmentId(string shipmentId, int tenant)
+        {
+            return (from shipment in context.Shipments
+                    where shipment.Id == shipmentId && shipment.Tenant == tenant 
+                    select shipment.ConcurrencyGUID).FirstOrDefault();
+        }
     }
 }
