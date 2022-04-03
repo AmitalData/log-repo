@@ -73,10 +73,11 @@ namespace Logitude.Customs.Data.Repsitories
 
             return constraints.FirstOrDefault().DeclarationID;
         }
-        public int GetDeclarationByConsignmentParames(string[] ArrayDeclartiosId)
+        public List<string> GetDeclarationByConsignmentParames(string[] ArrayDeclartiosId)
         {
 
             List<Consignment> declarationConstraintConsignments;
+                List<string> consignmentParames;   
             try
             {    
                 string a= ArrayDeclartiosId[0];
@@ -87,13 +88,14 @@ namespace Logitude.Customs.Data.Repsitories
                                                          where c.CargoTypeCode == consignment.CargoTypeCode && c.ManifestNumber == consignment.ManifestNumber &&
                                                          c.SecondCargoID == consignment.SecondCargoID && c.ThirdCargoID == consignment.ThirdCargoID && c.Declaration.ExportContainerizationID == null
                                                          select c).ToList();
-                    return declarationConstraintConsignments.FindAll(x => !ArrayDeclartiosId.Contains(x.DeclarationId)).Count();
+                    consignmentParames = declarationConstraintConsignments.FindAll(x => !ArrayDeclartiosId.Contains(x.DeclarationId)).Select(s => s.Declaration.CustomFileNo).ToList();
+                    return consignmentParames;
                 }
-                return -1;
+                return null;
             }
             catch (Exception ex)
             {
-                return 0;
+                return null;
             }
 
 
