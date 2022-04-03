@@ -1329,10 +1329,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 });
             }
             else {
-                var freightChrage = this.CheckFreightDuplicate();
-                if (freightChrage) {
+                var freightChrageError = this.ValidateFreightQuoteCharges();
+                if (freightChrageError) {
                     var messageWindow = new MessageWindow();
-                    messageWindow.Show("Freight Charge already added.");
+                    messageWindow.Show(freightChrageError);
                 }
                 else {
                     this.CurrentSession.StartBusyIndicatorLoading();
@@ -1347,8 +1347,27 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.FatherComponent.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT").length > 0) {
             isfreighExists = true;
         }
+
         return isfreighExists;
     }
+
+    public ValidateFreightQuoteCharges(): string {
+        var errors = null;
+        var numberOfFreightQuoteCharges = this.FatherComponent.EntityPM?.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT").length;
+        if (this.FatherComponent.EntityPM.TransportModeId == "I") {
+            var allInItems = this.FatherComponent.EntityPM?.QuoteCharges.filter(d => d.IsAllIN).length;
+            if (numberOfFreightQuoteCharges > 0 && allInItems > 0) {
+                errors = "A second freight charge cannot be added while some charges are marked as 'All-In'.";
+            }
+        }
+        else {
+            if (numberOfFreightQuoteCharges > 0) {
+                errors = "Freight Charge already added";
+            }
+        }
+        return errors;
+    }
+
     OverrideTariffQuoteCharges(): any {
         this.TariffList_Quote.forEach(item => {
             var charge: QuoteChargePM = this.FatherComponent.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostCurrencyId == item.CostCurrencyId && d.CostMeasurementId == item.CostMeasurementId && (d.TariffId == item.TariffId || d.TariffId == null))[0];
@@ -1457,6 +1476,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.FatherComponent.ItemsSource.Insert(chargeItem);
         });
         this.ReloadTariffCharges(truckerId);
+        this.FatherComponent.IsAllowingMultipleFreightChargesMethod(this.FatherComponent.EntityPM);
     }
     ReloadTariffCharges(truckerId) {
         this.FatherComponent.BuildItemsSource();

@@ -81,7 +81,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.Listen();
     }
 
-    private IsAllowingMultipleFreightChargesMethod() {
+    public IsAllowingMultipleFreightChargesMethod() {
         this.IsAllowingMultipleFreightCharges = QuoteUtilities.IsAllowingMultipleFreightCharges(this.EntityPM);
     }
 
@@ -612,11 +612,11 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         return type;
     }
     IsPriceCheckPortsEnabled(tariffType: string) {
-        var isPortsEnabled = false;
+        var isPortsEnabled = true;
         var inlandFTLTraiffCode = "IFT";
         if (tariffType == inlandFTLTraiffCode) {
             var isInlandDomestic = QuoteUtilities.IsInlandDomestic(this.EntityPM);
-            if (isInlandDomestic)
+            if (isInlandDomestic && this.EntityPM.FromPortId && this.EntityPM.ToPortId)
                 isPortsEnabled = false;
             else
                 isPortsEnabled = true;
