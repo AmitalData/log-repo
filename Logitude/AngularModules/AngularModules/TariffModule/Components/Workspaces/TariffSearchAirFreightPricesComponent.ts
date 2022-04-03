@@ -1286,7 +1286,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
             var isDuplicate = this.CheckTariffChargesDuplicate();
             var isSellerDifferentFromMainCarrier = this.CheckTariffSellerAndQuoteMainCarrier(item);
-            if (isDuplicate && !isSellerDifferentFromMainCarrier) {
+            var freightChrageError = this.ValidateFreightQuoteCharges();
+            if (freightChrageError) {
+                var messageWindow = new MessageWindow();
+                messageWindow.Show(freightChrageError);
+            }
+            else if (isDuplicate && !isSellerDifferentFromMainCarrier) {
                 // override
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Show("This generate will update on the existing lines.");
@@ -1329,15 +1334,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 });
             }
             else {
-                var freightChrageError = this.ValidateFreightQuoteCharges();
-                if (freightChrageError) {
-                    var messageWindow = new MessageWindow();
-                    messageWindow.Show(freightChrageError);
-                }
-                else {
-                    this.CurrentSession.StartBusyIndicatorLoading();
-                    this.AssignTariffChargesToQuote();
-                }
+                this.CurrentSession.StartBusyIndicatorLoading();
+                this.AssignTariffChargesToQuote();
             }
         }
     }
