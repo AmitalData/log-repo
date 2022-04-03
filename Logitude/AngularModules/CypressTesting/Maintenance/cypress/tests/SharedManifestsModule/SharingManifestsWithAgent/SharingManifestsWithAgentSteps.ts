@@ -19,6 +19,8 @@ import { ShipmentContext } from '../../../../../Shipment/cypress/models/Shipment
 //#region variables
 let MasterShipmentDetails: ShipmentDetails;
 let shipmentDetails: ShipmentDetails;
+let MAWB: string;
+let TransportMode: string;
 let code = null
 let Secondcode = null
 //#endregion
@@ -53,14 +55,15 @@ Then("the agent should create successfully", () => {
 //#region Create master export air shipment
 Given("the user navigates to shipments workspace", () => {
     code = Actions.getCardCode()
-    cy.log(code+" Agent code")
+    cy.log(code + " Agent code")
     ShipmentActions.NavigatesToShipmentsWorkspace()
 });
 
 Given("a master Shipment with following details", (dataTable) => {
     const shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     MasterShipmentDetails = shipmentDetails;
-    MasterShipmentDetails.Agent=code;
+    MasterShipmentDetails.Agent = code;
+    TransportMode = shipmentDetails.TransportMode
     ShipmentActions.OpenNewShipmentWizard(MasterShipmentDetails.ShipmentLevel);
     ShipmentActions.FillShipmentWizardsFields(MasterShipmentDetails);
 });
@@ -75,36 +78,37 @@ Then("the master should create successfully", () => {
     })
 });
 //#endregion
-When ("the user try to sharing manifest in a shipment with no MAWB number", () => {
+When("the user try to sharing manifest in a shipment with no MAWB number", () => {
     ShipmentActions.OpenShipment(ShipmentContext.MasterNumber);
     SharedManifestsActions.ShareManifestAction()
 });
-Then ("the following validation appears {string}", (ErrorMessage) => {
+Then("the following validation appears {string}", (ErrorMessage) => {
     SharedManifestsActions.ValidateShareManifestErrorMessage(ErrorMessage)
 });
 
-Given ("the user fill {string} as master number for the shipment and remove the consignee", (masterNumber) => {
-    SharedManifestsActions.UpdateShipment(masterNumber)
+Given("the user fill {string} as master number for the shipment and remove the consignee", (masterNumber) => {
+    MAWB = masterNumber;
+    SharedManifestsActions.UpdateShipment(masterNumber);
 });
-When ("the user save the shipment", () => {
+When("the user save the shipment", () => {
     SharedManifestsActions.SaveMasterShipment()
 });
-Then ("the master should updated successfully", () => {
-   SharedManifestsActions.AssertSaveMasterShipment()
+Then("the master should updated successfully", () => {
+    SharedManifestsActions.AssertSaveMasterShipment()
 });
 
-When ("the user try to sharing manifest in a shipment with no consignee", () => {
+When("the user try to sharing manifest in a shipment with no consignee", () => {
     SharedManifestsActions.ShareManifestAction()
- });
- Given ("the user add consignee", () => {
+});
+Given("the user add consignee", () => {
     SharedManifestsActions.AddConsignee(code)
- });
- When ("the user try to sharing manifest in a shipment Agent who doesn't have sharing accept", () => {
+});
+When("the user try to sharing manifest in a shipment Agent who doesn't have sharing accept", () => {
     SharedManifestsActions.ShareManifestAction()
 
- });
+});
 
- //#region Search for the agent by code
+//#region Search for the agent by code
 When("search agent", () => {
     SharedManifestsActions.ExitShipment()
     Actions.OpenMaintenanceItemFromMaintenanceMenu('Agent', MaintenanceSelectors.AgentMaintenanceItem)
@@ -143,98 +147,80 @@ When("send Invitation from Shared Logistics to {string}", (email) => {
 Then("the Invitation should sent successfully", () => {
     SharedManifestsActions.AssertSendInvitation()
     SharedManifestsActions.GetSharedKey()
-     /** SHOULD includeed BEFORE MERGE TO MASTER  */
     SharedManifestsActions.SignOut()
-    
+
 });
 
 
- Given("the user logged in to another tenant and open {string} in maintenance menu", (maintenanceItemName) => {
-     /** SHOULD CHANGED BEFORE MERGE TO MASTER  */
-    SharedManifestsActions.LoginSecondTenant() 
-    //cy.Login()
+Given("the user logged in to another tenant and open {string} in maintenance menu", (maintenanceItemName) => {
+    SharedManifestsActions.LoginSecondTenant()
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.AgentMaintenanceItem)
 });
-When ("Accept Invitation from Shared Logistics with the shared key from the previouse agent", () => {
+When("Accept Invitation from Shared Logistics with the shared key from the previouse agent", () => {
     SharedManifestsActions.FillSharedKey()
     SharedManifestsActions.AcceptInvitation()
 });
-Then ("the Invitation should accepted successfully", () => {
+Then("the Invitation should accepted successfully", () => {
     SharedManifestsActions.AssertAcceptInvitation()
+    SharedManifestsActions.SignOut()
 });
 
-Given ("the user logged in to the first tenant and open the created shipment", () => {
-     /** SHOULD CHANGED BEFORE MERGE TO MASTER  */
+Given("the user logged in to the first tenant and open the created shipment", () => {
     cy.Login(true)
-    //cy.Login()
     ShipmentActions.NavigatesToShipmentsWorkspace()
     ShipmentActions.OpenShipment(ShipmentContext.MasterNumber);
- });
-When ("the user shares the manifest from a shipment", () => {
+});
+When("the user shares the manifest from a shipment", () => {
     SharedManifestsActions.ShareManifestAction()
     SharedManifestsActions.ShareManifest()
- });
-Then ("the Manifest should shared successfully", () => {
-    SharedManifestsActions.AssertShareManifest()
- });
-
- Given("the user logged in to the second tenant", () => { 
-   /** SHOULD CHANGED BEFORE MERGE TO MASTER  */
-    SharedManifestsActions.LoginSecondTenant() 
-    //cy.Login()
 });
-Given("the user navigates to operations", () => { 
+Then("the Manifest should shared successfully", () => {
+    SharedManifestsActions.AssertShareManifest()
+});
+
+Given("the user logged in to the second tenant", () => {
+
+    SharedManifestsActions.LoginSecondTenant()
+
+});
+Given("the user navigates to operations", () => {
     SharedManifestsActions.ToOperations()
 });
-Given("chooses shared manifests tab", () => { 
+Given("chooses shared manifests tab", () => {
     SharedManifestsActions.ToSharedManifests()
 });
 
-
-
-
-
-
-
-//#region Create direct export air shipment Given steps
-Given("the user navigates to shipments workspace", () => {
-    ShipmentActions.NavigatesToShipmentsWorkspace()
+When("chooses Air Manifests and search by the manifest number", () => {
+    SharedManifestsActions.SearchManifest(TransportMode , ShipmentContext.MasterNumber)
+});
+Then("the shared shipment should exist with same details as we send from the first agent side", () => {
+    SharedManifestsActions.AssertManifestExist(MAWB)
 });
 
-Given("a direct shipment with the following details", (dataTable) => {
-    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
-    shipmentDetails.Agent=code
-    ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
-    ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
+When("the user create the shipment", () => {
+    SharedManifestsActions.CreateShipment(ShipmentContext.MasterNumber)
 });
-//#endregion
-
-//#region Update general tab given step
-Given("the user fill {string} as ValueOfGoods and {string} as a MoveType", (ValueOfGoods, MoveType) => {
-    ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber);
-    
+Then("an import shipment should be created", () => {
+    SharedManifestsActions.AssertCreateShipment()
+    SharedManifestsActions.SignOut()
 });
-//#endregion
-
-           
-//#region ShipmentActions steps
-When("create shipment", () => {
-    ShipmentActions.CreateShipment(shipmentDetails.ShipmentLevel);
+Given ("delete Master number", () => {
+    SharedManifestsActions.clearMasterNumber()
+});
+Given ("the user exit the shipment", () => {
+    SharedManifestsActions.ExitShipment()
 });
 
-When("update shipment", () => {
-    ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+When("the user click Cancel Manifest", () => {
+    SharedManifestsActions.CancelManifest()
 });
-//#endregion
-
-//#region Assert steps
-Then("the direct should create successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
-        shipmentDetails.ShipmentNumber = interception.response.body.ShipmentNumber;
-    })
+Then("the Manifest should cancelled successfully", () => {
+    SharedManifestsActions.AssertCancelManifest()
 });
 
-Then("the direct should update successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+When("the user mark the Manifest as completed", () => {
+    SharedManifestsActions.MarkAsCompleted()
 });
-//#endregion
+Then("the Manifest should Marked as Completed successfully", () => {
+    SharedManifestsActions.AssertMarkAsCompleted()
+});

@@ -1,6 +1,7 @@
 @devrelease
 Feature: Sharing Manifests with agent
-  The user Shares Manifests with agent by creating shipments
+    The user check Sharing Manifest with agent Prerequisites, then create a shipment and share it, 
+    from other side check shared Manifest and test actions of create, Cancel Manifest,and Mark as Completed
 
     Scenario: Create new Agent
         Given the user logged in and open "Agents" in maintenance menu
@@ -28,36 +29,36 @@ Feature: Sharing Manifests with agent
     Scenario: Create master export air shipment
         Given the user navigates to shipments workspace
         And a master Shipment with following details
-            | ShipmentLevel        | Master    |
-            | Direction            | Export    |
-            | TransportMode        | Air       |
+            | ShipmentLevel        | Master                 |
+            | Direction            | Export                 |
+            | TransportMode        | Air                    |
             | Agent                | Testing agent Scenario |
-            | MainCarriageFromPort | LHR       |
-            | MainCarriageToPort   | MIA       |
+            | MainCarriageFromPort | LHR                    |
+            | MainCarriageToPort   | MIA                    |
         When create shipment
         Then the master should create successfully
 
-Scenario: Try sharing manifest in a shipment with no MAWB number
-    When the user try to sharing manifest in a shipment with no MAWB number
-    Then the following validation appears "The master number is missing"
+    Scenario: Try sharing manifest in a shipment with no MAWB number
+        When the user try to sharing manifest in a shipment with no MAWB number
+        Then the following validation appears "The master number is missing"
 
-Scenario: update MAWB number for the shipment 
-        Given the user fill "88888881" as master number for the shipment and remove the consignee
+    Scenario: update MAWB number for the shipment
+        Given the user fill "11111111" as master number for the shipment and remove the consignee
         When the user save the shipment
         Then the master should updated successfully
 
-Scenario: Try sharing manifest in a shipment with no consignee
-    When the user try to sharing manifest in a shipment with no consignee
-    Then the following validation appears "The consignee partner is missing"
+    Scenario: Try sharing manifest in a shipment with no consignee
+        When the user try to sharing manifest in a shipment with no consignee
+        Then the following validation appears "The consignee partner is missing"
 
-Scenario: add consignee to the shipment 
-        Given the user add consignee 
+    Scenario: add consignee to the shipment
+        Given the user add consignee
         When the user save the shipment
         Then the master should updated successfully
 
-Scenario: Try sharing manifest in a shipment with Agent who doesn't have sharing accept
-    When the user try to sharing manifest in a shipment Agent who doesn't have sharing accept
-    Then the following validation appears "Please connect with the agent from the agent’s shared logistics tab"
+    Scenario: Try sharing manifest in a shipment with Agent who doesn't have sharing accept
+        When the user try to sharing manifest in a shipment Agent who doesn't have sharing accept
+        Then the following validation appears "Please connect with the agent from the agent’s shared logistics tab"
 
 
     Scenario: Search for the agent
@@ -108,23 +109,130 @@ Scenario: Try sharing manifest in a shipment with Agent who doesn't have sharing
         Then the Invitation should accepted successfully
 
 
- Scenario: Share manifest from shipment successfully
+    Scenario: Share manifest from shipment successfully
         Given the user logged in to the first tenant and open the created shipment
         When the user shares the manifest from a shipment
         Then the Manifest should shared successfully
 
-Scenario: check shared manifests from the second tenant
-        Given the user logged in to the second tenant         
+    Scenario: check shared manifests from the second tenant
+        Given the user logged in to the second tenant
         And the user navigates to operations
         And chooses shared manifests tab
-        When chooses Air Manifests and search by the master number "88888881"
-        Then the shared shipment should exist
+        When chooses Air Manifests and search by the manifest number
+        Then the shared shipment should exist with same details as we send from the first agent side
 
- Scenario: Create the shipment from the second tenant(should be inserted as import )
-       When the user create the shipment
-       Then an import shipment should be created
+    Scenario: Create the shipment from the second tenant(should be inserted as import )
+        When the user create the shipment
+        Then an import shipment should be created
 
-//test the actions of Cancel Manifest, Mark as Completed
-//make sure the shown details of this manifest are the same as we send from other agent side 
-        
+    Scenario: delete Master number from shipment successfully
+        Given the user logged in to the first tenant and open the created shipment
+        And delete Master number
+        When the user save the shipment
+        Then the master should updated successfully
+        And the user exit the shipment
+
+Scenario: Create master export air shipment
+        Given the user navigates to shipments workspace
+        And a master Shipment with following details
+            | ShipmentLevel        | Master                 |
+            | Direction            | Export                 |
+            | TransportMode        | Air                    |
+            | Agent                | Testing agent Scenario |
+            | MainCarriageFromPort | LHR                    |
+            | MainCarriageToPort   | MIA                    |
+        When create shipment
+        Then the master should create successfully
+
+    Scenario: Try sharing manifest in a shipment with no MAWB number
+        When the user try to sharing manifest in a shipment with no MAWB number
+        Then the following validation appears "The master number is missing"
+
+    Scenario: update MAWB number for the shipment
+        Given the user fill "22222222" as master number for the shipment and remove the consignee
+        When the user save the shipment
+        Then the master should updated successfully
+
+    Scenario: Try sharing manifest in a shipment with no consignee
+        When the user try to sharing manifest in a shipment with no consignee
+        Then the following validation appears "The consignee partner is missing"
+
+    Scenario: add consignee to the shipment
+        Given the user add consignee
+        When the user save the shipment
+        Then the master should updated successfully
+
+    Scenario: Share manifest from shipment successfully
+        When the user shares the manifest from a shipment
+        Then the Manifest should shared successfully
+
+    Scenario: check shared manifests from the second tenant
+        Given the user logged in to the second tenant
+        And the user navigates to operations
+        And chooses shared manifests tab
+        When chooses Air Manifests and search by the manifest number
+        Then the shared shipment should exist with same details as we send from the first agent side
+
+    Scenario: Cancel Manifest
+        When the user click Cancel Manifest
+        Then the Manifest should cancelled successfully
+
+    Scenario: delete Master number from shipment successfully
+        Given the user logged in to the first tenant and open the created shipment
+        And delete Master number
+        When the user save the shipment
+        Then the master should updated successfully
+        And the user exit the shipment
+
+Scenario: Create master export air shipment
+        Given the user navigates to shipments workspace
+        And a master Shipment with following details
+            | ShipmentLevel        | Master                 |
+            | Direction            | Export                 |
+            | TransportMode        | Air                    |
+            | Agent                | Testing agent Scenario |
+            | MainCarriageFromPort | LHR                    |
+            | MainCarriageToPort   | MIA                    |
+        When create shipment
+        Then the master should create successfully
+
+    Scenario: Try sharing manifest in a shipment with no MAWB number
+        When the user try to sharing manifest in a shipment with no MAWB number
+        Then the following validation appears "The master number is missing"
+
+    Scenario: update MAWB number for the shipment
+        Given the user fill "33333333" as master number for the shipment and remove the consignee
+        When the user save the shipment
+        Then the master should updated successfully
+
+    Scenario: Try sharing manifest in a shipment with no consignee
+        When the user try to sharing manifest in a shipment with no consignee
+        Then the following validation appears "The consignee partner is missing"
+
+    Scenario: add consignee to the shipment
+        Given the user add consignee
+        When the user save the shipment
+        Then the master should updated successfully
+
+    Scenario: Share manifest from shipment successfully
+        When the user shares the manifest from a shipment
+        Then the Manifest should shared successfully
+
+    Scenario: check shared manifests from the second tenant
+        Given the user logged in to the second tenant
+        And the user navigates to operations
+        And chooses shared manifests tab
+        When chooses Air Manifests and search by the manifest number
+        Then the shared shipment should exist with same details as we send from the first agent side
+
+    Scenario: Mark as Completed Action in Shared Manifest
+        When the user mark the Manifest as completed
+        Then the Manifest should Marked as Completed successfully
+
+    Scenario: delete Master number from shipment successfully
+        Given the user logged in to the first tenant and open the created shipment
+        And delete Master number
+        When the user save the shipment
+        Then the master should updated successfully
+        And the user exit the shipment
 
