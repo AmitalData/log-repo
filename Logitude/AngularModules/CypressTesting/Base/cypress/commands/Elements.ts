@@ -28,6 +28,7 @@ declare global {
             SelectDropDownListItem(Selector: string, contain: string): Chainable<Element>
             SelectDropDownListItem2(Selector: string, contain: string): Chainable<Element>
             SelectDropDownListItemNumber(Selector: string, number: number): Chainable<Element>
+            SelectComboDropDownListItem(Selector: string, contain: string): Chainable<Element>
 
         }
     }
@@ -35,6 +36,10 @@ declare global {
 Cypress.Commands.add("SelectDropDownListItem", (Selector: string, contain: string) => {
     cy.get(Selector).find(BaseSelectors.DownArrow).click()
     cy.get(BaseSelectors.DropDownList).find(BaseSelectors.DropDownListItem).contains(contain).click()
+})
+Cypress.Commands.add("SelectComboDropDownListItem", (Selector: string, contain: string) => {
+    cy.get(Selector).find(BaseSelectors.DownArrow).click()
+    cy.get(BaseSelectors.ComboList).find(BaseSelectors.ComboBoxItem).contains(contain).click()
 })
 Cypress.Commands.add("SelectDropDownListItem2", (Selector: string, contain: string) => {
     cy.get(Selector).clear({ force: true }).type(contain)

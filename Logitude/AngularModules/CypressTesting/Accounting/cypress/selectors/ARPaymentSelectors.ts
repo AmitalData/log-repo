@@ -20,4 +20,10 @@ export class ARPaymentSelectors {
     public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';
     public static readonly MetodoPago = '#ARPayment_MetodoPagoCode';
     public static readonly FormaPago = '#ARPayment_SATPaymentMethodCode';
+    public static readonly RecivableAccounting = '#RECEIVABLEAccounting';
+    public static readonly BackButton = '#BackButton_1';
+    public static readonly EditBackbutton = '#EditBackbutton';
+    public static readonly GeneralMHAccounting= '#GeneralMHAccounting';
+    public static readonly SendToSAT= '#ARPaymentBSENDToSAT';
+
 }

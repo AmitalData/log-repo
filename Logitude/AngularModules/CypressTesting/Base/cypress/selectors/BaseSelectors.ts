@@ -147,6 +147,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly Title = ".Title";
     public static readonly input = "input"
     public static readonly SaveCloseButton = "#SaveClose"
+    public static readonly ComboList = ".ComboBoxDropdown"
+   public static readonly ComboBoxItem = ".ComboBoxItem"
     //#region Should Condition 
     public static readonly BeEmpty = 'be.empty'
     public static readonly NotBeEmpty = 'not.be.empty'
