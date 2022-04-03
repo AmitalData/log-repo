@@ -73,6 +73,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Driver { get; set; }
         public string TruckNumber { get; set; }
         public string TrailerNumber { get; set; }
+        public string Transshipment1TrailerNumber { get; set; }
+        public string Transshipment2TrailerNumber { get; set; }
+        public string Transshipment3TrailerNumber { get; set; }
         public DateTime? MainCarriageSTD { get; set; }
         public DateTime? MainCarriageSTA { get; set; }
         public DateTime? Transshipment1STD { get; set; }
@@ -259,6 +262,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Transshipment2VesselName { get; set; }
         public string Transshipment3VesselName { get; set; }
         public string PreCarriageVesselName { get; set; }
-        public string OnCarriageVesselName { get; set; }
+        public string OnCarriageVesselName { get; set; }        
     }
 }

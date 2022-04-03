@@ -460,7 +460,10 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TenantCountryCode = shipment.House != null ? shipment.House : "";
                 myDataProvider.TransportationType = shipment.TransportModeName;
                 myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
-                myDataProvider.TrailerNumber = shipment.TrailerNumber;             
+                myDataProvider.TrailerNumber = shipment.TrailerNumber;
+                myDataProvider.Transshipment1TrailerNumber = shipment.Transshipment1TrailerNumber;
+                myDataProvider.Transshipment2TrailerNumber = shipment.Transshipment2TrailerNumber;
+                myDataProvider.Transshipment3TrailerNumber = shipment.Transshipment3TrailerNumber;
                 myDataProvider.MasterPreCarriageCarrierNumber = shipment.MasterPreCarriageCarrierNumber;
                 myDataProvider.MasterPreCarriageVesselName = shipment.MasterPreCarriageVesselName;
                 myDataProvider.MasterPreCarriageFromPortName = shipment.MasterPreCarriageFromPortName;

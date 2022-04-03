@@ -449,7 +449,7 @@
                                                             <table class="FixedTable">
                                                                 <tr>
                                                                     <td [style.width.px]="LabelWidth">
-                                                                        <LogLabel [TextCode]="'Shipment.S.Routings.DocumentsClosingTime'"  [ObjectFieldName]="'DocumentsClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        <LogLabel [TextCode]="'Shipment.S.Routings.DocumentsClosingTime'" [ObjectFieldName]="'DocumentsClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
                                                                     <td style="width: 170px;">
@@ -703,6 +703,21 @@
                                                                     </td>
                                                                 </tr>
                                                             </table>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- TrailerNumber -->
+                                                    <tr class="FormFieldRow" *ngIf="TransportModeId == 'I'">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment1TrailerNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'Transshipment1TrailerNumber'" [Text]="Transshipment1TrailerNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                         </td>
 
                                                         <td>
@@ -964,6 +979,21 @@
                                                         </td>
                                                     </tr>
 
+                                                    <!-- TrailerNumber -->
+                                                    <tr class="FormFieldRow" *ngIf="TransportModeId == 'I'">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment2TrailerNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'Transshipment2TrailerNumber'" [Text]="Transshipment2TrailerNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
                                                     <!-- Master -->
                                                     <tr class="FormFieldRow">
                                                         <td>
@@ -1211,6 +1241,21 @@
                                                                     </td>
                                                                 </tr>
                                                             </table>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- TrailerNumber -->
+                                                    <tr class="FormFieldRow" *ngIf="TransportModeId == 'I'">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment3TrailerNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'Transshipment3TrailerNumber'" [Text]="Transshipment3TrailerNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                         </td>
 
                                                         <td>

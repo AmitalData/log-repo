@@ -227,6 +227,7 @@ namespace WebFreight.Web.ReportsWebServices
                         prealertDataProvider.CustomerAddress = prealertDataProvider.CustomerAddress + Environment.NewLine + (customerAddress.PhoneNumber != null ? "Tel: " + customerAddress.PhoneNumber + " " : "") + (customerAddress.FaxNumber != null ? "Fax: " + customerAddress.FaxNumber + " " : "");
                     }
                 }
+
                 prealertDataProvider.ChargeableWeightUnitCode = shipmentpm.ChargeableWeightUnitCode != null ? shipmentpm.ChargeableWeightUnitCode : "";
                 prealertDataProvider.ChargeableWeight = shipmentpm.ChargeableWeight != null ? shipmentpm.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", shipmentpm.ChargeableWeight)) : "" : "";
                 prealertDataProvider.MainIncoterm = shipmentpm.IncotermName;
@@ -242,6 +243,10 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.BookingConfirmationNumber = shipmentpm.BookingConfirmationNumber;
                 prealertDataProvider.IncotermCode = shipmentpm.IncotermCode;
                 prealertDataProvider.ShipmentSubTypeName = shipmentpm.ShipmentSubTypeName;
+                prealertDataProvider.TrailerNumber = shipmentpm.TrailerNumber;
+                prealertDataProvider.Transshipment1TrailerNumber = shipmentpm.Transshipment1TrailerNumber;
+                prealertDataProvider.Transshipment2TrailerNumber = shipmentpm.Transshipment2TrailerNumber;
+                prealertDataProvider.Transshipment3TrailerNumber = shipmentpm.Transshipment2TrailerNumber;
 
                 if (shipmentpm.DocumentsClosingDate != null)
                 {

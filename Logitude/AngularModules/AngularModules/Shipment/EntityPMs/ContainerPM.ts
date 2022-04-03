@@ -1336,6 +1336,11 @@ export class ContainerPM {
     public set ShipmentNewConcurrencyGUID(newValue: string) { if (this.shipmentNewConcurrencyGUID != newValue) { this.shipmentNewConcurrencyGUID = newValue; this.MarkAsDirty("ShipmentNewConcurrencyGUID"); } }
        
 	 
+    private isUpdatedOceanInsightsAnalyzer: boolean;
+    public get IsUpdatedOceanInsightsAnalyzer() { return this.isUpdatedOceanInsightsAnalyzer; }
+    public set IsUpdatedOceanInsightsAnalyzer(newValue: boolean) { if (this.isUpdatedOceanInsightsAnalyzer != newValue) { this.isUpdatedOceanInsightsAnalyzer = newValue; this.MarkAsDirty("IsUpdatedOceanInsightsAnalyzer"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

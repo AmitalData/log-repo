@@ -1771,6 +1771,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     if (entityPM.TransportModeId == "I")
                     {
                         entityMasterData.TrailerNumber = entityPM.TrailerNumber;
+                        entityMasterData.Transshipment1TrailerNumber = entityPM.Transshipment1TrailerNumber;
+                        entityMasterData.Transshipment2TrailerNumber = entityPM.Transshipment2TrailerNumber;
+                        entityMasterData.Transshipment3TrailerNumber = entityPM.Transshipment3TrailerNumber;
                     }
 
                     if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")

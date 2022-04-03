@@ -3138,8 +3138,22 @@ export class ShipmentPM {
     private trailerNumber: string;
     public get TrailerNumber() { return this.trailerNumber; }
     public set TrailerNumber(newValue: string) { if (this.trailerNumber != newValue) { this.trailerNumber = newValue; this.MarkAsDirty("TrailerNumber"); } }
-       
-	 
+
+
+    private transshipment1TrailerNumber: string;
+    public get Transshipment1TrailerNumber() { return this.transshipment1TrailerNumber; }
+    public set Transshipment1TrailerNumber(newValue: string) { if (this.transshipment1TrailerNumber != newValue) { this.transshipment1TrailerNumber = newValue; this.MarkAsDirty("Transshipment1TrailerNumber"); } }
+
+
+    private transshipment2TrailerNumber: string;
+    public get Transshipment2TrailerNumber() { return this.transshipment2TrailerNumber; }
+    public set Transshipment2TrailerNumber(newValue: string) { if (this.transshipment2TrailerNumber != newValue) { this.transshipment2TrailerNumber = newValue; this.MarkAsDirty("Transshipment2TrailerNumber"); } }
+
+
+    private transshipment3TrailerNumber: string;
+    public get Transshipment3TrailerNumber() { return this.transshipment3TrailerNumber; }
+    public set Transshipment3TrailerNumber(newValue: string) { if (this.transshipment3TrailerNumber != newValue) { this.transshipment3TrailerNumber = newValue; this.MarkAsDirty("Transshipment3TrailerNumber"); } }
+      	 
     private asAgreedFreight: boolean;
     public get AsAgreedFreight() { return this.asAgreedFreight; }
     public set AsAgreedFreight(newValue: boolean) { if (this.asAgreedFreight != newValue) { this.asAgreedFreight = newValue; this.MarkAsDirty("AsAgreedFreight"); } }

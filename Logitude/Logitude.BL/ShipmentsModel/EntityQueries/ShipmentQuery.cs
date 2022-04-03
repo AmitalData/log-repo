@@ -345,6 +345,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (shipment.TransportModeId == "I")
                 {
                     shipmentPM.TrailerNumber = masterData.TrailerNumber;
+                    shipmentPM.Transshipment1TrailerNumber = masterData.Transshipment1TrailerNumber;
+                    shipmentPM.Transshipment2TrailerNumber = masterData.Transshipment2TrailerNumber;
+                    shipmentPM.Transshipment3TrailerNumber = masterData.Transshipment3TrailerNumber;
                 }
 
                 if (isInlandDomesticShipment)

@@ -1893,6 +1893,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Driver { get; set; }
         public string TruckNumber { get; set; }
         public string TrailerNumber { get; set; }
+        public string Transshipment1TrailerNumber { get; set; }
+        public string Transshipment2TrailerNumber { get; set; }
+        public string Transshipment3TrailerNumber { get; set; }
         public bool AsAgreedFreight { get; set; }
         public bool AsAgreedOtherCharges { get; set; }
         public bool ARInvoiceIssued { get; set; }
