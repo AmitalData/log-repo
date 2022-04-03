@@ -1091,6 +1091,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomsEnvironmentSettingQueryService.Generated.cs" />
 
     <Compile Include="EntityQueryServices\Generated\CustomsDocumentUploadQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeclarationCasualDetailsQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeliveryTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancelRequestRejectReasonTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DocumentRejectTypeQueryService.Generated.cs" />
