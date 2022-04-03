@@ -302,7 +302,7 @@
                                     </log-column>
 
                                     <!-- Horse Name-->
-                                    <log-column [width]="'150'" [header]="'Horse'" *ngIf="HorseFieldIsVisible">
+                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.HorseId' | TextCodeTranslationPipe" *ngIf="HorseFieldIsVisible">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.HorseName}}
@@ -611,7 +611,7 @@
                                     </log-column>
 
                                     <!-- Horse Name-->
-                                    <log-column [width]="'150'" [header]="'Horse'" *ngIf="(HorseFieldIsVisible && !IsFCLEntity)">
+                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.HorseId' | TextCodeTranslationPipe" *ngIf="(HorseFieldIsVisible && !IsFCLEntity)">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.HorseName}}
