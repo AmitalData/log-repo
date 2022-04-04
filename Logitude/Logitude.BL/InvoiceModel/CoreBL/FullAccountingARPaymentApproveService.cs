@@ -232,7 +232,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         public void AddNewChequesForEachReplica()
         {
             int LineNumberCounter = GetInitialLineNumberForCheque(paymentPM);
-            foreach (ARPaymentChequeReplicaPM chequeReplica in paymentPM.ARPaymentChequeReplicas)
+            foreach (ARPaymentChequeReplicaPM chequeReplica in paymentPM.ARPaymentChequeReplicas.Where(x => x.ChangeSetOp != ChangeSetOperation.Delete).ToList())
             {
                 
                 ARPaymentChequePM cheque = CreateARPaymentChequeForReplica(paymentPM, ref LineNumberCounter, chequeReplica);
@@ -249,7 +249,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             DeleteARPaymentBankTranfer();
             int LineNumberCounter = GetInitialLineNumberForBankTransfer(paymentPM);
             if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Any()) {
-                foreach (ARPaymentBankTranferPM bankTransfer in paymentPM.ARPaymentBankTranfers)
+                foreach (ARPaymentBankTranferPM bankTransfer in paymentPM.ARPaymentBankTranfers.Where(x => x.ChangeSetOp != ChangeSetOperation.Delete).ToList())
                 {
                     ARPaymentBankTranferPM aRPaymentBankTranferPM = InitializeARPaymentBankTransfer(paymentPM, bankTransfer, ref LineNumberCounter);
                     SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
