@@ -11,6 +11,9 @@ import * as MaintenanceBaseActions from "../BaseActions"
 import { SendDocs } from "../../../../Shipment/cypress/actions/Actions";
 import * as Authentication from "./../../../../Base/cypress/commands/Authentication"
 import { ValidateSingleErrorMessage } from "../BaseActions";
+import { URLs } from './../../../../Shipment/cypress/constants/URLs';
+import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
+import { ShipmentContext } from '../../../../Shipment/cypress/models/ShipmentContext';
 
 let SharedKey:string
 
@@ -204,4 +207,58 @@ export function AssertShareManifest(){
 function AssertGetSharedAgentManifest() {
     BaseAssertion.AssertStatusCode(SharedManifestsRequestAliases.GetSharedAgentManifest, 200).then((interception) => {
     });
+}
+
+export function SearchManifest(TransrportMode:string,ShipmentNumber:string){
+cy.get('[data-cy="'+TransrportMode+' Manifests"]').click()
+cy.get(SharedManifestsSelectors.Search).type(ShipmentNumber)
+
+}
+export function AssertManifestExist(MAWB:string){
+    cy.get(SharedManifestsSelectors.FirstRowMAWB).within(() => {
+            cy.contains('001-'+MAWB)
+        }).click()
+}
+
+export function CreateShipment(ShipmentNumber:string){
+    cy.get(SharedManifestsSelectors.Create).click()
+    BaseAssertion.AssertElementHaveValue(SharedManifestsSelectors.AgentReference,ShipmentNumber)
+    cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.get(SharedManifestsSelectors.CreateMaster).click()
+}
+
+export function AssertCreateShipment(){
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
+        ShipmentContext.MasterNumber = interception.response.body.ShipmentNumber;
+       
+       assert.equal(interception.response.body.DirectionName, "Import", 'valus equal')
+    })
+    BaseAssertion.AssertMessageWindow("Your Shipment was successfully created.")
+}
+
+export function CancelManifest(){
+    cy.DefineRequestWait(RestAPI.PUT, SharedManifestsURLs.agentsharedmanifests, SharedManifestsRequestAliases.Putagentsharedmanifests);
+    cy.get(SharedManifestsSelectors.CancelManifest).click()
+}
+
+export function AssertCancelManifest(){
+    BaseAssertion.AssertStatusCode(SharedManifestsRequestAliases.Putagentsharedmanifests, 200).then((interception) => {
+    });
+}
+
+export function MarkAsCompleted(){
+    cy.DefineRequestWait(RestAPI.PUT, SharedManifestsURLs.agentsharedmanifests, SharedManifestsRequestAliases.Putagentsharedmanifests);
+    cy.get(SharedManifestsSelectors.MarkAsCompleted).click()
+}
+
+export function AssertMarkAsCompleted(){
+    BaseAssertion.AssertStatusCode(SharedManifestsRequestAliases.Putagentsharedmanifests, 200).then((interception) => {
+    });
+}
+export function clearMasterNumber(){
+    cy.get(SharedManifestsSelectors.ShipmentRoutings).click()
+    cy.get(SharedManifestsSelectors.MainCarriage).click()
+    cy.get(SharedManifestsSelectors.ShipmentMasterNo).clear()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+    
 }

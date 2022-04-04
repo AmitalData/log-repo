@@ -34,4 +34,11 @@ export class SharedManifestsSelectors extends RegexSelectors {
     public static readonly ConsigneeId='[id="Shipment_ConsigneeId"]'
     public static readonly BackBottonBody='[class="BackBottonBody"]'
     public static readonly Close='[data-cy="Close"]'
+    public static readonly Search='[placeholder="SearchFields"]'
+    public static readonly FirstRowMAWB='[id="row0col2"]'
+    public static readonly Create='[data-cy="Create"]'
+    public static readonly CreateMaster='[data-cy="Create Master"]'
+    public static readonly AgentReference='[data-cy="AgentReference"]'
+    public static readonly CancelManifest='[data-cy="Cancel Manifest"]'
+    public static readonly MarkAsCompleted='[data-cy="Mark as Completed"]'
 }
