@@ -1,6 +1,6 @@
 @devrelease
 Feature: Sharing Manifests with agent
-    The user check Sharing Manifest with agent Prerequisites, then create a shipment and share it, 
+    The user check Sharing Manifest with agent Prerequisites, then create a shipment and share it,
     from other side check shared Manifest and test actions of create, Cancel Manifest,and Mark as Completed
 
     Scenario: Create new Agent
@@ -132,8 +132,8 @@ Feature: Sharing Manifests with agent
         Then the master should updated successfully
         And the user exit the shipment
 
-Scenario: Create master export air shipment
-        Given the user navigates to shipments workspace
+    Scenario: Create master export air shipment
+        Given the user navigates to shipments
         And a master Shipment with following details
             | ShipmentLevel        | Master                 |
             | Direction            | Export                 |
@@ -184,8 +184,8 @@ Scenario: Create master export air shipment
         Then the master should updated successfully
         And the user exit the shipment
 
-Scenario: Create master export air shipment
-        Given the user navigates to shipments workspace
+    Scenario: Create master export air shipment
+        Given the user navigates to shipments
         And a master Shipment with following details
             | ShipmentLevel        | Master                 |
             | Direction            | Export                 |
