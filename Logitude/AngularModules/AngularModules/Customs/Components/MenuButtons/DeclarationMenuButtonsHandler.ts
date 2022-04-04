@@ -197,7 +197,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
                     if (button.EventCode == "CloseDeclaration") {
                         button.Width = 100;
-                        if (this.EntityPM.Direction == "E") {
+                        if (this.EntityPM.Direction == "E" && this.EntityPM.DeclarationNumber != null) {
                             button.IsHidden = false;
                             if (this.EntityPM.IsSubmitDeclaration)
                                 button.IsDisabled = false
@@ -212,13 +212,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.DisplayText = "המכלה";
                         if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentCode && this.EntityPM.ProcedureCurrentName && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
                                 button.IsHidden = false;
-                                if(!AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)){
-                                    button.DisplayText = "הומכל";
-                                    button.LabelTextCodeCode=""
-                                    
-                                    
-                                   
-                                }
                         } else {
                             button.IsHidden = true;
                         }
@@ -568,7 +561,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         break;
                     }
                 case "OpenNewContainerization":
-                    {
+                    {/////
                         this.OpenNewContainerizationMethod();
                         break;
                     }
@@ -623,8 +616,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
                 case "ExportStorageDecleration":
                     {
-                        this.OpenDeclarationCancellationWindow();
-                        break;
+                            
+                            this.OpenExportStorageDeclarationMethod()
+                           // OpenNewContainerizationMethod();
+                            break;
                     }
             }
         }
@@ -1097,11 +1092,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                     "DeclarationNumber": this.EntityPM.DeclarationNumber,
                                     "CustomsFile": this.EntityPM.CustomFileNo,
                                     "DeclarationId": this.EntityPM.Id,
+                                    "LoggingEntityReference": this.EntityPM.Direction,
                                 };
                                 customsRequestMenuService.WindowClosed.subscribe(
                                     (myarg) => { this.CurrentSession.CurrentEditComponent.ReloadEntityPM() }
                                 );
+                                
                                 customsRequestMenuService.ShowModalAsEditMenuAction('8373', my);
+                               
                             }
                         });
                 }
@@ -1303,6 +1301,39 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.WindowArgs = args;
             logWindow.ShowCloseButton = true;
             logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            });
+        } else {
+                //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({
+                            EntityId: this.EntityPM.ExportContainerizationID,
+                            ObjectTableName: "Customs.Containerization"
+                        });
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        });
+                    });
+        }
+    }
+///new shoshana
+    private OpenExportStorageDeclarationMethod() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)) {
+            var args: any = {
+                EntityPM: this.EntityPM,
+                EntityIsDeclarationPM: "true",
+            };
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 1220;
+            logWindow.Height = 550;
+            logWindow.Title = ("קישור אחסנות להצהרה");
+            logWindow.WindowArgs = args;
+            logWindow.ShowCloseButton = true;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/ExportStorageDecleration/ExportStorageDeclerationComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
                 this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
