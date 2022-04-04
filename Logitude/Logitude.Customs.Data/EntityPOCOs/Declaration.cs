@@ -139,11 +139,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DepartmentId { get; set; }
 	      
         public virtual Department Department { get; set; }
-        [ForeignKey("User")]
+        [ForeignKey("ReferentUser")]
         [Column("ReferentUserId")]
 	    public string ReferentUserId { get; set; }
 	      
-        public virtual User User { get; set; }
+        public virtual User ReferentUser { get; set; }
         [ForeignKey("DeliverySiteType")]
         [Column("StorageSiteCode")]
 	    public string StorageSiteCode { get; set; }
