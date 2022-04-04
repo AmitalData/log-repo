@@ -98,6 +98,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                     CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
+                    if (declarationPM.IsAmendment == true && declarationPM.AmendmentOriginalDeclartation != null)
+                    {
+                        _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                    }
                     switch (customResponse.GeneralData.ReleaseMessageCode)
                     {
                         case 1: // released
