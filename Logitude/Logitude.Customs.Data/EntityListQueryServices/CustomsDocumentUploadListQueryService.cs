@@ -37,9 +37,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<CustomsDocumentUpload> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CustomsDocumentUpload> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
-			}
+	}
 
 
 }
