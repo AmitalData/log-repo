@@ -101,13 +101,11 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
         this.QuotePM = args.QuotePM;
 
-        this.FillQuoteTemplateTableSettingsData();
-
         if (((this.QuotePM && this.QuotePM.IsChargesByVAT) || !this.QuotePM) && FeatureLocator.HasFeaturePermession("Quote", "VATDetAILSINQUOTATION")) {
-                this.ShowVATDetails = true;
-            }
-        
+            this.ShowVATDetails = true;
+        }
 
+        this.FillQuoteTemplateTableSettingsData();
 
         this.IsRoutingRates = this.QuoteTemplatePM != null ? this.QuoteTemplatePM.TemplateTypeCode == "P" ? true : false : false;
         this.Alignment.push("Left"); this.Alignment.push("Center"); this.Alignment.push("Right");
