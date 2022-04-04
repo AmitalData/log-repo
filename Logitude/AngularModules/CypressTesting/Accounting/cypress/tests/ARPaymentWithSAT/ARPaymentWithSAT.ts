@@ -177,7 +177,7 @@ When("Send AR Payment to SAT", () => {
 
 Then("the AR Payment should Transferred successfully", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
-    BaseActions.ValidateEventsTab(eventDetailsList, AccountingSelectors.ARInvoiceEventsTab)
+    BaseActions.ValidateEventsTab(eventDetailsList, AccountingSelectors.ARPaymentTHEvents)
 });
 
 

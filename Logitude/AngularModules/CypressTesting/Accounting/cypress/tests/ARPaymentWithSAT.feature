@@ -23,7 +23,7 @@ Feature: AR Payment With SAT
     Scenario: Add Receivable
         Given a Receivable with the following details
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
-            | AFT         | GRWT | 5        | 20        | MXN      | 4            |
+            | AFT         | CHWT | 5        | 20        | MXN      | 4            |
         When add Receivable
         Then the Receivable should add successfully
 

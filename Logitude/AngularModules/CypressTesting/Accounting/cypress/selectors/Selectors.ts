@@ -187,6 +187,8 @@ export class AccountingSelectors extends RegexSelectors {
       public static readonly ARInvoiceInvoice= "#ARInvoice_InvoiceNumber";
       public static readonly ManuallySet= "#ComboBox_0_2";
       public static readonly InvoiceCheckBox= ".LogitudeCheckBox";
+      public static readonly ARPaymentTHEvents= "#ARPaymentTHEvents";
+      
    
       //#endregion
 }
