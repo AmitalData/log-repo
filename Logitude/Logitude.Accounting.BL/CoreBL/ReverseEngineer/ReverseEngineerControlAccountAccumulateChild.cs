@@ -163,7 +163,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     {
                         continue;
                     }
-                    item.AccountId = display.Value;
+                    item.AccountDisplayNumber= display.Value;
                 }
             }
             catch (Exception)
