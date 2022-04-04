@@ -439,7 +439,7 @@
                                 <div class="value weight-quantity"  [attr.src]="SetQuantityAndWeight(shipment)" (click)="$event.stopPropagation()" [matTooltipDisabled]="((shipment.NumberOfPackages? shipment.NumberOfPackages + ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') +(shipment.GrossWeight?shipment.GrossWeight+' '+shipment.GrossWeightUnitCode:'')).length <= 22" [matTooltip]="(shipment.NumberOfPackages? shipment.NumberOfPackages + ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') +(shipment.GrossWeight?shipment.GrossWeight+' '+shipment.GrossWeightUnitCode:'')">
                                     {{(shipment.NumberOfPackages? shipment.NumberOfPackages:'')|number}}
                                     {{ (shipment.NumberOfPackages? ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') }}
-                                    {{(shipment.GrossWeight?shipment.GrossWeight:'')|number}} {{(shipment.GrossWeight?shipment.GrossWeightUnitCode:'') }}
+                                    {{(shipment.GrossWeight?shipment.GrossWeight:'')|number}} {{(shipment.GrossWeight && shipment.EntityType!='O'?shipment.GrossWeightUnitCode:'') }}{{(shipment.GrossWeight && shipment.EntityType==='O'?'KG':'')}}
                                 </div>
 
                                 <div class="subtitle hide-mobile" [attr.src]="SetEstimationORActualDate(shipment)">
