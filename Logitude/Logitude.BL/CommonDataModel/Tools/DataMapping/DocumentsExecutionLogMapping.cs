@@ -31,6 +31,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.DocumentTypeId = entityPM.DocumentTypeId;
             entityPOCO.Logs = entityPM.Logs;
             entityPOCO.ExceptionMessage = entityPM.ExceptionMessage;
+            entityPOCO.ExecutedByServerName = entityPM.ExecutedByServerName;
+
       
 
 

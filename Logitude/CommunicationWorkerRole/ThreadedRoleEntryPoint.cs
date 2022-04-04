@@ -497,7 +497,10 @@ namespace CommunicationWorkerRole
                         threads.Add(new Thread(worker.ProtectedRun) { Name = worker.ThreadName });
 
                     foreach (Thread thread in threads)
+                    {
                         thread.Start();
+                        System.Threading.Thread.Sleep(new TimeSpan(0,0,1));
+                    }
 
                 }
             }

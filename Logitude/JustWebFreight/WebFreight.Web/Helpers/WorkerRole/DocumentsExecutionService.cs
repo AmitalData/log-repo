@@ -143,6 +143,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 documentsExecutionLog.StartDate = documentsExecutionLogArgs.StartDate != null ? documentsExecutionLogArgs.StartDate : documentsExecutionLog.StartDate;
                 documentsExecutionLog.ExceptionMessage = documentsExecutionLogArgs.Exception != null ? GetFullExceptionMessageFromException(documentsExecutionLogArgs.Exception) : documentsExecutionLog.ExceptionMessage;
                 documentsExecutionLog.DoneDate = documentsExecutionLogArgs.DoneDate != null ? documentsExecutionLogArgs.DoneDate : documentsExecutionLog.DoneDate;
+                documentsExecutionLog.ExecutedByServerName =!string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName : documentsExecutionLog.ExecutedByServerName;
                 if (documentsExecutionLog.RetryNumber >= 2 && documentsExecutionLog.StatusCode != "D" && documentsExecutionLogArgs.StatusCode !="P")
                 {
                     documentsExecutionLog.StatusCode = "F";

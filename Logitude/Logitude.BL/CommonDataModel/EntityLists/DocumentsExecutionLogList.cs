@@ -29,5 +29,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? StartDate { get; set; }
         public string Logs { get; set; }
         public string Subject { get; set; }
+
+        public string ExecutedByServerName { get; set; }
+
+        
     }
 }
