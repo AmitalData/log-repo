@@ -122,7 +122,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (string.IsNullOrEmpty(display.Value)){
                         continue;
                     }
-                    item.AccountId = display.Value;
+                    item.AccountDisplayNumber = display.Value;
                 }
             }
             catch (Exception)

@@ -200,7 +200,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         continue;
                     }
-                    item.AccountId = display.Value;
+                    item.AccountDisplayNumber = display.Value;
                 }
             }
             catch (Exception)
@@ -326,6 +326,8 @@ namespace Logitude.Accounting.BL.CoreBL
         public string AccountId { get; set; }
         public string DisplayNumber { get; set; }
         public string LocalName { get; set; }
+
+        public string AccountDisplayNumber { get; set; }
 
         public decimal BalanceInLocalCurrency { get; set; }
         public decimal BalanceInForeignCurrency { get; set; }

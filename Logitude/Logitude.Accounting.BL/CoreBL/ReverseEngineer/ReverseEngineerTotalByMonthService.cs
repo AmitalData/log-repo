@@ -262,7 +262,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         continue;
                     }
-                    item.AccountId = display.Value;
+                    item.AccountDisplayNumber = display.Value;
                 }
             }
             catch (Exception)

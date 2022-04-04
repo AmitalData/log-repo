@@ -1032,6 +1032,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public string JournalNumber { get; set; }
         public int JournalLineNumber { get; set; }
         public string AccountId { get; set; }
+        public string AccountDisplayNumber { get; set; }
         public string CurrencyId { get; set; }
         //public decimal LocalAmountCredit { get; set; }
         //public decimal LocalAmountDebit { get; set; }

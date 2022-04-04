@@ -275,6 +275,9 @@ namespace Logitude.Accounting.Data.Repositories
    public class CurrencySum
    {
        public string AccountId { get; set; }
+
+        public string AccountDisplayNumber { get; set; }
+        
        public string CurrencyId { get; set; }
 
        public decimal ForeignAmountCredit { get; set; }
@@ -301,8 +304,13 @@ namespace Logitude.Accounting.Data.Repositories
         public int Tenant { get; set; }
         
         public string AccountId { get; set; }
+
         public string DisplayNumber { get; set; }
         public string LocalName { get; set; }
+
+        public string AccountDisplayNumber { get; set; }
+        
+
         public string CurrencyId { get; set; }
 
         public int Year { get; set; }
