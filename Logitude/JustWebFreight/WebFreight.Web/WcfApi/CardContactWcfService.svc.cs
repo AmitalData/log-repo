@@ -192,11 +192,14 @@ namespace WebFreight.Web.WcfApi
         
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                   
+
                     ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
                     CardContactRepository cardContactRepository = new CardContactRepository(objectContext);
 
                     CardContact entity = cardContactRepository.GetSingleCardContactByExternal(contactExternalId, cardCode, tenant);
+                    
+                    RemoveCardContactProducts(entity.Id, objectContext, tenant);
+                    RemoveCardContactAdditionalServices(entity.Id, objectContext, tenant);
 
                     if (entity != null)
                     {
@@ -228,6 +231,29 @@ namespace WebFreight.Web.WcfApi
             }
         }
 
+        private static void RemoveCardContactProducts(string cardContactId, ICommonDataContext objectContext, int tenant)
+        {
+            CardContactProductRepository cardContactProductRepository = new CardContactProductRepository(objectContext);
+            List<CardContactProduct> cardContactProducts = cardContactProductRepository.GetProductsByCardContactIdd(cardContactId, tenant).ToList();
+            foreach (CardContactProduct product in cardContactProducts)
+            {
+                cardContactProductRepository.Remove(product);
+            }
+
+            cardContactProductRepository.SubmitChanges();
+        }
+
+        private static void RemoveCardContactAdditionalServices(string cardContactId, ICommonDataContext objectContext, int tenant)
+        {
+            CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(objectContext);
+            List<CardContactAdditionalService> cardContactAdditionalServices = cardContactAdditionalServiceRepository.GetAdditionalServicesByCardContactIdd(cardContactId, tenant).ToList();
+            foreach (CardContactAdditionalService additionalService in cardContactAdditionalServices)
+            {
+                cardContactAdditionalServiceRepository.Remove(additionalService);
+            }
+
+            cardContactAdditionalServiceRepository.SubmitChanges();
+        }
 
         public CardContactPM GetCardContactPM(string contactExternalId, string cardCode, int tenant, ref Response response)
         {
