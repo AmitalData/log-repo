@@ -37,6 +37,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
+
+        public IQueryable<DocumentsExecutionLog> GetAllDocumentsExecutionLogs()
+        {
+            return (from record in context.DocumentsExecutionLogs  select record);
+        }
+
         public void Add(DocumentsExecutionLog entity)
         {
             context.DocumentsExecutionLogs.Add(entity);

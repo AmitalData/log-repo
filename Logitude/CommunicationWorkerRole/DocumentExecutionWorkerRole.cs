@@ -64,14 +64,37 @@ namespace CommunicationWorkerRole
         private const int AllowedThreadNumbers = 20;
         private static DateTime startExecuteDate;
 
-
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "DocumentsExecutionWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
+
+            CleanUp();
             ConnectClient();
             return base.OnStart();
+        }
+
+        private void CleanUp()
+        {
+            bool isUpdatedRequired = false;
+            DocumentsExecutionLogRepository documentsExecutionLogRepository = new DocumentsExecutionLogRepository(0);
+            var documentsExecutionLogs = documentsExecutionLogRepository.GetAllDocumentsExecutionLogs().Where(d => d.ExecutedByServerName == System.Environment.MachineName && d.StatusCode == "P").ToList();
+            foreach (DocumentsExecutionLog documentsExecutionLog in documentsExecutionLogs)
+            {
+                MarkDocumentsExecutionLogFailed(documentsExecutionLog, documentsExecutionLogRepository);
+                isUpdatedRequired = true;
+            }
+            if (!isUpdatedRequired) return;
+            documentsExecutionLogRepository.SubmitChanges();
+        }
+
+
+        private void MarkDocumentsExecutionLogFailed(DocumentsExecutionLog documentsExecutionLog , DocumentsExecutionLogRepository documentsExecutionLogRepository)
+        {
+            documentsExecutionLog.StatusCode = "F";
+            documentsExecutionLog.ExceptionMessage = "The document failed to build.Please try again.";
+            documentsExecutionLogRepository.Update(documentsExecutionLog);
         }
 
 
