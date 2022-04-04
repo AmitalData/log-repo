@@ -238,8 +238,9 @@ namespace WebFreight.Web.WcfApi
             foreach (CardContactProduct product in cardContactProducts)
             {
                 cardContactProductRepository.Remove(product);
-                cardContactProductRepository.SubmitChanges();
             }
+
+            cardContactProductRepository.SubmitChanges();
         }
 
         private static void RemoveCardContactAdditionalServices(string cardContactId, ICommonDataContext objectContext, int tenant)
@@ -249,8 +250,9 @@ namespace WebFreight.Web.WcfApi
             foreach (CardContactAdditionalService additionalService in cardContactAdditionalServices)
             {
                 cardContactAdditionalServiceRepository.Remove(additionalService);
-                cardContactAdditionalServiceRepository.SubmitChanges();
             }
+
+            cardContactAdditionalServiceRepository.SubmitChanges();
         }
 
         public CardContactPM GetCardContactPM(string contactExternalId, string cardCode, int tenant, ref Response response)
