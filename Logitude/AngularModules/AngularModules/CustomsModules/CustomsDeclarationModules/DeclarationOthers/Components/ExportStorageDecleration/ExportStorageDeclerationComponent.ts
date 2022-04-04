@@ -232,128 +232,118 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             Styles: { width: '25px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/ExportStorageDeclarationListTemplate',
         });
 
 
         this.columns.push({
-            FieldName: 'CreateDateTime',
+            FieldName: 'OpenDate',
             DataTypeCode: 'String',
-            Display: "תאריך פתיחת הצהרה",
+            Display: "תאריך פתיחה",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'CreateDateTime',
+            SortByName: 'OpenDate',
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/ExportStorageDeclarationListTemplate',
 
         });
         this.columns.push({
+            FieldName: 'ExporterID',
+            DataTypeCode: 'String',
+            Display: 'יצואן',//TextCodeTranslator.Translate('Customs.Declaration.F.DeclarationNumber'),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'ExporterID'
+
+        });
+        this.columns.push({
+            FieldName: 'ExportFileNo',
+            DataTypeCode: 'String',
+            Display: "מס' תיק יצוא",
+            Styles: { width: '120px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'ExportFileNo'
+
+        });
+        this.columns.push({
+
+            FieldName: 'StorageNo',
+            DataTypeCode: 'String',//'Number',
+            Display: 'מספר אחסנה',
+            Styles: { width: '60px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'StorageNo'
+        });
+
+        this.columns.push({
             FieldName: 'DeclarationNumber',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.DeclarationNumber'),
-            Styles: { width: '120px' },
+            Display: 'מספר הצהרה',
+            Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'DeclarationNumber'
 
         });
         this.columns.push({
-            FieldName: 'ExportFile',
+            FieldName: 'ShipName',
             DataTypeCode: 'String',
-            Display: "מס' תיק יצוא",
+            Display:'אוניה',// TextCodeTranslator.Translate('Customs.Declaration.F.CargoTypeName'),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'ExportFile'
+            SortByName: 'ShipName'
 
         });
-        this.columns.push({
 
-            FieldName: 'TransportModeForExport',
-            DataTypeCode: 'String',//'Number',
-            //Display: "הגשה",
-            Styles: { width: '60px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CustomsContainerizationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
-            ColumnHeaderTemplateName: 'BlackTransportModeListHeaderTemplate',
-        });
-
-        this.columns.push({
-            FieldName: 'CustomFileNo',
-            DataTypeCode: 'String',
-            Display: "תיק מכס",
-            Styles: { width: '80px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'CustomFileNo'
-
-        });
         this.columns.push({
             FieldName: 'CargoTypeName',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.CargoTypeName'),
-            Styles: { width: '120px' },
+            Display:'סוג מטען FCL/LCL',
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'CargoTypeName'
 
         });
-
         this.columns.push({
-            FieldName: 'ManifestNumber',
+            FieldName: 'StorageStatus',
             DataTypeCode: 'String',
-            Display: "מזהה מטען 1",
+            Display: 'סטטוס אחסנה',
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'ManifestNumber'
+            SortByName: 'StorageStatus'
 
         });
         this.columns.push({
-            FieldName: 'SecondCargoID',
+            FieldName: 'CustomsStatus',
             DataTypeCode: 'String',
-            Display: "מזהה מטען 2",
-            Styles: { width: '100px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'SecondCargoID'
-
-        });
-        this.columns.push({
-            FieldName: 'ThirdCargoID',
-            DataTypeCode: 'String',
-            Display: "מזהה מטען 3",
+            Display: 'קוד סטטוס מטען',
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'ThirdCargoID'
+            SortByName: 'CustomsStatus'
 
         });
         this.columns.push({
-            FieldName: 'DeclarationStatusTypeName',
+            FieldName: 'ActionCode',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.DeclarationStatusTypeName'),
+            Display: 'היתר לוגיסטי מכסי',//TextCodeTranslator.Translate('Customs.Declaration.F.DeclarationStatusTypeName'),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'DeclarationStatusTypeName',
-            HtmlListComponentName: 'CustomsContainerizationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
+            SortByName: 'ActionCode',
+            // HtmlListComponentName: 'CustomsContainerizationListTemplate',
+            // HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
 
         });
 
-        this.columns.push({
-
-            FieldName: 'IsSubmitDeclaration',
-            DataTypeCode: 'String',//'Number',
-            Display: "הגשה",
-            Styles: { width: '50px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CustomsContainerizationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
-        });
+      
 
     }
 
