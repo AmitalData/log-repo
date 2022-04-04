@@ -59,6 +59,11 @@ Given("the user navigates to shipments workspace", () => {
     ShipmentActions.NavigatesToShipmentsWorkspace()
 });
 
+Given("the user navigates to shipments", () => {
+    cy.log(code + " Agent code")
+    ShipmentActions.NavigatesToShipmentsWorkspace()
+});
+
 Given("a master Shipment with following details", (dataTable) => {
     const shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     MasterShipmentDetails = shipmentDetails;
@@ -191,7 +196,7 @@ Given("chooses shared manifests tab", () => {
 });
 
 When("chooses Air Manifests and search by the manifest number", () => {
-    SharedManifestsActions.SearchManifest(TransportMode , ShipmentContext.MasterNumber)
+    SharedManifestsActions.SearchManifest(TransportMode, ShipmentContext.MasterNumber)
 });
 Then("the shared shipment should exist with same details as we send from the first agent side", () => {
     SharedManifestsActions.AssertManifestExist(MAWB)
@@ -204,10 +209,10 @@ Then("an import shipment should be created", () => {
     SharedManifestsActions.AssertCreateShipment()
     SharedManifestsActions.SignOut()
 });
-Given ("delete Master number", () => {
+Given("delete Master number", () => {
     SharedManifestsActions.clearMasterNumber()
 });
-Given ("the user exit the shipment", () => {
+Given("the user exit the shipment", () => {
     SharedManifestsActions.ExitShipment()
 });
 
