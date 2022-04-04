@@ -561,7 +561,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         break;
                     }
                 case "OpenNewContainerization":
-                    {
+                    {/////
                         this.OpenNewContainerizationMethod();
                         break;
                     }
@@ -613,6 +613,13 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     {
                         this.DeclarationCustomsRequestsMethod();
                         break;
+                    }
+                case "ExportStorageDecleration":
+                    {
+                            
+                            this.OpenExportStorageDeclarationMethod()
+                           // OpenNewContainerizationMethod();
+                            break;
                     }
             }
         }
@@ -1294,6 +1301,39 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.WindowArgs = args;
             logWindow.ShowCloseButton = true;
             logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            });
+        } else {
+                //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({
+                            EntityId: this.EntityPM.ExportContainerizationID,
+                            ObjectTableName: "Customs.Containerization"
+                        });
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        });
+                    });
+        }
+    }
+///new shoshana
+    private OpenExportStorageDeclarationMethod() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)) {
+            var args: any = {
+                EntityPM: this.EntityPM,
+                EntityIsDeclarationPM: "true",
+            };
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 1220;
+            logWindow.Height = 550;
+            logWindow.Title = ("קישור אחסנות להצהרה");
+            logWindow.WindowArgs = args;
+            logWindow.ShowCloseButton = true;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/ExportStorageDecleration/ExportStorageDeclerationComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
                 this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();

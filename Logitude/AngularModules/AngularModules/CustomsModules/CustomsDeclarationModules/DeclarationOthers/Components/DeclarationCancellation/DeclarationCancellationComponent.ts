@@ -16,7 +16,7 @@ import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { CustomsCollateralPM } from '../../../../../Customs/EntityPMs/CustomsCollateralPM';
 
 declare var window: any;
-
+ 
 @Component({
     selector: 'DeclarationCancellationComponent',
 
