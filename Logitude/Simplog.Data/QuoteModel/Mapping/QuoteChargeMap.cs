@@ -99,6 +99,12 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.TariffId).HasColumnName("TariffId");
             this.Property(t => t.TariffVersion).HasColumnName("TariffVersion");
             this.Property(t => t.IsRegionalTax).HasColumnName("IsRegionalTax");
+            this.Property(t => t.VATAmountInLocalCurrency).HasColumnName("VATAmountInLocalCurrency");
+            this.Property(t => t.VATAmountInQuoteSaleCurrency).HasColumnName("VATAmountInQuoteSaleCurrency");
+            this.Property(t => t.VATAmountInLineSaleCurrency).HasColumnName("VATAmountInLineSaleCurrency");
+            this.Property(t => t.SaleTotalAmountLocalIncludingVAT).HasColumnName("SaleTotalAmountLocalIncludingVAT");
+            this.Property(t => t.SaleAmountInSaleCurrencyIncludingVAT).HasColumnName("SaleAmountInSaleCurrencyIncludingVAT");
+            this.Property(t => t.SaleTotalAmountIncludingVAT).HasColumnName("SaleTotalAmountIncludingVAT");
 
             // Relationships
             this.HasOptional(t => t.VendorCard).WithMany().HasForeignKey(d => d.VendorId);

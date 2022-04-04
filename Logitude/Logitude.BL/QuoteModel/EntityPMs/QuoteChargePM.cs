@@ -25,12 +25,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsChargeBySteps { get; set; }
         public bool IsAllIN { get; set; }
         public int ViewOrder { get; set; }
-
         public double? SaleRatio { get; set; }
         public double? CostRatio { get; set; }
-
-
-
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteTypeCode { get; set; }
@@ -231,5 +227,11 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public bool IsRegionalTax { get; set; }
         public string QuoteChargesGroupCode { get; set; }
+        public double? VATAmountInLocalCurrency { get; set; }
+        public double? VATAmountInQuoteSaleCurrency { get; set; }
+        public double? VATAmountInLineSaleCurrency { get; set; }
+        public double? SaleTotalAmountLocalIncludingVAT { get; set; }
+        public double? SaleAmountInSaleCurrencyIncludingVAT { get; set; }
+        public double? SaleTotalAmountIncludingVAT { get; set; }
     }
 }

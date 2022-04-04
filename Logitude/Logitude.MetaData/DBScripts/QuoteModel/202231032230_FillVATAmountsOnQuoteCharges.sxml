@@ -1,0 +1,128 @@
+﻿<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="QuoteCharges">
+  <Sql Version="1">
+    <![CDATA[
+
+declare @Id as varchar(15)
+declare @QuoteId as varchar(15)
+declare @Tenant as int
+declare @VatTypeId as varchar(15)
+declare @QuoteRegionalTaxId as varchar(15)
+declare @VatPercentage as float
+declare @RegionalTaxPercentage as float
+declare @IsRegionalTax as bit
+declare @SaleTotalAmount as float
+declare @SaleTotalAmountLocal as float
+declare @SaleAmountInSaleCurrency as float
+declare @IsLineMultiVAT as bit
+
+declare @VATAmountInLocalCurrency as float
+declare @VATAmountInQuoteSaleCurrency as float
+declare @VATAmountInLineSaleCurrency as float
+declare @SaleTotalAmountLocalIncludingVAT as float
+declare @SaleAmountInSaleCurrencyIncludingVAT as float
+declare @SaleTotalAmountIncludingVAT as float
+
+BEGIN
+       DECLARE DataCursor CURSOR READ_ONLY
+       FOR
+       SELECT Id, QuoteId, Tenant, VatTypeId, VatPercentage, IsRegionalTax, SaleTotalAmount, SaleTotalAmountLocal, SaleAmountInSaleCurrency
+       FROM QuoteCharges
+       WHERE VatTypeId is not null and SaleTotalAmount is not null and $LastCounterWhere$
+       OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @QuoteId, @Tenant, @VatTypeId, @VatPercentage, @IsRegionalTax, @SaleTotalAmount, @SaleTotalAmountLocal, @SaleAmountInSaleCurrency
+       WHILE @@FETCH_STATUS = 0
+       BEGIN
+            
+            set @VATAmountInLocalCurrency = NULL
+            set @VATAmountInQuoteSaleCurrency = NULL
+            set @VATAmountInLineSaleCurrency = NULL
+            set @SaleTotalAmountLocalIncludingVAT = NULL
+            set @SaleAmountInSaleCurrencyIncludingVAT = NULL
+            set @SaleTotalAmountIncludingVAT = NULL
+            set @IsLineMultiVAT = 0
+            set @IsRegionalTax = 0
+            set @RegionalTaxPercentage = (select RegionalTaxPercentage from Quotes where Id = @QuoteId)
+
+            if(@VatPercentage = 0)
+            begin
+                set @VATAmountInLocalCurrency = 0
+                set @VATAmountInQuoteSaleCurrency = 0
+                set @VATAmountInLineSaleCurrency = 0
+                set @SaleTotalAmountLocalIncludingVAT = @SaleTotalAmountLocal
+                set @SaleAmountInSaleCurrencyIncludingVAT = @SaleAmountInSaleCurrency
+                set @SaleTotalAmountIncludingVAT = @SaleTotalAmount
+            end
+
+            else 
+            begin
+                declare @totalVATPercentage  as float
+                set @IsLineMultiVAT = (select IsMultiPercentage from VatTypes where Id = @VatTypeId and Tenant = @Tenant)
+
+                -- Multi VAT
+                if(@IsLineMultiVAT = 1)
+                begin
+                    declare @SingleVATTypeId as varchar(15)
+
+                    BEGIN
+                    DECLARE MultiVatDataCursor CURSOR READ_ONLY
+                   FOR
+                   SELECT SingleVATTypeId
+                   FROM VATTypesGroups
+                   where GroupVATTypeId = @VatTypeId
+                   OPEN MultiVatDataCursor FETCH NEXT FROM MultiVatDataCursor INTO @SingleVATTypeId
+                   WHILE @@FETCH_STATUS = 0
+                   BEGIN
+			            declare @singleVATPercentage as float
+                        set @singleVATPercentage = (select top(1) [Percentage] from VatTypePercentages where VatTypeId = @SingleVATTypeId and Tenant = @Tenant and FromDate <= GETDATE() order by FromDate desc)
+           			 
+                        if(@totalVATPercentage is NULL)
+                            set @totalVATPercentage = @singleVATPercentage
+                        else
+                            set @totalVATPercentage += @singleVATPercentage
+                       
+                   FETCH NEXT FROM MultiVatDataCursor INTO @SingleVATTypeId
+                   END
+                   CLOSE MultiVatDataCursor
+                   DEALLOCATE MultiVatDataCursor
+                   END
+                end
+
+                else 
+                begin
+                    set @totalVATPercentage = @VatPercentage
+                end
+
+                -- Regional Tax
+                if(@IsRegionalTax = 1)
+                begin
+                    set @totalVATPercentage += @RegionalTaxPercentage;
+                end
+
+                set @VATAmountInLocalCurrency = Round((@SaleTotalAmountLocal * @totalVATPercentage / 100), 2)
+                set @VATAmountInQuoteSaleCurrency = Round((@SaleAmountInSaleCurrency * @totalVATPercentage / 100), 2)
+                set @VATAmountInLineSaleCurrency = Round((@SaleTotalAmount * @totalVATPercentage / 100), 2)
+
+                set @SaleTotalAmountLocalIncludingVAT = @SaleTotalAmountLocal + @VATAmountInLocalCurrency
+                set @SaleAmountInSaleCurrencyIncludingVAT = @SaleAmountInSaleCurrency + @VATAmountInQuoteSaleCurrency
+                set @SaleTotalAmountIncludingVAT = @SaleTotalAmount + @VATAmountInLineSaleCurrency
+
+            end
+
+            update QuoteCharges 
+            set VATAmountInLocalCurrency = @VATAmountInLocalCurrency,
+            VATAmountInQuoteSaleCurrency = @VATAmountInQuoteSaleCurrency,
+            VATAmountInLineSaleCurrency = @VATAmountInLineSaleCurrency,
+            SaleTotalAmountLocalIncludingVAT = @SaleTotalAmountLocalIncludingVAT,
+            SaleAmountInSaleCurrencyIncludingVAT = @SaleAmountInSaleCurrencyIncludingVAT,
+            SaleTotalAmountIncludingVAT = @SaleTotalAmountIncludingVAT
+            where Id = @Id and Tenant = @Tenant
+
+			  			 
+       FETCH NEXT FROM DataCursor INTO @Id, @QuoteId, @Tenant, @VatTypeId, @VatPercentage, @IsRegionalTax, @SaleTotalAmount, @SaleTotalAmountLocal, @SaleAmountInSaleCurrency
+       END
+       CLOSE DataCursor
+       DEALLOCATE DataCursor
+END
+
+    ]]>
+  </Sql>
+</Script>

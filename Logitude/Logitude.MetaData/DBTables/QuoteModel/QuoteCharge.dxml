@@ -439,6 +439,45 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="VATAmountInLocalCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VATAmountInQuoteSaleCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VATAmountInLineSaleCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleTotalAmountLocalIncludingVAT"
+    OldNames="VatableSaleAmountLocal"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleAmountInSaleCurrencyIncludingVAT"
+    OldNames="VatableSaleAmountInSaleCurr"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleTotalAmountIncludingVAT"
+    OldNames="VatableSaleTotalAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteId"
     ReferencedTable="Quotes"
