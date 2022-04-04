@@ -324,6 +324,8 @@ namespace Logitude.Accounting.BL.CoreBL
     public class GLAccountBalanceDTO
     {
         public string AccountId { get; set; }
+        public string DisplayNumber { get; set; }
+        public string LocalName { get; set; }
 
         public string AccountDisplayNumber { get; set; }
 
