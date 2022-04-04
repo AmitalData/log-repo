@@ -1058,7 +1058,7 @@
                                     </svg>
                                 </td>
                                 <th style="width: 50px;" class="hide-mobile" *ngIf="item.DocumentId">
-                                    <a (click)="DownloadDocument(item)" href="javascript:;">
+                                    <span style="cursor: pointer;" (click)="DownloadDocument(item)">
                                         <svg style="width: 16px; height: 16px;" width="20px" height="19px"
                                             viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -1080,7 +1080,7 @@
                                                 </g>
                                             </g>
                                         </svg>
-                                    </a>
+                                    </span>
                                 </th>
                             </tr>
 
