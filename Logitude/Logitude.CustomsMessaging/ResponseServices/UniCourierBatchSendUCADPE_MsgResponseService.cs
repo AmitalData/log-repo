@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.Amital;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.Repsitories;
@@ -24,7 +25,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DCAInUCBUCADPEResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
-            UpdateDeclarationPendings(customResponse);
+            if(customResponse.requestParamsData.isCreateInvoiceDocument)
+            {
+                CreateInvoiceDocument(customResponse);
+            }
+            else
+            {
+                UpdateDeclarationPendings(customResponse);
+
+            }
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
@@ -34,6 +43,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
             //this.MyResponseData.ApplicationID = customResponse.Declarationid;            
             this.MyResponseData.UserMessage = "ההצהרות עודכנו";
+        }
+
+        public void CreateInvoiceDocument(DCAInUCBUCADPEResponseContentHeader customResponse)
+        {
+            AddMultiPendingsRequestParams rp = customResponse.requestParamsData;
+            ICustomContext customContext = CustomContext.GetContext(customResponse.tenant);
+
+            List<string> declarationIdsList = rp.checkboxAll ?
+               new DeclarationCourierStatusListQueryService(customContext).GetDeclarationCourierStatusListPendingBulk(customResponse.queryOperations, customResponse.tenant).Select(x => x.DeclarationId).ToList() :
+                rp.declarationIdsList.ToList();
+
+
+            if (rp.checkboxAll && rp.allWithoutdeclarationIdsList != null && rp.allWithoutdeclarationIdsList.Count() > 0)
+                declarationIdsList.RemoveAll(x => rp.allWithoutdeclarationIdsList.Contains(x));
+
+            //todo: call to morams service
+            UnifreightTaskService unifreightTaskService = new UnifreightTaskService();
+            DeclarationPM _MyDeclarationPM;
+            var myDeclarationQueryService = new DeclarationQueryService(customContext);
+            foreach (var item in declarationIdsList)
+            {
+                _MyDeclarationPM = myDeclarationQueryService.GetSingle(item, false, false);
+                if(_MyDeclarationPM != null)unifreightTaskService.OpenUnifreighTask(_MyDeclarationPM, "L2USID", null, false, "");
+            }
         }
 
         public void UpdateDeclarationPendings(DCAInUCBUCADPEResponseContentHeader customResponse)

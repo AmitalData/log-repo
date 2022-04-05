@@ -37,6 +37,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
+        //public List<CustomDocumentTypePM> GetCustomDocumentTypes(List<string> codes)
+        //{
+        //    var customDocumentTypes = repository.GetAll().Where(x => codes.Contains(x.Code)).ToList();
+        //    return customDocumentTypes.Select(poco => this.GetEntityPM(poco)).ToList();
+
+        //}
+
 
     }
 
