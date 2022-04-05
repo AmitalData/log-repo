@@ -29,6 +29,8 @@ export class AccountingSettingsComponent extends BaseComponent {
     public IsEnableMultiRateAPInvoicesVisible: boolean = false;
     public IsEnableMultiCurrencyAPPaymentsVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    QBOAccountingSystemCode = "QBO";
+    QBOGlobalAccountingSystemCode = "QBOG";
     constructor(private entityResourceService: EntityResourceService){
         super();
 
@@ -163,7 +165,11 @@ export class AccountingSettingsComponent extends BaseComponent {
                 
             }
         }
-
+        if ((ObjectsLocator.AccountingSettingPM.AccountingSystemCode == this.QBOAccountingSystemCode
+            || ObjectsLocator.AccountingSettingPM.AccountingSystemCode == this.QBOGlobalAccountingSystemCode) 
+            && !this.EntityPM.EnableEnteringTotalVAT) {
+                this.UIProperties.SetEnabled("EnableEnteringTotalVAT", this.ObjectTableName, false);
+            }
         this.UIProperties.SetEnabled("EnableInvoiceStocksManagement", this.ObjectTableName, !this.IsARInvoiceChronologicalDates);
         this.SetUIProperties_RegistryDate();
     }

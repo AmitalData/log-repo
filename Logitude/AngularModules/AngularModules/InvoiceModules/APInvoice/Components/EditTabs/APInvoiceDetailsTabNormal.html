@@ -211,7 +211,7 @@
                                         <table>
                                             <tr>
                                                 <td style="width: 1px; padding-right: 10px;" *ngIf="IsTotalVatVisible">
-                                                    <Hyperlink [FontSize]="12" (click)="EnterVATOnlyClicked()">Enter VAT Totals</Hyperlink>
+                                                    <Hyperlink [IsEnabled]="IsTotalVatEnabled" [FontSize]="12" (click)="EnterVATOnlyClicked()">Enter VAT Totals</Hyperlink>
                                                 </td>
 
                                                 <td style="width: 1px;" class="Label">{{'APInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
