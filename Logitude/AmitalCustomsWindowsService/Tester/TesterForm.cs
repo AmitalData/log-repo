@@ -1151,10 +1151,7 @@ namespace AmitalCustomsWindowsService.Tester
 
         }
 
-        private void checkBoxMQ_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click(object sender, EventArgs e)
         {
