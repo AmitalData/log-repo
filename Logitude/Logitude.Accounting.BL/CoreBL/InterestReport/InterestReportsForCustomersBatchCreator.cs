@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 {
                     ContactPM contact = GetLoggedContact(args.Tenant);
                     bool showLocals = !contact.DontShowLocal;
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchReportStillInProgress", args.Tenant, showLocals));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchReportStillInProgress", args.Tenant, showLocals));
                 }
 
                 scope.Complete();

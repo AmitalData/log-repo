@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
                 bool showLocals = !contact.DontShowLocal;
-                throw new Exception(TranslateTextsClass.Translate("Accounting.O.DeductionFileNumberNotFound", entityPM.Tenant, showLocals));
+                throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.DeductionFileNumberNotFound", entityPM.Tenant, showLocals));
 
 
             }

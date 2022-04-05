@@ -4064,7 +4064,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             if (docType == null)
             {
-                throw new Exception(error);
+                throw new ApplicationException(error);
             }
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
@@ -4654,7 +4654,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             if (docType == null)
             {
-                throw new Exception(error);
+                throw new ApplicationException(error);
             }
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();

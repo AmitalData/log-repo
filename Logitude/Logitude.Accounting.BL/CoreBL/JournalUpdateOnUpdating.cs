@@ -74,16 +74,16 @@ namespace Logitude.Accounting.BL
 
             if (journalPM.ChangeSetOp == ChangeSetOperation.None)
             {
-                throw new Exception("Don't Update Nothing");
+                throw new ApplicationException("Don't Update Nothing");
             }
             if (journalPM.ChangeSetOp == ChangeSetOperation.Delete)
             {
-                throw new Exception("I Don't think its good idea to delete Journal (ask yaron)");
+                throw new ApplicationException("I Don't think its good idea to delete Journal (ask yaron)");
             }
             if (JournalPOCO.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.Voided).ToString())
             {
 
-                throw new Exception("Journal is voided (Change is not Allowed)");
+                throw new ApplicationException("Journal is voided (Change is not Allowed)");
             }
 
 
@@ -131,7 +131,7 @@ namespace Logitude.Accounting.BL
             {
                 if (journalPM.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.Voided).ToString())
                 {
-                    throw new Exception("I Don't think its good idea to insert Journal and immediatlly to voided him ?!?!?(ask yaron)");
+                    throw new ApplicationException("I Don't think its good idea to insert Journal and immediatlly to voided him ?!?!?(ask yaron)");
                 }
             }
             if (journalPM.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.Voided).ToString())
@@ -142,7 +142,7 @@ namespace Logitude.Accounting.BL
                     JournalPOCO.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.Failed).ToString()
                     )
                 {
-                    throw new Exception("BLException :Void ACTION can only affect Approved journal");
+                    throw new ApplicationException("BLException :Void ACTION can only affect Approved journal");
                 }
             }
 
@@ -160,25 +160,25 @@ namespace Logitude.Accounting.BL
 
                         string msg = TranslateTextsClassTranslate("Accounting.O.CantVoidJouranlItDidntTurnedToTransactions", 0, useLocal);
 
-                        throw new Exception(msg);
+                        throw new ApplicationException(msg);
                     }
                 }
                 else
                 {
                     if (journalPM.StatusCode != ((int)JournalStatusTypePM.StatusCodeEnum.Voided).ToString())
                     {
-                        throw new Exception("BLException :Approved Streamed Journal Can Only Change To Voided");
+                        throw new ApplicationException("BLException :Approved Streamed Journal Can Only Change To Voided");
                     }
                 }
 
                 if (!String.IsNullOrWhiteSpace(journalPM.OriginalJournalId))
                 {
-                    throw new Exception("BLException :Can not create Strono Journal to Strono Journal ");
+                    throw new ApplicationException("BLException :Can not create Strono Journal to Strono Journal ");
                 }
 
                 if (JournalPOCO.IsVoided.GetValueOrDefault())
                 {
-                    throw new Exception("already entityPOCO.IsVoided.GetValueOrDefault() ?!?!?");
+                    throw new ApplicationException("already entityPOCO.IsVoided.GetValueOrDefault() ?!?!?");
                 }
                 var voidedProp = new List<string>(){
                         
@@ -197,12 +197,12 @@ namespace Logitude.Accounting.BL
                 //update 
                 if (propChanged.Any())
                 {
-                    throw new Exception("BLException :Approved Journal Can Only Change To Voided Property");
+                    throw new ApplicationException("BLException :Approved Journal Can Only Change To Voided Property");
                 }
                 if (journalPM.JournalLines.Any(jl => jl.ChangeSetOp != ChangeSetOperation.None))
                 {
                     var jl1 = journalPM.JournalLines.First(jl => jl.ChangeSetOp != ChangeSetOperation.None);
-                    throw new Exception($"BLException :Approved Journal Can Only Change To Voided Property (Change JournalLines fix credrit or debit) line={jl1.Line} ");
+                    throw new ApplicationException($"BLException :Approved Journal Can Only Change To Voided Property (Change JournalLines fix credrit or debit) line={jl1.Line} ");
                 }
 
             }
@@ -230,16 +230,16 @@ namespace Logitude.Accounting.BL
                         if (user != null) useLocal = !(GetLoggedContact(JournalPOCO.Tenant).DontShowLocal);
 
                         string msg = TranslateTextsClassTranslate("Accounting.O.CantVoidJouranlItDidntTurnedToTransactions", 0,useLocal);
-                        throw new Exception(msg);
+                        throw new ApplicationException(msg);
                     }
                     if (_JournalStornoService==null)
                     {
-                        throw new Exception("Only JournalVoidUpdateService init _JournalStornoService !!");
+                        throw new ApplicationException("Only JournalVoidUpdateService init _JournalStornoService !!");
                     }
                     JournalPM Storno = _JournalStornoService.CreateStornoAndCommitUpdate();
                     if (string.IsNullOrWhiteSpace(Storno.Id))
                     {
-                        throw new Exception(M_CreateStornoAndSaveFailed);
+                        throw new ApplicationException(M_CreateStornoAndSaveFailed);
                     }
                     journalPM.VoidedByUserId = journalPM.UpdatedByUserId =
                         this.GetLogContactId(journalPM); // AuthenticationUtil.ResolveUserId(journalPM.Tenant);
@@ -247,7 +247,7 @@ namespace Logitude.Accounting.BL
                     journalPM.IsVoided = true;
                     journalPM.VoidDate = DateTime.UtcNow;
 
-                    //throw new Exception("entityPM.VoidedBy = Storno.Id;// Add this line after VoidedBy convert from bool? to VC(15)");
+                    //throw new ApplicationException("entityPM.VoidedBy = Storno.Id;// Add this line after VoidedBy convert from bool? to VC(15)");
 
                     break;
 

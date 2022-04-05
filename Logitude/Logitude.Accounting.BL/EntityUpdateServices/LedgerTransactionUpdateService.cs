@@ -46,12 +46,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     return;
                     break;
                 case Simplog.Server.Infrastructure.ChangeSetOperation.Insert:
-                    throw new Exception("cannot insert LedgerTransactionPM move to Store Procedure");
+                    throw new ApplicationException("cannot insert LedgerTransactionPM move to Store Procedure");
                     break;
                 case Simplog.Server.Infrastructure.ChangeSetOperation.Update:
                     break;
                 case Simplog.Server.Infrastructure.ChangeSetOperation.Delete:
-                    throw new Exception("cannot Delete LedgerTransactionPM !!!!!");
+                    throw new ApplicationException("cannot Delete LedgerTransactionPM !!!!!");
                     break;
                 default:
                     break;
@@ -63,12 +63,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (entityPOCO.OpenAmount < 0 && entityPM.OpenAmount > 0)
                     {
-                        throw new Exception("(entityPOCO.OpenAmount < 0 && entityPM.OpenAmount > 0)");
+                        throw new ApplicationException("(entityPOCO.OpenAmount < 0 && entityPM.OpenAmount > 0)");
                     }
 
                     if (entityPOCO.OpenAmount > 0 && entityPM.OpenAmount < 0)
                     {
-                        throw new Exception("(entityPOCO.OpenAmount > 0 && entityPM.OpenAmount < 0)");
+                        throw new ApplicationException("(entityPOCO.OpenAmount > 0 && entityPM.OpenAmount < 0)");
                     }
                 }
             }
@@ -83,18 +83,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 var pairsCount = pairs.Count();
                 if (pairsCount > 1)
                 {
-                    throw new Exception("only one combination allowed Of {AccountId +Tenant }");
+                    throw new ApplicationException("only one combination allowed Of {AccountId +Tenant }");
                 }
                 if (pairsCount == 0)
                 {
                     //to delete 
-                    throw new Exception("only one combination allowed Of {AccountId +Tenant } (pairsCount == 0) ==>No Items On Match List,To Delete ? ");
+                    throw new ApplicationException("only one combination allowed Of {AccountId +Tenant } (pairsCount == 0) ==>No Items On Match List,To Delete ? ");
                 }
             
             var repeateTrans= OpenRecilationDrafts.GroupBy(r => r.Id).Where( g=> g.Count()>1).Select( g=>g.Key).ToList();
             if (repeateTrans.Count>0)
             {
-                throw new Exception("Client Side should send send Unique Id List :" + string.Join(",",repeateTrans.ToArray()));
+                throw new ApplicationException("Client Side should send send Unique Id List :" + string.Join(",",repeateTrans.ToArray()));
             }
   
             gLAccountId =pairs.First().Key.AccountId;
@@ -111,7 +111,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (pm.IsReconciled)
                     {
-                        throw new Exception("DelSertOpenRecilationDrafts but pm.IsReconciled " + pm.Id);
+                        throw new ApplicationException("DelSertOpenRecilationDrafts but pm.IsReconciled " + pm.Id);
                     }
                     pm.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     pm.AmountToReconcile = OpenRecilationDrafts.First(r => r.Id == pm.Id).AmountToReconcile;
@@ -135,7 +135,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         if (item.InReconcileProgress)
                         {
-                            throw new Exception("Already InReconcileProgress");
+                            throw new ApplicationException("Already InReconcileProgress");
                         }
                     }
                     item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
@@ -162,7 +162,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (item.InProgressExternalReconcile)
                     {
-                        throw new Exception("Already InReconcileProgress");
+                        throw new ApplicationException("Already InReconcileProgress");
                     }
                 }
                 item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;

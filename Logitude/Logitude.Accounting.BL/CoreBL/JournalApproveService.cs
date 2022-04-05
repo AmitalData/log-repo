@@ -227,7 +227,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var defaultRecord = allGLAccountTotalByMonths.FirstOrDefault();
             if (allGLAccountTotalByMonths.FirstOrDefault(rec => !rec.Tenant.Equals(defaultRecord.Tenant)) != null)
             {
-                throw new Exception("in 1 tenent only ");
+                throw new ApplicationException("in 1 tenent only ");
             }
             var inshureNoDuplicateKeys_MayBeCrash = allGLAccountTotalByMonths.ToDictionary(rec => string.Concat(rec.AccountId, rec.DateTypeCode, rec.Year, rec.Month, rec.CurrencyId));
             allGLAccountTotalByMonths = allGLAccountTotalByMonths.OrderBy(rec => rec.AccountId).ThenBy(rec => rec.DateTypeCode).ThenBy(rec => rec.Year).ThenBy(rec => rec.Month).ThenBy(rec => rec.CurrencyId);
@@ -556,7 +556,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private static void ThrowException(string mess)
         {
-            throw new Exception(mess);
+            throw new ApplicationException(mess);
         }
 
 
@@ -931,7 +931,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     DataTable tblQueue = new DataTable();
                     if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                     {
-                        throw new Exception();
+                        throw new ApplicationException();
                     }
 
                     using (SqlConnection myConnection = new SqlConnection(strConnString))

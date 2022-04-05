@@ -50,7 +50,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (item.InProgressExternalReconcile)
                     {
-                        throw new Exception("Already InReconcileProgress");
+                        throw new ApplicationException("Already InReconcileProgress");
                     }
                 }
                 item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;

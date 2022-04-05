@@ -55,7 +55,7 @@ namespace Logitude.Accounting.BL.CoreBL
             string loggedContactId = GetLogContactId(entityPM);
             if (string.IsNullOrWhiteSpace(loggedContactId))
             {
-                throw new Exception("Logged Contact Id is required ");
+                throw new ApplicationException("Logged Contact Id is required ");
             }
             string ObjectTableId = GetObjectTableId(entityPM);
 

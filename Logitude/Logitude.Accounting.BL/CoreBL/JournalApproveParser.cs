@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (_JournalPM.StatusCode != "2")
             {
-                throw new Exception("occure only OnApproveUpdating");
+                throw new ApplicationException("occure only OnApproveUpdating");
             }
             if (!String.IsNullOrWhiteSpace(_JournalPM.QueueId))
             {
@@ -133,21 +133,21 @@ namespace Logitude.Accounting.BL.CoreBL
             pm = qs.GetSingle(accountId, false, true);
             if (pm == null)
             {
-                throw new Exception("accountId not found" + accountId);
+                throw new ApplicationException("accountId not found" + accountId);
             }
             if (pm.Tenant != _JournalPM.Tenant)
             {
-                throw new Exception("accountId not found in tenant " + accountId);
+                throw new ApplicationException("accountId not found in tenant " + accountId);
             }
             
             ValidationResult res = GLAccountValidator./*IsGLAccountValid*/IsGLAccountValidCacheDueFromJournal(pm);
             if (res != null)
             {
-                throw new Exception("GLAccountValidator.IsGLAccountValid :" + res.ErrorMessage);
+                throw new ApplicationException("GLAccountValidator.IsGLAccountValid :" + res.ErrorMessage);
             }
             if (pm.AccountTypeCode != "1" && String.IsNullOrWhiteSpace(pm.ControlAccountId))
             {
-                throw new Exception("GLAccount is not card (AccountTypeCode != 1 ) and there isn't any ControlAccountId(Alex not check in ?!?!) " + pm.SearchFields);
+                throw new ApplicationException("GLAccount is not card (AccountTypeCode != 1 ) and there isn't any ControlAccountId(Alex not check in ?!?!) " + pm.SearchFields);
             }
 
             return pm;
@@ -179,7 +179,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 _LocalAccountingCurrencyId = tPM.CurrencyId;
                 if (_JournalPM.JournalLines.Count < 1)
                 {
-                    throw new Exception("JournalApproveParser(" + this._JournalPM.Id + "): No Journal line ");
+                    throw new ApplicationException("JournalApproveParser(" + this._JournalPM.Id + "): No Journal line ");
                 }
 
                 CreateLedger_MapByJournalActionType();
@@ -216,8 +216,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     errorString = errorString.Remove(errorString.Length - 1);
                     var errorText = errorString + ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id;
                     //ThrowException(errorText);
-                    throw new Exception(errorText);
-                    //throw new Exception(errorString);
+                    throw new ApplicationException(errorText);
+                    //throw new ApplicationException(errorString);
                 }
             }
             return true;
@@ -246,7 +246,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         break;
                     case JournalActionTypeEnum.NotValid:
                     default:
-                        throw new Exception("JournalApproveParser():JournalActionType is must ");
+                        throw new ApplicationException("JournalApproveParser():JournalActionType is must ");
                         break;
                 }
 
@@ -661,7 +661,7 @@ namespace Logitude.Accounting.BL.CoreBL
             _ErrorsList = _ErrorsList ?? new List<string>();
             _ErrorsList.Add(message);
             return;
-            throw new Exception(message);
+            throw new ApplicationException(message);
         }
         private void CheckLedgerTransactions()
         {
@@ -720,7 +720,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 ////ThrowException(errorText);
-                //                throw new Exception(errorText);
+                //                throw new ApplicationException(errorText);
             }
             //_JournalPM.JournalLines.ToLookup(rec => rec.ActionTypeCodeEnum);
 
