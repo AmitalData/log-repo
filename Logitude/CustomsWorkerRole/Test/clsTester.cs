@@ -625,10 +625,10 @@ PaymentDate  מלפני 3  ימים ");
                 //http://192.116.221.103:584/Courier58/api/couriermasters/getsingle?id=1-106
 
                 var myFTPMamanService = new FTPOutMamanSubManifestService();
-                myFTPMamanService.BuildCommunicationLog(bytearray, tenant, "1-1255463");//02004004
+                myFTPMamanService.BuildCommunicationLog(bytearray, tenant, "1-1651726");//02004004
 
                 var myFTPOutMaman2470ReleaseGoodService = new FTPOutMaman2470ReleaseGoodService();
-                myFTPOutMaman2470ReleaseGoodService.BuildCommunicationLog(bytearray, tenant, "1-1255463", $"maman{Guid.NewGuid().ToString()}", false);
+                myFTPOutMaman2470ReleaseGoodService.BuildCommunicationLog(bytearray, tenant, "1-1651726", $"maman{Guid.NewGuid().ToString()}", false);
 
 
 
