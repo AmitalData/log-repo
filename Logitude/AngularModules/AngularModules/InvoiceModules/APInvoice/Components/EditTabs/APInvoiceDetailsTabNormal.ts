@@ -80,9 +80,6 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.IsTotalVatEnabled = this.CheckIsTotalVatEnabled();
     }
     CheckIsTotalVatEnabled(): boolean {
-        if (!ObjectsLocator.AccountingSettingPM.EnableEnteringTotalVAT) {
-            return false;
-        }
         if (ObjectsLocator.AccountingSettingPM.AccountingSystemCode != this.QBOAccountingSystemCode
             && ObjectsLocator.AccountingSettingPM.AccountingSystemCode != this.QBOGlobalAccountingSystemCode) {
             return true;
