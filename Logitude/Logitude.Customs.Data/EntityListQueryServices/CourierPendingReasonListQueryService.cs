@@ -34,9 +34,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                 ErrorPlaceName = a.PendingErrorPlace != null ? a.PendingErrorPlace.LocalName : null,
                                                 Tenant = a.Tenant,
                                                 UnifreightStatusCode = a.UnifreightStatusCode,
+												MamanSuspendedCode=a.MamanSuspendedCode,
 		                    	            });
             return query;
 		}
+
 
 		private IQueryable<CourierPendingReason> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CourierPendingReason> iQueryable, int tenant)
         {
