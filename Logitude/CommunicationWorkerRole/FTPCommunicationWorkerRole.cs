@@ -335,7 +335,8 @@ namespace CommunicationWorkerRole
                             ftpHostIP = settingsData.host;
                             string p_status = "";
 
-                            SFTPService sftpService = new SFTPService();
+                            var sFTPDeleteTempFilesService = new SFTPDeleteTempFilesService(tenant, ftpHost: $"{ftpHostIP}@{ftpUserName}:22/{ftpFolderName}");
+                            SFTPService sftpService = new SFTPService(sFTPDeleteTempFilesService);
                             sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
                             waitingCommLog.Logs += p_message;
                             if (p_status == "0")
