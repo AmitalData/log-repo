@@ -292,7 +292,9 @@ export function ARApproveInvoice() {
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
 }
-export function SATARApproveInvoice() {
+export function SATARApproveInvoice(invoiceNumber: number) { 
+    cy.SelectComboDropDownListItem(AccountingSelectors.ManuallySet, 'Manually Set')
+    cy.FillLogTextBox(AccountingSelectors.ARInvoiceInvoice,`${invoiceNumber}`)
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
     cy.Click(AccountingSelectors.SATexchangerate, null)
@@ -640,14 +642,16 @@ export function changeSATInterfaceSettings(AccountingsSystem: string) {
     cy.SelectDropDownListItem(AccountingSelectors.LogLovSATInterfaceSettingsLogLov, AccountingsSystem)
     
 }
-export const SearchInvoice = () => {
-    DefineInvoiceViewsGetFilterSearch(InvoiceNumber);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput,InvoiceNumber);
-    AssertInvoiceViewsGetByFilters();
+export const SearchInvoice = (invoiceNumber) => {
+ //   DefineInvoiceViewsGetFilterSearch(invoiceNumber);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput,invoiceNumber);
+   // AssertInvoiceViewsGetByFilters();
+    cy.wait(1000)
 }
-export const DefineInvoiceViewsGetFilterSearch = (InvoiceNumber: string) => {
-  //  cy.DefineRequestWait(RestAPI.GET, AccountingURLs.GetFilterSearch(InvoiceNumber), RequestAliases.GetFilterSearch);
+export const DefineInvoiceViewsGetFilterSearch = (invoiceNumber: string) => {
+   //cy.DefineRequestWait(RestAPI.GET, AccountingURLs.GetFilterSearch(invoiceNumber), RequestAliases.GetFilterSearch);
 }
+
 export function AssertInvoiceViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }

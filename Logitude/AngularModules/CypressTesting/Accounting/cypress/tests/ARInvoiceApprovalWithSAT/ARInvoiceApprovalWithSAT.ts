@@ -20,6 +20,7 @@ let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let AccountingSystem: string;
 let ARInvoiceNumber: string;
+let invoiceNumber: number;
 //#endregion
 
 //#region Update Accounting System
@@ -68,7 +69,7 @@ Then("the direct should create successfully", () => {
 Given("a Receivable with the following details", (dataTable) => {
   const ReceivableData = Assists.CreateSet<ReceivableDetails>(dataTable);
   ShipmentActions.OpenShipment(shipmentNumber);
-  ShipmentActions.FillReceivablesTab(ReceivableData, true)
+  ShipmentActions.FillReceivablesTab(ReceivableData, false)
 });
 
 When("add Receivable", () => {
@@ -83,6 +84,10 @@ Then("the Receivable should add successfully", () => {
 //#region Create ARInvoice
 Given("an ARInvoice with the following details", (dataTable) => {
   const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
+  const yesterday = new Date(new Date().getTime() - 24*60*60*1000)
+  console.log('yesterday ', yesterday);
+  const formatted =  `${yesterday.getDate()}/${yesterday.getMonth()+1}/${yesterday.getFullYear()}`;
+  ARInvoiceData.InvoiceDate= formatted;
   cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
   AccountingActions.FillARInvoiceDetails(ARInvoiceData)
 });
@@ -102,8 +107,10 @@ Then("the status value should be Draft", () => {
 
 //#region Approve ARInvoice
 When("approve invoice", () => {
-  AccountingActions.SATARApproveInvoice()
+  invoiceNumber = (new Date()).getMilliseconds();
+  AccountingActions.SATARApproveInvoice(invoiceNumber)
 });
+
 Then("the invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
       ARInvoiceNumber = interception.response.body.InvoiceNumber;
