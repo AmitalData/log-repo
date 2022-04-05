@@ -219,6 +219,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                             }
                         }
                     }
+                    else
+                    {
+                        entityLists = sortClass.GetSorterQuery<DocumentsFilingList, string>(queryOperations, entityLists);
+                    }
                 }
                 else
                 {
