@@ -276,16 +276,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             select new MyJoin
             {
                 DeclarationId = g.Key,
-                ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1"),
+                //ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1"),
                 CourierPendingReason1stName = g.Any() ? g.FirstOrDefault().CourierPendingReason.LocalName : null,
-             });
+            });
 
             var q1 = (
                     from cd in context.CourierDeclarations.Include("Declarations").Include("Importer").Where(cd => cd.CourierMasterId == courierMasterId)
 
                     join dcs in context.DeclarationCourierStatuses on cd.Declaration.Id equals dcs.DeclarationId
-                    join errorPlace in qDeclarationPaymentPendingHold on dcs.DeclarationId equals errorPlace.DeclarationId into errorPlaceOuterJoin
-                    from errorPlaceOuterJoinNullable in errorPlaceOuterJoin.DefaultIfEmpty()
+
+                    join dp in context.DeclarationPendings.Include("CourierPendingReason")
+                    .Where(x => x.Status == "A").Select(x => new { DeclarationID = x.DeclarationID, CourierPendingReason = x.CourierPendingReason.LocalName })
+                    on dcs.DeclarationId equals dp.DeclarationID into dpjoin
+                    //join errorPlace in qDeclarationPaymentPendingHold on dcs.DeclarationId equals errorPlace.DeclarationId into errorPlaceOuterJoin
+                    from dpj in dpjoin.DefaultIfEmpty()
 
                     join cp in context.ConsignmentPackages on cd.Declaration.Id equals cp.DeclarationId into cpjoin
                     from cj in cpjoin.Where(t => t.PackageMeasureQualifierCode == "2" && t.GrossMassMeasure.HasValue).DefaultIfEmpty()
@@ -308,7 +312,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         CourierSearchFields = cd.Declaration.CourierSearchFields,
                         FastIndividualProcessCode = dcs.FastIndividualProcessCode,
                         CourierPendingReasonList = dcs.CourierPendingReasonList,
-                        CourierPendingReasonName = errorPlaceOuterJoinNullable != null ? errorPlaceOuterJoinNullable.CourierPendingReason1stName : null,
+                        CourierPendingReasonName = dpj.CourierPendingReason != null ? dpj.CourierPendingReason : null,
                         MissedDocumentStatusCode = dcs.MissedDocumentStatusCode,
 
                     } into t2
