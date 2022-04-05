@@ -121,6 +121,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                ImageDetailId = a.Card.ImageDetailId,
                                GLAccountId = a.Card.GLAccountId,
                                RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                               SATReceptorName = a.Card.SATCustomerName,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -225,6 +226,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                UsoCFDICode = a.Card.UsoCFDICode,
                                ImageDetailId = a.Card.ImageDetailId,
                                RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                               SATReceptorName = a.Card.SATCustomerName,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -330,6 +332,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                ImageDetailId = a.Card.ImageDetailId,
                                GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                               SATReceptorName = a.Card.SATCustomerName,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -456,6 +459,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  ImageDetailId = a.Card.ImageDetailId,
                                                  BillToId = a.Card.BillToId,
                                                  RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                                                 SATReceptorName = a.Card.SATCustomerName,
                                              };
             return airlines;
         }
@@ -546,6 +550,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ImageDetailId = a.Card.ImageDetailId,
                              BillToId = a.Card.BillToId,
                              RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                             SATReceptorName = a.Card.SATCustomerName,
                          }).AsQueryable();
 
             IQueryable<AirlinePM> query2 = null;
@@ -654,6 +659,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   StateName = a.Card.StateName,
                                                   GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                                   RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                                                  SATReceptorName = a.Card.SATCustomerName,
                                               });
 
 

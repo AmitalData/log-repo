@@ -82,6 +82,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
             entityCard.StorageFreeDays = entityPM.StorageFreeDays;
             entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
+            entityCard.SATCustomerName = entityPM.SATReceptorName;
 
             if (!entityPM.IsFirstContactToAdd)
             {

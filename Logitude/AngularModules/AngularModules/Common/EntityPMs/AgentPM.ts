@@ -437,6 +437,11 @@ export class AgentPM {
     public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
        
 	 
+    private sATReceptorName: string;
+    public get SATReceptorName() { return this.sATReceptorName; }
+    public set SATReceptorName(newValue: string) { if (this.sATReceptorName != newValue) { this.sATReceptorName = newValue; this.MarkAsDirty("SATReceptorName"); } }
+       
+	 
     private imageDetailId: string;
     public get ImageDetailId() { return this.imageDetailId; }
     public set ImageDetailId(newValue: string) { if (this.imageDetailId != newValue) { this.imageDetailId = newValue; this.MarkAsDirty("ImageDetailId"); } }

@@ -86,6 +86,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsSendingByContainer = a.IsSendingByContainer,
                                     IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                     RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                                    SATReceptorName = a.Card.SATCustomerName,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -175,6 +176,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsSendingByContainer = a.IsSendingByContainer,
                                     IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                     RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                                    SATReceptorName = a.Card.SATCustomerName,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -251,6 +253,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsSendingByContainer = a.IsSendingByContainer,
                                     IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                     RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                                    SATReceptorName = a.Card.SATCustomerName,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -316,6 +319,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            IsSendingByContainer = a.IsSendingByContainer,
                                                            IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                                            RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                                                           SATReceptorName = a.Card.SATCustomerName,
                                                        };
             return shippingLines;
         }
@@ -378,6 +382,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              IsSendingByContainer = a.IsSendingByContainer,
                              IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                              RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                             SATReceptorName = a.Card.SATCustomerName,
                          }).AsQueryable();
 
             IQueryable<ShippingLinePM> query2 = null;
@@ -457,6 +462,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        IsSendingByContainer = a.IsSendingByContainer,
                                                        IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                                        RegimenFiscalCode = a.Card.RegimenFiscalCode,
+                                                       SATReceptorName = a.Card.SATCustomerName,
                                                    });
 
 
