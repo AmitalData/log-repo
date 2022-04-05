@@ -2,13 +2,12 @@ import { Component, Output, EventEmitter, Input, ChangeDetectorRef } from '@angu
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
-import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
 import { ClientList } from 'Customs/EntityLists/ClientList';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { CargoIdentifireTypeList } from 'Customs/EntityLists/CargoIdentifireTypeList';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ConsignmentDeclartion, DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
@@ -23,7 +22,9 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import { ClientListService } from 'Customs/Services/StandardLists/ClientListService'
 import { CargoIdentifireTypeListService } from 'Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { CargoIdentifireTypePM } from 'Customs/EntityPMs/CargoIdentifireTypePM';
-import { Validator } from 'Infrastructure/Validators/Validator';
+import { ErrorLogPMFileLoggerService } from 'Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
+import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
+import { loggerService } from 'Infrastructure/Utilities/logger.service';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -148,7 +149,6 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     get CalculatedExporterName() { return this.entityPM?.CalculatedExporterName }
     set CalculatedExporterName(newValue: string) { this.entityPM.CalculatedExporterName = newValue; }
 
-
     constructor(
         private logisticActionRequestPMService: LogisticActionRequestPMService,
         private EntityResourceService: EntityResourceService,
@@ -156,10 +156,12 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         private cdr: ChangeDetectorRef,
         public entityArgs: EntityArgs,
         public logisticActionRequestWebService: LogisticActionRequestWebService,
+        private logger: loggerService,
     ) {
         super();
         this.entityPM = new LogisticActionRequestPM();
         this.EntityResourceService.getEntityResourceByTableName("Customs.LogisticActionRequestType").subscribe(response => { });
+        this.logger.loggerAppSettingsName = "20220301.LogUntilDateyyyyMMdd";
 
         this.Listen();
     }
@@ -400,12 +402,15 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     async SaveEntityChanges() {
+        this.logger.sendError('start SaveEntityChange', 'entityPM: ' + JSON.stringify(this.entityPM));
         const isInsert: boolean = !this.entityPM.Id;
 
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
         const res = await this.logtuideTableDataService.getDataFromService(
             (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM)))
+
+        this.logger.sendError('after save', 'res: ', JSON.stringify(res));
 
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
         SessionLocator.SelectedSession.StopBusyIndicator();
@@ -423,11 +428,13 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
                 this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.LogisticActionRequest.F." + filed))));
         
         // Validator.TryValidateObject(this.entityPM, this.ObjectTableName,  this.ValidationErrorsList);
+        this.logger.sendError('is invalid', 'ValidationErrorsList: ' + JSON.stringify(this.ValidationErrorsList))
         return !!this.ValidationErrorsList.length;
     }
 
 
     async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
+        this.logger.sendError('OnCustomSendOptionsButtonClick')
         this.submit = true;
         if (this.invalidate()) return;
 
@@ -437,12 +444,16 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
 
         const param: LogisticActionRequestRequestParams = this.getCustomsParams();
-
+        this.logger.sendError('param', 'param: ' + JSON.stringify(param));
         const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
-
+        this.logger.sendError('after SendCustomsMessage8410', 'res: ' + JSON.stringify(res));
+        
         CustomMessageProgressComponent
-            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), false)
-            .catch((err) => this.ValidationErrorsList.push(err));
+        .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), false)
+        .catch((err) => {
+                this.logger.sendError('after err', 'err: ' + JSON.stringify(err));
+                this.ValidationErrorsList.push(err)
+            });
     }
 
 
@@ -470,7 +481,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     OkButtonClicked() {
         this.submit = true;
         // if (this.invalidate()) return;
-
+        this.logger.sendError('OkButtonClicked');
         this.SaveEntityChanges();
     }
 
