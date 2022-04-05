@@ -11,12 +11,12 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
   
 @Injectable()
 
-export class ExportStorageDeclarationExtendedList {
+export class ExportStorageExtendedListService {
     private _http: HttpClient
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExportStorageDeclarationExtendedList';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExportStorageExtendedList';
     }
 
     public connectedSelectAll: boolean;

@@ -19,7 +19,8 @@ import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollect
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
-
+import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
+import { ExportStoragePMService } from 'Customs/Services/StandardPMs/ExportStoragePMService';
 @Component({
 
     templateUrl: './ExportStorageDeclerationComponent.html',
@@ -30,8 +31,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     public SelectedRow: any;
     DataContext = this;
     objectTableNameDec: string = "Customs.Declaration";
-    objectTableName: string = "Customs.Containerization";
-    entityPM: ContainerizationPM;
+    objectTableName: string = "Customs.ExportStorage";
+    entityPM: ExportStoragePM;
     declarationPM: DeclarationPM;
     @Output() onQueryChangeEvent = new EventEmitter();
     entityListService: EntityListService;
@@ -46,7 +47,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     IsSelected: boolean;
     @Output() MenuHeaderchangeevent = new EventEmitter();
     connectedListIds: ObservableCollection;
-    containerizationPMService: ContainerizationPMService = new ContainerizationPMService();
+    exportStoragePMService: ExportStoragePMService = new ExportStoragePMService();
     containerizationMessagesService: ContainerizationMessagesService = new ContainerizationMessagesService();
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
@@ -82,25 +83,25 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     }
 
     onCheckBoxChecked($event) {
-        this.IsSelected = false;
-        if (!this.entityPM.ConnectedDeclarations) {
-            this.entityPM.ConnectedDeclarations = "";
-        }
-        if ($event.IsChecked) {
-            if (!this.entityPM.ConnectedDeclarations.includes($event.rowData.Id)) {
-                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations + $event.rowData.Id + ",";
-            }
-        }
-        else {
-            if (this.entityPM.ConnectedDeclarations.includes($event.rowData.Id)) {
-                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace($event.rowData.Id + ",", "");
-            }
-        }
+        // this.IsSelected = false;
+        // if (!this.entityPM.ConnectedDeclarations) {
+        //     this.entityPM.ConnectedDeclarations = "";
+        // }
+        // if ($event.IsChecked) {
+        //     if (!this.entityPM.ConnectedDeclarations.includes($event.rowData.Id)) {
+        //         this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations + $event.rowData.Id + ",";
+        //     }
+        // }
+        // else {
+        //     if (this.entityPM.ConnectedDeclarations.includes($event.rowData.Id)) {
+        //         this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace($event.rowData.Id + ",", "");
+        //     }
+        // }
     }
 
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public containerizationExtendedListService: ContainerizationExtendedListService) {
         super();
-        this.entityPM = new ContainerizationPM();
+        this.entityPM = new ExportStoragePM();
         this.entityPM.Tenant = SessionLocator.Tenant;
         this.connectedListIds = new ObservableCollection([]);
         this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
@@ -189,23 +190,23 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     };
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        var filters = new ApiQueryFilters;
-        var ExportFilter = new FilterItem("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
-        filters.AdditionalFilters.push(ExportFilter);
-        var ProcFilter = new FilterItem("ProcedureCurrentName", 'המכלה', null, null, "Contains", false, false, false, "string", false);
-        filters.AdditionalFilters.push(ProcFilter);
-        filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
-        if (this.selectedValue != 'All') {
-            var ModeFilter = new FilterItem("TransportModeId", this.selectedValue, null, null, "Equals", false, false, false, "string", false);
-            filters.AdditionalFilters.push(ModeFilter);
-        }
+         var filters = new ApiQueryFilters;
+        // var ExportFilter = new FilterItem("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
+        // filters.AdditionalFilters.push(ExportFilter);
+        // var ProcFilter = new FilterItem("ProcedureCurrentName", 'המכלה', null, null, "Contains", false, false, false, "string", false);
+        // filters.AdditionalFilters.push(ProcFilter);
+        // filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
+        // if (this.selectedValue != 'All') {
+        //     var ModeFilter = new FilterItem("TransportModeId", this.selectedValue, null, null, "Equals", false, false, false, "string", false);
+        //     filters.AdditionalFilters.push(ModeFilter);
+        // }
 
-        if (this.ExportFileFilter) {
-            filters.AdditionalFilters.push(this.ExportFileFilter);
-        }
-        if (this.SearchFieldsFilter) {
-            filters.AdditionalFilters.push(this.SearchFieldsFilter);
-        }
+        // if (this.ExportFileFilter) {
+        //     filters.AdditionalFilters.push(this.ExportFileFilter);
+        // }
+        // if (this.SearchFieldsFilter) {
+        //     filters.AdditionalFilters.push(this.SearchFieldsFilter);
+        // }
 
         filters.PageSize = 30;
         filters.PageIndex = 0; // decremented 1 in the service
@@ -215,7 +216,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         filters.SortDirection = sortingDir;
 
         var myout = this.entityListService
-            .getExtendedByFilters("Customs.Containerization", filters);
+            .getExtendedByFilters("Customs.ExportStorage", filters);
         myout.then(res => {
         });
         return myout;
@@ -231,8 +232,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             Display: '',
             Styles: { width: '25px' },
             IsCustomTemplate: true,
-            HtmlListComponentName: 'CustomsContainerizationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/ExportStorageDeclarationListTemplate',
+            HtmlListComponentName: 'CustomsExportStorageListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsExportStorageListTemplate',
         });
 
 
@@ -244,8 +245,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'OpenDate',
-            HtmlListComponentName: 'CustomsContainerizationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/ExportStorageDeclarationListTemplate',
+            HtmlListComponentName: 'CustomsExportStorageListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsExportStorageListTemplate',
 
         });
         this.columns.push({
@@ -352,7 +353,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
         this.containerizationExtendedListService.SelectedDeclarations = true;
-        this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations + this.entityPM.ConnectedDeclarations;
+        this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations + this.entityPM.ExportFileNo;
         this.LoadConnectedItems();
 
     }
@@ -366,7 +367,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     OnNoneBtnClicked() {
         this.IsSelected = false;
         this.containerizationExtendedListService.connectedSelectAll = false;
-        this.entityPM.ConnectedDeclarations = "";
+        this.entityPM.DeclarationCustomFileNo = "";
         this.containerizationExtendedListService.ConnectedDeclarations = "";
         this.containerizationExtendedListService.SelectedDeclarations = false;
         this.LoadConnectedItems();
@@ -414,65 +415,65 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     }
 
     SendButtonClicked() {
-        if (this.entityPM.Id != null) {
-            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-            this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-            this.entityPM.OperationMode = "2";
-            this.entityPM.IsChange = true;
-            SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
-            DeclarationEventManager.AddDeclarationToContainerization.emit(null);
-            this.CurrentSession.CurrentWindow.Close("0");
-        } else {
-            var windowArgs: any = {};
-            if (this.declarationPM != null && this.declarationPM.ProcedureCurrentName != null && this.declarationPM.ProcedureCurrentName.includes("טעינה ישירה")) {
-                windowArgs.IsDirectCharging = true;
-            }
-            if (this.containerizationExtendedListService.IsDirectCharging != "") {
-                windowArgs.IsDirectCharging = true;
-            }
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Height = 200;
-        logitudeWindow.Width = 250;
-        logitudeWindow.ShowCloseButton = true;
-        logitudeWindow.Title = "הצהרת סוכן";
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.ComponentLoaded.subscribe(comp => {
-            logitudeWindow.WindowClosed.subscribe((event: any) => {
-                if (event != null) {
-                    SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-                    if (event == "true") {
-                        this.entityPM.AgentDeclaration = true;
-                    } else {
-                        this.entityPM.AgentDeclaration = false;
-                    }
-                    this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-                    this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
-                        this.CurrentSession.CurrentWindow.Close("0");
-                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-                            .then(cmpRef => {
-                                cmpRef.instance.ComponentRef = cmpRef;
-                                cmpRef.instance.Run({
-                                    EntityId: response.Result.Id,
-                                    ObjectTableName: "Customs.Containerization"
-                                });
-                                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                                });
-                            });
-                        if (!response.HasError) {
-                            var params = this.getParams(response, event);
-                            CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "שליחת המכלה", false).then((res) => { });
-                            this.containerizationMessagesService.SendContainerization(params)
-                                .subscribe(res1 => {
-                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                                });
-                        }
-                    });
-                }
-            });
-        });
-        logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
-    }
+        // if (this.entityPM.Id != null) {
+        //     SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        //     this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+        //     this.entityPM.OperationMode = "2";
+        //     this.entityPM.IsChange = true;
+        //     SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
+        //     DeclarationEventManager.AddDeclarationToContainerization.emit(null);
+        //     this.CurrentSession.CurrentWindow.Close("0");
+        // } else {
+        //     var windowArgs: any = {};
+        //     if (this.declarationPM != null && this.declarationPM.ProcedureCurrentName != null && this.declarationPM.ProcedureCurrentName.includes("טעינה ישירה")) {
+        //         windowArgs.IsDirectCharging = true;
+        //     }
+        //     if (this.containerizationExtendedListService.IsDirectCharging != "") {
+        //         windowArgs.IsDirectCharging = true;
+        //     }
+        // var logitudeWindow = new LogitudeWindow();
+        // logitudeWindow.Height = 200;
+        // logitudeWindow.Width = 250;
+        // logitudeWindow.ShowCloseButton = true;
+        // logitudeWindow.Title = "הצהרת סוכן";
+        // logitudeWindow.WindowArgs = windowArgs;
+        // logitudeWindow.ComponentLoaded.subscribe(comp => {
+        //     logitudeWindow.WindowClosed.subscribe((event: any) => {
+        //         if (event != null) {
+        //             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        //             if (event == "true") {
+        //                 this.entityPM.AgentDeclaration = true;
+        //             } else {
+        //                 this.entityPM.AgentDeclaration = false;
+        //             }
+        //             this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+        //             this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+        //                 this.CurrentSession.CurrentWindow.Close("0");
+        //                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+        //                     .then(cmpRef => {
+        //                         cmpRef.instance.ComponentRef = cmpRef;
+        //                         cmpRef.instance.Run({
+        //                             EntityId: response.Result.Id,
+        //                             ObjectTableName: "Customs.Containerization"
+        //                         });
+        //                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+        //                             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        //                         });
+        //                     });
+        //                 if (!response.HasError) {
+        //                     var params = this.getParams(response, event);
+        //                     CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "שליחת המכלה", false).then((res) => { });
+        //                     this.containerizationMessagesService.SendContainerization(params)
+        //                         .subscribe(res1 => {
+        //                             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        //                         });
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });
+        // logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
+   // }
 }
 
 getParams(response: ServiceResponse, event: any) {

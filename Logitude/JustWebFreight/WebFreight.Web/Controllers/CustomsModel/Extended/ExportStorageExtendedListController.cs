@@ -41,7 +41,7 @@ using Logitude.Customs.BL.EntityUpdateServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
-    public partial class ExportStorageDeclarationExtendedListController : ApiController
+    public partial class ExportStorageExtendedListController : ApiController
     {
         public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
         {

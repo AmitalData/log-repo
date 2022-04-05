@@ -38,7 +38,7 @@ import { MenuButtonsComponent } from '../../../Infrastructure/Components/Logitud
 import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
 import { TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
 import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
-
+import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
@@ -51,6 +51,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     isButtonClicked: boolean = false;
     MenuButtonCode: string = null;
     public EntityPM: DeclarationPM;
+    public ExportStoragePM: ExportStoragePM;
     checkTransfer: string = ""; // moran 4.8.16 - AMI-56804
     MenuButtons: MenuButtonPM[];
     IdentityKey: string;
@@ -1324,7 +1325,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     private OpenExportStorageDeclarationMethod() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)) {
             var args: any = {
-                EntityPM: this.EntityPM,
+                EntityPM: this.ExportStoragePM,
                 EntityIsDeclarationPM: "true",
             };
             var logWindow = new LogitudeWindow();
@@ -1335,7 +1336,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.ShowCloseButton = true;
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/ExportStorageDecleration/ExportStorageDeclerationComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
-                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                this.ExportStoragePM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
         } else {

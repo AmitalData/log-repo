@@ -8,14 +8,14 @@ import { DeclarationList } from '../../../Customs/EntityLists/DeclarationList';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { ContainerizationExtendedListService } from '../../../Customs/Services/ExtendedLists/ContainerizationExtendedListService';
 import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
-import { ExportStorageDeclarationExtendedList } from 'Customs/Services/ExtendedLists/ExportStorageDeclarationExtendedListService';
+import { ExportStorageExtendedListService } from 'Customs/Services/ExtendedLists/ExportStorageExtendedListService';
 
 
 @Component({   
-    templateUrl: 'ExportStorageDeclarationListTemplate.html',
+    templateUrl: 'CustomsExportStorageListTemplate.html',
 })
 
-export class ExportStorageDeclarationListTemplate {
+export class CustomsExportStorageListTemplate {
     public rowData: any;
     public IsDisplayOnly: boolean = false;
     public CustomsContainerizationRecord: DeclarationList;
@@ -31,8 +31,8 @@ export class ExportStorageDeclarationListTemplate {
     IsConnectedDeclarationChecked: boolean = true;
 
     //, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService
-    entityPM: ExportStoragePM;
-    constructor(private CD: ChangeDetectorRef, private _exportStorageDeclarationExtendedListService: ExportStorageDeclarationExtendedList) {
+    entityPM: ExportStoragePM
+    constructor(private CD: ChangeDetectorRef, private _exportStorageExtendedListService: ExportStorageExtendedListService) {
         if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
             this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as ExportStoragePM;
         } else {
@@ -48,31 +48,31 @@ export class ExportStorageDeclarationListTemplate {
     }
 
     BuildDeclarationsCheckBox() {
-        // this.IsConnectedDeclarationChecked = false;
-        // if (this.entityPM.StorageNo && this.entityPM.Id != null && !this._containerizationExtendedListService.connectedSelectAll) {
-        //     this._exportStorageDeclarationExtendedListService.ConnectedDeclarations = this.entityPM.StorageNo;
-        // }
-        // if (!this._exportStorageDeclarationExtendedListService.ConnectedDeclarations) {
-        //     this._exportStorageDeclarationExtendedListService.ConnectedDeclarations = "";
-        // }
-        // if (!this._exportStorageDeclarationExtendedListService.IsDirectCharging) {
-        //     this._exportStorageDeclarationExtendedListService.IsDirectCharging = "";
-        // }
-        // if (!this._exportStorageDeclarationExtendedListService.AllDeclarations) {
-        //     this._exportStorageDeclarationExtendedListService.AllDeclarations = "";
-        // }
-        // if (!this._exportStorageDeclarationExtendedListService.AllDeclarations.includes(this.rowData.Id)) {
-        //     this._exportStorageDeclarationExtendedListService.AllDeclarations = this._exportStorageDeclarationExtendedListService.AllDeclarations + this.rowData.Id + ",";
-        // }
-        // let sConnectedDeclarations = this._exportStorageDeclarationExtendedListService.ConnectedDeclarations as string;
-        // if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
-        //     let ConnectedDeclarations = sConnectedDeclarations.split(',')
-        //     let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
-        //     this.IsConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
-        // }
-        // if (this._exportStorageDeclarationExtendedListService.connectedSelectAll == true) {
-        //     this.IsConnectedDeclarationChecked = true;
-        // }
+        this.IsConnectedDeclarationChecked = false;
+        if (this.entityPM.StorageNo && this.entityPM.Id != null && !this._exportStorageExtendedListService.connectedSelectAll) {
+            this._exportStorageExtendedListService.ConnectedDeclarations = this.entityPM.StorageNo;
+        }
+        if (!this._exportStorageExtendedListService.ConnectedDeclarations) {
+            this._exportStorageExtendedListService.ConnectedDeclarations = "";
+        }
+        if (!this._exportStorageExtendedListService.IsDirectCharging) {
+            this._exportStorageExtendedListService.IsDirectCharging = "";
+        }
+        if (!this._exportStorageExtendedListService.AllDeclarations) {
+            this._exportStorageExtendedListService.AllDeclarations = "";
+        }
+        if (!this._exportStorageExtendedListService.AllDeclarations.includes(this.rowData.Id)) {
+            this._exportStorageExtendedListService.AllDeclarations = this._exportStorageExtendedListService.AllDeclarations + this.rowData.Id + ",";
+        }
+        let sConnectedDeclarations = this._exportStorageExtendedListService.ConnectedDeclarations as string;
+        if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
+            let ConnectedDeclarations = sConnectedDeclarations.split(',')
+            let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
+            this.IsConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
+        }
+        if (this._exportStorageExtendedListService.connectedSelectAll == true) {
+            this.IsConnectedDeclarationChecked = true;
+        }
     }
 
     OnConnectedCheckBoxChecked($event) {
