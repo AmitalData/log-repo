@@ -1021,9 +1021,9 @@
                     <div class="no-data-available"
                         *ngIf="cargoTrackingShipmentPM.DocumentsFilings && cargoTrackingShipmentPM.DocumentsFilings.length == 0 "
                         style="margin-top:10px">No Documents defined for this shipment</div>
-                    <a *ngIf="cargoTrackingShipmentPM.DocumentsFilings?.length > 0 " href="javascript:;"
-                        style="color: var(--MainColor)"
-                        (click)="DownloadAllClick(cargoTrackingShipmentPM.SecurityKey)">Download all</a>
+                    <span *ngIf="cargoTrackingShipmentPM.DocumentsFilings?.length > 0 "
+                        style="color: var(--MainColor); cursor: pointer;"
+                        (click)="DownloadAllClick(cargoTrackingShipmentPM.SecurityKey)">Download all</span>
                     <div *ngIf="cargoTrackingShipmentPM.DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet"
                         style="min-width: 720px;width: calc(100% - 100px);">
 
