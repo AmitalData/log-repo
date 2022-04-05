@@ -319,6 +319,16 @@ export class CourierMasterPM {
     public set OpenDeclarations(newValue: number) { if (this.openDeclarations != newValue) { this.openDeclarations = newValue; this.MarkAsDirty("OpenDeclarations"); } }
        
 	 
+    private noOfCourierHawbwWithoutHatara: string;
+    public get NoOfCourierHawbwWithoutHatara() { return this.noOfCourierHawbwWithoutHatara; }
+    public set NoOfCourierHawbwWithoutHatara(newValue: string) { if (this.noOfCourierHawbwWithoutHatara != newValue) { this.noOfCourierHawbwWithoutHatara = newValue; this.MarkAsDirty("NoOfCourierHawbwWithoutHatara"); } }
+       
+	 
+    private noOfCourierHawbWithoutDelivery: string;
+    public get NoOfCourierHawbWithoutDelivery() { return this.noOfCourierHawbWithoutDelivery; }
+    public set NoOfCourierHawbWithoutDelivery(newValue: string) { if (this.noOfCourierHawbWithoutDelivery != newValue) { this.noOfCourierHawbWithoutDelivery = newValue; this.MarkAsDirty("NoOfCourierHawbWithoutDelivery"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		
