@@ -811,6 +811,7 @@ namespace AmitalCustomsWindowsService.Tester
                 var tst = new CustomsWorkerRole.Test.clsTester();
                 tst.FtpTester(Tenant);
             }
+            
             var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
             d.ExecuteTask();
         }
@@ -1145,6 +1146,13 @@ namespace AmitalCustomsWindowsService.Tester
         private void checkBoxMQ_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CommunicationWorkerRole.SingletonFTPCommunicationWorkerRoleWinService>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
+            d.ExecuteTask();
         }
     }
 }
