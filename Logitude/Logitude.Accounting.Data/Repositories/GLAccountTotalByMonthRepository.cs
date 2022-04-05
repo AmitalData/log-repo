@@ -311,6 +311,10 @@ namespace Logitude.Accounting.Data.Repositories
         public string AccountDisplayNumber { get; set; }
         
 
+        public string DisplayNumber { get; set; }
+        public string LocalName { get; set; }
+
+
         public string CurrencyId { get; set; }
 
         public int Year { get; set; }
