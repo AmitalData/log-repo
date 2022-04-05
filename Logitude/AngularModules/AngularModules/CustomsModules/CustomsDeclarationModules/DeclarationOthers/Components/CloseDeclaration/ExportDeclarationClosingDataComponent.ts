@@ -43,10 +43,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     SetUIProperty() {
 
-        this.UIProperties.SetRequired("LoadingDateTime", this.ObjectTableName, true);
-
-        
-        
+        this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, true);
+                
         if (this.DecPM.TransportModeId != "O") {
             this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("Smp", this.ObjectTableName, false);
@@ -70,6 +68,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     setInputsReadOnly() {
+        
         this.UIProperties.SetEnabled("FinalCargoTypeCode", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalSecondCargoId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalThirdCargoId", this.ObjectTableName, false);
@@ -122,17 +121,17 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.EntityPM.LoadingDateTime = value;
             this.EntityPM.IsDirty = true;
         }
-        if (value) {
-            this.UIProperties.SetRequired("LoadingDateTime", this.ObjectTableName, false);
+        // if (value) {
+        //     this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, false);
 
 
-        }
-        else {
-            this.UIProperties.SetRequired("LoadingDateTime", this.ObjectTableName, true);
+        // }
+        // else {
+        //     this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, true);
 
 
 
-        }
+        // }
     }
 
     get FinalShipCode() { return this.EntityPM ? this.EntityPM.FinalShipCode : null; }
