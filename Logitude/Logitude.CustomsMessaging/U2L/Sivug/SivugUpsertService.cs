@@ -863,7 +863,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                         if (invoiceItem.CLASSIFICATIONCODE != SupplierInvoiceItemPM.ClassificationCode)
                         {
-                            SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
+                            SupplierInvoiceItemPM.ClassificationCode = CalculateCheckDigit.Calc(invoiceItem.CLASSIFICATIONCODE);
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
                         if (invoiceItem.CLASIFIEDREMARKS != SupplierInvoiceItemPM.ClasifiedRemarks)
