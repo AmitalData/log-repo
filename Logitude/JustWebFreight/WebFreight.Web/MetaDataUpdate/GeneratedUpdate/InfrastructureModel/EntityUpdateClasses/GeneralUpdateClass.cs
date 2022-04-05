@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "64048bc8fb20d589a0a96dbb06165b17";
+		public const string HashString = "a53b6935e1fabe54eeed4ea2f38e693e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2477,7 +2477,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOLocal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Local", DefaultText = "Local",LocalDefaultText = @"מקומ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOOriginal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Original", DefaultText = "Original",LocalDefaultText = @"מקור", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOOriginal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Original", DefaultText = "Original",LocalDefaultText = @"מקורי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
