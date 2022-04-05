@@ -2,6 +2,7 @@
 using nsoftware.IPWorksSSH;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -32,7 +33,7 @@ namespace Logitude.Server.Tools.FTP
         }
         public void Logon(string p_host, string p_user, string p_password, string p_port, string p_directory, out string p_status, out string p_message)
         {
-            
+       
             MyStart();
             if (string.IsNullOrEmpty(p_port))
                 p_port = "22";
@@ -435,9 +436,12 @@ namespace Logitude.Server.Tools.FTP
             string p_status_1;
             string p_message_1;
 
+            Debug.WriteLine($"DirList('tmp_ *.tmp') ..");
             var directoryFiles = DirList("tmp_*.tmp", true, false, out p_status_1, out p_message_1).ToList();
+            Debug.WriteLine($"Temp file {directoryFiles.Count()}");
             foreach (var fileName in directoryFiles)
             {
+                Debug.WriteLine($"delete Temp file {fileName}");
                 DeleteFile(fileName, out p_status_1, out p_message_1);
             }
 
