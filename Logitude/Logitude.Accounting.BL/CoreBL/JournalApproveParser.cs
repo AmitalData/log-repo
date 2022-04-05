@@ -712,7 +712,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 errorString = errorString.Remove(errorString.Length - 1);
-                throw new Exception(errorString);
+                throw new ApplicationException(errorString);
 
 
                 //                string errorText = validationResult.ErrorMessage + ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id + ", " + validationResult.MemberNames.FirstOrDefault();
