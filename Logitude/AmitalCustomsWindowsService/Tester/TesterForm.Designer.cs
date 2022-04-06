@@ -146,21 +146,21 @@
             // bolbToolStripMenuItem
             // 
             this.bolbToolStripMenuItem.Name = "bolbToolStripMenuItem";
-            this.bolbToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.bolbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bolbToolStripMenuItem.Text = "Bolb";
             this.bolbToolStripMenuItem.Click += new System.EventHandler(this.BlobToolStripMenuItem_Click);
             // 
             // multiBolbToolStripMenuItem
             // 
             this.multiBolbToolStripMenuItem.Name = "multiBolbToolStripMenuItem";
-            this.multiBolbToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.multiBolbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.multiBolbToolStripMenuItem.Text = "MultiBolb";
             this.multiBolbToolStripMenuItem.Click += new System.EventHandler(this.multiBlobToolStripMenuItem_Click);
             // 
             // clearCacheToolStripMenuItem
             // 
             this.clearCacheToolStripMenuItem.Name = "clearCacheToolStripMenuItem";
-            this.clearCacheToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.clearCacheToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clearCacheToolStripMenuItem.Text = "ClearCache";
             this.clearCacheToolStripMenuItem.Click += new System.EventHandler(this.clearCacheToolStripMenuItem_Click);
             // 
@@ -371,6 +371,13 @@
             this.commDecServiceToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
             this.commDecServiceToolStripMenuItem.Text = "CommDecService";
             this.commDecServiceToolStripMenuItem.Click += new System.EventHandler(this.commDecServiceToolStripMenuItem_Click);
+            // 
+            // singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem
+            // 
+            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Name = "singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem";
+            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Size = new System.Drawing.Size(349, 22);
+            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Text = "SingletonFTPCommunicationWorkerRoleWinService";
+            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Click += new System.EventHandler(this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click);
             // 
             // adHockToolStripMenuItem
             // 
