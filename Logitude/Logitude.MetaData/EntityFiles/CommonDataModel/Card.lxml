@@ -44,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Card&quot;"
-  Code="&quot;bff1&quot;"
+  Code="&quot;1561&quot;"
   Name="&quot;Card&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -3450,7 +3450,7 @@
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
-    AllowedinAutomationConditions="false"
+    AllowedinAutomationConditions="true"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
@@ -9059,6 +9059,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SATCustomerName&quot;"
     ListPropertyPath="&quot;SATCustomerName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -9149,10 +9150,9 @@
         ObjectFieldName="&quot;PartnerTypeId&quot;"
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
-        IndexOrder="0" />
+       IndexOrder="0" />
     </QueryFilters>
   </Query>
-
   <Screen
     Name="&quot;CardHeaderScreen&quot;"
     ObjectTableName="&quot;Card&quot;"
