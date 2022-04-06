@@ -225,7 +225,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, false, false);
             if (bankAccount.ChequeCounter == null)
             {
-                throw new Exception("The cheque counter did not defined for the choosen bank");
+                throw new ApplicationException("The cheque counter did not defined for the choosen bank");
             }
             else
             {
@@ -335,7 +335,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 
                
-                throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.PaymentChequeExist", entityPM.Tenant, showLocals));
+                throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.PaymentChequeExist", entityPM.Tenant, showLocals));
 
 
             }
@@ -364,7 +364,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public void PreventCancellingPaymentCheque(PaymentChequePM paymentCheque)
         {
-            throw new Exception("You cant cancel an internal payment cheque, you need to cancel APPayment.");
+            throw new ApplicationException("You cant cancel an internal payment cheque, you need to cancel APPayment.");
         }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         bool showLocals;
@@ -383,7 +383,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 if (account.AccountTypeCode == "3")
                 {
-                    throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.VendorsGLAccount", entityPM.Tenant, showLocals));
+                    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.VendorsGLAccount", entityPM.Tenant, showLocals));
                 }
             }
 

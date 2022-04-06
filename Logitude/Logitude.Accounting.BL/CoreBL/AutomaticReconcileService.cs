@@ -123,7 +123,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     string msg = TranslateTextsClass.Translate("Accounting.General.O.NoAutoRecoMethodDefined4GLAccount", 0, useLocal);
 
-                    throw new Exception(msg);
+                    throw new ApplicationException(msg);
                     //No GlAccount AutomaticReconcile and no Screen AutomaticReconcile defintion // WI26460
                     
                 }

@@ -161,7 +161,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (eventType == null)
                 {
-                    //throw new Exception("Event Type is not recognized:" + args.EventTypeCode);
+                    //throw new ApplicationException("Event Type is not recognized:" + args.EventTypeCode);
                     response.ErrorsList.Add("Event Type is not recognized:" + args.EventTypeCode);
                     return response;
                 }

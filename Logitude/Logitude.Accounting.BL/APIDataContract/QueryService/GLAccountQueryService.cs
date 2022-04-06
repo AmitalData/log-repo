@@ -452,7 +452,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
             if (entityPM == null)
             {
-                throw new Exception("GLAccount with internal number " + entity.InternalNumber + " does not exist");
+                throw new ApplicationException("GLAccount with internal number " + entity.InternalNumber + " does not exist");
             }
 
             return entityPM;
@@ -467,7 +467,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
                 if (parentGLAccount.IsMultiCurrency == false)
                 {
-                    throw new Exception(TextCodesTranslator.TranslateText("GLAccounts.O.MustBeMultiCurrency", MyEntity.Tenant));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.MustBeMultiCurrency", MyEntity.Tenant));
                 }
 
                 else
@@ -479,7 +479,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     Currency currency = currencyQueryService.GetCurrencyById(MyEntity.CurrencyId, parentGLAccount.Tenant);
                     if (gLAccountCurrencyPM != null)
                     {
-                        throw new Exception("The parent GLAccount(" + parentGLAccount.DisplayNumber + ") already has split GLAccount with currency (" + currency.Code + ")");
+                        throw new ApplicationException("The parent GLAccount(" + parentGLAccount.DisplayNumber + ") already has split GLAccount with currency (" + currency.Code + ")");
                     }
                     else
                     {
@@ -526,7 +526,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
             if (gLAccountPM == null)
             {
-                throw new Exception("GLAccount with internal number " + number + " does not exist");
+                throw new ApplicationException("GLAccount with internal number " + number + " does not exist");
             }
             return GLAccountDataMappingAndValidatin(gLAccountPM, tenant);
 

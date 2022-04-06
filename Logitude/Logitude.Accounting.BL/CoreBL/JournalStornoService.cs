@@ -71,7 +71,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void ThrowCloseMonth(int tenant)
         {
             var closeMonth = TextCodesTranslatorTranslateText(JournalValidator.M_ClosedMonth, tenant);
-            throw new Exception(closeMonth);//”Accounting period closed
+            throw new ApplicationException(closeMonth);//”Accounting period closed
         }
         public virtual string TextCodesTranslatorTranslateText(string textCodeCode, int tenant)
         {
@@ -87,7 +87,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (_StornoOverrideM == null)
             {
-                throw new Exception("stornoOverrideM is must (good2 remember values in properties r not Must )");
+                throw new ApplicationException("stornoOverrideM is must (good2 remember values in properties r not Must )");
             }
 
             ThrowIfStornoNotAllowed();
@@ -107,7 +107,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (stornoOverrideM==null)
             {
-                throw new Exception("stornoOverrideM is must (good2 remember values in properties r not Must )");
+                throw new ApplicationException("stornoOverrideM is must (good2 remember values in properties r not Must )");
             }
             JournalPM Storno = new JournalPM();
 

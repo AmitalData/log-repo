@@ -24,7 +24,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 case ChangeSetOperation.Update:
                 
                 default:
-                    throw new Exception(@"JournalExternalReconcilePM only insert allowed(so far 20190729 )
+                    throw new ApplicationException(@"JournalExternalReconcilePM only insert allowed(so far 20190729 )
 from 20210630 delet also allowed ");
                     break;
             }

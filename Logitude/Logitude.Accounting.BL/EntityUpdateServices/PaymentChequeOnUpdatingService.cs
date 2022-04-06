@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (bankAccount.ChequeCounter == null)
                     {
-                        throw new Exception("The cheque counter did not defined for the choosen bank");
+                        throw new ApplicationException("The cheque counter did not defined for the choosen bank");
                     }
                     else
                     {

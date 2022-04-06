@@ -492,7 +492,7 @@ namespace Logitude.Accounting.BL.Validators
                             }
                             else
                             {
-                                throw new Exception("Dear Programmer U must initialize in context SuppressCheckGLAccountIsMultiCurrencyWI40640");
+                                throw new ApplicationException("Dear Programmer U must initialize in context SuppressCheckGLAccountIsMultiCurrencyWI40640");
                             }
                         }
 
@@ -735,7 +735,7 @@ accountingValidationContextServiceProvider
             {
                 //if (myJournalPM.JournalExternalReconciles.Count > 1)
                 //{
-                //    //throw new Exception("Sorry meanwhile only one Adjust Allowed !!!");
+                //    //throw new ApplicationException("Sorry meanwhile only one Adjust Allowed !!!");
                 //    errorsList.Add(TranslateMyTextCode("Sorry meanwhile only one Adjust Allowed !!!", myJournalPM.Tenant));
                 //}
                 //            if (myJournalPM.JournalExternalReconciles.Count == 1)
