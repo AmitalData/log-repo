@@ -821,7 +821,7 @@ namespace RestClientApplication
 
                 xmlBrowser1.XmlDocumentTransformType = XmlRender.XmlBrowser.XslTransformType.XSL;
                 XmlDocument _xd = new XmlDocument();
-                if (IsResponseFromPatchAPI(apiName))
+                if (IsResponseFromPatchAPI(apiName) || txtRequestContentType.Text == "application/json")
                 {
                     _xd = JsonConvert.DeserializeXmlNode(xmlString, "Direct");
                 }
