@@ -20,8 +20,8 @@ namespace Logitude.Server.Tools.FTP
 
 
         const int DELETE_EveryMin = 10;//change to 20
-        static readonly Dictionary<string, DateTime?> _HostLastDelete;
-        static readonly Dictionary<int, bool> _FeatureExist;
+        static readonly Dictionary<string, DateTime?> _HostLastDeleteAt;
+        static readonly Dictionary<int, bool> _TenantFeatureExist;
         static readonly object _locker;
 
         private string _ftpHost;
@@ -33,8 +33,8 @@ namespace Logitude.Server.Tools.FTP
         static SFTPDeleteTempFilesService()
         {
             _locker = new object();
-            _HostLastDelete = new Dictionary<string, DateTime?>();
-            _FeatureExist = new Dictionary<int, bool>();
+            _HostLastDeleteAt = new Dictionary<string, DateTime?>();
+            _TenantFeatureExist = new Dictionary<int, bool>();
         }
 
         public SFTPDeleteTempFilesService(int tenant, string ftpHost)
@@ -47,58 +47,70 @@ namespace Logitude.Server.Tools.FTP
 
                     _tenant = tenant;
                     _ftpHost = ftpHost;
-                    if (!_FeatureExist.ContainsKey(tenant))
+                    if (!_TenantFeatureExist.ContainsKey(tenant))
                     {
                         bool exist = Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SFD", tenant);
-                        Debug.WriteLine($"HasFeatureToggle(t)[SFD]={exist }");
-                        _FeatureExist[tenant] = exist;
+                        Debug.WriteLine($"SFTPDeleteTempFilesService:HasFeatureToggle(tenant:{tenant})[SFD]={exist }");
+                        _TenantFeatureExist[tenant] = exist;
                     }
 
-                    if (!_HostLastDelete.ContainsKey(_ftpHost))
+                    if (!_HostLastDeleteAt.ContainsKey(_ftpHost))
                     {
-                        _HostLastDelete.Add(_ftpHost, DateTime.MinValue);
+                        _HostLastDeleteAt.Add(_ftpHost, DateTime.MinValue);
                     }
                 }
             }
             catch (Exception e)
             {
 
-                Logger.LogMe(e.ToString(), true, "SFTP");
+                Logger.LogMe(e.ToString(), true, "SFTPDeleteTempFilesService");
                 //throw;
             }
         }
-
-        internal bool DeleteIfNeeded(Action actionDeleteTempFiles)
+        /// <summary>
+        /// // ENSURE ALL TEMP FILES DELETED - HAPPEN EVERY 10 MIN -IF uploadAsTemp && HasFeatureToggle[SFD]
+        /// </summary>
+        /// <param name="actionDeleteTempFiles"></param>
+        /// <returns></returns>
+        internal bool DeleteIfNeeded(bool uploadAsTemp ,Action actionDeleteTempFiles)
         {
             try
             {
+                if (!uploadAsTemp)
+                {
+                    return false;
+                }
                 lock (_locker)
                 {
-
-                    if (_FeatureExist[_tenant])
+                    bool tenantFeatureExist = false;
+                    _TenantFeatureExist.TryGetValue(_tenant, out tenantFeatureExist);
+                    if (!tenantFeatureExist)
                     {
-                        Debug.WriteLine($"no HasFeatureToggle -SFD");
+                        Debug.WriteLine($"SFTPDeleteTempFilesService:does not  HasFeatureToggle -SFD");
                         return false;
                     }
-
-                    DateTime last = _HostLastDelete[_ftpHost] ?? DateTime.MinValue;
-                    if (DateTime.Now.Subtract(last) > TimeSpan.FromMinutes(DELETE_EveryMin))
+                    ///Debug.WriteLine($"HasFeatureToggle -SFD ..");
+                    DateTime? lastDeleteAt = null;
+                    _HostLastDeleteAt.TryGetValue(_ftpHost, out lastDeleteAt);
+                    lastDeleteAt = lastDeleteAt ?? DateTime.MinValue;
+                    if (DateTime.Now.Subtract(lastDeleteAt.GetValueOrDefault()) > TimeSpan.FromMinutes(DELETE_EveryMin))
                     {
                         
-                        _HostLastDelete[_ftpHost] = DateTime.Now;
+                        _HostLastDeleteAt[_ftpHost] = DateTime.Now;
                     }
                     else
                     {
+                        Debug.WriteLine($"SFTPDeleteTempFilesService:wait... (DELETE_EveryMin:{DELETE_EveryMin}) ");
                         return false;
                     }
                 }
-                Debug.WriteLine($"actionDeleteTempFiles(DELETE_EveryMin:{DELETE_EveryMin}) ...");
+                Debug.WriteLine($"SFTPDeleteTempFilesService:actionDeleteTempFiles(DELETE_EveryMin:{DELETE_EveryMin}) ...");
                 actionDeleteTempFiles?.Invoke();
                 return true;
             }
             catch (Exception e)
             {
-                Logger.LogMe(e.ToString(), true, "SFTP");
+                Logger.LogMe(e.ToString(), true, "SFTPDeleteTempFilesService");
                 return false;
             }
         }
