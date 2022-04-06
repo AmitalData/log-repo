@@ -95,6 +95,7 @@
  declare @ShipmentNumber as varchar(20)
  declare @ContainerNumber as varchar(20)
  declare @ContainerType as int
+ declare @IsAutomaticUpdates as bit
   --@[DeclareCustomFieldsVariable]
 
 
@@ -110,7 +111,7 @@
 	dw_Containers.ActualPODVesselArrival, dw_Containers.ActualPODDischarge, dw_Containers.EstimatedPODDeparture, dw_Containers.ActualPODDeparture, emptyReturnLocationPort.Id_Number, dw_Containers.EstimatedEmptyReturn, dw_Containers.ActualEmptyReturn, dw_Containers.MainCarriageATA, dw_Containers.MainCarriageETA, dw_Containers.MainCarriageETD, 
 	dw_Containers.MainCarriageATD, dw_Containers.PreCarriageATD, onCarriageLocationPort.Id_Number, dw_Containers.EstimatedOnCarriageDeparture, dw_Containers.OnCarriageETD, dw_Containers.ActualOnCarriageDeparture, dw_Containers.OnCarriageATD, lIFLocationPort.Id_Number, dw_Containers.ActualLIFArrival, dw_Containers.PreCarriageETD, 
 	dw_Containers.EstimatedLIFArrival, dw_Containers.CreateDate, createdByUser.Id_Number, dw_Containers.UpdateDate, updatedByUser.Id_Number, dw_Containers.CurrentStatus, dw_Containers.CurrentStatusDate, dw_Containers.ClosedDate, dw_Containers.IsClosed, status.Id_Number,dw_Containers.ShipmentId,dw_Containers.LastFreeDayDate,dw_Containers.GateOut,dw_Containers.FreeDays,
-	@dw_Containers.CustomFieldsVariable, dw_Containers.GateIn, dw_Containers.AvailablityDate, availabilityLocationPort.Id_Number, dw_Containers.OnCarriageGateOut, dw_Containers.PreCarriageGateIn, dw_Containers.ShipmentNumber, dw_Containers.ContainerNumber,packageType.Id_Number
+	@dw_Containers.CustomFieldsVariable, dw_Containers.GateIn, dw_Containers.AvailablityDate, availabilityLocationPort.Id_Number, dw_Containers.OnCarriageGateOut, dw_Containers.PreCarriageGateIn, dw_Containers.ShipmentNumber, dw_Containers.ContainerNumber,packageType.Id_Number, dw_Containers.IsAutomaticUpdates
 
   From dw_Containers
 
@@ -146,7 +147,7 @@
 	@ActualPODVesselArrival, @ActualPODDischarge, @EstimatedPODDeparture, @ActualPODDeparture, @emptyReturnLocationPort, @EstimatedEmptyReturn, @ActualEmptyReturn, @MainCarriageATA, @MainCarriageETA, @MainCarriageETD,
 	@MainCarriageATD, @PreCarriageATD, @onCarriageLocationPort, @EstimatedOnCarriageDeparture, @OnCarriageETD, @ActualOnCarriageDeparture, @OnCarriageATD, @lIFLocationPort, @ActualLIFArrival, @PreCarriageETD, @EstimatedLIFArrival,
 	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays,
-	@CursorCustomFieldsVariable, @GateIn, @AvailabilityDate, @AvailabilityLocationPort, @OnCarriageGateOut, @PreCarriageGateIn, @ShipmentNumber, @ContainerNumber, @ContainerType
+	@CursorCustomFieldsVariable, @GateIn, @AvailabilityDate, @AvailabilityLocationPort, @OnCarriageGateOut, @PreCarriageGateIn, @ShipmentNumber, @ContainerNumber, @ContainerType, @IsAutomaticUpdates
 
 		WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -170,7 +171,7 @@
 	 [POD ETD], [POD ATD], [Empty Return Port], [Empty Return Estimated], [Empty Return Actual], [Container Main Carriage ATA], [Container Main Carriage ETA], [Container Main Carriage ETD], 
 	 [Container Main Carriage ATD], [PreCarriage ETD], [OnCarriage Port], [Estimated On Carriage Departure], [Container On Carriage ETD], [Actual On Carriage Departure], [Container On Carriage ATD], [LIF Port], [LIF ATA], [PreCarriage ATD], [LIF ETA],
 	 [Create Date], [Created By], [Update Date], [Updated By], [Current Status], [Current Status Date], [Closed Date], [Is Closed], [Status], [Shipment Id],[Last Free Day],[POD Gate Out],[Free Days],[CustomFieldNamesVariable],
-	 [POL Gate In],[Availability Date],[Availability Port], [On Carriage Gate Out], [Pre Carriage Gate In],[Shipment Number],[Container Number],[Container Type])
+	 [POL Gate In],[Availability Date],[Availability Port], [On Carriage Gate Out], [Pre Carriage Gate In],[Shipment Number],[Container Number],[Container Type],[Automatic Updates])
 
 	 values(@Id, @SourceTenant, @ParentTenant,dbo.GetDateFormateAsNumber(@ActualEmptyPickupDate), @emptyPickupLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyPickupDate), @preCarriageLocationPort, @pOLLocationPort, dbo.GetDateFormateAsNumber(@EstimatedPOLArrival),
 	 dbo.GetDateFormateAsNumber(@ActualPOLArrival), dbo.GetDateFormateAsNumber(@EstimatedPOLLoaded), dbo.GetDateFormateAsNumber(@ActualPOLLoaded), dbo.GetDateFormateAsNumber(@EstimatedPOLVesselDeparture), dbo.GetDateFormateAsNumber(@ActualPOLVesselDeparture), @transshipment1LocationPort, dbo.GetDateFormateAsNumber(@EstimatedTrans1VesselArrival), dbo.GetDateFormateAsNumber(@ActualTransshipment1VesselArrival),
@@ -182,7 +183,7 @@
 	 dbo.GetDateFormateAsNumber(@EstimatedPODDeparture), dbo.GetDateFormateAsNumber(@ActualPODDeparture), @emptyReturnLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyReturn), dbo.GetDateFormateAsNumber(@ActualEmptyReturn), dbo.GetDateFormateAsNumber(@MainCarriageATA), dbo.GetDateFormateAsNumber(@MainCarriageETA), dbo.GetDateFormateAsNumber(@MainCarriageETD),
 	 dbo.GetDateFormateAsNumber(@MainCarriageATD), dbo.GetDateFormateAsNumber(@PreCarriageETD), @onCarriageLocationPort, dbo.GetDateFormateAsNumber(@EstimatedOnCarriageDeparture), dbo.GetDateFormateAsNumber(@OnCarriageETD), dbo.GetDateFormateAsNumber(@ActualOnCarriageDeparture), dbo.GetDateFormateAsNumber(@OnCarriageATD), @lIFLocationPort, dbo.GetDateFormateAsNumber(@ActualLIFArrival), dbo.GetDateFormateAsNumber(@PreCarriageATD), dbo.GetDateFormateAsNumber(@EstimatedLIFArrival),
 	 dbo.GetDateFormateAsNumber(@CreateDate), @createdByUser, dbo.GetDateFormateAsNumber(@UpdateDate), @updatedByUser, @CurrentStatus, dbo.GetDateFormateAsNumber(@CurrentStatusDate), dbo.GetDateFormateAsNumber(@ClosedDate), @IsClosed, @status,@ShipmentId, dbo.GetDateFormateAsNumber(@LastFreeDayDate), dbo.GetDateFormateAsNumber(@GateOut), @FreeDays,[CustomFieldValuesVariable],
-	 dbo.GetDateFormateAsNumber(@GateIn), dbo.GetDateFormateAsNumber(@AvailabilityDate), @AvailabilityLocationPort, dbo.GetDateFormateAsNumber(@OnCarriageGateOut), dbo.GetDateFormateAsNumber(@PreCarriageGateIn), @ShipmentNumber, @ContainerNumber, @ContainerType)
+	 dbo.GetDateFormateAsNumber(@GateIn), dbo.GetDateFormateAsNumber(@AvailabilityDate), @AvailabilityLocationPort, dbo.GetDateFormateAsNumber(@OnCarriageGateOut), dbo.GetDateFormateAsNumber(@PreCarriageGateIn), @ShipmentNumber, @ContainerNumber, @ContainerType, @IsAutomaticUpdates)
 
 		END TRY 
 BEGIN CATCH  
@@ -205,7 +206,7 @@ FETCH NEXT FROM ContainersCursor INTO @Id,@Tenant, @SourceTenant, @ParentTenant,
 	@ActualPODVesselArrival, @ActualPODDischarge, @EstimatedPODDeparture, @ActualPODDeparture, @emptyReturnLocationPort, @EstimatedEmptyReturn, @ActualEmptyReturn, @MainCarriageATA, @MainCarriageETA, @MainCarriageETD,
 	@MainCarriageATD, @PreCarriageATD, @onCarriageLocationPort, @EstimatedOnCarriageDeparture, @OnCarriageETD, @ActualOnCarriageDeparture, @OnCarriageATD, @lIFLocationPort, @ActualLIFArrival, @PreCarriageETD, @EstimatedLIFArrival,
 	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays,@CursorCustomFieldsVariable,
-	@GateIn, @AvailabilityDate, @AvailabilityLocationPort, @OnCarriageGateOut, @PreCarriageGateIn, @ShipmentNumber, @ContainerNumber, @ContainerType
+	@GateIn, @AvailabilityDate, @AvailabilityLocationPort, @OnCarriageGateOut, @PreCarriageGateIn, @ShipmentNumber, @ContainerNumber, @ContainerType, @IsAutomaticUpdates
 
 			End
 	CLOSE ContainersCursor
