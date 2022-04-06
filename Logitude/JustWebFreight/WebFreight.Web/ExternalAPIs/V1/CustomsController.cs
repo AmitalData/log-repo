@@ -239,16 +239,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                             entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                                         }
                                     }
-                                    if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                                    {
-                                        CardRepository cardRepository = new CardRepository(entityPM.Tenant);
-                                        Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
-                                        if (customer != null)
-                                        {
-                                            entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
-                                            entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
-                                        }
-                                    }
+                                    
                                     if (entityPM.ShipmentPackages.Count > 0)
                                     {
                                         foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
@@ -258,10 +249,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                         }
                                     }
 
+                                    AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
+                                    this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
                                     ComputeHelper.ComputeTotals(entityPM);
 
                                     ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
-
                                     service.Update(true);
                                 }
                             }
