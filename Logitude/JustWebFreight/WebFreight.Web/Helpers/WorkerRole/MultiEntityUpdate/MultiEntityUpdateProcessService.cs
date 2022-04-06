@@ -122,6 +122,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
             object oldEntityPM = MultiEntityUpdateCloner.CloneEntity(entityPM);
             foreach (AutomationSetValue item in multiEntityUpdateData.SetValueLists)
             {
+                ShipmentHouseValidator.HandleOperationallyClosedShipmentValidation(oldEntityPM, item); //for now! Maintenance #160028 
                 ShipmentHouseValidator.HandleHouseConnectedToMasterShipmentValidation(entityPM, item); //for now! Maintenance #159814 
                 SetNewValueToEntityPM(multiEntityUpdateData, entityPM, item);
             }

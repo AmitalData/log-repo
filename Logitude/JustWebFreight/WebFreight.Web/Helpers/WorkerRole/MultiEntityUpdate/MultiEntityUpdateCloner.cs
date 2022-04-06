@@ -25,7 +25,8 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
             return new ShipmentPM()
             {
                 IsOperationalClosed = ShipmentPM.IsOperationalClosed,
-                IsAccountingClosed = ShipmentPM.IsAccountingClosed
+                IsAccountingClosed = ShipmentPM.IsAccountingClosed,
+                Tenant = ShipmentPM.Tenant
             };
         }
     }

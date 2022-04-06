@@ -33,7 +33,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
     {
         public static void ValidateUpdate(ShipmentPM shipmentPM, ShipmentPM oldShipmentPM)
         {
-            if (oldShipmentPM.IsOperationalClosed) throw new ApplicationException("Can't update operationally closed shipments");
+            //if (oldShipmentPM.IsOperationalClosed) throw new ApplicationException("Can't update operationally closed shipments");
             if (oldShipmentPM.IsCancelled) throw new ApplicationException("Can't update cancelled shipments");
             //if (!string.IsNullOrEmpty(shipmentPM.MasterShipmentDataId)) throw new ApplicationException("Can't update house connected to master");
 
@@ -54,6 +54,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 throw new ApplicationException("Can't update house connected to master");
             }
+        }
+
+        public static void HandleOperationallyClosedShipmentValidation(object entityPM, AutomationSetValue item)
+        {
+            ShipmentPM oldShipmentPM = (ShipmentPM)entityPM;
+
+            if (oldShipmentPM.IsOperationalClosed && !IsCustomField(item, oldShipmentPM.Tenant))
+            {
+                throw new ApplicationException("Can't update operationally closed shipments");
+            }
+        }
+
+        private static bool IsCustomField(AutomationSetValue item, int tenant)
+        {
+            return item.ObjectFieldCode.Contains("." + tenant + ".Field");
         }
 
         private static List<string> GetObjectFieldsCodesNotAllowedToUpdate()
