@@ -98,7 +98,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                     CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
-                    if(_CourierMasterPM == null && declarationPM.AmendmentOriginalDeclartation != null)
+                    if (declarationPM.IsAmendment == true && declarationPM.AmendmentOriginalDeclartation != null)
                     {
                         _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
                     }

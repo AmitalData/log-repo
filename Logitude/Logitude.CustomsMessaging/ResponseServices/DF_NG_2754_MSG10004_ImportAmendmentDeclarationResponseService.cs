@@ -54,6 +54,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private bool isFromImporter;
         string decIdOrg;
         bool isFromAmendment = false;
+        bool dontUpdateImporters = false;
         SupplierInvoicePM _OrgSupplierInvoicePM;
         bool _isUpdateAfterAccept = false;
         public override void OnRequestFail(DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse, GenericRequestParams requestParams)
@@ -287,7 +288,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         declarationPM.CasualImporterEmail = casual.CasualImporterEmail;
                                         declarationPM.CasualImporterTel = casual.CasualImporterTel;
                                         declarationPM.CasualImporterContact = casual.CasualImporterContact;
-
+                                        dontUpdateImporters = true;
                                         casual.ChangeSetOp = ChangeSetOperation.Delete;
                                         DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), tenant);
                                         declarationCasualDetailsUpdateService.Update(casual, true);
@@ -624,8 +625,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case "4":
                             {
                                 declarationPM.ImporterTypeCode = importer.ID.schemeID;
-                                declarationPM.ImporterAddress = importer.DMExtensions.Address;
-                                declarationPM.ImporterName = importer.DMExtensions.Name;
+                                if (!dontUpdateImporters)
+                                {
+                                    declarationPM.ImporterAddress = importer.DMExtensions.Address;
+                                    declarationPM.ImporterName = importer.DMExtensions.Name;
+                                }
                                 declarationPM.MainImporterEntitlemntTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
                                 if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.ImporterPassCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
@@ -636,10 +640,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             var queryService = new ClientQueryService(context);
                                             var importerPM = queryService.GetClientByCode(importer.ID.Value, tenant);
                                             if (importerPM == null)
-                                                declarationPM.ImporterCode = importer.ID.Value;
+                                            {
+                                                if (!dontUpdateImporters)
+                                                    declarationPM.ImporterCode = importer.ID.Value;
+                                            }
                                             else
                                             {
-                                                declarationPM.ImporterCode = importerPM.Code;
+                                                if (!dontUpdateImporters)
+                                                    declarationPM.ImporterCode = importerPM.Code;
                                                 declarationPM.ImporterId = importerPM.Id;
 
                                             }
@@ -649,7 +657,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     case "3":
                                     case "2":
                                         {
-                                            declarationPM.ImporterPassportNumber = importer.ID.Value;
+                                            if (!dontUpdateImporters)
+                                                declarationPM.ImporterPassportNumber = importer.ID.Value;
                                             break;
                                         }
 
@@ -666,10 +675,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             var queryService = new ClientQueryService(context);
                                             var importerPM = queryService.GetClientByCode(importer.ID.Value, tenant);
                                             if (importerPM == null)
-                                                declarationPM.TransferImporterCode = importer.ID.Value;
+                                            {
+                                                if (!dontUpdateImporters)
+                                                    declarationPM.TransferImporterCode = importer.ID.Value;
+                                            }
                                             else
                                             {
-                                                declarationPM.TransferImporterCode = importerPM.Code;
+                                                if (!dontUpdateImporters)
+                                                    declarationPM.TransferImporterCode = importerPM.Code;
                                                 declarationPM.TransferImporterId = importerPM.Id;
 
                                             }
@@ -680,14 +693,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     case "3":
                                     case "2":
                                         {
-                                            declarationPM.TransferPassportNumber = importer.ID.Value;
+                                            if (!dontUpdateImporters)
+                                                declarationPM.TransferPassportNumber = importer.ID.Value;
                                             break;
                                         }
 
                                 }
                                 declarationPM.TransferImporterTypeCode = importer.ID.schemeID;
-                                declarationPM.TransferImporterAddress = importer.DMExtensions.Address;
-                                declarationPM.TransferImporterName = importer.DMExtensions.Name;
+                                if (!dontUpdateImporters)
+                                {
+                                    declarationPM.TransferImporterAddress = importer.DMExtensions.Address;
+                                    declarationPM.TransferImporterName = importer.DMExtensions.Name;
+                                }
                                 declarationPM.TransImporterEntitleTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
                                 if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.TransferImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
@@ -705,10 +722,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             var queryService = new ClientQueryService(context);
                                             var importerPM = queryService.GetClientByCode(importer.ID.Value, tenant);
                                             if (importerPM == null)
-                                                declarationPM.EntitleImporterCode = importer.ID.Value;
+                                            {
+                                                if (!dontUpdateImporters)
+                                                    declarationPM.EntitleImporterCode = importer.ID.Value;
+                                            }
                                             else
                                             {
-                                                declarationPM.EntitleImporterCode = importerPM.Code;
+                                                if (!dontUpdateImporters)
+                                                    declarationPM.EntitleImporterCode = importerPM.Code;
                                                 declarationPM.EntitleImporterId = importerPM.Id;
 
                                             }
@@ -719,14 +740,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     case "3":
                                     case "2":
                                         {
-                                            declarationPM.EntitlePassportNumber = importer.ID.Value;
+                                            if (!dontUpdateImporters)
+                                                declarationPM.EntitlePassportNumber = importer.ID.Value;
                                             break;
                                         }
 
                                 }
                                 declarationPM.EntitleImporterTypeCode = importer.ID.schemeID;
-                                declarationPM.EntitleImporterAddress = importer.DMExtensions.Address;
-                                declarationPM.EntitleImporterName = importer.DMExtensions.Name;
+                                if (!dontUpdateImporters)
+                                {
+                                    declarationPM.EntitleImporterAddress = importer.DMExtensions.Address;
+                                    declarationPM.EntitleImporterName = importer.DMExtensions.Name;
+                                }
                                 declarationPM.ImporterEntitlementTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
                                 if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.EntitleImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
@@ -745,24 +770,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             case "4":
                                 {
-                                    declarationPM.ImporterAddress = importer.DMExtensions.Address;
-                                    declarationPM.ImporterName = importer.DMExtensions.Name;
-                                    //   declarationPM.impo = GetValueTextType(importer.DMExtensions.IssueLocation);
-
+                                    if (!dontUpdateImporters)
+                                    {
+                                        declarationPM.ImporterAddress = importer.DMExtensions.Address;
+                                        declarationPM.ImporterName = importer.DMExtensions.Name;
+                                        //   declarationPM.impo = GetValueTextType(importer.DMExtensions.IssueLocation);
+                                    }
                                     break;
                                 }
                             case "5":
                                 {
-                                    declarationPM.TransferImporterAddress = importer.DMExtensions.Address;
-                                    declarationPM.TransferImporterName = importer.DMExtensions.Name;
+                                    if (!dontUpdateImporters)
+                                    {
+                                        declarationPM.TransferImporterAddress = importer.DMExtensions.Address;
+                                        declarationPM.TransferImporterName = importer.DMExtensions.Name;
+                                    }
                                     declarationPM.TransferImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
                                     break;
                                 }
                             case "6":
                                 {  //  declarationPM.EntitleImporterTypeCode = "4";
-                                    declarationPM.EntitleImporterAddress = importer.DMExtensions.Address;
-                                    declarationPM.EntitleImporterName = importer.DMExtensions.Name;
+                                    if (!dontUpdateImporters)
+                                    {
+                                        declarationPM.EntitleImporterAddress = importer.DMExtensions.Address;
+                                        declarationPM.EntitleImporterName = importer.DMExtensions.Name;
+                                    }
                                     declarationPM.EntitleImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
                                     break;
