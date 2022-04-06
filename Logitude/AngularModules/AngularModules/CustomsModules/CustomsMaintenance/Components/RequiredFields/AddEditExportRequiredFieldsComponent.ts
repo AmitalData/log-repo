@@ -1,27 +1,27 @@
 declare var window: any;
-import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ValidationSummary} from '../../../../Controls/All/ValidationSummary';
-import {Validator} from '../../../../Infrastructure/Validators/Validator';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {CustomsRequiredFieldList} from '../../../../Customs/EntityLists/CustomsRequiredFieldList';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ValidationSummary } from '../../../../Controls/All/ValidationSummary';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { CustomsRequiredFieldList } from '../../../../Customs/EntityLists/CustomsRequiredFieldList';
 import { CustomsRequierdFieldsWebService } from '../../../../Customs/Services/WebServices/CustomsRequierdFieldsWebService';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 
 
 @Component({
-    
+
     selector: 'AddEditExportRequiredFieldsComponent',
     templateUrl: './AddEditExportRequiredFieldsComponent.html',
 })
@@ -64,6 +64,10 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
     GetObjectFields() {
         var objectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         var objectFields: any[] = window.ObjectFields.filter(x => x.ObjectTableId == objectTable.Id && (!x.IsMulti && x.FieldName != "ImporterId" && x.FieldName != "TransferImporterId" && x.FieldName != "EntitleImporterId"));
+        if (objectTable.Name == "Customs.Declaration") {
+             objectFields= window.ObjectFields.filter(x => x.ValidForQuerySection1 == "Customs.ExportDeclaration" || x.AdditionalQuerySections == "Customs.ExportDeclaration" || x.ValidForQuerySection2 == "Customs.ExportDeclaration");
+        }
+
 
         this.FieldsList.Clear();
         var items = [];
@@ -91,7 +95,7 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
 
                 if (selectObjectField.IsImport)
                     item.IsImport = true;
-                 item.Active = true;
+                item.Active = true;
             }
 
             items.push(item);
@@ -159,7 +163,7 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
     CheckBoxChanged(event, itemModel: RequiredFieldItemModel) {
         console.log("<CheckBoxChanged> ", event, itemModel);
         if (itemModel) {
-             if (event == true) {
+            if (event == true) {
                 this.SelectedObjectFields.push(itemModel.RequierdField);
                 this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
                 this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
@@ -194,7 +198,7 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
 
             }
             if (this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active == false)
-            this.SelectedObjectFields.splice(index, 1);
+                this.SelectedObjectFields.splice(index, 1);
 
         }
     }
@@ -202,14 +206,14 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
 }
 
 export class RequiredFieldItemModel extends BaseComponent {
-    
+
     public DataContext = this;
 
     constructor(public ObjectField: any, public RequierdField: CustomsRequiredFieldList) {
         super();
         this.ObjectfieldId = ObjectField.Id;
         this.ObjectfieldCode = ObjectField.FieldCode;
-     }
+    }
 
     //#region PropertiesObjectfieldId
 
@@ -255,10 +259,10 @@ export class RequiredFieldItemModel extends BaseComponent {
     }
 
     isImport: boolean = false;
-    get IsImport() {return this.isImport; }
+    get IsImport() { return this.isImport; }
     set IsImport(value: boolean) {
-    if (this.isImport != value) {
-        this.isImport = value;
+        if (this.isImport != value) {
+            this.isImport = value;
 
         }
     }

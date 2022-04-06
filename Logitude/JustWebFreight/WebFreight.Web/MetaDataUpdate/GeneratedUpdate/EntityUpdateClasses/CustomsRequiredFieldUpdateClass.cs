@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsRequiredFieldUpdateClass
    {  		
-		public const string HashString = "63611ef1fe7e005d9a20d7bb2319739f";
+		public const string HashString = "4a5afc554ff18c33b190820390186f93";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שדה חובה מכס",
 			      				    DefaultText =  "Customs Required Field",
-			      				    Code =  "631c",
+			      				    Code =  "17b5",
 			      				    Name =  "Customs.CustomsRequiredField Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
