@@ -416,7 +416,11 @@ namespace Logitude.Server.Tools.FTP
 
                 try
                 {
-                    _SFTPDeleteTempFiles?.DeleteIfNeeded((Action)(this.DeleteTempFiles));
+                    if (_SFTPDeleteTempFiles?.DeleteIfNeeded(uploadAsTemp, (Action)(this.DeleteTempFiles)) == true)
+                    {
+                        p_message += Environment.NewLine + $" SFTPDeleteTempFilesService - delete temp file  ";
+                    }
+                    
                 }
                 catch (Exception e)
                 {
@@ -439,6 +443,8 @@ namespace Logitude.Server.Tools.FTP
             Debug.WriteLine($"DirList('tmp_ *.tmp') ..");
             var directoryFiles = DirList("tmp_*.tmp", true, false, out p_status_1, out p_message_1).ToList();
             Debug.WriteLine($"Temp file {directoryFiles.Count()}");
+
+
             foreach (var fileName in directoryFiles)
             {
                 Debug.WriteLine($"delete Temp file {fileName}");
