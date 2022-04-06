@@ -85,7 +85,7 @@ export class MasterActionConfirmationComponent extends BaseComponent {
         this.FCL_ObsList1 = this.MasterViewModel.FCL_ObsList1;
         this.FCL_ObsList2 = this.MasterViewModel.FCL_ObsList2;
         this.GRO_ObsList = this.MasterViewModel.GRO_ObsList;
-        this.EnabledOkButton = this.ConfirmIsEnabled(this.MasterViewModel.HasErrors());
+
         this.CurrentSession.StopBusyIndicator();
         this.FCLVisibility = this.MasterViewModel.FCLVisibility && this.MasterViewModel.MasterVSHousesVisibility;
         this.LCLVisibility = this.MasterViewModel.LCLVisibility && this.MasterViewModel.MasterVSHousesVisibility;
@@ -93,8 +93,9 @@ export class MasterActionConfirmationComponent extends BaseComponent {
         this.MasterVSHousesVisibility = this.MasterViewModel.MasterVSHousesVisibility;
         this.ErrorList = this.MasterViewModel.ErrorList;
 
-        if (this.MasterViewModel.ErrorList.length > 0) {
-            this.EnabledOkButton = false;
+        this.EnabledOkButton = true;
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TSV")[0] == null) {
+            this.EnabledOkButton = this.ConfirmIsEnabled(this.MasterViewModel.HasErrors());
         }
     }
 

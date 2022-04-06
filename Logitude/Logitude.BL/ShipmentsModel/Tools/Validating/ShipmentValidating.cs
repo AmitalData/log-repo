@@ -1665,11 +1665,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         private IRulesValidator ruleValidator;
         private int tenant;
         private ObjectFieldRepository objectFieldRepository;
+        private ShipmentQuery shipmentQuery;
         public OperationalCloseValidator(ShipmentPM shipmentPM)
         {
             this.shipmentPM = shipmentPM;
             this.tenant = shipmentPM.Tenant;
             this.objectFieldRepository = new ObjectFieldRepository(tenant);
+            this.shipmentQuery = new ShipmentQuery(tenant);
             this.InitializeRulesValidator();
         }
 
@@ -1686,6 +1688,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             if (shipmentPM.ShipmentLevelCode == "C" && shipmentPM.ShipmentConsoleShipments.Count > 0)
             {
                 string housesErrors = ValidateHouses();
+                string housesPackagesErrors = ValidateHousePackages();
 
                 if (string.IsNullOrEmpty(errorMessage))
                 {
@@ -1696,9 +1699,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     errorMessage = errorMessage + ", " + housesErrors;
                 }
+
+                if (string.IsNullOrEmpty(errorMessage))
+                {
+                    errorMessage = housesPackagesErrors;
+                }
+
+                else
+                {
+                    errorMessage = errorMessage + ", " + housesPackagesErrors;
+                }
             }
 
-            return errorMessage;
+            return errorMessage.TrimStart(',');
         }
         private string ValidateShipment(ShipmentPM shipment)
         {
@@ -1707,11 +1720,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private string ValidateHouses()
         {
-            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             Dictionary<string, string> housesErrors = new Dictionary<string, string>();
             foreach (ConsoleShipmentPM consoleShipment in shipmentPM.ShipmentConsoleShipments)
             {
-                string houseError = ValidateSingleHouse(consoleShipment, shipmentQuery);
+                string houseError = ValidateSingleHouse(consoleShipment);
 
                 if (!string.IsNullOrEmpty(houseError))
                 {
@@ -1720,16 +1732,174 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             }
 
             return this.BuildHousesErrorMessage(housesErrors);
-        }        
-        private string ValidateSingleHouse(ConsoleShipmentPM consoleShipment, ShipmentQuery shipmentQuery)
+        }
+        private string ValidateSingleHouse(ConsoleShipmentPM consoleShipment)
         {
             ShipmentPM house = shipmentQuery.GetSinglePMByShipmentNumber(consoleShipment.ShipmentNumber, tenant);
             house.IsOperationalClosed = true;
             return ValidateShipment(house);
         }
+        private string ValidateHousePackages()
+        {
+            PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
+            IQueryable<PackageType> packageTypes = packageTypeRepository.GetPackageTypes(tenant);
+            List<ShipmentPackagePM> houseShipmentsPackaes = shipmentQuery.GetShipmentConsolidationPackages(shipmentPM.Id, tenant);
+
+            List<LineData> FCL_ObsList1 = new List<LineData>();
+            List<LineData> FCL_ObsList2 = new List<LineData>();
+
+            List<ByPckageType> housesGroup = new List<ByPckageType>();
+            List<ByPckageType> masterGroup = new List<ByPckageType>();
+
+            foreach (ShipmentPackagePM item in houseShipmentsPackaes.Where(p => p.IsContainer))
+            {
+                ByPckageType existsedItem = housesGroup.Where(f => f.PackageTypeId == item.PackageTypeId).FirstOrDefault();
+                if (existsedItem == null)
+                {
+                    existsedItem = new ByPckageType();
+                    existsedItem.PackageTypeId = item.PackageTypeId;
+                    existsedItem.Quantity = item.Quantity;
+                    existsedItem.MeasurementId = (packageTypes.Where(f => f.Id == item.PackageTypeId).FirstOrDefault()) != null ? (packageTypes.Where(f => f.Id == item.PackageTypeId).FirstOrDefault()).MeasurementId : null;
+                    housesGroup.Add(existsedItem);
+                }
+                else
+                {
+                    existsedItem.Quantity += item.Quantity;
+                }
+            }
+
+            foreach (ShipmentPackagePM item in shipmentPM.ShipmentPackages.Where(d => d.IsContainer))
+            {
+                ByPckageType existsedItem = masterGroup.Where(f => f.PackageTypeId == item.PackageTypeId).FirstOrDefault();
+                if (existsedItem == null)
+                {
+                    existsedItem = new ByPckageType();
+                    existsedItem.PackageTypeId = item.PackageTypeId;
+                    existsedItem.Quantity = item.Quantity;
+                    existsedItem.MeasurementId = (packageTypes.Where(f => f.Id == item.PackageTypeId).FirstOrDefault()) != null ? (packageTypes.Where(f => f.Id == item.PackageTypeId).FirstOrDefault()).MeasurementId : null;
+                    masterGroup.Add(existsedItem);
+                }
+                else
+                {
+                    existsedItem.Quantity += item.Quantity;
+                }
+            }
+
+            foreach (ByPckageType houseItem in housesGroup)
+            {
+                PackageType packageType = packageTypes.Where(f => f.Id == houseItem.PackageTypeId).FirstOrDefault();
+                if (packageType != null)
+                {
+                    LineData line = new LineData();
+                    line.LineLabel = packageType.EnglishName;
+                    line.HouseValue = houseItem.Quantity;
+
+                    ByPckageType masterItem = masterGroup.Where(f => f.PackageTypeId == houseItem.PackageTypeId && f.MeasurementId == houseItem.MeasurementId).FirstOrDefault();
+                    if (masterItem != null)
+                    {
+                        line.MasterValue = masterItem.Quantity;
+                        line.IsEquals = (houseItem.Quantity == masterItem.Quantity);
+                        List<ByPckageType> temp = new List<ByPckageType>();
+                        foreach (ByPckageType p in masterGroup)
+                        {
+                            if (p != masterItem)
+                                temp.Add(p);
+                        }
+                        masterGroup = temp;
+                    }
+
+                    else
+                    {
+                        line.MasterValue = 0;
+                        line.IsEquals = false;
+                    }
+                    FCL_ObsList1.Add(line);
+                }
+            }
+
+            foreach (ByPckageType masterItem in  masterGroup)
+            {
+                PackageType packageType = packageTypes.Where(f => f.Id == masterItem.PackageTypeId).FirstOrDefault();
+                if (packageType != null)
+                {
+                    LineData line  = new LineData();
+                    line.LineLabel = packageType.EnglishName;
+                    line.HouseValue = 0;
+                    line.MasterValue = masterItem.Quantity;
+                    line.IsEquals = false;
+                    FCL_ObsList1.Add(line);
+                }
+            }
+
+            foreach (ShipmentPackagePM houseItem in houseShipmentsPackaes.OrderBy(d => d.ShipmentId))
+            { 
+                PackageType packageType = packageTypes.Where(p => p.Id == houseItem.PackageTypeId).FirstOrDefault();
+                if (packageType != null)
+                {
+                    LineData line  = new LineData();
+                    line.ShipmentNumber = houseItem.ShipmentNumber;
+                    line.LineLabel = packageType.EnglishName;
+
+                    if (string.IsNullOrEmpty(line.ShipmentNumber))
+                    {
+                        ConsoleShipmentPM dd = shipmentPM.ShipmentConsoleShipments.Where(d => d.Id == houseItem.ShipmentId).FirstOrDefault();
+                        if (dd != null)
+                        {
+                            line.ShipmentNumber = dd.ShipmentNumber;
+                        }
+                    }
+
+                    ShipmentPackagePM masterItem = shipmentPM.ShipmentPackages.Where(d => d.OriginalShipmentPackageId == houseItem.Id).FirstOrDefault();
+                    if (masterItem != null)
+                    {
+                        List<ShipmentPackagePM> temp = new List<ShipmentPackagePM>();
+                        foreach(ShipmentPackagePM p in  shipmentPM.ShipmentPackages)
+                        {
+                            if (p != masterItem)
+                                temp.Add(p);
+                        }
+                        shipmentPM.ShipmentPackages = temp;
+                        line.MasterStringValue = string.IsNullOrEmpty(masterItem.ContainerNumber) ? "- - -" : masterItem.ContainerNumber;
+                        line.IsEquals = (line.HouseStringValue == line.MasterStringValue);                        
+                    }
+                    else
+                    {
+                        line.MasterStringValue = "Not exists";
+                        line.IsEquals = false;
+                    }
+
+                    if (!line.IsEquals)
+                    {
+                        FCL_ObsList2.Add(line);
+                    }
+                }
+            }
+
+            foreach (ShipmentPackagePM item in shipmentPM.ShipmentPackages)
+            {
+                PackageType packageType = packageTypes.Where(d => d.Id == item.PackageTypeId).FirstOrDefault();
+                if (packageType != null)
+                {
+                    LineData line = new LineData();
+                    line.ShipmentNumber = shipmentPM.ShipmentNumber;
+                    line.LineLabel = packageType.EnglishName;
+                    line.HouseStringValue = "Not exists";
+                    line.MasterStringValue = string.IsNullOrEmpty(item.ContainerNumber) ? "- - -" : item.ContainerNumber;
+                    line.IsEquals = false;
+                    FCL_ObsList2.Add(line);
+                }
+            }
+
+            if (FCL_ObsList1.Where(d => d.IsEquals == false).FirstOrDefault() != null || FCL_ObsList2.Where(d => d.IsEquals == false).FirstOrDefault() != null)
+            {
+                return "Mismatch Quantities or Container numbers";
+            }
+
+            return null;
+        }
         private string GenerateErrorMessage(List<ObjectTableRuleField> requiredFields)
         {
-            string errorMessage = "";            
+            string errorMessage = "";
             foreach (ObjectTableRuleField field in requiredFields)
             {
                 ObjectField f = objectFieldRepository.GetSingleObjectFieldByFieldCode(field.ObjectFieldCode, tenant);
@@ -1745,12 +1915,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             }
 
             return errorMessage;
-        }        
+        }
         private string BuildHousesErrorMessage(Dictionary<string, string> housesErrors)
         {
             string errorMessage = "";
 
-            foreach(KeyValuePair<string, string> item in housesErrors)
+            foreach (KeyValuePair<string, string> item in housesErrors)
             {
                 string houseError = "House " + item.Key + ": " + item.Value;
 
@@ -1761,11 +1931,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                 else
                 {
-                    errorMessage = errorMessage +  ", " + houseError;
+                    errorMessage = errorMessage + ", " + houseError;
                 }
             }
 
             return errorMessage;
         }
+    }
+    public class ByPckageType
+    {
+        public int? Quantity { get; set; }
+        public string PackageTypeId { get; set; }
+        public string MeasurementId { get; set; }
+        public string MeasurementCode { get; set; }
+        public string MeasurementShortName { get; set; }
+    }
+
+    public class LineData
+    {
+        public string LineLabel { get; set; }
+        public int? HouseValue { get; set; }
+        public int? MasterValue { get; set; }
+        public bool IsEquals { get; set; }
+        public string ShipmentNumber { get; set; }
+        public string MasterStringValue { get; set; }
+        public string HouseStringValue { get; set; }
     }
 }
