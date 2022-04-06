@@ -71,6 +71,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.IsSendingByContainer = entityPM.IsSendingByContainer;
             entityPOCO.IsSendingByBillOfLading = entityPM.IsSendingByBillOfLading;
             entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
+            entityCard.SATCustomerName = entityPM.SATReceptorName;
 
             if (!entityPM.IsFirstContactToAdd)
             {

@@ -39,6 +39,7 @@ export class CustomAgentList {
 		PrimaryContactPhone: string;
 		StateName: string;
 		RegimenFiscalCode: string;
+		SATReceptorName: string;
 		GLAccountNumber: string;
 		Field1: string;
 		Field2: string;

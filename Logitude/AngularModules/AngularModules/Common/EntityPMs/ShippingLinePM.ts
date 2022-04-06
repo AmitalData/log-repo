@@ -413,6 +413,11 @@ export class ShippingLinePM {
     public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
        
 	 
+    private sATReceptorName: string;
+    public get SATReceptorName() { return this.sATReceptorName; }
+    public set SATReceptorName(newValue: string) { if (this.sATReceptorName != newValue) { this.sATReceptorName = newValue; this.MarkAsDirty("SATReceptorName"); } }
+       
+	 
 
     public OldEntityPM: ShippingLinePM;
 		

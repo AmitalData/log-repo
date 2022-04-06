@@ -69,6 +69,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
             entityCard.CreatedByPartner = entityPM.CreatedByPartner;
             entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
+            entityCard.SATCustomerName = entityPM.SATReceptorName;
 
             if (!entityPM.IsFirstContactToAdd)
             {

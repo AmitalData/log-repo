@@ -43,6 +43,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public double? CreditLimit { get; set; }
         public double? InsuredCreditlimit { get; set; }
         public string RegimenFiscalCode { get; set; }
+        public string SATReceptorName { get; set; }
 
 
     }

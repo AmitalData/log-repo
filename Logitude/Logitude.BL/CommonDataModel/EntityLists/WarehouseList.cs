@@ -54,6 +54,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string OceanWeightRoundingCode { get; set; }
         public string InlandWeightRoundingCode { get; set; }
         public string RegimenFiscalCode { get; set; }
+        public string SATReceptorName { get; set; }
 
         public string GLAccountNumber { get; set; }
         public int? StorageFreeDays { get; set; }

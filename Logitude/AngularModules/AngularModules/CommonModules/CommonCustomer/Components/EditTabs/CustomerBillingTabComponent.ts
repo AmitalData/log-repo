@@ -57,7 +57,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
     private SetShowRegimenFiscalField() {
         var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
-        if (RegimenFiscalFieldFeatureToggle) {
+        if (RegimenFiscalFieldFeatureToggle || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.ShowRegimenFiscalField = true;
         }
     }

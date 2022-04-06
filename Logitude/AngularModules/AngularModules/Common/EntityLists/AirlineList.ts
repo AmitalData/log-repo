@@ -83,5 +83,6 @@ export class AirlineList {
 		StateName: string;
 		GLAccountNumber: string;
 		RegimenFiscalCode: string;
+		SATReceptorName: string;
 	
 }

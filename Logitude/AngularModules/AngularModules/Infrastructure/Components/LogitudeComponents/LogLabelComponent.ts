@@ -24,6 +24,7 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
         "IsSmallLabel",
         "Replace",
         "ReplaceWith",
+        "ShowTitle",
     ],
 
     template:
@@ -38,11 +39,11 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
                 </div>
             </td>
 
-            <td class="TextTrimming" style="vertical-align:middle;"  [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!IsSmallLabel">
+            <td class="TextTrimming" style="vertical-align:middle;"  [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!IsSmallLabel" title="{{ ShowTitle ? LabelText : '' }}">
                 <label class="Label" [ngStyle]="{color: LabelColor}">{{LabelText}}</label>
             </td>
 
-            <td class="TextTrimming" style="vertical-align:middle;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="IsSmallLabel">
+            <td class="TextTrimming" style="vertical-align:middle;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="IsSmallLabel" title="{{ ShowTitle ? LabelText : '' }}">
                 <label class="SmallLabel" [ngStyle]="{color: LabelColor}">{{LabelText}}</label>
             </td>
         </tr>
@@ -61,6 +62,7 @@ export class LogLabelComponent implements OnInit {
     public LabelOpacity: number = 1;
     public ShowWarning: boolean = false;
     public NoValidation: boolean = false;
+    public ShowTitle: boolean = false;
     objectfield: any;
     uiProperty: UIProperty;   
     @Input() NoObjectField: boolean = false; 

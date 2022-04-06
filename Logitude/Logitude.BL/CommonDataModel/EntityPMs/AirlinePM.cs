@@ -368,6 +368,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string BillToId { get; set; }
         [DataMember]
         public string RegimenFiscalCode { get; set; }
+        [DataMember]
+        public string SATReceptorName { get; set; }
 
     }
 }
