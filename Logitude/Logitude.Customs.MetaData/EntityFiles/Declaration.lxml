@@ -19136,6 +19136,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DeclarationOfficeHandlerCode&quot;"
     ListPropertyPath="&quot;DeclarationOfficeHandlerCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -19206,6 +19207,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TransferExporterCode&quot;"
     ListPropertyPath="&quot;TransferExporterCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -19241,6 +19243,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;TransferExporterCode&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -24586,12 +24589,6 @@
       Code="&quot;Customs.Declaration.F.ExporterAddress&quot;"
       DefaultText="&quot;Exporter Address&quot;"
       LocalDefaultText="&quot;כתובת יצואן&quot;"
-      TextCodeTypeCode="&quot;F&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.Declaration.F.TransferExporterCode&quot;"
-      DefaultText="&quot;Transfer Exporter Code&quot;"
-      LocalDefaultText="&quot;קוד סוג  יצואן מעביר&quot;"
       TextCodeTypeCode="&quot;F&quot;"
       IsSpellChecked="false" />
     <TextCode
