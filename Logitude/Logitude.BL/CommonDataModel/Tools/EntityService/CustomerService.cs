@@ -387,7 +387,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateCardExternalCodeByCurrencyCollection();
             this.UpdateProductItemsCollection();
 
-            this.UpdateGLAccount(entityPM, entityPOCO);
            
             //var tenantQuery = new TenantQuery(entityPM.Tenant);
             //var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
