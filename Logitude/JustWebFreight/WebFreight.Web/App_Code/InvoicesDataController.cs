@@ -158,8 +158,7 @@ namespace WebFreight.Web.App_Code
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
             IQueryable<ARInvoice> invoices = aRInvoiceRepository.GetIQueryableInvoices(tenant);
 
-            invoices = customfilters.GetFilteredQuery(queryOperations, invoices);
-            List<ARInvoice> xx = invoices.ToList();
+            invoices = customfilters.GetFilteredQuery(queryOperations, invoices); 
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
@@ -167,8 +166,7 @@ namespace WebFreight.Web.App_Code
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
             invoices = filter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, invoices);
-            int skippedShipments = queryOperations.PageIndex;
-            xx = invoices.ToList(); 
+            int skippedShipments = queryOperations.PageIndex; 
 
             var query2 = from entity in invoices
                          select new ARInvoiceList()
@@ -251,8 +249,7 @@ namespace WebFreight.Web.App_Code
             {
                 query2 = query2.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
             }
-
-            var xx1 = query2.ToList();
+             
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
