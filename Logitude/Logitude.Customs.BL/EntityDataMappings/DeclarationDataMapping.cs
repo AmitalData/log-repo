@@ -108,6 +108,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.AmendmentStatusName = amendmentStatus.LocalName;
 
                 }
+                entityPM.ExportTaxationDateTime = entityPOCO.TaxationDateTime;
             }
             else
             {
@@ -262,6 +263,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CustomsHouseTypeQueryService customsHouseTypeQueryService = new CustomsHouseTypeQueryService(entityPOCO.Tenant);
                 CustomsHouseTypePM declarationOffice = customsHouseTypeQueryService.GetSingle(entityPOCO.DeclarationOfficeCode, false, true);
                 entityPM.DeclarationOfficeName = declarationOffice.LocalName;
+                entityPM.DeclarationOfficeHandlerCode = entityPOCO.DeclarationOfficeCode;
             }
 
             if (entityPOCO.AutonomyRegionTypeCode != null)
@@ -336,6 +338,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     FacilitationTypePM FacilitationType = FacilitationTypeQueryService.GetSingle(client.FacilitationTypeCode, false, true);
                     entityPM.FacilityTypeName = FacilitationType != null ? FacilitationType.LocalName : null;
                 }
+                entityPM.ExporterImporterCode = entityPOCO.ImporterCode;
+
             }
 
             if (entityPOCO.DeclarationStatusTypeCode != null || entityPOCO.CourierSuspentionCode != null)
@@ -388,6 +392,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
                     entityPM.CalculatedTransferImporterName = client.FullName;
                 }
+                entityPM.TransferExporterCode = entityPM.TransferImporterCode;
             }
 
             if (entityPOCO.EntitleImporterCountryCode != null)

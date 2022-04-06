@@ -461,15 +461,19 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
     SetScreenFieldsEditability() {
         this.UIProperties.SetEnabled("DeclarationOfficeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("DeclarationOfficeHandlerCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ExportDeclarationOfficeCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ProcedureCurrentCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("DeclarationDocumentTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("TaxationDateTime", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExportTaxationDateTime", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("AutonomyRegionTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("DeclarationDocumentId", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ImporterCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExporterImporterCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("TransferImporterCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("TransferExporterCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("EntitleImporterCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("DeclarationTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("DestinationCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
@@ -488,9 +492,21 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     //#region Properties
     public get DeclarationOfficeCode() { return this.EntityPM.DeclarationOfficeCode; }
     public set DeclarationOfficeCode(newValue: string) {
-        this.EntityPM.DeclarationOfficeCode = newValue;
-        this.ChangeTransportMode();
+        if (this.EntityPM.DeclarationOfficeCode != newValue) {
+            this.EntityPM.DeclarationOfficeCode = newValue;
+            this.EntityPM.DeclarationOfficeHandlerCode = newValue;
+            this.ChangeTransportMode();
+        }
     }
+
+    public get DeclarationOfficeHandlerCode() { return this.EntityPM.DeclarationOfficeHandlerCode; }
+    public set DeclarationOfficeHandlerCode(newValue: string) {
+        if (this.EntityPM.DeclarationOfficeHandlerCode != newValue) {
+            this.EntityPM.DeclarationOfficeHandlerCode = newValue;
+            this.EntityPM.DeclarationOfficeCode = newValue;
+        }
+    }
+
 
     public get ExportDeclarationOfficeCode() { return this.EntityPM.ExportDeclarationOfficeCode; }
     public set ExportDeclarationOfficeCode(newValue: string) {
@@ -508,7 +524,17 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public DrawMe: boolean = true;
     public get TaxationDateTime() { return this.EntityPM.TaxationDateTime; }
     public set TaxationDateTime(newValue: Date) {
-        this.EntityPM.TaxationDateTime = newValue;
+        if (this.EntityPM.TaxationDateTime != newValue) {
+            this.EntityPM.ExportTaxationDateTime = newValue;
+            this.EntityPM.TaxationDateTime = newValue;
+        }
+    }
+    public get ExportTaxationDateTime() { return this.EntityPM.ExportTaxationDateTime; }
+    public set ExportTaxationDateTime(newValue: Date) {
+        if (this.EntityPM.ExportTaxationDateTime != newValue) {
+            this.EntityPM.ExportTaxationDateTime = newValue;
+            this.EntityPM.TaxationDateTime = newValue;
+        }
     }
 
     public get AutonomyRegionTypeCode() { return this.EntityPM.AutonomyRegionTypeCode; }
@@ -517,11 +543,22 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public get DeclarationDocumentId() { return this.EntityPM.DeclarationDocumentId; }
     public set DeclarationDocumentId(newValue: string) { this.EntityPM.DeclarationDocumentId = newValue; }
 
+    public get ExporterImporterCode() { return this.EntityPM.ExporterImporterCode; }
+    public set ExporterImporterCode(newValue: string) {
+        if (this.EntityPM.ExporterImporterCode != newValue) {
+            this.EntityPM.ExporterImporterCode = newValue;
+            this.EntityPM.ImporterCode = newValue;
+        }
+    }
+         
+
     public get ImporterCode() { return this.EntityPM.ImporterCode; }
     public set ImporterCode(newValue: string) {
         if (this.EntityPM.ImporterCode != newValue) {
 
             this.EntityPM.ImporterCode = newValue;
+            this.EntityPM.ExporterImporterCode = newValue;
+
             this.EntityPM.ImporterTypeCode = "1";
             this.EntityPM.ImporterTypeName = "IL";
 
@@ -588,6 +625,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         this.EntityPM.LoadingDateTime = newValue;
     }
 
+    public get TransferExporterCode() { return this.EntityPM.TransferExporterCode; }
+    public set TransferExporterCode(newValue: string) {
+        if (this.EntityPM.TransferExporterCode != newValue) {
+            this.EntityPM.TransferExporterCode = newValue;
+            this.EntityPM.TransferImporterCode = newValue;}
+    }
+
     public get TransferImporterCode() {
         return this.EntityPM.TransferImporterCode;
     }
@@ -596,7 +640,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         if (this.EntityPM.TransferImporterCode != newValue) {
 
             this.EntityPM.TransferImporterCode = newValue;
-
+            this.EntityPM.TransferExporterCode = newValue;
 
             this.EntityPM.TransferImporterTypeCode = "1";
             this.EntityPM.TransferImporterTypeName = "IL";
