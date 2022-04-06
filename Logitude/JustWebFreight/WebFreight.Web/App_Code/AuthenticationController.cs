@@ -652,7 +652,6 @@ namespace WebFreight.Web
 
             try
             {
-
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
                 //if (LogitudeSettings.DeploymentStage.ToLower() == "test2")
@@ -1338,7 +1337,7 @@ namespace WebFreight.Web
         }
 
         bool OneTimePassword = false;
-        public UserData PostLoginData(LoginParameters parameters, int tenant, bool ignoreAddLoginHistory = false)
+        public UserData PostLoginData(LoginParameters parameters, int tenant, bool isFromCTool = false)
         {
 
 
@@ -1423,7 +1422,7 @@ namespace WebFreight.Web
 
 
 
-                        user = ValidateUser(email, password, customData, out userData, isUser, cardId, cardType, parameters.ByToken, via, parameters.IsAngularLogin, parameters.ClientType, ignoreAddLoginHistory);
+                        user = ValidateUser(email, password, customData, out userData, isUser, cardId, cardType, parameters.ByToken, via, parameters.IsAngularLogin, parameters.ClientType, isFromCTool);
 
 
 
@@ -1490,7 +1489,8 @@ namespace WebFreight.Web
                     if (!user.HasError && (parameters.IsMobileLogin || parameters.GetToken))
                     {
                         bool IsTwoFactorAuthenticationRequired = false;
-                        if (!parameters.IsAngularLogin && !parameters.IsMobileLogin && parameters.IsUser && !customerCare)
+
+                        if (!parameters.IsAngularLogin && !parameters.IsMobileLogin && parameters.IsUser && !customerCare && !isFromCTool)
                         {
                             IsTwoFactorAuthenticationRequired = CheckLoginSecurityPolicy(tenant, user, logitudeUser, commonDataContext);
                         }
@@ -1979,7 +1979,7 @@ namespace WebFreight.Web
             return result;
         }
 
-        private UserData ValidateUser(string name, string password, string customData, out string userData, bool isUser, string cardId, string cardType, bool byToken, string via, bool isAngularLogin,string clientType, bool ignoreAddLoginHistory)
+        private UserData ValidateUser(string name, string password, string customData, out string userData, bool isUser, string cardId, string cardType, bool byToken, string via, bool isAngularLogin,string clientType, bool isFromCTool)
         {
             ContactPassword contactPassword = null;
             UserData user = null;
@@ -2202,20 +2202,20 @@ namespace WebFreight.Web
 
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(contact.GlobalTenantId);
 
-                    if (isUser)
+                    if (!isFromCTool)
                     {
-                        if (isAngularLogin)
+                        if (isUser)
                         {
-                            ActivityLog.SendTotangoContactActivity(contact.Email, "(A) Miscellaneous", "(A) Login", tenant, false, cardId, via);
-                        }
-                        else
-                        {
+                            if (isAngularLogin)
+                            {
+                                ActivityLog.SendTotangoContactActivity(contact.Email, "(A) Miscellaneous", "(A) Login", tenant, false, cardId, via);
+                            }
+                            else
+                            {
 
-                            ActivityLog.SendTotangoContactActivity(contact.Email, "Miscellaneous", "Login", tenant, false, cardId, via);
-                        }
+                                ActivityLog.SendTotangoContactActivity(contact.Email, "Miscellaneous", "Login", tenant, false, cardId, via);
+                            }
 
-                        if (!ignoreAddLoginHistory)
-                        {
                             UserLoginLog userLog = new UserLoginLog()
                             {
                                 Id = IdCounter.GetNumber("UserLoginLog", tenant).ToString(),
@@ -2256,76 +2256,77 @@ namespace WebFreight.Web
                             commonDataContext.UserLoginLogs.Add(userLog);
                             commonDataContext.SaveChanges();
                         }
-                    }
-                    else
-                    {
-
-                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == member.Id && d.CardId == cardId).FirstOrDefault();
-                        if (cardContact != null)
+                        else
                         {
-                            card = commonDataContext.Cards.Where(d => d.Id == cardId).FirstOrDefault();
-                            card.SharedLogisticsInvitationStatusCode = 3;
-                            card.LastLoginDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            cardContact.LastLoginDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            user.CardId = card.Id;
-                            user.CardType = card.PartnerTypeId;
 
-
-                            if (via == "Mobile")
+                            CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == member.Id && d.CardId == cardId).FirstOrDefault();
+                            if (cardContact != null)
                             {
-                                card.IsActiveForMobile = true;
+                                card = commonDataContext.Cards.Where(d => d.Id == cardId).FirstOrDefault();
+                                card.SharedLogisticsInvitationStatusCode = 3;
+                                card.LastLoginDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                cardContact.LastLoginDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                user.CardId = card.Id;
+                                user.CardType = card.PartnerTypeId;
+
+
+                                if (via == "Mobile")
+                                {
+                                    card.IsActiveForMobile = true;
+                                }
+
                             }
 
-                        }
 
-
-                        if (card != null)
-                        {
-                            string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
-                            CreateSharedLogisticsContactLastLogin(via, user, card);
-                            ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
-                        }
-
-                        //Abed    Log
-                        ContactLoginLog contactLog = new ContactLoginLog()
-                        {
-                            Id = IdCounter.GetNumber("ContactLoginLog", tenant).ToString(),
-                            Tenant = tenant,
-                            Browser = HttpContext.Current.Request.Browser.Type,
-                            IP = AuthenticationUtil.GetIP4Address(),// HttpContext.Current.Request.UserHostAddress,
-                            ContactId = user.Id,
-                            GMTDateTime = DateTime.Now,
-                            LocalDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
-                            ContactAgent = userAgent,
-                            ComputerId = computerId,
-                            Via = via,
-                        };
-
-
-
-
-                        ContactLastLogin lastLogin = (from a in commonDataContext.ContactLastLogins
-                                                      where a.Id == user.Id
-                                                      select a).FirstOrDefault();
-                        if (lastLogin == null)
-                        {
-                            lastLogin = new ContactLastLogin()
+                            if (card != null)
                             {
-                                Id = user.Id,
+                                string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
+                                CreateSharedLogisticsContactLastLogin(via, user, card);
+                                ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
+                            }
+
+                            //Abed    Log
+                            ContactLoginLog contactLog = new ContactLoginLog()
+                            {
+                                Id = IdCounter.GetNumber("ContactLoginLog", tenant).ToString(),
                                 Tenant = tenant,
+                                Browser = HttpContext.Current.Request.Browser.Type,
+                                IP = AuthenticationUtil.GetIP4Address(),// HttpContext.Current.Request.UserHostAddress,
+                                ContactId = user.Id,
+                                GMTDateTime = DateTime.Now,
+                                LocalDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
+                                ContactAgent = userAgent,
+                                ComputerId = computerId,
+                                Via = via,
                             };
 
-                            commonDataContext.ContactLastLogins.Add(lastLogin);
+
+
+
+                            ContactLastLogin lastLogin = (from a in commonDataContext.ContactLastLogins
+                                                          where a.Id == user.Id
+                                                          select a).FirstOrDefault();
+                            if (lastLogin == null)
+                            {
+                                lastLogin = new ContactLastLogin()
+                                {
+                                    Id = user.Id,
+                                    Tenant = tenant,
+                                };
+
+                                commonDataContext.ContactLastLogins.Add(lastLogin);
+                            }
+
+                            lastLogin.ComputerId = computerId;
+                            lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            commonDataContext.ContactLoginLogs.Add(contactLog);
+                            commonDataContext.SaveChanges();
+
+
+                            // add a record to contact last login table
                         }
-
-                        lastLogin.ComputerId = computerId;
-                        lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        commonDataContext.ContactLoginLogs.Add(contactLog);
-                        commonDataContext.SaveChanges();
-
-                         
-                        // add a record to contact last login table
                     }
+
                     //contact.Email != "customercare@logitudeworld.com" && customercare to be replaced with tenant 0 users that are not distributors
 
                     if (logitudeUser != null)

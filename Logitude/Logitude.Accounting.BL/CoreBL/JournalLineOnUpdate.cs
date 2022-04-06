@@ -339,7 +339,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     this.ControlAccountId = myGLAccountPM.ControlAccountId;
                     if (string.IsNullOrWhiteSpace(this.ControlAccountId))
                     {
-                        throw new Exception("GLAccount is not Card but ControlAccountId  is null ??");
+                        throw new ApplicationException("GLAccount is not Card but ControlAccountId  is null ??");
                     }
                 }
             }

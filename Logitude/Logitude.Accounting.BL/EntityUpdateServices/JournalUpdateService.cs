@@ -530,7 +530,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     //                    if (LogitudeSettings.QueueServiceMode != "db")
                     //                    {
-                    //                        throw new Exception(@"I talked with Ihab he said it's about time to change all environment to DB QUEUE mode 
+                    //                        throw new ApplicationException(@"I talked with Ihab he said it's about time to change all environment to DB QUEUE mode 
                     //Especially in Accounting ,By This our transaction will be include Opening the QUEUE (in AZURE Mode its possible only with DTC Server  )
                     //");
                     //                    }
@@ -681,15 +681,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 _JornalPmSource.APPaymentCancelDate = APPaymentCanceledDate;
                 if (_JornalPmSource == null)
                 {
-                    throw new Exception("Journal id couldn't find in db" + JournalId);
+                    throw new ApplicationException("Journal id couldn't find in db" + JournalId);
                 }
                 if (_JornalPmSource.Tenant != requestTenant)
                 {
-                    throw new Exception("(Journal.Tenant!= requestTenant)");
+                    throw new ApplicationException("(Journal.Tenant!= requestTenant)");
                 }
                 if (String.IsNullOrWhiteSpace(_JornalPmSource.QueueId) &&  _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Draft && _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.WaitingforApprove)
                 {
-                    throw new Exception(
+                    throw new ApplicationException(
                         //"I must/Need??? Ledger to Reconcile - but journal did not Stream yet ..."
                         "רישום הקבלה בהנהלת החשבונות טרם הסתיים , אנא נסה בעוד מספר דקות עד שיושלם התהליך"
 

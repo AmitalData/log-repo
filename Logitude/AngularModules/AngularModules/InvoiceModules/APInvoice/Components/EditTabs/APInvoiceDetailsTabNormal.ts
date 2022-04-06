@@ -50,7 +50,10 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     public IsTotalVatVisible: boolean = false;
+    public IsTotalVatEnabled: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    QBOAccountingSystemCode = "QBO";
+    QBOGlobalAccountingSystemCode = "QBOG";
     constructor(private entityArgs: EntityArgs) {
         super();
 
@@ -74,8 +77,18 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         if (ObjectsLocator.AccountingSettingPM.EnableEnteringTotalVAT || this.EntityPM.TotalVATOnly) {
             this.IsTotalVatVisible = true;
         }
+        this.IsTotalVatEnabled = this.CheckIsTotalVatEnabled();
     }
-
+    CheckIsTotalVatEnabled(): boolean {
+        if (ObjectsLocator.AccountingSettingPM.AccountingSystemCode != this.QBOAccountingSystemCode
+            && ObjectsLocator.AccountingSettingPM.AccountingSystemCode != this.QBOGlobalAccountingSystemCode) {
+            return true;
+        }
+        if(this.EntityPM.TotalVATOnly){
+            return true;
+        }
+        return false;
+    }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {
@@ -1204,6 +1217,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     item.SetUIProperties();
                 });
             }
+            this.IsTotalVatEnabled = this.CheckIsTotalVatEnabled();
         });
 
         logWindow.Show('./InvoiceModules/APInvoice/Components/Others/APInvoiceTotalVATOnlyComponent');

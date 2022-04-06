@@ -49,6 +49,16 @@ namespace Simplog.Data.InvoiceModel.Repositories
             context.ARPaymentBankTranfers.Remove(entity);
         }
 
+        public void RemoveARPaymentBankTransfers(string paymentId, int tenant)
+        {
+            var aRPaymentBankTranfers = (from a in context.ARPaymentBankTranfers where a.PaymentId == paymentId && a.Tenant == tenant select a).ToList();
+
+            foreach (var entity in aRPaymentBankTranfers) {
+                context.ARPaymentBankTranfers.Attach(entity);
+                context.ARPaymentBankTranfers.Remove(entity);
+            }
+        }
+
         public void Update(ARPaymentBankTranfer entity)
         {
             try

@@ -548,7 +548,7 @@ namespace Logitude.Accounting.BL.DataContract
             }
             if (taxDeductionPerVendorReportParameters == null && taxDeductionReport.ErrorMessage != null)
             {
-                throw new Exception(taxDeductionReport.ErrorMessage);
+                throw new ApplicationException(taxDeductionReport.ErrorMessage);
             }
             return byVendorList;
         }

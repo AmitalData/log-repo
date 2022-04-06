@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 // changeset
                 if (reconciliationPM.ChangeSetOp != ChangeSetOperation.Insert)
                 {
-                    throw new Exception("Meanwhile Only Insert Enable ");
+                    throw new ApplicationException("Meanwhile Only Insert Enable ");
                 }
                 reconciliationPM.ChangeSetOp = ChangeSetOperation.Insert;
                 foreach (var item in reconciliationPM.ReconciliationLines)

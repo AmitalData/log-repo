@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
             {
-                throw new Exception("ChangeSetOperation.Delete ???");
+                throw new ApplicationException("ChangeSetOperation.Delete ???");
             }
             else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
@@ -104,11 +104,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else if (propChanged.Any())
                 {
-                    throw new Exception("BLException :Approved Reconciliation Can Only Change To IsCancelled Property");
+                    throw new ApplicationException("BLException :Approved Reconciliation Can Only Change To IsCancelled Property");
                 }
                 if (entityPM.ReconciliationLines.Any(jl => jl.ChangeSetOp != ChangeSetOperation.None))
                 {
-                    throw new Exception("BLException :Approved Reconciliation Can Only Change To IsCancelled Property");
+                    throw new ApplicationException("BLException :Approved Reconciliation Can Only Change To IsCancelled Property");
                 }
             }
             else
@@ -182,7 +182,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //{
                 //    string errorText = validationResult.ErrorMessage;//+ ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id;
                 //                                                     //ThrowException(errorText);
-                //    throw new Exception(errorText);
+                //    throw new ApplicationException(errorText);
                 //}
 
 
@@ -238,7 +238,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             if (pm.IsCancelled)
             {
-                throw new Exception("Reconciliation already  Cancelled");
+                throw new ApplicationException("Reconciliation already  Cancelled");
             }
             pm.IsCancelled = true;
             pm.ChangeSetOp = ChangeSetOperation.Update;
@@ -252,11 +252,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
             {
-                throw new Exception("Delete Reconciliation Is not allowed (try to Cancell)");
+                throw new ApplicationException("Delete Reconciliation Is not allowed (try to Cancell)");
             }
             if (entityPOCO.IsCancelled)
             {
-                throw new Exception("Reconciliation Is Cancelled (update not allowed)");
+                throw new ApplicationException("Reconciliation Is Cancelled (update not allowed)");
             }
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
@@ -266,7 +266,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else
                 {
-                    throw new Exception("Updating Reconciliation allowed only to cancell");
+                    throw new ApplicationException("Updating Reconciliation allowed only to cancell");
                 }
             }
             if (_CancelledAction == true)
@@ -420,7 +420,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var LedgerTransactionPMsUpdated = qs.GetLedgerTransactionPMsByIdList(transactionIdList, entityPM.Tenant);
             if (transactionIdList.Count() == 0)
             {
-                throw new Exception("Unable to UpdateLedgerTransaction  due there is any ReconciliationLines");
+                throw new ApplicationException("Unable to UpdateLedgerTransaction  due there is any ReconciliationLines");
             }
             foreach (var reconciliationLine in entityPM.ReconciliationLines)
             {
@@ -446,7 +446,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         if (errorsList.Count > 0)
                         {
                             var errLines = string.Join(Environment.NewLine, errorsList);
-                            throw new Exception(errLines);
+                            throw new ApplicationException(errLines);
                         }
                         Debug.WriteLine("due CreatedByReconciliationAfterConversion do not   UpdateLedgerTransaction - dont change open Amount ");
                     }

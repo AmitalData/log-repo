@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var percentagePM1 = percentageList.OrderByDescending(d => d.FromDate).ToList().Where(rec => rec.FromDate.Value.Date  <= documentDate).FirstOrDefault();
             if (percentagePM1 == null)
             {
-                throw new Exception("No Vat definition for Document Date " + documentDate.ToShortDateString());
+                throw new ApplicationException("No Vat definition for Document Date " + documentDate.ToShortDateString());
             }
 
             return Convert.ToDecimal(((percentagePM1.Percentage + 100) / 100));

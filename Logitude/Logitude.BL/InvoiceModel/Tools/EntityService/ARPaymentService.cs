@@ -67,6 +67,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private string cashBookMethodType = "";
         SATInterfaceHelper sATInterfaceHelper;
         private bool SetVoided = false;
+        private string DraftStatusCode = "DR";
         private  ARPaymentBankTranferRepository paymentBankTranferRepository;
         public ARPaymentService(IInvoiceContext objectContext, int tenant)
         {
@@ -175,10 +176,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (IsAccountingActivated && setApproved || (IsAccountingActivated && _arpaymentPM.IsExternalEntity && !_arpaymentPM.UpdateAmountAndStatuses))
             {
-                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(_arpaymentPM, tenant, isNewEntity);
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(_arpaymentPM, tenant, isNewEntity, false);
                 approveService.ApproveARPayment();
             }
-
+            else if (IsAccountingActivated && paymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod)
+            {
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(_arpaymentPM, tenant, isNewEntity, true);
+                approveService.AddNewBankTransfers();
+            }
+            else if (IsAccountingActivated && paymentPM.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod)
+            {
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(_arpaymentPM, tenant, isNewEntity, true);
+                approveService.AddNewChequesForDraftARPayment();
+            }
 
             paymentPoco.ValueDate = _arpaymentPM.ValueDate;
             paymentRepository.Update(paymentPoco);
@@ -326,7 +336,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.SetVoided = theEntityPm.SetVoided;
 
             this.paymentPoco = paymentRepository.GetSingleARPayment(theEntityPm.Id);
-
+            var isDraftPayment = paymentPoco.StatusCode == DraftStatusCode;
             bool isErrorInTransfer = this.paymentPoco.TransferStatusCode == "ET" ? true : false;
 
             this.ValidateHigherStatus();
@@ -396,11 +406,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (IsAccountingActivated && setApproved || (IsAccountingActivated && theEntityPm.IsExternalEntity && !theEntityPm.UpdateAmountAndStatuses))
             {
-                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(theEntityPm, tenant, isNewEntity);
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(theEntityPm, tenant, isNewEntity, false);
                 approveService.ApproveARPayment();
             }
-
-
+            else if (IsAccountingActivated && paymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod)
+            {
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(theEntityPm, tenant, isNewEntity, true);
+                approveService.AddNewBankTransfers();
+            }
+            else if (IsAccountingActivated && paymentPM.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod)
+            {
+                FullAccountingARPaymentApproveService approveService = new FullAccountingARPaymentApproveService(theEntityPm, tenant, isNewEntity, true);
+                approveService.AddNewChequesForDraftARPayment();
+            }
+            
             this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
 
             this.InitializeTransferComponents();  
@@ -424,7 +443,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 service.ARPaymentQuickbooksValidating(theEntityPm, true, false, paymentPoco, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }
-            else
+            else if(!isDraftPayment)
             {
                 service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, paymentPoco, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }

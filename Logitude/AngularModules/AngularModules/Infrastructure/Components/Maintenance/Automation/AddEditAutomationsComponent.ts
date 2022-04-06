@@ -1454,7 +1454,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
         });
 
-
+        if (this.IsShownAllContactsRecipient()) {
+            this.AddAllContactsRecipient("CustomerId");
+        }
         //Additional Automation Entity
         //AutomationCondition
         window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == this.ObjectTableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == this.ObjectTableName)[0]))).forEach((otherEntityObjectField) => {
@@ -1514,6 +1516,25 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
 
+    }
+
+    private IsShownAllContactsRecipient() {
+        return (this.ObjectTableName == "Shipment" && !this.IsMasterShipment) || this.ObjectTableName == "Quote";
+    }
+
+    private AddAllContactsRecipient(fieldName: string) {
+
+        let cardObjectFieldPM: ObjectFieldPM = window.ObjectFields.filter(d => d.FieldName == fieldName && d.ObjectTableId == this.ObjectTableId)[0];
+        let allContactsObjectFieldPM: ObjectFieldPM = new ObjectFieldPM();
+        allContactsObjectFieldPM.FullNameTextCodeDefaultText = "All " + cardObjectFieldPM.FullNameTextCodeDefaultText + " Contacts";
+        allContactsObjectFieldPM.DataTypeCode = "AllCardContacts";
+        allContactsObjectFieldPM.FieldName = cardObjectFieldPM.FieldName;
+        allContactsObjectFieldPM.FieldCode = cardObjectFieldPM.FieldCode;
+        allContactsObjectFieldPM.Tenant = SessionLocator.Tenant;
+        allContactsObjectFieldPM.ObjectTableId = cardObjectFieldPM.ObjectTableId;
+        allContactsObjectFieldPM.ObjectTableName = cardObjectFieldPM.ObjectTableName;
+
+        this.AutomationEmailRecipientFieldLists.push(new AutomationEmailRecipientFieldItem(allContactsObjectFieldPM));
     }
 
     //   private AddCustomObjectFieldToAutomationSetValuebjectFieldLists(objectField: ObjectFieldPM) {
@@ -2167,9 +2188,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
         this.EntityContactVariable.forEach((fieldCode) => {
-            if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == fieldCode && !d.IsNotifyBack && (d.RecipientType == "Variable" || d.RecipientType == "Emails"))[0]) {
+            if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == fieldCode && !d.IsNotifyBack && (d.RecipientType == "Variable" || d.RecipientType == "Emails" || d.RecipientType == "AllCardContacts"))[0]) {
                 var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM()
-                automationResultEmailRecipientPM.RecipientType = "Variable",
+                automationResultEmailRecipientPM.RecipientType = automationResultEmailRecipientPM.RecipientType == "AllCardContacts" ? "AllCardContacts" : "Variable",
                     automationResultEmailRecipientPM.RecipientValue = fieldCode,
                     automationResultEmailRecipientPM.Tenant = SessionLocator.Tenant;
                 automationResultEmailRecipientPM.AutomationsId = this.CurrentEntityPM.Id;
@@ -2179,6 +2200,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     var objectFieldPM = automationEmailRecipientFieldItem.ObjectFieldPM;
                     automationResultEmailRecipientPM.PartnerObjectFieldCode = automationEmailRecipientFieldItem.PartnerObjectFieldCode;
                     if (objectFieldPM.DataTypeCode == "Emails") automationResultEmailRecipientPM.RecipientType = "Emails";
+                    else if (objectFieldPM.DataTypeCode == "AllCardContacts") automationResultEmailRecipientPM.RecipientType = "AllCardContacts";
 
                 }
 
@@ -2203,7 +2225,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 });
             }
             else {
-                if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == this.NotifyBackSelectedItem.Code && d.IsNotifyBack && (d.RecipientType == "Variable" || d.RecipientType == "Emails"))[0]) {
+                if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == this.NotifyBackSelectedItem.Code && d.IsNotifyBack && (d.RecipientType == "Variable" || d.RecipientType == "Emails" || d.RecipientType == "AllCardContacts"))[0]) {
                     var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM();
                     automationResultEmailRecipientPM.RecipientType = "Variable",
                         automationResultEmailRecipientPM.RecipientValue = this.NotifyBackSelectedItem.Code,

@@ -44,7 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if (!ptenant.HasValue)
                 {
-                    throw new Exception("unable to find tenantFromPage4Tester ");
+                    throw new ApplicationException("unable to find tenantFromPage4Tester ");
                 }
                 int tenant = ptenant.Value;
 
@@ -222,7 +222,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NoLinesProcessed", 0, useLocal);
                             if (String.IsNullOrEmpty(text_44)) text = "No Lines Processed";
-                            throw new Exception($"{text_44}");
+                            throw new ApplicationException($"{text_44}");
                         }
 
                         GLAccountUpdateService updateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
@@ -236,7 +236,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (MyCSVFlatFileLoadResult.ErrorRowList.Count > 0)
                         {
                             string text_1 = MyCSVFlatFileLoadResult.ErrorRowList.FirstOrDefault();
-                            throw new Exception($"{text_1}");
+                            throw new ApplicationException($"{text_1}");
                         }
 
 
@@ -260,7 +260,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 string text = TranslateTextsClassTranslate("GLAccountsCSV.O.FailedWhilePerforming", 0, useLocal);
                 if (String.IsNullOrEmpty(text)) text = "failed while performing";
 
-                throw new Exception($"{text} ", e);
+                throw new ApplicationException($"{text} ", e);
             }
 
 
@@ -337,7 +337,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 string text_3 = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLine", 0, useLocal);
                                 string text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.AppearsBefore", 0, useLocal);
                                 string text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.HeaderType", 0, useLocal);
-                                throw new Exception($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO.RowType} ");
+                                throw new ApplicationException($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO.RowType} ");
                             }
                             GLAccountSrcLineDTO taxLine = GLAccountSrcLineDTO.Create(rawLine);
                             GLAccountSrcLines.Add(taxLine);
@@ -346,7 +346,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             string text = TranslateTextsClassTranslate("GLAccountsCSV.O.NotValidRowType", 0, useLocal);
-                            throw new Exception($"{text}  {rawLine}");
+                            throw new ApplicationException($"{text}  {rawLine}");
                         }
                         break;
                 }
@@ -387,13 +387,13 @@ namespace Logitude.Accounting.BL.CoreBL
             var myFullAccountingSettingPM = myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
             {
-                throw new Exception("No FullAccountingSettingPM  for tenant ");
+                throw new ApplicationException("No FullAccountingSettingPM  for tenant ");
             }
             //if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.DeductionFileNumber))
             //{
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.DeductionFileNumber", 0, useLocal);
             //    // Deduction File Number is undefined.
-            //    throw new Exception(text);
+            //    throw new ApplicationException(text);
             //}
             return myFullAccountingSettingPM;
         }
@@ -408,13 +408,13 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 text = TranslateTextsClassTranslate("GLAccountsCSV.O.HeaderLine", 0, useLocal);
                 text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.NotEncountered", 0, useLocal);
-                throw new Exception($"{text} {Opening_LineDTO.RowType} {text_2}  ");
+                throw new ApplicationException($"{text} {Opening_LineDTO.RowType} {text_2}  ");
             }
             //if (Closing_Line == null)
             //{
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.StartingRowType", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.NotEncountered", 0, useLocal);
-            //    throw new Exception($"{text} {Closing_LineDTO.RowType} {text_2}  ");
+            //    throw new ApplicationException($"{text} {Closing_LineDTO.RowType} {text_2}  ");
             //}
 
             //if (Closing_Line.DeductionFileNum != Opening_Line.DeductionFileNum)
@@ -422,7 +422,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.StartingRowDeductionFile", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.FinishingRowDeductionFile", 0, useLocal);
-            //    throw new Exception($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {Opening_Line.DeductionFileNum} ");
+            //    throw new ApplicationException($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {Opening_Line.DeductionFileNum} ");
             //}
             //string myDeduc = _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
             //if (Closing_Line.DeductionFileNum != myDeduc)
@@ -430,13 +430,13 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.StartingRowDeductionFile", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.OurDeductionFile", 0, useLocal);
-            //    throw new Exception($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {myDeduc} ");
+            //    throw new ApplicationException($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {myDeduc} ");
             //}
 
             //if (Opening_Line.TotalInvalidRecords + Opening_Line.TotalValidRecords != Opening_Line.TotalVendorNumber)
             //{
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.FinishingRowTotals", 0, useLocal);
-            //    throw new Exception($"{text} {Opening_Line.TotalInvalidRecords} + {Opening_Line.TotalValidRecords} != {Opening_Line.TotalVendorNumber} ");
+            //    throw new ApplicationException($"{text} {Opening_Line.TotalInvalidRecords} + {Opening_Line.TotalValidRecords} != {Opening_Line.TotalVendorNumber} ");
             //}
 
             //if (Opening_Line.TotalValidRecords != _VendorLinesDTO.Count)
@@ -444,7 +444,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.FinishingRowTotalVendors", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.CountVendorRows", 0, useLocal);
-            //    throw new Exception($"{text} {Opening_Line.TotalValidRecords} {text_44}{text_2} {_VendorLinesDTO.Count}");
+            //    throw new ApplicationException($"{text} {Opening_Line.TotalValidRecords} {text_44}{text_2} {_VendorLinesDTO.Count}");
             //}
 
 
@@ -604,7 +604,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!rawLine.StartsWith(RowType))
             {
                 string text = TranslateTextsClassTranslate("GLAccountsCSV.O.DoesntStartWithHeaderLine", 0, useLocal);
-                throw new Exception($"{text} {RowType} ");
+                throw new ApplicationException($"{text} {RowType} ");
             }
 
             var rec = new Opening_LineDTO();
@@ -637,7 +637,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!rawLine.StartsWith(RowType))
             {
                 string text = TranslateTextsClassTranslate("GLAccountsCSV.O.DoesntStartWithRowType", 0, useLocal);
-                throw new Exception($"{text} {RowType} ");
+                throw new ApplicationException($"{text} {RowType} ");
             }
 
             var rec = new Closing_LineDTO();
@@ -712,7 +712,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!startsWithRowTypeOk || actualRowType == "")
             {
                 string text = TranslateTextsClassTranslate("GLAccountsCSV.O.DoesntStartWithCoAType", 0, useLocal);
-                throw new Exception($"{text} {RowType.ToString()} ");
+                throw new ApplicationException($"{text} {RowType.ToString()} ");
             }
 
             var rec = new GLAccountSrcLineDTO();

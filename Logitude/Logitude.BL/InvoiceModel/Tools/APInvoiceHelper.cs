@@ -3,8 +3,10 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.DataMapping;
+using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -89,7 +91,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 return;
             }
-
+            
             if (IsSetApproved)
             {
                 commonContext = CommonContext;
@@ -102,6 +104,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                 if (loggedTenant.AccountingSetting != null)
                     if (IsQuickBooksAccoutingSystemTransfer(entityPM))
                     {
+                        if(entityPM.TotalVATOnly)
+                        {
+                            var showLocals = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                            throw new ApplicationException(TranslateTextsClass.Translate("Apinvoice.O.TotalVATwithQBO", entityPM.Tenant, showLocals));
+                        }
                         APInvoice = entityPM;
                         APInvoiceId = entityPM.Id;
                         documentRepository = new DocumentRepository(commonContext);

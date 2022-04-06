@@ -33,14 +33,98 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
     {
         public static void ValidateUpdate(ShipmentPM shipmentPM, ShipmentPM oldShipmentPM)
         {
-            if (oldShipmentPM.IsOperationalClosed) throw new ApplicationException("Can't update operationally closed shipments");
+            //if (oldShipmentPM.IsOperationalClosed) throw new ApplicationException("Can't update operationally closed shipments");
             if (oldShipmentPM.IsCancelled) throw new ApplicationException("Can't update cancelled shipments");
-            if (!string.IsNullOrEmpty(shipmentPM.MasterShipmentDataId)) throw new ApplicationException("Can't update house connected to master");
+            //if (!string.IsNullOrEmpty(shipmentPM.MasterShipmentDataId)) throw new ApplicationException("Can't update house connected to master");
 
             ShipmentMainCarriageLegsValidator shipmentMainCarriageLegsValidator = new ShipmentMainCarriageLegsValidator(shipmentPM);
             shipmentMainCarriageLegsValidator.ValidateRoutingsSeriesDates();
 
             //ValidateCustomerData(shipmentPM);
+        }
+
+        public static void HandleHouseConnectedToMasterShipmentValidation(object entityPM, AutomationSetValue item)
+        {
+            ShipmentPM shipmentPM = (ShipmentPM)entityPM;
+            if (shipmentPM.ShipmentLevelCode != "H") return;
+            if (string.IsNullOrEmpty(shipmentPM.MasterShipmentDataId)) return;
+
+            List<string> objectFieldsCodesNotAllowedToUpdate = GetObjectFieldsCodesNotAllowedToUpdate();
+            if (objectFieldsCodesNotAllowedToUpdate.Contains(item.ObjectFieldCode))
+            {
+                throw new ApplicationException("Can't update house connected to master");
+            }
+        }
+
+        public static void HandleOperationallyClosedShipmentValidation(object entityPM, AutomationSetValue item)
+        {
+            ShipmentPM oldShipmentPM = (ShipmentPM)entityPM;
+
+            if (oldShipmentPM.IsOperationalClosed && !IsCustomField(item, oldShipmentPM.Tenant))
+            {
+                throw new ApplicationException("Can't update operationally closed shipments");
+            }
+        }
+
+        private static bool IsCustomField(AutomationSetValue item, int tenant)
+        {
+            return item.ObjectFieldCode.Contains("." + tenant + ".Field");
+        }
+
+        private static List<string> GetObjectFieldsCodesNotAllowedToUpdate()
+        {
+            List<string> objectFieldsCodesNotAllowedToUpdate = new List<string>
+            {
+                "ShipmentComputedFields.MainCarriageATA",
+                "Container.MainCarriageATA",
+                "Shipment.MainCarriageATA",
+                "ShipmentComputedFields.MainCarriageATD",
+                "Shipment.MainCarriageATD",
+                "Master.MainCarriageATD",
+                "Shipment.MainCarriageCarrierId",
+                "Master.MainCarriageCarrierId",
+                "ShipmentComputedFields.MainCarriageETA",
+                "Shipment.MainCarriageETA",
+                "Master.MainCarriageETA",
+                "ShipmentComputedFields.MainCarriageETD",
+                "Shipment.MainCarriageETD",
+                "Master.MainCarriageETD",
+                "Shipment.MainCarriageFromPortId",
+                "Master.MainCarriageFromPortId",
+                "Shipment.MainCarriageFromPortName",
+                "Shipment.MainCarriageToPortId",
+                "Master.MainCarriageToPortId",
+                "Shipment.OnCarriageETA",
+                "Master.OnCarriageETA",
+                "Shipment.OnCarriageETD",
+                "Master.OnCarriageETD",
+                "Shipment.PreCarriageETA",
+                "Master.PreCarriageETA",
+                "Shipment.PreCarriageETD",
+                "Master.PreCarriageETD",
+                "Shipment.Transshipment1ATA",
+                "Master.Transshipment1ATA",
+                "Shipment.Transshipment1ATD",
+                "Master.Transshipment1ATD",
+                "Shipment.Transshipment1ETA",
+                "Master.Transshipment1ETA",
+                "Shipment.Transshipment1ETD",
+                "Master.Transshipment1ETD",
+                "Shipment.Transshipment1FromPortId",
+                "Master.Transshipment1FromPortId",
+                "Shipment.Transshipment1ToPortId",
+                "Master.Transshipment1ToPortId",
+                "Shipment.Transshipment2FromPortId",
+                "Master.Transshipment2FromPortId",
+                "Shipment.Transshipment2ToPortId",
+                "Master.Transshipment2ToPortId",
+                "Shipment.Transshipment3FromPortId",
+                "Master.Transshipment3FromPortId",
+                "Shipment.Transshipment3ToPortId",
+                "Master.Transshipment3ToPortId"
+            };
+
+            return objectFieldsCodesNotAllowedToUpdate;
         }
 
         private static void ValidateCustomerData(ShipmentPM shipmentPM)

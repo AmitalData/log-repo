@@ -389,9 +389,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
             }
-            catch (Exception e)
+            catch //(Exception e)
             {
-                LogMessagingUtil.Instance.AppendLine("DueLocalBalanceService Exception e=" + e.ToString());
+              //  LogMessagingUtil.Instance.AppendLine("DueLocalBalanceService Exception e=" + e.ToString());
                 throw;
             }
             finally
@@ -417,7 +417,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         continue;
                     }
-                    item.AccountId = display.Value;
+                    item.AccountDisplayNumber= display.Value;
                 }
             }
             catch (Exception)
@@ -592,6 +592,12 @@ namespace Logitude.Accounting.BL.CoreBL
     public class DueLocalBalanceDiffM
     {
         public string AccountId { get; set; }
+
+        public string AccountDisplayNumber { get; set; }
+
+        public string DisplayNumber { get; set; }
+        public string LocalName { get; set; }
+
 
         public decimal CalcDueInLocal { get; set; }
         public decimal CalcDueInForeign { get; set; }

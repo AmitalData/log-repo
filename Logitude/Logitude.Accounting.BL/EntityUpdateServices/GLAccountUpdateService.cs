@@ -336,7 +336,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 GLAccountPM acc = query.GetByInternalNumber(entityPM.InternalNumber, entityPM.Tenant)/*.FirstOrDefault<GLAccountPM>()*/;
                 if (acc != null)
                 {
-                    throw new Exception("Existing GLAccount found with Internal No. " + entityPM.InternalNumber + " (Display No. " + acc.DisplayNumber + ")");
+                    throw new ApplicationException("Existing GLAccount found with Internal No. " + entityPM.InternalNumber + " (Display No. " + acc.DisplayNumber + ")");
                 }
             }
 
@@ -364,7 +364,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else
                 {
-                    throw new Exception("Parent Account by Currency " + entityPM.ParentAccountByCurrency + " not found");
+                    throw new ApplicationException("Parent Account by Currency " + entityPM.ParentAccountByCurrency + " not found");
                 }
 
             }
@@ -444,7 +444,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 fullAccountingSetting.AirExportJobControlAccountId == entityPM.Id ||
                 fullAccountingSetting.AirImportJobControlAccountId == entityPM.Id
                 )) {
-                throw new Exception("Can't set parent account for control accounts");
+                throw new ApplicationException("Can't set parent account for control accounts");
             }
 
         }
@@ -462,7 +462,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete && s.PeriodStartDate !=null).GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
             {
 
-                throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.LineDateExist", entityPM.Tenant, showLocals));
+                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.LineDateExist", entityPM.Tenant, showLocals));
 
             }
             if (entityPM.ActiveForInterest == true)
@@ -474,7 +474,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (entityPM.InterestCalculationStartDate == null)
                     {
-                        throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.FieldInterestCalculationStartDateismandatory", entityPM.Tenant, showLocals));
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.FieldInterestCalculationStartDateismandatory", entityPM.Tenant, showLocals));
                     }
                     else
                     {
@@ -488,7 +488,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 if (item == null)
                                 {
 
-                                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.InterestCalculationStartDateValidation", entityPM.Tenant, showLocals) + " (" + String.Format("{0:dd.MM.yy}", entityPM.InterestCalculationStartDate.Value.Date) + ")");
+                                    throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.InterestCalculationStartDateValidation", entityPM.Tenant, showLocals) + " (" + String.Format("{0:dd.MM.yy}", entityPM.InterestCalculationStartDate.Value.Date) + ")");
 
                                 }
                             }
@@ -497,7 +497,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 GLAccountInterestPeriodPM item = entityPM.GLAccountInterestPeriods.Where(d => d.PeriodStartDate <= entityPM.InterestCalculationStartDate && d.LineNumber != periodPM.LineNumber ).FirstOrDefault();                          
                                 if (item == null )
                                 {
-                                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.InterestCalculationStartDateValidation", entityPM.Tenant, showLocals) + " (" + String.Format("{0:dd.MM.yy}", entityPM.InterestCalculationStartDate.Value.Date) + ")");
+                                    throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.InterestCalculationStartDateValidation", entityPM.Tenant, showLocals) + " (" + String.Format("{0:dd.MM.yy}", entityPM.InterestCalculationStartDate.Value.Date) + ")");
 
                                 }
                             }
@@ -506,7 +506,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         }
                         if (!IsNotDeletde)
                         {
-                            throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", entityPM.Tenant, showLocals));
+                            throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", entityPM.Tenant, showLocals));
 
                         }
 
@@ -519,7 +519,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
                     {
-                        throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.DeleteExistInterestperiods", entityPM.Tenant, showLocals));
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.DeleteExistInterestperiods", entityPM.Tenant, showLocals));
                     }
 
                 }
@@ -2243,16 +2243,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var delta = entityPM.BalanceInLocalCurrency.GetValueOrDefault() - entityPOCO.BalanceInLocalCurrency.GetValueOrDefault();
             if (delta!=0)
             {
-                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
+                throw new ApplicationException(messnoprivtochangeBalanceInLocalCurrency);
             }
             delta = entityPM.LocalBalanceInDue.GetValueOrDefault() - entityPOCO.LocalBalanceInDue.GetValueOrDefault();
             if (delta != 0)
             {
-                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
+                throw new ApplicationException(messnoprivtochangeBalanceInLocalCurrency);
             }
             if (entityPM.NextDueDate.GetValueOrDefault() != entityPOCO.NextDueDate.GetValueOrDefault())
             {
-                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
+                throw new ApplicationException(messnoprivtochangeBalanceInLocalCurrency);
             }
 #endif
         }
@@ -2275,7 +2275,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(accountingContext);
                     LedgerTransactionPM trans = transQuery.GetFirstLedgerTransaction(entityPM.Id, entityPM.Tenant);
                     if (trans != null)
-                        throw new Exception(TextCodesTranslator.TranslateText("GLAccounts.O.ReconcileMethodcantUpdated", 0, showLocals));
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ReconcileMethodcantUpdated", 0, showLocals));
                 }
             }
 
@@ -2538,17 +2538,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var delta = entityPM.BalanceInLocalCurrency.GetValueOrDefault() - entityPOCO.BalanceInLocalCurrency.GetValueOrDefault();
             if (delta != _deltaBalanceInLocalCurrency.GetValueOrDefault())
             {
-                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
+                throw new ApplicationException(messnoprivtochangeBalanceInLocalCurrency);
             }
             delta = entityPM.LocalBalanceInDue.GetValueOrDefault() - entityPOCO.LocalBalanceInDue.GetValueOrDefault();
 
             if (delta != _deltaLocalBalanceInDue.GetValueOrDefault())
             {
-                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
+                throw new ApplicationException(messnoprivtochangeBalanceInLocalCurrency);
             }
             if (entityPM.NextDueDate.GetValueOrDefault() != _nextDueDate.GetValueOrDefault())
             {
-                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
+                throw new ApplicationException(messnoprivtochangeBalanceInLocalCurrency);
             }
 #endif
             ///base.OnUpdatingCheckBalance(entityPM, entityPOCO);

@@ -65,7 +65,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             catch (Exception e)
             {
                 SetInterestReportStatusFailed();
-                throw new Exception(e.Message);
+                throw new ApplicationException(e.Message);
             }
         }
 
