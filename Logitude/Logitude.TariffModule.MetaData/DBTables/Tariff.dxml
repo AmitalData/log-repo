@@ -396,6 +396,11 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="TypeCode"
+    ReferencedTable="TariffTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="Surcharge1Id"
     ReferencedTable="ChargesTypes"
     ReferencedColumn="Id"
