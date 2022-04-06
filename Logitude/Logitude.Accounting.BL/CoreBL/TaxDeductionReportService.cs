@@ -834,7 +834,7 @@ namespace Logitude.Accounting.BL.CoreBL
         //            ip = currentIP;
         //        }
         //      //  ExceptionHandler.HandleException(new Exception(Error), DateTime.Now, 0, "", authenticateduser, "", ip);
-        //        throw new Exception(Error);
+        //        throw new ApplicationException(Error);
         //    }
         //}
 

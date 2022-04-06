@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
             if (!isAtLeastOneNotDeletdeCalculatedChartsOfAccounts)
-                throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.TheTeportNeedsAtLeastOne", entityPM.Tenant, showLocals));
+                throw new ApplicationException(TextCodesTranslator.TranslateText("UserDefinedReport.O.TheTeportNeedsAtLeastOne", entityPM.Tenant, showLocals));
         }
 
         private static void ValidateIsGLAccountorChartofAccountAlreadyExist(CalculatedChartsOfAccountPM periodPM, UserDefinedReportPM entityPM, bool showLocals)
@@ -102,7 +102,7 @@ namespace Logitude.Accounting.BL.Validators
             {
                 if (string.IsNullOrEmpty(periodPM.LocalName))
                 {
-                    throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " + requiredLocalNameFiled);
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " + requiredLocalNameFiled);
 
                 }
             }
@@ -122,7 +122,7 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
             if (!isAtLeastOneNotDeletdeCalculatedChartsOfAccountsLine)
-                throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
+                throw new ApplicationException(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
                                     TextCodesTranslator.TranslateText("UserDefinedReport.O.DontHaveAnyLinesInThem.", periodPM.Tenant, showLocals));
 
         }
@@ -142,17 +142,17 @@ namespace Logitude.Accounting.BL.Validators
                 {
                     if (string.IsNullOrEmpty(LinePM.LineTypeCode))
                     {
-                        throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
                         TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", periodPM.Tenant, showLocals) + " " + LinePM.Line + " " + requiredLineTypeFiled);
                     }
                     else if (LinePM.LineTypeCode == GLAccountType && string.IsNullOrEmpty(LinePM.GLAccountId))
                     {
-                        throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
                          TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", periodPM.Tenant, showLocals) + " " + LinePM.Line + " " + requiredGLAccountFiled);
                     }
                     else if (LinePM.LineTypeCode == ChartsofAccountType && string.IsNullOrEmpty(LinePM.ChartOfAccountId))
                     {
-                        throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
                         TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", periodPM.Tenant, showLocals) + " " + LinePM.Line + " " + requiredChartsofAccountFiled);
                     }
                 }
@@ -163,7 +163,7 @@ namespace Logitude.Accounting.BL.Validators
 
         private static void ThrowValidationGLAccountAlreadyExist(UserDefinedReportValidatorArguments arguments)
         {
-            throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.CurrentperiodPM.Line + " " +
+            throw new ApplicationException(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.CurrentperiodPM.Line + " " +
                                 TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.CurrentLinePM.Line + " " +
                                 TextCodesTranslator.TranslateText("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.LinePM.Line + " " +
                                  TextCodesTranslator.TranslateText("UserDefinedReport.O.AndCantBeAddedAgain.", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " (" +
@@ -172,7 +172,7 @@ namespace Logitude.Accounting.BL.Validators
 
         private static void ThrowValidationChartsofAccountAlreadyExist(UserDefinedReportValidatorArguments arguments)
         {
-            throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.CurrentperiodPM.Line + " " +
+            throw new ApplicationException(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.CurrentperiodPM.Line + " " +
                                 TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.CurrentLinePM.Line + " " +
                                 TextCodesTranslator.TranslateText("UserDefinedReport.O.ChildGLAccountsAlreadyIncluded", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " " + arguments.LinePM.Line + " " +
                                  TextCodesTranslator.TranslateText("UserDefinedReport.O.AndCantBeAddedAgain.", arguments.PeriodPM.Tenant, arguments.ShowLocals) + " (" +
@@ -192,7 +192,7 @@ namespace Logitude.Accounting.BL.Validators
                         !string.IsNullOrEmpty(LinePM.ChartOfAccountTypeCode) &&
                         LinePM.ChartOfAccountTypeCode != periodPM.ChartOfAccountTypeCode)
                     {
-                        throw new Exception(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("UserDefinedReport.O.CalculatedChartofAccount", periodPM.Tenant, showLocals) + " " + periodPM.Line + " " +
                                             TextCodesTranslator.TranslateText("CalculatedChartsOfAccountsLine", periodPM.Tenant, showLocals) + " " + LinePM.Line + " " +
                                             TextCodesTranslator.TranslateText("UserDefinedReport.O.ChartOfAccountTypeforthislinediffersfromtheChartofAccount", periodPM.Tenant, showLocals));
 

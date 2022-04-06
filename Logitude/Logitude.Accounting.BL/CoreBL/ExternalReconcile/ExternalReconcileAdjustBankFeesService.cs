@@ -124,7 +124,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             Validate(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, listOfpageLineList, listOfpageList, CheckWhileStreaming, ledgerTransactionList, ledgerTransactionIds, bankGLAccountList, accountingCurrencyId, skipAccountValidation);
             if (_ErrorList.Count() > 0)
             {
-                throw new Exception(string.Join(Environment.NewLine, _ErrorList.ToArray()));
+                throw new ApplicationException(string.Join(Environment.NewLine, _ErrorList.ToArray()));
             }
         }
 
@@ -328,7 +328,7 @@ new JournalLinePM()
                 TheNewJournal.JournalLines.Last() != jlAdjust
                 )
             {
-                throw new Exception("accumalation failed");
+                throw new ApplicationException("accumalation failed");
             }
             jlAdjust.Line = 2;
 

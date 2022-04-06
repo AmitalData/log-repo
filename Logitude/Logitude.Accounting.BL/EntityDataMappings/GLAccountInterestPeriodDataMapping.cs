@@ -40,25 +40,25 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 
                 {   if(entityPM.ChangeSetOp == ChangeSetOperation.Insert || entityPM.ChangeSetOp == ChangeSetOperation.Update)
-                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.LineDateExist", entityPM.Tenant, showLocals));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.LineDateExist", entityPM.Tenant, showLocals));
                 }
             }
 
             if( Math.Floor(Math.Log10((double)entityPM.StandardAddInterestPercent) + 1) > 2)
             {
-                throw new Exception("Number Of Digit Before Comma Must Be Two Or Less In Standard Add Interest Percent");
+                throw new ApplicationException("Number Of Digit Before Comma Must Be Two Or Less In Standard Add Interest Percent");
 
             }
 
             if (Math.Floor(Math.Log10((double)entityPM.CreditAddInterestPercent) + 1) > 2)
             {
-                throw new Exception("Number Of Digit Before Comma Must Be Two Or Less In Credit Add Interest Percent");
+                throw new ApplicationException("Number Of Digit Before Comma Must Be Two Or Less In Credit Add Interest Percent");
 
             }
 
             if (Math.Floor(Math.Log10((double)entityPM.ExceptionalAddInterestPercent) + 1) > 2)
             {
-                throw new Exception("Number Of Digit Before Comma Must Be Two Or Less In Exceptional Add Interest Percent");
+                throw new ApplicationException("Number Of Digit Before Comma Must Be Two Or Less In Exceptional Add Interest Percent");
 
             }
 

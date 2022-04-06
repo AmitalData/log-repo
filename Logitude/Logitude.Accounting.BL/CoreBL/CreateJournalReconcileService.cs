@@ -63,11 +63,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     decimal totReconciliationAmountFromUnknownCurrency = ReconciliationLines.Sum(r => r.ReconciliationAmount);
                     if (totReconciliationAmountFromUnknownCurrency == 0)
                     {
-                        throw new Exception("Total ReconciliationAmount is zero");
+                        throw new ApplicationException("Total ReconciliationAmount is zero");
                     }
                     if (ReconciliationLines.Select(r => r.CurrencyId).Distinct().Count() > 1)
                     {
-                        throw new Exception("לא אופיין התאמת תנועות  ליוצר ממטבע אחד");
+                        throw new ApplicationException("לא אופיין התאמת תנועות  ליוצר ממטבע אחד");
                     }
                     DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
                     var qs = new GLAccountQueryService(_AccountingContext);
@@ -88,7 +88,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     );
                     if (myAccEntityReconciliation10 == null)
                     {
-                        throw new Exception("was Reconciliation then change to Adjustment (and now to what ?? - yaron said it will not change ever !!)");
+                        throw new ApplicationException("was Reconciliation then change to Adjustment (and now to what ?? - yaron said it will not change ever !!)");
                     }
 
                     String theJournalLineCurrencyId = "";
@@ -117,7 +117,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (rate == null)
                     {
-                        throw new Exception("שער המטבע לא קיים בטבלת שערי המטבעות");
+                        throw new ApplicationException("שער המטבע לא קיים בטבלת שערי המטבעות");
                     }
 
 

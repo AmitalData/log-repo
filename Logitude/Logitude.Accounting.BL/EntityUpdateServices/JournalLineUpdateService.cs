@@ -33,7 +33,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var myName = this.NameOf();
             if (myName!="JournalLineUpdateServicePriv")
             {
-                throw new Exception("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
+                throw new ApplicationException("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
             }
             base.OnCreating(entityPM, entityParentPM);
         }
@@ -47,8 +47,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //if (journalPM == null)
             if (myName != "JournalLineUpdateServicePriv")
             {
-                throw new Exception("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
-                //throw new Exception("BLException :Approved Journal Can Only Change To Voided");
+                throw new ApplicationException("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
+                //throw new ApplicationException("BLException :Approved Journal Can Only Change To Voided");
             }
 
             base.OnUpdating(entityPM);

@@ -51,7 +51,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 bool useLocal = true;
                 string text = TranslateTextsClassTranslate("System1000.O.NoVendors", 0, useLocal);
                 if (String.IsNullOrEmpty(text)) text = "No Vendors found  with Vat Number and Deduction File Number";
-                throw new Exception(text);
+                throw new ApplicationException(text);
             }
 
             var listOfAccounts = _AllVendorGLAccountCards.ToList();
@@ -60,7 +60,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 bool useLocal = true;
                 string text = TranslateTextsClassTranslate("System1000.O.NoVendors", 0, useLocal);
                 if (String.IsNullOrEmpty(text)) text = "No Vendors found with Vat Number and Deduction File Number";
-                throw new Exception(text);
+                throw new ApplicationException(text);
             }
 
             List<GLAccount> listOfSmallCashbooks = new List<GLAccount>();
@@ -254,14 +254,14 @@ namespace Logitude.Accounting.BL.CoreBL
             var myFullAccountingSettingPM = myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
             {
-                throw new Exception("No FullAccountingSettingPM  for tenant ");
+                throw new ApplicationException("No FullAccountingSettingPM  for tenant ");
             }
             if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.DeductionFileNumber))
             {
-                //   throw new Exception("No myFullAccountingSettingPM.DeductionFileNumber  for tenant ");
+                //   throw new ApplicationException("No myFullAccountingSettingPM.DeductionFileNumber  for tenant ");
                 text = TranslateTextsClassTranslate("System1000.O.DeductionFileNumber", 0, useLocal);
                 // Deduction File Number is undefined.
-                throw new Exception(text);
+                throw new ApplicationException(text);
             }
             return myFullAccountingSettingPM;
         }

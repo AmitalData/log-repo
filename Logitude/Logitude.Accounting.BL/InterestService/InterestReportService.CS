@@ -91,7 +91,7 @@ namespace Logitude.Accounting.BL.InterestService
                 {
                     ContactPM contact = GetLoggedContact(tenant);
                     bool showLocals = !contact.DontShowLocal;
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
                 }
             }
 
@@ -121,7 +121,7 @@ namespace Logitude.Accounting.BL.InterestService
                 {
                     ContactPM contact = GetLoggedContact(tenant);
                     bool showLocals = !contact.DontShowLocal;
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
                 }
             }
             else if (InterestLastBatchService != null && string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
@@ -162,7 +162,7 @@ namespace Logitude.Accounting.BL.InterestService
                 {
                     ContactPM contact = GetLoggedContact(tenant);
                     bool showLocals = !contact.DontShowLocal;
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
                 }
             }
             interestReportArgs.Tenant = tenant;

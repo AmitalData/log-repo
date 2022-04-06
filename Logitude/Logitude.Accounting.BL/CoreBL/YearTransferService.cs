@@ -119,7 +119,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             transText = "Closed Month";
                         }
-                        throw new Exception(transText);
+                        throw new ApplicationException(transText);
                     }
                 }
                 DateTime accountingDateFrom = accountingDate.AddYears(-1);//1.1.yyyy
@@ -132,7 +132,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalPM journalNotLT = journalsNotLT.FirstOrDefault();
                     if (journalNotLT != null)
                     {
-                        throw new Exception(NotLTMessage(journalNotLT.JournalNumber));
+                        throw new ApplicationException(NotLTMessage(journalNotLT.JournalNumber));
                     }
                 }
 
@@ -143,7 +143,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalPM yearTransferjournalNotLT = yearTransferJournalsNotLT.FirstOrDefault();
                     if (yearTransferjournalNotLT != null)
                     {
-                        throw new Exception(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
+                        throw new ApplicationException(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
                     }
                 }
 
@@ -185,7 +185,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             transText = "The chosen year is transferred already, In order to transfer it again, you must void Journal " + journalNo;
                         }
 
-                        throw new Exception(transText);
+                        throw new ApplicationException(transText);
                     }
                 }
 
@@ -246,12 +246,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 catch (Exception e)
                 {
                     string text = $"Journal {origPM.JournalNumber} Storno issue failed";
-                    throw new Exception($"{text} ", e);
+                    throw new ApplicationException($"{text} ", e);
                 }
             }
             else
             {
-                throw new Exception("Original Journal not found");
+                throw new ApplicationException("Original Journal not found");
             }
 
             return stornoPM;
@@ -279,7 +279,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             transText = "Closed Month";
                         }
-                        throw new Exception(transText);
+                        throw new ApplicationException(transText);
                     }
                 }
 
@@ -290,7 +290,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalPM yearTransferjournalNotLT = yearTransferJournalsNotLT.FirstOrDefault();
                     if (yearTransferjournalNotLT != null)
                     {
-                        throw new Exception(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
+                        throw new ApplicationException(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
                     }
                 }
 
@@ -306,7 +306,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         transText = "The chosen year is not yet transferred";
                     }
 
-                    throw new Exception(transText);
+                    throw new ApplicationException(transText);
 
                 }
 
@@ -363,7 +363,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         transText = $"{transText_1}{journalNo}{transText_22}";
 
-                        throw new Exception(transText);
+                        throw new ApplicationException(transText);
                     }
                 }
 
@@ -618,14 +618,14 @@ GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endO
             var myFullAccountingSettingPM =myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
             {
-                throw new Exception("No FullAccountingSettingPM  for tenant ");
+                throw new ApplicationException("No FullAccountingSettingPM  for tenant ");
             }
             if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.RevenueExpenseGLAccountId))
             {
-                //   throw new Exception("No myFullAccountingSettingPM.RevenueExpenseGLAccountId  for tenant ");
+                //   throw new ApplicationException("No myFullAccountingSettingPM.RevenueExpenseGLAccountId  for tenant ");
                 text = TranslateTextsClassTranslate("YearTransfer.O.RevenueExpenseType", 0, useLocal);
                 // A year transfer account is undefined or not configured correctly
-                throw new Exception(text);
+                throw new ApplicationException(text);
             }
             else
             {
@@ -635,7 +635,7 @@ GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endO
                 {
                     text = TranslateTextsClassTranslate("YearTransfer.O.RevenueExpenseType", 0, useLocal);
                     // A year transfer account is undefined or not configured correctly
-                    throw new Exception(text);
+                    throw new ApplicationException(text);
                 }
             }
             return myFullAccountingSettingPM;
@@ -650,7 +650,7 @@ GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endO
             {
                 string text = TranslateTextsClassTranslate("YearTransfer.O.TwoOrFourDigits", 0, useLocal);
                 if (String.IsNullOrEmpty(text)) text = "Enter year in either two or four digits only";
-                throw new Exception(text); //("Enter year in either two or four digits only, יש להזין שנה בשתי ספרות או בארבע ספרות בלבד");
+                throw new ApplicationException(text); //("Enter year in either two or four digits only, יש להזין שנה בשתי ספרות או בארבע ספרות בלבד");
             }
 
             DateTime endOfYearUserInput = DateTime.MaxValue;
@@ -670,7 +670,7 @@ GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endO
             {
                 string text = TranslateTextsClassTranslate("YearTransfer.O.PastYears", 0, useLocal);
                 if (String.IsNullOrEmpty(text)) text = "Enter past years only";
-                throw new Exception(text); //Enter past years only, יש להזין שנים קודמות בלבד");
+                throw new ApplicationException(text); //Enter past years only, יש להזין שנים קודמות בלבד");
             }
             return endOfYearUserInput;
 

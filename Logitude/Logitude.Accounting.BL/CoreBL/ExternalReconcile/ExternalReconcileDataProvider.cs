@@ -55,7 +55,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             var bankAccountPM = bankAccountQS.GetBankAccountByTransferGLAcccountId(myLedgerTransactionTransferInCreditAccountId, tenant);
             if (bankAccountPM == null)
             {
-                throw new Exception("could not found bank from myLedgerTransactionTransferInCredit.id ");
+                throw new ApplicationException("could not found bank from myLedgerTransactionTransferInCredit.id ");
             }
 
             return bankAccountPM;
@@ -68,7 +68,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             var reconcileExternalPageLinePM = bankPageLineQS.GetSingle(reconcileExternalPageLineId, tenant);
             if (reconcileExternalPageLinePM == null)
             {
-                throw new Exception("bankPageLine is null");
+                throw new ApplicationException("bankPageLine is null");
             }
             var bankPageQS = new ReconcileExternalPageRepository(this._AccountingContext);
             var page = bankPageQS.GetSingle(reconcileExternalPageLinePM.ReconcileExternalPageId, tenant);

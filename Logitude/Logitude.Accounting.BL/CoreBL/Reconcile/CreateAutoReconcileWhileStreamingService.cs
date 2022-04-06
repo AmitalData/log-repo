@@ -46,7 +46,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (!_JournalPM.IsVoided.GetValueOrDefault())//while voiding -old transaction IsReconciled change after !!
                 {
-                    throw new Exception("Please call Helpdesk support,JournalReconciles already Is Reconciled ");
+                    throw new ApplicationException("Please call Helpdesk support,JournalReconciles already Is Reconciled ");
                 }
 
             }
@@ -54,7 +54,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (CheckINprogress && myOldTransToReconcile.Any(r => !r.InReconcileProgress))
             {
-                throw new Exception("_JournalPM.JournalReconciles have  myOldTransToReconcile.Any( r=> !r.InReconcileProgress) ");
+                throw new ApplicationException("_JournalPM.JournalReconciles have  myOldTransToReconcile.Any( r=> !r.InReconcileProgress) ");
             }
             MakeTesterIfNeeded(myOldTransToReconcile);
             //From JournalReconcile take old Ledger  - Match new Ledger 
@@ -144,7 +144,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             if (Math.Abs(totalNewLedgerOpenAmount) < Math.Abs(totalAmountFromJournalReconciliation))
             {
-                throw new Exception($"for JournalPM.Id ={_JournalPM.Id} Account {currentAccountId}  (totNew != totReconciliationAmount) = ({totalNewLedgerOpenAmount} >= -1* {totalAmountFromJournalReconciliation})");
+                throw new ApplicationException($"for JournalPM.Id ={_JournalPM.Id} Account {currentAccountId}  (totNew != totReconciliationAmount) = ({totalNewLedgerOpenAmount} >= -1* {totalAmountFromJournalReconciliation})");
             }
             bool isPartialReconciliation = (Math.Abs(totalNewLedgerOpenAmount) > Math.Abs(totalAmountFromJournalReconciliation));
 
@@ -153,7 +153,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 Debug.WriteLine("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
                 if (newLTranListOfAccountID.Count != 1 || oldLTransGroupByAccountId.Count() != 1)
                 {
-                    //throw new Exception("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
+                    //throw new ApplicationException("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
                 }
 
             }
@@ -173,14 +173,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (totalAmountFromJournalReconciliation_AsStack < 0)
                 {
 
-                    throw new Exception($"for JournalPM.Id ={_JournalPM.Id} Account {currentAccountId}  (if (totReconciliationAmount < 0)");
+                    throw new ApplicationException($"for JournalPM.Id ={_JournalPM.Id} Account {currentAccountId}  (if (totReconciliationAmount < 0)");
                 }
             }
             ValidationResult result = ValidateReconcile(myReconciliationPM);
             if (result != null)
             {
 
-                throw new Exception(result.ErrorMessage);
+                throw new ApplicationException(result.ErrorMessage);
             }
 
             return myReconciliationPM;
@@ -232,7 +232,7 @@ namespace Logitude.Accounting.BL.CoreBL
             totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
             if (_JournalPM.JournalReconciles.Sum(r => r.ReconciliationAmount) != totalNewLedgerOpenAmount)
             {
-                throw new Exception("never tested- Task 75738: ADJUST SERVICE- allow the user to define chose the same glaccount for debit and credit");
+                throw new ApplicationException("never tested- Task 75738: ADJUST SERVICE- allow the user to define chose the same glaccount for debit and credit");
             }
 
             return totalNewLedgerOpenAmount;
@@ -330,7 +330,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else
             {
-                ///throw new Exception("test !!");
+                ///throw new ApplicationException("test !!");
                 newLTranReconciliationAmount = -1 * totReconciliationAmount;
                 newLTranReconciliationAmount = -1 * totReconciliationAmount;
                 totReconciliationAmount = totReconciliationAmount + newLTranReconciliationAmount;

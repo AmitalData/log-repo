@@ -78,11 +78,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (String.IsNullOrWhiteSpace(_GLAccountId))
                 {
-                    throw new Exception("GLAccountId is must");
+                    throw new ApplicationException("GLAccountId is must");
                 }
                 if (!_ListOfAccountId.Contains(_GLAccountId))
                 {
-                    throw new Exception("_ListOfAccountId.Contains(_GLAccountId)");
+                    throw new ApplicationException("_ListOfAccountId.Contains(_GLAccountId)");
                 }
                 if (_AccountingContext == null)
                 {
@@ -211,7 +211,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (_ListOfAccountId.Count() > 1)
                         {
-                            throw new Exception("if (ClacOpenReconciledAmount && _ListOfAccountId.Count()>1)");
+                            throw new ApplicationException("if (ClacOpenReconciledAmount && _ListOfAccountId.Count()>1)");
                         }
 
                         var res=
@@ -357,7 +357,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (string.IsNullOrWhiteSpace(currencyId))
             {
-                throw new Exception("string.IsNullOrWhiteSpace(currencyId)");
+                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
             }
             return GetCallBackBalance().Where(r => r.CurrencyId == currencyId).ToList();
 
@@ -378,7 +378,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (string.IsNullOrWhiteSpace(currencyId))
             {
-                throw new Exception("string.IsNullOrWhiteSpace(currencyId)");
+                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
             }
             var tot = Totals.Where(r => r.CurrencyId == currencyId).FirstOrDefault();
             if (tot == null)
@@ -391,7 +391,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (string.IsNullOrWhiteSpace(currencyId))
             {
-                throw new Exception("string.IsNullOrWhiteSpace(currencyId)");
+                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
             }
             //var accountingCurrencyId=  AccountingSettingResolver.ResolveAccountingCurrencyId(Tenant);
             //if (accountingCurrencyId == currencyId)
