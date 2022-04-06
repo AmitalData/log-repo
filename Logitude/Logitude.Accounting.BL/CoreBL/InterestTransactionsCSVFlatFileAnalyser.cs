@@ -34,6 +34,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private const bool useLocal = true;
         private int _goodCount = 0;
         private bool _fatal = false;
+        private List<InterestTransactionUniqueConstraintFields> _itjlCache = new List<InterestTransactionUniqueConstraintFields>();
 
         public void Analyse(int? ptenant, string FileContent)
         {
@@ -362,21 +363,51 @@ namespace Logitude.Accounting.BL.CoreBL
                             JournalLinePM jlPM = null;
                             foreach (JournalLinePM journalLine in journalPM.JournalLines)
                             {
+                                InterestTransactionUniqueConstraintFields uniqueConstraintFields_current;
+
                                 if ((journalLine.ActionCode == "1" || journalLine.ActionCode == "3") && itLine.CreditAmount != 0m && journalLine.CreditAccountId == itLine.GLAccountId
                                     && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference))) 
-                                //    && (journalLine.LocalAmount == itLine.CreditAmount))
+                                 //   && (!firstDuplicateFound || journalLine.LocalAmount == itLine.CreditAmount))
                                 {
-                                    lineFound = true;
-                                    jlPM = journalLine;
-                                    break;
+                                    uniqueConstraintFields_current = new InterestTransactionUniqueConstraintFields()
+                                    {
+                                        GLAccountId = itLine.GLAccountId,
+                                        Tenant = tenant,
+                                        InterestEntityTypeCode = "3", //(Journal)
+                                        EntityId = journalLine.JournalId,
+                                        OriginalEntityLineNumber = journalLine.Line,
+                                        ForeignAmount = itLine.ForeignAmount,
+                                        LocalAmount = itLine.LocalAmount,
+                                        CurrencyId = itLine.CurrencyId,
+                                    };
+                                    if (!_itjlCache.Contains(uniqueConstraintFields_current))
+                                    {
+                                        lineFound = true;
+                                        jlPM = journalLine;
+                                        break;
+                                    }
                                 }
                                 else if ((journalLine.ActionCode == "2" || journalLine.ActionCode == "3") && itLine.DebitAmount != 0m && journalLine.DebitAccountId == itLine.GLAccountId
                                     && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
-                                //    && (journalLine.LocalAmount == itLine.DebitAmount))
+                                  //  && (!firstDuplicateFound || journalLine.LocalAmount == itLine.DebitAmount))
                                 {
-                                    lineFound = true;
-                                    jlPM = journalLine;
-                                    break;
+                                    uniqueConstraintFields_current = new InterestTransactionUniqueConstraintFields()
+                                    {
+                                        GLAccountId = itLine.GLAccountId,
+                                        Tenant = tenant,
+                                        InterestEntityTypeCode = "3", //(Journal)
+                                        EntityId = journalLine.JournalId,
+                                        OriginalEntityLineNumber = journalLine.Line,
+                                        ForeignAmount = itLine.ForeignAmount,
+                                        LocalAmount = itLine.LocalAmount,
+                                        CurrencyId = itLine.CurrencyId,
+                                    };
+                                    if (!_itjlCache.Contains(uniqueConstraintFields_current))
+                                    {
+                                        lineFound = true;
+                                        jlPM = journalLine;
+                                        break;
+                                    }
                                 }
                             }
                             if (!lineFound)
@@ -423,6 +454,10 @@ namespace Logitude.Accounting.BL.CoreBL
                                     //this.AddErrorRow($"{text}{count} {text_2} {itLine.ExternalNumber} {text_44} ({itPM.LocalAmount} ID={itPM.Id})");
                                     itLine.ErrorInLine = true;
 
+                                }
+                                else
+                                {
+                                    _itjlCache.Add(uniqueConstraintFields);
                                 }
                             }
 
