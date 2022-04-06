@@ -1123,9 +1123,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ARInvoicesSubtotalLocalNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesSubtotalLocalNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesSubtotalLocalNewId,0,'Fact_ARInvoices','[Subtotal (Local)]','Subtotal (Local)','Decimal','true',0,0,'false','true','MAX','true','Money','false','false','false','ARInvoice.SubTotalInLocalCurrency','false','false')  
-declare @Fact_ARInvoicesSubtotalProfitNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ARInvoicesSubtotalProfitNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesSubtotalProfitNewId,0,'Fact_ARInvoices','[Subtotal (Profit)]','Subtotal (Profit)','Decimal','true',0,0,'false','true','MAX','true','Money','false','false','false','ARInvoice.SubTotalInInvoiceCurrency','false','false')  
+declare @Fact_ARInvoicesSubtotalInvoiceNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesSubtotalInvoiceNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesSubtotalInvoiceNewId,0,'Fact_ARInvoices','[Subtotal (Invoice)]','Subtotal (Invoice)','Decimal','true',0,0,'false','true','MAX','true','Money','false','false','false','ARInvoice.SubTotalInInvoiceCurrency','false','false')  
 declare @Fact_ARInvoicesInvoiceBranchNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesInvoiceBranchNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesInvoiceBranchNewId,0,'Fact_ARInvoices','[Invoice Branch]','Invoice Branch','Dimension','false',0,15,'DIM_Branches','false','false','true','InvoiceGeneralDetails','false','false','false','ARInvoice.BranchId','false','false')  
@@ -1237,6 +1237,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ARInvoicesPaymentReferencesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesPaymentReferencesNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesPaymentReferencesNewId,0,'Fact_ARInvoices','[Payment References]','Payment References','Text','false',0,1000,'false','false','true','InvoiceGeneralDetails','false','false','false','ARInvoice.PaymentReferences','false','false')  
+declare @Fact_ARInvoicesInvoiceProfitCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesInvoiceProfitCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesInvoiceProfitCurrencyNewId,0,'Fact_ARInvoices','[Invoice Profit Currency]','Invoice Profit Currency','Dimension','false',0,15,'DIM_Currencies','false','false','true','Money','false','false','false','ARInvoice.ProfitCurrencyId','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
