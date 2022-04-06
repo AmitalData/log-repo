@@ -34,8 +34,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
     {
         public static void ValidateUpdate(ShipmentPM shipmentPM, ShipmentPM oldShipmentPM)
         {
-            if (oldShipmentPM.IsOperationalClosed)
-                throw new ApplicationException("Can't update operationally closed shipments");
+            //if (oldShipmentPM.IsOperationalClosed)
+            //    throw new ApplicationException("Can't update operationally closed shipments");
 
             if (oldShipmentPM.IsCancelled)
                 throw new ApplicationException("Can't update cancelled shipments");
