@@ -576,8 +576,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             else
             {
-                if (entityPM.
-                    Id == "I")
+                if (entityPM.DirectionId == "I")
                 {
                     entityPM.CustomerId = entityPM.ConsigneeId;
                     entityPM.ShipmentCustomerTypeCode = "CON";
