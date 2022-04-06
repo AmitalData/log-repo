@@ -33,7 +33,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
     {
         public static void ValidateUpdate(ShipmentPM shipmentPM, ShipmentPM oldShipmentPM)
         {
-            if (oldShipmentPM.IsOperationalClosed) throw new Exception("Can't update operationally closed shipments");
+            //if (oldShipmentPM.IsOperationalClosed) throw new Exception("Can't update operationally closed shipments");
             if (oldShipmentPM.IsCancelled) throw new Exception("Can't update cancelled shipments");
             if (IsInlandDomesticShipment(shipmentPM)) ValidateInlandDomesticShipment(shipmentPM);
             else ValidateNotInlandDomesticShipment(shipmentPM);
