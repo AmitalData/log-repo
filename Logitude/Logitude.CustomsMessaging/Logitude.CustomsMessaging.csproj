@@ -564,6 +564,7 @@
     <Compile Include="MessagingServices\TPG_8304_DeficitFileFilterParamMessagingService.cs" />
     <Compile Include="U2L\CommDec\ECommDecInsertService.cs" />
     <Compile Include="U2L\CommDec\CommDecService.cs" />
+    <Compile Include="U2L\Sivug\CalculateCheckDigit.cs" />
     <Compile Include="U2L\Sivug\SivugUpsertService.cs" />
     <Compile Include="UnifreightGateway\AnalyzeQueueMessageService.cs" />
     <Compile Include="UnifreightGateway\CacheManagerService.cs" />

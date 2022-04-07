@@ -863,7 +863,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                         if (invoiceItem.CLASSIFICATIONCODE != SupplierInvoiceItemPM.ClassificationCode)
                         {
-                            SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
+                            SupplierInvoiceItemPM.ClassificationCode =invoiceItem.CLASSIFICATIONCODE;
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
                         if ((invoiceItem.ITEMORIGINCOUNTRY ?? "") != (SupplierInvoiceItemPM.OriginCountryCode ?? ""))
@@ -1049,7 +1049,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     }
                 }
                 SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
-                SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
+                SupplierInvoiceItemPM.TaxExemptCode = CalculateCheckDigit.Calc(invoiceItem.TAXEXEMPTCODE); //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
 
                 if (!string.IsNullOrWhiteSpace(invoiceItem.OcrPageNumber))
                 {
