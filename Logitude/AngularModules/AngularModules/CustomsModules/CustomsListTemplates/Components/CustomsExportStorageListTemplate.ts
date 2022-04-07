@@ -28,7 +28,7 @@ export class CustomsExportStorageListTemplate {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
 
-    IsConnectedDeclarationChecked: boolean = true;
+    IsConnectedExportStorageChecked: boolean = true;
 
     //, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService
     entityPM: ExportStoragePM
@@ -48,7 +48,7 @@ export class CustomsExportStorageListTemplate {
     }
 
     BuildDeclarationsCheckBox() {
-        this.IsConnectedDeclarationChecked = false;
+        this.IsConnectedExportStorageChecked = false;
         if (this.entityPM.StorageNo && this.entityPM.Id != null && !this._exportStorageExtendedListService.connectedSelectAll) {
             this._exportStorageExtendedListService.ConnectedExportStorage = this.entityPM.StorageNo;
         }
@@ -66,12 +66,12 @@ export class CustomsExportStorageListTemplate {
         }
         let sConnectedDeclarations = this._exportStorageExtendedListService.ConnectedExportStorage as string;
         if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
-            let ConnectedDeclarations = sConnectedDeclarations.split(',')
-            let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
-            this.IsConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
+            let ConnectedExportStorage = sConnectedDeclarations.split(',')
+            let res = ConnectedExportStorage.filter(r => r == this.rowData.Id)[0];
+            this.IsConnectedExportStorageChecked = !AppTool.IsNullOrEmpty(res);
         }
         if (this._exportStorageExtendedListService.connectedSelectAll == true) {
-            this.IsConnectedDeclarationChecked = true;
+            this.IsConnectedExportStorageChecked = true;
         }
     }
 
