@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("UnifreightStatusCode")]
 	    public string UnifreightStatusCode { get; set; }
+        [Column("MamanSuspendedCode")]
+	    public string MamanSuspendedCode { get; set; }
     }
 }
 	 

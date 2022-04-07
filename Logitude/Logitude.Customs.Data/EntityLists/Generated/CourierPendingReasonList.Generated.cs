@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string UnifreightStatusCode  { get; set; }
        [DataMember]
        public string ErrorPlaceName  { get; set; }
+       [DataMember]
+       public string MamanSuspendedCode  { get; set; }
    }
 
 }

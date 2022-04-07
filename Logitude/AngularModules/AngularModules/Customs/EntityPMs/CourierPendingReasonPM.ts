@@ -74,6 +74,11 @@ export class CourierPendingReasonPM {
     public set ErrorPlaceName(newValue: string) { if (this.errorPlaceName != newValue) { this.errorPlaceName = newValue; this.MarkAsDirty("ErrorPlaceName"); } }
        
 	 
+    private mamanSuspendedCode: string;
+    public get MamanSuspendedCode() { return this.mamanSuspendedCode; }
+    public set MamanSuspendedCode(newValue: string) { if (this.mamanSuspendedCode != newValue) { this.mamanSuspendedCode = newValue; this.MarkAsDirty("MamanSuspendedCode"); } }
+       
+	 
 
     public OldEntityPM: CourierPendingReasonPM;
 		

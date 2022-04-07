@@ -30,7 +30,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         ErrorPlace, 
 	         Tenant, 
-	         UnifreightStatusCode,
+	         UnifreightStatusCode, 
+	         MamanSuspendedCode,
 	      }
 
 
@@ -46,7 +47,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ErrorPlace, 
 	         Tenant, 
 	         UnifreightStatusCode, 
-	         ErrorPlaceName,
+	         ErrorPlaceName, 
+	         MamanSuspendedCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -93,6 +95,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnifreightStatusCode))
             {
 				entityPOCO.UnifreightStatusCode = entityPM.UnifreightStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSuspendedCode))
+            {
+				entityPOCO.MamanSuspendedCode = entityPM.MamanSuspendedCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -146,6 +153,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.UnifreightStatusCode = entityPOCO.UnifreightStatusCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanSuspendedCode))
+            {
+					entityPM.MamanSuspendedCode = entityPOCO.MamanSuspendedCode;
+            }
+
 		}
 
 		public void PMToOldPM(CourierPendingReasonPM entityPM, CourierPendingReasonPM oldEntityPM)
@@ -190,6 +202,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnifreightStatusCode))
             {
                 oldEntityPM.UnifreightStatusCode = entityPM.UnifreightStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSuspendedCode))
+            {
+                oldEntityPM.MamanSuspendedCode = entityPM.MamanSuspendedCode;
             }
 			
 		}

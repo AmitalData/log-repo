@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
             this.Property(t => t.UnifreightStatusCode).HasColumnName("UnifreightStatusCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.MamanSuspendedCode).HasColumnName("MamanSuspendedCode").HasMaxLength(4).IsUnicode(false);
         }
     }
 }

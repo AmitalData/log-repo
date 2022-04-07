@@ -35,6 +35,13 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Code == code && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+        public List<CourierPendingReason> GetPendingReasonsWithMamanSuspendedCode(int tenant)
+        {
+            List<CourierPendingReason> selectedcourierPendingReasons = (from courierPendingReasons in context.CourierPendingReasons
+                                                                        where courierPendingReasons.Tenant == tenant && !courierPendingReasons.Inactive && courierPendingReasons.MamanSuspendedCode != null
+                                                                        select courierPendingReasons).ToList();
+            return selectedcourierPendingReasons;
+        }
         public Boolean IsActive(string code,int tenant)
         {
             var status = (from a in context.CourierPendingReasons
