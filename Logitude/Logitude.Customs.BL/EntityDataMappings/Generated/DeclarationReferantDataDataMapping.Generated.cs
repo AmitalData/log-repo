@@ -57,7 +57,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsManualPayment, 
 	         PackageTypeCode, 
 	         Commodity, 
-	         LastStatusRemarks,
+	         LastStatusRemarks, 
+	         Mawb, 
+	         Hawb,
 	      }
 
 
@@ -106,7 +108,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsManualPayment, 
 	         PackageTypeCode, 
 	         Commodity, 
-	         LastStatusRemarks,
+	         LastStatusRemarks, 
+	         Mawb, 
+	         Hawb,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -288,6 +292,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusRemarks))
             {
 				entityPOCO.LastStatusRemarks = entityPM.LastStatusRemarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Mawb))
+            {
+				entityPOCO.Mawb = entityPM.Mawb;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Hawb))
+            {
+				entityPOCO.Hawb = entityPM.Hawb;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -476,6 +490,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.LastStatusRemarks = entityPOCO.LastStatusRemarks;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Mawb))
+            {
+					entityPM.Mawb = entityPOCO.Mawb;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Hawb))
+            {
+					entityPM.Hawb = entityPOCO.Hawb;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -655,6 +679,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusRemarks))
             {
                 oldEntityPM.LastStatusRemarks = entityPM.LastStatusRemarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Mawb))
+            {
+                oldEntityPM.Mawb = entityPM.Mawb;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Hawb))
+            {
+                oldEntityPM.Hawb = entityPM.Hawb;
             }
 			
 		}
