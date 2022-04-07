@@ -248,7 +248,7 @@
                                     <div style="width:135px">
                                         <LogLov [ObjectFieldName]="'PackagingTypeCode'"
                                                 [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName"
+                                                [ObjectTableName]="ObjectTableName"                                                
                                                 [HideColumns]="true"
                                                 [LookUpTableName]="'Customs.PackingType'"
                                                 [SelectedValue]="PackagingTypeCode"></LogLov>
@@ -265,9 +265,8 @@
                                                     [InputType]="'integertext'"
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
-                                            [HideColumns]="true"
-                                            [Text]="Quantity"
-                                        ></LogTextBox>
+                                                    [Text]="Quantity"
+                                                    [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </td>
                             </tr>
