@@ -287,7 +287,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private void DeleteARPaymentCheques()
         {
             ARPaymentChequeRepository chequeRepository = new ARPaymentChequeRepository(tenant);
-            chequeRepository.RemoveARPaymentsCheques(paymentPM.Id, tenant);
+            chequeRepository.RemoveARPaymentsCheques(paymentPM.Id, paymentPM.ARPaymentChequeReplicas.Where(x => x.ChangeSetOp == ChangeSetOperation.Delete).Select(x => x.Id).ToList(), tenant);
             chequeRepository.SubmitChanges();
         }
         
@@ -371,15 +371,17 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 SubmitARPaymentCheque(arPaymentcheque);
                 return arPaymentcheque;
             }
-            return InitializeARPaymentChequeFromReplica(arpaymentPM, chequeReplica);
+            var newARPaymentcheque = InitializeARPaymentChequeFromReplica(arpaymentPM, chequeReplica);
+            newARPaymentcheque.LineNumber = LineNumberCounter++;
+            return newARPaymentcheque;
 
         }
 
         private int GetInitialLineNumberForCheque(ARPaymentPM arpaymentPM)
         {
             int LineNumberCounter = 1;
-            if (!isNewEntity && !IsDraft)
-                LineNumberCounter = arpaymentPM.ARPaymentChequeReplicas.Max(d => d.LineNumber) + 1;
+            //if (!isNewEntity && !IsDraft)
+            //    LineNumberCounter = arpaymentPM.ARPaymentChequeReplicas.Max(d => d.LineNumber) + 1;
             return LineNumberCounter;
         }
 
@@ -451,6 +453,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private ARPaymentChequePM InitializeARPaymentChequeFromReplica(ARPaymentPM arpaymentPM, ARPaymentChequeReplicaPM chequeReplica)
         {
+            ARPaymentChequeRepository chequeRepository = new ARPaymentChequeRepository(tenant);
+            var IsChequeExists = chequeRepository.IsChequeExists(paymentPM.Id, chequeReplica.Id, tenant);
             ARPaymentChequePM arPaymentcheque = new ARPaymentChequePM
             {
                 PaymentId = arpaymentPM.Id,
@@ -463,7 +467,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 CurrencyId = arpaymentPM.PaymentCurrencyId,
                 LocalAmount = (chequeReplica.ForeignAmount * (decimal)arpaymentPM.PaymentCurrencyExchangeRate),
                 ForeignAmount = (decimal)chequeReplica.ForeignAmount,
-                ChangeSetOp = ChangeSetOperation.Insert,
+                ChangeSetOp = IsChequeExists ? ChangeSetOperation.Update : ChangeSetOperation.Insert,
                 StatusCode = "1", // In Cashbook  
                 ExchangeRate = (decimal)arpaymentPM.PaymentCurrencyExchangeRate,
                 PaymentNumber = arpaymentPM.PaymentNo,
