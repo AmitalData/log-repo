@@ -58,6 +58,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return requiredFieldsPms;
         }
+        public List<CustomsRequiredFieldPM> GetExportCustomRequiredFieldsByObjectTableNoCache(string ObjectTableId, int Tenant, string type = "A")
+
+        {
+            CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
+            List<CustomsRequiredField> requiredFields = rep.GetExportCustomRequiredFieldsByObjectTable(ObjectTableId, Tenant, type);
+            List<CustomsRequiredFieldPM> requiredFieldsPms = new List<CustomsRequiredFieldPM>();
+            foreach (CustomsRequiredField field in requiredFields)
+            {
+                CustomsRequiredFieldPM requiredFieldpm = new CustomsRequiredFieldPM();
+                mapping.CustomPOCOToPM(requiredFieldpm, field);
+                mapping.POCOToPM(requiredFieldpm, field);
+                requiredFieldsPms.Add(requiredFieldpm);
+            }
+
+            return requiredFieldsPms;
+        }
 
         public CustomsRequiredFieldPM GetCustomRequiredFieldsByObjectFieldCode(string ObjectFieldCode, int Tenant)
         {

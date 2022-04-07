@@ -48,6 +48,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage GetSomeExportObjectTables()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ObjectTableRepository ObjectTableRepository = new ObjectTableRepository(0);
+                ObjectTableQuery objectTableQuery = new ObjectTableQuery(ObjectTableRepository);
+                List<ObjectTablePM> result = objectTableQuery.GetSomeExportObjectTables(0);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetCustomsRequiredFieldListsByObjectTable(string objectTableId)
         {
             try
@@ -59,6 +79,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 CustomsRequiredFieldQueryService customsRequiredFieldQuery = new CustomsRequiredFieldQueryService(customContext);
                 List<CustomsRequiredFieldPM> result = customsRequiredFieldQuery.GetCustomRequiredFieldsByObjectTableNoCache(objectTableId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetExportCustomsRequiredFieldListsByObjectTable(string objectTableId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                CustomsRequiredFieldQueryService customsRequiredFieldQuery = new CustomsRequiredFieldQueryService(customContext);
+                List<CustomsRequiredFieldPM> result = customsRequiredFieldQuery.GetExportCustomRequiredFieldsByObjectTableNoCache(objectTableId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }

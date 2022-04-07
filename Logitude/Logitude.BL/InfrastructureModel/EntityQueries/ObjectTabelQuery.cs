@@ -756,6 +756,22 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return tables;
         }
+
+        public List<ObjectTablePM> GetSomeExportObjectTables(int tenant)
+        {
+            List<ObjectTablePM> tables = null;
+
+
+            tables = GetObjectTablesWithTenantZero(tenant).Where(t => t.Name == "Customs.Declaration" ||
+                t.Name == "Customs.Consignment" ||
+                t.Name == "Customs.ConsignmentPackage" ||
+                t.Name == "Customs.SupplierInvoice" ||
+                   t.Name == "Customs.DeclarationExportRecipient"
+                ).ToList();
+
+
+            return tables;
+        }
         public IQueryable<ObjectTableList> GetIQueryableEntityList(IQueryable<ObjectTable> iQueryable)
         {
             IQueryable<ObjectTableList> result = from a in iQueryable

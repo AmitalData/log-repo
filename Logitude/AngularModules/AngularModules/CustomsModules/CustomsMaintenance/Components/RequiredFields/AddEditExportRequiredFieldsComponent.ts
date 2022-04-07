@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ValidationSummary } from '../../../../Controls/All/ValidationSummary';
@@ -35,6 +35,8 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
     FieldsList: ObservableCollection;
     SelectedObjectFields: CustomsRequiredFieldList[] = [];
 
+
+
     customsRequierdFieldsWebService: CustomsRequierdFieldsWebService = new CustomsRequierdFieldsWebService();
     _EntityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -66,8 +68,8 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
         var objectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         var objectFields: any[] = window.ObjectFields.filter(x => x.ObjectTableId == objectTable.Id && (!x.IsMulti && x.FieldName != "ImporterId" && x.FieldName != "TransferImporterId" && x.FieldName != "EntitleImporterId"));
         if (objectTable.Name == "Customs.Declaration") {
-             objectFields= window.ObjectFields.filter(x => x.AdditionalQuerySections == "Customs.ExportDeclaration");
-             objectFields= window.ObjectFields.filter(x => x.FieldName != "DeclarationNumber");
+             objectFields= objectFields.filter(x => x.AdditionalQuerySections == "Customs.ExportDeclaration");
+             objectFields= objectFields.filter(x => x.FieldName != "DeclarationNumber");
         }
 
 
@@ -161,7 +163,13 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
         this.SelectedRow = itemComponent;
     }
 
-    CheckBoxChanged(event, itemModel: RequiredFieldItemModel) {
+    CheckBoxChanged(event, itemModel: RequiredFieldItemModel,value:string) {
+        if(value== 'WarningExport' && event){
+            itemModel.IsExport=false;
+        }
+        if(value== 'IsExport' && event){
+            itemModel.WarningExport=false;
+        }
         console.log("<CheckBoxChanged> ", event, itemModel);
         if (itemModel) {
             if (event == true) {
