@@ -80,15 +80,20 @@ namespace Logitude.Accounting.Data.Repositories
                    select a).ToList();
         }
 
-        public void RemoveARPaymentsCheques(string paymentId, int tenant)
+        public void RemoveARPaymentsCheques(string paymentId, List<string> arPaymentChequesIds, int tenant)
         {
-            var aRPaymentBankTranfers = (from a in context.ARPaymentCheques where a.PaymentId == paymentId && a.Tenant == tenant select a).ToList();
+            var aRPaymentCheques = (from a in context.ARPaymentCheques where a.PaymentId == paymentId && arPaymentChequesIds.Contains(a.Id) && a.Tenant == tenant select a).ToList();
 
-            foreach (var entity in aRPaymentBankTranfers)
+            foreach (var entity in aRPaymentCheques)
             {
                 context.ARPaymentCheques.Attach(entity);
                 context.ARPaymentCheques.Remove(entity);
             }
+        }
+
+        public bool IsChequeExists(string paymentId, string arPaymentChequesId, int tenant)
+        {
+            return context.ARPaymentCheques.Any(a => a.PaymentId == paymentId && a.Id == arPaymentChequesId && a.Tenant == tenant);
         }
 
     }
