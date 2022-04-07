@@ -176,6 +176,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string RemoveInclusiveVisibility  { get; set; }
        [DataMember]
        public string ReferantName  { get; set; }
+       [DataMember]
+       public string Mawb  { get; set; }
+       [DataMember]
+       public string Hawb  { get; set; }
    }
 
 }
