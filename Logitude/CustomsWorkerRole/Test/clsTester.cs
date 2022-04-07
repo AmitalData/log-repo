@@ -31,6 +31,7 @@ using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging.ILSWS;
 
 using Logitude.Customs.BL.TraceEvents;
+using Logitude.Server.Tools.Helpers;
 
 using Logitude.CustomsMessaging.Common.RequestParams;
 
@@ -313,6 +314,19 @@ SELECT TOP 1000 [Id]
             {
                 Debug.WriteLine(ex.ToString());
             }
+        }
+
+        public static void FeatureToggle()
+        {
+
+            var hcd = FeatureToggleHelper.HasFeatureToggle("HCD", 3);
+            var hcdCache = FeatureToggleHelper.HasFeatureToggle("HCD", 3);
+
+            var hcdNotInCache = FeatureToggleHelper.HasFeatureToggle("HCD", 2);
+
+
+            var notexist = FeatureToggleHelper.HasFeatureToggle("notexist", 1);
+            var notexist_cache = FeatureToggleHelper.HasFeatureToggle("notexist", 1);
         }
 
         public static string CheckWSCourierStatistic(int tenant, bool multiThreard)
