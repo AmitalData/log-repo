@@ -64,6 +64,11 @@ export class CustomsRequiredFieldPM {
     public set IsExport(newValue: boolean) { if (this.isExport != newValue) { this.isExport = newValue; this.MarkAsDirty("IsExport"); } }
        
 	 
+    private warningExport: boolean;
+    public get WarningExport() { return this.warningExport; }
+    public set WarningExport(newValue: boolean) { if (this.warningExport != newValue) { this.warningExport = newValue; this.MarkAsDirty("WarningExport"); } }
+       
+	 
 
     public OldEntityPM: CustomsRequiredFieldPM;
 		

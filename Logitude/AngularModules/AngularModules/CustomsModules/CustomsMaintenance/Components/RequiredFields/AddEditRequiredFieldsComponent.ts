@@ -282,5 +282,6 @@ export class RequierdFieldObject {
     ObjectFieldName: string;
     IsExport: boolean;
     IsImport: boolean;
+    WarningExport: boolean;
     Active: boolean;
 }
