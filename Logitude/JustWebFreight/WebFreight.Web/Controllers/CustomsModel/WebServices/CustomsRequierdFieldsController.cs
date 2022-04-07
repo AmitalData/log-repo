@@ -102,6 +102,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                                 Tenant = tenant,
                                 IsImport=item.IsImport,
                                 IsExport= item.IsExport,
+                                WarningExport=item.WarningExport,
                                 ObjectFieldName = item.ObjectFieldName,
                             };
                             field.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -134,6 +135,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             reqField.Tenant = tenant;
                             reqField.IsImport = item.IsImport;
                             reqField.IsExport = item.IsExport;
+                            reqField.WarningExport = item.WarningExport;
                             reqField.ObjectFieldName = item.ObjectFieldName;
 
                             reqField.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
@@ -161,6 +163,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public string ObjectFieldName { get; set; }
         public bool IsImport { get; set; }
         public bool IsExport { get; set; }
+        public bool WarningExport { get; set; }
         public bool Active { get; set; }
     }
 }

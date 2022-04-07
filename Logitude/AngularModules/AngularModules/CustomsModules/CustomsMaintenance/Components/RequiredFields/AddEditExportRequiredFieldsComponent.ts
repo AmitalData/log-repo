@@ -18,6 +18,7 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { CustomsRequiredFieldList } from '../../../../Customs/EntityLists/CustomsRequiredFieldList';
 import { CustomsRequierdFieldsWebService } from '../../../../Customs/Services/WebServices/CustomsRequierdFieldsWebService';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { RequierdFieldObject } from './AddEditRequiredFieldsComponent';
 
 
 @Component({
@@ -65,7 +66,8 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
         var objectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         var objectFields: any[] = window.ObjectFields.filter(x => x.ObjectTableId == objectTable.Id && (!x.IsMulti && x.FieldName != "ImporterId" && x.FieldName != "TransferImporterId" && x.FieldName != "EntitleImporterId"));
         if (objectTable.Name == "Customs.Declaration") {
-             objectFields= window.ObjectFields.filter(x => x.ValidForQuerySection1 == "Customs.ExportDeclaration" || x.AdditionalQuerySections == "Customs.ExportDeclaration" || x.ValidForQuerySection2 == "Customs.ExportDeclaration");
+             objectFields= window.ObjectFields.filter(x => x.AdditionalQuerySections == "Customs.ExportDeclaration");
+             objectFields= window.ObjectFields.filter(x => x.FieldName != "DeclarationNumber");
         }
 
 
@@ -92,9 +94,8 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(selectObjectField)) {
                 if (selectObjectField.IsExport)
                     item.IsExport = true;
-
-                if (selectObjectField.IsImport)
-                    item.IsImport = true;
+                if(selectObjectField.WarningExport) 
+                     item.WarningExport=true;
                 item.Active = true;
             }
 
@@ -137,7 +138,7 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
             i.ObjectFieldName = field.ObjectField.FieldName;
             i.Active = field.Active;
             i.IsExport = field.IsExport;
-            i.IsImport = field.IsImport;
+            i.WarningExport = field.WarningExport
 
             items.push(i);
         });
@@ -165,23 +166,23 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
         if (itemModel) {
             if (event == true) {
                 this.SelectedObjectFields.push(itemModel.RequierdField);
-                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
-                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
+                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).WarningExport = itemModel.WarningExport;
+                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).WarningExport = itemModel.WarningExport;
 
                 this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
                 this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
             }
             else {
                 var index = this.SelectedObjectFields.findIndex(d => d.ObjectFieldName == itemModel.ObjectField.FieldName);
-                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
-                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
+                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).WarningExport = itemModel.WarningExport;
+                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).WarningExport = itemModel.WarningExport;
 
                 this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
                 this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
 
             }
 
-            if (this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport == true || this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport == true) {
+            if (this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).WarningExport == true || this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport == true) {
                 this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = true;
             }
             else {
@@ -190,7 +191,7 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
             }
 
 
-            if (this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport == true || this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport == true) {
+            if (this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).WarningExport == true || this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport == true) {
                 this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = true;
             }
             else {
@@ -258,11 +259,11 @@ export class RequiredFieldItemModel extends BaseComponent {
         }
     }
 
-    isImport: boolean = false;
-    get IsImport() { return this.isImport; }
-    set IsImport(value: boolean) {
-        if (this.isImport != value) {
-            this.isImport = value;
+    warningExport: boolean = false;
+    get WarningExport() { return this.warningExport; }
+    set WarningExport(value: boolean) {
+        if (this.warningExport != value) {
+            this.warningExport = value;
 
         }
     }
@@ -277,14 +278,4 @@ export class RequiredFieldItemModel extends BaseComponent {
     }
 
     //#endregion
-}
-
-export class RequierdFieldObject {
-    ObjectfieldId: string;
-    ObjectfieldCode: string;
-    ObjectTableId: string;
-    ObjectFieldName: string;
-    IsExport: boolean;
-    IsImport: boolean;
-    Active: boolean;
 }
