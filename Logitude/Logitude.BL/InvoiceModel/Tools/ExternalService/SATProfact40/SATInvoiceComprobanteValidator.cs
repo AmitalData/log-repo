@@ -49,6 +49,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public void Validate(List<ChargesType> allChargesTypes)
         {
             ValidateBranchAddress();
+            ValidatePaymentTerm();
             ValidateCompanyVatNumber();
             ValidateCompanyName();
             ValidateARInvoiceDate();
@@ -82,12 +83,23 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private Address GetBranchAddress(Address branchAddress)
         {
             Branch branch = branchRepository.GetSingleBranch(arInvoicePM.BranchId, arInvoicePM.Tenant);
-            if (!string.IsNullOrEmpty(branch.AddressId))
+
+            if (branch != null && !string.IsNullOrEmpty(branch.AddressId))
             {
                 branchAddress = addressReposirory.GetSingleAddress(branch.AddressId, branch.Tenant);
             }
 
             return branchAddress;
+        }
+
+        private void ValidatePaymentTerm()
+        {
+            PaymentTermRepository paymentTermRepository = new PaymentTermRepository(commonContext);
+            PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(arInvoicePM.PaymentTermId);
+            if(paymentTerm == null)
+            {
+                throw new ApplicationException("Payment Term is required");
+            }
         }
 
         private void ValidateCurrentTenantAddress()
@@ -152,7 +164,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             if (string.IsNullOrEmpty(arInvoicePM.RegimenFiscalCode) && string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
             {
-                throw new ApplicationException("Regimen Fiscal is required ");
+                throw new ApplicationException("Bill to Regimen Fiscal is required ");
             }
         }
 
