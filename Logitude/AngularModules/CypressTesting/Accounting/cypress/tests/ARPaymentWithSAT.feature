@@ -1,4 +1,4 @@
-
+@devrelease
 Feature: AR Payment With SAT
     The user creates new AR Payment and ARprove the AR Payment
 
