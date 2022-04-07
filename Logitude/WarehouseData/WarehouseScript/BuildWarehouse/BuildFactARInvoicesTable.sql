@@ -204,7 +204,7 @@
 	   insert into #Fact_ARInvoicesTemp ([Id],[Source Tenant],[Parent Tenant], [AR Invoice Type], [Invoice Number], [Invoice Date], [Create Date], [Approved Date], [Due Date], [Print Date],[Paid Date], 
 	   [Approved By], [Created By], [Printed By], [Invoice Salesman],  [Invoice Status], [Print Note], [Payment Term], [Invoice Local Currency], [Invoice Currency], [VAT Number], [Bill To], 
 	   
-	   [Subtotal (Local)],[Subtotal (Invoice)],[Invoice Amount (Local)],[Invoice Amount (Profit)],[Amount Due (Local)],[Amount Due (Profit)],
+	   [Subtotal (Local)],[Subtotal (Profit)],[Invoice Amount (Local)],[Invoice Amount (Profit)],[Amount Due (Local)],[Amount Due (Profit)],
 	  [Line Description],[Line Local Description], [Line Unit Price], [Line Quantity], [Line VAT Type], 
 	   [Line VAT Percentage],[Line Amount (Local)], [Line Amount (Foreign)],[Line Amount (Invoice Currency)], [Foreign Currency], [Foreign Exchange Rate],[Line Amount (Profit)],
        [Line Notes], [Invoice Currency Exchange Rate], [Is Expense], [Is Regional Tax],[Invoice Branch],[Is Cancelled],[Main Entity Id],[Original Invoice Number], [Invoice Master Number] , [Invoice House Number],[CustomFieldNamesVariable],
