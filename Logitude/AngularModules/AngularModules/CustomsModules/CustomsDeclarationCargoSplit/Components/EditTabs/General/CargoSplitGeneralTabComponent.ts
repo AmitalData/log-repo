@@ -42,7 +42,7 @@ import { CargoIdentifireTypeListService } from '../../../../../Customs/Services/
 //import {DecCargoSplitConComponent} from '../DecCargoSplitConComponent';
 
 @Component({
-    
+
     templateUrl: './CargoSplitGeneralTabComponent.html',
 })
 
@@ -81,6 +81,7 @@ export class CargoSplitGeneralTabComponent
     SendButtonEnabled: boolean = true;
     OKButtonEnabled: boolean = true;
     TabIndex: number;
+    IsImportDeclaration: boolean = true;
 
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
@@ -96,7 +97,7 @@ export class CargoSplitGeneralTabComponent
     _LastFetchConsignmentPMList: ConsignmentPM[];
     requestParams: CargoSplitRequestParams = new CargoSplitRequestParams();
     responseData: INF_MSG_GenericResponseData = new INF_MSG_GenericResponseData();
-
+    isExportConsignmentFetched=false;
     public XrayItems: XRayAvailableItem[] = [];
 
     SelectedDateTime: Date;
@@ -116,15 +117,15 @@ export class CargoSplitGeneralTabComponent
         //this.ItemsList = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         //this.entityArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
-        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCargoIdentifier").subscribe((response:any) => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCon").subscribe((response:any) => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsItem").subscribe((response:any) => {
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsPackDet").subscribe((response:any) => {
-                                this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
-                                //this.Init();
-                                //this.EntityPM = this.entityArgs.EntityPM;
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCargoIdentifier").subscribe((response: any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCon").subscribe((response: any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsItem").subscribe((response: any) => {
+                            this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsPackDet").subscribe((response: any) => {
+                                this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response: any) => {
+                                    //this.Init();
+                                    //this.EntityPM = this.entityArgs.EntityPM;
                                     //this.ObjectTableName = this.entityArgs.ObjectTableName;
                                     this._EntityResourceFinished = true;
                                     this.ExportCargoTypeFilterItems = new ApiQueryFilters();
@@ -167,7 +168,7 @@ export class CargoSplitGeneralTabComponent
                     this.NoConnectedConsignmentEnableField();
                 } else {
                     if (this._LastFetchDeclarationList.Direction == "E") {
-                        this.IsExportDeclaration = true;
+                        this.isExportConsignmentFetched=true;
                         this.AddItem();
                     }
                     this.CurrentSession.StartBusyIndicator("")
@@ -247,7 +248,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     public SetTabArgs(args: any, valdationErrorList: any[] = null) {
-        
+
         if (args.EntityPM instanceof DeclarationCargoSplitPM) this.EntityPM = args.EntityPM;
         this.IsNewEntity = args.IsNewEntity;
         if (this.IsDisplayOnly != true && args.IsDisplayOnly == true) {
@@ -304,7 +305,7 @@ export class CargoSplitGeneralTabComponent
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        if (this.CurrentSession.CurrentEditComponent.EntityPM instanceof DeclarationCargoSplitPM)this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        if (this.CurrentSession.CurrentEditComponent.EntityPM instanceof DeclarationCargoSplitPM) this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //this.RefreshEntity();
 
                     }
@@ -313,7 +314,7 @@ export class CargoSplitGeneralTabComponent
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        if (this.CurrentSession.CurrentEditComponent.EntityPM instanceof DeclarationCargoSplitPM)this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        if (this.CurrentSession.CurrentEditComponent.EntityPM instanceof DeclarationCargoSplitPM) this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildTabs();
                     }
                 })
@@ -351,7 +352,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     SetWindowArgs(winArg: any) {
-        if (winArg.CurrentEntity instanceof DeclarationCargoSplitPM)this.EntityPM = winArg.CurrentEntity;
+        if (winArg.CurrentEntity instanceof DeclarationCargoSplitPM) this.EntityPM = winArg.CurrentEntity;
         if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
             this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
@@ -463,12 +464,31 @@ export class CargoSplitGeneralTabComponent
 
     //}
 
+    TransportmodeId="NoValue";
+    TransportModeClicked(value: string) {
+        if (this.TransportmodeId != value) {
+            this.TransportmodeId = value;
+        }
+    }
+
+    air;ocean;land;
+    DirectionModeClicked(value: string) {
+        value == "Import" ? this.IsImportDeclaration = true : this.IsImportDeclaration = false;
+        value == "Import" ? this.IsExportDeclaration = false : this.IsExportDeclaration = true;
+        value == "Import" ? this.TransportmodeId="NoValue" : this.TransportmodeId=null;
+        if(value == "Import"){
+            this.air=false;
+            this.ocean=false;
+            this.land=false;
+        }
+    }
+
 
 
     BuildTabs() {
         var tab;
         this.Tabs = [];
-        
+
         if (this.EntityPM.DecCargoSplitCons != null && this.EntityPM.DecCargoSplitCons.length > 0) {
 
             var items: DecCargoSplitConPM[] = this.EntityPM.DecCargoSplitCons.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
@@ -510,7 +530,7 @@ export class CargoSplitGeneralTabComponent
                     this.TabIndex = code;
             }
         }
-        this.TabIndex=(ArrayTool.Max(this.Tabs, "Code") );
+        this.TabIndex = (ArrayTool.Max(this.Tabs, "Code"));
 
         var Tab: DecCargoSplitConPM = new DecCargoSplitConPM(this.EntityPM);
         Tab.DeclarationCargoSplitId = this.EntityPM.Id;
@@ -650,10 +670,10 @@ export class CargoSplitGeneralTabComponent
                             .subscribe((myResponse: ServiceResponse) => {
                                 this.CurrentSession.StopBusyIndicator();
                                 if (this._LastFetchDeclarationList.Direction == "E") {
-                                    this.IsExportDeclaration = true;
+                                    this.isExportConsignmentFetched = true;
                                     this.AddItem();
                                 } else {
-                                    this.IsExportDeclaration = false;
+                                    this.isExportConsignmentFetched = false;
                                 }
                                 this.SwitchTabsForExportORImport(this._LastFetchDeclarationList.Direction);
 
@@ -670,6 +690,7 @@ export class CargoSplitGeneralTabComponent
                                     }
                                 }
                                 else {
+                                    
                                     this.FetchConsignment(myResponse, false);
                                 }
 
@@ -828,7 +849,7 @@ export class CargoSplitGeneralTabComponent
             LoggingObjectTableId = LoggingObjectTableId;
 
             CustomMessageProgressComponent
-                .ShowProgressBar(this.CurrentSession,this.requestParams.PBId,
+                .ShowProgressBar(this.CurrentSession, this.requestParams.PBId,
                     "שליחת בקשה לפיצול מטען", false)
                 .then((res) => {
                     this.responseData = res;
@@ -840,18 +861,18 @@ export class CargoSplitGeneralTabComponent
                 });
 
 
-        this.declarationMessagesService.PostSendCargoSplit(this.requestParams)
-          .subscribe((response: ServiceResponse) => {
-            if (response) {
-              if (!response.HasError) {
-                if (response.Result.Succeeded) {
-                  this.declarationCargoSplitPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            this.declarationMessagesService.PostSendCargoSplit(this.requestParams)
+                .subscribe((response: ServiceResponse) => {
                     if (response) {
-                      if (!response.HasError) {
-                          if (response.Result instanceof DeclarationCargoSplitPM)this.EntityPM = response.Result;
-                        this.BuildTabs();
-                      }
-                    }
+                        if (!response.HasError) {
+                            if (response.Result.Succeeded) {
+                                this.declarationCargoSplitPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+                                    if (response) {
+                                        if (!response.HasError) {
+                                            if (response.Result instanceof DeclarationCargoSplitPM) this.EntityPM = response.Result;
+                                            this.BuildTabs();
+                                        }
+                                    }
 
                                 });
 
@@ -1068,9 +1089,9 @@ export class CargoSplitGeneralTabComponent
                     //this.SaveCompleted.emit(false);
                 }
 
-                    else {
-                        if (myResponse.Result instanceof DeclarationCargoSplitPM)this.EntityPM = myResponse.Result;
-                        if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                else {
+                    if (myResponse.Result instanceof DeclarationCargoSplitPM) this.EntityPM = myResponse.Result;
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
                         var myErrors: string[] = [];
                         myErrors.push("this.EntityPM.Id is null");
@@ -1129,7 +1150,7 @@ export class CargoSplitGeneralTabComponent
                 }
 
                 else {
-                    if (myResponse.Result instanceof DeclarationCargoSplitPM)this.EntityPM = myResponse.Result;
+                    if (myResponse.Result instanceof DeclarationCargoSplitPM) this.EntityPM = myResponse.Result;
                     if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
                         var myErrors: string[] = [];
@@ -1316,8 +1337,7 @@ export class XRayAvailableItem {
 
 }
 
-export class DecCargoSplitCargoIdentifierModel extends BaseComponent
-     {
+export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
     public EntityPM: DecCargoSplitCargoIdentifierPM;
 
     constructor(line: DecCargoSplitCargoIdentifierPM) {
@@ -1329,11 +1349,11 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent
     }
 
     setRequired() {
-       
+
         this.UIProperties.SetRequired("CargoIdentifierKey1", "Customs.DecCargoSplitCargoIdentifier", true);
         if (this.CargoIdentifierKey1 != null) {
             this.UIProperties.SetRequired("CargoIdentifierKey1", "Customs.DecCargoSplitCargoIdentifier", false);
-            }
+        }
         if (this.cargoIdentifireType != null) {
             if (this.cargoIdentifireType.IsKey2Mandatory) {
                 this.UIProperties.SetRequired("CargoIdentifierKey2", "Customs.DecCargoSplitCargoIdentifier", true);
@@ -1352,7 +1372,7 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent
                 this.UIProperties.SetRequired("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", false);
             }
         }
-            }
+    }
 
     CheckRequired() {
         var errors = [];
@@ -1391,10 +1411,9 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent
     //#region Properties
     public get CargoTypeCode() { return this.EntityPM.CargoTypeCode; }
     public set CargoTypeCode(newValue: string) { this.EntityPM.CargoTypeCode = newValue; }
-     
+
     public get CargoIdentifierKey1() { return this.EntityPM.CargoIdentifierKey1; }
-    public set CargoIdentifierKey1(newValue: string)
-    {
+    public set CargoIdentifierKey1(newValue: string) {
         this.EntityPM.CargoIdentifierKey1 = newValue;
         this.setRequired();
     }
