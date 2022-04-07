@@ -50,9 +50,8 @@ export class ExportRequiredFieldsComponent extends BaseComponent {
         //this.BuildTablesList();
     }
     GetCustomsObjectTables() {
-        this.customsRequierdFieldsWebService.GetSomeObjectTables().subscribe((response: ServiceResponse) => {
+        this.customsRequierdFieldsWebService.GetSomeExportObjectTables().subscribe((response: ServiceResponse) => {
             var res = response.Result;
-            console.log("[Response] customsRequierdFieldsWebService.GetSomeObjectTables: ", res);
             if (!AppTool.IsNullOrEmpty(res)) {
                 this.TablesList = [];
                 this.TablesList = res;
@@ -122,14 +121,10 @@ export class ExportRequiredFieldsComponent extends BaseComponent {
             this.SelectedTable = table;
 
             this._EntityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((res: any) => {
-                debugger;
-                this.customsRequierdFieldsWebService.GetCustomsRequiredFieldListsByObjectTable(table.Id)
+                this.customsRequierdFieldsWebService.GetExportCustomsRequiredFieldListsByObjectTable(table.Id)
                     .subscribe((response: ServiceResponse) => {
-                        debugger;
                         var res = response.Result;
                         this.IsNoFields = false;
-
-                        console.log("[Response] GetCustomsRequiredFieldListsByObjectTable: ", res);
                         if (!AppTool.IsNullOrEmpty(res)) {
                             this.FieldsList = [];
                             this.FieldsList = res;
@@ -157,20 +152,20 @@ export class ExportRequiredFieldsComponent extends BaseComponent {
         this.FieldsList.forEach((field) => {
             var objectField = window.ObjectFields.find(x => x.FieldCode == field.ObjectfieldCode);
             field.ObjectFieldName = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode);
-             if (field.IsExport && field.IsImport) {
+            if (field.IsExport) {
+                field.ObjectFieldName=  field.ObjectFieldName + " (יצוא)";
+            }
+           /* if (field.IsExport && field.IsImport) {
                 field.ObjectFieldName=  field.ObjectFieldName + " (יבוא, יצוא)";
             }
             else {
-                if (field.IsExport) {
-                    field.ObjectFieldName=  field.ObjectFieldName + " (יצוא)";
-
-                }
+                
                 else if (field.IsImport) {
                     field.ObjectFieldName=  field.ObjectFieldName + " (יבוא)";
 
                 }
             }
-            
+            */
         });
     }
 
