@@ -866,7 +866,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             SupplierInvoiceItemPM.ClassificationCode = CalculateCheckDigit.Calc(invoiceItem.CLASSIFICATIONCODE);
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
-                        if (invoiceItem.ITEMORIGINCOUNTRY != SupplierInvoiceItemPM.OriginCountryCode)
+                        if ((invoiceItem.ITEMORIGINCOUNTRY ?? "") != (SupplierInvoiceItemPM.OriginCountryCode ?? ""))
                         {
                             SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ITEMORIGINCOUNTRY;
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
