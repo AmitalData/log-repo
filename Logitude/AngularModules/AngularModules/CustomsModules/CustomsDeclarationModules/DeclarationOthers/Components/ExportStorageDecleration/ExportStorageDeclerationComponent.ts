@@ -21,17 +21,18 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
 import { ExportStoragePMService } from 'Customs/Services/StandardPMs/ExportStoragePMService';
+import { ExportStorageExtendedListService } from 'Customs/Services/ExtendedLists/ExportStorageExtendedListService';
 @Component({
 
     templateUrl: './ExportStorageDeclerationComponent.html',
-    providers: [ContainerizationExtendedListService]
+    providers: [ExportStorageExtendedListService]
 })
 
 export class ExportStorageDeclerationComponent extends BaseComponent {
     public SelectedRow: any;
     DataContext = this;
-    objectTableNameDec: string = "Customs.Declaration";
-    objectTableName: string = "Customs.ExportStorage";
+    objectTableNameDec: string = "Customs.ExportStorage";
+    objectTableName: string = "Customs.Declaration";
     entityPM: ExportStoragePM;
     declarationPM: DeclarationPM;
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -40,9 +41,6 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     isLoad: boolean = false;
     ExportFileFilter: FilterItem;
-    TransportFilter_A: string;
-    TransportFilter_O: string;
-    TransportFilter_I: string;
     IsSelectedNot: boolean;
     IsSelected: boolean;
     @Output() MenuHeaderchangeevent = new EventEmitter();
@@ -64,7 +62,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         if (this.exportFile != value) {
             this.exportFile = value;
             if (!AppTool.IsNullOrEmpty(value)) {
-                this.ExportFileFilter = new FilterItem("ExportFile", value, null, null, "StartsWith", false, false, false, "string", false);
+                this.ExportFileFilter = new FilterItem("ExportFileNo", value, null, null, "StartsWith", false, false, false, "string", false);
             } else {
                 this.ExportFileFilter = null
             }
@@ -83,41 +81,32 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     }
 
     onCheckBoxChecked($event) {
-        // this.IsSelected = false;
-        // if (!this.entityPM.ConnectedDeclarations) {
-        //     this.entityPM.ConnectedDeclarations = "";
-        // }
-        // if ($event.IsChecked) {
-        //     if (!this.entityPM.ConnectedDeclarations.includes($event.rowData.Id)) {
-        //         this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations + $event.rowData.Id + ",";
-        //     }
-        // }
-        // else {
-        //     if (this.entityPM.ConnectedDeclarations.includes($event.rowData.Id)) {
-        //         this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace($event.rowData.Id + ",", "");
-        //     }
-        // }
+        this.IsSelected = false;
+        if (!this.entityPM.DeclarationId) {
+            this.entityPM.DeclarationId = "";
+        }
+        if ($event.IsChecked) {
+            if (!this.entityPM.DeclarationId.includes($event.rowData.Id)) {
+                this.entityPM.DeclarationId = this.entityPM.DeclarationId + $event.rowData.Id + ",";
+            }
+        }
+        else {
+            if (this.entityPM.DeclarationId.includes($event.rowData.Id)) {
+                this.entityPM.DeclarationId = this.entityPM.DeclarationId.replace($event.rowData.Id + ",", "");
+            }
+        }                                 
     }
 
-    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public containerizationExtendedListService: ContainerizationExtendedListService) {
+    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public exportStorageExtendedListService: ExportStorageExtendedListService) {
         super();
         this.entityPM = new ExportStoragePM();
         this.entityPM.Tenant = SessionLocator.Tenant;
         this.connectedListIds = new ObservableCollection([]);
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ExportStorage").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => {
                     this.entityListService = new EntityListService();
-                    if (this.CurrentSession == null) {
-                        this.TransportFilter_A = "TransportFilter_A_-1_-1";
-                        this.TransportFilter_O = "TransportFilter_O_-1_-1";
-                        this.TransportFilter_I = "TransportFilter_I_-1_-1";
-                    } else {
-                        var index_T = this.CurrentSession.GetNewId("ShipmentTransportFilterMenu");
-                        this.TransportFilter_A = "TransportFilter_A" + index_T;
-                        this.TransportFilter_O = "TransportFilter_O" + index_T;
-                        this.TransportFilter_I = "TransportFilter_I" + index_T;
-                    }
+                   
                     this.BuildColumns();
                     this.isLoad = true;
                 });
@@ -126,63 +115,12 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
     }
 
-    itemMouseOver(itemValue: string) {
-        if (this.SelectedValue != itemValue) {
-            var img_A = document.getElementById(this.TransportFilter_A);
-            var img_O = document.getElementById(this.TransportFilter_O);
-            var img_I = document.getElementById(this.TransportFilter_I);
-
-            switch (itemValue) {
-                case "A": {
-                    img_A.setAttribute("src", "./Images/TransportModes/A.png");
-                    break;
-                }
-
-                case "O": {
-                    img_O.setAttribute("src", "./Images/TransportModes/O.png");
-                    break;
-                }
-
-                case "L": {
-                    img_I.setAttribute("src", "./Images/TransportModes/I.png");
-                    //img_I.style.top = "1px";
-                    break;
-                }
-            }
-        }
-    }
-
-    itemMouseLeave(itemValue: string) {
-        if (this.SelectedValue != itemValue) {
-            var img_A = document.getElementById(this.TransportFilter_A);
-            var img_O = document.getElementById(this.TransportFilter_O);
-            var img_I = document.getElementById(this.TransportFilter_I);
-
-            switch (itemValue) {
-                case "A": {
-                    img_A.setAttribute("src", "./Images/TransportModes/A_g.png");
-                    break;
-                }
-
-                case "O": {
-                    img_O.setAttribute("src", "./Images/TransportModes/O_g.png");
-                    break;
-                }
-
-                case "L": {
-                    img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
-                    break;
-                }
-            }
-        }
-    }
-
-
+ 
     DataSource = {
         pageSize: 30,
         rowCount: null,
-        //sortingCol: "CreateDateTime",
-        sortingDir: "Ascending",
+        sortingCol: "OpenDate",
+        sortingDir: "Decending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
             return tempo;
@@ -190,23 +128,17 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     };
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-         var filters = new ApiQueryFilters;
-        // var ExportFilter = new FilterItem("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
-        // filters.AdditionalFilters.push(ExportFilter);
-        // var ProcFilter = new FilterItem("ProcedureCurrentName", 'המכלה', null, null, "Contains", false, false, false, "string", false);
-        // filters.AdditionalFilters.push(ProcFilter);
-        // filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
-        // if (this.selectedValue != 'All') {
-        //     var ModeFilter = new FilterItem("TransportModeId", this.selectedValue, null, null, "Equals", false, false, false, "string", false);
-        //     filters.AdditionalFilters.push(ModeFilter);
-        // }
+        var filters = new ApiQueryFilters;
+        filters.addAdditionalFilter("DeclarationId", "123", null, null, "IsNull", false, false, false, "string");
+        filters.addAdditionalFilter("StorageStatus", "Cancel", null, null, "NotEqual", false, false, false, "string");
+       
 
-        // if (this.ExportFileFilter) {
-        //     filters.AdditionalFilters.push(this.ExportFileFilter);
-        // }
-        // if (this.SearchFieldsFilter) {
-        //     filters.AdditionalFilters.push(this.SearchFieldsFilter);
-        // }
+        if (this.ExportFileFilter) {
+            filters.AdditionalFilters.push(this.ExportFileFilter);
+        }
+        if (this.SearchFieldsFilter) {
+            filters.AdditionalFilters.push(this.SearchFieldsFilter);
+        }
 
         filters.PageSize = 30;
         filters.PageIndex = 0; // decremented 1 in the service
@@ -239,9 +171,9 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
         this.columns.push({
             FieldName: 'OpenDate',
-            DataTypeCode: 'String',
+            DataTypeCode: 'DateTime',
             Display: "תאריך פתיחה",
-            Styles: { width: '120px' },
+            Styles: { width: '110px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'OpenDate',
@@ -250,20 +182,20 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
         });
         this.columns.push({
-            FieldName: 'ExporterID',
+            FieldName: 'ExporterName',
             DataTypeCode: 'String',
-            Display: 'יצואן',//TextCodeTranslator.Translate('Customs.Declaration.F.DeclarationNumber'),
-            Styles: { width: '120px' },
+            Display: 'יצואן',
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'ExporterID'
+            SortByName: 'ExporterName'
 
         });
         this.columns.push({
             FieldName: 'ExportFileNo',
             DataTypeCode: 'String',
             Display: "מס' תיק יצוא",
-            Styles: { width: '120px' },
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ExportFileNo'
@@ -274,38 +206,26 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             FieldName: 'StorageNo',
             DataTypeCode: 'String',//'Number',
             Display: 'מספר אחסנה',
-            Styles: { width: '60px' },
+            Styles: { width: '90px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'StorageNo'
         });
-
-        this.columns.push({
-            FieldName: 'DeclarationNumber',
-            DataTypeCode: 'String',
-            Display: 'מספר הצהרה',
-            Styles: { width: '80px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'DeclarationNumber'
-
-        });
         this.columns.push({
             FieldName: 'ShipName',
             DataTypeCode: 'String',
-            Display:'אוניה',// TextCodeTranslator.Translate('Customs.Declaration.F.CargoTypeName'),
-            Styles: { width: '120px' },
+            Display: 'אוניה',
+            Styles: { width: '140px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ShipName'
 
         });
-
         this.columns.push({
             FieldName: 'CargoTypeName',
             DataTypeCode: 'String',
-            Display:'סוג מטען FCL/LCL',
-            Styles: { width: '100px' },
+            Display: 'סוג מטען FCL/LCL',
+            Styles: { width: '110px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'CargoTypeName'
@@ -315,7 +235,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             FieldName: 'StorageStatus',
             DataTypeCode: 'String',
             Display: 'סטטוס אחסנה',
-            Styles: { width: '100px' },
+            Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'StorageStatus'
@@ -325,7 +245,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             FieldName: 'CustomsStatus',
             DataTypeCode: 'String',
             Display: 'קוד סטטוס מטען',
-            Styles: { width: '120px' },
+            Styles: { width: '110px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'CustomsStatus'
@@ -334,28 +254,22 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ActionCode',
             DataTypeCode: 'String',
-            Display: 'היתר לוגיסטי מכסי',//TextCodeTranslator.Translate('Customs.Declaration.F.DeclarationStatusTypeName'),
+            Display: 'היתר לוגיסטי מכסי',
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ActionCode',
-            // HtmlListComponentName: 'CustomsContainerizationListTemplate',
-            // HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
-
         });
-
-      
-
     }
 
 
     OnAllBtnClicked() {
         this.IsSelected = true;
-        this.containerizationExtendedListService.connectedSelectAll = true;
-        this.containerizationExtendedListService.SelectedDeclarations = true;
-        this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations + this.entityPM.ExportFileNo;
+        this.exportStorageExtendedListService.connectedSelectAll = true;
+        this.exportStorageExtendedListService.SelectedExportStorage = true;
+        this.exportStorageExtendedListService.ConnectedExportStorage = this.exportStorageExtendedListService.AllExportStorage + this.entityPM.DeclarationId;
         this.LoadConnectedItems();
-
+      
     }
 
     filterAgrs: ApiQueryFilters;
@@ -366,162 +280,41 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
     OnNoneBtnClicked() {
         this.IsSelected = false;
-        this.containerizationExtendedListService.connectedSelectAll = false;
+        this.exportStorageExtendedListService.connectedSelectAll = false;
         this.entityPM.DeclarationCustomFileNo = "";
-        this.containerizationExtendedListService.ConnectedDeclarations = "";
-        this.containerizationExtendedListService.SelectedDeclarations = false;
+        this.exportStorageExtendedListService.ConnectedExportStorage = "";
+        this.exportStorageExtendedListService.SelectedExportStorage = false;
         this.LoadConnectedItems();
     }
 
-    itemClicked(itemValue: string) {
-        if (this.SelectedValue != itemValue) {
-            this.SelectedValue = itemValue;
-        }
-
-
-        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
-
-        this.ApplyTransportSelectedStyle();
-    }
-
-
-    ApplyTransportSelectedStyle() {
-        var itemValue = this.SelectedValue;
-        var img_A = document.getElementById(this.TransportFilter_A);
-        var img_O = document.getElementById(this.TransportFilter_O);
-        var img_I = document.getElementById(this.TransportFilter_I);
-        if (img_A) {
-            this.CurrentSession.ChangeSessionHeader({ TransportId: itemValue });
-            img_A.setAttribute("src", "./Images/TransportModes/A_g.png");
-            img_O.setAttribute("src", "./Images/TransportModes/O_g.png");
-            img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
-            switch (itemValue) {
-                case "A": {
-                    img_A.setAttribute("src", "./Images/TransportModes/A_w.png");
-                    break;
-                }
-
-                case "O": {
-                    img_O.setAttribute("src", "./Images/TransportModes/O_w.png");
-                    break;
-                }
-
-                case "L": {
-                    img_I.setAttribute("src", "./Images/TransportModes/I_w.png");
-                    break;
-                }
-            }
-        }
-    }
-
+  
     SendButtonClicked() {
-        // if (this.entityPM.Id != null) {
-        //     SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        //     this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-        //     this.entityPM.OperationMode = "2";
-        //     this.entityPM.IsChange = true;
-        //     SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
-        //     DeclarationEventManager.AddDeclarationToContainerization.emit(null);
-        //     this.CurrentSession.CurrentWindow.Close("0");
-        // } else {
-        //     var windowArgs: any = {};
-        //     if (this.declarationPM != null && this.declarationPM.ProcedureCurrentName != null && this.declarationPM.ProcedureCurrentName.includes("טעינה ישירה")) {
-        //         windowArgs.IsDirectCharging = true;
-        //     }
-        //     if (this.containerizationExtendedListService.IsDirectCharging != "") {
-        //         windowArgs.IsDirectCharging = true;
-        //     }
-        // var logitudeWindow = new LogitudeWindow();
-        // logitudeWindow.Height = 200;
-        // logitudeWindow.Width = 250;
-        // logitudeWindow.ShowCloseButton = true;
-        // logitudeWindow.Title = "הצהרת סוכן";
-        // logitudeWindow.WindowArgs = windowArgs;
-        // logitudeWindow.ComponentLoaded.subscribe(comp => {
-        //     logitudeWindow.WindowClosed.subscribe((event: any) => {
-        //         if (event != null) {
-        //             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        //             if (event == "true") {
-        //                 this.entityPM.AgentDeclaration = true;
-        //             } else {
-        //                 this.entityPM.AgentDeclaration = false;
-        //             }
-        //             this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-        //             this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
-        //                 this.CurrentSession.CurrentWindow.Close("0");
-        //                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-        //                     .then(cmpRef => {
-        //                         cmpRef.instance.ComponentRef = cmpRef;
-        //                         cmpRef.instance.Run({
-        //                             EntityId: response.Result.Id,
-        //                             ObjectTableName: "Customs.Containerization"
-        //                         });
-        //                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-        //                             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        //                         });
-        //                     });
-        //                 if (!response.HasError) {
-        //                     var params = this.getParams(response, event);
-        //                     CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "שליחת המכלה", false).then((res) => { });
-        //                     this.containerizationMessagesService.SendContainerization(params)
-        //                         .subscribe(res1 => {
-        //                             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        //                         });
-        //                 }
-        //             });
-        //         }
-        //     });
-        // });
-        // logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
-   // }
-}
-
-getParams(response: ServiceResponse, event: any) {
-    var params: GenericRequestParams = new GenericRequestParams();
-    params.Tenant = SessionLocator.Tenant;
-    params.RequestVIA = event.RequestVIA;
-    params.ForcePersonalSign = event.ForcePersonalSign;
-    params.LoggingEnabled = true;
-    params.LoggingEntityId = response.Result.Id;
-    params.LoggingUserId = SessionLocator.LoggedUserId;
-    params.RequestName = "המכלה";
-    params.ResponseName = "המכלה תשובה"
-    return params
-}
-    private timerToken: any;
-TextChanged(searchtext: any) {
-    if (searchtext != null || searchtext != undefined) {
-
-        this.timerToken = setTimeout(() => {
-            this.SearchFieldsFilter = new FilterItem("SearchFields", searchtext, null, null, "Contains", false, false, false, "string", false);
-            this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
-        }, 700);
-
-    } else {
-        this.SearchFieldsFilter = null;
-        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+       
     }
-}
-CancelButtonClicked() {
-    this.CurrentSession.CloseCurrentWindowEmit("cancel");
-}
 
 
-SetWindowArgs(windowArgs) {
-    if (windowArgs.EntityPM != null) {
-        if (windowArgs.EntityIsDeclarationPM == "true") {
-            this.declarationPM = windowArgs.EntityPM;
-            this.ExportFile = this.declarationPM.ExportFile;
-            this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
-            this.containerizationExtendedListService.SelectedDeclarations = true;
+    private timerToken: any;
+    TextChanged(searchtext: any) {
+        if (searchtext != null || searchtext != undefined) {
+
+            this.timerToken = setTimeout(() => {
+                this.SearchFieldsFilter = new FilterItem("SearchFields", searchtext, null, null, "Contains", false, false, false, "string", false);
+                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+            }, 700);
+
         } else {
-            this.entityPM = windowArgs.EntityPM;
+            this.SearchFieldsFilter = null;
+            this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
     }
-}
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
+    }
 
 
+    SetWindowArgs(windowArgs) {
 
-
-
+        this.declarationPM = windowArgs.DeclarationPM;
+        this.ExportFile = this.declarationPM.ExportFile;
+    }
 }

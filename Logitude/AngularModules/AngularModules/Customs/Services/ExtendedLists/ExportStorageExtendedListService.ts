@@ -5,9 +5,9 @@ import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { DeclarationList } from '../../EntityLists/DeclarationList';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
  import { SendCollateralRequestParams } from '../../DataContract/RequestParams/SendCollateralRequestParams';
+import { ExportStorageList } from 'Customs/EntityLists/ExportStorageList';
   
 @Injectable()
 
@@ -22,9 +22,9 @@ export class ExportStorageExtendedListService {
     public connectedSelectAll: boolean;
     public disconnectedSelectAll: boolean;
     public isNotDirty: boolean;
-    public ConnectedDeclarations: string;
-    public SelectedDeclarations: boolean;
-    public AllDeclarations: string;
+    public ConnectedExportStorage: string;
+    public SelectedExportStorage: boolean;
+    public AllExportStorage: string;
     public IsDirectCharging: string;
 
     getPromiseByFilters(filters: ApiQueryFilters) {
@@ -71,11 +71,11 @@ export class ExportStorageExtendedListService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response;
-                var _mappedListsArray: Array<DeclarationList> = [];
+                var _mappedListsArray: Array<ExportStorageList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
 
-                        var entity: DeclarationList;
+                        var entity: ExportStorageList;
                         entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
                         _mappedListsArray.push(entity);
 
@@ -89,8 +89,8 @@ export class ExportStorageExtendedListService {
     }
     MapJsonToEntityList(jsonList: any) {
 
-        var entityList: DeclarationList;
-        entityList = new DeclarationList();
+        var entityList: ExportStorageList;
+        entityList = new ExportStorageList();
         var jsonListKeys = Object.keys(jsonList);
 
         for (var key in jsonListKeys) {

@@ -66,22 +66,22 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     GetAll = filters.GetAll,
                 };
 
-                List<ObjectField> DeclarationObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.Declaration", tenant);
+                List<ObjectField> ExportStorageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ExportStorage", tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
 
-                for (int i = 1; i <= 10; i++)
+                for (int i = 1; i <= 10; i++)     
                 {
                     object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
                     object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
                     object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
                     object filterValue2 = null;
-
-                    if (filterNameProp != null)
+                        
+                    if (filterNameProp != null)   
                     {
                         string filterName = filterNameProp.ToString();
                         string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
 
-                        ObjectField field = DeclarationObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                        ObjectField field = ExportStorageObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -103,7 +103,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = DeclarationObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = ExportStorageObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
                             string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
@@ -121,13 +121,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     }
                 }
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
-                DeclarationListQueryService declarationListQueryService = new DeclarationListQueryService(MyContext);
-                List<DeclarationList> entityLists = declarationListQueryService.GetListForContainerization(queryOperations, tenant);
-
+                ExportStorageListQueryService exportStorageListQueryService = new ExportStorageListQueryService(MyContext);
+                List<ExportStorageList> entityLists = exportStorageListQueryService.GetListForExportStorage(queryOperations, tenant);
+                
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = declarationListQueryService.GetListCount(queryOperations, tenant);
+                    int count = exportStorageListQueryService.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 
