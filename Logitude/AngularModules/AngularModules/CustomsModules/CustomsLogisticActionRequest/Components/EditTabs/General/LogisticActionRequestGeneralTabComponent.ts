@@ -8,7 +8,7 @@ import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/componen
 import { CargoIdentifireTypeList } from 'Customs/EntityLists/CargoIdentifireTypeList';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { Subscription } from 'rxjs';
-import { ConsignmentDeclartion, DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
+import { ConsignmentDeclartions, DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
@@ -23,8 +23,9 @@ import { ClientListService } from 'Customs/Services/StandardLists/ClientListServ
 import { CargoIdentifireTypeListService } from 'Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { CargoIdentifireTypePM } from 'Customs/EntityPMs/CargoIdentifireTypePM';
 import { ErrorLogPMFileLoggerService } from 'Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
-import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
 import { loggerService } from 'Infrastructure/Utilities/logger.service';
+import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
+import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -239,18 +240,25 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     private async syncDeclaration() {
-        const consignmentDeclartion: ConsignmentDeclartion = await this.getDeclarationsandConsignment();
+        const consignmentDeclartion: ConsignmentDeclartions = await this.getDeclarationsandConsignment();
 
         if (!consignmentDeclartion.Consignment || !(await this.confirmSyncDeclaration())) return;
 
-        this.ExporterNumber = consignmentDeclartion.Consignment.Declaration.ImporterCode;
+        const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration ;
+
+        this.ExporterNumber = declaration.ImporterCode;
+        this.entityPM.DeclarationId = declaration.Id;
+        this.entityPM.DeclarationNumber = declaration.DeclarationNumber;
         this.CargoIdentifierType = consignmentDeclartion.Consignment.CargoTypeCode
         this.CargoIdentifierKey1 = consignmentDeclartion.Consignment.ManifestNumber
         this.CargoIdentifierKey2 = consignmentDeclartion.Consignment.SecondCargoID
         this.CargoIdentifierKey3 = consignmentDeclartion.Consignment.ThirdCargoID
         this.DeliverySiteID = consignmentDeclartion.Consignment.StorageSiteCode
-        this.entityPM.DeclarationId = consignmentDeclartion.Consignment.Declaration.Id;
-        this.entityPM.DeclarationNumber = consignmentDeclartion.Consignment.Declaration.DeclarationNumber;
+
+        if(consignmentDeclartion.ConsignmentPackages.length === 1) {
+            this.entityPM.PackagingTypeCode = consignmentDeclartion.ConsignmentPackages[0].PackageTypeCode
+            this.entityPM.Quantity = consignmentDeclartion.ConsignmentPackages[0].Quantity;
+        }
 
         this.cdr.detectChanges();
     }
@@ -269,8 +277,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    private async getDeclarationsandConsignment(): Promise<ConsignmentDeclartion> {
-        const res: ConsignmentDeclartion = await new DeclarationWebService().getDeclarationConsignment(this.entityPM.ExportFileNo)
+    private async getDeclarationsandConsignment(): Promise<ConsignmentDeclartions> {
+        const res: ConsignmentDeclartions = await new DeclarationWebService().getDeclarationConsignment(this.entityPM.ExportFileNo)
         return res;
     }
 
