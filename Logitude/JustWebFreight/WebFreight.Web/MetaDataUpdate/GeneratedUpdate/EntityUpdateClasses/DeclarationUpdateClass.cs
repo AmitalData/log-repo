@@ -85,7 +85,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "70b0831067118bd416c05ec2b2b4e660";
+
+		public const string HashString = "609e8c0b4477ba1b8572c747953bc31c";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12301,7 +12303,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportDeclaration",
+					  						ValidForQuerySection1 =  "Customs.Declaration",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -12324,6 +12326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -14235,7 +14238,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -15031,7 +15033,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
-					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -15058,7 +15059,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportTaxationDateTime",
 					  						DefaultText =  "Taxation Date Time",
-					  						FullLocalDefaultText =  "תאריך חישוב",
 					  						ListFieldLable =  "ExportTaxationDateTimeListLable",
 					  						ListLableDefaultText =  "Taxation Date Time",
 					  						ListLocalDefaultText =  "תאריך חישוב",
@@ -15070,7 +15070,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -15132,7 +15131,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -15616,123 +15614,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "DeclarationOfficeHandlerCode",
-					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.CustomsHouseType",
-					  						MinLength =  0,
-					  						MaxLength =  17,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  17,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DeclarationOfficeHandlerCode",
-					  						ListPropertyPath =  "DeclarationOfficeHandlerCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DeclarationOfficeHandlerCode",
-					  						DefaultText =  "Declaration Office",
-					  						FullLocalDefaultText =  "בית מכס מטפל",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "TransferExporterCode",
-					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TransferExporterCode",
-					  						ListPropertyPath =  "TransferExporterCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TransferExporterCode",
-					  						DefaultText =  "Transfer Exporter",
-					  						FullLocalDefaultText =  "קוד סוג  יצואן מעביר",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -18199,6 +18080,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              			   Feature DeclarationFeature_MB610 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel Declaration Closure", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CancelDeclarationClosure", NameTextCodeDefaultText = "Cancel Declaration Closure", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB611 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCustomsRequests", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DeclarationCustomsRequests", NameTextCodeDefaultText = "Declaration Customs Requests", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB612 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCancellation", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationCancellation", NameTextCodeDefaultText = "Declaration Cancellation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB613 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorageDecleration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.ExportStorageDecleration", NameTextCodeDefaultText = "Export Storage Decleration", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
                    
     
 			   Feature DeclarationFeature_MB7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSPANEL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocumentsPanel", NameTextCodeDefaultText = "Declaration Documents Panel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
@@ -18692,6 +18574,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         HtmlComponentPath="./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent",
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB612.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton DeclarationMenuButton613 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ExportStorageDecleration",
+						Index = 15, 
+						IsActive = true,
+						LabelTextCodeCode = "Declaration.B.ExportStorageDecleration",
+						LabelTextCodeDefaultText = "Export Storage Decleration",
+						Tenant = 0,
+						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
+						ParentMenuButtonId = DeclarationMenuButton6.Id,
+						ObjectTableId = DeclarationObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  DeclarationFeature_MB613.Id,
+						Style = null,
+						LocalDefaultText = "קישור אחסנות להצהרה",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  DeclarationFeature_MB613.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	          
    
@@ -19320,6 +19222,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationFExporterName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterName", DefaultText = "Exporter Name",LocalDefaultText = @"שם יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationFExporterAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterAddress", DefaultText = "Exporter Address",LocalDefaultText = @"כתובת יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterCode", DefaultText = "Transfer Exporter Code",LocalDefaultText = @"קוד סוג  יצואן מעביר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterPassportNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterPassportNumber", DefaultText = "Transfer Exporter Passport Number",LocalDefaultText = @"מס תעודה יצואן מעביר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

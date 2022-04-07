@@ -1686,6 +1686,7 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierMasterExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsRequiredFieldExtendedListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\ExportStorageExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\ContainerizationExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\DeclarationReferantDataExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\ExceptionReasonExtendedListService.ts" />
