@@ -15870,6 +15870,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AgentReference1&quot;"
     ListPropertyPath="&quot;AgentReference1&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -15941,6 +15942,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AgentReference2&quot;"
     ListPropertyPath="&quot;AgentReference2&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -16012,6 +16014,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PeriodCode&quot;"
     ListPropertyPath="&quot;PeriodCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -16043,6 +16046,77 @@
     IsMaxLength="false"
     NoMetaDataField="false"
     GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;276c8728-2508-4e64-828e-3067007cdebc&quot;"
+    FieldName="&quot;BillToIsCustomer&quot;"
+    OldNames="BillToIsCustomer"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;ARInvoice&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;BillToIsCustomer&quot;"
+    ListPropertyPath="&quot;BillToIsCustomer&quot;"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ARInvoice&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;BillToIsCustomer&quot;"
+    DefaultText="&quot;Bill To Is Customer&quot;"
+    ListFieldLable="&quot;BillToIsCustomerListLable&quot;"
+    ListLableDefaultText="&quot;Bill To Is Customer&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -16227,7 +16301,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;DraftGeneralInvoices&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -16317,7 +16392,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;ApprovalGeneralInvoices&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -16408,7 +16484,8 @@
         ObjectFieldName="&quot;IsGeneralInvoice&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -16495,7 +16572,8 @@
         ObjectFieldName="&quot;StatusCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -16586,7 +16664,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;UnpaidInvoices&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -16653,7 +16732,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;NotReadyInvoices&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -16710,7 +16790,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;MarkedAsBlockedForTransfer&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -16777,7 +16858,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;ErrorInTransferInvoices&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -16867,7 +16949,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;OpenConstituentInvoices&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -16956,7 +17039,8 @@
         PredefinedValue="&quot;TE&quot;"
         ObjectFieldName="&quot;SATTransferStatusCode&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -17041,7 +17125,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;OpenInvoices&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -17132,7 +17217,8 @@
         ObjectFieldName="&quot;TransferStatusCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -17890,7 +17976,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;ARInvoice&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;ApiV1&quot;"

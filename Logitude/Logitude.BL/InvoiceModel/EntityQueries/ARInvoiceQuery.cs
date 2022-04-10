@@ -1866,6 +1866,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         entityPM.BillToCreditLimitOpenBalance = myBillTo.Customer.CreditLimitOpenBalance;
                         entityPM.BillToCreditLimitWarningPercentage = myBillTo.Customer.CreditLimitWarningPercentage;
                         entityPM.BillToBlockNewInvoiceCreation = myBillTo.Customer.BlockNewInvoiceCreation;
+                        entityPM.BillToIsCustomer = myBillTo.PartnerTypeId == "CS";
                         entityPM.BillToCreditLimitActualAmount = this.GetCustomerCreditLimitActualAmount(entityPOCO.BillToId, tenant);
 
                         double? ActualBalance = 0;
