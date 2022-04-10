@@ -1021,7 +1021,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn InactiveFeatureTogglesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveFeatureTogglesQuery.Id,QueryCode = InactiveFeatureTogglesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "FeatureToggle.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter InactiveFeatureTogglesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "FeatureToggle.Inactive", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveFeatureTogglesQuery.Id,QueryCode = InactiveFeatureTogglesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter InactiveFeatureTogglesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "FeatureToggle.Inactive", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveFeatureTogglesQuery.Id,QueryCode = InactiveFeatureTogglesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

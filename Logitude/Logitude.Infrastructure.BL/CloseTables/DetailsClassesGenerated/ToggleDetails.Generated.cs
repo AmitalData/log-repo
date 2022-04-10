@@ -588,7 +588,14 @@ namespace Logitude.Infrastructure.BL
                 Description = "Aging Report Get From GLAccountAgingData, new method new way", 
                 SearchFields = "Aging Report Get From GLAccountAgingData, new method new way,ARN", 
 			});
-          
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TSV", 
+                Name = "Test Server Validations", 
+                SearchFields = "TSV,Test Server Validations", 
+                Description = "Test Operational/ Accounting close rules validations in server side", 
+			});
 			
             return all;
        }

@@ -690,52 +690,59 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.currentActionName = "AccountingClose";
         var hasOpenPayables: boolean = false;
         var hasOpenReceivables: boolean = false;
-        if (this.EntityPM.ShipmentReceivables.length > 0) {
-            this.EntityPM.ShipmentReceivables.forEach(p => {
-                if (p.ShipmentReceivableLineStatusCode != "ACCT" && p.ShipmentReceivableLineStatusCode != "EMPT")
-                    if (p.TotalAmount != null && p.TotalAmount != 0) hasOpenReceivables = true;
-            });
-        }
 
-        if (!SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables) {
-            if (this.EntityPM.ShipmentPayables.length > 0)
-                this.EntityPM.ShipmentPayables.forEach(p => {
-                    if (p.ShipmentPayableLineStatusCode != "ACCT" && p.ShipmentPayableLineStatusCode != "EMPT")
-                        if (p.ShipmentPayableAmountTypeCode == "NEXP") {
-                            p.AccountedAmount != null && p.AccountedAmount != null ? hasOpenPayables = true : p.ExpectedAmount != null && p.ExpectedAmount != 0 ? hasOpenPayables = true : -1;
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TSV")[0] == null) {
+            if (this.EntityPM.ShipmentReceivables.length > 0) {
+                this.EntityPM.ShipmentReceivables.forEach(p => {
+                    if (p.ShipmentReceivableLineStatusCode != "ACCT" && p.ShipmentReceivableLineStatusCode != "EMPT")
+                        if (p.TotalAmount != null && p.TotalAmount != 0) hasOpenReceivables = true;
+                });
+            }
 
-                        }
-                        else {
-                            if (p.ExpectedAmount != null && p.ExpectedAmount != 0) {
-                                hasOpenPayables = true;
+            if (!SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables) {
+                if (this.EntityPM.ShipmentPayables.length > 0)
+                    this.EntityPM.ShipmentPayables.forEach(p => {
+                        if (p.ShipmentPayableLineStatusCode != "ACCT" && p.ShipmentPayableLineStatusCode != "EMPT")
+                            if (p.ShipmentPayableAmountTypeCode == "NEXP") {
+                                p.AccountedAmount != null && p.AccountedAmount != null ? hasOpenPayables = true : p.ExpectedAmount != null && p.ExpectedAmount != 0 ? hasOpenPayables = true : -1;
+
+                            }
+                            else {
+                                if (p.ExpectedAmount != null && p.ExpectedAmount != 0) {
+                                    hasOpenPayables = true;
+                                }
+                            }
+                    });
+            }
+
+            if (this.EntityPM.ShipmentLevelCode == "C") {
+                if (hasOpenPayables && hasOpenReceivables) {
+                    this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
+
+                }
+                else {
+                    this.shipmentService.CheckHousesOpenAmounts(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                        if (myResponse != null) {
+                            if (myResponse.Result != null && myResponse.Result != "") {
+                                var Result: string = myResponse.Result;
+                                if (Result.includes('R'))
+                                    hasOpenReceivables = true;
+                                if (SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables) {
+                                    if (Result.includes('P'))
+                                        hasOpenPayables = true;
+                                }
                             }
                         }
-                });
-        }
+                    });
 
-        if (this.EntityPM.ShipmentLevelCode == "C") {
-            if (hasOpenPayables && hasOpenReceivables) {
-                this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
-
+                    this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
+                }
             }
             else {
-                this.shipmentService.CheckHousesOpenAmounts(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                    if (myResponse != null) {
-                        if (myResponse.Result != null && myResponse.Result != "") {
-                            var Result: string = myResponse.Result;
-                            if (Result.includes('R'))
-                                hasOpenReceivables = true;
-                            if (SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables) {
-                                if (Result.includes('P'))
-                                    hasOpenPayables = true;
-                            }
-                        }
-                    }
-                });
-
                 this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
             }
         }
+
         else {
             this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
         }
@@ -1190,7 +1197,10 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             this.EntityPM.IsOperationalClosed = true;
             this.ValidateShipmentRules(WarningsList, ErrorsList, this.EntityPM);
             var tableId = window.ObjectTables.filter(t => t.Name == "Shipment")[0].Id;
-            ServiceLocator.RulesValidator.ValidateAllRequiredFieldRules(this.EntityPM, tableId, ErrorsList);
+
+            if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TSV")[0] == null) {
+                ServiceLocator.RulesValidator.ValidateAllRequiredFieldRules(this.EntityPM, tableId, ErrorsList);
+            }
 
             this.DisplayErrorsWindow(WarningsList, ErrorsList);
         }
@@ -1627,84 +1637,79 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         });
     }
     private ValidateShipmentRules(WarningsList: Array<string>, ErrorsList: Array<string>, entityPM: any) {
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TSV")[0] == null) {
+            var warningValidator: EntityWarningsValidator = new EntityWarningsValidator();
+            var ruleValidator: RulesValidator = new RulesValidator();
+            var requiredFields: Array<ObjectTableRuleFieldPM> = [];
 
-        var tableId = window.ObjectTables.filter(t => t.Name == "Shipment")[0].Id;
+            if (entityPM.ShipmentLevelCode == "H") {
+                ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_AE", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_AI", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_OE", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_OI", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_IE", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_II", entityPM, requiredFields);
 
-        var tableId = window.ObjectTables.filter(t => t.Name == "Shipment")[0].Id;
-
-        var warningValidator: EntityWarningsValidator = new EntityWarningsValidator();
-        var ruleValidator: RulesValidator = new RulesValidator();
-        var requiredFields: Array<ObjectTableRuleFieldPM> = [];
-        // ruleValidator.ExecuteRequierdFieldRule(entityPM,
-        //ruleValidator.ValidateAllRequiredFieldRules(entityPM, tableId, ErrorsList);
-        if (entityPM.ShipmentLevelCode == "H") {
-            ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_AE", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_AI", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_OE", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_OI", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_IE", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Shipment_OpClosed_Req_II", entityPM, requiredFields);
-
-            warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_AE", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_AI", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_OE", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_OI", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_IE", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_II", entityPM, WarningsList);
-        }
-
-        if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C") {
-
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AE", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AI", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OE", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OI", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_IE", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_II", entityPM, requiredFields);
-
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AE_D", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AI_D", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OE_D", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OI_D", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_IE_D", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_II_D", entityPM, requiredFields);
-
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AE_D", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AI_D", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OE_D", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OI_D", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_IE_D", entityPM, requiredFields);
-            ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_II_D", entityPM, requiredFields);
-
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_AE", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_AI", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_OE", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_OI", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_IE", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_II", entityPM, WarningsList);
-
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_AE_D", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_AI_D", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_OE_D", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_OI_D", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_IE_D", entityPM, WarningsList);
-            warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_II_D", entityPM, WarningsList);
-        }
-
-        var _tenantObjectFields = window.ObjectFields;
-        if (requiredFields.length != 0) {
-
-            for (var k in requiredFields) {
-                var field = requiredFields[k];
-                var obField = _tenantObjectFields.filter(x => x.FieldCode === field.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
-                var requiredError = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-                var fieldTrans = TextCodeTranslator.Translate(obField.FullNameTextCodeCode);
-                requiredError = requiredError.replace("%FieldName", fieldTrans);
-                ErrorsList.push(requiredError);
+                warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_AE", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_AI", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_OE", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_OI", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_IE", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Shipment_OpClosed_Req_II", entityPM, WarningsList);
             }
 
+            if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C") {
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AE", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AI", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OE", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OI", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_IE", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_II", entityPM, requiredFields);
+
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AE_D", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AI_D", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OE_D", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OI_D", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_IE_D", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_II_D", entityPM, requiredFields);
+
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AE_D", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_AI_D", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OE_D", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_OI_D", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_IE_D", entityPM, requiredFields);
+                ruleValidator.ExecuteRequierdFieldRule("Master_OpClosed_Req_II_D", entityPM, requiredFields);
+
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_AE", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_AI", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_OE", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_OI", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_IE", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_II", entityPM, WarningsList);
+
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_AE_D", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_AI_D", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_OE_D", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_OI_D", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_IE_D", entityPM, WarningsList);
+                warningValidator.ValidateRequiedFieldRule("Master_OpClosed_Req_II_D", entityPM, WarningsList);
+            }
+
+            var _tenantObjectFields = window.ObjectFields;
+            if (requiredFields.length != 0) {
+                for (var k in requiredFields) {
+                    var field = requiredFields[k];
+                    var obField = _tenantObjectFields.filter(x => x.FieldCode === field.ObjectFieldCode)[0];
+                    var requiredError = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+                    var fieldTrans = TextCodeTranslator.Translate(obField.FullNameTextCodeCode);
+                    requiredError = requiredError.replace("%FieldName", fieldTrans);
+                    ErrorsList.push(requiredError);
+                }
+
+            }
         }
     }
+
     private IsStandAloneFeatureShipment() {
         return this.EntityPM.IsStandalonePickupDelivery;
     }

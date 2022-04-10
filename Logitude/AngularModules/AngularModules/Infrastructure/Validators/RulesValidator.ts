@@ -13,6 +13,7 @@ import { CustomFieldClass } from '../DataContracts/CustomFieldClass';
 import { EntityListService } from '../Services/EntityListService';
 import { ApiQueryFilters, FilterItem } from '../DataContracts/ApiQueryFilters';
 import { DateTool } from '../Tools';
+import { SessionLocator } from '../Utilities/SessionLocator';
 
 
 declare var window: any;
@@ -100,8 +101,10 @@ export class RulesValidator {
     }
     public ValidateAllTableRules(entity: any, objectTableId: string, errorsArray: Array<string>) {
 
-        this.ValidateAllRequiredFieldRules(entity, objectTableId, errorsArray);
-        this.ValidateEntityRules(entity, objectTableId, errorsArray);
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TSV")[0] == null) {
+            this.ValidateAllRequiredFieldRules(entity, objectTableId, errorsArray);
+            this.ValidateEntityRules(entity, objectTableId, errorsArray);
+        }
         //this.val
         return errorsArray;
 
