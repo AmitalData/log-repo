@@ -70,9 +70,8 @@ export class SATInterfaceSettingsComponent {
         if (AppTool.IsNullOrEmpty(this.EntityPM.SATInterfaceCode)) {
             return null;
         }
-        else {
-            return this.SATInterfaces.filter(satInterface => satInterface.Code == this.EntityPM.SATInterfaceCode)[0];
-        }
+
+        return this.SATInterfaces.filter(satInterface => satInterface.Code == this.EntityPM.SATInterfaceCode)[0];
     }
 
     CancelButtonClicked() {

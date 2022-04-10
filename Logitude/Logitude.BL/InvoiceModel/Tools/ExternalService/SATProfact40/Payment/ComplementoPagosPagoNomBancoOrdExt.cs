@@ -18,6 +18,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
         {
             if (arPaymentPM == null) arPaymentPM = externalARPaymentPM;
 
+            string rfcEmisorCtaOrd = ComplementoPagosPagoRfcEmisorCtaOrd.Get(arPaymentPM);
+            if (rfcEmisorCtaOrd != SATData.OutSideMexicoRfc) return false;
+            
             List<string> paymentMethodCodesRequiredBankName = new List<string>
             {
                 "02",
