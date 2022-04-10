@@ -596,6 +596,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TSV,Test Server Validations", 
                 Description = "Test Operational/ Accounting close rules validations in server side", 
 			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "PF4", 
+                Name = "Profact 4.0", 
+                SearchFields = "PF4,Profact 4.0", 
+                Description = "Add Profact Version 4.0 to SAT Interfaces", 
+			});
 			
             return all;
        }

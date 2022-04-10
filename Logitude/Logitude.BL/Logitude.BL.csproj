@@ -681,6 +681,7 @@
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.ImpuestosPs.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.NumOperacion.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.RfcEmisorCtaOrd.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\ComplementoPagosPagoNomBancoOrdExt.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Conceptos.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Fecha.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Receptor.cs" />
