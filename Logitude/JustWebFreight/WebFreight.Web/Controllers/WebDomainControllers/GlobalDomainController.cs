@@ -119,7 +119,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
                         myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
                         myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
-                        
+
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
                             myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
@@ -562,6 +562,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         TrialEndDate = entityPM.TrialEndDate,
                         TrialStartDate = entityPM.TrialStartDate,
                         BluesnapAccount = entityPM.BluesnapAccount,
+                        PaymentChannelCode = entityPM.PaymentChannelCode,
                         BluesnapContractId = entityPM.BluesnapContractId,
                         ChangeHeaderColor = entityPM.ChangeHeaderColor,
                         IsCargonautEnabled = entityPM.IsCargonautEnabled,
@@ -712,7 +713,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         oceanInsightGlobalSetting.OITenantNumber = setting.OITenantNumber;
                         oceanInsightGlobalSetting.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
                         oceanInsightGlobalSetting.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
-                       
+
                     }
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, oceanInsightGlobalSetting);
@@ -723,7 +724,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetUpdateOceanInsightGlobalSetting(int oITenantNumber, string amitalCloudEnvironmentURL, string amitalCloudLogitudeTenantPrimaryKey)
         {
             try
@@ -781,7 +782,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string ProductInfo { get; internal set; }
 
         public string ProductMessage { get; internal set; }
-        
+
         public bool ReportsRunUsingWR { get; set; }
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }
@@ -826,6 +827,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public int NumberOfFreeUsers { get; set; }
         public string BluesnapContractId { get; set; }
         public string BluesnapAccount { get; set; }
+        public string PaymentChannelCode { get; set; }
         public string BluesnapCRMContractId { get; set; }
         public string BluesnapEAWBContractId { get; set; }
         public string BluesnapEAWBSContractId { get; set; }
