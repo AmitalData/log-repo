@@ -996,7 +996,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn ARInvoiceTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARInvoiceTransferHistoryQuery.Id,QueryCode = ARInvoiceTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingTransferHeader.FileName" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter ARInvoiceTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.ARInvoiceTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ARInvoiceTransferHistoryQuery.Id,QueryCode = ARInvoiceTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ARInvoiceTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.ARInvoiceTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ARInvoiceTransferHistoryQuery.Id,QueryCode = ARInvoiceTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -1009,7 +1009,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn APInvoiceTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APInvoiceTransferHistoryQuery.Id,QueryCode = APInvoiceTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingTransferHeader.FileName" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter APInvoiceTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.APInvoiceTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, QueryId = APInvoiceTransferHistoryQuery.Id,QueryCode = APInvoiceTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter APInvoiceTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.APInvoiceTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = APInvoiceTransferHistoryQuery.Id,QueryCode = APInvoiceTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -1022,7 +1022,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn ARPaymentTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentTransferHistoryQuery.Id,QueryCode = ARPaymentTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingTransferHeader.FileName" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter ARPaymentTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.ARPaymentTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ARPaymentTransferHistoryQuery.Id,QueryCode = ARPaymentTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ARPaymentTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.ARPaymentTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ARPaymentTransferHistoryQuery.Id,QueryCode = ARPaymentTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -1035,7 +1035,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn APPaymentTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentTransferHistoryQuery.Id,QueryCode = APPaymentTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingTransferHeader.FileName" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter APPaymentTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.APPaymentTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, QueryId = APPaymentTransferHistoryQuery.Id,QueryCode = APPaymentTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter APPaymentTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.APPaymentTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = APPaymentTransferHistoryQuery.Id,QueryCode = APPaymentTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
