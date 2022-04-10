@@ -433,8 +433,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
         private void CheckIfGLAccountIsControlGLAccount(GLAccountPM entityPM) {
-            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(entityPM.Tenant);
-            FullAccountingSettingPM fullAccountingSetting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(entityPM.Tenant);
+            // FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(entityPM.Tenant);
+            FullAccountingSettingPM fullAccountingSetting = FullAccountingSettingQueryService.Get(entityPM.Tenant);
             if (!string.IsNullOrWhiteSpace(entityPM.ParentAccountId) && 
                 (fullAccountingSetting.CustomerControlAccountId == entityPM.Id ||
                 fullAccountingSetting.VendorControlAccountId == entityPM.Id ||
