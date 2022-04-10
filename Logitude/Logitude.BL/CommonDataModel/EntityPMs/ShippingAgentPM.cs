@@ -289,6 +289,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ImageDetailId { get; set; }
         [DataMember]
         public string RegimenFiscalCode { get; set; }
+        [DataMember]
+        public string SATReceptorName { get; set; }
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

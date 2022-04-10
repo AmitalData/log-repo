@@ -84,6 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public string GLAccountNumber { get; set; }
         public string RegimenFiscalCode { get; set; }
+        public string SATReceptorName { get; set; }
 
     }
 }

@@ -295,5 +295,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsSendingByBillOfLading { get; set; }
         [DataMember]
         public string RegimenFiscalCode { get; set; }
+        [DataMember]
+        public string SATReceptorName { get; set; }
     }
 }

@@ -44,7 +44,7 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
 
     private SetHaveRegimenFiscalFieldFeatureToggle() {
         var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
-        if (RegimenFiscalFieldFeatureToggle) {
+        if (RegimenFiscalFieldFeatureToggle || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.HaveRegimenFiscalFieldFeatureToggle = true;
         }
     }

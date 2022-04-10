@@ -42,5 +42,6 @@ export class AccountingPartnerList {
 		CreditLimit: number;
 		InsuredCreditlimit: number;
 		RegimenFiscalCode: string;
+		SATReceptorName: string;
 	
 }
