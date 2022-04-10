@@ -271,7 +271,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode,
                 DomicilioFiscalReceptor = billToAddressZipCode,
                 Rfc = GetReceptorRfc(),
-                UsoCFDI = GetReceptorUsoCFDI()
+                UsoCFDI = GetReceptorUsoCFDI(),
+                NumRegIdTrib = GetNumRegIdTrib()
             };
         }
 
@@ -287,6 +288,16 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             {
                 return !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : "XEXX010101000";
             }
+        }
+
+        private string GetNumRegIdTrib()
+        {
+            string billToCountryCode = GetBillToCountryCode();
+
+            if (IsMexicoCountry(billToCountryCode))
+                return null;
+
+            return !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : SATData.OutSideMexicoRfc;
         }
 
         private string GetBillToCountryCode()

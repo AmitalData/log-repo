@@ -30,10 +30,11 @@ export class SATInterfaceSettingsComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsCartaPorteSettingsEnabled: boolean = false;
     public HaveRegimenFiscalField: boolean = false;
+    public SATInterfaces: SATInterfaceDetails[] = [];
     constructor(private entityResourceService: EntityResourceService) {
         this._entityResourceService = new EntityResourceService();
         this.sATInterfaceSettingPMService = new SATInterfaceSettingPMService();
-
+        this.FillSATInterfaces();
         //entityResourceService.getEntityResourceByTableName("SATInterfaceSetting").subscribe(res1 => {
             this.LoadData();
         //});
@@ -43,15 +44,35 @@ export class SATInterfaceSettingsComponent {
         this.HaveRegimenFiscalField = SessionLocator.FeatureToggles.some(d => d.ToggleCode == "RFF");
     }
 
+    FillSATInterfaces() {
+        this.SATInterfaces.push(new SATInterfaceDetails("NONE", "None"));
+        this.SATInterfaces.push(new SATInterfaceDetails("CONT", "Contpaq"));
+        this.SATInterfaces.push(new SATInterfaceDetails("PROF33", "Profact 3.3"));
+
+        if (SessionLocator.FeatureToggles.some(d => d.ToggleCode == "PF4"))
+            this.SATInterfaces.push(new SATInterfaceDetails("PROF40", "Profact 4.0"));
+    }
+
     private LoadData() {
         this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe((response:any) => {
             if (!response.HasError) {
                 this.EntityPM = response.Result;
-               
+
+                this.SelectedSATInterface = this.GetSelectedSATInterface();
+
             }
 
             this.IsResourcesReady = true;
         });
+    }
+
+    private GetSelectedSATInterface() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.SATInterfaceCode)) {
+            return null;
+        }
+        else {
+            return this.SATInterfaces.filter(satInterface => satInterface.Code == this.EntityPM.SATInterfaceCode)[0];
+        }
     }
 
     CancelButtonClicked() {
@@ -135,4 +156,22 @@ export class SATInterfaceSettingsComponent {
 
 
     }
+
+    private selectedSATInterface: SATInterfaceDetails;
+    get SelectedSATInterface() { return this.selectedSATInterface; }
+    set SelectedSATInterface(value: SATInterfaceDetails) {
+        if (this.selectedSATInterface != value) {
+            this.selectedSATInterface = value;
+            this.EntityPM.SATInterfaceCode = value ? value.Code : null;
+        }
+    }
+}
+
+class SATInterfaceDetails {
+    constructor(code: string, name: string) {
+        this.Code = code;
+        this.Name = name;
+    }
+    Code: string;
+    Name: string;
 }
