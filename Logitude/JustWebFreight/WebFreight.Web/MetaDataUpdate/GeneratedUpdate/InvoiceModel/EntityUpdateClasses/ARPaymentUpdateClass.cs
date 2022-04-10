@@ -6186,7 +6186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn OpenPaymentsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentsQuery.Id,QueryCode = OpenPaymentsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ARPayment.InternalNotes" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.OpenPayments", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenPaymentsQuery.Id,QueryCode = OpenPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.OpenPayments", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenPaymentsQuery.Id,QueryCode = OpenPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -6215,7 +6215,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn DraftPaymentsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftPaymentsQuery.Id,QueryCode = DraftPaymentsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ARPayment.InternalNotes" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter DraftPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.DraftPayments", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DraftPaymentsQuery.Id,QueryCode = DraftPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DraftPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.DraftPayments", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = DraftPaymentsQuery.Id,QueryCode = DraftPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -6237,7 +6237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn NotReadyPaymentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyPaymentsQuery.Id,QueryCode = NotReadyPaymentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARPayment.TransferError" , ColumnWidth = 500 }, addedQueryColumns);
 
-             AdvancedQueryFilter NotReadyPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.NotReadyPayments", PredefinedValue = "true",PredefinedValue2 = null, QueryId = NotReadyPaymentsQuery.Id,QueryCode = NotReadyPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter NotReadyPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.NotReadyPayments", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = NotReadyPaymentsQuery.Id,QueryCode = NotReadyPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -6259,10 +6259,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn MarkedasblockedfortransferQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARPayment.TransferError" , ColumnWidth = 500 }, addedQueryColumns);
 
-             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.MarkedAsBlockedForTransfer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.MarkedAsBlockedForTransfer", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.SATTransferStatusCode", PredefinedValue = "TE",PredefinedValue2 = null, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.SATTransferStatusCode", PredefinedValue = "TE",PredefinedValue2 = null, CustomPredefined = false, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -6295,7 +6295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn PaymentsFailedtoOpeninSATQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentsFailedtoOpeninSATQuery.Id,QueryCode = PaymentsFailedtoOpeninSATQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ARPayment.InternalNotes" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter PaymentsFailedtoOpeninSATQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.SATTransferStatusCode", PredefinedValue = "TE",PredefinedValue2 = null, QueryId = PaymentsFailedtoOpeninSATQuery.Id,QueryCode = PaymentsFailedtoOpeninSATQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter PaymentsFailedtoOpeninSATQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.SATTransferStatusCode", PredefinedValue = "TE",PredefinedValue2 = null, CustomPredefined = false, QueryId = PaymentsFailedtoOpeninSATQuery.Id,QueryCode = PaymentsFailedtoOpeninSATQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -6324,7 +6324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn ErrorInTransferQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ARPayment.InternalNotes" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ErrorInTransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.TransferStatusCode", PredefinedValue = "ET",PredefinedValue2 = null, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter ErrorInTransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPayment.TransferStatusCode", PredefinedValue = "ET",PredefinedValue2 = null, CustomPredefined = false, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
