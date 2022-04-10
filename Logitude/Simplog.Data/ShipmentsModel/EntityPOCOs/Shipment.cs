@@ -33,7 +33,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string LocalCustomsSentByUserId { get; set; }
         public virtual User LocalCustomsSentByUser { get; set; }
         public string ConcurrencyGUID { get; set; }
-
+        public string OIConcurrencyGUID { get; set; }
+        
         #region Fields
         public string CountryForStatisticsId { get; set; }
         public double? ProfitExchangeRate { get; set; }

@@ -176,6 +176,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AWBComments).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.OIConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.AWBChargesCodeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.IssuingCarrierAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IssuingCarrierAgentId).HasMaxLength(15).IsUnicode(false);
@@ -563,6 +564,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChargeableWeight).HasColumnName("ChargeableWeight");
             this.Property(t => t.Volume).HasColumnName("Volume");
             this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
+            this.Property(t => t.OIConcurrencyGUID).HasColumnName("OIConcurrencyGUID");
             this.Property(t => t.AWBChargesCodeCode).HasColumnName("AWBChargesCodeCode");
             this.Property(t => t.IssuingCarrierAddressId).HasColumnName("IssuingCarrierAddressId");
             this.Property(t => t.IssuingCarrierAgentId).HasColumnName("IssuingCarrierAgentId");

@@ -3475,6 +3475,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="OIConcurrencyGUID"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

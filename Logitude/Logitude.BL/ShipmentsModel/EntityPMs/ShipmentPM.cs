@@ -28,6 +28,12 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ConcurrencyGUID { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string OIConcurrencyGUID { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string OINewConcurrencyGUID { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CASSCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

@@ -2332,7 +2332,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void StartProcessingUpdateShipment()
         {
-            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;  
+            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
+            shipmentPM.OINewConcurrencyGUID = Guid.NewGuid().ToString();
             this.UpdateShipmentDates();
         }
         private void UpdateShipmentDates()
