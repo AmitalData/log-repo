@@ -188,7 +188,7 @@ namespace Logitude.Customs.BL.BL
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
                
             var existCustomsDocumentTypes = customsDocumentsTicketPMList.Where(d => 
-            (d.DocumentTypeCode == "380" || d.DocumentTypeCode == "ILD") && d.DocumentsFilingId != null && d.CustomsDocId != null)
+            (d.DocumentTypeCode == "380" || d.DocumentTypeCode == "ILD") && d.DocumentsFilingId != null)
                 .Select(x=>x.DocumentTypeCode).Distinct().ToList();
 
             if (existCustomsDocumentTypes == null || existCustomsDocumentTypes.Count == 0)
