@@ -593,6 +593,26 @@ export class QuoteChargePM {
     public set TariffVersion(newValue: number) { if (this.tariffVersion != newValue) { this.tariffVersion = newValue; this.MarkAsDirty("TariffVersion"); } }
        
 	 
+    private saleTariffId: string;
+    public get SaleTariffId() { return this.saleTariffId; }
+    public set SaleTariffId(newValue: string) { if (this.saleTariffId != newValue) { this.saleTariffId = newValue; this.MarkAsDirty("SaleTariffId"); } }
+       
+	 
+    private saleTariffNumber: string;
+    public get SaleTariffNumber() { return this.saleTariffNumber; }
+    public set SaleTariffNumber(newValue: string) { if (this.saleTariffNumber != newValue) { this.saleTariffNumber = newValue; this.MarkAsDirty("SaleTariffNumber"); } }
+       
+	 
+    private saleTariffLineId: string;
+    public get SaleTariffLineId() { return this.saleTariffLineId; }
+    public set SaleTariffLineId(newValue: string) { if (this.saleTariffLineId != newValue) { this.saleTariffLineId = newValue; this.MarkAsDirty("SaleTariffLineId"); } }
+       
+	 
+    private saleTariffVersion: number;
+    public get SaleTariffVersion() { return this.saleTariffVersion; }
+    public set SaleTariffVersion(newValue: number) { if (this.saleTariffVersion != newValue) { this.saleTariffVersion = newValue; this.MarkAsDirty("SaleTariffVersion"); } }
+       
+	 
     private hasPickup: boolean;
     public get HasPickup() { return this.hasPickup; }
     public set HasPickup(newValue: boolean) { if (this.hasPickup != newValue) { this.hasPickup = newValue; this.MarkAsDirty("HasPickup"); } }

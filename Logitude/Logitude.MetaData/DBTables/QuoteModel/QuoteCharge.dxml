@@ -478,6 +478,33 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SaleTariffId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleTariffNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleTariffVersion"
+    Type="int"  DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SaleTariffLineId"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteId"
     ReferencedTable="Quotes"

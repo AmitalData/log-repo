@@ -27317,6 +27317,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TicketId&quot;"
     ListPropertyPath="&quot;TicketId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -27442,7 +27443,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCreatedQuote&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -27529,7 +27531,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsDraftQuote&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -27616,7 +27619,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsSentQuote&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -27708,7 +27712,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsExpiredQuote&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -27875,7 +27880,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsAcceptedQuote&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -27962,7 +27968,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;AcceptedWithoutShipments&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -28136,7 +28143,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -28228,7 +28236,8 @@
         PredefinedValue="&quot;12/6/2018 12:00:00 AM&quot;"
         ObjectFieldName="&quot;AllFollowUps&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -28320,7 +28329,8 @@
         PredefinedValue="&quot;12/6/2018 12:00:00 AM&quot;"
         ObjectFieldName="&quot;MyFollowUps&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -28407,7 +28417,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;MyQuotes&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -28494,7 +28505,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;OpenQuotes&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -29331,7 +29343,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;Quote&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"
@@ -31990,6 +32003,12 @@
       Code="&quot;Quote.F.PackageTypeQuantity.Short&quot;"
       DefaultText="&quot;Quantity&quot;"
       TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Quote.S.GenerateSalesLocalCharges&quot;"
+      DefaultText="&quot;Generate Sales Local Charges&quot;"
+      LocalDefaultText="&quot;Generate Sales Local Charges&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

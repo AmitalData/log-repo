@@ -221,6 +221,14 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int TariffVersion { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string SaleTariffId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string SaleTariffNumber { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string SaleTariffLineId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int SaleTariffVersion { get; set; }
 
         public bool HasPickup { get; set; }
         public bool HasDelivery { get; set; }

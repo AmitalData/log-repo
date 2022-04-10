@@ -23,6 +23,7 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 import { QuoteChargesBehaviours } from '../Behaviours/QuoteChargesBehaviours';
 import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { TariffDomainService, SalesLocalCharges, SalesLocalChargesTariffSearchArgs } from '../../../TariffModule/Services/TariffDomainService';
 
 @Component({
     selector: 'LCLChargesComponent',    
@@ -301,6 +302,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         logWindow.Show('./QuoteModules/QuoteTabs/Components/Tariffs/TariffsComponent');
        
     }
+
     PriceCheck() {
         this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             ServiceLocator.SendTotangoUserActivity("Tariff", "Generate from Quote");
@@ -357,6 +359,56 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });
     }
+
+    GenerateSalesLocalCharges() {
+        var saleLocalCharges =this.TariffBehaviours.GenerateSalesLocalCharges();
+        this.CreateQuoteSalesLocalCharges(saleLocalCharges);
+    }
+
+    CreateQuoteSalesLocalCharges(tariffCharges) {
+        if (tariffCharges != null) {
+            tariffCharges.forEach((localCharge: SalesLocalCharges) => {
+                this.AddTariffChargesToQuote_LCL(localCharge);
+            });
+        }
+        this.BuildItemsSource();
+    }
+
+    AddTariffChargesToQuote_LCL(localCharge) {
+        this.EntityPM.AddQuoteChargePM(localCharge);
+        var chargeItem: QuoteChargeItem = new QuoteChargeItem(localCharge, this, false);
+        chargeItem.ChargesTypeId = localCharge.ChargesTypeId;
+        chargeItem.CostMeasurementId = localCharge.CostMeasurementId;
+        chargeItem.CostCurrencyId = localCharge.CostCurrencyId;
+        chargeItem.CostTotalAmount = localCharge.CostTotalAmount;
+        chargeItem.CostMinAmount = localCharge.CostMinAmount;
+        chargeItem.CostExchangeRate = localCharge.CostExchangeRate;
+        chargeItem.SaleMeasurementId = localCharge.SaleMeasurementId;
+        chargeItem.SaleCurrencyId = localCharge.SaleCurrencyId;
+        chargeItem.SaleExchangeRate = localCharge.SaleExchangeRate;
+        chargeItem.ChargesGroupCode = localCharge.ChargesGroupCode;
+        chargeItem.IsAllIN = false;
+        var costAmount: number = localCharge.CostTotalAmount;
+        chargeItem.SetCostQuantity();
+        chargeItem.SetSaleQuantity(); 
+        var costQuantity: number = chargeItem.CostQuantity;
+
+        if (costQuantity != null && costQuantity != 0) {
+            if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
+                chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
+            }
+            else {
+                chargeItem.CostUnitPrice = (costAmount / costQuantity);
+
+            }
+            chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+        }
+        chargeItem.ComputeSalePrice();
+        chargeItem.ComputeSaleAmounts();
+        chargeItem.SetUIProperties_AllIn();
+        this.ItemsSource.Insert(chargeItem);
+    }
+
     EditTariffClicked(item: QuoteChargeItem) {
         if (item != null) {
             var editWindow = new LogitudeWindow();

@@ -394,6 +394,19 @@ export class TariffDomainService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetAvailableSalesLocalChargesTariffs(args: SalesLocalChargesTariffSearchArgs) {
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/PostAvailableSalesLocalChargesTariffs", JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
 }
 
 export class TariffSummery {
@@ -606,6 +619,42 @@ export class CustomsChargesTariffSearchArgs {
 }
 
 export class CustomsChargesPayable {
+    ChargeTypeId: string;
+    ChargeTypeCode: string;
+    ChargeTypeName: string;
+    UnitOfMesurmentId: string;
+    UnitOfMesurmentCode: string;
+    TariffId: string;
+    TariffNumber: string;
+    VersionId: number;
+    TariffLineId: string;
+    CurrencyId: string;
+    CurrencyCode: string;
+    ExpectedAmount: number;
+    LocalExpectedAmount: number;
+    ProfitExpectedAmount: number;
+    MinAmount: number;
+    Quantity: number;
+    Price: number;
+    IsDifferentCurrency: boolean;
+    Notes: string;
+    Rate: number;
+    SellerId: string;
+    SellerName: string;
+}
+
+export class SalesLocalChargesTariffSearchArgs {
+    FromCountryId: string;
+    ToCountryId: string;
+    BetweenDate: Date;
+    FriehgtAmount: number;
+    ForiegnChargesAmount: number;
+    LocalCurrencyId: string;
+    QuoteId: string;
+    SalesLocalCharges: SalesLocalCharges[] = [];
+}
+
+export class SalesLocalCharges {
     ChargeTypeId: string;
     ChargeTypeCode: string;
     ChargeTypeName: string;
