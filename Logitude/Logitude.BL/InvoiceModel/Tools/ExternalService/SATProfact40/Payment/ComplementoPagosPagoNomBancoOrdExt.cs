@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
+using Simplog.Data.CommonDataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
         public static bool IsPaymentMethodRequiredBankName(ARPaymentPM externalARPaymentPM = null)
         {
             if (arPaymentPM == null) arPaymentPM = externalARPaymentPM;
+            if(commonContext == null) commonContext = CommonDataContext.GetContext(arPaymentPM.Tenant);
 
             string rfcEmisorCtaOrd = ComplementoPagosPagoRfcEmisorCtaOrd.Get(arPaymentPM);
             if (rfcEmisorCtaOrd != SATData.OutSideMexicoRfc) return false;
