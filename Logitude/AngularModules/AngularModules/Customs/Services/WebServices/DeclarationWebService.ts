@@ -1917,7 +1917,7 @@ export class DeclarationWebService {
     }
 
 
-    public getDeclarationConsignment(exportfile: string): Promise<ConsignmentDeclartion> {
+    public getDeclarationConsignment(exportfile: string) : Promise<ConsignmentDeclartions>{
         const ajax: Observable<any> = this._http.get(
             this._apiUrl + "/DeclarationConsignment",
             {
@@ -1931,11 +1931,15 @@ export class DeclarationWebService {
     }
 }
 
-
-export interface ConsignmentDeclartion {
-    Consignment: ConsignmentDeclartion2
+export interface ConsignmentPackage {
+    $id: string;
+    PackageTypeCode: string;
+    DeclarationId: string;
+    Quantity: number;
 }
 
-interface ConsignmentDeclartion2 extends ConsignmentPM {
-    Declaration: DeclarationPM
+export interface ConsignmentDeclartions {
+    $id: string;
+    ConsignmentPackages: ConsignmentPackage[];
+    Consignment: ConsignmentPM;
 }
