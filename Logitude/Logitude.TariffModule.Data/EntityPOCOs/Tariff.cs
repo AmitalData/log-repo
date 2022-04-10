@@ -60,8 +60,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public DateTime? LastExpirationDate { get; set; }
         [Column("PriceSteps")]
 	    public string PriceSteps { get; set; }
+        [ForeignKey("TariffType")]
         [Column("TypeCode")]
 	    public string TypeCode { get; set; }
+	      
+        public virtual TariffType TariffType { get; set; }
         [Column("LastStartDate")]
 	    public DateTime? LastStartDate { get; set; }
         [Column("LastVersion")]

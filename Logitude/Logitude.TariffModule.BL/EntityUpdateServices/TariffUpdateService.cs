@@ -592,30 +592,27 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         }
         private void UpdateVersionPreviousLineSatrtDate(TariffLinePM tariffLinePM, TariffLine previousLine, string type)
         {
-            if (tariffLinePM.LineEdited)
+            bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "start", TariffLinePM = tariffLinePM, PreviousLine = previousLine });
+
+            if (isExpirationDateValid)
             {
-                bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "start", TariffLinePM = tariffLinePM, PreviousLine = previousLine });
+                previousLine.ExpirationDate = tariffLinePM.StartDate.Value.AddDays(-1);
+                iTariffLineRepository.Update(previousLine);
+            }
 
-                if (isExpirationDateValid)
+            else
+            {
+                string from = (type == "ECC" || type == "ICC" || type == "ICS") ? tariffLinePM.FromCountryCode : tariffLinePM.OriginPortCode;
+                string to = (type == "ECC" || type == "ICC" || type == "ECS") ? tariffLinePM.ToCountryCode : tariffLinePM.DestinationPortCode;
+
+                if (type != "ASC" && type != "ECC" && type != "ICC" && type != "ICS" && type != "ECS")
                 {
-                    previousLine.ExpirationDate = tariffLinePM.StartDate.Value.AddDays(-1);
-                    iTariffLineRepository.Update(previousLine);
+                    from = tariffLinePM.OriginPortCombinedCode;
+                    to = tariffLinePM.DestinationPortCombinedCode;
                 }
 
-                else
-                {
-                    string from = (type == "ECC" || type == "ICC" || type == "ICS") ? tariffLinePM.FromCountryCode : tariffLinePM.OriginPortCode;
-                    string to = (type == "ECC" || type == "ICC" || type == "ECS") ? tariffLinePM.ToCountryCode : tariffLinePM.DestinationPortCode;
-
-                    if(type != "ASC" && type != "ECC" && type != "ICC" && type != "ICS" && type != "ECS")
-                    {
-                        from = tariffLinePM.OriginPortCombinedCode;
-                        to = tariffLinePM.DestinationPortCombinedCode;
-                    }
-
-                    string msg = "Line (" + from + " > " + to + ") Start Date is less than or equal the previous version line";
-                    throw new ApplicationException(msg);
-                }
+                string msg = "Line (" + from + " > " + to + ") Start Date is less than or equal the previous version line";
+                throw new ApplicationException(msg);
             }
         }
         private bool ValidatePreviousLineDates(dynamic previousLineDatesArgs)

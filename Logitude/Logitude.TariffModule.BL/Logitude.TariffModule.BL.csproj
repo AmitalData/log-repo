@@ -135,6 +135,7 @@
     <Compile Include="EntityQueryServices\TariffLinesContainersPriceQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffSurchargesUpdateQueryService.cs" />
+    <Compile Include="EntityQueryServices\TariffTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffVersionQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffVersionUploadedExcelQueryService.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffLinesContainersPriceUpdateService.Generated.cs" />

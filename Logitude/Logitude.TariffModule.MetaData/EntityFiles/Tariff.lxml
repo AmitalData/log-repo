@@ -1287,8 +1287,10 @@
     FullFieldLable="&quot;TypeCode&quot;"
     DefaultText="&quot;Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
+    ForeignEntity="TariffType"
     DontBuildRelationOnDB="false"
+    NavigationPropertyName="TariffType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -6784,7 +6786,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6850,7 +6853,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6916,7 +6920,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
