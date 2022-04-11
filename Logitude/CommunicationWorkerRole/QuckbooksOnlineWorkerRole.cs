@@ -417,7 +417,7 @@ namespace CommunicationWorkerRole
                     payment.TransferStatusCode = "ET";
                     payment.IsTransferStarted = false;
 
-                    if (QBOId != null)
+                    if (!string.IsNullOrEmpty(QBOId))
                         payment.ExternalAccountingEntityId = QBOId;
 
                     repository.Update(payment);
@@ -1078,9 +1078,9 @@ namespace CommunicationWorkerRole
                     payment.TransferStatusCode = "TR";
                     payment.IsTransferStarted = false;
 
-                    if (QBOId != null)
+                    if (!string.IsNullOrEmpty(QBOId))
                         payment.ExternalAccountingEntityId = QBOId;
-                    else if (QBOIDSuccess != null)
+                    else if (!string.IsNullOrEmpty(QBOIDSuccess))
                         payment.ExternalAccountingEntityId = QBOIDSuccess;
 
                     repository.Update(payment);
