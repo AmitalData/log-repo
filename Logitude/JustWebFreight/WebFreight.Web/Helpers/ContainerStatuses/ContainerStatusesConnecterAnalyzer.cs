@@ -2332,11 +2332,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void StartProcessingUpdateShipment()
         {
+            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
             this.UpdateShipmentDates();
             if (IsUpdatingShipmentDateFields)
             {
                 shipmentPM.OINewConcurrencyGUID = Guid.NewGuid().ToString();
-                shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
             }
         }
        
