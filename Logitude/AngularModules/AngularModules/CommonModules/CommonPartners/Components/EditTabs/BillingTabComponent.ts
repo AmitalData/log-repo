@@ -30,7 +30,7 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
 
     private SetShowRegimenFiscalField() {
         var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
-        if (RegimenFiscalFieldFeatureToggle) {
+        if (RegimenFiscalFieldFeatureToggle || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.ShowRegimenFiscalField = true;
         }
     }
@@ -115,6 +115,13 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
     set RegimenFiscalCode(newValue: string) {
         if (this.EntityPM.RegimenFiscalCode != newValue) {
             this.EntityPM.RegimenFiscalCode = newValue;
+        }
+    }
+
+    get SATReceptorName() { return this.EntityPM.SATReceptorName; }
+    set SATReceptorName(newValue: string) {
+        if (this.EntityPM.SATReceptorName != newValue) {
+            this.EntityPM.SATReceptorName = newValue;
         }
     }
 

@@ -56,6 +56,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.StorageFreeDays = entityPM.StorageFreeDays;
             entityCard.ImageDetailId = entityPM.ImageDetailId;
             entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
+            entityCard.SATCustomerName = entityPM.SATReceptorName;
 
             entityPOCO.CASSCode = entityPM.CASSCode;
             entityPOCO.IATACode = entityPM.IATACode;

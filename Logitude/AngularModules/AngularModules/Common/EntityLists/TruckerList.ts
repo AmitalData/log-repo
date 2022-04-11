@@ -42,6 +42,7 @@ export class TruckerList {
 		StateName: string;
 		GLAccountNumber: string;
 		RegimenFiscalCode: string;
+		SATReceptorName: string;
 		Field1: string;
 		Field2: string;
 		Field3: string;

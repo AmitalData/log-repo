@@ -52,5 +52,6 @@ export class ShippingLineList {
 		IsSendingByContainer: boolean;
 		IsSendingByBillOfLading: boolean;
 		RegimenFiscalCode: string;
+		SATReceptorName: string;
 	
 }

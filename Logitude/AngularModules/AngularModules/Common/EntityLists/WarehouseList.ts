@@ -53,6 +53,7 @@ export class WarehouseList {
 		OceanWeightRoundingCode: string;
 		InlandWeightRoundingCode: string;
 		RegimenFiscalCode: string;
+		SATReceptorName: string;
 		GLAccountNumber: string;
 		StorageFreeDays: number;
 		Field1: string;

@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.DataContract;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.Utilities;
@@ -54,8 +55,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
           
             List<InterestTransactionPM> interestTransactionPMs = (from a in context.InterestTransactions
-                                                           where a.EntityId == entityId && a.Tenant == tenant
-                                                           select new InterestTransactionPM()
+                                                           where a.EntityId == entityId && a.Tenant == tenant && a.InterestEntityTypeCode == InterestEntities.ARPayment
+                                                                  select new InterestTransactionPM()
                                                            {
                                                                Id = a.Id,
                                                                OriginalEntityLineNumber = a.OriginalEntityLineNumber,

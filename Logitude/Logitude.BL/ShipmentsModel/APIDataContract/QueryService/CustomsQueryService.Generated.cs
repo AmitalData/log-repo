@@ -262,7 +262,11 @@ using Simplog.Data.ShipmentsModel;
 				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
 				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;
 				   temp.CustomerReference3 = MyEntityPM.CustomerReference3;
-				return temp;
+				   temp.CustomerReference2 = MyEntityPM.CustomerReference2;
+				   temp.ShipperReference3 = MyEntityPM.ShipperReference3;
+				   temp.ConsigneeReference3 = MyEntityPM.ConsigneeReference3;
+				   temp.CustomerReference1 = MyEntityPM.CustomerReference1;					
+				   return temp;
 			}
             catch (Exception ex)
             {
@@ -811,7 +815,6 @@ using Simplog.Data.ShipmentsModel;
 					if(!IsUpdate)
 					{							
 						temp.ShipperName = MyEntity.ShipperName;
-						temp.CustomerReference3 = MyEntity.CustomerReference3;
 
 										}  
 
@@ -842,6 +845,46 @@ using Simplog.Data.ShipmentsModel;
 						temp.Notify1Reference2 = MyEntity.Notify1Reference2;
 
 					 
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.CustomerReference3 = MyEntity.CustomerReference3;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.CustomerReference2 = MyEntity.CustomerReference2;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.ShipperReference3 = MyEntity.ShipperReference3;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.ConsigneeReference3 = MyEntity.ConsigneeReference3;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.CustomerReference1 = MyEntity.CustomerReference1;
+
+										}  
 
 										   
 					return temp;
