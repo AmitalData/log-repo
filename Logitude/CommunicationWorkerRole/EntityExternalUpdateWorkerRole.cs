@@ -42,6 +42,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Server.Infrastructure;
 
 namespace CommunicationWorkerRole
 {
@@ -53,7 +54,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
-                if (!General.IsUpdating())
+                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
                 {
                     try
                     {
