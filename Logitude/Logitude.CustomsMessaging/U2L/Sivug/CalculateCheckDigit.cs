@@ -94,7 +94,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             for (var i = 0; i < value.Length; i++)
             {
                 d = 0;
-                d = int.Parse(value.Substring(i, i + 1));
+                d = int.Parse(value.Substring(i, 1));
                 if (i % 2 != 0)
                     d = d * 2;
                 if (d > 9)
