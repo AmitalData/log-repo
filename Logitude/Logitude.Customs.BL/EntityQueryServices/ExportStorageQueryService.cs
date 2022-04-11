@@ -29,7 +29,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (exportStorage != null)
             {
 
-                exportStoragePM = this.GetEntityPM(exportStorage, false, null);
+                exportStoragePM = this.GetEntityPM(exportStorage, true, null);
                 //exportStoragePM = new ExportStoragePM()
                 //{
                 //    Id = exportStorage.Id,
