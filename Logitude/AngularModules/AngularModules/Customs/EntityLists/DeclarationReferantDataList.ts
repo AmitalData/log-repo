@@ -89,6 +89,8 @@ export class DeclarationReferantDataList {
 	DepartmentName: string;
 	RemoveInclusiveVisibility: string;
 	ReferantName: string;
+	Mawb: string;
+	Hawb: string;
 	
 }
  
