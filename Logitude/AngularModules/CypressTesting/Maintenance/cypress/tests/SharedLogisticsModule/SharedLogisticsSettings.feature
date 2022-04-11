@@ -2,11 +2,11 @@
 Feature:  Update Shared Logistics Settings
     The user opens the Shared Logistics Settings and update the Activation Settings, Display Settings, Documents Permissions, Partners Permissions, Money Permissions
 
-    Scenario: Activate Shared Logistics if isn't Activated
-        Given the user logged in
-        And the user Activate Shared Logistics
-        When the user save changes
-        Then the Shared Logistics should Activated successfully
+    # Scenario: Activate Shared Logistics if isn't Activated
+    #     Given the user logged in
+    #     And the user Activate Shared Logistics
+    #     When the user save changes
+    #     Then the Shared Logistics should Activated successfully
 
     Scenario: Update Activation Settings in Shared Logistics Settings
         Given the user logged in

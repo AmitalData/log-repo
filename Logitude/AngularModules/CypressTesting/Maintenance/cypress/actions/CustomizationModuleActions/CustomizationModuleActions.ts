@@ -82,8 +82,7 @@ function ChooseRuleCondition(customizationRuleDetails: CustomizationRuleDetails)
         cy.get("[data-cy='" + customizationRuleDetails.RuleCondition + "']").within(() => {
             cy.get("label").click()
         })
-        cy.get(CustomizationSelectors.Card).click().type(customizationRuleDetails.ConditionFieldValue)
-        cy.contains(customizationRuleDetails.ConditionFieldValue).click()
+        cy.SelectDropDownListItem2(CustomizationSelectors.Card,customizationRuleDetails.ConditionFieldValue)
     }
 }
 function addNewRulemoreDetails(customizationRuleDetails: CustomizationRuleDetails) {
