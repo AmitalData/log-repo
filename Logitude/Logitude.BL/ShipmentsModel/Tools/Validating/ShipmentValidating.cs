@@ -185,13 +185,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     throw new OptimisticConcurrencyException(msg);
                 }
             }
-
-            ValidateOceanInsightsConcurrencyGUID(entityPM, entityPoco);
+            if (!entityPM.IsUpdatedOceanInsightsAnalyzer)
+            {
+                ValidateOceanInsightsConcurrencyGUID(entityPM, entityPoco);
+            }
         }
 
         private static void ValidateOceanInsightsConcurrencyGUID(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (!entityPM.OIConcurrencyGUID.Equals(entityPoco.OIConcurrencyGUID) && !entityPM.OINewConcurrencyGUID.Equals(entityPoco.OIConcurrencyGUID))
+            if (entityPM.OIConcurrencyGUID != entityPoco.OIConcurrencyGUID && entityPM.OINewConcurrencyGUID != entityPoco.OIConcurrencyGUID)
             {
                 HandelThrowExcptionForOceanInsightsConcurrency(entityPM, entityPoco);
             }
@@ -205,13 +207,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 msg = msg.Replace("another user", entityPoco.UpdatedByPartner);
             }
             throw new OptimisticConcurrencyException(msg);
-        }
-
-        private static ShipmentMasterData GetShipmentMasterData(ShipmentPM entityPM)
-        {
-            ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(entityPM.Tenant);
-            ShipmentMasterData shipmentMasterData = shipmentMasterDataRepository.GetSingleMasterData(entityPM.MasterShipmentDataId);
-            return shipmentMasterData;
         }
 
         private static void ValidateDomesticShipment(ShipmentPM entityPM)
