@@ -852,7 +852,7 @@ namespace WebFreight.Web.ReportsWebServices
             cheque.Bank = chequePM.BankId;
             cheque.Branch = chequePM.BankBranch;
             cheque.Account = chequePM.BankAccount;
-            cheque.ValueDate = chequePM.ValueDate.ToShortDateString();
+            cheque.ValueDate = chequePM.ValueDate.ToString("dd/MM/yyyy");
             cheque.CurrencyCode = chequePM.CurrencyCode;
             cheque.LocalAmount = chequePM.LocalAmount;
             cheque.ForeignAmount = chequePM.ForeignAmount;
