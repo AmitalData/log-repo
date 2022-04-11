@@ -1618,14 +1618,10 @@ export class HomeComponent implements OnDestroy{
     }
 
     public ManageChargifyAccountClicked() {
-
-        var myService: CommonDomainService = new CommonDomainService();
-        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult: any) => {
-            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
-            var link = "https://www.billingportal.com/s/logitude/login/password";
-            var win = window.open(link, '_blank');
-            win.focus();
-        });
+        ServiceLocator.SendTotangoUserActivity("Help Center", "Help Icon");
+        var url = "https://www.billingportal.com/s/logitude/login/password";
+        var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }]
+        ServiceHelper.OpenWindowWithParams(url, params);
     }
 
     HelpButtonClicked() {
