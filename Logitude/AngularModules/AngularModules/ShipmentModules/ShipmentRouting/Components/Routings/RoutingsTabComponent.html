@@ -232,7 +232,7 @@
                                                                                     </div>
 
                                                                                     <div style="float: left;">
-                                                                                        <span class="Label" style="float: left;">{{'Shipment.O.Routings.Trucker' | TextCodeTranslationPipe}}:</span>
+                                                                                        <span class="Label" style="float: left;">{{item.CarrierLabel}}:</span>
                                                                                         <span *ngIf="item.IsCarrierTextVisible" class="Value" style="float: left; margin-left: 3px;">{{item.CarrierText}}</span>
                                                                                         <span *ngIf="item.IsCarrierSiteVisible" style="float: left; margin-left: 3px;"><a [attr.href]="item.CarrierSite" target="_blank">{{item.CarrierText}}</a></span>
                                                                                     </div>

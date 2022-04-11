@@ -1803,6 +1803,9 @@ export class RoutingItem extends BaseComponent {
     public IsWarehouseLeg: boolean = false;
     public IsWarehouseLeg2: boolean = false;
     public IsDeleteButtonEnabled: boolean = true;
+    public CarrierLabel: string;
+    private carrierLabelTextCode: string;
+
     constructor(entity: any, type: string, private fatherComponent: RoutingsTabComponent) {
         super();
 
@@ -1814,6 +1817,7 @@ export class RoutingItem extends BaseComponent {
             this.FollowupLegTypeDeparture = type + 'Departure' + this.PickUpDeliveryNumber;
             this.FollowupLegTypeArrival = type + 'Arrival' + this.PickUpDeliveryNumber;
             this.IsDeleteButtonEnabled = this.fatherComponent.IsEditingEnabled;
+            this.carrierLabelTextCode = "Shipment.O.Routings.Trucker";
         }
 
         else if (entity instanceof ShipmentDeliveryPM) {
@@ -1824,6 +1828,7 @@ export class RoutingItem extends BaseComponent {
             this.FollowupLegTypeDeparture = type + 'Departure' + this.PickUpDeliveryNumber;
             this.FollowupLegTypeArrival = type + 'Arrival' + this.PickUpDeliveryNumber;
             this.IsDeleteButtonEnabled = this.fatherComponent.IsEditingEnabled;
+            this.carrierLabelTextCode = "Shipment.O.Routings.Trucker";
         }
 
         else {
@@ -1857,8 +1862,10 @@ export class RoutingItem extends BaseComponent {
                 this.FollowupLegTypeDeparture = type + 'Departure'
                 this.FollowupLegTypeArrival = type + 'Arrival'
             }
+            this.carrierLabelTextCode = "Shipment.O.Routings.Carrier";
         }
-        
+
+        this.CarrierLabel = TextCodeTranslator.Translate(this.carrierLabelTextCode);
         this.LegType = type;
         this.SetLegAppearance();
         this.GetLegName();
