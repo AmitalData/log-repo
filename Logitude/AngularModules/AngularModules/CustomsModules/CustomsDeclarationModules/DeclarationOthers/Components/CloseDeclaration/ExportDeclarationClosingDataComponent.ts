@@ -42,7 +42,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     SetUIProperty() {
-        this.UIProperties.SetEnabled("LoadingDateTime", this.ObjectTableName, true);
+
+        this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, true);
+                
         if (this.DecPM.TransportModeId != "O") {
             this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("Smp", this.ObjectTableName, false);
@@ -66,10 +68,12 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     setInputsReadOnly() {
+        
         this.UIProperties.SetEnabled("FinalCargoTypeCode", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalSecondCargoId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalThirdCargoId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("LoadingDateTime", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("LoadingSite", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalManifestNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalLoadingSite", this.ObjectTableName, false);
@@ -78,51 +82,70 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     GetExportDeclarationClosingData(id: string) {
         if (id != null) {
-            
-                    this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
-                        this.EntityPM = response.Result;
-                        if (response.Result.ChangeSetOp == "1") {
-                            this.EntityPM.IsDirty = true;
-                            this.IsNew = true;
-                        }
-                        else {
-                            this.EntityPM.IsDirty = false;
 
-                        }
+            this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
+                this.EntityPM = response.Result;
+                if (response.Result.ChangeSetOp == "1") {
+                    this.EntityPM.IsDirty = true;
+                    this.IsNew = true;
+                }
+                else {
+                    this.EntityPM.IsDirty = false;
 
-                    /*this.EntityPM = new ExportDeclarationClosingDataPM();
-                    this.EntityPM.DeclarationId = id;
-                    this.EntityPM.Tenant = this.DecPM.Tenant;
-                    var consignments = this.DecPM.Consignments.filter(x => x.ConsignmentType == 'E');
-                    if (consignments.length == 1) {
-                        this.EntityPM.FinalCargoTypeCode = consignments[0].CargoTypeCode;
-                        this.EntityPM.FinalSecondCargoId = consignments[0].SecondCargoID;
-                        this.EntityPM.FinalThirdCargoId = consignments[0].ThirdCargoID;
-                        this.EntityPM.FinalManifestNumber = consignments[0].ManifestNumber;
-                        this.EntityPM.FinalShipCode = consignments[0].ShipCode;
-                        this.EntityPM.FinalLoadingSite = consignments[0].ExportLoadingPortCode;
-                    }
-                    this.IsNew = true;*/
-                
+                }
+
+                /*this.EntityPM = new ExportDeclarationClosingDataPM();
+                this.EntityPM.DeclarationId = id;
+                this.EntityPM.Tenant = this.DecPM.Tenant;
+                var consignments = this.DecPM.Consignments.filter(x => x.ConsignmentType == 'E');
+                if (consignments.length == 1) {
+                    this.EntityPM.FinalCargoTypeCode = consignments[0].CargoTypeCode;
+                    this.EntityPM.FinalSecondCargoId = consignments[0].SecondCargoID;
+                    this.EntityPM.FinalThirdCargoId = consignments[0].ThirdCargoID;
+                    this.EntityPM.FinalManifestNumber = consignments[0].ManifestNumber;
+                    this.EntityPM.FinalShipCode = consignments[0].ShipCode;
+                    this.EntityPM.FinalLoadingSite = consignments[0].ExportLoadingPortCode;
+                }
+                this.IsNew = true;*/
+
                 this.IsReady = true;
-          });
+            });
         }
     }
 
 
     get LoadingDateTime() { return this.EntityPM ? this.EntityPM.LoadingDateTime : null; }
     set LoadingDateTime(value: Date) {
-        debugger;
+
         if (this.EntityPM.LoadingDateTime != value) {
             this.EntityPM.LoadingDateTime = value;
             this.EntityPM.IsDirty = true;
         }
+        // if (value) {
+        //     this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, false);
+
+
+        // }
+        // else {
+        //     this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, true);
+
+
+
+        // }
     }
 
     get FinalShipCode() { return this.EntityPM ? this.EntityPM.FinalShipCode : null; }
     set FinalShipCode(value: string) {
         if (this.EntityPM.FinalShipCode != value) {
             this.EntityPM.FinalShipCode = value;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
+    get LoadingSite() { return this.EntityPM ? this.EntityPM.LoadingDateTime : null; }
+    set LoadingSite(value: Date) {
+        if (this.EntityPM.LoadingDateTime != value) {
+            this.EntityPM.LoadingDateTime = value;
             this.EntityPM.IsDirty = true;
         }
     }
@@ -188,30 +211,40 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
     SendButtonClicked(event: CustomSendOptionsArgs) {
-        debugger;
-        if (this.EntityPM.IsDirty) {
-            if (this.IsNew) {
-                this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
-                    if (!response.HasError) {
-                        this.SendAmendmentCloseDeclaration(event);
-                    }
-                });
-            } else {
-                this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-                    if (!response.HasError) {
-                        this.SendAmendmentCloseDeclaration(event);
-                    }
-                });
-            }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
+            var msg = " שדה תאריך טעינה שדה חובה";
+            this.ValidationErrors.push(msg);
+            this.FillValidationErrors("Errors");
         }
         else {
-            this.SendAmendmentCloseDeclaration(event);
-        }
+            if (this.EntityPM.IsDirty) {
+                if (this.IsNew) {
+                    this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
 
+
+                        if (!response.HasError) {
+                            this.SendAmendmentCloseDeclaration(event);
+                        }
+                    });
+                } else {
+                    this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+
+                        if (!response.HasError) {
+                            this.SendAmendmentCloseDeclaration(event);
+                        }
+                    });
+                }
+            }
+            else {
+                this.SendAmendmentCloseDeclaration(event);
+            }
+        }
     }
 
 
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
+
         this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שליחת מסר סגירת הצהרה");
         var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
@@ -228,26 +261,27 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         searchParams.IsExportClose = true;
         //searchParams.TestCase = event.TestCase;
         let myShowProgressBarParams: ShowProgressBarParams = null;
-        debugger;
+
         CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
             .then((res) => {
 
 
+
             }
             ).catch((err) => {
+
                 this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 this.ValidationErrors.push(err);
                 this.FillValidationErrors("Errors");
             });
 
         this.DeclarationService.PostSendDeclarationClosingAmendment(searchParams).subscribe((response: ServiceResponse) => {
+
             if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && !AppTool.IsNullOrEmpty(response.Result.UserMessage) && response.Result.HasException) {
                 this.ValidationErrors.push(response.Result.UserMessage);
                 this.FillValidationErrors("Errors");
             }
-            //DOTO
-            debugger;
-            //if success
+
             if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && (response.Result.IsExportCloseApprove || response.Result.HasException)) {
 
 
@@ -263,11 +297,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             }
 
 
-              SessionLocator.SelectedSession.CloseCurrentWindow();
+            SessionLocator.SelectedSession.CloseCurrentWindow();
         });
 
     }
     FillValidationErrors(title: string) {
+
+
         this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.Errors = this.ValidationErrors;
@@ -289,6 +325,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
     }
     OkButtonClicked() {
+        debugger;
+        if (this.ValidationErrors.length > 0)
+            this.FillValidationErrors("Errors");
+
+
         this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שמירה");
         if (this.IsNew) {
             this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
