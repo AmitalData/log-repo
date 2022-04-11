@@ -40,19 +40,44 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
                 return pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs;
 
             decimal invoiceTaxAmount = pagosPagoDoctoRelacionado.EquivalenciaDR;
+
+            List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> impuestosDRTrasladoDRs = new List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR>();
+
+
             pagosPagoDoctoRelacionado.ImpuestosDR.TrasladosDR.ToList().ForEach(pTDR =>
             {
-                CalculateTrasladoDRWithTax(pTDR, invoiceTaxAmount);
+                AddTrasladoDRWithTax(pTDR, invoiceTaxAmount, impuestosDRTrasladoDRs);
             });
 
-            return pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.Concat(pagosPagoDoctoRelacionado.ImpuestosDR.TrasladosDR.ToArray()).ToList();
+            return pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.Concat(impuestosDRTrasladoDRs.ToArray()).ToList();
         }
 
-        private static void CalculateTrasladoDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR pTDR, decimal invoiceTaxAmount)
+        private static void AddTrasladoDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR impuestosDRTrasladoDR, decimal invoiceTaxAmount, List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> impuestosDRTrasladoDRs)
         {
-            pTDR.BaseDR *= invoiceTaxAmount;
-            pTDR.ImporteDR *= invoiceTaxAmount;
-            BuildTrasladoPagosTotales(pTDR);
+            PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR impuestosDRTrasladoDRCloner = CloneImpuestosDRTrasladoDR(impuestosDRTrasladoDR);
+            CalculateTrasladoDRWithTax(impuestosDRTrasladoDRCloner, invoiceTaxAmount);
+            impuestosDRTrasladoDRs.Add(impuestosDRTrasladoDRCloner);
+        }
+
+        private static PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR CloneImpuestosDRTrasladoDR(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR impuestosDRTrasladoDR)
+        {
+            return new PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR
+            {
+                BaseDR = impuestosDRTrasladoDR.BaseDR,
+                ImporteDR = impuestosDRTrasladoDR.ImporteDR,
+                ImporteDRSpecified = impuestosDRTrasladoDR.ImporteDRSpecified,
+                ImpuestoDR = impuestosDRTrasladoDR.ImpuestoDR,
+                TasaOCuotaDR = impuestosDRTrasladoDR.TasaOCuotaDR,
+                TasaOCuotaDRSpecified = impuestosDRTrasladoDR.TasaOCuotaDRSpecified,
+                TipoFactorDR = impuestosDRTrasladoDR.TipoFactorDR,
+            };
+        }
+
+        private static void CalculateTrasladoDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR impuestosDRTrasladoDR, decimal invoiceTaxAmount)
+        {
+            impuestosDRTrasladoDR.BaseDR *= invoiceTaxAmount;
+            impuestosDRTrasladoDR.ImporteDR *= invoiceTaxAmount;
+            BuildTrasladoPagosTotales(impuestosDRTrasladoDR);
         }
 
         private static List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> GetPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs, PagosPagoDoctoRelacionado pagosPagoDoctoRelacionado)
@@ -60,20 +85,40 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             if (pagosPagoDoctoRelacionado.ImpuestosDR.RetencionesDR == null)
                 return pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs;
 
+            List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> impuestosDRRetencionDRs = new List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR>();
             decimal invoiceTaxAmount = pagosPagoDoctoRelacionado.EquivalenciaDR;
             pagosPagoDoctoRelacionado.ImpuestosDR.RetencionesDR.ToList().ForEach(pRDR =>
             {
-                CalculateRetencionDRWithTax(pRDR, invoiceTaxAmount);
+                AddRetencionDRWithTax(pRDR, invoiceTaxAmount, impuestosDRRetencionDRs);
             });
 
             return pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.Concat(pagosPagoDoctoRelacionado.ImpuestosDR.RetencionesDR.ToArray()).ToList();
         }
 
-        private static void CalculateRetencionDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR pRDR, decimal invoiceTaxAmount)
+        private static void AddRetencionDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDR, decimal invoiceTaxAmount, List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> impuestosDRRetencionDRs)
         {
-            pRDR.BaseDR *= invoiceTaxAmount;
-            pRDR.ImporteDR *= invoiceTaxAmount;
-            BuildRetencionPagosTotales(pRDR);
+            PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDRCloner = CloneImpuestosDRRetencionDR(impuestosDRRetencionDR);
+            CalculateRetencionDRWithTax(impuestosDRRetencionDRCloner, invoiceTaxAmount);
+            impuestosDRRetencionDRs.Add(impuestosDRRetencionDRCloner);
+        }
+
+        private static PagosPagoDoctoRelacionadoImpuestosDRRetencionDR CloneImpuestosDRRetencionDR(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDR)
+        {
+            return new PagosPagoDoctoRelacionadoImpuestosDRRetencionDR
+            {
+                BaseDR = impuestosDRRetencionDR.BaseDR,
+                ImporteDR = impuestosDRRetencionDR.ImporteDR,
+                ImpuestoDR = impuestosDRRetencionDR.ImpuestoDR,
+                TasaOCuotaDR = impuestosDRRetencionDR.TasaOCuotaDR,
+                TipoFactorDR = impuestosDRRetencionDR.TipoFactorDR,
+            };
+        }
+
+        private static void CalculateRetencionDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDR, decimal invoiceTaxAmount)
+        {
+            impuestosDRRetencionDR.BaseDR *= invoiceTaxAmount;
+            impuestosDRRetencionDR.ImporteDR *= invoiceTaxAmount;
+            BuildRetencionPagosTotales(impuestosDRRetencionDR);
         }
 
         private static List<PagosPagoImpuestosPTrasladoP> GetPagosPagoImpuestosPTrasladoPs(List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs)
