@@ -477,7 +477,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var sIModificationByCustomerCommissionService = new SIModificationByCustomerCommissionService();
             foreach (var currSupplierInvoices in _DeclarationPM.SupplierInvoices)
             {
-                sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(_DeclarationPM, currSupplierInvoices, true);
+                sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(_DeclarationPM, currSupplierInvoices, true && !IsFromOpenNewAmendment);
 
             }
 
