@@ -1044,6 +1044,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //var supplierInvoicePM =declarationPM.SupplierInvoices[supplierInvoiceSeq];
             //declarationGoodsShipment.SequenceNumeric = supplierInvoiceSeq + 1;
 
+            bool IsSendConsignment = true;
             foreach (var supplierInvoicePM in declarationPM.SupplierInvoices
                 ///.Where( rec => rec.SequenceNumeric !=null)
                 .OrderBy(rec => rec.SequenceNumeric).ToList())
@@ -1085,9 +1086,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 };
 
                 declarationGoodsShipment.CustomsValuation = GetcustomsValuation(supplierInvoicePM).ToArray();
-                if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
+                if (IsSendConsignment && !declarationPM.ExcludeConsignment)
                 {
                     declarationGoodsShipment.Consignment = GetDeclarationConsignment(declarationPM).ToArray();
+                    IsSendConsignment = false;
                 }
                 declarationGoodsShipment.AdditionalDocument = GetDeclarationGoodsShipmentAdditionalDocument(supplierInvoicePM);
                 declarationGoodsShipment.GovernmentAgencyGoodsItem = GetDeclarationGoodsItems(supplierInvoicePM).ToArray();
