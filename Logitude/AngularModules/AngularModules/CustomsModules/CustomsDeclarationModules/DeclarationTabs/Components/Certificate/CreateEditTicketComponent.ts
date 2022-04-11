@@ -80,8 +80,7 @@ export class CreateEditTicketComponent extends BaseComponent {
         this.customsSettingListService.getAll().subscribe((response: ServiceResponse) => {
             var list: CustomsSettingList[] = response.Result;
             this.ConfirmationTypesFilterItems = new ApiQueryFilters();
-            //if (this.DeclarationPM.Direction == 'E')
-               // this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", "123", null, null, "IsNull", false, false, false, "string");
+            if ( this.Parent.DeclarationPM.Direction == 'E')
                this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", false, null, null, "Equals", false, false, false, "boolean");
 
 
