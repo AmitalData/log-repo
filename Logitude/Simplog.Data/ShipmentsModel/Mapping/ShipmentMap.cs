@@ -176,7 +176,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AWBComments).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.OIConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.OIConcurrencyGUID).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.AWBChargesCodeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.IssuingCarrierAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IssuingCarrierAgentId).HasMaxLength(15).IsUnicode(false);
