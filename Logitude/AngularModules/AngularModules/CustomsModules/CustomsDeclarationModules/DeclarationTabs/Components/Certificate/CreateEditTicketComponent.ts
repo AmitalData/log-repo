@@ -71,6 +71,7 @@ export class CreateEditTicketComponent extends BaseComponent {
     ExemptionFilterSelectedValue: string = 'other';
     IsSearchIconVisibile: boolean;
     private currentSession=SessionLocator.SelectedSession;
+    ConfirmationTypesFilterItems: ApiQueryFilters;
     SetWindowArgs(args: any) {
 
         this.IsSearchIconVisibile = false;
@@ -78,7 +79,12 @@ export class CreateEditTicketComponent extends BaseComponent {
         this.Items = [];
         this.customsSettingListService.getAll().subscribe((response: ServiceResponse) => {
             var list: CustomsSettingList[] = response.Result;
-           
+            this.ConfirmationTypesFilterItems = new ApiQueryFilters();
+            //if (this.DeclarationPM.Direction == 'E')
+               // this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", "123", null, null, "IsNull", false, false, false, "string");
+               this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", false, null, null, "Equals", false, false, false, "boolean");
+
+
             if (!AppTool.IsNullOrEmpty(list)) {
                 var customsSetting =
                     //list[0];
