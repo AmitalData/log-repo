@@ -581,7 +581,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             //   if (isNewEntity)
             //    {
-            foreach (ConsignmentPM item in entityPM.Consignments)
+            ConsignmentQueryService cosigmentQuery = new ConsignmentQueryService(poco.Tenant);
+            List<Consignment> consignmentList = cosigmentQuery.GetConsgnmentByDeclarationIdForDataMapping(entityPM.Id, poco.Tenant);
+            foreach (var item in consignmentList)
                 {
                     if (!string.IsNullOrEmpty(item.ManifestNumber))
                     {
