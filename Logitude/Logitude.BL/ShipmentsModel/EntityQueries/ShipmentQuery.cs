@@ -1293,6 +1293,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AWBSignature = shipment.AWBSignature;
             shipmentPM.AWBChargesCodeCode = shipment.AWBChargesCodeCode;
             shipmentPM.ConcurrencyGUID = shipment.ConcurrencyGUID;
+            shipmentPM.OIConcurrencyGUID = shipment.OIConcurrencyGUID;
             shipmentPM.SCI = shipment.SCI;
             shipmentPM.AWBComments = shipment.AWBComments;
             shipmentPM.AWBPrintingComments = shipment.AWBPrintingComments;
@@ -2511,6 +2512,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.TEU = shipment.TEU;
             shipmentPM.SecurityKey = shipment.SecurityKey;
             shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            shipmentPM.OINewConcurrencyGUID = shipmentPM.OIConcurrencyGUID;
             shipmentPM.ValueOfGoods = shipment.ValueOfGoods;
             shipmentPM.ValueOfGoodsCurrencyId = shipment.ValueOfGoodsCurrencyId;
             shipmentPM.ISFDate = shipment.ISFDate;

@@ -179,7 +179,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             {
                 if (entityMasterData != null)
                 {
-                    entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+                    entityPoco.OIConcurrencyGUID = entityPM.OINewConcurrencyGUID;
                     entityMasterData.MainCarriageATD = entityPM.MainCarriageATD;
                     entityMasterData.MainCarriageETD = entityPM.MainCarriageETD;
                     entityMasterData.MainCarriageETA = entityPM.MainCarriageETA;

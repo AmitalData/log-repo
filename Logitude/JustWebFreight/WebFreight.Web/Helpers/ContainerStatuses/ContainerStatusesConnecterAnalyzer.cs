@@ -218,7 +218,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private ContainersExternalData containersExternalData_New;
         private ContainersExternalDataRepository containersExternalDataRepository;
         private ContainersExternal containersExternal;
-
+        private bool IsUpdatingShipmentDateFields  = false;
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
@@ -2332,9 +2332,14 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void StartProcessingUpdateShipment()
         {
-            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;  
             this.UpdateShipmentDates();
+            if (IsUpdatingShipmentDateFields)
+            {
+                shipmentPM.OINewConcurrencyGUID = Guid.NewGuid().ToString();
+                shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
+            }
         }
+       
         private void UpdateShipmentDates()
         {
             this.UpdatePOLDates();
@@ -2344,22 +2349,22 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (POLShipmentUpdateIndicator == "Pre Carriage")
             {
-                this.FillFieldsNewValues("PreCarriageETD", container.EstimatedPOLVesselDeparture, shipmentPM);
+                this.FillFieldsShipmentNewValues("PreCarriageETD", container.EstimatedPOLVesselDeparture, shipmentPM);
 
                 if (shipmentPM.PreCarriageATD == null)
                 {
-                    this.FillFieldsNewValues("PreCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
+                    this.FillFieldsShipmentNewValues("PreCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
                 }
             }
 
             else if(POLShipmentUpdateIndicator == "Main Carriage")
             {
                 shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
-                this.FillFieldsNewValues("MainCarriageETD", container.EstimatedPOLVesselDeparture, shipmentPM);
+                this.FillFieldsShipmentNewValues("MainCarriageETD", container.EstimatedPOLVesselDeparture, shipmentPM);
 
                 if (shipmentPM.MainCarriageATD == null)
                 {
-                    this.FillFieldsNewValues("MainCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
+                    this.FillFieldsShipmentNewValues("MainCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
                 }
             }
         }
@@ -2367,25 +2372,43 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (PODShipmentUpdateIndicator == "On Carriage")
             {
-                this.FillFieldsNewValues("OnCarriageETA", container.EstimatedPODVesselArrival, shipmentPM);
+                this.FillFieldsShipmentNewValues("OnCarriageETA", container.EstimatedPODVesselArrival, shipmentPM);
 
                 if (shipmentPM.OnCarriageATA == null)
                 {
-                    this.FillFieldsNewValues("OnCarriageATA", container.ActualPODVesselArrival, shipmentPM);
+                    this.FillFieldsShipmentNewValues("OnCarriageATA", container.ActualPODVesselArrival, shipmentPM);
                 }                
             }
 
             else if (PODShipmentUpdateIndicator == "Main Carriage")
             {
                 shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
-                this.FillFieldsNewValues("MainCarriageETA", container.EstimatedPODVesselArrival, shipmentPM);
+                this.FillFieldsShipmentNewValues("MainCarriageETA", container.EstimatedPODVesselArrival, shipmentPM);
 
                 if (shipmentPM.MainCarriageATA == null)
                 {
-                    this.FillFieldsNewValues("MainCarriageATA", container.ActualPODVesselArrival, shipmentPM);
+                    this.FillFieldsShipmentNewValues("MainCarriageATA", container.ActualPODVesselArrival, shipmentPM);
                 }
             }
         }
+
+        private void FillFieldsShipmentNewValues(string propertyName, object newValue, object entity)
+        {
+            PropertyInfo propertyInfo = entity.GetType().GetProperty(propertyName);
+            var entityValue = propertyInfo.GetValue(entity);
+            if (propertyInfo == null || newValue == null)
+            {
+                return;
+            }
+
+            if(entityValue != null && entityValue.Equals(newValue))
+            {
+                return;
+            }
+            IsUpdatingShipmentDateFields = true;
+            propertyInfo.SetValue(entity, newValue);
+        }
+
         private void FillFieldsNewValues(string propertyName, object newValue, object entity)
         {
             PropertyInfo propertyInfo = entity.GetType().GetProperty(propertyName);

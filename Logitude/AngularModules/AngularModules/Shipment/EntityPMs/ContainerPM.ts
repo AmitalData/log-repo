@@ -1336,16 +1336,16 @@ export class ContainerPM {
     public set ShipmentNewConcurrencyGUID(newValue: string) { if (this.shipmentNewConcurrencyGUID != newValue) { this.shipmentNewConcurrencyGUID = newValue; this.MarkAsDirty("ShipmentNewConcurrencyGUID"); } }
        
 	 
-
     private isUpdatedOceanInsightsAnalyzer: boolean;
     public get IsUpdatedOceanInsightsAnalyzer() { return this.isUpdatedOceanInsightsAnalyzer; }
     public set IsUpdatedOceanInsightsAnalyzer(newValue: boolean) { if (this.isUpdatedOceanInsightsAnalyzer != newValue) { this.isUpdatedOceanInsightsAnalyzer = newValue; this.MarkAsDirty("IsUpdatedOceanInsightsAnalyzer"); } }
        
- 
+	 
     private updatedByPartner: string;
     public get UpdatedByPartner() { return this.updatedByPartner; }
     public set UpdatedByPartner(newValue: string) { if (this.updatedByPartner != newValue) { this.updatedByPartner = newValue; this.MarkAsDirty("UpdatedByPartner"); } }
        
+	 
 
     public OldEntityPM: ContainerPM;
 		
@@ -1374,4 +1374,4 @@ export class ContainerPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

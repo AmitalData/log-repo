@@ -185,7 +185,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     throw new OptimisticConcurrencyException(msg);
                 }
             }
+
+            ValidateOceanInsightsConcurrencyGUID(entityPM, entityPoco);
         }
+
+        private static void ValidateOceanInsightsConcurrencyGUID(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            if (!entityPM.OIConcurrencyGUID.Equals(entityPoco.OIConcurrencyGUID) && !entityPM.OINewConcurrencyGUID.Equals(entityPoco.OIConcurrencyGUID))
+            {
+                HandelThrowExcptionForOceanInsightsConcurrency(entityPM, entityPoco);
+            }
+        }
+
+        private static void HandelThrowExcptionForOceanInsightsConcurrency(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+            if (entityPoco.UpdatedByPartner != null)
+            {
+                msg = msg.Replace("another user", entityPoco.UpdatedByPartner);
+            }
+            throw new OptimisticConcurrencyException(msg);
+        }
+
+        private static ShipmentMasterData GetShipmentMasterData(ShipmentPM entityPM)
+        {
+            ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(entityPM.Tenant);
+            ShipmentMasterData shipmentMasterData = shipmentMasterDataRepository.GetSingleMasterData(entityPM.MasterShipmentDataId);
+            return shipmentMasterData;
+        }
+
         private static void ValidateDomesticShipment(ShipmentPM entityPM)
         {
             if (entityPM.DirectionId.ToUpper() == "D")
