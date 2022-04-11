@@ -154,7 +154,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (ER1TaskStatus.Contains(customResponse?.GeneralDetails?.actionCode))
                 {
                     DateTime date = customResponse.ResponseContentHeader.TransmitionDateTime;
-                  var a= Task.Run(() => MN_MSG2791_ExportDeliveryAnswerMessageResponseService.RaiseExportStorageStatus("HTR", "HTR", exportstorage, "", date));
+                   MN_MSG2791_ExportDeliveryAnswerMessageResponseService.RaiseExportStorageStatus("HTR", "HTR", exportstorage, "", date);
                 }
             }
           
