@@ -193,11 +193,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
         private static void ValidateOceanInsightsConcurrencyGUID(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if(entityPM.OINewConcurrencyGUID == null)
-            {
-                return;
-            }
-            if (!entityPM.OINewConcurrencyGUID.Equals(entityPoco.OIConcurrencyGUID))
+            if (!entityPM.ConcurrencyGUID != entityPoco.ConcurrencyGUID && !entityPM.NewConcurrencyGUID != entityPoco.ConcurrencyGUID)
             {
                 HandelThrowExcptionForOceanInsightsConcurrency(entityPM, entityPoco);
             }
