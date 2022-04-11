@@ -209,13 +209,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             throw new OptimisticConcurrencyException(msg);
         }
 
-        private static ShipmentMasterData GetShipmentMasterData(ShipmentPM entityPM)
-        {
-            ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(entityPM.Tenant);
-            ShipmentMasterData shipmentMasterData = shipmentMasterDataRepository.GetSingleMasterData(entityPM.MasterShipmentDataId);
-            return shipmentMasterData;
-        }
-
         private static void ValidateDomesticShipment(ShipmentPM entityPM)
         {
             if (entityPM.DirectionId.ToUpper() == "D")
