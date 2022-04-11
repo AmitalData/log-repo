@@ -185,8 +185,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     throw new OptimisticConcurrencyException(msg);
                 }
             }
-
-            ValidateOceanInsightsConcurrencyGUID(entityPM, entityPoco);
+            if (!entityPM.IsUpdatedOceanInsightsAnalyzer)
+            {
+                ValidateOceanInsightsConcurrencyGUID(entityPM, entityPoco);
+            }
         }
 
         private static void ValidateOceanInsightsConcurrencyGUID(ShipmentPM entityPM, Shipment entityPoco)
