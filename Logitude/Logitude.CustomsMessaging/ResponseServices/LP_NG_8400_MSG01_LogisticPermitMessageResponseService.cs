@@ -129,12 +129,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             UpdateLogisticPermit(customResponse, requestParams);
-
+            RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams);
             MyResponseData.Succeeded = true;
 
         }
 
+        private void RegisterStatusLogisticPermitInExportStorage(LP_NG_8400_MSG01_LogisticPermitMessage customResponse, GenericRequestParams requestParams)
+        {
+            ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+            var logisticPermitQueryService = new ExportStorageQueryService(dbContext);
+            Logitude.Customs.BL.EntityQueryServices.ExportStorageQueryService query;
+            query = new Logitude.Customs.BL.EntityQueryServices.ExportStorageQueryService(requestParams.Tenant);
+            ExportStoragePM exportstorage = query.GetByCargoKeys(customResponse.CargoIdentifier.cargoIdentifierKey1, customResponse.CargoIdentifier.cargoIdentifierKey2, customResponse.CargoIdentifier.cargoIdentifierKey3, customResponse.CargoIdentifier.cargoIdentifierType, requestParams.Tenant);
 
+            var exportStorageUpdateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            if (exportstorage != null)
+            {
+                exportstorage.ChangeSetOp = ChangeSetOperation.Update;
+                exportstorage.ActionCode = customResponse?.GeneralDetails?.actionCode.ToString();
+                exportStorageUpdateService.Update(exportstorage, true);
+
+                var ER1TaskStatus = new int?[] { 4, 6, 8 };
+                if (ER1TaskStatus.Contains(customResponse?.GeneralDetails?.actionCode))
+                {
+                    DateTime date = customResponse.ResponseContentHeader.TransmitionDateTime;
+                    var a = Task.Run(() => MN_MSG2791_ExportDeliveryAnswerMessageResponseService.RaiseExportStorageStatus("HTR", "HTR", exportstorage, "", date));
+                }
+            }
+
+        }
         private void UpdateLogisticPermit(LP_NG_8400_MSG01_LogisticPermitMessage customResponse, GenericRequestParams requestParams)
         {
 
