@@ -2876,7 +2876,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
-                InterfaceType = "C",
+                //InterfaceType = "C",
             });            
             all.Add(new InterfaceManagementDetails()
             {
