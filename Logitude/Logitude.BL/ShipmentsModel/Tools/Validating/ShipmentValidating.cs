@@ -199,11 +199,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
         private static void HandelThrowExcptionForOceanInsightsConcurrency(ShipmentPM entityPM, Shipment entityPoco)
         {
-            ShipmentMasterData shipmentMasterData = GetShipmentMasterData(entityPM);
-            if (!CheckIfShipmentOceanInsightsFieldsUpdated(entityPM, shipmentMasterData))
-            {
-                return;
-            }
             string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
             if (entityPoco.UpdatedByPartner != null)
             {
@@ -217,27 +212,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(entityPM.Tenant);
             ShipmentMasterData shipmentMasterData = shipmentMasterDataRepository.GetSingleMasterData(entityPM.MasterShipmentDataId);
             return shipmentMasterData;
-        }
-        private static bool CheckIfShipmentOceanInsightsFieldsUpdated(ShipmentPM entityPM, ShipmentMasterData entityPoco)
-        {
-            if (entityPM.MainCarriageETA != entityPoco.MainCarriageETA)
-                return true;
-            if (entityPM.MainCarriageETD != entityPoco.MainCarriageETD)
-                return true;
-            if (entityPM.MainCarriageATA != entityPoco.MainCarriageATA)
-                return true;
-            if (entityPM.MainCarriageATD != entityPoco.MainCarriageATD)
-                return true;
-            if (entityPM.PreCarriageETD != entityPoco.PreCarriageETD)
-                return true;
-            if (entityPM.PreCarriageATD != entityPoco.PreCarriageATD)
-                return true;
-            if (entityPM.OnCarriageETA != entityPoco.OnCarriageETA)
-                return true;
-            if (entityPM.OnCarriageATA != entityPoco.OnCarriageATA)
-                return true;
-    
-            return false;
         }
 
         private static void ValidateDomesticShipment(ShipmentPM entityPM)
