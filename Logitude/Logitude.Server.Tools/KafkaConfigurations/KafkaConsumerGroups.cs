@@ -22,5 +22,8 @@
         public static string LogitudeCustomFields = "customfields";
         public static string UpdateContainer = "updatecontainer";
         public static string LogitudeCustomPickList = "custompicklist";
+        public static string LogitudeDepartment = "department";
+
+        public static string NLogConfigurations = "nlogconfigs";
     }
 }

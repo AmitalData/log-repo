@@ -26,5 +26,7 @@
         public static long CustomPickList = 22;
         public static long DeleteCustomPickListValue = 23;
         public static long DisconectFromContact = 24;
+        public static long NLogConfigurations = 25;
+        public static long Department = 26;
     }
 }

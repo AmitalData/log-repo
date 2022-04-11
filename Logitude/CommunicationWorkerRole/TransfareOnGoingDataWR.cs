@@ -120,9 +120,18 @@ namespace CommunicationWorkerRole
                     return EntityId;
                 case "DisconectFromContact":
                     return JsonConvert.DeserializeObject(EntityId);
+                case "Department":
+                    return GetDepartmentById(Tenant, EntityId);
                 default:
                     return null;
             }
+        }
+
+        private object GetDepartmentById(int tenant, string id)
+        {
+            DepartmentQuery departmentQuery = new DepartmentQuery(tenant);
+            DepartmentPM departmentPM = departmentQuery.GetSinglePM(id, tenant);
+            return departmentPM;
         }
 
         private object GetCustomPickListValueById(int tenant, string id)
@@ -240,11 +249,12 @@ namespace CommunicationWorkerRole
                     return KakaMessageTypes.DeleteCustomPickListValue;
                 case "DisconectFromContact":
                     return KakaMessageTypes.DisconectFromContact;
+                case "Department":
+                    return KakaMessageTypes.Department;
                 default:
                     return 0;
             }
         }
-
         #endregion
     }
 }

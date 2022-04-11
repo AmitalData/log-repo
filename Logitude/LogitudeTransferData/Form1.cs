@@ -132,6 +132,21 @@ namespace LogitudeTransferData
             ProduceKafkaMessages<ObjectFieldPM>(pickListObjectFieldPMs, KakaMessageTypes.CustomField);
         }
 
+        private void button12_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<DepartmentPM> departmentPMs = GetAllDepartments(tenant);
+
+            ProduceKafkaMessages<DepartmentPM>(departmentPMs, KakaMessageTypes.Department);
+        }
+
+        private List<DepartmentPM> GetAllDepartments(int tenant)
+        {
+            DepartmentQuery departmentQuery = new DepartmentQuery(tenant);
+            List<DepartmentPM> departmentPMs = departmentQuery.GetDepartmentPMsByTenant(tenant).ToList();
+            return departmentPMs;
+        }
+
         private List<CustomPickListPM> GetAllCustomPickLists(int tenant)
         {
             CustomPickListQuery customPickListQuery = new CustomPickListQuery(tenant);
