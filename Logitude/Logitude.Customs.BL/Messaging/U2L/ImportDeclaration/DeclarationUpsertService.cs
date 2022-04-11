@@ -1112,6 +1112,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._DeclarationReferantDataPM.PackageQuantity = packageQuantity;
             }
             this._DeclarationReferantDataPM.Commodity = _AmitalCustomsFile.Commodity;
+            this._DeclarationReferantDataPM.Hawb = _AmitalCustomsFile.HAWB;
+            this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.MAWB;
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
 
