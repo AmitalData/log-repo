@@ -53,18 +53,21 @@ export class PhysicalCheckFiltersMenuComponent
     transportmodeId: string = "All";
     itemClicked(itemValue: string) {
 
+        
+
         this.transportmodeId = itemValue;
         var RemoveFilter = false;
 
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
             this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportModeId")
-            if (itemValue == "All") {
-                this.apiQueryFilters.addAdditionalFilter("TransportModeId", itemValue, null, null, "NotEqual", false, false, false, "string");
-            } else {
-                this.apiQueryFilters.addAdditionalFilter("TransportModeId", itemValue, null, null, "Equals", false, false, false, "string");
-            }
-
         }
+        if (itemValue == "All") {
+            this.apiQueryFilters.addAdditionalFilter("TransportModeId", itemValue, null, null, "NotEqual", false, false, false, "string");
+        } else {
+            this.apiQueryFilters.addAdditionalFilter("TransportModeId", itemValue, null, null, "Equals", false, false, false, "string");
+        }
+
+
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
         this.ApplyTransportSelectedStyle();
     }
