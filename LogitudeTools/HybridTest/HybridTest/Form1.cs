@@ -2951,7 +2951,7 @@ namespace HypredTest
 
         private void btnTestCloud_Click(object sender, EventArgs e)
         {
-            //LoginToCloud();
+            LoginToCloud();
 
 
             //CustomerProxy.CustomerWcfServiceClient customerservice = new CustomerWcfServiceClient();
@@ -3222,20 +3222,20 @@ namespace HypredTest
         //    //}
         //}
 
-      
 
 
-        //private string LoginToCloud()
-        //{
-        //    LogingProxyCloud.LoginWcfServiceClient loginService = new LogingProxyCloud.LoginWcfServiceClient();
-        //    LogingProxyCloud.Response loginResponse = loginService.Login("yaronc@amital.co.il", "!Y123456");//("zaki@amital.co.il", "!Zz123456");
-        //    if (!loginResponse.HasError)
-        //    {
-        //        Token = loginResponse.Result;
-        //    }
 
-        //    return Token;
-        //}
+        private string LoginToCloud()
+        {
+            LogingProxyCloud.LoginWcfServiceClient loginService = new LogingProxyCloud.LoginWcfServiceClient();
+            LogingProxyCloud.Response loginResponse = loginService.Login("yaronc@amital.co.il", "!Y123456");//("zaki@amital.co.il", "!Zz123456");
+            if (!loginResponse.HasError)
+            {
+                Token = loginResponse.Result;
+            }
+
+            return Token;
+        }
 
         private void Button5_Click(object sender, EventArgs e)
         {
