@@ -956,6 +956,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                         if (traslado.TipoFactor == "Tasa")
                         {
                             traslado.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
+                            traslado.ImporteSpecified = true;
                         }
                     }
                 }
@@ -1124,6 +1125,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             {
                 traslado.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)));
                 traslado.TasaOCuota = total_tasaOCuota;
+                traslado.ImporteSpecified = true;
+                traslado.TasaOCuotaSpecified = true;
             }
 
             return traslado;
