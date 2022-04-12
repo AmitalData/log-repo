@@ -46,30 +46,36 @@ namespace Logitude.Customs.BL.BL
 
         public ExportDeclarationClosingDataPM SetEFIFILEMData(string declarationid, int tenant, ExportDeclarationClosingDataPM entityPM, DeclarationPM dec = null)
         {
-            if (dec == null)
-                dec = new DeclarationQueryService(tenant).GetSingle(declarationid, true, false);
+            CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+            CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
 
-            if (dec != null && dec.ExportFile != null && dec.Direction == "E" && dec.TransportModeId == "A")
-            { 
-                List<AmitalContext> _AmitalContextList = new List<AmitalContext>();
-                var tenantAmitalContext = _AmitalContextList.FirstOrDefault(rec => rec.TenantSeed == tenant);
-                if (tenantAmitalContext == null)
+            if (setting.IsConnectedToUniFreight)
+            {
+                if (dec == null)
+                    dec = new DeclarationQueryService(tenant).GetSingle(declarationid, true, false);
+
+                if (dec != null && dec.ExportFile != null && dec.Direction == "E" && dec.TransportModeId == "A")
                 {
-                    tenantAmitalContext = AmitalContext.GetContext(tenant);
-                    _AmitalContextList.Add(tenantAmitalContext);
-                }
-                int.TryParse(dec.ExportFile, out int exportFile);
-                var EFIFILEMData = new EFIFILEMQueryService(tenantAmitalContext).GetSingle(exportFile, false);
-                if (EFIFILEMData != null)
-                {
-                    entityPM.SMP = EFIFILEMData.SMP;
-                    entityPM.FLIGHT_DATE = EFIFILEMData.FLIGHT_DATE;
-                    if (EFIFILEMData.SPEDNO != null)
+                    List<AmitalContext> _AmitalContextList = new List<AmitalContext>();
+                    var tenantAmitalContext = _AmitalContextList.FirstOrDefault(rec => rec.TenantSeed == tenant);
+                    if (tenantAmitalContext == null)
                     {
-                        var ESPSPEDdata = new ESPSPEDQueryService(tenantAmitalContext).GetSingle(EFIFILEMData.SPEDNO.GetValueOrDefault(), false);
-                        if (ESPSPEDdata != null)
+                        tenantAmitalContext = AmitalContext.GetContext(tenant);
+                        _AmitalContextList.Add(tenantAmitalContext);
+                    }
+                    int.TryParse(dec.ExportFile, out int exportFile);
+                    var EFIFILEMData = new EFIFILEMQueryService(tenantAmitalContext).GetSingle(exportFile, false);
+                    if (EFIFILEMData != null)
+                    {
+                        entityPM.SMP = EFIFILEMData.SMP;
+                        entityPM.FLIGHT_DATE = EFIFILEMData.FLIGHT_DATE;
+                        if (EFIFILEMData.SPEDNO != null)
                         {
-                            entityPM.MAIN_AWB = ESPSPEDdata.MAINCARRIER + "-" + ESPSPEDdata.MAIN_AWB;
+                            var ESPSPEDdata = new ESPSPEDQueryService(tenantAmitalContext).GetSingle(EFIFILEMData.SPEDNO.GetValueOrDefault(), false);
+                            if (ESPSPEDdata != null)
+                            {
+                                entityPM.MAIN_AWB = ESPSPEDdata.MAINCARRIER + "-" + ESPSPEDdata.MAIN_AWB;
+                            }
                         }
                     }
                 }
