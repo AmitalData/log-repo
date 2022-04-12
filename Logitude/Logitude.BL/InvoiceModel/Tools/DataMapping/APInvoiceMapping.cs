@@ -140,8 +140,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ApprovedDate = entityPM.ApprovedDate;
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
             entity.IsGeneralInvoice = entityPM.IsGeneralInvoice;
-            entity.ExternalAccountingEntityId = entity.TransferStatusCode == "TR" && !string.IsNullOrEmpty(entity.ExternalAccountingEntityId) && !string.IsNullOrEmpty(entityPM.ExternalAccountingEntityId)
-                                               ? entity.ExternalAccountingEntityId : entityPM.ExternalAccountingEntityId;
+            if (!string.IsNullOrEmpty(entityPM.ExternalAccountingEntityId))
+                entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
             entity.CreatedByPartner = entityPM.CreatedByPartner;
             entity.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
             entity.Field2 = entityPM.Field2 != null ? entityPM.Field2.Value : null;
