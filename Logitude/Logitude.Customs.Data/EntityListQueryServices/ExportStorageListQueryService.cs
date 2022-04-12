@@ -42,6 +42,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    into ssj
                                                    from cargoStatus in ssj.DefaultIfEmpty()
 
+
+                                                   join el in context.ExportLogisticPermitActions.Select(r => new { r.Code, r.LocalName })
+                                                   on en.ActionCode equals el.Code
+                                                   into elpa
+                                                   from exportLogisticPermitActions in elpa.DefaultIfEmpty()
+
+
                                                    from client in context.Clients
                                                    .Where(c => c.Code == en.ExporterID || c.Id == en.ExporterID)
                                                    .Select( r=> new {r.Id, r.FullName, r.Code})
@@ -131,6 +138,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        ExporterCode = client.Code,
 
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open", 
+                                                       ActionCode = exportLogisticPermitActions.LocalName
                                                    });
             return query;
         }
