@@ -75,8 +75,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
         private static void CalculateTrasladoDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR impuestosDRTrasladoDR, decimal invoiceTaxAmount)
         {
-            impuestosDRTrasladoDR.BaseDR *= invoiceTaxAmount;
-            impuestosDRTrasladoDR.ImporteDR *= invoiceTaxAmount;
+            impuestosDRTrasladoDR.BaseDR /= invoiceTaxAmount;
+            impuestosDRTrasladoDR.ImporteDR /= invoiceTaxAmount;
             BuildTrasladoPagosTotales(impuestosDRTrasladoDR);
         }
 
