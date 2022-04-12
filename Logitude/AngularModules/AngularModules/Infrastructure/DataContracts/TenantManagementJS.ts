@@ -46,6 +46,7 @@ export class TenantManagementJS {
     public ExpirationDaysLeft: number;
 
     public BluesnapAccount: string;
+    public PaymentChannelCode: string;
     public ManagesRegisteredAgent: boolean;
     public IsINTTRAOnlyDemo: boolean;
     public IsMultiPackage: boolean;
