@@ -1569,6 +1569,7 @@ export class APInvoiceLineItem extends BaseComponent {
 
                         if (!AppTool.IsNullOrEmpty(this.chargesTypeList.PayableDebitGLAcountId)) {
                             this.fatherComponent.myGLAccountPMService.get(this.chargesTypeList.PayableDebitGLAcountId).subscribe((myResponse: ServiceResponse) => {
+                                this.invoiceLinePM.ChargeTypeGLAccountId = this.chargesTypeList.PayableDebitGLAcountId;
                                 if (!myResponse.HasError) {
                                     this.Glaccount = myResponse.Result;
                                 }
