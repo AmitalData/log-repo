@@ -94,6 +94,7 @@ export class HomeComponent implements OnDestroy{
     table: any;
     InitializeComponent() {
         this.InitializeBluesnapComponents();
+        this.InitializeChargifyComponents();
         this.IsCountryIsrael = SessionLocator.TenantManagementJS.CountryName == "Israel";
 
 
@@ -127,6 +128,9 @@ export class HomeComponent implements OnDestroy{
         this.IsBlusnapOneTimeActivated = !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.BluesnapOneTimeContract) && !AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapOneTimeContractQTY);
         this.IsBluesnapAccount = !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.BluesnapAccount);
     }
+    InitializeChargifyComponents() {
+        this.IsChargifyAccount = SessionLocator.TenantManagementJS.PaymentChannelCode == "CY";
+    }
     // InitializeAppHeader
     public EnvironmentUrl: string = null;
     public EnvironmentSRC: string = null;
@@ -148,7 +152,8 @@ export class HomeComponent implements OnDestroy{
     public IsCountryIsrael: boolean = false;
     public IsBlusnapOneTimeActivated: boolean = false;
     public IsDailyCurrenciesRatesVisible: boolean = false; 
-    
+    public IsChargifyAccount: boolean = false;
+
     InitializeAppHeader() {
         this.EnvironmentUrl = Environment.GetEnvironmentUrl();
         this.EnvironmentSRC = Environment.GetEnvironmentIcon();
@@ -1611,6 +1616,14 @@ export class HomeComponent implements OnDestroy{
             win.focus();
         });        
     }
+
+    public ManageChargifyAccountClicked() {
+        ServiceLocator.SendTotangoUserActivity("Help Center", "Help Icon");
+        var url = "https://www.billingportal.com/s/logitude/login/password";
+        var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }]
+        ServiceHelper.OpenWindowWithParams(url, params);
+    }
+
     HelpButtonClicked() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "Help Icon");
         var url = ServiceHelper.GetLogitudeURL() + 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx';
