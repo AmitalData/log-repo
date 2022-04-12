@@ -36,6 +36,7 @@ using System.Xml;
 using Logitude.CustomsMessaging.RabbitMQ;
 using Logitude.Customs.BL.CloseTables;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.Server.Tools;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -300,20 +301,6 @@ namespace AmitalCustomsWindowsService.Tester
             Debug.WriteLine(sw.ElapsedMilliseconds);
             
             return;
-            var rabbitMQReceiveWR = new RabbitMQReceiveWR();
-            var customRabbitMQQueue = new CustomRabbitMQQueue();
-            var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
-             .Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none)
-            .ToList();
-            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-            string log = "";
-            bool success = false;
-            var c=allQueueDetails.FirstOrDefault(r => r.Code == "uw2l");
-            rabbitMQReceiveWR.Exec(
-                customRabbitMQQueue, c,
-                analyzeQueueRepository,
-                "NYC1MMYLAEOS6QWZ44GZPA00000000",3,"", out log, out success);
-            ;
             return;
             clsTester.TestUpdateLOGITUDE_FILE();
             //clsTester.GetListByCourierHAWB();
@@ -1132,6 +1119,40 @@ namespace AmitalCustomsWindowsService.Tester
             
             var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CommunicationWorkerRole.SingletonFTPCommunicationWorkerRoleWinService>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
             d.ExecuteTask();
+        }
+
+        private void uW2LToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ///פתיחת הצהרה מאינטגרטור
+            
+            var rabbitMQReceiveWR = new RabbitMQReceiveWR();
+            var customRabbitMQQueue = new CustomRabbitMQQueue();
+            var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
+             .Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none)
+            .ToList();
+            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+            string log = "";
+            bool success = false;
+
+            string communicationLogId = _TBID.Text;//1-5898221
+            int tenant = GetTenant();
+            var _CommunicationLog = Communications.GetCommunicationLog(tenant, communicationLogId);
+            if (_CommunicationLog == null)
+            {
+                throw new Exception("Cannnot GetCommunicationLog");
+            }
+            string communicationsData = Communications.GetData(_CommunicationLog); ;
+
+
+            var c = allQueueDetails.FirstOrDefault(r => r.Code == "uw2l");
+            rabbitMQReceiveWR.Exec(
+                customRabbitMQQueue, c,
+                analyzeQueueRepository,
+                /*"1-5898221"*/
+                communicationLogId, tenant, communicationsData, out log, out success);
+            ;
+
+
         }
     }
 }
