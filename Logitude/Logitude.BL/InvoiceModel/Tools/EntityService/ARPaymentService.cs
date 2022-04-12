@@ -475,7 +475,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(paymentPM.Tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(paymentPM.Tenant);
-            if (satSetting.SATInterfaceCode == "PROF33")
+            if (satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40")
             {
                 if (this.paymentPM.SetCancelApproval)
                 {
