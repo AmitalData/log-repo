@@ -89,12 +89,12 @@ namespace Logitude.Customs.Data.Repsitories
         {
             return (from a in context.Consignments
                     where a.DeclarationId == declarationId && a.Tenant == tenant
-                    select new Consignment
+                    select new                    
                     {
                         ManifestNumber = a.ManifestNumber,
                         SecondCargoID=a.SecondCargoID,
                         ThirdCargoID=a.ThirdCargoID,
-                    }).ToList();
+                    }).ToList().Select(x=>new Consignment { ManifestNumber = x.ManifestNumber, SecondCargoID = x.SecondCargoID, ThirdCargoID = x.ThirdCargoID });
         }
         //partial void onRemove(Consignment entity)
         //{
