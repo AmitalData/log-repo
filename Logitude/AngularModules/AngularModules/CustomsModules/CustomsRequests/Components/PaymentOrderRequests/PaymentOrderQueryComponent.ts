@@ -429,6 +429,7 @@ export class PaymentOrderQueryComponent
             "שליחת שאילתא להוראות תשלום", true)
             .then((res) => {
                 this.ResponseData = res;
+                this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {
