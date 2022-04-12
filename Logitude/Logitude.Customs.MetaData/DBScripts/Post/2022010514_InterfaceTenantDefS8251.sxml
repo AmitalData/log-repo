@@ -12,7 +12,7 @@ select count(*) into v_count from CustomsSettings where companytype='B';
 
 if v_count > 0 then
 begin
-  insert into INTERFACETENANTDEFINITIONS (id,tenant,code,TenantSendOptionsCode,TenantPriority,active,DcaRenameFileEnable,DcaRenameFilePrefix)values ('1-999',(select * from (select tenant from CustomsSettings where companytype='B') where rownum <=1)),'8251','','2','0','1',''); 
+  insert into INTERFACETENANTDEFINITIONS (id,tenant,code,TenantSendOptionsCode,TenantPriority,active,DcaRenameFileEnable,DcaRenameFilePrefix)values ('1-999',(select * from (select tenant from CustomsSettings where companytype='B') where rownum <=1),'8251','','2','0','1',''); 
   commit;
 exception
   when DUP_VAL_ON_INDEX
