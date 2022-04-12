@@ -54,9 +54,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             return !ValidatePaymentBankTransfer.IsValid(arPaymentPM) ? null : SATData.SATPaymentBankTransferTypeCode;
         }
 
-        private static byte[] GetPagosPagoCertPago(ARPaymentPM arPaymentPM)
+        private static string GetPagosPagoCertPago(ARPaymentPM arPaymentPM)
         {
-            return !ValidatePaymentBankTransfer.IsValid(arPaymentPM) ? null : Encoding.ASCII.GetBytes(arPaymentPM.CertPago);
+            return !ValidatePaymentBankTransfer.IsValid(arPaymentPM) ? null : arPaymentPM.CertPago;
         }
 
         private static string GetPagosPagoCadPago(ARPaymentPM arPaymentPM)
@@ -66,9 +66,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
                 : !string.IsNullOrEmpty(arPaymentPM.CadPago) ? arPaymentPM.CadPago.Replace("|", "&#124;") : null;
         }
 
-        private static byte[] GetPagosPagoSelloPago(ARPaymentPM arPaymentPM)
+        private static string GetPagosPagoSelloPago(ARPaymentPM arPaymentPM)
         {
-            return !ValidatePaymentBankTransfer.IsValid(arPaymentPM) ? null : Encoding.ASCII.GetBytes(arPaymentPM.SelloPago);
+            return !ValidatePaymentBankTransfer.IsValid(arPaymentPM) ? null : arPaymentPM.SelloPago;
         }
 
         private static decimal GetTipoCambioP(ARPaymentPM entityPM, Currency paymentCurrency)

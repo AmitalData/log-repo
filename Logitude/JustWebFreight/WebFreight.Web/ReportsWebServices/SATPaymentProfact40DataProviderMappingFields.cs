@@ -103,8 +103,8 @@ namespace WebFreight.Web.ReportsWebServices
             paymentDataProvider.SAT.Monto = pagoItem.Monto;
             paymentDataProvider.SAT.TipoCadenaPago = pagoItem.TipoCadPago;
             paymentDataProvider.SAT.CadPago = pagoItem.CadPago;
-            paymentDataProvider.SAT.CertPago = Encoding.ASCII.GetString(pagoItem.CertPago); //////
-            paymentDataProvider.SAT.SelloPago = Encoding.ASCII.GetString(pagoItem.SelloPago); //////
+            paymentDataProvider.SAT.CertPago = pagoItem.CertPago;
+            paymentDataProvider.SAT.SelloPago = pagoItem.SelloPago;
 
             foreach (Profact.TimbraCFDI40.Complementos.Pagos20.PagosPagoDoctoRelacionado doctoItem in pagoItem.DoctoRelacionado.ToList())
             {

@@ -158,6 +158,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             pagosPagoImpuestosPTrasladoP.ImporteP = totalImporteDR;
             pagosPagoImpuestosPTrasladoP.TasaOCuotaP = group.Key;
             pagosPagoImpuestosPTrasladoP.TipoFactorP = "Tasa";
+            pagosPagoImpuestosPTrasladoP.ImportePSpecified = true;
+            pagosPagoImpuestosPTrasladoP.TasaOCuotaPSpecified = true;
 
             return pagosPagoImpuestosPTrasladoP;
         }
