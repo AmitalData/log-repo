@@ -94,7 +94,7 @@ namespace Logitude.Customs.Data.Repsitories
                         ManifestNumber = a.ManifestNumber,
                         SecondCargoID=a.SecondCargoID,
                         ThirdCargoID=a.ThirdCargoID,
-                    }).ToList().Select(x=>new Consignment { ManifestNumber = x.ManifestNumber, SecondCargoID = x.SecondCargoID, ThirdCargoID = x.ThirdCargoID });
+                    }).ToList().Select(x=>new Consignment { ManifestNumber = x.ManifestNumber, SecondCargoID = x.SecondCargoID, ThirdCargoID = x.ThirdCargoID }).ToList();
         }
         //partial void onRemove(Consignment entity)
         //{
