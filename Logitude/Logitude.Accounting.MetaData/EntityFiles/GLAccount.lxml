@@ -14431,7 +14431,7 @@
     ControlPath="&quot;Logitude.Accounting.Views.Tabs.ACC.GLAccountTransactionsTabControl&quot;"
     TextCode="&quot;GLAccount.TH.Transactions&quot;"
     IsPackagable="true"
-    IndexOrder="1"
+    IndexOrder="0"
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent&quot;"
     HtmlComponentName="&quot;GLAccountTransactionsTabComponent&quot;"
     FeatureCode="&quot;TRANSACTIONS&quot;"
@@ -14447,7 +14447,7 @@
     ControlPath="&quot;Logitude.Accounting.Views.Tabs.ACC.GLAccountGeneralTabControl&quot;"
     TextCode="&quot;GLAccount.TH.General&quot;"
     IsPackagable="true"
-    IndexOrder="2"
+    IndexOrder="1"
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/GLAccount/GLAccountGeneralTabComponent&quot;"
     HtmlComponentName="&quot;GLAccountGeneralTabComponent&quot;"
     FeatureCode="&quot;GENERAL&quot;"
@@ -14463,7 +14463,7 @@
     ControlPath="&quot;Logitude.Accounting.Views.Tabs.RECO.GLAccountManageReconciliationsTabControl&quot;"
     TextCode="&quot;GLAccount.TH.ManageReconciliations&quot;"
     IsPackagable="true"
-    IndexOrder="3"
+    IndexOrder="2"
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/GLAccount/ManageReconciliationsTabComponent&quot;"
     HtmlComponentName="&quot;ManageReconciliationsTabComponent&quot;"
     FeatureCode="&quot;MANAGERECONCILIATIONS&quot;"
@@ -14479,7 +14479,7 @@
     ControlPath="&quot;./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent&quot;"
     TextCode="&quot;GLAccount.TH.ExternalTransactions&quot;"
     IsPackagable="true"
-    IndexOrder="4"
+    IndexOrder="3"
     HtmlComponentURL="&quot;./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent&quot;"
     HtmlComponentName="&quot;ExternalPagesTabComponent&quot;"
     IsSpellChecked="false"
@@ -14492,7 +14492,7 @@
     ControlPath="&quot;./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent&quot;"
     TextCode="&quot;GLAccount.TH.ManageExternalReco&quot;"
     IsPackagable="true"
-    IndexOrder="5"
+    IndexOrder="4"
     HtmlComponentURL="&quot;./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent&quot;"
     HtmlComponentName="&quot;ManageExternalReconciliationTabComponent&quot;"
     IsSpellChecked="false"
@@ -14505,7 +14505,7 @@
     ControlPath="&quot;&quot;"
     TextCode="&quot;GLAccount.TH.Tax&quot;"
     IsPackagable="true"
-    IndexOrder="6"
+    IndexOrder="5"
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent&quot;"
     HtmlComponentName="&quot;GLAccountTaxWithholdingTabComponent&quot;"
     FeatureCode="&quot;TAX&quot;"
@@ -14521,7 +14521,7 @@
     ControlPath="&quot;&quot;"
     TextCode="&quot;GLAccount.TH.Additional&quot;"
     IsPackagable="true"
-    IndexOrder="7"
+    IndexOrder="6"
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/GLAccount/GLAccountAdditionalDataTabComponent&quot;"
     HtmlComponentName="&quot;GLAccountAdditionalDataTabComponent&quot;"
     FeatureCode="&quot;ADDITIONAL&quot;"
@@ -14537,9 +14537,22 @@
     ControlPath="&quot;&quot;"
     TextCode="&quot;GLAccount.TH.Interest&quot;"
     IsPackagable="true"
-    IndexOrder="8"
+    IndexOrder="7"
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/GLAccount/GLAccountInterestComponent&quot;"
     HtmlComponentName="&quot;GLAccountInterestComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Interest Transactions&quot;"
+    TabLocalName="&quot;תנועות ריבית&quot;"
+    ObjectTableName="&quot;GLAccount&quot;"
+    Code="&quot;GLIT&quot;"
+    ControlPath="&quot;GLAccountInterestTransactionsComponent&quot;"
+    TextCode="&quot;GLAccount.TH.InterestTransactions&quot;"
+    IsPackagable="true"
+    IndexOrder="8"
+    HtmlComponentURL="&quot;./Accounting/Components/EditTabs/GLAccount/GLAccountInterestTransactionsComponent&quot;"
+    HtmlComponentName="&quot;GLAccountInterestTransactionsComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
@@ -17851,6 +17864,30 @@
       Code="&quot;GLAccounts.O.UnsavedChangesSaveBeforeContinue&quot;"
       DefaultText="&quot;You have Unsaved changes, please save them before you continue&quot;"
       LocalDefaultText="&quot;קיימים שינויים שטרם נשמרו, אנא בצע שמירה לפני היציאה.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.Filter.Interest&quot;"
+      DefaultText="&quot;Interest value&quot;"
+      LocalDefaultText="&quot;תאריכי ריבית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.Filter.Accounting&quot;"
+      DefaultText="&quot;Accounting&quot;"
+      LocalDefaultText="&quot;תאריך חשבונאי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.Filter.Create&quot;"
+      DefaultText="&quot;Create&quot;"
+      LocalDefaultText="&quot;תאריך יצירה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.InterestReport&quot;"
+      DefaultText="&quot;Interest report&quot;"
+      LocalDefaultText="&quot;דוח ריבית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

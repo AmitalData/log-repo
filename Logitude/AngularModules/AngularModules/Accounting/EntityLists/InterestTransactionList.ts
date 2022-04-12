@@ -31,6 +31,10 @@ export class InterestTransactionList {
 	JournalId: string;
 	AccountEntityCode: string;
 	IsCancelled: boolean;
+	InterestReportNumber: string;
+	Source: string;
+	SourceTypeCode: string;
+	SourceId: string;
 	
 }
  

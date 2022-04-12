@@ -27,6 +27,8 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 
 
+const InterestTransactionTabCode = 'GLIT';
+const CustomerGLAccountTypeCode = "2";
 @Component({
     templateUrl: './EditComponent.html',
     providers: [EntityArgs],
@@ -520,7 +522,7 @@ export class EditComponent implements OnDestroy {
 
                 }
                 else {
-                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];                    
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];
                 }
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
@@ -833,6 +835,12 @@ export class EditComponent implements OnDestroy {
                                         myTabsSorted.push(tab);
                                     break;
                                 }
+                            case InterestTransactionTabCode:
+                                {
+                                    if (this.EntityPM.AccountTypeCode == CustomerGLAccountTypeCode)
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
                             default:
                                 {
                                     myTabsSorted.push(tab);
@@ -1012,11 +1020,15 @@ export class EditComponent implements OnDestroy {
 
             case "ARPayment": {
 
-                if (this.EntityPM.IsFullAccounting) {
+                if (this.EntityPM.IsFullAccounting)
+                {
                     let indexOfTab = allTabs.findIndex(t => t.Code == 'ARPD');
                     if (indexOfTab > -1)
                         allTabs.splice(indexOfTab, 1);
-                } else {
+
+                }
+                else
+                {
                     let indexOfTab = allTabs.findIndex(t => t.Code == 'PYDF');
                     if (indexOfTab > -1)
                         allTabs.splice(indexOfTab, 1);
@@ -1024,12 +1036,19 @@ export class EditComponent implements OnDestroy {
 
                 break;
             }
+
         }
         this.EditComponentController.FilterTabs(allTabs);
 
 
 
         return allTabs;
+    }
+    private RemoveItemByCode(items: any[], code: string)
+    {
+        let indexOfTab = items.findIndex(t => t.Code == code);
+        if (indexOfTab > -1)
+            items.splice(indexOfTab, 1);
     }
     private OnEntityCreated() {
         switch (this.ObjectTableName) {

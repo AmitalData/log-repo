@@ -151,6 +151,8 @@ import { CopyInvoiceComponent } from './Components/Others/CopyInvoiceComponent';
 import { TaxReportUploadLinesComponent } from './Components/Others/TaxReportUploadLinesComponent';
 import { CashbookTotalAdjustWindow } from './Components/EditTabs/CashBook/CashbookTotalAdjustWindow';
 import { JournalShortTitleComponent } from './Components/ShortTitles/JournalShortTitleComponent';
+import { GLAccountInterestTransactionsComponent } from './Components/EditTabs/GLAccount/GLAccountInterestTransactionsComponent';
+import { GlAccountInterestTransactionsListTemplate } from './Components/ListTemplates/GlAccountInterestTransactionsListTemplate';
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
@@ -214,6 +216,7 @@ export const Components =
         //CashBookGeneralTabComponent,
         GLAccountOverviewComponent,
         GLAccountTransactionsTabComponent,
+        GLAccountInterestTransactionsComponent,
         ManageReconciliationsTabComponent,
         JournalDetailsTabComponent,
         JournalDebugTabComponent,
@@ -245,6 +248,7 @@ export const Components =
         GLAccountChequeListComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
+        GlAccountInterestTransactionsListTemplate,
         GlAccountListTemplate,
         ReconcileExternalPageListTemplate,
         ReconcileExternalPageLineListTemplate,
@@ -383,6 +387,7 @@ export class ModuleDeclarations {
             //case "CashBookGeneralTabComponent": { myResult = CashBookGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
+            case "GLAccountInterestTransactionsComponent": { myResult = GLAccountInterestTransactionsComponent; break; }
             case "GLAccountChequeListComponent": { myResult = GLAccountChequeListComponent; break; }
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
             case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
@@ -414,6 +419,7 @@ export class ModuleDeclarations {
 
              //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
+            case "GlAccountInterestTransactionsListTemplate": { myResult = GlAccountInterestTransactionsListTemplate; break; }
             case "GlAccountListTemplate": { myResult = GlAccountListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }
             case "ReconcileExternalPageLineListTemplate": { myResult = ReconcileExternalPageLineListTemplate; break; }

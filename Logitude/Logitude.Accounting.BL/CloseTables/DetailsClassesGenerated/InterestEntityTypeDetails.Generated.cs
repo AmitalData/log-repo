@@ -27,6 +27,7 @@ namespace Logitude.Accounting.BL
                 EnglishName = "ARInvoice", 
                 LocalName = "חשבונית", 
                 SearchFields = "1,חשבונית,ARInvoice", 
+                AccountingEntityCode = "2", 
 			});
 			 
             all.Add(new InterestEntityTypeDetails()
@@ -34,6 +35,7 @@ namespace Logitude.Accounting.BL
                 Code = "2", 
                 EnglishName = "ARPayment", 
                 SearchFields = "2,ARPayment,קבלה", 
+                AccountingEntityCode = "3", 
                 LocalName = "קבלה", 
 			});
 			 
@@ -42,6 +44,7 @@ namespace Logitude.Accounting.BL
                 Code = "3", 
                 EnglishName = "Journal", 
                 SearchFields = "3,Journal,פקודת יומן", 
+                AccountingEntityCode = "1", 
                 LocalName = "פקודת יומן", 
 			});
 			 
@@ -50,6 +53,7 @@ namespace Logitude.Accounting.BL
                 Code = "4", 
                 EnglishName = "Open Balance", 
                 SearchFields = "4,Open Balance,יתרת פתיחה", 
+                AccountingEntityCode = "1", 
                 LocalName = "יתרת פתיחה", 
 			});
 			
@@ -61,12 +65,13 @@ namespace Logitude.Accounting.BL
 		    newPoco.Code = this.Code;  
 		    newPoco.EnglishName = this.EnglishName;  
 		    newPoco.LocalName = this.LocalName;  
-			newPoco.SearchFields = GetSearchFields(this);    
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.AccountingEntityCode = this.AccountingEntityCode;   
         }
 
 		public string GetSearchFields(InterestEntityType rec)
         {   
-           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",");
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",",rec.AccountingEntityCode,",");
         }
    }
 }

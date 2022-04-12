@@ -1,0 +1,41 @@
+<style>
+    .red {
+        color: red !important;
+    }
+    
+    a {
+        cursor: pointer;
+    }
+</style>
+
+<div>
+    <!-- Dates -->
+    <div text-start class="TextTrimming" *ngIf="fieldName == 'CreateDateTime'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div text-start class="TextTrimming" *ngIf="fieldName == 'InterestValueDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+
+    <!-- JournalNumber -->
+    <div text-start class="TextTrimming" *ngIf="fieldName == 'JournalNumber'">
+        <a href="javascript:;" (click)="OpenJournal(rowData['JournalId'])">
+            {{ rowData['JournalNumber'] }}
+        </a>
+    </div>
+
+    <!-- InterestReportNumber -->
+    <div text-start class="TextTrimming" *ngIf="fieldName == 'InterestReportNumber'">
+        <a (click)="OpenInterestReport(rowData['InterestReportId'])">
+            {{ rowData['InterestReportNumber'] }}
+        </a>
+    </div>
+
+
+    <!-- SourceType -->
+    <div style="padding: 0px 7px;text-align: left;" class="TextTrimming" *ngIf="fieldName == 'Source'">
+
+        <span [title]="rowData['SourceType']" *ngIf="IconCode" [class]="'SourceTypeIcon color-' + rowData['SourceTypeCode']" (click)="OpenSource(rowData['SourceId'])">{{IconCode}}</span>
+
+        <a (click)="OpenSource(rowData['SourceId'])">
+            {{rowData['Source']}}
+        </a>
+    </div>
+
+</div>

@@ -60,6 +60,14 @@ namespace Logitude.Accounting.Data.EntityLists
        public string AccountEntityCode  { get; set; }
        [DataMember]
        public bool IsCancelled  { get; set; }
+       [DataMember]
+       public string InterestReportNumber  { get; set; }
+       [DataMember]
+       public string Source  { get; set; }
+       [DataMember]
+       public string SourceTypeCode  { get; set; }
+       [DataMember]
+       public string SourceId  { get; set; }
    }
 
 }
