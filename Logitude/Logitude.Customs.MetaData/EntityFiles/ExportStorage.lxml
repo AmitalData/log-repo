@@ -2919,6 +2919,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ActionCode&quot;"
     ListPropertyPath="&quot;ActionCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2990,38 +2991,38 @@
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CustomStatusName&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;ExporterName&quot;"
         ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;ExportFileNo&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;StorageNo&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;CargoTypeName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;ShipName&quot;"
         ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenStorages&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;CustomStatusName&quot;"
+        ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="8"
@@ -3030,6 +3031,11 @@
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="9"
+        ObjectFieldName="&quot;ActionCode&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;OpenStorages&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="175" />
     </QueryColumns>
@@ -3066,38 +3072,38 @@
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CustomStatusName&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;ExporterName&quot;"
         ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;ExportFileNo&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;StorageNo&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;CargoTypeName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;ShipName&quot;"
         ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;CustomStatusName&quot;"
+        ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
         IndexOrder="8"
@@ -3106,6 +3112,11 @@
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
         IndexOrder="9"
+        ObjectFieldName="&quot;ActionCode&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="175" />
     </QueryColumns>

@@ -42,6 +42,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    into ssj
                                                    from cargoStatus in ssj.DefaultIfEmpty()
 
+
+                                                 
+
+
                                                    from client in context.Clients
                                                    .Where(c => c.Code == en.ExporterID || c.Id == en.ExporterID)
                                                    .Select( r=> new {r.Id, r.FullName, r.Code})
@@ -131,6 +135,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        ExporterCode = client.Code,
 
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
+
                                                        ActionCode= en.ExportLogisticPermitAction.LocalName
                                                    });
             return query;
