@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.ExportLogisticPermitAction&quot;"
   IsNew="true"
   DBTableName="&quot;Customs.ExportLogisticPermitActions&quot;"
-  DBTableOldNames=""
+  DBTableOldNames="Customs.ExportLogisticPermitActions"
   ObjectTableSingular="&quot;ExportLogisticPermitAction&quot;"
   ObjectTablePlural="&quot;ExportLogisticPermitActions&quot;"
   HasCustomFilter="false"
