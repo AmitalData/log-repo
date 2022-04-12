@@ -1,5 +1,5 @@
 @release @stable
-Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL to FCL and Shipment Direction
+Feature: Convert Shipment from Type to another Type
     The user creates a Direct Export Ocean FCL shipment,
     changes direction to Import, changes type to House,
     then back to Direct, changes type to LCL, then back to FCL.
