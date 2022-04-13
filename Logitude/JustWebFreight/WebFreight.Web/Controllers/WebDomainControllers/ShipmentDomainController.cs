@@ -1701,6 +1701,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
                 ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
                 Shipment myShipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+                string loggedContactId = null;
                 if (myShipment != null)
                 {
                     IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
@@ -1732,7 +1733,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         quoteRepository.SubmitChanges();
 
                         ContactQuery contactQuery = new ContactQuery(tenant);
-                        string loggedContactId = null;
                         ContactPM contact = contactQuery.GetContactByEmailOnly(authToken.Email, tenant);
                         if (contact != null)
                         {
@@ -1760,11 +1760,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         foreach (ShipmentReceivable item in receivables)
                         {
-                            item.IsFromQuote = false;
-                            item.QuoteChargeId = null;
-                            item.QuoteSaleMinAmount = null;
-                            item.QuoteSaleMaxAmount = null;
-                            receivableRepository.Update(item);
+                            receivableRepository.Remove(item);
                         }
                     }
 
@@ -1772,12 +1768,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         foreach (ShipmentPayable item in payables)
                         {
-                            item.IsFromQuote = false;
-                            item.QuoteChargeId = null;
-                            item.QuoteCostMinAmount = null;
-                            item.QuoteCostMaxAmount = null;
-
-                            payableRepository.Update(item);
+                            payableRepository.Remove(item);
                         }
                     }
 
@@ -1786,6 +1777,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     shipmentRepository.Update(myShipment);
 
                     shipmentsContext.SaveChanges();
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = tenant,
+                        EventTypeCode = "DTQT",
+                        UserId = loggedContactId,
+                        EntityId = myShipment.Id,
+                        ObjectTableName = "Shipment",
+                        Notes = "Disconnected from Quote#: " + myQuote.QuoteNumber,
+                    });
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, true);
