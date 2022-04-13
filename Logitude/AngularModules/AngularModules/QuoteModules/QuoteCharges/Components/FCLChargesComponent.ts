@@ -607,9 +607,19 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         });
     }
 
-    GenerateSalesLocalCharges() {
-        var saleLocalCharges = this.TariffBehaviours.GenerateSalesLocalCharges();
-        this.CreateQuoteSalesLocalCharges(saleLocalCharges);
+    GenerateSalesLocalCharges() { 
+        var args = this.TariffBehaviours.GenerateSalesLocalCharges();
+        var tariffService: TariffDomainService = new TariffDomainService();
+        tariffService.GetAvailableSalesLocalChargesTariffs(args).subscribe((res: ServiceResponse) => {
+            if (!res.HasError && res.Result) {
+                var saleLocalCharges = res.Result.SalesLocalCharges;
+                this.CreateQuoteSalesLocalCharges(saleLocalCharges);
+            }
+            else {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = res.ErrorsArray;
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     CreateQuoteSalesLocalCharges(tariffCharges) {
@@ -2411,6 +2421,32 @@ export class FCLQuoteChargeItem extends BaseComponent {
         }
     }
 
+    get SaleTariffNumber() { return this.EntityPM.SaleTariffNumber; }
+    set SaleTariffNumber(value: string) {
+        if (value != this.EntityPM.SaleTariffNumber) {
+            this.EntityPM.SaleTariffNumber = value;
+        }
+    }
+    get SaleTariffId() {
+        return this.EntityPM.SaleTariffId;
+    }
+    set SaleTariffId(value: string) {
+        if (value != this.EntityPM.SaleTariffId) {
+            this.EntityPM.SaleTariffId = value;
+        }
+    }
+    get SaleTariffVersion() { return this.EntityPM.SaleTariffVersion; }
+    set SaleTariffVersion(value: number) {
+        if (value != this.EntityPM.SaleTariffVersion) {
+            this.EntityPM.SaleTariffVersion = value;
+        }
+    }
+    get SaleTariffLineId() { return this.EntityPM.SaleTariffLineId; }
+    set SaleTariffLineId(value: string) {
+        if (value != this.EntityPM.SaleTariffLineId) {
+            this.EntityPM.SaleTariffLineId = value;
+        }
+    }
     // InSaleCurrency
     get CostUnitPriceInSaleCurrency() { return this.EntityPM.CostUnitPriceInSaleCurrency; }
     set CostUnitPriceInSaleCurrency(value: number) {

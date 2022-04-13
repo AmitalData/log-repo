@@ -13,22 +13,22 @@ namespace Logitude.TariffModule.BL.Helpers
 {
     public  class TariffPricesHelper
     {
-        public static double? grossWeight;
-        public static double? chargeableWeight;
-        public static double? volume;
-        public static string grossWeightUnitCode;
-        public static string chargeableWeightUnitCode;
-        public static string volumeUnitCode;
-        public static string profitCurrencyId;
-        public static double? profitRate;
-        public static List<RatesTableList> ratesList;
+        public double? grossWeight;
+        public double? chargeableWeight;
+        public double? volume;
+        public string grossWeightUnitCode;
+        public string chargeableWeightUnitCode;
+        public string volumeUnitCode;
+        public string profitCurrencyId;
+        public double? profitRate;
+        public List<RatesTableList> ratesList;
 
         public TariffPricesHelper(int tenant)
         {
             ratesList = this.GetRates(tenant);
         }
 
-        public static double? ComputeGrossWeigh_Kg_Ton(string type)
+        public double? ComputeGrossWeigh_Kg_Ton(string type)
         {
             double? weigh_Kg = null;
             double? weigh_Ton = null;
@@ -66,7 +66,7 @@ namespace Logitude.TariffModule.BL.Helpers
                 return weigh_Kg;
             return weigh_Ton;
         }
-        public static double? ComputeChargeableWeight_Kg()
+        public double? ComputeChargeableWeight_Kg()
         {
             double? weigh_Kg = null;
 
@@ -93,7 +93,7 @@ namespace Logitude.TariffModule.BL.Helpers
             }
             return weigh_Kg;
         }
-        public static double? ComputeVolumeInCBM()
+        public double? ComputeVolumeInCBM()
         {
             double? volumeInCBM = null;
 
@@ -119,7 +119,7 @@ namespace Logitude.TariffModule.BL.Helpers
             }
             return volumeInCBM;
         }
-        public static double? GetCurrencyRate(string currencyId, string localCurrencyId)
+        public double? GetCurrencyRate(string currencyId, string localCurrencyId)
         {
             double? myResult = null;
 
@@ -139,7 +139,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
             return myResult;
         }
-        public static double? CalculateProfitAmount(double? expectedAmount, double? localExpectedAmount, string currencyId)
+        public double? CalculateProfitAmount(double? expectedAmount, double? localExpectedAmount, string currencyId)
         {
             if (currencyId == profitCurrencyId)
             {
@@ -151,7 +151,7 @@ namespace Logitude.TariffModule.BL.Helpers
                 return (localExpectedAmount / profitRate);
             }
         }
-        public static double? CalculateLocalAmount(double? expectedAmount, double? rate)
+        public double? CalculateLocalAmount(double? expectedAmount, double? rate)
         {
             if (expectedAmount != null && rate != null)
             {
@@ -160,7 +160,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
             return null;
         }
-        public static double? Round(double? value, int digits)
+        public double? Round(double? value, int digits)
         {
             double? myValue = null;
 

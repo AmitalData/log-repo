@@ -18,34 +18,11 @@ export class QuoteTariffsBehaviours {
         var args: SalesLocalChargesTariffSearchArgs = new SalesLocalChargesTariffSearchArgs();
         args.FromCountryId = this.EntityPM.FromCountryId;
         args.ToCountryId = this.EntityPM.ToCountryId;;
-        args.BetweenDate = this.GetDate();
         args.FriehgtAmount = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount");;
         args.ForiegnChargesAmount = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId && d.SaleMeasurementCode != "PFCL"), "SaleTotalAmountLocal");
         args.QuoteId = this.EntityPM.Id;
         args.LocalCurrencyId = SessionLocator.LocalCurrencyId;
-        var tariffService: TariffDomainService = new TariffDomainService();
-        tariffService.GetAvailableSalesLocalChargesTariffs(args).subscribe((res: ServiceResponse) => {
-            if (!res.HasError && res.Result) {
-                var saleLocalCharges = res.Result;
-                return saleLocalCharges;
-            }
-            else {
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = res.ErrorsArray;
-            }
-
-            this.CurrentSession.StopBusyIndicator();
-        });
+        return args;
     }
 
-    GetDate() {
-        var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
-        if (this.EntityPM.DirectionId == "I") {
-            betweenDate = this.EntityPM.ETA;
-        }
-        else {
-            betweenDate = this.EntityPM.ETD;
-        }
-
-        return betweenDate;
-    }
 }

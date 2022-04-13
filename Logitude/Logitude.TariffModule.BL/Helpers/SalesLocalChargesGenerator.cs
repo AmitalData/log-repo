@@ -6,6 +6,7 @@ using Logitude.TariffModule.Data.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -32,10 +33,11 @@ namespace Logitude.TariffModule.BL.Helpers
         private string customerGroupExportId;
         private string customerGroupImportId;
         private Customer customer;
-
+        private TariffPricesHelper tariffPricesHelper;
         public SalesLocalChargesGenerator(SalesLocalChargesTariffSearchArgs args, int tenant)
         {
             this.tenant = tenant;
+            tariffPricesHelper = new TariffPricesHelper(this.tenant);
             this.SalesLocalChargesTariffSearchArgs = args;
             this.SalesLocalChargesTariffSearchArgs.SalesLocalCharges = new List<SalesLocalCharges>();
             this.commonContext = CommonDataContext.GetContext(tenant);
@@ -73,17 +75,17 @@ namespace Logitude.TariffModule.BL.Helpers
             GetCustomer();
             GetCustomerGroupExportId();
             GetCustomerGroupImportId();
-            TariffPricesHelper.grossWeight = this.quote.GrossWeight;
-            TariffPricesHelper.chargeableWeight = this.quote.ChargeableWeight;
-            TariffPricesHelper.volume = this.quote.Volume;
-            TariffPricesHelper.grossWeightUnitCode = this.quote.GrossWeightUnitCode;
-            TariffPricesHelper.chargeableWeightUnitCode = this.quote.ChargeableWeightUnitCode;
-            TariffPricesHelper.volumeUnitCode = this.quote.VolumeUnitCode;
+            tariffPricesHelper.grossWeight = this.quote.GrossWeight;
+            tariffPricesHelper.chargeableWeight = this.quote.ChargeableWeight;
+            tariffPricesHelper.volume = this.quote.Volume;
+            tariffPricesHelper.grossWeightUnitCode = this.quote.GrossWeightUnitCode;
+            tariffPricesHelper.chargeableWeightUnitCode = this.quote.ChargeableWeightUnitCode;
+            tariffPricesHelper.volumeUnitCode = this.quote.VolumeUnitCode;
             this.valueOfGoods = this.quote.ValueOfGoods;
             this.noOfPackages = MethodHelper.IsFCLEntity(quote.TransportModeId, quote.ShipmentTypeId) ? this.quote.NumberOfContainers : this.quote.NumberOfPackages;
             this.TEU = this.quote.TEU;
-            TariffPricesHelper.profitCurrencyId = this.quote.ProfitCurrencyId;
-            TariffPricesHelper.profitRate = this.quote.ProfitExchangeRate;
+            tariffPricesHelper.profitCurrencyId = this.quote.ProfitCurrencyId;
+            tariffPricesHelper.profitRate = this.quote.ProfitExchangeRate;
             this.GetQuotePackages();
 
         }
@@ -222,7 +224,7 @@ namespace Logitude.TariffModule.BL.Helpers
             List<TariffLine> myResult = new List<TariffLine>();
             TariffVersionRepository tariffVersionRepository = new TariffVersionRepository(tenant);
             TariffLineRepository tariffLineRepository = new TariffLineRepository(tenant);
-            DateTime? dateFilter  = SalesLocalChargesTariffSearchArgs.BetweenDate;
+            DateTime? dateFilter = this.GetFilterDate();
             foreach (Tariff tariff in tariffs)
             {
                 IQueryable<TariffVersion> tariffVersions = tariffVersionRepository.GetActiveVersionsByTariffId(tariff.Id, tenant);
@@ -242,7 +244,20 @@ namespace Logitude.TariffModule.BL.Helpers
 
             return myResult;
         }
-     
+        private DateTime? GetFilterDate()
+        {
+            DateTime? betweenDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            if (this.quote.DirectionId == "I" && this.quote.ETA != null)
+            {
+                betweenDate = this.quote.ETA;
+            }
+            else if(this.quote.ETD != null)
+            {
+                betweenDate = this.quote.ETD;
+            }
+
+            return betweenDate;
+        }
         private TariffLine FilterTariffLines(IQueryable<TariffLine> tariffLines)
         {
             if (IsImportQuote())
@@ -352,8 +367,8 @@ namespace Logitude.TariffModule.BL.Helpers
 
                             Currency currency = this.commonContext.Currencies.Where(p => p.Tenant == tariff.Tenant && p.Id == localCharge.CurrencyId).FirstOrDefault();
                             localCharge.CurrencyCode = currency?.Code;
-                            localCharge.Rate = TariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, SalesLocalChargesTariffSearchArgs.LocalCurrencyId);
-                            localCharge.Price = TariffPricesHelper.Round(price, 3);
+                            localCharge.Rate = tariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, SalesLocalChargesTariffSearchArgs.LocalCurrencyId);
+                            localCharge.Price = tariffPricesHelper.Round(price, 3);
 
                             double? expectedAmount = 0;
 
@@ -376,8 +391,8 @@ namespace Logitude.TariffModule.BL.Helpers
                             }
 
                             localCharge.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
-                            localCharge.LocalExpectedAmount = TariffPricesHelper.CalculateLocalAmount(expectedAmount, localCharge.Rate);
-                            localCharge.ProfitExpectedAmount = TariffPricesHelper.CalculateProfitAmount(expectedAmount, localCharge.LocalExpectedAmount, localCharge.CurrencyId);
+                            localCharge.LocalExpectedAmount = tariffPricesHelper.CalculateLocalAmount(expectedAmount, localCharge.Rate);
+                            localCharge.ProfitExpectedAmount = tariffPricesHelper.CalculateProfitAmount(expectedAmount, localCharge.LocalExpectedAmount, localCharge.CurrencyId);
                             localCharges.Add(localCharge);
                         }
                     }
@@ -440,19 +455,19 @@ namespace Logitude.TariffModule.BL.Helpers
                         case "PRVL": { localCharge.Quantity = this.valueOfGoods; break; }
                         case "PRFR": { localCharge.Quantity = SalesLocalChargesTariffSearchArgs.FriehgtAmount; break; }
                         case "QTY": { localCharge.Quantity = this.noOfPackages; break; }
-                        case "GRWT": { localCharge.Quantity = TariffPricesHelper.grossWeight; break; }
-                        case "CHWT": { localCharge.Quantity = TariffPricesHelper.chargeableWeight; break; }
-                        case "VOLU": { localCharge.Quantity = TariffPricesHelper.volume; break; }
+                        case "GRWT": { localCharge.Quantity = tariffPricesHelper.grossWeight; break; }
+                        case "CHWT": { localCharge.Quantity = tariffPricesHelper.chargeableWeight; break; }
+                        case "VOLU": { localCharge.Quantity = tariffPricesHelper.volume; break; }
                         case "PFCL": { localCharge.Quantity = SalesLocalChargesTariffSearchArgs.ForiegnChargesAmount; break; }
-                        case "GWTN": { localCharge.Quantity = TariffPricesHelper.ComputeGrossWeigh_Kg_Ton("ton"); break; }
-                        case "CWKG": { localCharge.Quantity = TariffPricesHelper.ComputeChargeableWeight_Kg(); break; }
-                        case "GWKG": { localCharge.Quantity = TariffPricesHelper.ComputeGrossWeigh_Kg_Ton("kg"); break; }
-                        case "VCBM": { localCharge.Quantity = TariffPricesHelper.ComputeVolumeInCBM(); break; }
+                        case "GWTN": { localCharge.Quantity = tariffPricesHelper.ComputeGrossWeigh_Kg_Ton("ton"); break; }
+                        case "CWKG": { localCharge.Quantity = tariffPricesHelper.ComputeChargeableWeight_Kg(); break; }
+                        case "GWKG": { localCharge.Quantity = tariffPricesHelper.ComputeGrossWeigh_Kg_Ton("kg"); break; }
+                        case "VCBM": { localCharge.Quantity = tariffPricesHelper.ComputeVolumeInCBM(); break; }
                         default: { break; }
                     }
 
-                    localCharge.Rate = TariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, SalesLocalChargesTariffSearchArgs.LocalCurrencyId);
-                    localCharge.Price = TariffPricesHelper.Round(price, 3);
+                    localCharge.Rate = tariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, SalesLocalChargesTariffSearchArgs.LocalCurrencyId);
+                    localCharge.Price = tariffPricesHelper.Round(price, 3);
 
                     double? expectedAmount = 0;
 
@@ -475,8 +490,8 @@ namespace Logitude.TariffModule.BL.Helpers
                     }
 
                     localCharge.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
-                    localCharge.LocalExpectedAmount = TariffPricesHelper.CalculateLocalAmount(expectedAmount, localCharge.Rate);
-                    localCharge.ProfitExpectedAmount = TariffPricesHelper.CalculateProfitAmount(expectedAmount, localCharge.LocalExpectedAmount, localCharge.CurrencyId);
+                    localCharge.LocalExpectedAmount = tariffPricesHelper.CalculateLocalAmount(expectedAmount, localCharge.Rate);
+                    localCharge.ProfitExpectedAmount = tariffPricesHelper.CalculateProfitAmount(expectedAmount, localCharge.LocalExpectedAmount, localCharge.CurrencyId);
                     localCharges.Add(localCharge);
                 }
             }

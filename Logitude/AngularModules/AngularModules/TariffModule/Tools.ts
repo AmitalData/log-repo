@@ -60,7 +60,7 @@ export class TariffTool {
             myResult = true;
         }
 
-        return myResult;
+        return myResult; 
     }
 
     public static CopyTariffVersion(tariff: TariffPM, oldVersion: TariffVersionPM): TariffVersionPM {
