@@ -24,6 +24,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 //using AmitalCustomsWindowsService.Utils;
 
 namespace Logitude.Accounting.BL.Utils
@@ -166,7 +167,7 @@ namespace Logitude.Accounting.BL.Utils
                                 if (lineList.Count > 0)
                                 {
                                     var journal = WriteJournal(journalUpdateService, lineList, revaluation);
-                                    CreateInterestTransactions(journal);
+                                    AddInterestTransactions(journal);
                                     lineList.Clear();
                                 }
 
@@ -195,23 +196,30 @@ namespace Logitude.Accounting.BL.Utils
 
         }
 
-        private void CreateInterestTransactions(JournalPM journal)
+        private static void AddInterestTransactions(JournalPM journal)
         {
-            var interestTransactions = new List<InterestTransaction>();
+            var interestTransactions = new List<InterestTransactionPM>();
             foreach (var line in journal.JournalLines)
             {
                 interestTransactions.Add(CreateInterestTransaction(line));
             }
-            InterestTransactionQueryService interestTransactionUpdateService = new InterestTransactionQueryService(journal.Tenant);
-            interestTransactionUpdateService.GetInterestTransactionPMByEntityId
+            InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(journal.Tenant);
+            using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+            {
+                foreach (var item in interestTransactions)
+                {
+                    interestTransactionUpdateService.Update(item,true);
+                }
+                excScope.Complete();
+            }
+                
 
 
         }
 
-        private InterestTransaction CreateInterestTransaction( JournalLinePM line)
+        private static InterestTransactionPM CreateInterestTransaction( JournalLinePM line)
         {
-            InterestTransaction newInterestTransaction = new InterestTransaction();
-
+            InterestTransactionPM newInterestTransaction = new InterestTransactionPM();
             newInterestTransaction.EntityId = line.JournalId;
             newInterestTransaction.OriginalEntityLineNumber = line.Line;
             newInterestTransaction.InterestEntityTypeCode = InterestEntityTypes.Journal;
@@ -220,6 +228,8 @@ namespace Logitude.Accounting.BL.Utils
             newInterestTransaction.CurrencyId = line.CurrencyId;
             newInterestTransaction.InterestValueDate = line.AccountingDate;
             newInterestTransaction.GLAccountId = line.CreditAccountId;
+            newInterestTransaction.Tenant = line.Tenant;
+            newInterestTransaction.ChangeSetOp = ChangeSetOperation.Insert;
             return newInterestTransaction;
         }
 
@@ -357,9 +367,10 @@ namespace Logitude.Accounting.BL.Utils
                             lineList.Add(journalLine_debit);
 
 
-                            if (lineList.Count >= 100)
+                            if (lineList.Count >= 1)
                             {
-                                WriteJournal(journalUpdateService, lineList, revaluation, gLAccountPM);
+                                var journal = WriteJournal(journalUpdateService, lineList, revaluation, gLAccountPM);
+                                AddInterestTransactions(journal);
                                 lineList.Clear();
                                 //  scope.Complete();
                             }
