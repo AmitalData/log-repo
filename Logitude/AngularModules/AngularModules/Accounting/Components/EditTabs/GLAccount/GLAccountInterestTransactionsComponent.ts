@@ -39,7 +39,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
     public searchFieldFilter: FilterItem;
     public isControlAccount: boolean = false;
     public isRTL: boolean = false;
-    InterestReports: InterestReportList[] = [];
+    InterestReports: any[] = [];
 
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -121,7 +121,9 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             .subscribe((myResponse: ServiceResponse) =>
             {
                 if (!myResponse.HasError) {
-                    this.InterestReports = myResponse.Result;
+                    const result = myResponse.Result;
+                    this.InterestReports = [{ ReportNumber : 'None' }];
+                    this.InterestReports = this.InterestReports.concat(result);
                 }
             });
     }
@@ -190,19 +192,19 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
         this.columns.push({
             FieldName: 'Source',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("InterestTransaction.F.Source"),
-            Styles: { width: '100px' },
+            Display: TextCodeTranslator.Translate("InterestTransaction.F.InterestEntityTypeCode"),
+            Styles: { width: '95px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.excelService.GetQueryColumn("Source", 'Text', TextCodeTranslator.Translate("InterestTransaction.F.Source")));
+        this.QueryColumns.push(this.excelService.GetQueryColumn("Source", 'Text', TextCodeTranslator.Translate("InterestTransaction.F.InterestEntityTypeCode")));
 
         this.columns.push({
             FieldName: 'InterestValueDate',
             DataTypeCode: 'DateTime',
             Display: TextCodeTranslator.Translate("InterestTransaction.F.InterestValueDate"),
-            Styles: { width: '85px' },
+            Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
             IsCustomTemplate: true
@@ -226,15 +228,21 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             FieldName: 'LocalAmount',
             DataTypeCode: 'Number',
             Display: TextCodeTranslator.Translate("InterestTransaction.F.LocalAmount"),
-            Styles: { width: '120px' }
+            Styles: { width: '120px' },
+            HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
+            IsCustomTemplate: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("LocalAmount", 'Number', TextCodeTranslator.Translate("InterestTransaction.F.LocalAmount")));
 
         this.columns.push({
            FieldName: 'CurrencyCode',
            DataTypeCode: 'String',
-           Display: 'Currency',
-           Styles: { width: '70px' }
+           Display: TextCodeTranslator.Translate("InterestTransaction.F.CurrencyCode"),
+           Styles: { width: '100px' },
+           HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
+           HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
+           IsCustomTemplate: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("CurrencyCode", 'Text', TextCodeTranslator.Translate("InterestTransaction.F.LocalAmount")));
 
@@ -242,7 +250,10 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             FieldName: 'ForeignAmount',
             DataTypeCode: 'Number',
             Display: TextCodeTranslator.Translate("InterestTransaction.F.ForeignAmount"),
-            Styles: { width: '120px' }
+            Styles: { width: '120px' },
+            HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
+            IsCustomTemplate: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("ForeignAmount", 'Number', TextCodeTranslator.Translate("InterestTransaction.F.ForeignAmount")));
 
@@ -273,7 +284,10 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             FieldName: 'IsClosed',
             DataTypeCode: 'Boolean',
             Display: TextCodeTranslator.Translate("InterestTransaction.F.IsClosed"),
-            Styles: { width: '80px' }
+            Styles: { width: '90px' },
+            HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
+            IsCustomTemplate: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("IsClosed", 'Boolean', TextCodeTranslator.Translate("InterestTransaction.F.IsClosed")));
 
@@ -282,7 +296,10 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             FieldName: 'IsCancelled',
             DataTypeCode: 'Boolean',
             Display: TextCodeTranslator.Translate("InterestTransaction.F.IsCancelled"),
-            Styles: { width: '80px' }
+            Styles: { width: '90px' },
+            HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
+            IsCustomTemplate: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("IsCancelled", 'Boolean', TextCodeTranslator.Translate("InterestTransaction.F.IsCancelled")));
 
@@ -334,7 +351,9 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             this.filterAgrs.SortDirection = sortingDir;
         }
 
-        if(this.SelectedInterestReport)
+        if(this.SelectedInterestReport && this.SelectedInterestReport.ReportNumber == 'None')
+            this.filterAgrs.addAdditionalFilter("InterestReportId", "Please Don't Erase Me", null, null, "IsNull", false, false, false, "string");
+            else if(this.SelectedInterestReport && this.SelectedInterestReport.ReportNumber != 'None')
             this.filterAgrs.addAdditionalFilter("InterestReportId", this.SelectedInterestReport.Id, null, null, "Equals", false, false, false, "string");
 
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.glaccountPM.Id, null, null, "Equals", false, false, false, "string");
@@ -375,7 +394,16 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
     {
         if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate))
         {
-            this.dateFilter = new FilterItem("InterestValueDate", this.FromDate, this.toDate, null, "Between", false, false, false, "Date", false);
+            let fieldName = "";
+
+            switch (this.dateFilterSelectedValue) {
+                case 'filter_Accounting': { fieldName = 'AccountingDate'; break; }
+                case 'filter_Create': { fieldName = 'CreateDateTime'; break; }
+                default:
+                case 'filter_Interest': { fieldName = 'InterestValueDate'; break; }
+            }
+
+            this.dateFilter = new FilterItem(fieldName, this.FromDate, this.toDate, null, "Between", true, true, false, "Date", false);
             this.RefreshButtonClicked();
         }
     }
@@ -419,32 +447,14 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
     //#endregion
 
     //#region Filter Methods
-    public filterSelectedValue: string = 'filter_Interest';
+    public dateFilterSelectedValue: string = 'filter_Interest';
     public dateTypeCode: string = '1';
     FilterItemClicked(itemValue: string)
     {
-        if (this.filterSelectedValue != itemValue) {
-            this.filterSelectedValue = itemValue;
-            this.FilterLines();
+        if (this.dateFilterSelectedValue != itemValue) {
+            this.dateFilterSelectedValue = itemValue;
+            this.LoadDataByDateFilter();
         }
-    }
-    FilterLines()
-    {
-        switch (this.filterSelectedValue) {
-            case 'filter_accounting':
-                this.dateTypeCode = '1';
-                break;
-            case 'filter_due':
-                this.dateTypeCode = '2';
-                break;
-            case 'filter_reference':
-                this.dateTypeCode = '3';
-                break;
-            default:
-                break;
-        }
-
-            this.LoadGridData();
     }
 
 

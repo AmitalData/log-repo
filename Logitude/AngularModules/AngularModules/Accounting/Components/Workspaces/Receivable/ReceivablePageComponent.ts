@@ -100,7 +100,10 @@ export class ReceivablePageComponent {
                                 {
                                     this._entityResourceService.getEntityResourceByTableName("InterestTransaction").subscribe((response: any) =>
                                     {
-                                        this.isReady = true;
+                                        this._entityResourceService.getEntityResourceByTableName("InterestReport").subscribe((response: any) =>
+                                        {
+                                            this.isReady = true;
+                                        });
                                     });
                                 });
                             });
