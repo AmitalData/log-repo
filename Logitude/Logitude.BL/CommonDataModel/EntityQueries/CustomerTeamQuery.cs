@@ -63,6 +63,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                UpdateDate = a.UpdateDate,
                                                CreatedByUserId = a.CreatedByUserId,
                                                UpdatedByUserId = a.UpdatedByUserId,
+                                               Code = a.Code,
                                            }).FirstOrDefault();
 
             return customerTeam;
@@ -83,6 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            UpdateDate = a.UpdateDate,
                                                            CreatedByUserId = a.CreatedByUserId,
                                                            UpdatedByUserId = a.UpdatedByUserId,
+                                                           Code = a.Code,
                                                        };
 
             return customerTeams;
@@ -103,6 +105,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  UpdateDate = a.UpdateDate,
                                                  CreatedByUserId = a.CreatedByUserId,
                                                  UpdatedByUserId = a.UpdatedByUserId,
+                                                 Code = a.Code,
                                              };
             return result;
         }
