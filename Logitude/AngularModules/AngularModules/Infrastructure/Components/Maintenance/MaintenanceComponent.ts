@@ -482,8 +482,21 @@ export class MaintenanceComponent {
             }
         }
     }
+
     private BuildCustomsMenus() {
 
+        if (window.ObjectTables.filter(d => d.Name == "Customs.Client")[0] != null) {
+
+            if (FeatureLocator.HasFeaturePermession("Customs.Client", "AUTHORIZAT")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CSM";
+                item.Icon = "Table"
+                item.Code = "SAL";
+                item.ObjectTableName = "Customs.Client";
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+        }
         if (window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0] != null) {
 
             if (FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "CSTMREQFIELDMTC")) {
@@ -494,6 +507,8 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Customs.CustomsRequiredField";
                 item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
+
             }
             if (FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "CSTMREQFIELDMTC")) {
                 this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequiredField", 0).subscribe((response: any) => {
@@ -507,6 +522,7 @@ export class MaintenanceComponent {
                     item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 });
+
             }
         }
 
@@ -1368,7 +1384,7 @@ export class MaintenanceComponent {
                 }
                 case "MRCF": {
                     var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Title = "קליטת קובץ אישורים מאיקאה להצהרה";
+                    logitudeWindow.Title = "קליטת קובץ םישורים מםיקםה להצהרה";
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 600;
                     logitudeWindow.Width = 700;
@@ -1412,7 +1428,7 @@ export class MaintenanceComponent {
                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                         confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
                         confirmWindow.ShowNoButton
-                        confirmWindow.Show("לעדכן נתוני יבואנים/יצואנים במערכת?");
+                        confirmWindow.Show("לעדכן נתוני יבוםנים/יצוםנים במערכת?");
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
 
@@ -1486,7 +1502,47 @@ export class MaintenanceComponent {
                     logWindow.Show('./CommonModules/CommonPartners/Components/Maintenance/UploadPartnersComponent');
                     break;
                 }
+                case "SAL":
+                    {
+                        let test = true;
+                        let strict = true;
+                        if (test) {
+                            if (DateTool.GetCurrentDateAsUtc().valueOf() < new Date(2017, 7, 20).valueOf()) {
+                                strict = false;
+                            }
+                        }
+                        let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
+                        LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
+                        let allowed = false;
+                        allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital.") || SessionLocator.LoggedUserPM.IsCustomerCare);
 
+                        if (strict && !allowed) {
+                            let messageWindow = new MessageWindow()
+                            messageWindow.Show("Logged User Is not Customer Care ");
+                            return;
+                        }
+
+                        let confirmWindow = new ConfirmWindow();
+                        confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.SelectAuthorizationLetters");
+                        confirmWindow.Width = 350;
+                        confirmWindow.Height = 200;
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+                        confirmWindow.ShowNoButton
+                        confirmWindow.Show("הםם לבצע שליפת כתבי הרשםה לכל הלקוחות במערכת ?");
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                            if (confirmWindow.Yes) {
+
+                                var servicelink = './Customs/CustomsGeneralRequests/Components/RecallClientsForCutoms';
+                               
+
+                                SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                                    service.SendRecallMessageConcurrencyGuidToServer();
+                                });                   
+                            }
+                        });
+                        break;
+                    }
                 default: {
                     if (item.ObjectTableId) {
                         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === item.ObjectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
@@ -1629,8 +1685,8 @@ export class MaintenanceComponent {
                     //LogitudeEntityNumber = 1 - 211622·;
                     //LogitudeViewModel = UnifreightMassageHandler·;
                     //LogitudeCommandId = CreateInvoiceCommand·;
-                    //formtitle = הצהרת יבוא"
-                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
+                    //formtitle = הצהרת יבום"
+                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבום"}';
 
                     var objParams = JSON.parse(json);
                     objParams.Requset = new Array();

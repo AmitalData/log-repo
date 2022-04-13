@@ -80,6 +80,14 @@ namespace Logitude.Customs.Data.Repsitories
                   select rec
                   ).ToList();
         }
+        public List<Client> GetAllLocalClientsIsConcurrencyGUID(int tenant)
+        {
+            return (
+                  from rec in context.Clients
+                  where !string.IsNullOrEmpty(rec.Code) && rec.Tenant == tenant && rec.ConcurrencyGUID != null
+                  select rec
+                  ).ToList();
+        }
     }
 
 }
