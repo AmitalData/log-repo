@@ -579,12 +579,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 result = string.IsNullOrEmpty(result) ? entityPM.ImporterName : result + "," + entityPM.ImporterName;
             }
 
-
-            //   if (isNewEntity)
-            //    {
-            ConsignmentQueryService cosigmentQuery = new ConsignmentQueryService(poco.Tenant);
-            List<Consignment> consignmentList = cosigmentQuery.GetConsgnmentByDeclarationIdForDataMapping(entityPM.Id, poco.Tenant);
-            foreach (var item in consignmentList)
+            if (entityPM.Consignments.Count > 0)
+            {
+                foreach (ConsignmentPM item in entityPM.Consignments)
                 {
                     if (!string.IsNullOrEmpty(item.ManifestNumber))
                     {
@@ -601,7 +598,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         result = string.IsNullOrEmpty(result) ? item.ThirdCargoID : result + "," + item.ThirdCargoID;
                     }
                 }
-            //   }
+
+            }
+            else
+            {
+                ConsignmentQueryService cosigmentQuery = new ConsignmentQueryService(poco.Tenant);
+                List<Consignment> consignmentList = cosigmentQuery.GetConsgnmentByDeclarationIdForDataMapping(entityPM.Id, poco.Tenant);
+                foreach (var item in consignmentList)
+                {
+                    if (!string.IsNullOrEmpty(item.ManifestNumber))
+                    {
+                        result = string.IsNullOrEmpty(result) ? item.ManifestNumber : result + "," + item.ManifestNumber;
+                    }
+
+                    if (!string.IsNullOrEmpty(item.SecondCargoID))
+                    {
+                        result = string.IsNullOrEmpty(result) ? item.SecondCargoID : result + "," + item.SecondCargoID;
+                    }
+
+                    if (!string.IsNullOrEmpty(item.ThirdCargoID))
+                    {
+                        result = string.IsNullOrEmpty(result) ? item.ThirdCargoID : result + "," + item.ThirdCargoID;
+                    }
+                }
+            }
+
 
             //    else
             //{
