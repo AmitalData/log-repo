@@ -264,5 +264,47 @@ namespace WebFreight.Web.CustomWebServices
 
             return "עידכון כל הלקוחות  ( " + clientsList.Count.ToString() + " ) ימשיך ברקע";
         }
+
+        [WebMethod]
+        //        public string RecallClientsForCutomsRequest(string guidId, int tenant, string clientsList)
+        public string RecallClientsConcurrencyGUIDForCutomsRequest(string guidId, int tenant)
+        {
+            ClientQueryService clientQueryService = new ClientQueryService(tenant);
+            var clientsList = clientQueryService.GetAllLocalClientsIsConcurrencyGUID(tenant);
+
+            if (clientsList.Count == 0)
+            {
+                return "Client List Is Empty (Count==0)";
+            }
+
+            string clientCode = "";
+            for (int i = 0; i < clientsList.Count; i++)
+            {
+                string mess = string.Format(
+                    "בניית תקשורת שליפת כתבי הרשאה  {2} ( {0}/{1} ) "
+                    , (i + 1), (clientsList.Count), clientCode);
+                ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(guidId, mess);
+
+                var clientSearchByCustomsAgentMessagingService = new CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService();
+                var req = new ClientSearchRequestParams()
+                {
+                    Tenant = tenant,
+                    RequestVIA = SendRequestVIA.WebServiceBatch,
+                    ExternalId = clientsList[i].Code,
+                    PassportNumber = clientsList[i].PassportNumber,
+                    PassportTypeCode = clientsList[i].PassportTypeCode,
+                    PassportCountryCode = clientsList[i].PassportCountryCode,
+                };
+                var test = false;
+                if (test)
+                {
+                    req.RequestVIA = SendRequestVIA.WebServiceInteractive;
+                    req.SuppressSplitWR = true;
+                }
+                clientSearchByCustomsAgentMessagingService.Send(req);
+            }
+
+            return "עידכון כל הלקוחות  ( " + clientsList.Count.ToString() + " ) ימשיך ברקע";
+        }
     }
 }
