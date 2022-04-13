@@ -3,14 +3,14 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="4">
     <![CDATA[
 
 UPDATE DECLARATIONREFERANTDATAS d
-SET PACKAGETYPECODE = (SELECT PACKAGETYPECODE
+SET PACKAGETYPECODE = (select * from (SELECT PACKAGETYPECODE
                FROM CONSIGNMENTPACKAGES p              
-               WHERE p.declarationid =d.declarationid and  p.PACKAGEMEASUREQUALIFIERCODE = '2'
-               FETCH NEXT 1 ROWS ONLY)
+               WHERE p.declarationid =d.declarationid and  p.PACKAGEMEASUREQUALIFIERCODE = '2')
+               where rownum <=1)
 WHERE d.PACKAGETYPECODE is null and  (D.ISCLOSEDFORFOLLOWUP is null or D.ISCLOSEDFORFOLLOWUP = 0 );
 
 
