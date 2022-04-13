@@ -6,20 +6,21 @@ Feature: Accounting Settings Search and Edit from Maintenance
         Given the user logged in
         And navigate to "Accounting Settings" in maintenance menu
         And the user update accounting settings as following
-            | VoidARInvoice | yes |
-            | voidARPayment | yes |
-            | VoidAPInvoice | yes |
-            | voidAPPayment | yes |
+            | VoidARInvoice | No |
+            | voidARPayment | No |
+            | VoidAPInvoice | No |
+            | voidAPPayment | No |
+
         When the user save the changes
         Then the new settings should saved successfully
 
     Scenario: Edit invoices and payment settings in accounting settings
         Given navigate to "Accounting Settings" in maintenance menu
         And the user update accounting settings as following
-            | VoidARInvoice | No |
-            | voidARPayment | No |
-            | VoidAPInvoice | No |
-            | voidAPPayment | No |
+            | VoidARInvoice | yes |
+            | voidARPayment | yes |
+            | VoidAPInvoice | yes |
+            | voidAPPayment | yes |
         When the user save the changes
         Then the new settings should saved successfully
 
