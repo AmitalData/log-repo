@@ -24,7 +24,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             this.context = context;
         }
-
+        // generate disabled
         public List<InterestTransactionList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<InterestTransactionList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<InterestTransactionList> query2 = GetIqueryableList(iQueryable, tenant);
            
             query2 = filter.GetFilteredQuery<InterestTransactionList>(listQueryOperation, query2);
 
@@ -137,8 +137,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        where a.Id == id
                                                        select a);
 
-             
-            IQueryable<InterestTransactionList> InterestTransactionListQuery = GetIqueryableList( InterestTransactionQuery);
+            var transaction = InterestTransactionQuery.FirstOrDefault();
+
+            IQueryable<InterestTransactionList> InterestTransactionListQuery = GetIqueryableList(InterestTransactionQuery, transaction.Tenant);
             InterestTransactionList InterestTransactionList = InterestTransactionListQuery.FirstOrDefault();
             return InterestTransactionList;
            
@@ -162,7 +163,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             
 			iQueryable = filter.GetFilteredQuery<InterestTransaction>(nonListQueryOperation, iQueryable);
 
-            IQueryable<InterestTransactionList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<InterestTransactionList> query2 = GetIqueryableList(iQueryable, tenant);
 
             query2 = filter.GetFilteredQuery<InterestTransactionList>(listQueryOperation, query2);
             int count = query2.Count();

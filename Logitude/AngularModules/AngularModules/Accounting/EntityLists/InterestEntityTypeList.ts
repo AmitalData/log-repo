@@ -12,6 +12,7 @@ export class InterestEntityTypeList {
 	EnglishName: string;
 	SearchFields: string;
 	LocalName: string;
+	AccountingEntityCode: string;
 	
 }
  

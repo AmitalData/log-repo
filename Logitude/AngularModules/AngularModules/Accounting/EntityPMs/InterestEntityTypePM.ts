@@ -44,6 +44,11 @@ export class InterestEntityTypePM {
     public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
        
 	 
+    private accountingEntityCode: string;
+    public get AccountingEntityCode() { return this.accountingEntityCode; }
+    public set AccountingEntityCode(newValue: string) { if (this.accountingEntityCode != newValue) { this.accountingEntityCode = newValue; this.MarkAsDirty("AccountingEntityCode"); } }
+       
+	 
 
     public OldEntityPM: InterestEntityTypePM;
 		

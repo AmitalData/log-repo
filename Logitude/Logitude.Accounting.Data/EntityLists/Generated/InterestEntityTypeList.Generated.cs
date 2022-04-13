@@ -22,6 +22,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string LocalName  { get; set; }
+       [DataMember]
+       public string AccountingEntityCode  { get; set; }
    }
 
 }

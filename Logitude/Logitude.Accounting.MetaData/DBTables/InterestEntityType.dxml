@@ -33,4 +33,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AccountingEntityCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

@@ -147,6 +147,7 @@ import { UserDefinedReportListService } from './Services/StandardLists/UserDefin
 import { UserDefinedReportPMService } from './Services/StandardPMs/UserDefinedReportPMService';
 import { CalculatedChartsLineTypeListService } from './Services/StandardLists/CalculatedChartsLineTypeListService';
 import { ARPaymentChequeOperationsService } from './Services/Others/ARPaymentChequeOpService';
+import { InterestTransactionListService } from './Services/StandardLists/InterestTransactionListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -264,6 +265,7 @@ export class ModuleProviders {
             case "InterestBasesTypeListService": { myResult = new InterestBasesTypeListService(); break; }
             case "InterestBasesPeriodPMService": { myResult = new InterestBasesPeriodPMService(); break; }
             case "InterestBasesTypePMService": { myResult = new InterestBasesTypePMService(); break; }
+            case "InterestTransactionListService": { myResult = new InterestTransactionListService(); break; }
 
             //#endregion
 
