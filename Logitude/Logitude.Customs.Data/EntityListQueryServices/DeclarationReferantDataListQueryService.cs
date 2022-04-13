@@ -83,6 +83,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  DeclarationStatusTypeCode = d.DeclarationStatusTypeCode,
                                                                  ExceptionReasonsList = a.ExceptionReasonsList,
                                                                  ReferentUserId = d.ReferentUserId,
+                                                                 ReferantName=d.ReferentUser.Contact.LocalName,
                                                                  DepartmentId = d.DepartmentId,
                                                                  AvailabilityDate = d.AvailabilityDate,
  
