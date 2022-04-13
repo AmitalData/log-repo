@@ -288,6 +288,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.ShortHAWB = entityPM.ShortHAWB.Substring(start);
                 }
             }
+            else
+            {
+                entityPM.ShortHAWB = entityPM.HAWB;
+            }
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
@@ -303,7 +307,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     toSetDeclarationChanged = true;
                 }
             }
-            entityPM.ShortHAWB = entityPM.HAWB;
 
             base.OnUpdating(entityPM, entityPOCO);
         }
