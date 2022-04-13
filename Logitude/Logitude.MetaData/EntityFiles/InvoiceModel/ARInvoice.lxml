@@ -17227,31 +17227,26 @@
     IsReadOnly="true"
     IsHeaderScreen="true"
     Code="&quot;ARInvoice.FullAccHeaderScreen&quot;"
-    NumberOfColumns="5"
+    NumberOfColumns="4"
     NumberOfRows="1">
     <ScreenFields>
       <ScreenField
         Column="0"
         Row="0"
-        ObjectFieldName="&quot;ShipmentsNumbers&quot;"
+        ObjectFieldName="&quot;DueDate&quot;"
         ScreenName="Header Screen" />
       <ScreenField
         Column="1"
         Row="0"
-        ObjectFieldName="&quot;DueDate&quot;"
+        ObjectFieldName="&quot;AmountDue&quot;"
         ScreenName="Header Screen" />
       <ScreenField
         Column="2"
         Row="0"
-        ObjectFieldName="&quot;AmountDue&quot;"
-        ScreenName="Header Screen" />
-      <ScreenField
-        Column="3"
-        Row="0"
         ObjectFieldName="&quot;StatusName&quot;"
         ScreenName="Header Screen" />
       <ScreenField
-        Column="4"
+        Column="3"
         Row="0"
         ObjectFieldName="&quot;JournalNumber&quot;"
         ScreenName="Header Screen" />
