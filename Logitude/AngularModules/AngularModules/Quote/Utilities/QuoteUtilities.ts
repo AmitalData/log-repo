@@ -348,6 +348,16 @@ export class QuoteUtilities {
             newChargePM.IsChargeBySteps = item.IsChargeBySteps;                       
             newChargePM.ChargesGroupCode = item.ChargesGroupCode;
             newChargePM.Notes = item.Notes;
+
+            if (oldEntityPM.IsChargesByVAT) {
+                newChargePM.VatTypeId = item.VatTypeId;
+                newChargePM.VatTypeName = item.VatTypeName;
+                newChargePM.VatAmount = item.VatAmount;
+                newChargePM.VatPercentage = item.VatPercentage;
+                newChargePM.VatIsMultiPercentage = item.VatIsMultiPercentage;
+                newChargePM.ExternalVATCard = item.ExternalVATCard; 
+            }
+
             if (isCopyCost) {
                 newChargePM.CostUnitPrice = item.CostUnitPrice;
                 newChargePM.CostQuantity = item.CostQuantity;
@@ -393,16 +403,6 @@ export class QuoteUtilities {
                 newChargePM.SaleContainerType3UnitPrice = item.SaleContainerType3UnitPrice;
                 newChargePM.SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice;
                 newChargePM.SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice;
-
-                if (oldEntityPM.IsChargesByVAT) {
-                    newChargePM.VatTypeId = item.VatTypeId;
-                    newChargePM.VatTypeName = item.VatTypeName;
-                    newChargePM.VatAmount = item.VatAmount;
-                    newChargePM.VatPercentage = item.VatPercentage;
-                    newChargePM.VatIsMultiPercentage = item.VatIsMultiPercentage;
-                    newChargePM.ExternalVATCard = item.ExternalVATCard;
-                }
-
                 newChargePM.SaleTotalAmount = item.SaleTotalAmount;
                 newChargePM.SaleTotalAmountLocal = item.SaleTotalAmountLocal;
             }
