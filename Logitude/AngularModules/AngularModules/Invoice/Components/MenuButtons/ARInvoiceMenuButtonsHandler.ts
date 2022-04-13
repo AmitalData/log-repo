@@ -791,6 +791,12 @@ export class ARInvoiceMenuButtonsHandler {
         var isQuickBooks: boolean = false;
         var isTransferingToQuickBooks: boolean = false;
 
+
+        if (this.EntityPM.SATTransferStatusCode == "TR" && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
+            this.ShowBlockVoidingInvoicesInSATMessage();    
+            return;
+        }
+
         if (SessionLocator.AccountingSystemPM.Code == "QBO" || SessionLocator.AccountingSystemPM.Code == "QBOG") {
             isQuickBooks = true;
             isTransferingToQuickBooks = true;
@@ -845,6 +851,17 @@ export class ARInvoiceMenuButtonsHandler {
             }
         }
     }
+
+
+
+    ShowBlockVoidingInvoicesInSATMessage() {
+        var messageWindow = new MessageWindow();
+            messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.BlockVoidingInvoicesInSAT"));
+            this.StopFlags();
+    }
+
+
+
     AccountingCheck() {
         if (this.EntityPM.MainEntityId) {
             this.CurrentSession.StartBusyIndicatorLoading();
