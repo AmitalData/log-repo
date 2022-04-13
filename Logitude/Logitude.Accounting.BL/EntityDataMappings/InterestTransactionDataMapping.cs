@@ -10,6 +10,10 @@ using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -31,13 +35,35 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.InterestValueDate = entityPM.InterestValueDate.Date;
             }
+
+            BuildSearchField(entityPM, entityPOCO);
         }
 
         public void CustomPOCOToPM(InterestTransactionPM entityPM, InterestTransaction entityPOCO)
         {
-            //throw new NotImplementedException();
         }
-   }
+
+        private void BuildSearchField(InterestTransactionPM entityPM, InterestTransaction entityPOCO)
+        {
+            InterestTransactionList entityList = GetEntityList(entityPM);
+
+            string searchFields = "";
+
+            MethodHelper.AddToSearchFields(ref searchFields, entityList.JournalNumber);
+            MethodHelper.AddToSearchFields(ref searchFields, entityList.Source);
+
+            entityPM.SearchFields = searchFields;
+            entityPOCO.SearchFields = searchFields;
+        }
+
+        private InterestTransactionList GetEntityList(InterestTransactionPM entityPM)
+        {
+            var context = AccountingContext.GetContext(entityPM.Tenant);
+            InterestTransactionListQueryService listQuery = new InterestTransactionListQueryService(context);
+            var entityList = listQuery.GetSingle(entityPM.Id, entityPM.Tenant);
+            return entityList;
+        }
+    }
 
 
 }

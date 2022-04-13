@@ -16,6 +16,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -111,6 +112,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return list;
         }
 
+        public InterestTransactionList GetSingle(string id,int tenant)
+        {
+            var repository = new InterestTransactionRepository(tenant);
+            var transactions = repository.GetAll(tenant);
+
+            var transactionQuery = GetIqueryableList(transactions, tenant).Where(d => d.Id == id).ToList();
+            var transaction = MapListQuery(transactionQuery, tenant).FirstOrDefault();
+            return transaction;
+        }
 
 
 
