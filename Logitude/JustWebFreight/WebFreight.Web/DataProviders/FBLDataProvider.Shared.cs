@@ -204,6 +204,8 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeVAT { get; set; }
         public string AgentVAT { get; set; }
         public string CustomerVAT { get; set; }
+        public string Notify1VAT { get; set; }
+        public string Notify2VAT { get; set; }
 
         public string ShipperNotExporterAddress { get; set; }
 
