@@ -437,10 +437,10 @@ namespace WebFreight.Web.WebServices
                 {
                     Card myPartnerCard = CardRepository.GetSingleCard(myNotify1Id, tenant, true);
 
-                    MapNotify1VAT(shipment, myNotify1Id, myPartnerCard);
-
                     if (myPartnerCard != null)
                     {
+                        MapNotify1VAT(shipment, myNotify1Id, myPartnerCard);
+
                         myDataProvider.NotifyAddress = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
 
                         if (!string.IsNullOrEmpty(myNotify1AddressId))
@@ -522,10 +522,9 @@ namespace WebFreight.Web.WebServices
                 {
                     Card myPartnerCard = CardRepository.GetSingleCard(myNotify2Id, tenant, true);
 
-                    myDataProvider.Notify2VAT = myPartnerCard.VatNumber;
-
                     if (myPartnerCard != null)
                     {
+                        myDataProvider.Notify2VAT = myPartnerCard.VatNumber;
                         myDataProvider.Notify2Address = "Notify 2:" + myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
 
                         if (!string.IsNullOrEmpty(myNotify2AddressId))
