@@ -20,7 +20,6 @@ namespace Logitude.TariffModule.BL.Helpers
     public class SalesLocalChargesGenerator
     {
         private SalesLocalChargesTariffSearchArgs SalesLocalChargesTariffSearchArgs;
-        private List<RatesTableList> ratesList;
         private ICommonDataContext commonContext;
         private Quote quote;
         private int tenant;
@@ -39,7 +38,6 @@ namespace Logitude.TariffModule.BL.Helpers
             this.tenant = tenant;
             this.SalesLocalChargesTariffSearchArgs = args;
             this.SalesLocalChargesTariffSearchArgs.SalesLocalCharges = new List<SalesLocalCharges>();
-            this.ratesList = this.GetRates(tenant);
             this.commonContext = CommonDataContext.GetContext(tenant);
 
             this.GetQuote();
@@ -156,24 +154,13 @@ namespace Logitude.TariffModule.BL.Helpers
                 }
             }
         }
-        private List<RatesTableList> GetRates(int tenant)
-        {
-            IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
-            RatesTableRepository ratesTableRepository = new RatesTableRepository(MyContext);
-            IQueryable<RatesTable> entityPocos = ratesTableRepository.GetRatesTables(tenant);
-
-            RatesTableQuery ratesTableQuery = new RatesTableQuery(ratesTableRepository);
-            IQueryable<RatesTableList> entityLists = ratesTableQuery.GetIQueryableEntityList(entityPocos);
-            entityLists = entityLists.OrderByDescending(r => r.ValueDate);
-
-            return entityLists.ToList();
-        }
+       
         private List<Tariff> GetTariffs(int tenant)
         {
             TariffRepository tariffRepository = new TariffRepository(tenant);
             IQueryable<Tariff> tariffs = tariffRepository.GetActiveSalesLocalChargesTariffs(tenant);
             List<Tariff> myResult = new List<Tariff>();
-
+            var yyy = tariffs.ToList();
             if (IsExportQuote())
             {
                 Tariff exportTariff = tariffs.Where(d => d.CustomerGroupId == this.customerGroupExportId && d.TypeCode == "ECS").FirstOrDefault();
@@ -185,7 +172,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
             if (IsImportQuote())
             {
-                Tariff importTariff = tariffs.Where(d => d.SellerId == this.customerGroupImportId && d.TypeCode == "ICS").FirstOrDefault();
+                Tariff importTariff = tariffs.Where(d => d.CustomerGroupId == this.customerGroupImportId && d.TypeCode == "ICS").FirstOrDefault();
                 if (importTariff != null)
                 {
                     myResult.Add(importTariff);
@@ -245,7 +232,7 @@ namespace Logitude.TariffModule.BL.Helpers
                 tariffLines = tariffLines.Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(dateFilter)
                                && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(dateFilter)) : true));
 
-                TariffLine customChargesLine = this.FilterTariffLinesBasedOnCountries(tariffLines);
+                TariffLine customChargesLine = this.FilterTariffLines(tariffLines);
 
                 if (customChargesLine != null)
                 {
@@ -256,25 +243,29 @@ namespace Logitude.TariffModule.BL.Helpers
             return myResult;
         }
      
-        private TariffLine FilterTariffLinesBasedOnCountries(IQueryable<TariffLine> tariffLines)
+        private TariffLine FilterTariffLines(IQueryable<TariffLine> tariffLines)
         {
-            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == SalesLocalChargesTariffSearchArgs.FromCountryId && p.ToCountryId == SalesLocalChargesTariffSearchArgs.ToCountryId);
-
-            if (filteredLines.Count() == 0)
+            if (IsImportQuote())
             {
-                filteredLines = tariffLines.Where(p => p.FromCountryId == SalesLocalChargesTariffSearchArgs.FromCountryId && p.IsToAllOtherCountries);
+                return FilterTariffLinesBasedOnFromCountries(tariffLines);
             }
 
-            if (filteredLines.Count() == 0)
+            else if (IsExportQuote())
             {
-                filteredLines = tariffLines.Where(p => p.IsFromAllOtherCountries && p.ToCountryId == SalesLocalChargesTariffSearchArgs.ToCountryId);
+                return FilterTariffLinesBasedOnToCountries(tariffLines);
             }
 
-            if (filteredLines.Count() == 0)
-            {
-                filteredLines = tariffLines.Where(p => p.IsFromAllOtherCountries && p.IsToAllOtherCountries);
-            }
+            return null;
+        }
 
+        private TariffLine FilterTariffLinesBasedOnFromCountries(IQueryable<TariffLine> tariffLines)
+        {
+            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == SalesLocalChargesTariffSearchArgs.FromCountryId);
+            return filteredLines.FirstOrDefault();
+        }
+        private TariffLine FilterTariffLinesBasedOnToCountries(IQueryable<TariffLine> tariffLines)
+        {
+            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.ToCountryId == SalesLocalChargesTariffSearchArgs.ToCountryId);
             return filteredLines.FirstOrDefault();
         }
         private void CreateQuoteChargeFromCustomChargesLine(TariffLine tariffLine, Tariff tariff)

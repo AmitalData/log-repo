@@ -24,6 +24,7 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 import { QuoteChargesBehaviours } from '../Behaviours/QuoteChargesBehaviours';
 import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { TariffDomainService, SalesLocalCharges, SalesLocalChargesTariffSearchArgs } from '../../../TariffModule/Services/TariffDomainService';
 
 @Component({
     selector: 'FCLChargesComponent',    
@@ -605,6 +606,69 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });
     }
+
+    GenerateSalesLocalCharges() {
+        var saleLocalCharges = this.TariffBehaviours.GenerateSalesLocalCharges();
+        this.CreateQuoteSalesLocalCharges(saleLocalCharges);
+    }
+
+    CreateQuoteSalesLocalCharges(tariffCharges) {
+        if (tariffCharges != null) {
+            tariffCharges.forEach((localCharge: SalesLocalCharges) => {
+                this.AddTariffChargesToQuote_FCL(localCharge);
+            });
+        }
+        this.BuildItemsSource();
+        this.IsAllowingMultipleFreightChargesMethod();
+    }
+
+    AddTariffChargesToQuote_FCL(localCharge) {
+        this.EntityPM.AddQuoteChargePM(localCharge);
+        var chargeItem: FCLQuoteChargeItem = new FCLQuoteChargeItem(localCharge, this, false);
+        var chargeId = localCharge.ChargesTypeId;
+        chargeItem.ChargesTypeId = chargeId;
+        chargeItem.CostMeasurementId = localCharge.CostMeasurementId;
+        chargeItem.CostCurrencyId = localCharge.CostCurrencyId;
+        chargeItem.CostTotalAmount = localCharge.CostTotalAmount;
+        chargeItem.CostMinAmount = localCharge.CostMinAmount;
+        chargeItem.CostExchangeRate = localCharge.CostExchangeRate;
+        chargeItem.SaleMeasurementId = localCharge.SaleMeasurementId;
+        chargeItem.SaleCurrencyId = localCharge.SaleCurrencyId;
+        chargeItem.SaleExchangeRate = localCharge.SaleExchangeRate;
+        chargeItem.ChargesGroupCode = localCharge.ChargesGroupCode;
+        chargeItem.IsAllIN = false;
+        chargeItem.CostContainerType1UnitPrice = localCharge.CostContainerType1UnitPrice;
+        chargeItem.CostContainerType2UnitPrice = localCharge.CostContainerType2UnitPrice;
+        chargeItem.CostContainerType3UnitPrice = localCharge.CostContainerType3UnitPrice;
+        chargeItem.CostContainerType4UnitPrice = localCharge.CostContainerType4UnitPrice;
+        chargeItem.CostContainerType5UnitPrice = localCharge.CostContainerType5UnitPrice;
+        var costAmount: number = localCharge.CostTotalAmount;
+        chargeItem.CostQuantity = localCharge.CostQuantity;
+        chargeItem.SaleQuantity = localCharge.CostQuantity;
+
+        var costQuantity: number = chargeItem.CostQuantity;
+        if (costQuantity != null && costQuantity != 0) {
+            if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
+                chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
+            }
+            else {
+                chargeItem.CostUnitPrice = (costAmount / costQuantity);
+            }
+            chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+        }
+        chargeItem.ComputeSalePrice();
+        chargeItem.ComputeSaleAmounts();
+        chargeItem.ComputeCostInSalePrice();
+        chargeItem.ComputeCostInSalePrice1();
+        chargeItem.ComputeCostInSalePrice2();
+        chargeItem.ComputeCostInSalePrice3();
+        chargeItem.ComputeCostInSalePrice4();
+        chargeItem.ComputeCostInSalePrice5();
+        chargeItem.ComputeCostInSaleAmount();
+        chargeItem.SetUIProperties_AllIn();
+        this.ItemsSource.Insert(chargeItem);
+    }
+
     GetTariffTye(): string {
         var type = "OFC";
         if (this.EntityPM.TransportModeId.toUpperCase() == "I" && this.EntityPM.ShipmentTypeId.toUpperCase() == "FTL")

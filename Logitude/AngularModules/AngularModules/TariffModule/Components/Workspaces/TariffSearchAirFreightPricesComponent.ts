@@ -1396,14 +1396,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.CostTotalAmount = item.CostTotalAmount;
             chargeItem.CostMinAmount = item.CostMinAmount;
             chargeItem.CostExchangeRate = item.CostExchangeRate;
-            chargeItem.SaleMeasurementId = item.SaleMeasurementId;
-            chargeItem.SaleCurrencyId = item.SaleCurrencyId;
-            chargeItem.SaleExchangeRate = item.SaleExchangeRate;
+            //chargeItem.SaleMeasurementId = item.SaleMeasurementId;
+            //chargeItem.SaleCurrencyId = item.SaleCurrencyId;
+            //chargeItem.SaleExchangeRate = item.SaleExchangeRate;
             chargeItem.ChargesGroupCode = item.ChargesGroupCode;
             chargeItem.IsAllIN = false;
             var costAmount: number = item.CostTotalAmount;
             chargeItem.SetCostQuantity();
-            chargeItem.SetSaleQuantity();
+            //chargeItem.SetSaleQuantity();
             var costQuantity: number = chargeItem.CostQuantity;
 
             if (costQuantity != null && costQuantity != 0) {
@@ -1414,10 +1414,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     chargeItem.CostUnitPrice = (costAmount / costQuantity);
 
                 }
-                chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+                //chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
             }
-            chargeItem.ComputeSalePrice();
-            chargeItem.ComputeSaleAmounts();
+            //chargeItem.ComputeSalePrice();
+           // chargeItem.ComputeSaleAmounts();
             chargeItem.SetUIProperties_AllIn();
             this.FatherComponent.ItemsSource.Insert(chargeItem);
         });
@@ -1437,9 +1437,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.CostTotalAmount = item.CostTotalAmount;
             chargeItem.CostMinAmount = item.CostMinAmount;
             chargeItem.CostExchangeRate = item.CostExchangeRate;
-            chargeItem.SaleMeasurementId = item.SaleMeasurementId;
-            chargeItem.SaleCurrencyId = item.SaleCurrencyId;
-            chargeItem.SaleExchangeRate = item.SaleExchangeRate;
+            //chargeItem.SaleMeasurementId = item.SaleMeasurementId;
+            //chargeItem.SaleCurrencyId = item.SaleCurrencyId;
+            //chargeItem.SaleExchangeRate = item.SaleExchangeRate;
             chargeItem.ChargesGroupCode = item.ChargesGroupCode;
             chargeItem.IsAllIN = false;
             chargeItem.CostContainerType1UnitPrice = item.CostContainerType1UnitPrice;
@@ -1449,7 +1449,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.CostContainerType5UnitPrice = item.CostContainerType5UnitPrice;
             var costAmount: number = item.CostTotalAmount;
             chargeItem.CostQuantity = item.CostQuantity;
-            chargeItem.SaleQuantity = item.CostQuantity;
+            //chargeItem.SaleQuantity = item.CostQuantity;
 
             var costQuantity: number = chargeItem.CostQuantity;
             if (costQuantity != null && costQuantity != 0) {
@@ -1459,17 +1459,17 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 else {
                     chargeItem.CostUnitPrice = (costAmount / costQuantity);
                 }
-                chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+                //chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
             }
-            chargeItem.ComputeSalePrice();
-            chargeItem.ComputeSaleAmounts();
-            chargeItem.ComputeCostInSalePrice();
-            chargeItem.ComputeCostInSalePrice1();
-            chargeItem.ComputeCostInSalePrice2();
-            chargeItem.ComputeCostInSalePrice3();
-            chargeItem.ComputeCostInSalePrice4();
-            chargeItem.ComputeCostInSalePrice5();
-            chargeItem.ComputeCostInSaleAmount();
+            //chargeItem.ComputeSalePrice();
+            //chargeItem.ComputeSaleAmounts();
+            //chargeItem.ComputeCostInSalePrice();
+            //chargeItem.ComputeCostInSalePrice1();
+            //chargeItem.ComputeCostInSalePrice2();
+            //chargeItem.ComputeCostInSalePrice3();
+            //chargeItem.ComputeCostInSalePrice4();
+            //chargeItem.ComputeCostInSalePrice5();
+            //chargeItem.ComputeCostInSaleAmount();
             chargeItem.SetUIProperties_AllIn();
             this.FatherComponent.ItemsSource.Insert(chargeItem);
         });
@@ -1534,10 +1534,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.CostCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(item.CurrencyId);
                 chargePM.CostExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(item.CurrencyId);
 
-                chargePM.SaleCurrencyId = this.FatherComponent.Behaviours.GetSaleCurrencyOnChargeTypeChanged(chargesType, chargePM);
-                chargePM.SaleCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
-                chargePM.SaleExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
-                chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
+                //chargePM.SaleCurrencyId = this.FatherComponent.Behaviours.GetSaleCurrencyOnChargeTypeChanged(chargesType, chargePM);
+                //chargePM.SaleCurrencyCode = this.FatherComponent.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
+                //chargePM.SaleExchangeRate = this.FatherComponent.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
+                //chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
 
                 var measurementCode = item.UnitOfMesurmentCode;
                 var quantity;
@@ -1575,9 +1575,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 }
 
                 chargePM.CostMeasurementCode = measurementCode;
-                chargePM.SaleMeasurementCode = measurementCode;
+                //chargePM.SaleMeasurementCode = measurementCode;
                 chargePM.CostMeasurementId = measurementId;
-                chargePM.SaleMeasurementId = measurementId;
+                //chargePM.SaleMeasurementId = measurementId;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
                 chargePM.IsCostAllIn = item.IsAllIn;
