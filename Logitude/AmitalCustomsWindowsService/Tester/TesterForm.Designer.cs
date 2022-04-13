@@ -95,6 +95,8 @@
             this.recivedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.textBoxOverrideRMQ = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBoxDebugMode = new System.Windows.Forms.CheckBox();
             this._TBID = new System.Windows.Forms.TextBox();
@@ -105,7 +107,6 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.uW2LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -147,21 +148,21 @@
             // bolbToolStripMenuItem
             // 
             this.bolbToolStripMenuItem.Name = "bolbToolStripMenuItem";
-            this.bolbToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.bolbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bolbToolStripMenuItem.Text = "Bolb";
             this.bolbToolStripMenuItem.Click += new System.EventHandler(this.BlobToolStripMenuItem_Click);
             // 
             // multiBolbToolStripMenuItem
             // 
             this.multiBolbToolStripMenuItem.Name = "multiBolbToolStripMenuItem";
-            this.multiBolbToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.multiBolbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.multiBolbToolStripMenuItem.Text = "MultiBolb";
             this.multiBolbToolStripMenuItem.Click += new System.EventHandler(this.multiBlobToolStripMenuItem_Click);
             // 
             // clearCacheToolStripMenuItem
             // 
             this.clearCacheToolStripMenuItem.Name = "clearCacheToolStripMenuItem";
-            this.clearCacheToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.clearCacheToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clearCacheToolStripMenuItem.Text = "ClearCache";
             this.clearCacheToolStripMenuItem.Click += new System.EventHandler(this.clearCacheToolStripMenuItem_Click);
             // 
@@ -614,8 +615,7 @@
             // 
             this.rabbitMQToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sendToolStripMenuItem,
-            this.recivedToolStripMenuItem,
-            this.uW2LToolStripMenuItem});
+            this.recivedToolStripMenuItem});
             this.rabbitMQToolStripMenuItem.Name = "rabbitMQToolStripMenuItem";
             this.rabbitMQToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.rabbitMQToolStripMenuItem.Text = "RabbitMQ";
@@ -623,14 +623,14 @@
             // sendToolStripMenuItem
             // 
             this.sendToolStripMenuItem.Name = "sendToolStripMenuItem";
-            this.sendToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sendToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.sendToolStripMenuItem.Text = "Send";
             this.sendToolStripMenuItem.Click += new System.EventHandler(this.sendToolStripMenuItem_Click);
             // 
             // recivedToolStripMenuItem
             // 
             this.recivedToolStripMenuItem.Name = "recivedToolStripMenuItem";
-            this.recivedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recivedToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.recivedToolStripMenuItem.Text = "Recived";
             this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
             // 
@@ -640,7 +640,7 @@
             this.textBoxLogger.Location = new System.Drawing.Point(0, 0);
             this.textBoxLogger.Multiline = true;
             this.textBoxLogger.Name = "textBoxLogger";
-            this.textBoxLogger.Size = new System.Drawing.Size(638, 308);
+            this.textBoxLogger.Size = new System.Drawing.Size(638, 306);
             this.textBoxLogger.TabIndex = 1;
             this.textBoxLogger.TextChanged += new System.EventHandler(this.textBoxLogger_TextChanged);
             // 
@@ -653,6 +653,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.textBoxOverrideRMQ);
+            this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.checkBox1);
             this.splitContainer1.Panel1.Controls.Add(this.checkBoxDebugMode);
             this.splitContainer1.Panel1.Controls.Add(this._TBID);
@@ -668,13 +670,29 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.textBoxLogger);
             this.splitContainer1.Size = new System.Drawing.Size(638, 372);
-            this.splitContainer1.SplitterDistance = 60;
+            this.splitContainer1.SplitterDistance = 62;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // textBoxOverrideRMQ
+            // 
+            this.textBoxOverrideRMQ.Location = new System.Drawing.Point(362, 32);
+            this.textBoxOverrideRMQ.Name = "textBoxOverrideRMQ";
+            this.textBoxOverrideRMQ.Size = new System.Drawing.Size(120, 20);
+            this.textBoxOverrideRMQ.TabIndex = 10;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(287, 36);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(78, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "OvverrideRMQ";
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(555, 32);
+            this.checkBox1.Location = new System.Drawing.Point(570, 32);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(65, 17);
             this.checkBox1.TabIndex = 7;
@@ -687,7 +705,7 @@
             this.checkBoxDebugMode.AutoSize = true;
             this.checkBoxDebugMode.Checked = true;
             this.checkBoxDebugMode.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxDebugMode.Location = new System.Drawing.Point(464, 32);
+            this.checkBoxDebugMode.Location = new System.Drawing.Point(488, 33);
             this.checkBoxDebugMode.Name = "checkBoxDebugMode";
             this.checkBoxDebugMode.Size = new System.Drawing.Size(85, 17);
             this.checkBoxDebugMode.TabIndex = 3;
@@ -715,7 +733,7 @@
             this._CBWorkerRole.FormattingEnabled = true;
             this._CBWorkerRole.Location = new System.Drawing.Point(72, 30);
             this._CBWorkerRole.Name = "_CBWorkerRole";
-            this._CBWorkerRole.Size = new System.Drawing.Size(386, 21);
+            this._CBWorkerRole.Size = new System.Drawing.Size(209, 21);
             this._CBWorkerRole.TabIndex = 4;
             this._CBWorkerRole.SelectedIndexChanged += new System.EventHandler(this._CBWorkerRole_SelectedIndexChanged);
             // 
@@ -735,15 +753,15 @@
             "280",
             "2715",
             "3050"});
-            this._CBInterfaceID.Location = new System.Drawing.Point(205, 7);
+            this._CBInterfaceID.Location = new System.Drawing.Point(156, 7);
             this._CBInterfaceID.Name = "_CBInterfaceID";
-            this._CBInterfaceID.Size = new System.Drawing.Size(76, 21);
+            this._CBInterfaceID.Size = new System.Drawing.Size(125, 21);
             this._CBInterfaceID.TabIndex = 3;
             // 
             // Interface
             // 
             this.Interface.AutoSize = true;
-            this.Interface.Location = new System.Drawing.Point(150, 7);
+            this.Interface.Location = new System.Drawing.Point(101, 10);
             this.Interface.Name = "Interface";
             this.Interface.Size = new System.Drawing.Size(49, 13);
             this.Interface.TabIndex = 2;
@@ -753,7 +771,7 @@
             // 
             this._TBTenant.Location = new System.Drawing.Point(72, 4);
             this._TBTenant.Name = "_TBTenant";
-            this._TBTenant.Size = new System.Drawing.Size(72, 20);
+            this._TBTenant.Size = new System.Drawing.Size(23, 20);
             this._TBTenant.TabIndex = 1;
             this._TBTenant.Text = "1";
             // 
@@ -765,13 +783,6 @@
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
-            // 
-            // uW2LToolStripMenuItem
-            // 
-            this.uW2LToolStripMenuItem.Name = "uW2LToolStripMenuItem";
-            this.uW2LToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.uW2LToolStripMenuItem.Text = "UW2L";
-            this.uW2LToolStripMenuItem.Click += new System.EventHandler(this.uW2LToolStripMenuItem_Click);
             // 
             // TesterForm
             // 
@@ -878,6 +889,7 @@
         private System.Windows.Forms.ToolStripMenuItem recivedToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem uW2LToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBoxOverrideRMQ;
+        private System.Windows.Forms.Label label4;
     }
 }
