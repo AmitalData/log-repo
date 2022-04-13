@@ -437,6 +437,8 @@ namespace WebFreight.Web.WebServices
                 {
                     Card myPartnerCard = CardRepository.GetSingleCard(myNotify1Id, tenant, true);
 
+                    MapNotify1VAT(shipment, myNotify1Id, myPartnerCard);
+
                     if (myPartnerCard != null)
                     {
                         myDataProvider.NotifyAddress = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
@@ -519,6 +521,8 @@ namespace WebFreight.Web.WebServices
                 if (!string.IsNullOrEmpty(myNotify2Id))
                 {
                     Card myPartnerCard = CardRepository.GetSingleCard(myNotify2Id, tenant, true);
+
+                    myDataProvider.Notify2VAT = myPartnerCard.VatNumber;
 
                     if (myPartnerCard != null)
                     {
@@ -2165,6 +2169,21 @@ namespace WebFreight.Web.WebServices
             myDataProvider.UserSignature = this.GetUserSignatureImage(tenant);
 
             return myDataProvider;
+        }
+
+        private void MapNotify1VAT(ShipmentPM shipment, string myNotify1Id, Card myPartnerCard)
+        {
+            if (string.IsNullOrEmpty(shipment.Notify1Id))
+                return;
+
+            if(shipment.Notify1Id == myNotify1Id)
+            {
+                myDataProvider.Notify1VAT = myPartnerCard.VatNumber;
+                return;
+            }
+
+            Card notify1Card = CardRepository.GetSingleCard(shipment.Notify1Id, tenant, true);
+            myDataProvider.Notify1VAT = notify1Card.VatNumber;
         }
 
         private void SetAgentContact(FBLDataProvider myDataProvider, string agentContactId)
