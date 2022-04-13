@@ -272,10 +272,13 @@ namespace AmitalCustomsWindowsService.Tester
             }
 
             //d.WorkerQueueType = checkBoxMQ.Checked ? Logitude.Server.Tools.WorkerQueueType.RabbitMQ : Logitude.Server.Tools.WorkerQueueType.DB;
-            if (!String.IsNullOrWhiteSpace(textBoxOverrideRMQ.Text))
-            {
-                d.OverrideRMQ = textBoxOverrideRMQ.Text;
-            }
+
+            //REMOVE DUE MERGE CONFLICT
+            //if (!String.IsNullOrWhiteSpace(textBoxOverrideRMQ.Text))
+            //{
+            //    d.OverrideRMQ = textBoxOverrideRMQ.Text;
+            //}
+
             Logitude.Server.Tools.WorkerRoleServiceLocator.PleaseShutDown = false;
             if (checkBoxDebugMode.Checked)
             {
