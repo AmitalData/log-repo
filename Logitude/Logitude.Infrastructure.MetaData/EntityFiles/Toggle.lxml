@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;b4d3&quot;"
+  Code="&quot;4710&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -742,6 +742,11 @@
       SearchFields="&quot;FIE,Froala Editor Insert Image,Activate Insert Image In Froala Editor&quot;"
       Name="&quot;Froala Editor Insert Image&quot;"
       Description="&quot;Activate Insert Image In Froala Editor&quot;" />
+    <Record
+      Code="&quot;PF4&quot;"
+      Name="&quot;Profact 4.0&quot;"
+      SearchFields="&quot;PF4,Profact 4.0&quot;"
+      Description="&quot;Add Profact Version 4.0 to SAT Interfaces&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

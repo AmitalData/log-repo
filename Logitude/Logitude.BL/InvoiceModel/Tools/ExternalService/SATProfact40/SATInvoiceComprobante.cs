@@ -265,20 +265,23 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 arInvoicePM.RegimenFiscalCode = billToCard.RegimenFiscalCode;
             }
 
+            string billToCountryCode = GetBillToCountryCode();
+
             return new ComprobanteReceptor
             {
                 Nombre = !string.IsNullOrEmpty(billToCard.SATCustomerName) ? billToCard.SATCustomerName : billToCard.EnglishName,
                 RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode,
                 DomicilioFiscalReceptor = billToAddressZipCode,
-                Rfc = GetReceptorRfc(),
-                UsoCFDI = GetReceptorUsoCFDI()
+                Rfc = GetReceptorRfc(billToCountryCode),
+                UsoCFDI = GetReceptorUsoCFDI(),
+                NumRegIdTrib = GetNumRegIdTrib(billToCountryCode),
+                ResidenciaFiscal = GetResidenciaFiscal(billToCountryCode),
+                ResidenciaFiscalSpecified = GetResidenciaFiscalSpecified(billToCountryCode)
             };
         }
 
-        private string GetReceptorRfc()
+        private string GetReceptorRfc(string billToCountryCode)
         {
-            string billToCountryCode = GetBillToCountryCode();
-
             if (IsMexicoCountry(billToCountryCode))
             {
                 return !string.IsNullOrEmpty(billToCard.VatNumber) ? billToCard.VatNumber : "AAA010101AAA";
@@ -287,6 +290,30 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             {
                 return !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : "XEXX010101000";
             }
+        }
+
+        private string GetNumRegIdTrib(string billToCountryCode)
+        {
+            if (IsMexicoCountry(billToCountryCode))
+                return null;
+
+            return !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : SATData.OutSideMexicoRfc;
+        }
+
+        private string GetResidenciaFiscal(string billToCountryCode)
+        {
+            if (IsMexicoCountry(billToCountryCode))
+                return null;
+
+            return billToCountryCode;
+        }
+
+        private bool GetResidenciaFiscalSpecified(string billToCountryCode)
+        {
+            if (IsMexicoCountry(billToCountryCode))
+                return false;
+
+            return true;
         }
 
         private string GetBillToCountryCode()
