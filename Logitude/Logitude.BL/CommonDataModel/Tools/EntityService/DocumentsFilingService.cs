@@ -1361,6 +1361,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         public void Send2UServer(DocumentsFilingPM myDocumentsFilingPM, string loggingUserId, string extDocPMId)
         {
+            var ExternalEntityName = myDocumentsFilingPM.ExternalEntityName;
             var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
                Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
                "GGGHQHYBRID", "LogitudeTaskByUrouter")
