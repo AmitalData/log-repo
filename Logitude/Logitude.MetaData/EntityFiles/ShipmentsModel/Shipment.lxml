@@ -97991,6 +97991,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;OIConcurrencyGUID&quot;"
     ListPropertyPath="&quot;OIConcurrencyGUID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -98059,6 +98060,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;OINewConcurrencyGUID&quot;"
     ListPropertyPath="&quot;OINewConcurrencyGUID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -102538,6 +102540,19 @@
       IsFollowUp="true"
       FollowUpEnglishName="&quot;AMS Closing Date&quot;"
       FollowUpLocalName="&quot;AMS Closing Date&quot;" />
+    <EventType
+      Code="&quot;DTQT&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Quote Disconnected&quot;"
+      LocalName="&quot;Quote Disconnected&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
