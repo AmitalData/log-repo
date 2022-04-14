@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "3bac3cbc3bd516bfbdadfd1f6afd8cc8";
+		public const string HashString = "47e572d39bcbcf93a86e6aa2af4bf5c0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "99a8",
+			      				    Code =  "7da2",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2075,6 +2075,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOMoreDetailsForImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.MoreDetailsForImporter", DefaultText = "More Details For Importer",LocalDefaultText = @"נתונים נוספים ליצואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOLogisticActionRequestAlreadyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.LogisticActionRequestAlreadyExist", DefaultText = "Logistic action request with the same cargo Identifiers already exist",LocalDefaultText = @"קיימת בקשה לביטול יצוא עם אותם מזהי מטען", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMCCustomsSelectAuthorizationLetters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.SelectAuthorizationLetters", DefaultText = "Select Authorization Letters",LocalDefaultText = @"שליפת כתבי הרשאה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
