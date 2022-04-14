@@ -44,6 +44,12 @@ export class NewCustomerTeamComponent extends BaseComponent {
             this.EntityPM.LocalName = value;
     }
 
+    public get Code() { return this.EntityPM.Code; }
+    public set Code(value: string) {
+        if (this.EntityPM.Code != value)
+            this.EntityPM.Code = value;
+    }
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

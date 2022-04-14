@@ -36,6 +36,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.CustomerTeams where record.Tenant == tenant select record);
         }
 
+        public IQueryable<CustomerTeam> GetCustomerTeams()
+        {
+            return context.CustomerTeams;
+        }
+
         public CustomerTeam GetSingleCustomerTeam(string id, int tenant)
         {
             return (from record in context.CustomerTeams where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
