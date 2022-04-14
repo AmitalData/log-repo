@@ -792,7 +792,7 @@ export class ARInvoiceMenuButtonsHandler {
         var isTransferingToQuickBooks: boolean = false;
 
 
-        if (this.EntityPM.SATTransferStatusCode == "TR" && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
+        if (this.EntityPM.SATTransferStatusCode == "TD" && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.ShowBlockVoidingInvoicesInSATMessage();    
             return;
         }
