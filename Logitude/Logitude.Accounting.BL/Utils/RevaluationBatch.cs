@@ -40,6 +40,7 @@ namespace Logitude.Accounting.BL.Utils
             _StatusCode = HttpStatusCode.Accepted;
 
         }
+        static string CreditCode = "1";
 
 
 
@@ -229,7 +230,7 @@ namespace Logitude.Accounting.BL.Utils
             newInterestTransaction.ForeignAmount = line.ForeignAmount;
             newInterestTransaction.CurrencyId = line.CurrencyId;
             newInterestTransaction.InterestValueDate = line.AccountingDate;
-            newInterestTransaction.GLAccountId = line.ActionCode =="1"  ? line.CreditAccountId : line.DebitAccountId;
+            newInterestTransaction.GLAccountId = line.ActionCode == CreditCode  ? line.CreditAccountId : line.DebitAccountId;
             newInterestTransaction.Tenant = line.Tenant;
             newInterestTransaction.ChangeSetOp = ChangeSetOperation.Insert;
             return newInterestTransaction;
