@@ -199,8 +199,8 @@ export function CancelShipment(note: string) {
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 export function OperationalCloseShipment() {
-    cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
-    cy.Click(ShipmentSelectors.OperationalCloseButton, null);
+    cy.Click(ShipmentSelectors.ShipmentMoreList,null, true);
+    cy.Click(ShipmentSelectors.OperationalCloseButton+BaseSelectors.LastElement,null);
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 
@@ -658,7 +658,7 @@ export function EditMainCarriageLegsFromToport(Gateway :string, Destination :str
 }
 export function AsserationMasterUpdateRoutind(){
 cy.get(ShipmentSelectors.RoutingRegion).contains('AA American Airlines').should('exist')
-cy.get(ShipmentSelectors.RoutingRegion).contains('766').should('exist')
+
 }
 
 export function AsserationEditMainCarriageLegsFromToport() {
