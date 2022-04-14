@@ -123,7 +123,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     try
                     {
-                        if (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "1") // Import Declaration
+                        if (
+                            (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "1") // Import Declaration
+                            ||
+                            (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "2") // Export Declaration
+                            )
                         {
                             var myDeclarationId = myDeclarationQueryService.GetIdByDeclarationNumber(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID, requestParams.Tenant);
                             _MyDeclarationPM = myDeclarationQueryService.GetSingle(myDeclarationId, false, false);
@@ -267,7 +271,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.OwnerId = requestParams.LoggingUserId;
             documentsFilingPM.UpdatedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
-            documentsFilingPM.DirectionCode = "I";
+            //documentsFilingPM.DirectionCode = "I";
+            documentsFilingPM.DirectionCode = this._MyDeclarationPM.Direction;
             documentsFilingPM.Description = "טופס הצהרה " + this._MyDeclarationPM.DeclarationNumber + "-" + this._MyDeclarationPM.VersionId;
             documentsFilingPM.ExternalEntityName = "CFIFILEM";
             documentsFilingPM.ExternalEntityReference = this._MyDeclarationPM.CustomFileNo;
@@ -276,7 +281,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             
             
             documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
-            LogMessagingUtil.Instance.AppendLine("Filed document " + documentsFilingPM.Code + "Created For declaration " + _MyDeclarationPM.DeclarationNumber);
+            LogMessagingUtil.Instance.AppendLine("Filed document " + documentsFilingPM.Code + "Created For declaration " + _MyDeclarationPM.DeclarationNumber + " documentsFilingPM.ID= "+ documentsFilingPM.Id);
             return documentsFilingPM;
 
 

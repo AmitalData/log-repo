@@ -1871,7 +1871,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             //Get all 'FieldErrors' for the 'FieldError'
                             List<field> fieldList = (from a in entity.FieldErrors
-                                                     where (a.Code == "2592" && a.Fieldcode == "ClassificationCode")
+                                                     where (a.Code == "14026360" && a.Fieldcode == "ClassificationCode")
                                                      select a).ToList();
                             //if (fieldList.Count != null)
                             if (fieldList.Count > 0)// Bug 23715: שליחת הצהרה- מתקבלת שגיאה שקשורה לאישורים
