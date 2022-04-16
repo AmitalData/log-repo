@@ -7,10 +7,14 @@ export class BIReportSelectors extends RegexSelectors {
  public static readonly NewBIReportFolder = '#NewBIReportFolder';
  public static readonly BIReportFolderDescription = '#BIReportFolder_Description';
  public static readonly BIReportFolderName = '#BIReportFolder_Name';
+ public static readonly FolderSearch = '#null_Search_1';
+ public static readonly SearchBIReportFolder = '#BIReportFolder';
  //#region Bi Report
- public static readonly NewButtonBIReport = '# NewButton_BIReport';
+ public static readonly NewButtonBIReport = '#NewButton_BIReport';
  public static readonly BIReportName = '#BIReport_Name';
  public static readonly BIReportDescription = '#BIReport_Description';
+ public static readonly BIReportFact = '#ComboBox_0_1 img';
+ public static readonly BIReportFactType ='.ComboBoxDropdown';
 
  //#region QueryBuilder
  public static readonly SearchDWQueryBuilderSearchFields = '#DWQueryBuilderSearchFields';
