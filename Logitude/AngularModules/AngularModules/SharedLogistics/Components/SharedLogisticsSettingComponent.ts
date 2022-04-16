@@ -272,7 +272,9 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     }
 
-
+    public get IsCargoTracking(): boolean {
+        return this.SharedTitleType == "CargoTracking";
+    }
 
     SetWindowArgs(args: any) {
 
