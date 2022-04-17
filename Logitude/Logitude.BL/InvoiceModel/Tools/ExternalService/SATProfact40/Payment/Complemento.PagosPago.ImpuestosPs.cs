@@ -19,9 +19,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs = new List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR>();
             pagoItem.DoctoRelacionado.ToList().ForEach(d =>
             {
-                pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs = d.ImpuestosDR.TrasladosDR != null ? pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.Concat(d.ImpuestosDR.TrasladosDR.ToArray()).ToList() : pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs;
-                pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs = d.ImpuestosDR.RetencionesDR != null ? pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.Concat(d.ImpuestosDR.RetencionesDR.ToArray()).ToList() : pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs;
-                BuildPagosTotales(d);
+                pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs = GetPagosPagoDoctoRelacionadoImpuestosDRTrasladoDR(pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs, d);
+                pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs = GetPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs, d);
             });
 
             PagosPagoImpuestosP pagosPagoImpuestosP = new PagosPagoImpuestosP();
@@ -35,17 +34,91 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             return impuestosPs;
         }
 
-        private static void BuildPagosTotales(PagosPagoDoctoRelacionado pagosPagoDoctoRelacionado)
+        private static List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> GetPagosPagoDoctoRelacionadoImpuestosDRTrasladoDR(List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs, PagosPagoDoctoRelacionado pagosPagoDoctoRelacionado)
         {
+            if(pagosPagoDoctoRelacionado.ImpuestosDR.TrasladosDR == null)
+                return pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs;
+
             decimal invoiceTaxAmount = pagosPagoDoctoRelacionado.EquivalenciaDR;
 
-            pagosPagoDoctoRelacionado?.ImpuestosDR?.TrasladosDR?.ToList()?.ForEach(pTDR => {
-                BuildTrasladoPagosTotales(pTDR, invoiceTaxAmount);
+            List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> impuestosDRTrasladoDRs = new List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR>();
+
+
+            pagosPagoDoctoRelacionado.ImpuestosDR.TrasladosDR.ToList().ForEach(pTDR =>
+            {
+                AddTrasladoDRWithTax(pTDR, invoiceTaxAmount, impuestosDRTrasladoDRs);
             });
 
-            pagosPagoDoctoRelacionado?.ImpuestosDR?.RetencionesDR?.ToList()?.ForEach(pRDR => {
-                BuildRetencionPagosTotales(pRDR, invoiceTaxAmount);
+            return pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.Concat(impuestosDRTrasladoDRs.ToArray()).ToList();
+        }
+
+        private static void AddTrasladoDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR impuestosDRTrasladoDR, decimal invoiceTaxAmount, List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> impuestosDRTrasladoDRs)
+        {
+            PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR impuestosDRTrasladoDRCloner = CloneImpuestosDRTrasladoDR(impuestosDRTrasladoDR);
+            CalculateTrasladoDRWithTax(impuestosDRTrasladoDRCloner, invoiceTaxAmount);
+            impuestosDRTrasladoDRs.Add(impuestosDRTrasladoDRCloner);
+        }
+
+        private static PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR CloneImpuestosDRTrasladoDR(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR impuestosDRTrasladoDR)
+        {
+            return new PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR
+            {
+                BaseDR = impuestosDRTrasladoDR.BaseDR,
+                ImporteDR = impuestosDRTrasladoDR.ImporteDR,
+                ImporteDRSpecified = impuestosDRTrasladoDR.ImporteDRSpecified,
+                ImpuestoDR = impuestosDRTrasladoDR.ImpuestoDR,
+                TasaOCuotaDR = impuestosDRTrasladoDR.TasaOCuotaDR,
+                TasaOCuotaDRSpecified = impuestosDRTrasladoDR.TasaOCuotaDRSpecified,
+                TipoFactorDR = impuestosDRTrasladoDR.TipoFactorDR,
+            };
+        }
+
+        private static void CalculateTrasladoDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR impuestosDRTrasladoDR, decimal invoiceTaxAmount)
+        {
+            impuestosDRTrasladoDR.BaseDR /= invoiceTaxAmount;
+            impuestosDRTrasladoDR.ImporteDR /= invoiceTaxAmount;
+            BuildTrasladoPagosTotales(impuestosDRTrasladoDR);
+        }
+
+        private static List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> GetPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs, PagosPagoDoctoRelacionado pagosPagoDoctoRelacionado)
+        {
+            if (pagosPagoDoctoRelacionado.ImpuestosDR.RetencionesDR == null)
+                return pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs;
+
+            List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> impuestosDRRetencionDRs = new List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR>();
+            decimal invoiceTaxAmount = pagosPagoDoctoRelacionado.EquivalenciaDR;
+            pagosPagoDoctoRelacionado.ImpuestosDR.RetencionesDR.ToList().ForEach(pRDR =>
+            {
+                AddRetencionDRWithTax(pRDR, invoiceTaxAmount, impuestosDRRetencionDRs);
             });
+
+            return pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.Concat(pagosPagoDoctoRelacionado.ImpuestosDR.RetencionesDR.ToArray()).ToList();
+        }
+
+        private static void AddRetencionDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDR, decimal invoiceTaxAmount, List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> impuestosDRRetencionDRs)
+        {
+            PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDRCloner = CloneImpuestosDRRetencionDR(impuestosDRRetencionDR);
+            CalculateRetencionDRWithTax(impuestosDRRetencionDRCloner, invoiceTaxAmount);
+            impuestosDRRetencionDRs.Add(impuestosDRRetencionDRCloner);
+        }
+
+        private static PagosPagoDoctoRelacionadoImpuestosDRRetencionDR CloneImpuestosDRRetencionDR(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDR)
+        {
+            return new PagosPagoDoctoRelacionadoImpuestosDRRetencionDR
+            {
+                BaseDR = impuestosDRRetencionDR.BaseDR,
+                ImporteDR = impuestosDRRetencionDR.ImporteDR,
+                ImpuestoDR = impuestosDRRetencionDR.ImpuestoDR,
+                TasaOCuotaDR = impuestosDRRetencionDR.TasaOCuotaDR,
+                TipoFactorDR = impuestosDRRetencionDR.TipoFactorDR,
+            };
+        }
+
+        private static void CalculateRetencionDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDR, decimal invoiceTaxAmount)
+        {
+            impuestosDRRetencionDR.BaseDR *= invoiceTaxAmount;
+            impuestosDRRetencionDR.ImporteDR *= invoiceTaxAmount;
+            BuildRetencionPagosTotales(impuestosDRRetencionDR);
         }
 
         private static List<PagosPagoImpuestosPTrasladoP> GetPagosPagoImpuestosPTrasladoPs(List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs)
@@ -62,27 +135,27 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             return trasladosP;
         }
 
-        private static void BuildTrasladoPagosTotales(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR, decimal invoiceTaxAmount)
+        private static void BuildTrasladoPagosTotales(PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR)
         {
             switch (pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.TasaOCuotaDR.ToString())
             {
                 case "0.160000":
-                    pagos.Totales.TotalTrasladosBaseIVA16 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR * invoiceTaxAmount;
-                    pagos.Totales.TotalTrasladosImpuestoIVA16 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.ImporteDR * invoiceTaxAmount;
+                    pagos.Totales.TotalTrasladosBaseIVA16 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR;
+                    pagos.Totales.TotalTrasladosImpuestoIVA16 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.ImporteDR;
                     break;
                 case "0.080000":
-                    pagos.Totales.TotalTrasladosBaseIVA8 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR * invoiceTaxAmount;
-                    pagos.Totales.TotalTrasladosImpuestoIVA8 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.ImporteDR * invoiceTaxAmount;
+                    pagos.Totales.TotalTrasladosBaseIVA8 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR;
+                    pagos.Totales.TotalTrasladosImpuestoIVA8 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.ImporteDR;
                     break;
                 case "0.000000":case "0":
                     if (pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.TipoFactorDR == "Exento")
                     {
-                        pagos.Totales.TotalTrasladosBaseIVAExento += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR * invoiceTaxAmount;
+                        pagos.Totales.TotalTrasladosBaseIVAExento += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR;
                     }
                     else
                     {
-                        pagos.Totales.TotalTrasladosBaseIVA0 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR * invoiceTaxAmount;
-                        pagos.Totales.TotalTrasladosImpuestoIVA0 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.ImporteDR * invoiceTaxAmount;
+                        pagos.Totales.TotalTrasladosBaseIVA0 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.BaseDR;
+                        pagos.Totales.TotalTrasladosImpuestoIVA0 += pagosPagoDoctoRelacionadoImpuestosDRTrasladoDR.ImporteDR;
                     } break;
             }
         }
@@ -158,6 +231,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             pagosPagoImpuestosPTrasladoP.ImporteP = totalImporteDR;
             pagosPagoImpuestosPTrasladoP.TasaOCuotaP = group.Key;
             pagosPagoImpuestosPTrasladoP.TipoFactorP = "Tasa";
+            pagosPagoImpuestosPTrasladoP.ImportePSpecified = true;
+            pagosPagoImpuestosPTrasladoP.TasaOCuotaPSpecified = true;
 
             return pagosPagoImpuestosPTrasladoP;
         }
@@ -191,9 +266,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             };
         }
 
-        private static void BuildRetencionPagosTotales(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR pagosPagoDoctoRelacionadoImpuestosDRRetencionDR, decimal invoiceTaxAmount)
+        private static void BuildRetencionPagosTotales(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR pagosPagoDoctoRelacionadoImpuestosDRRetencionDR)
         {
-            pagos.Totales.TotalRetencionesIVA += pagosPagoDoctoRelacionadoImpuestosDRRetencionDR.ImporteDR * invoiceTaxAmount;
+            pagos.Totales.TotalRetencionesIVA += pagosPagoDoctoRelacionadoImpuestosDRRetencionDR.ImporteDR;
         }
 
         private static void SetRetencionPagosTotalesSpecified()

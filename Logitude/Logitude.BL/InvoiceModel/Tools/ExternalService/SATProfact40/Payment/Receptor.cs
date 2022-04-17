@@ -38,7 +38,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             comprobanteReceptor.Rfc = !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : SATData.OutSideMexicoRfc;
             comprobanteReceptor.ResidenciaFiscal = billToCountryCode;
             comprobanteReceptor.ResidenciaFiscalSpecified = true;
-            comprobanteReceptor.NumRegIdTrib = comprobanteReceptor.Rfc;
+            comprobanteReceptor.NumRegIdTrib = !string.IsNullOrEmpty(comprobanteReceptor.Rfc) ? comprobanteReceptor.Rfc : SATData.OutSideMexicoRfc;
 
             return comprobanteReceptor;
         }

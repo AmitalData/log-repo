@@ -265,20 +265,23 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 arInvoicePM.RegimenFiscalCode = billToCard.RegimenFiscalCode;
             }
 
+            string billToCountryCode = GetBillToCountryCode();
+
             return new ComprobanteReceptor
             {
                 Nombre = !string.IsNullOrEmpty(billToCard.SATCustomerName) ? billToCard.SATCustomerName : billToCard.EnglishName,
                 RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode,
                 DomicilioFiscalReceptor = billToAddressZipCode,
-                Rfc = GetReceptorRfc(),
-                UsoCFDI = GetReceptorUsoCFDI()
+                Rfc = GetReceptorRfc(billToCountryCode),
+                UsoCFDI = GetReceptorUsoCFDI(),
+                NumRegIdTrib = GetNumRegIdTrib(billToCountryCode),
+                ResidenciaFiscal = GetResidenciaFiscal(billToCountryCode),
+                ResidenciaFiscalSpecified = GetResidenciaFiscalSpecified(billToCountryCode)
             };
         }
 
-        private string GetReceptorRfc()
+        private string GetReceptorRfc(string billToCountryCode)
         {
-            string billToCountryCode = GetBillToCountryCode();
-
             if (IsMexicoCountry(billToCountryCode))
             {
                 return !string.IsNullOrEmpty(billToCard.VatNumber) ? billToCard.VatNumber : "AAA010101AAA";
@@ -287,6 +290,30 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             {
                 return !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : "XEXX010101000";
             }
+        }
+
+        private string GetNumRegIdTrib(string billToCountryCode)
+        {
+            if (IsMexicoCountry(billToCountryCode))
+                return null;
+
+            return !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : SATData.OutSideMexicoRfc;
+        }
+
+        private string GetResidenciaFiscal(string billToCountryCode)
+        {
+            if (IsMexicoCountry(billToCountryCode))
+                return null;
+
+            return billToCountryCode;
+        }
+
+        private bool GetResidenciaFiscalSpecified(string billToCountryCode)
+        {
+            if (IsMexicoCountry(billToCountryCode))
+                return false;
+
+            return true;
         }
 
         private string GetBillToCountryCode()
@@ -955,7 +982,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                     {
                         if (traslado.TipoFactor == "Tasa")
                         {
-                            traslado.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
+                            MapImpuestosTraslado(TotalImpuestosTrasladados, totalVat, traslado);
                         }
                     }
                 }
@@ -1111,6 +1138,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return null;
         }
 
+        private static void MapImpuestosTraslado(decimal TotalImpuestosTrasladados, ARInvoiceTotalVATPM totalVat, ComprobanteImpuestosTraslado traslado)
+        {
+            traslado.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
+            traslado.ImporteSpecified = true;
+            traslado.Base += SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVatableAmount != null ? (decimal)totalVat.InvoiceCurrencyVatableAmount.Value : 0)));
+            traslado.Base = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(traslado.Base);
+        }
+
         private ComprobanteImpuestosTraslado GetNewComprobanteImpuestosTrasladoInstance(ARInvoiceTotalVATPM totalVat, string _totaltipoFactor, string total_tasaOCuota)
         {
             ComprobanteImpuestosTraslado traslado;
@@ -1124,6 +1159,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             {
                 traslado.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)));
                 traslado.TasaOCuota = total_tasaOCuota;
+                traslado.ImporteSpecified = true;
+                traslado.TasaOCuotaSpecified = true;
             }
 
             return traslado;

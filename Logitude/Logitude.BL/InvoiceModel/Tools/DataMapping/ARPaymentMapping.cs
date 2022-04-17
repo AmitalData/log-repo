@@ -45,8 +45,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                         entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
                     }
                 }
-
-                entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
+                if (!string.IsNullOrEmpty(entityPM.ExternalAccountingEntityId))
+                    entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
                 entity.BranchId = entityPM.BranchId;
                 entity.ARAccountId = entityPM.ARAccountId;
                 entity.AccountingPaymentMethodId = entityPM.AccountingPaymentMethodId;

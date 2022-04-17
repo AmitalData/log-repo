@@ -1373,11 +1373,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             if (relatedInvoice != null && !string.IsNullOrEmpty(relatedInvoice.SATXML))
             {
-                Profact.TimbraCFDI33.Comprobante oldComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(relatedInvoice.SATXML);
+                InvoiceComprobanteDetails invoiceComprobanteDetails = GetInvoiceComprobanteDetails(relatedInvoice.SATXML);
 
-                if (oldComprobante.Complemento.Any != null)
+                if (invoiceComprobanteDetails.ComplementoAny != null)
                 {
-                    List<System.Xml.XmlElement> myLXmlComplementos = oldComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
@@ -1917,10 +1917,11 @@ namespace Logitude.BL.InvoiceModel.Tools
             Profact.TimbraCFDI33.Comprobante comprobante = new Profact.TimbraCFDI33.Comprobante();
             if (!string.IsNullOrEmpty(entityPM.SATXML))
             {
-                Profact.TimbraCFDI33.Comprobante paymentComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(entityPM.SATXML);
-                if (paymentComprobante.Complemento.Any != null)
+                InvoiceComprobanteDetails invoiceComprobanteDetails = GetInvoiceComprobanteDetails(entityPM.SATXML);
+                
+                if (invoiceComprobanteDetails.ComplementoAny != null)
                 {
-                    List<System.Xml.XmlElement> myLXmlComplementos = paymentComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
@@ -2056,7 +2057,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             int number = 1;
             paymentARInvoices.ForEach(invoice =>
             {
-                Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
+                InvoiceComprobanteDetails invoiceComprobanteDetails = GetInvoiceComprobanteDetails(invoice.SATXML);
 
                 List<ARInvoicePayment> allInvoicePayments = (from a in invoiceContext.ARInvoicePayments.Include("ARPayment")
                                                              where a.ARInvoiceId == invoice.Id && a.Tenant == invoice.Tenant
@@ -2070,7 +2071,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 ARInvoicePayment currentARInvoicePayment = allInvoicePayments.FirstOrDefault(p => p.ARPaymentId == entityPM.Id);
                 decimal previouslySentPaymentsTotal = 0;
-                decimal invoiceAmount = (decimal)invoiceComprobante.Total;//invoice.AmountInInvoiceCurrency.Value; // 
+                decimal invoiceAmount = (decimal)invoiceComprobanteDetails.Total;//invoice.AmountInInvoiceCurrency.Value; // 
                 decimal currentPaymentAmount = (decimal)currentARInvoicePayment.ForeignAmount;
 
                 if (entityPM.AmountInPaymentCurrency == invoice.AmountInInvoiceCurrency) // one payment
@@ -2127,9 +2128,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
 
 
-                if (invoiceComprobante.Complemento.Any != null)
+                if (invoiceComprobanteDetails.ComplementoAny != null)
                 {
-                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
@@ -2138,9 +2139,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                     }
                 }
 
-                doctoItem.Serie = invoiceComprobante.Serie;
-                doctoItem.Folio = invoiceComprobante.Folio;
-                doctoItem.MetodoDePagoDR = invoiceComprobante.MetodoPago;
+                doctoItem.Serie = invoiceComprobanteDetails.Serie;
+                doctoItem.Folio = invoiceComprobanteDetails.Folio;
+                doctoItem.MetodoDePagoDR = invoiceComprobanteDetails.MetodoPago;
 
                 doctos.Add(doctoItem);
 
@@ -2243,15 +2244,15 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = null;
             Profact.TimbraCFDI33.Conector conector = GetProfactConnector(tenant);
-            Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(entitySATXML);
-            if (comprobante.Complemento.Any != null)
+            InvoiceComprobanteDetails invoiceComprobanteDetails = GetInvoiceComprobanteDetails(entitySATXML);
+            if (invoiceComprobanteDetails.ComplementoAny != null)
             {
-                List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
                 var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                 if (timbreFiscalDigitalElement != null)
                 {
                     Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-                    string rfcEmisor = comprobante.Emisor.Rfc.Trim();
+                    string rfcEmisor = invoiceComprobanteDetails.EmisorRfc.Trim();
                     //Folio Fiscal - UUID
                     string uuID = digitalTi.UUID.Trim();
 
@@ -2395,11 +2396,11 @@ namespace Logitude.BL.InvoiceModel.Tools
             List<ARInvoiceSATDetails> paymentInvoicesDetails = new List<ARInvoiceSATDetails>();
             foreach (ARInvoice invoice in currentPaymentARInvoices)
             {
-                Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
+                InvoiceComprobanteDetails invoiceComprobanteDetails = GetInvoiceComprobanteDetails(invoice.SATXML);
 
-                if (invoiceComprobante.Complemento.Any != null)
+                if (invoiceComprobanteDetails.ComplementoAny != null)
                 {
-                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
@@ -2414,6 +2415,32 @@ namespace Logitude.BL.InvoiceModel.Tools
             return paymentInvoicesDetails;
         }
 
+        public static InvoiceComprobanteDetails GetInvoiceComprobanteDetails(string invoiceSATXML)
+        {
+            InvoiceComprobanteDetails invoiceComprobanteDetails = new InvoiceComprobanteDetails();
+            try
+            {
+                Profact.TimbraCFDI33.Comprobante invoiceComprobanteV3 = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoiceSATXML);
+                invoiceComprobanteDetails.ComplementoAny = invoiceComprobanteV3.Complemento.Any;
+                invoiceComprobanteDetails.EmisorRfc = invoiceComprobanteV3.Emisor.Rfc;
+                invoiceComprobanteDetails.Total = invoiceComprobanteV3.Total;
+                invoiceComprobanteDetails.Serie = invoiceComprobanteV3.Serie;
+                invoiceComprobanteDetails.Folio = invoiceComprobanteV3.Folio;
+                invoiceComprobanteDetails.MetodoPago = invoiceComprobanteV3.MetodoPago;
+            }
+            catch (Exception ex)
+            {
+                Profact.TimbraCFDI40.Comprobante invoiceComprobanteV4 = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(invoiceSATXML);
+                invoiceComprobanteDetails.ComplementoAny = invoiceComprobanteV4.Complemento.Any;
+                invoiceComprobanteDetails.EmisorRfc = invoiceComprobanteV4.Emisor.Rfc;
+                invoiceComprobanteDetails.Total = invoiceComprobanteV4.Total;
+                invoiceComprobanteDetails.Serie = invoiceComprobanteV4.Serie;
+                invoiceComprobanteDetails.Folio = invoiceComprobanteV4.Folio;
+                invoiceComprobanteDetails.MetodoPago = invoiceComprobanteV4.MetodoPago;
+            }
+
+            return invoiceComprobanteDetails;
+        }
 
         private decimal GetDecimalWith3DigitsAfterPointIfZero(decimal dNumber)
         {
@@ -2446,6 +2473,15 @@ namespace Logitude.BL.InvoiceModel.Tools
         public ARInvoice Invoice { get; set; }
     }
 
+    public class InvoiceComprobanteDetails
+    {
+        public XmlElement[] ComplementoAny { get; set; }
+        public string EmisorRfc { get; set; }
+        public decimal Total { get; set; }
+        public string Serie { get; set; }
+        public string Folio { get; set; }
+        public string MetodoPago { get; set; }
 
+    }
 
 }

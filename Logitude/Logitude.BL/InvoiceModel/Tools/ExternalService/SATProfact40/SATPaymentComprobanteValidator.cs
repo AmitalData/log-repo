@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -53,6 +54,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             ValidateCompanyVat(currentTenant);
             ValidateFormaPago();
             ValidateBranchAddress();
+            ValidatePaymentMethodBankName();
         }
 
         private void ValidateMetodoPago()
@@ -151,6 +153,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             if (string.IsNullOrEmpty(currentTenant.Address.ZipCode))
             {
                 throw new ApplicationException("Company Address ZipCode is required ");
+            }
+        }
+
+        private void ValidatePaymentMethodBankName()
+        {
+            if (ComplementoPagosPagoNomBancoOrdExt.IsPaymentMethodRequiredBankName(arPaymentPM) && string.IsNullOrEmpty(arPaymentPM.Bank))
+            {
+                throw new ApplicationException("Payment Bank Name is required");
             }
         }
     }

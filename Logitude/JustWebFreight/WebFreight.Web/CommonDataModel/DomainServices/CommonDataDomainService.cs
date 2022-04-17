@@ -1025,7 +1025,120 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         protected override bool ExecuteChangeSet()
         {
             return base.ExecuteChangeSet();
-        }        
+        }
+
+        [Query(HasSideEffects = true)]
+        public IQueryable<HorseList> GetHorseFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("Horse", "READ", tenant);
+
+            HorseRepository horseRepository = new HorseRepository(tenant);
+            HorseQuery horseQuery = new HorseQuery(horseRepository);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+            IQueryable<Horse> horsees = horseRepository.GetHorses(tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            horsees = filter.GetFilteredQuery<Horse>(nonListQueryOperation, horsees);
+            int skippedPorts = queryOperations.PageIndex;//PageSize * (queryOperations.PageIndex - 1);
+
+            IQueryable<HorseList> query2 = horseQuery.GetIQueryableEntityList(horsees);
+
+            query2 = filter.GetFilteredQuery<HorseList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(HorseList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Horse", tenant).ToList();
+
+                ObjectField objectField = (from a in shipmentObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+                    switch (objectField.DataTypeCode.ToLower())
+                    {
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<HorseList, string>(queryOperations, query2);
+                                break;
+                            }
+                        case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<HorseList, double>(queryOperations, query2);
+                                break;
+                            }
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<HorseList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<HorseList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<HorseList, bool>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderByDescending(d => d.Name);
+                                break;
+                            }
+                    }
+                }
+            }
+            else
+            {
+                query2 = query2.OrderByDescending(d => d.Name);
+            }
+            //--------------------------------------------------------------------------------------------------
+
+            query2 = query2.Skip(skippedPorts);
+            query2 = query2.Take(queryOperations.PageSize);
+            return query2;
+        }
+
+        public int GetHorseFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("Horse", "READ", tenant);
+
+            HorseRepository horseRepository = new HorseRepository(tenant);
+            HorseQuery horseQuery = new HorseQuery(horseRepository);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+            IQueryable<Horse> horsees = horseRepository.GetHorses(tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            horsees = filter.GetFilteredQuery<Horse>(nonListQueryOperation, horsees);
+
+            IQueryable<HorseList> query2 = horseQuery.GetIQueryableEntityList(horsees);
+
+            query2 = filter.GetFilteredQuery<HorseList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+
     }
 }
 

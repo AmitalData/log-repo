@@ -400,7 +400,7 @@ namespace CommunicationWorkerRole
                     invoice.TransferError = null;
                     invoice.TransferStatusCode = "ET";
                     invoice.IsTransferStarted = false;
-                    if (QBOId != null)
+                    if (!string.IsNullOrEmpty(QBOId))
                         invoice.ExternalAccountingEntityId = QBOId;
                     repository.Update(invoice);
                     repository.SubmitChanges();
@@ -417,7 +417,7 @@ namespace CommunicationWorkerRole
                     payment.TransferStatusCode = "ET";
                     payment.IsTransferStarted = false;
 
-                    if (QBOId != null)
+                    if (!string.IsNullOrEmpty(QBOId))
                         payment.ExternalAccountingEntityId = QBOId;
 
                     repository.Update(payment);
@@ -1044,10 +1044,10 @@ namespace CommunicationWorkerRole
                     invoice.TransferStatusCode = "TR";
                     invoice.IsTransferStarted = false;
 
-                    if (QBOId != null)
+                    if (!string.IsNullOrEmpty(QBOId))
                         invoice.ExternalAccountingEntityId = QBOId;
 
-                    else if (QBOIDSuccess != null)
+                    else if (!string.IsNullOrEmpty(QBOIDSuccess))
                         invoice.ExternalAccountingEntityId = QBOIDSuccess;
 
                     repository.Update(invoice);
@@ -1078,9 +1078,9 @@ namespace CommunicationWorkerRole
                     payment.TransferStatusCode = "TR";
                     payment.IsTransferStarted = false;
 
-                    if (QBOId != null)
+                    if (!string.IsNullOrEmpty(QBOId))
                         payment.ExternalAccountingEntityId = QBOId;
-                    else if (QBOIDSuccess != null)
+                    else if (!string.IsNullOrEmpty(QBOIDSuccess))
                         payment.ExternalAccountingEntityId = QBOIDSuccess;
 
                     repository.Update(payment);

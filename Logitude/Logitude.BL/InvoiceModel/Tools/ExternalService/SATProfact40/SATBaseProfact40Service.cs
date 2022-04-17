@@ -47,15 +47,17 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = null;
             Conector conector = GetProfactConnector(tenant);
-            Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Comprobante>(entitySATXML);
-            if (comprobante.Complemento.Any == null) return resultadoConsultaEstatusSAT;
 
-            List<XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList();
+            InvoiceComprobanteDetails invoiceComprobanteDetails = SATInterfaceHelper.GetInvoiceComprobanteDetails(entitySATXML);
+
+            if (invoiceComprobanteDetails.ComplementoAny == null) return resultadoConsultaEstatusSAT;
+
+            List<XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList();
             var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
             if (timbreFiscalDigitalElement == null) return resultadoConsultaEstatusSAT;
 
             Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-            string rfcEmisor = comprobante.Emisor.Rfc.Trim();
+            string rfcEmisor = invoiceComprobanteDetails.EmisorRfc.Trim();
             string uuID = digitalTi.UUID.Trim();
             resultadoConsultaEstatusSAT = conector.ConsultaEstatusSAT(uuID);
 

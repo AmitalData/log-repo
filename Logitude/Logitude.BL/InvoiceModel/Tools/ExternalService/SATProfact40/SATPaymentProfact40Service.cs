@@ -138,16 +138,28 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private static void AddARInvoiceToPaymentInvoicesDetails(List<ARInvoiceSATDetails> paymentInvoicesDetails, ARInvoice invoice)
         {
-            Comprobante invoiceComprobante = LogitudeXmlSerializer.DeserializeObject<Comprobante>(invoice.SATXML);
-            if (invoiceComprobante.Complemento.Any == null) return;
-
-            List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+            XmlElement[] invoiceComprobanteComplemento = GetComplementoXmlElementFromRelatedInvoice(invoice.SATXML);
+            if (invoiceComprobanteComplemento == null) return;
+            
+            List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteComplemento.ToList<System.Xml.XmlElement>();
             var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
             if (timbreFiscalDigitalElement == null) return;
 
             Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
             paymentInvoicesDetails.Add(new ARInvoiceSATDetails() { UUID = digitalTi.UUID, Invoice = invoice });
 
+        }
+
+        private static XmlElement[] GetComplementoXmlElementFromRelatedInvoice(string relatedInvoiceSATXML)
+        {
+            try
+            {
+                return Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Comprobante>(relatedInvoiceSATXML).Complemento.Any;
+            }
+            catch (Exception ex)
+            {
+                return Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(relatedInvoiceSATXML).Complemento.Any;
+            }
         }
 
         private List<PagosPagoDoctoRelacionado> GetPagosPagoDoctoRelacionados()

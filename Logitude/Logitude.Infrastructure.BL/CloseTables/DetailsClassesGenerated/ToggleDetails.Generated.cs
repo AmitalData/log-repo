@@ -580,6 +580,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "Froala Editor Insert Image", 
                 Description = "Activate Insert Image In Froala Editor", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "PF4", 
+                Name = "Profact 4.0", 
+                SearchFields = "PF4,Profact 4.0", 
+                Description = "Add Profact Version 4.0 to SAT Interfaces", 
+			});
 			
             return all;
        }

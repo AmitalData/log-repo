@@ -210,7 +210,7 @@ namespace CommunicationWorkerRole
                                             {
                                                 PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, ForwarderShipment, customerTenantAccessInfo);
  
-                                                if (!privateLabelShipmentService.IsShipmentsAllowedForLogBox())
+                                                if (!privateLabelShipmentService.IsShipmentsAllowedForLogBox() && !privateLabelShipmentService.IsCustomFileShipment(ForwarderShipment))
                                                 {
                                                     queueservice.Complete();
                                                 }

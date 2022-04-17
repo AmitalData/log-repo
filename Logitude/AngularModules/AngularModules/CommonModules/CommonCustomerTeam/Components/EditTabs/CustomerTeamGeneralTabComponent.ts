@@ -33,6 +33,12 @@ export class CustomerTeamGeneralTabComponent extends BaseComponent implements On
             this.EntityPM.LocalName = value;
     }
 
+    public get Code() { return this.EntityPM.Code; }
+    public set Code(value: string) {
+        if (this.EntityPM.Code != value)
+            this.EntityPM.Code = value;
+    }
+
     public get InActive() { return this.EntityPM.InActive; }
     public set InActive(value: boolean) {
         if (this.EntityPM.InActive != value)

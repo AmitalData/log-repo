@@ -28,6 +28,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.Name = entityPM.Name;
             entityPOCO.LocalName = entityPM.LocalName;
             entityPOCO.InActive = entityPM.InActive;
+            entityPOCO.Code = entityPM.Code;
             BuildSearchFields(entityPM, entityPOCO);
         }
 
@@ -45,6 +46,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Name);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.LocalName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Code);
 
             if (mySearchFields.Length > 1000)
             {

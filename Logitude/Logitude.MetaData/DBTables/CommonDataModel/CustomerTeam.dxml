@@ -78,6 +78,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="6">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

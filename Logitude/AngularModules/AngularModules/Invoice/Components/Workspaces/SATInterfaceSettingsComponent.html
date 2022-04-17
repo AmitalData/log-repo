@@ -20,13 +20,16 @@
                         </td>
 
                         <td style="width:230px; ">
-                            <LogLov [ObjectFieldName]="'SATInterfaceCode'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="EntityPM"
-                                    [SelectedValue]="EntityPM.SATInterfaceCode"
-                                    [LookUpTableName]="'SATInterface'"
-                                    [HideColumns]="true">
-                            </LogLov>
+                            <!--<LogLov [ObjectFieldName]="'SATInterfaceCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="EntityPM"
+            [SelectedValue]="EntityPM.SATInterfaceCode"
+            [LookUpTableName]="'SATInterface'"
+            [HideColumns]="true">
+    </LogLov>-->
+                            <ComboBox (SelectedItemChanged)="SelectedSATInterface = $event"
+                                      [SelectedItem]="SelectedSATInterface" [ItemsSource]="SATInterfaces"
+                                      [Binding]="'Name'"></ComboBox>
                         </td>
 
                         <td>

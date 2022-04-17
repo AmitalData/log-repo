@@ -34,7 +34,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.Tenant = entityPM.Tenant;
                 entityPM.CreateDate = todayDateTime;
 
-                if (entityPM.IsExternalAPI )
+                if (entityPM.IsExternalAPI)
                 {
                     entity.IssuedByUserId = entityPM.IssuedByUserId;
                     entity.CreatedByUserId = entityPM.CreatedByUserId;
@@ -88,7 +88,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsGeneralInvoice = entityPM.IsGeneralInvoice;
             entity.SalesmanUserId = entityPM.SalesmanUserId;
             entity.IsCustomsChargesOnly = entityPM.IsCustomsChargesOnly;
-            entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
+            if (!string.IsNullOrEmpty(entityPM.ExternalAccountingEntityId))
+                entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
             entity.IsFromInterestBatchInvoice = entityPM.IsFromInterestBatchInvoice;
             entity.PartnerId = entityPM.PartnerId;
             entity.ShipmentsNumbers = entityPM.ShipmentsNumbers;
@@ -171,7 +172,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsPrinted = entityPM.IsPrinted;
             entity.PrintNotes = entityPM.PrintNotes;
             entity.PrintByUserId = entityPM.PrintByUserId;
-            entity.PrintDate = entityPM.PrintDate;            
+            entity.PrintDate = entityPM.PrintDate;
             entity.InternalNotes = entityPM.InternalNotes;
             entity.PaymentTermExternalId = entityPM.PaymentTermExternalId;
             entity.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
@@ -208,7 +209,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.UsoCFDICode = entityPM.UsoCFDICode;
             entity.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entity.PeriodCode = entityPM.PeriodCode;
-            entity.RelatedInvoice  = entityPM.RelatedInvoice;
+            entity.RelatedInvoice = entityPM.RelatedInvoice;
             entity.DocumentFilingId = entityPM.DocumentFilingId;
             entityPM.SetVoided = false;
             entityPM.SetAsSent = false;
@@ -236,7 +237,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
                 JournalRepository rep = new JournalRepository(entityPM.Tenant);
-                JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id,"2", entityPM.Tenant);
+                JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id, "2", entityPM.Tenant);
 
                 if (journal != null)
                 {
@@ -336,12 +337,12 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
         }
 
-        public static string GetBillToGLAccountId(string billToId,int tenant)
+        public static string GetBillToGLAccountId(string billToId, int tenant)
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
             CardPM card = GetCardById(billToId, tenant);
             GLAccountPM billToAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
-            if(billToAccount != null)
+            if (billToAccount != null)
             {
                 return billToAccount.Id;
             }
@@ -349,7 +350,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             {
                 return null;
             }
-            
+
         }
 
         private static CardPM GetCardById(string id, int tenant)

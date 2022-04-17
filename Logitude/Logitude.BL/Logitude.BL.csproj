@@ -178,7 +178,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Profact4.0.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\packages\Profact4.0.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
@@ -668,6 +668,7 @@
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.ImpuestosPs.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.NumOperacion.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.RfcEmisorCtaOrd.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\ComplementoPagosPagoNomBancoOrdExt.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Conceptos.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Fecha.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Receptor.cs" />
