@@ -2415,7 +2415,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             return paymentInvoicesDetails;
         }
 
-        private static InvoiceComprobanteDetails GetInvoiceComprobanteDetails(string invoiceSATXML)
+        public static InvoiceComprobanteDetails GetInvoiceComprobanteDetails(string invoiceSATXML)
         {
             InvoiceComprobanteDetails invoiceComprobanteDetails = new InvoiceComprobanteDetails();
             try

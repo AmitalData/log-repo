@@ -982,8 +982,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                     {
                         if (traslado.TipoFactor == "Tasa")
                         {
-                            traslado.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
-                            traslado.ImporteSpecified = true;
+                            MapImpuestosTraslado(TotalImpuestosTrasladados, totalVat, traslado);
                         }
                     }
                 }
@@ -1137,6 +1136,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
 
             return null;
+        }
+
+        private static void MapImpuestosTraslado(decimal TotalImpuestosTrasladados, ARInvoiceTotalVATPM totalVat, ComprobanteImpuestosTraslado traslado)
+        {
+            traslado.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
+            traslado.ImporteSpecified = true;
+            traslado.Base += SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVatableAmount != null ? (decimal)totalVat.InvoiceCurrencyVatableAmount.Value : 0)));
+            traslado.Base = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(traslado.Base);
         }
 
         private ComprobanteImpuestosTraslado GetNewComprobanteImpuestosTrasladoInstance(ARInvoiceTotalVATPM totalVat, string _totaltipoFactor, string total_tasaOCuota)
