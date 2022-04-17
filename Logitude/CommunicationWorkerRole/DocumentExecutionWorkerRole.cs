@@ -176,11 +176,7 @@ namespace CommunicationWorkerRole
         }
 
 
-        public override void OnStop()
-        {
-            CleanUp();
-            base.OnStop();
-        }
+     
 
     }
 
