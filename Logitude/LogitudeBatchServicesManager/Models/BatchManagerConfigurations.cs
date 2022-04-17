@@ -16,7 +16,7 @@ namespace LogitudeBatchServicesManager.Models
         [XmlArray("Processes")]
         [XmlArrayItem("Process")] 
         public List<BatchProcess> Processes { get; set; }
-        public int ProcDelayStartInSec { get; set; }
+        public int ProcessDelayStartInSeconds { get; set; }
 
 
     }

@@ -118,7 +118,7 @@ namespace LogitudeBatchServicesManager
         {
             EventLog.WriteEntry("StartBatchManagerService");
             BatchManagerConfigurations batchManagerConfigurations = GetBatchServiceArguments();
-            LaunchLogitudeBatchServices(batchManagerConfigurations.Processes , batchManagerConfigurations.ProcDelayStartInSec);
+            LaunchLogitudeBatchServices(batchManagerConfigurations.Processes , batchManagerConfigurations.ProcessDelayStartInSeconds);
         }
 
         private BatchManagerConfigurations GetBatchServiceArguments()
@@ -142,13 +142,13 @@ namespace LogitudeBatchServicesManager
             } 
         }
 
-        private void LaunchLogitudeBatchServices(List<BatchProcess> Processes , int procDelayStartInSec)
+        private void LaunchLogitudeBatchServices(List<BatchProcess> Processes, int processDelayStartInSeconds)
         {
             EventLog.WriteEntry("Start LaunchLogitudeBatchServices");
             foreach (var Process in Processes)
             {
                 StartProcessWithArgs(Process);
-                System.Threading.Thread.Sleep(new TimeSpan(0, 0, procDelayStartInSec));
+                System.Threading.Thread.Sleep(new TimeSpan(0, 0, processDelayStartInSeconds));
             }
 
         }
