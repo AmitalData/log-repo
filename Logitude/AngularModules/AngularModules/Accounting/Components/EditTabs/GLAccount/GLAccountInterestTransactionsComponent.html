@@ -78,13 +78,13 @@
     <!-- Toolbar -->
     <tr class="FormFieldRow">
         <td colspan="5">
-            <div float-end style="width: 220px;padding: 0 5px;" *ngIf="0">
+            <div float-end style="width: 220px;padding: 0 5px;">
                 <SearchTextBox [ObjectTableName]="'LedgerTransaction'" [PlaceHolder]="'Accounting.General.O.JournalNoRef' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
             </div>
             <div float-end>
                 <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
             </div>
-            <div float-end *ngIf="0">
+            <div float-end>
                 <IconButton style="margin: 0 5px;" [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'" [Left]="isRTL ? 3:-3" (click)="ExportToExcelClick()"></IconButton>
             </div>
 
