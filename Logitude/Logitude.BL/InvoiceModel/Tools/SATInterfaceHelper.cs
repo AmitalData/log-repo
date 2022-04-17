@@ -1478,15 +1478,16 @@ namespace Logitude.BL.InvoiceModel.Tools
             Encoding encoding = Encoding.UTF8;
             byte[] profactoXMLData = encoding.GetBytes(entityPoco.SATXML);
 
-            Profact.TimbraCFDI33.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData);
+            object comprobante = GetComprobante(profactoXMLData);
 
             this.BuildProfactCommunicationLog33(comprobante, entityPM.Tenant, entityPM.Id, entityPM.InvoiceNumber.ToString(), true);
         }
 
-        private void BuildProfactCommunicationLog33(Profact.TimbraCFDI33.Comprobante comprobante, int tenant, string entityId, string entityReference, bool isCancellation = false, bool isPayment = false)
+        private void BuildProfactCommunicationLog33(object comprobante, int tenant, string entityId, string entityReference, bool isCancellation = false, bool isPayment = false)
         {
             byte[] profactoXmlData = { };
 
+            InvoiceComprobanteShortDetails invoiceComprobanteShortDetails = GetInvoiceComprobanteShortDetails(comprobante);
 
             string logSubject = "SAT Interface";
             if (isCancellation)
@@ -1497,16 +1498,16 @@ namespace Logitude.BL.InvoiceModel.Tools
                     logSubject = "Payment SAT Interface Cancellation";
                 }
 
-                if (comprobante.Complemento.Any != null)
+                if (invoiceComprobanteShortDetails.ComplementoAny != null)
                 {
-                    List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteShortDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
                         Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
 
                         //Rfc Emisor
-                        string rfcEmisor = comprobante.Emisor.Rfc.Trim();
+                        string rfcEmisor = invoiceComprobanteShortDetails.EmisorRfc.Trim();
 
                         //Folio Fiscal - UUID
                         string folioFiscal = digitalTi.UUID.Trim();
@@ -1522,8 +1523,10 @@ namespace Logitude.BL.InvoiceModel.Tools
                 {
                     logSubject = "Payment SAT Interface";
                 }
-
-                profactoXmlData = LogitudeXmlSerializer.SerializeObject<Profact.TimbraCFDI33.Comprobante>(comprobante);
+                if(invoiceComprobanteShortDetails.V3Comprobante != null)
+                    profactoXmlData = LogitudeXmlSerializer.SerializeObject<Profact.TimbraCFDI33.Comprobante>(invoiceComprobanteShortDetails.V3Comprobante);
+                else
+                    profactoXmlData = LogitudeXmlSerializer.SerializeObject<Profact.TimbraCFDI40.Comprobante>(invoiceComprobanteShortDetails.V4Comprobante);
             }
 
 
@@ -1632,8 +1635,37 @@ namespace Logitude.BL.InvoiceModel.Tools
                 });
             }
         }
+        private object GetComprobante(byte[] profactoXMLData)
+        {
+            try
+            {
+                return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData);
+            }
+            catch(Exception ex) {
+                return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(profactoXMLData);
+            }
+        }
+        
+        private InvoiceComprobanteShortDetails GetInvoiceComprobanteShortDetails(object comprobante)
+        {
+            InvoiceComprobanteShortDetails invoiceComprobanteShortDetails = new InvoiceComprobanteShortDetails();
+            try
+            {
+                Profact.TimbraCFDI33.Comprobante invoiceComprobanteV3 = ((Profact.TimbraCFDI33.Comprobante)comprobante);
+                invoiceComprobanteShortDetails.V3Comprobante = invoiceComprobanteV3;
+                invoiceComprobanteShortDetails.EmisorRfc = invoiceComprobanteV3.Emisor.Rfc;
+                invoiceComprobanteShortDetails.ComplementoAny = invoiceComprobanteV3.Complemento.Any;
+            }
+            catch (Exception ex)
+            {
+                Profact.TimbraCFDI40.Comprobante invoiceComprobanteV4 = ((Profact.TimbraCFDI40.Comprobante)comprobante);
+                invoiceComprobanteShortDetails.V4Comprobante = invoiceComprobanteV4;
+                invoiceComprobanteShortDetails.EmisorRfc = invoiceComprobanteV4.Emisor.Rfc;
+                invoiceComprobanteShortDetails.ComplementoAny = invoiceComprobanteV4.Complemento.Any;
+            }
 
-
+            return invoiceComprobanteShortDetails;
+        }
 
         private List<ARInvoiceTotalVATPM> CalculateNoneExpenseTotalVats(ARInvoicePM entityPM,
             List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups, List<ChargesType> chargesTypes)
@@ -2220,7 +2252,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 Encoding encoding = Encoding.UTF8;
                 byte[] profactoXMLData = encoding.GetBytes(entityPoco.SATXML);
 
-                Profact.TimbraCFDI33.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData);
+                object comprobante = GetComprobante(profactoXMLData);
 
                 this.BuildProfactCommunicationLog33(comprobante, entityPM.Tenant, entityPM.Id, entityPM.PaymentNo.ToString(), true, true);
                 entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "TG";
@@ -2482,6 +2514,14 @@ namespace Logitude.BL.InvoiceModel.Tools
         public string Folio { get; set; }
         public string MetodoPago { get; set; }
 
+    }
+
+    public class InvoiceComprobanteShortDetails
+    {
+        public XmlElement[] ComplementoAny { get; set; }
+        public string EmisorRfc { get; set; }
+        public Profact.TimbraCFDI33.Comprobante V3Comprobante { get; set; }
+        public Profact.TimbraCFDI40.Comprobante V4Comprobante { get; set; }
     }
 
 }
