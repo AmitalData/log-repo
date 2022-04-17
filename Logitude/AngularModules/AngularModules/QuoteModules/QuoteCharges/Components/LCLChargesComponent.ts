@@ -408,7 +408,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     GenerateNewTariffQuoteCharge(item: any) {
-        var quoteCharge: QuoteChargePM = this.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.SaleCurrencyId == item.SaleCurrencyId && d.SaleMeasurementId == item.SaleMeasurementId && (d.SaleTariffId == item.SaleTariffId || d.SaleTariffId == null))[0];
+        var quoteCharge: QuoteChargePM = this.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargeTypeId && d.SaleCurrencyId == item.SaleCurrencyId && d.SaleMeasurementId == item.SaleMeasurementId && (d.SaleTariffId == item.SaleTariffId || d.SaleTariffId == null))[0];
         if (!quoteCharge) {
             this.CreateNewTariffQuoteCharge(item);
         }
