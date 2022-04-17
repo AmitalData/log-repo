@@ -69,12 +69,14 @@ namespace Logitude.TariffModule.BL.Helpers
             {
                 return null;
             }
-
+          
             var customerGroupId = IsExportQuote() ? customerGroupExportId : customerGroupImportId;
             var customerGroupName = GetCustomerGroupName(customerGroupId);
-            error = (customerGroupName == "General") ? "No matching tariff found." : "No matching tariff found for " + customerGroupName + " customer group.";
+
+            error = (customerGroupName == "General" || IsDropDomesticQuote()) ? "No matching tariff found." : "No matching tariff found for " + customerGroupName + " customer group.";
             return error;
         }
+  
         private void GetQuote()
         {
             QuoteRepository quoteRepository = new QuoteRepository(tenant);
@@ -292,7 +294,11 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private TariffLine FilterTariffLinesBasedOnBothCountries(IQueryable<TariffLine> tariffLines)
         {
-            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == SalesLocalChargesTariffSearchArgs.FromCountryId && p.ToCountryId == SalesLocalChargesTariffSearchArgs.ToCountryId);
+            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == SalesLocalChargesTariffSearchArgs.FromCountryId);
+            if (filteredLines.Count() == 0)
+            {
+                filteredLines = tariffLines.Where(p => p.ToCountryId == SalesLocalChargesTariffSearchArgs.ToCountryId);
+            }
             return filteredLines.FirstOrDefault();
         }
         private TariffLine FilterTariffLinesBasedOnFromCountries(IQueryable<TariffLine> tariffLines)
