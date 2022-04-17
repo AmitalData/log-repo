@@ -100,7 +100,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly NewShipmentToggleButton = '#NEWSHIP .LogitudeToggleButtonContainer';
   public static readonly NewShipmentToggleButtonItem = '#NEWSHIP .LogitudeToggleButtonItem';
   public static readonly ShipmentMainCarriageFromPort = '#Shipment_MainCarriageFromPortId';
-  public static readonly ShipmentMainCarriageToPort = '#Shipment_MainCarriageFinalDestinationPortId';
+  public static readonly ShipmentMainCarriageToPort = '#Shipment_MainCarriageToPortId';
   public static readonly MasterMainCarriageFromPort = '#Master_MainCarriageFromPortId';
   public static readonly MasterMainCarriageToPort = '#Master_MainCarriageToPortId';
   public static readonly MasterAgent = '#Master_AgentId';
