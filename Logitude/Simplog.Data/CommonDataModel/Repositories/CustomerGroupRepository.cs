@@ -4,6 +4,7 @@ using Simplog.Server.Infrastructure.Helpers;
 
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using System;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -90,5 +91,20 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public string GetGeneralCustomerGroupId(int tenant)
+        {
+            string generalGeup = "General";
+            var customerGroup = (from record in context.CustomerGroups where record.Name == generalGeup && record.Tenant == tenant select record).FirstOrDefault();
+            string customerGroupId = customerGroup?.Id;
+            return customerGroupId;
+        }
+        public string GetGeneralCustomerGroupName(int tenant, string id)
+        {
+            var customerGroup = (from record in context.CustomerGroups where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            string customerGroupName = customerGroup?.Name;
+            return customerGroupName;
+        }
+
     }
 }

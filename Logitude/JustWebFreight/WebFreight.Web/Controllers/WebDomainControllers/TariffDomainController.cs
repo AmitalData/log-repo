@@ -2777,6 +2777,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        [ActionName("PostAvailableSalesLocalChargesTariffs")]
+        public HttpResponseMessage PostAvailableSalesLocalChargesTariffs(SalesLocalChargesTariffSearchArgs args)
+        {
+            try
+            {
+                int tenant = this.AuthenticateAPIRequest();
+                SalesLocalChargesGenerator customsChargesGenerator = new SalesLocalChargesGenerator(args, tenant);
+                SalesLocalChargesTariffSearchArgs newArgs = customsChargesGenerator.GenerateSaleLocalCharges();
+
+                return Request.CreateResponse(HttpStatusCode.OK, newArgs);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         private int AuthenticateAPIRequest()
         {
             string token = HttpContext.Current.Request.Headers["Token"];

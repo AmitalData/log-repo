@@ -29,6 +29,9 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.TariffId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.TariffNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.TariffLineId).HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.SaleTariffId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.SaleTariffNumber).HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.SaleTariffLineId).HasMaxLength(20).IsUnicode(false);
             // Table & Column Mappings
             this.ToTable("QuoteCharges");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -98,6 +101,10 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.TariffLineId).HasColumnName("TariffLineId");
             this.Property(t => t.TariffId).HasColumnName("TariffId");
             this.Property(t => t.TariffVersion).HasColumnName("TariffVersion");
+            this.Property(t => t.SaleTariffNumber).HasColumnName("SaleTariffNumber");
+            this.Property(t => t.SaleTariffLineId).HasColumnName("SaleTariffLineId");
+            this.Property(t => t.SaleTariffId).HasColumnName("SaleTariffId");
+            this.Property(t => t.SaleTariffVersion).HasColumnName("SaleTariffVersion");
             this.Property(t => t.IsRegionalTax).HasColumnName("IsRegionalTax");
             this.Property(t => t.VATAmountInLocalCurrency).HasColumnName("VATAmountInLocalCurrency");
             this.Property(t => t.VATAmountInQuoteSaleCurrency).HasColumnName("VATAmountInQuoteSaleCurrency");

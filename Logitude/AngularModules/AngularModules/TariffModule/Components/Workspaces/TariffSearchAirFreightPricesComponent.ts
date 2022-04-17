@@ -1372,6 +1372,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             if (charge != null) {
                 this.FatherComponent.EntityPM.RemoveQuoteChargePM(charge);
                 item.ChargesGroupCode = charge.ChargesGroupCode;
+                item.SaleTariffId = charge.SaleTariffId;
+                item.SaleTariffNumber = charge.SaleTariffNumber;
+                item.SaleTariffLineId = charge.SaleTariffLineId;
+                item.SaleTariffVersion = charge.SaleTariffVersion;
             }
         });
         this.AssignTariffChargesToQuote();
@@ -1414,7 +1418,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     chargeItem.CostUnitPrice = (costAmount / costQuantity);
 
                 }
-                chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+                //chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
             }
             chargeItem.ComputeSalePrice();
             chargeItem.ComputeSaleAmounts();
@@ -1449,7 +1453,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.CostContainerType5UnitPrice = item.CostContainerType5UnitPrice;
             var costAmount: number = item.CostTotalAmount;
             chargeItem.CostQuantity = item.CostQuantity;
-            chargeItem.SaleQuantity = item.CostQuantity;
+            //chargeItem.SaleQuantity = item.CostQuantity;
 
             var costQuantity: number = chargeItem.CostQuantity;
             if (costQuantity != null && costQuantity != 0) {
@@ -1459,7 +1463,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 else {
                     chargeItem.CostUnitPrice = (costAmount / costQuantity);
                 }
-                chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+               // chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
             }
             chargeItem.ComputeSalePrice();
             chargeItem.ComputeSaleAmounts();
@@ -1540,7 +1544,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
 
                 var measurementCode = item.UnitOfMesurmentCode;
-                var quantity;
                 var measurementId = item.UnitOfMesurmentId;
 
                 if (!item.IsAllIn) {
@@ -1580,8 +1583,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.SaleMeasurementId = measurementId;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
-                chargePM.IsCostAllIn = item.IsAllIn;
-                this.TariffList_Quote.push(chargePM);
+                chargePM.IsCostAllIn = item.IsAllIn; 
+                this.TariffList_Quote.push(chargePM); 
             }
         });
     }
