@@ -440,6 +440,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     DisconnectShipmentReceivablesPayables() {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show("Disconnecting the quote will cause the receivables and payables generated from this quote to be deleted from this shipment. Please confirm.");
+        confirmWindow.Width = 450;
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.myDomainService.DisconnectQuote(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
@@ -574,6 +575,7 @@ class ShipmentConnectedEntityItem {
     get OpenDate() { return this.myEntity.OpenDate; }
     get AcceptedDate() { return this.myEntity.AcceptedDate; }
     get Salesman() { return this.myEntity.Salesman; }
+    get ExpirationDate() { return this.myEntity.ExpirationDate; }
 
     public EntityDate: Date;
     public Foreground: string;

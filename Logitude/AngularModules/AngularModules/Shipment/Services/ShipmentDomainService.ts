@@ -1121,7 +1121,8 @@ export class ShipmentConnectedEntity {
     public EntityStatus: string;
     public OpenDate: Date;
     public AcceptedDate: Date;
-    public Salesman: string;    
+    public Salesman: string;
+    public ExpirationDate: Date;
 }
 
 export class ExcelPackageFilter {

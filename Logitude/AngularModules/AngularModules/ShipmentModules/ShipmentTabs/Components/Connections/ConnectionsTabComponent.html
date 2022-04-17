@@ -333,6 +333,7 @@
                                                                         <td style="width: 150px; max-width:150px; min-width:150px;">Status</td>
                                                                         <td style="width: 150px; max-width:150px; min-width:150px;">Open Date</td>
                                                                         <td style="width: 150px; max-width:150px; min-width:150px;">Accepted Date</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Expiration Date</td>
                                                                         <td style="width: 150px; max-width:150px; min-width:150px;">Salesman</td>
                                                                         <td class="LastChild">
                                                                             <div></div>
@@ -362,6 +363,10 @@
 
                                                                         <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
                                                                             {{item.AcceptedDate | DateTimeToDatePipe}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.ExpirationDate | DateTimeToDatePipe}}
                                                                         </td>
 
                                                                         <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
