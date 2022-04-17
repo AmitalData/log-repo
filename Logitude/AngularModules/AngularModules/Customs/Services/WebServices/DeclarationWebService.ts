@@ -719,6 +719,32 @@ export class DeclarationWebService {
         );
     }
 
+    GetWarningFieldsForExportDeclaration(declarationId: string) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetWarningFieldsForExportDeclaration/?declarationId=" + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                //serviceResponse = response;
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+
+
+        }
+
+        );
+    }
+
     GetRequiredFieldsForCourierDeclaration(declarationId: string) {
         return defer(() => {
 

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "239d325298636e93824e69c7d5f93024";
+		public const string HashString = "e4a6978611064aa594ab35786155d4df";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "2de6",
+			      				    Code =  "e268",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2071,6 +2071,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Import", DefaultText = "Import",LocalDefaultText = @"יבוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Export", DefaultText = "Export",LocalDefaultText = @"יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOFieldForTableIsWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.FieldForTableIsWarning", DefaultText = "%FieldName in %TableName %EntityReference is Missing",LocalDefaultText = @"%FieldName ב- %TableName %EntityReference חסר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

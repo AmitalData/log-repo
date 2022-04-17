@@ -68,8 +68,8 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
         var objectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         var objectFields: any[] = window.ObjectFields.filter(x => x.ObjectTableId == objectTable.Id && (!x.IsMulti && x.FieldName != "ImporterId" && x.FieldName != "TransferImporterId" && x.FieldName != "EntitleImporterId"));
         if (objectTable.Name == "Customs.Declaration") {
-             objectFields= objectFields.filter(x => x.AdditionalQuerySections == "Customs.ExportDeclaration");
-             objectFields= objectFields.filter(x => x.FieldName != "DeclarationNumber");
+            objectFields = objectFields.filter(x => x.AdditionalQuerySections == "Customs.ExportDeclaration");
+            objectFields = objectFields.filter(x => x.FieldName != "DeclarationNumber");
         }
 
 
@@ -94,10 +94,12 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
             //}
             var selectObjectField = this.SelectedObjectFields.find(d => d.ObjectfieldCode == objectField.FieldCode);
             if (!AppTool.IsNullOrEmpty(selectObjectField)) {
-                if (selectObjectField.IsExport)
+                if (selectObjectField.IsExport) {
                     item.IsExport = true;
-                if(selectObjectField.WarningExport) 
-                     item.WarningExport=true;
+                }
+                if (selectObjectField.WarningExport) {
+                    item.WarningExport = true;
+                }
                 item.Active = true;
             }
 
@@ -163,12 +165,12 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
         this.SelectedRow = itemComponent;
     }
 
-    CheckBoxChanged(event, itemModel: RequiredFieldItemModel,value:string) {
-        if(value== 'WarningExport' && event){
-            itemModel.IsExport=false;
+    CheckBoxChanged(event, itemModel: RequiredFieldItemModel, value: string) {
+        if (value == 'WarningExport' && event) {
+            itemModel.IsExport = false;
         }
-        if(value== 'IsExport' && event){
-            itemModel.WarningExport=false;
+        if (value == 'IsExport' && event) {
+            itemModel.WarningExport = false;
         }
         console.log("<CheckBoxChanged> ", event, itemModel);
         if (itemModel) {

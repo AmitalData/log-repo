@@ -583,6 +583,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             
         }
 
+        public HttpResponseMessage GetWarningFieldsForExportDeclaration(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                CustomsRequiredFieldErrors errors = CustomsRequiredFieldsValidator.GetWarningFieldsForExportDeclaration(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, errors);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         public HttpResponseMessage GetRequiredFieldsForCourierDeclaration(string declarationId)
         {
             try

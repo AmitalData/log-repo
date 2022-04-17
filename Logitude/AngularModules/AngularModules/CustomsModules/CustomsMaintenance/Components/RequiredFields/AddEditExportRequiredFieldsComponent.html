@@ -46,7 +46,7 @@
 
 
 
-                    <log-column [header]="'התראה ביצוא'" [width]="'80'" [Alignment]="'right'">
+                    <log-column [header]="'התראה ליצוא'" [width]="'80'" [Alignment]="'right'">
                         <ng-template let-item>
                             <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
                                 <CheckBox  (Checked)="item.WarningExport=$event;  CheckBoxChanged($event, item,'WarningExport')" [IsChecked]="item.WarningExport"></CheckBox>

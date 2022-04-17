@@ -32,6 +32,7 @@ import { Guid } from '../../../Infrastructure/Utilities/Guid';
 
 export class CustomsErrorsComponent {
     Errors: string[];
+    Warning: string[];
     ErrorsCount: string;
     NoButtonVisibility: boolean;
     CancelButtonVisibility: boolean;
@@ -43,6 +44,7 @@ export class CustomsErrorsComponent {
     SetWindowArgs(windowArgs) {
         this.ComponentHeight = windowArgs.ComponentHeight;
         this.Errors = windowArgs.Errors;
+        this.Warning =  windowArgs.Warning;
         this.ErrorsCount = "Errors Found: ";
         if (this.Errors) {
             this.ErrorsCount = this.ErrorsCount + this.Errors.length;
