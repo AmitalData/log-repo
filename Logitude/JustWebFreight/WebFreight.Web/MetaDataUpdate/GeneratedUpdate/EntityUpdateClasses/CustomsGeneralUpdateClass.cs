@@ -126,6 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
 			      				    Code =  "7da2",
+
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2077,6 +2078,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOLogisticActionRequestAlreadyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.LogisticActionRequestAlreadyExist", DefaultText = "Logistic action request with the same cargo Identifiers already exist",LocalDefaultText = @"קיימת בקשה לביטול יצוא עם אותם מזהי מטען", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_GeneralMCCustomsSelectAuthorizationLetters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.SelectAuthorizationLetters", DefaultText = "Select Authorization Letters",LocalDefaultText = @"שליפת כתבי הרשאה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOFieldForTableIsWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.FieldForTableIsWarning", DefaultText = "%FieldName in %TableName %EntityReference is Missing",LocalDefaultText = @"%FieldName ב- %TableName %EntityReference חסר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

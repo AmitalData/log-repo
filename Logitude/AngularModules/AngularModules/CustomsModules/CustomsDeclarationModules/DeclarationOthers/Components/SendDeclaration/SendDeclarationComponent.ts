@@ -3,43 +3,44 @@
 
 declare var window: any;
 declare var System: any;
-import {Component, Output, EventEmitter, Input,OnDestroy} from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { ObjectTablePM } from '../../../../../Infrastructure/EntityPMs/ObjectTablePM'
-import {MenuButtonPM} from '../../../../../Infrastructure/EntityPMs/MenuButtonPM'
-import {MenuButtonGroupPM} from '../../../../../Infrastructure/EntityPMs/MenuButtonGroupPM'
-import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator'
-import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelper'
-import {AppTool, DateTool} from '../../../../../Infrastructure/Tools'
-import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
-import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
+import { MenuButtonPM } from '../../../../../Infrastructure/EntityPMs/MenuButtonPM'
+import { MenuButtonGroupPM } from '../../../../../Infrastructure/EntityPMs/MenuButtonGroupPM'
+import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator'
+import { ServiceHelper } from '../../../../../Infrastructure/Utilities/ServiceHelper'
+import { AppTool, DateTool } from '../../../../../Infrastructure/Tools'
+import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-import {Validator} from '../../../../../Infrastructure/Validators/Validator';
-import {CustomsExchangeRateExtendedPMService} from '../../../../../Customs/Services/ExtendedPMs/CustomsExchangeRateExtendedPMService';
-import {CustomsExchangeRatePM} from '../../../../../Customs/EntityPMs/CustomsExchangeRatePM';
-import {DeclarationValidator} from '../../../../../Customs/Validators/DeclarationValidator';
-import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
-import {GenericRequestParams} from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
-import {SendRequestVIA, CustomSendOptionsArgs, TestCase} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
-import {CustomMessageProgressComponent, ShowProgressBarParams} from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { Validator } from '../../../../../Infrastructure/Validators/Validator';
+import { CustomsExchangeRateExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsExchangeRateExtendedPMService';
+import { CustomsExchangeRatePM } from '../../../../../Customs/EntityPMs/CustomsExchangeRatePM';
+import { DeclarationValidator } from '../../../../../Customs/Validators/DeclarationValidator';
+import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
+import { SendRequestVIA, CustomSendOptionsArgs, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomMessageProgressComponent, ShowProgressBarParams } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
-import {SupplierInvoicePMService} from  '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
+import { SupplierInvoicePMService } from '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { UnifreightController } from '../../../../../Customs/Controller/UnifreightController';
-import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
-import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 ////// ../edittabs/supplierinvoices/addeditsupplierinvoicecomponent.ts" />
-import {CustomsDocumentPM} from '../../../../../Customs/EntityPMs/CustomsDocumentPM';
+import { CustomsDocumentPM } from '../../../../../Customs/EntityPMs/CustomsDocumentPM';
 import { AnalyzeUnifreightInsuranceService } from '../../../DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+
     selector: 'SendDeclarationComponent',
     templateUrl: "SendDeclarationComponent.html",
 })
@@ -64,15 +65,16 @@ export class SendDeclarationComponent implements OnDestroy {
     LoadCompletedEvent: any;
     _SendDeclarationService: SendDeclarationService = new SendDeclarationService();
     _WorkWithService: boolean = true;
-     //------------------------------------------------------//
+    //------------------------------------------------------//
     private CurrentSession = SessionLocator.SelectedSession;
+    s
     //logWindow = new LogitudeWindow();    
     constructor() {
 
     }
     Run(args: any) {
         this.EntityPM = args.EntityPM;
-         if (!this.EntityPM.IsCourierDeclaration) {
+        if (!this.EntityPM.IsCourierDeclaration) {
             this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Send");
         }
         else {
@@ -86,7 +88,7 @@ export class SendDeclarationComponent implements OnDestroy {
             this._SendDeclarationService.Run(args);
             return;
         }
-       
+
     }
 
     Listen() {
@@ -96,7 +98,7 @@ export class SendDeclarationComponent implements OnDestroy {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                      
+
                     }
                 });
             }
@@ -117,8 +119,8 @@ export class SendDeclarationComponent implements OnDestroy {
     OnCustomSendOptionsButtonClick(event: CustomSendOptionsArgs) {
         this._SendDeclarationService._TestCase = null;
         if (event.TestCase) {
-            
-            let windowArgs = { "SincroScreen": "SincroSendDeclaration"};
+
+            let windowArgs = { "SincroScreen": "SincroSendDeclaration" };
 
             var logWindow = new LogitudeWindow(this.CurrentSession);
             logWindow.Width = 600;
@@ -126,11 +128,11 @@ export class SendDeclarationComponent implements OnDestroy {
             logWindow.Title = "תרחשי הצהרה";
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
-            
+
             logWindow.ComponentLoaded.subscribe(comp => {
                 logWindow.WindowClosed.subscribe(res => {
-                    if (!AppTool.IsNullOrEmpty(res) && res=="Ok") {
-                         this._SendDeclarationService._TestCase = new TestCase();
+                    if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+                        this._SendDeclarationService._TestCase = new TestCase();
                         this._SendDeclarationService._TestCase.Code = comp._ScenarioCode;
                         this._SendDeclarationService._TestCase.Param1 = comp.Param1;
                         this._SendDeclarationService._TestCase.Param2 = comp.Param2;
@@ -176,6 +178,7 @@ export class SendDeclarationService implements OnDestroy {
     EntityPM: DeclarationPM;
     ObjectTable: ObjectTablePM;
     ValidationErrors: string[];
+    ValidationWarning: string[];
     presendValidationsTitle: string;
     DeclarationService: DeclarationWebService;
     RequestVIA: SendRequestVIA;
@@ -201,6 +204,7 @@ export class SendDeclarationService implements OnDestroy {
         this.ObjectTable = args.ObjectTable;
         this.CourierWorksheetmode = args.CourierWorksheetmode;
         this.ValidationErrors = [];
+        this.ValidationWarning = [];
         this.presendValidationsTitle = TextCodeTranslator.Translate("Customs.General.O.PreSendValidations");
         this.DeclarationService = new DeclarationWebService();
         if (!this.EntityPM.IsCourierDeclaration) {
@@ -209,7 +213,6 @@ export class SendDeclarationService implements OnDestroy {
         else {
             this.ButtonText = "שלח הצהרה"; // TextCodeTranslator.Translate("Customs.Declaration.O.SendDeclaration");
         }
- 
         this.Listen();
     }
     Listen() {
@@ -274,7 +277,7 @@ export class SendDeclarationService implements OnDestroy {
                     }
 
                     else {
-                         this.EntityPM = myResponse.Result;
+                        this.EntityPM = myResponse.Result;
                         if (this.CurrentSession.CurrentEditComponent) {
                             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -330,22 +333,48 @@ export class SendDeclarationService implements OnDestroy {
     }
 
     CheckRequiredFields() {
-       
         this.DeclarationService.GetRequiredFieldsForDeclaration(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
-            //List < CustomsRequiredFieldsErrorItem > errorsList = requiredFieldsErrors.RequiredFields;
-            var errorsList = response.Result.RequiredFields;
-            if (errorsList.length == 0 || this.EntityPM.IsAmendment) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) || true) { //|| !ScriptableGatewayUtil.AmitalBrowserInUse) { i put true temporarly--MM
-                    this.InstructionSendToMehes();//this.ConfirmB4TaxationDateTimeCheck();
-                    return;
+            this.DeclarationService.GetWarningFieldsForExportDeclaration(this.EntityPM.Id).subscribe((responseWarning: ServiceResponse) => {
+                //List < CustomsRequiredFieldsErrorItem > errorsList = requiredFieldsErrors.RequiredFields;
+                var errorsList = response.Result.RequiredFields;
+                var warningList = responseWarning.Result.RequiredFields;
+                if (errorsList.length == 0 || this.EntityPM.IsAmendment) {
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) || true) { //|| !ScriptableGatewayUtil.AmitalBrowserInUse) { i put true temporarly--MM
+                        if (warningList.length > 0) {
+                            this.ValidationWarning = this.GetWarningList(warningList);
+                            this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"));
+                        } else {
+                            this.InstructionSendToMehes();//this.ConfirmB4TaxationDateTimeCheck();
+                        }
+                        return;
+                    }
                 }
-            }
-            else {
-                this.ValidationErrors = this.GetRequiredErrorsList(errorsList);
-                this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"));
-            }
+                else {
+                    this.ValidationErrors = this.GetRequiredErrorsList(errorsList);
+                    this.ValidationWarning = this.GetWarningList(warningList);
+                    this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"));
+                }
+            });
         });
     }
+
+    /*   warningList:any;
+       CheckWarningFields() {
+           this.DeclarationService.GetWarningFieldsForExportDeclaration(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+               //List < CustomsRequiredFieldsErrorItem > errorsList = requiredFieldsErrors.RequiredFields;
+               this.warningList = response.Result.RequiredFields;
+               if (this.warningList.length == 0 || this.EntityPM.IsAmendment) {
+                   if (AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) || true) { //|| !ScriptableGatewayUtil.AmitalBrowserInUse) { i put true temporarly--MM
+                       this.InstructionSendToMehes();//this.ConfirmB4TaxationDateTimeCheck();
+                       return;
+                   }
+               }
+               else {
+                   this.ValidationErrors = this.GetRequiredErrorsList(warningList);
+                   this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"));
+               }
+           });
+       }*/
 
     private InstructionSendToMehes() {
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight)) {//if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
@@ -361,7 +390,7 @@ export class SendDeclarationService implements OnDestroy {
                     if (UnifreightResponseStatus) {
                         //busyIndicatorStartEvent.Publish(new BusyIndicatorStartEventArgs() { Start = true, Message = TextCodeTranslator.Translate("Customs.General.O.Sending") });
                         //var IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
-                        if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ") || FeatureLocator.IsFeatureGrantedByCode("ICL") ) {//    o        לאחר שמירה ובדיקת שדות לשליחה, יש לבדוק Feature כפי שבודקים במסך חשבון ספק
+                        if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ") || FeatureLocator.IsFeatureGrantedByCode("ICL")) {//    o        לאחר שמירה ובדיקת שדות לשליחה, יש לבדוק Feature כפי שבודקים במסך חשבון ספק
                             console.log("FritzFeatureIsON .. ");
                             this.UnifreightRequestExpenseFreight();
 
@@ -386,33 +415,33 @@ export class SendDeclarationService implements OnDestroy {
         this.CurrentSession.StartBusyIndicator("Check Insurance ...");
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
-            (unifreightMessageM: UnifreightMessageM) => {
-                var IsMatchUnifreightCallbackCommand = (
-                    unifreightMessageM.UnifreightEntityNumber == this.EntityPM.CustomFileNo &&
-                    unifreightMessageM.LogitudeViewModel == "SendDeclarationService");
-                if (IsMatchUnifreightCallbackCommand) {
-                    sub.unsubscribe();
-                    console.log("UnifreightRequestExpenseFreight .. UnifaceRequestArrived ");
-                    let supplierInvoice: SupplierInvoicePM = null;
-                    supplierInvoice = this.EntityPM.SupplierInvoices[0];
+                (unifreightMessageM: UnifreightMessageM) => {
+                    var IsMatchUnifreightCallbackCommand = (
+                        unifreightMessageM.UnifreightEntityNumber == this.EntityPM.CustomFileNo &&
+                        unifreightMessageM.LogitudeViewModel == "SendDeclarationService");
+                    if (IsMatchUnifreightCallbackCommand) {
+                        sub.unsubscribe();
+                        console.log("UnifreightRequestExpenseFreight .. UnifaceRequestArrived ");
+                        let supplierInvoice: SupplierInvoicePM = null;
+                        supplierInvoice = this.EntityPM.SupplierInvoices[0];
 
-                    this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
-                    this._SupplierInvoiceExtendedPMService
-                        .GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, supplierInvoice.InvoiceCounterKey, 0, 0, "").subscribe((response:any) => {
-                            supplierInvoice = response.Result;
+                        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+                        this._SupplierInvoiceExtendedPMService
+                            .GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, supplierInvoice.InvoiceCounterKey, 0, 0, "").subscribe((response: any) => {
+                                supplierInvoice = response.Result;
 
-                            var service: AnalyzeUnifreightInsuranceService = new AnalyzeUnifreightInsuranceService();
-                            service.Open(unifreightMessageM, this.EntityPM, supplierInvoice);
-                            if (this.EntityPM.IsChanged) {
-                                this.UpdateReloadAndConfirmB4TaxationDateTimeCheck(supplierInvoice);
-                            } else {
-                                console.log("UnifaceRequestArrived But noting change ");
-                                this.ConfirmB4TaxationDateTimeCheck();
-                            }
+                                var service: AnalyzeUnifreightInsuranceService = new AnalyzeUnifreightInsuranceService();
+                                service.Open(unifreightMessageM, this.EntityPM, supplierInvoice);
+                                if (this.EntityPM.IsChanged) {
+                                    this.UpdateReloadAndConfirmB4TaxationDateTimeCheck(supplierInvoice);
+                                } else {
+                                    console.log("UnifaceRequestArrived But noting change ");
+                                    this.ConfirmB4TaxationDateTimeCheck();
+                                }
 
-                        });
-                }
-            });
+                            });
+                    }
+                });
 
         AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseCheckInsuranseReturnIsNeededAmount(
             this.EntityPM.CustomFileNo, this.EntityPM.Id
@@ -597,7 +626,7 @@ export class SendDeclarationService implements OnDestroy {
                     var myCustomsDocumentPMList2: CustomsDocumentPM[] = myResponse2.Result;
                     if (myCustomsDocumentPMList2 && myCustomsDocumentPMList2.length > 0) {
 
-                        myCustomsDocumentPMList2.forEach(x =>  {
+                        myCustomsDocumentPMList2.forEach(x => {
                             //TextCodeTranslator.Translate("Customs.General.O.NotConnectInvoiceToDoc")
                             this.ValidationErrors.push("חסר קישור לחשבון/שורת פרט מכס לצרופה : " + x.ExternalAttachmentId);
 
@@ -606,7 +635,7 @@ export class SendDeclarationService implements OnDestroy {
                     if (myCustomsDocumentPMList && myCustomsDocumentPMList.filter(x => x.DocumentStatusCode == '7').length > 0) {
                         //TextCodeTranslator.Translate("Customs.General.O.DocumentInProgress")
                         this.ValidationErrors.push("קיימים מסמכים בתהליך שליחה.");
-                 
+
                     }
 
                     if (this.ValidationErrors && this.ValidationErrors.length > 0) {
@@ -679,7 +708,7 @@ export class SendDeclarationService implements OnDestroy {
                         }
                     }
                 });
-              
+
             });
         }
         else {
@@ -874,7 +903,7 @@ export class SendDeclarationService implements OnDestroy {
             windowTitle = "שליחת תיקון הצהרת יצוא";
         }
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,searchParams.PBId,
+            .ShowProgressBar(this.CurrentSession, searchParams.PBId,
                 windowTitle, false
                 , myShowProgressBarParams)
             .then((res) => {
@@ -949,14 +978,13 @@ export class SendDeclarationService implements OnDestroy {
                 };
         }
         var title = "שליחת הצהרת יבוא";
-        if (this.EntityPM.Direction == "E")
-        {
-             title = "שליחת הצהרת יצוא";
+        if (this.EntityPM.Direction == "E") {
+            title = "שליחת הצהרת יצוא";
         }
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession, searchParams.PBId,
                 title, false
-            , myShowProgressBarParams)
+                , myShowProgressBarParams)
             .then((res) => {
                 this.ResponseData = res;
                 if (this.CourierWorksheetmode) {
@@ -997,9 +1025,9 @@ export class SendDeclarationService implements OnDestroy {
             this.DeclarationService.PostSendDeclaration(searchParams).subscribe((response: ServiceResponse) => {
                 //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
-        
-}
-      
+
+        }
+
     }
 
     ChangeAnswerTab() {
@@ -1032,10 +1060,10 @@ export class SendDeclarationService implements OnDestroy {
                 var message = TextCodeTranslator.Translate("Customs.General.O.FieldForTableIsRequired");
 
 
-              var fieldName = error.FieldName;
-              if (field) {
-                fieldName = TextCodeTranslator.Translate(field.FullNameTextCodeCode);
-              }
+                var fieldName = error.FieldName;
+                if (field) {
+                    fieldName = TextCodeTranslator.Translate(field.FullNameTextCodeCode);
+                }
 
 
                 var tableName = TextCodeTranslator.Translate(error.TableName);
@@ -1046,6 +1074,50 @@ export class SendDeclarationService implements OnDestroy {
             }
         });
         return errorsMessages;
+
+    }
+    GetWarningList(warningList: any[]) {
+        var WarningMessages: string[] = [];
+        warningList.forEach((warning) => {
+            if (!AppTool.IsNullOrEmpty(warning.CustomMessageError)) {
+                if (warning.CustomMessageError.indexOf("specialerror") > -1) {
+                    var WarningMessage = "";
+                    var warningArr = warning.CustomMessageError.split(',');
+                    WarningMessage = warningArr[1] + TextCodeTranslator.Translate(warningArr[2]);
+                    WarningMessages.push(WarningMessage);
+                }
+                else {
+                    WarningMessages.push(TextCodeTranslator.Translate(warning.CustomMessageError));
+                }
+            }
+            else {
+                var table = window.ObjectTables.filter(d => d.Name === warning.TableName)[0];
+                var field = window.ObjectFields.filter(d => d.FieldName == warning.FieldName && d.ObjectTableId == table.Id)[0];
+
+                if (warning.TableName == "Customs.SupplierInvoiceItem" && !AppTool.IsNullOrEmpty(warning.EntityReference2)) {
+                    warning.EntityReference = warning.EntityReference + " (חשבון " + warning.EntityReference2 + " )";
+                }
+                var message = TextCodeTranslator.Translate("Customs.General.O.FieldForTableIsWarning");
+
+
+                var fieldName = warning.FieldName;
+                if (field) {
+                    fieldName = TextCodeTranslator.Translate(field.FullNameTextCodeCode);
+                }
+
+
+                var tableName = TextCodeTranslator.Translate(warning.TableName);
+                message = message.replace('%FieldName', fieldName);
+                message = message.replace('%TableName', tableName);
+                if (AppTool.IsNullOrEmpty(warning.EntityReference)) {
+                    message = message.replace('%EntityReference', "");
+                } else {
+                    message = message.replace('%EntityReference', warning.EntityReference);
+                }
+                WarningMessages.push(message);
+            }
+        });
+        return WarningMessages;
 
     }
 
@@ -1059,6 +1131,31 @@ export class SendDeclarationService implements OnDestroy {
         this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.Errors = this.ValidationErrors;
+        windowArgs.Warning = this.ValidationWarning;
+        windowArgs.ComponentHeight = '328px'; // بدك تقيم 72 
+        var windowTitle = title;
+
+        var logWindow = new LogitudeWindow(this.CurrentSession);
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.OnAddEditWindowClosed($event);
+            this.InstructionSendToMehes();
+            return;
+        });
+
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+    }
+    FillValidationWarning(title: string) {
+
+
+        this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.Errors = this.ValidationErrors;
+        windowArgs.Warning = this.ValidationWarning;
         windowArgs.ComponentHeight = '328px'; // بدك تقيم 72 
         var windowTitle = title;
 

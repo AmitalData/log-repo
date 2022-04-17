@@ -119,7 +119,6 @@ export class ExportRequiredFieldsComponent extends BaseComponent {
     TableNameClicked(table: any) {
         if (!AppTool.IsNullOrEmpty(table)) {
             this.SelectedTable = table;
-
             this._EntityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((res: any) => {
                 this.customsRequierdFieldsWebService.GetExportCustomsRequiredFieldListsByObjectTable(table.Id)
                     .subscribe((response: ServiceResponse) => {
@@ -153,19 +152,11 @@ export class ExportRequiredFieldsComponent extends BaseComponent {
             var objectField = window.ObjectFields.find(x => x.FieldCode == field.ObjectfieldCode);
             field.ObjectFieldName = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode);
             if (field.IsExport) {
-                field.ObjectFieldName=  field.ObjectFieldName + " (יצוא)";
+                field.ObjectFieldName=  field.ObjectFieldName + " (חובה)";
             }
-           /* if (field.IsExport && field.IsImport) {
-                field.ObjectFieldName=  field.ObjectFieldName + " (יבוא, יצוא)";
+            if (field.WarningExport) {
+                field.ObjectFieldName=  field.ObjectFieldName + " (התראה)";
             }
-            else {
-                
-                else if (field.IsImport) {
-                    field.ObjectFieldName=  field.ObjectFieldName + " (יבוא)";
-
-                }
-            }
-            */
         });
     }
 
