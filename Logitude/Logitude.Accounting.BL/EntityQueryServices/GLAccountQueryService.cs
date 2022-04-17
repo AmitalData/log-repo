@@ -1154,6 +1154,35 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                    }).FirstOrDefault();
         }
 
+        public GLAccountPM GetSplittedGLAccount(string accountId, int tenant, string currency)
+        {
+            IQueryable<GLAccount> glaccounts = repository.GetAll(tenant);
+            return (from a in glaccounts
+                    join
+                   c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
+                    where c.MainGLAccountId == accountId && c.CurrencyId == currency && a.Tenant == tenant && a.Inactive == false
+                    select new GLAccountPM()
+                    {
+                        Id = a.Id,
+                        CurrencyId = a.CurrencyId,
+                        DisplayNumber = a.DisplayNumber,
+                        Inactive = a.Inactive,
+                        CurrencyCode = a.Currency != null ? a.Currency.Code : null,
+                        ChartOfAccountsId = a.ChartOfAccountsId,
+                        ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                        LocalName = a.LocalName,
+                        ReconcileMethodCode = a.ReconcileMethodCode,
+                        RevenueExpenseType = a.RevenueExpenseType,
+                        Tenant = tenant,
+                        AccountTypeCode = a.AccountTypeCode,
+                        AutomaticReconcileId = a.AutomaticReconcileId,
+                        ControlAccountId = a.ControlAccountId,
+                        CustomerGLAccountId = a.CustomerGLAccountId,
+                        InternalNumber = a.InternalNumber
+
+                    }).FirstOrDefault();
+        }
+
         public GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
         {
             CardPM card = GetCardById(cardId, tenant);

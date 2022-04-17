@@ -3207,7 +3207,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             InterestTransactionPM interestTransaction = new InterestTransactionPM();
             if (invoiceLine != null) {
 
-                interestTransaction= CreateInterestTransactionLineForInvoiceLine(invoiceLine, account);
+                interestTransaction= CreateInterestTransactionLineForInvoiceLine(invoiceLine);
             }
             if (invoiceTotalVat != null)
             {
@@ -3258,15 +3258,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return entityPM.InvoiceLines.Where(d => d.VatTypeId == invoiceTotalVat.VatTypeId).FirstOrDefault();
         }
 
-        private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine, GLAccountPM account)
+        private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine)
         {
+            string interestTransactionGLAccount = null;
+            GLAccountPM debitGLAcount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant);
+            if (debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
+            {
+                var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, invoiceLine.ForiegnCurrencyId, invoiceLine.Tenant);
+                interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;
+            }
+            else
+            {
+                interestTransactionGLAccount = debitGLAcount?.Id;
+            }
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "1",
                 EntityId = invoiceLine.ARInvoiceId,
                 OriginalEntityLineNumber = invoiceLine.LineNumber,
                 LocalAmount = (decimal)invoiceLine.LocalCurrencyAmount,
-                GLAccountId = account != null? account.Id:null,
+                GLAccountId = interestTransactionGLAccount,
                 ForeignAmount = (decimal?)invoiceLine.ForiegnCurrencyAmount,
                 InterestValueDate = GetIntrestValueDate(invoiceLine),
                 Tenant = invoiceLine.Tenant,
@@ -3762,10 +3773,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                 Reference2 = theEntityPm.MainEntityReference,
                                                                 Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                                                                 Notes = theEntityPm.PrintNotes,
-                                                                DebitAccountId = glAccount == null ? "" : glAccount.Id,
-                                                                DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId,
                                                             }).ToList();
 
+                        UpdateJournalLinesDebitAccounts(journalLines);
                         journal.JournalLines.AddRange(journalLines);
 
 
@@ -3814,6 +3824,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
                     journalUpdate.Update(journal);
                 }
+            }
+        }
+
+        private void UpdateJournalLinesDebitAccounts(List<JournalLinePM> journalLines)
+        {
+            GLAccountPM debitGLAcount = getDebitGLAccount(invoice.BillToId, invoice.Tenant);
+            foreach (var item in journalLines)
+            {
+                if (debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
+                {
+                    var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, item.CurrencyId, invoice.Tenant);
+                    item.DebitAccountId = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;
+                    item.DebitControlAccountId = splittedGlAccount != null ? splittedGlAccount.ControlAccountId : debitGLAcount?.ControlAccountId;
+                }
+                else
+                {
+                    item.DebitAccountId = debitGLAcount?.Id;
+                    item.DebitControlAccountId = debitGLAcount?.ControlAccountId;
+                }
+
             }
         }
 
@@ -3997,6 +4027,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 return glAccountQuery.GetSingleGLAccountPM(invoice.BillToGLAccountId, invoice.Tenant);
             }
+        }
+
+        private GLAccountPM GetSplittedAccountByInvoiceLineCurrency(GLAccountPM debitGLAcount, string invoiceLineCurrency, int tenant)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            GLAccountPM splittedAccount = glAccountQuery.GetSplittedGLAccount(debitGLAcount.Id, tenant, invoiceLineCurrency);
+            return splittedAccount;
         }
 
         private GLAccountPM getDebitGLAccount(string billToId, int tenant)
