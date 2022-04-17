@@ -132,7 +132,7 @@
                                     </tr>
 
                                     <!--Send Link in email messages to your partners.-->
-                                    <tr style="height:100px;vertical-align:top">
+                                    <tr style="height:100px;vertical-align:top" *ngIf="!IsCargoTracking">
                                         <td>
                                             <table style="text-align:left">
                                                 <tr style="height:30px;">
@@ -164,7 +164,7 @@
 
 
                                     <!-- DisplayDocumentsAndEvents -->
-                                    <tr style="height:80px;vertical-align:top">
+                                    <tr style="height:80px;vertical-align:top" *ngIf="!IsCargoTracking">
                                         <td>
                                             <table style="text-align:left">
                                                 <tr style="height:30px;">
