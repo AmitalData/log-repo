@@ -373,11 +373,11 @@ namespace Logitude.BL.QuoteModel
 
                         if (!isShowingExpiredQuotes)
                         {
-                            queryableData = queryableData.Where(d => (d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now) && !d.IsCancelled && !d.IsClosed);
+                            queryableData = queryableData.Where(d => d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now);
                         }
                         else
                         {
-                            queryableData.Where(d => (d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now || d.ExpirationDate < DateTime.Now) && !d.IsCancelled && !d.IsClosed);
+                            queryableData =  queryableData.Where(d => d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now || d.ExpirationDate < DateTime.Now);
                         }                         
                     }
 
