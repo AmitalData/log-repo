@@ -1,3 +1,4 @@
+@release
 Feature: Cancel And Reactivate Master And Connected House
     The user creates a Master Export Air shipment, creates a House Export Air shipment from withing the Master shipment,
     cancel the master and house, reactivate them.

@@ -1,3 +1,4 @@
+@release
 Feature: LCL Container Number
     The user creates a master Import Ocean groupage shipment,
     creates house, connects the house with the master , creates package with container number in the house,
