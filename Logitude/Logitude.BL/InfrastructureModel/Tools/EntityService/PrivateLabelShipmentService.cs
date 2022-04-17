@@ -34,6 +34,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             return (IsCustomsShipmentsAllowedForLogBox() || IsExportShipmentsAllowedForLogBox());
         } 
+        public bool IsCustomFileShipment(ShipmentPM forwarderShipment)
+        {
+            const string importDirectionId = "I";
+            bool isImportShipment = forwarderShipment.DirectionId.ToUpper() == importDirectionId;
+            bool hasCustomFileId = !string.IsNullOrEmpty(forwarderShipment.CustomFileId); 
+            
+            return isImportShipment && hasCustomFileId;
+        }
         public bool IsCustomsShipmentsAllowedForLogBox()
         {
             return (tenantPM.CustomerTenantShareCustomsFile && customerTenantAccessInfo.IsCustomsActivated && shipmentPM.DirectionId.ToUpper() == "C");
