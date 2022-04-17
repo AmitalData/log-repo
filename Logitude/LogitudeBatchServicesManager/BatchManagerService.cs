@@ -117,18 +117,19 @@ namespace LogitudeBatchServicesManager
         private void StartBatchManagerService()
         {
             EventLog.WriteEntry("StartBatchManagerService");
-            List<BatchProcess> BatchProcesses = GetBatchServiceArguments();
-            LaunchLogitudeBatchServices(BatchProcesses);
+            BatchManagerConfigurations batchManagerConfigurations = GetBatchServiceArguments();
+            LaunchLogitudeBatchServices(batchManagerConfigurations.Processes , batchManagerConfigurations.ProcessDelayStartInSeconds);
         }
 
-        private List<BatchProcess> GetBatchServiceArguments()
+        private BatchManagerConfigurations GetBatchServiceArguments()
         {
             string path = System.AppDomain.CurrentDomain.BaseDirectory;
             string ConfigFilePath = path + "BatchManagerConfig.xml";
             string xmlString = File.ReadAllText(ConfigFilePath);
-            BatchManagerConfigurations Configs = xmlString.ParseXML<BatchManagerConfigurations>(); 
-            return Configs.Processes;
+            BatchManagerConfigurations batchManagerConfigurations = xmlString.ParseXML<BatchManagerConfigurations>(); 
+            return batchManagerConfigurations;
         }
+
 
         private void KillProcess(int processId)
         {
@@ -141,12 +142,13 @@ namespace LogitudeBatchServicesManager
             } 
         }
 
-        private void LaunchLogitudeBatchServices(List<BatchProcess> Processes)
+        private void LaunchLogitudeBatchServices(List<BatchProcess> Processes, int processDelayStartInSeconds)
         {
             EventLog.WriteEntry("Start LaunchLogitudeBatchServices");
             foreach (var Process in Processes)
             {
                 StartProcessWithArgs(Process);
+                System.Threading.Thread.Sleep(new TimeSpan(0, 0, processDelayStartInSeconds));
             }
 
         }
