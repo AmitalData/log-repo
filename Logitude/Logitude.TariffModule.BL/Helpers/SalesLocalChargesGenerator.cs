@@ -112,7 +112,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
         private void GetCustomerGroupExportId()
         {
-            customerGroupExportId = customer.ExportLocalCustomerGroupId;
+            customerGroupExportId = customer?.ExportLocalCustomerGroupId;
             if (string.IsNullOrEmpty(customerGroupExportId))
             {
                 customerGroupExportId = this.GetGeneralCustomerGroup();
@@ -120,7 +120,7 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private void GetCustomerGroupImportId()
         {
-            customerGroupImportId = customer.ImportLocalCustomerGroupId;
+            customerGroupImportId = customer?.ImportLocalCustomerGroupId;
             if (string.IsNullOrEmpty(customerGroupImportId))
             {
                 customerGroupImportId = this.GetGeneralCustomerGroup();
@@ -182,7 +182,7 @@ namespace Logitude.TariffModule.BL.Helpers
             IQueryable<Tariff> tariffs = tariffRepository.GetActiveSalesLocalChargesTariffs(tenant);
             List<Tariff> myResult = new List<Tariff>();
             var yyy = tariffs.ToList();
-            if (IsExportQuote())
+            if (IsExportQuote()|| IsDropDomesticQuote())
             {
                 Tariff exportTariff = tariffs.Where(d => d.CustomerGroupId == this.customerGroupExportId && d.TypeCode == "ECS").FirstOrDefault();
                 if (exportTariff != null)
@@ -191,7 +191,7 @@ namespace Logitude.TariffModule.BL.Helpers
                 }
             }
 
-            if (IsImportQuote())
+            if (IsImportQuote() || IsDropDomesticQuote())
             {
                 Tariff importTariff = tariffs.Where(d => d.CustomerGroupId == this.customerGroupImportId && d.TypeCode == "ICS").FirstOrDefault();
                 if (importTariff != null)
@@ -209,21 +209,11 @@ namespace Logitude.TariffModule.BL.Helpers
             {
                 return true;
             }
-            if (this.quote.DirectionId == "D" )
-            {
-                return true;
-            }
-            if (this.quote.DirectionId == "R")
-            {
-                return true;
-            }
-
             return false;
         }
-
-        private bool IsImportQuote()
+        private bool IsDropDomesticQuote()
         {
-            if (this.quote.DirectionId == "I")
+            if (this.quote.DirectionId == "R")
             {
                 return true;
             }
@@ -231,11 +221,15 @@ namespace Logitude.TariffModule.BL.Helpers
             {
                 return true;
             }
-            if (this.quote.DirectionId == "R")
+            return false;
+        }
+        private bool IsImportQuote()
+        {
+
+            if (this.quote.DirectionId == "I")
             {
                 return true;
             }
-
             return false;
         }
         private List<TariffLine> GetTariffLines(List<Tariff> tariffs, int tenant)
@@ -279,7 +273,12 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private TariffLine FilterTariffLines(IQueryable<TariffLine> tariffLines)
         {
-            if (IsImportQuote())
+            if (IsDropDomesticQuote())
+            {
+                return FilterTariffLinesBasedOnBothCountries(tariffLines); ;
+            }
+       
+            else if (IsImportQuote())
             {
                 return FilterTariffLinesBasedOnFromCountries(tariffLines);
             }
@@ -291,7 +290,11 @@ namespace Logitude.TariffModule.BL.Helpers
 
             return null;
         }
-
+        private TariffLine FilterTariffLinesBasedOnBothCountries(IQueryable<TariffLine> tariffLines)
+        {
+            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == SalesLocalChargesTariffSearchArgs.FromCountryId && p.ToCountryId == SalesLocalChargesTariffSearchArgs.ToCountryId);
+            return filteredLines.FirstOrDefault();
+        }
         private TariffLine FilterTariffLinesBasedOnFromCountries(IQueryable<TariffLine> tariffLines)
         {
             IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == SalesLocalChargesTariffSearchArgs.FromCountryId);

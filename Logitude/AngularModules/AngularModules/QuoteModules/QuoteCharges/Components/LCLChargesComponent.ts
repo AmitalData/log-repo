@@ -114,6 +114,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
+                    if (this.IsGenerateSalesLocalCharges) {
+                        this.IsGenerateSalesLocalCharges = false;
+                        this.GenerateSalesLocalCharges();
+                    }
                 }
             });
 
@@ -361,7 +365,13 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });
     }
-     
+
+    private IsGenerateSalesLocalCharges = false;
+    GenerateSalesLocalChargesClicked() {
+        this.IsGenerateSalesLocalCharges = true;
+        this.entityArgs.EditComponent.SaveChanges();
+    }
+
     GenerateSalesLocalCharges() {
         var args = this.TariffBehaviours.GenerateSalesLocalCharges();
         var tariffService: TariffDomainService = new TariffDomainService();
