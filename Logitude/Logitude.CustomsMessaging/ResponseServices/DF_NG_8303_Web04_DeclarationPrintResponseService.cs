@@ -274,7 +274,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //documentsFilingPM.DirectionCode = "I";
             documentsFilingPM.DirectionCode = this._MyDeclarationPM.Direction;
             documentsFilingPM.Description = "טופס הצהרה " + this._MyDeclarationPM.DeclarationNumber + "-" + this._MyDeclarationPM.VersionId;
-            documentsFilingPM.ExternalEntityName = "CFIFILEM";
+            documentsFilingPM.ExternalEntityName = this._MyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM";
             documentsFilingPM.ExternalEntityReference = this._MyDeclarationPM.CustomFileNo;
             documentsFilingPM.FileExtension = "PDF";
 
