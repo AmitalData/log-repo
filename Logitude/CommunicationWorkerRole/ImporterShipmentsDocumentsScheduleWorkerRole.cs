@@ -191,7 +191,7 @@ namespace CommunicationWorkerRole
 
                                         PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, ForwarderShipment, customerTenantAccessInfo);
 
-                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.CustomerTenantShareCustomsFile && (privateLabelShipmentService.IsShipmentsAllowedForLogBox()))
+                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.CustomerTenantShareCustomsFile && (privateLabelShipmentService.IsShipmentsAllowedForLogBox() || privateLabelShipmentService.IsCustomFileShipment(ForwarderShipment)))
                                         {
                                             var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, customerTenantAccessInfo.CustomerTenant);
 
