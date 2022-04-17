@@ -63,28 +63,35 @@ namespace CommunicationWorkerRole
         public static int NmuberOfRunningDocumentThreads =0;
         private const int AllowedThreadNumbers = 20;
         private static DateTime startExecuteDate;
+        int tenant = 0;
+        string documentsExecutionProgressStatus = "P";
+        string documentsExecutionFailedStatus = "F";
 
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "DocumentsExecutionWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
-
-            CleanUp();
             ConnectClient();
+
+            new Thread(new ThreadStart(CleanUp)).Start();
+
             return base.OnStart();
         }
+
+
 
         private void CleanUp()
         {
             bool isUpdatedRequired = false;
-            DocumentsExecutionLogRepository documentsExecutionLogRepository = new DocumentsExecutionLogRepository(0);
-            var documentsExecutionLogs = documentsExecutionLogRepository.GetAllDocumentsExecutionLogs().Where(d => d.ExecutedByServerName == System.Environment.MachineName && d.StatusCode == "P").ToList();
+            DocumentsExecutionLogRepository documentsExecutionLogRepository = new DocumentsExecutionLogRepository(tenant);
+            var documentsExecutionLogs = documentsExecutionLogRepository.GetAllDocumentsExecutionLogs().Where(d => d.ExecutedByServerName == System.Environment.MachineName && d.StatusCode == documentsExecutionProgressStatus && d.StartDate < DateTime.Now).ToList();
             foreach (DocumentsExecutionLog documentsExecutionLog in documentsExecutionLogs)
             {
                 MarkDocumentsExecutionLogFailed(documentsExecutionLog, documentsExecutionLogRepository);
                 isUpdatedRequired = true;
             }
+
             if (!isUpdatedRequired) return;
             documentsExecutionLogRepository.SubmitChanges();
         }
@@ -92,8 +99,8 @@ namespace CommunicationWorkerRole
 
         private void MarkDocumentsExecutionLogFailed(DocumentsExecutionLog documentsExecutionLog , DocumentsExecutionLogRepository documentsExecutionLogRepository)
         {
-            documentsExecutionLog.StatusCode = "F";
-            documentsExecutionLog.ExceptionMessage = "The document failed to build.Please try again.";
+            documentsExecutionLog.StatusCode = documentsExecutionFailedStatus;
+            documentsExecutionLog.ExceptionMessage = "The document failed to build.Please try again. Server Machine was down";
             documentsExecutionLogRepository.Update(documentsExecutionLog);
         }
 
@@ -107,7 +114,7 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                        ExecuteQueue();
+                       ExecuteQueue();
                     }
                     catch (Exception exception)
                     {
@@ -129,7 +136,7 @@ namespace CommunicationWorkerRole
                 NmuberOfRunningDocumentThreads = 0;
                 startExecuteDate = DateTime.Now;
             }
-            else if(NmuberOfRunningDocumentThreads > AllowedThreadNumbers)
+            else if (NmuberOfRunningDocumentThreads > AllowedThreadNumbers)
             {
                 Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
                 return;
@@ -150,13 +157,8 @@ namespace CommunicationWorkerRole
                 };
                 new Thread(executeDocumentsThreadStart) { IsBackground = true }.Start();
                 queueService.Complete();
-
-
-
-
             }
         }
-
 
 
         private void ConnectClient()
@@ -172,6 +174,10 @@ namespace CommunicationWorkerRole
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Document execution worker role start", null, null);
             }
         }
+
+
+     
+
     }
 
    
