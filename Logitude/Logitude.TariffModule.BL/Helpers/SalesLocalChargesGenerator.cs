@@ -59,7 +59,21 @@ namespace Logitude.TariffModule.BL.Helpers
                 this.SalesLocalChargesTariffSearchArgs.SalesLocalCharges.AddRange(this.localCharges);
             }
 
+            SalesLocalChargesTariffSearchArgs.Error = CheckIfTariffsFounded();
             return this.SalesLocalChargesTariffSearchArgs;
+        }
+        private string CheckIfTariffsFounded()
+        {
+            string error = null;
+            if(SalesLocalChargesTariffSearchArgs.SalesLocalCharges != null && SalesLocalChargesTariffSearchArgs.SalesLocalCharges.Count() != 0)
+            {
+                return null;
+            }
+
+            var customerGroupId = IsExportQuote() ? customerGroupExportId : customerGroupImportId;
+            var customerGroupName = GetCustomerGroupName(customerGroupId);
+            error = (customerGroupName == "General") ? "No matching tariff found." : "No matching tariff found for " + customerGroupName + " customer group.";
+            return error;
         }
         private void GetQuote()
         {
@@ -115,10 +129,15 @@ namespace Logitude.TariffModule.BL.Helpers
         private string GetGeneralCustomerGroup()
         {
             CustomerGroupRepository customerGroupRepository = new CustomerGroupRepository(tenant);
-            var generalCustomerGroup = customerGroupRepository.GetGeneralCustomerGroup(tenant);
+            var generalCustomerGroup = customerGroupRepository.GetGeneralCustomerGroupId(tenant);
             return generalCustomerGroup;
         }
-
+        private string GetCustomerGroupName(string customerGroupId)
+        {
+            CustomerGroupRepository customerGroupRepository = new CustomerGroupRepository(tenant);
+            var customerGroupName = customerGroupRepository.GetGeneralCustomerGroupName(tenant, customerGroupId);
+            return customerGroupName;
+        }
         private void GetQuotePackages()
         {
             QuotePackageRepository quotePackageRepository = new QuotePackageRepository(tenant);
@@ -510,6 +529,7 @@ namespace Logitude.TariffModule.BL.Helpers
         public double? ForiegnChargesAmount { get; set; }
         public string LocalCurrencyId { get; set; }
         public List<SalesLocalCharges> SalesLocalCharges { get; set; }
+        public string Error { get; set; }
     }
 
     public class SalesLocalCharges

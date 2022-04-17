@@ -23,6 +23,7 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 import { QuoteChargesBehaviours } from '../Behaviours/QuoteChargesBehaviours';
 import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { TariffDomainService, SalesLocalCharges, SalesLocalChargesTariffSearchArgs } from '../../../TariffModule/Services/TariffDomainService';
 
 @Component({
@@ -366,8 +367,15 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         var tariffService: TariffDomainService = new TariffDomainService();
         tariffService.GetAvailableSalesLocalChargesTariffs(args).subscribe((res: ServiceResponse) => {
             if (!res.HasError && res.Result) {
-                var saleLocalCharges = res.Result.SalesLocalCharges;
-                this.CreateQuoteSalesLocalCharges(saleLocalCharges);
+                var error = res.Result.Error;
+                if (error != null) {
+                    var msg = new MessageWindow();
+                    msg.Show(error);
+                }
+                else {
+                    var saleLocalCharges = res.Result.SalesLocalCharges;
+                    this.CreateQuoteSalesLocalCharges(saleLocalCharges);
+                }
             }
             else {
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = res.ErrorsArray;
@@ -418,7 +426,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.MarkUpTypeCode = "F";
                 chargePM.MarkUpValue = 0;
                 chargePM.QuoteTypeCode = this.EntityPM.QuoteTypeCode;
-
+                chargePM.CostCurrencyId = item.CurrencyId;
+                chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
+                chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
                 chargePM.SaleCurrencyId = this.Behaviours.GetSaleCurrencyOnChargeTypeChanged(chargesType, chargePM);
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
@@ -426,7 +436,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
                 var measurementCode = item.UnitOfMesurmentCode;
                 var measurementId = item.UnitOfMesurmentId;
-
                 if (!item.IsAllIn) {
                     chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
                     var saleAmount = AppTool.Round(item.Price, 3);
@@ -434,6 +443,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 }
                 chargePM.SaleMeasurementCode = measurementCode;
                 chargePM.SaleMeasurementId = measurementId;
+                chargePM.CostMeasurementCode = measurementCode;
+                chargePM.CostMeasurementId = measurementId;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
                 chargePM.IsAllIN = item.IsAllIn;
@@ -455,7 +466,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.MarkUpTypeCode = "F";
                 chargePM.MarkUpValue = 0;
                 chargePM.QuoteTypeCode = this.EntityPM.QuoteTypeCode;
-
+                chargePM.CostCurrencyId = item.CurrencyId;
+                chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
+                chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
                 chargePM.SaleCurrencyId = this.Behaviours.GetSaleCurrencyOnChargeTypeChanged(chargesType, chargePM);
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
@@ -463,7 +476,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
                 var measurementCode = item.UnitOfMesurmentCode;
                 var measurementId = item.UnitOfMesurmentId;
-
                 if (!item.IsAllIn) {
                     chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
                     var saleAmount = AppTool.Round(item.Price, 3);
@@ -471,6 +483,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 }
                 chargePM.SaleMeasurementCode = measurementCode;
                 chargePM.SaleMeasurementId = measurementId;
+                chargePM.CostMeasurementCode = measurementCode;
+                chargePM.CostMeasurementId = measurementId;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
                 chargePM.IsAllIN = item.IsAllIn;
@@ -486,7 +500,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         chargeItem.SaleExchangeRate = localCharge.SaleExchangeRate;
         chargeItem.ChargesGroupCode = localCharge.ChargesGroupCode;
         chargeItem.IsAllIN = false;
-
+        chargeItem.CostMeasurementId = localCharge.CostMeasurementId;
+        chargeItem.CostCurrencyId = localCharge.CostCurrencyId;
+        chargeItem.CostExchangeRate = localCharge.CostExchangeRate;
         var saleAmount: number = localCharge.SaleTotalAmount;
         chargeItem.SetSaleQuantity(); 
         var saleQuantity: number = chargeItem.SaleQuantity;
@@ -500,7 +516,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
             }
             chargeItem.SaleUnitPrice = chargeItem.SaleUnitPrice;
+            chargeItem.CostUnitPrice = chargeItem.SaleUnitPrice;
         }
+
         chargeItem.ComputeCostInSalePrice();
         chargeItem.ComputeSalePrice();
         chargeItem.ComputeSaleAmounts();

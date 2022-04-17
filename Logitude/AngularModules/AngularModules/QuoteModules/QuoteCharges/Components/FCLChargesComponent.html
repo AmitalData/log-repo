@@ -89,13 +89,13 @@
                                         <div></div>
                                     </td>
 
-                                    <td style="width: 1px;" *ngIf="IsPriceCheckVisible">
+                                    <!--<td style="width: 1px;" *ngIf="IsPriceCheckVisible">
                                         <button id="{{'SalesLocalCharges' | IdGeneratorPipe}}" class="Button" (click)="GenerateSalesLocalCharges()" [disabled]="!IsEditingEnabled">{{'Quote.S.GenerateSalesLocalCharges' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width: 5px;" *ngIf="IsPriceCheckVisible">
                                         <div></div>
-                                    </td>
+                                    </td>-->
 
                                     <td style="width: 1px;">
                                         <button id="{{ 'AddCharges' | IdGeneratorPipe}}" class="Button" (click)="AddChargeClicked()" [disabled]="!IsEditingEnabled">{{'Quote.B.Charges.AddCharge' | TextCodeTranslationPipe}}</button>

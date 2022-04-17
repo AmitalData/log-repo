@@ -652,6 +652,7 @@ export class SalesLocalChargesTariffSearchArgs {
     LocalCurrencyId: string;
     QuoteId: string;
     SalesLocalCharges: SalesLocalCharges[] = [];
+    Error: string;
 }
 
 export class SalesLocalCharges {

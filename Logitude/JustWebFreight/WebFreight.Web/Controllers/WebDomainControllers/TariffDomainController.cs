@@ -2785,6 +2785,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = this.AuthenticateAPIRequest();
                 SalesLocalChargesGenerator customsChargesGenerator = new SalesLocalChargesGenerator(args, tenant);
                 SalesLocalChargesTariffSearchArgs newArgs = customsChargesGenerator.GenerateSaleLocalCharges();
+
                 return Request.CreateResponse(HttpStatusCode.OK, newArgs);
             }
             catch (Exception ex)

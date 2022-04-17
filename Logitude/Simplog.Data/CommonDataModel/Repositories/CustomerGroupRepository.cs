@@ -92,12 +92,19 @@ namespace Simplog.Data.CommonDataModel.Repositories
             throw new System.NotImplementedException();
         }
 
-        public string GetGeneralCustomerGroup(int tenant)
+        public string GetGeneralCustomerGroupId(int tenant)
         {
             string generalGeup = "General";
-            var customerGroup =  (from record in context.CustomerGroups where record.Name == generalGeup && record.Tenant == tenant select record).FirstOrDefault();
-            string customerGroupId  = customerGroup?.Id;
+            var customerGroup = (from record in context.CustomerGroups where record.Name == generalGeup && record.Tenant == tenant select record).FirstOrDefault();
+            string customerGroupId = customerGroup?.Id;
             return customerGroupId;
         }
+        public string GetGeneralCustomerGroupName(int tenant, string id)
+        {
+            var customerGroup = (from record in context.CustomerGroups where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            string customerGroupName = customerGroup?.Name;
+            return customerGroupName;
+        }
+
     }
 }

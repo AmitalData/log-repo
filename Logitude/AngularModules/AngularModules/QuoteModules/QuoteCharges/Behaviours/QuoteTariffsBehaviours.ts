@@ -1,9 +1,7 @@
 import { QuotePM } from '../../../Quote/EntityPMs/QuotePM';
-import { TariffDomainService, SalesLocalCharges, SalesLocalChargesTariffSearchArgs } from '../../../TariffModule/Services/TariffDomainService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { SalesLocalChargesTariffSearchArgs } from '../../../TariffModule/Services/TariffDomainService';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { ArrayTool, DateTool} from '../../../Infrastructure/Tools';
-import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ArrayTool} from '../../../Infrastructure/Tools';
 
 export class QuoteTariffsBehaviours {
     public EntityPM: QuotePM = null;
