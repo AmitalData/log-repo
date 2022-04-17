@@ -51,12 +51,16 @@
                                         <div></div>
                                     </td>
 
+                                    <td *ngIf="EntityPM.ShipmentLevelCode != 'C'" style="width: 1px; padding-right: 10px;">
+                                        <button id="{{'GenerateFromQuote' | IdGeneratorPipe}}" class="Button" [disabled]="!IsEditingEnabled" (click)="GenerateFromQuoteClicked()">{{'Shipment.B.Receivables.GenerateFromQuote' | TextCodeTranslationPipe}}</button>
+                                    </td>
+
                                     <td style="width: 1px; padding-right: 10px;" *ngIf="IsProrateReceivablesVisible">
                                         <CheckBox [IsChecked]="ProrateReceivables" (Checked)="ProrateReceivables = $event" [IsEnabled]="IsEditingEnabled" [Text]="'Shipment.F.ProrateReceivables' | TextCodeTranslationPipe"></CheckBox>
                                     </td>
 
-                                    <td id="{{'AddReceivable'| IdGeneratorPipe}}"  style="width: 21px">
-                                        <IconButton [Name]="'Add'"   [IsEnabled]="IsEditingEnabled" (click)="AddReceivable()"></IconButton>
+                                    <td id="{{'AddReceivable'| IdGeneratorPipe}}" style="width: 21px">
+                                        <IconButton [Name]="'Add'" [IsEnabled]="IsEditingEnabled" (click)="AddReceivable()"></IconButton>
                                     </td>
 
                                     <td style="width:15px;">
@@ -88,8 +92,8 @@
                                                         <img src="./Images/ToggleIcon.png" />
 
                                                         <div class="ToggleButtonMenu">
-                                                            <button  id="{{'CreateCustomsInvoice' | IdGeneratorPipe}}" *ngIf="IsCustomsInvoiceVisible"  (click)="CreateInvoiceClicked('CI')">{{'Shipment.S.Receivables.Invoice' | TextCodeTranslationPipe}}</button>
-                                                            <button  id="{{'CreateCustomsCreditNote' | IdGeneratorPipe}}" *ngIf="IsCustomsCreditVisible" (click)="CreateInvoiceClicked('CC')">{{'Shipment.S.Receivables.CreditNote' | TextCodeTranslationPipe}}</button>
+                                                            <button id="{{'CreateCustomsInvoice' | IdGeneratorPipe}}" *ngIf="IsCustomsInvoiceVisible" (click)="CreateInvoiceClicked('CI')">{{'Shipment.S.Receivables.Invoice' | TextCodeTranslationPipe}}</button>
+                                                            <button id="{{'CreateCustomsCreditNote' | IdGeneratorPipe}}" *ngIf="IsCustomsCreditVisible" (click)="CreateInvoiceClicked('CC')">{{'Shipment.S.Receivables.CreditNote' | TextCodeTranslationPipe}}</button>
                                                         </div>
                                                     </div>
                                                 </td>

@@ -15,6 +15,11 @@
                     <td>
                         <div></div>
                     </td>
+                    <td style="width: 16px;">
+                        <CheckBox [IsChecked]="IsShowingExpiredQuotes" (Checked)="IsShowingExpiredQuotes = $event" [Text]="'Show Expired Quotes'"></CheckBox>
+                    </td>
+
+                    <td style="width: 5px;"> <div></div></td>
 
                     <td style="width: 16px;">
                         <CheckBox [IsChecked]="IsShowingUsedSpotRateQuotes" (Checked)="IsShowingUsedSpotRateQuotes = $event"></CheckBox>

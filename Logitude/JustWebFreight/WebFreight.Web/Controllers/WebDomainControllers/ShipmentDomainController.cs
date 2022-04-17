@@ -558,6 +558,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 OpenDate = myQuote.OpenDate,
                                 AcceptedDate = myQuote.AcceptedDate,
                                 Salesman = salesman,
+                                ExpirationDate = myQuote.ExpirationDate,
                             });
                         }
                     }
@@ -3278,6 +3279,7 @@ public class ShipmentConnectedEntity
     public DateTime? OpenDate { get; set; }
     public DateTime? AcceptedDate { get; set; }
     public string Salesman { get; set; }
+    public DateTime? ExpirationDate { get; set; }
 }
 
 public class ShipmentTransferSummary

@@ -151,6 +151,11 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                     if (this.SavingRequestCode) {
                         this.ApplySavingCommand();
                     }
+
+                    if (this.IsGeneratingFromQuote) {
+                        this.IsGeneratingFromQuote = false;
+                        this.GenerateFromQuote();
+                    }
                 }
             });
 
@@ -803,7 +808,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                 var logWindow = new LogitudeWindow();
                 logWindow.IsFillScreen_115 = true;
                 logWindow.Title = TextCodeTranslator.Translate("Shipment.O.Receivables.GenerateFromQuotesList")
-                logWindow.WindowArgs = { EntityPM: this.EntityPM, AllRates: this.AllRates };
+                logWindow.WindowArgs = { EntityPM: this.EntityPM, AllRates: this.AllRates, EntityArgs: this.entityArgs };
                 logWindow.Show('./ShipmentModules/ShipmentTabs/Components/Windows/Quotes/QuotesComponent');
                 logWindow.ComponentLoaded.subscribe(comp => {
                     logWindow.WindowClosed.subscribe(s => {
@@ -1437,6 +1442,28 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         });
 
         this.CheckUpdateQuantities();
+    }
+
+    private IsGeneratingFromQuote = false;
+    GenerateFromQuoteClicked() {
+        this.IsGeneratingFromQuote = true;
+        this.SaveChanges();
+    }
+    GenerateFromQuote() {
+        var logWindow = new LogitudeWindow();
+        logWindow.IsFillScreen_115 = true;
+        logWindow.Title = TextCodeTranslator.Translate("Shipment.O.Receivables.GenerateFromQuotesList")
+        logWindow.WindowArgs = { EntityPM: this.EntityPM, AllRates: this.AllRates, EntityArgs: this.entityArgs };
+        logWindow.Show('./ShipmentModules/ShipmentTabs/Components/Windows/Quotes/QuotesComponent');
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.BaseQuote = comp.BaseQuote;
+                    this.OnEntityDataGenerated();
+                    this.CurrentSession.FireEvent("PayablesGenerated");
+                }
+            });
+        });
     }
 }
 export class ShipmentReceivableItem extends BaseComponent {
