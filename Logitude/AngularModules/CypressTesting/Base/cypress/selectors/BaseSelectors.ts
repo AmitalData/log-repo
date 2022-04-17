@@ -126,6 +126,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LogCellTemplate = ".LogCellTemplate"
     public static readonly NoDataText = ".NoDataText"
     //#endregion
+    
+    public static readonly AddPayabelHouse = "#AddPayable_1";
 
     public static readonly FirstElementInList = 'ul > li';
     public static readonly LastElement = ":last";

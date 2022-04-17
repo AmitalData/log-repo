@@ -3,6 +3,13 @@ import { RegexSelectors } from '../selectors/RegexSelectors';
 export class ShipmentSelectors extends RegexSelectors {
   //#region Shared
 
+  public static readonly LastElementShipment = ":last";
+  public static readonly FirstRowinpackages = '#row0';
+  public static readonly Shipmentcontinernumbere = '#edit-log-grid_0_20_3_0';
+  public static readonly ShipmentcontinernumbereHouse = '#edit-log-grid_0_40_4_0';
+  
+  
+
   public static readonly MediaFillAbsolute = '.MediaFillAbsolute';
   public static readonly CloseBtn = '#CloseBtn';
   public static readonly DeleteAll = '#DeleteAll';
@@ -25,6 +32,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentShipperContactId = '#Shipment_ShipperContactId';
   public static readonly ShipmentConsignee = '#Shipment_ConsigneeId';
   public static readonly ShipmentCustomerType = '#Shipment_ShipmentCustomerTypeCode';
+
   public static readonly Backbutton_1 = '#EditBackbutton_1';
   public static readonly Backbutton = '[id^=EditBackbutton]'
   public static readonly HouseHyperLink = ".HyperlinkButtonControl";
@@ -38,6 +46,31 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ARPaymentStatus = "[data-cy='Header_Status']";
   public static readonly AddPackagesInStandalone = "#Add";
   
+
+  public static readonly NewTapItem = '.NewTabItem';
+  public static readonly ShipmentWorkspace = '#SHIP_1';
+  public static readonly ShipmentSearch = '#Shipment_Search_1';
+  public static readonly EditShipmentMaincarrige = '.LogitudeIconButton';
+  public static readonly MasterShipments = '#SHIPMENTS-M-Q';
+  public static readonly AllShipments = '#Shipments-O-Q';
+  public static readonly MasternoActual = '#row0col5';
+  public static readonly HouserActual = '#row0col13';
+  public static readonly MastertransshipmentsActual = '#row0col6';
+  public static readonly HouseFinalDate = '#span-row0col15';
+  public static readonly MastershipmentsfinalArrival = '#span-row0col8';
+  public static readonly EstimatedFinalArrivalDateMaster = '#span-row0col7';
+  public static readonly EstimatedFinalArrivalDateHouse = '#span-row0col14';
+  public static readonly Editcontainernumberfrommaster = '#Edit';
+
+  
+  
+  public static readonly Transshipment1FromPortId = '#Shipment_Transshipment1FromPortId';
+  public static readonly Transshipment1ETA = '#date_Shipment_Transshipment1ETA';
+  public static readonly Transshipment1ATA = '#date_Shipment_Transshipment1ATA';
+
+  public static readonly TEST = '.RedButton';
+  public static readonly Newcontainermaster = '.ToggleButtonMenu';
+  public static readonly Addcontainer = '.GroupageItem';
 
   //#endregion
   //#region Menu button in  shipment
@@ -67,7 +100,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly NewShipmentToggleButton = '#NEWSHIP .LogitudeToggleButtonContainer';
   public static readonly NewShipmentToggleButtonItem = '#NEWSHIP .LogitudeToggleButtonItem';
   public static readonly ShipmentMainCarriageFromPort = '#Shipment_MainCarriageFromPortId';
-  public static readonly ShipmentMainCarriageToPort = '#Shipment_MainCarriageToPortId';
+  public static readonly ShipmentMainCarriageToPort = '#Shipment_MainCarriageFinalDestinationPortId';
   public static readonly MasterMainCarriageFromPort = '#Master_MainCarriageFromPortId';
   public static readonly MasterMainCarriageToPort = '#Master_MainCarriageToPortId';
   public static readonly MasterAgent = '#Master_AgentId';
@@ -93,7 +126,39 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EventsTab = '#ShipmentTHEvents';
   public static readonly ConnectionsTab = '[id^=ShipmentTHConnections]'
   public static readonly CustomsTab = '#ShipmentTHCustoms';
+
   public static readonly StartWithPayablesTab = '[id^=ShipmentTHPayables]'
+
+  public static readonly RoutingsTabHouse = '#ShipmentTHRoutings_1';
+  public static readonly EventsTabHouse = '#ShipmentTHEvents_1';
+  public static readonly PackagesTabHouse = '#ShipmentTHPackages_1';
+  public static readonly OrdersTabHouse = '#ShipmentTHOrders_1';
+  public static readonly PartnersTabHouse = '#ShipmentTHPartners_1';
+  public static readonly BacktoMasterShipment = '.BackBottonBody';
+  public static readonly EditMainCarrigeHouse = '#Edit-MainCarriage_1';
+  public static readonly MainCarrigeHouse = '#Shipment_MainCarriageFromPortId';
+  public static readonly RoutingRegion= '.MediaFill';
+  public static readonly RoutingRegionTEAR= '#Routing_MainCarriageLeg1';
+  public static readonly RoutingRegionA= '"Routing_MainCarriageLeg1"';
+  public static readonly ShipmentPackagetype= '#ShipmentPackage_PackageTypeId';
+  public static readonly ShipmentPackageprice= '#ShipmentPackage_Quantity';
+  public static readonly ShipmentPackagecrossweight= '#ShipmentPackage_Weight';
+  public static readonly ShipmentPackageContainernumber= '#ShipmentPackage_ContainerNumber';
+  public static readonly ShipmentPackagefromhouse= '#ShipmentPackageMContainNoPackages';
+  
+  public static readonly ShipmentPackageok= '#OkOceanPackage';
+
+  
+  
+  public static readonly EventsTabHouseA = '#ShipmentTHEvents_2';
+  public static readonly PackageTabHouseA = '#ShipmentTHPackages_2';
+  public static readonly AddPackageTabHouseA = '#AddPackage_2';
+  public static readonly PayablesTaHouse = '#ShipmentTHPayables_2';
+
+  
+  
+
+
   //#endregion
 
   //#region General tab
@@ -288,6 +353,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EditOnCarriage_Number = '[id^=Edit-OnCarriage]'
   public static readonly MainCarrigeVessel = 'input[id^=Shipment_MainCarriageVesselId]';
   public static readonly MainCarrigeVoyageNo = 'input[id^=Shipment_MainCarriageCarrierNumber_]';
+
   public static readonly AddWarehouseLegPickups = '#Add-WarehouseLeg_Pickups';
   public static readonly WarehouseLegTerminal = '#Shipment_WarehouseLegWarehouseId';
 
@@ -298,17 +364,20 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentOnForwardingTransportModeId = '#Shipment_OnForwardingTransportModeId';
   public static readonly ShipmentOnForwardingToPortId = '#Shipment_OnForwardingToPortId';
   
-  //Warehouse
-  public static readonly ShipmentWarehouseLegExpectedEntryDate = "#date_Shipment_WarehouseLegExpectedEntryDate"
-  public static readonly ShipmentWarehouseLegActualEntryDate = "#date_Shipment_WarehouseLegActualEntryDate"
-  public static readonly ShipmentWarehouseLegExpectedEntryTime = "#time_Shipment_WarehouseLegExpectedEntryDate"
-  public static readonly ShipmentWarehouseLegActualEntryTime = "#time_Shipment_WarehouseLegActualEntryDate"
+  
 
-  public static readonly ShipmentWarehouseLegExpectedReleaseDate = "#date_Shipment_WarehouseLegExpectedReleaseDate"
-  public static readonly ShipmentWarehouseLegActualReleaseDate = "#date_Shipment_WarehouseLegActualReleaseDate"
-  public static readonly ShipmentWarehouseLegExpectedReleaseTime = "#time_Shipment_WarehouseLegExpectedReleaseDate"
-  public static readonly ShipmentWarehouseLegActualReleaseTime = "#time_Shipment_WarehouseLegActualReleaseDate"
-  public static readonly WarehouseOKBtn = "#WarehouseOKBtn"
+//Warehouse
+public static readonly ShipmentWarehouseLegExpectedEntryDate="#date_Shipment_WarehouseLegExpectedEntryDate"
+public static readonly ShipmentWarehouseLegActualEntryDate="#date_Shipment_WarehouseLegActualEntryDate"
+public static readonly  ShipmentWarehouseLegExpectedEntryTime="#time_Shipment_WarehouseLegExpectedEntryDate"
+public static readonly ShipmentWarehouseLegActualEntryTime="#time_Shipment_WarehouseLegActualEntryDate"
+
+public static readonly ShipmentWarehouseLegExpectedReleaseDate="#date_Shipment_WarehouseLegExpectedReleaseDate"
+public static readonly ShipmentWarehouseLegActualReleaseDate="#date_Shipment_WarehouseLegActualReleaseDate"
+public static readonly ShipmentWarehouseLegExpectedReleaseTime="#time_Shipment_WarehouseLegExpectedReleaseDate"
+public static readonly ShipmentWarehouseLegActualReleaseTime="#time_Shipment_WarehouseLegActualReleaseDate"
+public static readonly WarehouseOKBtn="#WarehouseOKBtn"
+
   //#endregion
 
   //#region Receivable tab fields
