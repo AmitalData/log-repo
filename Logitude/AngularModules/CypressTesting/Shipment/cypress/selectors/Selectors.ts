@@ -5,8 +5,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly LastElementShipment = ":last";
   public static readonly FirstRowinpackages = '#row0';
   public static readonly Shipmentcontinernumbere = '#edit-log-grid_0_20_3_0';
-  public static readonly ShipmentcontinernumbereHouse = '#edit-log-grid_0_40_3_0';
-
+  public static readonly ShipmentcontinernumbereHouse = '#edit-log-grid_0_40_4_0';
+  
   
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
