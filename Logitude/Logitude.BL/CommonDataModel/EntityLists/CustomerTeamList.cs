@@ -38,5 +38,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public string SearchFields { get; set; }
 
+        [DataMember]
+        public string Code { get; set; }
+
     }
 }

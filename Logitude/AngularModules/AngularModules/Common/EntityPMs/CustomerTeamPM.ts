@@ -75,6 +75,11 @@ export class CustomerTeamPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+       
+	 
 
     public OldEntityPM: CustomerTeamPM;
 		

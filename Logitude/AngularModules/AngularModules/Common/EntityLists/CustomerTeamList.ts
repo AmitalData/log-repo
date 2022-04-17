@@ -17,5 +17,6 @@ export class CustomerTeamList {
 		CreatedByUserId: string;
 		UpdatedByUserId: string;
 		SearchFields: string;
+		Code: string;
 	
 }
