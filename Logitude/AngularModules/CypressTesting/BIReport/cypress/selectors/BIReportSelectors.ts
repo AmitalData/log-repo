@@ -13,14 +13,21 @@ export class BIReportSelectors extends RegexSelectors {
  public static readonly NewButtonBIReport = '#NewButton_BIReport';
  public static readonly BIReportName = '#BIReport_Name';
  public static readonly BIReportDescription = '#BIReport_Description';
- public static readonly BIReportFact = '#ComboBox_0_1 img';
+ public static readonly BIReportFact = '.ComboBox';
  public static readonly BIReportFactType ='.ComboBoxDropdown';
+ public static readonly EditQueryBuilder ='#EditQueryBuilder';
+ public static readonly EditBackbutton ='#EditBackbutton_1';
+ public static readonly MasterEditBackbutton ='#EditBackbutton_2';
+ public static readonly ARInvoicesEditBackbutton ='#EditBackbutton_3';
 
+ 
  //#region QueryBuilder
  public static readonly SearchDWQueryBuilderSearchFields = '#DWQueryBuilderSearchFields';
  //#region add shipment number
+ 
+ public static readonly GridViewRowRowHover = '#SimpleGridViewRowRowHover';
  public static readonly AddQBRootColumnShipmentNumber = '#AddQBRootColumnShipmentNumber';
- public static readonly AddQBRootFilterShipmentNumber_1 = '#AddQBRootFilterShipmentNumber';
+ public static readonly AddQBRootFilterShipmentNumber = '#AddQBRootFilterShipmentNumber';
 //#region add customer
 public static readonly AddQBRootColumnCustomer = '#AddQBRootColumnCustomer';
  public static readonly AddQBRootFilterCustomer = '#AddQBRootFilterCustomer';
@@ -29,9 +36,26 @@ public static readonly AddQBRootColumnCustomer = '#AddQBRootColumnCustomer';
  public static readonly AddQBRootColumnShipper = '#AddQBRootColumnShipper';
  public static readonly AddQBRootFilterShipper = '#AddQBRootFilterShipper';
 
+ //#region add Branch
+ public static readonly AddQBRootColumnBranch = '#AddQBRootColumnBranch';
+ public static readonly AddQBRootFilterBranch = '#AddQBRootFilterBranch';
 
+ //#region add Master
+ public static readonly AddQBRootColumnMaster = '#AddQBRootColumnMaster';
+ public static readonly AAddQBRootFilterMaster = '#AddQBRootFilterMaster';
 
+ //#region add MasterShipmentNumber
+ public static readonly AddQBRootColumnMasterShipmentNumber = '#AddQBRootColumnMasterShipmentNumber';
+ public static readonly AddQBRootFilterMasterShipmentNumber = '#AddQBRootFilterMasterShipmentNumber';
 
+ 
+  //#region add ARInvoiceType
+  public static readonly AddQBRootColumnARInvoiceType = '#AddQBRootColumnARInvoiceType';
+  public static readonly AddQBRootFilterARInvoiceType = '#AddQBRootFilterARInvoiceType';
+
+   //#region add InvoiceBranch
+ public static readonly AddQBRootColumnInvoiceBranch = '#AddQBRootColumnInvoiceBranch';
+ public static readonly AddQBRootFilterInvoiceBranch = '#AddQBRootFilterInvoiceBranch';
 
 
 }
