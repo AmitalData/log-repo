@@ -370,7 +370,7 @@ namespace Logitude.Accounting.BL.Utils
                             lineList.Add(journalLine_debit);
 
 
-                            if (lineList.Count >= 1)
+                            if (lineList.Count >= 100)
                             {
                                 var journal = WriteJournal(journalUpdateService, lineList, revaluation, gLAccountPM);
                                 AddInterestTransactions(journal, context);
