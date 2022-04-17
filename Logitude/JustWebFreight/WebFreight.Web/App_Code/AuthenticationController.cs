@@ -96,7 +96,7 @@ namespace WebFreight.Web
         }
         
         [ActionName("PostLoginUsingAuthenticaionTokenForCTool")]
-        public UserData PostLoginUsingAuthenticaionTokenForCTool(LoginTokenParameter logintokenparam,int summyfornaming)
+        public UserData PostLoginUsingAuthenticaionTokenForCTool(LoginTokenParameter logintokenparam,int summyfornaming,string dummy2 = "")
         {
             LoginParameters loginParameters = BuildLoginParameters(logintokenparam);
             if(loginParameters == null)
@@ -1337,10 +1337,10 @@ namespace WebFreight.Web
         }
 
         bool OneTimePassword = false;
-        public UserData PostLoginData(LoginParameters parameters, int tenant, bool isFromCTool = false)
+        public UserData PostLoginData(LoginParameters parameters, int tenant, bool? isFromCTool = false)
         {
 
-
+            bool FromCTool = isFromCTool == null ? false : (bool)isFromCTool;
             try
             {
                 DateTime DateBeforePostLoginData = DateTime.Now;
@@ -1422,7 +1422,7 @@ namespace WebFreight.Web
 
 
 
-                        user = ValidateUser(email, password, customData, out userData, isUser, cardId, cardType, parameters.ByToken, via, parameters.IsAngularLogin, parameters.ClientType, isFromCTool);
+                        user = ValidateUser(email, password, customData, out userData, isUser, cardId, cardType, parameters.ByToken, via, parameters.IsAngularLogin, parameters.ClientType, FromCTool);
 
 
 
@@ -1490,7 +1490,7 @@ namespace WebFreight.Web
                     {
                         bool IsTwoFactorAuthenticationRequired = false;
 
-                        if (!parameters.IsAngularLogin && !parameters.IsMobileLogin && parameters.IsUser && !customerCare && !isFromCTool)
+                        if (!parameters.IsAngularLogin && !parameters.IsMobileLogin && parameters.IsUser && !customerCare && !FromCTool)
                         {
                             IsTwoFactorAuthenticationRequired = CheckLoginSecurityPolicy(tenant, user, logitudeUser, commonDataContext);
                         }
