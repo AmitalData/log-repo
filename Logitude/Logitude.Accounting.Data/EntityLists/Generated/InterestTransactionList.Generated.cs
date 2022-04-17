@@ -66,6 +66,7 @@ namespace Logitude.Accounting.Data.EntityLists
        public string Source  { get; set; }
        [DataMember]
        public string SourceTypeCode  { get; set; }
+       public string SourceType { get; set; }
        [DataMember]
        public string SourceId  { get; set; }
         [DataMember]

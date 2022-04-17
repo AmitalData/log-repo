@@ -84,7 +84,7 @@
             <div float-end>
                 <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
             </div>
-            <div float-end>
+            <div float-end *ngIf="0">
                 <IconButton style="margin: 0 5px;" [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'" [Left]="isRTL ? 3:-3" (click)="ExportToExcelClick()"></IconButton>
             </div>
 
