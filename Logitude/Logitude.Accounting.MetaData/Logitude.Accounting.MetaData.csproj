@@ -73,6 +73,7 @@
     <Content Include="DBOthers\0Types\GLAccountAgingDataType.xml" />
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
+    <None Include="DBScripts\202204141136_AddIntrestTransactionForRevaluationJournalLine.sxml" />
     <None Include="DBScripts\202202130931_UpdateRecCreditPayDebitGLAcountLocalName.sxml" />
     <None Include="DBScripts\202204130000_UpdateInterestTransactionsSearchFields.sxml" />
     <None Include="DBScripts\202204131020_AdjustmentsJournalInterestTransactions.sxml" />

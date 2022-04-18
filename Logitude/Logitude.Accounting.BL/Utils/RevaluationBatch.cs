@@ -23,6 +23,8 @@ using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.Data.Enums;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 //using AmitalCustomsWindowsService.Utils;
 
 namespace Logitude.Accounting.BL.Utils
@@ -31,12 +33,14 @@ namespace Logitude.Accounting.BL.Utils
     {
         private string _ResponseText;
         private HttpStatusCode _StatusCode;
-
+        IAccountingContext context;
         public RevaluationBatch()
         {
             _ResponseText = "";
             _StatusCode = HttpStatusCode.Accepted;
+
         }
+        static string CreditCode = "1";
 
 
 
@@ -164,7 +168,8 @@ namespace Logitude.Accounting.BL.Utils
                                 }
                                 if (lineList.Count > 0)
                                 {
-                                    WriteJournal(journalUpdateService, lineList, revaluation);
+                                    var journal = WriteJournal(journalUpdateService, lineList, revaluation);
+                                    AddInterestTransactions(journal, context);
                                     lineList.Clear();
                                 }
 
@@ -191,6 +196,44 @@ namespace Logitude.Accounting.BL.Utils
 
             }
 
+        }
+
+        private static void AddInterestTransactions(JournalPM journal, IAccountingContext context)
+        {
+            var interestTransactions = new List<InterestTransactionPM>();
+            foreach (var line in journal.JournalLines)
+            {
+                interestTransactions.Add(CreateInterestTransaction(line));
+            }
+            InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+
+            using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+            {
+                foreach (var item in interestTransactions)
+                {
+                    interestTransactionUpdateService.Update(item,true);
+                }
+                excScope.Complete();
+            }
+                
+
+
+        }
+
+        private static InterestTransactionPM CreateInterestTransaction( JournalLinePM line)
+        {
+            InterestTransactionPM newInterestTransaction = new InterestTransactionPM();
+            newInterestTransaction.EntityId = line.JournalId;
+            newInterestTransaction.OriginalEntityLineNumber = line.Line;
+            newInterestTransaction.InterestEntityTypeCode = InterestEntityTypes.Journal;
+            newInterestTransaction.LocalAmount = line.LocalAmount;
+            newInterestTransaction.ForeignAmount = line.ForeignAmount;
+            newInterestTransaction.CurrencyId = line.CurrencyId;
+            newInterestTransaction.InterestValueDate = line.AccountingDate;
+            newInterestTransaction.GLAccountId = line.ActionCode == CreditCode  ? line.CreditAccountId : line.DebitAccountId;
+            newInterestTransaction.Tenant = line.Tenant;
+            newInterestTransaction.ChangeSetOp = ChangeSetOperation.Insert;
+            return newInterestTransaction;
         }
 
         private static void UpdateRevaluationStatus(string id, int tenant, string status, string message, IAccountingContext context)
@@ -226,7 +269,7 @@ namespace Logitude.Accounting.BL.Utils
             LogMessagingUtil.Instance.AppendLine("Revaluation " + revaluation.RevaluationNumber + " run one account: " + gLAccountPM.DisplayNumber);
             List<GLAccountCurrencyBalance> allBalances = gLAccountQueryService.GetCurrencyBalances(gLAccountPM, revaluationDate, gLAccountPM.Tenant);
             bool useLocal = true;
-
+            IAccountingContext context = AccountingContext.GetContext(gLAccountPM.Tenant);
             if (allBalances != null && allBalances.Count != 0)
             {
                 foreach (GLAccountCurrencyBalance item in allBalances)
@@ -329,7 +372,8 @@ namespace Logitude.Accounting.BL.Utils
 
                             if (lineList.Count >= 100)
                             {
-                                WriteJournal(journalUpdateService, lineList, revaluation, gLAccountPM);
+                                var journal = WriteJournal(journalUpdateService, lineList, revaluation, gLAccountPM);
+                                AddInterestTransactions(journal, context);
                                 lineList.Clear();
                                 //  scope.Complete();
                             }
@@ -351,7 +395,7 @@ namespace Logitude.Accounting.BL.Utils
             service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
-        private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation, GLAccountPM gLAccountPM = null)
+        private static JournalPM WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation, GLAccountPM gLAccountPM = null)
         {
             // Start
             JournalPM newJournal = new JournalPM();
@@ -406,7 +450,7 @@ namespace Logitude.Accounting.BL.Utils
             AddAccountingEntitieJournal(newJournal, AccountingEntityJournalActions.RevaluationApprove, gLAccountPM?.Id);
             // End
             journalUpdateService.Update(newJournal, true);
-
+            return newJournal;
         }
 
 
