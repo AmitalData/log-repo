@@ -133,6 +133,11 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
+
+                    if (this.IsGenerateSalesLocalCharges) {
+                        this.IsGenerateSalesLocalCharges = false;
+                        this.GenerateSalesLocalCharges();
+                    }
                 }
             });
 
@@ -609,7 +614,13 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         });
     }
 
-    GenerateSalesLocalCharges() { 
+    private IsGenerateSalesLocalCharges = false;
+    GenerateSalesLocalChargesClicked() {
+        this.IsGenerateSalesLocalCharges = true;
+        this.entityArgs.EditComponent.SaveChanges();
+    }
+
+    GenerateSalesLocalCharges() {
         var args = this.TariffBehaviours.GenerateSalesLocalCharges();
         var tariffService: TariffDomainService = new TariffDomainService();
         tariffService.GetAvailableSalesLocalChargesTariffs(args).subscribe((res: ServiceResponse) => {
@@ -632,6 +643,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     CreateQuoteSalesLocalCharges(tariffCharges) {
+        this.TariffList_Quote = [];
         this.SetContainersInitialValues_Quotes();
         if (tariffCharges != null) {
             tariffCharges.forEach((localCharge: SalesLocalCharges) => {
@@ -669,7 +681,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.Quantity5 = this.EntityPM.PackageType5Quantity;
     }
     GenerateNewTariffQuoteCharge(item: any) {
-        var quoteCharge: QuoteChargePM = this.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.SaleCurrencyId == item.SaleCurrencyId && d.SaleMeasurementId == item.SaleMeasurementId && (d.SaleTariffId == item.SaleTariffId || d.SaleTariffId == null))[0];
+        var quoteCharge: QuoteChargePM = this.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargeTypeId && d.SaleCurrencyId == item.CurrencyId && d.SaleMeasurementId == item.UnitOfMesurmentId && (d.SaleTariffId == item.TariffId || d.SaleTariffId == null))[0];
         if (!quoteCharge) {
             this.CreateNewTariffQuoteCharge(item);
         }
@@ -699,7 +711,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.CostCurrencyId = item.CurrencyId;
                 chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
                 chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
-                chargePM.SaleCurrencyId = this.Behaviours.GetSaleCurrencyOnChargeTypeChanged(chargesType, chargePM);
+                chargePM.SaleCurrencyId = item.CurrencyId;
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
@@ -719,11 +731,11 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                     }
                     else {
                         if (measurementCode == 'FIXD') {
-                            chargePM.SaleUnitPrice = item.ActualPrice;
+                            chargePM.SaleUnitPrice = item.Price;
                             chargePM.SaleQuantity = 1;
                         }
                         else {
-                            chargePM.SaleUnitPrice = item.ContainersPrices[0].Price;
+                            chargePM.SaleUnitPrice = item.Price;
                             chargePM.SaleQuantity = this.EntityPM.TEU;
                         }
                     }
@@ -741,7 +753,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     FillQuoteFCLCharges(packageId: string, chargePM: QuoteChargePM, item: any) {
-        var saleAmount: number = AppTool.Round(item.ActualPrice, 3);
+        var saleAmount: number = AppTool.Round(item.Price, 3);
         var quantity: number;
 
         if (item.ContainersPrices) {
@@ -795,7 +807,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.CostCurrencyId = item.CurrencyId;
                 chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
                 chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
-                chargePM.SaleCurrencyId = this.Behaviours.GetSaleCurrencyOnChargeTypeChanged(chargesType, chargePM);
+                chargePM.SaleCurrencyId = item.CurrencyId;
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
@@ -895,6 +907,19 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             editWindow.ShowEditComponent(item.TariffId, "Tariff");
         }
     }
+    EditSaleTariffClicked(item: FCLQuoteChargeItem) {
+        if (item != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            var argumentsPriceCheck = { VersionId: item.SaleTariffVersion, LineId: item.SaleTariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
+            editWindow.EditComponentArguments = argumentsPriceCheck;
+            editWindow.ShowEditComponent(item.SaleTariffId, "Tariff");
+        }
+    }
+
     DeleteTariff(item: FCLQuoteChargeItem) {
         if (item != null) {
             item.TariffId = null;

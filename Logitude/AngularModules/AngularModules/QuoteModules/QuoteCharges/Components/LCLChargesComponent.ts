@@ -395,6 +395,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     CreateQuoteSalesLocalCharges(tariffCharges) {
+        this.TariffList_Quote = [];
         if (tariffCharges != null) {
             tariffCharges.forEach((localCharge: SalesLocalCharges) => {
                 this.GenerateNewTariffQuoteCharge(localCharge);
@@ -408,7 +409,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     GenerateNewTariffQuoteCharge(item: any) {
-        var quoteCharge: QuoteChargePM = this.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargeTypeId && d.SaleCurrencyId == item.CurrencyId && d.SaleMeasurementId == item.UnitOfMesurmentId && (d.SaleTariffId == item.SaleTariffId || d.SaleTariffId == null))[0];
+        var quoteCharge: QuoteChargePM = this.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargeTypeId && d.SaleCurrencyId == item.CurrencyId && d.SaleMeasurementId == item.UnitOfMesurmentId && (d.SaleTariffId == item.TariffId || d.SaleTariffId == null))[0];
         if (!quoteCharge) {
             this.CreateNewTariffQuoteCharge(item);
         }
@@ -439,7 +440,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.CostCurrencyId = item.CurrencyId;
                 chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
                 chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
-                chargePM.SaleCurrencyId = this.Behaviours.GetSaleCurrencyOnChargeTypeChanged(chargesType, chargePM);
+                chargePM.SaleCurrencyId = item.CurrencyId;
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
@@ -479,7 +480,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.CostCurrencyId = item.CurrencyId;
                 chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
                 chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
-                chargePM.SaleCurrencyId = this.Behaviours.GetSaleCurrencyOnChargeTypeChanged(chargesType, chargePM);
+                chargePM.SaleCurrencyId = item.CurrencyId;
                 chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
                 chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
@@ -546,6 +547,18 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             var argumentsPriceCheck = { VersionId: item.TariffVersion, LineId: item.TariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
             editWindow.EditComponentArguments = argumentsPriceCheck;
             editWindow.ShowEditComponent(item.TariffId, "Tariff");
+        }
+    }
+    EditSaleTariffClicked(item: QuoteChargeItem) {
+        if (item != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            var argumentsPriceCheck = { VersionId: item.SaleTariffVersion, LineId: item.SaleTariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
+            editWindow.EditComponentArguments = argumentsPriceCheck;
+            editWindow.ShowEditComponent(item.SaleTariffId, "Tariff");
         }
     }
     DeleteTariff(item: QuoteChargeItem) {
