@@ -166,10 +166,10 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         1,42,1330,2653,1688,2095,1526,1686
                     };
-                    //if (tenant <= 400)//newSPTenants.Where(a=>a == tenant).Count() > 0)
-                    //{
-                    //    cmd = new SqlCommand("dbo.usp_GetNextTableNumberValueWithSnapshot", cn);
-                    //}
+                    if (tenant <= 400)//newSPTenants.Where(a=>a == tenant).Count() > 0)
+                    {
+                        cmd = new SqlCommand("dbo.usp_GetNextTableNumberValueWithSnapshot", cn);
+                    }
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     SqlParameter lastValuePar = new SqlParameter("@pLastValue", SqlDbType.Int);
