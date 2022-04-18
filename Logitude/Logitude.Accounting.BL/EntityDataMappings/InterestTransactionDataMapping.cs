@@ -36,7 +36,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.InterestValueDate = entityPM.InterestValueDate.Date;
             }
 
-            BuildSearchField(entityPM, entityPOCO);
+            //BuildSearchField(entityPM, entityPOCO);
         }
 
         public void CustomPOCOToPM(InterestTransactionPM entityPM, InterestTransaction entityPOCO)
