@@ -116,15 +116,70 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         public InterestTransactionList GetSingle(string id,int tenant)
         {
-            var repository = new InterestTransactionRepository(tenant);
-            var transactions = repository.GetAll(tenant);
+            InterestTransaction interestTransaction = GetInterestTransaction(id, tenant);
+            Journal journal = GetJournalForInterestTransaction(tenant, interestTransaction);
+            InterestReport report = GetInterestReportForInterestTransaction(tenant, interestTransaction);
+            InterestTransactionList transactionList = MapInterestTransaction(interestTransaction, journal, report);
 
-            var transactionQuery = GetIqueryableList(transactions, tenant).Where(d => d.Id == id).ToList();
-            var transaction = MapListQuery(transactionQuery, tenant).FirstOrDefault();
-            return transaction;
+            return transactionList;
         }
 
+        private static InterestTransactionList MapInterestTransaction(InterestTransaction interestTransaction, Journal journal, InterestReport report)
+        {
+            return new InterestTransactionList()
+            {
 
+                Id = interestTransaction.Id,
+                Tenant = interestTransaction.Tenant,
+                CreateDateTime = interestTransaction.CreateDateTime,
+                UpdateDateTime = interestTransaction.UpdateDateTime,
+                SearchFields = interestTransaction.SearchFields,
+                GLAccountId = interestTransaction.GLAccountId,
+                InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
+                EntityId = interestTransaction.EntityId,
+                OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
+                LocalAmount = interestTransaction.LocalAmount,
+                ForeignAmount = interestTransaction.ForeignAmount,
+                CurrencyId = interestTransaction.CurrencyId,
+                InterestValueDate = interestTransaction.InterestValueDate,
+                InterestReportId = interestTransaction.InterestReportId,
+                IsClosed = interestTransaction.IsClosed,
+                IsCancelled = interestTransaction.IsCancelled,
+                InterestReportNumber = report?.ReportNumber,
+
+                JournalId = journal?.Id,
+                JournalNumber = journal?.JournalNumber,
+                AccountingDate = journal?.AccountingDate??DateTime.MinValue,
+                Source = journal?.AccountingEntityReference,
+                SourceType = journal?.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
+                SourceTypeCode = journal?.AccountingEntityCode,
+                SourceId = journal?.AccountingEntityId
+
+            };
+        }
+
+        private static InterestReport GetInterestReportForInterestTransaction(int tenant, InterestTransaction interestTransaction)
+        {
+            var reportRepository = new InterestReportRepository(tenant);
+            var report = reportRepository.GetSingle(interestTransaction.InterestReportId, tenant);
+            return report;
+        }
+
+        private static Journal GetJournalForInterestTransaction(int tenant, InterestTransaction interestTransaction)
+        {
+            var journalQuery = new JournalRepository(tenant);
+            var journal = journalQuery.GetJournalByAccountingEntity(interestTransaction.EntityId, interestTransaction.InterestEntityType.AccountingEntityCode, tenant);
+            return journal;
+        }
+
+        private InterestTransaction GetInterestTransaction(string id, int tenant)
+        {
+            context = AccountingContext.GetContext(tenant);
+            var interestTransaction = (from a in context.InterestTransactions.Include("InterestEntityType")
+                                       where a.Id == id && a.Tenant == tenant
+                                       select a).FirstOrDefault();
+            return interestTransaction;
+        }
 
         private static List<Currency> GetTenantCurrencies(int tenant)
         {
