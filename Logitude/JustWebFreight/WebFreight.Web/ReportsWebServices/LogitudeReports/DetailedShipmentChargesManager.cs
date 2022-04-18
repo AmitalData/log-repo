@@ -1338,6 +1338,27 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
             }
 
+            else
+            {
+                if (invoiceCurrencyId == myShipment.ProfitCurrencyId)
+                {
+                    myResult = myShipment.AccountedPayablesInProfitCurrency;
+                }
+
+                else if (invoiceCurrencyId == tenantLocalCurrencyId)
+                {
+                    myResult = myShipment.AccountedPayablesInLocalCurrency;
+                }
+
+                else
+                {
+                    double? rate = this.GetCurrencysExchangeRate(invoiceCurrencyId, invoiceDate);
+                    if (rate != null && rate != 0)
+                    {
+                        myResult = myShipment.AccountedPayablesInLocalCurrency / rate;
+                    }
+                }
+            }
 
             return myResult;
         }
