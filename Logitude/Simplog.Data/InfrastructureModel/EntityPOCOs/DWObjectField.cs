@@ -37,6 +37,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool DontDisplayInView { get; set; }
         public string DimensionDataViewName { get; set; }
         public bool IsMultipleSelection { get; set; }
+        public bool UseUnitSelection { get; set; }
         public string RecordType { get; set; }
 
         

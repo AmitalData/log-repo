@@ -626,7 +626,7 @@
                                                             <td style="height:95px;">
                                                                 <div class="EmailBoxMultiLinesText" style="height:100%;white-space: normal;max-width: 812px;overflow-y: auto;background:linear-gradient(#F2F8FF, #E6EBF0);">
                                                                     <div class="ItemBox" *ngFor="let item of SelectedFieldsDataSource" [class.SelectedItemBox]="FieldSelectedItem == item" (mouseover)="ShowOrderArrows(item)" (mouseout)="HideOrderArrows(item)" (click)="SetFieldSelectedItem(item)">
-                                                                        <div class="SelectedItemBoxContent" [title]="item.IsMultipleSelection && item.MultiSelectedValueLists && item.MultiSelectedValueLists.length > 0?item.Code.substr(1,item.Code.length-2):''">
+                                                                        <div class="SelectedItemBoxContent" [title]="(item.IsMultipleSelection || item.UseUnitSelection) && item.MultiSelectedValueLists && item.MultiSelectedValueLists.length > 0?item.Code.substr(1,item.Code.length-2):''">
                                                                             <table>
                                                                                 <tr>
                                                                                     <td>
@@ -636,6 +636,9 @@
                                                                                         <span style="margin-left:2px;cursor: default;">{{item.DisplayName.replace('[', '').replace(']', '')}}</span>
                                                                                         <span *ngIf="item.IsMultipleSelection" style="display:block;margin-top:-6px;">
                                                                                             <a style="font-size:12px;" (click)="SelectChargesClicked(item)">Select Charges</a>
+                                                                                        </span>
+                                                                                        <span *ngIf="item.UseUnitSelection" style="display:block;margin-top:-6px;">
+                                                                                            <a style="font-size:12px;" (click)="SelectUnitClicked(item)">Select Unit</a>
                                                                                         </span>
                                                                                     </td>
                                                                                     <td>
