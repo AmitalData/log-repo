@@ -58,7 +58,15 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsCustomCleaPointShowContactTS, 
 	         IsConsolidatorShowContactTS, 
 	         IsReleasingAgentShowContactTS, 
-	         IsIssuingCarAgentShowContactTS,
+	         IsIssuingCarAgentShowContactTS, 
+	         IsCustomerShared, 
+	         IsCustomerShowContactTS, 
+	         IsAccountManagerShared, 
+	         IsAccountManagerShowContactTS, 
+	         IsSalesmanShared, 
+	         IsSalesmanShowContactTS, 
+	         IsCollectorShared, 
+	         IsCollectorShowContactTS,
 	      }
 
 
@@ -101,7 +109,15 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsCustomCleaPointShowContactTS, 
 	         IsConsolidatorShowContactTS, 
 	         IsReleasingAgentShowContactTS, 
-	         IsIssuingCarAgentShowContactTS,
+	         IsIssuingCarAgentShowContactTS, 
+	         IsCustomerShared, 
+	         IsCustomerShowContactTS, 
+	         IsAccountManagerShared, 
+	         IsAccountManagerShowContactTS, 
+	         IsSalesmanShared, 
+	         IsSalesmanShowContactTS, 
+	         IsCollectorShared, 
+	         IsCollectorShowContactTS,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -288,6 +304,46 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsIssuingCarAgentShowContactTS))
             {
 				entityPOCO.IsIssuingCarAgentShowContactTS = entityPM.IsIssuingCarAgentShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomerShared))
+            {
+				entityPOCO.IsCustomerShared = entityPM.IsCustomerShared;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomerShowContactTS))
+            {
+				entityPOCO.IsCustomerShowContactTS = entityPM.IsCustomerShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAccountManagerShared))
+            {
+				entityPOCO.IsAccountManagerShared = entityPM.IsAccountManagerShared;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAccountManagerShowContactTS))
+            {
+				entityPOCO.IsAccountManagerShowContactTS = entityPM.IsAccountManagerShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSalesmanShared))
+            {
+				entityPOCO.IsSalesmanShared = entityPM.IsSalesmanShared;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSalesmanShowContactTS))
+            {
+				entityPOCO.IsSalesmanShowContactTS = entityPM.IsSalesmanShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCollectorShared))
+            {
+				entityPOCO.IsCollectorShared = entityPM.IsCollectorShared;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCollectorShowContactTS))
+            {
+				entityPOCO.IsCollectorShowContactTS = entityPM.IsCollectorShowContactTS;
 			}
 			}
 
@@ -479,6 +535,46 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.IsIssuingCarAgentShowContactTS = entityPOCO.IsIssuingCarAgentShowContactTS;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomerShared))
+            {
+					entityPM.IsCustomerShared = entityPOCO.IsCustomerShared;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomerShowContactTS))
+            {
+					entityPM.IsCustomerShowContactTS = entityPOCO.IsCustomerShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsAccountManagerShared))
+            {
+					entityPM.IsAccountManagerShared = entityPOCO.IsAccountManagerShared;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsAccountManagerShowContactTS))
+            {
+					entityPM.IsAccountManagerShowContactTS = entityPOCO.IsAccountManagerShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSalesmanShared))
+            {
+					entityPM.IsSalesmanShared = entityPOCO.IsSalesmanShared;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSalesmanShowContactTS))
+            {
+					entityPM.IsSalesmanShowContactTS = entityPOCO.IsSalesmanShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCollectorShared))
+            {
+					entityPM.IsCollectorShared = entityPOCO.IsCollectorShared;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCollectorShowContactTS))
+            {
+					entityPM.IsCollectorShowContactTS = entityPOCO.IsCollectorShowContactTS;
+            }
+
 		}
 
 		public void PMToOldPM(SharedLogisticsSettingPM entityPM, SharedLogisticsSettingPM oldEntityPM)
@@ -663,6 +759,46 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsIssuingCarAgentShowContactTS))
             {
                 oldEntityPM.IsIssuingCarAgentShowContactTS = entityPM.IsIssuingCarAgentShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomerShared))
+            {
+                oldEntityPM.IsCustomerShared = entityPM.IsCustomerShared;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomerShowContactTS))
+            {
+                oldEntityPM.IsCustomerShowContactTS = entityPM.IsCustomerShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAccountManagerShared))
+            {
+                oldEntityPM.IsAccountManagerShared = entityPM.IsAccountManagerShared;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAccountManagerShowContactTS))
+            {
+                oldEntityPM.IsAccountManagerShowContactTS = entityPM.IsAccountManagerShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSalesmanShared))
+            {
+                oldEntityPM.IsSalesmanShared = entityPM.IsSalesmanShared;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSalesmanShowContactTS))
+            {
+                oldEntityPM.IsSalesmanShowContactTS = entityPM.IsSalesmanShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCollectorShared))
+            {
+                oldEntityPM.IsCollectorShared = entityPM.IsCollectorShared;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCollectorShowContactTS))
+            {
+                oldEntityPM.IsCollectorShowContactTS = entityPM.IsCollectorShowContactTS;
             }
 			
 		}
