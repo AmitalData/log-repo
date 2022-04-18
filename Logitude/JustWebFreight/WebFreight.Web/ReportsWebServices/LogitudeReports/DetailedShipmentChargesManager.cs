@@ -205,6 +205,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             {
                 #region Data
                 List<string> allShipmentsIds = allShipments.Select(s => s.Id).ToList();
+
+                if (housesAndDirectOnly)
+                {
+                    IQueryable<ShipmentDataView> houses = iQueryable_Shipments.Where(d => d.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(d.MasterShipmentDataId));
+                    List<string> housesMastersIds = houses.Select(s => s.MasterShipmentDataId).Distinct().ToList();
+                    allShipmentsIds = allShipmentsIds.Concat(housesMastersIds).ToList();
+                }
+
                 this.BuildInvoicesLists(allShipmentsIds);
                 this.BuildInvoicesShipmentsLists(allShipmentsIds);
                 List<ShipmentPickUpDelivery> shipmentPickUpDeliveriesLists = (from d in myShipmentsContext.ShipmentPickUpDeliveries where allShipmentsIds.Contains(d.ShipmentId) select d).Include("ToAddressCountry").ToList();
@@ -457,8 +465,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             #endregion
                         }
                     }
-                    
-                    List<string> myAPInvoicesIds = allShipmentsAPInvoices.Where(d => d.ShipmentId == myShipment.Id).Select(s => s.InvoiceId).ToList();
+
+                    List<string> myAPInvoicesIds = new List<string>();
+                    if (housesAndDirectOnly)
+                    {
+                        myAPInvoicesIds = allShipmentsAPInvoices.Where(d => d.ShipmentId == myShipment.Id || d.ShipmentId == myShipment.MasterShipmentDataId).Select(s => s.InvoiceId).ToList();
+                    }
+
+                    else
+                    {
+                        myAPInvoicesIds = allShipmentsAPInvoices.Where(d => d.ShipmentId == myShipment.Id).Select(s => s.InvoiceId).ToList();
+                    }
+
                     foreach (string id in myAPInvoicesIds)
                     {
                         APInvoice invoice = allAPInvoices.Where(d => d.Id == id).FirstOrDefault();
@@ -474,8 +492,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myBranch = allBranchs.Where(d => d.Id == myShipment.BranchId).FirstOrDefault();
                                 myIncoterm = allIncoterms.Where(d => d.Id == myShipment.IncotermId).FirstOrDefault();
                             }
-                            
-                            List<ChargeTypeGroupClass> lines_Grouped = allAPInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
+
+                            List<ChargeTypeGroupClass> lines_Grouped = new List<ChargeTypeGroupClass>();
+
+                            if (housesAndDirectOnly)
+                            {
+                                lines_Grouped = allAPInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && (d.ShipmentId == myShipment.Id || d.ShipmentId == myShipment.MasterShipmentDataId)).ToList();
+                            }
+
+                            else
+                            {
+                                lines_Grouped = allAPInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
+                            }
 
                             foreach (ChargeTypeGroupClass item in lines_Grouped)
                             {
@@ -517,7 +545,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceAmountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
                                 myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
                                 myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
-                                myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                                myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.Id, invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate, item.PayableId);
 
                                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                 myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -664,7 +692,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceAmountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
                                 myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
                                 myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
-                                myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                                myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.Id, invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
 
                                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                 myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -934,12 +962,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             return (from d in myInvoiceContext.APInvoiceLines
                     where d.Tenant == tenant
                     && allAPInvoicesIds.Contains(d.APInvoiceId)
-                    group d by new { d.APInvoiceId, d.EntityId, d.ChargesTypeId } into g
+                    group d by new { d.APInvoiceId, d.EntityId, d.ChargesTypeId, d.EntityPayableId } into g
                     select new ChargeTypeGroupClass()
                     {
                         InvoiceId = g.Key.APInvoiceId,
                         ShipmentId = g.Key.EntityId,
                         ChargesTypeId = g.Key.ChargesTypeId,
+                        PayableId = g.Key.EntityPayableId,
                         AmountInLocal = g.Sum(s => s.LocalCurrencyAmount),
                         AmountInProfit = g.Sum(s => s.ProfitCurrencyAmount),
                     }).ToList();
@@ -1236,28 +1265,79 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             return myResult;
         }
-        private double? ComputeAccountedPayablesInInvoiceCurrency(string invoiceCurrencyId, ShipmentDataView myShipment, DateTime? invoiceDate)
+        private double? ComputeAccountedPayablesInInvoiceCurrency(string invoiceId, string invoiceCurrencyId, ShipmentDataView myShipment, DateTime? invoiceDate, string payableId = null)
         {
             double? myResult = null;
 
-            if (invoiceCurrencyId == myShipment.ProfitCurrencyId)
+            if (housesAndDirectOnly && myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
             {
-                myResult = myShipment.AccountedPayablesInProfitCurrency;
-            }
-
-            else if (invoiceCurrencyId == tenantLocalCurrencyId)
-            {
-                myResult = myShipment.AccountedPayablesInLocalCurrency;
+                myResult = this.ComputeAccountedPayables_ConnectedHouse(invoiceId, invoiceCurrencyId, myShipment, invoiceDate, payableId);
             }
 
             else
             {
-                double? rate = this.GetCurrencysExchangeRate(invoiceCurrencyId, invoiceDate);
-                if (rate != null && rate != 0)
+                if (invoiceCurrencyId == myShipment.ProfitCurrencyId)
                 {
-                    myResult = myShipment.AccountedPayablesInLocalCurrency / rate;
+                    myResult = myShipment.AccountedPayablesInProfitCurrency;
+                }
+
+                else if (invoiceCurrencyId == tenantLocalCurrencyId)
+                {
+                    myResult = myShipment.AccountedPayablesInLocalCurrency;
+                }
+
+                else
+                {
+                    double? rate = this.GetCurrencysExchangeRate(invoiceCurrencyId, invoiceDate);
+                    if (rate != null && rate != 0)
+                    {
+                        myResult = myShipment.AccountedPayablesInLocalCurrency / rate;
+                    }
                 }
             }
+
+            return myResult;
+        }
+        private double? ComputeAccountedPayables_ConnectedHouse(string invoiceId, string invoiceCurrencyId, ShipmentDataView myShipment, DateTime? invoiceDate, string payableId)
+        {
+            double? myResult = null;
+            ShipmentPayable housePayable = (from d in myShipmentsContext.ShipmentPayables
+                                            where d.Tenant == tenant
+                                            && d.ShipmentPayableParentId == payableId
+                                            && d.ShipmentId == myShipment.Id
+                                            select d).FirstOrDefault();
+
+            if (housePayable != null)
+            {
+                PayableProratedAmount payableProratedAmounts = (from d in myShipmentsContext.PayableProratedAmounts
+                                                                      where d.Tenant == tenant
+                                                                      && d.PayableId == housePayable.Id
+                                                                      && d.InvoiceId == invoiceId
+                                                                      && d.ShipmentId == myShipment.Id
+                                                                      select d).FirstOrDefault();
+                if (payableProratedAmounts != null)
+                {
+                    if (invoiceCurrencyId == myShipment.ProfitCurrencyId)
+                    {
+                        myResult = payableProratedAmounts.ProratedAmountInProfitCurrency;
+                    }
+
+                    else if (invoiceCurrencyId == tenantLocalCurrencyId)
+                    {
+                        myResult = payableProratedAmounts.ProratedAmountInLocalCurrency;
+                    }
+
+                    else
+                    {
+                        double? rate = this.GetCurrencysExchangeRate(invoiceCurrencyId, invoiceDate);
+                        if (rate != null && rate != 0)
+                        {
+                            myResult = payableProratedAmounts.ProratedAmountInLocalCurrency / rate;
+                        }
+                    }
+                }
+            }
+
 
             return myResult;
         }
