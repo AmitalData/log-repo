@@ -154,11 +154,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             try
             {
-                return Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Comprobante>(relatedInvoiceSATXML).Complemento.Any;
+                return Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Comprobante>(relatedInvoiceSATXML).Complemento?.Any;
             }
             catch (Exception ex)
             {
-                return Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(relatedInvoiceSATXML).Complemento.Any;
+                return Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(relatedInvoiceSATXML).Complemento?.Any;
             }
         }
 
