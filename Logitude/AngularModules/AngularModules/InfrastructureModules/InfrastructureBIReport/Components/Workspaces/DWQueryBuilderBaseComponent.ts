@@ -410,8 +410,10 @@ export class DWObjectFieldsDetails
             this.PartnerFullNameTextCodeCode = DWObjectField.PartnerFullNameTextCodeCode;
             this.FieldCode = DWObjectField.Code;
             this.IsMultipleSelection = DWObjectField.IsMultipleSelection;
+            this.UseUnitSelection = DWObjectField.UseUnitSelection;
+            this.SelectedUnitCode = DWObjectField.SelectedUnitCode;
             this.ColumnName = DWObjectField.ColumnName;
-            if (this.IsMultipleSelection) {
+            if (this.IsMultipleSelection || this.UseUnitSelection) {
                 this.MultiSelectedValueLists = DWObjectField.MultiSelectedValueLists;
             }
             this.ParentDataTypeCode = DWObjectField.ParentDataTypeCode;
@@ -547,6 +549,14 @@ export class DWObjectFieldsDetails
     private isMultipleSelection: boolean;
     public get IsMultipleSelection() { return this.isMultipleSelection; }
     public set IsMultipleSelection(newValue: boolean) { this.isMultipleSelection = newValue; }
+
+    private selectedUnitCode: string;
+    public get SelectedUnitCode() { return this.selectedUnitCode; }
+    public set SelectedUnitCode(newValue: string) { this.selectedUnitCode = newValue; }
+
+    private useUnitSelection: boolean;
+    public get UseUnitSelection() { return this.useUnitSelection; }
+    public set UseUnitSelection(newValue: boolean) { this.useUnitSelection = newValue; }
 
     private dimensionTableDisplayName: string;
     public get DimensionTableDisplayName() { return this.dimensionTableDisplayName; }

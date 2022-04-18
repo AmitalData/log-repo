@@ -135,6 +135,7 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("ViewFieldDisplayName", GetStringValue(fieldViewModel.ViewFieldDisplayName), fieldElement);
                 SetAttribute("DontDisplayInView", fieldViewModel.DontDisplayInView.ToString().ToLower(), fieldElement);
                 SetAttribute("IsMultipleSelection", fieldViewModel.IsMultipleSelection.ToString().ToLower(), fieldElement);
+                SetAttribute("UseUnitSelection", fieldViewModel.UseUnitSelection.ToString().ToLower(), fieldElement);
                 SetAttribute("DimensionDataViewName", GetStringValue(fieldViewModel.DimensionDataViewName), fieldElement);
                 SetAttribute("RecordType", GetStringValue(fieldViewModel.RecordType), fieldElement);
 
@@ -257,6 +258,7 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.ViewFieldDisplayName = GetAttributeStringValue(fieldNode.Attributes["ViewFieldDisplayName"]);
             fieldViewModel.DontDisplayInView = GetAttributeBoolValue(fieldNode.Attributes["DontDisplayInView"]);
             fieldViewModel.IsMultipleSelection = GetAttributeBoolValue(fieldNode.Attributes["IsMultipleSelection"]);
+            fieldViewModel.UseUnitSelection = GetAttributeBoolValue(fieldNode.Attributes["UseUnitSelection"]);
             fieldViewModel.DimensionDataViewName = GetAttributeStringValue(fieldNode.Attributes["DimensionDataViewName"]);
             fieldViewModel.RecordType = GetAttributeStringValue(fieldNode.Attributes["RecordType"]);
 

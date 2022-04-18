@@ -195,6 +195,11 @@ export class DWObjectFieldPM {
     public set IsMultipleSelection(newValue: boolean) { if (this.isMultipleSelection != newValue) { this.isMultipleSelection = newValue; this.MarkAsDirty("IsMultipleSelection"); } }
        
 	 
+    private useUnitSelection: boolean;
+    public get UseUnitSelection() { return this.useUnitSelection; }
+    public set UseUnitSelection(newValue: boolean) { if (this.useUnitSelection != newValue) { this.useUnitSelection = newValue; this.MarkAsDirty("UseUnitSelection"); } }
+       
+	 
     private recordType: string;
     public get RecordType() { return this.recordType; }
     public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }

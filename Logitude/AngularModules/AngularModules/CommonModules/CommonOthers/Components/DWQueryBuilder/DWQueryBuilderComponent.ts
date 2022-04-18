@@ -426,13 +426,39 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/DWLogSearchWindowComponent');
 
         logitudeWindow.WindowClosed.subscribe((event) => {
-            if (event != "Cancel") this.OnGroupChargsClosed(item, event);
+            if (event != "Cancel") this.OnLogLSearchComponentClosed(item, event);
         });
     }
 
-    OnGroupChargsClosed(item, columnName) {
-        item.DisplayName = columnName;
-        item.Name = columnName;
+    SelectUnitClicked(item) {
+        var args = new CustomEntityArgs();
+        //args.ObjectTableName = this.DWObjectTablePivotCode;
+        args.DisplayFieldsFromList = this.GroupChargesAdditionalColumns.Code;
+        args.LOVAdditionalColumns = this.GroupChargesAdditionalColumns.LOVAdditionalColumns;
+        args.DataContext = item;
+        args.SelectedFieldsDataSource = this.SelectedFieldsDataSource;
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 600;
+        logitudeWindow.Height = 600;
+        logitudeWindow.WindowArgs = args;
+        logitudeWindow.Title = "Select Weight Unit Code";
+        logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/DWLogSearchWindowComponent');
+
+        logitudeWindow.WindowClosed.subscribe((event) => {
+            if (event != "Cancel") this.OnChooseLogLSearchComponentClosed(item, event);
+        });
+    }
+
+    OnLogLSearchComponentClosed(item, columnName) {
+        item.DisplayName = columnName.split(',')[0];
+        item.Name = columnName.split(',')[0];
+    }
+
+    OnChooseLogLSearchComponentClosed(item, columnName) {
+        item.DisplayName = columnName.split(',')[0];
+        item.Name = columnName.split(',')[0];
+        item.SelectedUnitCode = columnName.split(',')[1];
     }
 
     private notes: string;
@@ -661,7 +687,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     btnAdd_Click(item) {
-        this.SelectedItem = item.IsMultipleSelection ? new DWObjectFieldsDetails(item) : item;
+        this.SelectedItem = item.IsMultipleSelection || item.UseUnitSelection ? new DWObjectFieldsDetails(item) : item;
 
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
 
@@ -705,7 +731,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     private MatchAddColumnConditions(myCurrentItem: DWObjectFieldsDetails[]) {
-        return this.SelectedItem && myCurrentItem && (myCurrentItem.length == 0 || (this.SelectedItem.IsMultipleSelection && !this.IsExistColumnName(myCurrentItem)));
+        return this.SelectedItem && myCurrentItem && (myCurrentItem.length == 0 || ((this.SelectedItem.IsMultipleSelection || this.SelectedItem.UseUnitSelection) && !this.IsExistColumnName(myCurrentItem)));
     }
 
     IsExistColumnName(myCurrentItem: DWObjectFieldsDetails[]) {
@@ -770,7 +796,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             return;
         }
 
-        var selectedItem = item.IsMultipleSelection ? new DWObjectFieldsDetails(item) : item;
+        var selectedItem = item.IsMultipleSelection || item.UseUnitSelection ? new DWObjectFieldsDetails(item) : item;
         var isChargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == selectedItem.DisplayName)[0] ? true : false
 
         if (isChargesFactMeasurementField && !this.hasShipmentOrMasterNumberField() && (this.FactTableName == "Fact_Charges" || this.FactTableName == "Fact_MasterCharges")) {
@@ -1292,6 +1318,8 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                 view.DisplayName = field.DisplayName;
                 view.DimensionTableDisplayName = field.DimensionTableDisplayName;
                 view.IsMultipleSelection = field.IsMultipleSelection;
+                view.UseUnitSelection = field.UseUnitSelection;
+                view.SelectedUnitCode = field.SelectedUnitCode;
                 view.MultiSelectedValueLists = this.MapMultiSelectedValueLists(field.MultiSelectedValueLists);
 
                 view.ParentCode = field.ParentCode;

@@ -42,6 +42,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.ViewFieldDisplayName = entityPM.ViewFieldDisplayName;
             entityPOCO.DimensionDataViewName = entityPM.DimensionDataViewName;
             entityPOCO.IsMultipleSelection = entityPM.IsMultipleSelection;
+            entityPOCO.UseUnitSelection = entityPM.UseUnitSelection;
             entityPOCO.RecordType = entityPM.RecordType;
 
 
