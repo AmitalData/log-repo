@@ -15,6 +15,7 @@ using Simplog.Data.QuoteModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Logitude.TariffModule.BL.Helpers
 {
@@ -55,7 +56,7 @@ namespace Logitude.TariffModule.BL.Helpers
             foreach (TariffLine tariffLine in tariffLines)
             {
                 Tariff tariff = tariffs.Where(d => d.Id == tariffLine.TariffId).FirstOrDefault();
-                this.CreateQuoteChargeFromCustomChargesLine(tariffLine, tariff);
+                this.CreateQuoteChargeFromLocalChargesLine(tariffLine, tariff);
                 this.SalesLocalChargesTariffSearchArgs.SalesLocalCharges.AddRange(this.localCharges);
             }
 
@@ -102,8 +103,6 @@ namespace Logitude.TariffModule.BL.Helpers
             this.TEU = this.quote.TEU;
             tariffPricesHelper.profitCurrencyId = this.quote.ProfitCurrencyId;
             tariffPricesHelper.profitRate = this.quote.ProfitExchangeRate;
-            this.GetQuotePackages();
-
         }
 
         private void GetCustomer()
@@ -140,24 +139,25 @@ namespace Logitude.TariffModule.BL.Helpers
             var customerGroupName = customerGroupRepository.GetGeneralCustomerGroupName(tenant, customerGroupId);
             return customerGroupName;
         }
-        private void GetQuotePackages()
-        {
-            QuotePackageRepository quotePackageRepository = new QuotePackageRepository(tenant);
-            this.FCLQuotePackages = quotePackageRepository.GetQuotePackagesForQuoteTenant(SalesLocalChargesTariffSearchArgs.QuoteId, tenant)
-                .Where(a => a.PackageType != null && a.PackageType.IsContainer).ToList();
-        }
+
         private void FillBCNTGroupedList()
         {
-            if (this.FCLQuotePackages.Count > 0)
+            for (int i = 1; i <= 5; i++)
             {
-                foreach (QuotePackage item in this.FCLQuotePackages)
+                PropertyInfo packageTypePropInfo = quote.GetType().GetProperty("PackageType" + i + "Id");
+                var packageTypePricevalue = (string)packageTypePropInfo.GetValue(quote);
+
+                PropertyInfo packageTypeQuantityPropInfo = quote.GetType().GetProperty("PackageType" + i + "Quantity");
+                var packageTypeQuantityPropValue = (int?)packageTypeQuantityPropInfo.GetValue(quote);
+
+                if (packageTypePricevalue != null)
                 {
-                    var itemGrouped = BCNTGroupedList.Where(f => f.PackageTypeId == item.PackageTypeId).FirstOrDefault();
+                    var itemGrouped = BCNTGroupedList.Where(f => f.PackageTypeId == packageTypePricevalue).FirstOrDefault();
                     if (itemGrouped == null)
                     {
                         itemGrouped = new ByPckageType();
-                        itemGrouped.PackageTypeId = item.PackageTypeId;
-                        itemGrouped.Quantity = item.Quantity;
+                        itemGrouped.PackageTypeId = packageTypePricevalue;
+                        itemGrouped.Quantity = packageTypeQuantityPropValue;
 
                         if (itemGrouped.Quantity == null)
                         {
@@ -169,9 +169,9 @@ namespace Logitude.TariffModule.BL.Helpers
 
                     else
                     {
-                        if (item.Quantity != null)
+                        if (packageTypeQuantityPropValue != null)
                         {
-                            itemGrouped.Quantity += item.Quantity;
+                            itemGrouped.Quantity += packageTypeQuantityPropValue;
                         }
                     }
                 }
@@ -249,11 +249,11 @@ namespace Logitude.TariffModule.BL.Helpers
                 tariffLines = tariffLines.Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(dateFilter)
                                && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(dateFilter)) : true));
 
-                TariffLine customChargesLine = this.FilterTariffLines(tariffLines);
+                TariffLine localChargesLine = this.FilterTariffLines(tariffLines);
 
-                if (customChargesLine != null)
+                if (localChargesLine != null)
                 {
-                    myResult.Add(customChargesLine);
+                    myResult.Add(localChargesLine);
                 }
             }
 
@@ -311,7 +311,7 @@ namespace Logitude.TariffModule.BL.Helpers
             IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.ToCountryId == SalesLocalChargesTariffSearchArgs.ToCountryId);
             return filteredLines.FirstOrDefault();
         }
-        private void CreateQuoteChargeFromCustomChargesLine(TariffLine tariffLine, Tariff tariff)
+        private void CreateQuoteChargeFromLocalChargesLine(TariffLine tariffLine, Tariff tariff)
         {
             this.localCharges = new List<SalesLocalCharges>();
 
@@ -326,7 +326,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
                 if (measurement.Code == "BCNT")
                 {
-                    this.HandleMeasurement_BCNT(tariff, tariffLine, i);
+                    this.HandleMeasurement_BCNT(tariff, tariffLine, measurement, i);
                 }
 
                 else
@@ -335,94 +335,83 @@ namespace Logitude.TariffModule.BL.Helpers
                 }
             }
         }
-        private void HandleMeasurement_BCNT(Tariff tariff, TariffLine tariffLine, int index)
+        private void HandleMeasurement_BCNT(Tariff tariff, TariffLine tariffLine, Measurement measurement, int index)
         {
             string chargeId = (string)tariff.GetType().GetProperty("Surcharge" + index + "Id").GetValue(tariff);
             ChargesType chargesType = this.commonContext.ChargesTypes.Where(p => p.Tenant == tariff.Tenant && p.Id == chargeId).FirstOrDefault();
             if (chargesType != null)
             {
-                foreach (ByPckageType byPckageType in BCNTGroupedList)
+                if (measurement != null)
                 {
-                    Measurement measurement = null;
-                    PackageType packageType = this.commonContext.PackageTypes.Where(p => p.Tenant == tenant && p.Id == byPckageType.PackageTypeId).FirstOrDefault();
-                    if (packageType != null)
+                    decimal? tariffChargePrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + index + "Price").GetValue(tariffLine);
+                    decimal? tariffChargeMinPrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + index + "MinPrice").GetValue(tariffLine);
+                    double? price = null;
+                    double? minAmount = null;
+
+                    if (tariffChargePrice != null)
                     {
-                        measurement = this.commonContext.Measurements.Where(p => p.Tenant == tenant && p.Id == packageType.MeasurementId).FirstOrDefault();
+                        price = Convert.ToDouble(tariffChargePrice);
                     }
 
-                    if (measurement != null)
+                    if (tariffChargeMinPrice != null)
                     {
-                        decimal? tariffChargePrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + index + "Price").GetValue(tariffLine);
-                        decimal? tariffChargeMinPrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + index + "MinPrice").GetValue(tariffLine);
-                        double? price = null;
-                        double? minAmount = null;
+                        minAmount = Convert.ToDouble(tariffChargeMinPrice);
+                    }
 
-                        if (tariffChargePrice != null)
+                    if (price != null)
+                    {
+                        SalesLocalCharges localCharge = new SalesLocalCharges()
                         {
-                            price = Convert.ToDouble(tariffChargePrice);
+                            TariffId = tariff.Id,
+                            TariffNumber = tariff.TariffNumber,
+                            TariffLineId = tariffLine.Id,
+                            VersionId = tariffLine.Version,
+                            ChargeTypeCode = chargesType.Code,
+                            ChargeTypeName = chargesType.EnglishName,
+                            ChargeTypeId = chargesType.Id,
+                            UnitOfMesurmentCode = measurement.Code,
+                            UnitOfMesurmentId = measurement.Id,
+                            IsDifferentCurrency = tariffLine.IsDifferentCurrenciesPerCharge,
+                            Notes = tariffLine.Notes,
+                            SellerId = tariff.SellerId,
+                            SellerName = tariff.Seller?.EnglishName,
+                            CurrencyId = tariffLine.CurrencyId != null ? tariffLine.CurrencyId : tariff.CurrencyId,
+                        };
+
+                        if (tariffLine.IsDifferentCurrenciesPerCharge)
+                        {
+                            localCharge.CurrencyId = (string)tariffLine.GetType().GetProperty("Surcharge" + index + "CurrencyId").GetValue(tariffLine);
                         }
 
-                        if (tariffChargeMinPrice != null)
+                        Currency currency = this.commonContext.Currencies.Where(p => p.Tenant == tariff.Tenant && p.Id == localCharge.CurrencyId).FirstOrDefault();
+                        localCharge.CurrencyCode = currency?.Code;
+                        localCharge.Rate = tariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, SalesLocalChargesTariffSearchArgs.LocalCurrencyId);
+                        localCharge.Price = tariffPricesHelper.Round(price, 3);
+
+                        double? expectedAmount = 0;
+
+                        if (measurement.Code == "PRVL" || measurement.Code == "PRFR")
                         {
-                            minAmount = Convert.ToDouble(tariffChargeMinPrice);
+                            expectedAmount = localCharge.Quantity * (price / 100);
+                        }
+                        else
+                        {
+                            expectedAmount = price * localCharge.Quantity;
                         }
 
-                        if (price != null)
+                        if (minAmount != null)
                         {
-                            SalesLocalCharges localCharge = new SalesLocalCharges()
+                            if (minAmount > expectedAmount)
                             {
-                                TariffId = tariff.Id,
-                                TariffNumber = tariff.TariffNumber,
-                                TariffLineId = tariffLine.Id,
-                                VersionId = tariffLine.Version,
-                                ChargeTypeCode = chargesType.Code,
-                                ChargeTypeName = chargesType.EnglishName,
-                                ChargeTypeId = chargesType.Id,
-                                UnitOfMesurmentCode = measurement.Code,
-                                UnitOfMesurmentId = measurement.Id,
-                                IsDifferentCurrency = tariffLine.IsDifferentCurrenciesPerCharge,
-                                Notes = tariffLine.Notes,
-                                SellerId = tariff.SellerId,
-                                SellerName = tariff.Seller?.EnglishName,
-                                CurrencyId = tariffLine.CurrencyId != null ? tariffLine.CurrencyId : tariff.CurrencyId,
-                                Quantity = byPckageType.Quantity,
-                            };
-
-                            if (tariffLine.IsDifferentCurrenciesPerCharge)
-                            {
-                                localCharge.CurrencyId = (string)tariffLine.GetType().GetProperty("Surcharge" + index + "CurrencyId").GetValue(tariffLine);
+                                expectedAmount = minAmount;
+                                localCharge.MinAmount = minAmount;
                             }
-
-                            Currency currency = this.commonContext.Currencies.Where(p => p.Tenant == tariff.Tenant && p.Id == localCharge.CurrencyId).FirstOrDefault();
-                            localCharge.CurrencyCode = currency?.Code;
-                            localCharge.Rate = tariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, SalesLocalChargesTariffSearchArgs.LocalCurrencyId);
-                            localCharge.Price = tariffPricesHelper.Round(price, 3);
-
-                            double? expectedAmount = 0;
-
-                            if (measurement.Code == "PRVL" || measurement.Code == "PRFR")
-                            {
-                                expectedAmount = localCharge.Quantity * (price / 100);
-                            }
-                            else
-                            {
-                                expectedAmount = price * localCharge.Quantity;
-                            }
-
-                            if (minAmount != null)
-                            {
-                                if (minAmount > expectedAmount)
-                                {
-                                    expectedAmount = minAmount;
-                                    localCharge.MinAmount = minAmount;
-                                }
-                            }
-
-                            localCharge.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
-                            localCharge.LocalExpectedAmount = tariffPricesHelper.CalculateLocalAmount(expectedAmount, localCharge.Rate);
-                            localCharge.ProfitExpectedAmount = tariffPricesHelper.CalculateProfitAmount(expectedAmount, localCharge.LocalExpectedAmount, localCharge.CurrencyId);
-                            localCharges.Add(localCharge);
                         }
+
+                        localCharge.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
+                        localCharge.LocalExpectedAmount = tariffPricesHelper.CalculateLocalAmount(expectedAmount, localCharge.Rate);
+                        localCharge.ProfitExpectedAmount = tariffPricesHelper.CalculateProfitAmount(expectedAmount, localCharge.LocalExpectedAmount, localCharge.CurrencyId);
+                        localCharges.Add(localCharge);
                     }
                 }
             }
