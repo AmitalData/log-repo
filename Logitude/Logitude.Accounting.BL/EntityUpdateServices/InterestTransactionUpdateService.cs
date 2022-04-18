@@ -1,6 +1,9 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +26,31 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             entityPM.UpdateDateTime = DateTime.UtcNow;
         }
+
+        protected override void AfterUpdating(InterestTransactionPM entityPM, EntityPM entityParentPM)
+        {
+            BuildSearchField(entityPM);
+        }
+
+        private void BuildSearchField(InterestTransactionPM entityPM)
+        {
+            InterestTransactionList entityList = GetEntityList(entityPM);
+
+            string searchFields = "";
+
+            MethodHelper.AddToSearchFields(ref searchFields, entityList.JournalNumber);
+            MethodHelper.AddToSearchFields(ref searchFields, entityList.Source);
+
+            entityPM.SearchFields = searchFields;
+        }
+
+        private InterestTransactionList GetEntityList(InterestTransactionPM entityPM)
+        {
+            InterestTransactionListQueryService listQuery = new InterestTransactionListQueryService(currentContext);
+            var entityList = listQuery.GetSingle(entityPM.Id, entityPM.Tenant);
+            return entityList;
+        }
+
 
     }
 }
