@@ -63,6 +63,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                UpdateDate = a.UpdateDate,
                                                CreatedByUserId = a.CreatedByUserId,
                                                UpdatedByUserId = a.UpdatedByUserId,
+                                               Code = a.Code,
                                            }).FirstOrDefault();
 
             return customerTeam;
@@ -83,6 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            UpdateDate = a.UpdateDate,
                                                            CreatedByUserId = a.CreatedByUserId,
                                                            UpdatedByUserId = a.UpdatedByUserId,
+                                                           Code = a.Code,
                                                        };
 
             return customerTeams;
@@ -103,8 +105,30 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  UpdateDate = a.UpdateDate,
                                                  CreatedByUserId = a.CreatedByUserId,
                                                  UpdatedByUserId = a.UpdatedByUserId,
+                                                 Code = a.Code,
                                              };
             return result;
+        }
+
+        public CustomerTeamPM GetSinglePMByCode(string code, int tenant)
+        {
+            CustomerTeamPM customerTeam = (from a in repository.context.CustomerTeams
+                                           where a.Code == code && a.Tenant == tenant
+                                           select new CustomerTeamPM()
+                                           {
+                                               Id = a.Id,
+                                               Tenant = a.Tenant,
+                                               Name = a.Name,
+                                               LocalName = a.LocalName,
+                                               InActive = a.InActive,
+                                               CreateDate = a.CreateDate,
+                                               UpdateDate = a.UpdateDate,
+                                               CreatedByUserId = a.CreatedByUserId,
+                                               UpdatedByUserId = a.UpdatedByUserId,
+                                               Code = a.Code,
+                                           }).FirstOrDefault();
+
+            return customerTeam;
         }
     }
 }

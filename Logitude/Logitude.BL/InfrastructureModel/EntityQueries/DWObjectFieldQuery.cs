@@ -62,6 +62,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    DontDisplayInView = a.DontDisplayInView,
                                                    DimensionDataViewName  = a.DimensionDataViewName,
                                                    IsMultipleSelection = a.IsMultipleSelection,
+                                                   UseUnitSelection = a.UseUnitSelection,
                                                    RecordType = a.RecordType,
                                                }).FirstOrDefault();
 
@@ -111,6 +112,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
                         IsMultipleSelection = a.IsMultipleSelection,
+                        UseUnitSelection = a.UseUnitSelection,
                         RecordType = a.RecordType,
 
 
@@ -149,6 +151,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                 DontDisplayInView = a.DontDisplayInView,
                                                 DimensionDataViewName = a.DimensionDataViewName,
                                                 IsMultipleSelection = a.IsMultipleSelection,
+                                                UseUnitSelection = a.UseUnitSelection,
                                                 RecordType = a.RecordType,
 
 
@@ -234,6 +237,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 DontDisplayInView = a.DontDisplayInView,
                                 DimensionDataViewName = a.DimensionDataViewName,
                                 IsMultipleSelection = a.IsMultipleSelection,
+                                UseUnitSelection = a.UseUnitSelection,
                                 RecordType = a.RecordType,
 
 
@@ -272,6 +276,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 DontDisplayInView = item.DontDisplayInView,
                 DimensionDataViewName = item.DimensionDataViewName,
                 IsMultipleSelection = item.IsMultipleSelection,
+                UseUnitSelection = item.UseUnitSelection,
                 RecordType = item.RecordType,
                 FactTableCode = dwotCode,
 
@@ -309,6 +314,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                         DontDisplayInView = a.DontDisplayInView,
                                                                         DimensionDataViewName = a.DimensionDataViewName,
                                                                         IsMultipleSelection = a.IsMultipleSelection,
+                                                                        UseUnitSelection = a.UseUnitSelection,
                                                                         RecordType = a.RecordType,
 
 
@@ -349,6 +355,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
                         IsMultipleSelection = a.IsMultipleSelection,
+                        UseUnitSelection = a.UseUnitSelection,
                         RecordType = a.RecordType,
 
 
@@ -388,6 +395,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
                         IsMultipleSelection = a.IsMultipleSelection,
+                        UseUnitSelection = a.UseUnitSelection,
                         RecordType = a.RecordType,
 
 
@@ -425,6 +433,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        DontDisplayInView = a.DontDisplayInView,
                                                        DimensionDataViewName = a.DimensionDataViewName,
                                                        IsMultipleSelection = a.IsMultipleSelection,
+                                                       UseUnitSelection = a.UseUnitSelection,
                                                        RecordType = a.RecordType,
 
 
@@ -473,6 +482,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
                         IsMultipleSelection = a.IsMultipleSelection,
+                        UseUnitSelection = a.UseUnitSelection,
                         RecordType = a.RecordType,
 
 
@@ -524,6 +534,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
                         IsMultipleSelection = a.IsMultipleSelection,
+                        UseUnitSelection = a.UseUnitSelection,
                         RecordType = a.RecordType,
 
 
@@ -569,6 +580,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  DontDisplayInView = a.DontDisplayInView,
                                                  DimensionDataViewName = a.DimensionDataViewName,
                                                  IsMultipleSelection = a.IsMultipleSelection,
+                                                 UseUnitSelection = a.UseUnitSelection,
                                                  RecordType = a.RecordType,
 
 

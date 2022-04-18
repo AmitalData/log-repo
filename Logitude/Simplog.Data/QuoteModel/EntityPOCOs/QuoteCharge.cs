@@ -44,6 +44,10 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string TariffNumber { get; set; }
         public string TariffLineId { get; set; }
         public int TariffVersion { get; set; }
+        public string SaleTariffId { get; set; }
+        public string SaleTariffNumber { get; set; }
+        public string SaleTariffLineId { get; set; }
+        public int SaleTariffVersion { get; set; }
 
         // Sale                
         public string SaleCurrencyId { get; set; }

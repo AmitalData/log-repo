@@ -116,8 +116,8 @@
                     </table>
                 </div>
 
-                <div class="SimpleGridViewBody" style="bottom:25px;">
-                    <table *ngIf="!this.showShipmentOrderPackages"> 
+                <div class="SimpleGridViewBody" style="bottom:25px;" *ngIf="!this.showShipmentOrderPackages">
+                    <table> 
                         <ng-container *ngIf="this.ShipmentPM && this.ShipmentPM.ShipmentPackages.length != 0">
                             <tr class="SimpleGridViewRow bg" *ngFor="let item of ShipmentPM.ShipmentPackages; let i=index;">
 
@@ -163,8 +163,8 @@
                     </table>
                 </div>
 
-                <div class="SimpleGridViewBody" style="bottom:25px;">
-                    <table *ngIf="this.showShipmentOrderPackages">
+                <div class="SimpleGridViewBody" style="bottom:25px;" *ngIf="this.showShipmentOrderPackages">
+                    <table>
                         <ng-container *ngIf="this.ShipmentPM && this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length !=0">
 
                             <tr class="SimpleGridViewRow bg" *ngFor="let item of ShipmentPM.ShipmentOrderPackages; let i=index;">

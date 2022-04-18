@@ -71,7 +71,6 @@ export class SharedLogisticsMainComponent implements OnInit {
     LastMonthAgentIsEnabled: boolean;
 
     TitleSettings: string;
-    TitleStatus: string;
     SharedTitleType: string;
     public LastPartnersList: LastLoginPartners[];
     public SelectLastPartnersList: LastLoginPartners;
@@ -89,9 +88,8 @@ export class SharedLogisticsMainComponent implements OnInit {
     public DisplayObjectTableInviteName: string = "Customers";
     private InviteQueryCode: string = "Shared Logistics Customers";
     public IsShowDisplaySetting: boolean = false;
-    public IsShowActivatedMobileArea: boolean = false;
     public IsShowAgentStatisticsArea: boolean = false;
-    public ActivatedLabel = "Activated Shared Logistics";
+
     constructor(public _sharedLogisticsService: SharedLogisticsService, public _documentTypeListService: DocumentTypeListService) {
         if (this.tenantPMService == null) {
             this.tenantPMService = new TenantPMService();
@@ -123,7 +121,6 @@ export class SharedLogisticsMainComponent implements OnInit {
         if (this.SharedTitleType == "CTool") return;
         this.LastMonthAccessVisibility = this.LastActivityVisibility = true;
         this.IsShowDisplaySetting = true;
-        this.IsShowActivatedMobileArea = true;
         this.IsShowAgentStatisticsArea = true;
         
 
@@ -131,6 +128,30 @@ export class SharedLogisticsMainComponent implements OnInit {
 
     GetInviteToolTipMessage() {
         return this.IsCtoolSetting ? "View shows all partners except customers" : "";
+    }
+
+    public get IsCargoTracking(): boolean {
+        return this.SharedTitleType == "CargoTracking";
+    }
+
+    public get IsShowActivatedMobileArea(): boolean {
+        if (this.SharedTitleType == "CTool" || this.SharedTitleType == "CargoTracking") return false;
+        return true;
+    }
+
+    public get TitleStatus(): string {
+        if (this.SharedTitleType == "CTool") return "CTool Status";
+        if (this.SharedTitleType == "CargoTracking") return "Cargo Tracking";
+        if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) return "Shared Logistics & Mobile Status";
+        if (FeatureLocator.HasFeaturePermession("General", "MOBILE")) return "Mobile Status";
+        if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) return "Shared Logistics Status";
+        return "Shared Logistics Status";
+    }
+
+    public get ActivatedLabel(): string {
+        if (this.SharedTitleType == "CTool") return "Activated Ctool";
+        if (this.SharedTitleType == "CargoTracking") return "Activated Cargo Tracking";
+        return "Activated Shared Logistics";
     }
 
     SetTitles() {
@@ -149,19 +170,9 @@ export class SharedLogisticsMainComponent implements OnInit {
                 this.TitleSettings = "Shared Logistics Settings";
         }
 
-        if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
-            this.TitleStatus = "Shared Logistics & Mobile Status";
-        else if (FeatureLocator.HasFeaturePermession("General", "MOBILE"))
-            this.TitleStatus = "Mobile Status";
-        else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
-            this.TitleStatus = "Shared Logistics Status";
-
-
         if (this.SharedTitleType != "CTool") return;
         this.TitleSettings = "CTool Settings";
         this.InviteLinkLable = "Invite CTool Partners";
-        this.TitleStatus = "CTool Status";
-        this.ActivatedLabel = "Activated Ctool";
 
     }
 

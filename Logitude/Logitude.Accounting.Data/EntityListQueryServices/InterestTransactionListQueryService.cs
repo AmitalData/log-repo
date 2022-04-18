@@ -16,6 +16,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -27,7 +28,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<InterestTransactionList> query
                 = (from interestTransaction in interestTransactionQuery.Include("InterestEntityType")
 
-                   join journal in context.Journals
+                   join journal in context.Journals.Include("AccountingEntity")
                    on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.InterestEntityType.AccountingEntityCode } equals
                       new { journal.AccountingEntityId, journal.AccountingEntityCode }
                       
@@ -61,6 +62,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        AccountingDate = journal.AccountingDate,
 
                        Source = journal.AccountingEntityReference,
+                       SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
                        SourceTypeCode = journal.AccountingEntityCode,
                        SourceId = journal.AccountingEntityId
 
@@ -103,6 +105,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        JournalNumber = interestTransaction.JournalNumber,
                        Source = interestTransaction.Source,
                        SourceTypeCode = interestTransaction.SourceTypeCode,
+                       SourceType = interestTransaction.SourceType,
                        SourceId = interestTransaction.SourceId,
                        AccountingDate = interestTransaction.AccountingDate,
 
@@ -111,6 +114,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return list;
         }
 
+        public InterestTransactionList GetSingle(string id,int tenant)
+        {
+            var repository = new InterestTransactionRepository(tenant);
+            var transactions = repository.GetAll(tenant);
+
+            var transactionQuery = GetIqueryableList(transactions, tenant).Where(d => d.Id == id).ToList();
+            var transaction = MapListQuery(transactionQuery, tenant).FirstOrDefault();
+            return transaction;
+        }
 
 
 

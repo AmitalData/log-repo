@@ -92,6 +92,10 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.TariffNumber = itemPM.TariffNumber;
             itemPoco.TariffLineId = itemPM.TariffLineId;
             itemPoco.TariffVersion = itemPM.TariffVersion;
+            itemPoco.SaleTariffId = itemPM.SaleTariffId;
+            itemPoco.SaleTariffNumber = itemPM.SaleTariffNumber;
+            itemPoco.SaleTariffLineId = itemPM.SaleTariffLineId;
+            itemPoco.SaleTariffVersion = itemPM.SaleTariffVersion;
             itemPoco.IsRegionalTax = itemPM.IsRegionalTax;
             itemPoco.VATAmountInLocalCurrency = itemPM.VATAmountInLocalCurrency;
             itemPoco.VATAmountInQuoteSaleCurrency = itemPM.VATAmountInQuoteSaleCurrency;

@@ -305,6 +305,7 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
 
             case "2": { journalEntityId = "1"; EntityPMId = this.EntityPM.AccountingEntityId } break;//	חשבונית ספקARInvoice
             case "3": { journalEntityId = "2"; EntityPMId = this.EntityPM.AccountingEntityId } break;//	תשלום לספקARPayment
+            case "10": { journalEntityId = "5"; } break;
             default:
                 { journalEntityId = "3"; } break;
 

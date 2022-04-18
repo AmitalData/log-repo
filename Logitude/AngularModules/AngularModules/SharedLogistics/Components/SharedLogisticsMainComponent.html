@@ -183,7 +183,7 @@ Test:hover {
                                                                 <tr style="height:41px;text-align:center;background-color:#EBEBEB"><td style="text-align:center"><p   style="font-size:20px;text-align:center;color:gray" (click)="AgentsZoomLinkClcik('activated')">0</p></td></tr>
 
 
-                                                                <tr *ngIf="MobileActivatedEnabled" style="border:1px solid #EBEBEB;border-bottom-left-radius:2px;border-bottom-right-radius:2px;height:41px;color:gray;text-align:center;background-color:#EBEBEB"><td style="text-align:center"><p  style="font-size:20px;text-align:center;" (click)="AgentsZoomLinkClcik('activatedmobile')">0</p></td></tr>
+                                                                <tr *ngIf="MobileActivatedEnabled  && IsShowActivatedMobileArea" style="border:1px solid #EBEBEB;border-bottom-left-radius:2px;border-bottom-right-radius:2px;height:41px;color:gray;text-align:center;background-color:#EBEBEB"><td style="text-align:center"><p  style="font-size:20px;text-align:center;" (click)="AgentsZoomLinkClcik('activatedmobile')">0</p></td></tr>
 
                                                     
                                                             </table>
@@ -399,7 +399,7 @@ Test:hover {
 
                                                 </tr>
                                                 <tr style="height:10px;"><td colspan="8"><div></div></td></tr>
-                                                <tr style="height:60px">
+                                                <tr style="height:60px" *ngIf="!IsCargoTracking">
                                                     <td style="width:20px"><div></div></td>
                                                     <td style="width:90px"><div style="font-size:15px">Agents</div></td>
                                                     <td style="width:8px"><div></div></td>

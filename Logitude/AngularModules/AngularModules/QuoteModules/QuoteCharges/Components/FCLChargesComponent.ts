@@ -24,6 +24,8 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 import { QuoteChargesBehaviours } from '../Behaviours/QuoteChargesBehaviours';
 import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { TariffDomainService, SalesLocalCharges, SalesLocalChargesTariffSearchArgs } from '../../../TariffModule/Services/TariffDomainService';
 
 @Component({
     selector: 'FCLChargesComponent',    
@@ -44,7 +46,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public IsPriceCheckVisible: boolean = false;
     private entityResourceService: EntityResourceService = new EntityResourceService();;
     public ComponentRef: any;
-
+    private TariffList_Quote: QuoteChargePM[];
     private CurrentSession = SessionLocator.SelectedSession;
     public HideFCLAllIn: boolean = false;
     public IsAllowingMultipleFreightCharges: boolean = false;
@@ -52,6 +54,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.TariffList_Quote = [];
         this.TransportModeId = this.EntityPM.TransportModeId;
         this.IsAdhoc = this.EntityPM.QuoteTypeCode == "A" ? true : false;
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
@@ -130,6 +133,11 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
+
+                    if (this.IsGenerateSalesLocalCharges) {
+                        this.IsGenerateSalesLocalCharges = false;
+                        this.GenerateSalesLocalCharges();
+                    }
                 }
             });
 
@@ -605,6 +613,269 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });
     }
+
+    private IsGenerateSalesLocalCharges = false;
+    GenerateSalesLocalChargesClicked() {
+        this.IsGenerateSalesLocalCharges = true;
+        this.entityArgs.EditComponent.SaveChanges();
+    }
+
+    GenerateSalesLocalCharges() {
+        var args = this.TariffBehaviours.GenerateSalesLocalCharges();
+        var tariffService: TariffDomainService = new TariffDomainService();
+        tariffService.GetAvailableSalesLocalChargesTariffs(args).subscribe((res: ServiceResponse) => {
+            if (!res.HasError && res.Result) {
+                var error = res.Result.Error;
+                if (error != null) {
+                    var msg = new MessageWindow();
+                    msg.Show(error);
+                }
+                else {
+                    var saleLocalCharges = res.Result.SalesLocalCharges;
+                    this.CreateQuoteSalesLocalCharges(saleLocalCharges);
+                }
+            }
+            else {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = res.ErrorsArray;
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    CreateQuoteSalesLocalCharges(tariffCharges) {
+        this.TariffList_Quote = [];
+        this.SetContainersInitialValues_Quotes();
+        if (tariffCharges != null) {
+            tariffCharges.forEach((localCharge: SalesLocalCharges) => {
+                this.GenerateNewTariffQuoteCharge(localCharge);
+            });
+
+            this.TariffList_Quote.forEach((localCharge: QuoteChargePM) => {
+                this.AddTariffChargesToQuote_FCL(localCharge);
+            });
+        }
+        this.BuildItemsSource();
+        this.IsAllowingMultipleFreightChargesMethod();
+    }
+
+    ContainerType1Id: string;
+    ContainerType2Id: string;
+    ContainerType3Id: string;
+    ContainerType4Id: string;
+    ContainerType5Id: string;
+    Quantity1: number;
+    Quantity2: number;
+    Quantity3: number;
+    Quantity4: number;
+    Quantity5: number;
+    private SetContainersInitialValues_Quotes() {
+        this.ContainerType1Id = this.EntityPM.PackageType1Id;
+        this.ContainerType2Id = this.EntityPM.PackageType2Id;
+        this.ContainerType3Id = this.EntityPM.PackageType3Id;
+        this.ContainerType4Id = this.EntityPM.PackageType4Id;
+        this.ContainerType5Id = this.EntityPM.PackageType5Id;
+        this.Quantity1 = this.EntityPM.PackageType1Quantity;
+        this.Quantity2 = this.EntityPM.PackageType2Quantity;
+        this.Quantity3 = this.EntityPM.PackageType3Quantity;
+        this.Quantity4 = this.EntityPM.PackageType4Quantity;
+        this.Quantity5 = this.EntityPM.PackageType5Quantity;
+    }
+    GenerateNewTariffQuoteCharge(item: any) {
+        var quoteCharge: QuoteChargePM = this.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargeTypeId && d.SaleCurrencyId == item.CurrencyId && d.SaleMeasurementId == item.UnitOfMesurmentId && (d.SaleTariffId == item.TariffId || d.SaleTariffId == null))[0];
+        if (!quoteCharge) {
+            this.CreateNewTariffQuoteCharge(item);
+        }
+        else {
+            this.UpdateNewTariffQuoteCharge(item, quoteCharge);
+        }
+    }
+    CreateNewTariffQuoteCharge(item: any) {
+        this.Behaviours.ChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var chargesType: ChargesTypeList = myResponse.Result;
+                var chargePM = new QuoteChargePM(this.EntityPM);
+                chargePM.ChargesTypeId = item.ChargeTypeId;
+                chargePM.ChargesTypeCode = chargesType.Code;
+                chargePM.ChargesTypeName = chargesType.EnglishName;
+                chargePM.ChargesTypeLocalName = chargesType.LocalName;
+                chargePM.SaleTariffId = item.TariffId;
+                chargePM.SaleTariffNumber = item.TariffNumber;
+                chargePM.SaleTariffLineId = item.LineId;
+                chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
+                chargePM.Tenant = this.EntityPM.Tenant;
+                chargePM.QuoteId = this.EntityPM.Id;
+                chargePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+                chargePM.MarkUpTypeCode = "F";
+                chargePM.MarkUpValue = 0;
+                chargePM.QuoteTypeCode = this.EntityPM.QuoteTypeCode;
+                chargePM.CostCurrencyId = item.CurrencyId;
+                chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
+                chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
+                chargePM.SaleCurrencyId = item.CurrencyId;
+                chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
+                chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
+                chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
+
+                var measurementCode = item.UnitOfMesurmentCode;
+                var measurementId = item.UnitOfMesurmentId;
+                if (!item.IsAllIn) {
+                    chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
+                    var saleAmount = AppTool.Round(item.Price, 3);
+                    chargePM.SaleTotalAmount = saleAmount;
+                    if (measurementCode != 'FIXD' && measurementCode != 'BTEU') {
+                        this.FillQuoteFCLCharges(this.ContainerType1Id, chargePM, item);
+                        this.FillQuoteFCLCharges(this.ContainerType2Id, chargePM, item);
+                        this.FillQuoteFCLCharges(this.ContainerType3Id, chargePM, item);
+                        this.FillQuoteFCLCharges(this.ContainerType4Id, chargePM, item);
+                        this.FillQuoteFCLCharges(this.ContainerType5Id, chargePM, item);
+                    }
+                    else {
+                        if (measurementCode == 'FIXD') {
+                            chargePM.SaleUnitPrice = item.Price;
+                            chargePM.SaleQuantity = 1;
+                        }
+                        else {
+                            chargePM.SaleUnitPrice = item.Price;
+                            chargePM.SaleQuantity = this.EntityPM.TEU;
+                        }
+                    }
+                }
+                chargePM.SaleMeasurementCode = measurementCode;
+                chargePM.SaleMeasurementId = measurementId;
+                chargePM.CostMeasurementCode = measurementCode;
+                chargePM.CostMeasurementId = measurementId;
+                chargePM.VendorId = item.SellerId;
+                chargePM.VendorName = item.SellerName;
+                chargePM.IsAllIN = item.IsAllIn;
+                this.TariffList_Quote.push(chargePM);
+            }
+        });
+    }
+
+    FillQuoteFCLCharges(packageId: string, chargePM: QuoteChargePM, item: any) {
+        var saleAmount: number = AppTool.Round(item.Price, 3);
+        var quantity: number;
+
+        if (item.ContainersPrices) {
+            var container = item.ContainersPrices.filter(d => d.TariffId == item.TariffId && d.ContainerId == packageId)[0];
+            if (container) {
+                quantity = container.Quantity;
+                saleAmount = container.Price;
+            }
+
+            else {
+                saleAmount = 0;
+            }
+        }
+
+        if (packageId == this.EntityPM.PackageType1Id) {
+            chargePM.CostContainerType1UnitPrice = saleAmount;
+        }
+        else if (packageId == this.EntityPM.PackageType2Id) {
+            chargePM.CostContainerType2UnitPrice = saleAmount;
+        }
+        else if (packageId == this.EntityPM.PackageType3Id) {
+            chargePM.CostContainerType3UnitPrice = saleAmount;
+        }
+        else if (packageId == this.EntityPM.PackageType4Id) {
+            chargePM.CostContainerType4UnitPrice = saleAmount;
+        }
+        else if (packageId == this.EntityPM.PackageType5Id) {
+            chargePM.CostContainerType5UnitPrice = saleAmount;
+        }
+        else {
+            chargePM.SaleTotalAmount = saleAmount;
+        }
+
+        chargePM.CostQuantity = quantity;
+    }
+
+    UpdateNewTariffQuoteCharge(item: any, chargePM: QuoteChargePM) {
+        this.Behaviours.ChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var chargesType: ChargesTypeList = myResponse.Result;
+                chargePM.SaleTariffId = item.TariffId;
+                chargePM.SaleTariffNumber = item.TariffNumber;
+                chargePM.SaleTariffLineId = item.LineId;
+                chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
+                chargePM.Tenant = this.EntityPM.Tenant;
+                chargePM.QuoteId = this.EntityPM.Id;
+                chargePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+                chargePM.MarkUpTypeCode = "F";
+                chargePM.MarkUpValue = 0;
+                chargePM.QuoteTypeCode = this.EntityPM.QuoteTypeCode;
+                chargePM.CostCurrencyId = item.CurrencyId;
+                chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
+                chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
+                chargePM.SaleCurrencyId = item.CurrencyId;
+                chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
+                chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
+                chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
+
+                var measurementCode = item.UnitOfMesurmentCode;
+                var measurementId = item.UnitOfMesurmentId;
+                if (!item.IsAllIn) {
+                    chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
+                    var saleAmount = AppTool.Round(item.Price, 3);
+                    chargePM.SaleTotalAmount = saleAmount;
+                }
+                chargePM.SaleMeasurementCode = measurementCode;
+                chargePM.SaleMeasurementId = measurementId;
+                chargePM.CostMeasurementCode = measurementCode;
+                chargePM.CostMeasurementId = measurementId;
+                chargePM.VendorId = item.SellerId;
+                chargePM.VendorName = item.SellerName;
+                chargePM.IsAllIN = item.IsAllIn;
+            }
+        });
+    }
+    AddTariffChargesToQuote_FCL(localCharge) {
+        this.EntityPM.AddQuoteChargePM(localCharge);
+        var chargeItem: FCLQuoteChargeItem = new FCLQuoteChargeItem(localCharge, this, false);
+        var chargeId = localCharge.ChargesTypeId;
+        chargeItem.ChargesTypeId = chargeId;
+        chargeItem.CostMeasurementId = localCharge.CostMeasurementId;
+        chargeItem.CostCurrencyId = localCharge.CostCurrencyId;
+        chargeItem.CostTotalAmount = localCharge.CostTotalAmount;
+        chargeItem.CostMinAmount = localCharge.CostMinAmount;
+        chargeItem.CostExchangeRate = localCharge.CostExchangeRate;
+        chargeItem.SaleMeasurementId = localCharge.SaleMeasurementId;
+        chargeItem.SaleCurrencyId = localCharge.SaleCurrencyId;
+        chargeItem.SaleExchangeRate = localCharge.SaleExchangeRate;
+        chargeItem.ChargesGroupCode = localCharge.ChargesGroupCode;
+        chargeItem.IsAllIN = false;
+        chargeItem.CostContainerType1UnitPrice = localCharge.CostContainerType1UnitPrice;
+        chargeItem.CostContainerType2UnitPrice = localCharge.CostContainerType2UnitPrice;
+        chargeItem.CostContainerType3UnitPrice = localCharge.CostContainerType3UnitPrice;
+        chargeItem.CostContainerType4UnitPrice = localCharge.CostContainerType4UnitPrice;
+        chargeItem.CostContainerType5UnitPrice = localCharge.CostContainerType5UnitPrice;
+        var costAmount: number = localCharge.CostTotalAmount;
+        chargeItem.CostQuantity = localCharge.CostQuantity;
+        chargeItem.SaleQuantity = localCharge.CostQuantity;
+
+        var costQuantity: number = chargeItem.CostQuantity;
+        if (costQuantity != null && costQuantity != 0) {
+            if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
+                chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
+            }
+            else {
+                chargeItem.CostUnitPrice = (costAmount / costQuantity);
+            }
+            chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+        }
+        chargeItem.ComputeSalePrice();
+        chargeItem.ComputeSaleAmounts();
+        chargeItem.ComputeCostInSalePrice();
+        chargeItem.ComputeCostInSalePrice1();
+        chargeItem.ComputeCostInSalePrice2();
+        chargeItem.ComputeCostInSalePrice3();
+        chargeItem.ComputeCostInSalePrice4();
+        chargeItem.ComputeCostInSalePrice5();
+        chargeItem.ComputeCostInSaleAmount();
+        chargeItem.SetUIProperties_AllIn();
+        this.ItemsSource.Insert(chargeItem);
+    }
+
     GetTariffTye(): string {
         var type = "OFC";
         if (this.EntityPM.TransportModeId.toUpperCase() == "I" && this.EntityPM.ShipmentTypeId.toUpperCase() == "FTL")
@@ -636,6 +907,19 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             editWindow.ShowEditComponent(item.TariffId, "Tariff");
         }
     }
+    EditSaleTariffClicked(item: FCLQuoteChargeItem) {
+        if (item != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            var argumentsPriceCheck = { VersionId: item.SaleTariffVersion, LineId: item.SaleTariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
+            editWindow.EditComponentArguments = argumentsPriceCheck;
+            editWindow.ShowEditComponent(item.SaleTariffId, "Tariff");
+        }
+    }
+
     DeleteTariff(item: FCLQuoteChargeItem) {
         if (item != null) {
             item.TariffId = null;
@@ -2347,6 +2631,32 @@ export class FCLQuoteChargeItem extends BaseComponent {
         }
     }
 
+    get SaleTariffNumber() { return this.EntityPM.SaleTariffNumber; }
+    set SaleTariffNumber(value: string) {
+        if (value != this.EntityPM.SaleTariffNumber) {
+            this.EntityPM.SaleTariffNumber = value;
+        }
+    }
+    get SaleTariffId() {
+        return this.EntityPM.SaleTariffId;
+    }
+    set SaleTariffId(value: string) {
+        if (value != this.EntityPM.SaleTariffId) {
+            this.EntityPM.SaleTariffId = value;
+        }
+    }
+    get SaleTariffVersion() { return this.EntityPM.SaleTariffVersion; }
+    set SaleTariffVersion(value: number) {
+        if (value != this.EntityPM.SaleTariffVersion) {
+            this.EntityPM.SaleTariffVersion = value;
+        }
+    }
+    get SaleTariffLineId() { return this.EntityPM.SaleTariffLineId; }
+    set SaleTariffLineId(value: string) {
+        if (value != this.EntityPM.SaleTariffLineId) {
+            this.EntityPM.SaleTariffLineId = value;
+        }
+    }
     // InSaleCurrency
     get CostUnitPriceInSaleCurrency() { return this.EntityPM.CostUnitPriceInSaleCurrency; }
     set CostUnitPriceInSaleCurrency(value: number) {

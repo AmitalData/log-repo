@@ -529,6 +529,10 @@ namespace WebFreight.Web.Helpers
                     {
                         field.DimensionTableDisplayName = field.Name;
                     }
+                    if (IsUsedUnitSelection(field))
+                    {
+                        SelectStmt.Append(GetUnitSelectionFieldQuery(isMainSelectStmt, field));
+                    }
                     if (field.IsMeasurement)
                     {
                         if (!string.IsNullOrEmpty(field.DimensionTableDisplayName))
@@ -552,7 +556,7 @@ namespace WebFreight.Web.Helpers
                             if (field.DataTypeCode.ToLower() == "boolean")
                             {
                                 string selectFrom = isMainSelectStmt ? "AllQuery." + field.DisplayName : "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code;
-                                SelectStmt.Append("case WHEN " + selectFrom + "= " + (isMainSelectStmt ? "'Yes'":"1") + " Then 'Yes' WHEN " + selectFrom + "= " + (isMainSelectStmt ? "'No'" : "0") + "Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                                SelectStmt.Append("case WHEN " + selectFrom + "= " + (isMainSelectStmt ? "'Yes'" : "1") + " Then 'Yes' WHEN " + selectFrom + "= " + (isMainSelectStmt ? "'No'" : "0") + "Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
                             }
                             else
                             {
@@ -569,7 +573,7 @@ namespace WebFreight.Web.Helpers
                                 string selectFrom = isMainSelectStmt ? "AllQuery." + field.DisplayName : field.DWObjectTableCode + "." + field.Code;
                                 SelectStmt.Append("case WHEN " + selectFrom + "= " + (isMainSelectStmt ? "'Yes'" : "1") + "Then 'Yes' WHEN " + selectFrom + "= " + (isMainSelectStmt ? "'No'" : "0") + "Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
                             }
-                            else
+                            else if (!IsUsedUnitSelection(field))
                             {
                                 string selectFrom = isMainSelectStmt ? "AllQuery." + field.DisplayName : field.DWObjectTableCode + "." + field.Code;
                                 SelectStmt.Append(selectFrom + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
@@ -596,6 +600,19 @@ namespace WebFreight.Web.Helpers
             return sqlStatmentDetails;
         }
 
+        private static bool IsUsedUnitSelection(DWObjectFieldsDetails field)
+        {
+            return field.UseUnitSelection && !string.IsNullOrEmpty(field.SelectedUnitCode);
+        }
+
+        private static string GetUnitSelectionFieldQuery(bool isMainSelectStmt, DWObjectFieldsDetails field)
+        {
+            const string selectedUnitCodeBuiltInFunction = "dbo.DW_GetNewValueWithSelectedUnitCode";
+            string selectFrom = isMainSelectStmt ? "AllQuery." + field.DisplayName : field.DWObjectTableCode + "." + field.Code;
+            selectFrom = selectedUnitCodeBuiltInFunction + "(" + selectFrom + ", '" + field.SelectedUnitCode + "')";
+            
+            return (selectFrom + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+        }
 
         private SqlCommandDefinition BuildSqlCommandDefinition(SqlStatmentDetails sqlStatmentDetails, DWQueryData DWQueryParam, SqlColumnStatmentDetails sqlColumnStatmentDetails = null)
         {

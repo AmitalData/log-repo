@@ -82,6 +82,12 @@
                                     <td style="width: 1px;" *ngIf="IsPriceCheckVisible">
                                         <button id="{{'PriceCheck' | IdGeneratorPipe}}" class="Button" (click)="PriceCheck()" [disabled]="!IsEditingEnabled">{{'Quote.Features.QuotePriceCheck' | TextCodeTranslationPipe}}</button>
                                     </td>
+                                    <td style="width: 5px;" *ngIf="IsPriceCheckVisible">
+                                        <div></div>
+                                    </td>
+                                    <td style="width: 1px;" *ngIf="IsPriceCheckVisible">
+                                        <button id="{{'SalesLocalCharges' | IdGeneratorPipe}}" class="Button" (click)="GenerateSalesLocalChargesClicked()" [disabled]="!IsEditingEnabled">{{'Quote.S.GenerateSalesLocalCharges' | TextCodeTranslationPipe}}</button>
+                                    </td>
 
                                     <td style="width: 5px;" *ngIf="IsPriceCheckVisible">
                                         <div></div>
@@ -466,6 +472,30 @@
 
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'SaleTotalAmountLocal'" [Text]="item.SaleTotalAmountLocal" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Sale  Tariff Link -->
+                                    <log-column *ngIf="IsPriceCheckVisible" [SortFieldName]="'SaleTariffNumber'" [header]="'Sale Tariff'" [width]="'90'" [Alignment]="'center'">
+                                        <ng-template let-item>
+                                            <log-cell-template [TabIndex]="-1" [Alignment]="'center'">
+                                                <div style="width: 100%; height: 100%; position: relative;">
+                                                    <table>
+                                                        <tr *ngIf="item.SaleTariffNumber != null">
+                                                            <td>
+                                                                <div class="MediaFill">
+                                                                    <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditSaleTariffClicked(item)">{{ item.SaleTariffNumber}}</Hyperlink>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="deleteIcon" style="height: 20px;" [class.Disable]="!item.IsEditingEnabled">
+                                                                    <img class="LeftCenter" style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DeleteTariff(item)" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

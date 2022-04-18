@@ -1495,7 +1495,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
-                    throw new ApplicationException(errorMessage);
+                    throw new ApplicationException(errorMessage.TrimStart(','));
                 }
             }
         }
@@ -1734,7 +1734,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
 
-            return errorMessage.TrimStart(',');
+            return errorMessage;
         }
         private string ValidateShipment(ShipmentPM shipment)
         {

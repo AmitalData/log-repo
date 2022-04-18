@@ -2182,7 +2182,10 @@ namespace WebFreight.Web.WebServices
             }
 
             Card notify1Card = CardRepository.GetSingleCard(shipment.Notify1Id, tenant, true);
-            myDataProvider.Notify1VAT = notify1Card.VatNumber;
+            if (notify1Card != null)
+            {
+                myDataProvider.Notify1VAT = notify1Card.VatNumber;
+            }
         }
 
         private void SetAgentContact(FBLDataProvider myDataProvider, string agentContactId)

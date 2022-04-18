@@ -63,6 +63,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DontDisplayInView).HasColumnName("DontDisplayInView ");
             this.Property(t => t.DimensionDataViewName).HasColumnName("DimensionDataViewName ");
             this.Property(t => t.IsMultipleSelection).HasColumnName("IsMultipleSelection ");
+            this.Property(t => t.UseUnitSelection).HasColumnName("UseUnitSelection ");
             this.Property(t => t.RecordType).HasColumnName("RecordType");
 
 

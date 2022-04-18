@@ -27,6 +27,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(40).IsUnicode(true);
 
+            this.Property(t => t.Code).HasColumnName("Code").HasMaxLength(6).IsUnicode(false);
+
             this.Property(t => t.InActive).HasColumnName("InActive").IsRequired();
         }
     }

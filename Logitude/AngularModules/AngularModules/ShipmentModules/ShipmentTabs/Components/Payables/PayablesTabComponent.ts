@@ -1583,7 +1583,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         tariffService.GetAvailableCustomsChargesTariffs(args).subscribe((res: ServiceResponse) => {
             if (!res.HasError) {
                 if (res.Result) {
-                    this.EntityPM.ShipmentPayables.filter
                     args = res.Result;
                     this.CreateCustomChargesPayables(args.CustomsChargesPayables);
                 }

@@ -47,11 +47,16 @@ namespace Logitude.TariffModule.Data.Repositories
 
         public IQueryable<Tariff> GetActiveCustomsChargesTariffs(int tenant)
         {
-            return from a in context.Tariffs.Include("CustomsBroker")
+            return from a in context.Tariffs.Include("Seller")
                    where a.Tenant == tenant && !a.InActive && (a.TypeCode == "ICC" || a.TypeCode == "ECC")
                    select a;
         }
-
+        public IQueryable<Tariff> GetActiveSalesLocalChargesTariffs(int tenant)
+        {
+            return from a in context.Tariffs.Include("CustomerGroup")
+                   where a.Tenant == tenant && !a.InActive && (a.TypeCode == "ECS" || a.TypeCode == "ICS")
+                   select a;
+        }
         public IQueryable<Tariff> GetSurchargeTariffsByCodeAndSellerId(string[] ids,string typeCode, int tenant)
         {
             var code = "ASC";

@@ -175,6 +175,13 @@ namespace DW_Editor_Tool.ViewModels
             set { isMultipleSelection = value; FirePropertyChanged("IsMultipleSelection"); }
         }
 
+        bool useUnitSelection;
+        public bool UseUnitSelection
+        {
+            get { return useUnitSelection; }
+            set { useUnitSelection = value; FirePropertyChanged("UseUnitSelection"); }
+        }
+
         string dimensionDataViewName;
         public string DimensionDataViewName
         {

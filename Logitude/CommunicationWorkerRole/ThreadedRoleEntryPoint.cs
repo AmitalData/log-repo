@@ -499,7 +499,6 @@ namespace CommunicationWorkerRole
                     foreach (Thread thread in threads)
                     {
                         thread.Start();
-                        System.Threading.Thread.Sleep(new TimeSpan(0,0,1));
                     }
 
                 }

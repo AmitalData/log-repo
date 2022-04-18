@@ -48,5 +48,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string SearchFields { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public string Code { get; set; }
+
     }
 }

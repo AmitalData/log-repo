@@ -2,11 +2,33 @@ import { ShipmentMapping } from "../mapping/ShipmentMapping";
 
 export class RegexSelectors {
 
-    public static readonly ShipmentPackagesTab = "li[id^='ShipmentTHPackages_']"
-    public static readonly ShipmentEventTab = "li[id^='ShipmentTHEvents_']"
+
+
+
     public static readonly ShipmentGrossWeight = "input[id^='Shipment_GrossWeight_']"
-    public static readonly ShipmentNumberInTitle = "div[data-cy^='ShipmentNumber']"
-    public static readonly RoutingDeliveryLeg = '[data-cy^="Routing_Delivery"]'
+    public static readonly ShipmentPackagesTab= "li[id^='ShipmentTHPackages_']"
+    public static readonly ShipmentAddPackagesTab= "button[id^='AddPackage_']"
+    public static readonly ShipmentOrderTab= "li[id^='ShipmentTHOrders_']"
+    public static readonly ShipmentAddOrderPackagesTab= "button[id^='Orders-AddPackage_']"
+    public static readonly ShipmentPartnersTab= "li[id^='ShipmentTHPartners_']"
+    public static readonly ShipmentAddPartners= "div[id^='PartnerToggle_']"
+    public static readonly ShipmenRoutingTab= "li[id^='ShipmentTHRoutings_']"
+    public static readonly ShipmenAddRoute= "div[id^='RoutingToggle_']"
+    public static readonly ShipmenPayablesgTab= "li[id^='ShipmentTHPayables_']"
+    public static readonly ShipmenAddPayables= "button[id^='Add_']"
+    public static readonly ShipmenReceivablesTab= "li[id^='ShipmentTHReceivables_']"
+    public static readonly ShipmenAddReceivables= "button[id^='Add_']"
+    public static readonly ShipmenAddpackqges= "#AddPackage"
+
+    public static readonly ShipmenSavepackqges= "button[id^='Shipment-Save_']"
+
+    
+    
+    public static readonly ShipmentEventTab= "li[id^='ShipmentTHEvents_']"
+    public static readonly Shipment_GrossWeight= "input[id^='Shipment_GrossWeight_']"
+    public static readonly ShipmentNumberInTitle= "div[data-cy^='ShipmentNumber']"
+    public static readonly RoutingDeliveryLeg='[data-cy^="Routing_Delivery"]'
+
     
     public static DirectionRadio(direction: string): string {
         return "input[id^='DirectionRadio_'][id$='" + ShipmentMapping.GetDirectionCode(direction) + "']";

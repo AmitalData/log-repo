@@ -230,4 +230,52 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsCustomerShared"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCustomerShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsAccountManagerShared"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsAccountManagerShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsSalesmanShared"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsSalesmanShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCollectorShared"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCollectorShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

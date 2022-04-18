@@ -93,6 +93,22 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public bool IsReleasingAgentShowContactTS { get; set; }
         [Column("IsIssuingCarAgentShowContactTS")]
 	    public bool IsIssuingCarAgentShowContactTS { get; set; }
+        [Column("IsCustomerShared")]
+	    public bool IsCustomerShared { get; set; }
+        [Column("IsCustomerShowContactTS")]
+	    public bool IsCustomerShowContactTS { get; set; }
+        [Column("IsAccountManagerShared")]
+	    public bool IsAccountManagerShared { get; set; }
+        [Column("IsAccountManagerShowContactTS")]
+	    public bool IsAccountManagerShowContactTS { get; set; }
+        [Column("IsSalesmanShared")]
+	    public bool IsSalesmanShared { get; set; }
+        [Column("IsSalesmanShowContactTS")]
+	    public bool IsSalesmanShowContactTS { get; set; }
+        [Column("IsCollectorShared")]
+	    public bool IsCollectorShared { get; set; }
+        [Column("IsCollectorShowContactTS")]
+	    public bool IsCollectorShowContactTS { get; set; }
     }
 }
 	 

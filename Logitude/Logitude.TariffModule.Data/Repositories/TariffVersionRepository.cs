@@ -69,6 +69,7 @@ namespace Logitude.TariffModule.Data.Repositories
                    where a.Tenant == tenant && a.TariffId == tariffId && !a.IsDraft
                    select a;
         }
+
     }
 }
    
