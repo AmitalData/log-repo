@@ -181,7 +181,7 @@ export class QuotesComponent {
         }
 
         var isPayablesConnectedToInvoice = this.EntityPM.ShipmentPayables.filter(f => (f.ShipmentPayableLineStatusCode == 'PACC' || f.ShipmentPayableLineStatusCode == 'ACCT') && f.QuoteChargeId != null).length > 0;
-        var isReceivablesConnectedToInvoice = this.EntityPM.ShipmentReceivables.filter(f => (f.ShipmentReceivableLineStatusCode == 'ACCT') && f.QuoteChargeId != null).length > 0;
+        var isReceivablesConnectedToInvoice = this.EntityPM.ShipmentReceivables.filter(f => (f.ShipmentReceivableLineStatusCode == 'ACCT' || f.ShipmentReceivableLineStatusCode == 'DRFT') && f.QuoteChargeId != null).length > 0;
          if (this.EntityPM.QuoteId != null) {
             if (isPayablesConnectedToInvoice|| isReceivablesConnectedToInvoice) {
                 var messageWindow = new MessageWindow();
