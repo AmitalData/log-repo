@@ -2792,7 +2792,7 @@ export class ShipmentGenerator {
             else if (!AppTool.IsNullOrEmpty(item.CostUnitPrice)) {
                 var newPayablePM: ShipmentPayablePM = this.CreateNewPayableFromQuoteCharge(item);
                 newPayablePM.UnitPrice = item.CostUnitPrice;
-
+                newPayablePM.QuoteChargeId = item.Id;
                 switch (item.CostMeasurementCode) {
                     case "BCNT":
                     case "GRWT":
@@ -2853,7 +2853,7 @@ export class ShipmentGenerator {
                         newRecord.MeasurementId = itemGrouped.MeasurementId;
                         newRecord.MeasurementCode = itemGrouped.MeasurementCode;
                         newRecord.MeasurementShortName = itemGrouped.MeasurementShortName;
-
+                        newRecord.QuoteChargeId = item.Id;
                         this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -3056,6 +3056,7 @@ export class ShipmentGenerator {
         itemPM.AccountedAmountInLocalCurrency = 0;
         itemPM.AccountedAmountInProfitCurrency = 0;
         itemPM.ShipmentPayableLineStatusCode = (itemPM.Quantity != null && itemPM.UnitPrice != null) ? "OAMT" : "EMPT";
+
         this.CalculatePayableVatAmount(itemPM);
     }
     private CreateNewPayableFromQuoteCharge(item: QuoteChargePM) {
@@ -3595,7 +3596,7 @@ export class ShipmentGenerator {
                         newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
                         newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
                         newRecord.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
-
+                        newRecord.QuoteChargeId = item.Id;
                         this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 var chargesType: ChargesTypeList = myResponse.Result;

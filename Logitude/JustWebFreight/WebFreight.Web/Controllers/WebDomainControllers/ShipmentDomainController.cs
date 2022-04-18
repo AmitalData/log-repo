@@ -1755,8 +1755,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(shipmentsContext);
 
                     List<ShipmentReceivable> receivables = receivableRepository.GetShipmentReceivablesByShipmentId(myShipment.Id, tenant);
+                    receivables = receivables.Where(a => !string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
                     List<ShipmentPayable> payables = payableRepository.GetShipemntPayablesByShipmentId(myShipment.Id, tenant);
-
+                    payables = payables.Where(a => !string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
                     if (receivables.Count > 0)
                     {
                         foreach (ShipmentReceivable item in receivables)
