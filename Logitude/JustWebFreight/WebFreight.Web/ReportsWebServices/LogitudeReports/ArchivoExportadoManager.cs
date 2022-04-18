@@ -1349,6 +1349,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public string InvoiceId { get; set; }
         public string ShipmentId { get; set; }
         public string ChargesTypeId { get; set; }
+        public string PayableId { get; set; }
         public double? AmountInLocal { get; set; }
         public double? AmountInProfit { get; set; }
         public double? ExpectedAmountInLocal { get; set; }
