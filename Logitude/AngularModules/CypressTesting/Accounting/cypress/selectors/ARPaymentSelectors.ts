@@ -25,5 +25,6 @@ export class ARPaymentSelectors {
     public static readonly EditBackbutton = '#EditBackbutton';
     public static readonly GeneralMHAccounting= '#GeneralMHAccounting';
     public static readonly SendToSAT= '#ARPaymentBSENDToSAT';
+    public static readonly Branch='[id="ARPayment_BranchId"]'
 
 }

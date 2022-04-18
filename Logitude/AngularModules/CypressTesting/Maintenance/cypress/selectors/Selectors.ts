@@ -34,7 +34,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemVATSettings = "#MaintenanceItemVATS"
    public static readonly MaintenanceItemReport = "#MaintenanceItemMTRP"
    public static readonly MaintenanceItemAccountingSettings = "#MaintenanceItemACSE"
-
+   public static readonly MaintenanceItemSignature='[id="MaintenanceItemSIGN"]'
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";

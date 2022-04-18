@@ -152,6 +152,8 @@ export class Urls {
     public static readonly EntityResource = '**/EntityResource?**';
     public static readonly ObjectFields = '**/objectfields';
 
+    public static readonly Signature='**/PutSaveDocumentTypeTemplate'
+
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }
