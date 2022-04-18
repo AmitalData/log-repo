@@ -871,6 +871,190 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isCustomerShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustomerShared  
+	   {
+	    
+	     get
+		{
+		   return isCustomerShared;
+		 }
+		 set
+		 {
+		   if(isCustomerShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomerShared",OldValue=isCustomerShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustomerShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCustomerShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustomerShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isCustomerShowContactTS;
+		 }
+		 set
+		 {
+		   if(isCustomerShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomerShowContactTS",OldValue=isCustomerShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustomerShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAccountManagerShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAccountManagerShared  
+	   {
+	    
+	     get
+		{
+		   return isAccountManagerShared;
+		 }
+		 set
+		 {
+		   if(isAccountManagerShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAccountManagerShared",OldValue=isAccountManagerShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAccountManagerShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAccountManagerShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAccountManagerShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isAccountManagerShowContactTS;
+		 }
+		 set
+		 {
+		   if(isAccountManagerShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAccountManagerShowContactTS",OldValue=isAccountManagerShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAccountManagerShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isSalesmanShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSalesmanShared  
+	   {
+	    
+	     get
+		{
+		   return isSalesmanShared;
+		 }
+		 set
+		 {
+		   if(isSalesmanShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSalesmanShared",OldValue=isSalesmanShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSalesmanShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isSalesmanShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSalesmanShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isSalesmanShowContactTS;
+		 }
+		 set
+		 {
+		   if(isSalesmanShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSalesmanShowContactTS",OldValue=isSalesmanShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSalesmanShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCollectorShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCollectorShared  
+	   {
+	    
+	     get
+		{
+		   return isCollectorShared;
+		 }
+		 set
+		 {
+		   if(isCollectorShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCollectorShared",OldValue=isCollectorShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCollectorShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCollectorShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCollectorShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isCollectorShowContactTS;
+		 }
+		 set
+		 {
+		   if(isCollectorShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCollectorShowContactTS",OldValue=isCollectorShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCollectorShowContactTS=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

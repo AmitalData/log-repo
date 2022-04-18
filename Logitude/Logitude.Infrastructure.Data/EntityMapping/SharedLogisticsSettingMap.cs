@@ -96,6 +96,22 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.IsReleasingAgentShowContactTS).HasColumnName("IsReleasingAgentShowContactTS");
 
             this.Property(t => t.IsIssuingCarAgentShowContactTS).HasColumnName("IsIssuingCarAgentShowContactTS");
+
+            this.Property(t => t.IsCustomerShared).HasColumnName("IsCustomerShared");
+
+            this.Property(t => t.IsCustomerShowContactTS).HasColumnName("IsCustomerShowContactTS");
+
+            this.Property(t => t.IsAccountManagerShared).HasColumnName("IsAccountManagerShared");
+
+            this.Property(t => t.IsAccountManagerShowContactTS).HasColumnName("IsAccountManagerShowContactTS");
+
+            this.Property(t => t.IsSalesmanShared).HasColumnName("IsSalesmanShared");
+
+            this.Property(t => t.IsSalesmanShowContactTS).HasColumnName("IsSalesmanShowContactTS");
+
+            this.Property(t => t.IsCollectorShared).HasColumnName("IsCollectorShared");
+
+            this.Property(t => t.IsCollectorShowContactTS).HasColumnName("IsCollectorShowContactTS");
         }
     }
 }
