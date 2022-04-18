@@ -84,14 +84,27 @@ export class ReceivablePageComponent {
         this.PopulateDeptorsFilterData();
     }
     LoadResources() {
-        this._entityResourceService.getEntityResourceByTableName("ARPayment").subscribe((response: any) => {
-            this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
-                this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
-                    this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
-                        this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => {
-                            this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => {
-                                this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => {
-                                    this.isReady = true;
+        this._entityResourceService.getEntityResourceByTableName("ARPayment").subscribe((response: any) =>
+        {
+            this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) =>
+            {
+                this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) =>
+                {
+                    this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) =>
+                    {
+                        this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) =>
+                        {
+                            this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) =>
+                            {
+                                this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) =>
+                                {
+                                    this._entityResourceService.getEntityResourceByTableName("InterestTransaction").subscribe((response: any) =>
+                                    {
+                                        this._entityResourceService.getEntityResourceByTableName("InterestReport").subscribe((response: any) =>
+                                        {
+                                            this.isReady = true;
+                                        });
+                                    });
                                 });
                             });
                         });

@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 
 export class InterestTransactionList {
-   
+
 	Id: string;
 	Tenant: number;
 	CreateDateTime: Date;
@@ -31,6 +31,10 @@ export class InterestTransactionList {
 	JournalId: string;
 	AccountEntityCode: string;
 	IsCancelled: boolean;
-	
+	InterestReportNumber: string;
+	Source: string;
+	SourceTypeCode: string;
+	SourceId: string;
+	SourceType: string;
+
 }
- 

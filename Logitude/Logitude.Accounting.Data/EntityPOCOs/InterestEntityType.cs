@@ -27,6 +27,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("LocalName")]
 	    public string LocalName { get; set; }
+        [Column("AccountingEntityCode")]
+	    public string AccountingEntityCode { get; set; }
     }
 }
 	 

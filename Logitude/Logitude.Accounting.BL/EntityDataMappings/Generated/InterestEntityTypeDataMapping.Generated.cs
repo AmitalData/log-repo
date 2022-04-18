@@ -25,7 +25,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Code, 
 	         EnglishName, 
 	         SearchFields, 
-	         LocalName,
+	         LocalName, 
+	         AccountingEntityCode,
 	      }
 
 
@@ -35,7 +36,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Code, 
 	         EnglishName, 
 	         SearchFields, 
-	         LocalName,
+	         LocalName, 
+	         AccountingEntityCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -57,6 +59,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
             {
 				entityPOCO.LocalName = entityPM.LocalName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountingEntityCode))
+            {
+				entityPOCO.AccountingEntityCode = entityPM.AccountingEntityCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -85,6 +92,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.LocalName = entityPOCO.LocalName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AccountingEntityCode))
+            {
+					entityPM.AccountingEntityCode = entityPOCO.AccountingEntityCode;
+            }
+
 		}
 
 		public void PMToOldPM(InterestEntityTypePM entityPM, InterestEntityTypePM oldEntityPM)
@@ -104,6 +116,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
             {
                 oldEntityPM.LocalName = entityPM.LocalName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountingEntityCode))
+            {
+                oldEntityPM.AccountingEntityCode = entityPM.AccountingEntityCode;
             }
 			
 		}
