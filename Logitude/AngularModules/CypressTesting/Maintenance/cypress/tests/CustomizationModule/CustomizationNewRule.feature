@@ -1,4 +1,4 @@
-@devrelease
+#@devrelease
 Feature: Customization New Rule
     The user open customization, add new rule, create new shipment, test the rule works in the shipment, inactivate the rule
 

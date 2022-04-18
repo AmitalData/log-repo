@@ -8,4 +8,5 @@ export interface ARPaymentDetails {
     PaymentAmount:string,
     MetodoPago:string,
     FormaPago:string,
+    Branch: string
 }

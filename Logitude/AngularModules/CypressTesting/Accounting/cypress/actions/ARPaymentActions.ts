@@ -27,6 +27,7 @@ export function FillARPaymentWithSAT(aRPaymentDetails: ARPaymentDetails) {
     cy.FillLogTextBox(ARPaymentSelectors.RegisterDate, aRPaymentDetails.RegisterDate)
     cy.FillLogLov(ARPaymentSelectors.MetodoPago, aRPaymentDetails.MetodoPago, true)
     cy.FillLogLov(ARPaymentSelectors.FormaPago, aRPaymentDetails.FormaPago, true)
+    cy.FillLogLov(ARPaymentSelectors.Branch,aRPaymentDetails.Branch,true)
 
 }
 

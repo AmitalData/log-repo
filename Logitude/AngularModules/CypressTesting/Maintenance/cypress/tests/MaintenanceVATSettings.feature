@@ -8,7 +8,7 @@ Feature: Update VAT settings from Maintenance
             | AppliesFor     | Customers                   |
             | VATFormatType  | Apply for All Countries     |
             | IsMandatoryFor | Mandatory For All Countries |
-            | VatSize        | 5                           |
+            | VatSize        | 4                           |
         When update VAT Setting
         Then the VATSetting should update successfully
 
@@ -18,6 +18,6 @@ Feature: Update VAT settings from Maintenance
             | AppliesFor     | Customers               |
             | VATFormatType  | Apply for All Countries |
             | IsMandatoryFor | Not Mandatory           |
-            | VatSize        | 5                       |
+            | VatSize        | 4                       |
         When update VAT Setting
         Then the VATSetting should update successfully

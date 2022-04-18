@@ -1,4 +1,4 @@
-@devrelease
+#@devrelease
 Feature: Create Custom Field ,Edit and add it to Shipment Screen
     The user creates a department, searches for and edits it from the Maintenance Module.
 

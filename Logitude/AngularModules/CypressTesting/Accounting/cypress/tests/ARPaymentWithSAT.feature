@@ -57,6 +57,7 @@ Feature: AR Payment With SAT
             | RegisterDate    | 02/04/2022                       |
             | MetodoPago      | Pago en parcialidades o diferido |
             | FormaPago       | Efectivo                         |
+            | Branch          | Main Office                      |
         When create AR Payment
         Then the AR Payment should get successfully
 
