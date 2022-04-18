@@ -30,6 +30,8 @@ namespace Logitude.Accounting.Data.Repositories
                 .Any();
         }
 
+
+
         public IQueryable<InterestTransaction> GetInterestTransactionsForGlAccountAndInterestValueDate(InterestTransactionGetParameters interestTransactionGetParameters)
         {
             return this.GetAll(interestTransactionGetParameters.Tenant)
