@@ -28,7 +28,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<InterestTransactionList> query
                 = (from interestTransaction in interestTransactionQuery.Include("InterestEntityType")
 
-                   join journal in context.Journals
+                   join journal in context.Journals.Include("AccountingEntity")
                    on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.InterestEntityType.AccountingEntityCode } equals
                       new { journal.AccountingEntityId, journal.AccountingEntityCode }
                       
@@ -62,6 +62,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        AccountingDate = journal.AccountingDate,
 
                        Source = journal.AccountingEntityReference,
+                       SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
                        SourceTypeCode = journal.AccountingEntityCode,
                        SourceId = journal.AccountingEntityId
 
@@ -104,6 +105,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        JournalNumber = interestTransaction.JournalNumber,
                        Source = interestTransaction.Source,
                        SourceTypeCode = interestTransaction.SourceTypeCode,
+                       SourceType = interestTransaction.SourceType,
                        SourceId = interestTransaction.SourceId,
                        AccountingDate = interestTransaction.AccountingDate,
 
