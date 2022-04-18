@@ -209,6 +209,46 @@ export class SharedLogisticsSettingPM {
     public set IsIssuingCarAgentShowContactTS(newValue: boolean) { if (this.isIssuingCarAgentShowContactTS != newValue) { this.isIssuingCarAgentShowContactTS = newValue; this.MarkAsDirty("IsIssuingCarAgentShowContactTS"); } }
        
 	 
+    private isCustomerShared: boolean;
+    public get IsCustomerShared() { return this.isCustomerShared; }
+    public set IsCustomerShared(newValue: boolean) { if (this.isCustomerShared != newValue) { this.isCustomerShared = newValue; this.MarkAsDirty("IsCustomerShared"); } }
+       
+	 
+    private isCustomerShowContactTS: boolean;
+    public get IsCustomerShowContactTS() { return this.isCustomerShowContactTS; }
+    public set IsCustomerShowContactTS(newValue: boolean) { if (this.isCustomerShowContactTS != newValue) { this.isCustomerShowContactTS = newValue; this.MarkAsDirty("IsCustomerShowContactTS"); } }
+       
+	 
+    private isAccountManagerShared: boolean;
+    public get IsAccountManagerShared() { return this.isAccountManagerShared; }
+    public set IsAccountManagerShared(newValue: boolean) { if (this.isAccountManagerShared != newValue) { this.isAccountManagerShared = newValue; this.MarkAsDirty("IsAccountManagerShared"); } }
+       
+	 
+    private isAccountManagerShowContactTS: boolean;
+    public get IsAccountManagerShowContactTS() { return this.isAccountManagerShowContactTS; }
+    public set IsAccountManagerShowContactTS(newValue: boolean) { if (this.isAccountManagerShowContactTS != newValue) { this.isAccountManagerShowContactTS = newValue; this.MarkAsDirty("IsAccountManagerShowContactTS"); } }
+       
+	 
+    private isSalesmanShared: boolean;
+    public get IsSalesmanShared() { return this.isSalesmanShared; }
+    public set IsSalesmanShared(newValue: boolean) { if (this.isSalesmanShared != newValue) { this.isSalesmanShared = newValue; this.MarkAsDirty("IsSalesmanShared"); } }
+       
+	 
+    private isSalesmanShowContactTS: boolean;
+    public get IsSalesmanShowContactTS() { return this.isSalesmanShowContactTS; }
+    public set IsSalesmanShowContactTS(newValue: boolean) { if (this.isSalesmanShowContactTS != newValue) { this.isSalesmanShowContactTS = newValue; this.MarkAsDirty("IsSalesmanShowContactTS"); } }
+       
+	 
+    private isCollectorShared: boolean;
+    public get IsCollectorShared() { return this.isCollectorShared; }
+    public set IsCollectorShared(newValue: boolean) { if (this.isCollectorShared != newValue) { this.isCollectorShared = newValue; this.MarkAsDirty("IsCollectorShared"); } }
+       
+	 
+    private isCollectorShowContactTS: boolean;
+    public get IsCollectorShowContactTS() { return this.isCollectorShowContactTS; }
+    public set IsCollectorShowContactTS(newValue: boolean) { if (this.isCollectorShowContactTS != newValue) { this.isCollectorShowContactTS = newValue; this.MarkAsDirty("IsCollectorShowContactTS"); } }
+       
+	 
 
     public OldEntityPM: SharedLogisticsSettingPM;
 		

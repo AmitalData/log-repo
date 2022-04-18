@@ -223,9 +223,65 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
         this.PartnersList.push(item13);
         this.PartnersList.push(item14);
         this.PartnersList.push(item15);
-
+        if(this.IsCargoTracking){
+            this.addCargoPartner();
+        }
+        
         this.CarriersList.push(item16);
         this.CarriersList.push(item17);
+        
+    }
+    addCargoPartner() {
+        var customer = this.createCustomerPartner();
+        var accountManager = this.createAccountManagerPartner();
+        var salesman = this.createSalesmanPartner();
+        var collector = this.createCollectorPartner();
+
+        this.PartnersList.push(customer);
+        this.PartnersList.push(accountManager);
+        this.PartnersList.push(salesman);
+        this.PartnersList.push(collector);
+
+    }
+    createCustomerPartner() {
+        var partner: PartnerItem = new PartnerItem(this);
+        partner.Code = "CU";
+        partner.PartnerName = "Customer";
+        partner.SuggestedIsChecked = this.TenantZeroEntity.IsCustomerShared;
+        partner.ChooseIsChecked = this.EntityPM.IsCustomerShared;
+        partner.IsShowContactTelSMS = this.EntityPM.IsCustomerShowContactTS;
+        partner.IsShowContactTelSMSFieldName = "IsCustomerShowContactTS";
+        return partner;
+    }
+    createAccountManagerPartner() {
+        var partner: PartnerItem = new PartnerItem(this);
+        partner.Code = "AM";
+        partner.PartnerName = "Account Manager";
+        partner.SuggestedIsChecked = this.TenantZeroEntity.IsAccountManagerShared;
+        partner.ChooseIsChecked = this.EntityPM.IsAccountManagerShared;
+        partner.IsShowContactTelSMS = this.EntityPM.IsAccountManagerShowContactTS;
+        partner.IsShowContactTelSMSFieldName = "IsAccountManagerShowContactTS";
+        return partner;
+    }
+    createSalesmanPartner() {
+        var partner: PartnerItem = new PartnerItem(this);
+        partner.Code = "SA";
+        partner.PartnerName = "Salesman";
+        partner.SuggestedIsChecked = this.TenantZeroEntity.IsSalesmanShared;
+        partner.ChooseIsChecked = this.EntityPM.IsSalesmanShared;
+        partner.IsShowContactTelSMS = this.EntityPM.IsSalesmanShowContactTS;
+        partner.IsShowContactTelSMSFieldName = "IsSalesmanShowContactTS";
+        return partner;
+    }
+    createCollectorPartner() {
+        var partner: PartnerItem = new PartnerItem(this);
+        partner.Code = "LL";
+        partner.PartnerName = "Collector";
+        partner.SuggestedIsChecked = this.TenantZeroEntity.IsCollectorShared;
+        partner.ChooseIsChecked = this.EntityPM.IsCollectorShared;
+        partner.IsShowContactTelSMS = this.EntityPM.IsCollectorShowContactTS;
+        partner.IsShowContactTelSMSFieldName = "IsCollectorShowContactTS";
+        return partner;
     }
 
     private mySearchText: string;
@@ -402,6 +458,23 @@ export class PartnerItem {
 
             case "MC": {
                 this.father.EntityPM.IsMainCarrierShared = this.ChooseIsChecked;
+                break;
+            }
+
+            case "CU": {
+                this.father.EntityPM.IsCustomerShared = this.ChooseIsChecked;
+                break;
+            }
+            case "AM": {
+                this.father.EntityPM.IsAccountManagerShared = this.ChooseIsChecked;
+                break;
+            }
+            case "SA": {
+                this.father.EntityPM.IsSalesmanShared = this.ChooseIsChecked;
+                break;
+            }
+            case "LL": {
+                this.father.EntityPM.IsCollectorShared = this.ChooseIsChecked;
                 break;
             }
         }
