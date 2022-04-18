@@ -428,7 +428,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
     DisconnectQuote() {
         var isPayablesConnectedToInvoice = this.EntityPM.ShipmentPayables.filter(f => (f.ShipmentPayableLineStatusCode == 'PACC' || f.ShipmentPayableLineStatusCode == 'ACCT') && f.QuoteChargeId != null ).length > 0;
-        var isReceivablesConnectedToInvoice = this.EntityPM.ShipmentReceivables.filter(f => (f.ShipmentReceivableLineStatusCode == 'ACCT') && f.QuoteChargeId != null).length > 0;
+        var isReceivablesConnectedToInvoice = this.EntityPM.ShipmentReceivables.filter(f => (f.ShipmentReceivableLineStatusCode == 'ACCT' || f.ShipmentReceivableLineStatusCode == 'DRFT') && f.QuoteChargeId != null).length > 0;
         if (isPayablesConnectedToInvoice || isReceivablesConnectedToInvoice) {
             var messageWindow = new MessageWindow();
             messageWindow.Show("Can't disconnecting the quote, some payables or receivables lines are connected to invoices");
