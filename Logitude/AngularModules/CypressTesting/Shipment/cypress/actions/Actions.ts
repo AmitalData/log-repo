@@ -171,7 +171,8 @@ export function BacktotheMasterShipment(){
 export function openHouseShipment(){
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
     // ShipmentContext.HouseNumber
-    cy.get("hyperlink").find("button").first().click()
+    //HyperlinkButtonControl
+    cy.get("hyperlink").find(".HyperlinkButtonControl").eq(0).click({force:true})
 }
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
@@ -269,27 +270,27 @@ export function AsserationMastershipmentFinalArrivalnoactualdate(){
 export function AsserationHouseshipmentFinalArrivalnoactualdate(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.HouseFinalDate).contains('02/05/2021').should('exist')
+    cy.get(ShipmentSelectors.MastershipmentsfinalArrival).contains('02/05/2021').should('exist')
 }
 export function AsserationHouseshipmentNOActualFinalArrivalDate(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    BaseAssertion. AssertElementNotExist(ShipmentSelectors.HouserActual) 
+    BaseAssertion. AssertElementNotExist(ShipmentSelectors.MasternoActual) 
 }
 export function AsserationHouseshipmenttransshipments(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.HouserActual).contains('05/05/2021').should('exist')
+    cy.get(ShipmentSelectors.MastertransshipmentsActual).contains('05/05/2021').should('exist')
 }
 export function FinalArrivalAsserationHouseshipmenttransshipments(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.HouseFinalDate).contains('05/05/2021').should('exist')
+    cy.get(ShipmentSelectors.MastershipmentsfinalArrival).contains('05/05/2021').should('exist')
 }
 export function AsserationEstimatedFinalArrivalDateHousetransshipments(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.EstimatedFinalArrivalDateHouse).contains('04/05/2021').should('exist')
+    cy.get(ShipmentSelectors.EstimatedFinalArrivalDateMaster).contains('04/05/2021').should('exist')
 }
 
 export function ValidateShipmentEventActions(eventSelector: string, excpectedMSG: string) {
@@ -883,18 +884,18 @@ export function ActualFinalArrivalDatewhentherearetransshipmentsinMaster(){
 export function AsserationActualFinalArrivalinHouse(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.HouserActual).contains('04/05/2021').should('exist')
+    cy.get(ShipmentSelectors.MastertransshipmentsActual).contains('04/05/2021').should('exist')
 }
 
 export function AsserationEstimatedFinalArrivalDateinHouse(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.EstimatedFinalArrivalDateHouse).contains('02/05/2021').should('exist')
+    cy.get(ShipmentSelectors.EstimatedFinalArrivalDateMaster).contains('02/05/2021').should('exist')
 }
 export function AsserationFinalArrivalinHouse(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.HouseFinalDate).contains('04/05/2021').should('exist')
+    cy.get(ShipmentSelectors.MastershipmentsfinalArrival).contains('04/05/2021').should('exist')
 }
 
 export function AddMainCarriageATDDateAndTime(date: string, time: string) {
