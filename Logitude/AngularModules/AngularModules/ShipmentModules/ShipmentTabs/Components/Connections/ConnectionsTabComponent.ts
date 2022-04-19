@@ -431,6 +431,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         var isReceivablesConnectedToInvoice = this.EntityPM.ShipmentReceivables.filter(f => (f.ShipmentReceivableLineStatusCode == 'ACCT' || f.ShipmentReceivableLineStatusCode == 'DRFT') && f.QuoteChargeId != null).length > 0;
         if (isPayablesConnectedToInvoice || isReceivablesConnectedToInvoice) {
             var messageWindow = new MessageWindow();
+            confirmWindow.Width = 450;
             messageWindow.Show("You cannot disconnect a quote to this shipment while some Receivables/Payables generated from a different quote are connected to an invoice.");
         }
         else {
