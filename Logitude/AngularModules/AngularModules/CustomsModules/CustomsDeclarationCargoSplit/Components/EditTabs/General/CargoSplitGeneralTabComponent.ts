@@ -674,21 +674,21 @@ export class CargoSplitGeneralTabComponent
                     }
 
                     this._LastFetchDeclarationList = myDeclarationResponse.Result;
-                    if (this._LastFetchDeclarationList.Direction == "E" && this.IsImportDeclaration) {
-                        errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile"); 
-                        this.MessageCustomsFileWindow(errorMessage);
-                        return;
-                    }
-                    if (this._LastFetchDeclarationList.Direction == "I" && this.IsExportDeclaration) {
-                        errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile"); 
-                        this.MessageCustomsFileWindow(errorMessage);
-                        return;
-                    }
                     //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
 
                     if (AppTool.IsNullOrEmpty(this._LastFetchDeclarationList)) {
                         this.NoConnectedConsignmentEnableField();
                     } else {
+                        if (this._LastFetchDeclarationList.Direction == "E" && this.IsImportDeclaration) {
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile"); 
+                            this.MessageCustomsFileWindow(errorMessage);
+                            return;
+                        }
+                        if (this._LastFetchDeclarationList.Direction == "I" && this.IsExportDeclaration) {
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile"); 
+                            this.MessageCustomsFileWindow(errorMessage);
+                            return;
+                        }
                         this.CurrentSession.StartBusyIndicator("")
                         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                             .subscribe((myResponse: ServiceResponse) => {
