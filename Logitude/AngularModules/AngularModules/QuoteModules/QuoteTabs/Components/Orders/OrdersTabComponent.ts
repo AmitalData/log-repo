@@ -169,6 +169,11 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
         this.EntityPM.UIProperties.SetEnabled("TransitTime", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.EntityPM.UIProperties.SetEnabled("DepartureFrequency", this.ObjectTableName, this.IsQuoteEditEnabled);
 
+        this.EntityPM.UIProperties.SetEnabled("SpecialServicesTypeId", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.EntityPM.UIProperties.SetEnabled("IncludeInsurance", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.EntityPM.UIProperties.SetEnabled("IsStackable", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.EntityPM.UIProperties.SetEnabled("IncludeImportDutyCharges", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.EntityPM.UIProperties.SetEnabled("InsuranceValue", this.ObjectTableName, this.IsQuoteEditEnabled);
         ServiceLocator.RulesValidator.ApplyAllConditionalBlockFieldRules(this.EntityPM, this.ObjectTableName);
     }
     private SetUIProperties_AutomaticallyClosed() {
@@ -468,10 +473,48 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
         }
     }
 
+    get SpecialServicesTypeId() { return this.EntityPM.SpecialServicesTypeId; }
+    set SpecialServicesTypeId(newValue: string) {
+        if (this.EntityPM.SpecialServicesTypeId != newValue) {
+            this.EntityPM.SpecialServicesTypeId = newValue;
+        }
+    }
+
+    get IncludeInsurance() { return this.EntityPM.IncludeInsurance; }
+    set IncludeInsurance(newValue: boolean) {
+        if (this.EntityPM.IncludeInsurance != newValue) {
+            this.EntityPM.IncludeInsurance = newValue;
+        }
+    }
+
+    get IsStackable() { return this.EntityPM.IsStackable; }
+    set IsStackable(newValue: boolean) {
+        if (this.EntityPM.IsStackable != newValue) {
+            this.EntityPM.IsStackable = newValue;
+        }
+    }
+
+    get IncludeImportDutyCharges() { return this.EntityPM.IncludeImportDutyCharges; }
+    set IncludeImportDutyCharges(newValue: boolean) {
+        if (this.EntityPM.IncludeImportDutyCharges != newValue) {
+            this.EntityPM.IncludeImportDutyCharges = newValue;
+        }
+    }
+
+    get InsuranceValue() { return this.EntityPM.InsuranceValue; }
+    set InsuranceValue(newValue: number) {
+        if (this.EntityPM.InsuranceValue != newValue) {
+            this.EntityPM.InsuranceValue = newValue;
+        }
+    }
+
     get TransitTime() { return this.EntityPM.TransitTime; }
     set TransitTime(newValue: string) {
         if (this.EntityPM.TransitTime != newValue) {
             this.EntityPM.TransitTime = newValue;
         }
     }
+
+
+
 }
