@@ -30,6 +30,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void AfterUpdating(InterestTransactionPM entityPM, EntityPM entityParentPM)
         {
             BuildSearchField(entityPM);
+            Repository.Update(EntityPOCO);
+            SubmitChanges();
+
         }
 
         private void BuildSearchField(InterestTransactionPM entityPM)
@@ -42,6 +45,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             MethodHelper.AddToSearchFields(ref searchFields, entityList.Source);
 
             entityPM.SearchFields = searchFields;
+            EntityPOCO.SearchFields = searchFields;
         }
 
         private InterestTransactionList GetEntityList(InterestTransactionPM entityPM)
