@@ -20,14 +20,14 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string ShipmentTypeId { get; set; }
         public string QuoteTemplateId { get; set; }
         public string ConcurrencyGUID { get; set; }
-        public DateTime? SentDate {get; set;}
+        public DateTime? SentDate { get; set; }
         public DateTime? AcceptedDate { get; set; }
         public DateTime? DeclinedDate { get; set; }
         public int LastVersionNumber { get; set; }
         public string Subject { get; set; }
         public bool IsSubjectEdited { get; set; }
         public bool TotalPerContainer { get; set; }
-        
+
         #region Partners
         public string QuoteCustomerTypeCode { get; set; }
 
@@ -67,7 +67,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public double? PickupDeliveryChargeableWeight { get; set; }
         public double? VolumeInCBM { get; set; }
-        public double? GrossWeight { get; set; }        
+        public double? GrossWeight { get; set; }
         public byte[] LastModified { get; set; }
         public bool IsClosed { get; set; }
         public string Field1 { get; set; }
@@ -79,7 +79,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string Field7 { get; set; }
         public string Field8 { get; set; }
         public string Field9 { get; set; }
-        public string Field10 { get; set; }           
+        public string Field10 { get; set; }
         public string GrossWeightUnitCode { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
         public string PickupDeliveryCWeightUnitCode { get; set; }
@@ -108,7 +108,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public int? PackageType2Quantity { get; set; }
         public int? PackageType3Quantity { get; set; }
         public int? PackageType4Quantity { get; set; }
-        public int? PackageType5Quantity { get; set; }        
+        public int? PackageType5Quantity { get; set; }
         public bool IsByKG { get; set; }
         public bool IsByContainer { get; set; }
         public string QuoteTypeCode { get; set; }
@@ -133,8 +133,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string FromPartnerId { get; set; }
         public string ToPartnerId { get; set; }
         public string FromPartnerAddressId { get; set; }
-        public string ToPartnerAddressId { get; set; }        
-        public DateTime? StageDueDate { get; set; }        
+        public string ToPartnerAddressId { get; set; }
+        public DateTime? StageDueDate { get; set; }
         public string LastActivityTypeCode { get; set; }
         public string LastActivitySubject { get; set; }
         public DateTime? LastActivityDate { get; set; }
@@ -186,11 +186,11 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string NotifyReference1 { get; set; }
         public string NotifyReference2 { get; set; }
         public string QuoteHTMLDocumentId { get; set; }
-        
+
         public virtual Card NotifyCard { get; set; }
         public virtual Contact NotifyContact { get; set; }
         public virtual Address NotifyAddress { get; set; }
-        
+
         public string Field11 { get; set; }
         public string Field12 { get; set; }
         public string Field13 { get; set; }
@@ -311,7 +311,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("TransportModeId")]
         public virtual TransportMode TransportMode { get; set; }
-        
+
         [ForeignKey("DirectionId")]
         public virtual Direction Direction { get; set; }
 
@@ -320,13 +320,13 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("ShipperContactId")]
         public virtual Contact ShipperContact { get; set; }
-        
+
         [ForeignKey("ConsigneeId")]
         public virtual Card ConsigneeCard { get; set; }
 
         [ForeignKey("ConsigneeContactId")]
         public virtual Contact ConsigneeContact { get; set; }
-        
+
         [ForeignKey("SalesmanUserId")]
         public virtual User SalesmanUser { get; set; }
 
@@ -358,7 +358,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public bool GrossWeightEdited { get; set; }
         public bool ChargeableWeightEdited { get; set; }
-        
+
         [ForeignKey("QuoteHTMLDocumentId")]
         public virtual Document QuoteHTMLDocument { get; set; }
 
@@ -405,5 +405,13 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("InlandDomesticToCountryId")]
         public virtual Country InlandDomesticToCountry { get; set; }
+
+        public string SpecialServicesTypeId { get; set; }
+        public bool IncludeInsurance { get; set; }
+        public bool IsStackable { get; set; }
+        public bool IncludeImportDutyCharges { get; set; }
+        public double? InsuranceValue { get; set; }
+        [ForeignKey("SpecialServicesTypeId")]
+        public virtual SpecialServicesType SpecialServicesType { get; set; }
     }
 }

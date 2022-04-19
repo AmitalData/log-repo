@@ -1345,6 +1345,37 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IncludeInsurance"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InsuranceValue"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsStackable"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IncludeImportDutyCharges"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SpecialServicesTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"
@@ -1638,6 +1669,11 @@
   <Relation
     ForeignKeyColumn="InlandDomesticToCountryId"
     ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SpecialServicesTypeId"
+    ReferencedTable="SpecialServicesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
