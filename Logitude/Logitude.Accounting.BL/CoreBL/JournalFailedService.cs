@@ -62,30 +62,35 @@ namespace Logitude.Accounting.BL.CoreBL
                             .AppendLine($"At:{DateTime.Now}")
                             .AppendLine(ex.Message)
                             .AppendLine(ex.ToString());
-                        
-                        var repoMD = new JournalMoreDataRepository(accountingContext);
-                        int last = 0;
-                        var q=repoMD.GetAll(_Tenant).Where(r => r.JournalId == _SeedJournalId).Select(r => (int?)r.Line);
-                        last = q.DefaultIfEmpty().Max()??0;
-                        ++last;
 
-                        //var logCompressText = InjectionUtil.Instance.CompressText(sb.ToString(/*0, Math.Min(sb.Length, (4000 - 2))*/));
-                        string log = sb.ToString(0, Math.Min(sb.Length, (4000 - 2)));
-                        var pocoJournalMoreData = new Data.EntityPOCOs.JournalMoreData()
-                        {
-                            Line = last,
-                            JournalId = _SeedJournalId,
-                            Tenant = _Tenant,
-                            GeneralData = log
-                        };
-                        repoMD.Add(pocoJournalMoreData);
-                        
+                        InsertJournalMoreData(accountingContext, sb);
+
                     }
                     accountingContext.SaveChanges();
 
                 }
                 scope.Complete();
             }
+        }
+
+        public void InsertJournalMoreData(IAccountingContext accountingContext, StringBuilder sb)
+        {
+            var repoMD = new JournalMoreDataRepository(accountingContext);
+            int last = 0;
+            var q = repoMD.GetAll(_Tenant).Where(r => r.JournalId == _SeedJournalId).Select(r => (int?)r.Line);
+            last = q.DefaultIfEmpty().Max() ?? 0;
+            ++last;
+
+            //var logCompressText = InjectionUtil.Instance.CompressText(sb.ToString(/*0, Math.Min(sb.Length, (4000 - 2))*/));
+            string log = sb.ToString(0, Math.Min(sb.Length, (4000 - 2)));
+            var pocoJournalMoreData = new Data.EntityPOCOs.JournalMoreData()
+            {
+                Line = last,
+                JournalId = _SeedJournalId,
+                Tenant = _Tenant,
+                GeneralData = log
+            };
+            repoMD.Add(pocoJournalMoreData);
         }
     }
 }
