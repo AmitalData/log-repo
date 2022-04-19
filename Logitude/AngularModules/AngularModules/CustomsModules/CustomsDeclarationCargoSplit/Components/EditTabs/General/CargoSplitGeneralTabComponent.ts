@@ -97,7 +97,7 @@ export class CargoSplitGeneralTabComponent
     _LastFetchConsignmentPMList: ConsignmentPM[];
     requestParams: CargoSplitRequestParams = new CargoSplitRequestParams();
     responseData: INF_MSG_GenericResponseData = new INF_MSG_GenericResponseData();
-    isExportConsignmentFetched=false;
+    isExportConsignmentFetched = false;
     public XrayItems: XRayAvailableItem[] = [];
 
     SelectedDateTime: Date;
@@ -168,7 +168,7 @@ export class CargoSplitGeneralTabComponent
                     this.NoConnectedConsignmentEnableField();
                 } else {
                     if (this._LastFetchDeclarationList.Direction == "E") {
-                        this.isExportConsignmentFetched=true;
+                        this.isExportConsignmentFetched = true;
                         this.AddItem();
                     }
                     this.CurrentSession.StartBusyIndicator("")
@@ -464,22 +464,28 @@ export class CargoSplitGeneralTabComponent
 
     //}
 
-    TransportmodeId="NoValue";
+    TransportmodeId = "NoValue";
     TransportModeClicked(value: string) {
         if (this.TransportmodeId != value) {
             this.TransportmodeId = value;
         }
     }
 
-    air;ocean;land;
+    air; ocean; land;
     DirectionModeClicked(value: string) {
         value == "Import" ? this.IsImportDeclaration = true : this.IsImportDeclaration = false;
         value == "Import" ? this.IsExportDeclaration = false : this.IsExportDeclaration = true;
-        value == "Import" ? this.TransportmodeId="NoValue" : this.TransportmodeId=null;
-        if(value == "Import"){
-            this.air=false;
-            this.ocean=false;
-            this.land=false;
+        value == "Import" ? this.TransportmodeId = "NoValue" : this.TransportmodeId = null;
+        if (value == "Import") {
+            this.air = false;
+            this.ocean = false;
+            this.land = false;
+            this.SwitchTabsForExportORImport("I");
+            this.isExportConsignmentFetched = false;
+        } else {
+            this.AddItem();
+            this.SwitchTabsForExportORImport("E");
+            this.isExportConsignmentFetched = true;
         }
     }
 
@@ -503,6 +509,7 @@ export class CargoSplitGeneralTabComponent
                 tab.Header = this.TabIndex;
                 tab.Parent = this.EntityPM;
                 tab.IsDisplayOnly = this.IsDisplayOnly;
+                tab.IsExportDeclaration = this.IsExportDeclaration;
                 tab.ComponentPath = "./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/DecCargoSplitConComponent";
                 this.Tabs.push(tab);
             }
@@ -654,7 +661,12 @@ export class CargoSplitGeneralTabComponent
                     if (myDeclarationResponse.Result == null || (myDeclarationResponse.Result != null && AppTool.IsNullOrEmpty(myDeclarationResponse.Result.Id))) {
                         this.CustomFileNo = "";
                         this.EntityPM.DeclarationId = null;
-                        errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
+                        if (this.IsExportDeclaration) {
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile"); 
+                        }
+                        if (this.IsImportDeclaration) { 
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile"); 
+                        }
                         //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
                         this.MessageCustomsFileWindow(errorMessage);
 
@@ -662,6 +674,18 @@ export class CargoSplitGeneralTabComponent
                     }
 
                     this._LastFetchDeclarationList = myDeclarationResponse.Result;
+                    if (this._LastFetchDeclarationList.Direction == "E" && this.IsImportDeclaration) {
+                        errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile"); 
+                        this.MessageCustomsFileWindow(errorMessage);
+                        return;
+                    }
+                    if (this._LastFetchDeclarationList.Direction == "I" && this.IsExportDeclaration) {
+                        errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile"); 
+                        this.MessageCustomsFileWindow(errorMessage);
+                        return;
+                    }
+                    //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
+
                     if (AppTool.IsNullOrEmpty(this._LastFetchDeclarationList)) {
                         this.NoConnectedConsignmentEnableField();
                     } else {
@@ -669,14 +693,6 @@ export class CargoSplitGeneralTabComponent
                         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                             .subscribe((myResponse: ServiceResponse) => {
                                 this.CurrentSession.StopBusyIndicator();
-                                if (this._LastFetchDeclarationList.Direction == "E") {
-                                    this.isExportConsignmentFetched = true;
-                                    this.AddItem();
-                                } else {
-                                    this.isExportConsignmentFetched = false;
-                                }
-                                this.SwitchTabsForExportORImport(this._LastFetchDeclarationList.Direction);
-
                                 if (searchtext == "ImporterOnly") {
                                     this._LastFetchConsignmentPMList = myResponse.Result
                                     if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {
@@ -690,7 +706,7 @@ export class CargoSplitGeneralTabComponent
                                     }
                                 }
                                 else {
-                                    
+
                                     this.FetchConsignment(myResponse, false);
                                 }
 
