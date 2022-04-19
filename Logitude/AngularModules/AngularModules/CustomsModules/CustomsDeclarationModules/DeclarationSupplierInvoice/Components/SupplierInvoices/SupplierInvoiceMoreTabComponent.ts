@@ -79,13 +79,15 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         this.TypeCodeFilterItems = new ApiQueryFilters();
         this.TypeCodeFilterItems.addAdditionalFilter("Code", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
         this.ModificationsList = new ObservableCollection([]);
-       
+        
         for (let item of this.InvoicePM.SupplierInvoiceModifications) {
             if (item.TypeCode != "I02" && item.TypeCode != "67" && item.TypeCode != "144" ) {
                 if (this.declarationPM.Direction == "E" && item.TypeCode != "160") {
                     this.ModificationsList.Insert(new ModificationItemModel(item, this));
                 }
-                
+                else if(this.declarationPM.Direction != "E"){ 
+                    this.ModificationsList.Insert(new ModificationItemModel(item, this));
+                }
             }
         }
 
