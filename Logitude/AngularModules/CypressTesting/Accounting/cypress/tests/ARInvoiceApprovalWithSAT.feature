@@ -21,7 +21,6 @@ Feature: AR Invoice Approve With SAT
         When create shipment
         Then the direct should create successfully
 
-
     Scenario: Add Receivable
         Given a Receivable with the following details
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
@@ -51,6 +50,10 @@ Feature: AR Invoice Approve With SAT
           | Event                 | Notes |
           | Transferred to SAT    |       | 
     
-
+   Scenario: Update SAT Interface Settings
+        Given the user logged in and navigate to SAT Interface settings
+        Given SAT Interface Settings as"None"
+        When change the SAT Interface Settings
+        Then SAT Interface Settings should update successfully
 
 

@@ -76,3 +76,9 @@ Feature: AR Payment With SAT
         Then the AR Payment should Transferred successfully
             | Event              | Notes |
             | Transferred to SAT |       |
+
+    Scenario: Update SAT Interface Settings
+        Given the user logged in and navigate to SAT Interface settings
+        Given SAT Interface Settings as"None"
+        When change the SAT Interface Settings
+        Then SAT Interface Settings should update successfully
