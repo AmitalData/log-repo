@@ -234,7 +234,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             TimeSpan? timeOut = GetTimeout(myLedgerTransactionsWithCounters, _JournalPM.JournalReconciles.Count > 0);
             timeOut = null;//ihab: no need to use timeout  - but have to be fast (statistic) !!!
-
+            StringBuilder stringBuilderWhyTransferCardBadBalance = new StringBuilder();
             LogMessagingUtil.Instance.AppendLine("GetNewSerializableTransaction(timeOut):insec" + timeOut.GetValueOrDefault().TotalSeconds.ToString());
             using (var scope = TransactionFactory.GetNewSerializableTransaction(timeOut))
             {
@@ -259,6 +259,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                               }
                                        )
                                        .ToList();
+                    
+                    
                     var gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_AccountingContext);
                     var gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _Tenant);
                     var glAccounts = allGLAccountTotalByMonthsForAccountingOnly.Select(x => x.AccountId).ToList();
@@ -266,9 +268,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     glAccountsToUpdate.ForEach(x =>
                     {
                         var glAccountMoreDataPM =  gLAccountMoreDataPMList.Where(acc => acc.AccountId == x.AccountId).First();
+                        if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
+                        {
+                            stringBuilderWhyTransferCardBadBalance.AppendLine($"now:{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff tt")}");
+                            stringBuilderWhyTransferCardBadBalance.AppendLine($"b4:{x.AccountId}:BalanceInLocalCurrency={glAccountMoreDataPM.BalanceInLocalCurrency}");
+                        }
                         glAccountMoreDataPM.BalanceInLocalCurrency = glAccountMoreDataPM.BalanceInLocalCurrency + x.LocalAmountDifference;
                         glAccountMoreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                         gLAccountMoreDataUpdateService.Update(glAccountMoreDataPM, true);
+                        if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
+                        {
+                            stringBuilderWhyTransferCardBadBalance.AppendLine($"after:{x.AccountId}:BalanceInLocalCurrency={glAccountMoreDataPM.BalanceInLocalCurrency}");
+                        }
+
                     });
                     
                     Impersonate();
@@ -350,6 +362,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     }
 #endif
+
+                    if (DateTime.Now < new DateTime(2022,06,19) && stringBuilderWhyTransferCardBadBalance.Length>0)
+                    {
+                        WriteLogWhyTransferCardBadBalance(_Tenant, _JournalPM.Id, this._AccountingContext, stringBuilderWhyTransferCardBadBalance);
+                    }
+                    
                     this._AccountingContext.SaveChanges();//due myJournalRepository.UpdateWhileStreaming 
                     scope.Complete();
 
@@ -368,6 +386,23 @@ namespace Logitude.Accounting.BL.CoreBL
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
             }
+        }
+
+        private void WriteLogWhyTransferCardBadBalance(int tenant, string seedJournalId, IAccountingContext accountingContext, StringBuilder sb)
+        {
+            try
+            {
+                
+                JournalFailedService journalFailedService = new JournalFailedService(tenant, seedJournalId);
+                journalFailedService.InsertJournalMoreData(accountingContext, sb);
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
+            
+
         }
 
         private void Impersonate()
