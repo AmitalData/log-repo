@@ -34,7 +34,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
         public byte[] Build(ReportsTemplate reportsTemplate, string documentId, bool isDocument)
         {
             List<DataProviderField> selectedFields = excelReportFileService.GetDataProviderFieldsFromXML(reportsTemplate.Id, documentId, isDocument);
-
+            selectedFields = ReOrderDataProviderFields(selectedFields);
             report = GetReport(reportsTemplate.ReportId);
 
             stiReport = new StiReport
@@ -50,6 +50,12 @@ namespace WebFreight.Web.Helpers.ExcelReport
             }
 
             return stiReport.SaveToByteArray();
+        }
+
+        private List<DataProviderField> ReOrderDataProviderFields(List<DataProviderField> selectedFields)
+        {
+            if (selectedFields.Any(x => x.Sort == 0)) return selectedFields;
+            return selectedFields.OrderBy(x => x.Sort).ToList();
         }
 
         private void BuildDataProvider()
@@ -246,6 +252,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
 
             double pos = 0;
             totalWidth = columnWidth * dataProviderField.Fields.Count();
+            dataProviderField.Fields = ReOrderDataProviderFields(dataProviderField.Fields);
             foreach (var item in dataProviderField.Fields.Where(x => x.Type != "List" && x.Type != "Class").ToList())
             {
                 SetTableHeaderText(headerBand, columnWidth, pos, item);

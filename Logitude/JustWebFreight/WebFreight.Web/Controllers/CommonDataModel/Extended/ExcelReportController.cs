@@ -27,7 +27,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.CheckContactFeature("ReportsTemplate", "ReportTemplateExcel", authToken.Tenant);
 
                 ExcelReportService reportsTemplateQuery = new ExcelReportService(authToken.Tenant);
-                List<DataProviderField> myResult = reportsTemplateQuery.GetDataProviderFields(reportId, reportsTemplateId);
+                ExcelReportResult myResult = reportsTemplateQuery.GetDataProviderFields(reportId, reportsTemplateId);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
