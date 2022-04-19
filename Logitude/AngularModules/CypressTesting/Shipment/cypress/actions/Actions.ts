@@ -171,7 +171,8 @@ export function BacktotheMasterShipment(){
 export function openHouseShipment(){
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
     // ShipmentContext.HouseNumber
-    cy.get("hyperlink").find(".HyperlinkButtonControl").eq(0).click()
+    //HyperlinkButtonControl
+    cy.get("hyperlink").find(".HyperlinkButtonControl").eq(0).click({force:true})
 }
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
