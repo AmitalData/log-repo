@@ -1,9 +1,4 @@
-﻿using Dropbox.Api.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 
 namespace WebFreight.Web.DataContracts
 {
@@ -23,6 +18,8 @@ namespace WebFreight.Web.DataContracts
         public string Expression { get; set; }
 
         public bool IsChecked { get; set; }
+
+        public int Sort { get; set; }
 
         public List<DataProviderField> Fields { get; set; }
     }
