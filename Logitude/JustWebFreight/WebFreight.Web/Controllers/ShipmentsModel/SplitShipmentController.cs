@@ -395,6 +395,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 InlandDomesticToTypeCode = oldEntity.InlandDomesticToTypeCode,
                 MainCarriageFromPortAddress = oldEntity.MainCarriageFromPortAddress,
                 MainCarriageToPortAddress = oldEntity.MainCarriageToPortAddress,
+                HandlerUserId = oldEntity.HandlerUserId,
+                PlannedCargoReadyDate = oldEntity.PlannedCargoReadyDate,
+                ApprovedCargoReadyDate = oldEntity.ApprovedCargoReadyDate,
             };
 
             this.CopyPartners(entityPM, oldEntity);
