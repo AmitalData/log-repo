@@ -54,6 +54,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
     {
         private const string InvoiceAutoCreditStatus = "AC";
         private const string InvoiceAlreadyReconciledMessage = "One or more invoices ledger transactions have been already reconciled";
+        private const string BillToNotConnectedMessage = "The bill to is not connected to a GL Account.";
         private int tenant;
         private bool isNewEntity;
         private bool isUpdateTotalVats;
@@ -3830,6 +3831,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void UpdateJournalLinesDebitAccounts(List<JournalLinePM> journalLines)
         {
             GLAccountPM debitGLAcount = getDebitGLAccount(invoice.BillToId, invoice.Tenant);
+
+            if (debitGLAcount == null)
+                throw new ApplicationException(BillToNotConnectedMessage);
+
             foreach (var item in journalLines)
             {
                 if (debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
