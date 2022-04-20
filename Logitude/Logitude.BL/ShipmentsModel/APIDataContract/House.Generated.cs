@@ -185,6 +185,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Address UnassignedConsigneeAddress { get; set; }
     
     public string FullMaster { get; set; }
+    
+    public Card Notify2 { get; set; }
+    
+    public string Notify2Reference { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

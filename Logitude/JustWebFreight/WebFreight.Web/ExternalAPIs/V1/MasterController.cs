@@ -311,9 +311,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(MasterPM, authToken.Tenant);
                             externalAPIShipmentValidator.ValidateInActiveCarriers(MasterPM);
-                            //externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(MasterPM);
-                            //externalAPIShipmentValidator.UpdatePayablesChangeSet(MasterPM);
-                            //externalAPIShipmentValidator.UpdateReceivablesChangeSet(MasterPM);
 
                             MasterPM = this.UpdatePartners(MyContext, MasterPM);
                             MasterPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
@@ -387,23 +384,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             ExternalAPIShipmentPartnersModifier externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersModifier(shipmentsContext, shipmentPM);
             return externalAPIShipmentPartnersUpdate.UpdatePartners();
         }
-        private void UpdateNotify1Partner(Shipment shipmentPOCO, ShipmentPM shipmentPM)
-        {
-            if (shipmentPOCO.Notify1Id != shipmentPM.Notify1Id)
-            {
-                Card card = CardRepository.GetSingleCard(shipmentPM.Notify1Id, shipmentPM.Tenant, false);
-                this.MapNotify1Fields(shipmentPM, card);
-            }
-        }
-        private void MapNotify1Fields(ShipmentPM shipmentPM, Card card)
-        {
-            if (card != null)
-            {
-                AddressRepository addressRepository = new AddressRepository(shipmentPM.Tenant);
-                shipmentPM.Notify1AddressId = addressRepository.GetMainAddressId(card.Id, shipmentPM.Tenant);
-                shipmentPM.Notify1ContactId = card.PrimaryContactId;
-            }
-        }
+        
         private void SetClosurePropertiers(ShipmentPM entityPM)
         {
             if (entityPM.IsOperationalClosed)

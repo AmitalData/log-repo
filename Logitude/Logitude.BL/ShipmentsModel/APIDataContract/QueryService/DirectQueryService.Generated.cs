@@ -689,7 +689,19 @@ using Simplog.Data.ShipmentsModel;
 				   
 				   temp.PreCarriageVesselName = MyEntityPM.PreCarriageVesselName;
 				   temp.OnCarriageVesselName = MyEntityPM.OnCarriageVesselName;
-				   temp.FullMaster = MyEntityPM.LongMaster;					
+				   temp.FullMaster = MyEntityPM.LongMaster;
+				   temp.AgentReference1 = MyEntityPM.AgentReference1;
+				   temp.AgentReference2 = MyEntityPM.AgentReference2; 
+
+			  
+				   if(MyEntityPM.Notify2Id != null)
+				   {
+					   CardQueryService CardService52 = new CardQueryService(Tenant);
+					   					   temp.Notify2 = CardService52.GetCardById(MyEntityPM.Notify2Id,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.Notify2Reference = MyEntityPM.Notify2Reference;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -991,9 +1003,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService52 = new AirPackageQueryService(Tenant);
+						AirPackageQueryService AirPackageService53 = new AirPackageQueryService(Tenant);
 						 								
-							temp.ShipmentPackages = AirPackageService52.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPackages = AirPackageService53.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1004,9 +1016,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService52 = new OceanOrInlandPackageQueryService(Tenant);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService53 = new OceanOrInlandPackageQueryService(Tenant);
 						 								
-							temp.ShipmentPackages = OceanOrInlandPackageService52.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPackages = OceanOrInlandPackageService53.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1017,9 +1029,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService52 = new ContainerQueryService(Tenant);
+						ContainerQueryService ContainerService53 = new ContainerQueryService(Tenant);
 						 								
-							temp.ShipmentPackages = ContainerService52.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPackages = ContainerService53.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1153,9 +1165,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService52 = new DeliveryQueryService(Tenant);
+						DeliveryQueryService DeliveryService53 = new DeliveryQueryService(Tenant);
 						 								
-							temp.ShipmentDeliveries = DeliveryService52.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentDeliveries = DeliveryService53.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1166,9 +1178,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService52 = new PickUpQueryService(Tenant);
+						PickUpQueryService PickUpService53 = new PickUpQueryService(Tenant);
 						 								
-							temp.ShipmentPickUps = PickUpService52.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPickUps = PickUpService53.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1280,11 +1292,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService52 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService53 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentReceivables = ReceivableService52.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentReceivables = ReceivableService53.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1296,11 +1308,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService52 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService53 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentPayables = PayableService52.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPayables = PayableService53.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1539,9 +1551,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						MainCarriageLegQueryService MainCarriageLegService52 = new MainCarriageLegQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService53 = new MainCarriageLegQueryService(Tenant);
 						 								
-							temp.MainCarriageLegs = MainCarriageLegService52.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
+							temp.MainCarriageLegs = MainCarriageLegService53.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -2193,11 +2205,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.EventList != null && MyEntity.EventList.Count > 0)
 					{
-						EventQueryService EventService52 = new EventQueryService(Tenant);
+						EventQueryService EventService53 = new EventQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.EventList = EventService52.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName,IsUpdate);
+							temp.EventList = EventService53.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -2209,11 +2221,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AddManualEvents != null && MyEntity.AddManualEvents.Count > 0)
 					{
-						EventQueryService EventService52 = new EventQueryService(Tenant);
+						EventQueryService EventService53 = new EventQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.AddManualEvents = EventService52.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName,IsUpdate);
+							temp.AddManualEvents = EventService53.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -2276,6 +2288,42 @@ using Simplog.Data.ShipmentsModel;
 						temp.LongMaster = MyEntity.FullMaster;
 
 										}  
+
+					
+                    							
+						temp.AgentReference1 = MyEntity.AgentReference1;
+
+					 
+
+					
+                    							
+						temp.AgentReference2 = MyEntity.AgentReference2;
+
+					 
+
+					
+					CardQueryService Notify2CardService = new CardQueryService(Tenant);
+					if(MyEntity.Notify2 != null)
+					{
+						var myNotify2PM = Notify2CardService.CardDataMappingAndValidatin(MyEntity.Notify2,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myNotify2PM != null)
+						{ 
+
+						 								
+								temp.Notify2Id = myNotify2PM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							
+						temp.Notify2Reference = MyEntity.Notify2Reference;
+
+					 
 
 										   
 					return temp;
