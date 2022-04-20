@@ -1,0 +1,17 @@
+<table>
+    <tr>
+        <td style="width: 250px;">
+            <ul class="FiltersMenu" style="float:right; padding-right: 5px;">
+                <li (click)="FilterClicked('I')" style="width:80px; height: 25px;" [class.SelectedFilter]="_SelectedValue === 'I'">
+                    יבוא
+                </li>
+                <li (click)="FilterClicked('E')" style="width:80px; height: 25px;" [class.SelectedFilter]="_SelectedValue === 'E'">
+                    יצוא
+                </li>
+                <li (click)="FilterClicked('A')" style="width:70px; height: 25px;" [class.SelectedFilter]="_SelectedValue === 'A'">
+                    {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>

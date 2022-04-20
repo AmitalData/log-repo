@@ -11,7 +11,7 @@
   HasCustomFields="false"
   HasHelper="false"
   HasShortTitle="true"
-  HasFiltersMenu="false"
+  HasFiltersMenu="true"
   HasCustomValidator="true"
   IsEditable="false"
   IsNewWizard="true"
