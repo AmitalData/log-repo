@@ -99,6 +99,8 @@ export class ExcelReportTemplateComponent implements OnInit {
     SetSelectedLists(selectedDataProviderFields: DataProviderField[]) {
         this.SelectedHeaderDataProviderFields = [];
         this.SelectedListsDataProviderFields = [];
+        if (!selectedDataProviderFields) return;
+
         selectedDataProviderFields.forEach(element => {
             if ((element.Type != 'Class' && element.Type != 'List')) this.SelectedHeaderDataProviderFields.push(this.Clone(element));
             else this.SelectedListsDataProviderFields.push(this.Clone(element));
