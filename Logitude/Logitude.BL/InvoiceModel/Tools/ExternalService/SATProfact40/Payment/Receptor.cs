@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Base;
 using Profact.TimbraCFDI40;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -14,7 +15,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 {
     internal class Receptor : SATComprobante
     {
-        public static ComprobanteReceptor Get()
+        public static ComprobanteReceptor Get(Tenant currentTenant)
         {
             ComprobanteReceptor comprobanteReceptor = new ComprobanteReceptor();
             CardRepository cardRepository = new CardRepository(commonContext);
@@ -40,6 +41,10 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             comprobanteReceptor.ResidenciaFiscalSpecified = true;
             comprobanteReceptor.NumRegIdTrib = !string.IsNullOrEmpty(comprobanteReceptor.Rfc) ? comprobanteReceptor.Rfc : SATData.OutSideMexicoRfc;
 
+            if(comprobanteReceptor.Rfc == SATData.OutSideMexicoRfc) {
+                comprobanteReceptor.RegimenFiscalReceptor = LugarExpedicion.Get(new LugarExpedicionArgs { CommonContext = commonContext, BranchId = arPaymentPM.BranchId, CurrentTenantZipCode = currentTenant.Address.ZipCode, Tenant = arPaymentPM.Tenant });
+            }
+            
             return comprobanteReceptor;
         }
 
