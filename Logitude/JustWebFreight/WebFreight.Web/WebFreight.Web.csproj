@@ -1152,6 +1152,7 @@
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\DataProviderField.cs" />
     <Compile Include="DataContracts\ExcelReportArguments.cs" />
+    <Compile Include="DataContracts\ExcelReportResult.cs" />
     <Compile Include="DataContracts\UserCredentials.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />

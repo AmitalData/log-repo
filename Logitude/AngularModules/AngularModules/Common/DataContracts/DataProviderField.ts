@@ -4,5 +4,8 @@ export class DataProviderField {
     public Type: string;
     public Expression: string;
     public IsChecked: boolean;
+    public Sort: number;
+    public ClassName: string = "ListBoxItem";
+    public FieldsOpened: boolean;
     public Fields: DataProviderField[];
 }

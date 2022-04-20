@@ -1,25 +1,26 @@
 declare var window: any;
 
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { ExcelReportService } from 'Common/Services/ExtendedLists/ExcelReportService';
 import { ReportsTemplatePM } from 'Common/EntityPMs/ReportsTemplatePM';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { DataProviderField } from 'Common/DataContracts/DataProviderField';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ExcelReportArguments } from 'Common/DataContracts/ExcelReportArguments';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import { ExcelReportResult } from 'Common/DataContracts/ExcelReportResult';
 
 @Component({
-
     selector: 'ExcelReportTemplateComponent',
     templateUrl: './ExcelReportTemplateComponent.html',
 })
 
 
 export class ExcelReportTemplateComponent implements OnInit {
+    RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
 
     public SearchTextValue: FormControl;
 
@@ -32,11 +33,22 @@ export class ExcelReportTemplateComponent implements OnInit {
     isNew: boolean;
     excelReportService: ExcelReportService;
     IsTextSearchEnabled: boolean = false;
-    IsSearchIconVisible: boolean = true;
     SearchText: string;
 
     DataProviderFields: DataProviderField[];
     DataProviderFieldsAll: DataProviderField[];
+    SelectedHeaderDataProviderFields: DataProviderField[];
+    SelectedListsDataProviderFields: DataProviderField[];
+    SelectedField: DataProviderField;
+    SelectedListName: any;
+
+
+    public IsbtnAddDisabled: boolean = true;
+    public IsbtnRemoveDisabled: boolean = true;
+    public IsbtnUpDisabled: boolean = true;
+    public IsbtnDownDisabled: boolean = true;
+    public IsListsbtnDownDisabled: boolean = true;
+    public IsListsbtnUpDisabled: boolean = true;
 
     constructor() {
         this.excelReportService = new ExcelReportService();
@@ -68,39 +80,36 @@ export class ExcelReportTemplateComponent implements OnInit {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.excelReportService.getDataProviderFields(this.ReportTemplatePM.ReportId, this.ReportTemplatePM.Id)
             .subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    this.FillDataProviderFields(myResponse.Result)
-                }
+                if (!myResponse.HasError) this.FillDataProviderFields(myResponse.Result)
                 this.CurrentSession.StopBusyIndicator();
             });
     }
 
-    FillDataProviderFields(result: any) {
+    FillDataProviderFields(result: ExcelReportResult) {
         this.DataProviderFields = new Array<DataProviderField>();
         this.DataProviderFieldsAll = new Array<DataProviderField>();
-        result.forEach((item) => {
+        result.DataProviderFields.forEach((item) => {
             this.DataProviderFieldsAll.push(item);
             this.DataProviderFields.push(this.Clone(item));
         });
+        this.SetSelectedLists(result.SelectedDataProviderFields);
         this.TextSearchEnabled();
     }
 
+    SetSelectedLists(selectedDataProviderFields: DataProviderField[]) {
+        this.SelectedHeaderDataProviderFields = [];
+        this.SelectedListsDataProviderFields = [];
+        if (!selectedDataProviderFields) return;
+
+        selectedDataProviderFields.forEach(element => {
+            if ((element.Type != 'Class' && element.Type != 'List')) this.SelectedHeaderDataProviderFields.push(this.Clone(element));
+            else this.SelectedListsDataProviderFields.push(this.Clone(element));
+        });
+    }
+
     private TextSearchEnabled() {
-        if (this.DataProviderFields.length > 0)
-            this.IsTextSearchEnabled = true;
-        else
-            this.IsTextSearchEnabled = false;
-    }
-
-    OnFucos() {
-        this.IsSearchIconVisible = false;
-    }
-
-    OnLostFucos() {
-        if (this.SearchText) {
-            this.IsSearchIconVisible = false;
-        }
-        else this.IsSearchIconVisible = true;
+        if (this.DataProviderFields.length > 0) this.IsTextSearchEnabled = true;
+        else this.IsTextSearchEnabled = false;
     }
 
     Search(textsearch: string) {
@@ -123,66 +132,39 @@ export class ExcelReportTemplateComponent implements OnInit {
         });
     }
 
-    CheckChanges(expression: string) {
-        this.FindItem(expression, this.DataProviderFieldsAll);
+
+    SelectChanges(selectedField: DataProviderField, selectedListName: string) {
+        this.SelectedField = selectedField;
+        this.SelectedListName = selectedListName;
+
+        this.IsbtnAddDisabled = selectedListName != 'DataProviderFields';
+        this.IsbtnRemoveDisabled = selectedListName == 'DataProviderFields';
+
+        this.IsbtnUpDisabled = selectedListName != 'SelectedHeaderDataProviderFields';
+        this.IsbtnDownDisabled = selectedListName != 'SelectedHeaderDataProviderFields';
+
+        this.IsListsbtnDownDisabled = selectedListName != 'SelectedListsDataProviderFields';
+        this.IsListsbtnUpDisabled = selectedListName != 'SelectedListsDataProviderFields';
+
+        this.UnSelectAllFields();
     }
 
-    FindItem(expression: string, list: DataProviderField[]) {
-        list.forEach(item => {
-            if (item.Expression == expression) {
-                item.IsChecked = !item.IsChecked;
-                return;
-            }
+    private UnSelectAllFields() {
+        this.UnselectField(this.SelectedHeaderDataProviderFields);
+        this.UnselectField(this.SelectedListsDataProviderFields);
+        this.UnselectField(this.DataProviderFields);
+    }
 
-            if (item.Fields != null) {
-                this.FindItem(expression, item.Fields);
-            }
+    UnselectField(dataProviderFields: DataProviderField[]) {
+        dataProviderFields.forEach(field => {
+            field.ClassName = "ListBoxItem";
+            if (field.Fields != null) this.UnselectField(field.Fields);
         });
     }
 
     CloseButtonClicked() {
         this.CurrentSession.CurrentWindow.Close("");
     }
-
-    SaveButtonClicked(preview: boolean) {
-        var selectedDataProviderFields: DataProviderField[] = this.GetSelectedDataProviderFields(this.Clone(this.DataProviderFieldsAll));
-
-        var excelReportArguments: ExcelReportArguments = this.GetExcelReportArguments(selectedDataProviderFields);
-
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.excelReportService.postDataProviderProperties(excelReportArguments).subscribe((myResponse: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
-            preview ? this.OpenStimulsoftDesigner() : this.CurrentSession.CurrentWindow.Close("");
-        });
-    }
-
-    private GetExcelReportArguments(selectedDataProviderFields: DataProviderField[]) {
-        var excelReportArguments: ExcelReportArguments = new ExcelReportArguments();
-        excelReportArguments.DataProviderFields = selectedDataProviderFields;
-        excelReportArguments.ReportId = this.ReportTemplatePM.ReportId;
-        excelReportArguments.ReportsTemplateId = this.ReportTemplatePM.Id;
-        excelReportArguments.IsNew = this.isNew;
-        return excelReportArguments;
-    }
-
-    Clone(list: any): any {
-        return JSON.parse(JSON.stringify(list));
-    }
-
-    GetSelectedDataProviderFields(dataProviderFields: DataProviderField[]): DataProviderField[] {
-        var selectedDataProviderFields: DataProviderField[] = [];
-        dataProviderFields.forEach(item => {
-            if (item.IsChecked) {
-                selectedDataProviderFields.push(item);
-            }
-            if (item.Fields != null) {
-                item.Fields = this.GetSelectedDataProviderFields(this.Clone(item.Fields));
-            }
-        });
-        return selectedDataProviderFields;
-    }
-
-
 
     PreviewButtonClicked() {
         this.SaveButtonClicked(true);
@@ -209,6 +191,125 @@ export class ExcelReportTemplateComponent implements OnInit {
         logWindow.WindowArgs = windowArgs;
         window.designerClosed = false;
         logWindow.Show("./Infrastructure/Components/StimulsoftDesigner/StimulsoftDesigner");
+    }
+
+
+    btnAdd_Click() {
+        if (this.IsHeaderField(this.SelectedField)) this.SelectedHeaderDataProviderFields.push(this.SelectedField);
+        else this.AddListField();
+
+        this.CheckUncheckFields(this.DataProviderFields, true, true);
+        this.IsbtnAddDisabled = true;
+        this.SelectedField = null;
+        this.UnSelectAllFields();
+    }
+
+    AddListField() {
+        var expressionList = this.SelectedField.Expression.split('.');
+        var parentExpression = expressionList[0] + '.' + expressionList[1] + '}';
+
+        var existField = this.SelectedListsDataProviderFields.find(x => x.Expression == parentExpression);
+        if (existField) {
+            existField.Fields.push(this.Clone(this.SelectedField));
+            return;
+        }
+        var parentField = this.Clone(this.DataProviderFields.find(x => x.Expression == parentExpression));
+        parentField.Fields = [];
+        parentField.Fields.push(this.Clone(this.SelectedField));
+        this.SelectedListsDataProviderFields.push(parentField);
+    }
+
+    CheckUncheckFields(dataProviderFields: DataProviderField[], checkSubFields: boolean, isChecked: boolean) {
+        dataProviderFields.forEach(field => {
+            if (field.Expression == this.SelectedField.Expression) field.IsChecked = isChecked;
+            else if (checkSubFields && field.Fields != null) this.CheckUncheckFields(field.Fields, false, isChecked);
+        });
+    }
+
+    private IsHeaderField(field: DataProviderField) {
+        return field.Expression.split('.').length == 2 && (field.Fields == null || field.Fields.length == 0);
+    }
+
+    btnRemove_Click() {
+        if (this.IsHeaderField(this.SelectedField)) this.SelectedHeaderDataProviderFields = this.SelectedHeaderDataProviderFields.filter(item => item !== this.SelectedField);
+        else this.RemoveListField();
+
+        this.CheckUncheckFields(this.DataProviderFields, true, false);
+        this.IsbtnRemoveDisabled = true;
+        this.SelectedField = null;
+        this.UnSelectAllFields();
+    }
+
+    RemoveListField() {
+        var expressionList = this.SelectedField.Expression.split('.');
+        var parentExpression = expressionList[0] + '.' + expressionList[1] + '}';
+
+        var existField = this.SelectedListsDataProviderFields.find(x => x.Expression == parentExpression);
+        if (existField) existField.Fields = existField.Fields.filter(item => item !== this.SelectedField);
+        if (existField.Fields.length == 0) this.SelectedListsDataProviderFields = this.SelectedListsDataProviderFields.filter(item => item !== existField);
+    }
+
+    btnUp_Click() {
+        var list = this.GetSelectedList();
+        var i = list.indexOf(this.SelectedField);
+        if (i <= 0) return;
+        this.ChangeItemPosition(list, i, i - 1);
+    }
+
+    btnDown_Click() {
+        var list = this.GetSelectedList();
+        var i = list.indexOf(this.SelectedField);
+        if (i >= list.length - 1) return;
+        this.ChangeItemPosition(list, i, i + 1);
+    }
+
+    private GetSelectedList() {
+        var list: DataProviderField[] = this[this.SelectedListName];
+        if (this.SelectedListName == 'SelectedListsDataProviderFields') list = list.find(x => x.Name == this.SelectedField.Expression.split('.')[1]).Fields;
+        return list;
+    }
+
+    ChangeItemPosition(arr: any, fromIndex: number, toIndex: number) {
+        var element = arr[fromIndex];
+        arr.splice(fromIndex, 1);
+        arr.splice(toIndex, 0, element);
+    }
+
+
+    SaveButtonClicked(preview: boolean) {
+        this.ReorderColumnsList(this.SelectedHeaderDataProviderFields, true);
+        this.ReorderColumnsList(this.SelectedListsDataProviderFields, true);
+        var selectedDataProviderFields: DataProviderField[] = this.Clone(this.SelectedHeaderDataProviderFields);
+        selectedDataProviderFields = selectedDataProviderFields.concat(this.Clone(this.SelectedListsDataProviderFields));
+
+        var excelReportArguments: ExcelReportArguments = this.GetExcelReportArguments(selectedDataProviderFields);
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.excelReportService.postDataProviderProperties(excelReportArguments).subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            preview ? this.OpenStimulsoftDesigner() : this.CurrentSession.CurrentWindow.Close("");
+        });
+    }
+
+    ReorderColumnsList(dataProviderFields: DataProviderField[], checkSubFields: boolean) {
+        for (let index = 0; index < dataProviderFields.length; index++) {
+            dataProviderFields[index].Sort = index + 1;
+            if (checkSubFields && dataProviderFields[index].Fields != null && dataProviderFields[index].Fields.length > 0)
+                this.ReorderColumnsList(dataProviderFields[index].Fields, false);
+        }
+    }
+
+    private GetExcelReportArguments(selectedDataProviderFields: DataProviderField[]) {
+        var excelReportArguments: ExcelReportArguments = new ExcelReportArguments();
+        excelReportArguments.DataProviderFields = selectedDataProviderFields;
+        excelReportArguments.ReportId = this.ReportTemplatePM.ReportId;
+        excelReportArguments.ReportsTemplateId = this.ReportTemplatePM.Id;
+        excelReportArguments.IsNew = this.isNew;
+        return excelReportArguments;
+    }
+
+    Clone(list: any): any {
+        return JSON.parse(JSON.stringify(list));
     }
 
 }

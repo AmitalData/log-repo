@@ -284,8 +284,8 @@ export class ReportTemplateComponent implements OnInit {
         windowArgs.ReportTemplatePM = item;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 500;
-        logWindow.Height = 600;
+        logWindow.Width = 960;
+        logWindow.Height = 550;
         logWindow.Title = "Edit Excel Template";
 
         logWindow.WindowArgs = windowArgs;

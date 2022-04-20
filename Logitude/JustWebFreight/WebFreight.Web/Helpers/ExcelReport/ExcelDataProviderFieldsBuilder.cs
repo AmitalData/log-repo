@@ -11,11 +11,11 @@ namespace WebFreight.Web.Helpers.ExcelReport
     {
         public List<DataProviderField> Build(string reportCode)
         {
-            return BuildDataProviderFields(GetDataProviderType(reportCode).GetProperties(), GetDataProviderType(reportCode).Name);
+            return BuildDataProviderFields(GetDataProviderType(reportCode).GetProperties(), GetDataProviderType(reportCode).Name, 1);
         }
 
 
-        private List<DataProviderField> BuildDataProviderFields(PropertyInfo[] propertyInfos, string parentClassName)
+        private List<DataProviderField> BuildDataProviderFields(PropertyInfo[] propertyInfos, string parentClassName, int maxSubLevels)
         {
             var dataProviderFields = new List<DataProviderField>();
             foreach (PropertyInfo property in propertyInfos)
@@ -26,7 +26,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
                     Text = property.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? property.Name,
                     Type = GetPropertyName(property),
                     Expression = "{" + parentClassName + "." + property.Name + "}",
-                    Fields = GetPropertyFields(property, parentClassName + "." + property.Name),
+                    Fields = GetPropertyFields(property, parentClassName + "." + property.Name, maxSubLevels),
                 });
             }
 
@@ -47,16 +47,17 @@ namespace WebFreight.Web.Helpers.ExcelReport
             return property.PropertyType.Name;
         }
 
-        private List<DataProviderField> GetPropertyFields(PropertyInfo property, string parentClassName)
+        private List<DataProviderField> GetPropertyFields(PropertyInfo property, string parentClassName, int maxSubLevels)
         {
+            if (maxSubLevels == 0) return null;
             if (IsClassProperty(property))
             {
-                return BuildDataProviderFields(property.PropertyType.GetProperties(), parentClassName);
+                return BuildDataProviderFields(property.PropertyType.GetProperties(), parentClassName, maxSubLevels - 1);
             }
 
             if (IsListProperty(property))
             {
-                return BuildDataProviderFields(property.PropertyType.GetGenericArguments()[0].GetProperties(), parentClassName);
+                return BuildDataProviderFields(property.PropertyType.GetGenericArguments()[0].GetProperties(), parentClassName, maxSubLevels - 1);
             }
 
             return null;
