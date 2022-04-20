@@ -13,6 +13,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.CustomFilters;
 
 namespace WebFreight.Web.ShipmentsModel.DomainServices
 {
