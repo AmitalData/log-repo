@@ -442,7 +442,17 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.UnassignedConsigneeAddress = AddressService29.AddressCustomDataMapping(MyEntityPM.UnassignedConsigneeAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				    
+
+			  
+				   if(MyEntityPM.Notify2Id != null)
+				   {
+					   CardQueryService CardService30 = new CardQueryService(Tenant);
+					   					   temp.Notify2 = CardService30.GetCardById(MyEntityPM.Notify2Id,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.Notify2Reference = MyEntityPM.Notify2Reference;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -857,9 +867,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService30 = new DeliveryQueryService(Tenant);
+						DeliveryQueryService DeliveryService31 = new DeliveryQueryService(Tenant);
 						 								
-							temp.ShipmentDeliveries = DeliveryService30.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentDeliveries = DeliveryService31.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -870,9 +880,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService30 = new PickUpQueryService(Tenant);
+						PickUpQueryService PickUpService31 = new PickUpQueryService(Tenant);
 						 								
-							temp.ShipmentPickUps = PickUpService30.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPickUps = PickUpService31.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -890,11 +900,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Houses != null && MyEntity.Houses.Count > 0)
 					{
-						HouseQueryService HouseService30 = new HouseQueryService(Tenant);
+						HouseQueryService HouseService31 = new HouseQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentConsoleShipments = HouseService30.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentConsoleShipments = HouseService31.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -952,11 +962,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService30 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService31 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentReceivables = ReceivableService30.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentReceivables = ReceivableService31.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -968,11 +978,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService30 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService31 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentPayables = PayableService30.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPayables = PayableService31.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1193,9 +1203,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						MainCarriageLegQueryService MainCarriageLegService30 = new MainCarriageLegQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService31 = new MainCarriageLegQueryService(Tenant);
 						 								
-							temp.MainCarriageLegs = MainCarriageLegService30.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
+							temp.MainCarriageLegs = MainCarriageLegService31.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1351,11 +1361,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.EventList != null && MyEntity.EventList.Count > 0)
 					{
-						EventQueryService EventService30 = new EventQueryService(Tenant);
+						EventQueryService EventService31 = new EventQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.EventList = EventService30.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName,IsUpdate);
+							temp.EventList = EventService31.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1367,11 +1377,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AddManualEvents != null && MyEntity.AddManualEvents.Count > 0)
 					{
-						EventQueryService EventService30 = new EventQueryService(Tenant);
+						EventQueryService EventService31 = new EventQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.AddManualEvents = EventService30.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName,IsUpdate);
+							temp.AddManualEvents = EventService31.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1415,6 +1425,30 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
+					
+					CardQueryService Notify2CardService = new CardQueryService(Tenant);
+					if(MyEntity.Notify2 != null)
+					{
+						var myNotify2PM = Notify2CardService.CardDataMappingAndValidatin(MyEntity.Notify2,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myNotify2PM != null)
+						{ 
+
+						 								
+								temp.Notify2Id = myNotify2PM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							
+						temp.Notify2Reference = MyEntity.Notify2Reference;
+
+					 
+
 										   
 					return temp;
 		    }
