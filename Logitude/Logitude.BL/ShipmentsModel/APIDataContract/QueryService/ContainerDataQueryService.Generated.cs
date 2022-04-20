@@ -358,7 +358,13 @@ using Simplog.Data.ShipmentsModel;
 					    throw new ApplicationException("Container with Id " + MyEntity.Id + " doesn't exist");
 					} 
 				 
-					
+										 
+					if(IsUpdate == true)
+					{
+					    
+					      temp.NewConcurrencyGUID = Guid.NewGuid().ToString(); 
+						
+					}
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
