@@ -1402,7 +1402,27 @@ export class QuotePM {
     public get ToZipCode() { return this.toZipCode; }
     public set ToZipCode(newValue: string) { if (this.toZipCode != newValue) { this.toZipCode = newValue; this.MarkAsDirty("ToZipCode"); } }
 
-     
+    private includeInsurance: boolean;
+    public get IncludeInsurance() { return this.includeInsurance; }
+    public set IncludeInsurance(newValue: boolean) { if (this.includeInsurance != newValue) { this.includeInsurance = newValue; this.MarkAsDirty("IncludeInsurance"); } }
+
+    private isStackable: boolean;
+    public get IsStackable() { return this.isStackable; }
+    public set IsStackable(newValue: boolean) { if (this.isStackable != newValue) { this.isStackable = newValue; this.MarkAsDirty("IsStackable"); } }
+
+    private includeImportDutyCharges: boolean;
+    public get IncludeImportDutyCharges() { return this.includeImportDutyCharges; }
+    public set IncludeImportDutyCharges(newValue: boolean) { if (this.includeImportDutyCharges != newValue) { this.includeImportDutyCharges = newValue; this.MarkAsDirty("IncludeImportDutyCharges"); } }
+
+    private specialServicesTypeId: string;
+    public get SpecialServicesTypeId() { return this.specialServicesTypeId; }
+    public set SpecialServicesTypeId(newValue: string) { if (this.specialServicesTypeId != newValue) { this.specialServicesTypeId = newValue; this.MarkAsDirty("SpecialServicesTypeId"); } }
+
+    private insuranceValue: number;
+    public get InsuranceValue() { return this.insuranceValue; }
+    public set InsuranceValue(newValue: number) { if (this.insuranceValue != newValue) { this.insuranceValue = newValue; this.MarkAsDirty("InsuranceValue"); } }
+
+
 	private quoteCharges: QuoteChargePM[];
     get  QuoteCharges() {
         if (this.quoteCharges == null) {

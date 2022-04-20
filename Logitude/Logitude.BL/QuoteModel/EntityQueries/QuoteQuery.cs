@@ -298,7 +298,11 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                RegionalTaxPercentage=f.RegionalTaxPercentage,
                                                IsMultiCurrency = f.IsMultiCurrency,
                                                PackagesQuantity = f.PackagesQuantity,
-
+                                               SpecialServicesTypeId = f.SpecialServicesTypeId,
+                                               IncludeInsurance = f.IncludeInsurance,
+                                               IsStackable = f.IsStackable,
+                                               IncludeImportDutyCharges = f.IncludeImportDutyCharges,
+                                               InsuranceValue = f.InsuranceValue,
                                            };
             return result;
         }
@@ -515,6 +519,11 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         EstimatedProfitInProfit = f.EstimatedProfitInProfit,
                         IsMultiCurrency = f.IsMultiCurrency,
                         PackagesQuantity = f.PackagesQuantity,
+                        SpecialServicesTypeId = f.SpecialServicesTypeId,
+                        IncludeInsurance = f.IncludeInsurance,
+                        IsStackable = f.IsStackable,
+                        IncludeImportDutyCharges = f.IncludeImportDutyCharges,
+                        InsuranceValue = f.InsuranceValue,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -1426,6 +1435,11 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 DescriptionRightToLeft = entityPOCO.DescriptionRightToLeft,
                 IsMultiCurrency = entityPOCO.IsMultiCurrency,
                 PackagesQuantity = entityPOCO.PackagesQuantity,
+                SpecialServicesTypeId = entityPOCO.SpecialServicesTypeId,
+                IncludeInsurance = entityPOCO.IncludeInsurance,
+                IsStackable = entityPOCO.IsStackable,
+                IncludeImportDutyCharges = entityPOCO.IncludeImportDutyCharges,
+                InsuranceValue = entityPOCO.InsuranceValue,
             };
 
             int tenant = entityPOCO.Tenant;

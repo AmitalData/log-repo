@@ -740,6 +740,15 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string FromZipCode { get; set; }
         public string ToZipCode { get; set; }
         public string TicketId { get; set; }
-         
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string SpecialServicesTypeId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IncludeInsurance { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsStackable { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IncludeImportDutyCharges { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? InsuranceValue { get; set; }
     }
 }
