@@ -35,7 +35,7 @@ export const Components =
         SendManifestComponent,
         DeclarationCancellationComponent,
         ExportDeclarationClosingDataComponent,
-        ExportStorageDeclerationComponent
+        ExportStorageDeclerationComponent,
         DeclarationFiltersMenuComponent,
     ];
 
