@@ -34,7 +34,9 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             ContainerRepository containerRepository = new ContainerRepository(tenant);
             ContainerQuery containerQuery = new ContainerQuery(tenant);
+            ContainerCustomFilter customfilters = new ContainerCustomFilter(tenant);
             IQueryable<Container> iQueryable = containerRepository.GetContainers(tenant);
+            iQueryable = customfilters.GetFilteredQuery(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
