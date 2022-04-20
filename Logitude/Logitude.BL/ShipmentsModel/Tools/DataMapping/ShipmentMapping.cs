@@ -2705,6 +2705,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 {
                     MethodHelper.AddToSearchFields(ref mySearchFields, item.ContainerNumber);
                 }
+
+                if (!string.IsNullOrEmpty(item.HorseName))
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, item.HorseName);
+                }
             }
             #endregion
 
