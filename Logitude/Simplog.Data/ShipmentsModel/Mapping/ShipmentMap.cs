@@ -761,7 +761,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IsPODReceived).HasColumnName("IsPODReceived");
             this.Property(t => t.PODReceivedDate).HasColumnName("PODReceivedDate");
             this.Property(t => t.IsShipmentOrder).HasColumnName("IsShipmentOrder");
-
+            this.Property(t => t.QuoteFreightExpirationDate).HasColumnName("QuoteFreightExpirationDate");
+            
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {

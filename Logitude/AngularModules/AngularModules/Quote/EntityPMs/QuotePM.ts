@@ -1402,6 +1402,7 @@ export class QuotePM {
     public get ToZipCode() { return this.toZipCode; }
     public set ToZipCode(newValue: string) { if (this.toZipCode != newValue) { this.toZipCode = newValue; this.MarkAsDirty("ToZipCode"); } }
 
+
     private includeInsurance: boolean;
     public get IncludeInsurance() { return this.includeInsurance; }
     public set IncludeInsurance(newValue: boolean) { if (this.includeInsurance != newValue) { this.includeInsurance = newValue; this.MarkAsDirty("IncludeInsurance"); } }
@@ -1422,6 +1423,10 @@ export class QuotePM {
     public get InsuranceValue() { return this.insuranceValue; }
     public set InsuranceValue(newValue: number) { if (this.insuranceValue != newValue) { this.insuranceValue = newValue; this.MarkAsDirty("InsuranceValue"); } }
 
+    private validByTypeCode: string;
+    public get ValidByTypeCode() { return this.validByTypeCode; }
+    public set ValidByTypeCode(newValue: string) { if (this.validByTypeCode != newValue) { this.validByTypeCode = newValue; this.MarkAsDirty("ValidByTypeCode"); } }
+    
 
 	private quoteCharges: QuoteChargePM[];
     get  QuoteCharges() {
@@ -1819,4 +1824,4 @@ export class QuotePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

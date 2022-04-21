@@ -303,6 +303,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                IsStackable = f.IsStackable,
                                                IncludeImportDutyCharges = f.IncludeImportDutyCharges,
                                                InsuranceValue = f.InsuranceValue,
+                                               ValidByTypeCode = f.ValidByTypeCode,
                                            };
             return result;
         }
@@ -524,6 +525,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         IsStackable = f.IsStackable,
                         IncludeImportDutyCharges = f.IncludeImportDutyCharges,
                         InsuranceValue = f.InsuranceValue,
+                        ValidByTypeCode = f.ValidByTypeCode,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -1440,6 +1442,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 IsStackable = entityPOCO.IsStackable,
                 IncludeImportDutyCharges = entityPOCO.IncludeImportDutyCharges,
                 InsuranceValue = entityPOCO.InsuranceValue,
+                ValidByTypeCode = entityPOCO.ValidByTypeCode,
             };
 
             int tenant = entityPOCO.Tenant;

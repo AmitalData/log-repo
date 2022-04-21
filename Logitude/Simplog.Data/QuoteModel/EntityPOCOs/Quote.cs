@@ -406,6 +406,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         [ForeignKey("InlandDomesticToCountryId")]
         public virtual Country InlandDomesticToCountry { get; set; }
 
+
         public string SpecialServicesTypeId { get; set; }
         public bool IncludeInsurance { get; set; }
         public bool IsStackable { get; set; }
@@ -413,5 +414,9 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public double? InsuranceValue { get; set; }
         [ForeignKey("SpecialServicesTypeId")]
         public virtual SpecialServicesType SpecialServicesType { get; set; }
+
+        public string ValidByTypeCode { get; set; }
+        [ForeignKey("ValidByTypeCode")]
+        public virtual ValidByType ValidByType { get; set; }
     }
 }

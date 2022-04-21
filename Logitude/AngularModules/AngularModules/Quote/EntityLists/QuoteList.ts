@@ -205,5 +205,7 @@ export class QuoteList {
 		IsStackable: boolean;
 		IncludeImportDutyCharges: boolean;
 		InsuranceValue: number;
+		ValidByTypeCode: string;
+
 	
-}
+}

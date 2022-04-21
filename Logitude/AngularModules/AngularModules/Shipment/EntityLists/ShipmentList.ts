@@ -514,5 +514,6 @@ export class ShipmentList {
 		IsShipmentOrder: boolean;
 		FirstPickupFullAddress: string;
 		LastDeliveryFullAddress: string;
+		QuoteFreightExpirationDate: Date;
 	
 }

@@ -512,7 +512,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.IsShipmentOrder = entityPM.IsShipmentOrder;
             entityPoco.FirstPickupFullAddress = entityPM.FirstPickupFullAddress;
             entityPoco.LastDeliveryFullAddress = entityPM.LastDeliveryFullAddress;
-
+            entityPoco.QuoteFreightExpirationDate = entityPM.QuoteFreightExpirationDate;
+            
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
             {

@@ -606,5 +606,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool IsShipmentOrder { get; set; }
         public string FirstPickupFullAddress { get; set; }
         public string LastDeliveryFullAddress { get; set; }
+        public DateTime? QuoteFreightExpirationDate { get; set; }
     }
 }

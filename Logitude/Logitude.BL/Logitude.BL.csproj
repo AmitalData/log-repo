@@ -701,7 +701,12 @@
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATCancelInvoiceProfact40Service.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATBaseProfact40Service.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATInvoiceProfact40Service.cs" />
+    <Compile Include="QuoteModel\CloseTables\DetailsClassesGenerated\ValidByTypeDetails.Generated.cs" />
+    <Compile Include="QuoteModel\CloseTables\EnumGenerated\ValidByTypeStruct.Generated.cs" />
     <Compile Include="QuoteModel\DataContracts\QuoteTemplateSettingData.cs" />
+    <Compile Include="QuoteModel\EntityLists\ValidByTypeList.cs" />
+    <Compile Include="QuoteModel\EntityPMs\ValidByTypePM.cs" />
+    <Compile Include="QuoteModel\EntityQueries\ValidByTypeQuery.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteTemplateSettingDataBuilder.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ContainerData.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUpDeliveryFromToType.Generated.cs" />

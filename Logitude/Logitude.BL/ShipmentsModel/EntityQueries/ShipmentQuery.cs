@@ -2053,7 +2053,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
             shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
             shipmentPM.IsShipmentOrder = shipment.IsShipmentOrder;
-
+            shipmentPM.QuoteFreightExpirationDate = shipment.QuoteFreightExpirationDate;
+            
             if (shipment.MoveTypeId != null)
             {
                 MoveTypeRepository moveTyperep = new MoveTypeRepository(webFreightContext);
@@ -3780,7 +3781,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
             shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
             shipmentPM.IsShipmentOrder = shipment.IsShipmentOrder;
-
+            shipmentPM.QuoteFreightExpirationDate = shipment.QuoteFreightExpirationDate;
+            
             if (!string.IsNullOrEmpty(shipment.LastSharedEventId))
             {
                 EventTypeRepository myRepository = new EventTypeRepository(tenant);
@@ -3896,6 +3898,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
             }
             shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
+            shipmentPM.QuoteFreightExpirationDate = shipment.QuoteFreightExpirationDate;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
             shipmentPM.IsShipmentOrder = shipment.IsShipmentOrder;
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;

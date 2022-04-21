@@ -2897,6 +2897,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public string FirstPickupFullAddress { get; set; }
         public string LastDeliveryFullAddress { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? QuoteFreightExpirationDate { get; set; }
     }
 
     public class TransshipmentLeg

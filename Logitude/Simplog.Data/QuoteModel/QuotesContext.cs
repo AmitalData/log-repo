@@ -319,6 +319,7 @@ namespace Simplog.Data.QuoteModel
         public IDbSet<QuoteCharge> QuoteCharges { get; set; }
         public IDbSet<QuotePriceSteps> QuotePriceSteps { get; set; }
         public IDbSet<QuoteType> QuoteTypes { get; set; }
+        public IDbSet<ValidByType> ValidByTypes { get; set; }
         public IDbSet<MarkUpType> MarkUpTypes { get; set; }
         public IDbSet<QuoteCustomerType> QuoteCustomerTypes { get; set; }
         public IDbSet<QuotePackage> QuotePackages { get; set; }

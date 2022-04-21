@@ -63,6 +63,7 @@ namespace WebFreight.Web.QuoteModel.DomainServices
         private QuoteQuery quoteQuery;
         private QuoteTypeQuery quoteTypeQuery;
         private MarkUpTypeQuery markUpTypeQuery;
+        private ValidByTypeQuery validByTypeQuery;
         private QuoteCustomerTypeQuery quoteCustomerTypeQuery;
         private QuoteClosingReasonQuery quoteClosingReasonQuery;
 

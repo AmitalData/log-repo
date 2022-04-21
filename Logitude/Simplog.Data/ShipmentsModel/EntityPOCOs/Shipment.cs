@@ -755,5 +755,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string FirstPickupFullAddress { get; set; }
         public string LastDeliveryFullAddress { get; set; }
+
+        public DateTime? QuoteFreightExpirationDate { get; set; }
     }
 }

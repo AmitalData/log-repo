@@ -3482,6 +3482,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="QuoteFreightExpirationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
