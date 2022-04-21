@@ -231,11 +231,14 @@ export class ExcelReportTemplateComponent implements OnInit {
 
     AddListToListsDataProvider(dataProviderField: DataProviderField) {
         dataProviderField.Fields.forEach(field => {
-            if (!field.IsChecked) {
-                this.AddFieldToListsDataProvider(field);
-                field.IsChecked = true;
-            }
+            this.AddListFieldToDataProvider(field);
         });
+    }
+
+    private AddListFieldToDataProvider(field: DataProviderField) {
+        if (field.IsChecked) return;
+        this.AddFieldToListsDataProvider(field);
+        field.IsChecked = true;
     }
 
     CheckUncheckFields(dataProviderFields: DataProviderField[], checkSubFields: boolean, isChecked: boolean) {
