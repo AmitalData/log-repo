@@ -698,7 +698,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     }
 
     ValidateReferenceNumber() {
-        if (this.CustomerReference3?.trim() == this.PrivateLabelInvoiceNumber?.trim())
+        if (this.CustomerReference3?.toLowerCase().trim() == this.PrivateLabelInvoiceNumber?.toLowerCase().trim())
         this.ValidationErrorsList.push("The Reference and Invoice number should be different");
     }
 
