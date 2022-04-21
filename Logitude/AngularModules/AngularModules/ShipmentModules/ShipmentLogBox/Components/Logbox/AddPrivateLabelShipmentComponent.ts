@@ -690,10 +690,16 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
      
     private CreateExportShipment() {
         this.ValidateRequiredFields();
+        this.ValidateReferenceNumber();
 
         if (this.ValidationErrorsList.length == 0) {
             this.InitializeExportShipmentFields();
         }
+    }
+
+    ValidateReferenceNumber() {
+        if (this.CustomerReference3?.toLowerCase().trim() == this.PrivateLabelInvoiceNumber?.toLowerCase().trim())
+        this.ValidationErrorsList.push("The Reference and Invoice number should be different");
     }
 
     NextButtonClicked() {
