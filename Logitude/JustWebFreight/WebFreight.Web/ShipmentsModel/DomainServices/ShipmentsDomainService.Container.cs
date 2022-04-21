@@ -13,6 +13,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.CustomFilters;
 
 namespace WebFreight.Web.ShipmentsModel.DomainServices
 {
@@ -34,8 +35,9 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             ContainerRepository containerRepository = new ContainerRepository(tenant);
             ContainerQuery containerQuery = new ContainerQuery(tenant);
+            ContainerCustomFilter customfilters = new ContainerCustomFilter(tenant);
             IQueryable<Container> iQueryable = containerRepository.GetContainers(tenant);
-
+            iQueryable = customfilters.GetFilteredQuery(queryOperations, iQueryable);
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
 
@@ -129,7 +131,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             iQueryable = filter.GetFilteredQuery<Container>(nonListQueryOperation, iQueryable);
             ContainerQuery containerQuery = new ContainerQuery(tenant);
-            var query2 = containerQuery.GetIQueryableEntityList(iQueryable); 
+            var query2 = containerQuery.GetIQueryableEntityList(iQueryable);
 
             query2 = filter.GetFilteredQuery<ContainerList>(listQueryOperation, query2);
             int count = query2.Count();
