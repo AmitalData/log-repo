@@ -196,7 +196,7 @@ export class ExcelReportTemplateComponent implements OnInit {
 
     btnAdd_Click() {
         if (this.IsHeaderField(this.SelectedField)) this.SelectedHeaderDataProviderFields.push(this.SelectedField);
-        else this.AddListField();
+        else this.AddFieldToListsDataProvider(this.SelectedField);
 
         this.CheckUncheckFields(this.DataProviderFields, true, true);
         this.IsbtnAddDisabled = true;
@@ -204,19 +204,41 @@ export class ExcelReportTemplateComponent implements OnInit {
         this.UnSelectAllFields();
     }
 
-    AddListField() {
-        var expressionList = this.SelectedField.Expression.split('.');
+    public HasFields(field: DataProviderField) {
+        return field.Fields && field.Fields.length > 0;
+    }
+
+    AddFieldToListsDataProvider(dataProviderField: DataProviderField) {
+        var expressionList = dataProviderField.Expression.split('.');
         var parentExpression = expressionList[0] + '.' + expressionList[1] + '}';
+
+        if (!this.DataProviderFields.find(x => x.Expression == parentExpression)) {
+            this.AddListToListsDataProvider(dataProviderField);
+            return;
+        }
 
         var existField = this.SelectedListsDataProviderFields.find(x => x.Expression == parentExpression);
         if (existField) {
-            existField.Fields.push(this.Clone(this.SelectedField));
+            existField.Fields.push(this.Clone(dataProviderField));
             return;
         }
+
         var parentField = this.Clone(this.DataProviderFields.find(x => x.Expression == parentExpression));
         parentField.Fields = [];
-        parentField.Fields.push(this.Clone(this.SelectedField));
+        parentField.Fields.push(this.Clone(dataProviderField));
         this.SelectedListsDataProviderFields.push(parentField);
+    }
+
+    AddListToListsDataProvider(dataProviderField: DataProviderField) {
+        dataProviderField.Fields.forEach(field => {
+            this.AddListFieldToDataProvider(field);
+        });
+    }
+
+    private AddListFieldToDataProvider(field: DataProviderField) {
+        if (field.IsChecked) return;
+        this.AddFieldToListsDataProvider(field);
+        field.IsChecked = true;
     }
 
     CheckUncheckFields(dataProviderFields: DataProviderField[], checkSubFields: boolean, isChecked: boolean) {
@@ -244,6 +266,12 @@ export class ExcelReportTemplateComponent implements OnInit {
         var expressionList = this.SelectedField.Expression.split('.');
         var parentExpression = expressionList[0] + '.' + expressionList[1] + '}';
 
+        if (!this.DataProviderFields.find(x => x.Expression == parentExpression)) {
+            this.SelectedListsDataProviderFields = this.SelectedListsDataProviderFields.filter(item => item.Expression !== this.SelectedField.Expression);
+            this.DataProviderFields.find(x => x.Expression == this.SelectedField.Expression)?.Fields?.forEach(field => { field.IsChecked = false; });
+            return;
+        }
+
         var existField = this.SelectedListsDataProviderFields.find(x => x.Expression == parentExpression);
         if (existField) existField.Fields = existField.Fields.filter(item => item !== this.SelectedField);
         if (existField.Fields.length == 0) this.SelectedListsDataProviderFields = this.SelectedListsDataProviderFields.filter(item => item !== existField);
@@ -265,7 +293,8 @@ export class ExcelReportTemplateComponent implements OnInit {
 
     private GetSelectedList() {
         var list: DataProviderField[] = this[this.SelectedListName];
-        if (this.SelectedListName == 'SelectedListsDataProviderFields') list = list.find(x => x.Name == this.SelectedField.Expression.split('.')[1]).Fields;
+        if (this.SelectedListName == 'SelectedListsDataProviderFields' && !list.find(x => x.Expression == this.SelectedField.Expression))
+            list = list.find(x => x.Name == this.SelectedField.Expression.split('.')[1]).Fields;
         return list;
     }
 

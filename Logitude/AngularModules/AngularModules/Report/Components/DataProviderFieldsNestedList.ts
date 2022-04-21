@@ -16,7 +16,7 @@ export class DataProviderFieldsNestedList {
     }
 
     ShowField(field: DataProviderField) {
-        return this.isDestinationFields || !field.IsChecked || field.Fields;
+        return this.isDestinationFields || !field.IsChecked || (field.Fields && this.field.Fields.find(x => !x.IsChecked));
     }
 
     public get HasFields() {
@@ -24,7 +24,7 @@ export class DataProviderFieldsNestedList {
     }
 
     SetSelected(field: DataProviderField) {
-        if (this.field.Fields != null && this.field.Fields.length > 0) return;
+       // if (this.field.Fields != null && this.field.Fields.length > 0) return;
         this.selectChangeEvent.emit(this.field);
         field.ClassName = "SelectedListBoxItem";
     }
