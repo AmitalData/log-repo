@@ -1345,6 +1345,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ValidByTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"
@@ -1640,6 +1647,11 @@
     ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ValidByTypeCode"
+    ReferencedTable="ValidByTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,OpenDate" />
   <Index
@@ -1647,5 +1659,5 @@
   <Index
     Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
-    Columns="Tenant,QuoteNumber" />
+    Columns="Tenant,QuoteNumber" /> 
 </Table>

@@ -200,5 +200,6 @@ export class QuoteList {
 		InlandDomesticFromCountryId: string;
 		InlandDomesticToCountryId: string;
 		TicketId: string;
+		ValidByTypeCode: string;
 	
 }

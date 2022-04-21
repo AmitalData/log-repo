@@ -1776,6 +1776,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     myShipment.QuoteId = null;
                     myShipment.QuoteNumber = null;
+                    myShipment.QuoteFreightExpirationDate = null;
                     shipmentRepository.Update(myShipment);
 
                     shipmentsContext.SaveChanges();

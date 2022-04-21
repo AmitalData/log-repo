@@ -220,6 +220,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string InlandDomesticFromCountryId { get; set; }
         public string InlandDomesticToCountryId { get; set; }
         public string TicketId { get; set; }
-         
+        public string ValidByTypeCode { get; set; }
+
     }
 }

@@ -405,5 +405,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("InlandDomesticToCountryId")]
         public virtual Country InlandDomesticToCountry { get; set; }
+        public string ValidByTypeCode { get; set; }
+        [ForeignKey("ValidByTypeCode")]
+        public virtual ValidByType ValidByType { get; set; }
     }
 }

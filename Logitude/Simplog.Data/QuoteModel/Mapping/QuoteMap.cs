@@ -108,6 +108,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(d => d.BusinessUnitId).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Subject).HasMaxLength(200).IsUnicode(true);
             this.Property(d => d.StageId).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(d => d.ValidByTypeCode).HasMaxLength(3).IsUnicode(false);
             this.Property(d => d.RatingCode).IsRequired().HasMaxLength(1).IsUnicode(false);
             this.Property(d => d.LastActivityTypeCode).HasMaxLength(2).IsUnicode(false);
             this.Property(d => d.NextActivityTypeCode).HasMaxLength(2).IsUnicode(false);
@@ -336,7 +337,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.NotifyReference1).HasColumnName("NotifyReference1");
             this.Property(t => t.NotifyReference2).HasColumnName("NotifyReference2");
             this.Property(t => t.PackagesQuantity).HasColumnName("PackagesQuantity");
-
+            this.Property(t => t.ValidByTypeCode).HasColumnName("ValidByTypeCode");
+            
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
             this.HasOptional(t => t.ToPartnerAddress).WithMany().HasForeignKey(d => d.ToPartnerAddressId);
@@ -393,7 +395,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.ProfitCurrency).WithMany().HasForeignKey(d => d.ProfitCurrencyId);
             this.HasOptional(t => t.ShipmentSubType).WithMany().HasForeignKey(d => d.ShipmentSubTypeId);
             this.HasOptional(t => t.RegionalTax).WithMany().HasForeignKey(d => d.RegionalTaxId);
-
+            this.HasOptional(t => t.ValidByType).WithMany().HasForeignKey(d => d.ValidByTypeCode);
         }
     }
 }
