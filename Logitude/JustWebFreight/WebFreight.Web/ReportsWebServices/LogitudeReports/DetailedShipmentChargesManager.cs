@@ -516,7 +516,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.DirectionPartner = myDirectionPartner;
                                 myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                                 myRecord.Salesman = myShipment.SalesmanUserName;
-                                myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+                                myRecord.Payables = this.ComputePayables(item, invoice, myShipment);
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
@@ -1358,6 +1358,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myResult = myShipment.AccountedPayablesInLocalCurrency / rate;
                     }
                 }
+            }
+
+            return myResult;
+        }
+        private double? ComputePayables(ChargeTypeGroupClass item, APInvoice invoice, ShipmentDataView myShipment)
+        {
+            double? myResult = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+
+            if (housesAndDirectOnly && myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+            {
+                myResult = this.ComputeAccountedPayables_ConnectedHouse(invoice.Id, invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate, item.PayableId);
             }
 
             return myResult;
