@@ -22,3 +22,8 @@ When("update VAT Setting", () => {
 Then("the VATSetting should update successfully", () => {
     MaintenanceActions.AssertUpdateVATSettings()
 });
+
+Given("VAT settings with the following details", (dataTable) => {
+    let vatSettingsDetails = Assists.CreateInstance<VATSettingsDetails>(dataTable, true);
+    MaintenanceActions.FillVATSettingsDetailsNoFormat(vatSettingsDetails)
+});
