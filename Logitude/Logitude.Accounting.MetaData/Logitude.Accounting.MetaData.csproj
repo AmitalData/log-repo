@@ -73,6 +73,11 @@
     <Content Include="DBOthers\0Types\GLAccountAgingDataType.xml" />
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
+    <None Include="DBScripts\202204211237_InsertInterestTransactionsForWrongGLAccountInterests.sxml" />
+    <None Include="DBScripts\202204211239_UpdateLedgerTransactionsForWrongGLAccount.sxml" />
+    <None Include="DBScripts\202204211239_UpdateJournalLinesForWrongGLAccount.sxml" />
+    <None Include="DBScripts\202204211236_InsertOppositeInterestTransactionsForWrongGLAccountInterests.sxml" />
+    <None Include="DBScripts\202204211224_UpdateInterestTransactionsForWrongGLAccountInterests.sxml" />
     <None Include="DBScripts\202201201432_UpdateReportName.sxml" />
     <None Include="DBScripts\202201191432_UpdateReportLocalName.sxml" />
     <None Include="DBScripts\202112161249_UpdateCrossYearReconciliations.sxml" />
