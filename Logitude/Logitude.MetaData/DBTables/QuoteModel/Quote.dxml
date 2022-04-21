@@ -1659,5 +1659,5 @@
   <Index
     Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
-    Columns="Tenant,QuoteNumber" /> 
+    Columns="Tenant,QuoteNumber" />
 </Table>
