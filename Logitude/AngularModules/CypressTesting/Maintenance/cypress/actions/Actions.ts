@@ -1737,6 +1737,12 @@ export function FillVATSettingsDetails(vatSettingsDetails: VATSettingsDetails) {
     cy.FillLogTextBox(MaintenanceSelectors.VatSize, vatSettingsDetails.VatSize);
 }
 
+export function FillVATSettingsDetailsNoFormat(vatSettingsDetails: VATSettingsDetails) {
+    cy.Click(MaintenanceSelectors.VATAppliesFor, null, true)
+    cy.SelectDropDownListItem2(MaintenanceSelectors.VatFormatType, vatSettingsDetails.VATFormatType);
+    cy.FillLogLov(MaintenanceSelectors.VATIsMandatoryFor, vatSettingsDetails.IsMandatoryFor, true);
+}
+
 export function AssertPostCard(CardType: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.PostCard, 200).then((interception) => {
         let responseBody = interception.response.body;
