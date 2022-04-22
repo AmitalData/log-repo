@@ -61,6 +61,8 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 paymentDataProvider.SAT.RegimenFiscal = comprobante.Emisor.RegimenFiscal;
             }
+
+            MapBillToDetails(currentPayment, paymentDataProvider);
             MapRegimenFiscalReceptor(currentPayment, paymentDataProvider, comprobante);
             paymentDataProvider.SAT.LugarExpedicion = comprobante.LugarExpedicion;
             paymentDataProvider.SAT.NoCertificado = comprobante.NoCertificado;
@@ -77,6 +79,20 @@ namespace WebFreight.Web.ReportsWebServices
 
             MapAdditionalFields(currentPayment, paymentDataProvider);
             MapPagosFields(paymentDataProvider, comprobante);
+        }
+
+        private static void MapBillToDetails(ARPayment currentPayment, PaymentDataProvider paymentDataProvider)
+        {
+            if (string.IsNullOrEmpty(currentPayment.BillToAddressId)) return;
+
+            AddressRepository addressReposirory = new AddressRepository(currentPayment.Tenant);
+            Address billToAddress = addressReposirory.GetSingleAddress(currentPayment.BillToAddressId, currentPayment.Tenant);
+
+            if (billToAddress == null) return;
+
+            paymentDataProvider.SAT.BillToCity = billToAddress.City;
+            paymentDataProvider.SAT.BillToCountry = billToAddress.Country?.EnglishName;
+            paymentDataProvider.SAT.BillToPostalCode = billToAddress.ZipCode;
         }
 
         private static void MapRegimenFiscalReceptor(ARPayment currentPayment, PaymentDataProvider paymentDataProvider, Comprobante comprobante)
