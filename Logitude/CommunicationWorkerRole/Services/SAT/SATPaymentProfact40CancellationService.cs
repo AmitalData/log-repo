@@ -45,7 +45,9 @@ namespace CommunicationWorkerRole.Services.SAT
 
 					string folioFiscal = digitalTi.UUID.Trim();
 
-					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI(rfcEmisor, folioFiscal);
+					const string motivoCancelaOperation = "03";
+
+					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI40(rfcEmisor, folioFiscal, motivoCancelaOperation, "No se llevó a cabo la operación");
 
 					if (resultadoCancelacion.Exitoso)
 					{
