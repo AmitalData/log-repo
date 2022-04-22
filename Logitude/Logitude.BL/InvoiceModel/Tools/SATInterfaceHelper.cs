@@ -1653,15 +1653,15 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 Profact.TimbraCFDI33.Comprobante invoiceComprobanteV3 = ((Profact.TimbraCFDI33.Comprobante)comprobante);
                 invoiceComprobanteShortDetails.V3Comprobante = invoiceComprobanteV3;
-                invoiceComprobanteShortDetails.EmisorRfc = invoiceComprobanteV3.Emisor.Rfc;
-                invoiceComprobanteShortDetails.ComplementoAny = invoiceComprobanteV3.Complemento.Any;
+                invoiceComprobanteShortDetails.EmisorRfc = invoiceComprobanteV3.Emisor?.Rfc;
+                invoiceComprobanteShortDetails.ComplementoAny = invoiceComprobanteV3.Complemento?.Any;
             }
             catch (Exception ex)
             {
                 Profact.TimbraCFDI40.Comprobante invoiceComprobanteV4 = ((Profact.TimbraCFDI40.Comprobante)comprobante);
                 invoiceComprobanteShortDetails.V4Comprobante = invoiceComprobanteV4;
-                invoiceComprobanteShortDetails.EmisorRfc = invoiceComprobanteV4.Emisor.Rfc;
-                invoiceComprobanteShortDetails.ComplementoAny = invoiceComprobanteV4.Complemento.Any;
+                invoiceComprobanteShortDetails.EmisorRfc = invoiceComprobanteV4.Emisor?.Rfc;
+                invoiceComprobanteShortDetails.ComplementoAny = invoiceComprobanteV4.Complemento?.Any;
             }
 
             return invoiceComprobanteShortDetails;
@@ -2453,8 +2453,8 @@ namespace Logitude.BL.InvoiceModel.Tools
             try
             {
                 Profact.TimbraCFDI33.Comprobante invoiceComprobanteV3 = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoiceSATXML);
-                invoiceComprobanteDetails.ComplementoAny = invoiceComprobanteV3.Complemento.Any;
-                invoiceComprobanteDetails.EmisorRfc = invoiceComprobanteV3.Emisor.Rfc;
+                invoiceComprobanteDetails.ComplementoAny = invoiceComprobanteV3.Complemento?.Any;
+                invoiceComprobanteDetails.EmisorRfc = invoiceComprobanteV3.Emisor?.Rfc;
                 invoiceComprobanteDetails.Total = invoiceComprobanteV3.Total;
                 invoiceComprobanteDetails.Serie = invoiceComprobanteV3.Serie;
                 invoiceComprobanteDetails.Folio = invoiceComprobanteV3.Folio;
@@ -2463,8 +2463,8 @@ namespace Logitude.BL.InvoiceModel.Tools
             catch (Exception ex)
             {
                 Profact.TimbraCFDI40.Comprobante invoiceComprobanteV4 = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(invoiceSATXML);
-                invoiceComprobanteDetails.ComplementoAny = invoiceComprobanteV4.Complemento.Any;
-                invoiceComprobanteDetails.EmisorRfc = invoiceComprobanteV4.Emisor.Rfc;
+                invoiceComprobanteDetails.ComplementoAny = invoiceComprobanteV4.Complemento?.Any;
+                invoiceComprobanteDetails.EmisorRfc = invoiceComprobanteV4.Emisor?.Rfc;
                 invoiceComprobanteDetails.Total = invoiceComprobanteV4.Total;
                 invoiceComprobanteDetails.Serie = invoiceComprobanteV4.Serie;
                 invoiceComprobanteDetails.Folio = invoiceComprobanteV4.Folio;
