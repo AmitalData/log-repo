@@ -17,12 +17,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
             ComprobanteCfdiRelacionados[] comprobanteCfdiRelacionados = null;
             if (string.IsNullOrEmpty(satXML)) return comprobanteCfdiRelacionados;
+            XmlElement[] paymentComprobanteComplementoAny = GetPaymentComprobanteComplementoAny(satXML);
 
-            Comprobante paymentComprobante = LogitudeXmlSerializer.DeserializeObject<Comprobante>(satXML);
+            if (paymentComprobanteComplementoAny == null) return comprobanteCfdiRelacionados;
 
-            if (paymentComprobante.Complemento.Any == null) return comprobanteCfdiRelacionados;
-
-            List<XmlElement> myLXmlComplementos = paymentComprobante.Complemento.Any.ToList();
+            List<XmlElement> myLXmlComplementos = paymentComprobanteComplementoAny.ToList();
             var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
             if (timbreFiscalDigitalElement == null) return comprobanteCfdiRelacionados;
 
@@ -36,6 +35,21 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             };
 
             return comprobanteCfdiRelacionados;
+        }
+
+        private static XmlElement[] GetPaymentComprobanteComplementoAny(string satXML)
+        {
+            XmlElement[] paymentComprobanteComplementoAny;
+            try
+            {
+                paymentComprobanteComplementoAny = LogitudeXmlSerializer.DeserializeObject<Comprobante>(satXML).Complemento?.Any;
+            }
+            catch (Exception ex)
+            {
+                paymentComprobanteComplementoAny = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(satXML).Complemento?.Any;
+            }
+
+            return paymentComprobanteComplementoAny;
         }
     }
 }
