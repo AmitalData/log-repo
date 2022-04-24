@@ -1,5 +1,6 @@
 ﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebFreight.Web.DataContracts;
@@ -16,18 +17,37 @@ namespace WebFreight.Web.Helpers.ExcelReport
             excelReportFileService = new ExcelReportFileService(tenant);
         }
 
-        public List<DataProviderField> GetDataProviderFields(string reportId, string reportTemplateId)
+        public ExcelReportResult GetDataProviderFields(string reportId, string reportTemplateId)
         {
+            ExcelReportResult excelReportResult = new ExcelReportResult();
             Report report = new ReportRepository(tenant).GetSingleReport(reportId, tenant);
+            excelReportResult.DataProviderFields = new ExcelDataProviderFieldsBuilder().Build(report.Code);
+            excelReportResult.DataProviderFields = RemoveSubCollectionFromProvderFields(excelReportResult.DataProviderFields);
 
-            List<DataProviderField> dataProvderFields = new ExcelDataProviderFieldsBuilder().Build(report.Code);
             List<DataProviderField> templateDataProvderFields = excelReportFileService.GetDataProviderFieldsFromXML(reportTemplateId, null, false);
-            if (templateDataProvderFields == null)
-                return dataProvderFields;
+            if (templateDataProvderFields == null) return excelReportResult;
 
-            ResolveTemplateDifference(dataProvderFields, templateDataProvderFields);
+            templateDataProvderFields = RemoveSubCollectionFromProvderFields(templateDataProvderFields);
+            excelReportResult.SelectedDataProviderFields = templateDataProvderFields;
+            ResolveTemplateDifference(excelReportResult.DataProviderFields, templateDataProvderFields);
 
-            return dataProvderFields;
+            return excelReportResult;
+        }
+
+        private List<DataProviderField> RemoveSubCollectionFromProvderFields(List<DataProviderField> templateDataProvderFields)
+        {
+            return templateDataProvderFields
+                        .Select(templateDataProvderField =>
+                        {
+                            return FilterDataProviderFields(templateDataProvderField);
+                        }).ToList();
+        }
+
+        private static DataProviderField FilterDataProviderFields(DataProviderField templateDataProvderField)
+        {
+            if (templateDataProvderField.Fields == null || !templateDataProvderField.Fields.Any()) return templateDataProvderField;
+            templateDataProvderField.Fields = templateDataProvderField.Fields.Where(field => field.Type != "List" && field.Type != "Class" && (field.Fields == null || field.Fields.Count == 0)).ToList();
+            return templateDataProvderField;
         }
 
         private void ResolveTemplateDifference(List<DataProviderField> dataProvderFields, List<DataProviderField> templateDataProvderFields)
@@ -41,8 +61,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
         private void CheckIfFieldExists(DataProviderField dataProviderField, List<DataProviderField> templateDataProvderFields)
         {
             DataProviderField templateDataProviderField = templateDataProvderFields.FirstOrDefault(a => a.Name == dataProviderField.Name);
-            if (templateDataProviderField == null)
-                return;
+            if (templateDataProviderField == null) return;
 
             dataProviderField.IsChecked = true;
             if (dataProviderField.Fields != null && dataProviderField.Fields.Count != 0)
