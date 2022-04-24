@@ -7,30 +7,29 @@ import { DataProviderField } from 'Common/DataContracts/DataProviderField';
 })
 export class DataProviderFieldsNestedList {
     @Input() field: DataProviderField;
-    @Input() isDisabled: boolean;
     @Input() margin: any;
+    @Input() isDestinationFields: boolean = false;
+    @Output() selectChangeEvent: EventEmitter<DataProviderField> = new EventEmitter<DataProviderField>();
 
-    @Output() checkChangeEvent: EventEmitter<string> = new EventEmitter<string>();
-
-    @Input() set checkAll(value: boolean) {
-        if (!value)
-            this.field.IsChecked = value;
+    NestedSelectChange(field: DataProviderField) {
+        this.selectChangeEvent.emit(field);
     }
 
-    NestedCheckChange(expression: string) {
-        this.checkChangeEvent.emit(expression)
+    ShowField(field: DataProviderField) {
+        return this.isDestinationFields || !field.IsChecked || (field.Fields && this.field.Fields.find(x => !x.IsChecked));
     }
 
-    CheckChange(): void {
-        this.field.IsChecked = !this.field.IsChecked;
-        this.checkChangeEvent.emit(this.field.Expression)
-        if (this.field.IsChecked === false) {
-            if (this.field.Fields != null) {
-                this.checkAll = this.field.IsChecked;
-                this.field.Fields.forEach(item => {
-                    item.IsChecked = false;
-                });
-            }
-        }
+    public get HasFields() {
+        return this.field.Fields && this.field.Fields.length > 0;
+    }
+
+    SetSelected(field: DataProviderField) {
+       // if (this.field.Fields != null && this.field.Fields.length > 0) return;
+        this.selectChangeEvent.emit(this.field);
+        field.ClassName = "SelectedListBoxItem";
+    }
+
+    OnShowHideColumnsClick(){
+        this.field.FieldsOpened = !this.field.FieldsOpened;
     }
 }
