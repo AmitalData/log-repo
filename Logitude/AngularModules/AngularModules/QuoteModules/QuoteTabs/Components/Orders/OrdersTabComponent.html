@@ -103,7 +103,7 @@
                         <SectionBody>
                             <table>
                                 <tr>
-                                    <td style="width:330px;">
+                                    <td style="width:350px;">
                                         <table>
 
                                             <!-- Incoterm -->
@@ -312,10 +312,10 @@
                                         <div></div>
                                     </td>
 
-                                    <td style="width:340px;">
+                                    <td style="width:360px;">
                                         <table>
                                             <tr class="FormFieldRow">
-                                                <td style="width: 130px;">
+                                                <td style="width: 180px;">
                                                     <LogLabel [ObjectFieldName]="'TransitTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -339,6 +339,74 @@
                                                                 [DataContext]="DataContext"
                                                                 [Text]="DepartureFrequency">
                                                     </LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IncludeInsurance'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'IncludeInsurance'"
+                                                                 [ObjectTableName]="ObjectTableName"
+                                                                 [DataContext]="DataContext"
+                                                                 [Checked]="IncludeInsurance"
+                                                                 [HideColumns]="true">
+                                                    </LogCheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsStackable'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'IsStackable'"
+                                                                 [ObjectTableName]="ObjectTableName"
+                                                                 [DataContext]="DataContext"
+                                                                 [Checked]="IsStackable"
+                                                                 [HideColumns]="true">
+                                                    </LogCheckBox>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IncludeImportDutyCharges'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'IncludeImportDutyCharges'"
+                                                                 [ObjectTableName]="ObjectTableName"
+                                                                 [DataContext]="DataContext"
+                                                                 [Checked]="IncludeImportDutyCharges"
+                                                                 [HideColumns]="true">
+                                                    </LogCheckBox>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'InsuranceValue'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'InsuranceValue'" [Text]="InsuranceValue" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'SpecialServicesTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'SpecialServicesTypeId'"
+                                                            [SelectedValue]="SpecialServicesTypeId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'SpecialServicesType'">
+                                                    </LogLov>
                                                 </td>
                                             </tr>
 

@@ -200,5 +200,10 @@ export class QuoteList {
 		InlandDomesticFromCountryId: string;
 		InlandDomesticToCountryId: string;
 		TicketId: string;
+		SpecialServicesTypeId: string;
+		IncludeInsurance: boolean;
+		IsStackable: boolean;
+		IncludeImportDutyCharges: boolean;
+		InsuranceValue: number;
 	
 }

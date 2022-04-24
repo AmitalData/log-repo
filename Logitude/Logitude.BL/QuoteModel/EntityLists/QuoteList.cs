@@ -220,6 +220,10 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string InlandDomesticFromCountryId { get; set; }
         public string InlandDomesticToCountryId { get; set; }
         public string TicketId { get; set; }
-         
+        public string SpecialServicesTypeId { get; set; }
+        public bool IncludeInsurance { get; set; }
+        public bool IsStackable { get; set; }
+        public bool IncludeImportDutyCharges { get; set; }
+        public double? InsuranceValue { get; set; }
     }
 }

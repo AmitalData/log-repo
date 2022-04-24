@@ -214,6 +214,11 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.InlandDomesticToTypeCode = entityPM.InlandDomesticToTypeCode;
             entityPoco.MainCarriageFromPortAddress = entityPM.MainCarriageFromPortAddress;
             entityPoco.MainCarriageToPortAddress = entityPM.MainCarriageToPortAddress;
+            entityPoco.SpecialServicesTypeId = entityPM.SpecialServicesTypeId;
+            entityPoco.IncludeInsurance = entityPM.IncludeInsurance;
+            entityPoco.IsStackable = entityPM.IsStackable;
+            entityPoco.IncludeImportDutyCharges = entityPM.IncludeImportDutyCharges;
+            entityPoco.InsuranceValue = entityPM.InsuranceValue;
 
             if (MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
             {

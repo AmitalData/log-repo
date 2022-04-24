@@ -512,6 +512,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 entityPM.ShipmentCustomerTypeCode = "FOR";
             }
+
+            else if (entityPM.CustomerId == entityPM.Notify1Id)
+            {
+                entityPM.ShipmentCustomerTypeCode = "NT1";
+            }
+
+            else if (entityPM.CustomerId == entityPM.Notify2Id)
+            {
+                entityPM.ShipmentCustomerTypeCode = "NT2";
+            }
         }
         private void ValidateMasterNumberAndCarrier(Direct entity)
         {
@@ -637,6 +647,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return true;
             }
             else if (entityPM.CustomerId == entityPM.Notify1Id)
+            {
+                return true;
+            }
+            else if (entityPM.CustomerId == entityPM.Notify2Id)
             {
                 return true;
             }
