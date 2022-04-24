@@ -570,6 +570,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     // moran 2.4.14 - add handle in case of empty value <--
                     this._MyDeclarationPM.Consignments[0].CargoDescription = _AmitalCustomsFile.CargoDescription;
+                    AppendLogLine("_AmitalCustomsFile.OriginCountryCode " + _AmitalCustomsFile.OriginCountryCode + ",  _MyDeclarationPM.Consignments[0].OriginCountryCode " + this._MyDeclarationPM.Consignments[0].OriginCountryCode +
+                        ", _AmitalCustomsFile.CargoDescription " + _AmitalCustomsFile.CargoDescription + ",  _MyDeclarationPM.Consignments[0].CargoDescription " + this._MyDeclarationPM.Consignments[0].CargoDescription);
+
                     //moran wi 1829 + 1855 14.11.13 -->
                     // moran 20.5.15 - Task 13527 - change handle for formatting dates -->
                     //DateTime dat;
