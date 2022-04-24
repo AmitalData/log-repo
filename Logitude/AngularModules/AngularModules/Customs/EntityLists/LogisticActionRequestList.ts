@@ -39,6 +39,7 @@ export class LogisticActionRequestList {
 	RequestCancelStatus: string;
 	HaveDeclarationId: boolean;
 	CalculatedExporterName: string;
+	MyCloseCheckBox: boolean;
 	
 }
  
