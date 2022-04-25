@@ -24,7 +24,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("ReportsTemplate", "ReportTemplateExcel", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("ReportsTemplate", "REPORTTEMPLATEEXCEL", authToken.Tenant);
 
                 ExcelReportService reportsTemplateQuery = new ExcelReportService(authToken.Tenant);
                 ExcelReportResult myResult = reportsTemplateQuery.GetDataProviderFields(reportId, reportsTemplateId);
@@ -44,7 +44,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("ReportsTemplate", "ReportTemplateExcel", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("ReportsTemplate", "REPORTTEMPLATEEXCEL", authToken.Tenant);
 
 
                 ExcelReportUpdateService reportsTemplateQuery = new ExcelReportUpdateService(authToken.Tenant);
