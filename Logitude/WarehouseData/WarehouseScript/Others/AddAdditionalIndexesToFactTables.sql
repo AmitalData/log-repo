@@ -17,5 +17,12 @@ END
 
 
 
+IF (OBJECT_ID ('Fact_Shipments', 'U')  IS NOT NULL)
+BEGIN
+
+CREATE NONCLUSTERED INDEX [IX_Fact_Shipments_Volumetric_Weight_UnitSelection] 
+ON [dbo].[Fact_Shipments] ([Volumetric Weight])
+
+END
 
 
