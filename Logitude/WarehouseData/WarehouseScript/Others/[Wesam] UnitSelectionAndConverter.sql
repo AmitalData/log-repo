@@ -49,7 +49,7 @@ BEGIN
   DECLARE @ValueWithoutUnitCode NVARCHAR(2000) = SUBSTRING(@ValueWithDefaultUnitCode, 0, @PositionToSplit)
   DECLARE @DefaultUnitCode NVARCHAR(10) = SUBSTRING(@ValueWithDefaultUnitCode, @PositionToSplit+2, LEN(@ValueWithDefaultUnitCode)-@PositionToSplit-2)
   RETURN
-	CAST(dbo.DW_WegihtConverter(@ValueWithoutUnitCode, @DefaultUnitCode, @SelectedUnitCode) + ' (' + @SelectedUnitCode + ')' AS VARCHAR(2000))
+	CAST(dbo.DW_WegihtConverter(@ValueWithoutUnitCode, @DefaultUnitCode, @SelectedUnitCode) AS VARCHAR(2000))
   END
   RETURN @ValueWithDefaultUnitCode
 END

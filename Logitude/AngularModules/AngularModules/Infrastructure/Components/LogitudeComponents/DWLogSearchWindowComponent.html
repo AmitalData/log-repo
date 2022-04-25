@@ -82,7 +82,7 @@
                                 </td>
 
                                 <td *ngIf="IsMultipleSelection || UseUnitSelection" style="width: 180px;">
-                                    <LogTextBox [ObjectFieldName]="'ColumnName'" [HideColumns]="true" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ColumnName'" [HideColumns]="true" [NoObjectField]="true" [Text]="ColumnName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                                 <td *ngIf="IsMultipleSelection || UseUnitSelection" style="width: 150px;">
                                     <LogLabel [ObjectFieldName]="'OriginalColumnName'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [Text]="'Original Column Name'" [DataContext]="DataContext"></LogLabel>
