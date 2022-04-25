@@ -408,7 +408,7 @@ namespace Logitude.TariffModule.BL.Helpers
                             }
                         }
 
-                        localCharge.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
+                        localCharge.SaleTotalAmount = expectedAmount == null ? 0 : expectedAmount.Value;
                         localCharge.LocalExpectedAmount = tariffPricesHelper.CalculateLocalAmount(expectedAmount, localCharge.Rate);
                         localCharge.ProfitExpectedAmount = tariffPricesHelper.CalculateProfitAmount(expectedAmount, localCharge.LocalExpectedAmount, localCharge.CurrencyId);
                         localCharges.Add(localCharge);
@@ -506,7 +506,7 @@ namespace Logitude.TariffModule.BL.Helpers
                         }
                     }
 
-                    localCharge.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
+                    localCharge.SaleTotalAmount = expectedAmount == null ? 0 : expectedAmount.Value;
                     localCharge.LocalExpectedAmount = tariffPricesHelper.CalculateLocalAmount(expectedAmount, localCharge.Rate);
                     localCharge.ProfitExpectedAmount = tariffPricesHelper.CalculateProfitAmount(expectedAmount, localCharge.LocalExpectedAmount, localCharge.CurrencyId);
                     localCharges.Add(localCharge);
@@ -543,7 +543,7 @@ namespace Logitude.TariffModule.BL.Helpers
         public string TariffLineId { get; set; }
         public string CurrencyId { get; set; }
         public string CurrencyCode { get; set; }
-        public double? ExpectedAmount { get; set; }
+        public double? SaleTotalAmount { get; set; }
         public double? LocalExpectedAmount { get; set; }
         public double? ProfitExpectedAmount { get; set; }
         public double? MinAmount { get; set; }

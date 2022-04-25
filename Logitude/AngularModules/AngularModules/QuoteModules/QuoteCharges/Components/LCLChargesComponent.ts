@@ -448,7 +448,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 var measurementCode = item.UnitOfMesurmentCode;
                 var measurementId = item.UnitOfMesurmentId;
                 if (!item.IsAllIn) {
-                    var saleAmount = AppTool.Round(item.ExpectedAmount, 3);
+                    var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
                     chargePM.SaleTotalAmount = saleAmount;
                     chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
                 }
@@ -488,7 +488,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.CostMeasurementId = measurementId;
                 chargePM.IsAllIN = item.IsAllIn;
                 if (!item.IsAllIn) {
-                    var saleAmount = AppTool.Round(item.ExpectedAmount, 3);
+                    var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
                     chargePM.SaleTotalAmount = saleAmount;
                     chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
                 }
