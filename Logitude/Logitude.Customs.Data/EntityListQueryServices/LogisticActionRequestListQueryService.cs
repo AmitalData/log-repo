@@ -88,8 +88,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                DeclarationNumber = declaration != null ? declaration.DeclarationNumber : null,
 
-                                                               RequestCancelStatus = a.LogisticActionResponseReqS.LocalName
+                                                               RequestCancelStatus = a.LogisticActionResponseReqS.LocalName,
 
+                                                               MyCloseCheckBox = false
                                                            });
             return query;
         }

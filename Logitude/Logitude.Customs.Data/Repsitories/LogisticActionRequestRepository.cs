@@ -34,7 +34,12 @@ namespace Logitude.Customs.Data.Repsitories
             return res;
         }
 
-   }
 
+        public List<LogisticActionRequest> GetByids(string[] ids)
+        {
+            var res = context.LogisticActionRequests.Where(x => ids.Contains(x.Id));
+            return res.ToList();
+        }
+   }
 }
    

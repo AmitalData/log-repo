@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.Data.EntityPOCOs;
+﻿using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using System;
@@ -16,6 +17,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
             LogisticActionRequest logisticActionRequest = new LogisticActionRequestRepository(Tenant).GetByCargoKey(key1, key2, key3, type);
 
             return logisticActionRequest == null ? null : GetEntityPM(logisticActionRequest);
+        }
+
+
+        public void CloseRequests(string[] ids)
+        {
+            var repo = new LogisticActionRequestRepository(Tenant);
+
+            repo.GetByids(ids)
+                .ForEach(req =>
+            {
+                req.IsClosed = true;
+                repo.Update(req);                
+            });
+
+            repo.SubmitChanges();
         }
     }
 }

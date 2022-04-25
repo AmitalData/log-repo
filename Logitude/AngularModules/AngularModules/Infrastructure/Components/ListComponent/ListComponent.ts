@@ -83,6 +83,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
     public HasCustomsFilterMenu: boolean = false;
     public IsPhysicalCheckObjectTable: boolean = false;
+    public IsLogisticActionRequestObjectTable: boolean = false;
 
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
@@ -665,8 +666,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         if(this.ObjectTable.ClientModuleName=="Customs"){
             this.HasCustomsFilterMenu = true;
           }
-         if (this.ObjectTableName == "Customs.PhysicalCheck") {
+         
+        if (this.ObjectTableName == "Customs.PhysicalCheck") {
              this.IsPhysicalCheckObjectTable = true; }
+         else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
+             this.IsLogisticActionRequestObjectTable = true; }
+
         if (["Customs.DeclarationReferantData", "Customs.DeclarationCargoSplit", "Customs.LogisticActionRequest"].includes(this.ObjectTableName)) {
             this.HasCustomsFilterMenu = true;
         }
@@ -881,13 +886,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                 else {
                     this.isLoaderReady = true;
-                    if (this.ObjectTable.Name == "Customs.PhysicalCheck") {
-                        this.LoadedActionBar("MNO", "ListActionBar");
 
-                    }
-                    else {
+                    if (this.ObjectTable.Name == "Customs.PhysicalCheck" || this.ObjectTable.Name == "Customs.LogisticActionRequest") {
+                        this.LoadedActionBar("MNO", "ListActionBar");
+                    } else {
                         this.LoadedActionBar("MNA", "ListActionBar");
                     }
+
                     if (this.ObjectTable.HasFiltersMenu) {
 
                         let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "MNH")[0];
@@ -3800,6 +3805,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         switch (this.ObjectTable.Name) {
             case "Customs.DeclarationReferantData":
             case "Customs.PhysicalCheck":
+            case "Customs.LogisticActionRequest":
                 return true;
                 //return false;
                 break;
