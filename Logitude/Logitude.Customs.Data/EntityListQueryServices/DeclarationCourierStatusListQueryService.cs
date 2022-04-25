@@ -285,11 +285,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                     join dcs in context.DeclarationCourierStatuses on cd.Declaration.Id equals dcs.DeclarationId
 
-                    join dp in context.DeclarationPendings.Include("CourierPendingReason")
-                    .Where(x => x.Status == "A").Select(x => new { DeclarationID = x.DeclarationID, CourierPendingReason = x.CourierPendingReason.LocalName })
-                    on dcs.DeclarationId equals dp.DeclarationID into dpjoin
-                    //join errorPlace in qDeclarationPaymentPendingHold on dcs.DeclarationId equals errorPlace.DeclarationId into errorPlaceOuterJoin
-                    from dpj in dpjoin.DefaultIfEmpty()
+                    //join dp in context.DeclarationPendings.Include("CourierPendingReason")
+                    //.Where(x => x.Status == "A").Select(x => new { DeclarationID = x.DeclarationID, CourierPendingReason = x.CourierPendingReason.LocalName })
+                    //on dcs.DeclarationId equals dp.DeclarationID into dpjoin
+                    ////join errorPlace in qDeclarationPaymentPendingHold on dcs.DeclarationId equals errorPlace.DeclarationId into errorPlaceOuterJoin
+                    //from dpj in dpjoin.DefaultIfEmpty()
 
                     join cp in context.ConsignmentPackages on cd.Declaration.Id equals cp.DeclarationId into cpjoin
                     from cj in cpjoin.Where(t => t.PackageMeasureQualifierCode == "2" && t.GrossMassMeasure.HasValue).DefaultIfEmpty()
