@@ -413,8 +413,8 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     SelectChargesClicked(item) {
         var args = new CustomEntityArgs();
         args.ObjectTableName = this.DWObjectTablePivotCode;
-        args.DisplayFieldsFromList = this.GroupChargesAdditionalColumns.Code;
-        args.LOVAdditionalColumns = this.GroupChargesAdditionalColumns.LOVAdditionalColumns;
+        args.DisplayFieldsFromList = this.GroupChargesAdditionalColumns ? this.GroupChargesAdditionalColumns.Code : "";
+        args.LOVAdditionalColumns = this.GroupChargesAdditionalColumns?.LOVAdditionalColumns;
         args.DataContext = item;
         args.SelectedFieldsDataSource = this.SelectedFieldsDataSource;
 
@@ -433,8 +433,8 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     SelectUnitClicked(item) {
         var args = new CustomEntityArgs();
         //args.ObjectTableName = this.DWObjectTablePivotCode;
-        args.DisplayFieldsFromList = this.GroupChargesAdditionalColumns.Code;
-        args.LOVAdditionalColumns = this.GroupChargesAdditionalColumns.LOVAdditionalColumns;
+        args.DisplayFieldsFromList = this.GroupChargesAdditionalColumns ? this.GroupChargesAdditionalColumns.Code : "";
+        args.LOVAdditionalColumns = this.GroupChargesAdditionalColumns?.LOVAdditionalColumns;
         args.DataContext = item;
         args.SelectedFieldsDataSource = this.SelectedFieldsDataSource;
 
