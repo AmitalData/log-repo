@@ -312,7 +312,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         CourierSearchFields = cd.Declaration.CourierSearchFields,
                         FastIndividualProcessCode = dcs.FastIndividualProcessCode,
                         CourierPendingReasonList = dcs.CourierPendingReasonList,
-                        CourierPendingReasonName = dpj.CourierPendingReason != null ? dpj.CourierPendingReason : null,
+                        //CourierPendingReasonName = dpj.CourierPendingReason != null ? dpj.CourierPendingReason : null,
                         MissedDocumentStatusCode = dcs.MissedDocumentStatusCode,
 
                     } into t2
@@ -332,7 +332,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         CourierSearchFields = t2.Key.CourierSearchFields,
                         FastIndividualProcessCode = t2.Key.FastIndividualProcessCode,
                         CourierPendingReasonList = t2.Key.CourierPendingReasonList,
-                        CourierPendingReasonName = t2.Key.CourierPendingReasonName,
+                        //CourierPendingReasonName = t2.Key.CourierPendingReasonName,
                         MissedDocumentStatusCode = t2.Key.MissedDocumentStatusCode,
                     });
 
