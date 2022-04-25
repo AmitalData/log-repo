@@ -817,17 +817,7 @@ namespace Logitude.Customs.BL.Validators
 
                 //supplierInvoiceArray[supplierInvoice.InvoiceCounterKey] = supplierInvoice.InvoiceNumber;
 
-                if (declaration.Direction == "E" && supplierInvoice.AccountTypeCode != "I04")
-                {
-                    if (string.IsNullOrEmpty(supplierInvoice.BuyerName))
-                    {
-                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "BuyerName", TableName = "Customs.SupplierInvoice", EntityReference = supplierInvoice.InvoiceNumber, EntityReference2 = "OTHER" });
-                    }
-                    if (string.IsNullOrEmpty(supplierInvoice.BuyerAddress))
-                    {
-                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "BuyerAddress", TableName = "Customs.SupplierInvoice", EntityReference = supplierInvoice.InvoiceNumber, EntityReference2 = "OTHER" });
-                    }
-                }
+                
                 supplierInvoiceItems = allInvoiceItems.Where(d => d.DeclarationId == supplierInvoice.DeclarationId && d.CounterKey == supplierInvoice.InvoiceCounterKey).ToList();//supplierInvoice.SupplierInvoiceItems;//mohammad fix wi 20751
                 supplierInvoiceModifications = supplierInvoice.SupplierInvoiceModifications;
                 supplierInvoicFreightAmounts = supplierInvoice.SupplierInvoiceFreightAmounts;
@@ -1110,20 +1100,6 @@ namespace Logitude.Customs.BL.Validators
 
                 }
 
-                if (supplierInvoice.IncotermCode != null && declaration.Direction == "E")
-                {
-                    var incotemrsFileValidationFilters = incotemrsFileValidationPMs.Where(x => x.EnglishName == supplierInvoice.IncotermCode && x.LeadDocumentTypeName == "הצהרת יצוא");
-
-                    bool notHaveInsuranceDetails = supplierInvoiceModifications.Where(x => x.TypeCode == "67").All(x => x.Amount == null || x.CurrencyTypeCode == null);
-                    bool needInsurance = incotemrsFileValidationFilters.Any(x => x.IsInsurance);
-                    if (notHaveInsuranceDetails && needInsurance)
-                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = "Customs.General.O.NoDetailsForInsurancAmount" });
-
-                    bool notHaveFreightDetails = supplierInvoiceModifications.Where(x => x.TypeCode == "144").All(x => x.Amount == null || x.CurrencyTypeCode == null);
-                    bool needFreight = incotemrsFileValidationFilters.Any(x => x.IsFreightCharge);
-                    if (notHaveFreightDetails && needFreight)
-                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = "Customs.General.O.NoDetailsForFreightAmount" });
-                }
 
 
 

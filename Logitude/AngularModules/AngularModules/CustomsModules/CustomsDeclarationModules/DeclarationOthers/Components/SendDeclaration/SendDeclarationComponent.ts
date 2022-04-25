@@ -342,7 +342,7 @@ export class SendDeclarationService implements OnDestroy {
                     if (AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) || true) { //|| !ScriptableGatewayUtil.AmitalBrowserInUse) { i put true temporarly--MM
                         if (warningList.length > 0) {
                             this.ValidationWarning = this.GetWarningList(warningList);
-                            this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"));
+                            this.FillValidationWarning(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"));
                         } else {
                             this.InstructionSendToMehes();//this.ConfirmB4TaxationDateTimeCheck();
                         }
@@ -1143,8 +1143,6 @@ export class SendDeclarationService implements OnDestroy {
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.OnAddEditWindowClosed($event);
-            this.InstructionSendToMehes();
-            return;
         });
 
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
@@ -1165,8 +1163,10 @@ export class SendDeclarationService implements OnDestroy {
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
-
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.OnAddEditWindowClosed($event);
+            this.InstructionSendToMehes();
+        });
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
     StopMyBusyIndicator() {
