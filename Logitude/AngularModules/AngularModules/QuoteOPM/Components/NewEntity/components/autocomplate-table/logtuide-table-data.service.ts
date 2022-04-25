@@ -21,6 +21,12 @@ export class LogtuideTableDataService {
     private entityResourceService: EntityResourceService
   ) { }
 
+
+  static createInstance() {
+    return new LogtuideTableDataService(new EntityListService(), new EntityResourceService())
+  }
+
+
   getTable(tableName: string): Promise<any> {
     return new Promise<ServiceResponse>((resolve, reject) => {
       this.entityResourceService.getEntityResourceByTableName(tableName, 0)

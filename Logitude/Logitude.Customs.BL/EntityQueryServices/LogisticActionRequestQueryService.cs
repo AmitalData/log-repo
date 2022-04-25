@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.Data.EntityPOCOs;
+﻿using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using System;
@@ -18,10 +19,26 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return logisticActionRequest == null ? null : GetEntityPM(logisticActionRequest);
         }
 
+
         public bool GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType)
         {
             return new LogisticActionRequestRepository(Tenant).GetExistByCargoKey(id, cargoIdentifierKey1, cargoIdentifierKey2, cargoIdentifierKey3, cargoIdentifierType);
             
+        }
+
+
+        public void CloseRequests(string[] ids)
+        {
+            var repo = new LogisticActionRequestRepository(Tenant);
+
+            repo.GetByids(ids)
+                .ForEach(req =>
+            {
+                req.IsClosed = true;
+                repo.Update(req);                
+            });
+
+            repo.SubmitChanges();
         }
     }
 }

@@ -34,6 +34,7 @@ namespace Logitude.Customs.Data.Repsitories
             return res;
         }
 
+
         public bool GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType)
         {
             return (from x in context.LogisticActionRequests
@@ -42,7 +43,13 @@ namespace Logitude.Customs.Data.Repsitories
                      ).Any();
 
         }
-    }
 
+
+        public List<LogisticActionRequest> GetByids(string[] ids)
+        {
+            var res = context.LogisticActionRequests.Where(x => ids.Contains(x.Id));
+            return res.ToList();
+        }
+    }
 }
    
