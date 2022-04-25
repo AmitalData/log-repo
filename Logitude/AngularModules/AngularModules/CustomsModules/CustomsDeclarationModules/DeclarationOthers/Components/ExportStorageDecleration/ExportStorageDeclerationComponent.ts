@@ -22,6 +22,9 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
 import { ExportStoragePMService } from 'Customs/Services/StandardPMs/ExportStoragePMService';
 import { ExportStorageExtendedListService } from 'Customs/Services/ExtendedLists/ExportStorageExtendedListService';
+import { ConsignmentPackagePM } from 'Customs/EntityPMs/ConsignmentPackagePM';
+import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
+import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 @Component({
 
     templateUrl: './ExportStorageDeclerationComponent.html',
@@ -47,6 +50,12 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     connectedListIds: ObservableCollection;
     exportStoragePMService: ExportStoragePMService = new ExportStoragePMService();
     containerizationMessagesService: ContainerizationMessagesService = new ContainerizationMessagesService();
+    exportStorage: ServiceResponse;
+    consignmet: ConsignmentPM;
+    consignmentPackagePM: ConsignmentPackagePM;
+
+    declarationPMService: DeclarationPMService = new DeclarationPMService();
+
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
     public set SelectedValue(value: string) {
@@ -94,7 +103,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             if (this.entityPM.DeclarationId.includes($event.rowData.Id)) {
                 this.entityPM.DeclarationId = this.entityPM.DeclarationId.replace($event.rowData.Id + ",", "");
             }
-        }                                 
+        }
     }
 
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public exportStorageExtendedListService: ExportStorageExtendedListService) {
@@ -106,7 +115,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => {
                     this.entityListService = new EntityListService();
-                   
+
                     this.BuildColumns();
                     this.isLoad = true;
                 });
@@ -115,7 +124,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
     }
 
- 
+
     DataSource = {
         pageSize: 30,
         rowCount: null,
@@ -131,7 +140,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         var filters = new ApiQueryFilters;
         filters.addAdditionalFilter("DeclarationId", "123", null, null, "IsNull", false, false, false, "string");
         filters.addAdditionalFilter("StorageStatus", "Cancel", null, null, "NotEqual", false, false, false, "string");
-       
+
 
         if (this.ExportFileFilter) {
             filters.AdditionalFilters.push(this.ExportFileFilter);
@@ -269,7 +278,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.exportStorageExtendedListService.SelectedExportStorage = true;
         this.exportStorageExtendedListService.ConnectedExportStorage = this.exportStorageExtendedListService.AllExportStorage + this.entityPM.DeclarationId;
         this.LoadConnectedItems();
-      
+
     }
 
     filterAgrs: ApiQueryFilters;
@@ -287,9 +296,77 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.LoadConnectedItems();
     }
 
-  
+
     SendButtonClicked() {
-       
+        let ArrayExportStorageId = this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
+
+        ArrayExportStorageId.forEach(ExportStorageId => {
+            this.declarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+            if (!AppTool.IsNullOrEmpty(this.declarationPM)) {
+
+                this.exportStoragePMService.get(ExportStorageId).subscribe(es =>
+                    this.exportStorage = es
+                );
+                if (!AppTool.IsNullOrEmpty(this.exportStorage.Result)) {
+
+                    var isConsignment = this.declarationPM.Consignments.find(x => x.CargoTypeCode == this.exportStorage.Result.cargoTypeCode
+                        && x.ManifestNumber == this.exportStorage.Result.firstCargoID
+                        && x.SecondCargoID == this.exportStorage.Result.secondCargoID);
+
+                    if (isConsignment != undefined) {
+                        this.exportStorage.Result.id = this.declarationPM.Id;
+                        this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
+
+                        });
+                        this.declarationPM.Consignments.find(x => x == isConsignment).ExportStoragesId = ExportStorageId;
+                        this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
+
+                        });
+                    }
+                    else {
+                        var consignment: ConsignmentPM;
+                        consignment = new ConsignmentPM(this.declarationPM);
+
+                        consignment.CargoTypeCode = this.exportStorage.Result.cargoTypeCode;
+                        consignment.ManifestNumber = this.exportStorage.Result.firstCargoID;
+                        consignment.SecondCargoID = this.exportStorage.Result.SecondCargoID;
+                        consignment.CargoDescription = this.exportStorage.Result.MarksNumbers;
+                        consignment.StorageSiteCode = this.exportStorage.Result.StorageSiteCode;
+                        consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods;
+                        consignment.ExportUnloadingPortCode = this.exportStorage.Result.ExportUnloadingPortCode;
+                        consignment.ExportLoadingPortCode = this.exportStorage.Result.ExportLoadingPortCode;
+                        consignment.ConsignmentType = "E";
+                        consignment.DeclarationId = this.declarationPM.Id;
+
+                        this.declarationPM.AddConsignment(consignment);
+
+                        var consignmentPackage: ConsignmentPackagePM;
+                        consignmentPackage = new ConsignmentPackagePM(consignment);
+
+                        consignmentPackage.LineNumber = 1;
+                        consignmentPackage.PackageQuantity = this.exportStorage.Result.packageQuantity;
+                        consignmentPackage.PackageMeasureQualifierCode = "2";
+                        consignmentPackage.GrossMassMeasure = this.exportStorage.Result.grossMassMeasure;
+                        consignmentPackage.PackageTypeCode = this.exportStorage.Result.cargoType == 1 ? "D5" : "PP";
+                        consignmentPackage.MarksNumbers = this.exportStorage.Result.MarksNumbers;
+                        consignmentPackage.PackageQuantityTypeCode = "EA";
+                        consignmentPackage.GrossMassMeasureTypeCode = "KGM";
+                        consignmentPackage.DeclarationId = this.declarationPM.Id;
+
+                        this.consignmet.AddConsignmentPackage(consignmentPackage);
+                        this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
+
+                        });
+
+                    }
+                }
+               
+
+            }
+        });
+
+
+
     }
 
 
