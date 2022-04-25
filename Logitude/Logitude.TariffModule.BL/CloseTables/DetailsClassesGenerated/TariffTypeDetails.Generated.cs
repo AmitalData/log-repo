@@ -100,7 +100,6 @@ namespace Logitude.TariffModule.BL.CLoseTable
                 Name = "Import Local Charges Sale", 
                 SearchFields = "ICS,Import Local Charges Sale", 
                 DirectionCode = "I", 
-                TransportModeCode = "", 
 			});
 			 
             all.Add(new TariffTypeDetails()
@@ -109,7 +108,6 @@ namespace Logitude.TariffModule.BL.CLoseTable
                 Name = "Export Local Charges Sale", 
                 SearchFields = "ECS,Export Local Charges Sale", 
                 DirectionCode = "E", 
-                TransportModeCode = "", 
 			});
 			
             return all;
