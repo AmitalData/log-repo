@@ -301,73 +301,84 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         let ArrayExportStorageId = this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
 
         ArrayExportStorageId.forEach(ExportStorageId => {
-            this.declarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-            if (!AppTool.IsNullOrEmpty(this.declarationPM)) {
+            if (!AppTool.IsNullOrEmpty(ExportStorageId)) {
+                this.declarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                if (!AppTool.IsNullOrEmpty(this.declarationPM)) {
 
-                this.exportStoragePMService.get(ExportStorageId).subscribe(es =>
-                    this.exportStorage = es
-                );
-                if (!AppTool.IsNullOrEmpty(this.exportStorage.Result)) {
+                    this.exportStoragePMService.get(ExportStorageId).toPromise().then(res => {
+                        this.exportStorage = res
+                        if (!AppTool.IsNullOrEmpty(this.exportStorage)) {
 
-                    var isConsignment = this.declarationPM.Consignments.find(x => x.CargoTypeCode == this.exportStorage.Result.cargoTypeCode
-                        && x.ManifestNumber == this.exportStorage.Result.firstCargoID
-                        && x.SecondCargoID == this.exportStorage.Result.secondCargoID);
+                            var isConsignment = this.declarationPM.Consignments.find(x => x.CargoTypeCode == this.exportStorage.Result.cargoTypeCode
+                                && x.ManifestNumber == this.exportStorage.Result.firstCargoID
+                                && x.SecondCargoID == this.exportStorage.Result.secondCargoID);
 
-                    if (isConsignment != undefined) {
-                        this.exportStorage.Result.id = this.declarationPM.Id;
-                        this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
+                            if (isConsignment != undefined) {
 
-                        });
-                        this.declarationPM.Consignments.find(x => x == isConsignment).ExportStoragesId = ExportStorageId;
-                        this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
+                                this.exportStorage.Result.id = this.declarationPM.Id;
+                                this.exportStoragePMService.update(this.exportStorage.Result);
+                                isConsignment.ExportStoragesId = ExportStorageId;
 
-                        });
-                    }
-                    else {
-                        var consignment: ConsignmentPM;
-                        consignment = new ConsignmentPM(this.declarationPM);
 
-                        consignment.CargoTypeCode = this.exportStorage.Result.cargoTypeCode;
-                        consignment.ManifestNumber = this.exportStorage.Result.firstCargoID;
-                        consignment.SecondCargoID = this.exportStorage.Result.SecondCargoID;
-                        consignment.CargoDescription = this.exportStorage.Result.MarksNumbers;
-                        consignment.StorageSiteCode = this.exportStorage.Result.StorageSiteCode;
-                        consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods;
-                        consignment.ExportUnloadingPortCode = this.exportStorage.Result.ExportUnloadingPortCode;
-                        consignment.ExportLoadingPortCode = this.exportStorage.Result.ExportLoadingPortCode;
-                        consignment.ConsignmentType = "E";
-                        consignment.DeclarationId = this.declarationPM.Id;
+                            }
+                            else {
+                                var consignment: ConsignmentPM;
+                                consignment = new ConsignmentPM(this.declarationPM);
+                                consignment.Tenant = SessionLocator.Tenant;
+                                consignment.CargoTypeCode = this.exportStorage.Result.cargoTypeCode;
+                                consignment.ManifestNumber = this.exportStorage.Result.firstCargoID;
+                                consignment.SecondCargoID = this.exportStorage.Result.SecondCargoID;
+                                consignment.CargoDescription = this.exportStorage.Result.MarksNumbers;
+                                consignment.StorageSiteCode = this.exportStorage.Result.StorageSiteCode;
+                                consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods;
+                                consignment.ExportUnloadingPortCode = this.exportStorage.Result.ExportUnloadingPortCode;
+                                consignment.ExportLoadingPortCode = this.exportStorage.Result.ExportLoadingPortCode;
+                                consignment.ConsignmentType = "E";
+                                consignment.DeclarationId = this.declarationPM.Id;
+                                consignment.ConsignmentNumber = this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].ConsignmentNumber + 1;
+                                consignment.SequenceNumeric = this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].SequenceNumeric + 1;
 
-                        this.declarationPM.AddConsignment(consignment);
 
-                        var consignmentPackage: ConsignmentPackagePM;
-                        consignmentPackage = new ConsignmentPackagePM(consignment);
 
-                        consignmentPackage.LineNumber = 1;
-                        consignmentPackage.PackageQuantity = this.exportStorage.Result.packageQuantity;
-                        consignmentPackage.PackageMeasureQualifierCode = "2";
-                        consignmentPackage.GrossMassMeasure = this.exportStorage.Result.grossMassMeasure;
-                        consignmentPackage.PackageTypeCode = this.exportStorage.Result.cargoType == 1 ? "D5" : "PP";
-                        consignmentPackage.MarksNumbers = this.exportStorage.Result.MarksNumbers;
-                        consignmentPackage.PackageQuantityTypeCode = "EA";
-                        consignmentPackage.GrossMassMeasureTypeCode = "KGM";
-                        consignmentPackage.DeclarationId = this.declarationPM.Id;
 
-                        this.consignmet.AddConsignmentPackage(consignmentPackage);
-                        this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
+                                var consignmentPackage: ConsignmentPackagePM;
+                                consignmentPackage = new ConsignmentPackagePM(consignment);
+                                consignmentPackage.ConsignmentNumber = consignment.ConsignmentNumber
+                                consignmentPackage.SequenceNumeric = consignment.SequenceNumeric
+                                consignmentPackage.LineNumber = 1;
+                                consignmentPackage.Tenant = SessionLocator.Tenant;
+                                consignmentPackage.PackageQuantity = this.exportStorage.Result.packageQuantity;
+                                consignmentPackage.PackageMeasureQualifierCode = "2";
+                                consignmentPackage.GrossMassMeasure = this.exportStorage.Result.grossMassMeasure;
+                                consignmentPackage.PackageTypeCode = this.exportStorage.Result.cargoType == 1 ? "D5" : "PP";
+                                consignmentPackage.MarksNumbers = this.exportStorage.Result.MarksNumbers;
+                                consignmentPackage.PackageQuantityTypeCode = "EA";
+                                consignmentPackage.GrossMassMeasureTypeCode = "KGM";
+                                consignmentPackage.DeclarationId = this.declarationPM.Id;
 
-                        });
 
-                    }
+                                consignment.AddConsignmentPackage(consignmentPackage);
+                                this.declarationPM.AddConsignment(consignment);
+
+                                this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
+                                });
+                            }
+                        }
+                        else {
+
+                        }
+
+                    });
+
                 }
-               
-
             }
+            this.CurrentSession.CloseCurrentWindowEmit("");
         });
 
 
 
     }
+
 
 
     private timerToken: any;
