@@ -57,46 +57,46 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             return iQueryable;
         }
 
-        public List<BIReportList> GetAllLists(QueryOperations queryOperations, int tenant, bool getAll = true, string[] factTableCodes = null)
+        public List<BIReportList> GetAllLists(BIReportsFilterArguments bIReportsFilterArguments)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
             IQueryable<BIReport> iQueryable;
-            if (getAll) iQueryable = (from a in context.BIReports select a);
-            else iQueryable = (from a in context.BIReports where a.Tenant == tenant select a);
+            if (bIReportsFilterArguments.GetAll) iQueryable = (from a in context.BIReports select a);
+            else iQueryable = (from a in context.BIReports where a.Tenant == bIReportsFilterArguments.Tenant select a);
 
-            iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable, tenant);
-            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
+            iQueryable = ApplyBusinessUnitFilters(bIReportsFilterArguments.QueryOperations, iQueryable, bIReportsFilterArguments.Tenant);
+            iQueryable = ApplyCustomFilters(bIReportsFilterArguments.QueryOperations, iQueryable, bIReportsFilterArguments.Tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = bIReportsFilterArguments.QueryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = bIReportsFilterArguments.QueryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
             iQueryable = filter.GetFilteredQuery<BIReport>(nonListQueryOperation, iQueryable);
 
-            int skippedPorts = queryOperations.PageIndex;
+            int skippedPorts = bIReportsFilterArguments.QueryOperations.PageIndex;
 
             IQueryable<BIReportList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<BIReportList>(listQueryOperation, query2);
 
-            if (factTableCodes != null) query2 = query2.Where(x => factTableCodes.Contains(x.FactTableName));
+            if (bIReportsFilterArguments.FactTableCodes != null) query2 = query2.Where(x => bIReportsFilterArguments.FactTableCodes.Contains(x.FactTableName));
 
-            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            if (!string.IsNullOrEmpty(bIReportsFilterArguments.QueryOperations.SortByColumnName) && !string.IsNullOrEmpty(bIReportsFilterArguments.QueryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(BIReportList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> BIReportObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("BIReport", tenant).ToList();
+                PropertyInfo propInfo = typeof(BIReportList).GetProperty(bIReportsFilterArguments.QueryOperations.SortByColumnName);
+                List<ObjectField> BIReportObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("BIReport", bIReportsFilterArguments.Tenant).ToList();
 
                 ObjectField objectField = (from a in BIReportObjectFields
-                                           where a.FieldName == queryOperations.SortByColumnName
+                                           where a.FieldName == bIReportsFilterArguments.QueryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
                 if (objectField != null)
                 {
                     if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<BIReportList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<BIReportList, string>(bIReportsFilterArguments.QueryOperations, query2);
                     }
                     else
                     {
@@ -105,36 +105,36 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                             case "ntext":
                             case "text":
                                 {
-                                    query2 = sortClass.GetSorterQuery<BIReportList, string>(queryOperations, query2);
+                                    query2 = sortClass.GetSorterQuery<BIReportList, string>(bIReportsFilterArguments.QueryOperations, query2);
                                     break;
                                 }
                             case "sigdouble":
                             case "double":
                                 {
-                                    query2 = sortClass.GetSorterQuery<BIReportList, double>(queryOperations, query2);
+                                    query2 = sortClass.GetSorterQuery<BIReportList, double>(bIReportsFilterArguments.QueryOperations, query2);
                                     break;
                                 }
                             case "date":
                             case "datetime":
                                 {
-                                    query2 = sortClass.GetSorterQuery<BIReportList, DateTime>(queryOperations, query2);
+                                    query2 = sortClass.GetSorterQuery<BIReportList, DateTime>(bIReportsFilterArguments.QueryOperations, query2);
                                     break;
                                 }
                             case "unsinteger":
                             case "integer":
                                 {
-                                    query2 = sortClass.GetSorterQuery<BIReportList, int>(queryOperations, query2);
+                                    query2 = sortClass.GetSorterQuery<BIReportList, int>(bIReportsFilterArguments.QueryOperations, query2);
                                     break;
                                 }
                             case "boolean":
                                 {
-                                    query2 = sortClass.GetSorterQuery<BIReportList, bool>(queryOperations, query2);
+                                    query2 = sortClass.GetSorterQuery<BIReportList, bool>(bIReportsFilterArguments.QueryOperations, query2);
                                     break;
                                 }
                             case "unsdecimal":
                             case "decimal":
                                 {
-                                    query2 = sortClass.GetSorterQuery<BIReportList, decimal>(queryOperations, query2);
+                                    query2 = sortClass.GetSorterQuery<BIReportList, decimal>(bIReportsFilterArguments.QueryOperations, query2);
                                     break;
                                 }
                             default:
@@ -150,10 +150,10 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             {
                 query2 = query2.OrderByDescending(d => d.CreateDate);
             }
-            if (!queryOperations.GetAll)
+            if (!bIReportsFilterArguments.QueryOperations.GetAll)
             {
                 query2 = query2.Skip(skippedPorts);
-                query2 = query2.Take(queryOperations.PageSize);
+                query2 = query2.Take(bIReportsFilterArguments.QueryOperations.PageSize);
             }
             return query2.ToList();
 
@@ -162,34 +162,43 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 
         public List<BIReportList> GetAllLists(int tenant)
         {
-            return GetAllLists(new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), PageIndex = 0, GetAll = true }, tenant);
+            return GetAllLists(new BIReportsFilterArguments { QueryOperations = new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), PageIndex = 0, GetAll = true }, Tenant = tenant});
         }
 
-        public int GetAllListsCount(QueryOperations queryOperations, int tenant, bool getAll = true, string[] factTableCodes = null)
+        public int GetAllListsCount(BIReportsFilterArguments bIReportsFilterArguments)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
             IQueryable<BIReport> iQueryable;
-            if (getAll) iQueryable = (from a in context.BIReports select a);
-            else iQueryable = (from a in context.BIReports where a.Tenant == tenant select a);
+            if (bIReportsFilterArguments.GetAll) iQueryable = (from a in context.BIReports select a);
+            else iQueryable = (from a in context.BIReports where a.Tenant == bIReportsFilterArguments.Tenant select a);
 
-            iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable, tenant);
-            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
+            iQueryable = ApplyBusinessUnitFilters(bIReportsFilterArguments.QueryOperations, iQueryable, bIReportsFilterArguments.Tenant);
+            iQueryable = ApplyCustomFilters(bIReportsFilterArguments.QueryOperations, iQueryable, bIReportsFilterArguments.Tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = bIReportsFilterArguments.QueryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = bIReportsFilterArguments.QueryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
             iQueryable = filter.GetFilteredQuery<BIReport>(nonListQueryOperation, iQueryable);
 
             IQueryable<BIReportList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<BIReportList>(listQueryOperation, query2);
-            if (factTableCodes != null) query2 = query2.Where(x => factTableCodes.Contains(x.FactTableName));
+            if (bIReportsFilterArguments.FactTableCodes != null) query2 = query2.Where(x => bIReportsFilterArguments.FactTableCodes.Contains(x.FactTableName));
             int count = query2.Count();
             return count;
+        }
+
+
+        public class BIReportsFilterArguments
+        {
+            public QueryOperations QueryOperations { get; set; }
+            public int Tenant { get; set; }
+            public bool GetAll { get; set; } = true;
+            public string[] FactTableCodes { get; set; }
         }
 
     }
