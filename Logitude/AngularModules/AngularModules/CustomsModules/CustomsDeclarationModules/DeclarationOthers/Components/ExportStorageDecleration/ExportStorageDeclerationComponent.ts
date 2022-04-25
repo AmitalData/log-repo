@@ -360,10 +360,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
                     }
                 }
-                else {
-
-
-                }
+               
 
             }
         });
