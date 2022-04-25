@@ -10,9 +10,6 @@ INCLUDE ([Shipment Id],[Shipment Number],[Customer],[Account Manager],[Status],[
 CREATE NONCLUSTERED INDEX [IX_Fact_Charges_Volumetric_Weight_UnitSelection] 
 ON [dbo].[Fact_Charges] ([Volumetric Weight])
 
-CREATE NONCLUSTERED INDEX [IX_Fact_Shipments_Volumetric_Weight_UnitSelection] 
-ON [dbo].[Fact_Shipments] ([Volumetric Weight])
-
 END
 
 
