@@ -262,6 +262,7 @@ namespace WarehouseData.Helper
             ExecuteScript("Others", "Day 18[AbedAddFuncationSplitString]", connectionString);
             ExecuteScript("Others", "Day 17[AbedAddFuncationResolveCustomFieldDateValue]", connectionString);
             ExecuteScript("Others", "Day 14 [Abed]AddFunctionResolveCustomFieldValue", connectionString);
+            ExecuteScript("Others", "[Wesam] UnitSelectionAndConverter", connectionString);
         }
 
         public void ExecuteScript(string forderName, string scriptName, string connectionString)
