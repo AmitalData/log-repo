@@ -1,4 +1,4 @@
-@release
+#@release
 Feature: UOM Release
     The user update system defaults, creates a direct export air shipment, change shipment ratio,
     update packages tab, add payable, add different unit of measurments.
