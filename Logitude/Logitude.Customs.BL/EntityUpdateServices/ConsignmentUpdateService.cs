@@ -54,6 +54,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 
             }
 
+            if ((string.IsNullOrWhiteSpace(entityPM.OriginCountryCode) && entityPM.OriginCountryCode != entityPOCO.OriginCountryCode) || (string.IsNullOrWhiteSpace(entityPM.CargoDescription) && entityPM.CargoDescription != entityPOCO.CargoDescription))
+            {
+                DateTime stopLogAt = DateTime.MinValue;
+                string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220424HD390614.LogUntilDateyyyyMMdd"];
+                if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                {
+                    stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                        "yyyyMMdd",
+                                                        CultureInfo.InvariantCulture,
+                                                        DateTimeStyles.None);
+                }
+
+                string logData = "";
+                logData = $"entityPOCO.OriginCountryCode={entityPOCO.OriginCountryCode},entityPOCO.CargoDescription={entityPOCO.CargoDescription}"; 
+                LogitudeSettings.HandleLogMe("Origin Country || Cargo Description deleted " + logData, false, "DeletedData", stopLogAt);
+            }
+
             UpdatePendingByKeyWords(entityPM);  
             base.OnUpdating(entityPM, entityPOCO);
         }

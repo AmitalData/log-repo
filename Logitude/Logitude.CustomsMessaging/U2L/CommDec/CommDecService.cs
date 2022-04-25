@@ -417,6 +417,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
 
                 }
+                AppendLogLine("_LogitudeCommDecFile.OriginCountryCode " + _LogitudeCommDecFile.OriginCountryCode + ",  _MyDeclarationPM.Consignments[0].OriginCountryCode " + this._MyDeclarationPM.Consignments[0].OriginCountryCode +
+                        ", _LogitudeCommDecFile.CargoDescription " + _LogitudeCommDecFile.CargoDescription + ",  _MyDeclarationPM.Consignments[0].CargoDescription " + this._MyDeclarationPM.Consignments[0].CargoDescription);
+
                 //this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ManifestDate, "LogitudeCommDecFile.ManifestDate");
                 if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime))
                 {
