@@ -1,4 +1,4 @@
-@devrelease
+#@devrelease
 Feature: Customization Add Fields To Shipment General Tab
     The user open customization, add Custom Fields To Shipment General Tab, create new shipment, test the Added fields in the shipment, remove the fields
 
