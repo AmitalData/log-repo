@@ -1610,6 +1610,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         }
     }
     private AddNewTariffPayable(payable: CustomsChargesPayable) {
+        var samePayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => AppTool.IsNullOrEmpty(d.TariffId) && d.IsCustomsChargesTariff && d.ChargesTypeId == payable.ChargeTypeId && d.MeasurementId == payable.UnitOfMesurmentId)[0];
+        if (samePayable) {
+            var index = this.EntityPM.ShipmentPayables.indexOf(samePayable);
+            if (index > -1) {
+                this.EntityPM.RemovePayable(samePayable);
+            }
+        }
+
         var alreadyAddedPayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.TariffId == payable.TariffId && d.ChargesTypeId == payable.ChargeTypeId && d.MeasurementId == payable.UnitOfMesurmentId)[0];
 
         if (alreadyAddedPayable == null) {
