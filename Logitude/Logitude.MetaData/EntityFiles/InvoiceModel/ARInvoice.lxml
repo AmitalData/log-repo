@@ -19104,6 +19104,12 @@
       LocalDefaultText="&quot;חשבונית הזיכוי לא נשמרה לפיכך ,החשבונית המקורית לא תבוטל אם לא תאשר חשבונית זיכוי זו. אנא אשר המשך תהליך ללא ביטול החשבונית המקורית.&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.M.BlockVoidingInvoicesInSAT&quot;"
+      DefaultText="&quot;you can't void this invoice, you have to Auto credit it then create a new one&quot;"
+      LocalDefaultText="&quot;&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
