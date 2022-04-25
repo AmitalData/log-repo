@@ -72,7 +72,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return query;
         }
-        public List<InterestTransactionList> MapListQuery(List<InterestTransactionList> interestTransactions, int tenant)
+        public List<InterestTransactionList> MapListQuery(List<InterestTransactionList> interestTransactions, int tenant, bool? exportToExcell = null)
         {
             List<Currency> currencies = GetTenantCurrencies(tenant);
 
@@ -103,7 +103,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        InterestReportNumber = interestTransaction.InterestReportNumber,
                        JournalId = interestTransaction.JournalId,
                        JournalNumber = interestTransaction.JournalNumber,
-                       Source = interestTransaction.Source,
+                       Source = exportToExcell == true? getEntityIcon(interestTransaction.SourceTypeCode) + " " + interestTransaction.Source : interestTransaction.Source,
                        SourceTypeCode = interestTransaction.SourceTypeCode,
                        SourceType = interestTransaction.SourceType,
                        SourceId = interestTransaction.SourceId,
@@ -113,6 +113,91 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return list;
         }
+
+        private string getEntityIcon(string sourceTypeCode)
+        {
+            var iconTxt = "";
+            switch (sourceTypeCode)
+            {
+                // 1-Journal
+                case "1":
+                    {
+                        iconTxt = "JR";
+                        break;
+                    }
+
+                // 2-ARInvoice
+                case "2":
+                    {
+                        iconTxt = "IN";
+                        break;
+                    }
+
+                // 3-ARPayment
+                case "3":
+                    {
+                        iconTxt = "PY";
+                        break;
+                    }
+
+                // 4-APInvoice
+                case "4":
+                    {
+                        iconTxt = "IN";
+                        break;
+                    }
+
+                // 5-APPayment
+                case "5":
+                    {
+                        iconTxt = "PY";
+
+                        break;
+                    }
+
+                // 6-Cheque Deposit
+                case "6":
+                    {
+                        iconTxt = "DP";
+
+                        break;
+                    }
+
+                // 7-Cash Deposit
+                case "7":
+                    {
+                        iconTxt = "DP";
+
+                        break;
+                    }
+
+                // 8-Revaluation
+                case "8":
+                    {
+                        iconTxt = "RV";
+
+                        break;
+                    }
+
+                // 9-PaymentCheque
+                case "9":
+                    {
+                        iconTxt = "CH";
+
+                        break;
+                    }
+
+                // 10-Adjustment
+                case "10":
+                    {
+                        iconTxt = "AJ";
+
+                        break;
+                    }
+            }
+            return iconTxt;
+        }
+
 
         public InterestTransactionList GetSingle(string id,int tenant)
         {
