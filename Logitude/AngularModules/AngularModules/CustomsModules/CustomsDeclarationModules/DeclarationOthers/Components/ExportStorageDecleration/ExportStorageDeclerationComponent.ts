@@ -298,6 +298,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
 
     SendButtonClicked() {
+        debugger;
         let ArrayExportStorageId = this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
 
         ArrayExportStorageId.forEach(ExportStorageId => {
@@ -315,9 +316,12 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
                             if (isConsignment != undefined) {
 
-                                this.exportStorage.Result.id = this.declarationPM.Id;
-                                this.exportStoragePMService.update(this.exportStorage.Result);
-                                isConsignment.ExportStoragesId = ExportStorageId;
+                                this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
+                                this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
+                                    isConsignment.ExportStoragesId = ExportStorageId;
+                                    this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
+                                    });
+                                });
 
 
                             }
@@ -329,13 +333,13 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                 consignment.ManifestNumber = this.exportStorage.Result.firstCargoID;
                                 consignment.SecondCargoID = this.exportStorage.Result.SecondCargoID;
                                 consignment.CargoDescription = this.exportStorage.Result.MarksNumbers;
-                                consignment.StorageSiteCode = this.exportStorage.Result.StorageSiteCode;
-                                consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods;
-                                consignment.ExportUnloadingPortCode = this.exportStorage.Result.ExportUnloadingPortCode;
+                                consignment.StorageSiteCode = "10081" //this.exportStorage.Result.StorageSiteCode;
+                                consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods == null ? 0 : this.exportStorage.Result.IsDangerousGoods;
+                                consignment.ExportUnloadingPortCode = "ALBUT" //this.exportStorage.Result.ExportUnloadingPortCode;
                                 consignment.ExportLoadingPortCode = this.exportStorage.Result.ExportLoadingPortCode;
                                 consignment.ConsignmentType = "E";
                                 consignment.DeclarationId = this.declarationPM.Id;
-                                consignment.ConsignmentNumber = this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].ConsignmentNumber + 1;
+                                consignment.ConsignmentNumber = this.declarationPM.Consignments.length > 0 ? this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].ConsignmentNumber + 1 : 1;
                                 consignment.SequenceNumeric = this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].SequenceNumeric + 1;
 
 
@@ -344,7 +348,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                 var consignmentPackage: ConsignmentPackagePM;
                                 consignmentPackage = new ConsignmentPackagePM(consignment);
                                 consignmentPackage.ConsignmentNumber = consignment.ConsignmentNumber
-                                consignmentPackage.SequenceNumeric = consignment.SequenceNumeric
+                                consignmentPackage.SequenceNumeric = 1;
                                 consignmentPackage.LineNumber = 1;
                                 consignmentPackage.Tenant = SessionLocator.Tenant;
                                 consignmentPackage.PackageQuantity = this.exportStorage.Result.packageQuantity;
@@ -361,6 +365,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                 this.declarationPM.AddConsignment(consignment);
 
                                 this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                 });
                             }
                         }
@@ -373,6 +378,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                 }
             }
             this.CurrentSession.CloseCurrentWindowEmit("");
+
         });
 
 
