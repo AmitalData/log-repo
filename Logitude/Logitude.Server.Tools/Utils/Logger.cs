@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
@@ -12,19 +14,110 @@ namespace Logitude.Server.Tools.Utils
 {
     public static class Logger
     {
-
+        static Thread writeLogLoop = null;
+        static Dictionary<string, string> suffixs = null;
         delegate DialogResult Show(string text, string caption);
+        static ConcurrentQueue<Tuple<string, bool, string>> cq = null;
+        static Dictionary<string, Dictionary<string, StreamWriter>> dicStream = null;
+        static DateTime lastOldStreamCheck;
+        static Logger()
+        {
+            lastOldStreamCheck = DateTime.Now;
+            dicStream = new Dictionary<string, Dictionary<string, StreamWriter>>();
+            suffixs = new Dictionary<string, string>();
+            cq = new ConcurrentQueue<Tuple<string, bool, string>>();
+            writeLogLoop = new Thread(new ParameterizedThreadStart(ManagerThreadLoop));
+            writeLogLoop.Start();
+        }
+
+        static void ManagerThreadLoop(object threadParam)
+        {
+            while (!WorkerRoleServiceLocator.PleaseShutDown)
+            {
+                try
+                {
+                    Tuple<string, bool, string> item = null;
+                    if (cq.TryDequeue(out item))
+                    {
+                        string prefix = ValidFileName(item.Item3);
+                        InitWorkingDir();
+                        if (item.Item2)
+                        {
+                            LogError(item.Item1, prefix);
+                        }
+                        else
+                        {
+                            LogMessage(item.Item1, prefix);
+                        }
+                    }
+                    CloseOldStream();
+                    Thread.Sleep(10);
+                }
+                catch { }
+            }
+
+        }
+
         public static void LogMe(string mess, bool Error)
         {
             LogMe(mess, Error, "");
         }
-        private static string UIErrorBuffer;
+        private static StringBuilder _SBUIErrorBuffer = new StringBuilder();
         private static DateTime UIErrorBufferAt;
+
         public static void LogMe(string mess, bool Error, string suffix)
         {
+            try
+            {
+                if (!Error)
+                {
+                    if (string.IsNullOrEmpty(suffix)) suffix = "Mess";
+                    cq.Enqueue(new Tuple<string, bool, string>(mess, false, suffix));
+                }
+                else
+                {
+                    cq.Enqueue(new Tuple<string, bool, string>(mess, true, ""));
+                    if (string.IsNullOrEmpty(suffix)) suffix = "Mess";
+                    cq.Enqueue(new Tuple<string, bool, string>(mess, false, suffix));
+                    bool Send = false;
+                    if (UIErrorBufferAt == DateTime.MinValue)
+                        Send = true;
+                    else if (DateTime.Now.Subtract(UIErrorBufferAt) > new TimeSpan(1, 0, 0))
+                        Send = true;
+                    _SBUIErrorBuffer.AppendLine(mess);
+                    #region Send Email
+                    if (Send)
+                    {
+                        if (System.Environment.UserInteractive)
+                        {
+                            Show myDel = new Show(System.Windows.Forms.MessageBox.Show);
+                            myDel.BeginInvoke(_SBUIErrorBuffer.ToString(), ValidFileName(ValidFileName(Application.ProductName)), null, null);
+                            //System.Windows.Forms.MessageBox.Show(m);
+
+                        }
+                        SMTP.SendItdelegate SendItP = new SMTP.SendItdelegate(SMTP.SendItDefault);
+                        SendItP.BeginInvoke(_SBUIErrorBuffer.ToString(), null, null);
+                        _SBUIErrorBuffer = new StringBuilder();
+                        UIErrorBufferAt = DateTime.Now;
+                    }
+                    #endregion
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
+
+        private static void LogMe2(string mess, bool Error, string suffix)
+        {
             suffix = ValidFileName(suffix);
+
             LogMeDelegate logMe;
-            Debug.WriteLine(mess);
+            if (Debugger.IsAttached)
+            {
+                Debug.WriteLine(mess);
+            }
             if (Error)
             {
                 logMe = new LogMeDelegate(LogError);
@@ -34,21 +127,23 @@ namespace Logitude.Server.Tools.Utils
                     Send = true;
                 else if (DateTime.Now.Subtract(UIErrorBufferAt) > new TimeSpan(1, 0, 0))
                     Send = true;
-                UIErrorBuffer += mess + Environment.NewLine;
+                _SBUIErrorBuffer.AppendLine(mess);
+                #region Send Email
                 if (Send)
                 {
                     if (System.Environment.UserInteractive)
                     {
                         Show myDel = new Show(System.Windows.Forms.MessageBox.Show);
-                        myDel.BeginInvoke(UIErrorBuffer, ValidFileName(ValidFileName(Application.ProductName)), null, null);
+                        myDel.BeginInvoke(_SBUIErrorBuffer.ToString(), ValidFileName(ValidFileName(Application.ProductName)), null, null);
                         //System.Windows.Forms.MessageBox.Show(m);
 
                     }
                     SMTP.SendItdelegate SendItP = new SMTP.SendItdelegate(SMTP.SendItDefault);
-                    SendItP.BeginInvoke(UIErrorBuffer, null, null);
-                    UIErrorBuffer = "";
+                    SendItP.BeginInvoke(_SBUIErrorBuffer.ToString(), null, null);
+                    _SBUIErrorBuffer = new StringBuilder();
                     UIErrorBufferAt = DateTime.Now;
                 }
+                #endregion
             }
             else
             {
@@ -93,7 +188,8 @@ namespace Logitude.Server.Tools.Utils
 
                     }
                     LastDelOldAt = DateTime.Now;
-                    WorkingDir = WorkingDir + @"\LogService\";
+                    var Machine_User = ValidFileName(Environment.MachineName + "_" + Environment.UserName);
+                    WorkingDir = WorkingDir + @"\LogService_" + Machine_User + @"\";
                     if (!Directory.Exists(WorkingDir))
                     {
                         Directory.CreateDirectory(WorkingDir);
@@ -107,14 +203,17 @@ namespace Logitude.Server.Tools.Utils
                         for (int i = 0; i < files.Length; i++)
                         {
                             fi = new FileInfo(files[i]);
-                            var day2delete = -14;var maxLengthInMB = 50;// ihab +itzik
-                            if (fi.LastWriteTime < DateTime.Today.AddDays(day2delete))
+                            if (fi.LastWriteTime < DateTime.Today.AddDays(-3))
                             {
                                 fi.Delete();
                             }
-                            else if (fi.Length > (1048576 * maxLengthInMB))
+                            else
                             {
-                                fi.Delete();
+                                int LoggerFileSizeLimitInMB = GetLimitInMB();
+                                if (fi.Length > (1048576 * LoggerFileSizeLimitInMB))
+                                {
+                                    fi.Delete();
+                                }
                             }
                         }
                     }
@@ -125,34 +224,90 @@ namespace Logitude.Server.Tools.Utils
             {
             }
         }
+        private static int? _LoggerFileSizeLimitInMB = null;
+        private static int GetLimitInMB()
+        {
+            if (_LoggerFileSizeLimitInMB.HasValue)
+            {
+                return _LoggerFileSizeLimitInMB.Value;
+            }
+            int LoggerFileSizeLimitInMB = 100;
+            try
+            {
+                var sLoggerFileSizeLimitInMB = System.Configuration.ConfigurationSettings.AppSettings["Logger.FileSizeLimitInMB"];
+                if (!String.IsNullOrWhiteSpace(sLoggerFileSizeLimitInMB))
+                {
+                    LoggerFileSizeLimitInMB = int.Parse(sLoggerFileSizeLimitInMB);
+                }
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
+            _LoggerFileSizeLimitInMB = LoggerFileSizeLimitInMB;
+            return _LoggerFileSizeLimitInMB.Value;
+        }
 
         private static void LogError(string mess, string suffix)
         {
 
-            if (suffix != "") // log again in Main Error File
+            //if (suffix != "") // log again in Main Error File
+            //{
+            //    LogMeDelegate logMe = new LogMeDelegate(LogError);
+            //    logMe.BeginInvoke(new StringBuilder().Append(suffix).AppendFormat("==> ").AppendLine(mess).ToString(), "", null, null);
+            //}
+            //string suffixFile = "Error.Log";
+            //if (suffix != "") suffixFile = "Error." + suffix + ".Log";
+            //lock (typeof(Logger))
+            //{
+            //    InitWorkingDir();
+            //    using (StreamWriter sw = File.AppendText(WorkingDir + ValidFileName(Application.ProductName) + "." + DateTime.Today.Year + "." + DateTime.Today.Month + "." + DateTime.Today.Day + "." + suffixFile))
+            //    {
+            //        if (String.IsNullOrWhiteSpace(suffix))
+            //        {
+            //            sw.WriteLine("<<==" + DateTime.Now.ToLocalTime());
+            //        }
+            //        sw.WriteLine(mess);
+            //    }
+            //}
+            StreamWriter sw = GetStreamWriter(true, suffix);
+            if (String.IsNullOrWhiteSpace(suffix))
             {
-                LogMeDelegate logMe = new LogMeDelegate(LogError);
-                logMe.BeginInvoke(suffix + "==> " + mess, "", null, null);
+                sw.WriteLine("<<==" + DateTime.Now.ToLocalTime());
             }
-            string suffixFile = "Error.Log";
-            if (suffix != "") suffixFile = "Error." + suffix + ".Log";
-            lock (typeof(Logger))
-            {
-                InitWorkingDir();
-                using (StreamWriter sw = File.AppendText(WorkingDir + ValidFileName(Application.ProductName) + "." + DateTime.Today.Year + "." + DateTime.Today.Month + "." + DateTime.Today.Day + "." + suffixFile))
-                {
-                    sw.WriteLine("<<==" + DateTime.Now.ToLocalTime());
-                    sw.WriteLine(mess);
-                    //sw.WriteLine("==>>");
-                }
-                //if (_form == null)
-                //{
-                //    _form = new frmLogger();
-                //    //_form.Show();
-                //}
-                //_form.LogMess(mess);  
+            sw.WriteLine(mess);
+            sw.Flush();
+        }
 
+        internal static StreamWriter GetStreamWriter(bool error, string suffix)
+        {
+            string datestr = DateTime.Today.Year + "." + DateTime.Today.Month + "." + DateTime.Today.Day;
+            if (!dicStream.ContainsKey(datestr))
+                dicStream.Add(datestr, new Dictionary<string, StreamWriter>());
+            var dic = dicStream[datestr];
+            string key = suffix + error;
+            if (dic.ContainsKey(key))
+                return (dic[key]);
+            string suffixFile = "";
+            if (error)
+            {
+                if (suffix != "")
+                    suffixFile = "Error." + suffix + ".Log";
+                else
+                    suffixFile = "Error.Log";
             }
+            else
+            {
+                if (suffix != "")
+                    suffixFile = suffix + ".Log";
+                else
+                    suffixFile = ".Log";
+            }
+            string filename = WorkingDir + ValidFileName(Application.ProductName) + "." + DateTime.Today.Year + "." + DateTime.Today.Month + "." + DateTime.Today.Day + "." + suffixFile;
+            StreamWriter sw = File.AppendText(filename);
+            dic.Add(key, sw);
+            return (sw);
         }
         public static String GetLogMessageFileName(string suffix)
         {
@@ -164,33 +319,39 @@ namespace Logitude.Server.Tools.Utils
         }
         private static void LogMessage(string mess, string suffix)
         {
-
-            if (suffix != "") // log again in 
+            try
             {
-                suffix = ValidFileName(suffix);
-                LogMeDelegate logMe = new LogMeDelegate(LogMessage);
-                logMe.BeginInvoke(suffix + "==> " + mess, "", null, null);
-            }
-
-
-            lock (typeof(Logger))
-            {
-                InitWorkingDir();
-                string fn = GetLogMessageFileName(suffix);
-                using (StreamWriter sw = File.AppendText(fn))
-                {
-
-                    sw.WriteLine("<<==" + DateTime.Now.ToLocalTime());
-                    sw.WriteLine(mess);
-                    //sw.WriteLine("==>>");
-                }
-                //if (_form == null)
+                //if (suffix != "") // log again in 
                 //{
-                //    _form = new frmLogger();
-                //    //_form.Show();
+                //    suffix = ValidFileName(suffix);
+                //    LogMeDelegate logMe = new LogMeDelegate(LogMessage);
+                //    logMe.BeginInvoke(new StringBuilder().Append(suffix).Append("==> ").AppendLine(mess).ToString(), "", null, null);
                 //}
-                //_form.LogMess(mess);  
+                //lock (typeof(Logger))
+                //{
+                //    InitWorkingDir();
+                //    string fn = GetLogMessageFileName(suffix);
+                //    using (StreamWriter sw = File.AppendText(fn))
+                //    {
 
+                //        if (String.IsNullOrWhiteSpace(suffix))
+                //        {
+                //            sw.WriteLine("<<==" + DateTime.Now.ToLocalTime());
+                //        }
+                //        sw.WriteLine(mess);
+                //    }
+
+                //}
+                StreamWriter sw = GetStreamWriter(false, suffix);
+                if (String.IsNullOrWhiteSpace(suffix))
+                {
+                    sw.WriteLine("<<==" + DateTime.Now.ToLocalTime());
+                }
+                sw.WriteLine(mess);
+                sw.Flush();
+            }
+            catch
+            {
             }
         }
         public static void DeleteAllLogState()
@@ -221,9 +382,18 @@ namespace Logitude.Server.Tools.Utils
         {
             try
             {
+                if (string.IsNullOrEmpty(FileName))
+                    return (string.Empty);
+                if (suffixs.ContainsKey(FileName))
+                    return (suffixs[FileName]);
+                string origFileName = FileName;
                 foreach (char c in System.IO.Path.GetInvalidFileNameChars())
                 {
                     FileName = FileName.Replace(c, '.');
+                }
+                lock (typeof(Logger))
+                {
+                    suffixs.Add(origFileName, FileName);
                 }
             }
             catch (Exception)
@@ -250,6 +420,39 @@ namespace Logitude.Server.Tools.Utils
             {
                 LogMe(e.ToString(), true);
             }
+        }
+        public static void CloseOldStream()
+        {
+            if (DateTime.Now.AddMinutes(-10) < lastOldStreamCheck && DateTime.Now.Hour >= 1)
+                return;
+            lastOldStreamCheck = DateTime.Now;
+            string datestr = DateTime.Now.AddDays(-1).Year + "." + DateTime.Now.AddDays(-1).Month + "." + DateTime.Now.AddDays(-1).Day;
+            if (dicStream.ContainsKey(datestr))
+            {
+                var dic = dicStream[datestr];
+                if (dic == null)
+                {
+                    dicStream.Remove(datestr);
+                    return;
+                }
+                foreach (var item in dic)
+                {
+                    try
+                    {
+                        var sw = item.Value;
+                        if (sw != null)
+                        {
+                            sw.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.ToString());
+                    }
+                }
+                dicStream.Remove(datestr);
+            }
+
         }
 
 
