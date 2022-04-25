@@ -7,7 +7,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/BIReportExtendedPMService';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { BIReportExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/BIReportExtendedListService';
 import { BIReportList } from '../../../../Infrastructure/EntityLists/BIReportList';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -178,6 +178,9 @@ export class NewBIReport extends BaseComponent {
         filters.PageSize = take;
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
+        filters.AdditionalFilters = [];
+
+        this.BuildFactTableCodesFilter(filters);
 
         if (this.BIReportsTenant != -1) {
             filters.Tenant = this.BIReportsTenant;
@@ -193,6 +196,16 @@ export class NewBIReport extends BaseComponent {
     }
 
     columns: any;
+    private BuildFactTableCodesFilter(filters: ApiQueryFilters) {
+        if (!this.FactTables){
+            filters.AdditionalFilters.push(new FilterItem("FactTableCodes", [], null, null, "IN", true, false, false, "List", false));
+            return;
+        }
+        var factTableCodes = this.FactTables.map(x => x.Code);
+        if (!factTableCodes || factTableCodes.length == 0) filters.AdditionalFilters.push(new FilterItem("FactTableCodes", [], null, null, "IN", true, false, false, "List", false));
+        else filters.AdditionalFilters.push(new FilterItem("FactTableCodes", factTableCodes, null, null, "IN", true, false, false, "List", false));
+    }
+
     BuildColumns() {
         var dateWidth = '130px';
         if (this.IsTenantZero) {
