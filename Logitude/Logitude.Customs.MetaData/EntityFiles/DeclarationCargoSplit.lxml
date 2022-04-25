@@ -2190,7 +2190,14 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.DeclarationCargoSplit.O.ScreenDeleteIsContinue&quot;"
+      DefaultText="&quot;The data entered on the screen will be deleted! to proceed ?&quot;"
+      LocalDefaultText="&quot;הנתונים שהוזנו במסך יימחקו ! האם להמשיך ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;GENERAL&quot;"
