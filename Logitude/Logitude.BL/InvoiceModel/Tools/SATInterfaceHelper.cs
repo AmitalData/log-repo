@@ -2465,6 +2465,8 @@ namespace Logitude.BL.InvoiceModel.Tools
     {
         public string rfcEmisor { get; set; }
         public string folioFiscal { get; set; }
+        public string motivoCancelacion { get; set; }
+        public string folioSustitucion { get; set; }
     }
 
     public class ARInvoiceSATDetails
