@@ -24,7 +24,7 @@ import { QuoteChargesBehaviours } from '../Behaviours/QuoteChargesBehaviours';
 import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { TariffDomainService, SalesLocalCharges, SalesLocalChargesTariffSearchArgs } from '../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService, SalesLocalCharges } from '../../../TariffModule/Services/TariffDomainService';
 
 @Component({
     selector: 'LCLChargesComponent',    
@@ -449,7 +449,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 var measurementId = item.UnitOfMesurmentId;
                 if (!item.IsAllIn) {
                     chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
-                    var saleAmount = AppTool.Round(item.Price, 3);
+                    var saleAmount = AppTool.Round(item.ExpectedAmount, 3);
                     chargePM.SaleTotalAmount = saleAmount;
                 }
                 chargePM.SaleMeasurementCode = measurementCode;
@@ -489,7 +489,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 var measurementId = item.UnitOfMesurmentId;
                 if (!item.IsAllIn) {
                     chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
-                    var saleAmount = AppTool.Round(item.Price, 3);
+                    var saleAmount = AppTool.Round(item.ExpectedAmount, 3);
                     chargePM.SaleTotalAmount = saleAmount;
                 }
                 chargePM.SaleMeasurementCode = measurementCode;
