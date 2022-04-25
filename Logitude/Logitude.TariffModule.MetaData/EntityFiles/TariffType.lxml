@@ -509,7 +509,6 @@
       Code="&quot;ICC&quot;"
       SearchFields="&quot;ICC,Import Customs Charges Cost&quot;" />
     <Record
-      DirectionCode="&quot;&quot;"
       Name="&quot;Inland FTL Charges Cost&quot;"
       Code="&quot;IFT&quot;"
       SearchFields="&quot;IFT,Inland FTL Charges Cost&quot;"
@@ -518,14 +517,12 @@
       Code="&quot;ICS&quot;"
       Name="&quot;Import Local Charges Sale&quot;"
       SearchFields="&quot;ICS,Import Local Charges Sale&quot;"
-      DirectionCode="&quot;I&quot;"
-      TransportModeCode="&quot;&quot;" />
+      DirectionCode="&quot;I&quot;"/>
     <Record
       Code="&quot;ECS&quot;"
       Name="&quot;Export Local Charges Sale&quot;"
       SearchFields="&quot;ECS,Export Local Charges Sale&quot;"
-      DirectionCode="&quot;E&quot;"
-      TransportModeCode="&quot;&quot;" />
+      DirectionCode="&quot;E&quot;"/>
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
