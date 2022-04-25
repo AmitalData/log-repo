@@ -865,9 +865,13 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
 
             case "WarehouseLeg":
-            case "WarehouseLeg2":
             case "WarehouseLeg_Pickups": {
                 message = "Delete Warehouse \ Terminal?";
+                break;
+            }
+
+            case "WarehouseLeg2": {
+                message = "Delete Origin Warehouse \ Terminal?";
                 break;
             }
         }
@@ -938,6 +942,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     case "WarehouseLeg_Pickups": {
                         this.EntityPM.WarehouseLegWarehouseId = null;
                         this.EntityPM.WarehouseLegAddressId = null;
+                        this.WarehouseAddressList = null;
+                        this.EntityPM.WarehouseLegAddressCountryName = null;
+                        this.EntityPM.WarehouseLegAddressCountryCode = null;
                         this.EntityPM.WarehouseLegReference = null;
                         this.EntityPM.WarehouseLegTerminalCode = null;
                         this.EntityPM.WarehouseLegLastFreeDate = null;
@@ -984,6 +991,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                         {
                             this.EntityPM.WarehouseLeg2WarehouseId = null;
                             this.EntityPM.WarehouseLeg2AddressId = null;
+                            this.Warehouse2AddressList = null;
+                            this.EntityPM.WarehouseLeg2AddressCountryName = null;
+                            this.EntityPM.WarehouseLeg2AddressCountryCode = null;
                             this.EntityPM.WarehouseLeg2Reference = null;
                             this.EntityPM.WarehouseLeg2TerminalCode = null;
                             this.EntityPM.TerminalAvailable = null;
