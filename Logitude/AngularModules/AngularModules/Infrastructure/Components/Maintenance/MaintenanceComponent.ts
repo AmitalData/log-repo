@@ -491,7 +491,8 @@ export class MaintenanceComponent {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CSM";
                 item.Icon = "Table"
-                item.Code = "SAL";
+                item.Code = "SAL"; 
+                item.TranslatedName=TextCodeTranslator.Translate("Customs.Client.AuthorizationLetters")
                 item.ObjectTableName = "Customs.Client";
                 item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
@@ -1499,7 +1500,7 @@ export class MaintenanceComponent {
                             messageWindow.Show("Logged User Is not Customer Care ");
                             return;
                         }
-
+                        let msg =TextCodeTranslator.Translate("Customs.Client.IsSelectAuthorizationLetters")
                         let confirmWindow = new ConfirmWindow();
                         confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.SelectAuthorizationLetters");
                         confirmWindow.Width = 350;
@@ -1507,7 +1508,7 @@ export class MaintenanceComponent {
                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                         confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
                         confirmWindow.ShowNoButton
-                        confirmWindow.Show("האם לבצע שליפת כתבי הרשאה לכל הלקוחות במערכת ?");
+                        confirmWindow.Show(msg);
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
 
