@@ -8,6 +8,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System.Collections.Generic;
@@ -58,14 +59,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (rp.checkboxAll && rp.allWithoutdeclarationIdsList != null && rp.allWithoutdeclarationIdsList.Count() > 0)
                 declarationIdsList.RemoveAll(x => rp.allWithoutdeclarationIdsList.Contains(x));
 
-            //todo: call to morams service
+            List<string> declarationIdsListToSend = new List<string> { };
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            foreach (var item in declarationIdsList)
+            {
+                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(item, "", "", "", customResponse.tenant, "Declaration");
+                customsDocumentsTicketPMList = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == "ILD" && d.DocumentsFilingId != null).ToList();
+                if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count == 0)
+                {
+                    LogMessagingUtil.Instance.AppendLine(" להצהרה שסומנה לא קיים מסמך שטר מטען" + item);
+                }
+                else
+                {
+                    declarationIdsListToSend.Add(item);
+                }
+            }
+
             UnifreightTaskService unifreightTaskService = new UnifreightTaskService();
             DeclarationPM _MyDeclarationPM;
             var myDeclarationQueryService = new DeclarationQueryService(customContext);
-            foreach (var item in declarationIdsList)
+
+            foreach (var item in declarationIdsListToSend)
             {
                 _MyDeclarationPM = myDeclarationQueryService.GetSingle(item, false, false);
-                if(_MyDeclarationPM != null)unifreightTaskService.OpenUnifreighTask(_MyDeclarationPM, "L2USID", null, false, "");
+                if (_MyDeclarationPM != null)
+                {
+                    LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask for Declaration: " + item);
+                    unifreightTaskService.OpenUnifreighTask(_MyDeclarationPM, "L2USID", null, false, "");
+                }
             }
         }
 

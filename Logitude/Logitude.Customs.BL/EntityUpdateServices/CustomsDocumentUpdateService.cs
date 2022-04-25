@@ -497,7 +497,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
                 if (currentDeclarationCourierStatusPM != null)
                 {
+                    string prevValMissingDocumentStatusCode = null;
+                    string currvValMissingDocumentStatusCode = null;
+
+                    prevValMissingDocumentStatusCode = currentDeclarationCourierStatusPM.MissedDocumentStatusCode;
+
                     calculateDeclarationCourierStatus.CalcMissingDocumentStatusCode(currentDeclarationCourierStatusPM);
+                    currvValMissingDocumentStatusCode = currentDeclarationCourierStatusPM.MissedDocumentStatusCode;
+
+                    if (prevValMissingDocumentStatusCode != currvValMissingDocumentStatusCode)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                    }
                 }
                 if (entityPM.DocumentStatusCode == "1")
                 {
