@@ -24,6 +24,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             accountingContext = AccountingContext.GetContext(tenant);
             InterestTransactionListQueryService listService = new InterestTransactionListQueryService(accountingContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            queryOperations.QueryFilterItems.ForEach(x => x.IsCustom = false);
             var entityLists = listService.GetList(queryOperations, tenant);
 
             return listService.MapListQuery(entityLists, tenant, true);
