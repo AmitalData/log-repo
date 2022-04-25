@@ -144,8 +144,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 }
 
-                if (_CommunicationLog.Retries == 5)
-                { success = true;
+                if (_CommunicationLog.Retries >= 5)
+                { 
+                    success = true;
                     log = "_CommunicationLog.Retries == 5";
 
                     return;
