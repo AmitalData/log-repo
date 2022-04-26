@@ -41,6 +41,7 @@ import { CargoIdentifireTypePM } from '../../../../../Customs/EntityPMs/CargoIde
 import { CargoIdentifireTypeListService } from '../../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { DateTimeFormat } from 'Infrastructure/Utilities/DateTimeZone';
 import { stringify } from 'querystring';
+
 //import {DecCargoSplitConComponent} from '../DecCargoSplitConComponent';
 
 @Component({
@@ -140,7 +141,7 @@ export class CargoSplitGeneralTabComponent
                                     this.ExportCargoTypeFilterItems.addAdditionalFilter("IsForDeclarationExport", true, null, null, "Equal", false, false, false, "boolean", false, true);
                                     this.Listen();
                                     //this.BuildTabs();
-
+                                    this.EntityPM.IsDirty = false;
                                 });
                             });
                         });
@@ -157,6 +158,7 @@ export class CargoSplitGeneralTabComponent
         if (this.IsDisplayOnly) {
             this.SetDisplayFields(this.ResponseStatusCode);
         }
+
     }
 
 
@@ -479,10 +481,48 @@ export class CargoSplitGeneralTabComponent
         if (this.TransportmodeId != value) {
             this.TransportmodeId = value;
         }
-        this.isTransportO = false;
-        this.isTransportL = false;
-        this.isTransportA = false;
-        if (this.PrevTransportmodeId != null) {
+        if (this.EntityPM.IsDirty) {
+            this.isTransportO = false;
+            this.isTransportL = false;
+            this.isTransportA = false;
+            if (this.PrevTransportmodeId != null) {
+                let confirmWindow = new ConfirmWindow();
+                confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.RecallClientsForCutoms");
+                confirmWindow.Width = 300;
+                confirmWindow.Height = 200;
+                confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+                confirmWindow.ShowNoButton
+                confirmWindow.Show(this.msgDeleteScreen);
+
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    // this.TransportmodeId = value;
+                    confirmWindow.Yes ? this.DeleteValueScreen() : this.TransportmodeId = this.PrevTransportmodeId;
+
+                    switch (this.TransportmodeId) {
+                        case 'A':
+                            this.isTransportA = true;
+                            break;
+                        case 'O':
+                            this.isTransportO = true;
+                            break;
+                        case 'L':
+                            this.isTransportL = true;
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
+
+            //  this.EntityPM.IsDirty = false;
+        }
+
+    }
+
+    air; ocean; land;
+    DirectionModeClicked(value: string) {
+        if (this.EntityPM.IsDirty) {
             let confirmWindow = new ConfirmWindow();
             confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.RecallClientsForCutoms");
             confirmWindow.Width = 300;
@@ -492,75 +532,39 @@ export class CargoSplitGeneralTabComponent
             confirmWindow.ShowNoButton
             confirmWindow.Show(this.msgDeleteScreen);
 
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                // this.TransportmodeId = value;
-                confirmWindow.Yes ? this.DeleteValueScreen() : this.TransportmodeId = this.PrevTransportmodeId;
+            value === "Import" ? this.isDirection = true : this.isDirection = false;
 
-                switch (this.TransportmodeId) {
-                    case 'A':
-                        this.isTransportA = true;
-                        break;
-                    case 'O':
-                        this.isTransportO = true;
-                        break;
-                    case 'L':
-                        this.isTransportL = true;
-                        break;
-                    default:
-                        break;
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+
+                if (confirmWindow.Yes) {
+
+                    this.SetDisable(value);
+                    this.DeleteValueScreen();
+                }
+                else {
+                    value === "Import" ? this.isDirection = false : this.isDirection = true;
                 }
             });
         }
+        else {
+            this.SetDisable(value);
+        }
 
     }
+    SetDisable(value) {
+        value == "Import" ? this.IsImportDeclaration = true : this.IsImportDeclaration = false;
+        value == "Import" ? this.IsExportDeclaration = false : this.IsExportDeclaration = true;
+        value == "Import" ? this.TransportmodeId = "NoValue" : this.TransportmodeId = null;
 
-    air; ocean; land;
-    DirectionModeClicked(value: string) {
-       
-        let confirmWindow = new ConfirmWindow();
-        confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.RecallClientsForCutoms");
-        confirmWindow.Width = 300;
-        confirmWindow.Height = 200;
-        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-        confirmWindow.ShowNoButton
-        confirmWindow.Show(this.msgDeleteScreen);
-
-        value === "Import" ? this.isDirection = true : this.isDirection = false;
-
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-
-            if (confirmWindow.Yes) {
-
-                value == "Import" ? this.IsImportDeclaration = true : this.IsImportDeclaration = false;
-                value == "Import" ? this.IsExportDeclaration = false : this.IsExportDeclaration = true;
-                value == "Import" ? this.TransportmodeId = "NoValue" : this.TransportmodeId = null;
-
-                if (value == "Import") {
-                    this.air = false;
-                    this.ocean = false;
-                    this.land = false;
-                }
-                this.DeleteValueScreen();
-            }
-            else {
-                value === "Import" ? this.isDirection = false : this.isDirection = true;
-            }
-        });
+        if (value == "Import") {
+            this.air = false;
+            this.ocean = false;
+            this.land = false;
+        }
     }
 
-
-    CheckIsWrite(){
-        console.log(Object.keys(this.EntityPM).length);
-         console.log(this.EntityPM[Object.keys(this.EntityPM)[3]]);
-       var a=  Object.keys(this.EntityPM).every(x=> {
-          //alert(this.EntityPM[x]);
-         // this.EntityPM[x]===undefined||this.EntityPM[x]===""||this.EntityPM[x]===null
-        });
-        // alert (a);
-    }
     DeleteValueScreen() {
-       
+
         this.EntityPM.CustomFileNo = '';
         this.EntityPM.ActionTypeCode = '';
         this.EntityPM.RequestDate = new Date();
@@ -586,6 +590,7 @@ export class CargoSplitGeneralTabComponent
             this.NoConnectedConsignmentEnableField();
             this.AddTab(null);
         }
+        this.EntityPM.IsDirty = false;
     }
     DeleteTabs(tab: LogTab) {
 
@@ -618,7 +623,7 @@ export class CargoSplitGeneralTabComponent
 
 
     BuildTabs() {
-       
+
         var tab;
         this.Tabs = [];
 
@@ -645,6 +650,7 @@ export class CargoSplitGeneralTabComponent
         }
 
         this.SelectedTab = this.Tabs[0];
+
     }
 
     AddTab(event) {
