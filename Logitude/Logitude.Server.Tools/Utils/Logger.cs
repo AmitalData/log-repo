@@ -69,6 +69,7 @@ namespace Logitude.Server.Tools.Utils
         {
             try
             {
+                mess = $"[{DateTime.Now.ToString("G")}]{mess}";
                 if (!Error)
                 {
                     if (string.IsNullOrEmpty(suffix)) suffix = "Mess";
