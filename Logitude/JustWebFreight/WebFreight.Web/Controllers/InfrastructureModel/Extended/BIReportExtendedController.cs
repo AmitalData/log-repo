@@ -5,6 +5,7 @@ using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityListQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
+using Logitude.Infrastructure.Data.Models;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -172,12 +173,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(copyFromTenant);
                 BIReportListQueryService bIReportQuery = new BIReportListQueryService(MyContext);
-                List<BIReportList> entityLists = bIReportQuery.GetAllLists(new BIReportListQueryService.BIReportsFilterArguments { QueryOperations = queryOperations, Tenant = copyFromTenant, GetAll = filters.Filter1Value == "true", FactTableCodes = factTableCodes });
+                List<BIReportList> entityLists = bIReportQuery.GetAllLists(new BIReportsFilterArguments { QueryOperations = queryOperations, Tenant = copyFromTenant, GetAll = filters.Filter1Value == "true", FactTableCodes = factTableCodes });
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = bIReportQuery.GetAllListsCount(new BIReportListQueryService.BIReportsFilterArguments { QueryOperations = queryOperations, Tenant = copyFromTenant, GetAll = filters.Filter1Value == "true", FactTableCodes = factTableCodes });
+                    int count = bIReportQuery.GetAllListsCount(new BIReportsFilterArguments { QueryOperations = queryOperations, Tenant = copyFromTenant, GetAll = filters.Filter1Value == "true", FactTableCodes = factTableCodes });
                     response.Count = count;
                 }
 
