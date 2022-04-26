@@ -264,15 +264,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (documentsFilingPM == null)
             {
               documentsFilingPM =CreatePaymentDocument(attachment, requestParams, this._MyDeclarationPM.DeclarationNumberandVersionId);
-                if (this._MyDeclarationPM.Direction == "E")
-                {
-                    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRS", status_DateTime: _TransmitionDateTime);
-                }
+                
             }
             else
             {
                 
                 UpdatePaymentDocument(documentsFilingPM, attachment, requestParams, this._MyDeclarationPM.DeclarationNumberandVersionId);
+            }
+
+            if (this._MyDeclarationPM.Direction == "E")
+            {
+                RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRS", status_DateTime: _TransmitionDateTime);
             }
             //DocumentsFilingMetaDataValueQuery.UpSert(documentsFilingPM, "VER", this._MyDeclarationPM.VersionId);
 
