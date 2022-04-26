@@ -324,6 +324,7 @@ and JournalActionTypes.Code =4
 
         public List<GLAccountBalanceDTO> GLAccountBalanceList { get; set; }
         public List<GLAccountBalanceDTO> TotalOpenReconciliation { get; set; }
+        public List<InterestReportDiff> InterestReportDiffList { get; set; }
     }
     
 }
