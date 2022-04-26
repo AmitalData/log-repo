@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "5df539a69e8a1d136a90ffd0655eb4d4";
+		public const string HashString = "d56b792f26ba801158c780390455a067";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "b94f",
+			      				    Code =  "1afe",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2082,7 +2082,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOFail = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Fail", DefaultText = "Fail",LocalDefaultText = @"נכשל", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsGeneralTextCode_CustomsGeneralORequestClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.RequestClosed", DefaultText = "Request Closed Successfully",LocalDefaultText = @"בקשות נסגרו בהצלחה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralORequestClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.RequestClosed", DefaultText = "Request Closed Successfully",LocalDefaultText = @"מס' הבקשות שנסגרו בהצלחה הן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOClosingCancellations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClosingCancellations", DefaultText = "Closing Cancellations",LocalDefaultText = @"סגירת ביטולים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
