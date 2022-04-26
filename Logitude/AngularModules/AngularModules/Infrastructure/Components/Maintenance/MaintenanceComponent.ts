@@ -488,6 +488,7 @@ export class MaintenanceComponent {
         if (window.ObjectTables.filter(d => d.Name == "Customs.Client")[0] != null) {
 
             if (FeatureLocator.HasFeaturePermession("Customs.Client", "AUTHORIZAT")) {
+                this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CSM";
                 item.Icon = "Table"
@@ -496,6 +497,7 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Customs.Client";
                 item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+                });
             }
         }
         if (window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0] != null) {
