@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure" AOT="false" >
-  <Sql Version="5">
+  <Sql Version="55">
     <![CDATA[
 
 declare @NewId  as varchar(15);
@@ -27,7 +27,7 @@ select
     ,l.ForeignAmount [ForeignAmount]
     ,l.CurrencyId [CurrencyId]
     ,l.AccountingDate [InterestValueDate]
-from Journals j left join JournalLines l on j.Id = l.JournalId where AccountingEntityCode = '8'
+from Journals j left join JournalLines l on j.Id = l.JournalId where AccountingEntityCode = '8' 
 
 OPEN VatsCursor FETCH NEXT FROM VatsCursor INTO @Tenant, @GLAccountId,@EntityId,@OriginalEntityLineNumber,@LocalAmount,@ForeignAmount,@CurrencyId,@InterestValueDate
 
@@ -36,7 +36,9 @@ WHILE @@FETCH_STATUS = 0
 BEGIN
 
 	EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'InterestTransaction'
-	insert into InterestTransactions
+	IF NOT EXISTS (	select * from interesttransactions where EntityId = @EntityId and GLAccountId =@GLAccountId and InterestEntityTypeCode='3' and OriginalEntityLineNumber=@OriginalEntityLineNumber and Tenant = @Tenant) 
+BEGIN
+insert into InterestTransactions
 	(
 		Id
 		,[Tenant]
@@ -74,13 +76,18 @@ BEGIN
 		0,
 		0
 	)
+END
+	
 
 	FETCH NEXT FROM VatsCursor INTO @Tenant, @GLAccountId,@EntityId,@OriginalEntityLineNumber,@LocalAmount,@ForeignAmount,@CurrencyId,@InterestValueDate
 
 END
 
 CLOSE VatsCursor
-DEALLOCATE VatsCursor								
+DEALLOCATE VatsCursor	
+
+
+				
 
     
    
