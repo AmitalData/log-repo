@@ -85,6 +85,17 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId && a.Tenant == tenant
                     select a.ManifestNumber).FirstOrDefault();
         }
+        public List<Consignment> GetConsgnmentByDeclarationIdForDataMapping(string declarationId, int tenant)
+        {
+            return (from a in context.Consignments
+                    where a.DeclarationId == declarationId && a.Tenant == tenant
+                    select new                    
+                    {
+                        ManifestNumber = a.ManifestNumber,
+                        SecondCargoID=a.SecondCargoID,
+                        ThirdCargoID=a.ThirdCargoID,
+                    }).ToList().Select(x=>new Consignment { ManifestNumber = x.ManifestNumber, SecondCargoID = x.SecondCargoID, ThirdCargoID = x.ThirdCargoID }).ToList();
+        }
         //partial void onRemove(Consignment entity)
         //{
         //    //entity.DeclarationId
@@ -106,7 +117,7 @@ namespace Logitude.Customs.Data.Repsitories
         //    }
         //    throw new Exception("preventing Clear Consignments - Validation (CALL#291407)");
         //}
-   }
+    }
 
 }
    
