@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Accounting" AOT="false">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
 
     update JournalLines set DebitAccountId = JournlaLinesGlAccountCurrencies.GLAccountId, CreditControlAccountId = ControlAccountId from JournalLines

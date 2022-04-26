@@ -1,5 +1,5 @@
-﻿<Script DBType="Main" Module="Accounting" AOT="true" TargetTableName="InterestTransactions">
-  <Sql Version="1">
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="2">
     <![CDATA[
 
 update InterestTransactions set GLAccountId = InterestTransactionsGlAccountCurrencies.SplitCurrencyGLAccountId from InterestTransactions
@@ -13,7 +13,7 @@ inner join (
 	where GLAccountCurrencies.GLAccountId != InterestTransactions.GLAccountId AND ARInvoiceLines.ForiegnCurrencyId = GLAccountCurrencies.CurrencyId AND InterestReportId is null
 ) as InterestTransactionsGlAccountCurrencies
 on InterestTransactions.EntityId = InterestTransactionsGlAccountCurrencies.EntityId AND InterestTransactions.OriginalEntityLineNumber = InterestTransactionsGlAccountCurrencies.OriginalEntityLineNumber  AND InterestTransactions.InterestEntityTypeCode = InterestTransactionsGlAccountCurrencies.InterestEntityTypeCode
-AND InterestTransactions.Tenant = InterestTransactionsGlAccountCurrencies.Tenant AND $LastCounterWhere$
+AND InterestTransactions.Tenant = InterestTransactionsGlAccountCurrencies.Tenant
 
      ]]>
  </Sql>
