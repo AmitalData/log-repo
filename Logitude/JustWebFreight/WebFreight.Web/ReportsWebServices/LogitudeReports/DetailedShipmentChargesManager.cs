@@ -1368,7 +1368,30 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             if (housesAndDirectOnly && myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
             {
-                myResult = this.ComputeAccountedPayables_ConnectedHouse(invoice.Id, invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate, item.PayableId);
+                ShipmentPayable housePayable = (from d in myShipmentsContext.ShipmentPayables
+                                                where d.Tenant == tenant
+                                                && d.ShipmentPayableParentId == item.PayableId
+                                                && d.ShipmentId == myShipment.Id
+                                                select d).FirstOrDefault();
+
+                if (housePayable != null)
+                {
+                    PayableProratedAmount payableProratedAmounts = (from d in myShipmentsContext.PayableProratedAmounts
+                                                                    where d.Tenant == tenant
+                                                                    && d.PayableId == housePayable.Id
+                                                                    && d.InvoiceId == invoice.Id
+                                                                    && d.ShipmentId == myShipment.Id
+                                                                    select d).FirstOrDefault();
+                    if (payableProratedAmounts != null)
+                    {
+                        myResult = this.IsLocalCurrency ? payableProratedAmounts.ProratedAmountInLocalCurrency : payableProratedAmounts.ProratedAmountInProfitCurrency;
+                    }
+                }
+
+                else
+                {
+                    myResult = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+                }
             }
 
             return myResult;
