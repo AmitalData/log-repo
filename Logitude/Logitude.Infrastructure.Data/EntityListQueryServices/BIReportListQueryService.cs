@@ -14,6 +14,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.EntityMapping;
 using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.Models;
 
 namespace Logitude.Infrastructure.Data.EntityListQueryServices
 {
@@ -190,15 +191,6 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             if (bIReportsFilterArguments.FactTableCodes != null) query2 = query2.Where(x => bIReportsFilterArguments.FactTableCodes.Contains(x.FactTableName));
             int count = query2.Count();
             return count;
-        }
-
-
-        public class BIReportsFilterArguments
-        {
-            public QueryOperations QueryOperations { get; set; }
-            public int Tenant { get; set; }
-            public bool GetAll { get; set; } = true;
-            public string[] FactTableCodes { get; set; }
         }
 
     }
