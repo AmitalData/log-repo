@@ -95,6 +95,7 @@ export class DeclarationCourierStatusList {
 	CasualImporterCity: string;
 	GrossMassMeasure: number;
 	IncoTermCode: string;
+	MissedDocumentStatusCode: string;
 	
 }
  

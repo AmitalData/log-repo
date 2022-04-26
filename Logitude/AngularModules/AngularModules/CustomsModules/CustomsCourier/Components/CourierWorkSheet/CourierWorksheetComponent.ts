@@ -2472,10 +2472,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     openBulkFeedPending() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 1500;
+        logitudeWindow.Width = 1600;
         logitudeWindow.Height = 800;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "הזנה גורפת PENDING";
+        logitudeWindow.Title = "עדכון גורף";
         logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };        
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent');
         this.ChangedUnloadPortSite = true;

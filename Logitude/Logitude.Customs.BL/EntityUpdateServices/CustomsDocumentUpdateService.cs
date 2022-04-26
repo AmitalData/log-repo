@@ -501,19 +501,39 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void AfterUpdating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
         {
-            if (entityPM.DocumentStatusCode == "1")
+
+            DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
+            if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
             {
                 ICustomContext context = MainContext as CustomContext;
-                DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
-                if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
+                if (currentDeclarationCourierStatusPM != null)
                 {
-                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+                    string prevValMissingDocumentStatusCode = null;
+                    string currvValMissingDocumentStatusCode = null;
+
+                    prevValMissingDocumentStatusCode = currentDeclarationCourierStatusPM.MissedDocumentStatusCode;
+
+                    calculateDeclarationCourierStatus.CalcMissingDocumentStatusCode(currentDeclarationCourierStatusPM);
+                    currvValMissingDocumentStatusCode = currentDeclarationCourierStatusPM.MissedDocumentStatusCode;
+
+                    if (prevValMissingDocumentStatusCode != currvValMissingDocumentStatusCode)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                    }
+                }
+                if (entityPM.DocumentStatusCode == "1")
+                {
+
                     if (currentDeclarationCourierStatusPM == null)
                     {
-                        CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
                         LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
                         calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);
+
                         if (currentDeclarationCourierStatusPM.DocumentStatusCode != "M")
                         {
                             DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
