@@ -151,7 +151,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                         JournalLineToLedgerResult = res.JournalLineToLedgerResult,
                         LedgerToMounthTotalResult = res.LedgerToMounthTotalResult,
                         ShouldFix = res.ShouldFix,
-                        TotalOpenReconciliationResult = res.TotalOpenReconciliationResult
+                        TotalOpenReconciliationResult = res.TotalOpenReconciliationResult,
+                        InterestReportResult = res.InterestReportResult
                     };
                     stringXML_toSend = LogitudeXmlSerializer.SerializeObjectToXmlString<AccountingIntegrityResult>(res_toSend);
 

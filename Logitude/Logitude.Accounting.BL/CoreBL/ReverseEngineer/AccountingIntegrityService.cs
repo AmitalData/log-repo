@@ -77,6 +77,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                 DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
                 LedgerOpenAmountDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                InterestReportDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
                 RebuildAgingData(accountingIntegrityInParam, myAccountingIntegrityResult);
 
             }
@@ -276,6 +277,87 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
 
         }
+
+
+
+
+        private void InterestReportDiffCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
+        {
+
+
+
+            try
+            {
+
+
+                var sw = Stopwatch.StartNew();
+                string ExceptionMessage = "";
+                int badRows = 0;
+
+                try
+                {
+                    var gLAccountBalanceInterestReportCheck = new GLAccountBalanceInterestReportCheck(accountingIntegrityInParam.Tenant);
+                    gLAccountBalanceInterestReportCheck.CheckDbIntegrity();
+
+
+                    myAccountingIntegrityResult.InterestReportResult = myAccountingIntegrityResult.InterestReportResult ?? new List<InterestReportDiff>();
+                    myAccountingIntegrityResult.InterestReportResult.AddRange(gLAccountBalanceInterestReportCheck.CompareReport.InterestReportDiffList);
+                    badRows = gLAccountBalanceInterestReportCheck.CompareReport.InterestReportDiffList.Count();
+
+                    IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
+                    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
+                    if (myAccountingIntegrityResult.TotalOpenReconciliationResult.Count > 0)
+                    {
+                        myAccountingIntegrityResult.TotalOpenReconciliationResult.ForEach(r =>
+                        {
+                            if (!String.IsNullOrEmpty(r.AccountId))
+                            {
+                                GLAccountPM gLAccountPM = gLAccountQueryService.GetSingle(r.AccountId, false, true);
+                                if (gLAccountPM != null)
+                                {
+                                    r.DisplayNumber = gLAccountPM.DisplayNumber;
+                                    r.LocalName = gLAccountPM.LocalName;
+                                }
+                            }
+                        });
+                    }
+
+                }
+                catch (Exception ee)
+                {
+                    ExceptionMessage = ee.ToString();
+                    //throw;
+                }
+                finally
+                {
+
+                    myAccountingIntegrityResult.MyAccountingIntegrityStep = myAccountingIntegrityResult.MyAccountingIntegrityStep ?? new List<AccountingIntegrityStep>();
+                    myAccountingIntegrityResult.MyAccountingIntegrityStep.Add(new AccountingIntegrityStep()
+                    {
+                        Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                        //Month = currentMonth,
+                        ExceptionMessage = ExceptionMessage,
+                        BadRows = badRows,
+                        ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
+                        ElapsedMilliseconds = sw.ElapsedMilliseconds,
+                    });
+                }
+
+
+
+            }
+
+
+            catch (Exception e)
+            {
+
+                //throw;
+            }
+
+        }
+
+
+
         private void DueLocalBalanceCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
         {
 
@@ -637,6 +719,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         public bool ShouldFix { get; set; }
         public List<LedgerOpenAmountRecoDiffM> LedgerOpenAmount { get; set; }
         public List<GLAccountBalanceDTO> TotalOpenReconciliationResult { get; set; }
+        public List<InterestReportDiff> InterestReportResult { get; set; }
     }
 
     public class AccountingIntegrityStep
