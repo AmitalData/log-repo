@@ -46,6 +46,7 @@ delete from ShipmentPickUpDeliveryPackages where Tenant= @Tenant
 delete from ShipmentPickUpDeliveries where Tenant= @Tenant
 delete from ShipmentAWBPrintOnlies where Tenant= @Tenant
 delete from ShipmentCarrierStatuses where Tenant= @Tenant
+delete from SharedFollowedShipments where Tenant= @Tenant
 delete from AWBOCIs where Tenant= @Tenant
 delete from ShipmentCommodities where Tenant= @Tenant
 delete from ShipmentAssemblies where Tenant= @Tenant

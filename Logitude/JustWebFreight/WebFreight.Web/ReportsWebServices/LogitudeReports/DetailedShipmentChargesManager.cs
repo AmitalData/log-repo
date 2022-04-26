@@ -516,7 +516,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.DirectionPartner = myDirectionPartner;
                                 myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                                 myRecord.Salesman = myShipment.SalesmanUserName;
-                                myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+                                myRecord.Payables = this.ComputePayables(item, invoice, myShipment);
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
@@ -1357,6 +1357,40 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     {
                         myResult = myShipment.AccountedPayablesInLocalCurrency / rate;
                     }
+                }
+            }
+
+            return myResult;
+        }
+        private double? ComputePayables(ChargeTypeGroupClass item, APInvoice invoice, ShipmentDataView myShipment)
+        {
+            double? myResult = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+
+            if (housesAndDirectOnly && myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+            {
+                ShipmentPayable housePayable = (from d in myShipmentsContext.ShipmentPayables
+                                                where d.Tenant == tenant
+                                                && d.ShipmentPayableParentId == item.PayableId
+                                                && d.ShipmentId == myShipment.Id
+                                                select d).FirstOrDefault();
+
+                if (housePayable != null)
+                {
+                    PayableProratedAmount payableProratedAmounts = (from d in myShipmentsContext.PayableProratedAmounts
+                                                                    where d.Tenant == tenant
+                                                                    && d.PayableId == housePayable.Id
+                                                                    && d.InvoiceId == invoice.Id
+                                                                    && d.ShipmentId == myShipment.Id
+                                                                    select d).FirstOrDefault();
+                    if (payableProratedAmounts != null)
+                    {
+                        myResult = this.IsLocalCurrency ? payableProratedAmounts.ProratedAmountInLocalCurrency : payableProratedAmounts.ProratedAmountInProfitCurrency;
+                    }
+                }
+
+                else
+                {
+                    myResult = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                 }
             }
 
