@@ -1427,7 +1427,6 @@ export class QuotePM {
     public get ValidByTypeCode() { return this.validByTypeCode; }
     public set ValidByTypeCode(newValue: string) { if (this.validByTypeCode != newValue) { this.validByTypeCode = newValue; this.MarkAsDirty("ValidByTypeCode"); } }
     
-
 	private quoteCharges: QuoteChargePM[];
     get  QuoteCharges() {
         if (this.quoteCharges == null) {

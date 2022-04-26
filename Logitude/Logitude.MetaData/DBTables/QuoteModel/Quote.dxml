@@ -1377,6 +1377,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+
   <Column
     Name="ValidByTypeCode"
     Type="varchar"
@@ -1679,16 +1680,19 @@
     ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+
   <Relation
     ForeignKeyColumn="SpecialServicesTypeId"
     ReferencedTable="SpecialServicesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+
   <Relation
     ForeignKeyColumn="ValidByTypeCode"
     ReferencedTable="ValidByTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+
   <Index
     Columns="Tenant,OpenDate" />
   <Index
