@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -14,7 +14,6 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.EntityMapping;
 using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.Models;
 
 namespace Logitude.Infrastructure.Data.EntityListQueryServices
 {
@@ -57,15 +56,13 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
         {
             return iQueryable;
         }
-
-        public List<BIReportList> GetAllLists(QueryOperations queryOperations, int tenant, bool getAll = true, string[] factTableCodes = null)
+        public List<BIReportList> GetAllLists(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
-            IQueryable<BIReport> iQueryable;
-            if (getAll) iQueryable = (from a in context.BIReports select a);
-            else iQueryable = (from a in context.BIReports where a.Tenant == tenant select a);
 
+            IQueryable<BIReport> iQueryable = (from a in context.BIReports
+                                               select a);
             iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable, tenant);
             iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
 
@@ -81,8 +78,6 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             IQueryable<BIReportList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<BIReportList>(listQueryOperation, query2);
-
-            if (factTableCodes != null) query2 = query2.Where(x => factTableCodes.Contains(x.FactTableName));
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -163,17 +158,16 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 
         public List<BIReportList> GetAllLists(int tenant)
         {
-            return GetAllLists(new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), PageIndex = 0, GetAll = true },  tenant);
+            return GetAllLists(new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), PageIndex = 0, GetAll = true }, tenant);
         }
 
-        public int GetAllListsCount(QueryOperations queryOperations, int tenant, bool getAll, string[] factTableCodes)
+        public int GetAllListsCount(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<BIReport> iQueryable;
-            if (getAll) iQueryable = (from a in context.BIReports select a);
-            else iQueryable = (from a in context.BIReports where a.Tenant == tenant select a);
+            IQueryable<BIReport> iQueryable = (from a in context.BIReports
+                                               select a);
 
             iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable, tenant);
             iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
@@ -188,11 +182,9 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             IQueryable<BIReportList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<BIReportList>(listQueryOperation, query2);
-            if (factTableCodes != null) query2 = query2.Where(x => factTableCodes.Contains(x.FactTableName));
             int count = query2.Count();
             return count;
         }
 
     }
 }
-	

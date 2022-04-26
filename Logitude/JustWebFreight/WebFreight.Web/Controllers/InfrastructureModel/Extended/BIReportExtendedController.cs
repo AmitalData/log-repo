@@ -14,7 +14,6 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -59,7 +58,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                if(authToken.Tenant!=0 && copyFromTenant != 0)
+                if (authToken.Tenant != 0 && copyFromTenant != 0)
                 {
                     throw new Exception("Sorry! you have no permission to do this operation on Tenant:" + copyFromTenant + ". Please contact your administrator.");
                 }
@@ -137,7 +136,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                 }
 
-                string[] factTableCodes = null;
                 if (!string.IsNullOrEmpty(filters.AdditionalFilters))
                 {
                     JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
@@ -165,19 +163,32 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                             queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
                         }
                     }
-
-                    var factTableCodesObject = filters_list.FirstOrDefault(x => x.FieldName == "FactTableCodes")?.FieldValue;
-                    if (factTableCodesObject != null) factTableCodes = ((IEnumerable)factTableCodesObject).Cast<object>().Select(x => x.ToString()).ToArray();
                 }
 
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(copyFromTenant);
                 BIReportListQueryService bIReportQuery = new BIReportListQueryService(MyContext);
-                List<BIReportList> entityLists = bIReportQuery.GetAllLists(queryOperations, copyFromTenant, filters.Filter1Value == "true", factTableCodes);
+                List<BIReportList> entityLists;
+                if (filters.Filter1Value == "true")
+                {
+                    entityLists = bIReportQuery.GetAllLists(queryOperations, copyFromTenant);
+                }
+                else
+                {
+                    entityLists = bIReportQuery.GetList(queryOperations, copyFromTenant);
+                }
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = bIReportQuery.GetAllListsCount(queryOperations, copyFromTenant, filters.Filter1Value == "true", factTableCodes);
+                    int count = 0;
+                    if (filters.Filter1Value == "true")
+                    {
+                        count = bIReportQuery.GetAllListsCount(queryOperations, copyFromTenant);
+                    }
+                    else
+                    {
+                        count = bIReportQuery.GetListCount(queryOperations, copyFromTenant);
+                    }
                     response.Count = count;
                 }
 
