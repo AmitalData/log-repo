@@ -362,9 +362,9 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.ValidateInActiveCarriersDeliveries(entityPM);
         }
 
-        private void ValidateInActiveCard(string carrierId, string carrierFieldName)
+        private void ValidateInActiveCard(string carrierId, string carrierFieldName, string partnerType = null)
         {
-            CarrierCard card = this.cardQuery.GetSingleCarrierCard(carrierId, tenant);
+            CarrierCard card = this.cardQuery.GetSingleCarrierCard(carrierId, tenant, partnerType);
             if(card == null)
             {
                 return;
@@ -378,14 +378,14 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         {
             foreach (ShipmentPickUpPM shipmentPickUp in entityPM.ShipmentPickUps)
             {
-                this.ValidateInActiveCard(shipmentPickUp.CarrierId,  "PickUpCarrier");
+                this.ValidateInActiveCard(shipmentPickUp.CarrierId,  "PickUpCarrier", "TR");
             }
         }
         private void ValidateInActiveCarriersDeliveries(ShipmentPM entityPM)
         {
             foreach (ShipmentDeliveryPM shipmentDelivery in entityPM.ShipmentDeliveries)
             {
-                this.ValidateInActiveCard(shipmentDelivery.CarrierId, "DeliveryCarrier");
+                this.ValidateInActiveCard(shipmentDelivery.CarrierId, "DeliveryCarrier", "TR");
             }
         }
 
