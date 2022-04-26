@@ -68,7 +68,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 Fecha = Fecha.Get(),
                 LugarExpedicion = LugarExpedicion.Get(new LugarExpedicionArgs { CommonContext = commonContext, BranchId = arPaymentPM.BranchId, CurrentTenantZipCode = currentTenant.Address.ZipCode, Tenant = arPaymentPM.Tenant }),
                 Emisor = Emisor.Get(currentTenant, satSetting),
-                Receptor = Receptor.Get(),
+                Receptor = Receptor.Get(currentTenant),
                 Conceptos = Conceptos.Get(),
                 Complemento = Complemento.Get(currentTenant),
                 Pagos20Specified = true,

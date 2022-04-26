@@ -41,6 +41,7 @@ namespace WebFreight.Web.ReportsWebServices
             invoicedataprovider.SAT.QR = "https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?" + "&id=" + digitalTi.UUID + "&re=" + tenantSettings.VatNumber + "&rr=" + invoicedataprovider.BillToVatNumber + "&tt=" + invtotal
                 + "&fe=" + fe;
 
+            MapBillToDetails(currentInvoice, invoicedataprovider);
             invoicedataprovider.SAT.FormadePago = comprobante.FormaPago;
             MapRegimenFiscal(invoicedataprovider, comprobante);
             MapTipoDeComprobante(invoicedataprovider, comprobante);
@@ -50,6 +51,20 @@ namespace WebFreight.Web.ReportsWebServices
             invoicedataprovider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptor(comprobante.Receptor.RegimenFiscalReceptor, currentInvoice.Tenant);
             MapCadenaOriginal(currentInvoice, invoicedataprovider);
             MapCFDIRelacionadoDetails(invoicedataprovider, comprobante);
+        }
+
+        private static void MapBillToDetails(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider)
+        {
+            if (string.IsNullOrEmpty(currentInvoice.BillToAddressId)) return;
+
+            AddressRepository addressReposirory = new AddressRepository(currentInvoice.Tenant);
+            Address billToAddress = addressReposirory.GetSingleAddress(currentInvoice.BillToAddressId, currentInvoice.Tenant);
+
+            if (billToAddress == null) return;
+
+            invoicedataprovider.SAT.BillToCity = billToAddress.City;
+            invoicedataprovider.SAT.BillToCountry = billToAddress.Country?.EnglishName;
+            invoicedataprovider.SAT.BillToPostalCode = billToAddress.ZipCode;
         }
 
         private static void MapRegimenFiscal(InvoiceDataProvider invoicedataprovider, Comprobante comprobante)

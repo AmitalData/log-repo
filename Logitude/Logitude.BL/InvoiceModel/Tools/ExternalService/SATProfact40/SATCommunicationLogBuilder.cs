@@ -87,8 +87,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
             string rfcEmisor = args.Comprobante.Emisor.Rfc.Trim();
             string folioFiscal = digitalTi.UUID.Trim();
+            const string motivoCancelaOperation = "03";
 
-            SATCancellation cancellatio = new SATCancellation() { rfcEmisor = rfcEmisor, folioFiscal = folioFiscal };
+            SATCancellation cancellatio = new SATCancellation() { rfcEmisor = rfcEmisor, folioFiscal = folioFiscal, motivoCancelacion = motivoCancelaOperation, folioSustitucion = "No se llevó a cabo la operación" };
             profactoXmlData = LogitudeXmlSerializer.SerializeObject<SATCancellation>(cancellatio);
 
             return profactoXmlData;

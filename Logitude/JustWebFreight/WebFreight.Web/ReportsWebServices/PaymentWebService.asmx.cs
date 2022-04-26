@@ -571,7 +571,8 @@ namespace WebFreight.Web.ReportsWebServices
         private void PrintTotalAmountInEnglishAndSpanish(PaymentDataProvider paymentDataProvider, string paymentCurrencyLocalName)
         {
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
-            var resultOfTotalAmount = decimal.Parse(paymentDataProvider.TotalAmount + "") - Math.Truncate(decimal.Parse(paymentDataProvider.TotalAmount + ""));
+            var resultOfTotalAmount = decimal.Parse((paymentDataProvider.TotalAmount == null ? 0 : paymentDataProvider.TotalAmount) + "")
+                - Math.Truncate(decimal.Parse((paymentDataProvider.TotalAmount == null ? 0 : paymentDataProvider.TotalAmount) + ""));
             var resulyFirstdigits = (int)(Math.Round(resultOfTotalAmount, 2) * 100);
             string resultstr = "";
             if (resulyFirstdigits < 10 && resulyFirstdigits > 0)
@@ -583,8 +584,8 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 resultstr = "";
             }
-            paymentDataProvider.TotalAmountInWordsSpanish = numbersConverterToWords.NumbersToSpanish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
-            paymentDataProvider.TotalAmountInWordsEnglish = numbersConverterToWords.NumbersToEnglish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
+            paymentDataProvider.TotalAmountInWordsSpanish = numbersConverterToWords.NumbersToSpanish((int)(paymentDataProvider.TotalAmount == null ? 0 : paymentDataProvider.TotalAmount)) + " " + paymentCurrencyLocalName + " " + resultstr;
+            paymentDataProvider.TotalAmountInWordsEnglish = numbersConverterToWords.NumbersToEnglish((int)(paymentDataProvider.TotalAmount == null ? 0 : paymentDataProvider.TotalAmount)) + " " + paymentCurrencyLocalName + " " + resultstr;
         }
 
         private string GetPaymentMethodLocalName(string code)
