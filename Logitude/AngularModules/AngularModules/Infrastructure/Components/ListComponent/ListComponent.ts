@@ -908,6 +908,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 myComponentPath=(myObjectTableName == "DeclarationCargoSplit")?myComponentPath+="/CustomsDeclarationCargoSplit":myComponentPath;
                                 myComponentPath=(myObjectTableName == "LogisticActionRequest")?myComponentPath+="/CustomsLogisticActionRequest":myComponentPath;
                                 myComponentPath=(myObjectTableName == "PhysicalCheck")?myComponentPath+="/CustomsPhysicalCheck":myComponentPath;
+                                myComponentPath=(myObjectTableName == "Declaration")?myComponentPath+="/CustomsDeclarationModules/DeclarationOthers":myComponentPath;
                                 myComponentPath+="/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             }
 
