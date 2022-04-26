@@ -14,6 +14,7 @@ import { DeclarationQueryComponent } from './Components/DeclarationQueryComponen
 import { DeclarationCancellationComponent } from './Components/DeclarationCancellation/DeclarationCancellationComponent';
 import { ExportDeclarationClosingDataComponent } from './Components/CloseDeclaration/ExportDeclarationClosingDataComponent';
 import { DeclarationPaymentExportComponent } from './Components/DeclarationPayment/DeclarationPaymentExportComponent';
+import { DeclarationFiltersMenuComponent } from './Components/FiltersMenu/DeclarationFiltersMenuComponent';
 
 
 
@@ -33,6 +34,7 @@ export const Components =
         SendManifestComponent,
         DeclarationCancellationComponent,
         ExportDeclarationClosingDataComponent,
+        DeclarationFiltersMenuComponent,
     ];
 
 export class ModuleDeclarations {
@@ -55,6 +57,7 @@ export class ModuleDeclarations {
             case "SendManifestComponent": { myResult = SendManifestComponent; break; }
             case "DeclarationCancellationComponent": { myResult = DeclarationCancellationComponent; break; }
             case "ExportDeclarationClosingDataComponent": { myResult = ExportDeclarationClosingDataComponent; break; }
+            case "DeclarationFiltersMenuComponent": { myResult = DeclarationFiltersMenuComponent; break; }
 
         }
 
