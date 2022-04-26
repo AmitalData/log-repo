@@ -678,4 +678,6 @@ export class SalesLocalCharges {
     Rate: number;
     SellerId: string;
     SellerName: string;
+    MinPrice: number;
+    ActualMinPrice: number;
 }

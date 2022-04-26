@@ -738,7 +738,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                             chargePM.SaleQuantity = this.EntityPM.TEU;
                         }
                     }
-                    chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
+                    chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
                 }
                 chargePM.SaleMeasurementCode = measurementCode;
                 chargePM.SaleMeasurementId = measurementId;
@@ -807,7 +807,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 if (!item.IsAllIn) {
                     var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
                     chargePM.SaleTotalAmount = saleAmount;
-                    chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
+                    chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
                     if (measurementCode != 'FIXD' && measurementCode != 'BTEU') {
                         this.FillQuoteFCLCharges(this.ContainerType1Id, quoteCharge, item);
                         this.FillQuoteFCLCharges(this.ContainerType2Id, quoteCharge, item);
