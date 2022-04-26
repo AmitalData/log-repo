@@ -143,7 +143,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                                     i += 1;
                                 });
                                 if (res.ChooseOne) {
-                                    myComponent.SecondListValueItems = [];
+                                    this.HandleUnitSelected(myComponent, newItem);
                                 }
                                 myComponent.SecondListValueItems.push(newItem);
                             }
@@ -152,6 +152,11 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                 }
             }
         });
+    }
+
+    private HandleUnitSelected(myComponent: any, newItem: MultiSelectedValue) {
+        myComponent.ColumnName = myComponent.originalColumnName.substring(1).replace(']', ' (') + newItem?.Value?.Row + ')';
+        myComponent.SecondListValueItems = [];
     }
 
     ngOnInit() {
@@ -229,6 +234,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.FirstListTitle = "All Units";
         this.SecondListTitle = "";
         this.DWLogHelpText = "In this screen you choose which unit code you want to display the weight with";
+        this.UIProperties.SetEnabled("ColumnName", this.ObjectTableName, false);
     }
 
     BuildAdditionalColumns(columns: string) {
@@ -625,7 +631,9 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     }
     public set ColumnName(newValue: string) {
         var isEmpty: boolean = AppTool.IsNullOrEmpty(newValue);
-        this.UIProperties.SetRequired("ColumnName", this.ObjectTableName, isEmpty);
+        if (!this.UseUnitSelection) {
+            this.UIProperties.SetRequired("ColumnName", this.ObjectTableName, isEmpty);
+        }
         this.columnName = newValue;
     }
 
