@@ -195,7 +195,11 @@
     <None Include="DBScripts\CommonModel\202223031100_UpdateAutomaticLastUpdateDateOnPackageTypes.sxml" />
     <None Include="DBScripts\InfrastructureModel\202202171015_FillEventTriggerField.sxml" />
     <None Include="DBScripts\QuoteModel\202231032230_FillVATAmountsOnQuoteCharges.sxml" />
+
     <None Include="DBScripts\ShipmentModel\202204191435_AddHorseNameToShipmentsSearchFields.sxml" />
+
+    <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
+
     <None Include="DBScripts\ShipmentModel\202223031230_UpdateAutomaticLastUpdateDateOnShipmentPackage.sxml" />
     <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.scxml" />
     <None Include="DBScripts\CommonModel\UpdateSharedLogisticsInvitationStatusCode.sxml" />
@@ -205,9 +209,11 @@
     <None Include="DBScripts\ShipmentModel\202202241410_FillLastDeilverypFullAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
+    <None Include="DBTables\QuoteModel\ValidByType.dxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
+    <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainersExternalData.lxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdatePortSearchFieldsFunction.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateShippingLineSearchFieldsFunction.dxml" />

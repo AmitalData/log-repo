@@ -40,6 +40,7 @@ export class ShipmentPMInitService {
         if (!isNew) {
             entityPM.UIProperties.SetEnabled("IsPODReceived", "Shipment", false);
             entityPM.UIProperties.SetEnabled("PODReceivedDate", "Shipment", false);
+            entityPM.UIProperties.SetEnabled("QuoteFreightExpirationDate", "Shipment", false);
         }
     }
 

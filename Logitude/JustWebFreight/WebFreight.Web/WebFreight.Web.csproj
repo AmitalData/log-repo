@@ -1128,6 +1128,7 @@
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\QBOGlobalTaxCalculationViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARPaymentBankTranferController.Generated.cs" />
+    <Compile Include="Controllers\QuoteModel\Generated\ListControllers\ValidByTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
     <Compile Include="Controllers\ShardLogistics\SharedLogisticReportController.cs" />
@@ -3477,6 +3478,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteVATsTotalUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\ValidByTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\QuoteModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentOrderModuleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AccountingInformationIdentifierUpdateClass.cs" />
@@ -6080,6 +6082,7 @@
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteTemplateTableDesign.cs" />
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteTemplateTextCode.cs" />
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteTemplateTextDesign.cs" />
+    <Compile Include="QuoteModel\DomainServices\QuotesDomainService.ValidByType.cs" />
     <Compile Include="QuoteModel\QuoteModelProcedureClass.cs" />
     <Compile Include="ReportsWebServices\APInvoiceWebService.asmx.cs">
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>

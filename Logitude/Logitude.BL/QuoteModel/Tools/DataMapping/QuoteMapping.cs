@@ -219,6 +219,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.IsStackable = entityPM.IsStackable;
             entityPoco.IncludeImportDutyCharges = entityPM.IncludeImportDutyCharges;
             entityPoco.InsuranceValue = entityPM.InsuranceValue;
+            entityPoco.ValidByTypeCode = entityPM.ValidByTypeCode;
 
             if (MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
             {

@@ -750,5 +750,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IncludeImportDutyCharges { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? InsuranceValue { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ValidByTypeCode { get; set; }
     }
 }

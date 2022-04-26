@@ -108,6 +108,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(d => d.BusinessUnitId).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Subject).HasMaxLength(200).IsUnicode(true);
             this.Property(d => d.StageId).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(d => d.ValidByTypeCode).HasMaxLength(3).IsUnicode(false);
             this.Property(d => d.RatingCode).IsRequired().HasMaxLength(1).IsUnicode(false);
             this.Property(d => d.LastActivityTypeCode).HasMaxLength(2).IsUnicode(false);
             this.Property(d => d.NextActivityTypeCode).HasMaxLength(2).IsUnicode(false);
@@ -339,6 +340,9 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.PackagesQuantity).HasColumnName("PackagesQuantity");
 
             this.Property(t => t.SpecialServicesTypeId).HasColumnName("SpecialServicesTypeId");
+            this.Property(t => t.ValidByTypeCode).HasColumnName("ValidByTypeCode");
+            
+            this.Property(t => t.SpecialServicesTypeId).HasColumnName("SpecialServicesTypeId");
             this.Property(t => t.IncludeInsurance).HasColumnName("IncludeInsurance");
             this.Property(t => t.IsStackable).HasColumnName("IsStackable");
             this.Property(t => t.IncludeImportDutyCharges).HasColumnName("IncludeImportDutyCharges");
@@ -401,7 +405,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.ShipmentSubType).WithMany().HasForeignKey(d => d.ShipmentSubTypeId);
             this.HasOptional(t => t.RegionalTax).WithMany().HasForeignKey(d => d.RegionalTaxId);
             this.HasOptional(d => d.SpecialServicesType).WithMany().HasForeignKey(d => d.SpecialServicesTypeId);
-
+            this.HasOptional(t => t.ValidByType).WithMany().HasForeignKey(d => d.ValidByTypeCode);
         }
     }
 }

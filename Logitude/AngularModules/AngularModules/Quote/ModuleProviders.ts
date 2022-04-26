@@ -12,6 +12,7 @@ import {QuoteStagePMService} from './Services/StandardPMs/QuoteStagePMService';
 import {QuoteMenuButtonsHandler} from './Components/MenuButtons/QuoteMenuButtonsHandler';
 import { QuoteFollowUpListService } from './Services/StandardLists/QuoteFollowUpListService';
 import { QuoteClosingReasonPMService } from './Services/StandardPMs/QuoteClosingReasonPMService';
+import { ValidByTypeListService } from './Services/StandardLists/ValidByTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -33,6 +34,7 @@ export class ModuleProviders {
             case "QuoteMenuButtonsHandler": { myResult = new QuoteMenuButtonsHandler(); break; }
             case "QuoteFollowUpListService": { myResult = new QuoteFollowUpListService(); break; }
             case "QuoteClosingReasonPMService": { myResult = new QuoteClosingReasonPMService(); break; }
+            case "ValidByTypeListService": { myResult = new ValidByTypeListService(); break; }
         }
 
         return myResult;

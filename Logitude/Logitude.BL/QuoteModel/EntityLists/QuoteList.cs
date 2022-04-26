@@ -225,5 +225,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public bool IsStackable { get; set; }
         public bool IncludeImportDutyCharges { get; set; }
         public double? InsuranceValue { get; set; }
+        public string ValidByTypeCode { get; set; }
+
     }
 }

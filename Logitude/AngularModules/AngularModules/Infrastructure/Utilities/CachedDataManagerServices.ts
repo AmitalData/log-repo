@@ -11,6 +11,7 @@ import {RatesTableListService} from '../Services/StandardLists/RatesTableListSer
 import {BookingProductListService} from '../../Booking/Services/StandardLists/BookingProductListService';
 import { QuoteStageListService } from '../../Quote/Services/StandardLists/QuoteStageListService';
 import { QuoteClosingReasonListService } from '../../Quote/Services/StandardLists/QuoteClosingReasonListService';
+import { ValidByTypeListService } from '../../Quote/Services/StandardLists/ValidByTypeListService';
 import {AWBSpecialHandlingCodeListService} from '../../Shipment/Services/StandardLists/AWBSpecialHandlingCodeListService';
 import {AccountingPaymentMethodListService} from '../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
 import {CreditCardTypeListService} from '../../Invoice/Services/StandardLists/CreditCardTypeListService';
@@ -153,6 +154,7 @@ export class CachedDataManagerServices {
             case "BookingProductListService": { myResult = new BookingProductListService(); break; }
             case "QuoteStageListService": { myResult = new QuoteStageListService(); break; }
             case "QuoteClosingReasonListService": { myResult = new QuoteClosingReasonListService(); break; }
+            case "ValidByTypeListService": { myResult = new ValidByTypeListService(); break; }
             case "AWBSpecialHandlingCodeListService": { myResult = new AWBSpecialHandlingCodeListService(); break; }            
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
             case "CreditCardTypeListService": { myResult = new CreditCardTypeListService(); break; }

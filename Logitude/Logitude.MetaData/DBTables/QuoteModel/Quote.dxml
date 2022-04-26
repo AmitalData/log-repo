@@ -1345,6 +1345,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+
   <Column
     Name="IncludeInsurance"
     Type="bit">
@@ -1373,6 +1374,14 @@
     Name="SpecialServicesTypeId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
+  <Column
+    Name="ValidByTypeCode"
+    Type="varchar"
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1671,11 +1680,19 @@
     ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+
   <Relation
     ForeignKeyColumn="SpecialServicesTypeId"
     ReferencedTable="SpecialServicesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+
+  <Relation
+    ForeignKeyColumn="ValidByTypeCode"
+    ReferencedTable="ValidByTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+
   <Index
     Columns="Tenant,OpenDate" />
   <Index
