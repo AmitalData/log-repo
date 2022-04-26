@@ -26,6 +26,8 @@ import { CourierDeclarationFiltersMenuComponent } from './FiltersMenu/CourierDec
 import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
 import { TabFilter } from '../CourierWorkSheet/CourierWorksheetComponent';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 //import { debug } from 'console';
 declare var window: any;
 
@@ -67,7 +69,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     public counters: any;
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
-
+    public filters: ApiQueryFilters;
+    FilterChange$ = new Subject();
 
 
     public _TabFilterList: TabFilter[] = [];
@@ -120,6 +123,10 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     }
 
+    ngOnInit() {
+        this.FilterChange$.pipe(debounceTime(2000)).subscribe((e)=>this._FilterChange(e))
+    }
+
     ngAfterViewInit() {
         this._CourierWorksheetSharedDataService.CurrentMessage
             .subscribe(message => {
@@ -153,8 +160,11 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         this.ReloadUsersQuery();
     }
 
-    public filters: ApiQueryFilters;
-    FilterChange($event) {
+    FilterChange($event) {        
+        this.FilterChange$.next($event);
+    }
+
+    _FilterChange($event) {        
         this.filters = new ApiQueryFilters();
         this.filters = $event.Filters;
         var IntegratorFilter = this.filters.AdditionalFilters.filter(a => a.FieldName == "IntegratorCode");
