@@ -14,6 +14,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                 }
 
+                string[] factTableCodes = null;
                 if (!string.IsNullOrEmpty(filters.AdditionalFilters))
                 {
                     JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
@@ -163,32 +165,19 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                             queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
                         }
                     }
+
+                    var factTableCodesObject = filters_list.FirstOrDefault(x => x.FieldName == "FactTableCodes")?.FieldValue;
+                    if (factTableCodesObject != null) factTableCodes = ((IEnumerable)factTableCodesObject).Cast<object>().Select(x => x.ToString()).ToArray();
                 }
 
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(copyFromTenant);
                 BIReportListQueryService bIReportQuery = new BIReportListQueryService(MyContext);
-                List<BIReportList> entityLists;
-                if (filters.Filter1Value == "true")
-                {
-                    entityLists = bIReportQuery.GetAllLists(queryOperations, copyFromTenant);
-                }
-                else
-                {
-                    entityLists = bIReportQuery.GetList(queryOperations, copyFromTenant);
-                }
+                List<BIReportList> entityLists = bIReportQuery.GetAllLists(new BIReportListQueryService.BIReportsFilterArguments { QueryOperations = queryOperations, Tenant = copyFromTenant, GetAll = filters.Filter1Value == "true", FactTableCodes = factTableCodes });
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = 0;
-                    if (filters.Filter1Value == "true")
-                    {
-                        count = bIReportQuery.GetAllListsCount(queryOperations, copyFromTenant);
-                    }
-                    else
-                    {
-                        count = bIReportQuery.GetListCount(queryOperations, copyFromTenant);
-                    }
+                    int count = bIReportQuery.GetAllListsCount(new BIReportListQueryService.BIReportsFilterArguments { QueryOperations = queryOperations, Tenant = copyFromTenant, GetAll = filters.Filter1Value == "true", FactTableCodes = factTableCodes });
                     response.Count = count;
                 }
 
