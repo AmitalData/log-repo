@@ -136,7 +136,7 @@ namespace Logitude.Accounting.BL.CoreBL
             reconciledTransactions = GetTransactionsById(recoLinesTransactionsId);
 
             // exclude partially reconcile transactions
-            reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == AccountingEntityValues.ARInvoice).ToList();
+            reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == CloseTables.AccountingEntityValues.ARInvoice).ToList();
 
             FillTransactionsAmountToReconcile(reconciledTransactions);
 
@@ -225,7 +225,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         d.AccountId == glaccountId
                         && d.Tenant == tenant
                         && d.IsReconciled == false
-                        && d.SourceTypeCode == AccountingEntityValues.ARInvoice)
+                        && d.SourceTypeCode == CloseTables.AccountingEntityValues.ARInvoice)
                     .OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
 
             var transactionsList = invoicesTransactions.ToList();
