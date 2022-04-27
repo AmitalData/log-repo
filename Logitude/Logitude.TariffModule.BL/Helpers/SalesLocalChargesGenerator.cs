@@ -388,29 +388,27 @@ namespace Logitude.TariffModule.BL.Helpers
                         localCharge.Rate = tariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, SalesLocalChargesTariffSearchArgs.LocalCurrencyId);
                         localCharge.Price = tariffPricesHelper.Round(price, 3);
 
-                        double? expectedAmount = 0;
+                        double? saleAmount = 0;
 
                         if (measurement.Code == "PRVL" || measurement.Code == "PRFR")
                         {
-                            expectedAmount = localCharge.Quantity * (price / 100);
+                            saleAmount = localCharge.Quantity * (price / 100);
                         }
                         else
                         {
-                            expectedAmount = price * localCharge.Quantity;
+                            saleAmount = price * localCharge.Quantity;
                         }
 
+                        decimal? minPriceSurcharge = null;
+                        decimal? actualMinimumPrice = null;
                         if (minAmount != null)
                         {
-                            if (minAmount > expectedAmount)
-                            {
-                                expectedAmount = minAmount;
-                                localCharge.MinAmount = minAmount;
-                            }
+                            actualMinimumPrice = (decimal)minAmount;
+                            minPriceSurcharge = tariffPricesHelper.CalculateLocalAmount(actualMinimumPrice.Value, tariff.CurrencyId, tariffLine.CurrencyId);
                         }
-
-                        localCharge.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
-                        localCharge.LocalExpectedAmount = tariffPricesHelper.CalculateLocalAmount(expectedAmount, localCharge.Rate);
-                        localCharge.ProfitExpectedAmount = tariffPricesHelper.CalculateProfitAmount(expectedAmount, localCharge.LocalExpectedAmount, localCharge.CurrencyId);
+                        localCharge.MinPrice = minPriceSurcharge;
+                        localCharge.ActualMinPrice = actualMinimumPrice;
+                        localCharge.SaleTotalAmount = saleAmount == null ? 0 : saleAmount.Value;
                         localCharges.Add(localCharge);
                     }
                 }
@@ -486,35 +484,31 @@ namespace Logitude.TariffModule.BL.Helpers
                     localCharge.Rate = tariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, SalesLocalChargesTariffSearchArgs.LocalCurrencyId);
                     localCharge.Price = tariffPricesHelper.Round(price, 3);
 
-                    double? expectedAmount = 0;
+                    double? saleAmount = 0;
 
                     if (measurement.Code == "PRVL" || measurement.Code == "PRFR")
                     {
-                        expectedAmount = localCharge.Quantity * (price / 100);
+                        saleAmount = localCharge.Quantity * (price / 100);
                     }
                     else
                     {
-                        expectedAmount = price * localCharge.Quantity;
+                        saleAmount = price * localCharge.Quantity;
                     }
 
+                    decimal? minPriceSurcharge = null;
+                    decimal? actualMinimumPrice = null;
                     if (minAmount != null)
                     {
-                        if (minAmount > expectedAmount)
-                        {
-                            expectedAmount = minAmount;
-                            localCharge.MinAmount = minAmount;
-                        }
+                        actualMinimumPrice = (decimal)minAmount;
+                        minPriceSurcharge = tariffPricesHelper.CalculateLocalAmount(actualMinimumPrice.Value, tariff.CurrencyId, tariffLine.CurrencyId);
                     }
-
-                    localCharge.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
-                    localCharge.LocalExpectedAmount = tariffPricesHelper.CalculateLocalAmount(expectedAmount, localCharge.Rate);
-                    localCharge.ProfitExpectedAmount = tariffPricesHelper.CalculateProfitAmount(expectedAmount, localCharge.LocalExpectedAmount, localCharge.CurrencyId);
+                    localCharge.MinPrice = minPriceSurcharge;
+                    localCharge.ActualMinPrice = actualMinimumPrice;
+                    localCharge.SaleTotalAmount = saleAmount == null ? 0 : saleAmount.Value;
                     localCharges.Add(localCharge);
                 }
             }
         }
-       
-
     }
 
     public class SalesLocalChargesTariffSearchArgs
@@ -543,9 +537,7 @@ namespace Logitude.TariffModule.BL.Helpers
         public string TariffLineId { get; set; }
         public string CurrencyId { get; set; }
         public string CurrencyCode { get; set; }
-        public double? ExpectedAmount { get; set; }
-        public double? LocalExpectedAmount { get; set; }
-        public double? ProfitExpectedAmount { get; set; }
+        public double? SaleTotalAmount { get; set; }
         public double? MinAmount { get; set; }
         public double? Quantity { get; set; }
         public double? Price { get; set; }
@@ -554,5 +546,7 @@ namespace Logitude.TariffModule.BL.Helpers
         public double? Rate { get; set; }
         public string SellerId { get; set; }
         public string SellerName { get; set; }
+        public decimal? MinPrice { get; set; }
+        public decimal? ActualMinPrice { get; set; }
     }
 }

@@ -477,30 +477,6 @@
                                         </ng-template>
                                     </log-column>
 
-                                    <!-- Sale  Tariff Link -->
-                                    <log-column *ngIf="IsPriceCheckVisible" [SortFieldName]="'SaleTariffNumber'" [header]="'Sale Tariff'" [width]="'90'" [Alignment]="'center'">
-                                        <ng-template let-item>
-                                            <log-cell-template [TabIndex]="-1" [Alignment]="'center'">
-                                                <div style="width: 100%; height: 100%; position: relative;">
-                                                    <table>
-                                                        <tr *ngIf="item.SaleTariffNumber != null">
-                                                            <td>
-                                                                <div class="MediaFill">
-                                                                    <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditSaleTariffClicked(item)">{{ item.SaleTariffNumber}}</Hyperlink>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="deleteIcon" style="height: 20px;" [class.Disable]="!item.IsEditingEnabled">
-                                                                    <img class="LeftCenter" style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DeleteTariff(item)" />
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
                                     <!-- All in -->
                                     <log-column [width]="'60'" *ngIf="IsAdhoc">
                                         <ng-template let-item>
@@ -526,6 +502,30 @@
                                                     <div class="CenterCenter" style="width: 16px;">
                                                         <CheckBox *ngIf="item.IsAllInCheckBoxVisible" [IsChecked]="item.IsAllIN" (Checked)="item.IsAllIN = $event" [IsEnabled]="item.IsEditingEnabled && !IsAllowingMultipleFreightCharges"></CheckBox>
                                                     </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Sale  Tariff Link -->
+                                    <log-column *ngIf="IsPriceCheckVisible" [SortFieldName]="'SaleTariffNumber'" [header]="'Sale Tariff'" [width]="'90'" [Alignment]="'center'">
+                                        <ng-template let-item>
+                                            <log-cell-template [TabIndex]="-1" [Alignment]="'center'">
+                                                <div style="width: 100%; height: 100%; position: relative;">
+                                                    <table>
+                                                        <tr *ngIf="item.SaleTariffNumber != null">
+                                                            <td>
+                                                                <div class="MediaFill">
+                                                                    <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditSaleTariffClicked(item)">{{ item.SaleTariffNumber}}</Hyperlink>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="deleteIcon" style="height: 20px;" [class.Disable]="!item.IsEditingEnabled">
+                                                                    <img class="LeftCenter" style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DeleteTariff(item)" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

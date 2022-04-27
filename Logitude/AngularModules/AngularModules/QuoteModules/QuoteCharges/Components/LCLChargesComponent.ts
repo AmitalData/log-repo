@@ -24,7 +24,7 @@ import { QuoteChargesBehaviours } from '../Behaviours/QuoteChargesBehaviours';
 import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { TariffDomainService, SalesLocalCharges, SalesLocalChargesTariffSearchArgs } from '../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService, SalesLocalCharges } from '../../../TariffModule/Services/TariffDomainService';
 
 @Component({
     selector: 'LCLChargesComponent',    
@@ -405,7 +405,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 this.AddTariffChargesToQuote_LCL(localCharge);
             });
         }
-        this.BuildItemsSource();
     }
 
     GenerateNewTariffQuoteCharge(item: any) {
@@ -447,36 +446,28 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
                 var measurementCode = item.UnitOfMesurmentCode;
                 var measurementId = item.UnitOfMesurmentId;
-                if (!item.IsAllIn) {
-                    chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
-                    var saleAmount = AppTool.Round(item.Price, 3);
-                    chargePM.SaleTotalAmount = saleAmount;
-                }
+                chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
+                var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
+                chargePM.SaleTotalAmount = saleAmount;
                 chargePM.SaleMeasurementCode = measurementCode;
                 chargePM.SaleMeasurementId = measurementId;
                 chargePM.CostMeasurementCode = measurementCode;
                 chargePM.CostMeasurementId = measurementId;
-                chargePM.VendorId = item.SellerId;
-                chargePM.VendorName = item.SellerName;
-                chargePM.IsAllIN = item.IsAllIn;
                 this.TariffList_Quote.push(chargePM);
             }
         });
     }
-    UpdateNewTariffQuoteCharge(item: any, chargePM: QuoteChargePM) {
+    UpdateNewTariffQuoteCharge(item: any, quoteCharge: QuoteChargePM) {
         this.Behaviours.ChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
+                var chargePM: QuoteChargeItem = new QuoteChargeItem(quoteCharge, this, false);
                 chargePM.SaleTariffId = item.TariffId;
                 chargePM.SaleTariffNumber = item.TariffNumber;
                 chargePM.SaleTariffLineId = item.LineId;
                 chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
-                chargePM.Tenant = this.EntityPM.Tenant;
-                chargePM.QuoteId = this.EntityPM.Id;
-                chargePM.UpdatedByUserId = SessionLocator.LoggedUserId;
                 chargePM.MarkUpTypeCode = "F";
                 chargePM.MarkUpValue = 0;
-                chargePM.QuoteTypeCode = this.EntityPM.QuoteTypeCode;
                 chargePM.CostCurrencyId = item.CurrencyId;
                 chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
                 chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
@@ -487,18 +478,26 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
                 var measurementCode = item.UnitOfMesurmentCode;
                 var measurementId = item.UnitOfMesurmentId;
-                if (!item.IsAllIn) {
-                    chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
-                    var saleAmount = AppTool.Round(item.Price, 3);
-                    chargePM.SaleTotalAmount = saleAmount;
-                }
                 chargePM.SaleMeasurementCode = measurementCode;
                 chargePM.SaleMeasurementId = measurementId;
                 chargePM.CostMeasurementCode = measurementCode;
                 chargePM.CostMeasurementId = measurementId;
-                chargePM.VendorId = item.SellerId;
-                chargePM.VendorName = item.SellerName;
-                chargePM.IsAllIN = item.IsAllIn;
+                chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
+                var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
+                chargePM.SaleTotalAmount = saleAmount;
+                chargePM.SetSaleQuantity();
+                var saleQuantity: number = chargePM.SaleQuantity;
+                if (saleQuantity != null && saleQuantity != 0) {
+                    if (chargePM.SaleMeasurementCode == "PRVL" || chargePM.SaleMeasurementCode == "PRFR") {
+                        chargePM.SaleUnitPrice = (saleAmount / saleQuantity) * 100;
+                    }
+                    else {
+                        chargePM.SaleUnitPrice = (saleAmount / saleQuantity);
+
+                    }
+                    chargePM.SaleUnitPrice = chargePM.SaleUnitPrice;
+                }
+                chargePM.ComputeSaleAmounts();
             }
         });
     }
@@ -527,11 +526,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
             }
             chargeItem.SaleUnitPrice = chargeItem.SaleUnitPrice;
-            chargeItem.CostUnitPrice = chargeItem.SaleUnitPrice;
+            //chargeItem.CostUnitPrice = chargeItem.SaleUnitPrice;
         }
 
-        chargeItem.ComputeCostInSalePrice();
-        chargeItem.ComputeSalePrice();
+        //ComputeCostInSalePrice();
         chargeItem.ComputeSaleAmounts();
         chargeItem.SetUIProperties_AllIn();
         this.ItemsSource.Insert(chargeItem);
@@ -2839,14 +2837,16 @@ export class QuoteChargeItem extends BaseComponent {
 
 
                     var freightTotalAmountLocal = AppTool.IsNullOrEmpty(freightModel.SaleTotalAmountLocal) ? 0 : freightModel.SaleTotalAmountLocal;
-
+                    var newSaleTotalAmountLocal = null;
                     if (this.IsAllIN) {
-                        freightModel.SaleTotalAmountLocal = freightTotalAmountLocal + this.EntityPM.SaleTotalAmountLocal;
+                        newSaleTotalAmountLocal = freightTotalAmountLocal + this.EntityPM.SaleTotalAmountLocal;
                     }
 
                     else {
-                        freightModel.SaleTotalAmountLocal = freightTotalAmountLocal - this.EntityPM.SaleTotalAmountLocal;
+                        newSaleTotalAmountLocal = freightTotalAmountLocal - this.EntityPM.SaleTotalAmountLocal;
                     }
+
+                    freightModel.SaleTotalAmountLocal = newSaleTotalAmountLocal;
                 }
             }
         }

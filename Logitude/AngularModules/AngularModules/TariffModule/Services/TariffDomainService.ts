@@ -667,7 +667,7 @@ export class SalesLocalCharges {
     TariffLineId: string;
     CurrencyId: string;
     CurrencyCode: string;
-    ExpectedAmount: number;
+    SaleTotalAmount: number;
     LocalExpectedAmount: number;
     ProfitExpectedAmount: number;
     MinAmount: number;
@@ -678,4 +678,6 @@ export class SalesLocalCharges {
     Rate: number;
     SellerId: string;
     SellerName: string;
+    MinPrice: number;
+    ActualMinPrice: number;
 }
