@@ -285,11 +285,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                     join dcs in context.DeclarationCourierStatuses on cd.Declaration.Id equals dcs.DeclarationId
 
-                    join dp in context.DeclarationPendings.Include("CourierPendingReason")
-                    .Where(x => x.Status == "A").Select(x => new { DeclarationID = x.DeclarationID, CourierPendingReason = x.CourierPendingReason.LocalName })
-                    on dcs.DeclarationId equals dp.DeclarationID into dpjoin
-                    //join errorPlace in qDeclarationPaymentPendingHold on dcs.DeclarationId equals errorPlace.DeclarationId into errorPlaceOuterJoin
-                    from dpj in dpjoin.DefaultIfEmpty()
+                    //join dp in context.DeclarationPendings.Include("CourierPendingReason")
+                    //.Where(x => x.Status == "A").Select(x => new { DeclarationID = x.DeclarationID, CourierPendingReason = x.CourierPendingReason.LocalName })
+                    //on dcs.DeclarationId equals dp.DeclarationID into dpjoin
+                    ////join errorPlace in qDeclarationPaymentPendingHold on dcs.DeclarationId equals errorPlace.DeclarationId into errorPlaceOuterJoin
+                    //from dpj in dpjoin.DefaultIfEmpty()
 
                     join cp in context.ConsignmentPackages on cd.Declaration.Id equals cp.DeclarationId into cpjoin
                     from cj in cpjoin.Where(t => t.PackageMeasureQualifierCode == "2" && t.GrossMassMeasure.HasValue).DefaultIfEmpty()
@@ -312,7 +312,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         CourierSearchFields = cd.Declaration.CourierSearchFields,
                         FastIndividualProcessCode = dcs.FastIndividualProcessCode,
                         CourierPendingReasonList = dcs.CourierPendingReasonList,
-                        CourierPendingReasonName = dpj.CourierPendingReason != null ? dpj.CourierPendingReason : null,
+                        //CourierPendingReasonName = dpj.CourierPendingReason != null ? dpj.CourierPendingReason : null,
                         MissedDocumentStatusCode = dcs.MissedDocumentStatusCode,
 
                     } into t2
@@ -332,7 +332,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         CourierSearchFields = t2.Key.CourierSearchFields,
                         FastIndividualProcessCode = t2.Key.FastIndividualProcessCode,
                         CourierPendingReasonList = t2.Key.CourierPendingReasonList,
-                        CourierPendingReasonName = t2.Key.CourierPendingReasonName,
+                        //CourierPendingReasonName = t2.Key.CourierPendingReasonName,
                         MissedDocumentStatusCode = t2.Key.MissedDocumentStatusCode,
                     });
 

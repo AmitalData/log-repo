@@ -404,9 +404,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                         LogMessagingUtil.Instance.AppendLine("Canceled");
                                         myEventContextTagModel.EventCode = "DCN";
-                                        declarationPM.CurrentContextTag = myEventContextTagModel;
-                                        declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                                        declarationUpdateService.Update(declarationPM, true);
+                                        UpdateDeclaration(declarationUpdateService, declarationPM);
                                         //if (isAutoPayment)
                                         //    SendPayment(declarationPM, dbContext, requestParams);
                                     }
@@ -429,8 +427,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : ""));
                                             declarationPM.CurrentContextTag = myEventContextTagModel;
                                         }
-                                        declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                                        declarationUpdateService.Update(declarationPM, true);
+                                        UpdateDeclaration(declarationUpdateService, declarationPM);
                                         //if (isAutoPayment)
                                         //    SendPayment(declarationPM, dbContext, requestParams);
                                     }
@@ -444,8 +441,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion == declarationPM.VersionId)
                                     {
                                         declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
-                                        declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                                        declarationUpdateService.Update(declarationPM, true);
+                                        UpdateDeclaration(declarationUpdateService, declarationPM);
                                         //if (isAutoPayment)
                                         //    SendPayment(declarationPM, dbContext, requestParams);
                                     }
@@ -459,8 +455,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                                 if ((paymentDateUpdated || courierStatusUpdated) && declarationPM.ChangeSetOp != ChangeSetOperation.Update)
                                 {
-                                    declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationUpdateService.Update(declarationPM, true);
+                                    UpdateDeclaration(declarationUpdateService, declarationPM);
                                     //if (isAutoPayment)
                                     //    SendPayment(declarationPM, dbContext, requestParams);
                                 }
@@ -689,6 +684,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
         }
+
+        private static void UpdateDeclaration(DeclarationUpdateService declarationUpdateService, DeclarationPM declarationPM)
+        {
+            declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            LogMessagingUtil.Instance.AppendLine("CourierCustomStatusCode=" + declarationPM.CourierCustomStatusCode);
+            LogMessagingUtil.Instance.AppendLine("Time before update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
+            declarationUpdateService.Update(declarationPM, true);
+            LogMessagingUtil.Instance.AppendLine("Time after update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
+        }
+
         private void UpdateManualPayment(DeclarationStatusRequestParams requestParams, ICustomContext customContext , DeclarationPM declarationPM)
         {
             if (requestParams.LoggingEntityReference == "AutoPayment")

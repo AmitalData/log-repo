@@ -183,13 +183,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             return;
                     }
                     //declarationPM.HatraDate = hataraDate; - Yuval Chalup 17.01.2018 Remarked (Init in each case above)
-                    LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : ""));
+                    LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : "") + ",Time: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
 
                     declarationPM.CurrentContextTag = myEventContextTagModel;
 
                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     declarationUpdateService.Update(declarationPM, true);
-                    LogMessagingUtil.Instance.AppendLine($"declarationUpdateService.Update(IsClose={declarationPM.IsClose},CourierCustomStatusCode ={declarationPM.CourierCustomStatusCode})");
+                    LogMessagingUtil.Instance.AppendLine($"declarationUpdateService.Update(IsClose={declarationPM.IsClose},CourierCustomStatusCode ={declarationPM.CourierCustomStatusCode}),Time: "+ DateTime.Now.ToString("hh:mm:ss.fff tt"));
 
                     MyRequestSheetParam.EntityId1 = declarationPM.Id;
                     if (declarationPM.IsConvertedDeclaration)

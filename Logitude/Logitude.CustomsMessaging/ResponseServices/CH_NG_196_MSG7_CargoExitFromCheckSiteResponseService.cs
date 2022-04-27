@@ -182,7 +182,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
                         decPM.PhysicalCheck = 2;
                         decPM.ChangeSetOp = ChangeSetOperation.Update;
+                        LogMessagingUtil.Instance.AppendLine("CourierCustomStatusCode=" + decPM.CourierCustomStatusCode);
+                        LogMessagingUtil.Instance.AppendLine("Time before update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
                         declarationUpdateService.Update(decPM, true);
+                        LogMessagingUtil.Instance.AppendLine("Time after update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
                     }
 
                 }
