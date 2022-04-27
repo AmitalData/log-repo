@@ -476,7 +476,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.ExternalEntityReference = documentIn.ExternalEntityReference;
             entityPM.ExternalEntityName = documentIn.ExternalEntityName;
             // this.UpdateIsPartOfDeclaration(entityPM, documentIn);
+            var myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(entityPM.Tenant);
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketListPM = new List<CustomsDocumentsTicketPM>();
+            customsDocumentsTicketListPM = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(documentIn.Id, entityPM.Tenant);
+            if (customsDocumentsTicketListPM != null)
+            {
+                var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 
+                foreach (var customsDocumentsTicketPM in customsDocumentsTicketListPM)
+                {
+                    myCustomsDocumentsTicketUpdateService.UpdateIsPartOfDeclaration(entityPM, customsDocumentsTicketPM);
+                }
+            }
         }
 
         private static void UpdateObjectTableIfDeclaration(CustomsDocumentPM entityPM, DocumentsFilingRepository documentInRep, DocumentsFiling documentIn, ObjectTable objectTable, DeclarationQueryService declarationQueryService)
