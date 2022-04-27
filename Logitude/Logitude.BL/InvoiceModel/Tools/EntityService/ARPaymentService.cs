@@ -751,7 +751,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 InterestEntityTypeCode = "2",
                 EntityId = payment.Id,
-                AccountEntityCode = AccountingEntityValues.ARPayment,
+                AccountingEntityCode = AccountingEntityValues.ARPayment,
                 OriginalEntityLineNumber = isFromVoidARPayment ? 2 : 1,
                 LocalAmount = isFromVoidARPayment ? (decimal)payment.AmountInLocalCurrency :
                                                                      (decimal)payment.AmountInLocalCurrency * -1,
@@ -774,7 +774,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 InterestEntityTypeCode = "2",
                 EntityId = payment.Id,
-                AccountEntityCode = AccountingEntityValues.ARPayment,
+                AccountingEntityCode = AccountingEntityValues.ARPayment,
                 OriginalEntityLineNumber =  lineNumber,
                 LocalAmount = transaction.LocalAmount * -1,
                 ForeignAmount = transaction.ForeignAmount * -1,
