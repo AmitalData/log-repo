@@ -175,7 +175,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             {
                 InterestEntityTypeCode = "2",
                 EntityId = payment.Id,
-                AccountEntityCode = AccountingEntityValues.ARPayment,
+                AccountingEntityCode = AccountingEntityValues.ARPayment,
                 OriginalEntityLineNumber = cheque.LineNumber,
                 LocalAmount = cheque.LocalAmount * -1,
                 ForeignAmount = cheque.ForeignAmount * -1,
@@ -196,7 +196,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             {
                 InterestEntityTypeCode = "2",
                 EntityId = payment.Id,
-                AccountEntityCode = AccountingEntityValues.ARPayment,
+                AccountingEntityCode = AccountingEntityValues.ARPayment,
                 OriginalEntityLineNumber = bankTranfer.LineNumber,
                 LocalAmount = bankTranfer.LocalAmount * -1,
                 ForeignAmount = bankTranfer.ForeignAmount * -1,
