@@ -177,7 +177,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string TerminalName { get; set; }
         public string TerminalAddressId { get; set; }
 
-
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field1 { get; set; }
 
@@ -354,5 +353,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdatedOceanInsightsAnalyzer { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string UpdatedByPartner { get; set; }
+        public bool IsUpdatedFromAPI { get; set; }
     }
 }
