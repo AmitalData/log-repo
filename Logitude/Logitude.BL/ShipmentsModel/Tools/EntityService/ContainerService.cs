@@ -78,6 +78,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void SetUpdatedByUser()
         {
+            bool setUser = true;
+            if(containerPm.IsUpdatedFromAPI && !string.IsNullOrEmpty(containerPm.UpdatedByUserId))
+            {
+                setUser = false;
+            }
+
+            if (!setUser)
+            {
+                return;
+            }
+
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
             string email = "system@tenant" + tenant + ".com";

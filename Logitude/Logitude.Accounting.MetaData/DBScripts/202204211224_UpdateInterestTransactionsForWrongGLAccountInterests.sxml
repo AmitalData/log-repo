@@ -1,6 +1,6 @@
 ﻿<Script DBType="Main" Module="Accounting">
-  <Sql Version="2">
-    <![CDATA[
+	<Sql Version="2">
+		<![CDATA[
 
 update InterestTransactions set GLAccountId = InterestTransactionsGlAccountCurrencies.SplitCurrencyGLAccountId from InterestTransactions
 inner join (
