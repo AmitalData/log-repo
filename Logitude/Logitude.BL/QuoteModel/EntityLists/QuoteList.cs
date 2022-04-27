@@ -228,8 +228,5 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public double? InsuranceValue { get; set; }
         public string ValidByTypeCode { get; set; }
 
-        public string ValidByTypeCode { get; set; }
-
-
     }
 }
