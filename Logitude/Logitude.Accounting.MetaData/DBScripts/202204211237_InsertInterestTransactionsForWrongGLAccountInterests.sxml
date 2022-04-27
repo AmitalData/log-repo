@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Accounting">
-	<Sql Version="2">
+	<Sql Version="3">
 		<![CDATA[
 
 	INSERT INTO InterestTransactions (Id, Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, SearchFields, GLAccountId, EntityId, OriginalEntityLineNumber, LocalAmount, ForeignAmount, CurrencyId,InterestEntityTypeCode, InterestReportId, IsClosed, IsCancelled)
