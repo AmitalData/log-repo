@@ -1,5 +1,5 @@
-﻿<Script DBType="Main" Module="Accounting" AOT="true" TargetTableName="InterestTransactions">
-  <Sql Version="1">
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="3">
     <![CDATA[
 
 update InterestTransactions set GLAccountId = InterestTransactionsGlAccountCurrencies.SplitCurrencyGLAccountId from InterestTransactions

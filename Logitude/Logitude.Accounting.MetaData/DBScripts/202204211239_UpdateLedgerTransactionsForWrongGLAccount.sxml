@@ -1,5 +1,5 @@
-﻿<Script DBType="Main" Module="Accounting" AOT="true" TargetTableName="LedgerTransactions">
-  <Sql Version="1">
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="3">
     <![CDATA[
     update LedgerTransactions set OppositeAccountId = JournlaLinesGlAccountCurrencies.GLAccountId from LedgerTransactions
     inner join (Select GLAccountCurrencies.GLAccountId, journallines.DebitAccountId, BillToGLAccountId ,Journals.Id as JournalId , journallines.Line,Journals.JournalNumber, journallines.CreditAccountId
