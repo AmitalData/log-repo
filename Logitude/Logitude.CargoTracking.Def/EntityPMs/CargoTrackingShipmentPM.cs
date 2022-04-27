@@ -11,7 +11,6 @@ using Logitude.Server.Tools;
 using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure.DataContracts; 
 using Logitude.CargoTracking.Def.Validators;
-using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.BL.EntityPMs;
 
 namespace Logitude.CargoTracking.Def.EntityPMs
