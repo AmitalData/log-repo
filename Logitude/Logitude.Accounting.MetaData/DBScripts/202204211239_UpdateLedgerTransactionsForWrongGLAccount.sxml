@@ -1,6 +1,6 @@
 ﻿<Script DBType="Main" Module="Accounting">
-	<Sql Version="2">
-		<![CDATA[
+  <Sql Version="2">
+    <![CDATA[
     update LedgerTransactions set OppositeAccountId = JournlaLinesGlAccountCurrencies.GLAccountId from LedgerTransactions
     inner join (Select GLAccountCurrencies.GLAccountId, journallines.DebitAccountId, BillToGLAccountId ,Journals.Id as JournalId , journallines.Line,Journals.JournalNumber, journallines.CreditAccountId
     , journallines.LocalAmount, journallines.ForeignAmount, journallines.CurrencyId, journallines.ActionCode, journallines.Tenant
@@ -13,5 +13,5 @@
     on JournlaLinesGlAccountCurrencies.JournalId = LedgerTransactions.JournalId AND JournlaLinesGlAccountCurrencies.Line = LedgerTransactions.JournalLineNumber
     AND JournlaLinesGlAccountCurrencies.Tenant = LedgerTransactions.Tenant
      ]]>
-	</Sql>
+ </Sql>
 </Script>

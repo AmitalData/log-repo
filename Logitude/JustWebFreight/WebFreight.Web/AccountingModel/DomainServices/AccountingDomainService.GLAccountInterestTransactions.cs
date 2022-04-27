@@ -14,8 +14,8 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
 {
-    public partial class AccountingDomainService
-    {
+	public partial class AccountingDomainService
+	{
         public List<InterestTransactionList> GetGLAccountInterestTransactionsFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);

@@ -26,11 +26,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private IQueryable<InterestTransactionList> GetIqueryableList(IQueryable<InterestTransaction> interestTransactionQuery, int tenant)
         {
             IQueryable<InterestTransactionList> query
-                = (from interestTransaction in interestTransactionQuery.Include("InterestEntityType")
+                = (from interestTransaction in interestTransactionQuery
 
                    join journal in context.Journals.Include("AccountingEntity")
-                   on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.InterestEntityType.AccountingEntityCode } equals
-                      new { AccountingEntityId = journal.AccountingEntityCode == "10" ? journal.Id : journal.AccountingEntityId, journal.AccountingEntityCode }
+                   on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode } equals
+                      new { AccountingEntityId = journal.AccountingEntityCode == Enums.AccountingEntityValues.Adjustment ? journal.Id : journal.AccountingEntityId,
+                            journal.AccountingEntityCode }
 
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
                    into reportJoinData
@@ -64,10 +65,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        Source = journal.AccountingEntityReference,
                        SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
                        SourceTypeCode = journal.AccountingEntityCode,
-                       SourceId = journal.AccountingEntityId
-
-
-
+                       SourceId = journal.AccountingEntityId,
+                       AccountingEntityCode = interestTransaction.AccountingEntityCode
                    });
 
             return query;
@@ -103,7 +102,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        InterestReportNumber = interestTransaction.InterestReportNumber,
                        JournalId = interestTransaction.JournalId,
                        JournalNumber = interestTransaction.JournalNumber,
-                       Source = exportToExcell == true ? getEntityIcon(interestTransaction.SourceTypeCode) + " " + interestTransaction.Source : interestTransaction.Source,
+                       Source = exportToExcell == true? getEntityIcon(interestTransaction.SourceTypeCode) + " " + interestTransaction.Source : interestTransaction.Source,
                        SourceTypeCode = interestTransaction.SourceTypeCode,
                        SourceType = interestTransaction.SourceType,
                        SourceId = interestTransaction.SourceId,
@@ -198,8 +197,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return iconTxt;
         }
 
-
-        public InterestTransactionList GetSingle(string id, int tenant)
+        public InterestTransactionList GetSingle(string id,int tenant)
         {
             InterestTransaction interestTransaction = GetInterestTransaction(id, tenant);
             Journal journal = GetJournalForInterestTransaction(tenant, interestTransaction);

@@ -17,5 +17,5 @@
     AND JournlaLinesGlAccountCurrencies.Tenant = JournalLines.Tenant
 
      ]]>
-	</Sql>
+ </Sql>
 </Script>

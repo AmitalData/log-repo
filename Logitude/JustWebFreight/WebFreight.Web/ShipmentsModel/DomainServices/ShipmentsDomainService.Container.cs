@@ -38,7 +38,6 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             ContainerCustomFilter customfilters = new ContainerCustomFilter(tenant);
             IQueryable<Container> iQueryable = containerRepository.GetContainers(tenant);
             iQueryable = customfilters.GetFilteredQuery(queryOperations, iQueryable);
-
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
 
@@ -132,7 +131,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             iQueryable = filter.GetFilteredQuery<Container>(nonListQueryOperation, iQueryable);
             ContainerQuery containerQuery = new ContainerQuery(tenant);
-            var query2 = containerQuery.GetIQueryableEntityList(iQueryable); 
+            var query2 = containerQuery.GetIQueryableEntityList(iQueryable);
 
             query2 = filter.GetFilteredQuery<ContainerList>(listQueryOperation, query2);
             int count = query2.Count();

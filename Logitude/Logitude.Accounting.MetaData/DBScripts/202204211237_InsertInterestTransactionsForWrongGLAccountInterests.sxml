@@ -12,5 +12,5 @@
 	where GLAccountCurrencies.GLAccountId != InterestTransactions.GLAccountId AND ARInvoiceLines.ForiegnCurrencyId = GLAccountCurrencies.CurrencyId  AND  InterestReportId is not null
 
      ]]>
-	</Sql>
+ </Sql>
 </Script>
