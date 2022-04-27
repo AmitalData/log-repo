@@ -23,6 +23,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? Today_DateTime { get; set; }
         public string Total_TotalWIWorkedHours { get; set; }
         public string Total_TotalWIWorkedHours_Employee { get; set; }
+        public TimeSpan? Total_TotalWIWorkedHours_Employee_Time { get; set; }
         public List<WorkDaysPerProjectData> DetailedWorkHoursPerProjectList { get; set; }
         public List<WorkDaysPerProjectData> SummarizedWorkHoursPerProjectList { get; set; }
         public List<ProjectsByCategoryGroup> ProjectsByCategoryGroupList { get; set; }
@@ -54,5 +55,6 @@ namespace WebFreight.Web.DataProviders
         public string CategoryName { get; set; }
         public string ExternalProjectNumber { get; set; }
         public double TotalMinutes { get; set; }
+        public TimeSpan? TotalWIWorkedDays_Employee_Time { get; set; }
     }
 }
