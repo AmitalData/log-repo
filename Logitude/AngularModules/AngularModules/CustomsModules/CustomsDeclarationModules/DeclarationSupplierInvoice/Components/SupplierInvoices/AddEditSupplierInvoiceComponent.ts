@@ -1596,7 +1596,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoice.F.InsruanceCurrencyTypeCode"));
         }
 
-        let ExportCommonInvoiceModifications:string[] = ['67', '144', '160']; // הובלה ביטוח והוצאות נוספות
+        let ExportCommonInvoiceModifications:string[] = ['67', '104', '160']; // הובלה ביטוח והוצאות נוספות
         // SupplierInvoiceModifications
         for (let item of this.EntityPM.SupplierInvoiceModifications) {
             if (this.declarationPM.Direction == "E" && ExportCommonInvoiceModifications.includes(item.TypeCode)) {
