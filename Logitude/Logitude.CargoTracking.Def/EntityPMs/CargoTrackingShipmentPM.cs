@@ -6,16 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using System.ServiceModel.DomainServices.Server; 
-using Logitude.Server.Tools; 
+using System.ServiceModel.DomainServices.Server;
+using Logitude.Server.Tools;
 using System.Runtime.Serialization;
-using Simplog.Server.Infrastructure.DataContracts; 
+using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.CargoTracking.Def.Validators;
-  
+using Logitude.Infrastructure.BL.EntityPMs;
+
 namespace Logitude.CargoTracking.Def.EntityPMs
 {
-   public partial class CargoTrackingShipmentPM
-   {
+    public partial class CargoTrackingShipmentPM
+    {
         [DataMember]
         public string CustomsBrokerReference { get; set; }
         [DataMember]
@@ -68,6 +69,8 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         [DataMember]
         public DateTime? SHOPODate { get; set; }
 
+        [DataMember]
+        public SharedLogisticsSettingPM SharedLogisticsSetting { get; set; }
     }
 
     public class CargoDocumentsFiling
