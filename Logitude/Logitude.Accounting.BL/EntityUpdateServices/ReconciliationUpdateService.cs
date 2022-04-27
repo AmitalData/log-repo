@@ -139,9 +139,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 List<LedgerTransactionPM> ledgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(ledgerTransactionIds, entityPM.Tenant);
 
                 
-                if (ledgerTransactions.Any(d=>d.SourceTypeCode == AccountingEntityValues.ARPayment))
+                if (ledgerTransactions.Any(d=>d.SourceTypeCode == CloseTables.AccountingEntityValues.ARPayment))
                 {
-                    LedgerTransactionPM paymentTransaction = ledgerTransactions.Find(d => d.SourceTypeCode == AccountingEntityValues.ARPayment);
+                    LedgerTransactionPM paymentTransaction = ledgerTransactions.Find(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.ARPayment);
                     if (paymentTransaction == null) throw new ApplicationException("Cannot find payment transaction on reco lines");
                     foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
                     {
