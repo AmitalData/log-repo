@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -21,9 +21,9 @@ using Logitude.Accounting.Data.Repositories;
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
 
-	public partial class InterestTransactionListQueryService
-	{
-		private IQueryable<InterestTransactionList> GetIqueryableList(IQueryable<InterestTransaction> interestTransactionQuery, int tenant)
+    public partial class InterestTransactionListQueryService
+    {
+        private IQueryable<InterestTransactionList> GetIqueryableList(IQueryable<InterestTransaction> interestTransactionQuery, int tenant)
         {
             IQueryable<InterestTransactionList> query
                 = (from interestTransaction in interestTransactionQuery.Include("InterestEntityType")
@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                    join journal in context.Journals.Include("AccountingEntity")
                    on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.InterestEntityType.AccountingEntityCode } equals
                       new { AccountingEntityId = journal.AccountingEntityCode == "10" ? journal.Id : journal.AccountingEntityId, journal.AccountingEntityCode }
-                      
+
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
                    into reportJoinData
                    from report in reportJoinData.DefaultIfEmpty()
@@ -72,7 +72,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return query;
         }
-        public List<InterestTransactionList> MapListQuery(List<InterestTransactionList> interestTransactions, int tenant)
+        public List<InterestTransactionList> MapListQuery(List<InterestTransactionList> interestTransactions, int tenant, bool? exportToExcell = null)
         {
             List<Currency> currencies = GetTenantCurrencies(tenant);
 
@@ -103,7 +103,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        InterestReportNumber = interestTransaction.InterestReportNumber,
                        JournalId = interestTransaction.JournalId,
                        JournalNumber = interestTransaction.JournalNumber,
-                       Source = interestTransaction.Source,
+                       Source = exportToExcell == true ? getEntityIcon(interestTransaction.SourceTypeCode) + " " + interestTransaction.Source : interestTransaction.Source,
                        SourceTypeCode = interestTransaction.SourceTypeCode,
                        SourceType = interestTransaction.SourceType,
                        SourceId = interestTransaction.SourceId,
@@ -114,7 +114,92 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return list;
         }
 
-        public InterestTransactionList GetSingle(string id,int tenant)
+        private string getEntityIcon(string sourceTypeCode)
+        {
+            var iconTxt = "";
+            switch (sourceTypeCode)
+            {
+                // 1-Journal
+                case "1":
+                    {
+                        iconTxt = "JR";
+                        break;
+                    }
+
+                // 2-ARInvoice
+                case "2":
+                    {
+                        iconTxt = "IN";
+                        break;
+                    }
+
+                // 3-ARPayment
+                case "3":
+                    {
+                        iconTxt = "PY";
+                        break;
+                    }
+
+                // 4-APInvoice
+                case "4":
+                    {
+                        iconTxt = "IN";
+                        break;
+                    }
+
+                // 5-APPayment
+                case "5":
+                    {
+                        iconTxt = "PY";
+
+                        break;
+                    }
+
+                // 6-Cheque Deposit
+                case "6":
+                    {
+                        iconTxt = "DP";
+
+                        break;
+                    }
+
+                // 7-Cash Deposit
+                case "7":
+                    {
+                        iconTxt = "DP";
+
+                        break;
+                    }
+
+                // 8-Revaluation
+                case "8":
+                    {
+                        iconTxt = "RV";
+
+                        break;
+                    }
+
+                // 9-PaymentCheque
+                case "9":
+                    {
+                        iconTxt = "CH";
+
+                        break;
+                    }
+
+                // 10-Adjustment
+                case "10":
+                    {
+                        iconTxt = "AJ";
+
+                        break;
+                    }
+            }
+            return iconTxt;
+        }
+
+
+        public InterestTransactionList GetSingle(string id, int tenant)
         {
             InterestTransaction interestTransaction = GetInterestTransaction(id, tenant);
             Journal journal = GetJournalForInterestTransaction(tenant, interestTransaction);
@@ -149,7 +234,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                 JournalId = journal?.Id,
                 JournalNumber = journal?.JournalNumber,
-                AccountingDate = journal?.AccountingDate??DateTime.MinValue,
+                AccountingDate = journal?.AccountingDate ?? DateTime.MinValue,
                 Source = journal?.AccountingEntityReference,
                 SourceType = journal?.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
                 SourceTypeCode = journal?.AccountingEntityCode,
@@ -189,17 +274,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
 
         private IQueryable<InterestTransaction> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
-		{
+        {
 
-			return iQueryable;
-		}
-		private IQueryable<InterestTransaction> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
-		{
-			return iQueryable;
-		}
+            return iQueryable;
+        }
+        private IQueryable<InterestTransaction> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
+        {
+            return iQueryable;
+        }
 
-	}
+    }
 
 
 }
-	
