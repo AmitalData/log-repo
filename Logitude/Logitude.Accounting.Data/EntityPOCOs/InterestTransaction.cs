@@ -60,8 +60,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool IsClosed { get; set; }
         [Column("IsCancelled")]
 	    public bool IsCancelled { get; set; }
-        [Column("AccountEntityCode")]
-        public string AccountEntityCode { get; set; }
 
         [Column("AccountingEntityCode")]
         public string AccountingEntityCode { get; set; }
