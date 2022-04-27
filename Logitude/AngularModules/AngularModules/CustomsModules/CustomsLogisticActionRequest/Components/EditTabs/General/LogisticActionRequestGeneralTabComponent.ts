@@ -28,6 +28,7 @@ import { ErrorLogPMFileLoggerService } from 'Infrastructure/Services/ExtendedPMs
 import { loggerService } from 'Infrastructure/Utilities/logger.service';
 import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -162,6 +163,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         public entityArgs: EntityArgs,
         public logisticActionRequestWebService: LogisticActionRequestWebService,
         private logger: loggerService,
+        private _logisticActionRequestsCloseSharedDataService: LogisticActionRequestsCloseSharedDataService,
     ) {
         super();
         this.entityPM = new LogisticActionRequestPM();
@@ -310,6 +312,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     ngOnDestroy() {
         this.subscriber?.unsubscribe();
+        this.restartCounterCloseRequest()
     }
 
 
@@ -513,12 +516,18 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.submit = true;
         // if (this.invalidate()) return;
         this.logger.sendError('OkButtonClicked');
-        this.SaveEntityChanges();
+        this.SaveEntityChanges();        
     }
 
 
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
+    }
+
+
+    private restartCounterCloseRequest() {
+        this._logisticActionRequestsCloseSharedDataService._SelectedItems.Clear();
+        this._logisticActionRequestsCloseSharedDataService.IsDisplayButtonClose = false;
     }
 
 
