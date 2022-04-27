@@ -244,7 +244,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
            IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.excelService.GetQueryColumn("CurrencyCode", 'Text', TextCodeTranslator.Translate("InterestTransaction.F.LocalAmount")));
+        this.QueryColumns.push(this.excelService.GetQueryColumn("CurrencyCode", 'Text', TextCodeTranslator.Translate("InterestTransaction.F.CurrencyCode")));
 
         this.columns.push({
             FieldName: 'ForeignAmount',
@@ -423,7 +423,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
 
     ExportToExcelClick()
     {
-        this.excelService.ExportToExcelExcute("GLAccountLedgerTransaction", this.filterAgrs, this.QueryColumns);
+        this.excelService.ExportToExcelExcute("GLAccountInterestTransactions", this.filterAgrs, this.QueryColumns);
     }
 
     //#endregion
