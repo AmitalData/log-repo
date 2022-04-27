@@ -976,6 +976,102 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             }
         });
     }
+    
+    checkPartnerTypePermissionSharedAccess(partnerTypeName) : boolean{
+        if(this.cargoTrackingShipmentPM.SharedLogisticsSetting) {
+            switch (partnerTypeName) {
+                case PartnerTypeNames.COLLECTOR:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCollectorShared;
+                case PartnerTypeNames.SALESMAN:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsSalesmanShared;
+                case PartnerTypeNames.ACCOUNTMANAGER:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsAccountManagerShared;
+                case PartnerTypeNames.ReleasingAgent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsReleasingAgentShared;    
+                case PartnerTypeNames.Customer:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomerShared;    
+                case PartnerTypeNames.IssuingCarrierAgent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsIssuingCarrierAgentShared;    
+                case PartnerTypeNames.Consolidator:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsolidatorShared;    
+                case PartnerTypeNames.CustomClearancePoint:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomClearancePoinShared;    
+                case PartnerTypeNames.CustomAgentImport:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomsAgentImportShared;    
+                case PartnerTypeNames.CustomAgentExport:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomsAgentExportShared;    
+                case PartnerTypeNames.Coloader:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsColoaderShared;     
+                case PartnerTypeNames.FreightForwarder:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsFreightForwarderShared;           
+                case PartnerTypeNames.Notify1:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsNotify1Shared;              
+                case PartnerTypeNames.Notify2:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsNotify2Shared;             
+                case PartnerTypeNames.ConsigneeNotImporter:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsigneeNotImporterShared;           
+                case PartnerTypeNames.ShipperNotExporter:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperNotExporterShared;           
+                case PartnerTypeNames.Agent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsAgentShared;           
+                case PartnerTypeNames.consignee:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsigneeShared;           
+                case PartnerTypeNames.shipper:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperShared;            
+                default:
+                    return true
+            }
+        }
+        return true;
+    }
+
+    checkPartnerTypePermissionContactAccess(partnerTypeName) : boolean{
+        if(this.cargoTrackingShipmentPM.SharedLogisticsSetting) {
+            switch (partnerTypeName) {
+                case PartnerTypeNames.COLLECTOR:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCollectorShowContactTS;
+                case PartnerTypeNames.SALESMAN:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsSalesmanShowContactTS;
+                case PartnerTypeNames.ACCOUNTMANAGER:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsAccountManagerShowContactTS;
+                case PartnerTypeNames.ReleasingAgent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsReleasingAgentShowContactTS;    
+                case PartnerTypeNames.Customer:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomerShowContactTS;    
+                case PartnerTypeNames.IssuingCarrierAgent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsIssuingCarAgentShowContactTS;    
+                case PartnerTypeNames.Consolidator:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsolidatorShowContactTS;    
+                case PartnerTypeNames.CustomClearancePoint:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomCleaPointShowContactTS;    
+                case PartnerTypeNames.CustomAgentImport:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomAgentImShowContactTS;    
+                case PartnerTypeNames.CustomAgentExport:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomAgentExShowContactTS;    
+                case PartnerTypeNames.Coloader:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsColoaderShowContactTS;     
+                case PartnerTypeNames.FreightForwarder:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsFreightForwardShowContactTS;           
+                case PartnerTypeNames.Notify1:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsNotify1ShowContactTS;              
+                case PartnerTypeNames.Notify2:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsNotify2ShowContactTS;             
+                case PartnerTypeNames.ConsigneeNotImporter:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsigneeNotImShowContactTS;           
+                case PartnerTypeNames.ShipperNotExporter:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperNotExShowContactTS;           
+                case PartnerTypeNames.Agent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsAgentShowContactTS;           
+                case PartnerTypeNames.consignee:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsigneeShowContactTS;           
+                case PartnerTypeNames.shipper:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperShowContactTS;        
+                default:
+                    return true
+            }
+        }
+        return true;
+    }
 }
 
 
@@ -997,4 +1093,26 @@ export enum ShipmentDirections {
     Import = "I",
     Export = "E",
     Customs = "C"
+}
+
+export enum PartnerTypeNames {
+    COLLECTOR = 'COLLECTOR',
+    SALESMAN = 'SALESMAN',
+    ACCOUNTMANAGER = 'ACCOUNT MANAGER',
+    ReleasingAgent= 'Releasing Agent',
+    Customer = 'Customer',
+    IssuingCarrierAgent = "Issuing Carrier's Agent",
+    Consolidator = 'Consolidator',
+    CustomClearancePoint = 'Custom Clearance Point',
+    CustomAgentImport = 'Custom Agent Import',
+    CustomAgentExport = 'Custom Agent Export',
+    Coloader =  'Coloader',
+    FreightForwarder =  'Freight Forwarder',
+    Notify1 = 'Notify 1',
+    Notify2 = 'Notify 2',
+    ConsigneeNotImporter = 'Consignee Not Importer',
+    ShipperNotExporter = 'Shipper Not Exporter',
+    Agent = 'Agent',
+    consignee = 'consignee',        
+    shipper = 'shipper'
 }
