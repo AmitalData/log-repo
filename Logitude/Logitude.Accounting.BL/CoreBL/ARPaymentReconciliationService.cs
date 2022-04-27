@@ -110,7 +110,7 @@ namespace Logitude.Accounting.BL.CoreBL
             List<LedgerTransactionPM> ledgerTransactions = GetReconciliationTransactions(entityPM);
 
             paymentTransaction = ledgerTransactions
-                                        .Where(d => d.SourceTypeCode == AccountingEntityValues.ARPayment)
+                                        .Where(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.ARPayment)
                                         .FirstOrDefault();
 
             return paymentTransaction;
