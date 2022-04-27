@@ -1008,7 +1008,6 @@
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReportLinesByDate.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountLedgerTransaction.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.UserDefinedReport.cs" />
-    <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountInterestTransactions.cs" />
     <Compile Include="AccountingModel\LedgerTransactionService\TransactionsBalanceByFiltersService.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCopyExtendedController.cs" />
     <Content Include="App_Code\DocumentFileController.cs" />
