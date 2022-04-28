@@ -29,4 +29,15 @@ export class LogisticActionRequestWebService {
 
         return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
+
+
+    closeRequest(ids: string[]) {
+        const ajax: Observable<any> = this._http.post(
+            this._apiUrl + "/CloseRequests",
+            ids,
+            { headers: ServiceHelper.GetHttpHeaders().headers }
+        );
+
+        return this.logtuideTableDataService.standartSendAjax(ajax);
+    }
 }
