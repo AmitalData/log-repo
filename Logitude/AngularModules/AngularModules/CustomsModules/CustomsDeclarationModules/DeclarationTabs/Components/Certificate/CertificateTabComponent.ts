@@ -1,45 +1,45 @@
 
 
 declare var window: any;
-import {Component, AfterViewInit, OnInit, ChangeDetectorRef, Output, EventEmitter}  from '@angular/core';
-import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {AppTool, ArrayTool} from '../../../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
-import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
-import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
+import { Component, AfterViewInit, OnInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
 
-import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
-import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
-import {DeclarationErrorView} from '../../../../../Customs/EntityPMs/Extended/DeclarationErrorView';
-import {DeclarationConstraintPM} from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
-import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
+import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
+import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import { DeclarationErrorView } from '../../../../../Customs/EntityPMs/Extended/DeclarationErrorView';
+import { DeclarationConstraintPM } from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
+import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
 
-import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
-import {ConstraintApprovalRequestParams} from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
+import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import { ConstraintApprovalRequestParams } from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
 
 // Send Request
-import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
-import {VendorCommunicationResult} from '../../../../../Customs/DataContract/ResponseData/VendorCommunicationResult';
+import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import { VendorCommunicationResult } from '../../../../../Customs/DataContract/ResponseData/VendorCommunicationResult';
 import { VendorInsertUpdateDeleteMessageRequestParams, OperationTypes } from '../../../../../Customs/DataContract/RequestParams/VendorInsertUpdateDeleteMessageRequestParams';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
-import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
-import {CertificateTicket} from '../../../../../Customs/DataContract/CertificateTicket';
-import {MultiCertificatesService} from '../../../../../Customs/Services/Others/MultiCertificatesService';
-import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {CertificateConnectedItem} from '../../../../../Customs/DataContract/CertificateConnectedItem';
-import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
-import {ConfirmationTypePM} from  '../../../../../Customs/EntityPMs/ConfirmationTypePM';
+import { DeclarationMessagesService } from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
+import { CertificateTicket } from '../../../../../Customs/DataContract/CertificateTicket';
+import { MultiCertificatesService } from '../../../../../Customs/Services/Others/MultiCertificatesService';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { CertificateConnectedItem } from '../../../../../Customs/DataContract/CertificateConnectedItem';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ConfirmationTypePM } from '../../../../../Customs/EntityPMs/ConfirmationTypePM';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
-    
+
     templateUrl: './CertificateTabComponent.html',
     providers: [DeclarationExtendedListService]
 })
@@ -64,14 +64,15 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     public ExcludedItems: ObservableCollection;
 
     SelectedItemsCountText: string;
-    SelectedItemsCount: number;IsDisplayMessage: boolean;
-   public TaxExemptCode92: boolean=true;
-;
+    SelectedItemsCount: number; IsDisplayMessage: boolean;
+    public TaxExemptCode92: boolean = true;
+    ;
     public IsVisible: boolean;
     showTemplate: boolean = false;
     CertificateTicketsList: CertificateTicketListItem[] = [];
     preventSelect: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    isDisableBtn92: boolean = true;
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.SelectedItemsCount = 0;
@@ -90,14 +91,14 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                 })
             )
         );
-        
+
         //SessionLocator.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
         //    SessionLocator.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
 
 
         this.DeclarationPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
-       
+
         this.BuildColumns();
         this.Listen();
         console.log("Declaration", this.DeclarationPM);
@@ -106,7 +107,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         this.DisplayOnlyCheck();
 
         this.CheckDeclarationInvoices();
-   
+
         //  this.GetCertificates(null);
 
         //this.CurrentSession.SelectItemEvent.subscribe((res) => {
@@ -185,10 +186,10 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
             this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                if (isSaveSuccess) {
-                    this.DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                }
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    }
                 })
             );;
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
@@ -223,9 +224,10 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         this.IsFirstTime = isFirstTime;
         this.GetCertificates(null);
     }
-    
+
     ConfirmationTypesFilterItems: ApiQueryFilters;
     GetCertificates(message: any) {
+        this.isDisableBtn92 = true;
         if (message == "ok" || message == null) {
             this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
             this.connectedItems.Collection = [];
@@ -234,34 +236,34 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             this.IsVisible = false;
             this.SelectedItemsCountText = null;
             this.SelectedItemsCount = 0;
-          
+
             this.IsSelected = false;
             var confirmation = null;
             if (this.ConfirmationType) {
-                confirmation= this.ConfirmationType.Code;
+                confirmation = this.ConfirmationType.Code;
             }
             this.declarationWebService.GetCertificateTickets(this.DeclarationPM.Id, confirmation, this.selectedInvoiceNumber, this.SelectedCounterKey, this.DemandState)
                 .subscribe((response: ServiceResponse) => {
                     console.log("[Response] GetCertificateTickets: ", response);
                     this.CertificateTicketsList = [];
                     this.ConfirmationTypesFilterItems = new ApiQueryFilters();
-                    if(this.DeclarationPM.Direction == 'E') 
+                    if (this.DeclarationPM.Direction == 'E')
                         this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", false, null, null, "Equals", false, false, false, "Boolean");
-                    
+
                     var reqConfirmationCodes: string = "";
                     var res = response.Result;
                     if (res) {
-                     
+
                         if (res.length > 0) {
                             if (!AppTool.IsNullOrEmpty(res)) {
 
                                 this.IsCheckBoxVisible = true;
-
+                                debugger;
                                 for (var i = 0; i < res.length; i++) {
 
-                                 
+
                                     reqConfirmationCodes = reqConfirmationCodes + res[i].ReqConfirmationTypeCode + ',';
-                                  
+
 
                                     var item: CertificateTicketListItem = new CertificateTicketListItem(res[i], this);
                                     //if (i == 0) {
@@ -277,8 +279,12 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
 
                                     this.CertificateTicketsList.push(item);
-
+                                    if ((AppTool.IsNullOrEmpty(res[i].AttachmentTypeCode) && (AppTool.IsNullOrEmpty(res[i].CertificateExemptionTypeCode) && AppTool.IsNullOrEmpty(res[i].CertificateNumber))))
+                                    {
+                                        this.isDisableBtn92 = false;
+                                    }
                                 }
+                            
 
                                 if (reqConfirmationCodes != null) {
                                     reqConfirmationCodes = reqConfirmationCodes.substr(0, reqConfirmationCodes.length - 1);
@@ -300,8 +306,8 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                                     this.selecteCertificate = this.CertificateTicketsList[0].ticket;
                                 }
 
-                                
-                             
+
+
 
 
 
@@ -311,11 +317,13 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                         else {
                             this.selecteCertificate = null;
                             this.IsCheckBoxVisible = false;
-
+                         
                         }
                     }
-                     this.LoadConnectedItems(null);
+                    this.LoadConnectedItems(null);
                     this.CurrentSession.StopBusyIndicator();
+                    console.log('IsDisplayOnly', this.IsDisplayOnly);
+                    console.log('flag', this.isDisableBtn92);
                 });
         }
     }
@@ -348,7 +356,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }
-        
+
     }
 
 
@@ -442,10 +450,10 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
     RefreshEntity() {
         //if (this.IsDisplayOnly) {
-            if (this.CurrentSession.CurrentEditComponent) {
-                this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            }
+        if (this.CurrentSession.CurrentEditComponent) {
+            this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        }
         //}
         if (!this.ThereIsNoInvoices) {
             this.activeItem = null;
@@ -465,7 +473,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             }
         }
 
-    else  if (this.IsDisplayOnly) {
+        else if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             //this.SetScreenFieldsEditability();
             this.timerToken = setTimeout(() => {
@@ -477,7 +485,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
         }
-       
+
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.DeclarationPM).subscribe((response: ServiceResponse) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
@@ -496,14 +504,14 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             }
-           
+
             this.timerToken = setTimeout(() => {
                 DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             }, 200);
         });
     }
 
- 
+
     public columns: any[] = null;
 
     BuildColumns() {
@@ -708,7 +716,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             this.SelectedRow = CurrentRow.rowData;
             this.CurrentSession.StartBusyIndicatorLoading();
 
-            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response: any) => {
 
                 this.declarationWebService
                     .GetSupplierInvoiceWithSpecificItemByCounterKey(this.SelectedRow.DeclarationId, this.SelectedRow.InvoiceCounterKey, this.SelectedRow.SequenceNumeric)
@@ -723,13 +731,13 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
                             this.CurrentSession.StartBusyIndicatorLoading();
                             var windowArgs: any = {};
-                     
-                        
+
+
                             windowArgs.EntityPM = supplierInvoicePM;
-                          
+
                             windowArgs.declarationPM = this.DeclarationPM;
 
-                           
+
                             var logWindow = new LogitudeWindow();
                             logWindow.Width = 1030;
                             logWindow.Height = 600;
@@ -751,8 +759,8 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
                             }
                             windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-                          
-                     
+
+
                             logWindow.ShowCloseButton = false;
                             logWindow.WindowArgs = windowArgs;
 
@@ -760,10 +768,10 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                             logWindow.WindowClosed.subscribe(($event: any) => {
                                 this.LoadConnectedItems($event);
                                 this.CD.reattach();
-                              //  this.RefreshEntity();
+                                //  this.RefreshEntity();
                             });
                             this.CD.detach();
-                          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
+                            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
                             this.CurrentSession.StopBusyIndicator();
 
                         }
@@ -802,7 +810,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         if (this.SelectedInvoiceNumber != null) {
             filters.addAdditionalFilter("InvoiceNumber", this.SelectedInvoiceNumber, null, null, "Equals", false, false, false, "string");
         }
-        if (!AppTool.IsNullOrEmpty(this.SearchText)){
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             //filters.addAdditionalFilter("ClassificationCode", this.SearchText, null, null, "Contains", false, false, false, "string");
             filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, false, false, "string");
         }
@@ -821,7 +829,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         //    return this.multiCertificatesService.getPromiseByFilters(filters, this.DeclarationPM.Id, null, this.ConfirmationType.Code, null, null,null);
 
         //}
-       
+
         else {
             return this.multiCertificatesService.getPromiseByFilters(filters, this.DeclarationPM.Id, "10", null, null, null, null);
         }
@@ -907,18 +915,17 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         if (this.confirmationType != value) {
             this.confirmationType = value;
             if (value) {
-                this.ConfirmationTypeCode = value.Code; 
-                }
+                this.ConfirmationTypeCode = value.Code;
+            }
             this.GetCertificates(null);
 
         }
-       
+
     }
 
     confirmationTypeCode: string;
     get ConfirmationTypeCode() { return this.confirmationTypeCode; }
-    set ConfirmationTypeCode(value: string)
-    {
+    set ConfirmationTypeCode(value: string) {
         this.confirmationTypeCode = value;
     }
     //this.connectedItems
@@ -1037,13 +1044,13 @@ export class CertificateTicketListItem extends BaseComponent {
             logWindow.WindowArgs = windowArgs;
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe($event => {
-                   
+
                     if ($event == "ok") {
                         this.ticket = s.certificateTicke;
                         this.ReloadCertificates($event);
-                       // this.parent.CD.reattach();
+                        // this.parent.CD.reattach();
                         //  this.parent.RefreshEntity();
-                    } 
+                    }
                 });
             });
 
@@ -1054,12 +1061,12 @@ export class CertificateTicketListItem extends BaseComponent {
             //      //  this.parent.RefreshEntity();
             //    }
             //});
-         //   this.parent.CD.detach();
+            //   this.parent.CD.detach();
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CreateEditTicketComponent');
-                    //}
+            //}
 
 
-                //});
+            //});
 
 
 
