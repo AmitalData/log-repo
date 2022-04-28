@@ -309,19 +309,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string objectTableId = "";
                 string entityId = "";
                 string childEntityId = "";
+                string dir = "I";
                 if (_MyDeclarationPM != null) // If connected to Declaration
                 {
                     objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                     entityId = _MyDeclarationPM.Id;
                     childEntityId = _MyDeficitPM.Id;
+                    dir = _MyDeclarationPM.Direction;
                 }
                 else
                 {
                     objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Deficit");
                     entityId = _MyDeficitPM.Id;
                 }
+
                 var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("DEF", requestParams.Tenant);
-                var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, childEntityId, objectTableId, "I", requestParams.Tenant);
+                var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, childEntityId, objectTableId, dir /*"I"*/, requestParams.Tenant);
 
                 foreach (var documentItem in documentsFilingPMList)
                 {

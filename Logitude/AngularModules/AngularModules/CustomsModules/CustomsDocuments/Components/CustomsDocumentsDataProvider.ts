@@ -92,7 +92,7 @@ export class CustomsDocumentsDataProvider {
         switch (this.objectTableName) {
             case 'Customs.Declaration': {
                 if (this.entityPM.Direction == "E" && filterValue != "customs" ) {
-                    return this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.entityPM.Id, null, this.ObjectTableId, 'I', this.entityPM.ExportFile, filterValue, this.entityPM.Direction);
+                    return this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.entityPM.Id, null, this.ObjectTableId,/*maybe change to E*/ 'I'    , this.entityPM.CustomFileNo  /*this.entityPM.ExportFile*/, filterValue, this.entityPM.Direction);
 
                 }
                 else {

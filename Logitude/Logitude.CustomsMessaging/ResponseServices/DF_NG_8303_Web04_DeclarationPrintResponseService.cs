@@ -242,7 +242,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Check if file already exists
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("DEC", requestParams.Tenant);
-            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(_MyDeclarationPM.Id, null, objectTableId, "I", requestParams.Tenant);
+            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(_MyDeclarationPM.Id, null, objectTableId, _MyDeclarationPM.Direction  /*"I"*/, requestParams.Tenant);
             foreach (var documentItem in documentsFilingPMList)
             {
                 if (documentItem.DocumentTypeId == documentType?.Id)
