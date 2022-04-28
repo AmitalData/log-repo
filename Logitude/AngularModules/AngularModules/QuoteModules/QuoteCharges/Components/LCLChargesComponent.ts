@@ -44,6 +44,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public IsEditExchangeRateVisible: boolean = false;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsPriceCheckVisible: boolean = false;
+    public IsSalePriceCheckVisible: boolean = false;
     private entityResourceService: EntityResourceService = new EntityResourceService();
     public ComponentRef: any;
     public IsAllowingMultipleFreightCharges: boolean = false;
@@ -67,6 +68,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         }
 
         this.IsPriceCheckVisible = QuoteUtilities.IsPriceCheckVisible(this.EntityPM);
+        if (FeatureLocator.HasFeaturePermession("Tariff", "SaleTariff")) {
+            this.IsSalePriceCheckVisible = true;
+        }
         this.IsAllowingMultipleFreightChargesMethod();
         this.InitBehaviours();
 
