@@ -410,11 +410,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     Description = item.Description,
                     ExternalProjectNumber = item.ExternalProjectNumber,
                     TotalMinutes = item.FullDuration,
-                    TotalWIWorkedDays_Employee = this.GetTimeFormatFromMinutes(item.FullDuration),
+                    TotalWIWorkedDays_Employee = this.GetTimeFormatFromMinutesAsString(item.FullDuration),
+                    TotalWIWorkedDays_Employee_Time = this.GetTimeFormatFromMinutesAsTime(item.FullDuration),
+                    TotalWIWorkedDays_Employee_double = this.GetTimeFormatFromMinutesAsDouble(item.FullDuration),
                     EmployeeName = this.iDataProvider.EmployeeName,
                     OwnerName = item.OwnerId == "" ? null : this.iDataProvider.OwnerName,
                     CustomerName = this.iDataProvider.CustomerName,
-                    CategoryName = this.iDataProvider.CategoryName,                     
+                    CategoryName = this.iDataProvider.CategoryName,
                 };
 
                 if (string.IsNullOrEmpty(itemRecord.OwnerName))
@@ -479,7 +481,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             {
                 double iTotalMinutes = this.iDataProvider.DetailedWorkHoursPerProjectList.Sum(s => s.TotalMinutes);
 
-                this.iDataProvider.Total_TotalWIWorkedHours_Employee = this.GetTimeFormatFromMinutes(iTotalMinutes);
+                this.iDataProvider.Total_TotalWIWorkedHours_Employee = this.GetTimeFormatFromMinutesAsString(iTotalMinutes);
+                this.iDataProvider.Total_TotalWIWorkedHours_Employee_Time = this.GetTimeFormatFromMinutesAsTime(iTotalMinutes);
+                this.iDataProvider.Total_TotalWIWorkedHours_Employee_double = this.GetTimeFormatFromMinutesAsDouble(iTotalMinutes);
             }
         }
         private void BuildProjectsByCategory()
@@ -495,7 +499,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                          CategoryName = g.Key.CategoryName,
                      }).ToList();
 
-                foreach(ProjectsByCategoryGroup item in DataGroups)
+                foreach (ProjectsByCategoryGroup item in DataGroups)
                 {
                     List<WorkDaysPerProjectData> lines = this.iDataProvider.DetailedWorkHoursPerProjectList.Where(d => d.CategoryId == item.CategoryId).ToList();
 
@@ -518,7 +522,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             }
         }
 
-        private string GetTimeFormatFromMinutes(double minutes)
+        private string GetTimeFormatFromMinutesAsString(double minutes)
         {
             string iResult = "";
 
@@ -536,17 +540,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
             return iResult;
         }
+        private TimeSpan? GetTimeFormatFromMinutesAsTime(double minutes)
+        {
+            return TimeSpan.FromMinutes(Math.Abs(minutes));
+        }
+        private double? GetTimeFormatFromMinutesAsDouble(double minutes)
+        {
+            TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(minutes));
+            double hours = iTimeSpan.TotalHours;
+            double minuts = iTimeSpan.Minutes / 60;
+
+            return hours + minuts;
+        }
+
         private string GetDaysFormatFromMinutes(double minutes)
         {
             string iResult = "";
 
             if (minutes != 0)
             {
-                TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(minutes));
-
-
                 double TotalHours = minutes / 60;
-
                 int iDays = (int)(TotalHours / 9);
                 double Hours = TotalHours % 9;
                 double iHours = Math.Round(Hours / 9, 2);
@@ -560,87 +573,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             }
 
             return iResult;
-        }
-
-        private void temp()
-        {
-            //var iQueryable_List1 = (from EmployeeTimes in iQueryable_EmployeeTimes
-            //                        join Projects in iQueryable_Projects on EmployeeTimes.ProjectId equals Projects.Id
-            //                        where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != ""
-            //                        group EmployeeTimes by new
-            //                        {
-            //                            EmployeeTimes.DateOfWork.Year,
-            //                            EmployeeTimes.DateOfWork.Month,
-            //                            EmployeeTimes.DateOfWork.Day,
-            //                            EmployeeTimes.EmployeeUserId,
-            //                            EmployeeTimes.ProjectId,
-            //                            EmployeeTimes.WINumber,
-            //                            EmployeeTimes.Description,
-            //                            Projects.Name,
-            //                            Projects.ProjectNumber,
-            //                            Projects.ExternalProjectNumber,
-            //                            Projects.CustomerId,
-            //                            Projects.OwnerId,
-            //                            Projects.CategoryId,
-            //                            ProjectDescription = Projects.Description,
-            //                        }
-
-            //           into g
-
-            //                        select new
-            //                        {
-            //                            Year = g.Key.Year,
-            //                            Month = g.Key.Month,
-            //                            Day = g.Key.Day,
-            //                            EmployeeUserId = g.Key.EmployeeUserId,
-            //                            WINumber = g.Key.WINumber,
-            //                            Description = g.Key.Description,
-            //                            ProjectId = g.Key.ProjectId,
-            //                            ProjectName = g.Key.Name,
-            //                            ProjectNumber = g.Key.ProjectNumber,
-            //                            ExternalProjectNumber = g.Key.ExternalProjectNumber,
-            //                            TimeInMinutes = g.Sum(s => s.TimeInMinutes),
-            //                            FullDuration = g.Sum(s => s.FullDuration),
-            //                            CustomerId = g.Key.CustomerId,
-            //                            OwnerId = g.Key.OwnerId,
-            //                            CategoryId = g.Key.CategoryId,
-            //                            ProjectDescription = g.Key.ProjectDescription,
-            //                        }).ToList();
-
-            //var iQueryable_List2 = (from EmployeeTimes in iQueryable_EmployeeTimes
-            //                        where EmployeeTimes.ProjectId == null || EmployeeTimes.ProjectId == ""
-            //                        group EmployeeTimes by new
-            //                        {
-            //                            EmployeeTimes.DateOfWork.Year,
-            //                            EmployeeTimes.DateOfWork.Month,
-            //                            EmployeeTimes.DateOfWork.Day,
-            //                            EmployeeTimes.EmployeeUserId,
-            //                            EmployeeTimes.ProjectId,
-            //                            EmployeeTimes.WINumber,
-            //                            EmployeeTimes.Description,
-            //                        }
-
-            //           into g
-
-            //                        select new
-            //                        {
-            //                            Year = g.Key.Year,
-            //                            Month = g.Key.Month,
-            //                            Day = g.Key.Day,
-            //                            EmployeeUserId = g.Key.EmployeeUserId,
-            //                            WINumber = g.Key.WINumber,
-            //                            Description = g.Key.Description,
-            //                            ProjectId = g.Key.ProjectId,
-            //                            ProjectName = "",
-            //                            ProjectNumber = "",
-            //                            ExternalProjectNumber = "",
-            //                            TimeInMinutes = g.Sum(s => s.TimeInMinutes),
-            //                            FullDuration = g.Sum(s => s.FullDuration),
-            //                            CustomerId = "",
-            //                            OwnerId = "",
-            //                            CategoryId = "",
-            //                            ProjectDescription = "",
-            //                        }).ToList();
         }
     }
 }
