@@ -73,6 +73,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     preventSelect: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     isDisableBtn92: boolean = true;
+
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.SelectedItemsCount = 0;
@@ -252,8 +253,8 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
                     var reqConfirmationCodes: string = "";
                     var res = response.Result;
+                    
                     if (res) {
-
                         if (res.length > 0) {
                             if (!AppTool.IsNullOrEmpty(res)) {
 
@@ -279,12 +280,11 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
 
                                     this.CertificateTicketsList.push(item);
-                                    if ((AppTool.IsNullOrEmpty(res[i].AttachmentTypeCode) && (AppTool.IsNullOrEmpty(res[i].CertificateExemptionTypeCode) && AppTool.IsNullOrEmpty(res[i].CertificateNumber))))
-                                    {
+                                    if ((AppTool.IsNullOrEmpty(res[i].AttachmentTypeCode) && (AppTool.IsNullOrEmpty(res[i].CertificateExemptionTypeCode) && AppTool.IsNullOrEmpty(res[i].CertificateNumber)))) {
                                         this.isDisableBtn92 = false;
                                     }
                                 }
-                            
+
 
                                 if (reqConfirmationCodes != null) {
                                     reqConfirmationCodes = reqConfirmationCodes.substr(0, reqConfirmationCodes.length - 1);
@@ -317,13 +317,11 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                         else {
                             this.selecteCertificate = null;
                             this.IsCheckBoxVisible = false;
-                         
+
                         }
                     }
                     this.LoadConnectedItems(null);
                     this.CurrentSession.StopBusyIndicator();
-                    console.log('IsDisplayOnly', this.IsDisplayOnly);
-                    console.log('flag', this.isDisableBtn92);
                 });
         }
     }
