@@ -976,7 +976,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             }
         });
     }
-
+    
     checkPartnerTypePermissionSharedAccess(partnerTypeName) : boolean{
         if(this.cargoTrackingShipmentPM.SharedLogisticsSetting) {
             switch (partnerTypeName) {

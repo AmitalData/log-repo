@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -21,18 +21,18 @@ using Logitude.Accounting.Data.Repositories;
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
 
-	public partial class InterestTransactionListQueryService
-	{
-		private IQueryable<InterestTransactionList> GetIqueryableList(IQueryable<InterestTransaction> interestTransactionQuery, int tenant)
+    public partial class InterestTransactionListQueryService
+    {
+        private IQueryable<InterestTransactionList> GetIqueryableList(IQueryable<InterestTransaction> interestTransactionQuery, int tenant)
         {
             IQueryable<InterestTransactionList> query
                 = (from interestTransaction in interestTransactionQuery
 
                    join journal in context.Journals.Include("AccountingEntity")
                    on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode } equals
-                      new { AccountingEntityId = journal.AccountingEntityCode == Enums.AccountingEntityValues.Adjustment ? journal.Id : journal.AccountingEntityId,
+                      new { AccountingEntityId = journal.AccountingEntityId,
                             journal.AccountingEntityCode }
-                      
+
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
                    into reportJoinData
                    from report in reportJoinData.DefaultIfEmpty()
@@ -197,7 +197,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return iconTxt;
         }
 
-
         public InterestTransactionList GetSingle(string id,int tenant)
         {
             InterestTransaction interestTransaction = GetInterestTransaction(id, tenant);
@@ -233,7 +232,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                 JournalId = journal?.Id,
                 JournalNumber = journal?.JournalNumber,
-                AccountingDate = journal?.AccountingDate??DateTime.MinValue,
+                AccountingDate = journal?.AccountingDate ?? DateTime.MinValue,
                 Source = journal?.AccountingEntityReference,
                 SourceType = journal?.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
                 SourceTypeCode = journal?.AccountingEntityCode,
@@ -273,17 +272,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
 
         private IQueryable<InterestTransaction> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
-		{
+        {
 
-			return iQueryable;
-		}
-		private IQueryable<InterestTransaction> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
-		{
-			return iQueryable;
-		}
+            return iQueryable;
+        }
+        private IQueryable<InterestTransaction> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
+        {
+            return iQueryable;
+        }
 
-	}
+    }
 
 
 }
-	

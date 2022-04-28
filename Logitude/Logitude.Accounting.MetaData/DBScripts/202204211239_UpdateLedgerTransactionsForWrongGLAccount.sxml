@@ -13,5 +13,5 @@
     on JournlaLinesGlAccountCurrencies.JournalId = LedgerTransactions.JournalId AND JournlaLinesGlAccountCurrencies.Line = LedgerTransactions.JournalLineNumber
     AND JournlaLinesGlAccountCurrencies.Tenant = LedgerTransactions.Tenant
      ]]>
-	</Sql>
+ </Sql>
 </Script>
