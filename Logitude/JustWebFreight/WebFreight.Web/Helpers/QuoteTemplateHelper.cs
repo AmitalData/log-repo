@@ -522,6 +522,18 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("INCLUDED", "Included", "Included", "TotalPerContainers"));
 
 
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATPACKAGES", "VAT (Sale)", "VAT (Sale)", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATCONTAINERS", "VAT (Sale)", "VAT (Sale)", "Containers"));
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("LOCALVATPACKAGES", "VAT(Local)", "VAT(Local)", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("LOCALVATCONTAINERS", "VAT(Local)", "VAT(Local)", "Containers"));
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALINCLUDINGVATPACKAGES", "Total Including VAT(Sale)", "Total Including VAT(Sale)", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALINCLUDINGVATCONTAINERS", "Total Including VAT(Sale)", "Total Including VAT(Sale)", "Containers"));
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALINCLUDINGVATLOCALPACKAGES", "Total Including VAT(Local)", "Total Including VAT(Local)", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALINCLUDINGVATLOCALCONTAINERS", "Total Including VAT(Local)", "Total Including VAT(Local)", "Containers"));
+
             quoteTemplateTextCodeRepository.SubmitChanges();
         }   
 
