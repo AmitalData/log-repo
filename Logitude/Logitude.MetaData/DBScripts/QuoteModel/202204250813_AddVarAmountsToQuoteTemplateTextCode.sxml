@@ -22,26 +22,26 @@ declare @NewEntityId as varchar(15)
 	   begin
 
 	        EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'VATPACKAGES', 'VAT(in Line Sale currency)', 'VAT(in Line Sale currency)' , @QuoteTemplateId ,'Packages' , 'VAT(in Line Sale currency)', 'VAT(in Line Sale currency)' );
+            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'VATPACKAGES', 'VAT (Sale)', 'VAT (Sale)' , @QuoteTemplateId ,'Packages' , 'VAT (Sale)', 'VAT (Sale)' );
 			
 		    EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-	        INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'VATCONTAINERS',  'VAT(in Line Sale currency)', 'VAT(in Line Sale currency)', @QuoteTemplateId ,'Containers' , 'VAT(in Line Sale currency)', 'VAT(in Line Sale currency)' );
+	        INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'VATCONTAINERS',  'VAT (Sale)', 'VAT (Sale)', @QuoteTemplateId ,'Containers' , 'VAT (Sale)', 'VAT (Sale)' );
 			
 			
 
 			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'LOCALVATPACKAGES', 'Local VAT', 'Local VAT' , @QuoteTemplateId ,'Packages' , 'Local VAT', 'Local VAT' );
+            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'LOCALVATPACKAGES', 'VAT(Local)', 'VAT(Local)' , @QuoteTemplateId ,'Packages' , 'VAT(Local)', 'VAT(Local)' );
 
 		    EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-	        INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'LOCALVATCONTAINERS',  'Local VAT', 'Local VAT', @QuoteTemplateId ,'Containers' , 'Local VAT', 'Local VAT' );
+	        INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'LOCALVATCONTAINERS',  'VAT(Local)', 'VAT(Local)', @QuoteTemplateId ,'Containers' , 'VAT(Local)', 'VAT(Local)' );
 			
 			
 			
 	        EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'TOTALINCLUDINGVATPACKAGES', 'Total Including VAT(line sale currency)', 'Total Including VAT(line sale currency)' , @QuoteTemplateId ,'Packages' , 'Total Including VAT(line sale currency)', 'Total Including VAT(line sale currency)' );		
+            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'TOTALINCLUDINGVATPACKAGES', 'Total Including VAT(Sale)', 'Total Including VAT(Sale)' , @QuoteTemplateId ,'Packages' , 'Total Including VAT(Sale)', 'Total Including VAT(Sale)' );		
 			
 	        EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'TOTALINCLUDINGVATCONTAINERS', 'Total Including VAT(line sale currency)', 'Total Including VAT(line sale currency)' , @QuoteTemplateId ,'Containers' , 'Total Including VAT(line sale currency)', 'Total Including VAT(line sale currency)' );	
+            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'TOTALINCLUDINGVATCONTAINERS', 'Total Including VAT(Sale)', 'Total Including VAT(Sale)' , @QuoteTemplateId ,'Containers' , 'Total Including VAT(Sale)', 'Total Including VAT(Sale)' );	
 			
 			
 			
