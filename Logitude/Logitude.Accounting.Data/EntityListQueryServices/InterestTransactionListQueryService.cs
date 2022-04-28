@@ -30,7 +30,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                    join journal in context.Journals.Include("AccountingEntity")
                    on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode } equals
-                      new { AccountingEntityId = journal.AccountingEntityCode == Enums.AccountingEntityValues.Adjustment ? journal.Id : journal.AccountingEntityId,
+                      new { AccountingEntityId = journal.AccountingEntityId,
                             journal.AccountingEntityCode }
                       
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
