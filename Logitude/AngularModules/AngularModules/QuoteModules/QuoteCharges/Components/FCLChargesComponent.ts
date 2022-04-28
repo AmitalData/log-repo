@@ -44,6 +44,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public AllInMatchText: string;
     IsShowTotalPerContainer: boolean = false;
     public IsPriceCheckVisible: boolean = false;
+    public IsSalePriceCheckVisible: boolean = false;
     private entityResourceService: EntityResourceService = new EntityResourceService();;
     public ComponentRef: any;
     private TariffList_Quote: QuoteChargePM[];
@@ -70,6 +71,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR")[0];
         if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && featureToggle != null) {
             this.IsPriceCheckVisible = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "SaleTariff")) {
+            this.IsSalePriceCheckVisible = true;
         }
 
         this.InitBehaviours();
