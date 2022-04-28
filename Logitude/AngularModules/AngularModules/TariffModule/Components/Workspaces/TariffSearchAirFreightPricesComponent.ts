@@ -1418,7 +1418,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     chargeItem.CostUnitPrice = (costAmount / costQuantity);
 
                 }
-                //chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+                chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
             }
             chargeItem.ComputeSalePrice();
             chargeItem.ComputeSaleAmounts();
@@ -1453,7 +1453,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.CostContainerType5UnitPrice = item.CostContainerType5UnitPrice;
             var costAmount: number = item.CostTotalAmount;
             chargeItem.CostQuantity = item.CostQuantity;
-            //chargeItem.SaleQuantity = item.CostQuantity;
+            chargeItem.SaleQuantity = item.CostQuantity;
 
             var costQuantity: number = chargeItem.CostQuantity;
             if (costQuantity != null && costQuantity != 0) {
@@ -1463,7 +1463,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 else {
                     chargeItem.CostUnitPrice = (costAmount / costQuantity);
                 }
-               // chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+               chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
             }
             chargeItem.ComputeSalePrice();
             chargeItem.ComputeSaleAmounts();

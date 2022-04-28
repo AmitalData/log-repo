@@ -405,7 +405,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 this.AddTariffChargesToQuote_LCL(localCharge);
             });
         }
-        this.BuildItemsSource();
     }
 
     GenerateNewTariffQuoteCharge(item: any) {
@@ -447,16 +446,13 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
                 var measurementCode = item.UnitOfMesurmentCode;
                 var measurementId = item.UnitOfMesurmentId;
-                if (!item.IsAllIn) {
-                    var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
-                    chargePM.SaleTotalAmount = saleAmount;
-                    chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
-                }
+                chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
+                var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
+                chargePM.SaleTotalAmount = saleAmount;
                 chargePM.SaleMeasurementCode = measurementCode;
                 chargePM.SaleMeasurementId = measurementId;
                 chargePM.CostMeasurementCode = measurementCode;
                 chargePM.CostMeasurementId = measurementId;
-                chargePM.IsAllIN = item.IsAllIn;
                 this.TariffList_Quote.push(chargePM);
             }
         });
@@ -486,12 +482,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.SaleMeasurementId = measurementId;
                 chargePM.CostMeasurementCode = measurementCode;
                 chargePM.CostMeasurementId = measurementId;
-                chargePM.IsAllIN = item.IsAllIn;
-                if (!item.IsAllIn) {
-                    var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
-                    chargePM.SaleTotalAmount = saleAmount;
-                    chargePM.SaleMinAmount = AppTool.Round(item.MinAmount, 3);
-                }
+                chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
+                var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
+                chargePM.SaleTotalAmount = saleAmount;
                 chargePM.SetSaleQuantity();
                 var saleQuantity: number = chargePM.SaleQuantity;
                 if (saleQuantity != null && saleQuantity != 0) {
@@ -2844,14 +2837,16 @@ export class QuoteChargeItem extends BaseComponent {
 
 
                     var freightTotalAmountLocal = AppTool.IsNullOrEmpty(freightModel.SaleTotalAmountLocal) ? 0 : freightModel.SaleTotalAmountLocal;
-
+                    var newSaleTotalAmountLocal = null;
                     if (this.IsAllIN) {
-                        freightModel.SaleTotalAmountLocal = freightTotalAmountLocal + this.EntityPM.SaleTotalAmountLocal;
+                        newSaleTotalAmountLocal = freightTotalAmountLocal + this.EntityPM.SaleTotalAmountLocal;
                     }
 
                     else {
-                        freightModel.SaleTotalAmountLocal = freightTotalAmountLocal - this.EntityPM.SaleTotalAmountLocal;
+                        newSaleTotalAmountLocal = freightTotalAmountLocal - this.EntityPM.SaleTotalAmountLocal;
                     }
+
+                    freightModel.SaleTotalAmountLocal = newSaleTotalAmountLocal;
                 }
             }
         }

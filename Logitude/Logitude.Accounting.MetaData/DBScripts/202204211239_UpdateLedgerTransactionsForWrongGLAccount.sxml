@@ -11,7 +11,7 @@
     inner join GLAccountCurrencies on ARInvoices.BillToGLAccountId = GLAccountCurrencies.MainGLAccountId AND ARInvoices.Tenant = GLAccountCurrencies.Tenant 
     where  AccountingEntityCode = 2 AND GLAccounts.IsMultiCurrency = 1 and GLAccountCurrencies.CurrencyId = journallines.CurrencyId and ActionCode = '1' AND journallines.DebitAccountId != GLAccountCurrencies.GLAccountId) as JournlaLinesGlAccountCurrencies
     on JournlaLinesGlAccountCurrencies.JournalId = LedgerTransactions.JournalId AND JournlaLinesGlAccountCurrencies.Line = LedgerTransactions.JournalLineNumber
-    AND JournlaLinesGlAccountCurrencies.Tenant = LedgerTransactions.Tenant AND $LastCounterWhere$
+    AND JournlaLinesGlAccountCurrencies.Tenant = LedgerTransactions.Tenant
      ]]>
- </Sql>
+	</Sql>
 </Script>

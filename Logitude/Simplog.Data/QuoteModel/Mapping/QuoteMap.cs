@@ -338,8 +338,10 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.NotifyReference1).HasColumnName("NotifyReference1");
             this.Property(t => t.NotifyReference2).HasColumnName("NotifyReference2");
             this.Property(t => t.PackagesQuantity).HasColumnName("PackagesQuantity");
-            this.Property(t => t.ValidByTypeCode).HasColumnName("ValidByTypeCode");
 
+            this.Property(t => t.SpecialServicesTypeId).HasColumnName("SpecialServicesTypeId");
+            this.Property(t => t.ValidByTypeCode).HasColumnName("ValidByTypeCode");
+            
             this.Property(t => t.SpecialServicesTypeId).HasColumnName("SpecialServicesTypeId");
             this.Property(t => t.IncludeInsurance).HasColumnName("IncludeInsurance");
             this.Property(t => t.IsStackable).HasColumnName("IsStackable");
@@ -404,7 +406,6 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.RegionalTax).WithMany().HasForeignKey(d => d.RegionalTaxId);
             this.HasOptional(d => d.SpecialServicesType).WithMany().HasForeignKey(d => d.SpecialServicesTypeId);
             this.HasOptional(t => t.ValidByType).WithMany().HasForeignKey(d => d.ValidByTypeCode);
-
         }
     }
 }

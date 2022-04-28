@@ -5,7 +5,7 @@ import { ConnectedOrder } from "./ConnectedOrder";
 import { PartnerCard } from "./PartnerCard";
 import { RoutingStep } from "./RoutingStep";
 import { ShipmentCustomsData } from "./ShipmentCustomsData";
-
+import { SharedLogisticsSettingPM } from "./SharedLogisticsSettingPM";
 export class CargoTrackingShipmentMappedPM {
 
 	  constructor() {
@@ -700,5 +700,5 @@ export class CargoTrackingShipmentMappedPM {
     public SHOBookingConfirmationNumber: string;
     public SHOCarrierName: string;
     public SHOPODate: Date;
-
+    public SharedLogisticsSetting: SharedLogisticsSettingPM;
 }

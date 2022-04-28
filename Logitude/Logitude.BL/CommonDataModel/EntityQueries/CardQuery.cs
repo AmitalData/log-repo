@@ -2447,18 +2447,29 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return isCardExisit;
         }
 
-        public CarrierCard GetSingleCarrierCard(string cardId, int tenant)
+        public CarrierCard GetSingleCarrierCard(string cardId, int tenant, string partnerType = null)
         {
-            var card = (from a in repository.context.Cards
+            if (!string.IsNullOrEmpty(partnerType))
+            {
+                return (from a in repository.context.Cards
                         where a.Tenant == tenant && a.Id == cardId
+                        && a.PartnerTypeId == partnerType
                         select new CarrierCard
                         {
                             Code = a.Code,
                             InActive = a.InActive,
                         }).FirstOrDefault();
-            return card;
-        }
+            }
 
+            return (from a in repository.context.Cards
+                        where a.Tenant == tenant && a.Id == cardId
+                        && (a.PartnerTypeId == "TR" || a.PartnerTypeId == "SL" || a.PartnerTypeId == "AL")
+                        select new CarrierCard
+                        {
+                            Code = a.Code,
+                            InActive = a.InActive,
+                        }).FirstOrDefault();            
+        }
     }
 
     public class ShortPartnersDetails

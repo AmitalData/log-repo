@@ -11,7 +11,8 @@ using Logitude.Server.Tools;
 using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure.DataContracts; 
 using Logitude.CargoTracking.Def.Validators;
-  
+using Logitude.Infrastructure.BL.EntityPMs;
+
 namespace Logitude.CargoTracking.Def.EntityPMs
 {
    public partial class CargoTrackingShipmentPM
@@ -68,6 +69,8 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         [DataMember]
         public DateTime? SHOPODate { get; set; }
 
+        [DataMember]
+        public SharedLogisticsSettingPM SharedLogisticsSetting { get; set; }
     }
 
     public class CargoDocumentsFiling

@@ -13,6 +13,8 @@ using System.Linq;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.BL.EntityPMs;
 
 namespace Logitude.CargoTracking.BL.EntityQueryServices
 {
@@ -40,7 +42,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             SetRoutePortsCodes(cargoShipmentPM);
             SetTenantFields();
             SetShipmentCloudDataFields();
-
+            SetSharedLogisticsSettings();
         }
 
 
@@ -153,6 +155,13 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             TenantManagementPM tenantManagment = GetTenantManagement(cargoShipmentPM.Tenant);
             cargoShipmentPM.ActivatedForDeclarationApprove = tenantManagment?.ActivatedforDeclarationApprove ?? false;
             cargoShipmentPM.TenantDeclarationMessage = tenantManagment?.DeclarationMessage;
+        }
+
+        private void SetSharedLogisticsSettings()
+        {
+            SharedLogisticsSettingQueryService query = new SharedLogisticsSettingQueryService(cargoShipmentPM.Tenant);
+            SharedLogisticsSettingPM setting = query.GetSingle(cargoShipmentPM.Tenant.ToString(), false, false);
+            cargoShipmentPM.SharedLogisticsSetting = setting;
         }
 
         private void SetShipmentCloudDataFields()

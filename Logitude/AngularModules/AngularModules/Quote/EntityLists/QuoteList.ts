@@ -207,4 +207,4 @@ export class QuoteList {
 		InsuranceValue: number;
 		ValidByTypeCode: string;
 	
-}
+}

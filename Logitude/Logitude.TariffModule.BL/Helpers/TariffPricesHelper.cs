@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -22,9 +24,11 @@ namespace Logitude.TariffModule.BL.Helpers
         public string profitCurrencyId;
         public double? profitRate;
         public List<RatesTableList> ratesList;
+        private int tenant;
 
         public TariffPricesHelper(int tenant)
         {
+            this.tenant = tenant;
             ratesList = this.GetRates(tenant);
         }
 
@@ -192,6 +196,49 @@ namespace Logitude.TariffModule.BL.Helpers
             entityLists = entityLists.OrderByDescending(r => r.ValueDate);
 
             return entityLists.ToList();
+        }
+
+        public decimal CalculateLocalAmount(decimal amount, string convertedCurrencyId, string tariffLineCurrencyId)
+        {
+            var tenantCurrency = GetTenantCurrency();
+            decimal amountInTariffCurr, amountInConvertedCurr;
+
+            if (convertedCurrencyId == tariffLineCurrencyId)
+            {
+                amountInTariffCurr = amount;
+            }
+
+            else
+            {
+                if (tenantCurrency == tariffLineCurrencyId)
+                    amountInTariffCurr = amount;
+                else
+                {
+                    RatesTableList rateList = ratesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == tariffLineCurrencyId);
+                    var rate = rateList == null ? 0 : rateList.Rate;
+                    amountInTariffCurr = amount * (decimal)rate;
+
+                }
+
+                if (tenantCurrency == convertedCurrencyId)
+                    amountInConvertedCurr = amountInTariffCurr;
+
+                else
+                {
+                    RatesTableList rateList = ratesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == convertedCurrencyId);
+                    var rate = rateList == null ? 0 : rateList.Rate;
+                    amountInTariffCurr = amountInTariffCurr / (decimal)rate;
+                }
+            }
+
+            return amountInTariffCurr;
+        }
+        private string GetTenantCurrency()
+        {
+            TenantRepository tRepo = new TenantRepository(tenant);
+            Tenant t = tRepo.GetSingleByTenant(tenant);
+            var tenantCurrency = (t == null ? null : t.CurrencyId);
+            return tenantCurrency;
         }
     }
 }

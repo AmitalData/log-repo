@@ -3226,6 +3226,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 InterestEntityTypeCode = "1",
                 EntityId = invoiceTotalVat.ARInvoiceId,
+                AccountingEntityCode = AccountingEntityValues.ARInvoice,
                 OriginalEntityLineNumber = invoiceLineNumber,
                 LocalAmount = (decimal)invoiceTotalVat.LocalVATAmount,
                 ForeignAmount = (decimal?)invoiceTotalVat.InvoiceCurrencyVATAmount,
@@ -3276,6 +3277,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 InterestEntityTypeCode = "1",
                 EntityId = invoiceLine.ARInvoiceId,
+                AccountingEntityCode = AccountingEntityValues.ARInvoice,
                 OriginalEntityLineNumber = invoiceLine.LineNumber,
                 LocalAmount = (decimal)invoiceLine.LocalCurrencyAmount,
                 GLAccountId = interestTransactionGLAccount,

@@ -13,7 +13,7 @@ inner join (
 	where GLAccountCurrencies.GLAccountId != InterestTransactions.GLAccountId AND ARInvoiceLines.ForiegnCurrencyId = GLAccountCurrencies.CurrencyId AND InterestReportId is null
 ) as InterestTransactionsGlAccountCurrencies
 on InterestTransactions.EntityId = InterestTransactionsGlAccountCurrencies.EntityId AND InterestTransactions.OriginalEntityLineNumber = InterestTransactionsGlAccountCurrencies.OriginalEntityLineNumber  AND InterestTransactions.InterestEntityTypeCode = InterestTransactionsGlAccountCurrencies.InterestEntityTypeCode
-AND InterestTransactions.Tenant = InterestTransactionsGlAccountCurrencies.Tenant AND $LastCounterWhere$
+AND InterestTransactions.Tenant = InterestTransactionsGlAccountCurrencies.Tenant
 
      ]]>
  </Sql>

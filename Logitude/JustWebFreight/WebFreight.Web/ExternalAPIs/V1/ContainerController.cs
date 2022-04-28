@@ -69,6 +69,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (containerPM != null)
                         {
+                            containerPM.IsUpdatedFromAPI = true;
                             ContainerService service = new ContainerService(shipmentsContext, authToken.Tenant);
                             service.Update(containerPM);
 
