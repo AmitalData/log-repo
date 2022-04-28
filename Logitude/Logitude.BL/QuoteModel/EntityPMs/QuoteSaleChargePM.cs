@@ -85,5 +85,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? SalesWithVATAmount { get; set; }
         public bool IsRegionalTax { get; set; }
         public string QuoteChargesGroupCode { get; set; }
+        public double? VATAmountInLocalCurrency { get; set; }
+        public double? VATAmountInLineSaleCurrency { get; set; }
+        public double? SaleTotalAmountIncludingVAT { get; set; }
+        public double? SaleTotalAmountLocalIncludingVAT { get; set; }
     }
 }

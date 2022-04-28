@@ -2748,6 +2748,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 IsChargeBySteps = item.IsChargeBySteps,
                 SalesWithVATAmount = item.SaleTotalAmount + item.VatAmount,
                 QuoteChargesGroupCode = item.QuoteChargesGroupCode,
+                VATAmountInLocalCurrency = item.VATAmountInLocalCurrency,
+                VATAmountInLineSaleCurrency = item.VATAmountInLineSaleCurrency,
+                SaleTotalAmountIncludingVAT = item.SaleTotalAmountIncludingVAT,
+                SaleTotalAmountLocalIncludingVAT = item.SaleTotalAmountLocalIncludingVAT,
             };
             return saleChargePM;
         }

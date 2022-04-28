@@ -41,6 +41,7 @@ using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityLists;
 using System.Text.RegularExpressions;
 using Logitude.BL.QuoteModel.DataContracts;
+using WebFreight.Web.Helpers.QuoteTemplate;
 
 namespace Logitude.BL.Helpers
 {
@@ -1373,14 +1374,13 @@ namespace Logitude.BL.Helpers
             string alignContent = quoteTemplateTextDesignTotalsLabel.Alignment;
             if (setting.RightToLeft) dir = "dir='RTL'";
             string totalInSaleCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(SaleTotalAmountInSaleCurrency + " " + quotePM.SaleCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
-            string totalInLocalCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, true) + BuildTotalInSale(SaleTotalAmountInLocalCurrency + " " + LocalCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
 
             if (!quotePM.IsSaleCurrencySameAsCost)
             {
                 if (showTotalInSaleCurrency && showTotalInLocalCurrency)
                 {
                     HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:"+ alignContent + ";'>" + totalInSaleCurrency + "</div>");
-                    if (quotePM.SaleCurrencyCode != LocalCurrencyCode) HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInLocalCurrency + "</div>");
+                    if (quotePM.SaleCurrencyCode != LocalCurrencyCode) HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, Name, quotePM, LocalCurrencyCode, true));
                 }
                 else if (showTotalInSaleCurrency)
                 {
@@ -1389,8 +1389,7 @@ namespace Logitude.BL.Helpers
                 }
                 else if (showTotalInLocalCurrency)
                 {
-                    totalInLocalCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(SaleTotalAmountInLocalCurrency + " " + LocalCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
-                    HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInLocalCurrency + "</div>");
+                    HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, Name, quotePM, LocalCurrencyCode, false));
                 }
             }
 
@@ -1420,29 +1419,46 @@ namespace Logitude.BL.Helpers
 
                     if (showTotalInLocalCurrency)
                     {
-
-                        totalInLocalCurrency = BuildTotalInSale(LocalCurrencyName, quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(" : " + SaleTotalAmountInLocalCurrency, quoteTemplateTextDesignTotalsValue, false);
-                        HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInLocalCurrency + "</div>");
+                        HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, LocalCurrencyName, quotePM, null));
                     }
 
                 }
-                else
+                else if (showTotalInLocalCurrency)
                 {
-
-                    if (showTotalInLocalCurrency)
-                    {
-                        totalInLocalCurrency = BuildTotalInSale(LocalCurrencyName + " : ", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(SaleTotalAmountInLocalCurrency + " " + LocalCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
-                        HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInLocalCurrency + "</div>");
-
-                    }
-
-
-
-
+                    HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, LocalCurrencyName, quotePM, null));
                 }
 
 
             }
+        }
+
+        private string GetLocalCurrencyTotalTemplate(QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsLabel, QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsValue, string dir, string alignContent, string LocalCurrencyName, QuotePM quotePM, string currency, bool IsHiddenTotal = false)
+        {
+            var currnecyCode = currency != null ? " " + currency : "";
+
+            if (!quotePM.IsChargesByVAT)
+            {
+                string totalInLocalCurrency = BuildTotalInSale(LocalCurrencyName, quoteTemplateTextDesignTotalsLabel, IsHiddenTotal) + BuildTotalInSale(" : " + GetNumberValueFormate(quotePM.SaleTotalAmountInLocalCurrency) + currnecyCode, quoteTemplateTextDesignTotalsValue, false);
+                return "<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInLocalCurrency + "</div>";
+            }
+
+            var amounts = "";
+            string subTotal = BuildTotalInSale("Sub Total", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale("     : " + GetNumberValueFormate(quotePM.SaleTotalAmountInLocalCurrency) + currnecyCode, quoteTemplateTextDesignTotalsValue, false);
+            amounts = amounts + "</br><div " + dir + " style='white-space: pre;display:block;text-align:" + alignContent + ";'>" + subTotal + "</div>";
+
+            string vatAmount = BuildTotalInSale("Vat Amount", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(" : " + GetNumberValueFormate(GetLocalVatAmount(quotePM)) + currnecyCode, quoteTemplateTextDesignTotalsValue, false);
+            amounts = amounts + "<div " + dir + " style='white-space: pre;display:block;text-align:" + alignContent + ";'>" + vatAmount + "</div>";
+
+            string total = BuildTotalInSale("Total", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale("            : " + GetNumberValueFormate(quotePM.TotalSaleIncludingVATAmountInLocalCurrency) + currnecyCode, quoteTemplateTextDesignTotalsValue, false);
+            amounts = amounts + "<div " + dir + " style='white-space: pre;display:block;text-align:" + alignContent + ";'>" + total + "</div>";
+
+            return amounts;
+        }
+
+        private static double? GetLocalVatAmount(QuotePM quotePM)
+        {
+            if (quotePM.TotalVATs == null || !quotePM.TotalVATs.Any()) return null;
+            return quotePM.TotalVATs.Sum(a => a.LocalCurrencyVATAmount);
         }
 
         private List<QuoteSalesTotalPM> ComputeQuoteSalesTotals(QuotePM quotePM)
@@ -2153,12 +2169,15 @@ namespace Logitude.BL.Helpers
                 SaleCurrencyCode = "USD",
                 TotalPerContainer = true,
                 IsChargesByVAT = true,
+                TotalSaleIncludingVATAmountInLocalCurrency = 1000,
+                TotalSaleIncludingVATAmountInSaleCurrency = 2000,
+                IsSaleCurrencySameAsCost = false
             };
 
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName ="vat1",VatPercentage =50 ,ChargesTypeCode = "AFT", Notes = "test", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description", SaleMaxAmount = 50, SaleMinAmount = 20, QuoteChargesGroupCode = "ORCH" });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat2", VatPercentage = 40, ChargesTypeCode = "AFT", Notes = "test2", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description1", SaleMaxAmount = 40, SaleMinAmount = 25, QuoteChargesGroupCode = "ORCH" });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat3", VatPercentage = 30, ChargesTypeCode = "DEMU", Notes = "test3", ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description2", SaleMaxAmount = 45, SaleMinAmount = 33, QuoteChargesGroupCode = "DECH" });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat4", VatPercentage = 10, ChargesTypeCode = "DU", Notes = "test4", ChargesGroupCode = "FRT", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description3", SaleMaxAmount = 22, SaleMinAmount = 15, QuoteChargesGroupCode = "ORCH" });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName ="vat1",VatPercentage =50 ,ChargesTypeCode = "AFT", Notes = "test", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description", SaleMaxAmount = 50, SaleMinAmount = 20, QuoteChargesGroupCode = "ORCH", VATAmountInLocalCurrency = 10, VATAmountInLineSaleCurrency = 20, SaleTotalAmountIncludingVAT = 30, SaleTotalAmountLocalIncludingVAT = 40 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat2", VatPercentage = 40, ChargesTypeCode = "AFT", Notes = "test2", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description1", SaleMaxAmount = 40, SaleMinAmount = 25, QuoteChargesGroupCode = "ORCH", VATAmountInLocalCurrency = 10, VATAmountInLineSaleCurrency = 20, SaleTotalAmountIncludingVAT = 30, SaleTotalAmountLocalIncludingVAT = 40 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat3", VatPercentage = 30, ChargesTypeCode = "DEMU", Notes = "test3", ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description2", SaleMaxAmount = 45, SaleMinAmount = 33, QuoteChargesGroupCode = "DECH", VATAmountInLocalCurrency = 10, VATAmountInLineSaleCurrency = 20, SaleTotalAmountIncludingVAT = 30, SaleTotalAmountLocalIncludingVAT = 40 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat4", VatPercentage = 10, ChargesTypeCode = "DU", Notes = "test4", ChargesGroupCode = "FRT", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description3", SaleMaxAmount = 22, SaleMinAmount = 15, QuoteChargesGroupCode = "ORCH", VATAmountInLocalCurrency = 10, VATAmountInLineSaleCurrency = 20, SaleTotalAmountIncludingVAT = 30, SaleTotalAmountLocalIncludingVAT = 40 });
 
             return quotePM;
         }
@@ -2655,6 +2674,18 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
 
 
+            QuoteTemplateVatAmountsService quoteTemplateVatAmountsService = new QuoteTemplateVatAmountsService(this, new VatAmountsAruments
+            {
+                StringBuilder = HtmlTemplate,
+                QuoteTemplateSettingPM = setting,
+                QuoteTemplateTextDesignPM = quotetemplateTextDesignPMHeader,
+                QuoteTemplateTableDesignPM = quoteTemplateTableDesignPM,
+                PricingSectionType = pricingSectionType,
+                TextCodes = textcodes,
+                QuotePM = quotePM,
+                PricesPackagesTableSettings = setting.QuoteTemplateSettingData.PricesPackagesTableSettings,
+                PricesContainersTableSettings = setting.QuoteTemplateSettingData.PricesContainersTableSettings,
+            });
 
             IsShowlanguage = setting.ShowLocalLanguage;
             if (pricingSectionType == "PP")
@@ -2730,6 +2761,11 @@ namespace Logitude.BL.Helpers
                         allPackagesHeaderColumns.Add("VATPERCENTAGEPACKAGES", GetHeaderColumn("VATPERCENTAGEPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes));
                     }
                 }
+
+                quoteTemplateVatAmountsService.BuildSaleVatPackagesHeaderColumns();
+                quoteTemplateVatAmountsService.BuildLocalVatPackagesHeaderColumns();
+                setting.QuoteTemplateSettingData.PricesPackagesTableSettings = quoteTemplateVatAmountsService.AddRangeTableSettings(setting.QuoteTemplateSettingData.PricesPackagesTableSettings, quoteTemplateVatAmountsService.pricesPackagesTableSettings);
+                allPackagesHeaderColumns = quoteTemplateVatAmountsService.AddColumns(allPackagesHeaderColumns, quoteTemplateVatAmountsService.headerColumns);
 
                 HtmlTemplate = BuildHtmlTemplateWithAllColumns(HtmlTemplate, setting.QuoteTemplateSettingData.PricesPackagesTableSettings, allPackagesHeaderColumns);
 
@@ -2858,6 +2894,10 @@ namespace Logitude.BL.Helpers
                     }
                 }
 
+                quoteTemplateVatAmountsService.BuildSaleVatContainersHeaderColumns();
+                quoteTemplateVatAmountsService.BuildLocalVatContainersHeaderColumns();
+                setting.QuoteTemplateSettingData.PricesContainersTableSettings = quoteTemplateVatAmountsService.AddRangeTableSettings(setting.QuoteTemplateSettingData.PricesContainersTableSettings, quoteTemplateVatAmountsService.pricesContainersTableSettings);
+                allContainersHeaderColumns = quoteTemplateVatAmountsService.AddColumns(allContainersHeaderColumns, quoteTemplateVatAmountsService.headerColumns);
                 //===========================================================================
 
                 HtmlTemplate = BuildHtmlTemplateWithAllColumns(HtmlTemplate, setting.QuoteTemplateSettingData.PricesContainersTableSettings, allContainersHeaderColumns);
@@ -2888,7 +2928,7 @@ namespace Logitude.BL.Helpers
             return PackageTableSetting.Key;
         }
 
-        private string GetHeaderColumn(string textCode, StringBuilder HtmlTemplate, QuoteTemplateSettingPM setting, QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader, QuoteTemplateTableDesignPM quoteTemplateTableDesignPM, string pricingSectionType, List<QuoteTemplateTextCodePM> textcodes)
+        public string GetHeaderColumn(string textCode, StringBuilder HtmlTemplate, QuoteTemplateSettingPM setting, QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader, QuoteTemplateTableDesignPM quoteTemplateTableDesignPM, string pricingSectionType, List<QuoteTemplateTextCodePM> textcodes)
         {
             string Name = GetNameColum(textCode, textcodes, pricingSectionType);
             int width = GetWidthColumHeaderForPricingTable(textCode, pricingSectionType, setting);
@@ -3026,6 +3066,8 @@ namespace Logitude.BL.Helpers
                     if (setting.ShowVATPercentagePackages) ++TdCount;
                 }
 
+                if (quotePM.IsChargesByVAT && setting.ShowSaleCurrencyColumnPackages) TdCount += 2;
+                if (quotePM.IsChargesByVAT && setting.ShowLocalCurrencyColumnPackages) TdCount += 2;
 
             }
             else if (sectionType == "PC" && setting.ShowPricesTableContainers)
@@ -3067,7 +3109,8 @@ namespace Logitude.BL.Helpers
                     if (setting.ShowVATPercentageContainers) ++TdCount;
                 }
 
-
+                if (quotePM.IsChargesByVAT && setting.ShowSaleCurrencyColumnContainers) TdCount += 2;
+                if (quotePM.IsChargesByVAT && setting.ShowLocalCurrencyColumnContainers) TdCount += 2;
 
             }
         }
@@ -3247,7 +3290,7 @@ namespace Logitude.BL.Helpers
         }
 
 
-        private string AddTableRows(PricingTableRowDetailsArgs pricingTableRowDetailsArgs)
+        public string AddTableRows(PricingTableRowDetailsArgs pricingTableRowDetailsArgs)
         {
             string width = GetWidthColumHeaderForPricingTable(pricingTableRowDetailsArgs.FieldCode , pricingTableRowDetailsArgs.PricingSectionType, pricingTableRowDetailsArgs.QuoteTemplateSettingPM).ToString() + "%"; ;
             return BuildTableColumn(pricingTableRowDetailsArgs.Value, pricingTableRowDetailsArgs.HeaderDesign, pricingTableRowDetailsArgs.TableDesign, pricingTableRowDetailsArgs.RowDataType, width, pricingTableRowDetailsArgs.QuoteTemplateSettingPM.RightToLeft, pricingTableRowDetailsArgs.RowDataType == "FieldPrice" ? true:false);
@@ -3265,9 +3308,22 @@ namespace Logitude.BL.Helpers
 
             Dictionary<string, string> allTableRows;
 
+            QuoteTemplateVatAmountsService quoteTemplateVatAmountsService = new QuoteTemplateVatAmountsService(this, new VatAmountsAruments
+            {
+                StringBuilder = HtmlTemplate,
+                QuoteTemplateSettingPM = setting,
+                QuoteTemplateTextDesignPM = quoteTemplateTextDesignLines,
+                QuoteTemplateTableDesignPM = quotetemplatetableDesignPM,
+                PricingSectionType = pricingSectionType,
+                QuotePM = quotePM,
+            });
+
             int i = -1;
             foreach (QuoteSaleChargePM chargePM in quoteSaleCharges)
             {
+                quoteTemplateVatAmountsService.Reset();
+                quoteTemplateVatAmountsService.SetQuoteSaleChargePM(chargePM);
+
                 allTableRows = new Dictionary<string, string>();
                 bool included = (chargePM.IsAllIN != null && chargePM.IsAllIN.ToLower() == "true" ? true : false);
                 ++i;
@@ -3384,6 +3440,9 @@ namespace Logitude.BL.Helpers
                             allTableRows.Add("VATPERCENTAGEPACKAGES", AddTableRows(new PricingTableRowDetailsArgs() { FieldCode = "VATTYPEPACKAGES", Value = value, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
                         }
                     }
+                    quoteTemplateVatAmountsService.BuildLocalVatPackagesColumns();
+                    quoteTemplateVatAmountsService.BuildSaleVatPackagesColumns();
+                    allTableRows = quoteTemplateVatAmountsService.AddColumns(allTableRows, quoteTemplateVatAmountsService.tableRows);
 
                     HtmlTemplate = BuildHtmlTemplateWithAllColumns(HtmlTemplate, setting.QuoteTemplateSettingData.PricesPackagesTableSettings, allTableRows);
                 }
@@ -3623,6 +3682,10 @@ namespace Logitude.BL.Helpers
                         }
                     }
 
+                    quoteTemplateVatAmountsService.BuildSaleVatContainersColumns();
+                    quoteTemplateVatAmountsService.BuildLocalVatContainersColumns();
+                    allTableRows = quoteTemplateVatAmountsService.AddColumns(allTableRows, quoteTemplateVatAmountsService.tableRows);
+
                     HtmlTemplate = BuildHtmlTemplateWithAllColumns(HtmlTemplate, setting.QuoteTemplateSettingData.PricesContainersTableSettings, allTableRows);
                 }
 
@@ -3630,7 +3693,7 @@ namespace Logitude.BL.Helpers
             }
         }
 
-        private  string GetNumberValueFormate(double? value)
+        public string GetNumberValueFormate(double? value)
         {
             string result = string.Empty;
             if (value != null)
