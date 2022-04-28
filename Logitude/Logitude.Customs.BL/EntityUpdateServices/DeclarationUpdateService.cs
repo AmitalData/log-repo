@@ -784,6 +784,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+
+            if (entityPM.CourierCustomStatusCode != entityPOCO.CourierCustomStatusCode)
+                LogMessagingUtil.Instance.AppendLine("CourierCustomStatusCode update to=" + entityPM.CourierCustomStatusCode + DateTime.Now.ToString("hh: mm:ss.fff tt"));
+
+
             base.OnUpdating(entityPM, entityPOCO);
         }
 
