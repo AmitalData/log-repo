@@ -39,6 +39,7 @@ namespace Logitude.BL.CommonDataModel.ExternalService
         {
             List<DocumentTypeTemplatePM> tenantZeroDocumentTypeTemplatePMs = allSystemTenantZeroDocumentTypeTemplatePMs.Where(t => t.DocumentTypeId == tenantZeroDocumentTypePM.Id).ToList();
             List<DocumentTypeTemplatePM> currentTenantDocumentTypeTemplatePMs = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(t => t.DocumentTypeId == currentTenantDocumentType.Id).ToList();
+            documentTypeShouldChange = false;
 
             if (!string.IsNullOrEmpty(tenantZeroDocumentTypePM.CountryCode) && currentTenantDocumentType.CountryCode != tenantZeroDocumentTypePM.CountryCode) return;
 
@@ -86,13 +87,13 @@ namespace Logitude.BL.CommonDataModel.ExternalService
 
         private string GetDefaultDocumentType(DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeTemplatePM, string currentTenantDocumentTypeDefaultTemplate)
         {
-            DocumentTypeTemplatePM currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.OriginalTemplateId == tenantZeroDefaultDocumentTypeTemplatePM.Id && d.CountryCode == countryCode).FirstOrDefault();
+            DocumentTypeTemplatePM currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.DocumentTypeCode == tenantZeroDefaultDocumentTypeTemplatePM.DocumentTypeCode && d.OriginalTemplateId == tenantZeroDefaultDocumentTypeTemplatePM.Id && d.CountryCode == countryCode).FirstOrDefault();
             if (currentDefaultDocumentTypeTemplatePM != null) return currentDefaultDocumentTypeTemplatePM.Id;
             
-            currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.CountryCode == countryCode).FirstOrDefault();
+            currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.DocumentTypeCode == tenantZeroDefaultDocumentTypeTemplatePM.DocumentTypeCode && d.CountryCode == countryCode).FirstOrDefault();
             if (currentDefaultDocumentTypeTemplatePM != null) return currentDefaultDocumentTypeTemplatePM.Id;
             
-            currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => string.IsNullOrEmpty(d.CountryCode)).FirstOrDefault();
+            currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.DocumentTypeCode == tenantZeroDefaultDocumentTypeTemplatePM.DocumentTypeCode && string.IsNullOrEmpty(d.CountryCode)).FirstOrDefault();
             if (currentDefaultDocumentTypeTemplatePM != null) return currentDefaultDocumentTypeTemplatePM.Id;
 
             return currentTenantDocumentTypeDefaultTemplate;
