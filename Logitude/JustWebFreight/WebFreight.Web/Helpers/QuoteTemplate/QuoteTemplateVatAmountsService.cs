@@ -18,6 +18,9 @@ namespace WebFreight.Web.Helpers.QuoteTemplate
         public List<PricesFieldSettings> pricesContainersTableSettings;
 
         public Dictionary<string, string> tableRows;
+
+        private readonly int shiftListByOneColumn = 1;
+        private readonly int shiftListByThreeColumns = 3;
         public QuoteTemplateVatAmountsService(QuoteTemplateReportHelper quoteTemplateReportHelper, VatAmountsAruments vatAmountsAruments)
         {
             headerColumns = new Dictionary<string, string>();
@@ -74,7 +77,7 @@ namespace WebFreight.Web.Helpers.QuoteTemplate
         {
             if (!vatAmountsAruments.QuotePM.IsChargesByVAT || !vatAmountsAruments.QuoteTemplateSettingPM.ShowSaleCurrencyColumnPackages) return;
 
-            var shiftBy = localBeforeSale ? 3 : 1;
+            var shiftBy = localBeforeSale ? shiftListByThreeColumns : shiftListByOneColumn;
             var index = vatAmountsAruments.PricesPackagesTableSettings.FirstOrDefault(x => x.Code == "TOTALPACKAGES").Index + shiftBy;
             headerColumns.Add("VATPACKAGES", BuildVatHeaderColumnValue("VATPACKAGES", true, index));
             headerColumns.Add("TOTALINCLUDINGVATPACKAGES", BuildVatHeaderColumnValue("TOTALINCLUDINGVATPACKAGES", true, index + 1));
@@ -84,7 +87,7 @@ namespace WebFreight.Web.Helpers.QuoteTemplate
         {
             if (!vatAmountsAruments.QuotePM.IsChargesByVAT || !vatAmountsAruments.QuoteTemplateSettingPM.ShowSaleCurrencyColumnContainers) return;
 
-            var shiftBy = localBeforeSale ? 3 : 1;
+            var shiftBy = localBeforeSale ? shiftListByThreeColumns : shiftListByOneColumn;
             var index = vatAmountsAruments.PricesContainersTableSettings.FirstOrDefault(x => x.Code == "TOTALCONTAINERS").Index + shiftBy;
             headerColumns.Add("VATCONTAINERS", BuildVatHeaderColumnValue("VATCONTAINERS", false, index));
             headerColumns.Add("TOTALINCLUDINGVATCONTAINERS", BuildVatHeaderColumnValue("TOTALINCLUDINGVATCONTAINERS", false, index + 1));
@@ -94,7 +97,7 @@ namespace WebFreight.Web.Helpers.QuoteTemplate
         {
             if (!vatAmountsAruments.QuotePM.IsChargesByVAT || !vatAmountsAruments.QuoteTemplateSettingPM.ShowLocalCurrencyColumnPackages) return;
 
-            var shiftBy = localBeforeSale ? 1 : 3;
+            var shiftBy = localBeforeSale ? shiftListByOneColumn : shiftListByThreeColumns;
             var index = vatAmountsAruments.PricesPackagesTableSettings.FirstOrDefault(x => x.Code == "LOCALAMOUNTPACKAGES").Index + shiftBy;
             headerColumns.Add("LOCALVATPACKAGES", BuildVatHeaderColumnValue("LOCALVATPACKAGES", true, index));
             headerColumns.Add("TOTALINCLUDINGVATLOCALPACKAGES", BuildVatHeaderColumnValue("TOTALINCLUDINGVATLOCALPACKAGES", true, index + 1));
@@ -104,7 +107,7 @@ namespace WebFreight.Web.Helpers.QuoteTemplate
         {
             if (!vatAmountsAruments.QuotePM.IsChargesByVAT || !vatAmountsAruments.QuoteTemplateSettingPM.ShowLocalCurrencyColumnContainers) return;
 
-            var shiftBy = localBeforeSale ? 1 : 3;
+            var shiftBy = localBeforeSale ? shiftListByOneColumn : shiftListByThreeColumns;
             var index = vatAmountsAruments.PricesContainersTableSettings.FirstOrDefault(x => x.Code == "LOCALAMOUNTCONTAINERS").Index + shiftBy;
             headerColumns.Add("LOCALVATCONTAINERS", BuildVatHeaderColumnValue("LOCALVATCONTAINERS", false, index));
             headerColumns.Add("TOTALINCLUDINGVATLOCALCONTAINERS", BuildVatHeaderColumnValue("TOTALINCLUDINGVATLOCALCONTAINERS", false, index + 1));
@@ -158,9 +161,9 @@ namespace WebFreight.Web.Helpers.QuoteTemplate
             return quoteTemplateReportHelper.AddTableRows(new PricingTableRowDetailsArgs() { FieldCode = textCode, Value = quoteTemplateReportHelper.GetNumberValueFormate(GetPropValue(vatAmountsAruments.QuoteSaleChargePM, getValueFrom)), RowDataType = "Field", QuoteTemplateSettingPM = vatAmountsAruments.QuoteTemplateSettingPM, HeaderDesign = vatAmountsAruments.QuoteTemplateTextDesignPM, TableDesign = vatAmountsAruments.QuoteTemplateTableDesignPM, PricingSectionType = vatAmountsAruments.PricingSectionType });
         }
 
-        public double? GetPropValue(object src, string propName)
+        public double? GetPropValue(object srcObject, string propName)
         {
-            return (double?)src.GetType().GetProperty(propName).GetValue(src, null);
+            return (double?)srcObject.GetType().GetProperty(propName).GetValue(srcObject, null);
         }
 
         public List<PricesFieldSettings> AddRangeTableSettings(List<PricesFieldSettings> fieldSettings, List<PricesFieldSettings> newFiledSettings)

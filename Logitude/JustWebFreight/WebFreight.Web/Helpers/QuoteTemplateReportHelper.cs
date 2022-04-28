@@ -1380,7 +1380,7 @@ namespace Logitude.BL.Helpers
                 if (showTotalInSaleCurrency && showTotalInLocalCurrency)
                 {
                     HtmlTemplate.Append("<div " + dir + " style='display:block;text-align:"+ alignContent + ";'>" + totalInSaleCurrency + "</div>");
-                    if (quotePM.SaleCurrencyCode != LocalCurrencyCode) HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, Name, quotePM, LocalCurrencyCode, true));
+                    if (quotePM.SaleCurrencyCode != LocalCurrencyCode) HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(new LocalCurrencyTotalArguments(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, Name, quotePM, LocalCurrencyCode, true)));
                 }
                 else if (showTotalInSaleCurrency)
                 {
@@ -1389,7 +1389,7 @@ namespace Logitude.BL.Helpers
                 }
                 else if (showTotalInLocalCurrency)
                 {
-                    HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, Name, quotePM, LocalCurrencyCode, false));
+                    HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(new LocalCurrencyTotalArguments(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, Name, quotePM, LocalCurrencyCode, false)));
                 }
             }
 
@@ -1419,38 +1419,38 @@ namespace Logitude.BL.Helpers
 
                     if (showTotalInLocalCurrency)
                     {
-                        HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, LocalCurrencyName, quotePM, null));
+                        HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(new LocalCurrencyTotalArguments(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, LocalCurrencyName, quotePM, null)));
                     }
 
                 }
                 else if (showTotalInLocalCurrency)
                 {
-                    HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, LocalCurrencyName, quotePM, null));
+                    HtmlTemplate.Append(GetLocalCurrencyTotalTemplate(new LocalCurrencyTotalArguments(quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue, dir, alignContent, LocalCurrencyName, quotePM, null)));
                 }
 
 
             }
         }
 
-        private string GetLocalCurrencyTotalTemplate(QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsLabel, QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsValue, string dir, string alignContent, string LocalCurrencyName, QuotePM quotePM, string currency, bool IsHiddenTotal = false)
+        private string GetLocalCurrencyTotalTemplate(LocalCurrencyTotalArguments localCurrencyTotalArguments)
         {
-            var currnecyCode = currency != null ? " " + currency : "";
+            var currnecyCode = localCurrencyTotalArguments.Currency != null ? " " + localCurrencyTotalArguments.Currency : "";
 
-            if (!quotePM.IsChargesByVAT)
+            if (!localCurrencyTotalArguments.QuotePM.IsChargesByVAT)
             {
-                string totalInLocalCurrency = BuildTotalInSale(LocalCurrencyName, quoteTemplateTextDesignTotalsLabel, IsHiddenTotal) + BuildTotalInSale(" : " + GetNumberValueFormate(quotePM.SaleTotalAmountInLocalCurrency) + currnecyCode, quoteTemplateTextDesignTotalsValue, false);
-                return "<div " + dir + " style='display:block;text-align:" + alignContent + ";'>" + totalInLocalCurrency + "</div>";
+                string totalInLocalCurrency = BuildTotalInSale(localCurrencyTotalArguments.LocalCurrencyName, localCurrencyTotalArguments.QuoteTemplateTextDesignTotalsLabel, localCurrencyTotalArguments.IsHiddenTotal) + BuildTotalInSale(" : " + GetNumberValueFormate(localCurrencyTotalArguments.QuotePM.SaleTotalAmountInLocalCurrency) + currnecyCode, localCurrencyTotalArguments.QuoteTemplateTextDesignTotalsValue, false);
+                return "<div " + localCurrencyTotalArguments.Direction + " style='display:block;text-align:" + localCurrencyTotalArguments.AlignContent + ";'>" + totalInLocalCurrency + "</div>";
             }
 
             var amounts = "";
-            string subTotal = BuildTotalInSale("Sub Total", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale("     : " + GetNumberValueFormate(quotePM.SaleTotalAmountInLocalCurrency) + currnecyCode, quoteTemplateTextDesignTotalsValue, false);
-            amounts = amounts + "</br><div " + dir + " style='white-space: pre;display:block;text-align:" + alignContent + ";'>" + subTotal + "</div>";
+            string subTotal = BuildTotalInSale("Sub Total", localCurrencyTotalArguments.QuoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale("     : " + GetNumberValueFormate(localCurrencyTotalArguments.QuotePM.SaleTotalAmountInLocalCurrency) + currnecyCode, localCurrencyTotalArguments.QuoteTemplateTextDesignTotalsValue, false);
+            amounts = amounts + "</br><div " + localCurrencyTotalArguments.Direction + " style='white-space: pre;display:block;text-align:" + localCurrencyTotalArguments.AlignContent + ";'>" + subTotal + "</div>";
 
-            string vatAmount = BuildTotalInSale("Vat Amount", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(" : " + GetNumberValueFormate(GetLocalVatAmount(quotePM)) + currnecyCode, quoteTemplateTextDesignTotalsValue, false);
-            amounts = amounts + "<div " + dir + " style='white-space: pre;display:block;text-align:" + alignContent + ";'>" + vatAmount + "</div>";
+            string vatAmount = BuildTotalInSale("Vat Amount", localCurrencyTotalArguments.QuoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(" : " + GetNumberValueFormate(GetLocalVatAmount(localCurrencyTotalArguments.QuotePM)) + currnecyCode, localCurrencyTotalArguments.QuoteTemplateTextDesignTotalsValue, false);
+            amounts = amounts + "<div " + localCurrencyTotalArguments.Direction + " style='white-space: pre;display:block;text-align:" + localCurrencyTotalArguments.AlignContent + ";'>" + vatAmount + "</div>";
 
-            string total = BuildTotalInSale("Total", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale("            : " + GetNumberValueFormate(quotePM.TotalSaleIncludingVATAmountInLocalCurrency) + currnecyCode, quoteTemplateTextDesignTotalsValue, false);
-            amounts = amounts + "<div " + dir + " style='white-space: pre;display:block;text-align:" + alignContent + ";'>" + total + "</div>";
+            string total = BuildTotalInSale("Total", localCurrencyTotalArguments.QuoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale("            : " + GetNumberValueFormate(localCurrencyTotalArguments.QuotePM.TotalSaleIncludingVATAmountInLocalCurrency) + currnecyCode, localCurrencyTotalArguments.QuoteTemplateTextDesignTotalsValue, false);
+            amounts = amounts + "<div " + localCurrencyTotalArguments.Direction + " style='white-space: pre;display:block;text-align:" + localCurrencyTotalArguments.AlignContent + ";'>" + total + "</div>";
 
             return amounts;
         }
@@ -4171,6 +4171,29 @@ namespace Logitude.BL.Helpers
         public int IsOrder { get; set; }
     }
 
+    public class LocalCurrencyTotalArguments
+    {
+        public LocalCurrencyTotalArguments(QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsLabel, QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsValue, string direction, string alignContent, string localCurrencyName, QuotePM quotePM, string currency, bool isHiddenTotal = false)
+        {
+            QuoteTemplateTextDesignTotalsLabel = quoteTemplateTextDesignTotalsLabel;
+            QuoteTemplateTextDesignTotalsValue = quoteTemplateTextDesignTotalsValue;
+            Direction = direction;
+            AlignContent = alignContent;
+            LocalCurrencyName = localCurrencyName;
+            QuotePM = quotePM;
+            Currency = currency;
+            IsHiddenTotal = isHiddenTotal;
+        }
+
+        public QuoteTemplateTextDesignPM QuoteTemplateTextDesignTotalsLabel { get; set; }
+        public QuoteTemplateTextDesignPM QuoteTemplateTextDesignTotalsValue { get; set; }
+        public string Direction { get; set; }
+        public string AlignContent { get; set; }
+        public string LocalCurrencyName { get; set; }
+        public QuotePM QuotePM { get; set; }
+        public string Currency { get; set; }
+        public bool IsHiddenTotal { get; set; }
+    }
 
 }
 
