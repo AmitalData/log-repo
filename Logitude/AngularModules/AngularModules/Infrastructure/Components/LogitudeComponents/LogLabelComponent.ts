@@ -25,6 +25,7 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
         "Replace",
         "ReplaceWith",
         "ShowTitle",
+        "Title",
     ],
 
     template:
@@ -39,11 +40,11 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
                 </div>
             </td>
 
-            <td class="TextTrimming" style="vertical-align:middle;"  [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!IsSmallLabel" title="{{ ShowTitle ? LabelText : '' }}">
+            <td class="TextTrimming" style="vertical-align:middle;"  [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!IsSmallLabel" title="{{ ShowTitle ? (Title ? Title : LabelText) : '' }}">
                 <label class="Label" [ngStyle]="{color: LabelColor}">{{LabelText}}</label>
             </td>
 
-            <td class="TextTrimming" style="vertical-align:middle;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="IsSmallLabel" title="{{ ShowTitle ? LabelText : '' }}">
+            <td class="TextTrimming" style="vertical-align:middle;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="IsSmallLabel" title="{{ ShowTitle ? (Title ? Title : LabelText) : '' }}">
                 <label class="SmallLabel" [ngStyle]="{color: LabelColor}">{{LabelText}}</label>
             </td>
         </tr>
@@ -63,6 +64,7 @@ export class LogLabelComponent implements OnInit {
     public ShowWarning: boolean = false;
     public NoValidation: boolean = false;
     public ShowTitle: boolean = false;
+    public Title: string;
     objectfield: any;
     uiProperty: UIProperty;   
     @Input() NoObjectField: boolean = false; 
