@@ -183,6 +183,7 @@ namespace CommunicationWorkerRole
                                     {
                                         Id = a.Id,
                                         ReceivedDate = a.ReceivedDate,
+                                        ReceivedByUserId = a.ReceivedByUserId
                                     }).ToList();
 
             return documentsFilings;
@@ -192,11 +193,11 @@ namespace CommunicationWorkerRole
         {
             if (documentsFilings == null || (documentsFilings != null && documentsFilings.Count() == 0))
             {
-                UpdateShipment(documentsFiling.EntityId, false, null);
+                UpdateShipment(documentsFiling, false, null);
             }
             else if ((documentsFilings != null && documentsFilings.Count() >= 1))
             {
-                UpdateShipment(documentsFiling.EntityId, true, documentsFilings.FirstOrDefault()?.ReceivedDate);
+                UpdateShipment(documentsFiling, true, documentsFilings.FirstOrDefault()?.ReceivedDate);
             }
         }
 
@@ -206,12 +207,14 @@ namespace CommunicationWorkerRole
             var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
             if (shipmentObjectTable != null && shipmentObjectTable.Name == "Shipment" && documentFiling.DocumentTypeCode == "POD")
             {
-                UpdateShipment(documentFiling.EntityId, true, podRecivedDate);
+                UpdateShipment(documentFiling, true, podRecivedDate);
             }
         }
 
-        private void UpdateShipment(string shipmentId, bool isPODReceived, DateTime? podReceivedDate)
+        private void UpdateShipment(DocumentsFilingPM documentFiling, bool isPODReceived, DateTime? podReceivedDate)
         {
+            var shipmentId = documentFiling.EntityId;
+            var pODReceivedByUserId = documentFiling.ReceivedByUserId;
             if (string.IsNullOrEmpty(shipmentId))
             {
                 return;
@@ -220,7 +223,7 @@ namespace CommunicationWorkerRole
             shipment.IsPODReceived = isPODReceived;
             shipment.PODReceivedDate = podReceivedDate;
             this.UpdateShipmentContainers(shipmentId, podReceivedDate, tenant);
-            this.HandelPODShipmentEvent(isPODReceived, podReceivedDate);
+            this.HandelPODShipmentEvent(isPODReceived, podReceivedDate, pODReceivedByUserId);
             shipmentRepository.Update(shipment);
             shipmentRepository.SubmitChanges();
         }
@@ -255,11 +258,11 @@ namespace CommunicationWorkerRole
             containerService.Update(container);
         }
 
-        private void HandelPODShipmentEvent(bool isPODReceived, DateTime? podReceivedDate)
+        private void HandelPODShipmentEvent(bool isPODReceived, DateTime? podReceivedDate, string pODReceivedByUserId)
         {
             var isNew = false;
             ShipmentMasterData master = this.GetMasterShipment();
-            var shipmentTracing = new ShipmentTracing(shipmentPM, shipment, master, shipment?.UpdatedByUserId, isNew);
+            var shipmentTracing = new ShipmentTracing(shipmentPM, shipment, master, pODReceivedByUserId, isNew);
             shipmentTracing.TracePODReceived(isPODReceived, podReceivedDate);
         }
 
