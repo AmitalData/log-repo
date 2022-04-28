@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "70eac94cbe61382fe74d414c34437e96";
+		public const string HashString = "4fb8e07dd9991f1f73530b8c3671ed5f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -49888,6 +49888,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "QuoteFreightExpirationDate",
 					  						ListPropertyPath =  "QuoteFreightExpirationDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -49905,7 +49906,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuoteFreightExpirationDate",
-					  						DefaultText =  "QuoteFreightExpirationDate",
+					  						DefaultText =  "Quote Freight Expiration Date",
+					  						ListFieldLable =  "QuoteFreightExpirationDateListLable",
+					  						ListLableDefaultText =  "Quote Freight Expiration Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
