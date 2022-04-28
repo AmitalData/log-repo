@@ -2185,6 +2185,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
+
+        public List<DeclarationList> GetExportStorageConnectToDeclaration(string declarationId) =>
+            new DeclarationRepository(Tenant)
+
+
+
         public string GetHatraDateForDecId(string decId,int tenant)
         {
             return repository.GetHatraDateForDecId(decId, tenant);

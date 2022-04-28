@@ -33,10 +33,12 @@ import { EntityResourceService } from '../../../../../Infrastructure/Services/En
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationExportRecipientPM } from '../../../../../Customs/EntityPMs/DeclarationExportRecipientPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 
 @Component({
 
     templateUrl: './DeclarationGeneralComponent.html',
+    styleUrls: ['./DeclarationGeneralComponent.scss'],
     providers: [DeclarationExtendedListService],
 })
 
@@ -66,6 +68,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     AddRecipientEnabled: boolean;
     public DeclarationExportRecipientTableName: string = "Customs.DeclarationExportRecipient";
     private CurrentSession = SessionLocator.SelectedSession;
+    exportStorageConnectToDeclaration = null as any;
+
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
@@ -353,6 +357,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     //#endregion
 
     ngAfterViewInit() {
+    }
+    
+    ngOnInit() {
+        this.getExportStorageData();
     }
 
     checkImportersVisibility() {
@@ -1537,6 +1545,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
 
     }
+
+    
+    async getExportStorageData() {
+        this.exportStorageConnectToDeclaration =  await new DeclarationWebService().getExportStorageConnectToDeclaration(this.EntityPM.Id);
+        console.log(this.exportStorageConnectToDeclaration)
+    }
+
 }
 
 

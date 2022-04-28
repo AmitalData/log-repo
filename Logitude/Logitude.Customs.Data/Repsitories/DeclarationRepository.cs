@@ -978,6 +978,25 @@ namespace Logitude.Customs.Data.Repsitories
             DeclarationId res = myQ.Take(1).ToList().FirstOrDefault();
             return res;
         }
+
+
+        public List<DeclarationList> GetExportStorageConnectToDeclaration(string declarationId)
+        {
+            var res = (
+                from d in context.Declarations.Where(x => x.Id == declarationId)
+
+                join e in context.ExportStorages on d.ExportFile equals e.ExportFileNo into ejoin
+                from ej in ejoin.DefaultIfEmpty()
+                group by 
+
+                select new
+                {
+
+                }
+
+
+                );
+        }
     }
 
 

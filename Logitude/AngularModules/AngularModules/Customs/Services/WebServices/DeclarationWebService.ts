@@ -1904,6 +1904,20 @@ export class DeclarationWebService {
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
         return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
+
+
+    public getExportStorageConnectToDeclaration(id: string) : Promise<any>{
+        const ajax: Observable<any> = this._http.get(
+            this._apiUrl + "/ExportStorageConnectToDeclaration",
+            {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+                params: { id: id }
+            }
+        );
+
+        // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+    }
 }
 
 
