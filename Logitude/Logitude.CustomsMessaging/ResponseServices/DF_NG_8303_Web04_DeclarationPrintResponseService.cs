@@ -316,8 +316,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.OwnerId = requestParams.LoggingUserId;
             documentsFilingPM.UpdatedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
-            //documentsFilingPM.DirectionCode = "I";
-            documentsFilingPM.DirectionCode = this._MyDeclarationPM.Direction;
+            documentsFilingPM.DirectionCode = "I";
+            // I/O  - only  !!  -   documentsFilingPM.DirectionCode = this._MyDeclarationPM.Direction;
             documentsFilingPM.Description = "טופס הצהרה " + this._MyDeclarationPM.DeclarationNumber + "-" + this._MyDeclarationPM.VersionId;
             documentsFilingPM.ExternalEntityName = this._MyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM";
             documentsFilingPM.ExternalEntityReference = this._MyDeclarationPM.CustomFileNo;
