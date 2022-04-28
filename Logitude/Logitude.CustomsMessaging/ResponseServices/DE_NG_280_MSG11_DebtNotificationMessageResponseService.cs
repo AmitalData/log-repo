@@ -27,7 +27,7 @@ using Attachment = UnifreightIIG.Common.MessageLib.Deficit.Attachment;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-    public class DE_NG_280_MSG11_DebtNotificationMessageResponseService:
+    public class DE_NG_280_MSG11_DebtNotificationMessageResponseService :
         ResponseServiceBase<INF_MSG_GenericResponseData, DE_NG_280_MSG11_DebtNotificationMessage, GenericRequestParams>
     {
         private int _MyDeficitTenant;
@@ -47,14 +47,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (customResponse == null) return;
                 if (customResponse.Attachment == null) return;
-                 customResponse.Attachment.ToList().ForEach( attachment=>{
+                customResponse.Attachment.ToList().ForEach(attachment => {
 
-                     var MD5Hash = MD5HashUtil.GetMD5Hash(attachment.content);
-                     attachment.content = System.Text.UTF8Encoding.UTF8.GetBytes(MD5Hash);
-                 }) ;
+                    var MD5Hash = MD5HashUtil.GetMD5Hash(attachment.content);
+                    attachment.content = System.Text.UTF8Encoding.UTF8.GetBytes(MD5Hash);
+                });
 
 
-                
+
 
 
             };
@@ -91,7 +91,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 return;
             }
-           
+
             // Create new record in Deficit Table
             GetDeficitDetails(customResponse);
             deficitUpdateService.Update(this._MyDeficitPM, true);
@@ -156,7 +156,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this._MyDeficitPM.TapagNumber = CodeCounter.GetNumber("Customs.Tapag", this._MyDeficitTenant).ToString();
             this._MyDeficitPM.TapagTypeCode = "1";
             this._MyDeficitPM.LeadingFileNumber = customResponse.DebtNotificationMessag.leadingFileNumber.ToString();
-            var clientId = clientQueryService.GetIdByCode(customResponse.DebtNotificationMessag.externalID.ToString(), this._MyDeficitTenant,true);
+            var clientId = clientQueryService.GetIdByCode(customResponse.DebtNotificationMessag.externalID.ToString(), this._MyDeficitTenant, true);
             if (!String.IsNullOrWhiteSpace(clientId))
             {
                 //this._MyDeficitPM.CustomerId = clientId;
@@ -309,22 +309,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string objectTableId = "";
                 string entityId = "";
                 string childEntityId = "";
-                string dir = "I";
                 if (_MyDeclarationPM != null) // If connected to Declaration
                 {
                     objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                     entityId = _MyDeclarationPM.Id;
                     childEntityId = _MyDeficitPM.Id;
-                    dir = _MyDeclarationPM.Direction;
                 }
                 else
                 {
                     objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Deficit");
                     entityId = _MyDeficitPM.Id;
                 }
-
                 var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("DEF", requestParams.Tenant);
-                var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, childEntityId, objectTableId, dir /*"I"*/, requestParams.Tenant);
+                var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, childEntityId, objectTableId, "I", requestParams.Tenant);
 
                 foreach (var documentItem in documentsFilingPMList)
                 {
@@ -354,7 +351,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
 
-            documentsFilingService.Update(documentsFilingPM, attachment.content,requestParams.LoggingUserId);
+            documentsFilingService.Update(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
             if (this._MyDeclarationPM != null)
             {
                 logMessage = " -For declaration " + _MyDeclarationPM.DeclarationNumber;
@@ -399,15 +396,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.ExternalEntityName = "CFIFILEM";
             documentsFilingPM.FileExtension = "PDF";
 
-            documentsFilingService.Create(documentsFilingPM, attachment.content,requestParams.LoggingUserId);
+            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
             LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
         }
 
         private string GetTapagConnection(string fileNumber, int numeral)
         {
             var tapagConnectionTableQueryService = new TapagConnectionTableQueryService(this._MyDeficitTenant);
-            TapagConnectionTablePM tapagConnectionTablePM = tapagConnectionTableQueryService.GetTapagConnectionByFileAndNumeral(fileNumber, numeral,this._MyDeficitTenant);
-            if(tapagConnectionTablePM != null)
+            TapagConnectionTablePM tapagConnectionTablePM = tapagConnectionTableQueryService.GetTapagConnectionByFileAndNumeral(fileNumber, numeral, this._MyDeficitTenant);
+            if (tapagConnectionTablePM != null)
             {
                 return tapagConnectionTablePM.DeclarationId;
             }

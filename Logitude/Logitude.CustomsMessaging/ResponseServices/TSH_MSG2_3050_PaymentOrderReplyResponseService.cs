@@ -630,7 +630,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 entityId = _PaymentOrderPM.Id;
             }
             var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("POR", _PaymentOrderPM.Tenant);
-            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, childEntityId, objectTableId, dir/*"I"*/, requestParams.Tenant);
+            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, childEntityId, objectTableId, "I", requestParams.Tenant);
 
             foreach (var documentItem in documentsFilingPMList)
             {
@@ -838,7 +838,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 entityId = _PaymentOrderPM.Id;
             }
             var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("POR", _PaymentOrderPM.Tenant);
-            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, childEntityId, objectTableId, dir/*"I"*/, requestParams.Tenant);
+            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, childEntityId, objectTableId, "I", requestParams.Tenant);
 
             foreach (var documentItem in documentsFilingPMList)
             {

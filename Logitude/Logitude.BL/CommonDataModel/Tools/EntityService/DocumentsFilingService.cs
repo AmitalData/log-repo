@@ -183,8 +183,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 if (
                     (entityPM.DirectionCode == "I")
-                    || 
-                    (entityPM.DirectionCode == "E")
+                    //|| 
+                    //(entityPM.DirectionCode == "E")
                     )
                     
                 {

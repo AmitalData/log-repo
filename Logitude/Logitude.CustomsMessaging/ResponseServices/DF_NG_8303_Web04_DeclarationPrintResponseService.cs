@@ -242,7 +242,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Check if file already exists
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("DEC", requestParams.Tenant);
-            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(_MyDeclarationPM.Id, null, objectTableId, _MyDeclarationPM.Direction  /*"I"*/, requestParams.Tenant);
+            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(_MyDeclarationPM.Id, null, objectTableId, "I", requestParams.Tenant);
             foreach (var documentItem in documentsFilingPMList)
             {
                 if (documentItem.DocumentTypeId == documentType?.Id)
@@ -316,8 +316,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.OwnerId = requestParams.LoggingUserId;
             documentsFilingPM.UpdatedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
-            //documentsFilingPM.DirectionCode = "I";
-            documentsFilingPM.DirectionCode = this._MyDeclarationPM.Direction;
+            documentsFilingPM.DirectionCode = "I";
+            // I/O  - only  !!  -   documentsFilingPM.DirectionCode = this._MyDeclarationPM.Direction;
             documentsFilingPM.Description = "טופס הצהרה " + this._MyDeclarationPM.DeclarationNumber + "-" + this._MyDeclarationPM.VersionId;
             documentsFilingPM.ExternalEntityName = this._MyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM";
             documentsFilingPM.ExternalEntityReference = this._MyDeclarationPM.CustomFileNo;

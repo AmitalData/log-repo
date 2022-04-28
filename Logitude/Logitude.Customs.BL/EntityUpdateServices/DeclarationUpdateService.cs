@@ -709,7 +709,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 throw new Exception("DEC documentType  NOT EXIST ?!?!?!?");
             }
 
-            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityPM.Id, null, objectTableId, entityPM.Direction /*"I"*/, entityPM.Tenant);
+            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityPM.Id, null, objectTableId, "I", entityPM.Tenant);
             var extDocPM = documentsFilingPMList.FirstOrDefault(r => r.DocumentTypeId == documentType.Id);
             if (extDocPM != null)
             {
