@@ -47,7 +47,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (this.MyRequestSheetParam == null)
                 this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam = new RequestSheetParam();
+            
             DeclarationQueryService declarationQuery = new DeclarationQueryService(requestParams.Tenant);
 
             this.MyRequestSheetParam.CustomFileNo = larPM.DeclarationId == null ? larPM.ExportFileNo : declarationQuery.GetSingle(larPM.DeclarationId, false, false)?.CustomFileNo;
