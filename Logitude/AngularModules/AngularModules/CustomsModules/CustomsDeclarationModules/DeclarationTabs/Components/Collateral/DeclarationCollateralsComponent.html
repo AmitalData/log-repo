@@ -97,9 +97,14 @@
                         <td></td>
                     
                         <td style="left:0px;float:left">
-                            <button style="width:100px" class="Button" *ngIf="_customsCollateralAnswerSharedDataService.IsDisplayButtonSend"
-                                (click)="OpenEditCollateralAnswerWindow()"> {{'Customs.Declaration.O.MultiCollateralsAnswer'|
-                                TextCodeTranslationPipe}}</button>
+                            
+                            <button style="width:100px" class="Button" *ngIf="this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length>0"
+                                    (click)="OpenEditCollateralAnswerWindow()">
+                                {{
+'Customs.Declaration.O.MultiCollateralsAnswer'|
+                                TextCodeTranslationPipe
+                                }}
+                            </button>
                         </td>
                     </tr>
 

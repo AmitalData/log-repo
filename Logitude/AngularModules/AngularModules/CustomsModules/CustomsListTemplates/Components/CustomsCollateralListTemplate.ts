@@ -45,7 +45,7 @@ export class CustomsCollateralListTemplate {
     BuildDeclarationsCheckBox() {
         if(this.isDisable) return;
 
-        this.IsDeclarationChecked = this._customsCollateralAnswerSharedDataService.connectedSelectAll ||  this.IsDeclarationChecked;
+        this.IsDeclarationChecked = this._customsCollateralAnswerSharedDataService.connectedSelectAll || this.IsDeclarationChecked;
         this.handlerShareService()
     }
 
@@ -60,11 +60,12 @@ export class CustomsCollateralListTemplate {
 
     handlerShareService() {
         if (this.IsDeclarationChecked) {
-            if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(this._CustomsCollateralRecord.DeclarationId)) 
-                this._customsCollateralAnswerSharedDataService._SelectedItems.Insert(this._CustomsCollateralRecord.DeclarationId);
+            
+            if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(this._CustomsCollateralRecord.Id))
+                this._customsCollateralAnswerSharedDataService._SelectedItems.Insert(this._CustomsCollateralRecord.Id);
 
             for (var i = 0; i < this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection.length; i++) {
-                if (this._CustomsCollateralRecord.DeclarationId == this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection[i]) {
+                if (this._CustomsCollateralRecord.Id == this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection[i]) {
                     removedIndex = i;
                     break;
                 }
@@ -78,12 +79,12 @@ export class CustomsCollateralListTemplate {
         else {
             var removedIndex = null;
 
-            if (!this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection.includes(this._CustomsCollateralRecord.DeclarationId)) {
-                this._customsCollateralAnswerSharedDataService._UnSelectedItems.Insert(this._CustomsCollateralRecord.DeclarationId);
+            if (!this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection.includes(this._CustomsCollateralRecord.Id)) {
+                this._customsCollateralAnswerSharedDataService._UnSelectedItems.Insert(this._CustomsCollateralRecord.Id);
             }
 
             for (var i = 0; i < this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length; i++) {
-                if (this._CustomsCollateralRecord.DeclarationId == this._customsCollateralAnswerSharedDataService._SelectedItems.Collection[i]) {
+                if (this._CustomsCollateralRecord.Id == this._customsCollateralAnswerSharedDataService._SelectedItems.Collection[i]) {
                     removedIndex = i;
                     break;
                 }
