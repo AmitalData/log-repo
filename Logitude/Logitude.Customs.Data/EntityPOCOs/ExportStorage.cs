@@ -83,6 +83,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FinalDestinationPortCode { get; set; }
         [Column("IsDangerousGoods")]
 	    public decimal? IsDangerousGoods { get; set; }
+        [ForeignKey("ExportLogisticPermitAction")]
+        [Column("ActionCode")]
+	    public string ActionCode { get; set; }
+	      
+        public virtual ExportLogisticPermitAction ExportLogisticPermitAction { get; set; }
     }
 }
 	 

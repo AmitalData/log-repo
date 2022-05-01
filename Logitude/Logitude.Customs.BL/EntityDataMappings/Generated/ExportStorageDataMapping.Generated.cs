@@ -47,7 +47,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StorageSiteCode, 
 	         ExportUnloadingPortCode, 
 	         FinalDestinationPortCode, 
-	         IsDangerousGoods,
+	         IsDangerousGoods, 
+	         ActionCode,
 	      }
 
 
@@ -91,7 +92,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportUnloadingPortCode, 
 	         FinalDestinationPortCode, 
 	         IsDangerousGoods, 
-	         StorageStatusIsOpen,
+	         StorageStatusIsOpen, 
+	         ActionCode, 
+	         ProcedureCurrentName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -223,6 +226,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDangerousGoods))
             {
 				entityPOCO.IsDangerousGoods = entityPM.IsDangerousGoods;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActionCode))
+            {
+				entityPOCO.ActionCode = entityPM.ActionCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -361,6 +369,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsDangerousGoods = entityPOCO.IsDangerousGoods;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActionCode))
+            {
+					entityPM.ActionCode = entityPOCO.ActionCode;
+            }
+
 		}
 
 		public void PMToOldPM(ExportStoragePM entityPM, ExportStoragePM oldEntityPM)
@@ -490,6 +503,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDangerousGoods))
             {
                 oldEntityPM.IsDangerousGoods = entityPM.IsDangerousGoods;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActionCode))
+            {
+                oldEntityPM.ActionCode = entityPM.ActionCode;
             }
 			
 		}

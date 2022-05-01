@@ -109,8 +109,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual CustomsShip CustomsShipCode { get; set; }
         [Column("ConsignmentType")]
 	    public string ConsignmentType { get; set; }
-        [Column("ExportStoragesId")]
-	    public string ExportStoragesId { get; set; }
     }
 }
 	 
