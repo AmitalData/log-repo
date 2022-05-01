@@ -259,7 +259,6 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                             if (!AppTool.IsNullOrEmpty(res)) {
 
                                 this.IsCheckBoxVisible = true;
-                                debugger;
                                 for (var i = 0; i < res.length; i++) {
 
 
