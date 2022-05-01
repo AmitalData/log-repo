@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             IQueryable<ExportStorageList> query = (from en in iQueryable
                                                    
-                                                   join d in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber })
+                                                   join d in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber, r.GovernmentProcedureCurrent, r.ProcedureCurrentCode })
                                                    on en.DeclarationId equals d.Id
                                                    into dj from declaration in dj.DefaultIfEmpty()
 
