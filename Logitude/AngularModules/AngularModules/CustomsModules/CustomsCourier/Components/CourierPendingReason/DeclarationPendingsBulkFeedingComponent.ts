@@ -105,7 +105,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
             return this.showMessage("יש יותר מרשומה אחת עם אותו קוד עיכוב");
 
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-        const msg: string = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll, this.allWithoutdeclarationIdsList, this.filter)
+        const msg: string = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll, this.allWithoutdeclarationIdsList, this.filter, false)
         SessionLocator.SelectedSession.StopBusyIndicator();
 
         this.showMessage(msg);
