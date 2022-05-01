@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -68,6 +70,25 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 }
             }
             return customsCollateralList;
+        }
+
+        public void UpdateMulti(string[] ids, string declarationId, bool selectAll, CustomsCollateralsAnswerPM customsCollateralsAnswerPM, int tenant)
+        {
+            CustomsCollateralUpdateService updateService = new CustomsCollateralUpdateService(context); 
+
+            List<CustomsCollateral> customsCollateralList =
+                selectAll ? 
+                    repository.GetDeclarationCollateralsList(declarationId, tenant).FindAll(x => !ids.Contains(x.Id)) : 
+                    repository.GetDeclarationCollateralsList(ids);
+
+            customsCollateralList.ForEach(customsCollateralItem =>
+            {
+                CustomsCollateralPM customsCollateralPM = GetEntityPM(customsCollateralItem);
+                customsCollateralPM.CustomsCollateralsAnswers.Add(customsCollateralsAnswerPM);                
+
+                customsCollateralPM.ChangeSetOp = ChangeSetOperation.Update;
+                updateService.Update(customsCollateralPM, true);
+            });
         }
     }
 }
