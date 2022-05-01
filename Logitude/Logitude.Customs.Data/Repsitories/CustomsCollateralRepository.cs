@@ -48,6 +48,11 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.EntityIdKey1 == entityIdKey1 && a.EntityIdKey2 == entityIdKey2
                     select a).OrderByDescending(d => d.CollateralRequestNumber).ToList();
         }
+        
+        public List<CustomsCollateral> GetDeclarationCollateralsList(string[] ids) =>
+            (from a in context.CustomsCollaterals
+            where ids.Contains(a.Id)
+            select a).ToList();        
     }
 
 }

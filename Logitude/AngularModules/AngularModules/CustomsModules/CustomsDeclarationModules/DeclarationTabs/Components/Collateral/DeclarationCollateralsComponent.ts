@@ -406,6 +406,8 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
         
         windowArgs.DeclarationId = this.EntityPM.Id;
         windowArgs.collateralToSendlist = this._customsCollateralAnswerSharedDataService._SelectedItems.Collection;
+        windowArgs.collateralToNotSendlist = this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection;
+        windowArgs.selectAll = this.IsSelectedNot;
         var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.CollateralAnswer");
 
         var logWindow = new LogitudeWindow();
