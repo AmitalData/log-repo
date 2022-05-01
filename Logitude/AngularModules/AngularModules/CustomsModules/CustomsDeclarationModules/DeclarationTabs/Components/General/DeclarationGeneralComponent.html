@@ -443,19 +443,19 @@
                                     <td *ngIf="EntityPM.TransportModeId =='O'" style="width: 200px;" class="status-exports">                                        
                                         <table>
                                             <tr>
-                                                <th>סטטוס אחסנות</th>
-                                                <th>סך הכל</th>
+                                                <th>{{'Customs.Declaration.O.ExportsStatus' | TextCodeTranslationPipe}}</th>
+                                                <th>{{'Customs.Declaration.O.Total' | TextCodeTranslationPipe}}</th>
                                             </tr>
                                             <tr>
-                                                <td>לא מקושרות /מקושרות</td>
+                                                <td>{{'Customs.Declaration.O.NotConnect' | TextCodeTranslationPipe}} / {{'Customs.Declaration.O.Connect' | TextCodeTranslationPipe}}</td>
                                                 <td>{{exportStorageConnectToDeclaration?.NotConnect}} / {{exportStorageConnectToDeclaration?.Connect}}</td>
                                             </tr>
                                             <tr>
-                                                <td>סטטוס מטען נקלט - תקין</td>
+                                                <td>{{'Customs.Declaration.O.ChargedStatusReceivedCorrect' | TextCodeTranslationPipe}}</td>
                                                 <td>{{exportStorageConnectToDeclaration?.CustomsStatus}}</td>
                                             </tr>
                                             <tr>
-                                                <td>היתר לוגיסטי מיכסי - אושר</td>
+                                                <td>{{'Customs.Declaration.O.CustomsLogisticalPermitHappiness' | TextCodeTranslationPipe}}</td>
                                                 <td>{{exportStorageConnectToDeclaration?.ActionCode}}</td>
                                             </tr>
                                         </table>
