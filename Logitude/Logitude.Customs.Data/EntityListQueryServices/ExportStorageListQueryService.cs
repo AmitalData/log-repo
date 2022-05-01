@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             IQueryable<ExportStorageList> query = (from en in iQueryable
                                                    
-                                                   join d in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber })
+                                                   join d in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber,r.GovernmentProcedureCurrent,r.ProcedureCurrentCode })
                                                    on en.DeclarationId equals d.Id
                                                    into dj from declaration in dj.DefaultIfEmpty()
 
@@ -131,13 +131,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        ExporterCode = client.Code,
 
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
-                                                       ActionCode= en.ExportLogisticPermitAction.LocalName
+
+                                                       ActionCode= en.ExportLogisticPermitAction.LocalName,
+                                                       ProcedureCurrentName =declaration.GovernmentProcedureCurrent.LocalName
                                                    });
             return query;
         }
 
         private IQueryable<ExportStorage> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ExportStorage> iQueryable, int tenant)
         {
+            var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "DeclarationIdAndProcedureCurrentName");
+            if (filter != null)
+            {
+                iQueryable = iQueryable.Where(x => x.DeclarationId == null || (x.DeclarationId != null  && x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("המכלה")));
+            }
             return iQueryable;
         }
         public List<ExportStorageList> GetListForExportStorage(QueryOperations queryOperations, int tenant)
