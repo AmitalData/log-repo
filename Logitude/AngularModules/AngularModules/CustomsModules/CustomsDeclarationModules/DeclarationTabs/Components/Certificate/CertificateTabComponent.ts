@@ -253,7 +253,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
                     var reqConfirmationCodes: string = "";
                     var res = response.Result;
-                    
+
                     if (res) {
                         if (res.length > 0) {
                             if (!AppTool.IsNullOrEmpty(res)) {
@@ -283,8 +283,9 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                                     if ((AppTool.IsNullOrEmpty(res[i].AttachmentTypeCode) && (AppTool.IsNullOrEmpty(res[i].CertificateExemptionTypeCode) && AppTool.IsNullOrEmpty(res[i].CertificateNumber)))) {
                                         this.isDisableBtn92 = false;
                                     }
-                                }
 
+                                  
+                                }
 
                                 if (reqConfirmationCodes != null) {
                                     reqConfirmationCodes = reqConfirmationCodes.substr(0, reqConfirmationCodes.length - 1);
@@ -325,7 +326,6 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                 });
         }
     }
-
 
     UpdateAllCertificateWithoutResponse() {
 
