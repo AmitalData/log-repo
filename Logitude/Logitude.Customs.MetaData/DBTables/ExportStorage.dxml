@@ -189,6 +189,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ActionCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProcedureCurrentCode"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -207,6 +221,11 @@
   <Relation
     ForeignKeyColumn="CustomsStatus"
     ReferencedTable="CargoStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ActionCode"
+    ReferencedTable="ExportLogisticPermitActions"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
