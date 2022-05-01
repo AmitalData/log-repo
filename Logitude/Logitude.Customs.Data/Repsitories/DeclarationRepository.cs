@@ -160,7 +160,8 @@ namespace Logitude.Customs.Data.Repsitories
 
             int max = 0;
 
-            if (list.Count() != 0) {
+            if (list.Count() != 0)
+            {
                 var maxAmendmentRequestNumber = list.Select(r => (int.TryParse(r.AmendmentRequestNumber, out var a)) ? int.Parse(r.AmendmentRequestNumber) : 0).ToList().Max();
                 var maxCancelRequestNumber = list.Select(r => ((r.CancelRequestNumber).HasValue) ? r.CancelRequestNumber.Value : 0).ToList().Max();
                 max = (maxAmendmentRequestNumber > maxCancelRequestNumber) ? maxAmendmentRequestNumber : maxCancelRequestNumber;
@@ -432,19 +433,19 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
-        public (string id ,string direction) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
+        public (string id, string direction) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return (id: "", direction: "");// tuple literal
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
-            var res=
+            var res =
                   (
                   from rec in context.Declarations
                   where rec.DeclarationNumber == declarationNumber && rec.Tenant == tenant
                   select new { rec.Id, rec.Direction }
                   )
                   .FirstOrDefault();
-            return (id: res.Id, direction:res.Direction);// tuple literal
+            return (id: res.Id, direction: res.Direction);// tuple literal
         }
 
         public List<Declaration> GetDeclarationsById(List<string> declarationIds)
@@ -953,10 +954,10 @@ namespace Logitude.Customs.Data.Repsitories
                         join c in context.ConsignmentPackages.Select(x => new ConsignmentPackagesShort { DeclarationId = x.DeclarationId, PackageTypeCode = x.PackageTypeCode, Quantity = x.PackageQuantity.Value }) on d.Id equals c.DeclarationId into cjoin
                         from cj in cjoin.DefaultIfEmpty()
 
-                        select new  ConsignmentPackagesShort { DeclarationId = cj.DeclarationId, PackageTypeCode = cj.PackageTypeCode, Quantity = cj.Quantity }
+                        select new ConsignmentPackagesShort { DeclarationId = cj.DeclarationId, PackageTypeCode = cj.PackageTypeCode, Quantity = cj.Quantity }
                     );
             List<ConsignmentPackagesShort> ConsignmentPackages = myQ2.ToList();
-      
+
             return new DeclarationConsignments { ConsignmentPackages = ConsignmentPackages, Consignment = Consignment };
         }
 
@@ -976,6 +977,37 @@ namespace Logitude.Customs.Data.Repsitories
                        select new DeclarationId { Id = d.Id }
                        );
             DeclarationId res = myQ.Take(1).ToList().FirstOrDefault();
+            return res;
+        }
+
+
+        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId)
+        {
+            var actionCodes = new List<string> { "4", "6", "8" };
+
+            var q = (
+                from d in context.Declarations.Where(x => x.Id == declarationId)
+
+                join e in context.ExportStorages on d.ExportFile equals e.ExportFileNo into ejoin
+                from ej in ejoin.DefaultIfEmpty()
+
+                select new
+                {
+                    DeclarationId = ej.DeclarationId,
+                    CustomsStatus = ej.CustomsStatus,
+                    ActionCode = ej.ActionCode
+                })
+                .GroupBy(x => true)
+                .Select(g => new ExportStorageConnectToDeclaration
+                {
+                    NotConnect = g.Sum(x => string.IsNullOrEmpty(x.DeclarationId) ? 1 : 0),
+                    Connect = g.Sum(x => x.DeclarationId == declarationId ? 1 : 0),
+                    CustomsStatus = g.Sum(x => x.CustomsStatus == "1" ? 1 : 0),
+                    ActionCode = g.Sum(x => actionCodes.Contains(x.ActionCode) ? 1 : 0)
+                });
+
+            ExportStorageConnectToDeclaration res = q.ToList().FirstOrDefault();
+            
             return res;
         }
     }
@@ -1009,7 +1041,7 @@ namespace Logitude.Customs.Data.Repsitories
         public string Importername { get; set; }
         public string Cargodescription { get; set; }
         public string Casualimporteraddress { get; set; }
-        
+
         public string Casualimportercity { get; set; }
         public decimal? TotalInvoiceAmountInUSD { get; set; }
         public int PackageMeasureQualifierCode { get; set; }
@@ -1024,7 +1056,7 @@ namespace Logitude.Customs.Data.Repsitories
             CourierHAWB = courierHAWB;
             Importername = importername;
             Cargodescription = cargodescription;
-            Casualimporteraddress = casualimporteraddress;            
+            Casualimporteraddress = casualimporteraddress;
             Casualimportercity = casualimportercity;
             TotalInvoiceAmountInUSD = totalInvoiceAmountInUSD;
             PackageMeasureQualifierCode = packageMeasureQualifierCode;
@@ -1062,8 +1094,15 @@ namespace Logitude.Customs.Data.Repsitories
             IncotermCode = incotermCode;
         }
     }
-    //class TotM {
+    
 
+    public class ExportStorageConnectToDeclaration
+    {
+        public int NotConnect { get; set; }
+        public int Connect { get; set; }
+        public int CustomsStatus { get; set; }
+        public int ActionCode { get; set; }              
+    }
 }
 
 

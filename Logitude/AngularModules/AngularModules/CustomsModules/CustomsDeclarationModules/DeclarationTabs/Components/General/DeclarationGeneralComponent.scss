@@ -1,0 +1,25 @@
+.status-exports {
+    width: 200px;
+    padding-right: 55px;
+    position: relative;
+
+    table {
+        background-color: #ffff8e;
+        position: absolute;
+        top: 0;
+
+        td, th {
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        th:first-child,
+        td:first-child {
+            text-align: right;
+        }
+
+        th{
+            font-weight: bold;
+        }
+    }
+}

@@ -40,9 +40,9 @@
         border: 1px solid #e7e7e7;
     }
 
-        .button_ellipsis:hover {
-            background-color: #e7e7e7;
-        }
+    .button_ellipsis:hover {
+        background-color: #e7e7e7;
+    }
 </style>
 
 <!--<div class="TabHolder" style="background: red;">
@@ -440,6 +440,27 @@
                                         <LogDatePicker [RefreshMe]="RefreshDatePicker" [ObjectFieldName]="'ExportTaxationDateTime'" [ObjectTableName]="ObjectTableName"
                                                        [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="ExportTaxationDateTime"></LogDatePicker>
                                     </td>
+                                    <td *ngIf="EntityPM.TransportModeId =='O'" style="width: 200px;" class="status-exports">                                        
+                                        <table>
+                                            <tr>
+                                                <th>סטטוס אחסנות</th>
+                                                <th>סך הכל</th>
+                                            </tr>
+                                            <tr>
+                                                <td>לא מקושרות /מקושרות</td>
+                                                <td>{{exportStorageConnectToDeclaration?.NotConnect}} / {{exportStorageConnectToDeclaration?.Connect}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>סטטוס מטען נקלט - תקין</td>
+                                                <td>{{exportStorageConnectToDeclaration?.CustomsStatus}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>היתר לוגיסטי מיכסי - אושר</td>
+                                                <td>{{exportStorageConnectToDeclaration?.ActionCode}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+            
 
                                 </tr>
                                 <tr style="height: 28px;">
