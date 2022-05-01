@@ -152,7 +152,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
                                 var dec = declarationQueryService.GetSingleDeclarationById(entityPM.DeclarationId, entityPM.Tenant);
                                 DeclarationCasualDetailsQueryService declarationCasualDetailsQueryService = new DeclarationCasualDetailsQueryService(entityPM.Tenant);
-                                var casual = declarationCasualDetailsQueryService.GetSingle(entityPM.DeclarationId, false, true);
+                                var casual = declarationCasualDetailsQueryService.GetSingle(entityPM.DeclarationId, false, false);
                                 if (casual != null)
                                 {
                                     //dec.CasualSupplierName = casual.CasualSupplierName;
