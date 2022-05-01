@@ -29,6 +29,7 @@ import { loggerService } from 'Infrastructure/Utilities/logger.service';
 import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
+import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -51,6 +52,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     // syncDeclaration$ = new Subject();
     subscriber: Subscription;
     ValidationErrorsList: any[] = [];
+    declartionVal: DeclarationPM;
     private clientListService: ClientListService = null;
     @Input() QueryFilterItems: ApiQueryFilters;
     FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -89,15 +91,15 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     set RequestDate(value: Date) { this.entityPM.RequestDate = value; }
 
     get RequestType() { return this.entityPM?.RequestType }
-    set RequestType(value: string) { 
-        this.entityPM.RequestType = value; 
+    set RequestType(value: string) {
+        this.entityPM.RequestType = value;
         this.setRequiredField('RequestType', !value)
     }
 
     get CargoIdentifierType() { return this.entityPM?.CargoIdentifierType }
     set CargoIdentifierType(value: string) {
         this.entityPM.CargoIdentifierType = value;
-        
+
         if (value) {
             this.setRequiredCargoKey();
             this.setPlaceholderForCargoKey();
@@ -123,7 +125,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
     get PackagingTypeCode() { return this.entityPM?.PackagingTypeCode }
-    set PackagingTypeCode(value: string) { 
+    set PackagingTypeCode(value: string) {
         this.entityPM.PackagingTypeCode = value;
         this.setRequiredField('PackagingTypeCode', !value)
     }
@@ -247,10 +249,12 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     private async syncDeclaration() {
         const consignmentDeclartion: ConsignmentDeclartions = await this.getDeclarationsandConsignment();
-
+        console.log(consignmentDeclartion+"thththth");
+        
+        debugger
         if (!consignmentDeclartion.Consignment || !(await this.confirmSyncDeclaration())) return;
 
-        const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration ;
+        const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration;
 
         this.ExporterNumber = declaration.ImporterCode;
         this.entityPM.DeclarationId = declaration.Id;
@@ -260,8 +264,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.CargoIdentifierKey2 = consignmentDeclartion.Consignment.SecondCargoID
         this.CargoIdentifierKey3 = consignmentDeclartion.Consignment.ThirdCargoID
         this.DeliverySiteID = consignmentDeclartion.Consignment.StorageSiteCode
-
-        if(consignmentDeclartion.ConsignmentPackages.length === 1) {
+        this.declartionVal = declaration;
+        if (consignmentDeclartion.ConsignmentPackages.length === 1) {
             this.entityPM.PackagingTypeCode = consignmentDeclartion.ConsignmentPackages[0].PackageTypeCode
             this.entityPM.Quantity = consignmentDeclartion.ConsignmentPackages[0].Quantity;
         }
@@ -271,6 +275,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     private async confirmSyncDeclaration() {
+        debugger
         const exporterName = this.exporterName ? TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.ForImporter') + ' ' + this.exporterName + ' ' : '';
 
         const myConfirmWindow = new ConfirmWindow();
@@ -342,7 +347,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     ImporterClicked(type, client: ClientList) {
         this.ExporterNumber = client?.Code;
         this.exporterName = client?.FullName;
-        if (client)this.isImporterClicked = true;
+        if (client) this.isImporterClicked = true;
         if (client && !AppTool.IsNullOrEmpty(client.FullName)) {
             this.CalculatedExporterName = client.FullName;
             this.currentClient = client;
@@ -353,7 +358,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         }
     }
 
-    
+
     ImporterTextChanged(type, item: any) {
         if (this.currentClient != null && !AppTool.IsNullOrEmpty(item) && this.ExporterNumber == this.currentClient.Code) {
             this.CalculatedExporterName = this.currentClient.FullName;
@@ -371,7 +376,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
             filters.PageSize = 10;
 
             filters.addAdditionalFilter("Code", item, null, null, "Equal", false, false, false, "string");
-            
+
             this.clientListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
 
                 var itemsCount = 0;
@@ -401,7 +406,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
                 }
             });
         }
-        
+
         if (this.currentClient != null && !AppTool.IsNullOrEmpty(item) && this.ExporterNumber == this.currentClient.Code) {
             this.CalculatedExporterName = this.currentClient.FullName;
         }
@@ -460,7 +465,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
             .filter(filed => !this[filed])
             .forEach(filed =>
                 this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.LogisticActionRequest.F." + filed))));
-        
+
         // Validator.TryValidateObject(this.entityPM, this.ObjectTableName,  this.ValidationErrorsList);
         this.logger.sendError('is invalid', 'ValidationErrorsList: ' + JSON.stringify(this.ValidationErrorsList))
         return !!this.ValidationErrorsList.length;
@@ -468,6 +473,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
+        debugger
         this.logger.sendError('OnCustomSendOptionsButtonClick')
         this.submit = true;
         if (this.invalidate()) return;
@@ -481,10 +487,10 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.logger.sendError('param', 'param: ' + JSON.stringify(param));
         const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
         this.logger.sendError('after SendCustomsMessage8410', 'res: ' + JSON.stringify(res));
-        
+
         CustomMessageProgressComponent
-        .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), false)
-        .catch((err) => {
+            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), false)
+            .catch((err) => {
                 this.logger.sendError('after err', 'err: ' + JSON.stringify(err));
                 this.ValidationErrorsList.push(err)
             });
@@ -507,7 +513,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         param.CargoIdentifierKey3 = this.entityPM.CargoIdentifierKey3;
         param.PackagingTypeCode = this.entityPM.PackagingTypeCode;
         param.Quantity = this.entityPM.Quantity;
-        param.CustomsFile = this.entityPM.ExportFileNo;
+        param.CustomsFile = this.entityPM.DeclarationId == null ? this.entityPM.ExportFileNo : this.declartionVal.CustomFileNo;
         param.Tenant = this.entityPM.Tenant;
         return param;
     }
@@ -581,9 +587,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    private async setPlaceholderForCargoKey() {        
+    private async setPlaceholderForCargoKey() {
         const res: CargoIdentifireTypePM = await this.logtuideTableDataService.getDataFromService(this._CargoIdentifireTypeListService.getSingleFromCache(this.entityPM.CargoIdentifierType))
-        
+
         this.ManifestNumberPlaceholder = res.CargoIdentifierKey1Name;
         this.SecondCargoIDPlaceholder = res.CargoIdentifierKey2Name ?? '';
         this.ThirdCargoIdPlaceholder = res.CargoIdentifierKey3Name ?? '';
