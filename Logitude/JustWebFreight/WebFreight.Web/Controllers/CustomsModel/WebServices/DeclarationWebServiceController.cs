@@ -2221,10 +2221,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                var res = new DeclarationQueryService(authToken.Tenant)
+                ExportStorageConnectToDeclaration res = new DeclarationQueryService(authToken.Tenant).GetExportStorageConnectToDeclaration(id);
                     
-                    
-
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
 
