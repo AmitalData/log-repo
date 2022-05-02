@@ -141,6 +141,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         //filters.addAdditionalFilter("DeclarationId", "123", null, null, "IsNull", false, false, false, "string");
         filters.addAdditionalFilter("StorageStatus", "Cancel", null, null, "NotEqual", false, false, false, "string");
         filters.addAdditionalFilter("DeclarationIdAndProcedureCurrentName", "", null, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("IsExportFileNo", this.declarationPM.ExportFile, null, null, "Contains", true, false, false, "string");
 
 
         if (this.ExportFileFilter) {
@@ -149,7 +150,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         if (this.SearchFieldsFilter) {
             filters.AdditionalFilters.push(this.SearchFieldsFilter);
         }
-
+debugger;
         filters.PageSize = 30;
         filters.PageIndex = 0; // decremented 1 in the service
         filters.GetAll = false;
