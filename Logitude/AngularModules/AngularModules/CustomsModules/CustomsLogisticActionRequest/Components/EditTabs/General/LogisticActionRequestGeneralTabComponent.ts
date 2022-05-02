@@ -22,12 +22,18 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import { ClientListService } from 'Customs/Services/StandardLists/ClientListService'
 import { CargoIdentifireTypeListService } from 'Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { CargoIdentifireTypePM } from 'Customs/EntityPMs/CargoIdentifireTypePM';
+
 import { Validator } from 'Infrastructure/Validators/Validator';
 import { LogisticActionRequestService } from 'Customs/Services/Others/LogisticActionRequestService';
 import { ErrorLogPMFileLoggerService } from 'Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
+
+
+import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
+
 import { loggerService } from 'Infrastructure/Utilities/logger.service';
 import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 
@@ -249,12 +255,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     private async syncDeclaration() {
         const consignmentDeclartion: ConsignmentDeclartions = await this.getDeclarationsandConsignment();
-        console.log(consignmentDeclartion+"thththth");
-        
-        debugger
         if (!consignmentDeclartion.Consignment || !(await this.confirmSyncDeclaration())) return;
 
-        const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration;
+        const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration ;
 
         this.ExporterNumber = declaration.ImporterCode;
         this.entityPM.DeclarationId = declaration.Id;
@@ -264,6 +267,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.CargoIdentifierKey2 = consignmentDeclartion.Consignment.SecondCargoID
         this.CargoIdentifierKey3 = consignmentDeclartion.Consignment.ThirdCargoID
         this.DeliverySiteID = consignmentDeclartion.Consignment.StorageSiteCode
+
         this.declartionVal = declaration;
         if (consignmentDeclartion.ConsignmentPackages.length === 1) {
             this.entityPM.PackagingTypeCode = consignmentDeclartion.ConsignmentPackages[0].PackageTypeCode

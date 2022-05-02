@@ -223,41 +223,7 @@
                 <td colspan="6" class="subTitle">{{'Customs.Declaration.O.MoreData' | TextCodeTranslationPipe}}</td>
             </tr>
 
-            <!-- Fields -->
-            <tr style="height: 40px;">
-
-                <!-- ActualPayedCurrencyTypeCode -->
-                <td style="width: 150px">
-                    <LogLabel [ObjectFieldName]="'ActualPayedCurrencyTypeCode'" [ObjectTableName]="ObjectTableName"
-                              [DataContext]="DataContext"></LogLabel>
-                </td>
-                <td style="width: 115px;" [class.disabled]="IsDisplayOnly">
-                    <LogLov [ObjectFieldName]="'ActualPayedCurrencyTypeCode'"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [LookUpTableName]="'Customs.CurrencyType'"
-                            [HideColumns]="true">
-                    </LogLov>
-                </td>
-
-                <td></td>
-                <td></td>
-
-            </tr>
-            <tr>
-
-                <!-- ActualPayedAmount -->
-                <td style="width: 100px;">
-                    <LogLabel [ObjectFieldName]="'ActualPayedAmount'" [ObjectTableName]="ObjectTableName"
-                              [DataContext]="DataContext"></LogLabel>
-                </td>
-                <td style="width: 115px;" [class.disabled]="IsDisplayOnly">
-                    <LogTextBox [ObjectFieldName]="'ActualPayedAmount'" [ObjectTableName]="ObjectTableName" [AddCommasToNumbers]="true"
-                                [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
+           
             <!-- Title/Modifications -->
             <tr style="height: 28px;">
                 <td class="subTitle">{{'Customs.Declaration.O.ModificationsExport' | TextCodeTranslationPipe}}</td>
