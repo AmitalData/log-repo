@@ -874,29 +874,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string exportStoragesId ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExportStoragesId  
-	   {
-	    
-	     get
-		{
-		   return exportStoragesId;
-		 }
-		 set
-		 {
-		   if(exportStoragesId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportStoragesId",OldValue=exportStoragesId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   exportStoragesId=value;
-		   }
-			
-		 }
-	   }
    }
    
 }

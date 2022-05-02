@@ -22,46 +22,47 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<ExportStorageList> GetIqueryableList(IQueryable<ExportStorage> iQueryable)
         {
             IQueryable<ExportStorageList> query = (from en in iQueryable
-                                                   
-                                                   join d in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber,r.GovernmentProcedureCurrent,r.ProcedureCurrentCode })
+
+                                                   join d in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber, r.GovernmentProcedureCurrent, r.ProcedureCurrentCode })
                                                    on en.DeclarationId equals d.Id
-                                                   into dj from declaration in dj.DefaultIfEmpty()
+                                                   into dj
+                                                   from declaration in dj.DefaultIfEmpty()
 
                                                    join s in context.DeclarationStatusTypes.Select(r => new { r.Code, r.LocalName })
                                                    on declaration.DeclarationStatusTypeCode equals s.Code
                                                    into sj
                                                    from status in sj.DefaultIfEmpty()
 
-                                                   join ct in context.CargoTypes.Select(r => new { r.Code, r.LocalName})
+                                                   join ct in context.CargoTypes.Select(r => new { r.Code, r.LocalName })
                                                    on en.CargoType equals ct.Code
                                                    into ctj
                                                    from cargoType in ctj.DefaultIfEmpty()
 
-                                                   join ss in context.CargoStatuses.Select( r=> new {r.Code, r.LocalName})
+                                                   join ss in context.CargoStatuses.Select(r => new { r.Code, r.LocalName })
                                                    on en.CustomsStatus equals ss.Code
                                                    into ssj
                                                    from cargoStatus in ssj.DefaultIfEmpty()
 
 
-                                                 
+
 
 
                                                    from client in context.Clients
                                                    .Where(c => c.Code == en.ExporterID || c.Id == en.ExporterID)
-                                                   .Select( r=> new {r.Id, r.FullName, r.Code})
+                                                   .Select(r => new { r.Id, r.FullName, r.Code })
                                                    .DefaultIfEmpty()
 
-                                                   //join c in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
-                                                   //on en.ExporterID equals c.Id
-                                                   //into cj
-                                                   //from card in cj.DefaultIfEmpty()
+                                                       //join c in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
+                                                       //on en.ExporterID equals c.Id
+                                                       //into cj
+                                                       //from card in cj.DefaultIfEmpty()
 
-                                                   join cs in context.CustomsShips.Select( r=> new {r.Code, r.LocalName})
+                                                   join cs in context.CustomsShips.Select(r => new { r.Code, r.LocalName })
                                                    on en.ShipCode equals cs.Code
                                                    into csj
                                                    from customsShip in csj.DefaultIfEmpty()
 
-                                                   join ci in context.CargoIdentifireTypes.Select(r=> new{ r.Code, r.LocalName})
+                                                   join ci in context.CargoIdentifireTypes.Select(r => new { r.Code, r.LocalName })
                                                    on en.CargoTypeCode equals ci.Code
                                                    into cij
                                                    from cargoIdentifireType in cij.DefaultIfEmpty()
@@ -105,7 +106,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        // where status.Code == (from Declaration in context.Declarations where Declaration.Id == en.DeclarationId select new { Declaration.DeclarationStatusTypeCode }).FirstOrDefault().DeclarationStatusTypeCode
                                                        // select new  { status.LocalName }
                                                        //).FirstOrDefault().LocalName,
-                                                       
+
                                                        CargoTypeName = cargoType.LocalName,
 
                                                        CustomStatusName = cargoStatus.LocalName,
@@ -136,18 +137,28 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
 
-                                                       ActionCode= en.ExportLogisticPermitAction.LocalName,
-                                                       ProcedureCurrentName =declaration.GovernmentProcedureCurrent.LocalName
+                                                       ActionCode = en.ExportLogisticPermitAction.LocalName,
+                                                       ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName
                                                    });
             return query;
         }
 
         private IQueryable<ExportStorage> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ExportStorage> iQueryable, int tenant)
         {
+            bool flag= false;
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "DeclarationIdAndProcedureCurrentName");
             if (filter != null)
             {
-                iQueryable = iQueryable.Where(x => x.DeclarationId == null || (x.DeclarationId != null  && x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("המכלה")));
+
+                iQueryable = iQueryable.Where(x => x.DeclarationId == null || x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("המכלה"));
+            }
+            var filter2 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsExportFileNo");
+            if (filter2 != null)
+            {
+            
+                flag = !iQueryable.Any(x=>x.ExportFileNo == filter2.FieldValue.ToString()) ;
+                iQueryable = iQueryable.Where(x => flag || x.ExportFileNo == filter2.FieldValue.ToString());
+
             }
             return iQueryable;
         }
@@ -159,7 +170,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportStorage> iQueryable = (from a in context.ExportStorages
 
                                                     where a.Tenant == tenant
-                                                  select a);
+                                                    select a);
             iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
