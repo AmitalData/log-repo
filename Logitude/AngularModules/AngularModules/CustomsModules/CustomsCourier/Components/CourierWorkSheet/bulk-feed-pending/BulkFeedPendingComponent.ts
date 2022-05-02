@@ -45,7 +45,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
   declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
   checkboxAll: boolean = false;
   public MyScrollTop: number = 0;
-  filterAgrs: ApiQueryFilters;
+    filterAgrs: ApiQueryFilters;
+    public PendingFilterItems: ApiQueryFilters;
+    PendingList: string = '';
   columns: any[] = []
   private _entityListService: EntityListService = new EntityListService();
 
@@ -96,8 +98,22 @@ export class BulkFeedPendingComponent extends BaseComponent {
   ngOnInit() {
     this.buildColumns();
 
-    this.RefreshList();
-  }
+      this.RefreshList()
+    }
+
+    GetPending(){
+        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
+        this._CourierMasterService.GetPending(this.CourierMasterPM.Id)
+            .subscribe((resu: any) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                var list: string[];
+                list = resu.Result;
+                this.PendingList = list.toString();
+                this.PendingFilterItems = new ApiQueryFilters();
+                this.PendingFilterItems.addAdditionalFilter("Code", this.PendingList, null, null, "InListExact", false, false, false, "string",false,true);
+
+            });
+    }
 
 
   getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
@@ -233,6 +249,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
     RefreshButtonClicked() {
         this._CourierWorksheetSharedDataService._SelectedItems.Clear();
         this.RefreshList();
+        this.GetPending();
     }
 
     OpenMultiUpdateWindow() {
@@ -316,7 +333,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
 
   SetWindowArgs(args: any) {
-    this.CourierMasterPM = args?.CourierMasterPM;
+      this.CourierMasterPM = args?.CourierMasterPM;
+      this.GetPending();
   }
 
 
