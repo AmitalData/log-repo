@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { CustomsCollateralPM } from "Customs/EntityPMs/CustomsCollateralPM";
 import { CustomsCollateralsAnswerPM } from "Customs/EntityPMs/CustomsCollateralsAnswerPM";
-import { EntityListService } from "Infrastructure/Services/EntityListService";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
 import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { Observable } from "rxjs";
@@ -11,7 +10,7 @@ import { Observable } from "rxjs";
 export class CustomsCollateralWebService {
     private _http: HttpClient;
     private _apiUrl: string;
-    private logtuideTableDataService: LogtuideTableDataService = new LogtuideTableDataService(new EntityListService());
+    private logtuideTableDataService: LogtuideTableDataService = LogtuideTableDataService.createInstance();
 
     constructor() {
         this._http = ServiceHelper.HttpClient;
