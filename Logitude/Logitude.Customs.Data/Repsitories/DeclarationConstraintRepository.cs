@@ -88,7 +88,7 @@ namespace Logitude.Customs.Data.Repsitories
                                                          where c.CargoTypeCode == consignment.CargoTypeCode && c.ManifestNumber == consignment.ManifestNumber &&
                                                          c.SecondCargoID == consignment.SecondCargoID && c.ThirdCargoID == consignment.ThirdCargoID && c.Declaration.ExportContainerizationID == null
                                                          select c).ToList();
-                    consignmentParames = declarationConstraintConsignments.FindAll(x => !ArrayDeclartiosId.Contains(x.DeclarationId)).Select(s => s.Declaration.CustomFileNo).ToList();
+                    consignmentParames = declarationConstraintConsignments.FindAll(x => !ArrayDeclartiosId.Contains(x.DeclarationId)).Select(s => s.Declaration.CustomFileNo).Distinct().ToList();
                     return consignmentParames;
                 }
                 return null;
