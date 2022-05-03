@@ -269,6 +269,7 @@ namespace WebFreight.Web.CustomWebServices
         //        public string RecallClientsForCutomsRequest(string guidId, int tenant, string clientsList)
         public string RecallClientsConcurrencyGUIDForCutomsRequest(string guidId, int tenant)
         {
+
             ClientQueryService clientQueryService = new ClientQueryService(tenant);
             var clientsList = clientQueryService.GetAllLocalClientsIsConcurrencyGUID(tenant);
 
@@ -284,8 +285,7 @@ namespace WebFreight.Web.CustomWebServices
                     "בניית תקשורת שליפת כתבי הרשאה  {2} ( {0}/{1} ) "
                     , (i + 1), (clientsList.Count), clientCode);
                 ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(guidId, mess);
-
-                var clientSearchByCustomsAgentMessagingService = new CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService();
+                var service = new CL_NG_8343_ClientSearchByIDParamMessagingService();
                 var req = new ClientSearchRequestParams()
                 {
                     Tenant = tenant,
@@ -301,7 +301,11 @@ namespace WebFreight.Web.CustomWebServices
                     req.RequestVIA = SendRequestVIA.WebServiceInteractive;
                     req.SuppressSplitWR = true;
                 }
-                clientSearchByCustomsAgentMessagingService.Send(req);
+               
+
+                
+                service.Send(req);
+
             }
 
             return "עידכון כל הלקוחות  ( " + clientsList.Count.ToString() + " ) ימשיך ברקע";
