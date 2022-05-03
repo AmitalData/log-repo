@@ -285,7 +285,7 @@ namespace WebFreight.Web.CustomWebServices
                     "בניית תקשורת שליפת כתבי הרשאה  {2} ( {0}/{1} ) "
                     , (i + 1), (clientsList.Count), clientCode);
                 ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(guidId, mess);
-               
+                var service = new CL_NG_8343_ClientSearchByIDParamMessagingService();
                 var req = new ClientSearchRequestParams()
                 {
                     Tenant = tenant,
@@ -301,10 +301,10 @@ namespace WebFreight.Web.CustomWebServices
                     req.RequestVIA = SendRequestVIA.WebServiceInteractive;
                     req.SuppressSplitWR = true;
                 }
-                ClientSearchByIDResponseData responseData = null;
+               
 
-                var service = new CL_NG_8343_ClientSearchByIDParamMessagingService();
-                responseData = service.Send(req);
+                
+                service.Send(req);
 
             }
 
