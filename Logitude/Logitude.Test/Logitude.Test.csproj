@@ -286,10 +286,6 @@
       <Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>
       <Name>Logitude.Customs.BL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
-      <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
-      <Name>Logitude.Customs.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
