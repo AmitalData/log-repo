@@ -242,7 +242,7 @@
                                             <ng-template let-item>
 <log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
-                                                    <span>{{item.CustomFileNo}}</span>
+                                                    <a (click)="NavigateToDeclarationButtonClicked(item.CustomFileNo)" href="#">{{item.CustomFileNo}}</a>
                                                 </div>
                                             </log-cell-template>
 </ng-template>

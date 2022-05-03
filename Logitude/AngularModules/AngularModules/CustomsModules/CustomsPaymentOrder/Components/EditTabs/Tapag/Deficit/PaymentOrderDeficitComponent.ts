@@ -20,6 +20,8 @@ import { DeclarationWebService } from '../../../../../../Customs/Services/WebSer
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../../../Infrastructure/Services/EntityResourceService';
 import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
+import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 declare var window: any;
 
 @Component({
@@ -248,6 +250,16 @@ export class PaymentOrderDeficitComponent extends BaseComponent {
         //logWindow.Title = TextCodeTranslator.Translate("Customs.PaymentOrder.TH.Deficits");
         logWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deficit/DeficitDecisionComponent');
     }
+    
+
+    NavigateToDeclarationButtonClicked(customFileNo: string) {
+        new DeclarationExtendedListService().GetSingleDeclarationByCustomFileNo(customFileNo).subscribe(async (res: ServiceResponse) => {
+            const entity: DeclarationPM = res.Result;
+            const cmpRef = await SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "הצהרת יבוא" });
+        });
+    }
 }
 
 export class ConnectedEntityLineComponent extends BaseComponent {
@@ -300,5 +312,4 @@ export class ConnectedEntityLineComponent extends BaseComponent {
             this.TotalTax = total.toString();
         }
     }
-
 }
