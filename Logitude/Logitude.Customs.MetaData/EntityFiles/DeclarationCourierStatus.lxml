@@ -6337,7 +6337,7 @@
     OldNames="HatraDate"
     IsNew="true"
     IsChecked="true"
-    IsDeleted="false"
+    IsDeleted="true"
     ObjectTableName="&quot;Customs.DeclarationCourierStatus&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"

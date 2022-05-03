@@ -536,7 +536,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.FinalLoadingSiteName = entityPOCO.LoadingSiteType.LocalName;
             }
 
-
         }
 
         public static void UpdateCourierDeclarationFields(DeclarationPM entityPM, Declaration entityPOCO)

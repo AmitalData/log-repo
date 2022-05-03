@@ -271,6 +271,7 @@ namespace AmitalCustomsWindowsService.Tester
                     return;
             }
 
+
             //d.WorkerQueueType = checkBoxMQ.Checked ? Logitude.Server.Tools.WorkerQueueType.RabbitMQ : Logitude.Server.Tools.WorkerQueueType.DB;
             if (!String.IsNullOrWhiteSpace(textBoxOverrideRMQ.Text))
             {
@@ -292,6 +293,7 @@ namespace AmitalCustomsWindowsService.Tester
 
                 });
             }
+
             d.ExecuteTask(); 
 
         }
@@ -314,7 +316,12 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
+            return;
+
             clsTester.FeatureToggle();
+
             var sw = Stopwatch.StartNew();
             int tenant =GetTenant();
             _MultiThreard = !_MultiThreard;
@@ -325,6 +332,7 @@ namespace AmitalCustomsWindowsService.Tester
             return;
             return;
             clsTester.TestUpdateLOGITUDE_FILE();
+
             //clsTester.GetListByCourierHAWB();
 
             return;
@@ -1135,6 +1143,8 @@ namespace AmitalCustomsWindowsService.Tester
         {
 
         }
+
+       
 
         private void singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click(object sender, EventArgs e)
         {

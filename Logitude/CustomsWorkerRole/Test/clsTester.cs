@@ -29,12 +29,12 @@ using Simplog.Server.Infrastructure.Helpers;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging.ILSWS;
-
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Server.Tools.Helpers;
 
-using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Customs.BL.TraceEvents;
 
+using Logitude.CustomsMessaging.Common.RequestParams;
 
 namespace CustomsWorkerRole.Test
 {
