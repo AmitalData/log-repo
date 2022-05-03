@@ -26,10 +26,6 @@ import { CargoIdentifireTypePM } from 'Customs/EntityPMs/CargoIdentifireTypePM';
 import { Validator } from 'Infrastructure/Validators/Validator';
 import { LogisticActionRequestService } from 'Customs/Services/Others/LogisticActionRequestService';
 import { ErrorLogPMFileLoggerService } from 'Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
-
-
-import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
-
 import { loggerService } from 'Infrastructure/Utilities/logger.service';
 import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';

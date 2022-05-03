@@ -319,7 +319,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
                                 this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
                                 this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
-                                    isConsignment.ExportStoragesId = ExportStorageId;
+                                    isConsignment[0].ExportStoragesId = ExportStorageId;
                                     this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
                                     });
                                 });
