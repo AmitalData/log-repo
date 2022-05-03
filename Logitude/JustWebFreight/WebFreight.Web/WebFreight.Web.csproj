@@ -1074,7 +1074,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferenceStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ClientsPoaController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ContainerizationController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsEnvironmentSettingController.Generated.cs" />
+    
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationCasualDetailsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsEnvironmentSettingController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportDeclarationClosingDataController.Generated.cs" />
@@ -3161,7 +3161,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsEnvironmentSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsDocumentUploadUpdateClass.cs" />
 
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsEnvironmentSettingUpdateClass.cs" />
+    
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsGeneralUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsInsuranceCompanyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPartnerFtpUpdateClass.cs" />
