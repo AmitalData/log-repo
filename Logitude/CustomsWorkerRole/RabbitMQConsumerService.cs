@@ -23,7 +23,7 @@ namespace CustomsWorkerRole
         private string _myClass;
         private CustomDbQueueService _CustomDbQueueService;
         private string _RabbitQueueCode;
-
+        private DateTime _LastReprtAt= DateTime.MinValue;
         public RabbitMQConsumerService(string myClass, string RabbitQueueCode)
         {
             _myClass = myClass;
@@ -33,14 +33,17 @@ namespace CustomsWorkerRole
 
         public void WorkUntilPrcossesStop_RabbitMQ(Func<CustomDBQueueMessage,bool> ProcessMessage_Db, Action LogDoneItemInMemory)
         {
+            bool isConnectionShutdown = false;
             EventHandler<BasicDeliverEventArgs> consumerEventArgs = null;
             try
             {
+                DateTime lastworkAt = DateTime.Now;
+                string RabbitMQLogFILE = "RabbitMQLog"+ _myClass;
                 if (ProcessMessage_Db==null)
                 {
                     Logger.LogMe("ProcessMessage_Db ==null", true, "rabbitmq");
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", $"{_myClass}:WorkerRoleRabbitMQ", $"ProcessMessage_Db == null", null);
-                    Thread.Sleep(60000);
+                    Thread.Sleep(5000);
                     return;
                 }
                 var factory = RabbitmqHelper.GetConnectionFactory();
@@ -53,6 +56,7 @@ namespace CustomsWorkerRole
                     {
 
                         connection.ConnectionShutdown += Connection_ConnectionShutdown;
+                        Logger.LogMe("CONNECTION", false, RabbitMQLogFILE);
                         channel.BasicQos(0, 5, true);
                         RabbitmqHelper.DeclareQueue(channel, this._RabbitQueueCode, true);
 
@@ -69,6 +73,7 @@ namespace CustomsWorkerRole
                             CustomDBQueueMessage customDBQueueMessage = null;
                             try
                             {
+                                lastworkAt = DateTime.Now;
                                 var body = ea.Body.ToArray();
                                 var message = Encoding.UTF8.GetString(body);
                                 messageId = ea.BasicProperties.MessageId;
@@ -85,6 +90,7 @@ namespace CustomsWorkerRole
                                 {
                                     channel.BasicAck(ea.DeliveryTag, false);
                                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", $"{_myClass}:RabbitMQ", $"BasicProperties.Headers[que_id] is null  ", null);
+                                    Logger.LogMe("No interfaceTypeCode in header " + messageId, true, RabbitMQLogFILE);
                                     Thread.Sleep(1000);
 
                                     return;
@@ -96,6 +102,7 @@ namespace CustomsWorkerRole
                                 {
                                     channel.BasicAck(ea.DeliveryTag, false);
                                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", $"{_myClass}:WorkerRoleRabbitMQ", $"GetRabbitMQPseudoByMessageId not found({longQId})", null);
+                                    Logger.LogMe($"GetRabbitMQPseudoByMessageId not found({longQId})", true, RabbitMQLogFILE);
                                     Thread.Sleep(100);
                                     return;
 
@@ -122,8 +129,9 @@ namespace CustomsWorkerRole
 
                                         queue_TransactionScope.Dispose();
                                         successProcessMessage = false;
-                                        Logger.LogMe(e1.ToString(), true, "rabbitmq");
+                                        //Logger.LogMe(e1.ToString(), true, "rabbitmq");
                                         ExceptionHandler.HandleException(e1, DateTime.Now, 0, "", $"{_myClass}:WorkerRoleRabbitMQ", $"WorkUntilPrcossesStop_RabbitMQ{messageId}", null);
+                                        Logger.LogMe($"WorkUntilPrcossesStop_RabbitMQ{messageId}", true, RabbitMQLogFILE);
                                         Thread.Sleep(1000);
 
                                     }
@@ -190,6 +198,10 @@ namespace CustomsWorkerRole
 
                         var consumer = new EventingBasicConsumer(channel);
                         consumer.Received += consumerEventArgs;
+                        consumer.Shutdown += (sender, e) => {
+                            isConnectionShutdown = true;
+                            Logger.LogMe("Connection broke!", false, RabbitMQLogFILE);
+                        };
 
                         channel.BasicConsume(queue: this._RabbitQueueCode,
                                             autoAck: false,
@@ -197,13 +209,37 @@ namespace CustomsWorkerRole
                         Debug.WriteLine("Start BasicConsume " + this._RabbitQueueCode);
                         while (!WorkerRoleServiceLocator.PleaseShutDown)
                         {
+                            if (
+                        isConnectionShutdown ||
+                        connection?.IsOpen == false ||
+                        channel?.IsOpen == false
 
-                            Thread.Sleep(100);
+                        )
+                            {
+
+                                Logger.LogMe("Connection broke!", false, RabbitMQLogFILE);
+                                break;
+                            }
+
+                            if (DateTime.Now.Subtract(lastworkAt) > TimeSpan.FromMinutes(10))
+                            {
+                                Thread.Sleep(1000);
+                                Logger.LogMe("No work (FromMinutes(10)) or connection fail ??! - dispose old create new one", false, RabbitMQLogFILE);
+                                break;
+
+                            }
+                            Thread.Sleep(200);
                             bool getOut = false;
                             if (getOut)
                             {
                                 break;
                             }
+                            if (DateTime.Now.Subtract(_LastReprtAt) > TimeSpan.FromHours(1))
+                            {
+                                _LastReprtAt = DateTime.Now;
+                                Logger.LogMe(this.GetType().FullName + ":Still Alive", false);
+                            }
+
                         }
 
 
