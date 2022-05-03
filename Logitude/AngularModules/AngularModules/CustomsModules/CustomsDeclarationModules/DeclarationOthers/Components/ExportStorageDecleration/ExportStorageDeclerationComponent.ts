@@ -25,6 +25,8 @@ import { ExportStorageExtendedListService } from 'Customs/Services/ExtendedLists
 import { ConsignmentPackagePM } from 'Customs/EntityPMs/ConsignmentPackagePM';
 import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
+import { InternationalSiteListService } from 'Customs/Services/StandardLists/InternationalSiteListService';
+import { DeliverySiteTypeListService } from 'Customs/Services/StandardLists/DeliverySiteTypeListService';
 @Component({
 
     templateUrl: './ExportStorageDeclerationComponent.html',
@@ -50,9 +52,13 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     connectedListIds: ObservableCollection;
     exportStoragePMService: ExportStoragePMService = new ExportStoragePMService();
     containerizationMessagesService: ContainerizationMessagesService = new ContainerizationMessagesService();
+    InternationalSiteService: InternationalSiteListService = new InternationalSiteListService();
+    DeliverySiteTypeService: DeliverySiteTypeListService = new DeliverySiteTypeListService()
     exportStorage: ServiceResponse;
     consignmet: ConsignmentPM;
     consignmentPackagePM: ConsignmentPackagePM;
+    DeliverySiteTypeList: ServiceResponse
+    InternationalSiteList: ServiceResponse
 
     declarationPMService: DeclarationPMService = new DeclarationPMService();
 
@@ -301,6 +307,8 @@ debugger;
 
     SendButtonClicked() {
         debugger;
+
+
         let ArrayExportStorageId = this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
 
         ArrayExportStorageId.forEach(ExportStorageId => {
@@ -335,10 +343,10 @@ debugger;
                                 consignment.ManifestNumber = this.exportStorage.Result.firstCargoID;
                                 consignment.SecondCargoID = this.exportStorage.Result.SecondCargoID;
                                 consignment.CargoDescription = this.exportStorage.Result.MarksNumbers;
-                                consignment.StorageSiteCode = "10081" //this.exportStorage.Result.StorageSiteCode;
+                                consignment.StorageSiteCode = this.checkStorageSiteCode(this.exportStorage.Result.StorageSiteCode) ? this.exportStorage.Result.StorageSiteCode : "";
                                 consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods == null ? 0 : this.exportStorage.Result.IsDangerousGoods;
-                                consignment.ExportUnloadingPortCode = "ALBUT" //this.exportStorage.Result.ExportUnloadingPortCode;
-                                consignment.ExportLoadingPortCode = this.exportStorage.Result.ExportLoadingPortCode;
+                                consignment.ExportUnloadingPortCode = this.checkloadingPortCodAndUn(this.exportStorage.Result.ExportUnloadingPortCode) ? this.exportStorage.Result.ExportUnloadingPortCode : "" //this.exportStorage.Result.ExportUnloadingPortCode;
+                                consignment.ExportLoadingPortCode = this.checkloadingPortCodAndUn(this.exportStorage.Result.ExportLoadingPortCode) ? this.exportStorage.Result.ExportLoadingPortCode : ""//this.exportStorage.Result.ExportLoadingPortCode;
                                 consignment.ConsignmentType = "E";
                                 consignment.DeclarationId = this.declarationPM.Id;
                                 consignment.ConsignmentNumber = this.declarationPM.Consignments.length > 0 ? this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].ConsignmentNumber + 1 : 1;
@@ -388,7 +396,24 @@ debugger;
     }
 
 
+    async checkStorageSiteCode(StorageSiteCode: any) {
 
+      await  this.DeliverySiteTypeService.getSingle(StorageSiteCode).subscribe(res => {
+            if (!AppTool.IsNullOrEmpty(res.Result))
+                return true;
+            return false;
+        })
+        return false;
+    }
+    async checkloadingPortCodAndUn(PortCode: any) {
+
+      await  this.InternationalSiteService.getSingle(PortCode).subscribe(res => {
+            if (!AppTool.IsNullOrEmpty(res.Result))
+                return true;
+            return false;
+        })
+        return false;
+    }
     private timerToken: any;
     TextChanged(searchtext: any) {
         if (searchtext != null || searchtext != undefined) {
