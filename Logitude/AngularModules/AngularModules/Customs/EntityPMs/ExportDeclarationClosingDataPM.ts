@@ -99,6 +99,11 @@ export class ExportDeclarationClosingDataPM {
     public set FLIGHT_DATE(newValue: Date) { if (this.fLIGHT_DATE != newValue) { this.fLIGHT_DATE = newValue; this.MarkAsDirty("FLIGHT_DATE"); } }
        
 	 
+    private chargingSite: string;
+    public get ChargingSite() { return this.chargingSite; }
+    public set ChargingSite(newValue: string) { if (this.chargingSite != newValue) { this.chargingSite = newValue; this.MarkAsDirty("ChargingSite"); } }
+       
+	 
 
     public OldEntityPM: ExportDeclarationClosingDataPM;
 		

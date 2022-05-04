@@ -9359,6 +9359,140 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region EFIMMN
+
+            modelBuilder.Entity<EFIMMN>()
+                .HasKey(p => new { p.FILENO, p.STORGENO })
+                .ToTable("EFIMMN", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.DESOFGOOD)
+                    .HasColumnName(@"DES_OF_GOOD")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.DIRECTLOAD)
+                    .HasColumnName(@"DIRECT_LOAD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int64");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.FINALPORT)
+                    .HasColumnName(@"FINAL_PORT")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.STORGENO)
+                    .HasColumnName(@"STORGE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.MAWBINPORT)
+                    .HasColumnName(@"MAWB_INPORT")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.MEHESOK)
+                    .HasColumnName(@"MEHES_OK")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.MMNDATE)
+                    .HasColumnName(@"MMN_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.MMNTIME)
+                    .HasColumnName(@"MMN_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.MZAR)
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.PACKQNTY)
+                    .HasColumnName(@"PACK_QNTY")
+                    .HasColumnType("int");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.PACKTYPE)
+                    .HasColumnName(@"PACK_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.PART)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.REMARK)
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.SHTONTYPE)
+                    .HasColumnName(@"SHTON_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.SMPINPORT)
+                    .HasColumnName(@"SMP_INPORT")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.SPECIALSTORAGE)
+                    .HasColumnName(@"SPECIAL_STORAGE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.STATUS)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.VALDOLAR)
+                    .HasColumnName(@"VAL_DOLAR")
+                    .HasColumnType("double");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.WGTKG)
+                    .HasColumnName(@"WGT_KG")
+                    .HasColumnType("double");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.YEZUAN)
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.YEZUANNAME)
+                    .HasColumnName(@"YEZUAN_NAME")
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.TYPEOFGOOD)
+                    .HasColumnName(@"TYPE_OF_GOOD")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.DNGGOODS)
+                    .HasColumnName(@"DNG_GOODS")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.WAREHOUSE)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.DRIVERNAME)
+                    .HasColumnName(@"DRIVER_NAME")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<EFIMMN>()
+                .Property(p => p.BARCODE)
+                    .HasMaxLength(9)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
             #region Disabled conventions
 
 
@@ -9484,6 +9618,7 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<EFIFILEM> EFIFILEMs { get; set; }
         public virtual DbSet<ESPSPED> ESPSPEDs { get; set; }
         public virtual DbSet<GITITEMAP> GITITEMAPs { get; set; }
+        public virtual DbSet<EFIMMN> EFIMMNs { get; set; }
 
     }
 }
