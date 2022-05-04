@@ -114,10 +114,10 @@ export class CustomsRequestSheetExtendedPMService {
 
     }
 
-    GetGeneralRequestInProgress(interfaceTypeCode: string, objectTableId1: string, entityId1: string, tenant: number) {
+    GetGeneralRequestInProgress(interfaceTypeCode: string, objectTableId2: string, entityId2: string, tenant: number) {
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetGeneralRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + objectTableId1 + '&entityId1=' + entityId1 + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + "", ServiceHelper.GetHttpHeaders())
+            return this._http.get(this._apiUrl + '/GetGeneralRequestInProgressByEntity2/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + objectTableId2 + '&entityId2=' + entityId2 + '&customFileNo=' + "", ServiceHelper.GetHttpHeaders())
                 .pipe(map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     var requestSheets = response;

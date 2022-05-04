@@ -777,6 +777,35 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetGeneralRequestInProgressByEntity2(int Tenant,
+            string InterfaceTypeCode,
+            string ObjectTableId1, string EntityId1,
+            string ObjectTableId2, string EntityId2,
+            string CustomFileNo)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                CustomsRequestsSheetQueryService customsRequestsSheetQuery = new CustomsRequestsSheetQueryService(customContext);
+                List<CustomsRequestsSheetPM> requestSheets = customsRequestsSheetQuery.GetGeneralRequestInProgressByEntity2(Tenant, InterfaceTypeCode, ObjectTableId1, EntityId1, ObjectTableId2, EntityId2, CustomFileNo);
+
+                return Request.CreateResponse(HttpStatusCode.OK, requestSheets);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetRequestDescription(string id)
         {
             if (ModelState.IsValid)
