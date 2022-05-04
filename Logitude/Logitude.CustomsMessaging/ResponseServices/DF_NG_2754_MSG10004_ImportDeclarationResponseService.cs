@@ -151,6 +151,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
+            if (_MyDeclarationPM.IsCourierDeclaration && customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
+            {
+                // update payment status code
+                DeclarationCourierStatusPM dcapm = new DeclarationCourierStatusQueryService(context)
+                    .GetByDeclarationIdList(requestParams.Tenant, new List<string>() { _MyDeclarationPM.Id }).FirstOrDefault();
+                dcapm.CourierPaymentStatusCode = "R";
+
+                new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant)
+                    .Update(dcapm, true);
+            }
+
             if (_MyDeclarationPM.IsCourierDeclaration && this._MyDeclarationPM.PaymentDate.HasValue)
             {
                 if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
