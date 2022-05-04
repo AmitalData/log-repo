@@ -206,18 +206,6 @@
                                             <td style="width:5px; min-width:5px;">
                                                 <div></div>
                                             </td>
-                                            <!--next-->
-                                            <td style="width: 57px; min-width: 57px;">
-                                                <!--<button [disabled] ="NextButtonDisabled" class="Button" (click)="Next()" style="width:40px; font-weight:bold; font-size:medium;" title="Next"><</button>-->
-                                                <button class="Button" [disabled]="NextButtonDisabled" (click)="Next()">
-                                                    <img src="./Images/Arrow-right.png" style="height:10px;width:10px;" />
-                                                    {{'Customs.General.O.Next' | TextCodeTranslationPipe}}
-
-                                                </button>
-                                            </td>
-                                            <td style="width:70px; min-width:70px;">
-                                                <div><input style="text-align:center" tabindex="-1" type="number" [(ngModel)]="TextMoveToValue" placeholder="{{'Customs.Declaration.O.MoveTo' | TextCodeTranslationPipe}}" (blur)="MoveToTextBoxKeyUp($event)" /></div>
-                                            </td>
                                             <!-- previous -->
                                             <td style="width: 57px; min-width: 57px;">
 
@@ -225,6 +213,18 @@
                                                 <button class="Button" [disabled]="PreviousButtonDisabled" (click)="Previous()">
                                                     {{'Customs.General.O.Previous' |TextCodeTranslationPipe}}
                                                     <img src="./Images/Arrow-left.png" style="height:10px;width:10px;" />
+                                                </button>
+                                            </td>
+                                            <td style="width:70px; min-width:70px;">
+                                                <div><input style="text-align:center" tabindex="-1" type="number" [(ngModel)]="TextMoveToValue" placeholder="{{'Customs.Declaration.O.MoveTo' | TextCodeTranslationPipe}}" (blur)="MoveToTextBoxKeyUp($event)" /></div>
+                                            </td>
+                                              <!--next-->
+                                              <td style="width: 57px; min-width: 57px;">
+                                                <!--<button [disabled] ="NextButtonDisabled" class="Button" (click)="Next()" style="width:40px; font-weight:bold; font-size:medium;" title="Next"><</button>-->
+                                                <button class="Button" [disabled]="NextButtonDisabled" (click)="Next()">
+                                                    <img src="./Images/Arrow-right.png" style="height:10px;width:10px;" />
+                                                    {{'Customs.General.O.Next' | TextCodeTranslationPipe}}
+
                                                 </button>
                                             </td>
 
