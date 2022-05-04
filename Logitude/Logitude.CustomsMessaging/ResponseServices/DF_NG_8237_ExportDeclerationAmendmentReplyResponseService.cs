@@ -38,6 +38,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         DeclarationPM _MyDeclarationPM;
         DeclarationPM _MyDeclarationPMOrg;
         private bool isExportClose=false;
+        private bool HasErors = false;
 
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
 
@@ -539,7 +540,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if(!isExportClose)
                         this._MyDeclarationPM.AmendmentErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
                     else
+                    {
                         this._MyDeclarationPM.ExportClosedErrorXML = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
+                       
+                        if (mydDclarationErrorPointerService._declarationErrorPointer != null &&
+                            mydDclarationErrorPointerService._declarationErrorPointer.Entitites != null &&
+                            mydDclarationErrorPointerService._declarationErrorPointer.Entitites.Exists(x => 
+                            (x.FieldErrors != null && x.FieldErrors.Any(y => y.ListVersionID == "1")) || (x.EntityErrors != null && x.EntityErrors.Any(y => y.ListVersionID == "1"))  ))
+                            HasErors = true;
+                    }
 
                 }
 
@@ -762,7 +771,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
             if (requestParams.IsExportClose) {
-                this.MyResponseData.UserMessage = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
+                if (HasErors)
+                    this.MyResponseData.UserMessage = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט עם שגיאות!!!";
+                else
+                    this.MyResponseData.UserMessage = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
             }
             else{
                 this.MyResponseData.UserMessage = "מענה לתיקון הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
