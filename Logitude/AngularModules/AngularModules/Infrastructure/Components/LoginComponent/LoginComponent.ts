@@ -44,11 +44,8 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
 
-import { AuthenticateService, LogitudeTokensService } from "collaboration-tool-core";
-import { SessionInfo as CToolSessionInfo } from "collaboration-tool-core";
-
 @Component({
-
+    
     templateUrl: './LoginComponent.html',
     providers: [ApplicationTimersManager, LogitudeApplicationService, UserLastLoginPMService]
 })
@@ -314,51 +311,8 @@ export class LoginComponent implements OnInit {
                     });
                 });
             }
-
-            this.SetCToolAuthorizedUser(userData);
         }
         window.sessionStorage.setItem("userdata", "");
-    }
-
-    SetCToolAuthorizedUser(userData: any) {
-        this.myInfrastructureDomainService.GetFeatureToggles().subscribe((featureTogglesResponse: ServiceResponse) => {
-            if (!featureTogglesResponse.HasError) {
-                var userTenant = Number(userData.CurrentTenant + "");
-                var ctoolFeatureToggle = featureTogglesResponse.Result
-                    .filter((f: any) => (f.TenantNumber == userTenant || (userTenant >= f.FromTenantNumber && userTenant <= f.ToTenantNumber)) && f.ToggleCode === "CTL")[0];
-                if (ctoolFeatureToggle) {
-                    const authenticateService = new AuthenticateService();
-                    if (authenticateService) {
-                        var logitudeAuthenticate = "logitudeAuthenticate";
-                        if (authenticateService.hasOwnProperty(logitudeAuthenticate)) {
-                            authenticateService[logitudeAuthenticate]({ Tenant: userTenant, Token: userData.Token }).then((data: any) => {
-                                if (data !== null && data.User !== null && data.Token !== null) {
-                                    CToolSessionInfo.IsUserAuthorized = true;
-                                    CToolSessionInfo.AuthorizedUserToken = data.Token;
-                                    CToolSessionInfo.IsLogitudeAuthentication = true;
-                                    this.SetCToolLogitudeTokens();
-                                }
-                            });
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    SetCToolLogitudeTokens() {
-        const logitudeTokensService = new LogitudeTokensService();
-        if (logitudeTokensService) {
-            var getTokens = "getTokens";
-            if (logitudeTokensService.hasOwnProperty(getTokens)) {
-                logitudeTokensService[getTokens]().then((logitudeTokens: any) => {
-                    if(logitudeTokens){
-                        let logitudeTokensJson = JSON.stringify(logitudeTokens);
-                        CToolSessionInfo.LogitudeTokensJson = logitudeTokensJson;
-                    }
-                });
-            }
-        }
     }
 
     FillProtractorEmails() {
@@ -528,7 +482,7 @@ export class LoginComponent implements OnInit {
     VerifyClicked() {
         if (!AppTool.IsNullOrEmpty(this.VerficationCode)) {
             this.HidePendingLoading = false;
-            this.loginService.PostAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.VerficationCode, Number(this.LoggedUserData.CurrentTenant + "")).subscribe((res: any) => {
+            this.loginService.PostAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.VerficationCode, Number(this.LoggedUserData.CurrentTenant + "")).subscribe((res:any) => {
                 this.HidePendingLoading = true;
                 if (res == true) {
                     this.ShowTwoFactorAuthenScreen = false;
@@ -861,7 +815,7 @@ export class LoginComponent implements OnInit {
                             // ];
 
                             //window.TextCodes = window.TextCodes.concat(additionalTextCodes);
-
+                            
                             this.IncreaseProgressBar();
                             //25
                         }
@@ -996,49 +950,49 @@ export class LoginComponent implements OnInit {
 
 
     private CheckTenantBlocking(userData: any) {
-        var isSystemBlocked = false;
-        var todayDateTicks = DateTool.GetCurrentDateAsUtc().valueOf();
+                var isSystemBlocked = false;
+                var todayDateTicks = DateTool.GetCurrentDateAsUtc().valueOf();
 
-        if (SessionLocator.TenantManagementJS.PaymentFailure) {
+                if(SessionLocator.TenantManagementJS.PaymentFailure) {
 
-            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.SuspendDate)) {
-                isSystemBlocked = true;
-                SessionLocator.BlockType = "company";
-            }
+                    if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.SuspendDate)) {
+                        isSystemBlocked = true;
+                        SessionLocator.BlockType = "company";
+                    }
 
-            else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.SuspendDate).DateTicks < todayDateTicks) {
-                isSystemBlocked = true;
-                SessionLocator.BlockType = "suspend";
-            }
-        }
-
-        if (!isSystemBlocked) {
-            if (SessionLocator.TenantManagementJS.IsTrial) {
-
-                if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TrialEndDate)) {
-                    isSystemBlocked = true;
-                    SessionLocator.BlockType = "company";
+                    else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.SuspendDate).DateTicks < todayDateTicks) {
+                        isSystemBlocked = true;
+                        SessionLocator.BlockType = "suspend";
+                    }
                 }
 
-                else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.TrialEndDate).DateTicks < todayDateTicks) {
-                    isSystemBlocked = true;
-                    SessionLocator.BlockType = "company";
-                }
-            }
-        }
+        if(!isSystemBlocked) {
+                    if (SessionLocator.TenantManagementJS.IsTrial) {
 
-        if (!isSystemBlocked) {
-            if (!AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
+                        if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TrialEndDate)) {
+                            isSystemBlocked = true;
+                            SessionLocator.BlockType = "company";
+                        }
 
-                if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.PaidUntilDate).DateTicks < todayDateTicks && !SessionLocator.TenantManagementJS.IsRecurring) {
-                    isSystemBlocked = true;
-                    SessionLocator.BlockType = "company";
+                        else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.TrialEndDate).DateTicks < todayDateTicks) {
+                            isSystemBlocked = true;
+                            SessionLocator.BlockType = "company";
+                        }
+                    }
                 }
-            }
-        }
+
+        if(!isSystemBlocked) {
+                    if (!AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
+
+                        if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.PaidUntilDate).DateTicks < todayDateTicks && !SessionLocator.TenantManagementJS.IsRecurring) {
+                            isSystemBlocked = true;
+                            SessionLocator.BlockType = "company";
+                        }
+                    }
+                }
 
         this.LoadClosedTablesToWindow(userData.CurrentTenant);
-    }
+            }
 
     private timerToken: any;
     private TotalNumberOfLoads: number = 0;
@@ -1085,10 +1039,10 @@ export class LoginComponent implements OnInit {
                 }
             }
 
-            if (this.CompletedLoadsCount === this.TotalNumberOfLoads && this.generalTableResourcesIsLoaded === true) {
-                console.log("===============>Changing Page<==================");
-                this.SetLayoutDirection();
-
+          if (this.CompletedLoadsCount === this.TotalNumberOfLoads && this.generalTableResourcesIsLoaded === true) {
+              console.log("===============>Changing Page<==================");
+              this.SetLayoutDirection();
+              
                 ServiceLocator.RulesValidator = new RulesValidator();
                 this.timerToken = setTimeout(() => this.ChangePage(), 1000);
             }
@@ -1118,7 +1072,7 @@ export class LoginComponent implements OnInit {
 
 
 
-
+    
 
 }
 
