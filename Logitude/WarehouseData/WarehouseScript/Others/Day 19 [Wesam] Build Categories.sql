@@ -321,3 +321,15 @@ IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories]
 ELSE      Begin 
 				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 280 WHERE [dbo].[DWCategories].[Code] = 'CustomFields'	  
 		  End
+
+		  
+		  --Customs
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'Customs')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Customs','Customs',290)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 290 WHERE [dbo].[DWCategories].[Code] = 'Customs'	  
+		  End
+
