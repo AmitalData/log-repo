@@ -99,13 +99,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
                     }
 
-                    if (customResponse.GeneralData.ReleaseMessageCode ==1)
-                    {
-                        if (declarationPM.Direction == "E")
-                        {
-                            RaiseEvent(declarationPM, requestParams.LoggingUserId, status_id: "HTR", status_DateTime: statusDateTime);
-                        }
-                    }
+                    
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                     CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
                     switch (customResponse.GeneralData.ReleaseMessageCode)
@@ -117,7 +111,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
-
+                            if (declarationPM.Direction == "E")
+                            {
+                                RaiseEvent(declarationPM, requestParams.LoggingUserId, status_id: "HTR", status_DateTime: statusDateTime);
+                            }
                             if (declarationPM.IsCourierDeclaration)
                             {
                                 // update NoOfCourierHawbwWithoutHatara
