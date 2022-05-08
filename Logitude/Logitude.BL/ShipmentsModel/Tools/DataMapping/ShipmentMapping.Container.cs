@@ -296,6 +296,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, containerPM.Master);
             MethodHelper.AddToSearchFields(ref mySearchFields, containerPM.MainCarriageCarrierNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, containerPM.CarrierName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, containerPM.ShipmentNumber);
 
             containerPM.SearchFields = mySearchFields;
             container.SearchFields = mySearchFields;
