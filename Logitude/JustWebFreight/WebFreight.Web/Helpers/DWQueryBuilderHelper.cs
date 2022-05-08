@@ -859,7 +859,7 @@ namespace WebFreight.Web.Helpers
             string codeString = pivotTableNickname + ".Code = ";
             string replaceString = "@Tenant and ( " + codeString;
             columns[columnIndex-1].MultiSelectedValueLists.ForEach(c => {
-                replaceString += "'" + c.Value.Row + "' or " + codeString;
+                replaceString += "'" + c.Value.Row?.Replace("'", "''") + "' or " + codeString;
             });
 
             replaceString += " )";
