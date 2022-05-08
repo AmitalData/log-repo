@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnifreightIIG.Common.MessageLib.Collateral;
-using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
 using Logitude.Customs.BL.BL;
 using Unifreight.BL.EntityQueryServices;
@@ -136,6 +135,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         DeclarationPM _MyDeclarationPM;
         private bool _FastDelete;
+        private DateTime _DateTime;
+
         //private List<SupplierInvoiceItemsTaxesModPM> _SupplierInvoiceItemsTaxesModificationPMList;
         //public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption;
         public bool _IsSubmitDeclarationResponse { get; set; }
@@ -399,6 +400,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this._IsSubmitDeclarationResponse = true;
             }
 
+
+
+            if (customResponse.Response.Declaration.DMExtensions.VersionID.Value == "1.0")
+            {
+                if (this._MyDeclarationPM.Direction == "E")
+                {
+                    _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
+                    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRN", versionId :customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value,status_DateTime: _DateTime );
+                }
+            }
             //if (customResponse.ResponseContentHeader.Exception != null)
             // {
             //     string userMessage = customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription;
@@ -2414,6 +2425,49 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             return msg;
         }
+
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id,string versionId , DateTime? status_DateTime)
+        {
+            //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
+            string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+            if (dirtyDeclarationPM.TransportModeId != "A")
+            {
+                primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
+            }
+
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+                Tenant = dirtyDeclarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = status_id,
+                notes = "",
+                CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                EntityId = dirtyDeclarationPM.Id,
+                UserId = loggingUserId,
+
+                CommunicationSubject = "FU Status " + status_id + " from logitude",
+                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                {
+                    entname = dirtyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+                    primary_number = primary_number,
+                    status = "new",
+                    xml_status = "new",
+                    status_id = status_id,
+                    status_DateTime = status_DateTime ?? DateTime.Now,
+                    comments = dirtyDeclarationPM.Id + versionId,
+
+
+
+
+
+                }
+            };
+
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+
+
+        }
+
     }
 
 }
