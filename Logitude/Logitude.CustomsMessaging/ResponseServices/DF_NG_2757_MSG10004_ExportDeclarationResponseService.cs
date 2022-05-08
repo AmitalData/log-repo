@@ -407,7 +407,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 if (this._MyDeclarationPM.Direction == "E")
                 {
-                    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRN", status_DateTime: _DateTime, customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value);
+                    _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
+                    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRN",customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value,status_DateTime: _DateTime );
                 }
             }
             //if (customResponse.ResponseContentHeader.Exception != null)
@@ -2426,7 +2427,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return msg;
         }
 
-        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, DateTime? status_DateTime, string versionId)
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id,string versionId , DateTime? status_DateTime)
         {
             //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
             string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
