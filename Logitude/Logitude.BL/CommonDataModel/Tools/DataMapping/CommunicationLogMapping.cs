@@ -55,6 +55,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.EmailDeliveryError = entityPM.EmailDeliveryError;
             poco.ResponseDocumentId = entityPM.ResponseDocumentId;
             poco.UniqueNumber = entityPM.UniqueNumber;
+            poco.WasAnalyzed = entityPM.WasAnalyzed;
         }
     }
 }

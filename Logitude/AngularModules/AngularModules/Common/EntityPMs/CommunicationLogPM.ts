@@ -270,6 +270,11 @@ export class CommunicationLogPM {
     public set UniqueNumber(newValue: string) { if (this.uniqueNumber != newValue) { this.uniqueNumber = newValue; this.MarkAsDirty("UniqueNumber"); } }
        
 	 
+    private wasAnalyzed: boolean;
+    public get WasAnalyzed() { return this.wasAnalyzed; }
+    public set WasAnalyzed(newValue: boolean) { if (this.wasAnalyzed != newValue) { this.wasAnalyzed = newValue; this.MarkAsDirty("WasAnalyzed"); } }
+       
+	 
 
     public OldEntityPM: CommunicationLogPM;
 		

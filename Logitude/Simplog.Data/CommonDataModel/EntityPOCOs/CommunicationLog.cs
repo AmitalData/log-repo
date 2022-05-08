@@ -96,6 +96,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual Document ResponseDocument { get; set; }
 
         public string UniqueNumber { get; set; }
-
+        public bool? WasAnalyzed { get; set; }
     }
 }
