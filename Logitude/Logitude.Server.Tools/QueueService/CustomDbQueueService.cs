@@ -172,7 +172,7 @@ namespace Logitude.Server.Tools.QueueService
             };
             CurrentCustomQueueResponse = new CustomDBQueueMessage(myQueueResponse, CustomDbQueueParams);
             CurrentCustomQueueResponse.QueueStatus = QueueStatusEnum.Received;
-            LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:Receive:DbQueueName=" + CustomDbQueueParams.QueueCode + ":QMId=" + base.CurrentMessageId);
+            LogMessagingUtil.Instance.AppendLine("Rabbit:CustomDbQueueService:Receive:DbQueueName=" + CustomDbQueueParams.QueueCode + ":QMId=" + base.CurrentMessageId);
             return CurrentCustomQueueResponse;
         }
 
@@ -198,23 +198,26 @@ namespace Logitude.Server.Tools.QueueService
         {
             int Tenant = 1;
             //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('MQC', 'RABBITMQ Communication', 'MQC,RABBITMQ Communication')
-            //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('-2', '3', TO_TIMESTAMP('2022-03-01 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-03-01 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'MQC', '3', '0', 'MQC')
+            //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE)
+            //                    VALUES('MQC', '1', TO_TIMESTAMP('2022-03-01 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-03-01 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'MQC', '1', '0', 'MQC')
 
             ///Bug 75132: העלאת מסמך ללא קישור - מסמך נשלח למכס מס' פעמים
             return Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("MQC", Tenant);
         }
-    
 
-
+        static List<string> _SupportedRabbitMQList = new List<string>() { SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() };
+        public static List<string> SupportedRabbitMQList { get { return _SupportedRabbitMQList; }  }
 
         public static void SendCommunicationLogMessageToQueue(string queueName, Dictionary<string, string> messageValues, int tenant,bool UseRabbitMQ)
         {
             try
             {
+                
 
-                UseRabbitMQ = IsFeatureOnRABBITMQ_Communication() && UseRabbitMQ;
 
-
+                UseRabbitMQ = IsFeatureOnRABBITMQ_Communication() && UseRabbitMQ && SupportedRabbitMQList.Contains(queueName);
+                LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue(${queueName},UseRabbitMQ={UseRabbitMQ})");
+                
 
                 var customDbQueueService = new CustomDbQueueService(queueName,tenant);
                 customDbQueueService.Send(messageValues, tenant, null, new QueueSendModel() { UseRabbitMQ = UseRabbitMQ });
