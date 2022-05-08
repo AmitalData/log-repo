@@ -575,14 +575,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "FIE", 
-                SearchFields = "FIE,Froala Editor Insert Image,Activate Insert Image In Froala Editor", 
-                Name = "Froala Editor Insert Image", 
-                Description = "Activate Insert Image In Froala Editor", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Code = "ARN", 
                 Name = "Aging Report Get From GLAccountAgingData", 
                 Description = "Aging Report Get From GLAccountAgingData, new method new way", 
@@ -596,6 +588,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TSV,Test Server Validations", 
                 Description = "Test Operational/ Accounting close rules validations in server side", 
 			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "PF4", 
