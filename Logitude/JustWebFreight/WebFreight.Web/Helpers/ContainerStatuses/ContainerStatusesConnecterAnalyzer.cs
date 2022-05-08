@@ -870,6 +870,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void BuildCommunicationLog(LogitudeOceanInsightsRequest oceanInsight)
         {
+
             CommunicationsParams logParams = new CommunicationsParams()
             {
                 Tenant = logitudeTenant.Value,
@@ -881,7 +882,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 Status = "D",
                 LoggingUserId = this.loggedContactId,
                 LoggingObjectTableId = objectTableId,
-                LoggingEntityId = IsUpdatingShipmentAndContainer() ? (string.IsNullOrEmpty(container_number) ? oceanInsight?.ShipmentId : containerId) : null,
+                LoggingEntityId = string.IsNullOrEmpty(container_number) ? oceanInsight?.ShipmentId : containerId,
                 LoggingEntityReference = string.IsNullOrEmpty(container_number) ? oceanInsight?.BLNumber : container_number,
                 Subject = communicationLogSubject,
                 FolderName = communicationLogTo.ToLower(),
@@ -889,7 +890,17 @@ namespace WebFreight.Web.Helpers.Analyzers
                 UniqueNumber = xmlId
             };
 
+            logParams.WasAnalyzed = IsWasAnalyzed();
             Communications.AddCommunicationLog(logParams);
+        }
+
+        private bool? IsWasAnalyzed()
+        {
+            if (IsUpdatingShipmentAndContainer())
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool IsCommunicationLogsExsit()

@@ -167,6 +167,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ResponseDocumentId).HasColumnName("ResponseDocumentId");
             this.Property(t => t.AdditionalFields).HasColumnName("AdditionalFields");
             this.Property(t => t.UniqueNumber).HasColumnName("UniqueNumber");
+            this.Property(t => t.WasAnalyzed).HasColumnName("WasAnalyzed");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
