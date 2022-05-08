@@ -408,7 +408,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (this._MyDeclarationPM.Direction == "E")
                 {
                     _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
-                    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRN",customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value,status_DateTime: _DateTime );
+                    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRN", versionId :customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value,status_DateTime: _DateTime );
                 }
             }
             //if (customResponse.ResponseContentHeader.Exception != null)
