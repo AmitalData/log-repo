@@ -689,8 +689,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     }
      
     private CreateExportShipment() {
-        this.ValidateRequiredFields();
         this.ValidateReferenceNumber();
+        this.ValidateRequiredFields();
 
         if (this.ValidationErrorsList.length == 0) {
             this.InitializeExportShipmentFields();
@@ -698,6 +698,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     }
 
     ValidateReferenceNumber() {
+        this.ValidationErrorsList = [];
+        if(AppTool.IsNullOrEmpty(this.CustomerReference3) && AppTool.IsNullOrEmpty(this.PrivateLabelInvoiceNumber)) return;
         if (this.CustomerReference3?.toLowerCase().trim() == this.PrivateLabelInvoiceNumber?.toLowerCase().trim())
         this.ValidationErrorsList.push("The Reference and Invoice number should be different");
     }
@@ -1034,6 +1036,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             return this.EntityPM.CustomerReference1;
     }
     public set CustomerReference3(newValue: string) {
+        this.ValidateReferenceNumber();
         if (!AppTool.IsNullOrEmpty(newValue)) this.EntityPM.CustomerReference1 = newValue.substring(0, 50);
         this.EntityPM.CustomerReference3 = newValue;
     }
@@ -1061,6 +1064,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     set PrivateLabelInvoiceNumber(newValue: string) {
         if (this.EntityPM.PrivateLabelInvoiceNumber != newValue) {
             this.EntityPM.PrivateLabelInvoiceNumber = newValue;
+            this.ValidateReferenceNumber();
         }
     }
 
