@@ -37,7 +37,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
             entityPOCO.AccountingEntityCode = entityPM.AccountingEntityCode;
-
         }
 
         public void CustomPOCOToPM(InterestTransactionPM entityPM, InterestTransaction entityPOCO)
