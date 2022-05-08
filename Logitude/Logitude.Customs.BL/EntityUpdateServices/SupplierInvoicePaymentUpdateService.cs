@@ -30,9 +30,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-        //public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
-        //{
-        //    (Repository as Logitude.Customs.Data.Repsitories.SupplierInvoicePaymentRepository).FastDeleteMulti(entityKeyFields);
-        //}
+        public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
+        {
+            (Repository as Logitude.Customs.Data.Repsitories.SupplierInvoicePaymentRepository).FastDeleteMulti(entityKeyFields);
+        }
     }
 }
