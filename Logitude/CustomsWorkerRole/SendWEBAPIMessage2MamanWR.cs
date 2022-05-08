@@ -95,7 +95,10 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         private CommunicationLog _WaitingCommLog;
         private QueueResponse _ReceivedBrokeredMessage;
         private string myClass;
+        public SendWEBAPIMessage2MamanWR()
+        {
 
+        }
         public override bool OnStart()
         {
             try
@@ -110,7 +113,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
                 var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
                 
-                if (CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
+                if (CustomDbQueueService.SupportedRabbitMQList.Contains(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString()) && CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
                 {
                     base.WorkerQueueType = WorkerQueueType.RabbitMQ;
                 }
@@ -183,18 +186,34 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             rabbitMQConsumerService.WorkUntilPrcossesStop_RabbitMQ(
                 (CustomDBQueueMessage customDBQueueMessage) =>
                 {
-                    LogMessagingUtil.Instance.Clear();
+                    _ReceivedBrokeredMessage= customDBQueueMessage.MyQueueResponse;
 
-                    _CommunicationLogId = customDBQueueMessage.Properties["CommunicationLogId"].ToString();
+                     _CommunicationLogId = customDBQueueMessage.Properties["CommunicationLogId"].ToString();
                     int.TryParse(customDBQueueMessage.Properties["Tenant"].ToString(), out _Tenant);
 
                     LogMessagingUtil.Instance
-                        .AppendLine("ProccessReceivedMessage()")
+                        .AppendLine("SendWEBAPIMessage2MamanWR:ProccessReceivedMessage()")
                         .AppendLine("QUEUEMessageId:" + customDBQueueMessage.MessageId)
-                        //.AppendLine("RetryNumber:" + customDBQueueMessage.RetryNumber)
+                        .AppendLine("RetryNumber:" + customDBQueueMessage.Retries)
                         .AppendLine("CommunicationLogId:" + _CommunicationLogId)
                         .AppendLine(",Tenant" + _Tenant);
-                    ProccessReceivedMessage();
+
+                    //ProccessReceivedMessage();
+
+                    _Context = CommonDataContext.GetContext(_Tenant);
+                    _CommunicationLogRep = new CommunicationLogRepository(_Context);
+
+
+                    _WaitingCommLog = _CommunicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
+                    if (_WaitingCommLog == null)
+                    {
+                        var myEx = new Exception("GetSingleCommunicationLog(_CommunicationLogId:" + _CommunicationLogId + " , _Tenant:" + _Tenant.ToString() + ") == null");
+                        ExceptionHandler.HandleException(myEx, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
+                        return false;
+                    }
+
+
+                    PostWebAPIAnalyzeAndSaveCommDone(_CommunicationLogRep, _WaitingCommLog);
 
                     return true;
                 },
@@ -310,7 +329,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 LastActivity = DateTime.UtcNow;
                 LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
 
-                PostWebAPIAnalyzeAndSaveCommDone();//if failed throw exception
+                PostWebAPIAnalyzeAndSaveCommDone(_CommunicationLogRep, _WaitingCommLog);//if failed throw exception
                 if (!forceRetryFromTester)
                 {
                     _IQueueService.Complete();
@@ -330,7 +349,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         }
 
 
-        private bool PostWebAPIAnalyzeAndSaveCommDone()
+        private static bool PostWebAPIAnalyzeAndSaveCommDone(CommunicationLogRepository _CommunicationLogRep,CommunicationLog _WaitingCommLog)
         {
             try
             {

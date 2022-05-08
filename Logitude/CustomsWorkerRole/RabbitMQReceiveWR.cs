@@ -137,7 +137,7 @@ namespace CustomsWorkerRole
             bool isConnectionShutdown = false;
             DateTime lastworkAt = DateTime.Now;
 
-            var factory = RabbitmqHelper.GetConnectionFactory();
+            var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: true);
 
             
             try

@@ -36,7 +36,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             var args = new Dictionary<string, object>();
 
             
-            var factory = RabbitmqHelper.GetConnectionFactory();
+            var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: true);
 
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())

@@ -262,7 +262,7 @@ namespace CustomsWorkerRole
             EventHandler<BasicDeliverEventArgs> consumerEventArgs = null;
             try
             {
-                var factory = RabbitmqHelper.GetConnectionFactory();
+                var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: false);
                 //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123"  };
                 factory.RequestedHeartbeat = TimeSpan.FromMinutes(10);
                 using (var connection = factory.CreateConnection())

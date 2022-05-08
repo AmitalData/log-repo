@@ -178,7 +178,7 @@ export class LoginComponent implements OnInit {
         this.LoginClicked(); 
         while (!this.TenantList?.length)
             await new Promise<void>(resolve => setTimeout(() => resolve(), 100));
-        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1);
+        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 6);
         this.ContinueClicked()
     }
 

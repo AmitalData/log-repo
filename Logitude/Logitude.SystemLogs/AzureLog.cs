@@ -226,7 +226,7 @@ namespace Logitude.SystemLogs
             {
                 stackTrace = myStackTrace;
             }
-            if (stackTrace.Length > 7000)
+            if (stackTrace?.Length > 7000)
             {
                 stackTrace = stackTrace.Substring(0, 6999);
             }

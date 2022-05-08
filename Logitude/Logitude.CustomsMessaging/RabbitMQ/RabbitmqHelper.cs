@@ -38,7 +38,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
         {
             errMessage = "";
             CloseChannel(connection);
-            var factory = GetConnectionFactory();
+            var factory = GetConnectionFactory(tryFromAppSettings: false);
             try
             {
                 connection.Connection = factory.CreateConnection();
@@ -132,11 +132,28 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             return (-1);
         }
 
-        public static ConnectionFactory GetConnectionFactory()
+
+        static ConnectionFactory GetConnectionFactoryFromAppSettings()
+        {
+            //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+
+            string HostName = ConfigurationManager.AppSettings["RabbitmqHost"] ?? throw new Exception("HostName is null set ConfigurationManager.AppSettings RabbitmqHost"); ;
+            string UserName = ConfigurationManager.AppSettings["RabbitmqUsername"];
+            string Password = ConfigurationManager.AppSettings["RabbitmqPassword"];
+
+            return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password }); ;
+        }
+        public static ConnectionFactory GetConnectionFactory(bool tryFromAppSettings)
         {
             //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
-            CustomsEnvironmentSettingPM  customsEnvironmentSettingPM= customsEnvironmentSettingQueryService.GetEnvironmentSettingPM()??
+
+            if (tryFromAppSettings && customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() is null)
+            {
+                return GetConnectionFactoryFromAppSettings();
+            }
+
+            CustomsEnvironmentSettingPM customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM()??
                 throw new Exception("CustomsEnvironmentSetting is null set n DB");
             string HostName =
                 //ConfigurationManager.AppSettings["RabbitmqHost"] ?? throw new Exception("HostName is null set ConfigurationManager.AppSettings RabbitmqHost"); ;

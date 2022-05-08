@@ -37,7 +37,7 @@ namespace Logitude.Server.Tools.QueueService
 
     public partial class CustomDBQueueMessage //: QueueResponse//Oracle Extention
     {
-        private QueueResponse q;
+        //private QueueResponse q;
         private CustomDbQueueModel CustomDbQueueParams;
 
         public CustomDBQueueMessage(QueueResponse baseQueueResponse)
@@ -46,6 +46,8 @@ namespace Logitude.Server.Tools.QueueService
             {
                 return;
             }
+
+            MyQueueResponse= baseQueueResponse;
 
             this.MessageId = baseQueueResponse.MessageId;
             this.Retries = baseQueueResponse.RetryNumber;
@@ -60,6 +62,7 @@ namespace Logitude.Server.Tools.QueueService
             
             this.CustomDbQueueParams = CustomDbQueueParams;
         }
+        public QueueResponse MyQueueResponse { get; private set; }
         public DateTime? MessageCreatedServerTime { get; set; }
         public QueueStatusEnum QueueStatus { get; set; }
 

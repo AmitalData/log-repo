@@ -31,7 +31,7 @@ namespace CustomsWorkerRole
             this._RabbitQueueCode = RabbitQueueCode;
         }
 
-        public void WorkUntilPrcossesStop_RabbitMQ(Func<CustomDBQueueMessage,bool> ProcessMessage_Db, Action LogDoneItemInMemory)
+        public void WorkUntilPrcossesStop_RabbitMQ(Func<CustomDBQueueMessage,bool> ProcessMessage, Action LogDoneItemInMemory)
         {
             bool isConnectionShutdown = false;
             EventHandler<BasicDeliverEventArgs> consumerEventArgs = null;
@@ -39,14 +39,15 @@ namespace CustomsWorkerRole
             {
                 DateTime lastworkAt = DateTime.Now;
                 string RabbitMQLogFILE = "RabbitMQLog"+ _myClass;
-                if (ProcessMessage_Db==null)
+                if (ProcessMessage==null)
                 {
                     Logger.LogMe("ProcessMessage_Db ==null", true, "rabbitmq");
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", $"{_myClass}:WorkerRoleRabbitMQ", $"ProcessMessage_Db == null", null);
                     Thread.Sleep(5000);
                     return;
                 }
-                var factory = RabbitmqHelper.GetConnectionFactory();
+                string myRabbitQueueCode = RabbitQueueCodeService.GetRabbitQueueCode(_RabbitQueueCode, "" /*base.QueueGroupCodeRabbit*/);
+                var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: false);
                 //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123"  };
                 factory.RequestedHeartbeat = TimeSpan.FromMinutes(10);
                 using (var connection = factory.CreateConnection())
@@ -56,9 +57,9 @@ namespace CustomsWorkerRole
                     {
 
                         connection.ConnectionShutdown += Connection_ConnectionShutdown;
-                        Logger.LogMe("CONNECTION", false, RabbitMQLogFILE);
+                        Logger.LogMe($"CONNECTION:{myRabbitQueueCode}", false, RabbitMQLogFILE);
                         channel.BasicQos(0, 5, true);
-                        RabbitmqHelper.DeclareQueue(channel, this._RabbitQueueCode, true);
+                        RabbitmqHelper.DeclareQueue(channel, myRabbitQueueCode, true);
 
 
 
@@ -96,7 +97,7 @@ namespace CustomsWorkerRole
                                     return;
                                 }
 
-
+                                LogMessagingUtil.Instance.AppendLine($"GetRabbitMQPseudoByMessageId({longQId})");
                                 customDBQueueMessage = _CustomDbQueueService.GetRabbitMQPseudoByMessageId(longQId);
                                 if (customDBQueueMessage == null)
                                 {
@@ -114,7 +115,7 @@ namespace CustomsWorkerRole
                                 {
                                     try
                                     {
-                                        successProcessMessage = ProcessMessage_Db(customDBQueueMessage);
+                                        successProcessMessage = ProcessMessage(customDBQueueMessage);
                                         
                                         if (successProcessMessage)
                                         {
@@ -148,6 +149,7 @@ namespace CustomsWorkerRole
                                                 {
 
                                                     isTimeToEndDueMaxTries = customDBQueueMessage.SafeAbandon();
+                                                    Debug.WriteLineIf(isTimeToEndDueMaxTries, "isTimeToEndDueMaxTries==true");
                                                     Abandon_Queue_scope.Complete();
                                                 }
                                             }
@@ -203,10 +205,10 @@ namespace CustomsWorkerRole
                             Logger.LogMe("Connection broke!", false, RabbitMQLogFILE);
                         };
 
-                        channel.BasicConsume(queue: this._RabbitQueueCode,
+                        channel.BasicConsume(queue:myRabbitQueueCode /*this._RabbitQueueCode*/,
                                             autoAck: false,
                                             consumer: consumer);
-                        Debug.WriteLine("Start BasicConsume " + this._RabbitQueueCode);
+                        Debug.WriteLine("Start BasicConsume " + myRabbitQueueCode);
                         while (!WorkerRoleServiceLocator.PleaseShutDown)
                         {
                             if (
@@ -268,7 +270,7 @@ namespace CustomsWorkerRole
 
         private void Connection_ConnectionShutdown(object sender, RabbitMQ.Client.ShutdownEventArgs e)
         {
-            throw new NotImplementedException();
+            ///throw new NotImplementedException();
         }
     }
 }
