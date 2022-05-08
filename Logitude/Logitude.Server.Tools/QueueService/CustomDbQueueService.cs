@@ -205,7 +205,7 @@ namespace Logitude.Server.Tools.QueueService
             return Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("MQC", Tenant);
         }
 
-        static List<string> _SupportedRabbitMQList = new List<string>() { SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() };
+        static List<string> _SupportedRabbitMQList = new List<string>() { SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() , SBQueueNames.AnalyzeQueueMQ.ToString() };
         public static List<string> SupportedRabbitMQList { get { return _SupportedRabbitMQList; }  }
 
         public static void SendCommunicationLogMessageToQueue(string queueName, Dictionary<string, string> messageValues, int tenant,bool UseRabbitMQ)
