@@ -28,6 +28,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -35,6 +36,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         : ResponseServiceBase<ReleaseGoodsResponseData, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage, GenericRequestParams>
     {
         private bool _LockResponseService2470Feature;
+        
 
         public override ReleaseGoodsResponseData GetResponse(DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
         {
@@ -44,7 +46,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
         {
             //Analyzing Message 2470 -Release Goods Message (Hatara)
-            
+
             var declarationNumber = customResponse.GeneralData.declarationID;
             IDisposable disposableToken = null;
             try
@@ -53,12 +55,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (_LockResponseService2470Feature)
                 {
-                   
-                   string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
+
+                    string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
                     //using (disposableToken = ProcessLockUtil.Instance.InsertKey(key, "2470ResponseService.Update"))
                     disposableToken =
                         ///ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "2470ResponseService.Update");
-                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant,true, key, "2470ResponseService.Update");
+                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "2470ResponseService.Update");
                 }
                 {
 
@@ -96,6 +98,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
                     }
+
+                    if (customResponse.GeneralData.ReleaseMessageCode ==1)
+                    {
+                        if (declarationPM.Direction == "E")
+                        {
+                            RaiseEvent(declarationPM, requestParams.LoggingUserId, status_id: "HTR", status_DateTime: statusDateTime);
+                        }
+                    }
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                     CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
                     switch (customResponse.GeneralData.ReleaseMessageCode)
@@ -112,9 +122,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 // update NoOfCourierHawbwWithoutHatara
                                 IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", declarationPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
-                            myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(declarationPM.Tenant, _CourierMasterPM.Id, null);
+                                myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(declarationPM.Tenant, _CourierMasterPM.Id, null);
 
-                        
+
                                 declarationPM.CourierCustomStatusCode = "1";
 
                                 string defValue = "";
@@ -125,7 +135,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, requestParams.Tenant);
                                     if (!String.IsNullOrWhiteSpace(myCard.Code))
                                     {
-                                         defValue = GetDefault("ISRAEL", "CGO_COURAWB_CLS", "NON", myCard.Code, requestParams.Tenant);
+                                        defValue = GetDefault("ISRAEL", "CGO_COURAWB_CLS", "NON", myCard.Code, requestParams.Tenant);
                                     }
                                 }
                                 if (defValue == "R" || String.IsNullOrWhiteSpace(defValue))
@@ -160,7 +170,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //hataraDate = declarationPM.HatraDate; Yuval Chalup 17.01.2018 Remarked - Do NOT change date
                             MyRequestSheetParam.RequestDescription = "הודעה מוקדמת לסוכן מכס: " + declarationPM.CustomFileNo;
                             declarationPM.CourierCustomStatusCode = "1";
-                            Send2470ToMaman(declarationPM,customResponse, requestParams);
+                            Send2470ToMaman(declarationPM, customResponse, requestParams);
                             break;
                         case 14: // Release When Arrived
                             LogMessagingUtil.Instance.AppendLine("Release When Arrived");
@@ -200,7 +210,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DeclarationNumber = declarationPM.DeclarationNumber,
                         UserMessage = MyRequestSheetParam.RequestDescription,
                     };
-                    GetResponseData(this.MyResponseData,customResponse, declarationPM);
+                    GetResponseData(this.MyResponseData, customResponse, declarationPM);
                 }
             }
             catch (ProcessLockException processLockException)
@@ -268,12 +278,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void GetResponseData(ReleaseGoodsResponseData myResponseData, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, DeclarationPM declarationPM)
         {
-            if(declarationPM != null)
+            if (declarationPM != null)
             {
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(declarationPM.Tenant);
                 DeclarationPM fullDeclarationPM = declarationQueryService.GetSingle(declarationPM.Id, true, false);
                 MyResponseData.FileNumber = fullDeclarationPM.CustomFileNo;
-                
+
                 if (fullDeclarationPM.SupplierInvoices != null && fullDeclarationPM.SupplierInvoices.Count() > 0)
                 {
                     MyResponseData.GoodsItemsList = new List<GoodsItems>();
@@ -290,18 +300,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (supplierInvoice.IsPrimarySupplierInvoice)
                         {
                             MyResponseData.CurrencyTypeCode = supplierInvoice.InvoiceCurrencyTypeCode;
-                            
+
                         }
                     }
                 }
-                if(declarationPM.TaxationDateTime.HasValue)MyResponseData.TaxationDate = declarationPM.TaxationDateTime.Value.Date.ToString("dd/MM/yyyy");
+                if (declarationPM.TaxationDateTime.HasValue) MyResponseData.TaxationDate = declarationPM.TaxationDateTime.Value.Date.ToString("dd/MM/yyyy");
             }
-            if(customResponse != null)
+            if (customResponse != null)
             {
-                if(customResponse.GeneralData != null)
+                if (customResponse.GeneralData != null)
                 {
                     MyResponseData.governmentProcedureType = customResponse.GeneralData.governmentProcedureType.ToString();
-                    if(customResponse.GeneralData.releaseDate != null)
+                    if (customResponse.GeneralData.releaseDate != null)
                     {
                         MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.GetValueOrDefault().Date.ToString("dd/MM/yyyy");
                         if (customResponse.GeneralData.releaseDate.GetValueOrDefault().TimeOfDay.Hours != 0)
@@ -310,7 +320,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
-                    if (customResponse.GeneralData.dealValueNISSpecified)MyResponseData.dealValueNIS = customResponse.GeneralData.dealValueNIS.ToString();
+                    if (customResponse.GeneralData.dealValueNISSpecified) MyResponseData.dealValueNIS = customResponse.GeneralData.dealValueNIS.ToString();
                     if (customResponse.GeneralData.CifValueNisSpecified) MyResponseData.CifValueNis = customResponse.GeneralData.CifValueNis.ToString();
                     if (customResponse.GeneralData.ExchangeRate > 0) MyResponseData.ExchangeRate = customResponse.GeneralData.ExchangeRate.ToString();
                 }
@@ -337,9 +347,51 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     MyResponseData.storageSiteNumber = customResponse.Sites.storingSiteNumber;
                     MyResponseData.unloadingSiteNumber = customResponse.Sites.unloadingSiteNumber;
                 }
-                    
+
             }
-            
+
         }
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, DateTime? status_DateTime)
+        {
+            //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
+            string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+            if (dirtyDeclarationPM.TransportModeId != "A")
+            {
+                primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
+            }
+
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+                Tenant = dirtyDeclarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = status_id,
+                notes = "",
+                CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                EntityId = dirtyDeclarationPM.Id,
+                UserId = loggingUserId,
+
+                CommunicationSubject = "FU Status " + status_id + " from logitude",
+                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                {
+                    entname = dirtyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+                    primary_number = primary_number,
+                    status = "new",
+                    xml_status = "new",
+                    status_id = status_id,
+                    status_DateTime = status_DateTime ?? DateTime.Now,
+                    comments = dirtyDeclarationPM.Id,
+
+
+
+
+
+                }
+            };
+
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+
+
+        }
+
     }
 }
