@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "c661bf722877b982aeef6ef47692435d";
+		public const string HashString = "0b2c4c3f57b4ef090993b79dd6febeb3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -19443,6 +19443,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOChargedStatusReceivedCorrect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChargedStatusReceivedCorrect", DefaultText = "Charged Status Received - Correct",LocalDefaultText = @"סטטוס מטען נקלט - תקין", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOCustomsLogisticalPermitHappiness = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CustomsLogisticalPermitHappiness", DefaultText = "Customs Logistical Permit - Happiness",LocalDefaultText = @"היתר לוגיסטי מיכסי - אושר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOConnectedDelcaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConnectedDelcaration", DefaultText = "Note a linked statement!",LocalDefaultText = @"!שים לב הצהרה מקושרת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChangeCargoId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangeCargoId", DefaultText = "Changed carge ID on save will be disconnected",LocalDefaultText = @"שונו מזהה המטען בשמירה יבוצע ניתוק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
