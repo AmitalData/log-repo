@@ -461,6 +461,8 @@ namespace Logitude.Accounting.BL.InterestService
                                                                               OriginalEntityLineNumber = a.InterestTransaction.OriginalEntityLineNumber,
 
                                                                               SearchFields = a.InterestTransaction.SearchFields,
+
+                                                                              AccountingEntityCode = a.InterestTransaction.AccountingEntityCode
  
                                                                           });
             return interestTransactionLists;
