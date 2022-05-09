@@ -99,26 +99,36 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public List<APInvoiceTotalVATPM> GetTotalVATs(List<string> invoiceIds, int tenant)
 
         {
-            return (from a in repository.context.APInvoiceTotalVATs
-                    where a.Tenant == tenant && invoiceIds.Contains(a.APInvoiceId)
-                    select new APInvoiceTotalVATPM()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        APInvoiceId = a.APInvoiceId,
-                        ExternalVATCard = a.ExternalVATCard,
-                        ExternalTAXItemId = a.ExternalTAXItemId,
-                        InvoiceCurrencyVatableAmount = a.InvoiceCurrencyVatableAmount,
-                        InvoiceCurrencyVATAmount = a.InvoiceCurrencyVATAmount,
-                        LocalVatableAmount = a.LocalVatableAmount,
-                        LocalVATAmount = a.LocalVATAmount,
-                        ProfitCurrencyVATAmount = a.ProfitCurrencyVATAmount,
-                        ProfitVatableAmount = a.ProfitVatableAmount,
-                        VatTypeId = a.VatTypeId,
-                      
-                        VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
-                        VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"),
-                    }).ToList();
+            List<APInvoiceTotalVATPM> list = new List<APInvoiceTotalVATPM>();
+            const int sqlLimit = 5000;
+
+            int iterations = invoiceIds.Count() / sqlLimit;
+            for (int i = 0; i <= iterations; i++)
+            {
+                var tempInvoiceIds = invoiceIds.Skip(i * sqlLimit).Take(sqlLimit).ToList();
+                List<APInvoiceTotalVATPM> tempList = (from a in repository.context.APInvoiceTotalVATs
+                                                      where a.Tenant == tenant && tempInvoiceIds.Contains(a.APInvoiceId)
+                                                      select new APInvoiceTotalVATPM()
+                                                      {
+                                                          Id = a.Id,
+                                                          Tenant = a.Tenant,
+                                                          APInvoiceId = a.APInvoiceId,
+                                                          ExternalVATCard = a.ExternalVATCard,
+                                                          ExternalTAXItemId = a.ExternalTAXItemId,
+                                                          InvoiceCurrencyVatableAmount = a.InvoiceCurrencyVatableAmount,
+                                                          InvoiceCurrencyVATAmount = a.InvoiceCurrencyVATAmount,
+                                                          LocalVatableAmount = a.LocalVatableAmount,
+                                                          LocalVATAmount = a.LocalVATAmount,
+                                                          ProfitCurrencyVATAmount = a.ProfitCurrencyVATAmount,
+                                                          ProfitVatableAmount = a.ProfitVatableAmount,
+                                                          VatTypeId = a.VatTypeId,
+
+                                                          VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
+                                                          VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"),
+                                                      }).ToList();
+                list.AddRange(tempList);
+            }
+            return list;
         }
 
         public List<APInvoiceTotalVATPM> GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(string invoiceId, int tenant)
