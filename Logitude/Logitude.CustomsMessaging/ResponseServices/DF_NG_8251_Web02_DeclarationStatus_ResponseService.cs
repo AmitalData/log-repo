@@ -44,12 +44,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DF_NG_8251_Web02_DeclarationStatus_Response customResponse,
             DeclarationStatusRequestParams requestParams)
         {
-            
-            
-            
 
 
+
+
+            DateTime _DateTime;
             this.MyResponseData = new DeclarationStatusResponseData();
+
             if (!String.IsNullOrWhiteSpace(requestParams.TesterSendOption))
             {
                 TesterSendOption(requestParams);
@@ -59,7 +60,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string declarationStatusCodeName = "";
             string declarationStatusCode = "";
             string warningMess = "";
-            bool isAutoPayment= false;
+            bool isAutoPayment = false;
             DeclarationStatusTypePM declarationStatusTypePM = null;
             AmitalContext _AmitalContext = AmitalContext.GetContext(requestParams.Tenant);
 
@@ -72,10 +73,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationUpdateService.SuppressNewConcurrencyGUID = true;
             }
             MyResponseData.MultiDeclarations = new List<MultiDeclaration>();
+
+            //eclarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+
+            //if (customResponse.ResponseContentHeader. == "3" || declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" && declarationPM.DeclarationStatusTypeCode != declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
+            //{
+            //    _DateTime = new DateTime();
+            //    _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
+            //    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+            //}
+
             foreach (var declarationStatus_ResponseDeclarationStatusAnswer in customResponse.DeclarationStatusAnswer)
             {
                 try
                 {
+
+
                     DeclarationPM declarationPM = null;
                     if (declarationStatus_ResponseDeclarationStatusAnswer.ExceptionPerQuery != null)
                     {
@@ -286,6 +299,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     //declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 31/12/18//Task 49319
                                     switch (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
                                     {
+
+
+
                                         case "3":
                                             declarationPM.CourierCustomStatusCode = "1";
                                             courierStatusUpdated = true;
@@ -455,6 +471,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     //if (isAutoPayment)
                                     //    SendPayment(declarationPM, dbContext, requestParams);
                                 }
+
+                                if (declarationPM.Direction == "E")
+                                {
+                                    if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" || declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "3" && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode != declarationPM.DeclarationStatusTypeCode)
+                                    {
+                                        _DateTime = new DateTime();
+                                      //  _DateTime = DateTime.Parse(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LastModifiedDateTime);
+                                        RaiseEvent(declarationPM, requestParams.LoggingUserId, status_id: "RDH", versionId: declarationPM.VersionId, status_DateTime: _DateTime);
+
+                                    }
+                                }
                             }
                             else
                             {
@@ -538,38 +565,38 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 MyResponseData.SubmitDateTime = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime.Value.TimeOfDay.ToString("hh':'mm") + "   " + MyResponseData.SubmitDateTime;
                             }
                         }
-                    if(customResponse.DeclarationStatusAnswer.Length > 1)
-                    {
-                        var responseDec = new MultiDeclaration();
-                        responseDec.DeclarationID = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationID;
-                        responseDec.DeclarationVersion = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion;
-                        responseDec.DeclarationStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
-                        responseDec.DeclarationStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusText;
-                        responseDec.LogisticStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusCode;
-                        responseDec.LogisticStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusText;
-                        responseDec.DeclarationOfficeID = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationOfficeID;
-                        responseDec.DeclarationOfficeText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationOfficeText;
-                        responseDec.FinancialStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusCode;
-                        responseDec.FinancialStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusText;
-                        responseDec.SubmitDateTime = MyResponseData.SubmitDateTime;
-                        MyResponseData.MultiDeclarations.Add(responseDec);
-                    }
-                    if(customResponse.DeclarationStatusAnswer.Length > 1)
-                    {
-                        var responseDec = new MultiDeclaration();
-                        responseDec.DeclarationID = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationID;
-                        responseDec.DeclarationVersion = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion;
-                        responseDec.DeclarationStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
-                        responseDec.DeclarationStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusText;
-                        responseDec.LogisticStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusCode;
-                        responseDec.LogisticStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusText;
-                        responseDec.DeclarationOfficeID = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationOfficeID;
-                        responseDec.DeclarationOfficeText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationOfficeText;
-                        responseDec.FinancialStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusCode;
-                        responseDec.FinancialStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusText;
-                        responseDec.SubmitDateTime = MyResponseData.SubmitDateTime;
-                        MyResponseData.MultiDeclarations.Add(responseDec);
-                    }
+                        if (customResponse.DeclarationStatusAnswer.Length > 1)
+                        {
+                            var responseDec = new MultiDeclaration();
+                            responseDec.DeclarationID = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationID;
+                            responseDec.DeclarationVersion = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion;
+                            responseDec.DeclarationStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                            responseDec.DeclarationStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusText;
+                            responseDec.LogisticStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusCode;
+                            responseDec.LogisticStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusText;
+                            responseDec.DeclarationOfficeID = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationOfficeID;
+                            responseDec.DeclarationOfficeText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationOfficeText;
+                            responseDec.FinancialStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusCode;
+                            responseDec.FinancialStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusText;
+                            responseDec.SubmitDateTime = MyResponseData.SubmitDateTime;
+                            MyResponseData.MultiDeclarations.Add(responseDec);
+                        }
+                        if (customResponse.DeclarationStatusAnswer.Length > 1)
+                        {
+                            var responseDec = new MultiDeclaration();
+                            responseDec.DeclarationID = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationID;
+                            responseDec.DeclarationVersion = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion;
+                            responseDec.DeclarationStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                            responseDec.DeclarationStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusText;
+                            responseDec.LogisticStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusCode;
+                            responseDec.LogisticStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusText;
+                            responseDec.DeclarationOfficeID = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationOfficeID;
+                            responseDec.DeclarationOfficeText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationOfficeText;
+                            responseDec.FinancialStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusCode;
+                            responseDec.FinancialStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusText;
+                            responseDec.SubmitDateTime = MyResponseData.SubmitDateTime;
+                            MyResponseData.MultiDeclarations.Add(responseDec);
+                        }
 
                         if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null
                                 && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoQuantities != null
@@ -664,7 +691,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
                 }
-                catch 
+                catch
                 {
                     if (customResponse.DeclarationStatusAnswer.Count() > 1
                         && requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster"))
@@ -679,8 +706,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
             }
+            //if (customResponse.)
+            //{
+
+            //}
+            //if (customResponse.ResponseContentHeader. == "3" || declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" && declarationPM.DeclarationStatusTypeCode != declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
+            //{
+            //    _DateTime = new DateTime();
+            //    _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
+            //    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+            //}
         }
-        private void UpdateManualPayment(DeclarationStatusRequestParams requestParams, ICustomContext customContext , DeclarationPM declarationPM)
+        private void UpdateManualPayment(DeclarationStatusRequestParams requestParams, ICustomContext customContext, DeclarationPM declarationPM)
         {
             if (requestParams.LoggingEntityReference == "AutoPayment")
             {
@@ -698,7 +735,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void SendPayment(DeclarationPM declarationPM,ICustomContext dbContext, DeclarationStatusRequestParams requestParams)
+        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams)
         {
             if (declarationPM.AvailabilityDate != null) return;
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
@@ -706,13 +743,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var myDeclarationQueryService = new DeclarationQueryService(dbContext);
             var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-              var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
+            var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
             _declarationPM.AvailabilityDate = DateTime.Now;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_declarationPM, true);
 
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_declarationPM.Id, true, false);
-            
+
 
             if (declarationPaymentPM != null)
             {
@@ -761,7 +798,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     InterfaceTypeCode = "2755",
                                     LoggingUserId = requestParams.LoggingUserId,
                                     RequestVIA = SendRequestVIA.WebServiceBatch,
-                                  
+
                                 };
                                 if (requestDate != DateTime.MinValue)
                                 {
@@ -770,13 +807,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                     requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
                                     requestParams2755.FutureSendDateTime = requestDate;
- 
+
                                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
 
                                 }
                                 else
                                 {
-                                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
                                 }
 
 
@@ -825,19 +862,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
             TimeSpan toTime = new TimeSpan();
             if (timesCompany != null && timesCompany != "")
             {
-                List<string> times= GetTimesFromDefault(timesCompany);
+                List<string> times = GetTimesFromDefault(timesCompany);
 
                 TimeSpan fromTime = DateTime.ParseExact(times[0], "HH:mm",
                                         CultureInfo.InvariantCulture).TimeOfDay;
 
 
-                  toTime = DateTime.ParseExact(times[1], "HH:mm",
-                                    CultureInfo.InvariantCulture).TimeOfDay;
+                toTime = DateTime.ParseExact(times[1], "HH:mm",
+                                  CultureInfo.InvariantCulture).TimeOfDay;
 
                 if (DateTime.Now.TimeOfDay > fromTime && DateTime.Now.TimeOfDay < toTime)
                 {
                     toTimeCurrent = toTime;
-                //    return new DateTime(toTime.Ticks).AddMinutes(5);
+                    //    return new DateTime(toTime.Ticks).AddMinutes(5);
                 }
 
             }
@@ -851,22 +888,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         CultureInfo.InvariantCulture).TimeOfDay;
 
 
-                  toTime = DateTime.ParseExact(times[1], "HH:mm",
-                                    CultureInfo.InvariantCulture).TimeOfDay;
+                toTime = DateTime.ParseExact(times[1], "HH:mm",
+                                  CultureInfo.InvariantCulture).TimeOfDay;
 
                 if (DateTime.Now.TimeOfDay > fromTime && DateTime.Now.TimeOfDay < toTime)
                 {
                     toTime2Current = toTime;
-                   // return new DateTime(toTime.Ticks).AddMinutes(5);
+                    // return new DateTime(toTime.Ticks).AddMinutes(5);
                 }
 
             }
 
-            if(toTimeCurrent> toTime2Current)
+            if (toTimeCurrent > toTime2Current)
             {
                 return new DateTime(toTimeCurrent.Ticks).AddMinutes(5);
             }
-            else if(toTime2Current > toTimeCurrent)
+            else if (toTime2Current > toTimeCurrent)
             {
                 return new DateTime(toTime2Current.Ticks).AddMinutes(5);
 
@@ -877,13 +914,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             //}
 
-            return  DateTime.MinValue;
- 
+            return DateTime.MinValue;
+
         }
 
         private List<string> GetTimesFromDefault(string times)
         {
-          var arr = times.Split('-');
+            var arr = times.Split('-');
             return new List<string>()
             {
                  arr[0].TrimEnd() ,  arr[1].TrimStart()
@@ -909,7 +946,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             };
             var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
             CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
-             if (!string.IsNullOrEmpty(creditResponseData.CustomFileCredit[0].ErrorMessage))
+            if (!string.IsNullOrEmpty(creditResponseData.CustomFileCredit[0].ErrorMessage))
             {
                 return false;
             }
@@ -919,7 +956,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private static void TesterSendOption(DeclarationStatusRequestParams requestParams)
         {
-            string testerSendOption = requestParams.TesterSendOption??"";
+            string testerSendOption = requestParams.TesterSendOption ?? "";
             testerSendOption = testerSendOption.ToUpper();
             var context = CustomContext.GetContext(requestParams.Tenant);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
@@ -946,7 +983,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         var declarationId = declarationQueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
                         LogMessagingUtil.Instance.AppendLine("declarationQueryService.GetIdByDeclarationNumber");
-                        var pm=declarationQueryService.GetSingle(declarationId, false, false);
+                        var pm = declarationQueryService.GetSingle(declarationId, false, false);
                         LogMessagingUtil.Instance.AppendLine("declarationQueryService..GetSingle(declarationId, false, false);");
                         pm.ChangeSetOp = ChangeSetOperation.Update;
                         pm.UpdateDateTime = DateTime.UtcNow;
@@ -963,8 +1000,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public static void RaiseStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string statusId)
         {
-            
-            try 
+
+            try
             {
                 if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
@@ -991,7 +1028,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         comments = "",
                     }
                 };
-                if (!dirtyDeclarationPM.IsConnectedToUnifreight &&  dirtyDeclarationPM.IsAmendment!=true) myAmitalEventTracerModel.NotConnectedToUniface = true;
+                if (!dirtyDeclarationPM.IsConnectedToUnifreight && dirtyDeclarationPM.IsAmendment != true) myAmitalEventTracerModel.NotConnectedToUniface = true;
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent Status " + statusId + "  CustomFileNo = " + dirtyDeclarationPM.CustomFileNo + "   ");
                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
@@ -1003,5 +1040,48 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 throw;
             }
         }
+
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, string versionId, DateTime? status_DateTime)
+        {
+            //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
+            string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+            if (dirtyDeclarationPM.TransportModeId != "A")
+            {
+                primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
+            }
+
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+                Tenant = dirtyDeclarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = status_id,
+                notes = "",
+                CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                EntityId = dirtyDeclarationPM.Id,
+                UserId = loggingUserId,
+
+                CommunicationSubject = "FU Status " + status_id + " from logitude",
+                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                {
+                    entname = dirtyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+                    primary_number = primary_number,
+                    status = "new",
+                    xml_status = "new",
+                    status_id = status_id,
+                    status_DateTime = status_DateTime ?? DateTime.Now,
+                    comments = dirtyDeclarationPM.Id + versionId,
+
+
+
+
+
+                }
+            };
+
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+
+
+        }
+
     }
 }
