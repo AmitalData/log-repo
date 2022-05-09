@@ -36,7 +36,6 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<Airline> Airlines { get; }
         IDbSet<CarrierArea> CarrierAreas { get; }
         IDbSet<CarrierAreasPort> CarrierAreasPorts { get; }
-
         IDbSet<ShippingLine> ShippingLines { get; }
         IDbSet<Trucker> Truckers { get; }
         IDbSet<Tenant> Tenants { get; }
@@ -245,7 +244,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions { get; set; }
         IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
         IDbSet<Mention> Mentions { get; set; }
-
+        IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

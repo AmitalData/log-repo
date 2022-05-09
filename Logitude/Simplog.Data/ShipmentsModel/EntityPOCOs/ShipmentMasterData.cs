@@ -262,6 +262,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Transshipment2VesselName { get; set; }
         public string Transshipment3VesselName { get; set; }
         public string PreCarriageVesselName { get; set; }
-        public string OnCarriageVesselName { get; set; }        
+        public string OnCarriageVesselName { get; set; }
+        public string CarrierServiceLineId { get; set; }
+        public virtual CarrierServiceLine CarrierServiceLine { get; set; }
     }
 }
