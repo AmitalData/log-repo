@@ -90,9 +90,9 @@ namespace Logitude.Server.Tools.QueueService
             QueueSendModel queueSendModel = null)
         {
             //int tenantPriority=8;
-
+            //LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue(${queueName},UseRabbitMQ={UseRabbitMQ})");
             var queueId = base.SendReturnId(messageValues, tenant, delayTime, null, null, null, /*tenantPriority,*/ queueSendModel);
-            LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:CreateNew:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + queueId);
+            LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:CreateNew:DbQueueName=" + CustomDbQueueParams.QueueCode + ":QMId=" + queueId + ":UseRabbitMQ=" + queueSendModel?.UseRabbitMQ);
             return queueId;
         }
 
@@ -205,7 +205,11 @@ namespace Logitude.Server.Tools.QueueService
             return Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("MQC", Tenant);
         }
 
-        static List<string> _SupportedRabbitMQList = new List<string>() { SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() , SBQueueNames.AnalyzeQueueMQ.ToString() };
+        static List<string> _SupportedRabbitMQList = new List<string>() { 
+            SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() , 
+            SBQueueNames.AnalyzeQueueMQ.ToString() ,
+            SBQueueNames.SendDataToExternalServicesBQ.ToString() ,
+        };
         public static List<string> SupportedRabbitMQList { get { return _SupportedRabbitMQList; }  }
 
         public static void SendCommunicationLogMessageToQueue(string queueName, Dictionary<string, string> messageValues, int tenant,bool UseRabbitMQ)
@@ -216,7 +220,7 @@ namespace Logitude.Server.Tools.QueueService
 
 
                 UseRabbitMQ = IsFeatureOnRABBITMQ_Communication() && UseRabbitMQ && SupportedRabbitMQList.Contains(queueName);
-                LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue(${queueName},UseRabbitMQ={UseRabbitMQ})");
+                //LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue(${queueName},UseRabbitMQ={UseRabbitMQ})");
                 
 
                 var customDbQueueService = new CustomDbQueueService(queueName,tenant);

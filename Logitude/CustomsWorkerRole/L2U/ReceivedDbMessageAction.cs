@@ -22,14 +22,16 @@ namespace CustomsWorkerRole.L2U
     abstract class ReceivedDbMessageAction
     {
         CustomDBQueueMessage _ReceivedCustomDBQueueResponse;
+        private bool _fromRabitHandler;
         protected int _Tenant = 0;
         protected string _CommunicationLogId;
         ICommonDataContext _Context;
         protected  CommunicationLog _WaitingCommLog;
 
-        public ReceivedDbMessageAction(CustomDBQueueMessage receivedCustomDBQueueResponse)
+        public ReceivedDbMessageAction(CustomDBQueueMessage receivedCustomDBQueueResponse,bool fromRabitHandler)
         {
             _ReceivedCustomDBQueueResponse = receivedCustomDBQueueResponse;
+            _fromRabitHandler = fromRabitHandler;
         }
         
 
@@ -60,7 +62,10 @@ namespace CustomsWorkerRole.L2U
                 
                 var myEx =new Exception("GetSingleCommunicationLog(_CommunicationLogId:" + _CommunicationLogId + " , _Tenant:" + _Tenant.ToString() + ") == null");
                 ExceptionHandler.HandleException(myEx, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
-                _ReceivedCustomDBQueueResponse.SafeComplete(); //Stop Try !!
+                if (!_fromRabitHandler)
+                {
+                    _ReceivedCustomDBQueueResponse.SafeComplete(); //Stop Try !!
+                }
                 return;
             }
             var ExceptionMessage="";
@@ -71,7 +76,7 @@ namespace CustomsWorkerRole.L2U
             }
             try
             {
-                if (_WaitingCommLog.Retries < 5)
+                if (_fromRabitHandler || _WaitingCommLog.Retries < 5)
                 {
                     var xmlfile = GetCommDataFromBlob();
                     if (string.IsNullOrWhiteSpace(xmlfile))
@@ -100,8 +105,11 @@ namespace CustomsWorkerRole.L2U
                 LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
                 commLogrepository.Update(_WaitingCommLog);
                 commLogrepository.SubmitChanges();
-
-                _ReceivedCustomDBQueueResponse.SafeComplete();
+                if (!_fromRabitHandler)
+                {
+                    _ReceivedCustomDBQueueResponse.SafeComplete();
+                }
+                
             }
             catch (Exception exc)
             {
@@ -114,7 +122,10 @@ namespace CustomsWorkerRole.L2U
                 _WaitingCommLog.ExceptionMessage =   s.Substring(0,Math.Min(7999,s.Length));
                 commLogrepository.Update(_WaitingCommLog);
                 commLogrepository.SubmitChanges();
-                _ReceivedCustomDBQueueResponse.SafeAbandon();
+                if (!_fromRabitHandler)
+                {
+                    _ReceivedCustomDBQueueResponse.SafeAbandon();
+                }
                 //throw;
 
             }

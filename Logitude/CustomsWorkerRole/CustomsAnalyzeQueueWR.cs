@@ -127,7 +127,7 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
                 var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
                 var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
 
-                if (CustomDbQueueService.SupportedRabbitMQList.Contains(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString()) && CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
+                if (CustomDbQueueService.SupportedRabbitMQList.Contains(SBQueueNames.AnalyzeQueueMQ.ToString()) && CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
                 {
                     base.WorkerQueueType = WorkerQueueType.RabbitMQ;
                 }
