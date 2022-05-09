@@ -25,13 +25,62 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
         private IQueryable<InterestTransactionList> GetIqueryableList(IQueryable<InterestTransaction> interestTransactionQuery, int tenant)
         {
+            var interestTransactionsForAdustmentsAndRevaluationJournals = from interestTransaction in interestTransactionQuery
+
+                                                                          join journal in context.Journals.Include("AccountingEntity")
+                                                                          on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode } equals
+                                                                             new
+                                                                             {
+                                                                                 AccountingEntityId = journal.Id,
+                                                                                 journal.AccountingEntityCode
+                                                                             }
+
+                                                                          join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
+                                                                          into reportJoinData
+                                                                          from report in reportJoinData.DefaultIfEmpty()
+                                                                          where journal.AccountingEntityCode == Enums.AccountingEntityValues.Adjustment || journal.AccountingEntityCode == Enums.AccountingEntityValues.Revaluation
+
+                                                                          select new InterestTransactionList()
+                                                                          {
+
+                                                                              Id = interestTransaction.Id,
+                                                                              Tenant = interestTransaction.Tenant,
+                                                                              CreateDateTime = interestTransaction.CreateDateTime,
+                                                                              UpdateDateTime = interestTransaction.UpdateDateTime,
+                                                                              SearchFields = interestTransaction.SearchFields,
+                                                                              GLAccountId = interestTransaction.GLAccountId,
+                                                                              InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
+                                                                              EntityId = interestTransaction.EntityId,
+                                                                              OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
+                                                                              LocalAmount = interestTransaction.LocalAmount,
+                                                                              ForeignAmount = interestTransaction.ForeignAmount,
+                                                                              CurrencyId = interestTransaction.CurrencyId,
+                                                                              InterestValueDate = interestTransaction.InterestValueDate,
+                                                                              InterestReportId = interestTransaction.InterestReportId,
+                                                                              IsClosed = interestTransaction.IsClosed,
+                                                                              IsCancelled = interestTransaction.IsCancelled,
+                                                                              InterestReportNumber = report == null ? null : report.ReportNumber,
+
+                                                                              JournalId = journal.Id,
+                                                                              JournalNumber = journal.JournalNumber,
+                                                                              AccountingDate = journal.AccountingDate,
+
+                                                                              Source = journal.AccountingEntityReference,
+                                                                              SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
+                                                                              SourceTypeCode = journal.AccountingEntityCode,
+                                                                              SourceId = journal.AccountingEntityId,
+                                                                              AccountingEntityCode = interestTransaction.AccountingEntityCode
+                                                                          };
             IQueryable<InterestTransactionList> query
                 = (from interestTransaction in interestTransactionQuery
 
                    join journal in context.Journals.Include("AccountingEntity")
                    on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode } equals
-                      new { AccountingEntityId = journal.AccountingEntityId,
-                            journal.AccountingEntityCode }
+                      new
+                      {
+                          AccountingEntityId = journal.AccountingEntityId,
+                          journal.AccountingEntityCode
+                      }
 
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
                    into reportJoinData
@@ -67,7 +116,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        SourceTypeCode = journal.AccountingEntityCode,
                        SourceId = journal.AccountingEntityId,
                        AccountingEntityCode = interestTransaction.AccountingEntityCode
-                   });
+                   }).Union(interestTransactionsForAdustmentsAndRevaluationJournals);
 
             return query;
         }
