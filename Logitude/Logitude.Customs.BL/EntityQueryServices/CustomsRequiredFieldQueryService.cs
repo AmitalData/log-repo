@@ -56,7 +56,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
         */
         public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableNoCache(string ObjectTableId, int Tenant, string type = "A")
-
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
             List<CustomsRequiredField> requiredFields = rep.GetCustomRequiredFieldsByObjectTable(ObjectTableId, Tenant, type);

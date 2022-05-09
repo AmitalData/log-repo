@@ -157,6 +157,9 @@ export class ExportRequiredFieldsComponent extends BaseComponent {
             if (field.WarningExport) {
                 field.ObjectFieldName=  field.ObjectFieldName + " (התראה)";
             }
+            if (field.IsImport) {
+                this.FieldsList.splice(this.FieldsList.indexOf(field),1);
+            }
         });
     }
 
