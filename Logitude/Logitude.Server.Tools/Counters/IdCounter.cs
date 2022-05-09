@@ -30,49 +30,53 @@ namespace Logitude.Server.Tools.Counters
             string number = null;
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-              //  throw new Exception("itzik+elisheva= not in GetNewReadCommittedTransaction !!!!!! ");
+                //  throw new Exception("itzik+elisheva= not in GetNewReadCommittedTransaction !!!!!! ");
 
-                
-                using (OracleConnection cn = new OracleConnection(connectionString))
+                // ALL IdCounter MUST BE IN TRANSACTION 
+                // ALTHOGH THIS FUNCTION CALL FRM UNITEST 
+                using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                 {
-                    OracleCommand cmd = new OracleCommand();
-                    cmd.Connection = cn;
-                    cmd.CommandText = 
+                    using (OracleConnection cn = new OracleConnection(connectionString))
+                    {
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = cn;
+                        cmd.CommandText =
                         //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "usp_GetNextTableIdValue";
-                    DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", LogitudeDBSchema.LOGITUDE_MAIN ,
-                    cmd.Connection.ConnectionString);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    /*
-                      v_pLastNumber OUT VARCHAR2,
---                    v_pTableName IN VARCHAR2 
-                     * */
+                        DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", LogitudeDBSchema.LOGITUDE_MAIN,
+                        cmd.Connection.ConnectionString);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        /*
+                          v_pLastNumber OUT VARCHAR2,
+    --                    v_pTableName IN VARCHAR2 
+                         * */
 
-                    OracleParameter lastNumberPar = new OracleParameter("v_pLastNumber", OracleDbType.VarChar, 100);
-                    OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
+                        OracleParameter lastNumberPar = new OracleParameter("v_pLastNumber", OracleDbType.VarChar, 100);
+                        OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
 
-                    lastNumberPar.Direction = ParameterDirection.Output;
-                    tableNamePar.Direction = ParameterDirection.Input;
+                        lastNumberPar.Direction = ParameterDirection.Output;
+                        tableNamePar.Direction = ParameterDirection.Input;
 
-                    tableNamePar.Value = tableName;
+                        tableNamePar.Value = tableName;
 
-                    cmd.Parameters.Add(lastNumberPar);
-                    cmd.Parameters.Add(tableNamePar);
-                    try
-                    {
-                        cn.Open();
-                        cmd.ExecuteNonQuery();
-                        number = (string)cmd.Parameters["v_pLastNumber"].Value;
+                        cmd.Parameters.Add(lastNumberPar);
+                        cmd.Parameters.Add(tableNamePar);
+                        try
+                        {
+                            cn.Open();
+                            cmd.ExecuteNonQuery();
+                            number = (string)cmd.Parameters["v_pLastNumber"].Value;
 
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Console.WriteLine("Exception: {0}", ex.ToString());
+                            throw;
+                        }
+
+                        cn.Close();
                     }
-                    catch (Exception ex)
-                    {
-                        System.Console.WriteLine("Exception: {0}", ex.ToString());
-                        throw;
-                    }
-
-                    cn.Close();
+                    scope.Complete();
                 }
-
                 return number;
             }
 
