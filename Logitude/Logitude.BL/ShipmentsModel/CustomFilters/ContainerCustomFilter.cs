@@ -34,21 +34,21 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         }
                     }
 
-                    if (item.FieldName == "IsCancelled")
-                    {
-                        bool value = Convert.ToBoolean(item.FieldValue);
-                        if (value)
-                        {
-                            showIsCancelled = true;
-                        }
-                    }
-
                     if (item.FieldName == "Containers")
                     {
                        
                         queryableData = queryableData.Where(d => !d.IsClosed && !d.IsCancelled);
                     }
    
+                }
+
+                if (item.FieldName == "IsCancelled")
+                {
+                    bool value = Convert.ToBoolean(item.FieldValue);
+                    if (value)
+                    {
+                        showIsCancelled = true;
+                    }
                 }
             }
 
