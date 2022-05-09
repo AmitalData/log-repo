@@ -385,7 +385,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
         });
 
-        if (!this.IsCreatedFromMasterHouses) {
+        if (!this.IsCreatedFromMasterHouses && !this.IsCopyFromShipment) {
             this.SetDefaultSubType();
         }
     }
