@@ -711,7 +711,7 @@ namespace Logitude.Customs.BL.Validators
             IncotemrsFileValidationQueryService incotemrsFileValidationQuery = new IncotemrsFileValidationQueryService(context);
             List<IncotemrsFileValidationPM> incotemrsFileValidationPMs = incotemrsFileValidationQuery.GetAllFromCache();
 
-            var fromCache = true;
+            var fromCache = false;
             if (fromCache)
             {
                 var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
