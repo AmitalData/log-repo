@@ -28,6 +28,8 @@ using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 using Logitude.Server.Tools;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace CustomsWorkerRole
 {
@@ -65,13 +67,63 @@ namespace CustomsWorkerRole
 
         }
         bool _OnStartDone = false;
+        private string myClass;
         private CustomDbQueueService _CustomDbQueueService;
         public override bool OnStart()
         {
             try
             {
-                if (_OnStartDone) return true ;
-                _OnStartDone =true ;
+                if (_OnStartDone) return true;
+                _OnStartDone = true;
+                DoneItemsInRange = new Dictionary<DateTime, int>();
+                string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(SBQueueNames.SendDataToExternalServicesBQ.ToString()); //Amitalqueue
+                                                                                                                                           //if (StorageAcountDetails.NameSpaceManager.QueueExists(emailQueueName))
+                                                                                                                                           //{
+                                                                                                                                           //    StorageAcountDetails.NameSpaceManager.DeleteQueue(emailQueueName);
+                                                                                                                                           //}
+
+
+                myClass = this.GetType().Name;
+                _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), 0);
+
+
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+
+                if (CustomDbQueueService.SupportedRabbitMQList.Contains(SBQueueNames.SendDataToExternalServicesBQ.ToString()) && CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
+                {
+                    base.WorkerQueueType = WorkerQueueType.RabbitMQ;
+                }
+                else
+                {
+                    base.WorkerQueueType = WorkerQueueType.DB;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "amital send data worker role start", null, null);
+            }
+
+            // Set the maximum number of concurrent connections 
+            ServicePointManager.DefaultConnectionLimit = 12;
+
+            //DiagnosticMonitor.Start("DiagnosticsConnectionString");
+
+            // For information on handling configuration changes
+            // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
+            
+
+            return base.OnStart();
+        }
+
+        public bool OnStart_old()
+        {
+            try
+            {
+                if (_OnStartDone) return true;
+                _OnStartDone = true;
                 DoneItemsInRange = new Dictionary<DateTime, int>();
                 string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(SBQueueNames.SendDataToExternalServicesBQ.ToString()); //Amitalqueue
                 //if (StorageAcountDetails.NameSpaceManager.QueueExists(emailQueueName))
@@ -118,7 +170,7 @@ namespace CustomsWorkerRole
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "amital send data worker role start", null,null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "amital send data worker role start", null, null);
             }
 
             // Set the maximum number of concurrent connections 
@@ -128,10 +180,11 @@ namespace CustomsWorkerRole
 
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
-            
+
 
             return base.OnStart();
         }
+
 
         //private void RoleEnvironmentChanging(object sender, RoleEnvironmentChangingEventArgs e)
         //{
@@ -299,14 +352,28 @@ namespace CustomsWorkerRole
             try
             {
                 OnStart();
-                if (LogitudeSettings.QueueServiceMode != "db")
+                //if (LogitudeSettings.QueueServiceMode != "db")
+                //{
+                //    WorkUntilQEmpty();
+                //}
+                //else
+                //{
+                //    WorkUntilQEmpty_Db();
+                //}
+                switch (base.WorkerQueueType)
                 {
-                    WorkUntilQEmpty();
+
+                    case WorkerQueueType.RabbitMQ:
+                        WorkUntilPrcossesStop_RabbitMQ();
+                        break;
+                    case WorkerQueueType.DB:
+                    default:
+                        {
+                            WorkUntilQEmpty_Db();
+                        }
+                        break;
                 }
-                else
-                {
-                    WorkUntilQEmpty_Db();
-                }
+
 
             }
             catch (Exception e)
@@ -318,7 +385,39 @@ namespace CustomsWorkerRole
             
 
         }
+        private void WorkUntilPrcossesStop_RabbitMQ()
+        {
+            var rabbitMQConsumerService = new RabbitMQConsumerService(myClass, SBQueueNames.SendDataToExternalServicesBQ.ToString());
+            rabbitMQConsumerService.WorkUntilPrcossesStop_RabbitMQ(
+                (CustomDBQueueMessage customDBQueueMessage) =>
+                {
+                    ///var receivedMessage= customDBQueueMessage.MyQueueResponse;
 
+
+
+
+                    LogMessagingUtil.Instance
+                        .AppendLine("SendDataToExternalServicesWR:ProccessReceivedMessage()")
+                        .AppendLine("QUEUEMessageId:" + customDBQueueMessage.MessageId)
+                        .AppendLine("RetryNumber:" + customDBQueueMessage.Retries);
+                        
+                        
+
+
+                    LastActivity = DateTime.UtcNow;
+
+                    var mySender = new SendDbQueueMessage2Unifreight(customDBQueueMessage, fromRabitHandler: true);
+                    mySender.ProccessReceivedMessage();
+
+
+                    LogDoneItemInMemory();
+                    
+
+                    return true;
+                },
+                base.LogDoneItemInMemory
+                );
+        }
         private void WorkUntilQEmpty_Db()
         {
             while (!WorkerRoleServiceLocator.PleaseShutDown)
@@ -441,7 +540,7 @@ namespace CustomsWorkerRole
             try
             {
 
-                var mySender = new SendDbQueueMessage2Unifreight(message);
+                var mySender = new SendDbQueueMessage2Unifreight(message, fromRabitHandler: false);
                 //var success = mySender.Parse();//crash if failed
                 mySender.ProccessReceivedMessage();
 

@@ -349,14 +349,16 @@ namespace Logitude.Server.Tools
                 }
                 else
                 {
+                    var UseRabbitMQ = CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && CustomDbQueueService.SupportedRabbitMQList.Contains(queueName);
+
                     var queueService = new CustomDbQueueService//();
                                                                //queueService.InitializeQueue
                     (queueName, 0);
                     var messageProperties = new Dictionary<string, string>();
                     messageProperties["CommunicationLogId"] = communicationLogId;
                     messageProperties["Tenant"] = tenant.ToString();
-                    var queueId = queueService.Send(messageProperties, tenant, delayTime, new QueueSendModel() { TenantPriority = 7 });
-
+                    var queueId = queueService.Send(messageProperties, tenant, delayTime, new QueueSendModel() { TenantPriority = 7,UseRabbitMQ= UseRabbitMQ });
+                    
                     LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue({queueName}, {communicationLogId})=>QID={queueId} ");
                     ///throw new Exception("Queue is DbMode "); 
                 }
