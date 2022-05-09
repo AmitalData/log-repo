@@ -135,7 +135,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         DeclarationPM _MyDeclarationPM;
         private bool _FastDelete;
-        private DateTime _DateTime;
+         DateTime _DateTime;
 
         //private List<SupplierInvoiceItemsTaxesModPM> _SupplierInvoiceItemsTaxesModificationPMList;
         //public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption;
@@ -229,7 +229,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
             if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
-            {                
+            {
                 this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
@@ -402,12 +402,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-            if (customResponse.Response.Declaration.DMExtensions.VersionID.Value == "1.0")
+
             {
                 if (this._MyDeclarationPM.Direction == "E")
                 {
-                    _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
-                    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRN", versionId :customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value,status_DateTime: _DateTime );
+                    if (customResponse.Response.Declaration.DMExtensions.VersionID.Value == "1.0")
+                    {
+                        _DateTime = new DateTime();
+                        _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
+                        RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRN", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                    }
+
+                    if (customResponse.Response.Status[0].NameCode.Value == "3" || customResponse.Response.Status[0].NameCode.Value == "6" && _MyDeclarationPM.DeclarationStatusTypeCode != customResponse.Response.Status[0].NameCode.Value)
+                    {
+                        _DateTime = new DateTime();
+                        _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
+                        RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                    }
                 }
             }
             //if (customResponse.ResponseContentHeader.Exception != null)
@@ -586,7 +597,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeleteSupplierInvoiceItemsTaxes(mySupplierInvoiceItemsTaxUpdateService);
                 DeleteSupplierInvoiceItemsVehicleMods(mySupplierInvoiceItemVehicleModUpdateService); // moran 20.10.15 - Task 17209
                 DeleteSupplierInvoiceItemsModVehicles(mySupplierInvoiceItemModVehicleUpdateService); // moran 24.11.15 - Task 17424 
-                //DeleteSupplierInvioceItemCertificates(mySupplierInvioceItemCertificatUpdateService);
+                                                                                                     //DeleteSupplierInvioceItemCertificates(mySupplierInvioceItemCertificatUpdateService);
             }
             LogMessagingUtil.Instance.AppendLine("IsFastDelete:" + _FastDelete.ToString() + ",Took :" + sw.ElapsedMilliseconds);
 
@@ -628,7 +639,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 _MyDeclarationPM.IsExportClosed = true;
             }
 
-                if (customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails != null)
+            if (customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails != null)
                 _MyDeclarationPM.LoadingFactor = customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails.FirstOrDefault()?.ExpenseLoadingFactor.Value;
 
             if (customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount != null)
@@ -1057,12 +1068,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeclarationPendingQueryService myCourierPendingReasonQueryService = new DeclarationPendingQueryService(context);
                 DeclarationPendingPM declarationPendingPM_900 = myCourierPendingReasonQueryService.GetSingle(_MyDeclarationPM.Id, "900", false, false);
                 DeclarationPendingPM declarationPendingPM_901 = myCourierPendingReasonQueryService.GetSingle(_MyDeclarationPM.Id, "901", false, false);
-                
+
                 //DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                 //DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
                 //if (currentDeclarationCourierStatusPM != null && 
                 //    (string.IsNullOrEmpty(currentDeclarationCourierStatusPM.CourierPendingReasonCode) || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900" || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901"))
-                
+
                 {
                     // Pending 901
                     Boolean isSetPendingTo901 = false;
@@ -1142,7 +1153,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //  DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                     //declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                     //}
-                    
+
                     DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     if (declarationPendingPM_900 != null && declarationPendingPM_900.ChangeSetOp == ChangeSetOperation.Update)
                     {
@@ -1870,7 +1881,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                        select a).ToList();
 
             if (entityList.Count > 0) //Bug 23715: שליחת הצהרה- מתקבלת שגיאה שקשורה לאישורים
-            //if (entityList.Count != null)
+                                      //if (entityList.Count != null)
             {
                 //Go over all the 'Entity'
                 foreach (var entity in entityList)
@@ -2405,7 +2416,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var fieldList = WCO.Instance.CreateDB().GetCopyList();
             WCOErrorPointerModel res;
 
-            if(ex.ExceptionParms != null)
+            if (ex.ExceptionParms != null)
             {
                 ex.ExceptionParms.ToList().ForEach(param =>
                 {
@@ -2426,7 +2437,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return msg;
         }
 
-        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id,string versionId , DateTime? status_DateTime)
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, string versionId, DateTime? status_DateTime)
         {
             //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
             string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
