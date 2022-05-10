@@ -274,7 +274,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (this._MyDeclarationPM.Direction == "E")
             {
-                RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRS", status_DateTime: _TransmitionDateTime);
+                RaiseEvent(this._MyDeclarationPM, "MEHES", status_id: "MRS", status_DateTime: _TransmitionDateTime);
             }
             //DocumentsFilingMetaDataValueQuery.UpSert(documentsFilingPM, "VER", this._MyDeclarationPM.VersionId);
 
