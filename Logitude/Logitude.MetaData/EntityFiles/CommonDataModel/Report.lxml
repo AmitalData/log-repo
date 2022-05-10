@@ -1817,6 +1817,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsExcelReportAllowed&quot;"
     ListPropertyPath="&quot;IsExcelReportAllowed&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2686,6 +2687,15 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;Report.Features.PerVendorReport&quot;"
       FeatureDefaultText="&quot;856 Per Vendor Report&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SRQR&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Report.Features.SRQR&quot;"
+      FeatureDefaultText="&quot;Spot Rate Quote Report&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

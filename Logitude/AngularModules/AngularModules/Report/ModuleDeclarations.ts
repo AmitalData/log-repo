@@ -95,6 +95,7 @@ import { UserDefinedReportFilterControl } from './Components/FilterReportCompone
 import { LogitudeCRMReportFilterComponent } from './Components/FiltersComponent/CRM/LogitudeCRMReportFilterComponent';
 import { ExcelReportTemplateComponent } from './Components/ExcelReportTemplateComponent';
 import { DataProviderFieldsNestedList } from './Components/DataProviderFieldsNestedList';
+import { SpotRateQuoteReportFilterComponent } from './Components/FiltersComponent/Quote/SpotRate/SpotRateQuoteReportFilterComponent';
 
 export const Components =
     [
@@ -176,7 +177,8 @@ export const Components =
         LogitudeCRMReportFilterComponent,
         ExcelReportTemplateComponent,
         DataProviderFieldsNestedList,
-        PerVendorReportFilterComponent
+        PerVendorReportFilterComponent,
+        SpotRateQuoteReportFilterComponent
 
     ];
 
@@ -264,6 +266,7 @@ export class ModuleDeclarations {
             case "LogitudeCRMReportFilterComponent": { myResult = LogitudeCRMReportFilterComponent; break; }
             case "ExcelReportTemplateComponent": { myResult = ExcelReportTemplateComponent; break; }
             case "PerVendorReportFilterComponent": { myResult = PerVendorReportFilterComponent; break; }
+            case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
 
         }
 

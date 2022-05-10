@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportUpdateClass
    {  		
-		public const string HashString = "e2542d8f1f7ee3fa7ec065a816b0f422";
+		public const string HashString = "a2a7ed8da8fa3d9c261b482096919eb8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -849,6 +849,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsExcelReportAllowed",
 					  						ListPropertyPath =  "IsExcelReportAllowed",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1147,6 +1148,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature ReportFeature_LOCR = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LOCR", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.LOCR", NameTextCodeDefaultText = @"Logitude CRM Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
 		   Feature ReportFeature_PerVendorReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PerVendorReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.PerVendorReport", NameTextCodeDefaultText = @"856 Per Vendor Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
+
+		   Feature ReportFeature_SRQR = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SRQR", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.SRQR", NameTextCodeDefaultText = @"Spot Rate Quote Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
    
 	    
