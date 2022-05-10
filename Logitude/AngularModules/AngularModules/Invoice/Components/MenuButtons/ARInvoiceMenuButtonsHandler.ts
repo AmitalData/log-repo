@@ -287,6 +287,14 @@ export class ARInvoiceMenuButtonsHandler {
                             break;
                         }
 
+                        case "ResendToSAT": {
+                            const SATTransferWithErrorStatusCode: string = "TE";
+                            button.IsHidden = this.EntityPM.SATTransferStatusCode != SATTransferWithErrorStatusCode;
+                            button.DisplayText = "Resend to SAT";
+
+                            break;
+                        }
+
                         case "InvoiceOperationsSeparator":
                         case "VoidARInvoiceOperationsSeparator": {
                             if (SessionLocator.TenantPM.AccountingActivated == true) {
@@ -373,6 +381,11 @@ export class ARInvoiceMenuButtonsHandler {
                     break;
                 }
 
+                case "ResendToSAT": {
+                    this.ResendToSAT();
+                    break;
+                }
+
                 case "BlockFromTransfer": {
                     this.BlockFromTransferToQBO();
                     break;
@@ -433,6 +446,16 @@ export class ARInvoiceMenuButtonsHandler {
         });
     }
 
+    ResendToSAT() {
+        this.EntityPM.ResendToSAT = true;
+        this.EntityPM.SetVoided = false;
+        this.EntityPM.SetApproved = false;
+        this.EntityPM.SetReTransfer = false;
+        this.EntityPM.SetCancelDraft = false;
+        const SATInTransferStatusCode: string = "TG";
+        this.EntityPM.SATTransferStatusCode = SATInTransferStatusCode;
+        this.entityArgs.EditComponent.SaveChanges("Resending Invoice to SAT");
+    }
 
     SendToQBOApproved(Text: string) {
         this.EntityPM.SetReSendQBO = true;

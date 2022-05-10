@@ -1132,6 +1132,26 @@ export class ARInvoicePM {
     public set PaymentReferences(newValue: string) { if (this.paymentReferences != newValue) { this.paymentReferences = newValue; this.MarkAsDirty("PaymentReferences"); } }
        
 	 
+    private agentReference1: string;
+    public get AgentReference1() { return this.agentReference1; }
+    public set AgentReference1(newValue: string) { if (this.agentReference1 != newValue) { this.agentReference1 = newValue; this.MarkAsDirty("AgentReference1"); } }
+       
+	 
+    private agentReference2: string;
+    public get AgentReference2() { return this.agentReference2; }
+    public set AgentReference2(newValue: string) { if (this.agentReference2 != newValue) { this.agentReference2 = newValue; this.MarkAsDirty("AgentReference2"); } }
+       
+	 
+    private billToIsCustomer: boolean;
+    public get BillToIsCustomer() { return this.billToIsCustomer; }
+    public set BillToIsCustomer(newValue: boolean) { if (this.billToIsCustomer != newValue) { this.billToIsCustomer = newValue; this.MarkAsDirty("BillToIsCustomer"); } }
+       
+	 
+    private resendToSAT: boolean;
+    public get ResendToSAT() { return this.resendToSAT; }
+    public set ResendToSAT(newValue: boolean) { if (this.resendToSAT != newValue) { this.resendToSAT = newValue; this.MarkAsDirty("ResendToSAT"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		
