@@ -136,6 +136,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                     OpportunityTypeName = a.OpportunityType == null ? null : a.OpportunityType.Name,
                                                     NumberOfShipmentsForeground = a.NumberOfShipments > 0 ? "#FF282E30" : "#FFE53030",
                                                     IsCancelled = a.IsCancelled,
+                                                    NumberOfConnectedQuotes = a.NumberOfConnectedQuotes,
                                                 });
             return query;
 		}

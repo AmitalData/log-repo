@@ -561,6 +561,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="NumberOfConnectedQuotes"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="OwnerId"
     ReferencedTable="Users"

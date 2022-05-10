@@ -8742,6 +8742,82 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;54309628-47e9-45ea-b8f2-efa0335e4ddc&quot;"
+    FieldName="&quot;NumberOfConnectedQuotes&quot;"
+    OldNames="NumberOfConnectedQuotes"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Opportunity&quot;"
+    FieldsDataType="&quot;Integer&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    DataTemplateName="&quot;&quot;"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;NumberOfConnectedQuotes&quot;"
+    ListPropertyPath="&quot;NumberOfConnectedQuotes&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Opportunity&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;NumberOfConnectedQuotes&quot;"
+    DefaultText="&quot;No. of Quotes&quot;"
+    ListFieldLable="&quot;NumberOfConnectedQuotesListLable&quot;"
+    ListLableDefaultText="&quot;No. of Quotes&quot;"
+    ShortFieldLable="&quot;NumberOfConnectedQuotes&quot;"
+    ShortFieldLableDefaultText="&quot;Quotes&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;My Open Opportunities&quot;"
     TextCode="&quot;My Open Opportunities&quot;"
@@ -8803,7 +8879,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;MyOpenOpportunities&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -8867,7 +8944,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;AllOpenOpportunities&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -8931,7 +9009,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;MyClosedOpportunities&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -8995,7 +9074,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;AllClosedOpportunities&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -9126,7 +9206,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;CancelledOpportunities&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -9205,7 +9286,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;OpenByStageOpp&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen

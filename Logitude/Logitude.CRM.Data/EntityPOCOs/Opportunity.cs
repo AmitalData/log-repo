@@ -235,6 +235,8 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string Field39 { get; set; }
         [Column("Field40")]
 	    public string Field40 { get; set; }
+        [Column("NumberOfConnectedQuotes")]
+	    public int? NumberOfConnectedQuotes { get; set; }
     }
 }
 	 

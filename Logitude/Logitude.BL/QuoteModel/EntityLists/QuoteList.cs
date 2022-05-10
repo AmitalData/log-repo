@@ -226,6 +226,6 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public bool IncludeImportDutyCharges { get; set; }
         public double? InsuranceValue { get; set; }
         public string ValidByTypeCode { get; set; }
-
+        public bool? ConnectedToOpportunity { get; set; }
     }
 }
