@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCasualDetailsUpdateClass
    {  		
-		public const string HashString = "9ed317d59e3791354ade6f9ad64c171a";
+		public const string HashString = "492acfa719a871d7cfba27279662f9c4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Casual Details",
-			      				    Code =  "32af",
+			      				    Code =  "fcdc",
 			      				    Name =  "Customs.DeclarationCasualDetails Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
