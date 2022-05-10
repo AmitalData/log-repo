@@ -1291,8 +1291,8 @@ namespace WebFreight.Web.Helpers
                     }
                 case "SRQR":
                     {
-                        SpotRateQuoteReportDataProviderService myDataService = new SpotRateQuoteReportDataProviderService(filters, reportFliter.tenant);
-                        dataProvider = myDataService.Load();
+                        SpotRateQuoteReportDataProviderService spotRateQuoteReportDataProviderService = new SpotRateQuoteReportDataProviderService(filters, reportFliter.tenant);
+                        dataProvider = spotRateQuoteReportDataProviderService.Load();
                         break;
                     }
                     #endregion

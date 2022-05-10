@@ -118,8 +118,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Quots.SpotRate
 
         private List<QuoteChargeItem> SetQuotesShipments(List<QuoteChargeItem> quoteChargeItems)
         {
-            var quoteNumbers = quoteChargeItems.Select(x => x.QuoteId);
-            var shipments = shipmentsContext.Shipments.Where(x => quoteNumbers.Contains(x.QuoteId)).Select(x => new { x.ShipmentNumber, x.QuoteId }).ToList();
+            var quoteIds = quoteChargeItems.Select(x => x.QuoteId);
+            var shipments = shipmentsContext.Shipments.Where(x => quoteIds.Contains(x.QuoteId)).Select(x => new { x.ShipmentNumber, x.QuoteId }).ToList();
 
             foreach (var quoteChargeItem in quoteChargeItems) SetSingleQuoteShipments(quoteChargeItem, shipments);
 
