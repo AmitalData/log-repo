@@ -587,6 +587,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 if (!string.IsNullOrEmpty(entityPM.CalculatedImporterName) && entityPM.CalculatedImporterName.Length > 35) entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, 35);
                 if (!string.IsNullOrEmpty(entityPM.ImporterName) && entityPM.ImporterName.Length > 35) entityPM.ImporterName = entityPM.ImporterName.Substring(0, 35);
+
+                if(entityPM.Direction == "E" && entityPM.TransportModeId == "O")
+                {
+                    DeclarationPM oldDeclaration = new DeclarationQueryService(entityPM.Tenant).GetSingle(entityPM.Id, true, false);
+
+                    oldDeclaration.Consignments.ForEach(con =>
+                    {
+                        bool isDisconnect = /*oldDeclaration.exportstorageid != null &&*/ !entityPM.Consignments.Any(oldCon => oldCon.DeclarationId == con.DeclarationId  && oldCon.ManifestNumber == con.ManifestNumber && oldCon.SecondCargoID == con.SecondCargoID && oldCon.ThirdCargoID == con.ThirdCargoID);
+                        if (isDisconnect)
+                        {
+                            //con.exportstorageid = null;
+                            //con.ChangeSetOp = ChangeSetOperation.Update;
+                            //new ConsignmentUpdateService(MainContext as CustomContext, new Dictionary<string, IContext>(), entityPM.Tenant).Update(con, true);
+
+
+                            //ExportStoragePM exportStoragePM = new ExportStorageQueryService(entityPM.Tenant).GetSingle(con.exportstorageid, true, false);
+                            //exportStoragePM.DeclarationId = null;
+                            //exportStoragePM.ChangeSetOp = ChangeSetOperation.Update;
+                            //new ExportStorageUpdateService(MainContext as CustomContext, new Dictionary<string, IContext>(), entityPM.Tenant).Update(ExportStoragePM, true);
+                        }
+                    });
+                }
             }
             finally
             {
