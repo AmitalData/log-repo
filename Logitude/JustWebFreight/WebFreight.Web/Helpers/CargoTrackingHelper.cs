@@ -43,6 +43,8 @@ namespace WebFreight.Web.Helpers
                     ShipmentHeaderImageId = tenantManagementPM.ShipmentHeaderImageId,
                     InvertedLogoId = tenantManagementPM.InvertedLogoId,
                     CustomerURL = tenantManagementPM.CustomerURL,
+                    ActivatePrivateSite = tenantManagementPM.ActivatePrivateSite,
+                    
                 };
                 SetCargoTrackingImages(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);
             }

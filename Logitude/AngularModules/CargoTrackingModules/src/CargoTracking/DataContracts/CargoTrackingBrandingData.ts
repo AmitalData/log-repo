@@ -24,4 +24,5 @@ export class CargoTrackingBrandingData {
     public static BackgroundBytes:any;
     public static ShipmentHeaderBytes:any;
     public static ForceHttps:boolean;
+    public static ActivatePrivateSite: boolean;
 }

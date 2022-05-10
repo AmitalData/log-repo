@@ -73,7 +73,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.InvertedLogoId = this.EntityPM.InvertedLogoId;
         this.BrowserIconId = this.EntityPM.BrowserIconId;
         this.ShipmentHeaderImageId = this.EntityPM.ShipmentHeaderImageId;
-        
+
     }
 
     RemoveImage(name){
@@ -141,7 +141,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.ValidateMainColorCode(hexColor);
         this.UpdateEntityMainColor();
     }
-    
+
     get PermissionBuildMonths()
     {
         return this.EntityPM.PermissionBuildMonths;
@@ -261,6 +261,16 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     {
         if (this.EntityPM.CustomerURL != value) {
             this.EntityPM.CustomerURL = value;
+
+        }
+    }
+
+    get ActivatePrivateSite() {
+        return this.EntityPM.ActivatePrivateSite;
+    }
+    set ActivatePrivateSite(value: boolean) {
+        if (this.EntityPM.ActivatePrivateSite != value) {
+            this.EntityPM.ActivatePrivateSite = value;
 
         }
     }
