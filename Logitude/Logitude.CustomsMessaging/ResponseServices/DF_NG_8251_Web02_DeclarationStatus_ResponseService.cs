@@ -61,6 +61,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string declarationStatusCode = "";
             string warningMess = "";
             bool isAutoPayment = false;
+            List<string> statusList = new List<string>()
+            {
+               "2","4","22","23","26","35","40","41","42","45","47","48","49"
+            };
             DeclarationStatusTypePM declarationStatusTypePM = null;
             AmitalContext _AmitalContext = AmitalContext.GetContext(requestParams.Tenant);
 
@@ -74,14 +78,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             MyResponseData.MultiDeclarations = new List<MultiDeclaration>();
 
-            //eclarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
 
-            //if (customResponse.ResponseContentHeader. == "3" || declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" && declarationPM.DeclarationStatusTypeCode != declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
-            //{
-            //    _DateTime = new DateTime();
-            //    _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
-            //    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
-            //}
 
             foreach (var declarationStatus_ResponseDeclarationStatusAnswer in customResponse.DeclarationStatusAnswer)
             {
@@ -478,13 +475,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 if (declarationPM.Direction == "E")
                                 {
-                                    if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" || declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "3" && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode != declarationPM.DeclarationStatusTypeCode)
-                                    {
-                                        _DateTime = new DateTime();
-                                      //  _DateTime = DateTime.Parse(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LastModifiedDateTime);
-                                        RaiseEvent(declarationPM, requestParams.LoggingUserId, status_id: "RDH", versionId: declarationPM.VersionId, status_DateTime: _DateTime);
 
+                                    if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode != declarationPM.DeclarationStatusTypeCode)
+                                    {
+                                        if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" ||
+                                           declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "3")
+                                        {
+                                            RaiseEvent(declarationPM, requestParams.LoggingUserId, status_id: "RDH", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                        }
+                                        if (statusList.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
+                                        {
+                                            RaiseEvent(declarationPM, requestParams.LoggingUserId, status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                        }
                                     }
+
+
+
                                 }
                             }
                             else
