@@ -1,4 +1,8 @@
-﻿using Logitude.SystemLogs;
+﻿
+
+
+
+using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -18,7 +22,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 
 namespace WebFreight.Web.Monitoring
 {
-    public partial class DocumentsExecutionLogWaitingStatus : System.Web.UI.Page
+    public partial class DocumentsExecutionLogProgressStatus : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,7 +31,7 @@ namespace WebFreight.Web.Monitoring
             Response.ContentType = "text/xml";
             Response.Write("<pingdom_http_custom_check>");
 
-            if (AnyDocumentsExecutionLogsWaitingStatus())
+            if (AnyDocumentsExecutionLogsProgressStatus())
             {
                 Response.Write("<status>Fail</status>");
             }
@@ -43,26 +47,27 @@ namespace WebFreight.Web.Monitoring
             Response.End();
         }
 
-        private bool AnyDocumentsExecutionLogsWaitingStatus()
+        private bool AnyDocumentsExecutionLogsProgressStatus()
         {
-            bool isWaitingStatus = false;
+            bool isProgressStatus = false;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 try
                 {
                     DateTime twoDaysBefore = DateTime.Now.AddDays(-2);
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
-                    isWaitingStatus = (from d in commonDataContext.DocumentsExecutionLogs
-                                       where d.CreateDate > twoDaysBefore && d.StatusCode == "W" && (EntityFunctions.DiffMinutes(d.CreateDate, DateTime.Now) > 1)
+                    isProgressStatus = (from d in commonDataContext.DocumentsExecutionLogs
+                                       where d.CreateDate > twoDaysBefore && d.StatusCode == "P" && (EntityFunctions.DiffMinutes(d.CreateDate, DateTime.Now) >= 6)
                                        select d).Any();
                 }
+
                 catch (Exception errorInfo)
                 {
-                    ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "DocumentsExecutionLogsWaitingStatus", "Bug in AnyWaitingStatus Method : isWaitingStatus = (from a in commonDataContext.DocumentsExecutionLogs ...", null);
+                    ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "DocumentsExecutionLogProgressStatus", "Bug in AnyProgressStatus Method : isProgressStatus = (from a in commonDataContext.DocumentsExecutionLogs ...", null);
                 }
                 scope.Complete();
             }
-            return isWaitingStatus;
+            return isProgressStatus;
         }
     }
 }
