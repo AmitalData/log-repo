@@ -155,13 +155,16 @@ namespace Logitude.Customs.Data.Repsitories
             //          select a).Max(rec => Convert.ToInt32( rec.AmendmentRequestNumber));
 
             var list = (from a in context.Declarations
-                        where a.Tenant == tenant && a.AmendmentRequestNumber != null
-                        select a.AmendmentRequestNumber).ToList();
+                        where a.Tenant == tenant && (a.AmendmentRequestNumber != null || a.CancelRequestNumber != null)
+                        select new { a.AmendmentRequestNumber, a.CancelRequestNumber }).ToList();
 
             int max = 0;
 
-            if (list.Count() != 0)
-                max = list.Select(int.Parse).ToList().Max();
+            if (list.Count() != 0) {
+                var maxAmendmentRequestNumber = list.Select(r => (int.TryParse(r.AmendmentRequestNumber, out var a)) ? int.Parse(r.AmendmentRequestNumber) : 0).ToList().Max();
+                var maxCancelRequestNumber = list.Select(r => ((r.CancelRequestNumber).HasValue) ? r.CancelRequestNumber.Value : 0).ToList().Max();
+                max = (maxAmendmentRequestNumber > maxCancelRequestNumber) ? maxAmendmentRequestNumber : maxCancelRequestNumber;
+            }
 
             return max;
         }
@@ -427,6 +430,21 @@ namespace Logitude.Customs.Data.Repsitories
                   select rec.Id
                   )
                   .FirstOrDefault();
+        }
+
+        public (string id ,string direction) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(declarationNumber)) return (id: "", direction: "");// tuple literal
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            var res=
+                  (
+                  from rec in context.Declarations
+                  where rec.DeclarationNumber == declarationNumber && rec.Tenant == tenant
+                  select new { rec.Id, rec.Direction }
+                  )
+                  .FirstOrDefault();
+            return (id: res.Id, direction:res.Direction);// tuple literal
         }
 
         public List<Declaration> GetDeclarationsById(List<string> declarationIds)
@@ -860,7 +878,7 @@ namespace Logitude.Customs.Data.Repsitories
                     d.Importername,
                     d.Cargodescription,
                     d.Casualimporteraddress1,
-                    d.Casualimporteraddress2,                    
+                    d.Casualimporteraddress2,
                     d.Casualimportercity,
                     d.TotalInvoiceAmountInUSD,
                     d.PackageMeasureQualifierCode1,
@@ -919,17 +937,27 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
 
-        public object GetDeclarationConsignment(string exportFile)
+        public DeclarationConsignments GetDeclarationConsignment(string exportFile)
         {
             var myQ = (from d in context.Declarations
                        join c in context.Consignments on d.Id equals c.DeclarationId into cjoin
                        from cj in cjoin.DefaultIfEmpty()
 
                        where d.ExportFile == exportFile
-                       select new { Consignment = cj , d}
+                       select new { Consignment = cj, d }
                        );
-            var res = myQ.Take(1).ToList().FirstOrDefault();
-            return res;
+            Consignment Consignment = myQ.Take(1).ToList().FirstOrDefault()?.Consignment;
+
+            var myQ2 = (from d in context.Declarations.Where(d => d.ExportFile == exportFile).Take(1)
+
+                        join c in context.ConsignmentPackages.Select(x => new ConsignmentPackagesShort { DeclarationId = x.DeclarationId, PackageTypeCode = x.PackageTypeCode, Quantity = x.PackageQuantity.Value }) on d.Id equals c.DeclarationId into cjoin
+                        from cj in cjoin.DefaultIfEmpty()
+
+                        select new  ConsignmentPackagesShort { DeclarationId = cj.DeclarationId, PackageTypeCode = cj.PackageTypeCode, Quantity = cj.Quantity }
+                    );
+            List<ConsignmentPackagesShort> ConsignmentPackages = myQ2.ToList();
+      
+            return new DeclarationConsignments { ConsignmentPackages = ConsignmentPackages, Consignment = Consignment };
         }
 
         public DeclarationId GetDeclarationId(string exportFileNo, string exporterNumber, string transportmodeId, string cargoIdentifierType, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3)
@@ -941,7 +969,7 @@ namespace Logitude.Customs.Data.Repsitories
                        where d.ExportFile == exportFileNo
                        && d.ImporterCode == exporterNumber
                        && d.TransportModeId == transportmodeId
-                       && cj.CargoTypeCode== cargoIdentifierType
+                       && cj.CargoTypeCode == cargoIdentifierType
                        && cj.ManifestNumber == cargoIdentifierKey1
                        && cj.SecondCargoID == cargoIdentifierKey2
                        && cj.ThirdCargoID == cargoIdentifierKey3
@@ -957,6 +985,21 @@ namespace Logitude.Customs.Data.Repsitories
     {
         public string Id { get; set; }
     }
+
+
+    public class ConsignmentPackagesShort
+    {
+        public string PackageTypeCode { get; set; }
+        public string DeclarationId { get; set; }
+        public int Quantity { get; set; }
+    }
+
+    public class DeclarationConsignments
+    {
+        public List<ConsignmentPackagesShort> ConsignmentPackages { get; set; }
+        public Consignment Consignment { get; set; }
+    }
+
 
 
     public class DeclarationPendingBulkFeed

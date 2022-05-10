@@ -2,14 +2,13 @@ import { Component, Output, EventEmitter, Input, ChangeDetectorRef } from '@angu
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
-import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
 import { ClientList } from 'Customs/EntityLists/ClientList';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { CargoIdentifireTypeList } from 'Customs/EntityLists/CargoIdentifireTypeList';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { Subject, Subscription } from 'rxjs';
-import { ConsignmentDeclartion, DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
+import { Subscription } from 'rxjs';
+import { ConsignmentDeclartions, DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
@@ -21,6 +20,12 @@ import { AppTool } from '../../../../../Infrastructure/Tools';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClientListService } from 'Customs/Services/StandardLists/ClientListService'
+import { CargoIdentifireTypeListService } from 'Customs/Services/StandardLists/CargoIdentifireTypeListService';
+import { CargoIdentifireTypePM } from 'Customs/EntityPMs/CargoIdentifireTypePM';
+import { ErrorLogPMFileLoggerService } from 'Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
+import { loggerService } from 'Infrastructure/Utilities/logger.service';
+import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
+import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -56,8 +61,12 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         'PackagingTypeCode',
         'Quantity',
         'DeliverySiteID',
+        'RequestReason',
     ]
-    
+    public SecondCargoIDPlaceholder: string = " ";
+    public ThirdCargoIdPlaceholder: string = " ";
+    public ManifestNumberPlaceholder: string = " ";
+    _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
 
     get ExportFileNo() { return this.entityPM?.ExportFileNo }
     set ExportFileNo(value: string) {
@@ -68,19 +77,26 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     get ExporterNumber() { return this.entityPM?.ExporterNumber }
     set ExporterNumber(value: string) {
         this.entityPM.ExporterNumber = value;
+        this.setRequiredField('ExporterNumber', !value)
     }
 
     get RequestDate() { return this.entityPM?.RequestDate }
     set RequestDate(value: Date) { this.entityPM.RequestDate = value; }
 
     get RequestType() { return this.entityPM?.RequestType }
-    set RequestType(value: string) { this.entityPM.RequestType = value; }
+    set RequestType(value: string) { 
+        this.entityPM.RequestType = value; 
+        this.setRequiredField('RequestType', !value)
+    }
 
     get CargoIdentifierType() { return this.entityPM?.CargoIdentifierType }
     set CargoIdentifierType(value: string) {
         this.entityPM.CargoIdentifierType = value;
-        if (value)
+        
+        if (value) {
             this.setRequiredCargoKey();
+            this.setPlaceholderForCargoKey();
+        }
     }
 
     get CargoIdentifierKey1() { return this.entityPM?.CargoIdentifierKey1 }
@@ -102,7 +118,10 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
     get PackagingTypeCode() { return this.entityPM?.PackagingTypeCode }
-    set PackagingTypeCode(value: string) { this.entityPM.PackagingTypeCode = value; }
+    set PackagingTypeCode(value: string) { 
+        this.entityPM.PackagingTypeCode = value;
+        this.setRequiredField('PackagingTypeCode', !value)
+    }
 
     get Quantity() { return this.entityPM?.Quantity }
     set Quantity(value: number) {
@@ -131,7 +150,6 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     get CalculatedExporterName() { return this.entityPM?.CalculatedExporterName }
     set CalculatedExporterName(newValue: string) { this.entityPM.CalculatedExporterName = newValue; }
 
-
     constructor(
         private logisticActionRequestPMService: LogisticActionRequestPMService,
         private EntityResourceService: EntityResourceService,
@@ -139,10 +157,12 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         private cdr: ChangeDetectorRef,
         public entityArgs: EntityArgs,
         public logisticActionRequestWebService: LogisticActionRequestWebService,
+        private logger: loggerService,
     ) {
         super();
         this.entityPM = new LogisticActionRequestPM();
         this.EntityResourceService.getEntityResourceByTableName("Customs.LogisticActionRequestType").subscribe(response => { });
+        this.logger.loggerAppSettingsName = "20220301.LogUntilDateyyyyMMdd";
 
         this.Listen();
     }
@@ -153,11 +173,12 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
         this.setTransportModeId();
         this.setRequiredCargoKey();
+        this.setPlaceholderForCargoKey()
     }
 
 
     private setRequiredFields() {
-        this.requierdFieldsList.forEach(fieldName => this.UIProperties.SetRequired(fieldName, this.ObjectTableName, !this[fieldName]));
+        this.requierdFieldsList.forEach(fieldName => this.UIProperties.SetWarning(fieldName, this.ObjectTableName, !this[fieldName]));
     }
 
 
@@ -165,14 +186,12 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         const cargoIdentifireTypeTable: CargoIdentifireTypeList[] = await this.logtuideTableDataService.getTable("Customs.CargoIdentifireType")
         const cargoIdentifireType: CargoIdentifireTypeList = cargoIdentifireTypeTable.find(x => x.Code == this.entityPM.CargoIdentifierType);
         this.setRequiredField('CargoIdentifierKey2', !this.entityPM.CargoIdentifierKey2 && cargoIdentifireType.IsKey2Mandatory)
-        this.setRequiredField('CargoIdentifierKey3', !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)       
-        // this.UIProperties.SetWarning('CargoIdentifierKey2', this.ObjectTableName, !this.entityPM.CargoIdentifierKey2 && cargoIdentifireType.IsKey2Mandatory);
-        // this.UIProperties.SetWarning('CargoIdentifierKey3', this.ObjectTableName, !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)
+        this.setRequiredField('CargoIdentifierKey3', !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)
     }
 
 
     setRequiredField(name: string, fieldIsRequired: boolean) {
-        this.UIProperties.SetRequired(name, this.ObjectTableName, fieldIsRequired);
+        this.UIProperties.SetWarning(name, this.ObjectTableName, fieldIsRequired);
 
         if (fieldIsRequired) {
             if (this.requierdFieldsList.every(x => x != name))
@@ -180,7 +199,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         } else
             this.removeFromArray(this.requierdFieldsList, name)
 
-        this.invalidate()
+        // this.invalidate()
     }
 
 
@@ -221,29 +240,36 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     private async syncDeclaration() {
-        const consignmentDeclartion: ConsignmentDeclartion = await this.getDeclarationsandConsignment();
+        const consignmentDeclartion: ConsignmentDeclartions = await this.getDeclarationsandConsignment();
 
         if (!consignmentDeclartion.Consignment || !(await this.confirmSyncDeclaration())) return;
 
-        this.ExporterNumber = consignmentDeclartion.Consignment.Declaration.ImporterCode;
+        const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration ;
+
+        this.ExporterNumber = declaration.ImporterCode;
+        this.entityPM.DeclarationId = declaration.Id;
+        this.entityPM.DeclarationNumber = declaration.DeclarationNumber;
         this.CargoIdentifierType = consignmentDeclartion.Consignment.CargoTypeCode
         this.CargoIdentifierKey1 = consignmentDeclartion.Consignment.ManifestNumber
         this.CargoIdentifierKey2 = consignmentDeclartion.Consignment.SecondCargoID
         this.CargoIdentifierKey3 = consignmentDeclartion.Consignment.ThirdCargoID
         this.DeliverySiteID = consignmentDeclartion.Consignment.StorageSiteCode
-        this.entityPM.DeclarationId = consignmentDeclartion.Consignment.Declaration.Id;
-        this.entityPM.DeclarationNumber = consignmentDeclartion.Consignment.Declaration.DeclarationNumber;
+
+        if(consignmentDeclartion.ConsignmentPackages.length === 1) {
+            this.entityPM.PackagingTypeCode = consignmentDeclartion.ConsignmentPackages[0].PackageTypeCode
+            this.entityPM.Quantity = consignmentDeclartion.ConsignmentPackages[0].Quantity;
+        }
 
         this.cdr.detectChanges();
     }
 
 
     private async confirmSyncDeclaration() {
-        const exporterName = this.exporterName ? 'ליצואן ' + this.exporterName + ' ' : '';
+        const exporterName = this.exporterName ? TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.ForImporter') + ' ' + this.exporterName + ' ' : '';
 
         const myConfirmWindow = new ConfirmWindow();
         myConfirmWindow.Width = 400;
-        myConfirmWindow.Show(`אותרה הצהרה ${exporterName}לפי מס' התיק , האם לבצע קישור ?`);
+        myConfirmWindow.Show(`${TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.FindDeclaration')} ${exporterName} ${TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.FindDeclaration2')}?`);
 
         return new Promise(resolve =>
             myConfirmWindow.WindowClosed.subscribe(event =>
@@ -251,8 +277,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    private async getDeclarationsandConsignment(): Promise<ConsignmentDeclartion> {
-        const res: ConsignmentDeclartion = await new DeclarationWebService().getDeclarationConsignment(this.entityPM.ExportFileNo)
+    private async getDeclarationsandConsignment(): Promise<ConsignmentDeclartions> {
+        const res: ConsignmentDeclartions = await new DeclarationWebService().getDeclarationConsignment(this.entityPM.ExportFileNo)
         return res;
     }
 
@@ -295,7 +321,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     onBlurExportFileNo() {
         if (this.entityPM.ExportFileNo)
             this.syncDeclaration()
-            // this.syncDeclaration$.next()
+        // this.syncDeclaration$.next()
     }
 
 
@@ -378,18 +404,21 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
     SendButtonClicked() {
-        if (this.invalidate()) return;
+        // if (this.invalidate()) return;
         SessionLocator.SelectedSession.StartBusyIndicator("");
     }
 
 
     async SaveEntityChanges() {
+        this.logger.sendError('start SaveEntityChange', 'entityPM: ' + JSON.stringify(this.entityPM));
         const isInsert: boolean = !this.entityPM.Id;
 
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
         const res = await this.logtuideTableDataService.getDataFromService(
             (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM)))
+
+        this.logger.sendError('after save', 'res: ', JSON.stringify(res));
 
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
         SessionLocator.SelectedSession.StopBusyIndicator();
@@ -405,13 +434,15 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
             .filter(filed => !this[filed])
             .forEach(filed =>
                 this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.LogisticActionRequest.F." + filed))));
-
+        
         // Validator.TryValidateObject(this.entityPM, this.ObjectTableName,  this.ValidationErrorsList);
+        this.logger.sendError('is invalid', 'ValidationErrorsList: ' + JSON.stringify(this.ValidationErrorsList))
         return !!this.ValidationErrorsList.length;
     }
 
 
     async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
+        this.logger.sendError('OnCustomSendOptionsButtonClick')
         this.submit = true;
         if (this.invalidate()) return;
 
@@ -421,12 +452,16 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
 
         const param: LogisticActionRequestRequestParams = this.getCustomsParams();
-
+        this.logger.sendError('param', 'param: ' + JSON.stringify(param));
         const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
-
+        this.logger.sendError('after SendCustomsMessage8410', 'res: ' + JSON.stringify(res));
+        
         CustomMessageProgressComponent
-            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, "בקשת ביטול יצוא", true)
-            .catch((err) => this.ValidationErrorsList.push(err));
+        .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), false)
+        .catch((err) => {
+                this.logger.sendError('after err', 'err: ' + JSON.stringify(err));
+                this.ValidationErrorsList.push(err)
+            });
     }
 
 
@@ -453,8 +488,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     OkButtonClicked() {
         this.submit = true;
-        if (this.invalidate()) return;
-
+        // if (this.invalidate()) return;
+        this.logger.sendError('OkButtonClicked');
         this.SaveEntityChanges();
     }
 
@@ -478,7 +513,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 350;
         logWindow.Height = 230;
-        logWindow.Title = 'נתונים נוספים ליצואן';
+        logWindow.Title = TextCodeTranslator.Translate('Customs.General.O.MoreDetailsForImporter');
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/MoreDetailesforImporterComponent/MoreDetailesforImporterComponent');
         logWindow.WindowClosed.subscribe(() => {
@@ -511,5 +546,14 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     OnDocumentsWindowClosed(event) {
         this.entityArgs.SkipCtor = false;
+    }
+
+
+    private async setPlaceholderForCargoKey() {        
+        const res: CargoIdentifireTypePM = await this.logtuideTableDataService.getDataFromService(this._CargoIdentifireTypeListService.getSingleFromCache(this.entityPM.CargoIdentifierType))
+        
+        this.ManifestNumberPlaceholder = res.CargoIdentifierKey1Name;
+        this.SecondCargoIDPlaceholder = res.CargoIdentifierKey2Name ?? '';
+        this.ThirdCargoIdPlaceholder = res.CargoIdentifierKey3Name ?? '';
     }
 }

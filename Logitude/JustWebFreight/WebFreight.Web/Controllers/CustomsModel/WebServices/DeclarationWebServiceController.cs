@@ -518,7 +518,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 //requestParamsData.AppicationId = declarationPM.Id;
                 //requestParamsData.LoggingEntityId = declarationPM.Id;
-                INF_MSG_GenericResponseData responseData;
+                ExportDeclarationAmendmentResponseData responseData;
                 //var messagingService = new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService();
                 var messagingService = new DF_MSG8235_ExportDeclarationAmendmentMessagingService();
                 responseData = messagingService.Send(requestParamsData);
@@ -2220,7 +2220,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                var res = new DeclarationRepository(authToken.Tenant).GetDeclarationConsignment(exportFile);
+                DeclarationConsignments res = new DeclarationRepository(authToken.Tenant).GetDeclarationConsignment(exportFile);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }

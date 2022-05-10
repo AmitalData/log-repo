@@ -11,7 +11,7 @@
   HasCustomFields="false"
   HasHelper="false"
   HasShortTitle="true"
-  HasFiltersMenu="false"
+  HasFiltersMenu="true"
   HasCustomValidator="true"
   IsEditable="false"
   IsNewWizard="true"
@@ -20567,6 +20567,11 @@
         IndexOrder="8"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;PhysicalCheck&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -20728,6 +20733,11 @@
         IndexOrder="8"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;PhysicalCheck&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -20817,6 +20827,11 @@
         IndexOrder="8"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;PhysicalCheck&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -20907,6 +20922,11 @@
         IndexOrder="8"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;PhysicalCheck&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -20992,6 +21012,11 @@
         IndexOrder="8"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;AllExportDeclaration&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;PhysicalCheck&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter

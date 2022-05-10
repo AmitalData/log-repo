@@ -86,17 +86,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     entity.StorErrorXML = xml;
                 }
-                
+                else
+                {
+                    entity.StorErrorXML = null;
+                }
+
                 entity.CustomsStatus = customResponse.CargoDetails?.CargoStatusID?.ToString();
                 entity.ChangeSetOp = ChangeSetOperation.Update;
                 var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
                 updateService.Update(entity, true);
                 MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 MyRequestSheetParam.EntityId2 = entity.DeclarationId;
+                MyRequestSheetParam.EntityId1 = entity.Id;
 
             }
-            
-            MyRequestSheetParam.EntityId1 = entity.Id;
+
             MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
             
@@ -106,7 +110,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
-        public static void RaiseExportStorageStatus(string statusId, string unifrieghtStatus, ExportStoragePM dirtyEntityPM, string FUStatusRemarks)
+        public static void RaiseExportStorageStatus(string statusId, string unifrieghtStatus, ExportStoragePM dirtyEntityPM, string FUStatusRemarks, DateTime? date=null)
         {
             try
             {
@@ -135,7 +139,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status = "new",
                         xml_status = "new",
                         status_id = unifrieghtStatus,
-                        status_DateTime = DateTime.Now,
+                        status_DateTime = date.HasValue?date.GetValueOrDefault():DateTime.Now,
                         //status_save = "no_fail",
                         comments = FUStatusRemarks,
                     };
@@ -148,5 +152,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 throw;
             }
         }
+       
     }
 }

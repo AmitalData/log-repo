@@ -340,7 +340,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
         {
             DeclarationRepository declarationRepository = new DeclarationRepository(context);
-            return declarationRepository.GetDeclarationMaxCancelRequestNumber(tenant, id);
+            return declarationRepository.GetDeclarationMaxAmendmentRequestNumber(tenant);
         }
 
 
@@ -349,7 +349,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
             return repository.GetIdByDeclarationNumber(declarationNumber, tenant);
         }
-
+        public (string id, string direction) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
+        {
+            
+            return repository.GetMinDeclarationByDeclarationNumber(declarationNumber, tenant);
+        }
 
         public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant)
         {
@@ -613,9 +617,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             else if (IsAmendmentErrors )
             {
-                if (!string.IsNullOrEmpty(declaration.AmendmentErrorXml))
+                if (!string.IsNullOrEmpty(declaration.AmendmentErrorXml) || !string.IsNullOrEmpty(declaration.ExportClosedErrorXML))
                 {
-                    byte[] errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml);
+                    byte[] errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml ?? declaration.ExportClosedErrorXML);
                     MemoryStream memorystream = new MemoryStream(errorsByte);
                     XmlSerializer serializer = new XmlSerializer(typeof(DeclarationError));
                     DeclarationError declarationError = (DeclarationError)serializer.Deserialize(memorystream);
