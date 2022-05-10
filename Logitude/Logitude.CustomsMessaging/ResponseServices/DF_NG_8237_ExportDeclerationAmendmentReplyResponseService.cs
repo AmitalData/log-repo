@@ -287,9 +287,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                             case "29":
                                 {
-                                    if (additionalInformation.Content != null)
-                                        _MyDeclarationPM.AmendmentRemarks += '\n' + additionalInformation.Content.Value;
-                                    if(!string.IsNullOrEmpty(_MyDeclarationPM.AmendmentRemarks)&&  _MyDeclarationPM.AmendmentRemarks.Length>=511)
+                                    if (additionalInformation.Content != null) {
+                                       if(_MyDeclarationPM.Direction == "E")
+                                       {
+                                        _MyDeclarationPM.AmendmentRemarks = additionalInformation.Content.Value;
+                                       }
+                                       else { 
+                                           _MyDeclarationPM.AmendmentRemarks += '\n' + additionalInformation.Content.Value;
+                                       }
+                                    }
+                                    if (!string.IsNullOrEmpty(_MyDeclarationPM.AmendmentRemarks)&&  _MyDeclarationPM.AmendmentRemarks.Length>=511)
                                     {
                                         _MyDeclarationPM.AmendmentRemarks = _MyDeclarationPM.AmendmentRemarks.Substring(0, 511);
                                     }
