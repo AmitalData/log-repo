@@ -278,7 +278,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             confirm.ShowNoButton = true;
             confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-            confirm.Show("שינוי יבצע עדכון קוד התהליך/הנחה פטור באופן גורף לכל שורות פרטי המכס");
+            confirm.Show("שינוי יבצע עדכון גורף של קוד תהליך בהצהרות,\n ועדכון קוד הנחה פטור לכל שורות פרטי המכס");
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     this.SendMultiUpdate();
