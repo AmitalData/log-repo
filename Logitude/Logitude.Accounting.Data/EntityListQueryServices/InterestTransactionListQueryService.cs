@@ -28,11 +28,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var interestTransactionsForAdustmentsAndRevaluationJournals = from interestTransaction in interestTransactionQuery
 
                                                                           join journal in context.Journals.Include("AccountingEntity")
-                                                                          on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode } equals
+                                                                          on new { AccountingEntityId = interestTransaction.EntityId } equals
                                                                              new
                                                                              {
-                                                                                 AccountingEntityId = journal.Id,
-                                                                                 journal.AccountingEntityCode
+                                                                                 AccountingEntityId = journal.Id
                                                                              }
 
                                                                           join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
