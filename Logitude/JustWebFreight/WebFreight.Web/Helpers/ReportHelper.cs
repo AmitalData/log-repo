@@ -44,6 +44,7 @@ using WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMReport;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Quotes.SpotRate;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
 using WebFreight.Web.TaxesApprovalModel;
@@ -1288,6 +1289,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = dataService.GetData();
                         break;
                     }
+                case "SRQR":
+                    {
+                        SpotRateQuoteReportDataProviderService myDataService = new SpotRateQuoteReportDataProviderService(filters, reportFliter.tenant);
+                        dataProvider = myDataService.Load();
+                        break;
+                    }
                     #endregion
             }
             return dataProvider;
@@ -1993,6 +2000,16 @@ namespace WebFreight.Web.Helpers
 
                         break;
                     }
+
+
+                case "SRQR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(SpotRateQuoteReportDataProvider));
+                        SpotRateQuoteReportDataProvider reportDataProvider = (SpotRateQuoteReportDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Spot Rate Quote Report", Name = "SpotRateQuoteReportDataProvider", BusinessObjectValue = reportDataProvider };
+                        break;
+                    }
             }
             return stimulReportDataProviderDetails;
         }
@@ -2230,6 +2247,7 @@ namespace WebFreight.Web.Helpers
                     case "LTRP":
                     case "CSSR":
                     case "LOCR":
+                    case "SRQR":
 
                         return true;
 

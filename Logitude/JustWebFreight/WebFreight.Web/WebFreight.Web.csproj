@@ -1176,6 +1176,7 @@
     <Compile Include="DataProviders\LogitudeCRMReportDataProvider.cs" />
     <Compile Include="DataProviders\ProductItemLine.Shared.cs" />
     <Compile Include="DataProviders\RoutingDataProvider.cs" />
+    <Compile Include="DataProviders\SpotRateQuoteReportDataProvider.cs" />
     <Compile Include="DataProviders\TaxDeductionReportPerVendorDataProvider.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIMainCarriageLegsHelper.cs" />
@@ -6109,6 +6110,9 @@
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\FlightBookingsManifestManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Quots\SpotRate\SpotRateQuoteReportDataProviderService.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Quots\SpotRate\SpotRateQuoteReportFilterService.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Quots\SpotRate\SpotRateQuoteReportService.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\WorkPerDaysCategoryManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VehiclesManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\AccountingLedgerManager.cs" />

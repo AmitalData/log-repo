@@ -1,0 +1,133 @@
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:25px">
+                    <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
+                </tr>
+
+                <tr style="height:5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+
+                                            <!-- Customer -->
+                                            <td style="width:180px;">Customer:</td>
+                                            <td style="width:170px;">
+                                                <LogLov [ObjectFieldName]="'CustomerId'" [DataContext]="DataContext"
+                                                    [ObjectTableName]="'Quote'" [LookUpTableName]="'Card'"
+                                                    [HideAddLink]="true" [HideAdd]="true" [HideEdit]="true"
+                                                    [HideMaintenanceIcon]="true">
+                                                </LogLov>
+                                            </td>
+
+
+                                            <td style="width:25px;">
+                                                <div></div>
+                                            </td>
+
+
+                                            <!-- Salesman -->
+                                            <td style="width:180px;">Salesman:</td>
+                                            <td style="width:170px;">
+                                                <LogLov [ObjectFieldName]="'SalesmanId'" [DataContext]="DataContext"
+                                                    [ObjectTableName]="'Quote'" [LookUpTableName]="'User'"
+                                                    [HideAddLink]="true" [HideAdd]="true" [HideEdit]="true"
+                                                    [HideMaintenanceIcon]="true">
+                                                </LogLov>
+                                            </td>
+
+
+                                            <td style="width:25px;">
+                                                <div></div>
+                                            </td>
+
+                                            <!-- Run -->
+                                            <td style="width:90px;">
+                                                <button class="GreenButton" (click)="RunReport(true)">Run
+                                                    Report</button>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+
+                                            <!-- Open Date Greater Than -->
+                                            <td style="width:180px;">Open Date Greater Than:</td>
+                                            <td style="width:170px;">
+                                                <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'OpenDate'"
+                                                    [DataContext]="DataContext"></LogDatePicker>
+                                            </td>
+
+
+                                            <td style="width:25px;">
+                                                <div></div>
+                                            </td>
+
+                                            <!-- Expiration Date Less Than -->
+                                            <td style="width:180px;">Expiration Date Less Than:</td>
+                                            <td style="width:170px;">
+                                                <LogDatePicker [NoObjectField]="true"
+                                                    [ObjectFieldName]="'ExpirationDate'" [DataContext]="DataContext">
+                                                </LogDatePicker>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

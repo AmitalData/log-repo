@@ -105,6 +105,10 @@ namespace WebFreight.Web.Helpers.ExcelReport
                     {
                         return typeof(ArchivoExportadoDataProvider);
                     }
+                case "SRQR":
+                    {
+                        return typeof(SpotRateQuoteReportDataProvider);
+                    }
                 default:
                     return null;
             }
