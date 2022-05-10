@@ -117,6 +117,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.RegisteredAirlines = entityPM.RegisteredAirlines;
             entityPOCO.PendingAirlines = entityPM.PendingAirlines;
             entityPOCO.EnableBranding = entityPM.EnableBranding;
+            entityPOCO.ActivatePrivateSite = entityPM.ActivatePrivateSite;
             entityPOCO.ContactEmail = entityPM.ContactEmail;
             entityPOCO.CustomerURL = entityPM.CustomerURL;
             entityPOCO.ActivatedforDeclarationApprove = entityPM.ActivatedforDeclarationApprove;

@@ -214,6 +214,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public double? PermissionBuildMonths { get; set; }
         public string WhatsAppMessagingPhoneNumber { get; set; }
         public double? CargoTokenTimeout { get; set; }
+        public bool ActivatePrivateSite { get; set; }
 
 
     }

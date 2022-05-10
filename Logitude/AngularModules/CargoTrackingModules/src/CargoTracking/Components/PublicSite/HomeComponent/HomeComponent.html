@@ -1,15 +1,15 @@
-<div   class="app-content" style="background-size: contain;" [ngStyle]="{ 'background-image': BackGroundImg}">
-     <!-- Mobile Menu -->
+<div class="app-content" style="background-size: contain;" [ngStyle]="{ 'background-image': BackGroundImg}">
+    <!-- Mobile Menu -->
     <div *ngIf="displayMenu" class="side-menu" [style.left]="displayMenu ? '0' : '-65%'">
         <div style="width: 60%; float: left; background-color: #965982;">
             <img class="logo" src="./assets/menu-logo.png" width="100px" alt="" />
 
-                <ul class="nav-mobile">
-                    <li (click)="displayMenu = false" routerLink="/search">Home</li>
-                    <!-- <li (click)="displayMenu = false" routerLink="/pageb">Page B</li> -->
-                    <!-- <li (click)="displayMenu = false" routerLink="/cargo-tracking/login" style="float: right;">Login</li> -->
-                </ul>
-            </div>
+            <ul class="nav-mobile">
+                <li (click)="displayMenu = false" routerLink="/search">Home</li>
+                <!-- <li (click)="displayMenu = false" routerLink="/pageb">Page B</li> -->
+                <!-- <li (click)="displayMenu = false" routerLink="/cargo-tracking/login" style="float: right;">Login</li> -->
+            </ul>
+        </div>
         <div style="width: 40%; float: right;" (click)="displayMenu = false"></div>
     </div>
 
@@ -30,15 +30,15 @@
         <div class="web-header hide-mobile">
             <div class="logo-wrapper">
                 <div class="logo">
-                    <img *ngIf="ComapnyLogo" style="border:0;outline:none" [attr.src]="ComapnyLogo"  />
+                    <img *ngIf="ComapnyLogo" style="border:0;outline:none" [attr.src]="ComapnyLogo" />
                 </div>
             </div>
 
 
-            <div  class="nav">
-                <ul class="left-nav" [class.show]="displayMenu" style="margin-top: 11px;">
+            <div class="nav">
+                <ul class="left-nav" [class.show]="displayMenu" style="margin-top: 20px;">
 
-                    <!-- <li  (click)="GoToPrivateSite()" style="float: right;">cargo-tracking</li> -->
+                    <li *ngIf="brandingData?.ActivatePrivateSite" (click)="GoToPrivateSite()" style="float: right;">Login</li>
 
 
                 </ul>
@@ -55,11 +55,11 @@
 
     <footer>
         <!-- {{ currentDate | date:'y'}} {{companyLabel}} &copy; &nbsp; -->
-        <span style="color: black;">Powered By</span>  &nbsp;
+        <span style="color: black;">Powered By</span> &nbsp;
         <img width="16" src="./assets/images/misc/poweredby.png" alt="powered by">
-        <span style="color: black;">{{companyName}}</span>  &nbsp;
+        <span style="color: black;">{{companyName}}</span> &nbsp;
 
 
     </footer>
 
-  </div>
+</div>
