@@ -329,11 +329,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 // get charges
                 ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(tenant);
                 ChargesTypePM charge = chargesTypeQuery.GetSinglePM(line.ChargesTypeId, tenant);
+                
+                line.LocalDescription = line.LocalDescription ?? line.Description ?? charge.LocalName ?? charge.EnglishName;
 
                 if (string.IsNullOrWhiteSpace(line.Description))
                     line.Description = charge.EnglishName;
-                if (string.IsNullOrWhiteSpace(line.LocalDescription))
-                    line.LocalDescription = charge.LocalName ?? charge.EnglishName;
+                
 
                 line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
             }
