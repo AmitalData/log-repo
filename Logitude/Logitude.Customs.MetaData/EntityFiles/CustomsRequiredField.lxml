@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;שדה חובה מכס&quot;"
   DefaultText="&quot;Customs Required Field&quot;"
-  Code="&quot;0619&quot;"
+  Code="&quot;6aa7&quot;"
   Name="&quot;Customs.CustomsRequiredField Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -670,6 +670,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;WarningExport&quot;"
     ListPropertyPath="&quot;WarningExport&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -760,6 +761,12 @@
       Code="&quot;Customs.CustomsRequiredField.O.ExportRequiredFields&quot;"
       DefaultText="&quot;Required Export Fields&quot;"
       LocalDefaultText="&quot;שדות חובה ביצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsRequiredField.O.ImportRequiredFields&quot;"
+      DefaultText="&quot;Required Import Fields&quot;"
+      LocalDefaultText="&quot;שדות חובה מכס ביבוא&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
