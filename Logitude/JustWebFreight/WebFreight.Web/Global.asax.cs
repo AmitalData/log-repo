@@ -649,7 +649,7 @@ namespace WebFreight.Web
 
 
             var systemUrl = SecurityUtility.getLoggedDomain();
-            if (!string.IsNullOrEmpty(systemUrl) &&  systemUrl.ToLower().Contains("staging"))
+            if (!string.IsNullOrEmpty(systemUrl) &&  systemUrl.ToLower().Contains("staging") && LogitudeSettings.DeploymentStage != "amitalstorage")
             {
                 HttpContext.Current.Items.Add("workerrolename", "staging");
                 return;
