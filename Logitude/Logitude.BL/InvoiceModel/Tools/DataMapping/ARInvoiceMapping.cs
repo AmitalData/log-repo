@@ -60,6 +60,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
             }
 
+            if (entityPM.ResendToSAT)
+            {
+                entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
+            }
+
             entity.ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate;
             entity.BranchId = entityPM.BranchId;
             entity.DueDate = entityPM.DueDate;
