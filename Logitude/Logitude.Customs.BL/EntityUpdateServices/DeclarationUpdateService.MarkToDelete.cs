@@ -249,6 +249,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var mySupplierInvoiceInvoiceFreightAmountUpdateService = new SupplierInvoiceFreightAmountUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             mySupplierInvoiceInvoiceFreightAmountUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
 
+            var mySupplierInvoiceInvoicePaymentUpdateService = new SupplierInvoicePaymentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+            mySupplierInvoiceInvoicePaymentUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
+
+
             DeclarationSupplierInvoiceItemsFastDelete(declarationPM,dbContext);
 
             var mySupplierInvoiceInvoiceUpdateService = new SupplierInvoiceUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
@@ -330,6 +334,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var declarationExportRecipientUpdateService = new DeclarationExportRecipientUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             declarationExportRecipientUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
         }
+
+        public void DeclarationClosingDataFastDelete(DeclarationPM declarationPM, ICustomContext dbContext)
+        {
+
+
+            var declarationExportClosingDataUpdateService = new ExportDeclarationClosingDataUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+            declarationExportClosingDataUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
+        }
+
 
         public void DeclarationSupplierInvoiceItemsParentsFastDelete(DeclarationPM declarationPM)
         {
