@@ -250,7 +250,6 @@ export class InvoiceTool {
                                     }
                                     else {
                                         dateMonth -= 1;
-                                        dateDay = 1;
                                     }
                                     var myDate = new Date();
                                     myDate.setUTCMonth(0);
@@ -328,7 +327,6 @@ export class InvoiceTool {
                                     }
                                     else {
                                         dateMonth -= 1;
-                                        dateDay = 1;
                                     }
 
                                     var myDate = new Date();
