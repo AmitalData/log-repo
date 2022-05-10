@@ -410,7 +410,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     _DateTime = new DateTime();
                     _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
-                    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRN", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                    RaiseEvent(this._MyDeclarationPM, "MEHES", status_id: "MRN", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
                 }
 
 
@@ -425,13 +425,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _DateTime = new DateTime();
                         _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
 
-                        RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "WAT", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                        RaiseEvent(this._MyDeclarationPM,"MEHES", status_id: "WAT", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
                     }
                     if (customResponse.Response.Status[0].NameCode.Value == "3" || customResponse.Response.Status[0].NameCode.Value == "6")
                     {
                         _DateTime = new DateTime();
                         _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
-                        RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                        RaiseEvent(this._MyDeclarationPM,"MEHES", status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
                     }
 
                 }
