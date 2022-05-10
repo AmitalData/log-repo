@@ -52,7 +52,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Quots.SpotRate
                 .Where(a => a.Tenant == tenant);
             quoteCharges = FilterQuoteCharges(quoteCharges);
 
-            var quoteChargeItems = quoteCharges.AsEnumerable().Select(quoteCharge => MapQuoteChargeToQuoteChargeItem(quoteCharge)).ToList();
+            var quoteChargeItems = quoteCharges.OrderBy(x => x.ValueDate).ThenBy(x => x.Quote.QuoteNumber).AsEnumerable()
+                .Select(quoteCharge => MapQuoteChargeToQuoteChargeItem(quoteCharge)).ToList();
             return SetQuotesShipments(quoteChargeItems);
         }
         private IQueryable<QuoteCharge> FilterQuoteCharges(IQueryable<QuoteCharge> quoteChargeItems)
