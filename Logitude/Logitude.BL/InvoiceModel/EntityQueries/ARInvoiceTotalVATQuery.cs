@@ -75,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         }
 
         public List<ARInvoiceTotalVATPM> GetTotalVATs(List<string> invoiceIds, int tenant)
-            
+
         {
             List<ARInvoiceTotalVATPM> list = new List<ARInvoiceTotalVATPM>();
             const int sqlLimit = 5000;
