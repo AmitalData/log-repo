@@ -3567,6 +3567,7 @@
     <Content Include="Monitoring\DeclarationApprovalRequestMonitoring.aspx" />
     <Content Include="Monitoring\DocumentApprovalQueueMonitoring.aspx" />
     <Content Include="Monitoring\DocumentFilingBackupBatchMonitoring.aspx" />
+    <Content Include="Monitoring\DocumentsExecutionLogProgressStatus.aspx" />
     <Content Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
@@ -5756,6 +5757,13 @@
     </Compile>
     <Compile Include="Monitoring\DocumentFilingBackupBatchMonitoring.aspx.designer.cs">
       <DependentUpon>DocumentFilingBackupBatchMonitoring.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\DocumentsExecutionLogProgressStatus.aspx.cs">
+      <DependentUpon>DocumentsExecutionLogProgressStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\DocumentsExecutionLogProgressStatus.aspx.designer.cs">
+      <DependentUpon>DocumentsExecutionLogProgressStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx.cs">
       <DependentUpon>DocumentsExecutionLogWaitingStatus.aspx</DependentUpon>
