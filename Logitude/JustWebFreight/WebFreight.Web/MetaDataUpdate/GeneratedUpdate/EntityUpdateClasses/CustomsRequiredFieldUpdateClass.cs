@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsRequiredFieldUpdateClass
    {  		
-		public const string HashString = "494f5026c9e869754c870ea36305cc8f";
+		public const string HashString = "f8b0969b3cdb698146b47abd5513a287";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שדה חובה מכס",
 			      				    DefaultText =  "Customs Required Field",
-			      				    Code =  "0619",
+			      				    Code =  "6aa7",
 			      				    Name =  "Customs.CustomsRequiredField Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -643,6 +643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "WarningExport",
 					  						ListPropertyPath =  "WarningExport",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -778,6 +779,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable CustomsRequiredFieldObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsRequiredField" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode CustomsRequiredFieldTextCode_CustomsCustomsRequiredFieldOExportRequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsRequiredField.O.ExportRequiredFields", DefaultText = "Required Export Fields",LocalDefaultText = @"שדות חובה ביצוא", ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsRequiredFieldTextCode_CustomsCustomsRequiredFieldOImportRequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsRequiredField.O.ImportRequiredFields", DefaultText = "Required Import Fields",LocalDefaultText = @"שדות חובה מכס ביבוא", ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

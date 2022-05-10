@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticActionRequestUpdateClass
    {  		
-		public const string HashString = "4889cdc53ead78e2cfc7c4bda34bc5dd";
+		public const string HashString = "33913bbf60dae919c4d7c1d6eaee1c08";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1259,10 +1259,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ResponseStatusCode",
 					  						DefaultText =  "Response Status Code",
-					  						FullLocalDefaultText =  "קוד סטטוס תשובה",
 					  						ListFieldLable =  "ResponseStatusCodeListLable",
 					  						ListLableDefaultText =  "Response Status Code",
-					  						ListLocalDefaultText =  "קוד סטטוס תשובה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1321,10 +1319,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OperationalStatus",
 					  						DefaultText =  "Operational Status",
-					  						FullLocalDefaultText =  "סטטוס בקשת ביטול",
 					  						ListFieldLable =  "OperationalStatusListLable",
 					  						ListLableDefaultText =  "Operational Status",
-					  						ListLocalDefaultText =  "סטטוס בקשת ביטול",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1383,10 +1379,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Direction",
 					  						DefaultText =  "Direction",
-					  						FullLocalDefaultText =  "קוד סוג הובלה",
 					  						ListFieldLable =  "DirectionListLable",
 					  						ListLableDefaultText =  "Direction",
-					  						ListLocalDefaultText =  "קוד סוג הובלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1819,10 +1813,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestCancelStatus",
 					  						DefaultText =  "Request Cancel Status",
-					  						FullLocalDefaultText =  "סוג בקשת ביטול",
+					  						FullLocalDefaultText =  "סטטוס בקשת ביטול",
 					  						ListFieldLable =  "RequestCancelStatusListLable",
 					  						ListLableDefaultText =  "Request Cancel Status",
-					  						ListLocalDefaultText =  "סוג בקשת ביטול",
+					  						ListLocalDefaultText =  "סטטוס בקשת ביטול",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1881,10 +1875,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HaveDeclarationId",
 					  						DefaultText =  "Have Declaration Id",
-					  						FullLocalDefaultText =  "האם ההצהרה מקושרת",
 					  						ListFieldLable =  "HaveDeclarationIdListLable",
 					  						ListLableDefaultText =  "Have Declaration Id",
-					  						ListLocalDefaultText =  "האם ההצהרה מקושרת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1955,67 +1947,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "MyCloseCheckBox",
-					  						ObjectTableName =  "Customs.LogisticActionRequest",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MyCloseCheckBox",
-					  						ListPropertyPath =  "MyCloseCheckBox",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.LogisticActionRequest",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MyCloseCheckBox",
-					  						DefaultText =  "סימון לסגירה גורפת",
-					  						FullLocalDefaultText =  "סימון לסגירה גורפת",
-					  						ListFieldLable =  "MyCloseCheckBoxListLable",
-					  						ListLableDefaultText =  "MyCloseCheckBox",
-					  						ListLocalDefaultText =  "סימון לסגירה גורפת",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  true,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -2067,31 +1998,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			  Query OpenImportCancelRequestQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogisticActionRequestTextCode_0.Id, NameTextCodeCode = LogisticActionRequestTextCode_0.Code, ObjectTableName = "Customs.LogisticActionRequest", Code = "OpenImportCancelRequest",  EditWizardName = "Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl",
 			   QueryGroupCode = "45f7", IndexOrder = 0, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_0.Id,FeatureUniqeCode= LogisticActionRequestFeature_0.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn OpenImportCancelRequestQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionRequest.MyCloseCheckBox" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionRequest.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LogisticActionRequest.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LogisticActionRequest.RequestDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LogisticActionRequest.OperationalStatus" , ColumnWidth = 145 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey1" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LogisticActionRequest.RequestDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey2" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey1" , ColumnWidth = 125 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey3" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey2" , ColumnWidth = 132 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.LogisticActionRequest.RequestReason" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey3" , ColumnWidth = 139 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.LogisticActionRequest.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.LogisticActionRequest.RequestReason" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.LogisticActionRequest.TransportmodeId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.LogisticActionRequest.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.LogisticActionRequest.RequestCancelStatus" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.LogisticActionRequest.TransportmodeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.LogisticActionRequest.DecisionRmarks" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.LogisticActionRequest.DecisionRmarks" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.LogisticActionRequest.RequestNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenImportCancelRequestQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.LogisticActionRequest.RequestNumber" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn OpenImportCancelRequestQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.LogisticActionRequest.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenImportCancelRequestQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.LogisticActionRequest.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter OpenImportCancelRequestQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.LogisticActionRequest.IsClosed", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
@@ -2103,21 +2032,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn ClosedImportCancelRequestQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionRequest.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClosedImportCancelRequestQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LogisticActionRequest.OperationalStatus" , ColumnWidth = 145 }, addedQueryColumns);
+			 QueryColumn ClosedImportCancelRequestQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LogisticActionRequest.RequestDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClosedImportCancelRequestQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LogisticActionRequest.RequestDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedImportCancelRequestQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey1" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClosedImportCancelRequestQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey1" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedImportCancelRequestQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey2" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClosedImportCancelRequestQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey2" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedImportCancelRequestQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey3" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClosedImportCancelRequestQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey3" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedImportCancelRequestQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.LogisticActionRequest.RequestReason" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClosedImportCancelRequestQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.LogisticActionRequest.RequestReason" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedImportCancelRequestQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.LogisticActionRequest.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClosedImportCancelRequestQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.LogisticActionRequest.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedImportCancelRequestQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.LogisticActionRequest.TransportmodeId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClosedImportCancelRequestQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.LogisticActionRequest.TransportmodeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedImportCancelRequestQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.LogisticActionRequest.RequestCancelStatus" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn ClosedImportCancelRequestQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.LogisticActionRequest.DecisionRmarks" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -2135,21 +2064,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllImportCancelRequestQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionRequest.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllImportCancelRequestQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LogisticActionRequest.OperationalStatus" , ColumnWidth = 145 }, addedQueryColumns);
+			 QueryColumn AllImportCancelRequestQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LogisticActionRequest.RequestDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllImportCancelRequestQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LogisticActionRequest.RequestDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllImportCancelRequestQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey1" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllImportCancelRequestQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey1" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllImportCancelRequestQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey2" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllImportCancelRequestQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey2" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllImportCancelRequestQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey3" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllImportCancelRequestQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey3" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllImportCancelRequestQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.LogisticActionRequest.RequestReason" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllImportCancelRequestQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.LogisticActionRequest.RequestReason" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllImportCancelRequestQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.LogisticActionRequest.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllImportCancelRequestQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.LogisticActionRequest.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllImportCancelRequestQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.LogisticActionRequest.TransportmodeId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllImportCancelRequestQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.LogisticActionRequest.TransportmodeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllImportCancelRequestQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.LogisticActionRequest.RequestCancelStatus" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn AllImportCancelRequestQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.LogisticActionRequest.DecisionRmarks" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -2164,21 +2093,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn DeclartionsConnctedRequestQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionRequest.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclartionsConnctedRequestQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LogisticActionRequest.OperationalStatus" , ColumnWidth = 145 }, addedQueryColumns);
+			 QueryColumn DeclartionsConnctedRequestQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LogisticActionRequest.RequestDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclartionsConnctedRequestQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LogisticActionRequest.RequestDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclartionsConnctedRequestQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey1" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclartionsConnctedRequestQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey1" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclartionsConnctedRequestQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey2" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclartionsConnctedRequestQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey2" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclartionsConnctedRequestQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey3" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclartionsConnctedRequestQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.LogisticActionRequest.CargoIdentifierKey3" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclartionsConnctedRequestQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.LogisticActionRequest.RequestReason" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclartionsConnctedRequestQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.LogisticActionRequest.RequestReason" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclartionsConnctedRequestQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.LogisticActionRequest.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclartionsConnctedRequestQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.LogisticActionRequest.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclartionsConnctedRequestQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.LogisticActionRequest.TransportmodeId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclartionsConnctedRequestQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.LogisticActionRequest.TransportmodeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclartionsConnctedRequestQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.LogisticActionRequest.RequestCancelStatus" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn DeclartionsConnctedRequestQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.LogisticActionRequest.DecisionRmarks" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -2210,7 +2139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn DeclartionsNotConnctedRequestQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsNotConnctedRequestQuery.Id,QueryCode = DeclartionsNotConnctedRequestQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.LogisticActionRequest.TransportmodeId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclartionsNotConnctedRequestQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsNotConnctedRequestQuery.Id,QueryCode = DeclartionsNotConnctedRequestQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.LogisticActionRequest.OperationalStatus" , ColumnWidth = 145 }, addedQueryColumns);
+			 QueryColumn DeclartionsNotConnctedRequestQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsNotConnctedRequestQuery.Id,QueryCode = DeclartionsNotConnctedRequestQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.LogisticActionRequest.RequestCancelStatus" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn DeclartionsNotConnctedRequestQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsNotConnctedRequestQuery.Id,QueryCode = DeclartionsNotConnctedRequestQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.LogisticActionRequest.DecisionRmarks" , ColumnWidth = 100 }, addedQueryColumns);
 
