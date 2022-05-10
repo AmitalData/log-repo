@@ -425,8 +425,6 @@
     <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\QuoteModel\202108312250_DeleteFromRelatedDataToQuoteField.sxml" />
     <None Include="DBScripts\QuoteModel\202108312330_FillQuotePackagesQuantity.sxml" />
-    <None Include="DBScripts\ShipmentModel\202202051200_AddContainersExceptionEvents.sxml" />
-    <None Include="DBScripts\ShipmentModel\202201221830_AddPODReceivedEventAndStatusToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202109121000_FillShipperNotExporterReference1.ssxxml" />
     <None Include="DBScripts\QuoteModel\202109141136_FillFromToInlandDomesticTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202107291118_CalculateVolumetricWeightForShipmentsAndShipmentPackages.sxml">
@@ -624,12 +622,9 @@
     <None Include="DBScripts\ShipmentModel\202107151520_UpdateIsAddedManuallyShipmentSubTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202108260927_UpdateContainersFieldsFromShipmentField.sxml" />
     <None Include="DBScripts\ShipmentModel\202109021032_FillDomesticFromToAdPartner.sxml" />
-    <None Include="DBScripts\ShipmentModel\202111071410_FillContainersShipmentCreateDate.sxml" />
-    <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnMaster.soxml" />
     <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnShipment.soxml" />
     <None Include="DBScripts\ShipmentModel\202202141010_UpdateAutomaticLastUpdateDateOnPayableProratedAmounts.sxml" />
     <None Include="DBScripts\ShipmentModel\202211010335_UpdateAutomaticLastUpdateDateOnContainerStatuses.sxml" />
-    <None Include="DBScripts\ShipmentModel\202117101748_UpdateAutomaticLastUpdateDateOnShipmentSubTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.soxml" />
     <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />
