@@ -4195,8 +4195,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void OnResendToSAT()
         {
-            const string sATTransferWithErrorStatusCode = "TE";
-            if (entityPM.ResendToSAT && invoice.SATTransferStatusCode == sATTransferWithErrorStatusCode)
+            if (entityPM.ResendToSAT && !string.IsNullOrEmpty(invoice.TransmissionError))
             {
                 this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
             }
