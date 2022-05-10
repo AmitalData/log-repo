@@ -136,7 +136,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         DeclarationPM _MyDeclarationPM;
         private bool _FastDelete;
-         DateTime _DateTime;
+        DateTime _DateTime;
 
         //private List<SupplierInvoiceItemsTaxesModPM> _SupplierInvoiceItemsTaxesModificationPMList;
         //public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption;
@@ -404,24 +404,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
+
+            if (this._MyDeclarationPM.Direction == "E")
             {
-                if (this._MyDeclarationPM.Direction == "E")
+                if (customResponse.Response.Declaration.DMExtensions.VersionID.Value == "1.0")
                 {
-                    if (customResponse.Response.Declaration.DMExtensions.VersionID.Value == "1.0")
+                    _DateTime = new DateTime();
+                    _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
+                    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRN", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                }
+
+
+                if (_MyDeclarationPM.DeclarationStatusTypeCode != customResponse.Response.Status[0].NameCode.Value)
+                {
+                    List<string> statusList = new List<string>()
+                        {
+                            "2","4","22","23","26","35","40","41","42","45","47","48","49"
+                        };
+                    if (statusList.Contains(customResponse.Response.Status[0].NameCode.Value))
                     {
                         _DateTime = new DateTime();
-                        _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
-                        RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "MRN", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
-                    }
+                        _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
 
-                    if (customResponse.Response.Status[0].NameCode.Value == "3" || customResponse.Response.Status[0].NameCode.Value == "6" && _MyDeclarationPM.DeclarationStatusTypeCode != customResponse.Response.Status[0].NameCode.Value)
+                        RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "WAT", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                    }
+                    if (customResponse.Response.Status[0].NameCode.Value == "3" || customResponse.Response.Status[0].NameCode.Value == "6")
                     {
                         _DateTime = new DateTime();
                         _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
                         RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
                     }
+
                 }
             }
+
             //if (customResponse.ResponseContentHeader.Exception != null)
             // {
             //     string userMessage = customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription;
