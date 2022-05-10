@@ -20,11 +20,11 @@ import {AirlineListService} from '../../../../Common/Services/StandardLists/Airl
 import {VesselListService} from '../../../../Common/Services/StandardLists/VesselListService';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 declare var window: any;
 
-@Component({
-    
+@Component({    
     templateUrl: './OrdersTabComponent.html',
 })
 
@@ -39,6 +39,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     public DataContext: OrdersTabComponent = this;
     public IsResourcesReady: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsCarrierServiceLineVisible: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -104,6 +105,10 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsInlandDomestic = ShipmentTool.IsInlandDomestic(this.EntityPM);
+
+            if (FeatureLocator.HasFeaturePermession("ShippingLine", "ShippingLine.Tab.ServiceLines") && this.TransportModeId == "O") {
+                this.IsCarrierServiceLineVisible = true;
+            }
 
             this.entityResourceService.getEntityResourceByTableName("ShipmentOrderPackage").subscribe((res1: any) => {
                 this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDelivery").subscribe((res2: any) => {
@@ -263,6 +268,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         this.UIProperties.SetEnabled("EmptyPickupContainerPartnerId", "ShipmentPickUpDelivery", isEditingEnabled);        
         this.UIProperties.SetEnabled("Notes", "ShipmentPickUpDelivery", isEditingEnabled);               
         this.UIProperties.SetEnabled("MainCarriageCarrierId", this.ObjectTableName, isCarrierEnabled);
+        this.UIProperties.SetEnabled("CarrierServiceLineId", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.MainCarriageCarrierId));
         this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, isConfirmationEnabled);
         this.UIProperties.SetEnabled("BookingConfirmationNumber", this.ObjectTableName, isConfirmationEnabled);
         this.UIProperties.SetEnabled("BookingConfirmedBy", this.ObjectTableName, isConfirmationEnabled);
@@ -729,6 +735,12 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
                     }
                 });
             }
+        }
+    }
+    get CarrierServiceLineId() { return this.EntityPM.CarrierServiceLineId; }
+    set CarrierServiceLineId(value: string) {
+        if (this.EntityPM.CarrierServiceLineId != value) {
+            this.EntityPM.CarrierServiceLineId = value;
         }
     }
 

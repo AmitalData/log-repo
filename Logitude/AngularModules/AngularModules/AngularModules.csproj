@@ -171,6 +171,7 @@
     <Content Include="CommonModules\CommonOthers\Components\ProductType\EditTabs\ProductTypeGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\AddEditAreaComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\AddEditPartnerAddressComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\AddEdit\AddEditServiceLineComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\ChooseCountryPortComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\ChoosePortComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\AreasTabComponent.html" />
@@ -407,6 +408,7 @@
     <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\AddEdit\AddEditCustomerProductItemComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerProductItemsTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\ZipCodeSelection\ZipCodeSelectionComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\AddEdit\AddEditServiceLineComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ServiceLinesTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />

@@ -51,6 +51,7 @@ import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomField
 import { ProductItemPM } from '../EntityPMs/ProductItemPM';
 import { HTSCodePM } from '../EntityPMs/HTSCodePM';
 import { CardContactProductPM } from '../EntityPMs/CardContactProductPM';
+import { CarrierServiceLinePM } from '../EntityPMs/CarrierServiceLinePM';
 
 @Injectable()
 
@@ -2204,6 +2205,79 @@ export class PartnersDomainService {
                 }
             }
         }
+    }
+
+    GetAllCarrierServiceLinesByCarrierId(carrierId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetAllCarrierServiceLinesByCarrierId?carrierId=' + carrierId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var listJason = response;
+                var listMapped: Array<CarrierServiceLinePM> = [];
+
+                for (var itemJeson in listJason) {
+                    var itemMapped: CarrierServiceLinePM = this.MapCarrierServiceLinePM(listJason[itemJeson]);
+                    listMapped.push(itemMapped);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = listMapped;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    MapCarrierServiceLinePM(jsonList: any, mapParent: boolean = true) {
+        var entityPM: CarrierServiceLinePM = null;
+
+        if (jsonList) {
+            entityPM = new CarrierServiceLinePM();
+
+            var jsonListKeys = Object.keys(jsonList);
+
+            for (var key in jsonListKeys) {
+                var property = jsonListKeys[key];
+
+                if (property === "UIProperties" || property === "entityParentPM") {
+                    continue;
+                }
+
+                entityPM[property] = jsonList[property];
+            }
+
+
+            entityPM.IsDirty = false;
+
+            if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+            }
+            else {
+                entityPM.OldEntityPM = null;
+            }
+        }
+
+        return entityPM;
+    }
+    RemoveServiceLineFromCarrier(serviceLineId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetRemoveServiceLineFromCarrier?serviceLineId=' + serviceLineId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = done;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
 }
 export class AirlineMessagingRuleList {
