@@ -9620,5 +9620,6 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<GITITEMAP> GITITEMAPs { get; set; }
         public virtual DbSet<EFIMMN> EFIMMNs { get; set; }
 
+
     }
 }

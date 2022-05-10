@@ -89,15 +89,16 @@ namespace Logitude.Customs.BL.BL
                         if (EFIFILEMData.SPEDNO != null)
                         {
                             var ESPSPEDdata = new ESPSPEDQueryService(tenantAmitalContext).GetSingle(EFIFILEMData.SPEDNO.GetValueOrDefault(), false);
-                            if (ESPSPEDdata != null)
+                            if (ESPSPEDdata != null && ESPSPEDdata.MAIN_AWB != null)
                             {
                                 var AIRLINE_NUM = "";
                                 var ETBAIRLINEData = new ETBAIRLINEQueryService(tenantAmitalContext).GetSingle(ESPSPEDdata.MAINCARRIER, false);
-                                if (ETBAIRLINEData != null)
+                                if (ETBAIRLINEData != null && ETBAIRLINEData.AIRLINENUM != null)
                                 {
                                     AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
                                 }
                                 entityPM.MAIN_AWB = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
+                                entityPM.FinalManifestNumber = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
                             }
                         }
                     }
