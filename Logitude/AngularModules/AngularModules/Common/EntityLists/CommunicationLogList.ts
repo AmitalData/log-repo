@@ -55,5 +55,6 @@ export class CommunicationLogList {
 		EmailDeliveryError: string;
 		ResponseDocumentId: string;
 		UniqueNumber: string;
+		WasAnalyzed: boolean;
 	
 }
