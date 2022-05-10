@@ -268,7 +268,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         this.UIProperties.SetEnabled("EmptyPickupContainerPartnerId", "ShipmentPickUpDelivery", isEditingEnabled);        
         this.UIProperties.SetEnabled("Notes", "ShipmentPickUpDelivery", isEditingEnabled);               
         this.UIProperties.SetEnabled("MainCarriageCarrierId", this.ObjectTableName, isCarrierEnabled);
-        this.UIProperties.SetEnabled("CarrierServiceLineId", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.MainCarriageCarrierId));
         this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, isConfirmationEnabled);
         this.UIProperties.SetEnabled("BookingConfirmationNumber", this.ObjectTableName, isConfirmationEnabled);
         this.UIProperties.SetEnabled("BookingConfirmedBy", this.ObjectTableName, isConfirmationEnabled);
@@ -292,6 +291,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         this.SetUIProperties_Totals();
         this.SetUIProperties_DimFactor();
         this.SetUIProperties_DimensionsUnitCode();
+        this.SetUIProperties_ServiceLine();
     }
     SetUIProperties_Totals() {
         var isTotalsFieldEnabled = false;
@@ -311,7 +311,9 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         this.UIProperties.SetEnabled("OrderGrossWeight", this.ObjectTableName, isTotalsEditedFieldEnabled);
         this.UIProperties.SetEnabled("OrderChargeableWeight", this.ObjectTableName, isTotalsEditedFieldEnabled);
     }
-
+    SetUIProperties_ServiceLine() {
+        this.UIProperties.SetEnabled("CarrierServiceLineId", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.MainCarriageCarrierId));
+    }
     public DimensionsDependencyProperty1: string = null;
     public DimensionsDependencyProperty1IsList: boolean = false;
     private SetUIProperties_DimensionsUnitCode() {
@@ -664,12 +666,15 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         if (this.EntityPM.MainCarriageCarrierId != value) {
             this.EntityPM.MainCarriageCarrierId = value;
 
+            this.CarrierServiceLineId = null;
+            this.SetUIProperties_ServiceLine();
+
             if (AppTool.IsNullOrEmpty(value)) {
                 this.MainCarriageCarrierPrefix = null;
                 this.MainCarriageCarrierNumber = null;
-                this.Master = null;
+                this.Master = null;                
 
-                RoutingHelper.MainCarriageCarrierChanged(this.EntityPM, null);
+                RoutingHelper.MainCarriageCarrierChanged(this.EntityPM, null);                
 
                 if (this.TransportModeId == "A") {
                     if (AppTool.IsNullOrEmpty(this.EntityPM.InterlineId)) {

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CarrierServiceLineUpdateClass
    {  		
-		public const string HashString = "1d449e105b024b473d44c8a386a7b16e";
+		public const string HashString = "f17903c1497c9b03baeb1745cb7afc77";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -111,7 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Id",
+			      				    SortingByObjectField =  "Name",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Service Line",
-			      				    Code =  "8fae",
+			      				    Code =  "7dd8",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",

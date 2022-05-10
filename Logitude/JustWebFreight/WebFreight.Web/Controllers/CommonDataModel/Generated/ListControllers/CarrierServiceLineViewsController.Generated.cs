@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				CarrierServiceLineQuery carrierServiceLineQuery = new CarrierServiceLineQuery(carrierServiceLineRepository);
 			    IQueryable<CarrierServiceLineList> entityLists = carrierServiceLineQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Id);
+				entityLists = entityLists.OrderBy(d => d.Name);
 				List<CarrierServiceLineList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -292,7 +292,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Id);
+                                entityLists = entityLists.OrderBy(d => d.Name);
                                 break;
                             }
                     }
@@ -301,7 +301,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Id);
+                entityLists = entityLists.OrderBy(d => d.Name);
             } 
 
 			ServiceResponse response = new ServiceResponse();
