@@ -365,6 +365,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string chargingSite ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChargingSite  
+	   {
+	    
+	     get
+		{
+		   return chargingSite;
+		 }
+		 set
+		 {
+		   if(chargingSite != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargingSite",OldValue=chargingSite,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chargingSite=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

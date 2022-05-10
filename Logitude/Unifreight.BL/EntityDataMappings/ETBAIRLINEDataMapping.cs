@@ -22,6 +22,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.NAMEHEB = entityPM.NAMEHEB;
             entityPOCO.NAMEENG = entityPM.NAMEENG;
             entityPOCO.BLOCKRECORD = entityPM.BLOCKRECORD;
+            entityPOCO.AIRLINENUM = entityPM.AIRLINENUM;
         }
 
         public void POCOToPM(ETBAIRLINEPM entityPM, ETBAIRLINE entityPOCO)
@@ -30,6 +31,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.NAMEHEB = entityPOCO.NAMEHEB;
             entityPM.NAMEENG = entityPOCO.NAMEENG;
             entityPM.BLOCKRECORD = entityPOCO.BLOCKRECORD;
+            entityPM.AIRLINENUM = entityPOCO.AIRLINENUM;
         }
 
         public void CustomPMToPOCO(ETBAIRLINEPM entityPM, ETBAIRLINE entityPOCO)
