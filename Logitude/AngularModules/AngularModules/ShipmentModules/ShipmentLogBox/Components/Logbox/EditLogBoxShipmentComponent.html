@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .Disabled{
         pointer-events:none;
         opacity:0.5;
@@ -31,7 +31,7 @@
                                 </td>
                                 <td style="height:22px;">
                                     <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                        My Reference
+                                        {{IsShownCustomerReference3 ? 'Reference #' : 'My Reference'}}
                                     </label>
                                 </td>
                             </tr>
@@ -45,7 +45,7 @@
                         <table> 
                             <tr style="height: 33px;">
                                 <td style="height: 22px;">
-                                    <LogTextBox [ObjectFieldName]="'CustomerReference2'" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="IsShownCustomerReference3 ? 'CustomerReference3' : 'CustomerReference2'" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
                             <tr>
