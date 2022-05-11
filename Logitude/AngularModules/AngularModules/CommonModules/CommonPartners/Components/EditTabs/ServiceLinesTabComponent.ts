@@ -114,8 +114,17 @@ export class ServiceLinesTabComponent implements OnDestroy {
             window.Show("Are you sure you want to delete this service line?");
             window.WindowClosed.subscribe((event: any) => {
                 if (window.Yes) {
-                    this.DomainService.RemoveServiceLineFromCarrier(itemComponent.Id).subscribe((myResult: any) => {
-                        this.LoadData();
+                    this.CurrentSession.StartBusyIndicatorLoading();
+                    this.DomainService.RemoveServiceLineFromCarrier(itemComponent.Id).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            this.LoadData();
+                        }
+
+                        else {
+                            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                        }
+
+                        this.CurrentSession.StopBusyIndicator();
                     });
                 }
             });

@@ -16,6 +16,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -2747,6 +2749,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (serviceLine != null)
                 {
+                    this.ValidateConnectedMasterToServiceLine(serviceLine);
                     serviceLineRepository.Remove(serviceLine);
                     commonDataContext.SaveChanges();
                 }
@@ -2757,6 +2760,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private void ValidateConnectedMasterToServiceLine(CarrierServiceLine serviceLine)
+        {
+            ShipmentRepository shipmentRepository = new ShipmentRepository(serviceLine.Tenant);
+            IQueryable<ShipmentMasterData> shipments = shipmentRepository.GetMasterByServiceLineId(serviceLine.Id, serviceLine.Tenant);
+
+            if(shipments.Count() > 0)
+            {
+                throw new ApplicationException("Can't delete Service lines which is connected to shipments");
             }
         }
     }
