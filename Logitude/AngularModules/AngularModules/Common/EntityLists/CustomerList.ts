@@ -154,4 +154,4 @@ export class CustomerList {
 		ExportLocalCustomerGroupId: string;
 		SATCustomerName: string;
 	
-}
+}

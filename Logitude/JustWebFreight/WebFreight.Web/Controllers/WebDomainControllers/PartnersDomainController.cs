@@ -2708,5 +2708,56 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetAllCarrierServiceLinesByCarrierId(string carrierId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                CarrierServiceLineQuery carrierServiceLineQuery = new CarrierServiceLineQuery(tenant);
+                List<CarrierServiceLinePM> serviceLinePMs = carrierServiceLineQuery.GetCarrierServiceLinePMsByCardId(carrierId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, serviceLinePMs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetRemoveServiceLineFromCarrier(string serviceLineId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                CarrierServiceLineRepository serviceLineRepository = new CarrierServiceLineRepository(commonDataContext);
+                CarrierServiceLine serviceLine = serviceLineRepository.GetSingleCarrierServiceLine(serviceLineId, tenant);
+
+                if (serviceLine != null)
+                {
+                    serviceLineRepository.Remove(serviceLine);
+                    commonDataContext.SaveChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

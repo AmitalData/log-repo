@@ -5247,6 +5247,10 @@ export class ShipmentPM {
     public get IsShipmentOrder() { return this.isShipmentOrder; }
     public set IsShipmentOrder(newValue: boolean) { if (this.isShipmentOrder != newValue) { this.isShipmentOrder = newValue; this.MarkAsDirty("IsShipmentOrder"); } }
 
+    private carrierServiceLineId: string;
+    public get CarrierServiceLineId() { return this.carrierServiceLineId; }
+    public set CarrierServiceLineId(newValue: string) { if (this.carrierServiceLineId != newValue) { this.carrierServiceLineId = newValue; this.MarkAsDirty("CarrierServiceLineId"); } }
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

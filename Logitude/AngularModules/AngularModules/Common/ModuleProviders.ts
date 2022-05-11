@@ -222,6 +222,7 @@ import { CustomerGroupPMService } from './Services/StandardPMs/CustomerGroupPMSe
 import { CustomerGroupListService } from './Services/StandardLists/CustomerGroupListService';
 import { MentionListService } from './Services/StandardLists/MentionListService';
 import { MentionPMService } from './Services/StandardPMs/MentionPMService';
+import { CarrierServiceLineListService } from './Services/StandardLists/CarrierServiceLineListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -447,6 +448,7 @@ export class ModuleProviders {
             case "CustomerGroupListService": { myResult = new CustomerGroupListService(); break; }
             case "MentionListService": { myResult = new MentionListService(); break; }
             case "MentionPMService": { myResult = new MentionPMService(); break; }
+            case "CarrierServiceLineListService": { myResult = new CarrierServiceLineListService(); break; }
         }
 
         return myResult;

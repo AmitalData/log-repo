@@ -345,6 +345,21 @@
                                                             </td>
                                                         </tr>
 
+                                                        <tr class="FormFieldRow" *ngIf="IsCarrierServiceLineVisible">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'CarrierServiceLineId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td>
+                                                                <LogLov [ObjectFieldName]="'CarrierServiceLineId'"
+                                                                        [SelectedValue]="CarrierServiceLineId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'CarrierServiceLine'"
+                                                                        [DependencyFilter1Value]="MainCarriageCarrierId">
+                                                                </LogLov>
+                                                            </td>
+                                                        </tr>
+
                                                         <!-- CarrierNumber -->
                                                         <tr class="FormFieldRow">
                                                             <td>
