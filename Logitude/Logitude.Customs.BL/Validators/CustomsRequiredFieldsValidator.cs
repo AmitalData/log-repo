@@ -446,7 +446,7 @@ namespace Logitude.Customs.BL.Validators
                     if (notHaveInsuranceDetails && needInsurance)
                         requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = "Customs.General.O.NoDetailsForInsurancAmount" });
 
-                    bool notHaveFreightDetails = supplierInvoiceModifications.Where(x => x.TypeCode == "144").All(x => x.Amount == null || x.CurrencyTypeCode == null);
+                    bool notHaveFreightDetails = supplierInvoiceModifications.Where(x => x.TypeCode == "104").All(x => x.Amount == null || x.CurrencyTypeCode == null);
                     bool needFreight = incotemrsFileValidationFilters.Any(x => x.IsFreightCharge);
                     if (notHaveFreightDetails && needFreight)
                         requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = "Customs.General.O.NoDetailsForFreightAmount" });
