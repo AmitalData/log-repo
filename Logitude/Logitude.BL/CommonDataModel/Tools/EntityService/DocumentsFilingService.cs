@@ -181,7 +181,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if ((!FromService || _OnCreateUnifreightFillingMode) && documentId == null)
             {
-                if (entityPM.DirectionCode == "I")
+                if (
+                    (entityPM.DirectionCode == "I")
+                    //|| 
+                    //(entityPM.DirectionCode == "E")
+                    )
+                    
                 {
                     entityPM.DocumentId = BuildDocument(fileData, true, entityPM.Id);
 

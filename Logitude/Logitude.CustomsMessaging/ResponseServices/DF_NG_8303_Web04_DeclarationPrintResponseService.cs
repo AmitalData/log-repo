@@ -25,6 +25,7 @@ using System.Xml.Serialization;
 using UnifreightIIG.Common.DeclarationPrintServiceReference;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -35,6 +36,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     {
         public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption;
         private DeclarationPM _MyDeclarationPM;
+        private DateTime _TransmitionDateTime;
 
         public override DeclarationPrintResponseData GetResponse(DF_NG_8303_Web04_DeclarationPrint_Response customResponse, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams)
         {
@@ -70,6 +72,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DF_NG_8303_Web04_DeclarationPrint_Response customResponse, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams)
         {
+            _TransmitionDateTime=customResponse.ResponseContentHeader.TransmitionDateTime;
             //Analayze 8303- Declaration Print
             var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
             this.MyResponseData = new DeclarationPrintResponseData();
@@ -104,6 +107,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             foreach (var declarationPrintAnswerItem in customResponse.DeclarationPrintAnswer)
             {
+                
                 if (!string.IsNullOrWhiteSpace(declarationPrintAnswerItem.ExceptionPerQuery))
                 {
                     var declarationPrintDetails = new DeclarationPrintM();
@@ -123,7 +127,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     try
                     {
-                        if (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "1") // Import Declaration
+                        if (
+                            (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "1") // Import Declaration
+                            ||
+                            (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "2") // Export Declaration
+                            )
                         {
                             var myDeclarationId = myDeclarationQueryService.GetIdByDeclarationNumber(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID, requestParams.Tenant);
                             _MyDeclarationPM = myDeclarationQueryService.GetSingle(myDeclarationId, false, false);
@@ -180,7 +188,42 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.RequestDescription = "בקשה לטופס הצהרה " + _MyDeclarationPM.DeclarationNumber;
             }
         }
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id,DateTime? status_DateTime)
+        {
+            //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
+            string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+            if (dirtyDeclarationPM.TransportModeId != "A")
+            {
+                primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
+            }
 
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+                Tenant = dirtyDeclarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = status_id,
+                notes = "",
+                CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                EntityId = dirtyDeclarationPM.Id,
+                UserId = loggingUserId,
+
+                CommunicationSubject = "FU Status " + status_id + " from logitude",
+                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                {
+                    entname = dirtyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+                    primary_number = primary_number,
+                    status = "new",
+                    xml_status = "new",
+                    status_id = status_id,
+                    status_DateTime = status_DateTime ?? DateTime.Now,
+                    comments = "",
+                }
+            };
+
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+
+
+        }
         private void AnalyzePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams,string MyDeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
@@ -221,11 +264,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (documentsFilingPM == null)
             {
               documentsFilingPM =CreatePaymentDocument(attachment, requestParams, this._MyDeclarationPM.DeclarationNumberandVersionId);
+                
             }
             else
             {
                 
                 UpdatePaymentDocument(documentsFilingPM, attachment, requestParams, this._MyDeclarationPM.DeclarationNumberandVersionId);
+            }
+
+            if (this._MyDeclarationPM.Direction == "E")
+            {
+                RaiseEvent(this._MyDeclarationPM, "MEHES", status_id: "MRS", status_DateTime: _TransmitionDateTime);
             }
             //DocumentsFilingMetaDataValueQuery.UpSert(documentsFilingPM, "VER", this._MyDeclarationPM.VersionId);
 
@@ -268,15 +317,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.UpdatedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.DirectionCode = "I";
+            // I/O  - only  !!  -   documentsFilingPM.DirectionCode = this._MyDeclarationPM.Direction;
             documentsFilingPM.Description = "טופס הצהרה " + this._MyDeclarationPM.DeclarationNumber + "-" + this._MyDeclarationPM.VersionId;
-            documentsFilingPM.ExternalEntityName = "CFIFILEM";
+            documentsFilingPM.ExternalEntityName = this._MyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM";
             documentsFilingPM.ExternalEntityReference = this._MyDeclarationPM.CustomFileNo;
             documentsFilingPM.FileExtension = "PDF";
 
             
             
             documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
-            LogMessagingUtil.Instance.AppendLine("Filed document " + documentsFilingPM.Code + "Created For declaration " + _MyDeclarationPM.DeclarationNumber);
+            LogMessagingUtil.Instance.AppendLine("Filed document " + documentsFilingPM.Code + "Created For declaration " + _MyDeclarationPM.DeclarationNumber + " documentsFilingPM.ID= "+ documentsFilingPM.Id);
+
+            
+
             return documentsFilingPM;
 
 
