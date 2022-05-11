@@ -522,7 +522,7 @@ export class MaintenanceComponent {
                     item.TranslatedName = TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields")
                     item.ObjectTableName = "Customs.CustomsRequiredField";
                     item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
-                    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+                    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item)); 
                 }
             });
 

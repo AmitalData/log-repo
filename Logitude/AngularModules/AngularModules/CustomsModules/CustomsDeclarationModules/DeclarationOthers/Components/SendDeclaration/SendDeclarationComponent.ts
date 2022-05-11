@@ -1154,6 +1154,7 @@ export class SendDeclarationService implements OnDestroy {
         var windowArgs: any = {};
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.Warning = this.ValidationWarning;
+        windowArgs.CancelButtonVisibility = true;
         windowArgs.ComponentHeight = '328px'; // بدك تقيم 72 
         var windowTitle = title;
 
@@ -1164,8 +1165,10 @@ export class SendDeclarationService implements OnDestroy {
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {
-            this.OnAddEditWindowClosed($event);
-            this.InstructionSendToMehes();
+            if ($event == "ok") {
+                this.OnAddEditWindowClosed($event);
+                this.InstructionSendToMehes();
+            }
         });
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
