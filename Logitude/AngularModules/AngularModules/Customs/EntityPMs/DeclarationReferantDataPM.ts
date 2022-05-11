@@ -249,6 +249,11 @@ export class DeclarationReferantDataPM {
     public set Hawb(newValue: string) { if (this.hawb != newValue) { this.hawb = newValue; this.MarkAsDirty("Hawb"); } }
        
 	 
+    private importerApproval: boolean;
+    public get ImporterApproval() { return this.importerApproval; }
+    public set ImporterApproval(newValue: boolean) { if (this.importerApproval != newValue) { this.importerApproval = newValue; this.MarkAsDirty("ImporterApproval"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		
