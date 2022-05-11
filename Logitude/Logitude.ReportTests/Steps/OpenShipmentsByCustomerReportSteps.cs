@@ -4,17 +4,18 @@ using Logitude.Base.Models.Shared;
 using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using TechTalk.SpecFlow;
+using Logitude.ReportTests.Services.Mapps.Mappers;
 
 namespace Logitude.ReportTests.Steps
 {
     [Binding]
     public class OpenShipmentsByCustomerReportSteps
     {
-        private readonly ReportFilterService reportFilterService;
+        private readonly ReportFilterService<OpenShipmentsByCustomerReportFilterMapper> reportFilterService;
         private readonly ReportContext reportContext;
         private readonly ReportAssertService reportAssertService;
 
-        public OpenShipmentsByCustomerReportSteps(ReportFilterService reportFilterService, ReportContext reportContext, ReportAssertService reportAssertService)
+        public OpenShipmentsByCustomerReportSteps(ReportFilterService<OpenShipmentsByCustomerReportFilterMapper> reportFilterService, ReportContext reportContext, ReportAssertService reportAssertService)
         {
             this.reportFilterService = reportFilterService;
             this.reportContext = reportContext;

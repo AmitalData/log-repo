@@ -109,6 +109,8 @@
     <Compile Include="Services\EntityService.cs" />
     <Compile Include="Services\Asserts\ReportAssertService.cs" />
     <Compile Include="Services\Asserts\ReportDataAssertService.cs" />
+    <Compile Include="Services\Mapps\Mappers\OpenShipmentsByCustomerReportFilterMapper.cs" />
+    <Compile Include="Services\Mapps\ReportFilterMapper.cs" />
     <Compile Include="Services\ReportFilterItemService.cs" />
     <Compile Include="Services\ReportFilterService.cs" />
     <Compile Include="Services\ReportService.cs" />
@@ -119,9 +121,7 @@
     <None Include="Features\OpenShipmentsByCustomerReport.feature" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Hooks\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Base.csproj">
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>

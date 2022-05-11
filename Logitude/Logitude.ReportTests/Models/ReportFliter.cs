@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.ReportTests.Models
 {
@@ -23,12 +20,30 @@ namespace Logitude.ReportTests.Models
 
     }
 
-    public class ReportFliterItem
+    public class ReportFliterItem : ReportFliterItemEntity
     {
-        public string FieldName { get; set; }
-        public object FieldValue { get; set; }
-        public string FieldDataType { get; set; }
-        public string Operator { get; set; }
+        public string Name { get; set; }
+        public object Value { get; set; }
     }
 
+
+    public class ReportFliterItemEntity
+    {
+        public ReportFliterItemEntity(string map, string entityName, string searchKeyName, string searchKeyValue)
+        {
+            Map = map;
+            EntityName = entityName;
+            SearchKeyName = searchKeyName;
+            SearchKeyValue = searchKeyValue;
+        }
+
+        public ReportFliterItemEntity()
+        {
+        }
+
+        public string Map { get; set; }
+        public string EntityName { get; set; }
+        public string SearchKeyName { get; set; }
+        public string SearchKeyValue { get; set; }
+    }
 }

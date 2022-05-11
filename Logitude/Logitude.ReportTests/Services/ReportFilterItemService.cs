@@ -1,6 +1,7 @@
 ﻿using Logitude.ReportTests.Models;
 using Logitude.ReportTests.Models.Builders;
-using Logitude.Base;
+using Logitude.ReportTests.Services.Mapps;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -9,14 +10,15 @@ using TechTalk.SpecFlow.Assist;
 
 namespace Logitude.ReportTests.Services
 {
-    public class ReportFilterItemService
+
+    public class ReportFilterItemService<T> where T : ReportFilterMapper
     {
-        private readonly EntityService entityService;
         private readonly List<ReportFliterItem> reportFliterItems;
+        private readonly T reportFilterMapper;
         public ReportFilterItemService()
         {
-            entityService = new EntityService();
             reportFliterItems = new List<ReportFliterItem>();
+            reportFilterMapper = (T)Activator.CreateInstance(typeof(T));
         }
 
         public List<ReportFliterItem> Build(Table filterTable)
@@ -28,29 +30,15 @@ namespace Logitude.ReportTests.Services
             return new List<ReportFliterItem>(reportFliterItems);
         }
 
-        private ReportFliterItem GetNewReportFliterItem(ExpandoObject reportFliterItem)
+        private ReportFliterItem GetNewReportFliterItem(ExpandoObject reportFliterItemObject)
         {
-            return new ReportFliterItemBuilder()
-               .WithDefualtValues()
-               .FieldName(reportFliterItem.Get<string>("PropertyName"))
-               .FieldValue(GetFilterValue(reportFliterItem))
-               .FieldDataType(reportFliterItem.Get<string>("DataType"))
+            var reportFliterItem = new ReportFliterItemBuilder().WithDefualtValues()
+               .Name(reportFliterItemObject.Get<string>("Name"))
+               .Map(reportFliterItemObject.Get<string>("Map"))
+               .Value(reportFliterItemObject.Get<string>("Value"))
                .Build();
+
+            return reportFilterMapper.RenderReportFliterItemValue(reportFliterItem);
         }
-
-        private object GetFilterValue(ExpandoObject reportFliterItem)
-        {
-            if (string.IsNullOrEmpty(reportFliterItem.Get<string>("EntityName"))
-                || string.IsNullOrEmpty(reportFliterItem.Get<string>("SearchKeyName"))
-                || string.IsNullOrEmpty(reportFliterItem.Get<string>("SearchKeyValue")))
-                return reportFliterItem.Get<string>("Value");
-
-            return entityService.GetIdentity(
-                reportFliterItem.Get<string>("SearchKeyValue"),
-                 reportFliterItem.Get<string>("SearchKeyName"),
-                 reportFliterItem.Get<string>("EntityName")
-             );
-        }
-
     }
 }
