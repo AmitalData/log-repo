@@ -49,7 +49,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Quots.SpotRate
                 .Include("Quote").Include("Quote.ShipperCard").Include("Quote.ConsigneeCard")
                 .Include("ChargesType").Include("CostMeasurement").Include("CostCurrency")
                 .Include("SaleMeasurement").Include("Currency").Include("Quote.Stage").Include("Quote.ShipmentType")
-                .Where(a => a.Tenant == tenant);
+                .Where(a => a.Tenant == tenant && a.Quote.QuoteTypeCode == "A");
             quoteCharges = FilterQuoteCharges(quoteCharges);
 
             var quoteChargeItems = quoteCharges.OrderBy(x => x.ValueDate).ThenBy(x => x.Quote.QuoteNumber).AsEnumerable()
