@@ -666,7 +666,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
 
         let Insurance67: any = this.FindModificationByCode("67");
-        let Freight144: any = this.FindModificationByCode("144");
+        let Freight104: any = this.FindModificationByCode("104");
         let ExtraPayments160: any = this.FindModificationByCode("160");
 
         this.AdjustmentsList = new ObservableCollection([]);
@@ -678,12 +678,12 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.AdjustmentsList.Insert(new ModificationItemModel(Insurance67, this, "67"));
         }
 
-        if (Freight144 == null) {
+        if (Freight104 == null) {
             paymentCounter += 1;
-            this.AddModification("144", paymentCounter, "הובלה");
+            this.AddModification("104", paymentCounter, "הובלה בפועל");
         } else {
-            Freight144.TypeName = "הובלה"
-            this.AdjustmentsList.Insert(new ModificationItemModel(Freight144, this, "144"));
+            Freight104.TypeName = "הובלה בפועל"
+           this.AdjustmentsList.Insert(new ModificationItemModel(Freight104, this, "104"));
         }
 
         if (ExtraPayments160 == null) {

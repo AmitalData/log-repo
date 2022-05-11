@@ -81,7 +81,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         this.ModificationsList = new ObservableCollection([]);
         
         for (let item of this.InvoicePM.SupplierInvoiceModifications) {
-            if (item.TypeCode != "I02" && item.TypeCode != "67" && item.TypeCode != "144" ) {
+            if (item.TypeCode != "I02" && item.TypeCode != "67" && item.TypeCode != "104" ) {
                 if (this.declarationPM.Direction == "E" && item.TypeCode != "160") {
                     this.ModificationsList.Insert(new ModificationItemModel(item, this));
                 }

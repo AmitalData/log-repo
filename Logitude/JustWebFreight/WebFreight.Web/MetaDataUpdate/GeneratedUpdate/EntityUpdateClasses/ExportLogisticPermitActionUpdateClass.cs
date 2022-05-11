@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportLogisticPermitActionUpdateClass
    {  		
-		public const string HashString = "a2527ef6e14a40ed2db2ed9cd6524d52";
+		public const string HashString = "75a08582410bf0488e83bd7f8d28a306";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
