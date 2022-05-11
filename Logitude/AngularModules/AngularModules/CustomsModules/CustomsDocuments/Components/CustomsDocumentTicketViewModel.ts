@@ -88,6 +88,7 @@ export class CustomsDocumentTicketViewModel {
 
     public FromCompanyDocumentType2Add: boolean = false;
 
+    public get CustomDocumentTypeMetaDataLists() { return this.customDocumentTypeMetaDataLists };
     private customDocumentTypeMetaDataLists: CustomDocumentTypeMetaDataList[];
     public MetaDataCount: number;
     public IsMetaDataVisible: boolean;
@@ -113,6 +114,7 @@ export class CustomsDocumentTicketViewModel {
     }
     DeniedImageVisibility: boolean;
     ApprovedImageVisibility: boolean;
+    public get CustomsDocumentMetaDataValuePMs() { return this.customsDocumentMetaDataValuePMs };
     private customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[];
     DataContext: CustomsDocumentsComponent;
     PreventEdit: boolean = false;

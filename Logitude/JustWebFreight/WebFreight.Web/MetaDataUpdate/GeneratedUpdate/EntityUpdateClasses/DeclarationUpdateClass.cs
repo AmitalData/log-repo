@@ -19402,6 +19402,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsCustomsDocumentSupplierInvoiceItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.SupplierInvoiceItems", DefaultText = "Supplier Invoice Items",LocalDefaultText = @"פרטי מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOUnSavedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UnSavedDeclarations", DefaultText = "UnSavedDeclarations",LocalDefaultText = @"בהצהרה זו בוצעו שינויים שלא נשמרו האם ברצונך לשמור?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   
+			TextCode DeclarationTextCode_CustomsCustomsDocumentBulkUploadDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.BulkUploadDocuments", DefaultText = "Bulk Upload Documents",LocalDefaultText = @"העלאת מסמכים גורפת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentMarkOriginalDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.MarkOriginalDocument", DefaultText = "Do mark an original document",LocalDefaultText = @"האם לסמן מסמך מקורי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsCustomsDocumentMissingMetadataMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.MissingMetadataMsg", DefaultText = "There are documents with a lack of Metadata data and therefore such documents will not go up to customs",LocalDefaultText = @"ש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים אילו לא יעלו למכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
