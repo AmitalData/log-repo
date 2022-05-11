@@ -705,7 +705,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.ChargesTypeLocalName = chargesType.LocalName;
                 chargePM.SaleTariffId = item.TariffId;
                 chargePM.SaleTariffNumber = item.TariffNumber;
-                chargePM.SaleTariffLineId = item.LineId;
+                chargePM.SaleTariffLineId = item.TariffLineId;
                 chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
                 chargePM.Tenant = this.EntityPM.Tenant;
                 chargePM.QuoteId = this.EntityPM.Id;
@@ -753,7 +753,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 var chargePM: FCLQuoteChargeItem = new FCLQuoteChargeItem(quoteCharge, this, false);
                 chargePM.SaleTariffId = item.TariffId;
                 chargePM.SaleTariffNumber = item.TariffNumber;
-                chargePM.SaleTariffLineId = item.LineId;
+                chargePM.SaleTariffLineId = item.TariffLineId;
                 chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
                 chargePM.MarkUpTypeCode = "F";
                 chargePM.MarkUpValue = 0;
@@ -910,9 +910,15 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            var argumentsPriceCheck = { VersionId: item.SaleTariffVersion, LineId: item.SaleTariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
+
+            var code = item.SaleTariffVersion.toString();
+            if (!AppTool.IsNullOrEmpty(item.SaleTariffLineId)) {
+                code = code + "," + item.SaleTariffLineId;
+            }
+
+            var argumentsPriceCheck = { VersionId: item.SaleTariffVersion.toString(), LineId: item.SaleTariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
             editWindow.EditComponentArguments = argumentsPriceCheck;
-            editWindow.ShowEditComponent(item.SaleTariffId, "Tariff");
+            editWindow.ShowEditComponent(item.SaleTariffId, "Tariff", code);
         }
     }
 
