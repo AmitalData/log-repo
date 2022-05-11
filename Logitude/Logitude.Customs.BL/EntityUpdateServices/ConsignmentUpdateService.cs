@@ -45,6 +45,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(ConsignmentPM entityPM, Consignment entityPOCO)
         {
+            if (EntityParentPM.Direction == "I") { 
+
+               entityPM.ManifestNumber = entityPM.ManifestNumber?.Trim();
+               entityPM.SecondCargoID = entityPM.SecondCargoID?.Trim();
+               entityPM.ThirdCargoID = entityPM.ThirdCargoID?.Trim();
+            }
+
             if (String.IsNullOrWhiteSpace(entityPM.UnloadPortCode))
             {
                 if (!string.IsNullOrWhiteSpace(EntityPOCO.UnloadPortCode) )
