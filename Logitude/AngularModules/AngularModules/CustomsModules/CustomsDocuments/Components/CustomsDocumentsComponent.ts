@@ -895,7 +895,9 @@ export class CustomsDocumentsComponent
                 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        documnetUpload.forEach(async docTicket  => {
+        this.RefreshEntity();
+
+        await Promise.all(documnetUpload.map(async (docTicket: CustomsDocumentTicketViewModel) => {
             const doc: CustomsDocumentPM =  await this.getCustomDocument(docTicket);
             doc.DeclarationId = this.EntityPM.Id;
             doc.CurrentCustomsDocumentsTicketId = docTicket.customsDocumentsTicketPM.Id; 
@@ -903,7 +905,9 @@ export class CustomsDocumentsComponent
             doc.CloneMe();
             await this.SendCustomsDocumentMethod(doc);
             this.SubmitTicketChanges(docTicket.customsDocumentsTicketPM)
-        });        
+        }));
+
+        this.RefreshEntity();
 
         this.CurrentSession.StopBusyIndicator();
 
