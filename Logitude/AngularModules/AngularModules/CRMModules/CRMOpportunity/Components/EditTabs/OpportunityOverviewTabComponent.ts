@@ -850,10 +850,10 @@ export class QuoteObslistItemClass{
     public get DirectionId() {return this.entityList.DirectionId; }
     public get DirectionName() { return this.entityList.DirectionName; }
     public get TransportModeId() {return this.entityList.TransportModeId; }
-    public get TransportModeName() {return this.entityList.TransportModeName; }
-        
-
+    public get TransportModeName() { return this.entityList.TransportModeName; }
+    public get StageName() { return this.entityList.StageName; }
 }
+
 export class ServiceItemClass {
     private entityPM: OpportunityPM;
     private entityList: AdditionalServiceList;
