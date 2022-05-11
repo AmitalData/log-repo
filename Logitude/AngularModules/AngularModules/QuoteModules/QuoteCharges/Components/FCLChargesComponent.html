@@ -46,6 +46,21 @@
                                         </div>
                                     </td>
 
+                                    <td style="width:5px;" *ngIf="IsUpdateSalesChargesVisible">
+                                        <div></div>
+                                    </td>
+
+                                    <td [style.width.px]="UpdateSalesChargesMessageWidth + 70" *ngIf="IsUpdateSalesChargesVisible">
+                                        <div class="MediaFill">
+                                            <div class="MediaFillAbsolute OrangeInfo" style="top: 2px; bottom: 2px; padding: 0px;">
+                                                <div style="line-height: 25px; margin-left: 5px; float: left; color:black; font-size:11px;">{{UpdateSalesChargesMessage}}</div>
+                                                <div style="line-height: 25px; margin-left: 10px; float: left; width: 50px;">
+                                                    <button class="Button" style="margin-top: 1px;" [disabled]="!IsEditingEnabled" (click)="UpdateSalesChargesClicked()">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
                                     <td>
                                         <div></div>
                                     </td>

@@ -248,11 +248,13 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
                             }
 
                             this.IsUpdateSalesmanVisible = true;
-                            this.SalesmanUpdated = true;
+                            this.SalesmanUpdated = true;  
                         }
                     }
                 }
             });
+
+            this.CurrentSession.FireEvent("UpdateTariffSaleCharges");
         }
     }
     UpdateSalesmanClicked() {
