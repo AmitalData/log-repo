@@ -109,7 +109,7 @@ export class CustomsDocumentsComponent
             this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName, entityArgs.EntityParentPM, entityArgs.IsFromStandAloneScreen);
         }
 
-        this.bulkUploadDocumentsPermission =FeatureLocator.HasFeaturePermession("General", "General.Features.BulkUploadDocuments") || true;
+        this.bulkUploadDocumentsPermission = FeatureLocator.HasFeaturePermession("Customs.Declaration", "BULKUPLOADDOCUMENTS");
     }
     ngOnDestroy() {
         console.log("CustomsDocumentsComponent:ngOnDestroy");
