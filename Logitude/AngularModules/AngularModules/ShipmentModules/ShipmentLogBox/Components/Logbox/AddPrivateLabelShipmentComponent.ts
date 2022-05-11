@@ -1036,7 +1036,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             return this.EntityPM.CustomerReference1;
     }
     public set CustomerReference3(newValue: string) {
-        if (!AppTool.IsNullOrEmpty(newValue)) this.EntityPM.CustomerReference1 = newValue.substring(0, 50);
+        this.EntityPM.CustomerReference1 = !AppTool.IsNullOrEmpty(newValue) ? newValue.substring(0, 50) : null;
         this.EntityPM.CustomerReference3 = newValue;
         this.ValidateReferenceNumber();
     }
