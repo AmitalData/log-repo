@@ -805,6 +805,7 @@ namespace WebFreight.Web.DataProviders
         public double? NONVATableAmountInLocalCurrency_double { get; set; }
 
         public string VatAmountInForeignCurrency { get; set; }
+        public double? VatAmountInForeignCurrency_Double { get; set; }
         public string ForeignToInvoiceExchangeRate { get; set; }
         public double? ForeignToInvoiceExchangeRate_Double { get; set; }
 
