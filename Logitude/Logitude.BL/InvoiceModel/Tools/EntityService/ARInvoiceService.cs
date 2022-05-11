@@ -672,7 +672,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.AfterServiceFinished();
         }
 
-         
+
 
         private void ARInvoiceStockNumber()
         {
@@ -4189,6 +4189,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdatePaymentsNumbers();
                 this.OnApprovingInvoice();
                 this.OnVoidingInvoise();
+                this.OnResendToSAT();
+            }
+        }
+
+        private void OnResendToSAT()
+        {
+            if (entityPM.ResendToSAT && !string.IsNullOrEmpty(invoice.TransmissionError))
+            {
+                this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
             }
         }
         private void UpdatePaymentsNumbers()
