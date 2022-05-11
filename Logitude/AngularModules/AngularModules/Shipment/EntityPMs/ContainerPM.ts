@@ -1346,6 +1346,11 @@ export class ContainerPM {
     public set UpdatedByPartner(newValue: string) { if (this.updatedByPartner != newValue) { this.updatedByPartner = newValue; this.MarkAsDirty("UpdatedByPartner"); } }
        
 	 
+    private isUpdatedFromAPI: boolean;
+    public get IsUpdatedFromAPI() { return this.isUpdatedFromAPI; }
+    public set IsUpdatedFromAPI(newValue: boolean) { if (this.isUpdatedFromAPI != newValue) { this.isUpdatedFromAPI = newValue; this.MarkAsDirty("IsUpdatedFromAPI"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

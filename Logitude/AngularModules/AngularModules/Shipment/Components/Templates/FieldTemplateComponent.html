@@ -127,6 +127,14 @@
                                     <div class="TemplateTrimmingChild TextRight" *ngIf="FieldValue">{{FieldValue | NumbersPipe:'N2'}} {{ProfitCurrency}}</div>
                                 </div>
 
+                                <div *ngIf="FieldName == 'MainCarriageETDTime'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild" >{{Entity[FieldName] | DateTimeToTimePipe}}</div>                                    
+                                </div>
+
+                                <div *ngIf="FieldName == 'MainCarriageETATime'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">{{Entity[FieldName] | DateTimeToTimePipe}}</div>
+                                </div>
+
                                 <!-- Spot Light -->
                                 <div *ngIf="IsSpotLightTemplate">
                                     <div ChildDirective></div>
