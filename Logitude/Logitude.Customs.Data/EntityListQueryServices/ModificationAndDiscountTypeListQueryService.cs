@@ -22,7 +22,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<ModificationAndDiscountTypeList> GetIqueryableList(IQueryable<ModificationAndDiscountType> iQueryable)
         {
             IQueryable<ModificationAndDiscountTypeList> query = (from a in iQueryable
-                                                                 where a.Code != "67" && a.Code != "104"
+                                                                 where a.Code != "67" 
                                                                  select new ModificationAndDiscountTypeList()
                                                                  {
                                                                      Code = a.Code,
