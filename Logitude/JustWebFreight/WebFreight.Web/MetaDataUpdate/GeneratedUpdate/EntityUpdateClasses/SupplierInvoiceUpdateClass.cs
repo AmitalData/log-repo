@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceUpdateClass
    {  		
-		public const string HashString = "d8eb90ba9aa4267635067a617f854a70";
+		public const string HashString = "0b0b43cc4d7f95951e4725ad9bbf0307";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "חשבון",
 			      				    DefaultText =  "Supplier Invoice",
-			      				    Code =  "e413",
+			      				    Code =  "de7d",
 			      				    Name =  "Customs.SupplierInvoice Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -3099,7 +3099,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BuyerCountryCode",
 					  						DefaultText =  "Buyer Country",
-					  						FullLocalDefaultText =  "מדינת הקונה",
+					  						FullLocalDefaultText =  "קוד מדינת הקונה",
 					  						ListFieldLable =  "BuyerCountryCodeListLable",
 					  						ListLableDefaultText =  "Buyer Country",
 					  						ListLocalDefaultText =  "מדינת הקונה",
@@ -3921,6 +3921,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VendorNumber",
 					  						ListPropertyPath =  "VendorNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

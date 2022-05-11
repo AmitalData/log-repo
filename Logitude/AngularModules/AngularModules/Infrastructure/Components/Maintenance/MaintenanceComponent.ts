@@ -501,32 +501,31 @@ export class MaintenanceComponent {
             }
         }
         if (window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0] != null) {
+            this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequiredField", 0).subscribe((response: any) => {
+                if (FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "CSTMREQFIELDMTC")) {
+                    var item = new MenusTablePM();
+                    item.CategoryTypeCode = "CSM";
+                    item.Icon = "Settings"
+                    item.Code = "REFI";
+                    item.ObjectTableName = "Customs.CustomsRequiredField";
+                    item.TranslatedName = TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ImportRequiredFields")
+                    item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
+                    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-            if (FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "CSTMREQFIELDMTC")) {
-                var item = new MenusTablePM();
-                item.CategoryTypeCode = "CSM";
-                item.Icon = "Settings"
-                item.Code = "REFI";
-                item.ObjectTableName = "Customs.CustomsRequiredField";
-                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
-                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-
-            }
-            if (FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "CSTMREQFIELDMTC")) {
-                this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequiredField", 0).subscribe((response: any) => {
+                }
+                if (FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "EXPREQFIELDMTC")) {
                     var item = new MenusTablePM();
                     item.CategoryTypeCode = "CSM";
                     item.Icon = "Settings"
                     item.Code = "EXPR";
-                    debugger;
-                    item.TranslatedName=TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields")
+                    item.TranslatedName = TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields")
                     item.ObjectTableName = "Customs.CustomsRequiredField";
                     item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-                });
+                }
+            });
 
-            }
         }
 
         let yaronWantWithoutLogiUpdate = false;// in "customs" branch do not use it !!
@@ -1915,7 +1914,7 @@ class MaintenanceMenuItem {
         if (AppTool.IsNullOrEmpty(this.TranslatedName)) {
             this.TranslatedName = this.Code;
         }
-        if(!AppTool.IsNullOrEmpty(this.item.TranslatedName)){
+        if (!AppTool.IsNullOrEmpty(this.item.TranslatedName)) {
             this.TranslatedName = this.item.TranslatedName;
         }
     }
