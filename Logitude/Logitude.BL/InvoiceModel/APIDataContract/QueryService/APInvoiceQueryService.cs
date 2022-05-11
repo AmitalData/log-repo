@@ -559,11 +559,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             Tenant tenant = GetTenant();
             if (tenant.AccountingActivated)
             {
+                line.LocalDescription = line.LocalDescription ?? line.Description ?? chargesType.LocalName ?? chargesType.EnglishName;
+
                 if (string.IsNullOrWhiteSpace(line.Description))
                     line.Description = chargesType.EnglishName;
 
-                if (string.IsNullOrWhiteSpace(line.LocalDescription))
-                    line.LocalDescription = chargesType.LocalName;
             }
             else
             {
