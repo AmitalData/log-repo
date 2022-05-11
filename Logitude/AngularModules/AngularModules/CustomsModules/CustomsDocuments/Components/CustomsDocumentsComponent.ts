@@ -32,6 +32,7 @@ import { CustomsSettingExtendedListService } from '../../../Customs/Services/Ext
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { CustomsDocumentsTicketPMService } from 'Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
+import { CustomDocumentTypeMetaDataList } from 'Customs/EntityLists/CustomDocumentTypeMetaDataList';
 
 @Component({
 
@@ -882,31 +883,55 @@ export class CustomsDocumentsComponent
         // console.log('MetadataValues', this.MetadataValues);
         // console.log('CustomsDocumentsTickets', this.CustomsDocumentsTickets);
         
-        const orginalDocIsCheck: boolean = await this.checkOrginalDoc();
-        if(!orginalDocIsCheck) return;
-        
+        const documnetUpload: CustomsDocumentTicketViewModel[] = this.getDocumentReadyToUpload();
 
-        const documnetUpload: CustomsDocumentTicketViewModel[] = this.CustomsDocumentsTicketViewModels.filter((customDocument: CustomsDocumentTicketViewModel) => {            
-            customDocument.CustomDocumentTypeMetaDataLists.every((type) => {
-                if(!type.Mandatory) return true;
-                
-                const value: CustomsDocumentMetaDataValuePM = customDocument.CustomsDocumentMetaDataValuePMs.find(d => d != null && d.MetaDataTypeCode == type.MetaDataTypeCode);
-                return value.MetaDataValue || value.MetaDataValue == '';
-            })
-        });
+        if(documnetUpload.length === 0) return;        
+
+        const orginalDocIsCheck: boolean = await this.checkOrginalDoc(documnetUpload);
+        if(!orginalDocIsCheck) return;        
 
         if(documnetUpload.length !== this.CustomsDocumentsTicketViewModels.length)
             new MessageWindow().Show(TextCodeTranslator.Translate("Customs.Declaration.O.HaveMandatory") || 'יש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים אילו לא יעלו למכס');
                 
+        this.CurrentSession.StartBusyIndicatorLoading();
+
         documnetUpload.forEach(async docTicket  => {
             const doc: CustomsDocumentPM =  await this.getCustomDocument(docTicket);
+            doc.DeclarationId = this.EntityPM.Id;
+            doc.CurrentCustomsDocumentsTicketId = docTicket.customsDocumentsTicketPM.Id; 
+            doc.IsSendToQueue = true;
+            doc.CloneMe();
             await this.SendCustomsDocumentMethod(doc);
             this.SubmitTicketChanges(docTicket.customsDocumentsTicketPM)
         });        
+
+        this.CurrentSession.StopBusyIndicator();
+
     }
 
-    private async checkOrginalDoc() {
-        const metaDataValues: CustomsDocumentMetaDataValuePM[] = this.CustomsDocumentsTicketViewModels.reduce((res: CustomsDocumentMetaDataValuePM[], customDocument: CustomsDocumentTicketViewModel) => {
+    private getDocumentReadyToUpload(): CustomsDocumentTicketViewModel[] {
+        return this.CustomsDocumentsTicketViewModels.filter((customDocument: CustomsDocumentTicketViewModel) => {
+            // const res =  customDocument.CustomsDocumentMetaDataValuePMs?.filter((value :CustomsDocumentMetaDataValuePM) => {
+            //     const metaDataType: CustomDocumentTypeMetaDataList = customDocument.CustomDocumentTypeMetaDataLists.find(metaDataType => value.MetaDataTypeCode == metaDataType.MetaDataTypeCode);
+            //     return !(!metaDataType?.Mandatory || 
+            //         metaDataType.MetaDataTypeCode === '87' ||
+            //         (value.MetaDataValue || value.MetaDataValue == ''));
+            // });
+
+
+
+           return customDocument.CustomsDocumentMetaDataValuePMs &&
+            customDocument.CustomsDocumentMetaDataValuePMs.every((value :CustomsDocumentMetaDataValuePM) => {
+                const metaDataType: CustomDocumentTypeMetaDataList = customDocument.CustomDocumentTypeMetaDataLists.find(metaDataType => value.MetaDataTypeCode == metaDataType.MetaDataTypeCode);
+                return !metaDataType?.Mandatory || 
+                    metaDataType.MetaDataTypeCode === '87' ||
+                    (value.MetaDataValue || value.MetaDataValue == '');
+            });
+        });
+    }
+
+    private async checkOrginalDoc(documnetUpload: CustomsDocumentTicketViewModel[]) {
+        const metaDataValues: CustomsDocumentMetaDataValuePM[] = documnetUpload.reduce((res: CustomsDocumentMetaDataValuePM[], customDocument: CustomsDocumentTicketViewModel) => {
             const haveIsOrginalDoc: boolean = customDocument.CustomDocumentTypeMetaDataLists.some(type => type.MetaDataTypeCode === '87');
             const value: CustomsDocumentMetaDataValuePM = customDocument.CustomsDocumentMetaDataValuePMs.find(d => d?.MetaDataTypeCode === '87');
             if(haveIsOrginalDoc && !value.MetaDataValue)
