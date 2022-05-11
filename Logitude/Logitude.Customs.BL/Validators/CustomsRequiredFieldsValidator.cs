@@ -535,6 +535,25 @@ namespace Logitude.Customs.BL.Validators
                 List<PropertyInfo> ConsignmentProperties = GetPropertiesForEntity("ConsignmentPM");
                 foreach (ConsignmentPM Consignment in declaration.Consignments)
                 {
+                    if (isExport == "E") {
+                        var _CargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(context);
+                        var cargoIndentifierType = _CargoIdentifireTypeQueryService.GetSingle(Consignment.CargoTypeCode,false,false);
+                        if (cargoIndentifierType != null)
+                        {
+                            if (Consignment.ManifestNumber == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "ManifestNumber", TableName = "Customs.Consignment" });
+                            }
+                            if(cargoIndentifierType.IsKey2Mandatory && Consignment.SecondCargoID == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "SecondCargoID", TableName = "Customs.Consignment" });
+                            }
+                            if (cargoIndentifierType.IsKey3Mandatory && Consignment.ThirdCargoID == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = Consignment.SequenceNumeric.ToString() ?? "", FieldName = "ThirdCargoID", TableName = "Customs.Consignment" });
+                            }
+                        }
+                    }
                     foreach (PropertyInfo info in ConsignmentProperties)
                     {
                         bool required = (from a in consignmentRequiredFields
@@ -757,14 +776,6 @@ namespace Logitude.Customs.BL.Validators
                 }
             }
 
-
-            if (declaration.Direction == "E" && (declaration.DeclarationExportRecipients == null || declaration.DeclarationExportRecipients.Count() == 0))
-            {
-                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "שורת פרטי מקבל", TableName = "Customs.Declaration" });
-
-            }
-
-
             #endregion
 
             #region SupplierInvoice
@@ -790,12 +801,6 @@ namespace Logitude.Customs.BL.Validators
             //string[] supplierInvoiceArray = new string[declaration.SupplierInvoices.Count() + 1]; // Alaa: array index out of bounds problem
             //supplierInvoiceArray[0] = "";
 
-
-            List<string> errors = CheckSupplierInvoice(declarationId, tenant);
-            foreach (string error in errors)
-            {
-                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = error, });
-            }
 
             foreach (SupplierInvoicePM supplierInvoice in supplierInvoices)//declaration.SupplierInvoices)//mohammad fix wi 20751
             {
