@@ -23,7 +23,7 @@ namespace Logitude.BL.CommonDataModel.Helpers
 
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ImporterShipmentOrderDocumentsQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "ShipmentOrderId", documentsFiling.EntityId }, { "DocumentFilingId", documentsFiling.Id }, { "Tenant", documentsFiling.Tenant.ToString() }, }, documentsFiling.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "ShipmentOrderId", shipmentOrder.Id }, { "DocumentFilingId", documentsFiling.Id }, { "Tenant", documentsFiling.Tenant.ToString() }, }, documentsFiling.Tenant);
         }
 
         private ShipmentOrder GetShipmentOrder(DocumentsFilingPM documentsFiling)
