@@ -1014,5 +1014,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from record in context.Shipments where record.Id == id && record.Tenant == tenant select record.ProjectNumber).FirstOrDefault();
         }
+
+        public IQueryable<ShipmentMasterData> GetMasterByServiceLineId(string serviceLineId, int tenant)
+        {
+            return (from a in context.ShipmentMasterDatas
+                    where a.Tenant == tenant && a.CarrierServiceLineId == serviceLineId
+                    select a);
+        }
     }
 }
