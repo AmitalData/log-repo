@@ -998,6 +998,18 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.ETAAsDateFormat = shipment.MainCarriageFinalDestinationETA;
                     invoicedataprovider.ATAAsDateFormat = shipment.MainCarriageFinalDestinationATA;
 
+                    invoicedataprovider.Transshipment1FlightNumber = shipment.Transshipment1FullCarrierNumber;
+                    invoicedataprovider.Transshipment1ETD = shipment.Transshipment1ETD;
+                    invoicedataprovider.Transshipment1ETA = shipment.Transshipment1ETA;
+                    invoicedataprovider.Transshipment1ATD = shipment.Transshipment1ATD;
+                    invoicedataprovider.Transshipment1ATA = shipment.Transshipment1ATA;
+                    invoicedataprovider.Transshipment1VesselName = shipment.Transshipment1VesselName;
+                    invoicedataprovider.Transhipment1VoyageNo = shipment.Transshipment1CarrierNumber;
+                    invoicedataprovider.Transshipment2VesselName = shipment.Transshipment2VesselName;
+                    invoicedataprovider.Transhipment2VoyageNo = shipment.Transshipment2CarrierNumber;
+                    invoicedataprovider.Transshipment3VesselName = shipment.Transshipment3VesselName;
+                    invoicedataprovider.Transhipment3VoyageNo = shipment.Transshipment3CarrierNumber;
+
                     // Inland + Domestic
                     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
                     {
