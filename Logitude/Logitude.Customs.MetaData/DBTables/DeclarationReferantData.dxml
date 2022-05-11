@@ -261,6 +261,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ImporterApproval"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"

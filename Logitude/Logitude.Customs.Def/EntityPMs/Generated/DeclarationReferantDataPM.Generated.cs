@@ -1055,6 +1055,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool importerApproval ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ImporterApproval  
+	   {
+	    
+	     get
+		{
+		   return importerApproval;
+		 }
+		 set
+		 {
+		   if(importerApproval != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterApproval",OldValue=importerApproval,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   importerApproval=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
