@@ -444,6 +444,10 @@ export class AddEditRuleComponent extends BaseComponent {
             }
         }
 
+        if(this.DataContext.RuleTypeCode == "EVAL" && AppTool.IsNullOrEmpty(this.DataContext.OutputMessage)){
+            this.ValidationErrorsList.push("Output Message field is required");
+        }
+
         if (AppTool.IsNullOrEmpty(this.DataContext.RuleCode)) {
             this.ValidationErrorsList.push("Code field is required");
         }
