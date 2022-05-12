@@ -40,7 +40,7 @@ Feature: Create standalone shipment From Pickup
         And all fields should be dim in pickup window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and from partner to partner with different countries
+    Scenario: when the pickup is FullResponsibility and from partner to partner with different countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | FullResponsibility | True                      |
@@ -52,7 +52,7 @@ Feature: Create standalone shipment From Pickup
         When click create Standalone Shipment
         Then a validation message with "Both Addresses must be in the same country since the direction is Domestic" error should appear
 
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and from partner to partner with same countries
+    Scenario: when the pickup is FullResponsibility and from partner to partner with same countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | From        | Partner        |
@@ -67,7 +67,7 @@ Feature: Create standalone shipment From Pickup
         And all fields should be dim in pickup window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the pickup is not FullResponsibility and from partner to partner with same countries
+    Scenario: when the pickup is not FullResponsibility and from partner to partner with same countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | From        | Partner        |
@@ -78,7 +78,7 @@ Feature: Create standalone shipment From Pickup
         When save the pickup
         Then the Create Standalone Shipment button Should be dim
 
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and from partner to casual address with same countries
+    Scenario: when the pickup is FullResponsibility and from partner to casual address with same countries
         Given the user in the shipment's routong tab
         And  add a new pickup leg with the following details
             | From        | Partner            |
@@ -94,7 +94,7 @@ Feature: Create standalone shipment From Pickup
         And all fields should be dim in pickup window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and from port to port with same countries
+    Scenario: when the pickup is FullResponsibility and from port to port with same countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | From     | Port                   |
@@ -109,7 +109,7 @@ Feature: Create standalone shipment From Pickup
         And all fields should be dim in pickup window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and from Casual Address to Casual Address with same countries
+    Scenario: when the pickup is FullResponsibility and from Casual Address to Casual Address with same countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | From        | CasualAddress      |
