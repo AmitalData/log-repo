@@ -25,9 +25,9 @@ namespace CommunicationWorkerRole.Services.ShipmentOrderDocuments
             shipmentOrderQueryService = new ShipmentOrderQueryService(tenant);
         }
 
-        public DocumentsFilingAM Map(DocumentsFilingPM documentsFiling)
+        public DocumentsFilingAM Map(DocumentsFilingPM documentsFiling, string shipmentOrderId)
         {
-            var shipmentOrder = shipmentOrderQueryService.GetSinglePM(documentsFiling.EntityId, tenant);
+            var shipmentOrder = shipmentOrderQueryService.GetSinglePM(shipmentOrderId, tenant);
             var objectTable = objectTableRepository.GetSingleObjectTable(documentsFiling.ObjectTableId, tenant, true);
             BlobFileInfo fileInfo = BuildFileInfo(documentsFiling);
             var datainByte = GetDataInByte(documentsFiling, fileInfo);

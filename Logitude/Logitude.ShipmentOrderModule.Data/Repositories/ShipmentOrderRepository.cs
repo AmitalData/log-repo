@@ -41,6 +41,10 @@ namespace Logitude.ShipmentOrderModule.Data.Repositories
         public ShipmentOrder GetSingleById(string id, int tenant)
         {
             return (from a in context.ShipmentOrders where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
+        }   
+        public ShipmentOrder GetSingleByOrderNumber(string orderNumber, int tenant)
+        {
+            return (from a in context.ShipmentOrders where a.OrderNumber == orderNumber && a.Tenant == tenant select a).FirstOrDefault();
         }
 
     }
