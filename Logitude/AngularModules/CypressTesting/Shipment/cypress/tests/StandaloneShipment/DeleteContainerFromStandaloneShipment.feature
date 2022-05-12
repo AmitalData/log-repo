@@ -25,7 +25,7 @@ Feature: Delete container from standalone shipment
         When save shipment
         Then the direct shipment should save successfully
 
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and "To/From" are partners with same countries
+    Scenario:  FullResponsibility and "To/From" are partners with same countries
         Given navigate to RoutingsTab workspace
         And add a new pickup leg with the following details
             | From        | Partner        |

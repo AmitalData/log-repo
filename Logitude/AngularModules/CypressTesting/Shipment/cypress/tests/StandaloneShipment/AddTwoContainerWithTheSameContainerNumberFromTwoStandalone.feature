@@ -19,7 +19,7 @@ Feature: Add containers
         When create shipment
         Then the shipment should create successfully
 
-    Scenario: Create standalone shipment when the first pickup is FullResponsibility and from partner to partner with same countries
+    Scenario:  FullResponsibility and from partner to partner with same countries
         Given the user open the shipment and navigate to RoutingsTab workspace
         And add a new pickup leg with the following details
             | From        | Partner        |
@@ -43,7 +43,7 @@ Feature: Add containers
         Then the direct shipment should save successfully
         And The container appear in the pickup
 
-    Scenario: Create standalone shipment when the second  pickup is FullResponsibility and from partner to partner with same countries
+    Scenario: FullResponsibility and from partner to partner with same countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | From        | Partner        |

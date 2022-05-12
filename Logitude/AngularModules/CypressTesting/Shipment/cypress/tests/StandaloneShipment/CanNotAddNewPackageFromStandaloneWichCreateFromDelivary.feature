@@ -18,7 +18,7 @@ Feature: add packages
         When create shipment
         Then the shipment should create successfully
 
-    Scenario: Create standalone shipment when the Delivery is FullResponsibility and from partner to partner with same countries
+    Scenario: FullResponsibility and from partner to partner with same countries
         Given the user open the shipment and navigate to RoutingsTab workspace
         And add a new Delivery leg with the following details
             | From        | Partner        |

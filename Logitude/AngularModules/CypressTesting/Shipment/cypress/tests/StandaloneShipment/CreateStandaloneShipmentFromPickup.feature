@@ -126,7 +126,7 @@ Feature: Create standalone shipment From Pickup
         And all fields should be dim in pickup window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and from casual address to port with same countries
+    Scenario:  FullResponsibility and from casual address to port with same countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | From        | CasualAddress      |
