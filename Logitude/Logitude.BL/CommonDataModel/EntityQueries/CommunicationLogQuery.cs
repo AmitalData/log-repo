@@ -88,9 +88,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }).FirstOrDefault();
         }
 
-        public IQueryable<CommunicationLogPM> GetCommunicationLogPMsByEntityId(string entityId, int tenant)
+        public List<CommunicationLogPM> GetCommunicationLogPMsByEntityId(string entityId, int tenant)
         {
-            IQueryable<CommunicationLogPM> commlogs = (from a in repository.context.CommunicationLogs.Include("CommunicationLogType").Include("CommunicationStatusType").Include("ObjectTable")
+            List<CommunicationLogPM> commlogs = (from a in repository.context.CommunicationLogs.Include("CommunicationLogType").Include("CommunicationStatusType").Include("ObjectTable")
                                                        where a.Tenant == tenant && a.EntityId == entityId
                     select new CommunicationLogPM()
                     {
@@ -141,7 +141,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ResponseDocumentId = a.ResponseDocumentId,
                         UniqueNumber = a.UniqueNumber,
                         WasAnalyzed = a.WasAnalyzed,
-                    });
+                    }).ToList();
 
             List<string> contactIds = new List<string>();
             foreach (CommunicationLogPM item in commlogs)
