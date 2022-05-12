@@ -679,6 +679,102 @@ namespace Logitude.Server.Tools.Helpers
             }
         }
 
+        public static double? ComputeRatio(string directionId, string transportModeId, string shipmentTypeId, Tenant tenant)
+        {
+            double? ratio = null;
+            if (IsTenantFromUS(tenant))
+            {
+                ratio = GetRatioForUSTenant(directionId, transportModeId, shipmentTypeId);
+            }
+
+            if(ratio == null)
+            {
+                switch (transportModeId)
+                {
+                    case "A":
+                        {
+                            ratio = tenant.AirRatio;
+                            break;
+                        }
+
+                    case "O":
+                        {
+                            if (shipmentTypeId == "FCL" || shipmentTypeId == "FCLD")
+                            {
+                                ratio = tenant.FCLRatio;
+                            }
+
+                            else
+                            {
+                                ratio = tenant.LCLRatio;
+                            }
+
+                            break;
+                        }
+
+                    case "I":
+                        {
+                            if (shipmentTypeId == "FTL")
+                            {
+                                ratio = tenant.FTLRatio;
+                            }
+
+                            else
+                            {
+                                ratio = tenant.LTLRatio;
+                            }
+
+                            break;
+                        }
+                }
+            }
+
+            return ratio;
+        }
+        private static bool IsTenantFromUS(Tenant tenant)
+        {
+            bool isFromUS = false;
+            Address address = null;
+            if (!string.IsNullOrEmpty(tenant.AddressId))
+            {
+                AddressRepository addressRepository = new AddressRepository(tenant.Id);
+                address = addressRepository.GetSingleAddress(tenant.AddressId, tenant.Id);                
+            }
+
+            if(address == null)
+            {
+                isFromUS = false;
+            }
+
+            if (address.Country != null && address.Country.Code.ToUpper() == "US")
+            {
+                isFromUS = true;
+            }
+
+            return isFromUS;
+        }
+        private static double? GetRatioForUSTenant(string directionId, string transportModeId, string shipmentTypeId)
+        {
+            double? ratio = null;
+
+            if (directionId == "D")
+            {
+                if (transportModeId == "A")
+                {
+                    ratio = 7;
+                }
+
+                else if (transportModeId == "I")
+                {
+                    if (shipmentTypeId == "LTL")
+                    {
+                        ratio = 9;
+                    }
+                }
+            }
+
+            return ratio;
+        }
     }
 
     public class DatesHelper
