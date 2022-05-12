@@ -23,6 +23,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
     public partial class InterestTransactionListQueryService
     {
+        private const string DummyInterestReportIdFilterValue = "999";
         private IQueryable<InterestTransactionList> GetIqueryableList(IQueryable<InterestTransaction> interestTransactionQuery, int tenant)
         {
             var interestTransactionsForAdustmentsAndRevaluationJournals = from interestTransaction in interestTransactionQuery
@@ -321,8 +322,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         private IQueryable<InterestTransaction> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
         {
-
-            return iQueryable;
+            var customInterestReportIdFilter = queryOperations.QueryFilterItems.Where(x => x.FieldName == "InterestReportId" && x.IsCustom).FirstOrDefault();
+            if (customInterestReportIdFilter != null)
+            {
+                iQueryable = iQueryable.Where(x => x.InterestReportId == null || x.InterestReportId == DummyInterestReportIdFilterValue);
+                return iQueryable;
+            }
+            else
+            {
+                return iQueryable;
+            }
         }
         private IQueryable<InterestTransaction> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
         {
