@@ -363,7 +363,11 @@
 
             _JavascriptGateway.LastRequestFromAngular = JSON.parse(myRequestWrapperJSON);
             RefreshResponseDiv(_JavascriptGateway.LastRequestFromAngular);
-            if (JSBridge) {
+            if (window.JSBridge == null || window.JSBridge === undefined) {
+                console.error("window.JSBridge == null")
+            }
+            else if (window.JSBridge)
+            {
 
                 if (JSBridge.AngularSendEvent2Uniface) {
                     if (!_JavascriptGateway.LastRequestFromAngular) {
