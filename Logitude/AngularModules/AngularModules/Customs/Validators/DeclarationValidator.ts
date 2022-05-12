@@ -218,13 +218,6 @@ export class DeclarationValidator {
                 }
 
             }
-            if(!AppTool.IsNullOrEmpty(this._DeclarationPM.ExportClosedErrorXML)){
-                errorMessage = "Customs.General.O.ClosingProcessStatus";
-                if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                    this.ValidationErrorMessageCodes.push(errorMessage);
-                }
-
-            }
             if (this._DeclarationPM.Direction != "E" && this._DeclarationPM.PaymentDate) {
                 errorMessage = "Customs.General.O.NoPaymentDate";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
