@@ -157,9 +157,9 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         (await Promise.all(userPromises)).forEach(user => {
             if (user != null) {
-                var updatedepartment=this.LOVListDepartment.find(x=>x.Id == user.Id);
-                if (updatedepartment) {
-                    updatedepartment.LocalName = decodeURIComponent(user.LocalName);
+                var updateUser=this.LOVListUsers.find(x=>x.Id == user.Id);
+                if (updateUser) {
+                    updateUser.LocalName = decodeURIComponent(user.LocalName);
                 }
             }
         });
