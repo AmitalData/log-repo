@@ -60,7 +60,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             return communicationLogQuery.GetSinglePM(id, tenant);
         }
 
-        public IQueryable<CommunicationLogPM> GetCommunicationLogPMsByEntityId(string entityId, int tenant)
+        public List<CommunicationLogPM> GetCommunicationLogPMsByEntityId(string entityId, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
             SecurityUtility.CheckContactFeature("CommunicationLog", "READ", tenant);
