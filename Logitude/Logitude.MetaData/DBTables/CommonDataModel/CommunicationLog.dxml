@@ -373,6 +373,8 @@
   <Index
     Columns="EntityId" />
   <Index
+    Columns="EntityId,Tenant" />
+  <Index
     Columns="CreateDateUTC,CommunicationStatusTypeCode" />
   <Index
     Columns="CreateDate,CommunicationStatusTypeCode" />
