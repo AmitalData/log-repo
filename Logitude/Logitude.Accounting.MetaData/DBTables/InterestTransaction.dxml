@@ -136,10 +136,10 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="InterestEntityTypeCode,EntityId" />
-    <Index
-        Columns="AccountingEntityCode" />
-    <Index
-        Columns="AccountingEntityCode,EntityId" />
+  <Index
+    Columns="AccountingEntityCode" />
+  <Index
+    Columns="AccountingEntityCode,EntityId" />
   <UniqueConstraint
     Columns="Tenant,InterestEntityTypeCode,EntityId,OriginalEntityLineNumber,GLAccountId" />
 </Table>

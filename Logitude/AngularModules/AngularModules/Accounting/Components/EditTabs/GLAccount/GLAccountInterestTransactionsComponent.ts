@@ -352,7 +352,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
         }
 
         if(this.SelectedInterestReport && this.SelectedInterestReport.ReportNumber == 'None')
-            this.filterAgrs.addAdditionalFilter("InterestReportId", "Please Don't Erase Me", null, null, "IsNull", false, false, false, "string");
+            this.filterAgrs.addAdditionalFilter("InterestReportId", "Please Don't Erase Me", null, null, "IsNull", true, false, false, "string");
             else if(this.SelectedInterestReport && this.SelectedInterestReport.ReportNumber != 'None')
             this.filterAgrs.addAdditionalFilter("InterestReportId", this.SelectedInterestReport.Id, null, null, "Equals", false, false, false, "string");
 
