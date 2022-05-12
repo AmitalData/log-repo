@@ -515,7 +515,8 @@ export class HomeComponent implements OnDestroy{
 
                         let locs = this.AllLocations.toArray().filter(f => f.Code == 'SessionLocation');
                         let myLocation: LocationDirective = locs.filter(f => f.Index == myCA23EditTab.Index)[0];
-
+                        
+                        //alert(exportDecId);
                         //let viewContainerRef = myCA23EditTab.SessionComponent.viewContainerRef
                         if (myLocation != null) {
                             SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Session/SessionComponent", myLocation.viewContainerRef).then(cmpRef => {
@@ -529,17 +530,50 @@ export class HomeComponent implements OnDestroy{
                                 myCA23EditTab.SessionComponent = cmpRef.instance;
                                 this.CurrentSession = myCA23EditTab.SessionComponent;
                                 cmpRef.instance.RunComponent();
+
+                                this.ShowShowExportDeclaration();
+
                                 AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
                                 this.ProductMessage();
                             });
                         }
                     }
                     else {
+                        this.ShowShowExportDeclaration();
+
                         AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
                         this.ProductMessage();
                     }
                 }, 500);
         }
+    }
+    ShowShowExportDeclaration() {
+        //http://localhost:4200/AmitalSSOAngular.html?token=3F860255-DA0E-4612-99B6-E857FC531A56&tenant=1&AmitalSSOAngular=1&xxxx=132967399749219211&ExportDecId=1-7381
+        const exportDecId = this.getParameterByName("ExportDecId", window.location.href);
+        if (!AppTool.IsNullOrEmpty(exportDecId)) {
+            setTimeout(() => {
+                const objParams = {
+                    LogitudeCommandId: "ShowDeclarationByIdReturnCloseSave",
+                    LogitudeEntity: "Customs.Declaration",
+                    LogitudeEntityNumber: "1-7381",
+                    LogitudeViewModel: "UnifreightMassageHandler",
+                    Response: [],
+                    UnifreightEntity: "CFIFILEM",
+                    UnifreightEntityNumber: "91340690",
+                };
+                const event = new CustomEvent('UnifaceRequestEvent', { 'detail': objParams, });
+                this.UnifaceRequest(event);
+            }, 100);
+        }
+    }
+    getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
     ProductMessage() {
         if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductMessage)) {
