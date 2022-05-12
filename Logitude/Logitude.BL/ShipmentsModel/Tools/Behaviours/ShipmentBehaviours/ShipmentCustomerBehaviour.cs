@@ -33,7 +33,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.CustomerContactId = null;
                 entityPM.CustomerReference1 = null;
                 entityPM.CustomerReference2 = null;
-                entityPM.CustomerReference3 = null;
+                entityPM.CustomerReference3 = IsShipmentFromToLogbox() || entityPM.IsExternalAPI ? entityPM.CustomerReference3 : null;
             }
 
             if (entityPM.ShipmentLevelCode == "C")
@@ -48,6 +48,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 this.MapCustomerFields();
                 this.GetCustomerEntity();
             }
+        }
+
+        private bool IsShipmentFromToLogbox()
+        {
+            bool isShipmentFromUNF = entityPM.IsHybrid;
+            bool isShipmentFromOrToLogbox = isShipmentFromUNF || entityPM.IsImporterShipment || !string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber);
+            return isShipmentFromOrToLogbox;
         }
 
         private void SetCustomerType()
