@@ -270,7 +270,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.CustomerAddressId = entityPM.ShipperAddressId;
                 entityPM.CustomerReference1 = entityPM.ShipperReference1;
                 entityPM.CustomerReference2 = entityPM.ShipperReference2;
-                entityPM.CustomerReference3 = entityPM.ShipperReference3;
+                //entityPM.CustomerReference3 = entityPM.ShipperReference3;
             }
         }
 
@@ -287,7 +287,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.ConsigneeAddressId;
             entityPM.CustomerReference1 = entityPM.ConsigneeReference1;
             entityPM.CustomerReference2 = entityPM.ConsigneeReference2;
-            entityPM.CustomerReference3 = entityPM.ConsigneeReference3;
+            //entityPM.CustomerReference3 = entityPM.ConsigneeReference3;
         }
 
         private void MapAgent()
@@ -298,7 +298,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.AgentAddressId;
             entityPM.CustomerReference1 = entityPM.AgentReference1;
             entityPM.CustomerReference2 = entityPM.AgentReference2;
-            entityPM.CustomerReference3 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapIssuingCarrierAgent()
@@ -320,7 +320,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.CustomAgentExportAddressId;
             entityPM.CustomerReference1 = entityPM.CustomAgentExportReference;
             entityPM.CustomerReference2 = null;
-            entityPM.CustomerReference3 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapCustomAgentImport()
@@ -331,7 +331,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.CustomAgentImportAddressId;
             entityPM.CustomerReference1 = entityPM.CustomAgentImportReference;
             entityPM.CustomerReference2 = null;
-            entityPM.CustomerReference3 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapNotify1()
@@ -342,7 +342,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.Notify1AddressId;
             entityPM.CustomerReference1 = entityPM.Notify1Reference;
             entityPM.CustomerReference2 = entityPM.Notify1Reference2;
-            entityPM.CustomerReference3 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapNotify2()
@@ -353,7 +353,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.Notify2AddressId;
             entityPM.CustomerReference1 = entityPM.Notify2Reference;
             entityPM.CustomerReference2 = null;
-            entityPM.CustomerReference3 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapShipperNotExporter()
@@ -365,7 +365,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerReference1 = entityPM.ShipperNotExporterReference;
             entityPM.CustomerReference1 = entityPM.ShipperNotExporterReference1;
             entityPM.CustomerReference2 = entityPM.ShipperNotExporterReference2;
-            entityPM.CustomerReference3 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapConsigneeNotImporter()
@@ -376,7 +376,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.ConsigneeNotImporterAddressId;
             entityPM.CustomerReference1 = entityPM.ConsigneeNotImporterReference;
             entityPM.CustomerReference2 = null;
-            entityPM.CustomerReference3 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapFreightForwarder()
@@ -387,7 +387,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.FreightForwarderAddressId;
             entityPM.CustomerReference1 = entityPM.FreightForwarderReference;
             entityPM.CustomerReference2 = null;
-            entityPM.CustomerReference3 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapColoader()
@@ -398,7 +398,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.ColoaderAddressId;
             entityPM.CustomerReference1 = entityPM.ColoaderReference1;
             entityPM.CustomerReference2 = null;
-            entityPM.CustomerReference3 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapCustomClearance()
@@ -409,7 +409,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.CustomClearancePointAddressId;
             entityPM.CustomerReference1 = entityPM.CustomClearancePointReference1;
             entityPM.CustomerReference2 = null;
-            entityPM.CustomerReference3 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapTrucker()
