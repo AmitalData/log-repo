@@ -16159,6 +16159,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ResendToSAT&quot;"
     ListPropertyPath="&quot;ResendToSAT&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -17292,6 +17293,14 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
+      <QueryFilter
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        PredefinedValue="&quot;SM&quot;"
+        ObjectFieldName="&quot;SATTransferStatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="1"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -18044,6 +18053,12 @@
         DefaultText="&quot;Resend To SAT&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="16"
+        IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;SolvedManual&quot;"
+        DefaultText="&quot;Solved Manual&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="17"
         IsPackagable="false" />
     </MenuButton>
   </MenuButtons>

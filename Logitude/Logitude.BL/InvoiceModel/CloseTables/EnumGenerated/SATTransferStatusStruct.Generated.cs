@@ -16,6 +16,7 @@ namespace Logitude.BL.InvoiceModel.CloseTables
        public const string Transferred = "TD";  
        public const string TransferredwithErrors = "TE";  
        public const string Transferring = "TG";  
+       public const string SolvedManual = "SM";  
     }
 }
 

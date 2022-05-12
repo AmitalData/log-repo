@@ -24,6 +24,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
     public class ARInvoiceMapping
     {
+        private const string sATSolvedManualStatusCode = "SM";
+
         public static void MapEntity(ARInvoicePM entityPM, ARInvoice entity, bool isNewState, string loggedContactId)
         {
             DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
@@ -60,7 +62,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
             }
 
-            if (entityPM.ResendToSAT)
+            if (entityPM.ResendToSAT || entityPM.SATTransferStatusCode == sATSolvedManualStatusCode)
             {
                 entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
             }
