@@ -405,7 +405,11 @@ if (window.location.href.includes("AmitalSSOAngular") && undefined ==
 
         _JavascriptGateway.LastRequestFromAngular = JSON.parse(myRequestWrapperJSON);
         //---RefreshResponseDiv(_JavascriptGateway.LastRequestFromAngular);
-        if (JSBridge) {
+        //if (JSBridge) {
+        if (window.JSBridge == null || window.JSBridge === undefined) {
+            console.error("window.JSBridge == null")
+        }
+        else if (window.JSBridge) {
 
             if (JSBridge.AngularSendEvent2Uniface) {
                 if (!_JavascriptGateway.LastRequestFromAngular) {
