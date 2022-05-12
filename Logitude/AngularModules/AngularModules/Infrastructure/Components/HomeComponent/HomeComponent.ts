@@ -531,7 +531,7 @@ export class HomeComponent implements OnDestroy{
                                 this.CurrentSession = myCA23EditTab.SessionComponent;
                                 cmpRef.instance.RunComponent();
 
-                                this.ShowShowExportDeclaration();
+                                this.ShowExportDeclaration();
 
                                 AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
                                 this.ProductMessage();
@@ -539,7 +539,7 @@ export class HomeComponent implements OnDestroy{
                         }
                     }
                     else {
-                        this.ShowShowExportDeclaration();
+                        this.ShowExportDeclaration();
 
                         AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
                         this.ProductMessage();
@@ -547,9 +547,16 @@ export class HomeComponent implements OnDestroy{
                 }, 500);
         }
     }
-    ShowShowExportDeclaration() {
+    ShowExportDeclaration() {
+        if (AppTool.IsNullOrEmpty(SessionLocator.ExternalParams)) {
+            console.log("ShowExportDeclaration is null");
+            return;
+        }
+        //alert(SessionLocator.ExternalParams);
+        //const amitalSSOAngularURL = window.sessionStorage.getItem("AmitalSSOAngularURL");
         //http://localhost:4200/AmitalSSOAngular.html?token=3F860255-DA0E-4612-99B6-E857FC531A56&tenant=1&AmitalSSOAngular=1&xxxx=132967399749219211&ExportDecId=1-7381
-        const exportDecId = this.getParameterByName("ExportDecId", window.location.href);
+        const exportDecId = //this.getParameterByName("ExportDecId", amitalSSOAngularURL);
+            SessionLocator.ExternalParams["ExportDecId"];
         if (!AppTool.IsNullOrEmpty(exportDecId)) {
             setTimeout(() => {
                 const objParams = {
