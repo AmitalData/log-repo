@@ -327,8 +327,6 @@
                                                                                                     <li class="RecentEntityItem" *ngFor="let item of QuotesObslist" (click)="EditQuote(item)">
                                                                                                         <table>
                                                                                                             <tr>
-
-
                                                                                                                 <td style="width:5px;min-width:5px; overflow: hidden;" rowspan="2" [ngStyle]="{background: item.RatingCode | StringToColorPipe:'QuoteRatingCode'}">
                                                                                                                     <div>
 
@@ -347,8 +345,10 @@
                                                                                                                 </td>
 
                                                                                                                 <td rowspan="2">
-                                                                                                                    <div style="height:50%"></div>
-                                                                                                                    <div style="float:left;padding-left:30%  ">{{item.OpenDate |  DateTimePipe:'SD'}}</div>
+                                                                                                                    <div style="height: 50%; width: 100px; float: left; padding-left: 30%; font-size:11px;">
+                                                                                                                        <label [ngStyle]="{color: item.StageName | StringToColorPipe}">{{item.StageName}}</label>
+                                                                                                                    </div>
+                                                                                                                    <div style="float:left;padding-left:30%">{{item.OpenDate |  DateTimePipe:'SD'}}</div>
                                                                                                                 </td>
 
                                                                                                                 <td style="width:7px; height: 100%;" rowspan="2">
@@ -362,9 +362,6 @@
                                                                                                                                 <div title="{{item.DirectionName}}" style="height: 100%;width:100%; position:relative;">
                                                                                                                                     <img style="height:16px;width:16px" class="CenterCenter" src="./Images/Directions/{{item.DirectionId}}.png" />
                                                                                                                                 </div>
-
-
-
                                                                                                                             </td>
                                                                                                                         </tr>
 
@@ -373,17 +370,10 @@
                                                                                                                                 <div title="{{item.TransportModeName}}" style="position:relative;height:100%">
                                                                                                                                     <img style="height:16px;width:16px" class="CenterCenter" src="./Images/Icons/{{item.TransportModeId}}.png" />
                                                                                                                                 </div>
-
-
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                     </table>
-
-
                                                                                                                 </td>
-
-
-
 
                                                                                                                 <td style="width: 10px;">
                                                                                                                     <div></div>
