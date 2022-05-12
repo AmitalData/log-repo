@@ -3861,8 +3861,8 @@ namespace WebFreight.Web.ReportsWebServices
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                                     myRecord.ShipmentRouting = myShipment.Routing;
                                     myRecord.ConnectedQuoteNumber = myShipment.QuoteNumber;
+                                    myRecord.ProjectNumber = myShipment.ProjectNumber;
                                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
-
 
                                     #region From:To Location
                                     if (myShipment.TransportModeId == "I" && myShipment.DirectionId == "D")
