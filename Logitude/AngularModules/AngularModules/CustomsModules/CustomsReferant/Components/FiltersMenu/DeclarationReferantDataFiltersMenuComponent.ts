@@ -73,6 +73,8 @@ export class DeclarationReferantDataFiltersMenuComponent
     public QueryId: string = "";
     public QueryCode: string = "Customs.DeclarationReferantData.AllCases";
     public departmentListService: DepartmentListService = new DepartmentListService();
+    public userListService: UserListService = new UserListService();
+
 
     async SetFiltersMenu(args: any) {
         this.OpenQueryThruWorkSpace = true;
@@ -83,7 +85,6 @@ export class DeclarationReferantDataFiltersMenuComponent
         if (args.AdditionalFilters) {
             this.TransportFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "TransportModeId");
             this.UserFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId");
-            this.UserNameFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "ReferantUserName");
             this.DepartmentFilters.AdditionalFilters = args.AdditionalFilters.filter(a => a.FieldName == "DepartmentId");
             this.CurrentScreenIsWorkSpace = false;
         }
@@ -93,7 +94,6 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.LOVListDepartment = [];
             this.TransportFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "TransportModeId");
             this.UserFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "ReferentUserId");
-            this.UserNameFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "ReferantUserName");
             this.DepartmentFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "DepartmentId");
             this.QueryId = args.QuerySection;
             if (!this.QueryId) {
@@ -118,18 +118,12 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         var DepartmentFromFilters = this.DepartmentFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
 
-        var i = 0;
         var myService: UserListService = new UserListService();
         if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && !AppTool.IsNullOrEmpty(UserListFromFilters[0])) {
             UserListFromFilters[0].split("%2C").forEach(function (value) {
                 let ul = new UserList();
                 ul.Id = value;
-                if (UserNameList) {
-                    ul.LocalName = decodeURIComponent(UserNameList[i]);
-                    this.LOVListUsers.push(ul)
-                }
-                i++;
-                this._CD.detectChanges();
+                this.LOVListUsers.push(ul)
             }, this);
         } else {
         }
@@ -142,16 +136,30 @@ export class DeclarationReferantDataFiltersMenuComponent
         } else {
         }
 
-        const promises = []
+        const deparmentPromises = []
         this.LOVListDepartment.forEach((value) => {
-            promises.push(this.GetDepartment(value))
+            deparmentPromises.push(this.GetDepartment(value))
         });
 
-        (await Promise.all(promises)).forEach(department => {
+        (await Promise.all(deparmentPromises)).forEach(department => {
             if (department != null) {
                 var updatedepartment=this.LOVListDepartment.find(x=>x.Id == department.Id);
                 if (updatedepartment) {
                     updatedepartment.LocalName = decodeURIComponent(department.LocalName);
+                }
+            }
+        });
+
+        const userPromises = []
+        this.LOVListUsers.forEach((value) => {
+            userPromises.push(this.GetUser(value))
+        });
+
+        (await Promise.all(userPromises)).forEach(user => {
+            if (user != null) {
+                var updatedepartment=this.LOVListDepartment.find(x=>x.Id == user.Id);
+                if (updatedepartment) {
+                    updatedepartment.LocalName = decodeURIComponent(user.LocalName);
                 }
             }
         });
@@ -191,6 +199,16 @@ export class DeclarationReferantDataFiltersMenuComponent
     async GetDepartment(value) {
         return new Promise<void>((resolve, reject) => {
             var entity = this.departmentListService.getSingleFromCache(value.Id).subscribe((response: any) => {
+                if (response?.Result != null) {
+                    resolve(response.Result);
+                }
+            });
+        })
+    }
+
+    async GetUser(value) {
+        return new Promise<void>((resolve, reject) => {
+            var entity = this.userListService.getSingleFromCache(value.Id).subscribe((response: any) => {
                 if (response?.Result != null) {
                     resolve(response.Result);
                 }
@@ -249,7 +267,6 @@ export class DeclarationReferantDataFiltersMenuComponent
     TransportAdvancedQueryFilterPM: AdvancedQueryFilterPM;
     SaveFilters() {
         this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "TransportModeId"), "TransportModeId");
-        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "ReferantUserName"), "ReferantUserName");
         this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId"), "ReferentUserId");
         this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "DepartmentId"), "DepartmentId");
         this.apiQueryFiltersChanged = false;
