@@ -146,7 +146,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
                     if (this.IsGenerateSalesLocalCharges) {
                         this.IsGenerateSalesLocalCharges = false;
-                        this.GenerateSalesLocalCharges(false);
+                        this.GenerateSalesLocalCharges();
                     }
 
                     if (this.IsUpdatingSalesCharges) {
@@ -636,9 +636,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.entityArgs.EditComponent.SaveChanges();
     }
 
-    GenerateSalesLocalCharges(isFromUpdateSalesMessage) {
+    GenerateSalesLocalCharges() {
         var args = this.TariffBehaviours.GenerateSalesLocalCharges();
-        args.IsFromUpdateSalesMessage = isFromUpdateSalesMessage;
         var tariffService: TariffDomainService = new TariffDomainService();
         tariffService.GetAvailableSalesLocalChargesTariffs(args).subscribe((res: ServiceResponse) => {
             if (!res.HasError && res.Result) {
@@ -949,6 +948,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
     UpdateSalesChargesClicked() {
         this.IsUpdatingSalesCharges = true;
+        
         this.entityArgs.EditComponent.SaveChanges();
     }
 
@@ -956,8 +956,12 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.UpdateSalesChargesMessage = null;
         this.UpdateSalesChargesMessageWidth = 0;
         this.IsUpdateSalesChargesVisible = false;
-        var isFromUpdateSalesMessage = true;
-        this.GenerateSalesLocalCharges(isFromUpdateSalesMessage);
+        this.EntityPM.QuoteCharges.forEach(item => {
+            item.SaleTariffId = null;
+            item.SaleTariffNumber = null;
+            item.SaleTariffLineId = null;
+        });
+        this.GenerateSalesLocalCharges();
     }
 
     DeleteTariff(item: FCLQuoteChargeItem) {
