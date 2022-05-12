@@ -113,7 +113,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationPM.DeclarationStatusTypeCode = "7";
                             if (declarationPM.Direction == "E")
                             {
-                                RaiseEvent(declarationPM, "MEHES", status_id: "HTR", status_DateTime: statusDateTime);
+                                RaiseEvent(declarationPM, null, status_id: "HTR", status_DateTime: statusDateTime);
                             }
                             if (declarationPM.IsCourierDeclaration)
                             {
