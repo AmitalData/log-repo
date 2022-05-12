@@ -532,7 +532,7 @@ namespace Logitude.Accounting.BL.DataContract
                     }
                         groupedbyVendor.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency.Value;
                         groupedbyVendor.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount.Value;
-                       groupedbyVendor.TotalAmount =(decimal?)groupedbyVendor.SumOfAmountInLocalCurrency + groupedbyVendor.SumOfTaxDeductionLocalAmount;
+                       groupedbyVendor.TotalAmount =(decimal?)groupedbyVendor.SumOfAmountInLocalCurrency;
                     if (groupedbyVendor.SumOfAmountInLocalCurrency > 0 || groupedbyVendor.SumOfAmountInLocalCurrency < 0)
                     {
                         byVendorList.Add(groupedbyVendor);
