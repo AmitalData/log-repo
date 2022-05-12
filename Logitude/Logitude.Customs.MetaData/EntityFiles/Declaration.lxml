@@ -23598,7 +23598,7 @@
     <TextCode
       Code="&quot;Customs.General.O.Previous&quot;"
       DefaultText="&quot;Previous&quot;"
-      LocalDefaultText="&quot;קודם&quot;"
+      LocalDefaultText="&quot;הקודם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
