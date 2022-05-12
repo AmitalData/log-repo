@@ -87,6 +87,7 @@
 
                         var data = JSON.stringify(userdata);
                         window.sessionStorage.setItem("userdata", data);
+                        window.sessionStorage.setItem("AmitalSSOAngular", window.location.href);
                         window.sessionStorage.setItem("LogoCode", "U.N.I");
                         var version = "";
                         if (userdata.HtmlVersion) version = userdata.HtmlVersion;
