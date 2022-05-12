@@ -2749,7 +2749,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (serviceLine != null)
                 {
-                    this.ValidateConnectedMasterToServiceLine(serviceLine);
+                    this.ValidateConnectedShipmentsToServiceLine(serviceLine);
                     serviceLineRepository.Remove(serviceLine);
                     commonDataContext.SaveChanges();
                 }
@@ -2763,14 +2763,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private void ValidateConnectedMasterToServiceLine(CarrierServiceLine serviceLine)
+        private void ValidateConnectedShipmentsToServiceLine(CarrierServiceLine serviceLine)
         {
             ShipmentRepository shipmentRepository = new ShipmentRepository(serviceLine.Tenant);
             IQueryable<ShipmentMasterData> shipments = shipmentRepository.GetMasterByServiceLineId(serviceLine.Id, serviceLine.Tenant);
 
             if(shipments.Count() > 0)
             {
-                throw new ApplicationException("Can't delete Service lines which is connected to shipments");
+                throw new ApplicationException("Can't delete Service lines which are connected to shipments");
             }
         }
     }
