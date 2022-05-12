@@ -968,6 +968,14 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             item.SetUIProperties();
         }
     }
+    DeleteSaleTariff(item: FCLQuoteChargeItem) {
+        if (item != null) {
+            item.SaleTariffId = null;
+            item.SaleTariffNumber = null;
+            item.SaleTariffLineId = null;
+            item.SetUIProperties();
+        }
+    }
 
     // Profit
     InitializeProfit() {
