@@ -762,7 +762,7 @@ export class CustomsDocumentTicketViewModel {
 
     private async confirmConnectionDiffrentDocTypeMsg(): Promise<boolean> {
         const confirmWindow = new ConfirmWindow();
-        confirmWindow.Show(TextCodeTranslator.Translate("Customs.General.O.DocumentSizeLimit"));
+        confirmWindow.Show(TextCodeTranslator.Translate("Customs.General.O.ConnectDiffrentTypeMessage"));
         await confirmWindow.WindowClosedPromise()
         
         return confirmWindow.Yes;
