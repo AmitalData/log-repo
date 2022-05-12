@@ -461,7 +461,7 @@
 
                 <tr  *ngIf="DataContext.RuleTypeCode === 'EVAL' || DataContext.RuleTypeCode === 'REQ' || DataContext.RuleTypeCode === 'DUPL'" style="height:100px;">
                     <td style="width:110px;vertical-align:top;">
-                        <LogLabel Text="Outpu Message" [DataContext]="DataContext" style="vertical-align:top"></LogLabel>
+                        <LogLabel Text="Output Message" [DataContext]="DataContext" style="vertical-align:top"></LogLabel>
                     </td>
                     <td  style="vertical-align:top;">
                         <textarea type="text" [(ngModel)]="DataContext.OutputMessage" style="height: 90px; max-height:unset;vertical-align:top;margin-right:10px;"></textarea>
