@@ -295,6 +295,15 @@ export class ARInvoiceMenuButtonsHandler {
                             break;
                         }
 
+                        case "SolvedManual": {
+                            const sATTransferWithErrorStatusCode: string = "TE";
+                            const sATSolvedManualStatusCode: string = "SM";
+                            button.IsHidden = this.EntityPM.SATTransferStatusCode != sATTransferWithErrorStatusCode && this.EntityPM.SATTransferStatusCode != sATSolvedManualStatusCode;                       
+                            if(!button.IsHidden) myButtonIsDisabled = this.EntityPM.SATTransferStatusCode == sATSolvedManualStatusCode;
+
+                            break;
+                        }
+
                         case "InvoiceOperationsSeparator":
                         case "VoidARInvoiceOperationsSeparator": {
                             if (SessionLocator.TenantPM.AccountingActivated == true) {
@@ -390,6 +399,11 @@ export class ARInvoiceMenuButtonsHandler {
                     this.BlockFromTransferToQBO();
                     break;
                 }
+
+                case "SolvedManual": {
+                    this.SolvedManual();
+                    break;
+                }
             }
         }
     }
@@ -455,6 +469,12 @@ export class ARInvoiceMenuButtonsHandler {
         const SATInTransferStatusCode: string = "TG";
         this.EntityPM.SATTransferStatusCode = SATInTransferStatusCode;
         this.entityArgs.EditComponent.SaveChanges("Resending Invoice to SAT");
+    }
+
+    SolvedManual() {
+        this.EntityPM.SATTransferStatusCode = "SM";
+        //this.EntityPM.TransmissionError = ""; // or ng if
+        this.entityArgs.EditComponent.SaveChanges("Solved Manual");
     }
 
     SendToQBOApproved(Text: string) {
