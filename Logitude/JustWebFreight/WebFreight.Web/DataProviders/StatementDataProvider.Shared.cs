@@ -150,6 +150,7 @@ namespace WebFreight.Web.DataProviders
         public double? OriginalAmount { get; set; }
         public string ShipmentNumber { get; set; }
         public string ShipmentDirection { get; set; }
+        public string ContainersNumbersArray { get; set; }
     }
 
     public class StatmentAging
