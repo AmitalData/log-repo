@@ -1451,6 +1451,8 @@ export class CustomerPM {
     private exportLocalCustomerGroupId: string;
     public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
     public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
+       
+	 
     private sATCustomerName: string;
     public get SATCustomerName() { return this.sATCustomerName; }
     public set SATCustomerName(newValue: string) { if (this.sATCustomerName != newValue) { this.sATCustomerName = newValue; this.MarkAsDirty("SATCustomerName"); } }
@@ -1484,4 +1486,4 @@ export class CustomerPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

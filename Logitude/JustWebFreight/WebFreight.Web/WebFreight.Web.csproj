@@ -1070,6 +1070,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\MixPanelController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportExecutionLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ShippingLineExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CarrierServiceLineViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerGroupViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerTeamViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
@@ -1091,6 +1092,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestReportsConnectInvoiceController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightMeasurementViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightRoundingViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CarrierServiceLineController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomerGroupController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomerTeamController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\HorseController.Generated.cs" />
@@ -2950,6 +2952,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CargoTenantMilestoneDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierAreasPortUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierAreaUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierServiceLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesExternalAccountsByProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesTypeUpdateClass.cs" />

@@ -195,6 +195,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ManifestReason = masterData.ManifestReason;
                 shipmentPM.ManifestStatusCode = masterData.ManifestStatusCode;
                 shipmentPM.ProrateReceivables = masterData.ProrateReceivables;
+                shipmentPM.CarrierServiceLineId = masterData.CarrierServiceLineId;
 
                 #region Carrier
 

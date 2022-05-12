@@ -2899,6 +2899,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string LastDeliveryFullAddress { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? QuoteFreightExpirationDate { get; set; }
+        public string CarrierServiceLineId { get; set; }
     }
 
     public class TransshipmentLeg
@@ -2921,7 +2922,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }
         public DateTime? ATA { get; set; }
-        public string CarrierTypeName { get; set; }
-
+        public string CarrierTypeName { get; set; }        
     }
 }

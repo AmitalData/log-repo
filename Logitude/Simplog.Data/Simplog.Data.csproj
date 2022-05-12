@@ -179,6 +179,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CardContactAdditionalService.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CardContactProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CardExternalAccountsByProduct.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CarrierServiceLine.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
@@ -193,12 +194,14 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PostalCode.cs" />
+    <Compile Include="CommonDataModel\Mapping\CarrierServiceLineMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HTSCodeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\MentionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PostalCodeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ProductItemMap.cs" />
+    <Compile Include="CommonDataModel\Repositories\CarrierServiceLineRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MentionRepository.cs" />

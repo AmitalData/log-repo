@@ -2720,8 +2720,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
-
-
         public IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs
         {
             get
@@ -2734,11 +2732,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
-
-
-
-
-
         public IDbSet<AccountingPartner> AccountingPartners
         {
             get
@@ -2751,7 +2744,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
-
         public IDbSet<CardContactAdditionalService> CardContactAdditionalServices
         {
             get
@@ -2853,7 +2845,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
         IDbSet<UnassignedEntity> ICommonDataContext.UnassignedEntitys { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<Mention> Mentions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-
+        public IDbSet<CarrierServiceLine> CarrierServiceLines { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 

@@ -61,6 +61,7 @@ import { BluesnapContractTypeListService } from '../Services/StandardLists/Blues
 import { HorseListService } from '../../Common/Services/StandardLists/HorseListService';
 import { PortTimeZoneListService } from '../../Common/Services/StandardLists/PortTimeZoneListService';
 import { CustomerTeamListService } from '../../Common/Services/StandardLists/CustomerTeamListService';
+import { CarrierServiceLineListService } from '../../Common/Services/StandardLists/CarrierServiceLineListService';
 
 //customs
 import {InternationalSiteListService} from '../../Customs/Services/StandardLists/InternationalSiteListService'; 
@@ -249,6 +250,7 @@ export class CachedDataManagerServices {
             case "HorseListService": { myResult = new HorseListService(); break; }
             case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
             case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
+            case "CarrierServiceLineListService": { myResult = new CarrierServiceLineListService(); break; }
 
             default: {
 

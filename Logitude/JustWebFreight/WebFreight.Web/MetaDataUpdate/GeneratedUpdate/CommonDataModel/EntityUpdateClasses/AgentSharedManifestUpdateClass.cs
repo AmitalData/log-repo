@@ -1337,10 +1337,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn AirAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AgentSharedManifest.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter AirAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.TransportModeId", PredefinedValue = "A",PredefinedValue2 = null, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AirAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.TransportModeId", PredefinedValue = "A",PredefinedValue2 = null, CustomPredefined = false, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter AirAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "WAIT",PredefinedValue2 = null, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AirAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "WAIT",PredefinedValue2 = null, CustomPredefined = false, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -1374,10 +1374,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn OceanAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AgentSharedManifest.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter OceanAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.TransportModeId", PredefinedValue = "O",PredefinedValue2 = null, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OceanAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.TransportModeId", PredefinedValue = "O",PredefinedValue2 = null, CustomPredefined = false, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter OceanAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "WAIT",PredefinedValue2 = null, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OceanAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "WAIT",PredefinedValue2 = null, CustomPredefined = false, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -1411,10 +1411,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn InlandAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AgentSharedManifest.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter InlandAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.TransportModeId", PredefinedValue = "I",PredefinedValue2 = null, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter InlandAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.TransportModeId", PredefinedValue = "I",PredefinedValue2 = null, CustomPredefined = false, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter InlandAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "WAIT",PredefinedValue2 = null, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter InlandAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "WAIT",PredefinedValue2 = null, CustomPredefined = false, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -1448,7 +1448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn CancelledAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AgentSharedManifest.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter CancelledAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "CANC",PredefinedValue2 = null, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CancelledAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "CANC",PredefinedValue2 = null, CustomPredefined = false, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

@@ -6,16 +6,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class RoleList {
+export class CarrierServiceLineList {
    		Id: string;
 		Tenant: number;
-		Code: string;
+		CardId: string;
 		Name: string;
-		RoleTypeCode: string;
 		Description: string;
-		ParentRoleId: string;
-		IsCustomRole: boolean;
-		SearchFields: string;
+		PartnerTypeId: string;
 		Inactive: boolean;
+		SearchFields: string;
 	
 }

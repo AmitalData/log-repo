@@ -90,6 +90,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Transshipment3VesselName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.PreCarriageVesselName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.OnCarriageVesselName).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.CarrierServiceLineId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentMasterDatas");
@@ -219,6 +220,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Transshipment3VesselName).HasColumnName("Transshipment3VesselName");
             this.Property(t => t.PreCarriageVesselName).HasColumnName("PreCarriageVesselName");
             this.Property(t => t.OnCarriageVesselName).HasColumnName("OnCarriageVesselName");
+            this.Property(t => t.CarrierServiceLineId).HasColumnName("CarrierServiceLineId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -286,6 +288,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.OnCarriageToPort).WithMany().HasForeignKey(d => d.OnCarriageToPortId);
             this.HasOptional(t => t.OnCarriageVessel).WithMany().HasForeignKey(d => d.OnCarriageVesselId);
             this.HasOptional(t => t.OnCarriageAdditionalTransportMode).WithMany().HasForeignKey(d => d.OnCarriageAdditionalTransportModeCode);
+            this.HasOptional(t => t.CarrierServiceLine).WithMany().HasForeignKey(d => d.CarrierServiceLineId);
         }
     }
 }
