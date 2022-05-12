@@ -749,7 +749,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-
+        public string ProjectNumber { get; set; }
     }
 
     public class ReportInvoiceLine
