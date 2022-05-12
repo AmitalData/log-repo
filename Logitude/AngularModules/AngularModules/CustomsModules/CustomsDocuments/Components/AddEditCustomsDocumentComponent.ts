@@ -23,6 +23,7 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { CustomDocumentNewVersionService } from '../services/CustomDocumentNewVersion.service';
 import { ConnectedToItem } from './ConnectedToItem';
 import { ICustomsDocumentsController } from './ICustomsDocumentsController';
 
@@ -174,7 +175,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     IsActionButtonsEnabled: boolean;
     WindowArgs: any;
     //***********************************************************************//
-    constructor() {
+    constructor(
+        private readonly customDocumentNewVersionService: CustomDocumentNewVersionService,
+    ) {
         super();
     }
 
@@ -1156,44 +1159,18 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     }
 
-    NewVersion() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 400;
-        confirmWindow.Height = 200;
-        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-        confirmWindow.ShowNoButton = true;
-        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-        confirmWindow.Show(TextCodeTranslator.Translate("Customs.CustomsDocuments.NewVersionWarning"));
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.CustomsDocument.DocumentVersion = this.CustomsDocument.DocumentVersion + 1;
-                this.CustomsDocument.DocumentStatusCode = null;
-                this.CustomsDocument.CustomRecievedDate = null;
-                this.CustomsDocument.CustomsDocId = null;
-                this.CustomsDocument.ForceRemoveCustomsDocId = true;
-                confirmWindow.Close();
-                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
-                var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
-                customsDocumentPMService.update(this.CustomsDocument).subscribe((docRes: ServiceResponse) => {
-                    this.CurrentSession.StopBusyIndicator();
-                    if (!docRes.HasError) {
-                        // this.CheckEditEnabled(this.IsCustomsDocumentInRequest, !this.IsDisplayOnly);
+    async NewVersion() {
+        const docRes: ServiceResponse = await this.customDocumentNewVersionService.NewVersion(this.CustomsDocument);
+        if (!docRes.HasError) {
+            // this.CheckEditEnabled(this.IsCustomsDocumentInRequest, !this.IsDisplayOnly);
 
-                        this.WindowArgs.CustomsDocument = docRes.Result;
-                        this.SetWindowArgs(this.WindowArgs);
-                        this.newVersionAdded = true;
-                    }
-                    else {
-                        this.ValidationErrorsList = docRes.ErrorsArray;
-                    }
-                });
-
-
-            }
-            else {
-                confirmWindow.Close();
-            }
-        });
+            this.WindowArgs.CustomsDocument = docRes.Result;
+            this.SetWindowArgs(this.WindowArgs);
+            this.newVersionAdded = true;
+        }
+        else {
+            this.ValidationErrorsList = docRes.ErrorsArray;
+        }
     }
 
     OnTextAreaKeyDown(event) {
