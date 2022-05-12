@@ -146,7 +146,12 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
                     if (this.IsGenerateSalesLocalCharges) {
                         this.IsGenerateSalesLocalCharges = false;
-                        this.GenerateSalesLocalCharges();
+                        this.GenerateSalesLocalCharges(false);
+                    }
+
+                    if (this.IsUpdatingSalesCharges) {
+                        this.IsUpdatingSalesCharges = false;
+                        this.UpdateTariffSalesChargesLines();
                     }
                 }
             });
@@ -625,13 +630,15 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     private IsGenerateSalesLocalCharges = false;
+  
     GenerateSalesLocalChargesClicked() {
         this.IsGenerateSalesLocalCharges = true;
         this.entityArgs.EditComponent.SaveChanges();
     }
 
-    GenerateSalesLocalCharges() {
+    GenerateSalesLocalCharges(isFromUpdateSalesMessage) {
         var args = this.TariffBehaviours.GenerateSalesLocalCharges();
+        args.IsFromUpdateSalesMessage = isFromUpdateSalesMessage;
         var tariffService: TariffDomainService = new TariffDomainService();
         tariffService.GetAvailableSalesLocalChargesTariffs(args).subscribe((res: ServiceResponse) => {
             if (!res.HasError && res.Result) {
@@ -933,16 +940,24 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public IsUpdatingSalesCharges: boolean = false;
     CheckUpdateSalesCharges() {
         var updateMessage: string = null;
-        updateMessage = "Quotes details have been updated, update the generated Sales charges?";
+        updateMessage = "Customer has been changed, update the generated sales tariff amounts?";
         this.UpdateSalesChargesMessage = updateMessage;
         this.UpdateSalesChargesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
         this.IsUpdateSalesChargesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+
     }
+
     UpdateSalesChargesClicked() {
+        this.IsUpdatingSalesCharges = true;
+        this.entityArgs.EditComponent.SaveChanges();
+    }
+
+    UpdateTariffSalesChargesLines() {
         this.UpdateSalesChargesMessage = null;
         this.UpdateSalesChargesMessageWidth = 0;
         this.IsUpdateSalesChargesVisible = false;
-        this.GenerateSalesLocalCharges();
+        var isFromUpdateSalesMessage = true;
+        this.GenerateSalesLocalCharges(isFromUpdateSalesMessage);
     }
 
     DeleteTariff(item: FCLQuoteChargeItem) {
