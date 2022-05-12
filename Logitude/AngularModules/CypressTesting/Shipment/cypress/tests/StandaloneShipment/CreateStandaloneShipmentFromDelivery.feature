@@ -109,7 +109,7 @@ Feature: Create Standalone Shipment From Delivery
         And all fields should be dim in Delivery window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to Casual Address with same countries
+    Scenario: FullResponsibility and from Casual Address to Casual Address with same countries
         Given  the user in the shipment's routings tab
         And add a new Delivery leg with the following details
             | From        | CasualAddress      |
