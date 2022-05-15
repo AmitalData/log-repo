@@ -194,7 +194,7 @@ export class LicensesManagementComponent implements OnDestroy {
     private BuildAdditionalColumns() {
         if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
             this.Columns.push({
-                FieldName: SessionLocator.TenantManagementJS.PackageCode + ",0" ,
+                FieldName: SessionLocator.TenantManagementJS.PackageCode + ",0" + "," + SessionLocator.TenantManagementJS.PackageName,
                 DataTypeCode: 'Boolean',
                 Display: SessionLocator.TenantManagementJS.PackageName,
                 IsCustomTemplate: true,
@@ -221,7 +221,7 @@ export class LicensesManagementComponent implements OnDestroy {
                 }
 
                 this.Columns.push({
-                    FieldName: myPackageCode + "," + index,
+                    FieldName: myPackageCode + "," + index + "," + myPackageName,
                     DataTypeCode: 'Boolean',
                     Display: myPackageName,
                     IsCustomTemplate: true,
