@@ -468,26 +468,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     //if (isAutoPayment)
                                     //    SendPayment(declarationPM, dbContext, requestParams);
                                 }
-
-                                if (declarationPM.Direction == "E")
+                                var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
+                                if (setting.IsConnectedToUniFreight)
                                 {
-
-                                    if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode != declarationPM.DeclarationStatusTypeCode)
+                                    if (declarationPM.Direction == "E")
                                     {
-                                        if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" ||
-                                           declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "3")
+
+                                        if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode != declarationPM.DeclarationStatusTypeCode)
                                         {
-                                            RaiseEvent(declarationPM,null, status_id: "RDH", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                            if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" ||
+                                               declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "3")
+                                            {
+                                                RaiseEvent(declarationPM, null, status_id: "RDH", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                            }
+                                            if (statusList.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
+                                            {
+                                                RaiseEvent(declarationPM, null, status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                            }
                                         }
-                                        if (statusList.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
-                                        {
-                                            RaiseEvent(declarationPM,null, status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
-                                        }
+
+
+
                                     }
-
-
-
                                 }
+                               
                             }
                             else
                             {

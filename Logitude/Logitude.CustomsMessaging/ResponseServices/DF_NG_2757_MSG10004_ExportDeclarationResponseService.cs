@@ -402,39 +402,42 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
 
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
 
-
-
-            if (this._MyDeclarationPM.Direction == "E")
+            if (setting.IsConnectedToUniFreight)
             {
-                if (customResponse.Response.Declaration.DMExtensions.VersionID.Value == "1.0")
+
+                if (this._MyDeclarationPM.Direction == "E")
                 {
-                    _DateTime = new DateTime();
-                    _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
-                    RaiseEvent(this._MyDeclarationPM, null, status_id: "MRN", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
-                }
+                    if (customResponse.Response.Declaration.DMExtensions.VersionID.Value == "1.0")
+                    {
+                        _DateTime = new DateTime();
+                        _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
+                        RaiseEvent(this._MyDeclarationPM, null, status_id: "MRN", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                    }
 
 
-                if (_MyDeclarationPM.DeclarationStatusTypeCode != customResponse.Response.Status[0].NameCode.Value)
-                {
-                    List<string> statusList = new List<string>()
+                    if (_MyDeclarationPM.DeclarationStatusTypeCode != customResponse.Response.Status[0].NameCode.Value)
+                    {
+                        List<string> statusList = new List<string>()
                         {
                             "2","4","22","23","26","35","40","41","42","45","47","48","49"
                         };
-                    if (statusList.Contains(customResponse.Response.Status[0].NameCode.Value))
-                    {
-                        _DateTime = new DateTime();
-                        _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
+                        if (statusList.Contains(customResponse.Response.Status[0].NameCode.Value))
+                        {
+                            _DateTime = new DateTime();
+                            _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
 
-                        RaiseEvent(this._MyDeclarationPM,null, status_id: "WAT", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
-                    }
-                    if (customResponse.Response.Status[0].NameCode.Value == "3" || customResponse.Response.Status[0].NameCode.Value == "6")
-                    {
-                        _DateTime = new DateTime();
-                        _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
-                        RaiseEvent(this._MyDeclarationPM,null, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
-                    }
+                            RaiseEvent(this._MyDeclarationPM, null, status_id: "WAT", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                        }
+                        if (customResponse.Response.Status[0].NameCode.Value == "3" || customResponse.Response.Status[0].NameCode.Value == "6")
+                        {
+                            _DateTime = new DateTime();
+                            _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
+                            RaiseEvent(this._MyDeclarationPM, null, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                        }
 
+                    }
                 }
             }
 
