@@ -394,6 +394,32 @@ namespace Logitude.BL.QuoteModel
                             queryableData = queryableData.Where(d => d.ConnectedToOpportunity == false || d.ConnectedToOpportunity == null);
                         }
                     }
+
+                    if (item.FieldName == "IsFilteringExpirationDate")
+                    {
+                        bool filterValue1 = false;
+                        DateTime? filterValue2 = null;
+
+                        if (item.FieldValue != null)
+                        {
+                            filterValue1 = Convert.ToBoolean(item.FieldValue);
+                        }
+
+                        if (item.FieldValue2 != null)
+                        {
+                            filterValue2 = Convert.ToDateTime(item.FieldValue2);
+                        }
+
+                        DateTime? myTodayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                        if (filterValue1)
+                        {
+                            queryableData = queryableData.Where(d =>
+                            (d.ValidByType != null && System.Data.Entity.DbFunctions.TruncateTime(d.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(filterValue2))
+                            || (d.ValidByType == null && System.Data.Entity.DbFunctions.TruncateTime(d.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(myTodayDate))
+                            );
+                        }
+                    }
                 }
             }
 
