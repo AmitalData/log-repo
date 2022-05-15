@@ -94,7 +94,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TenantCBSA = tenantSettings.CBSA;
 
                 PrepaidCollect shipmentprepaidcollect = (from a in webFreightContext.PrepaidCollects where a.Id == shipment.FreightPrepaidCollectId select a).FirstOrDefault();
-
+                myDataProvider.ShipmentNumberLink = DataProviders.General.BuildShipmentNumberLink(shipmentId, shipment.ShipmentLevelCode, shipment.SecurityKey, tenant);
                 myDataProvider.ShipmentType = shipment.ShipmentTypeName != null ? shipment.ShipmentTypeName : "";
                 myDataProvider.ShipmentNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";
                 myDataProvider.CompanyName = tenantSettings.Company != null ? tenantSettings.Company : "";

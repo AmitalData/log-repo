@@ -5,6 +5,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class ShippingDeclarationDataProvider : BaseDataProvider
     {
+        public string ShipmentNumberLink { get; set; }
         public DateTime ShipmentCreationDate { get; set; }
         public string MasterAMSBL { get; set; }
         public string CopyNumber { get; set; }
