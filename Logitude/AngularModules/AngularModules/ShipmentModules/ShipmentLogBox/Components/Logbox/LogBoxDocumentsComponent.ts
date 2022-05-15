@@ -101,6 +101,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     public ShowShipmentPackagesLabelLink: boolean = false;
     public ShipmentPackageTitle: string = "";
     public ReferencesLabel: string = "";
+    public ShortReferencesLabel: string = "";
 
     constructor(public http: HttpClient, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
         super();
@@ -249,7 +250,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         this.SetLogboxReferencesLabel();
         if (this.SelectedShipment && this.IsPrivateLabel) {
             this.SetPrivateLabelReferencesLabel();
-        } 
+        }
+
+        this.ShortReferencesLabel = this.ReferencesLabel.length > 50 ? this.ReferencesLabel.substring(0, 50) + "..." : this.ReferencesLabel;
     }
 
     private SetPrivateLabelReferencesLabel() {
