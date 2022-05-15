@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "ac84882d8ce7ae8136403995264ad00f";
+		public const string HashString = "35a05a6d97536a84596020a38ab82837";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9784,6 +9784,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
              AdvancedQueryFilter ErrorInTransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARInvoice.TransferStatusCode", PredefinedValue = "ET",PredefinedValue2 = null, CustomPredefined = false, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter ErrorInTransferQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARInvoice.SATTransferStatusCode", PredefinedValue = "SM",PredefinedValue2 = null, CustomPredefined = false, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -10416,6 +10419,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
              			   Feature ARInvoiceFeature_MB45 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.SendToQBO", NameTextCodeDefaultText = "Send to QBO", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ARInvoiceObjectTable);
              			   Feature ARInvoiceFeature_MB46 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BlockFromTransfer", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.Blockfromtransfer", NameTextCodeDefaultText = "Block from transfer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ARInvoiceObjectTable);
              			   Feature ARInvoiceFeature_MB47 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ResendToSAT", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.ResendToSAT", NameTextCodeDefaultText = "Resend To SAT", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ARInvoiceObjectTable);
+             			   Feature ARInvoiceFeature_MB48 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SolvedManual", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.SolvedManual", NameTextCodeDefaultText = "Solved Manual", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ARInvoiceObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -10725,6 +10729,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ARInvoiceFeature_MB47.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ARInvoiceMenuButton410 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "SolvedManual",
+						Index = 17, 
+						IsActive = true,
+						LabelTextCodeCode = "ARInvoice.B.SolvedManual",
+						LabelTextCodeDefaultText = "Solved Manual",
+						Tenant = 0,
+						MenuButtonGroupId = ARInvoiceMenuButtonGroup.Id,
+						ParentMenuButtonId = ARInvoiceMenuButton4.Id,
+						ObjectTableId = ARInvoiceObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ARInvoiceFeature_MB48.Id,
+						Style = null,
+						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ARInvoiceFeature_MB48.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

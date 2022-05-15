@@ -9602,6 +9602,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;BillToCode&quot;"
     ListPropertyPath="&quot;BillToCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -9807,7 +9808,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;OpenPayments&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -9892,7 +9894,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;DraftPayments&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -9958,7 +9961,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;NotReadyPayments&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10024,13 +10028,15 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;MarkedAsBlockedForTransfer&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;Marked as blocked for transfer&quot;"
         PredefinedValue="&quot;TE&quot;"
         ObjectFieldName="&quot;SATTransferStatusCode&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10124,7 +10130,8 @@
         PredefinedValue="&quot;TE&quot;"
         ObjectFieldName="&quot;SATTransferStatusCode&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10205,7 +10212,16 @@
         ObjectFieldName="&quot;TransferStatusCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
+      <QueryFilter
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        PredefinedValue="&quot;SM&quot;"
+        ObjectFieldName="&quot;SATTransferStatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="1"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -10650,12 +10666,19 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="11"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;SolvedManual&quot;"
+        DefaultText="&quot;Solved Manual&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="12"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>
     <DataContract
       Name="&quot;ARPayment&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"

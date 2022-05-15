@@ -27,7 +27,8 @@
                                         <td>
                                             <div class="MediaFill">
                                                 <!--<div class="OrangeInfo">{{EntityWarning}}</div>-->
-                                                <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList"></WarningSummary>
+                                                <!-- SM: solved manual SATTransferStatusCode -->
+                                                <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0 && EntityPM.SATTransferStatusCode != 'SM'" [ItemsSource]="EntityWarningsList"></WarningSummary>
                                             </div>
 
                                         </td>
