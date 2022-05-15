@@ -34,9 +34,8 @@ export class CommunicationsTabComponent implements OnDestroy {
             this.IsResourcesReady = true;
             this.Listen();
             this.InitTab();
+            this.SetIsShowWasAnalyzed();
         });
-
-        this.SetIsShowWasAnalyzed();
     }
 
     private SessionEvent: any = null;
