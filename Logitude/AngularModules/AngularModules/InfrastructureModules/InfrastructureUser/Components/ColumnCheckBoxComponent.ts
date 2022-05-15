@@ -38,7 +38,7 @@ export class ColumnCheckBoxComponent {
     }
 
     private SetLicenseManagementTitle() {
-        this.LicenseManagementTitle = "To remove the main package(" + this.packageName +") from a user, please make sure the 'Additional Packages Only' field is checked for that user.";
+        this.LicenseManagementTitle = "To remove the main package (" + this.packageName +") from a user, please make sure the 'Additional Packages Only' field is checked for that user.";
     }
 
     private SetIsChecked() {
