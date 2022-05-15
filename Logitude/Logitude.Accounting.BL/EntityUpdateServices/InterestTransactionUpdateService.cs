@@ -29,7 +29,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void AfterUpdating(InterestTransactionPM entityPM, EntityPM entityParentPM)
         {
-            BuildSearchField(entityPM);
+            string arInvoiceInterestEntityType = "1";
+            if (entityPM.InterestEntityType != arInvoiceInterestEntityType)
+            {
+                BuildSearchField(entityPM);
+            }
+            
             Repository.Update(EntityPOCO);
             SubmitChanges();
 
