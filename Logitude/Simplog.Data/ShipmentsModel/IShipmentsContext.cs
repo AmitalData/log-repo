@@ -34,6 +34,7 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<NextLeg> NextLegs { get; }
         IDbSet<ShipmentPayableAmountType> ShipmentPayableAmountTypes { get; }
         IDbSet<ShipmentLevel> ShipmentLevels { get; }
+        IDbSet<ContainerTrackingProvider> ContainerTrackingProviders { get; }
         IDbSet<AWBChargesCode> AWBChargeCodes { get; }
         IDbSet<AWBSpecialHandlingCode> AWBHandlingCodes { get; }
         IDbSet<FWBStatus> FWBStatus { get; }

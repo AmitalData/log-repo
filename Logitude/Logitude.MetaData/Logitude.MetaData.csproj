@@ -215,6 +215,7 @@
     <None Include="DBTables\CommonDataModel\HorseGender.dxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="DBTables\QuoteModel\ValidByType.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingProviders.dxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\CommonDataModel\HorseGender.lxml" />
@@ -1730,6 +1731,7 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentCustomsTransmission.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingProviders.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentLevel.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentOrderPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPackage.lxml">
