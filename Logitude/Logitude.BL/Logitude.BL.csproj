@@ -722,6 +722,8 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ContainerDataQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpDeliveryFromToTypeQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickupDeliveryService.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\ContainerTrackingProvidersDetails.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\ContainerTrackingProvidersStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\ContainerCustomFilter.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalCustomFilter.cs" />
     <Compile Include="ShipmentsModel\DigitalModels\ShipmentAdditionalFields.cs" />
@@ -2803,6 +2805,7 @@
     <Compile Include="ShipmentsModel\EntityLists\ShipmentCustomsMessageTypeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentCustomsTransmissionList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentJoinPackageList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ContainerTrackingProviderList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentLevelList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentComputedFieldsList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentList.cs" />
@@ -2867,6 +2870,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentDeliveryPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentFollowUpPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentIntegrationVariables.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ContainerTrackingProviderPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentLevelPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentMobilePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentOrderPackagePM.cs" />
@@ -2938,6 +2942,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCustomsMessageTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCustomsTransmissionQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentComputedFieldsQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ContainerTrackingProviderQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentLevelQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentOrderPackageQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPackageHarmonizeQuery.cs" />

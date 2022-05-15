@@ -239,6 +239,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentCarrierStatusMap());
             modelBuilder.Configurations.Add(new ShipmentCustomerTypeMap());
             modelBuilder.Configurations.Add(new ShipmentLevelMap());
+            modelBuilder.Configurations.Add(new ContainerTrackingProviderMap());
             modelBuilder.Configurations.Add(new ShipmentMasterDataMap());
             modelBuilder.Configurations.Add(new ShipmentOrderPackageMap());
             modelBuilder.Configurations.Add(new ShipmentPackageMap());
@@ -485,6 +486,12 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ARInvoice> ARInvoicesForReports
         {
             get; set;
+        }
+
+        public IDbSet<ContainerTrackingProvider> ContainerTrackingProviders
+        {
+            get;
+            set;
         }
 
         public void SetAsModified(object entity)
