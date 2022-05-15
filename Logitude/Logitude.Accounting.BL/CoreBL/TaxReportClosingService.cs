@@ -251,8 +251,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
 
                 CurrencyId = tenantPM.CurrencyId,
-                LocalAmount = taxReportPM.OutputTaxAmount.Value + taxReportPM.OutputTaxAmountRound.Value,
-                ForeignAmount = taxReportPM.OutputTaxAmount.Value + taxReportPM.OutputTaxAmountRound.Value,
+                LocalAmount = taxReportPM.OutputTaxAmount.Value + (taxReportPM.OutputTaxAmountRound ?? 0),
+                ForeignAmount = taxReportPM.OutputTaxAmount.Value + (taxReportPM.OutputTaxAmountRound ?? 0),
                 ExchangeRate = 1,
 
                 DebitAccountId = fullAccountingSettings.VATOutputGLAccountId,
@@ -281,8 +281,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
 
                 CurrencyId = tenantPM.CurrencyId,
-                LocalAmount = taxReportPM.EquipmentInputsTaxAmount.Value + taxReportPM.OtherInputsTaxAmount.Value + taxReportPM.InputsTaxAmountRound.Value,
-                ForeignAmount = taxReportPM.EquipmentInputsTaxAmount.Value + taxReportPM.OtherInputsTaxAmount.Value + taxReportPM.InputsTaxAmountRound.Value,
+                LocalAmount = taxReportPM.EquipmentInputsTaxAmount.Value + taxReportPM.OtherInputsTaxAmount.Value + (taxReportPM.InputsTaxAmountRound ?? 0),
+                ForeignAmount = taxReportPM.EquipmentInputsTaxAmount.Value + taxReportPM.OtherInputsTaxAmount.Value + (taxReportPM.InputsTaxAmountRound ?? 0),
                 ExchangeRate = 1,
 
                 DebitAccountId = fullAccountingSettings.TaxInstitutionGLAccountId,
@@ -312,8 +312,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
 
                 CurrencyId = tenantPM.CurrencyId,
-                LocalAmount = taxReportPM.OutputTaxAmountRound.Value - taxReportPM.InputsTaxAmountRound.Value,
-                ForeignAmount = taxReportPM.OutputTaxAmountRound.Value - taxReportPM.InputsTaxAmountRound.Value,
+                LocalAmount = (taxReportPM.OutputTaxAmountRound ?? 0) - (taxReportPM.InputsTaxAmountRound ?? 0),
+                ForeignAmount = (taxReportPM.OutputTaxAmountRound ?? 0) - (taxReportPM.InputsTaxAmountRound ?? 0),
                 ExchangeRate = 1,
 
                 DebitAccountId = fullAccountingSettings.TaxInstitutionGLAccountId,
