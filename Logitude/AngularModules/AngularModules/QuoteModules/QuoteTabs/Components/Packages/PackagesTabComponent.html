@@ -83,7 +83,7 @@
 
                                         <div style="width: 80px; display: block; float:left; margin-left: 15px;">
                                             <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled"></RatioBox>
+                                            <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled" [SelectedValue]="Ratio"></RatioBox>
                                         </div>
 
                                         <div *ngIf="IsHybrid" style="width: 120px; display: block; float:left; margin-left: 15px;">
