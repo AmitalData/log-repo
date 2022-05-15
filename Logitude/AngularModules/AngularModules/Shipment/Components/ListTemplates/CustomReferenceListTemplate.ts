@@ -6,7 +6,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
 
-    template: `<div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left;">
+    template: `<div title={{MyLabel}} style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left;">
                       {{MyLabel}}
                </div>
             `
@@ -47,7 +47,7 @@ export class CustomReferenceListTemplate {
 
 
     private GetAgentShipmentsCustomerReferenceColumn() {
-        this.MyLabel = this.GetCustomerReference1And2(); 
+        this.MyLabel = this.GetCustomerReference3Or1And2(); 
     }
 
     private GetMyShipmentsCustomerReferenceColumn() {
@@ -59,7 +59,11 @@ export class CustomReferenceListTemplate {
     private GetLogboxReferenceLabel() {
         if (this.isPrivateLabel) return;
 
-        this.MyLabel = this.GetCustomerReference1And2();
+        this.MyLabel = this.GetCustomerReference3Or1And2();
+    }
+
+    private GetCustomerReference3Or1And2() {
+        return AppTool.IsNullOrEmpty(this.rowData['CustomerReference3']) ? this.GetCustomerReference1And2() : this.rowData['CustomerReference3'];
     }
 
     private GetCustomerReference1And2() {

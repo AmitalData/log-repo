@@ -13,7 +13,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
     public class ARPaymentMapping
     {
-
+        private const string sATSolvedManualStatusCode = "SM";
         public static void MapEntity(ARPaymentPM entityPM, ARPayment entity, bool isNewState)
         {
             ContactPM loggedContact = GetLoggedContactPM(entityPM.Tenant);
@@ -75,7 +75,12 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             {
                 entityPM.UpdatedByUserId = loggedContact.Id;
             }
-           
+
+            if (entityPM.SATTransferStatusCode == sATSolvedManualStatusCode)
+            {
+                entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
+            }
+
             entity.RegisterDate = entityPM.RegisterDate;
             entity.UpdateDate = entityPM.UpdateDate;
             entity.UpdatedByUserId = entityPM.UpdatedByUserId;

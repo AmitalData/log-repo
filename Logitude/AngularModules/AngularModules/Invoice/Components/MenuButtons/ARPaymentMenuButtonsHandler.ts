@@ -264,6 +264,15 @@ export class ARPaymentMenuButtonsHandler {
                             button.IsHidden = isHidden;
                             break;
                         }
+
+                        case "SolvedManual": {
+                            const sATTransferWithErrorStatusCode: string = "TE";
+                            const sATSolvedManualStatusCode: string = "SM";
+                            button.IsHidden = this.EntityPM.SATTransferStatusCode != sATTransferWithErrorStatusCode && this.EntityPM.SATTransferStatusCode != sATSolvedManualStatusCode;                       
+                            if(!button.IsHidden) button.IsDisabled = this.EntityPM.SATTransferStatusCode == sATSolvedManualStatusCode;
+
+                            break;
+                        }
                     }
                 }
             }
@@ -321,10 +330,19 @@ export class ARPaymentMenuButtonsHandler {
                 this.BlockFromTransferToQBO();
                 break;
             }
+
+            case "SolvedManual": {
+                this.SolvedManual();
+                break;
+            }
         }
     }
 
-
+    SolvedManual() {
+        this.EntityPM.SATTransferStatusCode = "SM";
+        //this.EntityPM.TransmissionError = ""; // or ng if
+        this.entityArgs.EditComponent.SaveChanges("Solved Manual");
+    }
 
     SendToQBO() {
         if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
