@@ -403,8 +403,11 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
     OpenEditCollateralAnswerWindow() {
         //   if (!AppTool.IsNullOrEmpty(item)) {
         var windowArgs: any = {};
+        
         windowArgs.DeclarationId = this.EntityPM.Id;
         windowArgs.collateralToSendlist = this._customsCollateralAnswerSharedDataService._SelectedItems.Collection;
+        windowArgs.collateralToNotSendlist = this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection;
+        windowArgs.selectAll = this.IsSelectedNot;
         var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.CollateralAnswer");
 
         var logWindow = new LogitudeWindow();
@@ -414,8 +417,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {
-            this._customsCollateralAnswerSharedDataService._SelectedItems.Collection = [];
-            this._customsCollateralAnswerSharedDataService.IsDisplayButtonSend = (this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 1);
+            this._customsCollateralAnswerSharedDataService.resetValue();
             this.RefreshList();
         });
         logWindow.Show('./CustomsModules/CustomsCollateral/Components/CustomsCollateralAnswerComponent');
