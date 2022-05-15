@@ -381,14 +381,31 @@ namespace Logitude.BL.QuoteModel
                         }                         
                     }
 
-                    //if (item.FieldName == "MyFollowUps")
-                    //{
-                    //    string email = SecurityUtility.GetAuthenticatedUser();
-                    //    ContactQuery contactQuery = new ContactQuery(tenant);
-                    //    ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
+                    if (item.FieldName == "IsFilteringExpirationDate")
+                    {
+                        bool filterValue1 = false;
+                        DateTime? filterValue2 = null;
 
-                    //    queryableData = queryableData.Where(d => d.FollowUpOwnerId == loggedContact.Id);
-                    //}
+                        if (item.FieldValue != null)
+                        {
+                            filterValue1 = Convert.ToBoolean(item.FieldValue);
+                        }
+
+                        if (item.FieldValue2 != null)
+                        {
+                            filterValue2 = Convert.ToDateTime(item.FieldValue2);
+                        }
+
+                        DateTime? myTodayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                        if (filterValue1)
+                        {
+                            queryableData = queryableData.Where(d =>
+                            (d.ValidByType != null && System.Data.Entity.DbFunctions.TruncateTime(d.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(filterValue2))
+                            || (d.ValidByType == null && System.Data.Entity.DbFunctions.TruncateTime(d.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(myTodayDate))
+                            );
+                        }
+                    }
                 }
             }
 
