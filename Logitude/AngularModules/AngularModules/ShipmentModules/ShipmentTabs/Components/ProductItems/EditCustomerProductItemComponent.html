@@ -302,21 +302,25 @@
                                             </log-column>
 
                                             <!-- Remarks -->
-                                            <log-column [header]="'Remarks'" [width]="'100'" [Alignment]="'left'">
+                                            <log-column [header]="'Remarks'" [width]="'100'" [Alignment]="'center'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
-                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                            <span>{{item.Remarks}}</span>
+                                                        <!--<div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+        <span>{{item.Remarks}}</span>
+    </div>
+    <div *ngIf="logcelltemplate.IsEditMode">
+        <LogTextBox [FocusOnMe]="'true'"
+                    [ObjectFieldName]="'Remarks'"
+                    [DataContext]="item"
+                    [Text]="item.Remarks"
+                    [ObjectTableName]="'HTSCode'"
+                    [HideColumns]="true">
+        </LogTextBox>
+    </div>-->
+                                                        <div>
+                                                            <HelperNotes [Title]="'Remarks'" [Text]="item.Remarks" (TextChanged)="item.Remarks = $event"></HelperNotes>
                                                         </div>
-                                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                                            <LogTextBox [FocusOnMe]="'true'"
-                                                                        [ObjectFieldName]="'Remarks'"
-                                                                        [DataContext]="item"
-                                                                        [Text]="item.Remarks"
-                                                                        [ObjectTableName]="'HTSCode'"
-                                                                        [HideColumns]="true">
-                                                            </LogTextBox>
-                                                        </div>
+                                                   
                                                     </log-cell-template>
                                                 </ng-template>
                                             </log-column>
