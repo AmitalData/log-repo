@@ -1,5 +1,4 @@
-﻿using Logitude.Server.Tools.EntityChanges.Service;
-using Logitude.Server.Tools.Helpers;
+﻿using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;

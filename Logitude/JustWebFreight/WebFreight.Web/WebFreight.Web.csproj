@@ -2717,6 +2717,11 @@
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\AutomationModel\OnUpdateDocumentService.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\ARInvoiceAPISendInterfaceDataContract.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\ISendInterfaceDataContract.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\SendInterfaceDataContract.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\SendInterfaceDataContractService.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\ShipmentAPISendInterfaceDataContract.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
     <Compile Include="Helpers\CrmWebServicesValidator.cs" />
     <Compile Include="Helpers\DataWarehouse\FactQuoteBusinessUnitFilter.cs" />
