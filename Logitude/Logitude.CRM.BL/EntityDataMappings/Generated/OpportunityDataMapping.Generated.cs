@@ -102,7 +102,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         Field37, 
 	         Field38, 
 	         Field39, 
-	         Field40,
+	         Field40, 
+	         NumberOfConnectedQuotes,
 	      }
 
 
@@ -211,7 +212,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         Field37, 
 	         Field38, 
 	         Field39, 
-	         Field40,
+	         Field40, 
+	         NumberOfConnectedQuotes,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -618,6 +620,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field40))
             {
 				entityPOCO.Field40 = entityPM.Field40!= null ? entityPM.Field40.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfConnectedQuotes))
+            {
+				entityPOCO.NumberOfConnectedQuotes = entityPM.NumberOfConnectedQuotes;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1031,6 +1038,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 				entityPM.Field40 = new CustomFieldClass("Field40", "Opportunity", entityPOCO.Field40);
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NumberOfConnectedQuotes))
+            {
+					entityPM.NumberOfConnectedQuotes = entityPOCO.NumberOfConnectedQuotes;
+            }
+
 		}
 
 		public void PMToOldPM(OpportunityPM entityPM, OpportunityPM oldEntityPM)
@@ -1435,6 +1447,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field40))
             {
                 oldEntityPM.Field40 = entityPM.Field40;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfConnectedQuotes))
+            {
+                oldEntityPM.NumberOfConnectedQuotes = entityPM.NumberOfConnectedQuotes;
             }
 			
 		}

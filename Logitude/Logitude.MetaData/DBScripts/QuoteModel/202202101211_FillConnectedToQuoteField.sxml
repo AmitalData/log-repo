@@ -1,0 +1,8 @@
+﻿<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes">
+  <Sql Version="1">
+    <![CDATA[
+
+    update Quotes set ConnectedToOpportunity = 1 where OpportunityId is not null and $LastCounterWhere$
+    ]]>
+  </Sql>
+</Script>

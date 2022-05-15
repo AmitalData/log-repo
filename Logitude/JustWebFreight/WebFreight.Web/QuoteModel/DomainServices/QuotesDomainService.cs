@@ -1345,30 +1345,50 @@ namespace WebFreight.Web.QuoteModel.DomainServices
             QuoteRepository myQuoteRepository = new QuoteRepository(tenant);
             IQueryable<Quote> myQuotes = myQuoteRepository.GetQuotes(tenant).Where(d => quotesIds.Contains(d.Id));
 
-            string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            string loggedContactId = contactRepository.GetSingleContactByEmail(email, tenant).Id;
+            OpportunityRepository opportunityRepository = new OpportunityRepository(tenant);
+            Opportunity opportunity = opportunityRepository.GetSingle(opportunityId, tenant);
 
-            string myEventNotes = "Connected:";
-
-            foreach (Quote item in myQuotes)
+            if (opportunity != null)
             {
-                item.OpportunityId = opportunityId;
+                string email = HttpContext.Current.User.Identity.Name;
+                ContactRepository contactRepository = new ContactRepository(tenant);
+                string loggedContactId = contactRepository.GetSingleContactByEmail(email, tenant).Id;
 
-                myEventNotes += "\n" + item.QuoteNumber;
+                string myEventNotes = "Connected:";
+
+                foreach (Quote item in myQuotes)
+                {
+                    item.OpportunityId = opportunityId;
+                    item.ConnectedToOpportunity = true;
+                    myEventNotes += "\n" + item.QuoteNumber;
+                    this.UpdateOpportunity(opportunity);
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tenant,
+                    EventTypeCode = "QTOP",
+                    UserId = loggedContactId,
+                    EntityId = opportunityId,
+                    ObjectTableName = "Opportunity",
+                    Notes = myEventNotes,
+                });
+
+                myQuoteRepository.SubmitChanges();
+                opportunityRepository.SubmitChanges();
             }
-            
-            EventTracer.CreateTraceEvent(new EventTracerArgs()
+        }
+        private void UpdateOpportunity(Opportunity opportunity)
+        {
+            if (opportunity.NumberOfConnectedQuotes == null)
             {
-                Tenant = tenant,
-                EventTypeCode = "QTOP",
-                UserId = loggedContactId,
-                EntityId = opportunityId,
-                ObjectTableName = "Opportunity",
-                Notes = myEventNotes,
-            });
+                opportunity.NumberOfConnectedQuotes = 1;
+            }
 
-            myQuoteRepository.SubmitChanges();
+            else
+            {
+                opportunity.NumberOfConnectedQuotes += 1;
+            }
         }
 
         public List<ChartingDataClass> GetStageFunnelData(string ownerId, string businessUnitId, int tenant)

@@ -644,6 +644,11 @@ export class OpportunityPM {
     public set Field40(newValue: CustomFieldClass) {  this.field40 = newValue; this.MarkAsDirty("Field40");  }
        
 	 
+    private numberOfConnectedQuotes: number;
+    public get NumberOfConnectedQuotes() { return this.numberOfConnectedQuotes; }
+    public set NumberOfConnectedQuotes(newValue: number) { if (this.numberOfConnectedQuotes != newValue) { this.numberOfConnectedQuotes = newValue; this.MarkAsDirty("NumberOfConnectedQuotes"); } }
+       
+	 
 
     public OldEntityPM: OpportunityPM;
 		

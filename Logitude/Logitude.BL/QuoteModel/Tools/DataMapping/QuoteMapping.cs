@@ -220,6 +220,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.IncludeImportDutyCharges = entityPM.IncludeImportDutyCharges;
             entityPoco.InsuranceValue = entityPM.InsuranceValue;
             entityPoco.ValidByTypeCode = entityPM.ValidByTypeCode;
+            entityPoco.ConnectedToOpportunity = entityPM.ConnectedToOpportunity;
 
             if (MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
             {

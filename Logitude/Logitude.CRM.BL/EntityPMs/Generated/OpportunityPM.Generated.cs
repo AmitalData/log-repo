@@ -2494,6 +2494,29 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private int? numberOfConnectedQuotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? NumberOfConnectedQuotes  
+	   {
+	    
+	     get
+		{
+		   return numberOfConnectedQuotes;
+		 }
+		 set
+		 {
+		   if(numberOfConnectedQuotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfConnectedQuotes",OldValue=numberOfConnectedQuotes,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   numberOfConnectedQuotes=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
