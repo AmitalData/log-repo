@@ -8,6 +8,11 @@ using WebFreight.Web.WebServices;
 using System.Linq;
 using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.DataProviders
 {
@@ -301,7 +306,98 @@ namespace WebFreight.Web.DataProviders
             return tenantQuery.GetCompanyNameById(tenant);
         }
 
+        private static string tenantManagementCustomerURL;
+        private static bool hideSharedlogistics;
+        private static bool isBrandingEnabled;
+        public static string BuildShipmentNumberLink(string shipmentId, string shipmentLevelCode, string securitykey, int tenant)
+        {
+            string shipmentNumberURL = "";
 
+            SetTenantManagementProperties(tenant);
+            string myUrl = tenantManagementCustomerURL;
 
+            if (string.IsNullOrEmpty(tenantManagementCustomerURL))
+            {
+                myUrl = LogitudeSettings.LogitudeURL;
+                if (isBrandingEnabled)
+                {
+                    myUrl = LogitudeSettings.LogitudeURL + "/login.aspx?tenant=" + tenant;
+                }
+            }
+            
+            if (myUrl.Contains("login.aspx"))
+            {
+                myUrl = GetOnlyDomainNameFromSystemUrl(myUrl);
+            }
+
+            string pagePath = @"/SharedLogistic/ShipmentPage.aspx";
+            Tenant myTenant = GetCurrentTenant(tenant);
+
+            if (myTenant != null && myTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C")
+            {
+                myUrl = GetSystemURL(tenant, myUrl);
+                pagePath = @"/SharedMasterDocumentsPage.aspx";
+                shipmentNumberURL = (myUrl + pagePath).ToLower() + "?securitykey=" + securitykey;
+            }
+
+            else
+            {
+                shipmentNumberURL = (myUrl + pagePath).ToLower() + "?securitykey=" + securitykey + ":" + shipmentId + ":" +
+                                  tenant + ":" + hideSharedlogistics;            
+            }
+
+            if (!shipmentNumberURL.Contains("//"))
+            {
+                shipmentNumberURL = "https://" + shipmentNumberURL;
+            }
+
+            return shipmentNumberURL;
+        }
+
+        private static void SetTenantManagementProperties(int tenant)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetTenantManagementPM(tenant);
+                if (tenantManagementPM != null)
+                {
+                    tenantManagementCustomerURL = tenantManagementPM.CustomerURL;
+                    isBrandingEnabled = tenantManagementPM.EnableBranding;
+                    if (tenantManagementPM.EnableBranding)
+                    {
+                        hideSharedlogistics = tenantManagementPM.HideSharedlogistics;
+                    }
+                }
+                scope.Complete();
+            }
+        }
+        private static string GetOnlyDomainNameFromSystemUrl(string systemUrl)
+        {
+            string url = systemUrl;
+            string[] test = systemUrl.Split('/');
+            if (test != null && test.Length > 0)
+            {
+                url = systemUrl.Replace("/" + test[test.Length - 1], "");
+            }
+
+            return url;
+        }
+        private static Tenant GetCurrentTenant(int tenant)
+        {
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            return context.Tenants.Where(t => t.Id == tenant).FirstOrDefault();
+        }        
+        private static string GetSystemURL(int tenant, string systemUrl)
+        {
+            string myUrl = systemUrl;
+            if (!string.IsNullOrEmpty(tenantManagementCustomerURL))
+            {
+                myUrl = tenantManagementCustomerURL;
+            }
+            myUrl = myUrl.ToLower().Replace("/cargotracking", "");
+
+            return myUrl;
+        }
     }
 }
