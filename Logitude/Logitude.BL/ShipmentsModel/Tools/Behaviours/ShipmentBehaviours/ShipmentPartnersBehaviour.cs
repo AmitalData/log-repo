@@ -53,6 +53,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ShipperAddressText = null;
                 entityPM.ShipperReference1 = IsShipmentFromToLogbox() ? entityPM.ShipperReference1 : null;
                 entityPM.ShipperReference2 = IsShipmentFromToLogbox() ? entityPM.ShipperReference2 : null;
+                entityPM.ShipperReference3 = IsShipmentFromToLogbox() ? entityPM.ShipperReference3 : null;
             }
 
             else if (entityPM.IsExternalAPI || entityPM.IsHybrid)
@@ -97,6 +98,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ConsigneeAddressText = null;
                 entityPM.ConsigneeReference1 = IsShipmentFromToLogbox() ? entityPM.ConsigneeReference1 : null;
                 entityPM.ConsigneeReference2 = IsShipmentFromToLogbox() ? entityPM.ConsigneeReference2 : null;
+                entityPM.ConsigneeReference3 = IsShipmentFromToLogbox() ? entityPM.ConsigneeReference3 : null;
             }
 
             else if (entityPM.IsExternalAPI)
