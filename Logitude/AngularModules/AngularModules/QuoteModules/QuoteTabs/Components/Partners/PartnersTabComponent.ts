@@ -218,7 +218,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             this.EntityPM.CustomerReference1 = this.EntityPM.ShipperReference1;
             this.EntityPM.CustomerReference2 = this.EntityPM.ShipperReference2;
         }
-
+        this.OnCustomerGroupChanged(null, this.EntityPM.CustomerId);
         this.OnCustomerChanged();
     }
 
@@ -704,8 +704,9 @@ export class PartnerItem extends BaseComponent {
     }
     set CustomerId(newValue: string) {
         if (this.EntityPM.CustomerId != newValue) {
-            this.EntityPM.CustomerId = newValue;
+            this.EntityPM.CustomerId = newValue; 
             this.GetPartnerCard();
+            
         }
     }
 
