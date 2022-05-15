@@ -7521,11 +7521,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private string GetNewPickupDeliveryNumber(string oldNumber, bool isChild)
         {
             string newNumber = oldNumber;
-            int slashesCount = oldNumber.Count(t => t == '/');
+            int slashesCount = oldNumber.Replace(entityPM.ShipmentNumber, "").Count(t => t == '/');
 
             if (slashesCount <= 2)
             {
-                string[] numberArray = oldNumber.Split('/');
+                string[] numberArray = oldNumber.Replace(entityPM.ShipmentNumber, "").Split('/');
                 newNumber = entityPM.ShipmentNumber + "/" + Convert.ToInt32(numberArray[1]);
 
                 if (isChild && numberArray.Length > 2)
