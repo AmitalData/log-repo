@@ -265,7 +265,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         var errors = [];
-        if (this.ProcessTypeCode == null && this.TaxExemptCode == null && this.classificationCode == null) {
+        if (this.ProcedureCurrentCode == null && this.TaxExemptCode == null && this.classificationCode == null) {
             errors.push("חובה להזין אחד מהשדות לעדכון");
         }
        
@@ -278,7 +278,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             confirm.ShowNoButton = true;
             confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-            confirm.Show("שינוי יבצע עדכון קוד התהליך/הנחה פטור באופן גורף לכל שורות פרטי המכס");
+            confirm.Show("שינוי יבצע עדכון גורף של קוד תהליך בהצהרות,\n ועדכון קוד הנחה פטור לכל שורות פרטי המכס");
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     this.SendMultiUpdate();
@@ -292,7 +292,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.ProcessTypeCode = this.ProcessTypeCode;
+        currRequestParams.ProcessTypeCode = this.ProcedureCurrentCode;
         currRequestParams.ClassificationCode = this.ClassificationCode;
         currRequestParams.TaxExemptCode = this.TaxExemptCode;
         //currRequestParams.Declarationid = this.CurrentSession.CurrentEditComponent.EntityPM.Id;
@@ -336,10 +336,11 @@ export class MultiUpdateDecComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindowEmit("");
     }
 
-    processTypeCode: string;
-    get ProcessTypeCode() { return this.processTypeCode; }
-    set ProcessTypeCode(value: string) {
-        this.processTypeCode = value;
+    procedureCurrentCode: string;
+    get ProcedureCurrentCode() { return this.procedureCurrentCode; }
+    set ProcedureCurrentCode(value: string) {
+        debugger;
+        this.procedureCurrentCode = value;
     }
 
     taxExemptCode: string;
