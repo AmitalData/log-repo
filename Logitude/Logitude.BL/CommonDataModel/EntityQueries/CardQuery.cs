@@ -27,6 +27,8 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools;
 using System.IO;
 using Logitude.BL.DataContracts;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -1603,6 +1605,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                             countryRepository.Add(newCountry);
                             countryRepository.SubmitChanges();
+
+                            AddCountryKafkaQueueMessage(newCountry);
                             #endregion
                         }
 
@@ -1664,6 +1668,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 CardRepository.Add(newTenantCard);
                 CardRepository.SubmitChanges();
+
+                AddCardKafkaQueueMessage(newTenantCard);
 
                 TableLastUpdateClass.UpdateTableHistory(newTenantCard.Tenant, "Card");
                 TableLastUpdateClass.UpdateTableHistory(newTenantCard.Tenant, tableName);
@@ -1809,6 +1815,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                             ContactRepository.Add(contact);
                             ContactRepository.SubmitChanges();
+
+                            AddContactKafkaQueueMessage(contact);
                         }
                     }
 
@@ -1822,6 +1830,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     CardContactRepository.Add(newcardContact);
                     CardContactRepository.SubmitChanges();
+
+                    AddCardContactKafkaQueueMessage(newcardContact);
                 }
                 #endregion
 
@@ -2041,6 +2051,100 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return myCardList;
         }
+
+        #region Send messages to CTool
+        private void AddCountryKafkaQueueMessage(Country country)
+        {
+            if (country != null && !FeatureToggleHelper.HasFeatureToggle("CTL", country.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage(country);
+        }
+
+        private void AddKafkaQueueMessage(Country country)
+        {
+            if (country != null)
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("CToolLookups", 0);
+                var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Country" },
+                { "EntityId", country.Id },
+                { "Tenant", country.Tenant.ToString()}};
+                queueservice.Send(queueMessage, country.Tenant);
+            }
+        }
+
+        private void AddCardKafkaQueueMessage(Card card)
+        {
+            if (card != null && !FeatureToggleHelper.HasFeatureToggle("CTL", card.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage(card);
+        }
+
+        private void AddKafkaQueueMessage(Card card)
+        {
+            if (card != null)
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("CToolLookups", 0);
+                var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Card" },
+                { "EntityId", card.Id },
+                { "Tenant", card.Tenant.ToString()}};
+                queueservice.Send(queueMessage, card.Tenant);
+            }
+        }
+
+        private void AddContactKafkaQueueMessage(Contact contact)
+        {
+            if (contact != null && !FeatureToggleHelper.HasFeatureToggle("CTL", contact.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage(contact);
+        }
+
+        private void AddKafkaQueueMessage(Contact contact)
+        {
+            if (contact != null)
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("CToolLookups", 0);
+                var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Contact" },
+                { "EntityId", contact.Id },
+                { "Tenant", contact.Tenant.ToString()}};
+                queueservice.Send(queueMessage, contact.Tenant);
+            }
+        }
+
+        private void AddCardContactKafkaQueueMessage(CardContact cardContact)
+        {
+            if (cardContact != null && !FeatureToggleHelper.HasFeatureToggle("CTL", cardContact.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage(cardContact);
+        }
+
+        private void AddKafkaQueueMessage(CardContact cardContact)
+        {
+            if (cardContact != null)
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("CToolLookups", 0);
+                var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Contact" },
+                { "EntityId", cardContact.ContactId },
+                { "Tenant", cardContact.Tenant.ToString()}};
+                queueservice.Send(queueMessage, cardContact.Tenant);
+            }
+        }
+        #endregion
 
         private void CheckPartcipant(Airline myTenantAirline, int tenantManagmentId, bool isProcessed, string processType, string updatedBy, string code)
         {
