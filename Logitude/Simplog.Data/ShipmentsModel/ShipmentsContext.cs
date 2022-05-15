@@ -139,6 +139,9 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ContactMap());
             modelBuilder.Configurations.Add(new ContactTenantRoleSetMap());
             modelBuilder.Configurations.Add(new ContactTenantMap());
+            modelBuilder.Configurations.Add(new ContainerTrackingProviderMap());
+            modelBuilder.Configurations.Add(new ContainerTrackingResponseMap());
+            modelBuilder.Configurations.Add(new ContainerTrackingRequestMap());
             modelBuilder.Configurations.Add(new CounterDefinitionMap());
             modelBuilder.Configurations.Add(new CounterLastNumberMap());
             modelBuilder.Configurations.Add(new CounterMap());
@@ -239,7 +242,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentCarrierStatusMap());
             modelBuilder.Configurations.Add(new ShipmentCustomerTypeMap());
             modelBuilder.Configurations.Add(new ShipmentLevelMap());
-            modelBuilder.Configurations.Add(new ContainerTrackingProviderMap());
+
             modelBuilder.Configurations.Add(new ShipmentMasterDataMap());
             modelBuilder.Configurations.Add(new ShipmentOrderPackageMap());
             modelBuilder.Configurations.Add(new ShipmentPackageMap());
@@ -488,11 +491,9 @@ namespace Simplog.Data.ShipmentsModel
             get; set;
         }
 
-        public IDbSet<ContainerTrackingProvider> ContainerTrackingProviders
-        {
-            get;
-            set;
-        }
+        public IDbSet<ContainerTrackingProvider> ContainerTrackingProviders { get; set; }
+        public IDbSet<ContainerTrackingResponse> ContainerTrackingResponses { get; set; }
+        public IDbSet<ContainerTrackingRequest> ContainerTrackingRequests { get; set; }
 
         public void SetAsModified(object entity)
         {

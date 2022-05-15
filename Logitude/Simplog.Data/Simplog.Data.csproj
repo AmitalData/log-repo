@@ -739,6 +739,8 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentContainerStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsMessageType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerTrackingRequest.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerTrackingResponse.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentProductItem.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentStoragePricing.cs" />
@@ -748,6 +750,8 @@
     <Compile Include="ShipmentsModel\Mapping\ContainersExternalDataMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerStatusSourceMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ContainerTrackingResponseMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ContainerTrackingRequestMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferLineMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferTypeMap.cs" />
@@ -778,6 +782,7 @@
     <Compile Include="ShipmentsModel\Repositories\ContainersExternalDataRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerStatusSourceRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ContainerTrackingResponseRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferHeaderRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferLineRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferTypeRepository.cs" />
@@ -1199,6 +1204,7 @@
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsMessageTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsTransmissionRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerTrackingProviderRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ContainerTrackingRequestRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentPackageHarmonizeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentProductItemRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentStoragePricingRepository.cs" />

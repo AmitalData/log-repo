@@ -14,13 +14,13 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Code)
                 .IsRequired()
                 .HasMaxLength(100)
-                .IsUnicode(true);
+                .IsUnicode(false);
 
 
             this.Property(t => t.Name)
                 .IsRequired()
                 .HasMaxLength(100)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             this.Property(t => t.SearchFields)
                 .HasMaxLength(1000)
@@ -36,7 +36,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 .IsUnicode(true);
 
             // Table & Column Mappings
-            this.ToTable("ShipmentLevels");
+            this.ToTable("ContainerTrackingProviders");
             
         }
     }

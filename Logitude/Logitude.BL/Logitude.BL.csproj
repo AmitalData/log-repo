@@ -2775,6 +2775,8 @@
     <Compile Include="ShipmentsModel\EntityLists\ContainerList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ContainerStatusList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ContainerStatusSourceList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ContainerTrackingRequestList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ContainerTrackingResponseList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\CustomsTransferHeaderList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\CustomsTransferTypeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\HarmonizeCodeList.cs" />
@@ -2835,6 +2837,8 @@
     <Compile Include="ShipmentsModel\EntityPMs\ContainerPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ContainerStatusPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ContainerStatusSourcePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ContainerTrackingRequestPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ContainerTrackingResponsePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\CustomsTransferHeaderPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\CustomsTransferLinePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\DeclarationApprovalRequestPM.cs" />
@@ -2907,6 +2911,8 @@
     <Compile Include="ShipmentsModel\EntityQueries\ContainerQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ContainerStatusQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ContainerStatusSourceQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ContainerTrackingRequestQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ContainerTrackingResponseQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\CustomsTransferHeaderQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\CustomsTransferLineQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\CustomsTransferTypeQuery.cs" />
@@ -3001,6 +3007,8 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Assembly.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestsCountMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Concurrency.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ContainerTrackingRequestMapping.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ContainerTrackingResponseMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Container.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ContainerConcurrency.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentUnassignedField.cs" />
@@ -3028,6 +3036,8 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCarrierStatus.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\SpecialServicesTypeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\AWBAdditionalHandlingInfoService.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ContainerTrackingResponseService.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ContainerTrackingRequestService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ContainerService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\CustomsTransferHeaderService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ExporterShipmentAMMappingService.cs" />

@@ -933,5 +933,9 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         public IDbSet<PayableProratedAmount> PayableProratedAmounts => throw new NotImplementedException();
 
         public IDbSet<ContainerTrackingProvider> ContainerTrackingProviders => throw new NotImplementedException();
+
+        public IDbSet<ContainerTrackingResponse> ContainerTrackingResponses => throw new NotImplementedException();
+
+        public IDbSet<ContainerTrackingRequest> ContainerTrackingRequests => throw new NotImplementedException();
     }
 }
