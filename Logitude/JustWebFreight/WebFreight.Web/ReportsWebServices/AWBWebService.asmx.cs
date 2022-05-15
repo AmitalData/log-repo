@@ -88,6 +88,7 @@ namespace WebFreight.Web.ReportsWebServices
                     awbDp.AWBComments = shipmentPM.AWBPrintingComments;
                 }
 
+                awbDp.ShipmentNumberLink = DataProviders.General.BuildShipmentNumberLink(shipmentId, shipmentPM.ShipmentLevelCode, shipmentPM.SecurityKey, tenant);
                 awbDp.AccountManagerName = shipmentPM.AccountManagerUserName;
                 awbDp.MAWBShort = shipmentPM.Master == null ? "" : shipmentPM.Master;
                 awbDp.HAWB = shipmentPM.House == null ? "" : shipmentPM.House;

@@ -118,6 +118,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (shipmentpm != null)
             {
+                prealertDataProvider.ShipmentNumberLink = DataProviders.General.BuildShipmentNumberLink(shipmentpm.Id, shipmentpm.ShipmentLevelCode, shipmentpm.SecurityKey, tenant);
                 this.MapMasterShipmentNumber();
 
                 ContactRepository contactRepository = new ContactRepository(tenant);

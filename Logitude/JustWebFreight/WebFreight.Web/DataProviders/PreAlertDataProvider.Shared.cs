@@ -5,6 +5,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class PreAlertDataProvider : BaseDataProvider
     {
+        public string ShipmentNumberLink { get; set; }
         public string BranchSignature { get; set; }
         public string ClientName { get; set; }
         public string Company { get; set; }
