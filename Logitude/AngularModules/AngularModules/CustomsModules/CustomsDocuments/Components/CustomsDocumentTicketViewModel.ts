@@ -25,7 +25,6 @@ import { CustDocMetaDataValuesWebService } from '../../../Customs/Services/WebSe
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
 import { DocumentTypeCustomsDataPMService } from '../../../Customs/Services/StandardPMs/DocumentTypeCustomsDataPMService';
-import { CustomDocumentNewVersionService } from "../services/CustomDocumentNewVersion.service";
 
 export class CustomsDocumentTicketViewModel {
 
@@ -123,16 +122,8 @@ export class CustomsDocumentTicketViewModel {
     _IsClassified: boolean = false;
     private EntityResourceService: EntityResourceService;
     //*****************************************//
-    constructor(
-        public customsDocumentsTicketPM: CustomsDocumentsTicketPM, 
-        customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[], 
-        private isNew: boolean, 
-        public isDisplayOnly: boolean, 
-        public EntityPM: any, 
-        private objectTableName: string, 
-        private iCustomsDocumentsController: ICustomsDocumentsController,
-        private readonly customDocumentNewVersionService: CustomDocumentNewVersionService,
-        ) {
+    constructor(public customsDocumentsTicketPM: CustomsDocumentsTicketPM, customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[],
+        private isNew: boolean, public isDisplayOnly: boolean, public EntityPM: any, private objectTableName: string, private iCustomsDocumentsController: ICustomsDocumentsController) {
         this.EntityResourceService = new EntityResourceService();
         if (customsDocumentMetaDataValuePMs != null) {
             this.customsDocumentMetaDataValuePMs = customsDocumentMetaDataValuePMs.filter(d => d.CustomsDocumentId == customsDocumentsTicketPM.DocumentsFilingId);
@@ -241,7 +232,7 @@ export class CustomsDocumentTicketViewModel {
         });
         var leading: MetaDataValueViewModel = this.metaDataList.filter(d => d.IsLeading)[0];
         if (leading) {
-            this.LeadingMetaDataValue = leading.MetaDataValue == "True" ? "×›×Ÿ" : (leading.MetaDataValue == "False" ? "×œ×�" : leading.MetaDataValue);
+            this.LeadingMetaDataValue = leading.MetaDataValue == "True" ? "כן" : (leading.MetaDataValue == "False" ? "לא" : leading.MetaDataValue);
             this.LeadingMetaDataName = leading.MetaDataTypeName;
         }
         else if (this.customDocumentTypeMetaDataLists != null) {
@@ -296,7 +287,7 @@ export class CustomsDocumentTicketViewModel {
             var leading: CustomDocumentTypeMetaDataList = this.customDocumentTypeMetaDataLists.filter(d => d.IsLeading && d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
             if (leading) {
                 var leadingValue: CustomsDocumentMetaDataValuePM = this.customsDocumentMetaDataValuePMs.filter(d => d.MetaDataTypeCode == leading.MetaDataTypeCode)[0];
-                this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "×›×Ÿ" : (leadingValue.MetaDataValue == "False" ? "×œ×�" : leadingValue.MetaDataValue)) : null;
+                this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "כן" : (leadingValue.MetaDataValue == "False" ? "לא" : leadingValue.MetaDataValue)) : null;
                 this.LeadingMetaDataName = leading.MetaDataTypeName;
             }
             else if (this.customDocumentTypeMetaDataLists != null) {
@@ -305,7 +296,7 @@ export class CustomsDocumentTicketViewModel {
                 leading = types.filter(d => d.Mandatory && d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
                 if (leading != null) {
                     var leadingValue: CustomsDocumentMetaDataValuePM = this.customsDocumentMetaDataValuePMs.filter(d => d.MetaDataTypeCode == leading.MetaDataTypeCode)[0];
-                    this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "×›×Ÿ" : (leadingValue.MetaDataValue == "False" ? "×œ×�" : leadingValue.MetaDataValue)) : null;
+                    this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "כן" : (leadingValue.MetaDataValue == "False" ? "לא" : leadingValue.MetaDataValue)) : null;
                     this.LeadingMetaDataName = leading.MetaDataTypeName;
                 }
             }
@@ -435,7 +426,7 @@ export class CustomsDocumentTicketViewModel {
             messageWindow.Width = 400;
             messageWindow.Height = 200;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("×”×”×¦×”×¨×” ×›×‘×¨ ×”×•×’×©×” - ×œ×� × ×™×ª×Ÿ ×œ×§×©×¨ ×ž×¡×ž×›×™×� ×—×“×©×™×�");
+            messageWindow.Show("ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים");
             messageWindow.WindowClosed.subscribe((event: any) => {
 
                 messageWindow.Close();
@@ -722,129 +713,107 @@ export class CustomsDocumentTicketViewModel {
         }
     }
 
-    async ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {    
-        if (relatedDocumentViewModel == null || await this.checkFileBiggerFrom200MB(relatedDocumentViewModel)) return;
-
-        if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == null)
-            relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
-
-        if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)
-            this.connectDocument(relatedDocumentViewModel);
-
-        else if (!relatedDocumentViewModel.CustomDocument.CustomsDocId) {
-            relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
-            this.connectDocument(relatedDocumentViewModel);
-
-        } else if (!relatedDocumentViewModel.CustomDocument.DeclarationId) {
-            if ((await this.confirmConnectionDiffrentDocTypeMsg())) {
+    ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+        if (relatedDocumentViewModel != null) {
+            var fileSizeInMB = relatedDocumentViewModel.FileSize / (1024 * 1024);
+            if (fileSizeInMB > 200) { //if (fileSizeInMB > 30) {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 400;
+                confirmWindow.Height = 200;
+                confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                confirmWindow.ShowNoButton = false;
+                confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+                confirmWindow.Show(TextCodeTranslator.Translate("Customs.General.O.DocumentSizeLimit"));
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        confirmWindow.Close();
+                    }
+                });
+                return;
+            }
+            if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == null) {
                 relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
-                await this.customDocumentNewVersionService.NewVersion(relatedDocumentViewModel.CustomDocument);
-                this.connectDocument(relatedDocumentViewModel);
             }
 
-        } else 
-            this.cnotConnectDiffrentTypeDocumentMessage();        
-    }
+            if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode) {
+                this.customsDocumentMetaDataValuePMs = relatedDocumentViewModel.CustomDocument.CustomsDocumentMetaDataValues;
 
-    private async checkFileBiggerFrom200MB(relatedDocumentViewModel: RelatedDocumentViewModel) {
-        var fileSizeInMB = relatedDocumentViewModel.FileSize / (1024 * 1024);
-        if (fileSizeInMB > 200) { //if (fileSizeInMB > 30) {
-            const confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 400;
-            confirmWindow.Height = 200;
-            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            confirmWindow.ShowNoButton = false;
-            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
-            confirmWindow.Show(TextCodeTranslator.Translate("Customs.General.O.DocumentSizeLimit"));
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) 
-                    confirmWindow.Close();                
-            });
-
-            return true
-        }
-
-        return false;
-    }
-
-    private async confirmConnectionDiffrentDocTypeMsg(): Promise<boolean> {
-        const confirmWindow = new ConfirmWindow();
-        confirmWindow.Show(TextCodeTranslator.Translate("Customs.General.O.ConnectDiffrentTypeMessage"));
-        await confirmWindow.WindowClosedPromise()
-        
-        return confirmWindow.Yes;
-    }
-
-    private connectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {
-        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
-
-        this.customsDocumentMetaDataValuePMs = relatedDocumentViewModel.CustomDocument.CustomsDocumentMetaDataValues;
-
-        //CustomsDocumentsTicketId adjustment mohammad 18.10.14
-        this.customsDocumentsTicketPM.DocumentsFilingId = relatedDocumentViewModel.documentsFilingPM.Id;
-        this.customsDocumentsTicketPM.Name = relatedDocumentViewModel.documentsFilingPM.DocumentTypeName;
-        this.customsDocumentsTicketPM.Extension = relatedDocumentViewModel.documentsFilingPM.FileExtension;
-        this.customsDocumentsTicketPM.FileSize = relatedDocumentViewModel.documentsFilingPM.FileSize;
-        this.customsDocumentsTicketPM.IsMetaDataReady = relatedDocumentViewModel.CustomDocument.IsMetaDataReady;
+                //CustomsDocumentsTicketId adjustment mohammad 18.10.14
+                this.customsDocumentsTicketPM.DocumentsFilingId = relatedDocumentViewModel.documentsFilingPM.Id;
+                this.customsDocumentsTicketPM.Name = relatedDocumentViewModel.documentsFilingPM.DocumentTypeName;
+                this.customsDocumentsTicketPM.Extension = relatedDocumentViewModel.documentsFilingPM.FileExtension;
+                this.customsDocumentsTicketPM.FileSize = relatedDocumentViewModel.documentsFilingPM.FileSize;
+                this.customsDocumentsTicketPM.IsMetaDataReady = relatedDocumentViewModel.CustomDocument.IsMetaDataReady;
 
 
-        /// <---field to refresh Screen
-        this.customsDocumentsTicketPM.DocumentStatusName = relatedDocumentViewModel.CustomDocument.DocumentStatusName;
-        this.customsDocumentsTicketPM.DocumentStatusCode = relatedDocumentViewModel.CustomDocument.DocumentStatusCode;
-        this.customsDocumentsTicketPM.CustomsDocId = relatedDocumentViewModel.CustomDocument.CustomsDocId;
-        this.customsDocumentsTicketPM.ExternalAttachmentId = relatedDocumentViewModel.CustomDocument.ExternalAttachmentId;
-        if (this.EntityPM.Direction == "E") {
-            this.GeneratecustomsDocumentMetaDataValues();
-        }
+                /// <---field to refresh Screen
+                this.customsDocumentsTicketPM.DocumentStatusName = relatedDocumentViewModel.CustomDocument.DocumentStatusName;
+                this.customsDocumentsTicketPM.DocumentStatusCode = relatedDocumentViewModel.CustomDocument.DocumentStatusCode;
+                this.customsDocumentsTicketPM.CustomsDocId = relatedDocumentViewModel.CustomDocument.CustomsDocId;
+                this.customsDocumentsTicketPM.ExternalAttachmentId = relatedDocumentViewModel.CustomDocument.ExternalAttachmentId;
+                if (this.EntityPM.Direction == "E") {
+                    this.GeneratecustomsDocumentMetaDataValues();
+                }
 
-        if (this.isNew) {
+                if (this.isNew) {
 
-            this.SaveGeneratedPointer(relatedDocumentViewModel);
-        }
-        else {
-            var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
-            customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    relatedDocumentViewModel.IsConnected = true;
-                    relatedDocumentViewModel.CustomDocument.IsPartOfDeclaration = true;
-                    this.SetSavedMetaData(relatedDocumentViewModel);
+                    this.SaveGeneratedPointer(relatedDocumentViewModel);
                 }
                 else {
-                    SessionLocator.SelectedSession.StopBusyIndicator();
-                    if (SessionLocator.SelectedSession.CurrentEditComponent) {
-                        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
-                    }
-                    else {
-                        var messageWindow = new MessageWindow();
-                        messageWindow.Width = 400;
-                        messageWindow.Height = 200;
-                        messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                        if (response.ErrorsArray && response.ErrorsArray.length > 0) {
-                            messageWindow.Show(response.ErrorsArray[0]);
+                    var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
+                    customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe((response: ServiceResponse) => {
+                        if (!response.HasError) {
+                            relatedDocumentViewModel.IsConnected = true;
+                            relatedDocumentViewModel.CustomDocument.IsPartOfDeclaration = true;
+                            this.SetSavedMetaData(relatedDocumentViewModel);
                         }
                         else {
-                            messageWindow.Show("Server Error");
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                                SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                            }
+                            else {
+                                var messageWindow = new MessageWindow();
+                                messageWindow.Width = 400;
+                                messageWindow.Height = 200;
+                                messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                if (response.ErrorsArray && response.ErrorsArray.length > 0) {
+                                    messageWindow.Show(response.ErrorsArray[0]);
+                                }
+                                else {
+                                    messageWindow.Show("Server Error");
+                                }
+                                messageWindow.WindowClosed.subscribe((event: any) => {
+
+                                    messageWindow.Close();
+
+                                });
+                            }
                         }
-                        messageWindow.WindowClosed.subscribe((event: any) => {
+                    });
 
-                            messageWindow.Close();
-
-                        });
-                    }
                 }
-            });
+
+            }
+
+            else {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 200;
+                messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                messageWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DocumentAndCustomDocumentType"));
+                messageWindow.WindowClosed.subscribe((event: any) => {
+
+                    messageWindow.Close();
+
+                });
+
+            }
 
         }
-    }
-
-    private cnotConnectDiffrentTypeDocumentMessage() {
-        SessionLocator.SelectedSession.StopBusyIndicator();
-        var messageWindow = new MessageWindow();
-        messageWindow.Width = 400;
-        messageWindow.Height = 200;
-        messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-        messageWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DocumentAndCustomDocumentType"));
-        messageWindow.WindowClosed.subscribe((event: any) => messageWindow.Close());
     }
 
     DisconnectButtonClicked_old(dataContext: CustomsDocumentsComponent) {
@@ -852,7 +821,7 @@ export class CustomsDocumentTicketViewModel {
         if (this.customsDocumentsTicketPM.DocumentStatusCode == "8") {
             //var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
             //if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-            var message = ".×œ×� × ×™×ª×Ÿ ×œ× ×ª×§ ×ž×¡×ž×š ×‘×ª×”×œ×™×š ×�×™×ž×•×ª";
+            var message = ".לא ניתן לנתק מסמך בתהליך אימות";
             //}
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
@@ -870,7 +839,7 @@ export class CustomsDocumentTicketViewModel {
         else if (this.customsDocumentsTicketPM.VerificationStatusTypeCode == "4" || this.customsDocumentsTicketPM.VerificationStatusTypeCode == "5" || this.customsDocumentsTicketPM.VerificationStatusTypeCode == "6") {
             //var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
             //if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-            var message = ".×œ×� × ×™×ª×Ÿ ×œ× ×ª×§ ×ž×¡×ž×š ×�×•×ž×ª/× ×“×—×”";
+            var message = ".לא ניתן לנתק מסמך אומת/נדחה";
             //}
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
@@ -892,7 +861,7 @@ export class CustomsDocumentTicketViewModel {
                         if (this.isDisplayOnly) {
                             var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
                             if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-                                message = ".×œ×� × ×™×ª×Ÿ ×œ× ×ª×§ ×ž×¡×ž×š ×¢×� ×¡×™×ž×•×›×™×Ÿ - ×”×¦×”×¨×” ×œ×ª×¦×•×’×” ×‘×œ×‘×“";
+                                message = ".לא ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד";
                             }
                             var confirmWindow = new ConfirmWindow();
                             confirmWindow.Width = 400;
@@ -923,7 +892,7 @@ export class CustomsDocumentTicketViewModel {
                         else {
                             var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
                             if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-                                message = "×œ×� × ×™×ª×Ÿ ×œ× ×ª×§ ×ž×¡×ž×š × ×“×¨×© â€“ ×§×™×™×ž×ª ×‘×§×©×” ×‘×ª×”×œ×™×š";
+                                message = "לא ניתן לנתק מסמך נדרש – קיימת בקשה בתהליך";
                             }
                             var confirmWindow = new ConfirmWindow();
                             confirmWindow.Width = 400;
@@ -943,7 +912,7 @@ export class CustomsDocumentTicketViewModel {
                         if (response.Result.IsDisplayOnly) {
                             var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
                             if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-                                message = ".×œ×� × ×™×ª×Ÿ ×œ× ×ª×§ ×ž×¡×ž×š ×¢×� ×‘×§×©×” ×‘×ª×”×œ×™×š";
+                                message = ".לא ניתן לנתק מסמך עם בקשה בתהליך";
                             }
                             var confirmWindow = new ConfirmWindow();
                             confirmWindow.Width = 400;
@@ -975,25 +944,25 @@ export class CustomsDocumentTicketViewModel {
             var entitySpecialCondition = this.iCustomsDocumentsController.GetAddEditDocumentsEntitySpecialCondition();
             if ((this.isDisplayOnly || !entitySpecialCondition) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {//(Regular doc in a paid declaration) or just disabled declaration
                 applyDisconnect = false;
-                message = "×”×”×¦×”×¨×” ×œ×ª×¦×•×’×” ×‘×œ×‘×“ - ×œ×� × ×™×ª×Ÿ ×œ× ×ª×§ ×ž×¡×ž×›×™×�";
+                message = "ההצהרה לתצוגה בלבד - לא ניתן לנתק מסמכים";
             }
             if (this.isDisplayOnly && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.CustomsDocId)) {//(Regular doc that was already sent to customs)
                 applyDisconnect = false;
-                message = ".×œ×� × ×™×ª×Ÿ ×œ× ×ª×§ ×ž×¡×ž×š ×¢×� ×¡×™×ž×•×›×™×Ÿ - ×”×¦×”×¨×” ×œ×ª×¦×•×’×” ×‘×œ×‘×“";
+                message = ".לא ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד";
             }
 
             if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {//(Requested doc that was verified/denied/in verification process)
                 applyDisconnect = false;
-                message = ".×œ×� × ×™×ª×Ÿ ×œ× ×ª×§ ×ž×¡×ž×š ×�×•×ž×ª/× ×“×—×”/×‘×ª×”×œ×™×š ×�×™×ž×•×ª";
+                message = ".לא ניתן לנתק מסמך אומת/נדחה/בתהליך אימות";
             }
 
             if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {//Requested Doc that wasn't send to customs for verification allow disconnect according to design.
                 applyDisconnect = true;
-                //message = "×œ×� × ×™×ª×Ÿ ×œ× ×ª×§ ×ž×¡×ž×š × ×“×¨×© â€“ ×§×™×™×ž×ª ×‘×§×©×” ×‘×ª×”×œ×™×š";
+                //message = "לא ניתן לנתק מסמך נדרש – קיימת בקשה בתהליך";
             }
             if (this.customsDocumentsTicketPM.DocumentStatusCode == '7') {
                 applyDisconnect = false;
-                message = "×œ×� × ×™×ª×Ÿ ×œ× ×ª×§ ×�×ª ×”×ž×¡×ž×š - ×§×™×™×ž×ª ×‘×§×©×” ×‘×ª×”×œ×™×š";
+                message = "לא ניתן לנתק את המסמך - קיימת בקשה בתהליך";
             }
         }
         if (applyDisconnect) {
@@ -1177,7 +1146,7 @@ export class CustomsDocumentTicketViewModel {
             messageWindow.Width = 400;
             messageWindow.Height = 200;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("×”×”×¦×”×¨×” ×›×‘×¨ ×”×•×’×©×” - ×œ×� × ×™×ª×Ÿ ×œ×§×©×¨ ×ž×¡×ž×›×™×� ×—×“×©×™×�");
+            messageWindow.Show("ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים");
             messageWindow.WindowClosed.subscribe((event: any) => {
 
                 messageWindow.Close();
