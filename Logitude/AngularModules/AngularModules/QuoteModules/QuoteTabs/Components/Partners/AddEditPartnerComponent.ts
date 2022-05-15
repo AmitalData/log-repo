@@ -133,6 +133,7 @@ export class AddEditPartnerComponent implements OnInit {
                     }
 
                     if (this.oldCustomerPartnerId != this.EntityPM.CustomerId) {
+                        this.DataContext.fatherComponent.OnCustomerGroupChanged(this.oldCustomerPartnerId, this.EntityPM.CustomerId);
                         this.DataContext.fatherComponent.OnCustomerChanged();
                     }
                 }
