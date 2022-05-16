@@ -19,7 +19,8 @@ export class ColumnCheckBoxComponent {
     public packageName: string;
     public columnIndex: string;
     public IsEnabled: boolean = true;
-    public LicenseManagementTitle = null;
+    public LicenseManagementTitle = "";
+    public mainAdditionalPackageApplied = "false";
 
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
@@ -27,7 +28,7 @@ export class ColumnCheckBoxComponent {
         this.packageCode = this.fieldName[0];
         this.columnIndex = this.fieldName[1];
         this.packageName = this.fieldName[2];
-        
+        this.mainAdditionalPackageApplied = this.fieldName[3];
         this.SetIsChecked();
         this.SetLicenseManagementTitle();
     
@@ -38,7 +39,9 @@ export class ColumnCheckBoxComponent {
     }
 
     private SetLicenseManagementTitle() {
-        this.LicenseManagementTitle = "To remove the main package (" + this.packageName +") from a user, please make sure the 'Additional Packages Only' field is checked for that user.";
+        this.LicenseManagementTitle = "";
+        if (this.mainAdditionalPackageApplied == "true")
+            this.LicenseManagementTitle = "To remove the main package (" + this.packageName + ") from a user, please make sure the 'Additional Packages Only' field is checked for that user.";
     }
 
     private SetIsChecked() {
