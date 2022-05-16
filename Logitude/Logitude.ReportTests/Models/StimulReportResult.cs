@@ -2,11 +2,11 @@
 
 namespace Logitude.ReportTests.Models
 {
-    public class StimulReportResult
+    public class StimulReportResult<T> where T : BaseDataProvider
     {
         public int PageCount { get; set; }
         public string ReportKey { get; set; }
         public string StimulImageBase64 { get; set; }
-        public object DataProvider { get; set; }
+        public T DataProvider { get; set; }
     }
 }

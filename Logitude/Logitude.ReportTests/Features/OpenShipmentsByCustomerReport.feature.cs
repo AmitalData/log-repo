@@ -126,19 +126,11 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Value",
-                            "DataType",
-                            "PropertyName",
-                            "EntityName",
-                            "SearchKeyName",
-                            "SearchKeyValue"});
+                            "Map"});
                 table2.AddRow(new string[] {
                             "Customer",
-                            "Abed",
-                            "String",
-                            "CustomerId",
-                            "Card",
-                            "Code",
-                            "70000"});
+                            "TestCustomer",
+                            "CustomerId"});
 #line 10
  testRunner.And("filter fields", ((string)(null)), table2, "And ");
 #line hidden
@@ -154,9 +146,19 @@ this.ScenarioInitialize(scenarioInfo);
                             "ValueOne",
                             "ValueTwo"});
                 table3.AddRow(new string[] {
-                            "CustomerName",
+                            "SelectedCustomerName",
                             "Equal",
-                            "Abed",
+                            "Ahmed",
+                            ""});
+                table3.AddRow(new string[] {
+                            "OpenShipmentsRecord.Open.Id",
+                            "LessThan",
+                            "100",
+                            ""});
+                table3.AddRow(new string[] {
+                            "OpenShipmentsRecordList.ShipperName",
+                            "Equal",
+                            "Ahmed",
                             ""});
 #line 15
  testRunner.And("with values", ((string)(null)), table3, "And ");

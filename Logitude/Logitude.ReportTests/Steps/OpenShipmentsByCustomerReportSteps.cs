@@ -4,17 +4,19 @@ using Logitude.Base.Models.Shared;
 using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using TechTalk.SpecFlow;
+using Logitude.ReportTests.Services.Mapps.Mappers;
+using Logitude.ReportTests.Models.DataProviders;
 
 namespace Logitude.ReportTests.Steps
 {
     [Binding]
     public class OpenShipmentsByCustomerReportSteps
     {
-        private readonly ReportFilterService reportFilterService;
+        private readonly ReportFilterService<OpenShipmentsByCustomerReportFilterMapper> reportFilterService;
         private readonly ReportContext reportContext;
-        private readonly ReportAssertService reportAssertService;
+        private readonly ReportAssertService<OpenShipmentsByCustomerDataProvider> reportAssertService;
 
-        public OpenShipmentsByCustomerReportSteps(ReportFilterService reportFilterService, ReportContext reportContext, ReportAssertService reportAssertService)
+        public OpenShipmentsByCustomerReportSteps(ReportFilterService<OpenShipmentsByCustomerReportFilterMapper> reportFilterService, ReportContext reportContext, ReportAssertService<OpenShipmentsByCustomerDataProvider> reportAssertService)
         {
             this.reportFilterService = reportFilterService;
             this.reportContext = reportContext;
@@ -48,6 +50,7 @@ namespace Logitude.ReportTests.Steps
         [Then(@"with values")]
         public void ThenWithValues(Table table)
         {
+            // reportAssertService.Initialize(new OpenShipmentsByCustomerDataProvider().GetTestData());
             reportAssertService.AssertFields(table);
         }
     }
