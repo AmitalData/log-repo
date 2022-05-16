@@ -561,43 +561,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return dataList;
         }
 
-        private void GetPickUpDeliveryIndexes(ShipmentPickUpPM item, string shipmentNumber)
-        {
-            if (string.IsNullOrEmpty(shipmentNumber))
-            {
-                return;
-            }
-            int slashesCount = item.PickUpDeliveryNumber.Count(t => t == '/');
-            if (slashesCount <= 2)
-            {
-                GetPickUpDeliveryIndexesForTwoSlashes(item);
-            }
-            else
-            {
-                GetPickUpDeliveryIndexesForMultipleSlashes(item, shipmentNumber);
-            }
-        }
-        private void GetPickUpDeliveryIndexesForTwoSlashes(ShipmentPickUpPM item)
-        {
-            string[] numberArray = item.PickUpDeliveryNumber.Split('/');
-
-            item.PickUpDeliveryIndex = Convert.ToInt32(numberArray[1]);
-            if (numberArray.Length > 2)
-            {
-                item.ChildIndex = Convert.ToInt32(numberArray[2]);
-            }
-        }
-        private void GetPickUpDeliveryIndexesForMultipleSlashes(ShipmentPickUpPM item, string shipmentNumber)
-        {
-            string actualickupdeliveryNumber = item.PickUpDeliveryNumber.Replace(shipmentNumber + "/", "");
-            string[] numberArray = actualickupdeliveryNumber.Split('/');
-            item.PickUpDeliveryIndex = Convert.ToInt32(numberArray[0]);
-            if (numberArray.Length > 1)
-            {
-                item.ChildIndex = Convert.ToInt32(numberArray[1]);
-            }
-        }
-
         public ShipmentPickUpPM GetFistShipmentPickUpPMByTenantAndShipmentId(string shipmentId, string shipmentNumber, int tenant)
         {
             ShipmentPickUpPM shipmentPickUpPM = (from entityPOCO in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode")
