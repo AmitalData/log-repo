@@ -3840,7 +3840,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
                     AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
                     journalUpdate.Update(journal);
-                    BuildSearchFieldForInterest(journal.JournalNumber, entityPM.InvoiceNumber);
+                    if (interestTransaction != null) {
+                        BuildSearchFieldForInterest(journal.JournalNumber, entityPM.InvoiceNumber);
+                    }
                 }
             }
         }

@@ -189,7 +189,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     throw new OptimisticConcurrencyException(msg);
                 }
             }
-            if (!entityPM.IsUpdatedOceanInsightsAnalyzer)
+            if (!entityPM.IsUpdatedOceanInsightsAnalyzer && !entityPM.IsHybrid)
             {
                 ValidateOceanInsightsConcurrencyGUID(entityPM, entityPoco);
             }
