@@ -146,9 +146,19 @@ this.ScenarioInitialize(scenarioInfo);
                             "ValueOne",
                             "ValueTwo"});
                 table3.AddRow(new string[] {
-                            "CustomerName",
+                            "SelectedCustomerName",
                             "Equal",
-                            "Abed",
+                            "Ahmed",
+                            ""});
+                table3.AddRow(new string[] {
+                            "OpenShipmentsRecord.Open.Id",
+                            "LessThan",
+                            "100",
+                            ""});
+                table3.AddRow(new string[] {
+                            "OpenShipmentsRecordList.ShipperName",
+                            "Equal",
+                            "Ahmed",
                             ""});
 #line 15
  testRunner.And("with values", ((string)(null)), table3, "And ");

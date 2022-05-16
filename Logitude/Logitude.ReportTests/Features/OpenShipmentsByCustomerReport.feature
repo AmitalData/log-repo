@@ -13,5 +13,7 @@ Scenario: Run Report
 	When run report
 	Then the report should run successfully
 	And with values
-		| FieldName    | Operation | ValueOne | ValueTwo |
-		| CustomerName | Equal     | Abed     |          |
+		| FieldName                           | Operation | ValueOne | ValueTwo |
+		| SelectedCustomerName                | Equal     | Ahmed    |          |
+		| OpenShipmentsRecord.Open.Id         | LessThan  | 100      |          |
+		| OpenShipmentsRecordList.ShipperName | Equal     | Ahmed    |          |

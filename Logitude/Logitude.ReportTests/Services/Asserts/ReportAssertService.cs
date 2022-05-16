@@ -4,11 +4,10 @@ using Logitude.Base.Models.Shared;
 using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using System;
-using TechTalk.SpecFlow;
 
 namespace Logitude.ReportTests.Services
 {
-    public class ReportAssertService : ReportDataAssertService
+    public class ReportAssertService<T> : ReportDataAssertService<T> where T : BaseDataProvider
     {
         public void Assert(ReportFliter reportFilter)
         {
@@ -38,11 +37,10 @@ namespace Logitude.ReportTests.Services
         private void AssertStimulReportResult(ReportFliter reportFilter)
         {
             reportFilter.ProcessType = "ReportsRunUsingWR";
-            StimulReportResult stimulReportResult = APICaller.CallPut<StimulReportResult>(reportFilter, Urls.ReportController, UserTenant.Token)?.Data;
+            StimulReportResult<T> stimulReportResult = APICaller.CallPut<StimulReportResult<T>>(reportFilter, Urls.ReportController, UserTenant.Token)?.Data;
             stimulReportResult.Should().NotBeNull();
             stimulReportResult.StimulImageBase64.Should().NotBeNull();
             Initialize(stimulReportResult.DataProvider);
         }
-
     }
 }
