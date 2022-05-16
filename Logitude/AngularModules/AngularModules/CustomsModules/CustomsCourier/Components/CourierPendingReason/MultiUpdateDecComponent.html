@@ -15,16 +15,16 @@
                 <table>
                     <tr>
                         <td style="width:140px">
-                            <LogLabel [ObjectFieldName]="'ProcessTypeCode'" [ObjectTableName]="'Customs.SupplierInvoiceItemProcesType'"
+                            <LogLabel [ObjectFieldName]="'ProcedureCurrentCode'" [ObjectTableName]="'Customs.Declaration'"
                                       [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:160px">
-                            <LogLov tabindex="1" [ObjectFieldName]="'ProcessTypeCode'"
-                                    [ObjectTableName]="'Customs.SupplierInvoiceItemProcesType'"
+                            <LogLov tabindex="1" [ObjectFieldName]="'ProcedureCurrentCode'"
+                                    [ObjectTableName]="'Customs.Declaration'"
                                     [DataContext]="DataContext"
-                                    [LookUpTableName]="'Customs.ItemGovernmentProcedureType'"
+                                    [LookUpTableName]="'Customs.GovernmentProcedureType'"
                                     [HideColumns]="true"
-                                    [SelectedValue]="ProcessTypeCode">
+                                    [SelectedValue]="ProcedureCurrentCode">
                             </LogLov>
                         </td>
                         <td><div></div></td>

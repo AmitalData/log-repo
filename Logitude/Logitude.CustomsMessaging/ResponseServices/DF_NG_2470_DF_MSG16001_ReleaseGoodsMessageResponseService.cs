@@ -36,7 +36,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         : ResponseServiceBase<ReleaseGoodsResponseData, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage, GenericRequestParams>
     {
         private bool _LockResponseService2470Feature;
-        
+
 
         public override ReleaseGoodsResponseData GetResponse(DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
         {
@@ -99,7 +99,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
                     }
 
-                    
+
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                     CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
                     if (declarationPM.IsAmendment == true && declarationPM.AmendmentOriginalDeclartation != null)
@@ -115,10 +115,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
-                            if (declarationPM.Direction == "E")
+                            var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
+                            if (setting.IsConnectedToUniFreight)
                             {
-                                RaiseEvent(declarationPM, null, status_id: "HTR", status_DateTime: statusDateTime);
+                                if (declarationPM.Direction == "E")
+                                {
+                                    RaiseEvent(declarationPM, null, status_id: "HTR", status_DateTime: statusDateTime);
+                                }
                             }
+
                             if (declarationPM.IsCourierDeclaration)
                             {
                                 // update NoOfCourierHawbwWithoutHatara
