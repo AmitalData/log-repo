@@ -37,6 +37,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsRelevantInvoiceExport { get; set; }
         [Column("IsRelevantGoodsItemExport")]
 	    public bool IsRelevantGoodsItemExport { get; set; }
+        [Column("ExtraNumericData")]
+	    public int ExtraNumericData { get; set; }
     }
 }
 	 

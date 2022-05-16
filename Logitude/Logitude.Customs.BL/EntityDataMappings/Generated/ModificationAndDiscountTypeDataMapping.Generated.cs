@@ -30,7 +30,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsRelevantGoodsItem, 
 	         IsRelevantInvoice, 
 	         IsRelevantInvoiceExport, 
-	         IsRelevantGoodsItemExport,
+	         IsRelevantGoodsItemExport, 
+	         ExtraNumericData,
 	      }
 
 
@@ -45,7 +46,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsRelevantGoodsItem, 
 	         IsRelevantInvoice, 
 	         IsRelevantInvoiceExport, 
-	         IsRelevantGoodsItemExport,
+	         IsRelevantGoodsItemExport, 
+	         ExtraNumericData,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -92,6 +94,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantGoodsItemExport))
             {
 				entityPOCO.IsRelevantGoodsItemExport = entityPM.IsRelevantGoodsItemExport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExtraNumericData))
+            {
+				entityPOCO.ExtraNumericData = entityPM.ExtraNumericData;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -145,6 +152,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsRelevantGoodsItemExport = entityPOCO.IsRelevantGoodsItemExport;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExtraNumericData))
+            {
+					entityPM.ExtraNumericData = entityPOCO.ExtraNumericData;
+            }
+
 		}
 
 		public void PMToOldPM(ModificationAndDiscountTypePM entityPM, ModificationAndDiscountTypePM oldEntityPM)
@@ -189,6 +201,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantGoodsItemExport))
             {
                 oldEntityPM.IsRelevantGoodsItemExport = entityPM.IsRelevantGoodsItemExport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExtraNumericData))
+            {
+                oldEntityPM.ExtraNumericData = entityPM.ExtraNumericData;
             }
 			
 		}
