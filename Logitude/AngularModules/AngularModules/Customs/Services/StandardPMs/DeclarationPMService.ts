@@ -1,3 +1,4 @@
+//file not found! child composition Elastic
 //file not found! child composition DeclarationErrorView
 //file not found! child composition DecDangersContact
 //------------------------------------------------------------------------------
@@ -23,6 +24,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {DeclarationPM} from '../../EntityPMs/DeclarationPM';
 
+import {ElasticPM} from '../../EntityPMs/ElasticPM';
 import {ConsignmentPM} from '../../EntityPMs/ConsignmentPM';
 
 import {ConsignmentPackagePM} from '../../EntityPMs/ConsignmentPackagePM';
@@ -230,6 +232,7 @@ export class DeclarationPMService {
                  
             }
 			
+               this.MapCustomerName(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapConsignments(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapSupplierInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapDeclarationTaxes(entityPM, jsonPM, mapParent); // Call composition tables map methods
@@ -244,6 +247,15 @@ export class DeclarationPMService {
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
 			   			   
+            entityPM.OldEntityPM.CustomerName = [];
+            for (var item in entityPM.CustomerName) {
+            var myElasticPM = entityPM.CustomerName[item];
+            var newElasticPM: ElasticPM = this.clone(myElasticPM);
+						
+							 
+            entityPM.OldEntityPM.CustomerName.push(newElasticPM);
+            }
+			   			   			   
             entityPM.OldEntityPM.Consignments = [];
             for (var item in entityPM.Consignments) {
             var myConsignmentPM = entityPM.Consignments[item];
@@ -488,6 +500,32 @@ export class DeclarationPMService {
         return entityPM;
     }
 
+    MapCustomerName(entityPM: DeclarationPM, jsonPM: any, mapParent: boolean = true) {
+
+        entityPM.CustomerName = new Array<ElasticPM>();
+        for (var item in jsonPM.CustomerName) {
+
+            var jItem = jsonPM.CustomerName[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newElasticPM: ElasticPM;
+            newElasticPM = new ElasticPM();
+		    newElasticPM.DisableMarkAsDirty = true;                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+			
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newElasticPM[pmProperty] = jItem[pmProperty];
+            }
+			newElasticPM.DisableMarkAsDirty = false;
+            newElasticPM.IsDirty = false;
+            entityPM.CustomerName.push(newElasticPM);
+        }
+    }
     MapConsignments(entityPM: DeclarationPM, jsonPM: any, mapParent: boolean = true) {
 
         var oldConsignments: ConsignmentPM[] = [];

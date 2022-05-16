@@ -85,9 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-
-		public const string HashString = "9de5d33933bce310c60c2ededdf17014";
-
+		public const string HashString = "fefecb6f155ac9f450874dcf818f0645";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2089,10 +2087,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOClosingCancellations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClosingCancellations", DefaultText = "Closing Cancellations",LocalDefaultText = @"סגירת ביטולים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralODeclarationStatClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeclarationStatClosed", DefaultText = "Declaration closed with closed status",LocalDefaultText = @"הצהרה נסגרה עם סטאטוס סגור", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-            
-           TextCode CustomsGeneralTextCode_CustomsGeneralONoDetailsForActualFreightAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NoDetailsForActualFreightAmount", DefaultText = "Not have amount Actual freight Actual details for supplier", LocalDefaultText = @"אין פרטי מחיר הובלה בפועל ליצואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-            TextCode CustomsGeneralTextCode_CustomsGeneralOClosingProcessStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClosingProcessStatus", DefaultText = "Closing process with status",LocalDefaultText = @"תהליך סגירה עם סטאטוס", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOClosingProcessStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClosingProcessStatus", DefaultText = "Closing process with status",LocalDefaultText = @"תהליך סגירה עם סטאטוס", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOConnectDiffrentTypeMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ConnectDiffrentTypeMessage", DefaultText = "Document type is different from the type of document in the ticket, a link will create a new document version",LocalDefaultText = @"סוג מסמך שונה מסוג מסמך בטיקט, קישור יגרום ליצירת גרסת מסמך חדשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
