@@ -93,6 +93,7 @@
             this.rabbitMQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recivedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uW2LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.textBoxOverrideRMQ = new System.Windows.Forms.TextBox();
@@ -634,6 +635,13 @@
             this.recivedToolStripMenuItem.Text = "Recived";
             this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
             // 
+            // uW2LToolStripMenuItem
+            // 
+            this.uW2LToolStripMenuItem.Name = "uW2LToolStripMenuItem";
+            this.uW2LToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.uW2LToolStripMenuItem.Text = "UW2L";
+            this.uW2LToolStripMenuItem.Click += new System.EventHandler(this.uW2LToolStripMenuItem_Click);
+            // 
             // textBoxLogger
             // 
             this.textBoxLogger.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -718,6 +726,7 @@
             this._TBID.Name = "_TBID";
             this._TBID.Size = new System.Drawing.Size(281, 20);
             this._TBID.TabIndex = 6;
+            this._TBID.TextChanged += new System.EventHandler(this._TBID_TextChanged);
             // 
             // label3
             // 
@@ -757,6 +766,7 @@
             this._CBInterfaceID.Name = "_CBInterfaceID";
             this._CBInterfaceID.Size = new System.Drawing.Size(125, 21);
             this._CBInterfaceID.TabIndex = 3;
+            this._CBInterfaceID.SelectedIndexChanged += new System.EventHandler(this._CBInterfaceID_SelectedIndexChanged);
             // 
             // Interface
             // 
