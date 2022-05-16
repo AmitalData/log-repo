@@ -346,6 +346,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
             CardPM card = GetCardById(billToId, tenant);
+            if(card.GLAccountId == null) return null;
             GLAccountPM billToAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
             if (billToAccount != null)
             {
