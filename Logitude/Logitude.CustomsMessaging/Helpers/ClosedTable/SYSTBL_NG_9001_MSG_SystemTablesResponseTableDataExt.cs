@@ -50,6 +50,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     {
         public Boolean IsRelevantGoodsItem { get; set; }
         public Boolean IsRelevantInvoice { get; set; }
+        public string ExtraNumericData { get; set; }
     }
     public class NDMessageActionCode
     {

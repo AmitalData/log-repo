@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsRelevantInvoice  { get; set; }
        [DataMember]
-       public int? ExtraNumericData  { get; set; }
+       public string ExtraNumericData  { get; set; }
    }
 
 }

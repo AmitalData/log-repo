@@ -181,12 +181,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? extraNumericData ;
+	  private string extraNumericData ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? ExtraNumericData  
+       public string ExtraNumericData  
 	   {
 	    
 	     get
@@ -197,7 +197,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(extraNumericData != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExtraNumericData",OldValue=extraNumericData,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExtraNumericData",OldValue=extraNumericData,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   extraNumericData=value;
 		   }

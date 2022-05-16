@@ -53,7 +53,8 @@
   </Column>
   <Column
     Name="ExtraNumericData"
-    Type="int">
+    Type="nvarchar"
+    Size="5">
     <Constraints
       Nullable="true" />
   </Column>
