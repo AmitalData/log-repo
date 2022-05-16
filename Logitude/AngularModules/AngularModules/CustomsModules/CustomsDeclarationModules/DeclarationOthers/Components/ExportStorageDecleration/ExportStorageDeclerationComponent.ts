@@ -328,7 +328,8 @@ debugger;
 
                                 this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
                                 this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
-                                    isConsignment.ExportStoragesId = ExportStorageId;
+                                  var index= this.declarationPM.Consignments.findIndex(u=>u==isConsignment)
+                                   this.declarationPM.Consignments[index].ExportStoragesId = ExportStorageId;
                                     this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
                                     });
                                 });
