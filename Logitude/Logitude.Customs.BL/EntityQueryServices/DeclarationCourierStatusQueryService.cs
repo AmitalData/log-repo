@@ -572,6 +572,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
         }
 
+        public IQueryable<string> GetQCustomsWithheld(int tenant)
+        {
+            ICustomContext context = MainContext as CustomContext;
+
+            var q = (from dcs in this.repository.GetAll(tenant)
+                  .Where(x => x.IsClosedForFollowUp == false)
+                     join d in context.Declarations
+                     .Where(x => x.Tenant == tenant
+                     && x.AmendmentDontDisplayInList == false
+                     && x.IsCancelled == false
+                     && x.CourierCustomStatusCode == "2")
+                     on dcs.DeclarationId equals d.Id
+                     select d.Id);
+
+
+            return q;
+
+        }
     }
 
 

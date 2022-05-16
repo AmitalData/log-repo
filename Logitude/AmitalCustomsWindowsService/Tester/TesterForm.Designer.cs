@@ -93,6 +93,7 @@
             this.rabbitMQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recivedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uW2LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -105,7 +106,6 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.uW2LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -623,16 +623,23 @@
             // sendToolStripMenuItem
             // 
             this.sendToolStripMenuItem.Name = "sendToolStripMenuItem";
-            this.sendToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sendToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.sendToolStripMenuItem.Text = "Send";
             this.sendToolStripMenuItem.Click += new System.EventHandler(this.sendToolStripMenuItem_Click);
             // 
             // recivedToolStripMenuItem
             // 
             this.recivedToolStripMenuItem.Name = "recivedToolStripMenuItem";
-            this.recivedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recivedToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.recivedToolStripMenuItem.Text = "Recived";
             this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
+            // 
+            // uW2LToolStripMenuItem
+            // 
+            this.uW2LToolStripMenuItem.Name = "uW2LToolStripMenuItem";
+            this.uW2LToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.uW2LToolStripMenuItem.Text = "UW2L";
+            this.uW2LToolStripMenuItem.Click += new System.EventHandler(this.uW2LToolStripMenuItem_Click);
             // 
             // textBoxLogger
             // 
@@ -700,6 +707,7 @@
             this._TBID.Name = "_TBID";
             this._TBID.Size = new System.Drawing.Size(281, 20);
             this._TBID.TabIndex = 6;
+            this._TBID.TextChanged += new System.EventHandler(this._TBID_TextChanged);
             // 
             // label3
             // 
@@ -739,6 +747,7 @@
             this._CBInterfaceID.Name = "_CBInterfaceID";
             this._CBInterfaceID.Size = new System.Drawing.Size(76, 21);
             this._CBInterfaceID.TabIndex = 3;
+            this._CBInterfaceID.SelectedIndexChanged += new System.EventHandler(this._CBInterfaceID_SelectedIndexChanged);
             // 
             // Interface
             // 
@@ -765,13 +774,6 @@
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
-            // 
-            // uW2LToolStripMenuItem
-            // 
-            this.uW2LToolStripMenuItem.Name = "uW2LToolStripMenuItem";
-            this.uW2LToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.uW2LToolStripMenuItem.Text = "UW2L";
-            this.uW2LToolStripMenuItem.Click += new System.EventHandler(this.uW2LToolStripMenuItem_Click);
             // 
             // TesterForm
             // 
