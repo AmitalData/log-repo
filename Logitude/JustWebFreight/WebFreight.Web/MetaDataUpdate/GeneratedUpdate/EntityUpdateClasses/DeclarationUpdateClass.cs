@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "df1e7ca57ab0bafcb2a6c97e8d5c9091";
+		public const string HashString = "e0a97aee88a063a378a717d2d4a7743d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -19134,7 +19134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsGeneralONext = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Next", DefaultText = "Next",LocalDefaultText = @"הבא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsGeneralOPrevious = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Previous", DefaultText = "Previous",LocalDefaultText = @"קודם", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsGeneralOPrevious = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Previous", DefaultText = "Previous",LocalDefaultText = @"הקודם", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOProtest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Protest", DefaultText = "Protest",LocalDefaultText = @"אגב מחאה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
