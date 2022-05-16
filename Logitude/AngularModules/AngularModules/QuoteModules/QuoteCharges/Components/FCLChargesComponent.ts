@@ -128,6 +128,11 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                     this.BuildItemsSource();
                     this.BuildProfitData();
                 }
+
+                else if (s == "UpdateTariffSaleCharges") {
+                    this.CheckUpdateSalesCharges();
+                }
+
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -142,6 +147,11 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                     if (this.IsGenerateSalesLocalCharges) {
                         this.IsGenerateSalesLocalCharges = false;
                         this.GenerateSalesLocalCharges();
+                    }
+
+                    if (this.IsUpdatingSalesCharges) {
+                        this.IsUpdatingSalesCharges = false;
+                        this.UpdateTariffSalesChargesLines();
                     }
                 }
             });
@@ -620,6 +630,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     private IsGenerateSalesLocalCharges = false;
+  
     GenerateSalesLocalChargesClicked() {
         this.IsGenerateSalesLocalCharges = true;
         this.entityArgs.EditComponent.SaveChanges();
@@ -705,7 +716,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.ChargesTypeLocalName = chargesType.LocalName;
                 chargePM.SaleTariffId = item.TariffId;
                 chargePM.SaleTariffNumber = item.TariffNumber;
-                chargePM.SaleTariffLineId = item.LineId;
+                chargePM.SaleTariffLineId = item.TariffLineId;
                 chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
                 chargePM.Tenant = this.EntityPM.Tenant;
                 chargePM.QuoteId = this.EntityPM.Id;
@@ -753,7 +764,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 var chargePM: FCLQuoteChargeItem = new FCLQuoteChargeItem(quoteCharge, this, false);
                 chargePM.SaleTariffId = item.TariffId;
                 chargePM.SaleTariffNumber = item.TariffNumber;
-                chargePM.SaleTariffLineId = item.LineId;
+                chargePM.SaleTariffLineId = item.TariffLineId;
                 chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
                 chargePM.MarkUpTypeCode = "F";
                 chargePM.MarkUpValue = 0;
@@ -910,10 +921,47 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            var argumentsPriceCheck = { VersionId: item.SaleTariffVersion, LineId: item.SaleTariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
+
+            var code = item.SaleTariffVersion.toString();
+            if (!AppTool.IsNullOrEmpty(item.SaleTariffLineId)) {
+                code = code + "," + item.SaleTariffLineId;
+            }
+
+            var argumentsPriceCheck = { VersionId: item.SaleTariffVersion.toString(), LineId: item.SaleTariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
             editWindow.EditComponentArguments = argumentsPriceCheck;
-            editWindow.ShowEditComponent(item.SaleTariffId, "Tariff");
+            editWindow.ShowEditComponent(item.SaleTariffId, "Tariff", code);
         }
+    }
+
+    public UpdateSalesChargesMessage: string;
+    public UpdateSalesChargesMessageWidth: number = 0;
+    public IsUpdateSalesChargesVisible: boolean = false;
+    public IsUpdatingSalesCharges: boolean = false;
+    CheckUpdateSalesCharges() {
+        var updateMessage: string = null;
+        updateMessage = "Customer has been changed, update the generated sales tariff amounts?";
+        this.UpdateSalesChargesMessage = updateMessage;
+        this.UpdateSalesChargesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
+        this.IsUpdateSalesChargesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+
+    }
+
+    UpdateSalesChargesClicked() {
+        this.IsUpdatingSalesCharges = true;
+        
+        this.entityArgs.EditComponent.SaveChanges();
+    }
+
+    UpdateTariffSalesChargesLines() {
+        this.UpdateSalesChargesMessage = null;
+        this.UpdateSalesChargesMessageWidth = 0;
+        this.IsUpdateSalesChargesVisible = false;
+        this.EntityPM.QuoteCharges.forEach(item => {
+            item.SaleTariffId = null;
+            item.SaleTariffNumber = null;
+            item.SaleTariffLineId = null;
+        });
+        this.GenerateSalesLocalCharges();
     }
 
     DeleteTariff(item: FCLQuoteChargeItem) {
@@ -921,6 +969,14 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             item.TariffId = null;
             item.TariffNumber = null;
             item.TariffLineId = null;
+            item.SetUIProperties();
+        }
+    }
+    DeleteSaleTariff(item: FCLQuoteChargeItem) {
+        if (item != null) {
+            item.SaleTariffId = null;
+            item.SaleTariffNumber = null;
+            item.SaleTariffLineId = null;
             item.SetUIProperties();
         }
     }

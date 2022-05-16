@@ -102,12 +102,19 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     SetFeaturesAndFlags() {
         this.IsRegionalTaxVisible = this.Behaviours.IsRegionalTaxVisible();
     }
-
+    private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null; 
     Listen() {
         if (this.entityArgs.EditComponent) {
+
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "UpdateTariffSaleCharges") {
+                    this.CheckUpdateSalesCharges();
+                }
+
+            });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
@@ -122,6 +129,11 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                         this.IsGenerateSalesLocalCharges = false;
                         this.GenerateSalesLocalCharges();
                     }
+                    if (this.IsUpdatingSalesCharges) {
+                        this.IsUpdatingSalesCharges = false;
+                        this.UpdateTariffSalesChargesLines();
+                    }
+
                 }
             });
 
@@ -153,6 +165,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         }
     }
     ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
@@ -432,7 +445,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.ChargesTypeLocalName = chargesType.LocalName;
                 chargePM.SaleTariffId = item.TariffId;
                 chargePM.SaleTariffNumber = item.TariffNumber;
-                chargePM.SaleTariffLineId = item.LineId;
+                chargePM.SaleTariffLineId = item.TariffLineId;
                 chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
                 chargePM.Tenant = this.EntityPM.Tenant;
                 chargePM.QuoteId = this.EntityPM.Id;
@@ -468,7 +481,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 var chargePM: QuoteChargeItem = new QuoteChargeItem(quoteCharge, this, false);
                 chargePM.SaleTariffId = item.TariffId;
                 chargePM.SaleTariffNumber = item.TariffNumber;
-                chargePM.SaleTariffLineId = item.LineId;
+                chargePM.SaleTariffLineId = item.TariffLineId;
                 chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
                 chargePM.MarkUpTypeCode = "F";
                 chargePM.MarkUpValue = 0;
@@ -558,11 +571,46 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            var argumentsPriceCheck = { VersionId: item.SaleTariffVersion, LineId: item.SaleTariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
+            var code = item.SaleTariffVersion.toString();
+            if (!AppTool.IsNullOrEmpty(item.SaleTariffLineId)) {
+                code = code + "," + item.SaleTariffLineId;
+            }
+
+            var argumentsPriceCheck = { VersionId: item.SaleTariffVersion.toString(), LineId: item.SaleTariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
             editWindow.EditComponentArguments = argumentsPriceCheck;
-            editWindow.ShowEditComponent(item.SaleTariffId, "Tariff");
+            editWindow.ShowEditComponent(item.SaleTariffId, "Tariff", code);
         }
     }
+
+    public UpdateSalesChargesMessage: string;
+    public UpdateSalesChargesMessageWidth: number = 0;
+    public IsUpdateSalesChargesVisible: boolean = false;
+    public IsUpdatingSalesCharges: boolean = false;   
+    CheckUpdateSalesCharges() {
+        var updateMessage: string = null;
+        updateMessage = "Customer has been changed, update the generated sales tariff amounts?";
+        this.UpdateSalesChargesMessage = updateMessage;
+        this.UpdateSalesChargesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
+        this.IsUpdateSalesChargesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+    }
+
+    UpdateSalesChargesClicked() {
+        this.IsUpdatingSalesCharges = true;
+        this.entityArgs.EditComponent.SaveChanges();
+    }
+
+    UpdateTariffSalesChargesLines() {
+        this.UpdateSalesChargesMessage = null;
+        this.UpdateSalesChargesMessageWidth = 0;
+        this.IsUpdateSalesChargesVisible = false;
+        this.EntityPM.QuoteCharges.forEach(item => {
+            item.SaleTariffId = null;
+            item.SaleTariffNumber = null;
+            item.SaleTariffLineId = null;
+        });
+        this.GenerateSalesLocalCharges();
+    }
+
     DeleteTariff(item: QuoteChargeItem) {
         if (item != null) {
             item.TariffId = null;
@@ -570,7 +618,14 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             item.SetUIProperties();
         }
     }
-
+    DeleteSaleTariff(item: QuoteChargeItem) {
+        if (item != null) {
+            item.SaleTariffId = null;
+            item.SaleTariffNumber = null;
+            item.SaleTariffLineId = null;
+            item.SetUIProperties();
+        }
+    }
     // Profit
     InitializeProfit() {
         this.SelectedCurrencyCode = this.SaleCurrencyCode;
