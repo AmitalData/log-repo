@@ -51,4 +51,10 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ExtraNumericData"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>
