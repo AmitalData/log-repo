@@ -239,7 +239,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     invoiceElement.Card.Name = myPartnerCard.EnglishName;
                     invoiceElement.Card.VATNumber = myPartnerCard.VatNumber;
 
-                    AddressPM address = addressQuery.GetSingleAddressPM(item.BillToAddressId, tenant, true);
+                    AddressPM address = addressQuery.GetSingleAddressPM(item.BillToAddressId, tenant, !ReturnEntityFile);
                     if (address != null)
                     {
                         invoiceElement.Card.Address1 = address.Address1;
