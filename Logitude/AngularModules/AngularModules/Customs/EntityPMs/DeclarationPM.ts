@@ -67,9 +67,9 @@ export class DeclarationPM {
     public set DeclarationNumber(newValue: string) { if (this.declarationNumber != newValue) { this.declarationNumber = newValue; this.MarkAsDirty("DeclarationNumber"); } }
        
 	 
-    private customerName: string;
-    public get CustomerName() { return this.customerName; }
-    public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
+    private customerName: CustomFieldClass;
+    public get CustomerName() {if(!this.customerName){ this.customerName = new CustomFieldClass(null, "CustomerName", "Declaration");} return this.customerName; }
+    public set CustomerName(newValue: CustomFieldClass) {  this.customerName = newValue; this.MarkAsDirty("CustomerName");  }
        
 	 
     private versionId: string;

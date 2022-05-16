@@ -214,6 +214,7 @@ export class DeclarationList {
 	TerminalReleaseDate: Date;
 	IntegratorCode: string;
 	IsExportClosed: boolean;
+	DeclarationTypeName: string;
 	
 }
  
