@@ -714,6 +714,7 @@
     <Compile Include="QuoteModel\EntityLists\ValidByTypeList.cs" />
     <Compile Include="QuoteModel\EntityPMs\ValidByTypePM.cs" />
     <Compile Include="QuoteModel\EntityQueries\ValidByTypeQuery.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteOpportunityBehaviour.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteTemplateSettingDataBuilder.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ContainerData.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUpDeliveryFromToType.Generated.cs" />

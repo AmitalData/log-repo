@@ -138,13 +138,12 @@ namespace Logitude.BL.QuoteModel.Tools.Initializers
             serviceBehaviours.Add(new QuoteFieldsBehaviour());
             serviceBehaviours.Add(new QuoteSalesmanBehavior());
             serviceBehaviours.Add(new UpdateQuoteComputedFieldBehaviour());
+            serviceBehaviours.Add(new QuoteOpportunityBehaviour());
 
             foreach (IServiceBehaviour behaviour in serviceBehaviours)
             {
                 behaviour.Handle(this);
             }
         }
-
-
     }
 }

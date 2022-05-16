@@ -232,6 +232,8 @@ namespace Logitude.CRM.Data.EntityLists
        public string Field39  { get; set; }
        [DataMember]
        public string Field40  { get; set; }
+       [DataMember]
+       public int? NumberOfConnectedQuotes  { get; set; }
    }
 
 }

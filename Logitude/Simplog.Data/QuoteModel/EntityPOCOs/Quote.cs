@@ -417,6 +417,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string ValidByTypeCode { get; set; }
         [ForeignKey("ValidByTypeCode")]
         public virtual ValidByType ValidByType { get; set; }
-
+        public bool? ConnectedToOpportunity { get; set; }
     }
 }

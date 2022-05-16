@@ -7385,7 +7385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllOpenTicketsQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllOpenTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MyAllOpenTickets", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllOpenTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MyAllOpenTickets", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -7426,7 +7426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn UnassignedTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter UnassignedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MyUnassignedTickets", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter UnassignedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MyUnassignedTickets", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -7505,7 +7505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn SolvedTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter SolvedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MySolvedTickets", PredefinedValue = "true",PredefinedValue2 = null, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter SolvedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MySolvedTickets", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -7534,7 +7534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn SolvedwithSLAFailuresQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Ticket.TicketFirstResolveTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter SolvedwithSLAFailuresQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MySolvedSLATickets", PredefinedValue = "true",PredefinedValue2 = null, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter SolvedwithSLAFailuresQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MySolvedSLATickets", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -7575,7 +7575,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn SLAFailuresQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter SLAFailuresQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MySLAFailures", PredefinedValue = "true",PredefinedValue2 = null, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter SLAFailuresQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MySLAFailures", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -7618,7 +7618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllCancelledTicketsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllCancelledTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllCancelledTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -7647,7 +7647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn RecentlyUpdatedTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Ticket.TicketFirstResolveTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter RecentlyUpdatedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MyRecentlyUpdatedTickets", PredefinedValue = "true",PredefinedValue2 = null, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter RecentlyUpdatedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MyRecentlyUpdatedTickets", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

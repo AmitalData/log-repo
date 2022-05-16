@@ -1,0 +1,35 @@
+﻿<Script DBType="Main" Module="CRM" AOT="true" TargetTableName="Opportunities">
+  <Sql Version="2">
+    <![CDATA[    
+
+
+			declare @Tenant as int
+			declare @OpportunityId as varchar(15)
+			declare @NumberOfQoutes as int
+
+			BEGIN
+					DECLARE OpportunitiesCursor CURSOR READ_ONLY
+					FOR
+					SELECT Id, Tenant
+					FROM Opportunities
+					WHERE $LastCounterWhere$
+					OPEN OpportunitiesCursor FETCH NEXT FROM OpportunitiesCursor INTO @OpportunityId, @Tenant
+					WHILE @@FETCH_STATUS = 0
+						BEGIN
+
+							set @NumberOfQoutes =  (select COUNT(*) from Quotes where Tenant = @Tenant and OpportunityId = @OpportunityId)				
+              
+              if(@NumberOfQoutes > 0)
+              begin
+								update Opportunities set NumberOfConnectedQuotes = @NumberOfQoutes where Id = @OpportunityId				
+							end
+              
+						FETCH NEXT FROM OpportunitiesCursor INTO @OpportunityId,  @Tenant
+						END
+					CLOSE OpportunitiesCursor
+					DEALLOCATE OpportunitiesCursor
+			END
+
+    ]]>
+  </Sql>
+</Script>

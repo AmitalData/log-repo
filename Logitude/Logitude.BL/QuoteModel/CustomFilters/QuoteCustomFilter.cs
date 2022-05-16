@@ -381,14 +381,19 @@ namespace Logitude.BL.QuoteModel
                         }                         
                     }
 
-                    //if (item.FieldName == "MyFollowUps")
-                    //{
-                    //    string email = SecurityUtility.GetAuthenticatedUser();
-                    //    ContactQuery contactQuery = new ContactQuery(tenant);
-                    //    ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
+                    if (item.FieldName == "ConnectedToOpportunity")
+                    {
+                        bool value = Convert.ToBoolean(item.FieldValue);
+                        if (value)
+                        {
+                            queryableData = queryableData.Where(d => d.ConnectedToOpportunity == true);
+                        }
 
-                    //    queryableData = queryableData.Where(d => d.FollowUpOwnerId == loggedContact.Id);
-                    //}
+                        else
+                        {
+                            queryableData = queryableData.Where(d => d.ConnectedToOpportunity == false || d.ConnectedToOpportunity == null);
+                        }
+                    }
                 }
             }
 
