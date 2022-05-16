@@ -357,7 +357,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                 var consignmentPackage: ConsignmentPackagePM;
                                 consignmentPackage = new ConsignmentPackagePM(consignment);
                                 consignmentPackage.ConsignmentNumber = consignment.ConsignmentNumber
-                                consignmentPackage.SequenceNumeric = 1;
+                                consignmentPackage.SequenceNumeric = consignment.SequenceNumeric;
                                 consignmentPackage.LineNumber = 1;
                                 consignmentPackage.Tenant = SessionLocator.Tenant;
                                 consignmentPackage.PackageQuantity = this.exportStorage.Result.packageQuantity;
