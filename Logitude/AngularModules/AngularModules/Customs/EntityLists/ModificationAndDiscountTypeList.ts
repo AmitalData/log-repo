@@ -17,7 +17,7 @@ export class ModificationAndDiscountTypeList {
 	IsRelevantInvoice: boolean;
 	IsRelevantInvoiceExport: boolean;
 	IsRelevantGoodsItemExport: boolean;
-	ExtraNumericData: number;
+	ExtraNumericData: string;
 	
 }
  

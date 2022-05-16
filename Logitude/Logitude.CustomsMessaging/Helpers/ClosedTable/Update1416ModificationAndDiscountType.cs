@@ -31,7 +31,12 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         protected override bool IsEqual(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, ModificationAndDiscountTypePM curDbPM)
         {
             var gov = mehesTableRow.MyModificationAndDiscountType ?? new ModificationAndDiscountType();
-            return base.IsEqual(mehesTableRow, curDbPM) && curDbPM.IsRelevantGoodsItem == gov.IsRelevantGoodsItem && gov.IsRelevantInvoice == curDbPM.IsRelevantInvoice && curDbPM.IsRelevantGoodsItemExport == gov.IsRelevantGoodsItemExport && gov.IsRelevantInvoiceExport == curDbPM.IsRelevantInvoiceExport;
+            return base.IsEqual(mehesTableRow, curDbPM) && 
+             curDbPM.IsRelevantGoodsItemExport == gov.IsRelevantGoodsItemExport && 
+             gov.IsRelevantInvoiceExport == curDbPM.IsRelevantInvoiceExport&& 
+                curDbPM.IsRelevantGoodsItem == gov.IsRelevantGoodsItem && 
+                curDbPM.ExtraNumericData == gov.ExtraNumericData && 
+                gov.IsRelevantInvoice == curDbPM.IsRelevantInvoice;
         }
         protected override void SetOtherFields(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, ModificationAndDiscountTypePM curDbPM)
         {
@@ -41,6 +46,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             curDbPM.IsRelevantInvoice = gov.IsRelevantInvoice;
             curDbPM.IsRelevantInvoiceExport = gov.IsRelevantInvoiceExport;
             curDbPM.IsRelevantGoodsItemExport = gov.IsRelevantGoodsItemExport;
+            curDbPM.ExtraNumericData = gov.ExtraNumericData;
 
 
         }

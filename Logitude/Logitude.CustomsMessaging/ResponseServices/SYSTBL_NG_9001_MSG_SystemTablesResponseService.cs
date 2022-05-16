@@ -467,6 +467,11 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyModificationAndDiscountType.IsRelevantInvoiceExport = true;
                                                     }
+                                                    if (dr["ExtraNumericData"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.ExtraNumericData = dr["ExtraNumericData"].ToString();
+                                                    }
                                                     extList.Add(newExt);
                                                 });
                         return extList;

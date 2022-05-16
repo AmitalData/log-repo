@@ -91,15 +91,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.IsRelevantInvoiceExport = entityPM.IsRelevantInvoiceExport;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExtraNumericData))
+            {
+				entityPOCO.ExtraNumericData = entityPM.ExtraNumericData;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantGoodsItemExport))
             {
 				entityPOCO.IsRelevantGoodsItemExport = entityPM.IsRelevantGoodsItemExport;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExtraNumericData))
-            {
-				entityPOCO.ExtraNumericData = entityPM.ExtraNumericData;
-			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
@@ -207,7 +208,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 oldEntityPM.ExtraNumericData = entityPM.ExtraNumericData;
             }
-			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ModificationAndDiscountTypePM entityPM)
@@ -224,6 +224,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ExtraNumericData)) //T4 find type == nText 
+            {
+                entityPM.ExtraNumericData = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExtraNumericData));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

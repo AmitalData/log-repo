@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ModificationAndDiscountTypeUpdateClass
    {  		
-		public const string HashString = "df3a0b55dcb8d5ddc313c761913fc863";
+		public const string HashString = "a881779d6b088af9cd165b97bf24b878";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -257,10 +257,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
+					  						FullLocalDefaultText =  "שם םנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
+					  						ListLocalDefaultText =  "שם םנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -442,10 +442,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive ",
-					  						FullLocalDefaultText =  "לא פּעיל",
+					  						FullLocalDefaultText =  "לם פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "לא פּעיל",
+					  						ListLocalDefaultText =  "לם פּעיל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -623,7 +623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "IsRelevantInvoiceExport",
 					  						ListFieldLable =  "IsRelevantInvoiceExportListLable",
 					  						ListLableDefaultText =  "IsRelevantInvoiceExport",
-					  						ListLocalDefaultText =  "האם רלוונטי לחשבון ביצוא ",
+					  						ListLocalDefaultText =  "הםם רלוונטי לחשבון ביצום ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -683,7 +683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "IsRelevantGoodsItemExport",
 					  						ListFieldLable =  "IsRelevantGoodsItemExportListLable",
 					  						ListLableDefaultText =  "IsRelevantGoodsItemExport",
-					  						ListLocalDefaultText =  "האם רלוונטי לסחורה ביצוא ",
+					  						ListLocalDefaultText =  "הםם רלוונטי לסחורה ביצום ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -760,6 +760,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ExtraNumericData",
+					  						ObjectTableName =  "Customs.ModificationAndDiscountType",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  5,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  5,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ExtraNumericData",
+					  						ListPropertyPath =  "ExtraNumericData",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ModificationAndDiscountType",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ExtraNumericData",
+					  						DefaultText =  "Extra Numeric Data",
+					  						FullLocalDefaultText =  "השפעת ערכי התםמות",
+					  						ListFieldLable =  "ExtraNumericDataListLable",
+					  						ListLableDefaultText =  "Extra Numeric Data",
+					  						ListLocalDefaultText =  "השפעת ערכי התםמות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -785,7 +847,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ModificationAndDiscountTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ModificationAndDiscountType.Q.ModificationAndDiscountTypeQuery", DefaultText = @"Modification And Discount Types",LocalDefaultText = "סוג ההתאמה", ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ModificationAndDiscountTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ModificationAndDiscountType.Q.ModificationAndDiscountTypeQuery", DefaultText = @"Modification And Discount Types",LocalDefaultText = "סוג ההתםמה", ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ModificationAndDiscountTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MODIFICATIONANDDISCOUNTTYPE", ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ModificationAndDiscountType.Features.ModificationAndDiscountTypes", NameTextCodeDefaultText = "Modification And Discount Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ModificationAndDiscountTypeObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();

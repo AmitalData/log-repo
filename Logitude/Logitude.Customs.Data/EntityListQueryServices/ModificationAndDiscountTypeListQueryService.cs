@@ -34,6 +34,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                      IsRelevantInvoice = a.IsRelevantInvoice,
                                                                      IsRelevantGoodsItemExport= a.IsRelevantGoodsItemExport,
                                                                      IsRelevantInvoiceExport= a.IsRelevantInvoiceExport,
+                                                                     ExtraNumericData = 
+                                                                        (a.ExtraNumericData == 1) ? "תוספת" :
+                                                                        (a.ExtraNumericData == 2) ? "הפחתה" :
+                                                                        (a.ExtraNumericData == 3) ? "ללא השפעה" : null,
                                                                  });
             return query;
         }
