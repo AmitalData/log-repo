@@ -22,6 +22,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
         private Contact loggedContact = null;
         private string companyName = string.Empty;
         private string computingPartnerName = string.Empty;
+        private string interfaceName = string.Empty;
         public WebHookAutomationService(WebHookAutomationServiceArgs webHookAutomationServiceArgs)
         {
             tenant = webHookAutomationServiceArgs.Tenant;
@@ -33,6 +34,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
             loggedContact = GetLoggedContact();
             companyName = GetCompanyName();
             computingPartnerName = GetComputingPartnerName(webHookAutomationServiceArgs.ComputingPartnerId);
+            interfaceName = webHookAutomationServiceArgs.InterfaceName;
         }
 
         private Contact GetLoggedContact()
@@ -75,12 +77,13 @@ namespace WebFreight.Web.Helpers.AutomationModel
         private CommunicationLog GetNewCommunicationLog()
         {
             string to = GetToDomainString();
+            string entityInterfaceName = interfaceName.Replace("API", "");
             return new CommunicationLog()
             {
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
                 To = to,
                 From = companyName,
-                Subject = string.IsNullOrEmpty(documentFileName) ? string.IsNullOrEmpty(computingPartnerName) ? "Shipment Interface" : ("Shipment Interface for " + computingPartnerName) : documentFileName,
+                Subject = string.IsNullOrEmpty(documentFileName) ? string.IsNullOrEmpty(computingPartnerName) ? entityInterfaceName + " Interface" : (entityInterfaceName + " Interface for " + computingPartnerName) : documentFileName,
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 LastStatusDateUTC = System.DateTime.UtcNow,
                 InOut = "O",
@@ -158,6 +161,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
         public string ObjectTableId { get; set; }
         public string ComputingPartnerId { get; set; }
         public string DocumentFileName { get; set; }
+        public string InterfaceName { get; set; }
     }
 
     public class WebHookCommunicationLogSettings
