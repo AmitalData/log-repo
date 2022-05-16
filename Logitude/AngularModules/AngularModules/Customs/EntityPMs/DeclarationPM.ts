@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {ElasticPM} from './ElasticPM';
 import {ConsignmentPM} from './ConsignmentPM';
 import {SupplierInvoicePM} from './SupplierInvoicePM';
 import {DeclarationTaxPM} from './DeclarationTaxPM';
@@ -68,20 +67,11 @@ export class DeclarationPM {
     public set DeclarationNumber(newValue: string) { if (this.declarationNumber != newValue) { this.declarationNumber = newValue; this.MarkAsDirty("DeclarationNumber"); } }
        
 	 
-     
-	private customerName: ElasticPM[];
-    get  CustomerName() {
-        if (this.customerName == null) {
-            this.customerName = [];
-        }
-
-        return this.customerName;
-    }
-    set  CustomerName(newValue: ElasticPM[]) {
-        if (this.customerName != newValue) {
-            this.customerName = newValue;
-        }
-    }
+    private customerName: string;
+    public get CustomerName() { return this.customerName; }
+    public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
+       
+	 
     private versionId: string;
     public get VersionId() { return this.versionId; }
     public set VersionId(newValue: string) { if (this.versionId != newValue) { this.versionId = newValue; this.MarkAsDirty("VersionId"); } }

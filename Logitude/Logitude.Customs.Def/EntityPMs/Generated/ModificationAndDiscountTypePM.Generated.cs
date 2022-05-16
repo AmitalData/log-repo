@@ -227,7 +227,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  	  private string extraNumericData ;
+	  private string extraNumericData ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]

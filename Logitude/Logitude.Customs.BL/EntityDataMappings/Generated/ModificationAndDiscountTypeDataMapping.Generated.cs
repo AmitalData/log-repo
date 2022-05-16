@@ -91,16 +91,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.IsRelevantInvoiceExport = entityPM.IsRelevantInvoiceExport;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExtraNumericData))
-            {
-				entityPOCO.ExtraNumericData = entityPM.ExtraNumericData;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantGoodsItemExport))
             {
 				entityPOCO.IsRelevantGoodsItemExport = entityPM.IsRelevantGoodsItemExport;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExtraNumericData))
+            {
+				entityPOCO.ExtraNumericData = entityPM.ExtraNumericData;
+			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
@@ -208,6 +207,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 oldEntityPM.ExtraNumericData = entityPM.ExtraNumericData;
             }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ModificationAndDiscountTypePM entityPM)

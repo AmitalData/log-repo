@@ -637,7 +637,7 @@
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
-    IsMulti="true"
+    IsMulti="false"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
