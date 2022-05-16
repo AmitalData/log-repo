@@ -1013,6 +1013,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 if (documentSendFeatureToggle != null) this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
             }
 
+            if (this.ObjectTableName == "ARInvoice") {
+                this.AddSendInterfaceResult();
+            }
             //Masters and Houses
             if (this.ObjectTableName == "Shipment") {
                 this.ResultCodeList.push(new ResultCode("F/U Creation", "FOLLOWUP"));
@@ -1024,13 +1027,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     this.ResultCodeList.push(new ResultCode("Queued Task", "QUEUE"));
                 }
 
-                if (this.IsShowSendInterfaceResult) {
-                    this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
-                }
-                else if (this.AutomatedBackupClass.ResultCode == "SENDINTERFACE") {
-                    this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
-                    this.DisableTimeTypeSelector = true;
-                }
+                this.AddSendInterfaceResult();
 
                 if (this.IsShowCreateTaskResult) {
                     this.ResultCodeList.push(new ResultCode("Create Task in Collaboration Tool", "CREATETASK"));
@@ -1193,6 +1190,16 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         this.IsLoadingComplete = true;
+    }
+
+    private AddSendInterfaceResult() {
+        if (this.IsShowSendInterfaceResult) {
+            this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
+        }
+        else if (this.AutomatedBackupClass.ResultCode == "SENDINTERFACE") {
+            this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
+            this.DisableTimeTypeSelector = true;
+        }
     }
 
     private MapAutomationEvent() {
@@ -2462,7 +2469,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 myGeneratedComponentLocation.viewContainerRef.clear();
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/SendInterfaceResultComponent', myGeneratedComponentLocation.viewContainerRef)
                     .then(cmpRef => {
-                        cmpRef.instance.Run(this.AutomationSendInterface);
+                        cmpRef.instance.Run(this.AutomationSendInterface, this.ObjectTableName);
 
                     });
             }

@@ -24,6 +24,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     SendViaClassLists: Operator[] = [];
     FTPFolderLists: Operator[] = [];
     IsCustomerCare: boolean = false;
+    ObjectTableName: string = "";
 
     DataContext: any;
     IsRefreshComputingPartner: boolean = false;
@@ -45,12 +46,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     }
 
     InitializeSendInterfaceResultComponent() {
-        this.SendInterfaceClassLists = [];
-        this.SendInterfaceClassLists.push(new Operator("Shipment API", "ShipmentAPI"));
-
-
-
-
+        
         this.SendFormatLists = [];
         this.SendFormatLists.push(new Operator("XML", "XML"));
         this.SendFormatLists.push(new Operator("JSON", "JSON"));
@@ -244,10 +240,24 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
         });
     }
     public automationSendInterface: AutomationSendInterface;
-    Run(automationSendInterface: AutomationSendInterface) {
+    Run(automationSendInterface: AutomationSendInterface, objectTableName: string) {
         this.automationSendInterface = automationSendInterface;
-
+        this.ObjectTableName = objectTableName;
+        this.FillInterfaces();
         this.SetSelectedDelfultData();
+    }
+
+    private FillInterfaces() {
+        this.SendInterfaceClassLists = [];
+
+        switch (this.ObjectTableName) {
+            case "ARInvoice":
+                this.SendInterfaceClassLists.push(new Operator("ARInvoice API", "ARInvoiceAPI"));
+                break;
+            default:
+                this.SendInterfaceClassLists.push(new Operator("Shipment API", "ShipmentAPI"));
+                break;
+        }
     }
 }
 

@@ -8,6 +8,7 @@ using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
@@ -21,7 +22,6 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.EntityChanges.AutomationResult;
-using Logitude.Server.Tools.EntityChanges.Service;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
@@ -54,6 +54,7 @@ using System.Threading.Tasks;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.AutomationModel;
+using WebFreight.Web.Helpers.AutomationModel.SendInterface;
 
 namespace CommunicationWorkerRole
 {
@@ -646,8 +647,7 @@ namespace CommunicationWorkerRole
         {
             StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = (entityChange.Id + entityChange.EntityId + "Entity"), FolderName = "Others", Tenant = entityChange.Tenant };
             byte[] objectData = StorageDataService.ReadFileFromStorage(storageDataArgs);
-            ShipmentPM shipmentPM = LogitudeXmlSerializer.DeserializeObject<ShipmentPM>(objectData);
-            SendInterfaceDataContractService sendInterfaceDataContractService = new SendInterfaceDataContractService(shipmentPM, automationSendInterface, entityChange.Tenant);
+            SendInterfaceDataContractService sendInterfaceDataContractService = new SendInterfaceDataContractService(objectData, automationSendInterface, entityChange.Tenant);
             string documentId = sendInterfaceDataContractService.GetDataContractDocumentId(automationSendInterface.Format);
             return documentId;
         }
