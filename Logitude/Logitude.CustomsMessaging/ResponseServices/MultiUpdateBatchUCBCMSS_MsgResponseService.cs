@@ -109,7 +109,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var invoice = mySupplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(item.DeclarationId, item.CounterKey, (int)item.SequenceNumeric);
                     invoice.SupplierInvioceItemCertificats = mySupplierInvioceItemCertificatQueryService.GetSupplierInvioceItemCertificatesForSupplierInvoiceItem(item.DeclarationId, item.CounterKey, invoice.LineNumber, invoice.Tenant);
                     procestypesExist = false;
-                    if (customResponse.ProcessTypeCode != null)
+                    if (customResponse.ProcessTypeCode != null && customResponse.Declarationid != null) // only from invoiceview, dont update from pendingview
                     {
                         var procestypes = mySupplierInvoiceItemProcesTypeQueryService.GetSupplierInvoiceItemProcesTypesForSupplierInvoiceItem(declarationPM.Id, invoice.CounterKey, invoice.LineNumber, invoice.Tenant);
                         foreach (var proces in procestypes)
@@ -154,6 +154,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyRequestSheetParam.CustomFileNo = declarationPM.CustomFileNo;
                     this.MyResponseData.UserMessage += mess.ToString();
                     this.MyResponseData.ApplicationID = declarationPM.CustomFileNo;
+                }
+
+                if (customResponse.ProcessTypeCode != null && customResponse.Declarationid == null) // only from pendingview, dont update from invoiceview
+                {
+                    LogMessagingUtil.Instance.AppendLine("set declaration.ProcessTypeCode");
+                    declarationPM.ProcedureCurrentCode = customResponse.ProcessTypeCode;
+                    declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                    declarationUpdateService.Update(declarationPM, true);
                 }
             }
         }
