@@ -21,7 +21,7 @@ namespace WebFreight.Web.Helpers.AutomationModel.SendInterface
         public string GetFileName(SendInterfaceDataContractFileNameArgs sendInterfaceDataContractFileNameArgs)
         {
             string invoiceNumber = GetPropertyValueFromObject("InvoiceNumber", entityPM);
-            string calculatedFieldName = invoiceNumber + "." + sendInterfaceDataContractFileNameArgs.Format;
+            string calculatedFieldName = "arinvoice_"+ invoiceNumber;
             
             return calculatedFieldName;
         }

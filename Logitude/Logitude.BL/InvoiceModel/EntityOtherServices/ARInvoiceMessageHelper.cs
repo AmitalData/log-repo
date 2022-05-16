@@ -51,6 +51,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private bool UsingFTP = false;
         private string FTPDetailId;
         private bool ReturnEntityFile = false;
+        private const string genericInterfaceCode = "GI";
+        private const string advancedGenericInterfaceCode = "AI";
         public ARInvoiceMessageHelper(List<ARInvoice> invoices, string filename, int tenant,  bool isDropBox = false, bool isFTP = false)
         {
             Initialize(invoices, tenant);
@@ -68,6 +70,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             List<ARInvoice> invoices = new List<ARInvoice> { arInvoice };
             Initialize(invoices, tenant);
             ReturnEntityFile = returnEntityFile;
+            myAccountingSystemCode = myAccountingSystemCode != advancedGenericInterfaceCode ? genericInterfaceCode : advancedGenericInterfaceCode;
         }
 
         private void Initialize(List<ARInvoice> invoices, int tenant)
@@ -1838,7 +1841,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     }
                 }
 
-                if (string.IsNullOrEmpty(income.CreditAccount1))
+                if (!ReturnEntityFile && string.IsNullOrEmpty(income.CreditAccount1))
                 {
                     throw new ApplicationException("Error: Missing CreditAccount");
                 }
@@ -1967,7 +1970,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     }
                 }
 
-                if (string.IsNullOrEmpty(income.CreditAccount1))
+                if (!ReturnEntityFile && string.IsNullOrEmpty(income.CreditAccount1))
                 {
                     throw new ApplicationException("Error: Missing CreditAccount");
                 }
@@ -2161,7 +2164,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 }                
             }
 
-            if (string.IsNullOrEmpty(myResult))
+            if (!ReturnEntityFile && string.IsNullOrEmpty(myResult))
             {
                 throw new ApplicationException("Error: Missing Debit Account 1");
             }
@@ -2193,7 +2196,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 }
             }
 
-            if (string.IsNullOrEmpty(myResult))
+            if (!ReturnEntityFile && string.IsNullOrEmpty(myResult))
             {
                 throw new ApplicationException("Error: Missing Credit Account");
             }
