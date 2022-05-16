@@ -181,12 +181,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string customerName ;
+	  private CustomFieldClass customerName ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CustomerName  
+       public CustomFieldClass CustomerName  
 	   {
 	    
 	     get
@@ -197,7 +197,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(customerName != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=customerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=customerName,NewValue=value,PropertyType="CustomFieldClass"};
 		    NotifyPropertyChanged(values);
 		   customerName=value;
 		   }
