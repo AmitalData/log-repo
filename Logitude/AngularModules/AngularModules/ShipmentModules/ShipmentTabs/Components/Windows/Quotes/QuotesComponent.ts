@@ -93,11 +93,26 @@ export class QuotesComponent {
         filters.PageIndex = 0;
         filters.PageSize = 100;
         filters.SortBy = "OpenDate";
-        filters.SortDirection = "Descending";
-        var myToDate: Date = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
-        myToDate.setUTCHours(23);
-        myToDate.setUTCMinutes(59);
-        myToDate.setUTCSeconds(59);
+        filters.SortDirection = "Descending";        
+
+        var myExpiredDateFilter: Date
+        if (this.EntityPM.MainCarriageATD != null) {
+            myExpiredDateFilter = this.EntityPM.MainCarriageATD;
+        }
+
+        else if (this.EntityPM.MainCarriageETD != null) {
+            myExpiredDateFilter = this.EntityPM.MainCarriageETD;
+        }
+
+        else {
+            var myTodayDate: Date = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
+            myExpiredDateFilter = myTodayDate;
+        }
+
+        var myTomorrowDate: Date = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
+        myTomorrowDate.setUTCHours(23);
+        myTomorrowDate.setUTCMinutes(59);
+        myTomorrowDate.setUTCSeconds(59);
 
         filters.addAdditionalFilter("DirectionId", this.EntityPM.DirectionId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("TransportModeId", this.EntityPM.TransportModeId, null, null, "StartsWith", false, false, false, "string");
@@ -106,8 +121,12 @@ export class QuotesComponent {
         filters.addAdditionalFilter("FromPortId", this.EntityPM.MainCarriageFromPortId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("ToPortId", this.EntityPM.MainCarriageFinalDestinationPortId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("IsShowingUsedSpotRateQuotes", this.IsShowingUsedSpotRateQuotes, null, null, "Equals", true, false, false, "Boolean");
-        filters.addAdditionalFilter("StartDate", myToDate, null, null, "LessThanOrEqual", false, false, false, "Date");
+        filters.addAdditionalFilter("StartDate", myTomorrowDate, null, null, "LessThanOrEqual", false, false, false, "Date");
         filters.addAdditionalFilter("IsShowingExpiredQuotes", this.IsShowingExpiredQuotes, null, null, "Equals", true, false, false, "Boolean");
+
+        if (!this.IsShowingExpiredQuotes) {
+            filters.addAdditionalFilter("IsFilteringExpirationDate", true, myExpiredDateFilter, null, "Equals", true, false, false, "Boolean");
+        }
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.AgentId)) {
             filters.addAdditionalFilter("RoutingRatesAgentId", this.EntityPM.AgentId, null, null, "StartsWith", true, false, false, "string");
@@ -132,7 +151,7 @@ export class QuotesComponent {
                     }
 
                     list.forEach(item => {
-                        this.ItemsSource.push(new QuoteItem(item, this.EntityPM.GrossWeight));
+                        this.ItemsSource.push(new QuoteItem(item, this.EntityPM));
                     });
                 }
             }
@@ -279,11 +298,14 @@ export class QuotesComponent {
 class QuoteItem {
     public Entity: QuoteList = null;
     private shipmentGrossWeight: number = 0;
-    constructor(entity: QuoteList, shipmentGrossWeight: number) {
+    private shipmentPM: ShipmentPM;
+    constructor(entity: QuoteList, shipment: ShipmentPM) {
         this.Entity = entity;
-        this.shipmentGrossWeight = shipmentGrossWeight;
+        this.shipmentPM = shipment;
+        this.shipmentGrossWeight = shipment.GrossWeight;
         this.SetDiffernece();
         this.SetStageBackground();
+        this.SetValidByDate();
     }
 
     get Id() { return this.Entity.Id; }
@@ -292,6 +314,21 @@ class QuoteItem {
     get ExpirationDate() { return this.Entity.ExpirationDate; }
     get StageName() { return this.Entity.StageName; }
     get StartDate() { return this.Entity.StartDate; }
+
+    public ValidByDate: Date;
+    private SetValidByDate() {
+        if (this.shipmentPM.MainCarriageATD != null) {
+            this.ValidByDate = this.shipmentPM.MainCarriageATD;
+        }
+
+        else if (this.shipmentPM.MainCarriageETD != null) {
+            this.ValidByDate = this.shipmentPM.MainCarriageETD;
+        }
+
+        else {
+            this.ValidByDate = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
+        }
+    }
 
     get QuoteTypeName() { return this.Entity.QuoteTypeName; }
     get CarrierName() { return this.Entity.CarrierName; }

@@ -380,18 +380,30 @@ namespace Logitude.BL.QuoteModel
                             queryableData =  queryableData.Where(d => d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now || d.ExpirationDate < DateTime.Now);
                         }                         
                     }
-
-                    if (item.FieldName == "ConnectedToOpportunity")
+                    
+                    if (item.FieldName == "IsFilteringExpirationDate")
                     {
-                        bool value = Convert.ToBoolean(item.FieldValue);
-                        if (value)
+                        bool filterValue1 = false;
+                        DateTime? filterValue2 = null;
+
+                        if (item.FieldValue != null)
                         {
-                            queryableData = queryableData.Where(d => d.ConnectedToOpportunity == true);
+                            filterValue1 = Convert.ToBoolean(item.FieldValue);
                         }
 
-                        else
+                        if (item.FieldValue2 != null)
                         {
-                            queryableData = queryableData.Where(d => d.ConnectedToOpportunity == false || d.ConnectedToOpportunity == null);
+                            filterValue2 = Convert.ToDateTime(item.FieldValue2);
+                        }
+
+                        DateTime? myTodayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                        if (filterValue1)
+                        {
+                            queryableData = queryableData.Where(d =>
+                            (d.ValidByType != null && System.Data.Entity.DbFunctions.TruncateTime(d.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(filterValue2))
+                            || (d.ValidByType == null && System.Data.Entity.DbFunctions.TruncateTime(d.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(myTodayDate))
+                            );
                         }
                     }
                 }
