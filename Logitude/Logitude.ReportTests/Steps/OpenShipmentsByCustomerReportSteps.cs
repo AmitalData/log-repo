@@ -26,31 +26,31 @@ namespace Logitude.ReportTests.Steps
         [Given(@"report with the following properties")]
         public void GivenReportWithTheFollowingProperties(Table table)
         {
-            //reportContext.ReportFilter = reportFilterService.Create(table);
+            reportContext.ReportFilter = reportFilterService.Create(table);
         }
 
         [Given(@"filter fields")]
         public void GivenFilterFields(Table table)
         {
-            //reportContext.ReportFilter.QueryFilterItemLists = reportFilterService.BuildFilterItems(table);
+            reportContext.ReportFilter.QueryFilterItemLists = reportFilterService.BuildFilterItems(table);
         }
 
         [When(@"run report")]
         public void WhenRunReport()
         {
-            //reportContext.ReportFilter = APICaller.CallPut<ReportFliter>(reportContext.ReportFilter, Urls.ReportController, UserTenant.Token)?.Data;
+            reportContext.ReportFilter = APICaller.CallPut<ReportFliter>(reportContext.ReportFilter, Urls.ReportController, UserTenant.Token)?.Data;
         }
 
         [Then(@"the report should run successfully")]
         public void ThenTheReportShouldRunSuccessfully()
         {
-            //reportAssertService.Assert(reportContext.ReportFilter);
+            reportAssertService.Assert(reportContext.ReportFilter);
         }
 
         [Then(@"with values")]
         public void ThenWithValues(Table table)
         {
-            reportAssertService.Initialize(new OpenShipmentsByCustomerDataProvider().GetTestData());
+            // reportAssertService.Initialize(new OpenShipmentsByCustomerDataProvider().GetTestData());
             reportAssertService.AssertFields(table);
         }
     }
