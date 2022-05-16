@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Accounting">
-	<Sql Version="1">
+	<Sql Version="2">
 		<![CDATA[
-            update	InterestTransactions set AccountingEntityCode = '10' where InterestEntityTypeCode = '5'
+            --update	InterestTransactions set AccountingEntityCode = '10' where InterestEntityTypeCode = '5'
      ]]>
 	</Sql>
 </Script>
