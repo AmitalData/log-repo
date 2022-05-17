@@ -23,4 +23,12 @@ export class CustomsCollateralAnswerSharedDataService {
         this.messageSource.next(message)
     }
 
+    public resetValue() {
+      this._SelectedItems = new ObservableCollection([]);
+      this._UnSelectedItems = new ObservableCollection([]);  
+      this.connectedSelectAll = false;
+      this.IsDisplayButtonSend = false;
+      this.disconnectedSelectAll = false;
+      this.SupperssOnRowSelectedAction = false;  
+    }
 }
