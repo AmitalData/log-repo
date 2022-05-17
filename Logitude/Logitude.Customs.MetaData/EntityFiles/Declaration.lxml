@@ -22444,6 +22444,14 @@
         LocalDefaultText="&quot;ביטול הצהרה&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent&quot;" />
+      <MenuItem
+        EventCode="&quot;LoadExcelSupplierInvoices&quot;"
+        DefaultText="&quot;Load Excel SupplierInvoices&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="15"
+        LocalDefaultText="&quot;הטענת חשבון ספק&quot;"
+        IsPackagable="true"
+        HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent&quot;" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"
