@@ -31,7 +31,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                      SearchFields = a.SearchFields,
                                                                      Inactive = a.Inactive,
                                                                      IsRelevantGoodsItem = a.IsRelevantGoodsItem,
-                                                                     IsRelevantInvoice = a.IsRelevantInvoice
+                                                                     IsRelevantInvoice = a.IsRelevantInvoice,
+                                                                     ExtraNumericData = 
+                                                                        (a.ExtraNumericData == "1") ? "תוספת" :
+                                                                        (a.ExtraNumericData == "2") ? "הפחתה" :
+                                                                        (a.ExtraNumericData == "3") ? "ללא השפעה" : null,
                                                                  });
             return query;
         }

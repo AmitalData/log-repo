@@ -15,6 +15,7 @@ export class ModificationAndDiscountTypeList {
 	Inactive: boolean;
 	IsRelevantGoodsItem: boolean;
 	IsRelevantInvoice: boolean;
+	ExtraNumericData: string;
 	
 }
  

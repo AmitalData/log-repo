@@ -59,6 +59,11 @@ export class ModificationAndDiscountTypePM {
     public set IsRelevantInvoice(newValue: boolean) { if (this.isRelevantInvoice != newValue) { this.isRelevantInvoice = newValue; this.MarkAsDirty("IsRelevantInvoice"); } }
        
 	 
+    private extraNumericData: string;
+    public get ExtraNumericData() { return this.extraNumericData; }
+    public set ExtraNumericData(newValue: string) { if (this.extraNumericData != newValue) { this.extraNumericData = newValue; this.MarkAsDirty("ExtraNumericData"); } }
+       
+	 
 
     public OldEntityPM: ModificationAndDiscountTypePM;
 		
