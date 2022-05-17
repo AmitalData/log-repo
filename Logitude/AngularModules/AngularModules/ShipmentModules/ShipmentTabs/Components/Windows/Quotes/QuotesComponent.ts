@@ -109,10 +109,10 @@ export class QuotesComponent {
             myExpiredDateFilter = myTodayDate;
         }
 
-        var myTomorrowDate: Date = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
-        myTomorrowDate.setUTCHours(23);
-        myTomorrowDate.setUTCMinutes(59);
-        myTomorrowDate.setUTCSeconds(59);
+        var myToDate: Date = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
+        myToDate.setUTCHours(23);
+        myToDate.setUTCMinutes(59);
+        myToDate.setUTCSeconds(59);
 
         filters.addAdditionalFilter("DirectionId", this.EntityPM.DirectionId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("TransportModeId", this.EntityPM.TransportModeId, null, null, "StartsWith", false, false, false, "string");
@@ -121,12 +121,12 @@ export class QuotesComponent {
         filters.addAdditionalFilter("FromPortId", this.EntityPM.MainCarriageFromPortId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("ToPortId", this.EntityPM.MainCarriageFinalDestinationPortId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("IsShowingUsedSpotRateQuotes", this.IsShowingUsedSpotRateQuotes, null, null, "Equals", true, false, false, "Boolean");
-        filters.addAdditionalFilter("StartDate", myTomorrowDate, null, null, "LessThanOrEqual", false, false, false, "Date");
+        filters.addAdditionalFilter("StartDate", myToDate, null, null, "LessThanOrEqual", false, false, false, "Date");
         filters.addAdditionalFilter("IsShowingExpiredQuotes", this.IsShowingExpiredQuotes, null, null, "Equals", true, false, false, "Boolean");
 
-        if (!this.IsShowingExpiredQuotes) {
-            filters.addAdditionalFilter("IsFilteringExpirationDate", true, myExpiredDateFilter, null, "Equals", true, false, false, "Boolean");
-        }
+        //if (!this.IsShowingExpiredQuotes) {
+        //    filters.addAdditionalFilter("IsFilteringExpirationDate", true, myExpiredDateFilter, null, "Equals", true, false, false, "Boolean");
+        //}
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.AgentId)) {
             filters.addAdditionalFilter("RoutingRatesAgentId", this.EntityPM.AgentId, null, null, "StartsWith", true, false, false, "string");
