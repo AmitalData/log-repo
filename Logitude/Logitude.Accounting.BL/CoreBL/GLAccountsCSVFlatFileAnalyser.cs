@@ -8,9 +8,13 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -27,7 +31,9 @@ namespace Logitude.Accounting.BL.CoreBL
         private string _resolveLoggingUserId;
         private Contact _contact;
         private const bool useLocal = true;
-
+        private string _startingInternal = "";
+        private string _endingInternal = "";
+        private Hashtable _controlAccounts;
 
         public void Analyse(int? ptenant, string FileContent)
         {
@@ -59,78 +65,96 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
-                    using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(55)))
+                    int count = 0;
+                //    bool global_errors = false;
+                    string text;
+                    string text_44;
+                    string text_2;
+                    List<GLAccountPM> newOrUpdLines = new List<GLAccountPM>();
+                    _controlAccounts = new Hashtable();
+                    foreach (GLAccountSrcLineDTO accLineDTO in _GLAccountSrcLinesDTO)
                     {
-                        int count = 0;
-                        bool global_errors = false;
-                        string text;
-                        string text_44;
-                        string text_2;
-                        List<GLAccountPM> newOrUpdLines = new List<GLAccountPM>();
-                        foreach (GLAccountSrcLineDTO accLineDTO in _GLAccountSrcLinesDTO)
+                        count++;
+                        bool errors = false;
+                        GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(MyContext);
+                        GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                        GLAccountPM cleanGLAccountPM = null;
+                        GLAccountPM gLAccountPM = gLAccountQueryService.GetByInternalNumber(accLineDTO.InternalNumber, tenant);
+                        if (gLAccountPM == null)
                         {
-                            count++;
-                            bool errors = false;
-                            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(MyContext);
-                            GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                            gLAccountPM = new GLAccountPM()
+                            {
+                                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                                Tenant = tenant,
+                                InternalNumber = accLineDTO.InternalNumber,
+                                //Id = "get",
+                                //RevenueExpenseType = "get",
+                                //ExcludeFromDeductionReport = false,
+                                //CreateDate = DateTime.Now,
+                                //UpdateDate = DateTime.Now,
+                                //AllowEditChequePayToName = false,
+                                //ActiveForInterest = false,
+                                //ActiveForInterestCreditInvoice = false,
+                                //Smallcashbook = false,
+                                //DeductionTypeId = "get",
+                                //DeductionFileTypeId = "get",
+                                //AssessingOfficeCode = "get",
+                                //CreatedByUserId = _resolveLoggingUserId,
+                            };
+                        }
+                        else
+                        {
+                            cleanGLAccountPM = DeepCopy(gLAccountPM);
+                            gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        }
+                        gLAccountPM.DisplayNumber = accLineDTO.DisplayNumber;
+                        gLAccountPM.ExternalDisplayNumber = accLineDTO.DisplayNumber;
+                        if (gLAccountPM.IsMultiCurrency.HasValue && gLAccountPM.IsMultiCurrency.Value != accLineDTO.IsMulti)
+                        {
+                            gLAccountPM.OldIsMultiCurrency = gLAccountPM.IsMultiCurrency.Value;
+                        }
+                        gLAccountPM.IsMultiCurrency = accLineDTO.IsMulti;
+                        if (!accLineDTO.IsMulti)
+                        {
+                            gLAccountPM.CurrencyCode = accLineDTO.CurrencyCode;
+                            gLAccountPM.CurrencyId = null;
+                        }
+                        else
+                        {
+                            gLAccountPM.CurrencyCode = null;
+                            gLAccountPM.CurrencyId = null;
+                        }
 
-                            GLAccountPM gLAccountPM = gLAccountQueryService.GetByInternalNumber(accLineDTO.InternalNumber, tenant);
-                            if (gLAccountPM == null)
-                            {
-                                gLAccountPM = new GLAccountPM()
-                                {
-                                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                                    Tenant = tenant,
-                                    InternalNumber = accLineDTO.InternalNumber,
-                                    //Id = "get",
-                                    //RevenueExpenseType = "get",
-                                    //ExcludeFromDeductionReport = false,
-                                    //CreateDate = DateTime.Now,
-                                    //UpdateDate = DateTime.Now,
-                                    //AllowEditChequePayToName = false,
-                                    //ActiveForInterest = false,
-                                    //ActiveForInterestCreditInvoice = false,
-                                    //Smallcashbook = false,
-                                    //DeductionTypeId = "get",
-                                    //DeductionFileTypeId = "get",
-                                    //AssessingOfficeCode = "get",
-                                    //CreatedByUserId = _resolveLoggingUserId,
-                                };
-                            }
-                            else
-                            {
-                                gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                            }
-                            gLAccountPM.DisplayNumber = accLineDTO.DisplayNumber;
-                            gLAccountPM.ExternalDisplayNumber = accLineDTO.DisplayNumber;
-                            if (gLAccountPM.IsMultiCurrency.HasValue)
-                            {
-                                gLAccountPM.OldIsMultiCurrency = gLAccountPM.IsMultiCurrency.Value;
-                            }
-                            gLAccountPM.IsMultiCurrency = accLineDTO.IsMulti;
-                            if (!accLineDTO.IsMulti)
-                            {
-                                gLAccountPM.CurrencyCode = accLineDTO.CurrencyCode;
-                                gLAccountPM.CurrencyId = null;
-                            }
-                            else
-                            {
-                                gLAccountPM.CurrencyCode = null;
-                                gLAccountPM.CurrencyId = null;
-                            }
+                        ChartOfAccountQueryService chartOfAccountQueryService = new ChartOfAccountQueryService(MyContext);
+                        ChartOfAccountPM chart = chartOfAccountQueryService.GetSinglePMByCode(accLineDTO.ChartCode, tenant);
+                        if (chart == null)
+                        {
+                            text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                            if (String.IsNullOrEmpty(text)) text = "Account Line #";
 
-                            ChartOfAccountQueryService chartOfAccountQueryService = new ChartOfAccountQueryService(MyContext);
-                            ChartOfAccountPM chart = chartOfAccountQueryService.GetSinglePMByCode(accLineDTO.ChartCode, tenant);
-                            if (chart == null)
+                            text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NotFound", 0, useLocal);
+                            if (String.IsNullOrEmpty(text_44)) text_44 = "not found";
+
+                            text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ChartCode", 0, useLocal);
+                            if (String.IsNullOrEmpty(text_2)) text_2 = "Chart of Accounts Code";
+
+                            this.AddErrorRow($"{text}{count} ({accLineDTO.InternalNumber}) {text_2} {text_44} ");
+                            gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
+                            errors = true;
+                        }
+                        else
+                        {
+                            string chartType = chart.TypeCode;
+                            if (accLineDTO.ChartType != chartType)
                             {
                                 text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
                                 if (String.IsNullOrEmpty(text)) text = "Account Line #";
 
-                                text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NotFound", 0, useLocal);
-                                if (String.IsNullOrEmpty(text_44)) text_44 = "not found";
-                                
-                                text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ChartCode", 0, useLocal);
-                                if (String.IsNullOrEmpty(text_2)) text_2 = "Chart of Accounts Code";
+                                text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.WrongM", 0, useLocal);
+                                if (String.IsNullOrEmpty(text_44)) text_44 = "wrong";
+
+                                text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ChartType", 0, useLocal);
+                                if (String.IsNullOrEmpty(text_2)) text_2 = "Chart of Accounts Type";
 
                                 this.AddErrorRow($"{text}{count} ({accLineDTO.InternalNumber}) {text_2} {text_44} ");
                                 gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
@@ -138,111 +162,142 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                             else
                             {
-                                string chartType = chart.TypeCode;
-                                if (accLineDTO.ChartType != chartType)
+                                gLAccountPM.ChartOfAccountsId = chart.Id;
+                                gLAccountPM.ChartOfAccountsTypeCode = chart.TypeCode;
+                                switch (chart.TypeCode)
                                 {
-                                    text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
-                                    if (String.IsNullOrEmpty(text)) text = "Account Line #";
+                                    case "3":
+                                        gLAccountPM.AccountTypeCode = "2";
+                                        break;
 
-                                    text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.WrongM", 0, useLocal);
-                                    if (String.IsNullOrEmpty(text_44)) text_44 = "wrong";
-                                    
-                                    text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ChartType", 0, useLocal);
-                                    if (String.IsNullOrEmpty(text_2)) text_2 = "Chart of Accounts Type";
+                                    case "4":
+                                        gLAccountPM.AccountTypeCode = "3";
+                                        break;
 
-                                    this.AddErrorRow($"{text}{count} ({accLineDTO.InternalNumber}) {text_2} {text_44} ");
-                                    gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
-                                    errors = true;
+                                    case "6":
+                                        GLAccountPM controlPM;
+                                        gLAccountPM.AccountTypeCode = "4";
+                                        if (_controlAccounts.ContainsKey(chart.Id))
+                                        {
+                                            controlPM = (GLAccountPM)_controlAccounts[chart.Id];
+                                        }
+                                        else
+                                        {
+                                            controlPM = gLAccountQueryService.GetControlGLAccountByChart(chart.Id, tenant);
+                                            _controlAccounts.Add(chart.Id, controlPM);
+                                        }
+                                        if (controlPM == null || String.IsNullOrEmpty(controlPM.Id))
+                                        {
+                                            text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                                            if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
+                                            text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NotFound", 0, useLocal);
+                                            if (String.IsNullOrEmpty(text_44)) text_44 = "not found";
+
+                                            text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ControlAccount", 0, useLocal);
+                                            if (String.IsNullOrEmpty(text_2)) text_2 = "Control Account";
+
+                                            this.AddErrorRow($"{text}{count} ({accLineDTO.InternalNumber}) {text_2} {text_44} ");
+                                            gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
+                                            errors = true;
+                                        }
+                                        else
+                                        {
+                                            gLAccountPM.ControlAccountId = controlPM.Id;
+                                        }
+                                        break;
+
+                                    default:
+                                        gLAccountPM.AccountTypeCode = "1";
+                                        break;
                                 }
-                                else
+                                switch (chart.TypeCode)
                                 {
-                                    gLAccountPM.ChartOfAccountsId = chart.Id;
-                                    gLAccountPM.ChartOfAccountsTypeCode = chart.TypeCode;
-                                    switch (chart.TypeCode)
-                                    {
-                                        case "3":
-                                            gLAccountPM.AccountTypeCode = "2";
-                                            break;
+                                    case "1":
+                                        gLAccountPM.RevenueExpenseType = "1";
+                                        break;
 
-                                        case "4":
-                                            gLAccountPM.AccountTypeCode = "3";
-                                            break;
+                                    case "2":
+                                        gLAccountPM.RevenueExpenseType = "2";
+                                        break;
 
-                                        case "6":
-                                            gLAccountPM.AccountTypeCode = "4";
-                                            break;
-
-                                        default:
-                                            gLAccountPM.AccountTypeCode = "1";
-                                            break;
-                                    }
-                                    switch (chart.TypeCode)
-                                    {
-                                        case "1":
-                                            gLAccountPM.RevenueExpenseType = "1";
-                                            break;
-
-                                        case "2":
-                                            gLAccountPM.RevenueExpenseType = "2";
-                                            break;
-
-                                        default:
-                                            gLAccountPM.RevenueExpenseType = "3";
-                                            break;
-                                    }
+                                    default:
+                                        gLAccountPM.RevenueExpenseType = "3";
+                                        break;
                                 }
                             }
-                            if (!errors && !String.IsNullOrWhiteSpace(accLineDTO.LocalName))
-                            {
-                                gLAccountPM.LocalName = accLineDTO.LocalName;
-                            }
-                            if (!errors && !String.IsNullOrWhiteSpace(accLineDTO.EnglishName))
-                            {
-                                gLAccountPM.EnglishName = accLineDTO.EnglishName;
-                            }
-                            if (!errors)
-                            {
-                                gLAccountPM.IsVATExempt = accLineDTO.IsExempt;
-                                gLAccountPM.ReconcileMethodCode = accLineDTO.RecoMethod;
-
-                            }
-
-
-                            if (!errors)
-                            {
-                                newOrUpdLines.Add(gLAccountPM);
-                            }
-                            else
-                            {
-                                global_errors = true;
-                            }
                         }
-
-                        if (newOrUpdLines.Count == 0)
+                        if (!errors && !String.IsNullOrWhiteSpace(accLineDTO.LocalName))
                         {
-                            text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NoLinesProcessed", 0, useLocal);
-                            if (String.IsNullOrEmpty(text_44)) text = "No Lines Processed";
-                            throw new ApplicationException($"{text_44}");
+                            gLAccountPM.LocalName = accLineDTO.LocalName;
                         }
-
-                        GLAccountUpdateService updateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                        newOrUpdLines.ForEach(accPM =>
-                            {
-                                updateService.Update(accPM, true);
-                            });
-
-
-
-                        if (MyCSVFlatFileLoadResult.ErrorRowList.Count > 0)
+                        if (!errors && !String.IsNullOrWhiteSpace(accLineDTO.EnglishName))
                         {
-                            string text_1 = MyCSVFlatFileLoadResult.ErrorRowList.FirstOrDefault();
-                            throw new ApplicationException($"{text_1}");
+                            gLAccountPM.EnglishName = accLineDTO.EnglishName;
+                        }
+                        if (!errors)
+                        {
+                            gLAccountPM.IsVATExempt = accLineDTO.IsExempt;
+                            gLAccountPM.ReconcileMethodCode = accLineDTO.RecoMethod;
+
                         }
 
 
-                        scope.Complete();
-
+                        if (!errors && (gLAccountPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert
+                            || (gLAccountPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update && IsRealUpdate(gLAccountPM, cleanGLAccountPM))))
+                        {
+                            newOrUpdLines.Add(gLAccountPM);
+                        }
+                    //    else
+                    //    {
+                   //         global_errors = true;
+                    //    }
                     }
+
+                    if (newOrUpdLines.Count == 0)
+                    {
+                        text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NoLinesProcessed", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_44)) text = "No Lines Processed";
+                        throw new ApplicationException($"{text_44}");
+                    }
+                    
+                    List<List<GLAccountPM>> chunks = newOrUpdLines.ChunkBy(50);
+                    chunks.ForEach(list =>
+                    {
+                        _startingInternal = "";
+                        _endingInternal = "";
+                        if (list.Count > 0)
+                        {
+                            GLAccountPM startingPM = list.ElementAt(0);
+                            if (startingPM != null) _startingInternal = startingPM.InternalNumber;
+
+                            GLAccountPM endingPM = list.ElementAt(list.Count - 1);
+                            if (endingPM != null) _endingInternal = endingPM.InternalNumber;
+                        }
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(55)))
+                        {
+
+                            GLAccountUpdateService updateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                            list.ForEach(accPM =>
+                                {
+
+                                    updateService.Update(accPM, true);
+
+                                });
+                            scope.Complete();
+                        }
+                        _startingInternal = "";
+                        _endingInternal = "";
+
+                    });
+
+                    if (MyCSVFlatFileLoadResult.ErrorRowList.Count > 0)
+                    {
+                        string text_1 = MyCSVFlatFileLoadResult.ErrorRowList.FirstOrDefault();
+                        throw new ApplicationException($"{text_1}");
+                    }
+
+
                 }
                 else
                 {
@@ -252,19 +307,51 @@ namespace Logitude.Accounting.BL.CoreBL
                     throw new ApplicationException($"{errorLines}");
 
                 }
-
-
             }
             catch (Exception e)
             {
-                string text = TranslateTextsClassTranslate("GLAccountsCSV.O.FailedWhilePerforming", 0, useLocal);
-                if (String.IsNullOrEmpty(text)) text = "failed while performing";
-
-                throw new ApplicationException($"{text} ", e);
+                string text;
+                if (!String.IsNullOrEmpty(_startingInternal))
+                {
+                    text = $"chunk from { _startingInternal} to {_endingInternal }";
+                    throw new ApplicationException($"{text} ", e.InnerException);
+                }
+                else
+                    throw;
             }
 
+        }
 
+        private bool IsRealUpdate(GLAccountPM gLAccountPM, GLAccountPM cleanGLAccountPM)
+        {
+            bool rv;
+            rv = gLAccountPM.InternalNumber != cleanGLAccountPM.InternalNumber
+               | gLAccountPM.DisplayNumber != cleanGLAccountPM.DisplayNumber
+               | gLAccountPM.ExternalDisplayNumber != cleanGLAccountPM.ExternalDisplayNumber
+               | gLAccountPM.IsMultiCurrency != cleanGLAccountPM.IsMultiCurrency
+               | gLAccountPM.CurrencyCode != cleanGLAccountPM.CurrencyCode
+               | gLAccountPM.CurrencyId != cleanGLAccountPM.CurrencyId
+               | gLAccountPM.ChartOfAccountsId != cleanGLAccountPM.ChartOfAccountsId
+               | gLAccountPM.ChartOfAccountsTypeCode != cleanGLAccountPM.ChartOfAccountsTypeCode
+               | gLAccountPM.AccountTypeCode != cleanGLAccountPM.AccountTypeCode
+               | gLAccountPM.RevenueExpenseType != cleanGLAccountPM.RevenueExpenseType
+               | gLAccountPM.EnglishName != cleanGLAccountPM.EnglishName
+               | gLAccountPM.LocalName != cleanGLAccountPM.LocalName
+               | gLAccountPM.IsVATExempt != cleanGLAccountPM.IsVATExempt
+               | gLAccountPM.ReconcileMethodCode != cleanGLAccountPM.ReconcileMethodCode;
+            return rv;
+        }
 
+        public static T DeepCopy<T>(T other)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Context = new StreamingContext(StreamingContextStates.Clone);
+                formatter.Serialize(ms, other);
+                ms.Position = 0;
+                return (T)formatter.Deserialize(ms);
+            }
         }
 
         static string ConvertFromDosHebrewToWinHebrew(string FileContent862)
@@ -796,7 +883,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return rec;
         }
-
 
     }
 
