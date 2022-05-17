@@ -533,11 +533,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             if (filter != null)
             {
-                iQueryable = iQueryable.Where(x => String.Equals((x.CustomerCard.LocalName != null ? x.CustomerCard.LocalName : x.CustomerCard.EnglishName), filter.FieldValue.ToString(), StringComparison.CurrentCultureIgnoreCase));
-              
+                 iQueryable = iQueryable.Where(x => (x.CustomerCard.LocalName != null ? x.CustomerCard.LocalName : x.CustomerCard.EnglishName).ToLower().StartsWith(filter.FieldValue.ToString().ToLower()));
             }
 
-         
+
             return iQueryable;
         }
         /*

@@ -188,7 +188,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'OpenDate',
             DataTypeCode: 'DateTime',
-            Display: "תאריך פתיחה",
+            Display: "תםריך פתיחה",
             Styles: { width: '110px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -200,7 +200,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExporterName',
             DataTypeCode: 'String',
-            Display: 'יצואן',
+            Display: 'יצוםן',
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -210,7 +210,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFileNo',
             DataTypeCode: 'String',
-            Display: "מס' תיק יצוא",
+            Display: "מס' תיק יצום",
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -221,7 +221,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
             FieldName: 'StorageNo',
             DataTypeCode: 'String',//'Number',
-            Display: 'מספר אחסנה',
+            Display: 'מספר םחסנה',
             Styles: { width: '90px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -230,7 +230,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ShipName',
             DataTypeCode: 'String',
-            Display: 'אוניה',
+            Display: 'םוניה',
             Styles: { width: '140px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -250,7 +250,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'StorageStatus',
             DataTypeCode: 'String',
-            Display: 'סטטוס אחסנה',
+            Display: 'סטטוס םחסנה',
             Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -327,7 +327,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
                                 this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
                                 this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
-                                    isConsignment[0].ExportStoragesId = ExportStorageId;
+                                  var index= this.declarationPM.Consignments.findIndex(u=>u==isConsignment)
+                                   this.declarationPM.Consignments[index].ExportStoragesId = ExportStorageId;
                                     this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
                                     });
                                 });
@@ -342,8 +343,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                 consignment.ManifestNumber = this.exportStorage.Result.firstCargoID;
                                 consignment.SecondCargoID = this.exportStorage.Result.SecondCargoID;
                                 consignment.CargoDescription = this.exportStorage.Result.MarksNumbers;
-                                consignment.StorageSiteCode = this.checkStorageSiteCode(this.exportStorage.Result.StorageSiteCode) ? this.exportStorage.Result.StorageSiteCode : "";
-                                consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods == null ? 0 : this.exportStorage.Result.IsDangerousGoods;
+                                consignment.StorageSiteCode = this.checkStorageSiteCode(this.exportStorage.Result.StorageSiteCode) ? this.exportStorage.Result.StorageSiteCode : null;
+                                consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods == null ? null : this.exportStorage.Result.IsDangerousGoods;
                                 consignment.ExportUnloadingPortCode = this.checkloadingPortCodAndUn(this.exportStorage.Result.ExportUnloadingPortCode) ? this.exportStorage.Result.ExportUnloadingPortCode : "" //this.exportStorage.Result.ExportUnloadingPortCode;
                                 consignment.ExportLoadingPortCode = this.checkloadingPortCodAndUn(this.exportStorage.Result.ExportLoadingPortCode) ? this.exportStorage.Result.ExportLoadingPortCode : ""//this.exportStorage.Result.ExportLoadingPortCode;
                                 consignment.ConsignmentType = "E";
