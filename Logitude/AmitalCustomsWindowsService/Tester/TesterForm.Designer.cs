@@ -897,6 +897,7 @@
         private System.Windows.Forms.ToolStripMenuItem rabbitMQToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sendToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recivedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uW2LToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem;
         private System.Windows.Forms.TextBox textBoxOverrideRMQ;
