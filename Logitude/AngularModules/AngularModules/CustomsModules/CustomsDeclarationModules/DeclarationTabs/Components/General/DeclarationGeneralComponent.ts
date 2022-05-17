@@ -499,7 +499,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         }
     }
 
-    public get DeclarationOfficeHandlerCode() { return this.EntityPM.DeclarationOfficeHandlerCode; }
+    public get DeclarationOfficeHandlerCode() { return this.EntityPM.DeclarationOfficeCode; }
     public set DeclarationOfficeHandlerCode(newValue: string) {
         if (this.EntityPM.DeclarationOfficeHandlerCode != newValue) {
             this.EntityPM.DeclarationOfficeHandlerCode = newValue;
@@ -543,7 +543,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public get DeclarationDocumentId() { return this.EntityPM.DeclarationDocumentId; }
     public set DeclarationDocumentId(newValue: string) { this.EntityPM.DeclarationDocumentId = newValue; }
 
-    public get ExporterImporterCode() { return this.EntityPM.ExporterImporterCode; }
+    public get ExporterImporterCode() { return this.EntityPM.ImporterCode; }
     public set ExporterImporterCode(newValue: string) {
         if (this.EntityPM.ExporterImporterCode != newValue) {
             this.EntityPM.ExporterImporterCode = newValue;
@@ -625,7 +625,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         this.EntityPM.LoadingDateTime = newValue;
     }
 
-    public get TransferExporterCode() { return this.EntityPM.TransferExporterCode; }
+    public get TransferExporterCode() { return this.EntityPM.TransferImporterCode; }
     public set TransferExporterCode(newValue: string) {
         if (this.EntityPM.TransferExporterCode != newValue) {
             this.EntityPM.TransferExporterCode = newValue;
