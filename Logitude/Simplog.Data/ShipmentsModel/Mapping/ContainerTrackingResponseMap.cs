@@ -20,7 +20,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.HasRequired(e => e.ContainerTrackingRequest).WithMany().HasForeignKey(e => e.ContainerTrackingRequestId);
 
-            this.HasIndex(e => e.CommunicationLogId);
 
             // Table & Column Mappings
             this.ToTable("ContainerTrackingResponses");
