@@ -230,6 +230,16 @@ export class TaxReportMenuButtonsHandler {
         this.CurrentSession.StopBusyIndicator();
     }
     CreateClosingJournalButtonClicked(){
+        var taxReportMonthDate = new Date(this.EntityPM.TaxReportMonth)
+        if(taxReportMonthDate.getFullYear()  < 2022 || (taxReportMonthDate.getFullYear()  === 2022 && taxReportMonthDate.getMonth() + 1  < 5)){
+            var messageWindow = new MessageWindow();
+                    messageWindow.Width = 500;
+                    messageWindow.IsMessageMultiLine = true;
+                    let message: string = TextCodeTranslator.Translate(TextCode.TaxReportCloseJournalNotSupported);
+                    messageWindow.Show(message);
+                    return;
+        }
+
         this.taxReportExtendedPMService.GetTaxReportReconciledLines(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) =>
             {
@@ -296,5 +306,6 @@ enum TaxReportStatus {
 
 enum TextCode {
     TaxReportCantBeClosedValidationMessage = "TaxReport.O.ClosingJournalValidationMessage",
-    TaxReportClosingJournalConfirmationMessage = "TaxReport.O.ClosingJournalConfirmationMessage"
+    TaxReportClosingJournalConfirmationMessage = "TaxReport.O.ClosingJournalConfirmationMessage",
+    TaxReportCloseJournalNotSupported = "TaxReport.O.CloseJournalNotSupported",
 }
