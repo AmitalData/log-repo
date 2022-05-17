@@ -33,14 +33,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public List<CustomsRequiredFieldPM> GetCustomWarningFieldsByObjectTable(string ObjectTableId, int Tenant, string type = "A")
 
         {
-            string entityKeyString = $"GetCustomWarningFieldsByObjectTableFromCache({ObjectTableId},{Tenant},{type})";
-            var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
-            {
-
-                return this.GetCustomWarningFieldsByObjectTableNoCache(ObjectTableId, Tenant, type);
-
-            });
-            return res;
+            return this.GetCustomWarningFieldsByObjectTableNoCache(ObjectTableId, Tenant, type);
         }
         /*
         private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant,string type="A")
