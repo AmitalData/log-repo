@@ -102,4 +102,4 @@ export class ModificationAndDiscountTypePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

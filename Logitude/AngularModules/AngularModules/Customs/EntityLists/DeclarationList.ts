@@ -15,6 +15,7 @@ export class DeclarationList {
 	ImporterId: string;
 	SearchFields: string;
 	DeclarationNumber: string;
+	CustomerName: string;
 	ExternalDeclarationNumber: string;
 	DeclarationOfficeCode: string;
 	TaxationDateTime: Date;
