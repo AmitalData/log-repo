@@ -608,6 +608,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                 filters.TextValue1 = LastYearToDate;
                 filters.MyName = "Last Year";
             }
+            else if (filters.TextValue == "NoDate" || filters.TextValue == "No Date") {
+                filters.TextValue = "NoDate";
+                filterOperator = "NoDate";
+            }
             else if (filters.TextValue == "Less than Today") {
                 filters.TextValue = TodayDate;
                 filters.MyName = "Less than Today";
@@ -3476,6 +3480,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 value1 = LastYearFromDate;
                                 value2 = LastYearToDate;
                                 filterOperator = "Between";
+                            }
+                            else if (value1 == "NoDate" || value1 == "No Date") {
+                                value1 = "NoDate";
+                                filterOperator = "NoDate";
                             }
                             else if (value1 == "Less than Today") {
                                 value1 = TodayDate;
