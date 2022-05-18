@@ -435,6 +435,9 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
    declare @ITDate as datetime
    declare @ITNumber as varchar(25)
 
+   declare @ISFDate as datetime
+   declare @ISFNumber as varchar(25)
+
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
 	SELECT  dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,  DIM_Directions.Name, DIM_TransportModes.Name ,DIM_Levels.Name,  DIM_Types.Name, DIM_OBLTypes.Name, DIM_Departments.Id_Number ,DIM_Branches.Id_Number , dw_Shipments.ShipmentNumber, dw_Shipments.House ,dw_ShipmentMasterDatas.Master,shipperPartners.Id_Number, consigneePartners.Id_Number,
@@ -488,7 +491,8 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
 
 	DIM_ShipmentSubTypes.Id_Number, dw_Shipments.PODReceivedDate, dw_ShipmentMasterDatas.MainCarriageFinalDestinationATA,Transshipment2Vessel.Id_Number, Transshipment3Vessel.Id_Number,dw_ShipmentMasterDatas.MainCarriageCarrierNumber,
 	dw_Shipments.WarehouseLegVGMCutOffDate,dw_Shipments.WarehouseLegCutOffDate,
-	dw_Shipments.ENSNumber, dw_Shipments.ENSDate, dw_Shipments.ITDate, dw_Shipments.ITNumber
+	dw_Shipments.ENSNumber, dw_Shipments.ENSDate, dw_Shipments.ITDate, dw_Shipments.ITNumber,
+	dw_Shipments.ISFDate, dw_Shipments.ISFNumber
 
 	 
 
@@ -634,7 +638,8 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
 	  @ColoaderAddress,@ColoaderContact,
 	  @ConsolidatorAddress,@ConsolidatorContact,
 	  @ShipmentSubType, @PODReceivedDate, @ComputedMainCarriageATA,@Transshipment2Vessel,@Transshipment3Vessel,@OBL,@WarehouseLegVGMCutOffDate, @WarehouseLegCutOffDate,
-	  @ENSNumber, @ENSDate, @ITDate, @ITNumber
+	  @ENSNumber, @ENSDate, @ITDate, @ITNumber,
+	  @ISFDate, @ISFNumber
  
 
 
@@ -823,7 +828,8 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
 	   [Notify2 Address],[Notify2 Contact],[Freight Forwarder Address],[Freight Forwarder Contact],
 	   [Consignee Not Importer Address],[Consignee Not Importer Contact],[Custom Clearance Point Address],[Custom Clearance Point Contact],
 	   [Coloader Address],[Coloader Contact],[Consolidator Address],[Consolidator Contact],[IsInland Domestic Shipment],[Is Standalone Pickup Delivery], [Shipment Sub Type], [POD Received Date], [Main Carriage Final Destination ATA],[Transshipment 2 Vessel],[Transshipment 3 Vessel],[OBL], [VGM cut off date],[Warehouse Cut off],
-	   [ENS #],[ENS Date],[IT Date],[IT #]
+	   [ENS #],[ENS Date],[IT Date],[IT #],
+	   [ISF Date], [ISF #]
 	  )  
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared  , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA ,dbo.GetDateFormateAsNumber(@MAWBOBLDate) , @MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServicesType ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1
 	   ,@Transshipment1Vessel,@Transshipment1Carrier,@IncludesCustoms,@DeclarationNumber,dbo.GetDateFormateAsNumber(@DeclarationDate),dbo.GetDateFormateAsNumber(@CustomsClearanceDate),@TerminalAvailable,@WarehouseLegLastFreeDate,@FirstPickupATD,@FirstPickupATA,@FinalDeliveryETD,@FinalDeliveryETA,@FinalDeliveryATD,@FinalDeliveryATA,@Transshipment1ETA,@Transshipment1ETD,@Transshipment1ATA,@Transshipment1ATD, @Transshipment1AdditionalMAWBOBLBL,@FirstPickupLocation,@ContainersNumbers,@FinalRatio,@FinalVolumetricWeight,@WarehouseLegEntryDate,@WarehouseLegReleaseDate,@OrderGrossWeightWithUnitCode ,@OrderVolumeWithUnitCode , @BookingNumberOfPackages ,@OrderChargeableWeight,@EstimateProfitInProfitCurrency , @EstimateProfitInLocalCurrency, @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy,@NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupETA,@DeliveryToPort,@LastPickupETD,@LastPickupATD,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
@@ -845,7 +851,8 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
 	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
 	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact, @IsInlandDomesticShipment, @IsStandalonePickupDelivery,@ShipmentSubType, @PODReceivedDate,@ComputedMainCarriageATA,@Transshipment2Vessel,@Transshipment3Vessel,@OBL,dbo.GetDateFormateAsNumber(@WarehouseLegVGMCutOffDate), dbo.GetDateFormateAsNumber(@WarehouseLegCutOffDate),
-	  @ENSNumber, dbo.GetDateFormateAsNumber(@ENSDate), dbo.GetDateFormateAsNumber(@ITDate), @ITNumber)
+	  @ENSNumber, dbo.GetDateFormateAsNumber(@ENSDate), dbo.GetDateFormateAsNumber(@ITDate), @ITNumber,
+	  dbo.GetDateFormateAsNumber(@ISFDate), @ISFNumber)
 
 	   	END TRY 
 BEGIN CATCH  
@@ -905,7 +912,8 @@ END CATCH
 	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
 	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact, @ShipmentSubType, @PODReceivedDate, @ComputedMainCarriageATA,@Transshipment2Vessel,@Transshipment3Vessel,@OBL,@WarehouseLegVGMCutOffDate, @WarehouseLegCutOffDate,
-	  @ENSNumber, @ENSDate, @ITDate, @ITNumber
+	  @ENSNumber, @ENSDate, @ITDate, @ITNumber,
+	  @ISFDate, @ISFNumber
  
 
 
