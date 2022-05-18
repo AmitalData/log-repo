@@ -80,6 +80,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ShipCode  { get; set; }
        [DataMember]
        public string ConsignmentType  { get; set; }
+       [DataMember]
+       public string ExportStoragesId  { get; set; }
    }
 
 }

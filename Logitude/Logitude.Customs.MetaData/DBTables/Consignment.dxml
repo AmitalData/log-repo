@@ -176,6 +176,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExportStoragesId"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
