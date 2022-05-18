@@ -29,6 +29,14 @@ namespace Logitude.Customs.Data.Repsitories
             }
         }
 
+        public void FastDeleteMulti(DeclarationKeys entityKeyFields)
+        {
+            LogitudeSettings.HandleLogMe("DeclarationId:" + entityKeyFields.GetFullKey() + Environment.NewLine + Environment.StackTrace.ToString(), false, "ExportDeclarationClosingDataRepositoryFastDeleteMulti", new DateTime(2017, 11, 1));
+
+            (context as DbContextBase)
+                .DeleteWhere<ExportDeclarationClosingData>(rec => rec.DeclarationId == entityKeyFields.Id);
+        }
+
     }
 
 }

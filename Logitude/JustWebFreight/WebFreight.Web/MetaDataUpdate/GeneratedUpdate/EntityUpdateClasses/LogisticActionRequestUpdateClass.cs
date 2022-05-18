@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticActionRequestUpdateClass
    {  		
-		public const string HashString = "90c381b3f5478c80bd91b84d87471a95";
+		public const string HashString = "33913bbf60dae919c4d7c1d6eaee1c08";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,10 +127,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Logitude.Customs.Views.NewLogisticActionRequestControlCommand",
-			      				    LocalDefaultText =  " בקשות ביטול יצוא",
+			      				    LocalDefaultText =  " בקשות ביטול יצום",
 			      				    DefaultText =  "Logistic Action Request",
-			      				    NewButtonLocalDefaultText =  " בקשות ביטול יצוא",
-			      				    NewButtonDefaultText =  " בקשות ביטול יצוא",
+			      				    NewButtonLocalDefaultText =  " בקשות ביטול יצום",
+			      				    NewButtonDefaultText =  " בקשות ביטול יצום",
 			      				    Code =  "45f7",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
@@ -195,10 +195,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultText =  "תיק,יצואן ,הצהרה,מס' בקשה,מזהה המטען",
+					  						FullLocalDefaultText =  "תיק,יצוםן ,הצהרה,מס' בקשה,מזהה המטען",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
-					  						ListLocalDefaultText =  "תיק,יצואן ,הצהרה,מס' בקשה,מזהה המטען",
+					  						ListLocalDefaultText =  "תיק,יצוםן ,הצהרה,מס' בקשה,מזהה המטען",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -257,10 +257,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestDate",
 					  						DefaultText =  "Request Date",
-					  						FullLocalDefaultText =  "תאריך בקשת ביטול",
+					  						FullLocalDefaultText =  "תםריך בקשת ביטול",
 					  						ListFieldLable =  "RequestDateListLable",
 					  						ListLableDefaultText =  "Request Date",
-					  						ListLocalDefaultText =  "תאריך בקשת ביטול",
+					  						ListLocalDefaultText =  "תםריך בקשת ביטול",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -319,10 +319,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportFileNo",
 					  						DefaultText =  "Export File No",
-					  						FullLocalDefaultText =  "תיק יצוא",
+					  						FullLocalDefaultText =  "תיק יצום",
 					  						ListFieldLable =  "ExportFileNoListLable",
 					  						ListLableDefaultText =  "Export File No",
-					  						ListLocalDefaultText =  "תיק יצוא",
+					  						ListLocalDefaultText =  "תיק יצום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -445,10 +445,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExporterNumber",
 					  						DefaultText =  "Exporter Number",
-					  						FullLocalDefaultText =  "מספר יצואן",
+					  						FullLocalDefaultText =  "מספר יצוםן",
 					  						ListFieldLable =  "ExporterNumberListLable",
 					  						ListLableDefaultText =  "Exporter Number",
-					  						ListLocalDefaultText =  "מספר יצואן",
+					  						ListLocalDefaultText =  "מספר יצוםן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -508,10 +508,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PassportCountry",
 					  						DefaultText =  "Passport Country",
-					  						FullLocalDefaultText =  "מדינת דרכון יצואן",
+					  						FullLocalDefaultText =  "מדינת דרכון יצוםן",
 					  						ListFieldLable =  "PassportCountryListLable",
 					  						ListLableDefaultText =  "Passport Country",
-					  						ListLocalDefaultText =  "מדינת דרכון יצואן",
+					  						ListLocalDefaultText =  "מדינת דרכון יצוםן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -570,10 +570,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PassportNumber",
 					  						DefaultText =  "Passport Number",
-					  						FullLocalDefaultText =  "מספר דרכון יצואן",
+					  						FullLocalDefaultText =  "מספר דרכון יצוםן",
 					  						ListFieldLable =  "PassportNumberListLable",
 					  						ListLableDefaultText =  "Passport Number",
-					  						ListLocalDefaultText =  "מספר דרכון יצואן",
+					  						ListLocalDefaultText =  "מספר דרכון יצוםן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -758,10 +758,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeliverySiteID",
 					  						DefaultText =  "Delivery Site ID",
-					  						FullLocalDefaultText =  "מספר אתר מסירה",
+					  						FullLocalDefaultText =  "מספר םתר מסירה",
 					  						ListFieldLable =  "DeliverySiteIDListLable",
 					  						ListLableDefaultText =  "Delivery Site ID",
-					  						ListLocalDefaultText =  "מספר אתר מסירה",
+					  						ListLocalDefaultText =  "מספר םתר מסירה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -883,10 +883,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoIdentifierKey1",
 					  						DefaultText =  "Cargo Identifier Key 1",
-					  						FullLocalDefaultText =  "מזהה מטען ראשון",
+					  						FullLocalDefaultText =  "מזהה מטען רםשון",
 					  						ListFieldLable =  "CargoIdentifierKey1ListLable",
 					  						ListLableDefaultText =  "Cargo Identifier Key 1",
-					  						ListLocalDefaultText =  "מזהה מטען ראשון",
+					  						ListLocalDefaultText =  "מזהה מטען רםשון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1070,10 +1070,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PackagingTypeCode",
 					  						DefaultText =  "Packaging Type Code",
-					  						FullLocalDefaultText =  "סוג אריזה",
+					  						FullLocalDefaultText =  "סוג םריזה",
 					  						ListFieldLable =  "PackagingTypeCodeListLable",
 					  						ListLableDefaultText =  "Packaging Type Code",
-					  						ListLocalDefaultText =  "סוג אריזה",
+					  						ListLocalDefaultText =  "סוג םריזה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1915,6 +1915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CalculatedExporterName",
 					  						ListPropertyPath =  "CalculatedExporterName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1946,6 +1947,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MyCloseCheckBox",
+					  						ObjectTableName =  "Customs.LogisticActionRequest",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MyCloseCheckBox",
+					  						ListPropertyPath =  "MyCloseCheckBox",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.LogisticActionRequest",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MyCloseCheckBox",
+					  						DefaultText =  "סימון לסגירה גורפת",
+					  						FullLocalDefaultText =  "סימון לסגירה גורפת",
+					  						ListFieldLable =  "MyCloseCheckBoxListLable",
+					  						ListLableDefaultText =  "MyCloseCheckBox",
+					  						ListLocalDefaultText =  "סימון לסגירה גורפת",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -1971,15 +2032,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode LogisticActionRequestTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionRequest.Q.OpenImportCancelRequest", DefaultText = @"Open Import Cancel Request",LocalDefaultText = "בקשות ביטול יצוא פתוחות", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode LogisticActionRequestTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionRequest.Q.OpenImportCancelRequest", DefaultText = @"Open Import Cancel Request",LocalDefaultText = "בקשות ביטול יצום פתוחות", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature LogisticActionRequestFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogisticActionRequest.Q.OpenImportCancelRequest", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogisticActionRequestFeatures.OpenImportCancelRequest", NameTextCodeDefaultText = "OpenImportCancelRequest", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LogisticActionRequestObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode LogisticActionRequestTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionRequest.Q.ClosedImportCancelRequest", DefaultText = @"Closed Import Cancel Request",LocalDefaultText = "בקשות ביטול יצוא סגורות", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode LogisticActionRequestTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionRequest.Q.ClosedImportCancelRequest", DefaultText = @"Closed Import Cancel Request",LocalDefaultText = "בקשות ביטול יצום סגורות", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature LogisticActionRequestFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogisticActionRequest.Q.ClosedImportCancelRequest", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogisticActionRequestFeatures.ClosedImportCancelRequest", NameTextCodeDefaultText = "ClosedImportCancelRequest", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LogisticActionRequestObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode LogisticActionRequestTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionRequest.Q.AllImportCancelRequest", DefaultText = @"All Import Cancel Request",LocalDefaultText = "כל בקשות ביטול יצוא", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode LogisticActionRequestTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionRequest.Q.AllImportCancelRequest", DefaultText = @"All Import Cancel Request",LocalDefaultText = "כל בקשות ביטול יצום", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature LogisticActionRequestFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogisticActionRequest.Q.AllImportCancelRequest", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogisticActionRequestFeatures.AllImportCancelRequest", NameTextCodeDefaultText = "AllImportCancelRequest", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LogisticActionRequestObjectTable, addedFeatures, addedTextCodes);
  
 
@@ -1987,7 +2048,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature LogisticActionRequestFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogisticActionRequest.Q.DeclartionsConnctedRequest", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogisticActionRequestFeatures.DeclartionsConnctedRequest", NameTextCodeDefaultText = "DeclartionsConnctedRequest", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LogisticActionRequestObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode LogisticActionRequestTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionRequest.Q.DeclartionsNotConnctedRequest", DefaultText = @"Declartions Not Conncted Request",LocalDefaultText = "בקשות לא מקושרות להצהרה", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode LogisticActionRequestTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionRequest.Q.DeclartionsNotConnctedRequest", DefaultText = @"Declartions Not Conncted Request",LocalDefaultText = "בקשות לם מקושרות להצהרה", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature LogisticActionRequestFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogisticActionRequest.Q.DeclartionsNotConnctedRequest", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogisticActionRequestFeatures.DeclartionsNotConnctedRequest", NameTextCodeDefaultText = "DeclartionsNotConnctedRequest", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LogisticActionRequestObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -1995,7 +2056,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query OpenImportCancelRequestQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogisticActionRequestTextCode_0.Id, NameTextCodeCode = LogisticActionRequestTextCode_0.Code, ObjectTableName = "Customs.LogisticActionRequest", Code = "OpenImportCancelRequest",  EditWizardName = "Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl",
-			   QueryGroupCode = "45f7", IndexOrder = 0, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_0.Id,FeatureUniqeCode= LogisticActionRequestFeature_0.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			   QueryGroupCode = "45f7", IndexOrder = 0, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_0.Id,FeatureUniqeCode= LogisticActionRequestFeature_0.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn OpenImportCancelRequestQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenImportCancelRequestQuery.Id,QueryCode = OpenImportCancelRequestQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionRequest.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -2027,7 +2088,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query ClosedImportCancelRequestQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogisticActionRequestTextCode_1.Id, NameTextCodeCode = LogisticActionRequestTextCode_1.Code, ObjectTableName = "Customs.LogisticActionRequest", Code = "ClosedImportCancelRequest",  EditWizardName = "Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl",
-			   QueryGroupCode = "45f7", IndexOrder = 1, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_1.Id,FeatureUniqeCode= LogisticActionRequestFeature_1.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			   QueryGroupCode = "45f7", IndexOrder = 1, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_1.Id,FeatureUniqeCode= LogisticActionRequestFeature_1.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn ClosedImportCancelRequestQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedImportCancelRequestQuery.Id,QueryCode = ClosedImportCancelRequestQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionRequest.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -2059,7 +2120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query AllImportCancelRequestQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogisticActionRequestTextCode_2.Id, NameTextCodeCode = LogisticActionRequestTextCode_2.Code, ObjectTableName = "Customs.LogisticActionRequest", Code = "AllImportCancelRequest",  EditWizardName = "Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl",
-			   QueryGroupCode = "45f7", IndexOrder = 2, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_2.Id,FeatureUniqeCode= LogisticActionRequestFeature_2.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			   QueryGroupCode = "45f7", IndexOrder = 2, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_2.Id,FeatureUniqeCode= LogisticActionRequestFeature_2.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn AllImportCancelRequestQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllImportCancelRequestQuery.Id,QueryCode = AllImportCancelRequestQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionRequest.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -2088,7 +2149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query DeclartionsConnctedRequestQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogisticActionRequestTextCode_3.Id, NameTextCodeCode = LogisticActionRequestTextCode_3.Code, ObjectTableName = "Customs.LogisticActionRequest", Code = "DeclartionsConnctedRequest",  EditWizardName = "Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl",
-			   QueryGroupCode = "45f7", IndexOrder = 3, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_3.Id,FeatureUniqeCode= LogisticActionRequestFeature_3.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			   QueryGroupCode = "45f7", IndexOrder = 3, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_3.Id,FeatureUniqeCode= LogisticActionRequestFeature_3.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn DeclartionsConnctedRequestQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionRequest.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -2120,7 +2181,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query DeclartionsNotConnctedRequestQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogisticActionRequestTextCode_4.Id, NameTextCodeCode = LogisticActionRequestTextCode_4.Code, ObjectTableName = "Customs.LogisticActionRequest", Code = "DeclartionsNotConnctedRequest",  EditWizardName = "Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl",
-			   QueryGroupCode = "45f7", IndexOrder = 4, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_4.Id,FeatureUniqeCode= LogisticActionRequestFeature_4.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			   QueryGroupCode = "45f7", IndexOrder = 4, Tenant = 0, ObjectTableId = LogisticActionRequestObjectTable.Id, QuerySection = "Customs.LogisticActionRequest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LogisticActionRequestFeature_4.Id,FeatureUniqeCode= LogisticActionRequestFeature_4.FeatureUniqeCode, DefaultSortName = "RequestDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn DeclartionsNotConnctedRequestQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsNotConnctedRequestQuery.Id,QueryCode = DeclartionsNotConnctedRequestQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionRequest.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -2242,13 +2303,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOCustomsResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.CustomsResponse", DefaultText = "Customs Response",LocalDefaultText = @"תשובת המכס", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOCancelRequestImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.CancelRequestImporter", DefaultText = "Cancel Request Importer",LocalDefaultText = @"בקשת ביטול יצוא", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOCancelRequestImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.CancelRequestImporter", DefaultText = "Cancel Request Importer",LocalDefaultText = @"בקשת ביטול יצום", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOForImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.ForImporter", DefaultText = "For Importer",LocalDefaultText = @"ליצואן", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOForImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.ForImporter", DefaultText = "For Importer",LocalDefaultText = @"ליצוםן", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOFindDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.FindDeclaration", DefaultText = "Find Declaration",LocalDefaultText = @"אותרה הצהרה", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOFindDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.FindDeclaration", DefaultText = "Find Declaration",LocalDefaultText = @"םותרה הצהרה", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOFindDeclaration2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.FindDeclaration2", DefaultText = "According to the file number, whether to make a link",LocalDefaultText = @"לפי מס' התיק , האם לבצע קישור", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOFindDeclaration2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.FindDeclaration2", DefaultText = "According to the file number, whether to make a link",LocalDefaultText = @"לפי מס' התיק , הםם לבצע קישור", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

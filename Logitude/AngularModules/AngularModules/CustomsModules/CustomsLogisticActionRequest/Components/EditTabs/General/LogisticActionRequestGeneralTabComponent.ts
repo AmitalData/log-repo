@@ -2,14 +2,13 @@ import { Component, Output, EventEmitter, Input, ChangeDetectorRef } from '@angu
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
-import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
 import { ClientList } from 'Customs/EntityLists/ClientList';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { CargoIdentifireTypeList } from 'Customs/EntityLists/CargoIdentifireTypeList';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { Subject, Subscription } from 'rxjs';
-import { ConsignmentDeclartion, DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
+import { Subscription } from 'rxjs';
+import { ConsignmentDeclartions, DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
@@ -23,6 +22,11 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import { ClientListService } from 'Customs/Services/StandardLists/ClientListService'
 import { CargoIdentifireTypeListService } from 'Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { CargoIdentifireTypePM } from 'Customs/EntityPMs/CargoIdentifireTypePM';
+import { ErrorLogPMFileLoggerService } from 'Infrastructure/Services/ExtendedPMs/ErrorLogPMFileLoggerService';
+import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
+import { loggerService } from 'Infrastructure/Utilities/logger.service';
+import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
 import { Validator } from 'Infrastructure/Validators/Validator';
 import { LogisticActionRequestService } from 'Customs/Services/Others/LogisticActionRequestService';
 
@@ -150,7 +154,6 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     get CalculatedExporterName() { return this.entityPM?.CalculatedExporterName }
     set CalculatedExporterName(newValue: string) { this.entityPM.CalculatedExporterName = newValue; }
 
-
     constructor(
         private logisticActionRequestPMService: LogisticActionRequestPMService,
         private EntityResourceService: EntityResourceService,
@@ -158,10 +161,13 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         private cdr: ChangeDetectorRef,
         public entityArgs: EntityArgs,
         public logisticActionRequestWebService: LogisticActionRequestWebService,
+        private logger: loggerService,
+        private _logisticActionRequestsCloseSharedDataService: LogisticActionRequestsCloseSharedDataService,
     ) {
         super();
         this.entityPM = new LogisticActionRequestPM();
         this.EntityResourceService.getEntityResourceByTableName("Customs.LogisticActionRequestType").subscribe(response => { });
+        this.logger.loggerAppSettingsName = "20220301.LogUntilDateyyyyMMdd";
 
         this.Listen();
     }
@@ -239,18 +245,25 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     private async syncDeclaration() {
-        const consignmentDeclartion: ConsignmentDeclartion = await this.getDeclarationsandConsignment();
+        const consignmentDeclartion: ConsignmentDeclartions = await this.getDeclarationsandConsignment();
 
         if (!consignmentDeclartion.Consignment || !(await this.confirmSyncDeclaration())) return;
 
-        this.ExporterNumber = consignmentDeclartion.Consignment.Declaration.ImporterCode;
+        const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration ;
+
+        this.ExporterNumber = declaration.ImporterCode;
+        this.entityPM.DeclarationId = declaration.Id;
+        this.entityPM.DeclarationNumber = declaration.DeclarationNumber;
         this.CargoIdentifierType = consignmentDeclartion.Consignment.CargoTypeCode
         this.CargoIdentifierKey1 = consignmentDeclartion.Consignment.ManifestNumber
         this.CargoIdentifierKey2 = consignmentDeclartion.Consignment.SecondCargoID
         this.CargoIdentifierKey3 = consignmentDeclartion.Consignment.ThirdCargoID
         this.DeliverySiteID = consignmentDeclartion.Consignment.StorageSiteCode
-        this.entityPM.DeclarationId = consignmentDeclartion.Consignment.Declaration.Id;
-        this.entityPM.DeclarationNumber = consignmentDeclartion.Consignment.Declaration.DeclarationNumber;
+
+        if(consignmentDeclartion.ConsignmentPackages.length === 1) {
+            this.entityPM.PackagingTypeCode = consignmentDeclartion.ConsignmentPackages[0].PackageTypeCode
+            this.entityPM.Quantity = consignmentDeclartion.ConsignmentPackages[0].Quantity;
+        }
 
         this.cdr.detectChanges();
     }
@@ -269,8 +282,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    private async getDeclarationsandConsignment(): Promise<ConsignmentDeclartion> {
-        const res: ConsignmentDeclartion = await new DeclarationWebService().getDeclarationConsignment(this.entityPM.ExportFileNo)
+    private async getDeclarationsandConsignment(): Promise<ConsignmentDeclartions> {
+        const res: ConsignmentDeclartions = await new DeclarationWebService().getDeclarationConsignment(this.entityPM.ExportFileNo)
         return res;
     }
 
@@ -298,6 +311,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     ngOnDestroy() {
         this.subscriber?.unsubscribe();
+        this.restartCounterCloseRequest()
     }
 
 
@@ -402,6 +416,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     async SaveEntityChanges() {
+        this.logger.sendError('start SaveEntityChange', 'entityPM: ' + JSON.stringify(this.entityPM));
         const isInsert: boolean = !this.entityPM.Id;
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         const errMess = await this.CheckIfLogisticActionRequestExist();
@@ -412,6 +427,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         }
         const res = await this.logtuideTableDataService.getDataFromService(
             (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM)))
+
+        this.logger.sendError('after save', 'res: ', JSON.stringify(res));
 
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
         SessionLocator.SelectedSession.StopBusyIndicator();
@@ -425,7 +442,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
                 if (!mm.HasError) {
                     if (mm.Result) {
                         var errorMsg: string = TextCodeTranslator.Translate("Customs.General.O.LogisticActionRequestAlreadyExist");
-                        if (AppTool.IsNullOrEmpty(errorMsg)) errorMsg = "קיימת בקשה לביטול יצוא עם אותם מזהי מטען";
+                        if (AppTool.IsNullOrEmpty(errorMsg)) errorMsg = "����� ���� ������ ���� �� ���� ���� ����";
                         resolve(errorMsg);
                     }
                 }
@@ -444,11 +461,13 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
                 this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.LogisticActionRequest.F." + filed))));
         
         // Validator.TryValidateObject(this.entityPM, this.ObjectTableName,  this.ValidationErrorsList);
+        this.logger.sendError('is invalid', 'ValidationErrorsList: ' + JSON.stringify(this.ValidationErrorsList))
         return !!this.ValidationErrorsList.length;
     }
 
 
     async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
+        this.logger.sendError('OnCustomSendOptionsButtonClick')
         this.submit = true;
         if (this.invalidate()) return;
 
@@ -458,12 +477,16 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
 
         const param: LogisticActionRequestRequestParams = this.getCustomsParams();
-
+        this.logger.sendError('param', 'param: ' + JSON.stringify(param));
         const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
-
+        this.logger.sendError('after SendCustomsMessage8410', 'res: ' + JSON.stringify(res));
+        
         CustomMessageProgressComponent
-            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), false)
-            .catch((err) => this.ValidationErrorsList.push(err));
+        .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, TextCodeTranslator.Translate('Customs.LogisticActionRequest.O.CancelRequestImporter'), false)
+        .catch((err) => {
+                this.logger.sendError('after err', 'err: ' + JSON.stringify(err));
+                this.ValidationErrorsList.push(err)
+            });
     }
 
 
@@ -491,13 +514,19 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     OkButtonClicked() {
         this.submit = true;
         // if (this.invalidate()) return;
-
-        this.SaveEntityChanges();
+        this.logger.sendError('OkButtonClicked');
+        this.SaveEntityChanges();        
     }
 
 
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
+    }
+
+
+    private restartCounterCloseRequest() {
+        this._logisticActionRequestsCloseSharedDataService._SelectedItems.Clear();
+        this._logisticActionRequestsCloseSharedDataService.IsDisplayButtonClose = false;
     }
 
 

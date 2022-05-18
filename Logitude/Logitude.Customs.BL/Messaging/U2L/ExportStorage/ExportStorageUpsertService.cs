@@ -181,16 +181,64 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 _DBExportStoragePM.ExporterID = TranslateClient(_DBExportStoragePM.Tenant, _UnifreigntExportStorage.General.ExporterNumber);
                 //UnifreigntExportStorage.General.ExporterFileNumber = "Exp_Ref_INV1";
                 _DBExportStoragePM.ShipCode = _UnifreigntExportStorage.General.ShipCode;
+                _DBExportStoragePM.ExportLoadingPortcode = _UnifreigntExportStorage.General.LoadingSite;
+                _DBExportStoragePM.StorageSiteCode = _UnifreigntExportStorage.General.StorageSite;
+                _DBExportStoragePM.ExportUnloadingPortCode = _UnifreigntExportStorage.General.FirstDestinationInternationalSiteID;
+                _DBExportStoragePM.FinalDestinationPortCode = _UnifreigntExportStorage.General.FinalDestinationInternationalSiteID;
+
+                if (_UnifreigntExportStorage.CargoIdentifier != null)
+                {
+                    _DBExportStoragePM.CargoTypeCode = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierType;
+                    _DBExportStoragePM.FirstCargoID = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierKey1;
+                    _DBExportStoragePM.SecondCargoID = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierKey2;
+                    _DBExportStoragePM.ThirdCargoID = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierKey3;
+                }
+
+                if (_UnifreigntExportStorage.CargoDetails != null)
+                {
+                    _DBExportStoragePM.CargoType = _UnifreigntExportStorage.CargoDetails.CargoType;
+                    _DBExportStoragePM.MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription;
+                    decimal PackageQuantity = 0;
+                    if (!String.IsNullOrWhiteSpace(_UnifreigntExportStorage.CargoDetails.Quantity))
+                    {
+
+                        if (decimal.TryParse(_UnifreigntExportStorage.CargoDetails.Quantity, out PackageQuantity))
+                        {
+                            _DBExportStoragePM.PackageQuantity = PackageQuantity;
+                        }
+                    }
+                    else
+                    {
+                        _DBExportStoragePM.PackageQuantity = null;
+                    }
+
+                    decimal GrossMassMeasure = 0;
+                    if (!String.IsNullOrWhiteSpace(_UnifreigntExportStorage.CargoDetails.Weight))
+                    {
+
+                        if (decimal.TryParse(_UnifreigntExportStorage.CargoDetails.Weight, out GrossMassMeasure))
+                        {
+                            _DBExportStoragePM.GrossMassMeasure = GrossMassMeasure;
+                        }
+                    }
+                    else
+                    {
+                        _DBExportStoragePM.GrossMassMeasure = null;
+                    }
 
 
-
-                _DBExportStoragePM.CargoTypeCode = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierType;
-                _DBExportStoragePM.FirstCargoID = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierKey1;
-                _DBExportStoragePM.SecondCargoID = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierKey2;
-                _DBExportStoragePM.ThirdCargoID = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierKey3;
-
-
-                _DBExportStoragePM.CargoType = _UnifreigntExportStorage.CargoDetails.CargoType;
+                    if (_UnifreigntExportStorage.CargoDetails.DangerousSubstances != null)
+                    {
+                        if (!String.IsNullOrWhiteSpace(_UnifreigntExportStorage.CargoDetails.DangerousSubstances.UNNumber))
+                        {
+                            _DBExportStoragePM.IsDangerousGoods = 1;
+                        }
+                        else
+                        {
+                            _DBExportStoragePM.IsDangerousGoods = 0;
+                        }
+                    }
+                }
 
                 //_DBExportStoragePM.StorageStatus = (_UnifreigntExportStorage.StorageStatus ?? "").ToLower();
                 _DBExportStoragePM.StorageStatus = _UnifreigntExportStorage.StorageStatus;

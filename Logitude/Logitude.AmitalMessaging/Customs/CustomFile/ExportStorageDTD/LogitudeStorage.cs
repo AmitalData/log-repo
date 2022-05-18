@@ -27,7 +27,7 @@ namespace Logitude.AmitalMessaging.Customs.CustomFile.ExportStorageDTD
 		public string SenderCodeID { get; set; }
 
 		[XmlElement(ElementName = "MessageFromForm")]
-		public bool MessageFromForm { get; set; }
+		public string MessageFromForm { get; set; }
 
 		[XmlElement(ElementName = "ReplyPhoneNumeric")]
 		public string ReplyPhoneNumeric { get; set; }
@@ -82,6 +82,9 @@ namespace Logitude.AmitalMessaging.Customs.CustomFile.ExportStorageDTD
 
 		[XmlElement(ElementName = "LoadingSite")]
 		public string LoadingSite { get; set; }
+
+		[XmlElement(ElementName = "StorageSite")]
+		public string StorageSite { get; set; }
 
 		[XmlElement(ElementName = "FinalDestinationInternationalSiteID")]
 		public string FinalDestinationInternationalSiteID { get; set; }
@@ -158,13 +161,13 @@ namespace Logitude.AmitalMessaging.Customs.CustomFile.ExportStorageDTD
 		public string HandingCode { get; set; }
 
 		[XmlElement(ElementName = "DangerousGoodsIndication")]
-		public bool DangerousGoodsIndication { get; set; }
+		public string DangerousGoodsIndication { get; set; }
 
 		[XmlElement(ElementName = "CodeBreaksIndication")]
-		public bool CodeBreaksIndication { get; set; }
+		public string CodeBreaksIndication { get; set; }
 
 		[XmlElement(ElementName = "DamageCode")]
-		public bool DamageCode { get; set; }
+		public string DamageCode { get; set; }
 
 		[XmlElement(ElementName = "ForeignCurrencyType")]
 		public string ForeignCurrencyType { get; set; }
@@ -185,7 +188,7 @@ namespace Logitude.AmitalMessaging.Customs.CustomFile.ExportStorageDTD
 		public string Quantity { get; set; }
 
 		[XmlElement(ElementName = "WeightInPortMandatory")]
-		public bool WeightInPortMandatory { get; set; }
+		public string WeightInPortMandatory { get; set; }
 
 		[XmlElement(ElementName = "Weight")]
 		public string Weight { get; set; }
@@ -228,13 +231,13 @@ namespace Logitude.AmitalMessaging.Customs.CustomFile.ExportStorageDTD
 		public string OwnershipCode { get; set; }
 
 		[XmlElement(ElementName = "CoolingActivated")]
-		public bool CoolingActivated { get; set; }
+		public string CoolingActivated { get; set; }
 
 		[XmlElement(ElementName = "RequiredTemperature")]
 		public string RequiredTemperature { get; set; }
 
 		[XmlElement(ElementName = "PharmaGroceryIndication")]
-		public bool PharmaGroceryIndication { get; set; }
+		public string PharmaGroceryIndication { get; set; }
 
 		[XmlElement(ElementName = "LeftException")]
 		public string LeftException { get; set; }

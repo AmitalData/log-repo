@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportDeclarationClosingDataUpdateClass
    {  		
-		public const string HashString = "dcf6114624098bc286fb32998e46d018";
+		public const string HashString = "e90cadf3fbec76440de72d87b976b266";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "ExportDeclarationClosingData",
 			      				    DefaultText =  "ExportDeclarationClosingData",
-			      				    Code =  "87bd",
+			      				    Code =  "5146",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -820,7 +820,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "Customs.ExportDeclarationClosingData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  20,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -828,7 +828,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  10,
+					  						SystemMaxLength =  20,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,

@@ -24,6 +24,7 @@ import { CourierMasterService } from 'Customs/Services/Others/CourierMasterServi
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { PendingByKeywordWebService } from 'Customs/Services/ExtendedPMs/PendingByKeywordWebService';
+import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -52,6 +53,7 @@ export class FieldTemplateComponent {
         private CD: ChangeDetectorRef,
         private entityResourceService: EntityResourceService,
         private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService,
+        private _logisticActionRequestsCloseSharedDataService: LogisticActionRequestsCloseSharedDataService,
         private logtuideTableDataService: LogtuideTableDataService,
         private pendingByKeywordWebService: PendingByKeywordWebService,
     ) {
@@ -187,31 +189,32 @@ export class FieldTemplateComponent {
         });
     }
 
-    EditMyCloseCheckBox(eventM) {
+    EditMyCloseCheckBox(tableName: string) {
+        const myService = tableName === 'LogisticActionRequest' ? this._logisticActionRequestsCloseSharedDataService : this._physicalChecksCloseSharedDataService;
 
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
 
 
         //eventM.stopPropagation();
-        if (!this._physicalChecksCloseSharedDataService._SelectedItems.Collection.includes(this.Entity.Id)) {
-            this._physicalChecksCloseSharedDataService._SelectedItems.Insert(this.Entity.Id);
+        if (!myService._SelectedItems.Collection.includes(this.Entity.Id)) {
+            myService._SelectedItems.Insert(this.Entity.Id);
         }
         else {
             var removedIndex = null;
-            for (var i = 0; i < this._physicalChecksCloseSharedDataService._SelectedItems.Collection.length; i++) {
-                if (this.Entity.Id == this._physicalChecksCloseSharedDataService._SelectedItems.Collection[i]) {
+            for (var i = 0; i < myService._SelectedItems.Collection.length; i++) {
+                if (this.Entity.Id == myService._SelectedItems.Collection[i]) {
                     removedIndex = i;
                     break;
                 }
             }
             if (removedIndex != null) {
-                this._physicalChecksCloseSharedDataService._SelectedItems.Collection.splice(removedIndex, 1);
+                myService._SelectedItems.Collection.splice(removedIndex, 1);
             }
 
         }
 
 
-        this._physicalChecksCloseSharedDataService.IsDisplayButtonClose = (this._physicalChecksCloseSharedDataService._SelectedItems.Collection.length > 0);
+        myService.IsDisplayButtonClose = (myService._SelectedItems.Collection.length > 0);
         this.CD.detectChanges();
 
     }

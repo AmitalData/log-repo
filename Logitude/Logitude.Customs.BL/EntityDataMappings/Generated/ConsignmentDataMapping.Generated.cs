@@ -46,7 +46,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportUnloadingPortCode, 
 	         ExportLoadingPortCode, 
 	         ShipCode, 
-	         ConsignmentType,
+	         ConsignmentType, 
+	         ExportStoragesId,
 	      }
 
 
@@ -86,7 +87,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportLoadingPortCode, 
 	         ShipCode, 
 	         ConsignmentType, 
-	         DeliverySiteCode,
+	         DeliverySiteCode, 
+	         ExportStoragesId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -208,6 +210,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConsignmentType))
             {
 				entityPOCO.ConsignmentType = entityPM.ConsignmentType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportStoragesId))
+            {
+				entityPOCO.ExportStoragesId = entityPM.ExportStoragesId;
 			}
 			}
 
@@ -339,6 +346,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ConsignmentType = entityPOCO.ConsignmentType;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportStoragesId))
+            {
+					entityPM.ExportStoragesId = entityPOCO.ExportStoragesId;
+            }
+
 		}
 
 		public void PMToOldPM(ConsignmentPM entityPM, ConsignmentPM oldEntityPM)
@@ -460,6 +472,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ConsignmentType = entityPM.ConsignmentType;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportStoragesId))
+            {
+                oldEntityPM.ExportStoragesId = entityPM.ExportStoragesId;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ConsignmentPM entityPM)
@@ -472,6 +489,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CargoDescription)) //T4 find type == nText 
             {
                 entityPM.CargoDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CargoDescription));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ExportStoragesId)) //T4 find type == nText 
+            {
+                entityPM.ExportStoragesId = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExportStoragesId));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

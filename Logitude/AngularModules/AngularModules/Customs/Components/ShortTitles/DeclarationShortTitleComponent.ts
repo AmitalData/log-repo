@@ -116,6 +116,11 @@ export class DeclarationShortTitleComponent {
         }
     }
 
+    RefreshButtonClicked() {
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+    }
+
+
     ShowCustomFileOPCFromDeclaration() {
 
         var declarationEditComponentController: DeclarationEditComponentController = (this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController)

@@ -640,7 +640,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         }
 
         if (valid) {
-            if (checkFreightValues) {
+            if (checkFreightValues && this.declarationPM.Direction != 'E') {
 
                 this.SaveAndNew = true;
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.IncotermCode) && (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F"))) {
@@ -875,7 +875,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
     ContinueSaving(checkFreightValues: boolean) {
-        if (checkFreightValues /*&& !this.loadingNextItems*/) {// maybe this should be done because i'm saving the invoice in case next and previous.
+        if (checkFreightValues && this.declarationPM.Direction != 'E'/*&& !this.loadingNextItems*/) {// maybe this should be done because i'm saving the invoice in case next and previous.
             if (this.EntityPM.IncotermCode != null && (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F"))) {
                 if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
@@ -1596,7 +1596,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoice.F.InsruanceCurrencyTypeCode"));
         }
 
-        let ExportCommonInvoiceModifications:string[] = ['67', '144', '160']; // הובלה ביטוח והוצאות נוספות
+        let ExportCommonInvoiceModifications:string[] = ['67', '104', '160']; // הובלה ביטוח והוצאות נוספות
         // SupplierInvoiceModifications
         for (let item of this.EntityPM.SupplierInvoiceModifications) {
             if (this.declarationPM.Direction == "E" && ExportCommonInvoiceModifications.includes(item.TypeCode)) {

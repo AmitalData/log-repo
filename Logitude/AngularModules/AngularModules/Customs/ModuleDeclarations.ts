@@ -29,6 +29,7 @@ import { ReferantSpotlightDataTemplate } from './Components/Spotlight/ReferantSp
 import { DeclarationReferantDataListActionBarComponent } from './Components/ListActionBar/DeclarationReferantDataListActionBarComponent';
 import { PhysicalCheckListActionBarComponent } from './Components/ListActionBar/PhysicalCheckListActionBarComponent';
 import { ExportStorageShortTitleComponent } from './Components/ShortTitles/ExportStorageShortTitleComponent';
+import { LogisticActionRequestListActionBarComponent } from './Components/ListActionBar/LogisticActionRequestListActionBarComponent';
 
 export const CustomsControlsComponents =
     [
@@ -72,7 +73,8 @@ export const Components =
 
         ReferantSpotlightDataTemplate,
         DeclarationReferantDataListActionBarComponent,
-        PhysicalCheckListActionBarComponent
+        PhysicalCheckListActionBarComponent,
+        LogisticActionRequestListActionBarComponent,
     ];
 
 export class ModuleDeclarations {
@@ -104,6 +106,7 @@ export class ModuleDeclarations {
 
             case "DeclarationReferantDataListActionBarComponent": { myResult = DeclarationReferantDataListActionBarComponent; break; }
             case "PhysicalCheckListActionBarComponent": { myResult = PhysicalCheckListActionBarComponent; break; }
+            case "LogisticActionRequestListActionBarComponent": { myResult = LogisticActionRequestListActionBarComponent; break; }
         }
 
         return myResult;
