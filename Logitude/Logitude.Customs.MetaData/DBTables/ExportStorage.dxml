@@ -217,6 +217,21 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
+    ForeignKeyColumn="ExportLoadingPortcode"
+    ReferencedTable="UnloadingSiteType"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="StorageSiteCode"
+    ReferencedTable="DeliverySiteTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ExportUnloadingPortCode,FinalDestinationPortCode"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
     ForeignKeyColumn="ActionCode"
     ReferencedTable="ExportLogisticPermitActions"
     ReferencedColumn="Code"

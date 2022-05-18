@@ -14,8 +14,8 @@ import { DeclarationQueryComponent } from './Components/DeclarationQueryComponen
 import { DeclarationCancellationComponent } from './Components/DeclarationCancellation/DeclarationCancellationComponent';
 import { ExportDeclarationClosingDataComponent } from './Components/CloseDeclaration/ExportDeclarationClosingDataComponent';
 import { DeclarationPaymentExportComponent } from './Components/DeclarationPayment/DeclarationPaymentExportComponent';
-import { ExportStorageDeclerationComponent } from './Components/ExportStorageDecleration/ExportStorageDeclerationComponent';
 import { DeclarationFiltersMenuComponent } from './Components/FiltersMenu/DeclarationFiltersMenuComponent';
+import { ExportStorageDeclerationComponent } from './Components/ExportStorageDecleration/ExportStorageDeclerationComponent';
 
 
 
@@ -35,8 +35,8 @@ export const Components =
         SendManifestComponent,
         DeclarationCancellationComponent,
         ExportDeclarationClosingDataComponent,
-        ExportStorageDeclerationComponent,
         DeclarationFiltersMenuComponent,
+        ExportStorageDeclerationComponent
     ];
 
 export class ModuleDeclarations {
@@ -59,8 +59,9 @@ export class ModuleDeclarations {
             case "SendManifestComponent": { myResult = SendManifestComponent; break; }
             case "DeclarationCancellationComponent": { myResult = DeclarationCancellationComponent; break; }
             case "ExportDeclarationClosingDataComponent": { myResult = ExportDeclarationClosingDataComponent; break; }
-            case "ExportStorageDeclerationComponent": { myResult = ExportStorageDeclerationComponent; break; }
             case "DeclarationFiltersMenuComponent": { myResult = DeclarationFiltersMenuComponent; break; }
+
+            case "ExportStorageDeclerationComponent": { myResult = ExportStorageDeclerationComponent; break; }
         }
 
         return myResult;
