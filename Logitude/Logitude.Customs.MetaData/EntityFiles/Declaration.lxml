@@ -22629,6 +22629,13 @@
         LocalDefaultText="&quot;ביטול הצהרה&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent&quot;" />
+      <MenuItem
+        EventCode="&quot;ExportStorageDecleration&quot;"
+        DefaultText="&quot;Export Storage Decleration&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="15"
+        LocalDefaultText="&quot;קישור אחסנות להצהרה&quot;"
+        IsPackagable="true" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"

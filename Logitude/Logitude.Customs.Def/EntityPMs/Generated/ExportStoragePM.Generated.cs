@@ -917,6 +917,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string procedureCurrentName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProcedureCurrentName  
+	   {
+	    
+	     get
+		{
+		   return procedureCurrentName;
+		 }
+		 set
+		 {
+		   if(procedureCurrentName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProcedureCurrentName",OldValue=procedureCurrentName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   procedureCurrentName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
