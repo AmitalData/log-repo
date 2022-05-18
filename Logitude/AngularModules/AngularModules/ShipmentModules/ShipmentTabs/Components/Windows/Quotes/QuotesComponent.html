@@ -83,7 +83,7 @@
                                     {{item.StartDate | DateTimeToDatePipe}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;" [ngStyle]="{color: item.ExpirationDate | DateTimeToColorPipe}">
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;" [ngStyle]="{color: item.ExpirationDate | DateTimeToColorPipe: null : ExpirationDateComparisonDate}">
                                     {{item.ExpirationDate | DateTimeToDatePipe}}
                                 </td>
 
