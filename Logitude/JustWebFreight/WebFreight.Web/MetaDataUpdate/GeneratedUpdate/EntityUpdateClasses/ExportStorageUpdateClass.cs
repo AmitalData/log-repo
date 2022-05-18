@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "2170c47ac8db8c98a3efe6c400df2274";
+		public const string HashString = "b9c728638b26b4340f6b82f6a43bc760";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1980,7 +1980,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.UnloadingSiteType",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  17,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1988,7 +1988,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  10,
+					  						SystemMaxLength =  17,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
