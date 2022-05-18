@@ -36,6 +36,9 @@
         <td *ngIf="CancelButtonVisibility" style="width: 57px;vertical-align: bottom;padding-left:5px">
             <button class="Button" (click)="CancelButtonClicked()">{{CancelButtonText}}</button>
         </td>
+        <td *ngIf="CloseButtonVisibility" style="width: 57px;vertical-align: bottom;padding-left:5px">
+            <button class="Button" (click)="CloseButtonClicked()">{{CloseButtonText}}</button>
+        </td>
 
         <td *ngIf="NoButtonVisibility" style="width: 57px;vertical-align: bottom;padding-left:5px">
             <button class="Button" (click)="NoButtonClicked()">{{NoButtonText}}</button>

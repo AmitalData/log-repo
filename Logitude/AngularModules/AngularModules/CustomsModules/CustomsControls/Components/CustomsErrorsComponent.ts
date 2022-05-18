@@ -37,6 +37,8 @@ export class CustomsErrorsComponent {
     NoButtonVisibility: boolean;
     CancelButtonVisibility: boolean;
     CancelButtonText: string;
+    CloseButtonVisibility: boolean;
+    CloseButtonText: string;
     NoButtonText: string;
     SaveButtonText: string;
     ComponentHeight: string;
@@ -51,6 +53,7 @@ export class CustomsErrorsComponent {
         }
         this.NoButtonText = TextCodeTranslator.Translate('Customs.General.B.No');
         this.CancelButtonText = TextCodeTranslator.Translate('Customs.General.B.Cancel');
+        this.CloseButtonText = TextCodeTranslator.Translate('Customs.General.B.Close');
         this.SaveButtonText = TextCodeTranslator.Translate('Customs.General.B.OK');
         this.CancelButtonVisibility = windowArgs.CancelButtonVisibility;
         this.NoButtonVisibility = windowArgs.NoButtonVisibility;
@@ -59,6 +62,9 @@ export class CustomsErrorsComponent {
         }
         if (windowArgs.CancelButtonText) {
             this.CancelButtonText = windowArgs.CancelButtonText;
+        }
+        if (windowArgs.CloseButtonText) {
+            this.CloseButtonText = windowArgs.CloseButtonText;
         }
         if (windowArgs.SaveButtonText) {
             this.SaveButtonText = windowArgs.SaveButtonText;
@@ -75,5 +81,8 @@ export class CustomsErrorsComponent {
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("cancel");
+    }
+    CloseButtonClicked() {
+        this.CurrentSession.CloseCurrentWindowEmit("close");
     }
 }
