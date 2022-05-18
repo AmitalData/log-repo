@@ -144,37 +144,44 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         {
             entity.FirstPickupLocation = shipmentPM.FirstPickupLocation;
             entity.Commodity = shipmentPM.AWBCommodityItemNumber;
-            //entity.ContainsDangerousGoods = shipmentPM.IsDangerous;
-            //entity.ImportDeclarationDate = shipmentPM.DeclarationDate;
-            //entity.ImportDeclarationNumber = shipmentPM.DeclarationNumber;
             entity.NumberOfDeliveries = shipmentPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
-            entity.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
+            entity.LastDocumentDateTime = null;
             entity.CreatedFromDigital = shipmentPM.CreatedFromDigital;
         }
         private void MapContainersNumbersAndTypesArray()
         {
             if (shipmentPM.ShipmentPackages != null)
             {
-                MapContainersNumbersAndTypesArrayFromShipmentPackages();
+                MapDetailsFromShipmentPackages();
             }
         }
-        private void MapContainersNumbersAndTypesArrayFromShipmentPackages()
+        private void MapDetailsFromShipmentPackages()
         {
             string shipmentContainersNumbers = string.Empty;
             string shipmentContainersNumbersAndTypesArray = string.Empty;
+            string packagesQuantityAndType = null;
             foreach (ShipmentPackagePM packagePM in shipmentPM.ShipmentPackages.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete))
             {
                 shipmentContainersNumbers = AddPackageContainerNumberToShipmentContainersNumbers(shipmentContainersNumbers, packagePM.ContainerNumber);
                 shipmentContainersNumbersAndTypesArray = AddPackageContainerNumberAndTypeToShipmentContainersNumbersAndTypesArray(shipmentContainersNumbersAndTypesArray, packagePM.ContainerNumber, packagePM.PackageTypeCode);
+                packagesQuantityAndType = AddPackageDetailsToPackagesQuantityAndType(packagesQuantityAndType, packagePM.Quantity, packagePM.PackageTypeCode);
             }
 
             if (!string.IsNullOrEmpty(shipmentContainersNumbers) && shipmentContainersNumbers.Length > 1000)
             {
                 shipmentContainersNumbers = shipmentContainersNumbers.Substring(0, 1000);
             }
+
+            if (!string.IsNullOrEmpty(packagesQuantityAndType) && packagesQuantityAndType.Length > 2000)
+            {
+                packagesQuantityAndType = packagesQuantityAndType.Substring(0, 2000);
+            }
+
             entity.ContainersNumbers = string.IsNullOrEmpty(shipmentContainersNumbers) ? null : shipmentContainersNumbers;
             entity.ContainersNumbersAndTypesArray = string.IsNullOrEmpty(shipmentContainersNumbersAndTypesArray) ? null : shipmentContainersNumbersAndTypesArray;
+            entity.PackagesQuantityAndType = packagesQuantityAndType;
         }
+
         private string AddPackageContainerNumberToShipmentContainersNumbers(string shipmentContainersNumbers, string packageContainerNumber)
         {
             string allShipmentContainersNumbers = shipmentContainersNumbers;
@@ -193,6 +200,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             }
             return allShipmentContainersNumbersAndTypesArray;
         }
+        private string AddPackageDetailsToPackagesQuantityAndType(string packagesQuantityAndType, int? quantity, string packageTypeCode)
+        {
+            string allPackagesQuantityAndType = packagesQuantityAndType;
+            if (!string.IsNullOrEmpty(packageTypeCode) && quantity!= null)
+            {
+                string quantityAndTypeField = quantity + "x" + packageTypeCode;
+                allPackagesQuantityAndType += (!string.IsNullOrEmpty(allPackagesQuantityAndType) ? ", " : "") + quantityAndTypeField;
+            }
+            return allPackagesQuantityAndType;
+        }
+
         private void MapFirstPickUp()
         {
             ShipmentPickUpPM firstPickUp = shipmentPM.ShipmentPickUps.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault(); 

@@ -12685,6 +12685,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                LastDeliveryFullAddress = f.LastDeliveryFullAddress,
                                MainCarriageETDTime = f.MainCarriageETD,
                                MainCarriageETATime = f.MainCarriageETA,
+                               PackagesQuantityAndType = f.PackagesQuantityAndType,
                            };
             return myResult;
         }
@@ -13085,6 +13086,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastDeliveryFullAddress = f.LastDeliveryFullAddress,
                     MainCarriageETDTime = f.MainCarriageETD,
                     MainCarriageETATime = f.MainCarriageETA,
+                    PackagesQuantityAndType = f.PackagesQuantityAndType,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
