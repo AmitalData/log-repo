@@ -214,7 +214,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     //Check if Declaration was already paid, constraint in progress or Future payment was done
                     var declarationValidator = new Logitude.Customs.BL.Validators.DeclarationValidator(_MyDeclarationPM);
-                    if (_MyDeclarationPM.IsCourierDeclaration) declarationValidator.ToUpdateWithPaymentDate = true;
+                        if (_MyDeclarationPM.IsCourierDeclaration) declarationValidator.ToUpdateWithPaymentDate = true;
                     declarationValidator.DeclarationViewDisplayOnlyChecks();
                     if (declarationValidator.ErrorCode.Count > 0)
                     {
@@ -249,7 +249,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
-
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(_MyDeclarationPM.Tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(_MyDeclarationPM.Tenant);
                 this._MyDeclarationPM.MarkAsChanged = true; // moran 2.6.15 - Task 13803
 
                 MyGenericResponseObj.Stage = "Mapping";
@@ -338,7 +339,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CasualImporterCountry))
                             {
                                 string countryCode = "";
-                                if (_AmitalCustomsFile.CasualImporterCountry.Length > 2)
+                                if (_AmitalCustomsFile.CasualImporterCountry.Length > 2 && setting.IsConnectedToUniFreight)
                                 {
                                     countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _AmitalCustomsFile.CasualImporterCountry);
                                 }
@@ -560,7 +561,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     {
                         //this._MyDeclarationPM.Consignments[0].OriginCountryCode = _AmitalCustomsFile.OriginCountryCode;
                         string countryCode = "";
-                        if (_AmitalCustomsFile.OriginCountryCode.Length > 2)
+                        if (_AmitalCustomsFile.OriginCountryCode.Length > 2 && setting.IsConnectedToUniFreight)
                         {
                             countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _AmitalCustomsFile.OriginCountryCode);
                         }
@@ -632,7 +633,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                         var packingType = new PackingTypeRepository(ResolvedTenant());
                         var myPackingType = packingType.GetSingle(_AmitalCustomsFile.PackageTypeCode);
-                        if (myPackingType == null)
+                        if (myPackingType == null && setting.IsConnectedToUniFreight)
                         {
                             string PackageTypeCode = "";
                             PackageTypeCode = GetTranslationL2P("IIGC", "CTBPACKTYPE", _AmitalCustomsFile.PackageTypeCode);
