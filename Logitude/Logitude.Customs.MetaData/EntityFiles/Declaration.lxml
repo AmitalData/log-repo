@@ -24956,6 +24956,18 @@
       LocalDefaultText="&quot;שונו מזהה המטען בשמירה יבוצע ניתוק&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclaration.O.Insurance&quot;"
+      DefaultText="&quot;Insurance&quot;"
+      LocalDefaultText="&quot;ביטוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.FreightActualAmount&quot;"
+      DefaultText="&quot;Freight Actual Amount&quot;"
+      LocalDefaultText="&quot;הובלה בפועל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
