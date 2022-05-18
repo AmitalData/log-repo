@@ -105,6 +105,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.HouseNumbers = entityPM.HouseNumbers;
             entity.GlobalTaxCalculation = entityPM.GlobalTaxCalculation == "None" ? null : entityPM.GlobalTaxCalculation;
             entity.PaymentReferences = entityPM.PaymentReferences;
+            entity.SATCancelReasonCode = entityPM.SATCancelReasonCode;
 
             if (entityPM.HouseNumber != null)
             {

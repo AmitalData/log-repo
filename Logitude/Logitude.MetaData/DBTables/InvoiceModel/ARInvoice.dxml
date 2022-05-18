@@ -812,6 +812,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SATCancelReasonCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"

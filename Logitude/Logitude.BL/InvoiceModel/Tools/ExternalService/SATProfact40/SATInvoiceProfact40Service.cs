@@ -93,7 +93,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             SATInvoiceComprobante sATInvoiceComprobante = new SATInvoiceComprobante(arInvoicePM, currentTenant, satSetting);
             Comprobante comprobante = sATInvoiceComprobante.BuildNewInvoiceComprobante();
 
-            sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = comprobante, EntityId = arInvoicePM.Id, EntityReference = arInvoicePM.InvoiceNumber.ToString() });
+            sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = comprobante, ARInvoicePM = arInvoicePM });
             SetSATTransferStatus(SATData.InTransferingSATTransferStatusCode);
         }
 
