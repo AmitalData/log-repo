@@ -518,6 +518,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pms.Select(rec => this.GetEntityPM(rec)).ToList();
         }
 
+        public GLAccountPM GetControlGLAccountByChart(String chartOfAccountsId, int tenant)
+        {
+            var rec = this.repository.GetControlGLAccountByChart(chartOfAccountsId, tenant);
+            return this.GetEntityPM(rec);
+        }
+
         internal IQueryable<GLAccount> GetQAllControlAccount(int tenant)
         {
             return this.repository.GetQAllControlAccount(tenant);
