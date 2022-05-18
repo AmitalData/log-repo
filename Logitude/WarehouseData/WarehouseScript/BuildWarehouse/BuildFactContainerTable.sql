@@ -110,6 +110,10 @@
  declare @ShipmentDeliveryATA as datetime
  declare @ShipmentDeliveryETD as datetime
  declare @ShipmentDeliveryATD as datetime
+
+ declare @CustomsReleaseDate as datetime
+ declare @CustomsReleaseState as varchar(10)
+
   --@[DeclareCustomFieldsVariable]
 
 
@@ -127,7 +131,8 @@
 	dw_Containers.EstimatedLIFArrival, dw_Containers.CreateDate, createdByUser.Id_Number, dw_Containers.UpdateDate, updatedByUser.Id_Number, dw_Containers.CurrentStatus, dw_Containers.CurrentStatusDate, dw_Containers.ClosedDate, dw_Containers.IsClosed, status.Id_Number,dw_Containers.ShipmentId,dw_Containers.LastFreeDayDate,dw_Containers.GateOut,dw_Containers.FreeDays,
 	@dw_Containers.CustomFieldsVariable, dw_Containers.GateIn, dw_Containers.AvailablityDate, availabilityLocationPort.Id_Number, dw_Containers.OnCarriageGateOut, dw_Containers.PreCarriageGateIn, dw_Containers.ShipmentNumber, dw_Containers.ContainerNumber,packageType.Id_Number, dw_Containers.IsAutomaticUpdates,
 	dw_Containers.ShipmentPickupFrom, dw_Containers.ShipmentPickupTo, dw_Containers.ShipmentPickupETA, dw_Containers.ShipmentPickupATA, dw_Containers.ShipmentPickupETD, dw_Containers.ShipmentPickupATD, dw_Containers.ShipmentDeliveryFrom, 
-	dw_Containers.ShipmentDeliveryTo, shipmentDeliveryTrucker.Id_Number, dw_Containers.ShipmentDeliveryETA, dw_Containers.ShipmentDeliveryATA, dw_Containers.ShipmentDeliveryETD, dw_Containers.ShipmentDeliveryATD
+	dw_Containers.ShipmentDeliveryTo, shipmentDeliveryTrucker.Id_Number, dw_Containers.ShipmentDeliveryETA, dw_Containers.ShipmentDeliveryATA, dw_Containers.ShipmentDeliveryETD, dw_Containers.ShipmentDeliveryATD,
+	dw_Containers.CustomsReleaseDate, dw_Containers.CustomsReleaseState 
 
   From dw_Containers
 
@@ -166,7 +171,8 @@
 	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays,
 	@CursorCustomFieldsVariable, @GateIn, @AvailabilityDate, @AvailabilityLocationPort, @OnCarriageGateOut, @PreCarriageGateIn, @ShipmentNumber, @ContainerNumber, @ContainerType, @IsAutomaticUpdates,
 	@ShipmentPickupFrom, @ShipmentPickupTo, @ShipmentPickupETA, @ShipmentPickupATA, @ShipmentPickupETD, @ShipmentPickupATD, @ShipmentDeliveryFrom,
-	@ShipmentDeliveryTo, @ShipmentDeliveryTrucker, @ShipmentDeliveryETA, @ShipmentDeliveryATA, @ShipmentDeliveryETD, @ShipmentDeliveryATD
+	@ShipmentDeliveryTo, @ShipmentDeliveryTrucker, @ShipmentDeliveryETA, @ShipmentDeliveryATA, @ShipmentDeliveryETD, @ShipmentDeliveryATD,
+	@CustomsReleaseDate, @CustomsReleaseState
 
 		WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -192,7 +198,8 @@
 	 [Create Date], [Created By], [Update Date], [Updated By], [Current Status], [Current Status Date], [Closed Date], [Is Closed], [Status], [Shipment Id],[Last Free Day],[POD Gate Out],[Free Days],[CustomFieldNamesVariable],
 	 [POL Gate In],[Availability Date],[Availability Port], [On Carriage Gate Out], [Pre Carriage Gate In],[Shipment Number],[Container Number],[Container Type],[Automatic Updates],
 	 [Shipment Pickup From], [Shipment Pickup To], [Shipment Pickup ETA], [Shipment Pickup ATA], [Shipment Pickup ETD], [Shipment Pickup ATD], [Shipment Delivery From],
-	 [Shipment Delivery To], [Shipment Delivery Trucker], [Shipment Delivery ETA], [Shipment Delivery ATA], [Shipment Delivery ETD], [Shipment Delivery ATD])
+	 [Shipment Delivery To], [Shipment Delivery Trucker], [Shipment Delivery ETA], [Shipment Delivery ATA], [Shipment Delivery ETD], [Shipment Delivery ATD],
+	 [Customs Release Date], [Customs Release State])
 
 	 values(@Id, @SourceTenant, @ParentTenant,dbo.GetDateFormateAsNumber(@ActualEmptyPickupDate), @emptyPickupLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyPickupDate), @preCarriageLocationPort, @pOLLocationPort, dbo.GetDateFormateAsNumber(@EstimatedPOLArrival),
 	 dbo.GetDateFormateAsNumber(@ActualPOLArrival), dbo.GetDateFormateAsNumber(@EstimatedPOLLoaded), dbo.GetDateFormateAsNumber(@ActualPOLLoaded), dbo.GetDateFormateAsNumber(@EstimatedPOLVesselDeparture), dbo.GetDateFormateAsNumber(@ActualPOLVesselDeparture), @transshipment1LocationPort, dbo.GetDateFormateAsNumber(@EstimatedTrans1VesselArrival), dbo.GetDateFormateAsNumber(@ActualTransshipment1VesselArrival),
@@ -206,7 +213,8 @@
 	 dbo.GetDateFormateAsNumber(@CreateDate), @createdByUser, dbo.GetDateFormateAsNumber(@UpdateDate), @updatedByUser, @CurrentStatus, dbo.GetDateFormateAsNumber(@CurrentStatusDate), dbo.GetDateFormateAsNumber(@ClosedDate), @IsClosed, @status,@ShipmentId, dbo.GetDateFormateAsNumber(@LastFreeDayDate), dbo.GetDateFormateAsNumber(@GateOut), @FreeDays,[CustomFieldValuesVariable],
 	 dbo.GetDateFormateAsNumber(@GateIn), dbo.GetDateFormateAsNumber(@AvailabilityDate), @AvailabilityLocationPort, dbo.GetDateFormateAsNumber(@OnCarriageGateOut), dbo.GetDateFormateAsNumber(@PreCarriageGateIn), @ShipmentNumber, @ContainerNumber, @ContainerType, @IsAutomaticUpdates,
 	 @ShipmentPickupFrom, @ShipmentPickupTo, dbo.GetDateFormateAsNumber(@ShipmentPickupETA), dbo.GetDateFormateAsNumber(@ShipmentPickupATA), dbo.GetDateFormateAsNumber(@ShipmentPickupETD), dbo.GetDateFormateAsNumber(@ShipmentPickupATD), @ShipmentDeliveryFrom,
-	 @ShipmentDeliveryTo, @ShipmentDeliveryTrucker, dbo.GetDateFormateAsNumber(@ShipmentDeliveryETA), dbo.GetDateFormateAsNumber(@ShipmentDeliveryATA), dbo.GetDateFormateAsNumber(@ShipmentDeliveryETD), dbo.GetDateFormateAsNumber(@ShipmentDeliveryATD))
+	 @ShipmentDeliveryTo, @ShipmentDeliveryTrucker, dbo.GetDateFormateAsNumber(@ShipmentDeliveryETA), dbo.GetDateFormateAsNumber(@ShipmentDeliveryATA), dbo.GetDateFormateAsNumber(@ShipmentDeliveryETD), dbo.GetDateFormateAsNumber(@ShipmentDeliveryATD),
+	 dbo.GetDateFormateAsNumber(@CustomsReleaseDate), @CustomsReleaseState)
 
 		END TRY 
 BEGIN CATCH  
@@ -231,7 +239,8 @@ FETCH NEXT FROM ContainersCursor INTO @Id,@Tenant, @SourceTenant, @ParentTenant,
 	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays,@CursorCustomFieldsVariable,
 	@GateIn, @AvailabilityDate, @AvailabilityLocationPort, @OnCarriageGateOut, @PreCarriageGateIn, @ShipmentNumber, @ContainerNumber, @ContainerType, @IsAutomaticUpdates,
 	@ShipmentPickupFrom, @ShipmentPickupTo, @ShipmentPickupETA, @ShipmentPickupATA, @ShipmentPickupETD, @ShipmentPickupATD, @ShipmentDeliveryFrom,
-	@ShipmentDeliveryTo, @ShipmentDeliveryTrucker, @ShipmentDeliveryETA, @ShipmentDeliveryATA, @ShipmentDeliveryETD, @ShipmentDeliveryATD
+	@ShipmentDeliveryTo, @ShipmentDeliveryTrucker, @ShipmentDeliveryETA, @ShipmentDeliveryATA, @ShipmentDeliveryETD, @ShipmentDeliveryATD,
+	@CustomsReleaseDate, @CustomsReleaseState
 			End
 	CLOSE ContainersCursor
 	DEALLOCATE ContainersCursor
