@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCargoSplitUpdateClass
    {  		
-		public const string HashString = "597908722308144ff5cfcf31446d24ec";
+		public const string HashString = "fa313e0ed72dbc8e0fd7bbd13e8ce84c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1749,7 +1749,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable DeclarationCargoSplitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationCargoSplit" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode DeclarationCargoSplitTextCode_CustomsDeclarationCargoSplitOScreenDeleteIsContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCargoSplit.O.ScreenDeleteIsContinue", DefaultText = "The data entered on the screen will be deleted! to proceed ?",LocalDefaultText = @"הנתונים שהוזנו במסך יימחקו ! האם להמשיך ?", ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
