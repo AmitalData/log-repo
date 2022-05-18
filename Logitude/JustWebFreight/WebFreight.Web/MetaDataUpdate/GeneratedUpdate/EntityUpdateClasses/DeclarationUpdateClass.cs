@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "3f4315061b9710fce327125a822ce630";
+		public const string HashString = "6af33dc6ccea2d1e9035ca4a3b5cc5ce";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -19510,6 +19510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOConnectedDelcaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConnectedDelcaration", DefaultText = "Note a linked statement!",LocalDefaultText = @"!שים לב הצהרה מקושרת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOChangeCargoId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangeCargoId", DefaultText = "Changed carge ID on save will be disconnected",LocalDefaultText = @"שונו מזהה המטען בשמירה יבוצע ניתוק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode DeclarationTextCode_CustomsExportDeclarationOInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportDeclaration.O.Insurance", DefaultText = "Insurance",LocalDefaultText = @"ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOFreightActualAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FreightActualAmount", DefaultText = "Freight Actual Amount",LocalDefaultText = @"הובלה בפועל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
