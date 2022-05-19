@@ -93,7 +93,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FinalDestinationPortCode, 
 	         IsDangerousGoods, 
 	         StorageStatusIsOpen, 
-	         ActionCode,
+	         ActionCode, 
+	         ProcedureCurrentName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -225,6 +226,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDangerousGoods))
             {
 				entityPOCO.IsDangerousGoods = entityPM.IsDangerousGoods;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActionCode))
+            {
+				entityPOCO.ActionCode = entityPM.ActionCode;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActionCode))
@@ -368,10 +374,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsDangerousGoods = entityPOCO.IsDangerousGoods;
             }
 
+			
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActionCode))
             {
 					entityPM.ActionCode = entityPOCO.ActionCode;
             }
+
+		
 
 		}
 

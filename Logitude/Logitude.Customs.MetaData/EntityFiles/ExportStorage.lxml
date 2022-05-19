@@ -1211,7 +1211,7 @@
     ObjectFieldNotRequired="false"
     SystemMaxLength="100"
     DisplayInList="true"
-    DataTemplateName="&quot;DeclarationStatusCodeTemplate&quot;"
+    DataTemplateName="&quot;&quot;"
     IsCustomFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
@@ -1259,7 +1259,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="true"
+    HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
@@ -2919,6 +2919,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ActionCode&quot;"
     ListPropertyPath="&quot;ActionCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2967,6 +2968,82 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;432a711e-6866-4402-b1cf-f23c769dbc8c&quot;"
+    FieldName="&quot;ProcedureCurrentName&quot;"
+    OldNames="ProcedureCurrentName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.ExportStorage&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="300"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="300"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ProcedureCurrentName&quot;"
+    ListPropertyPath="&quot;ProcedureCurrentName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.Declaration&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ProcedureCurrentName&quot;"
+    DefaultText="&quot;Government Procedure Type&quot;"
+    FullLocalDefaultText="&quot;סוג תהליך&quot;"
+    ListFieldLable="&quot;ProcedureCurrentNameListLable&quot;"
+    ListLableDefaultText="&quot;Procedure Current Name&quot;"
+    ListLocalDefaultText="&quot;סוג תהליך &quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;OpenStorages&quot;"
     TextCode="&quot;Open Storages&quot;"
@@ -2990,38 +3067,38 @@
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CustomStatusName&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;ExporterName&quot;"
         ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;ExportFileNo&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;StorageNo&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;CargoTypeName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;ShipName&quot;"
         ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenStorages&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;CustomStatusName&quot;"
+        ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="8"
@@ -3030,6 +3107,11 @@
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="9"
+        ObjectFieldName="&quot;ActionCode&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;OpenStorages&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="175" />
     </QueryColumns>
@@ -3066,38 +3148,38 @@
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CustomStatusName&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;ExporterName&quot;"
         ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;ExportFileNo&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;StorageNo&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;CargoTypeName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;ShipName&quot;"
         ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;CustomStatusName&quot;"
+        ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
         IndexOrder="8"
@@ -3106,6 +3188,11 @@
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
         IndexOrder="9"
+        ObjectFieldName="&quot;ActionCode&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="175" />
     </QueryColumns>

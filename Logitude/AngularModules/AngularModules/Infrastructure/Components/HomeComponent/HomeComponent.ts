@@ -562,11 +562,11 @@ export class HomeComponent implements OnDestroy{
                 const objParams = {
                     LogitudeCommandId: "ShowDeclarationByIdReturnCloseSave",
                     LogitudeEntity: "Customs.Declaration",
-                    LogitudeEntityNumber: "1-7381",
+                    LogitudeEntityNumber: exportDecId,
                     LogitudeViewModel: "UnifreightMassageHandler",
                     Response: [],
-                    UnifreightEntity: "CFIFILEM",
-                    UnifreightEntityNumber: "91340690",
+                //    UnifreightEntity: "CFIFILEM",
+                //    UnifreightEntityNumber: "91340690",
                 };
                 const event = new CustomEvent('UnifaceRequestEvent', { 'detail': objParams, });
                 this.UnifaceRequest(event);

@@ -325,7 +325,6 @@ import { SignStationExtendedListService } from './Services/ExtendedLists/SignSta
 import { DeclarationCourierStatusExtendedListService } from './Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
 import { RecallClientsForCutoms } from '../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
 import { CustomsCollateralExtendedListService } from './Services/ExtendedLists/CustomsCollateralExtendedListService';
- 
 import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
 
  
@@ -436,6 +435,7 @@ import { LogisticActionRequestTypeListService } from './Services/StandardLists/L
 import { LogisticActionResponseReqSListService } from './Services/StandardLists/LogisticActionResponseReqSListService';
 import { LogisticActionRequestPMService } from './Services/StandardPMs/LogisticActionRequestPMService';
 import { ExportLogisticPermitActionListService } from './Services/StandardLists/ExportLogisticPermitActionListService';
+import { ExportStorageExtendedListService } from './Services/ExtendedLists/ExportStorageExtendedListService';
 
 
 export class ModuleProviders {
@@ -816,6 +816,7 @@ export class ModuleProviders {
             case "CustomsCollateralExtendedListService": { myResult = new CustomsCollateralExtendedListService(); break; }
             case "CourierMasterExtendedListService": { myResult = new CourierMasterExtendedListService(); break; }
             case "ContainerizationExtendedListService": { myResult = new ContainerizationExtendedListService(); break; }
+            case "ExportStorageExtendedListService": { myResult = new ExportStorageExtendedListService(); break; }
 
             //#endregion
 

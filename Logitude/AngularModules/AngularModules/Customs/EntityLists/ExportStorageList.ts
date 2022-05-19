@@ -47,6 +47,7 @@ export class ExportStorageList {
 	IsDangerousGoods: number;
 	StorageStatusIsOpen: boolean;
 	ActionCode: string;
+	ProcedureCurrentName: string;
 	
 }
  
