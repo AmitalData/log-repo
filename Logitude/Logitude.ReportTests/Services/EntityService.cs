@@ -1,5 +1,4 @@
-﻿using Logitude.ReportTests.Models;
-using Logitude.Base.Models.Api;
+﻿using Logitude.Base.Models.Api;
 using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using System;

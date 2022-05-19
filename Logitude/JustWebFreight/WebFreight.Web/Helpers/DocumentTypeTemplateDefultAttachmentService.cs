@@ -113,17 +113,7 @@ namespace WebFreight.Web.Helpers
             List<string> documentTypeIds = defultAttachmentList.Where(d=>d.Type == "DocOut").Select(d => d.DocumentTypeId).ToList();
             if (documentTypeIds.Count() > 0)
             {
-                IQueryable<DocumentsFiling> documentsFilings = (from a in commonDataContext.DocumentsFilings
-                                                         where a.Tenant == defultAttachmentArgs.Tenant && a.ObjectTableId == defultAttachmentArgs.ObjectTableId && documentTypeIds.Contains(a.DocumentTypeId) && a.DirectionCode == "O" && a.EntityId == defultAttachmentArgs.EntityId
-                                                         select a);
-
-                if (!string.IsNullOrEmpty(defultAttachmentArgs.ChildEntityId))
-                {
-                    documentsFilings = documentsFilings.Where(d => d.ChildEntityId == defultAttachmentArgs.ChildEntityId);
-                }
-
-
-                List<string> documentsFilingIds = documentsFilings.Select(d => d.Id).ToList();
+                List<string> documentsFilingIds = GetDocumentFilinfIds(documentTypeIds);
 
                 if (documentsFilingIds.Count > 0)
                 {
@@ -132,11 +122,40 @@ namespace WebFreight.Web.Helpers
                     var documentOutCopys = documentOutCopyQuery.GeDocumentOutCopiesPMListsBydocumentTypeCopyIdsAndDocumentOutIds(documentTypeCopyIds, documentsFilingIds, defultAttachmentArgs.Tenant);
                     foreach (DocumentOutCopyPM copy in documentOutCopys)
                     {
-                        attachmentsLists.Add(new AttachmentsList() { Id = copy.DocumentId, DocumentFilingId = copy.DocumentOutId, DocumentTypeCopyNameWithDocumentTypeName = copy.DocumentTypeCopyNameWithDocumentTypeName, FileSize = copy.FileSize, FileExtension = copy.FileExtension , Tenant = copy.Tenant }) ;
+                        attachmentsLists.Add(new AttachmentsList() { Id = copy.DocumentId, DocumentFilingId = copy.DocumentOutId, DocumentTypeCopyNameWithDocumentTypeName = copy.DocumentTypeCopyNameWithDocumentTypeName, FileSize = copy.FileSize, FileExtension = copy.FileExtension, Tenant = copy.Tenant });
                     }
                 }
             }
 
+        }
+
+        private List<string> GetDocumentFilinfIds(List<string> documentTypeIds)
+        {
+
+            IQueryable<DocumentsFiling> documentsFilings = (from a in commonDataContext.DocumentsFilings
+                                                            where a.Tenant == defultAttachmentArgs.Tenant &&
+                                                            documentTypeIds.Contains(a.DocumentTypeId) && a.DirectionCode == "O"
+                                                            select a);
+
+            if (!defultAttachmentArgs.IsAutomation || !IsNotChildObjectTable())
+            {
+                documentsFilings = documentsFilings.Where(a => a.EntityId == defultAttachmentArgs.EntityId && a.ObjectTableId == defultAttachmentArgs.ObjectTableId);
+            }
+            else
+            {
+                documentsFilings = documentsFilings.Where(a => a.ChildEntityId == defultAttachmentArgs.EntityId && (a.ObjectTable.Name == "Master" || a.ObjectTable.Name == "Shipment"));
+            }
+
+            if (!string.IsNullOrEmpty(defultAttachmentArgs.ChildEntityId))
+            {
+                documentsFilings = documentsFilings.Where(d => d.ChildEntityId == defultAttachmentArgs.ChildEntityId);
+            }
+            return documentsFilings.Select(d => d.Id).ToList();
+        }
+
+        private bool IsNotChildObjectTable()
+        {
+            return defultAttachmentArgs.ObjectTableName == "ARInvoice" || defultAttachmentArgs.ObjectTableName == "ARPayment";
         }
 
         private void BuildDocInAttachmentList (List<DocumentDefultAttachment> defultAttachmentList)
@@ -201,8 +220,8 @@ namespace WebFreight.Web.Helpers
         public string ObjectTableId { get; set; }
         public int Tenant { get; set; }
         public string ChildEntityId { get; set; }
-
-        
+        public bool IsAutomation { get; set; }
+        public string ObjectTableName { get; set; }
     }
 
 }

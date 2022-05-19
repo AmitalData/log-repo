@@ -83,8 +83,7 @@
     <None Include="DBScripts\202204130000_UpdateInterestTransactionsSearchFields.sxml" />
     <None Include="DBScripts\202204131020_AdjustmentsJournalInterestTransactions.sxml" />
     <None Include="DBScripts\202204211237_InsertInterestTransactionsForWrongGLAccountInterests.sxml" />
-    <None Include="DBScripts\202205110000_UpdateInterestTransactionWithDumyIntRepIdAndIsClosedZero.sxml" />
-    <None Include="DBScripts\202205100000_UpdateAccountingEntityCodeForInterestTransactionForAdjustments.sxml" />
+    <None Include="DBScripts\202205180000_FillEmptySearchFieldsForInterestTransactions.sxml" />
     <None Include="DBScripts\202204270000_UpdateAccountingEntityCodeForInterestTransaction.sxml" />
     <None Include="DBScripts\202204211239_UpdateLedgerTransactionsForWrongGLAccount.sxml" />
     <None Include="DBScripts\202204211239_UpdateJournalLinesForWrongGLAccount.sxml" />

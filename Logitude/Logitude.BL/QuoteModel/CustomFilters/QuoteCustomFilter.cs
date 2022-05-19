@@ -379,21 +379,7 @@ namespace Logitude.BL.QuoteModel
                         {
                             queryableData =  queryableData.Where(d => d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now || d.ExpirationDate < DateTime.Now);
                         }                         
-                    }
-
-                    if (item.FieldName == "ConnectedToOpportunity")
-                    {
-                        bool value = Convert.ToBoolean(item.FieldValue);
-                        if (value)
-                        {
-                            queryableData = queryableData.Where(d => d.ConnectedToOpportunity == true);
-                        }
-
-                        else
-                        {
-                            queryableData = queryableData.Where(d => d.ConnectedToOpportunity == false || d.ConnectedToOpportunity == null);
-                        }
-                    }
+                    } 
                 }
             }
 

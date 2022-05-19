@@ -80,12 +80,15 @@ namespace Logitude.Accounting.BL.CoreBL
                             if (!itLine.ErrorInLine)
                             {
                                 count++;
+                                string searchFields = "";
+                                MethodHelper.AddToSearchFields(ref searchFields, itLine.JournalNumber);
+                                MethodHelper.AddToSearchFields(ref searchFields, itLine.Reference);
 
                                 InterestTransactionPM newItPM = new InterestTransactionPM()
                                 {
                                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                                     Tenant = tenant,
-                                    SearchFields = "External",
+                                    SearchFields = searchFields, //"External",
                                     CreateDateTime = @now,
                                     UpdateDateTime = @now,
                                     
@@ -359,6 +362,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             itLine.JournalId = journalPM.Id;
+                            itLine.JournalNumber = journalPM.JournalNumber;
                             bool lineFound = false;
                             JournalLinePM jlPM = null;
                             foreach (JournalLinePM journalLine in journalPM.JournalLines)
@@ -575,6 +579,8 @@ namespace Logitude.Accounting.BL.CoreBL
         public bool ErrorInLine { get;  set; }
 
         public int JournalLineNumber { get; set; }
+        public string JournalNumber { get; set; }
+
 
 
         internal static InterestTransactionSrcLineDTO Create(string rawLine, string accountingCurrencyId)

@@ -9034,7 +9034,7 @@
     MinLength="0"
     MaxLength="10"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -9107,7 +9107,7 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -19316,6 +19316,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdatedByPartner&quot;"
     ListPropertyPath="&quot;UpdatedByPartner&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -20311,7 +20312,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;ContainerData&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"

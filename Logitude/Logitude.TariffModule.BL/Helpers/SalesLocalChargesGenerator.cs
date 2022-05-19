@@ -21,7 +21,7 @@ namespace Logitude.TariffModule.BL.Helpers
 {
     public class SalesLocalChargesGenerator
     {
-        private SalesLocalChargesTariffSearchArgs SalesLocalChargesTariffSearchArgs;
+        private SalesLocalChargesTariffSearchArgs salesLocalChargesTariffSearchArgs;
         private ICommonDataContext commonContext;
         private Quote quote;
         private int tenant;
@@ -39,8 +39,8 @@ namespace Logitude.TariffModule.BL.Helpers
         {
             this.tenant = tenant;
             tariffPricesHelper = new TariffPricesHelper(this.tenant);
-            this.SalesLocalChargesTariffSearchArgs = args;
-            this.SalesLocalChargesTariffSearchArgs.SalesLocalCharges = new List<SalesLocalCharges>();
+            this.salesLocalChargesTariffSearchArgs = args;
+            this.salesLocalChargesTariffSearchArgs.SalesLocalCharges = new List<SalesLocalCharges>();
             this.commonContext = CommonDataContext.GetContext(tenant);
 
             this.GetQuote();
@@ -57,16 +57,16 @@ namespace Logitude.TariffModule.BL.Helpers
             {
                 Tariff tariff = tariffs.Where(d => d.Id == tariffLine.TariffId).FirstOrDefault();
                 this.CreateQuoteChargeFromLocalChargesLine(tariffLine, tariff);
-                this.SalesLocalChargesTariffSearchArgs.SalesLocalCharges.AddRange(this.localCharges);
+                this.salesLocalChargesTariffSearchArgs.SalesLocalCharges.AddRange(this.localCharges);
             }
 
-            SalesLocalChargesTariffSearchArgs.Error = CheckIfTariffsFounded();
-            return this.SalesLocalChargesTariffSearchArgs;
+            salesLocalChargesTariffSearchArgs.Error = CheckIfTariffsFounded();
+            return this.salesLocalChargesTariffSearchArgs;
         }
         private string CheckIfTariffsFounded()
         {
             string error = null;
-            if(SalesLocalChargesTariffSearchArgs.SalesLocalCharges != null && SalesLocalChargesTariffSearchArgs.SalesLocalCharges.Count() != 0)
+            if(salesLocalChargesTariffSearchArgs.SalesLocalCharges != null && salesLocalChargesTariffSearchArgs.SalesLocalCharges.Count() != 0)
             {
                 return null;
             }
@@ -81,7 +81,27 @@ namespace Logitude.TariffModule.BL.Helpers
         private void GetQuote()
         {
             QuoteRepository quoteRepository = new QuoteRepository(tenant);
-            quote = quoteRepository.GetSingleQuote(SalesLocalChargesTariffSearchArgs.QuoteId, tenant);
+            quote = quoteRepository.GetSingleQuote(salesLocalChargesTariffSearchArgs.QuoteId, tenant);
+
+            if(salesLocalChargesTariffSearchArgs.IsFromUpdateSalesMessage)
+            {
+                UpdateQuoteCharges();
+            }
+        }
+        private void UpdateQuoteCharges()
+        {
+            QuoteChargeRepository quoteChargeRepository = new QuoteChargeRepository(tenant);
+            var quoteCharges = quoteChargeRepository.GetQuoteReceivablesByQuoteId(salesLocalChargesTariffSearchArgs.QuoteId,tenant);
+
+            foreach (var item in quoteCharges)
+            {
+                item.SaleTariffId = null;
+                item.SaleTariffNumber = null;
+                item.SaleTariffLineId = null;
+                quoteChargeRepository.Update(item);
+            }
+            quoteChargeRepository.SubmitChanges();
+
         }
         private void SetQuotePropeaties()
         {
@@ -294,21 +314,21 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private TariffLine FilterTariffLinesBasedOnBothCountries(IQueryable<TariffLine> tariffLines)
         {
-            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == SalesLocalChargesTariffSearchArgs.FromCountryId);
+            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == salesLocalChargesTariffSearchArgs.FromCountryId);
             if (filteredLines.Count() == 0)
             {
-                filteredLines = tariffLines.Where(p => p.ToCountryId == SalesLocalChargesTariffSearchArgs.ToCountryId);
+                filteredLines = tariffLines.Where(p => p.ToCountryId == salesLocalChargesTariffSearchArgs.ToCountryId);
             }
             return filteredLines.FirstOrDefault();
         }
         private TariffLine FilterTariffLinesBasedOnFromCountries(IQueryable<TariffLine> tariffLines)
         {
-            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == SalesLocalChargesTariffSearchArgs.FromCountryId);
+            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == salesLocalChargesTariffSearchArgs.FromCountryId);
             return filteredLines.FirstOrDefault();
         }
         private TariffLine FilterTariffLinesBasedOnToCountries(IQueryable<TariffLine> tariffLines)
         {
-            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.ToCountryId == SalesLocalChargesTariffSearchArgs.ToCountryId);
+            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.ToCountryId == salesLocalChargesTariffSearchArgs.ToCountryId);
             return filteredLines.FirstOrDefault();
         }
         private void CreateQuoteChargeFromLocalChargesLine(TariffLine tariffLine, Tariff tariff)
@@ -385,7 +405,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
                         Currency currency = this.commonContext.Currencies.Where(p => p.Tenant == tariff.Tenant && p.Id == localCharge.CurrencyId).FirstOrDefault();
                         localCharge.CurrencyCode = currency?.Code;
-                        localCharge.Rate = tariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, SalesLocalChargesTariffSearchArgs.LocalCurrencyId);
+                        localCharge.Rate = tariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, salesLocalChargesTariffSearchArgs.LocalCurrencyId);
                         localCharge.Price = tariffPricesHelper.Round(price, 3);
 
                         double? saleAmount = 0;
@@ -468,12 +488,12 @@ namespace Logitude.TariffModule.BL.Helpers
                         case "FIXD": { localCharge.Quantity = 1; break; }
                         case "BTEU": { localCharge.Quantity = this.TEU; break; }
                         case "PRVL": { localCharge.Quantity = this.valueOfGoods; break; }
-                        case "PRFR": { localCharge.Quantity = SalesLocalChargesTariffSearchArgs.FriehgtAmount; break; }
+                        case "PRFR": { localCharge.Quantity = salesLocalChargesTariffSearchArgs.FriehgtAmount; break; }
                         case "QTY": { localCharge.Quantity = this.noOfPackages; break; }
                         case "GRWT": { localCharge.Quantity = tariffPricesHelper.grossWeight; break; }
                         case "CHWT": { localCharge.Quantity = tariffPricesHelper.chargeableWeight; break; }
                         case "VOLU": { localCharge.Quantity = tariffPricesHelper.volume; break; }
-                        case "PFCL": { localCharge.Quantity = SalesLocalChargesTariffSearchArgs.ForiegnChargesAmount; break; }
+                        case "PFCL": { localCharge.Quantity = salesLocalChargesTariffSearchArgs.ForiegnChargesAmount; break; }
                         case "GWTN": { localCharge.Quantity = tariffPricesHelper.ComputeGrossWeigh_Kg_Ton("ton"); break; }
                         case "CWKG": { localCharge.Quantity = tariffPricesHelper.ComputeChargeableWeight_Kg(); break; }
                         case "GWKG": { localCharge.Quantity = tariffPricesHelper.ComputeGrossWeigh_Kg_Ton("kg"); break; }
@@ -481,7 +501,7 @@ namespace Logitude.TariffModule.BL.Helpers
                         default: { break; }
                     }
 
-                    localCharge.Rate = tariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, SalesLocalChargesTariffSearchArgs.LocalCurrencyId);
+                    localCharge.Rate = tariffPricesHelper.GetCurrencyRate(localCharge.CurrencyId, salesLocalChargesTariffSearchArgs.LocalCurrencyId);
                     localCharge.Price = tariffPricesHelper.Round(price, 3);
 
                     double? saleAmount = 0;
@@ -522,6 +542,7 @@ namespace Logitude.TariffModule.BL.Helpers
         public string LocalCurrencyId { get; set; }
         public List<SalesLocalCharges> SalesLocalCharges { get; set; }
         public string Error { get; set; }
+        public bool IsFromUpdateSalesMessage { get; set; }
     }
 
     public class SalesLocalCharges

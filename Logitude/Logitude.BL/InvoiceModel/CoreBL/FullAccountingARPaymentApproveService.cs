@@ -627,28 +627,44 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             if (paymentPM.PaymentInvoices.Any())
             {
                 var AutoReconcileARPaymentServiceExt = ContainerAccessor.Container.Resolve(typeof(IAutoReconcileServiceExt), "AutoReconcileServiceExt", new ParameterOverride("", 1)) as IAutoReconcileServiceExt;
-
-
                 var AutoReconcileRecordList = new List<AutoReconcileRecord>();
                 paymentPM.PaymentInvoices.ForEach(r =>
-                {
-                    var item = new AutoReconcileRecord()
                     {
-                        AccountingEntityId = r.ARInvoiceId,
-                        LocalAmountToReconcile = Convert.ToDecimal(r.LocalAmount.GetValueOrDefault()),
-                        ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()),
-                        ForeignCurrencyIdReconcile = r.ForeignCurrencyId,
+
+                        var arInvoiceCanBeReconcilied = CheckIfArInvoiceCanBeReconcilied(r.ARInvoiceId, tenant);
+                        if (arInvoiceCanBeReconcilied) {
+                            var item = new AutoReconcileRecord()
+                            {
+                                AccountingEntityId = r.ARInvoiceId,
+                                LocalAmountToReconcile = Convert.ToDecimal(r.LocalAmount.GetValueOrDefault()),
+                                ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()),
+                                ForeignCurrencyIdReconcile = r.ForeignCurrencyId,
 
 
-                    };
-                    AutoReconcileRecordList.Add(item);
+                            };
+                            AutoReconcileRecordList.Add(item);
+                        }
+                    }
+                );
+                if (AutoReconcileRecordList.Count > 0) {
+                    AutoReconcileARPaymentServiceExt.InitMust(paymentGLAccount, journal, AutoReconcileRecordList);
+                    AutoReconcileARPaymentServiceExt.InsertJournalReconcile();
                 }
-            );
-                AutoReconcileARPaymentServiceExt.InitMust(paymentGLAccount, journal, AutoReconcileRecordList);
-                AutoReconcileARPaymentServiceExt.InsertJournalReconcile();
+                
             }
         }
 
+        private bool CheckIfArInvoiceCanBeReconcilied(string aRInvoiceId, int tenant)
+        {
+            var aRInvoiceLineRepository = new ARInvoiceLineRepository(tenant);
+            if (paymentGLAccount.IsMultiCurrency == true)
+            {
+                var arinvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByInvoiceId(aRInvoiceId, tenant);
+                var arinvoiceLinesCurrencies = arinvoiceLines.Select(x => x.ForiegnCurrencyId).Distinct().ToList();
+                return arinvoiceLinesCurrencies.Count > 1 ? false : true;
+            }
+            return true;
+        }
 
         private string GetGLAccountIdByPaymentMethodCode(ARPaymentPM entityPm)
         {

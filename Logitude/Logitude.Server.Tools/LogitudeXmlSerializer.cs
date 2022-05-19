@@ -184,6 +184,14 @@ namespace Logitude.Server.Tools
              
 
         }
-  
+
+        public static object DeserializeObject(byte[] byteData, Type type)
+        {
+            MemoryStream memstream = new MemoryStream(byteData);
+            XmlSerializer serilaizer = new XmlSerializer(type);
+
+            return serilaizer.Deserialize(memstream);
+        }
+
     }
 }

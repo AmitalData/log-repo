@@ -2841,6 +2841,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ReconciliationsNumbers&quot;"
     ListPropertyPath="&quot;ReconciliationsNumbers&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3357,6 +3358,12 @@
       Code="&quot;TaxReport.O.CantCloseThisMonth&quot;"
       DefaultText="&quot;Can't close a tax report for the current month, please wait until the end of this month&quot;"
       LocalDefaultText="&quot;לא ניתן לסגור דוח מע''מ עבור החודש הנוכחי מכיוון שהחודש טרם הסתיים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.CloseJournalNotSupported&quot;"
+      DefaultText="&quot;Creating a closing journal is not supported before 05.22&quot;"
+      LocalDefaultText="&quot;הפעולה ליצירת פקודת יומן והתאמות לדוח המע''מ , נתמכת החל מדוח 05.22 בלבד &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

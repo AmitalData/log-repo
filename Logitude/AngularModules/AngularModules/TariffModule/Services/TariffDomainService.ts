@@ -653,6 +653,7 @@ export class SalesLocalChargesTariffSearchArgs {
     QuoteId: string;
     SalesLocalCharges: SalesLocalCharges[] = [];
     Error: string;
+    IsFromUpdateSalesMessage: boolean;
 }
 
 export class SalesLocalCharges {

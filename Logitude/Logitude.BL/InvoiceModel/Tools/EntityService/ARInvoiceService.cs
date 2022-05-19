@@ -3200,12 +3200,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         int invoiceLineNumber = 0;
         DateTime? dateForInterest;
+        InterestTransactionPM interestTransaction;
         private void  CreateInterestTransactionLine(ARInvoiceLinePM invoiceLine, ARInvoiceTotalVAT invoiceTotalVat)
         {
             ++invoiceLineNumber;
              dateForInterest = entityPM.DateForInterest == null ? DateTime.Now : entityPM.DateForInterest;
             GLAccountPM account = GetGLAccount(entityPM);
-            InterestTransactionPM interestTransaction = new InterestTransactionPM();
+            interestTransaction = new InterestTransactionPM();
             if (invoiceLine != null) {
 
                 interestTransaction= CreateInterestTransactionLineForInvoiceLine(invoiceLine);
@@ -3237,6 +3238,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ChangeSetOp = ChangeSetOperation.Insert,
             };
             return InterestTransactionVatLine;
+        }
+
+        private void BuildSearchFieldForInterest(string journalNumber, string invoiceNumber)
+        {
+            string searchFields = "";
+
+            MethodHelper.AddToSearchFields(ref searchFields, journalNumber);
+            MethodHelper.AddToSearchFields(ref searchFields, invoiceNumber);
+            interestTransaction.SearchFields = searchFields;
+            interestTransaction.ChangeSetOp = ChangeSetOperation.Update;
+            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+
+            interestTransactionUpdateService.Update(interestTransaction);
         }
 
         private DateTime GetIntrestValueDate(ARInvoiceLinePM invoiceLine)
@@ -3826,6 +3840,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
                     AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
                     journalUpdate.Update(journal);
+                    if (interestTransaction != null) {
+                        BuildSearchFieldForInterest(journal.JournalNumber, entityPM.InvoiceNumber);
+                    }
                 }
             }
         }
