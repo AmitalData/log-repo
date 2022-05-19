@@ -614,9 +614,31 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.DeclarationCustomsRequestsMethod();
                         break;
                     }
+                case "LoadExcelSupplierInvoices":
+                    {
+                        this.OpenDeclarationLoadExcelSupplierInvoiceWindow();
+                        break;
+                    }
             }
         }
     }
+
+    OpenDeclarationLoadExcelSupplierInvoiceWindow() {
+        var args: any = {
+            Declaration: this.EntityPM,
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 300;
+        logWindow.Title = "הטענת חשבון ספק";
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+    }
+
     OpenDeclarationCancellationWindow() {
         var args: any = {
             Declaration: this.EntityPM,
