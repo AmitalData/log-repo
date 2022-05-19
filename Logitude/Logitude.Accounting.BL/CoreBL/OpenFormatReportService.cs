@@ -629,7 +629,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         var mainaddress = addreses.Where(d => d.CardId == card.Id && d.AddressTypeId == "M").FirstOrDefault();
                         if (billingaddress == null)
                         {
-                            billingaddress = mainaddress;
+                            if (mainaddress == null) myStringBuilder.Append(' ', 130);
+                           else billingaddress = mainaddress;
                         }
                         if (billingaddress != null)
                         {
