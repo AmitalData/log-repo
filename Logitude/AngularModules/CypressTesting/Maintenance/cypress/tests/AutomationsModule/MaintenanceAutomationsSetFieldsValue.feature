@@ -1,4 +1,4 @@
-#@devrelease
+@devrelease
 Feature: Automations Creation and Updating for Set Fields Value Result
     The user creates Automations on update and On Create ,and edit it from the Automations Module,and test the automation from shipment side.
 

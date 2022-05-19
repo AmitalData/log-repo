@@ -1734,7 +1734,7 @@ export function FillVATSettingsDetails(vatSettingsDetails: VATSettingsDetails) {
     cy.Click(MaintenanceSelectors.VATAppliesFor, null, true)
     cy.SelectDropDownListItem2(MaintenanceSelectors.VatFormatType, vatSettingsDetails.VATFormatType);
     cy.FillLogLov(MaintenanceSelectors.VATIsMandatoryFor, vatSettingsDetails.IsMandatoryFor, true);
-    cy.FillLogTextBox(MaintenanceSelectors.VatSize, vatSettingsDetails.VatSize);
+    //cy.FillLogTextBox(MaintenanceSelectors.VatSize, vatSettingsDetails.VatSize);
 }
 
 export function FillVATSettingsDetailsNoFormat(vatSettingsDetails: VATSettingsDetails) {
