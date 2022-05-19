@@ -106,8 +106,15 @@
                     <div class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0', 'right' : 'initial' , top: ToggleButtonTop} : {top: ToggleButtonTop}">
                         <div *ngFor="let menuItem of MenuButtons | MenuButtonsItemsPipe:button.Id; let menuItemIndex=index">
                             <button id="{{ menuItem.LabelTextCodeCode | IdGeneratorPipe}}" *ngIf="menuItem.MenuButtonType=='menuitem' && !menuItem.IsHidden" (click)="OnClick(menuItem)" [disabled]="menuItem.IsDisabled" [ngStyle]="LayoutDirection == 'rtl' ? {'text-align': 'right'} : {'text-align': 'left'}">
-                                <div *ngIf="menuItem.LabelTextCodeCode!=null">{{menuItem.LabelTextCodeCode | TextCodeTranslationPipe}}</div>
-                                <div *ngIf="menuItem.LabelTextCodeCode==null">{{menuItem.DisplayText}}</div>
+                                <div *ngIf="menuItem.LabelTextCodeCode!=null">{{menuItem.LabelTextCodeCode | TextCodeTranslationPipe}}
+                                <img *ngIf="menuItem.EventCode == 'LoadExcelSupplierInvoices'" title="Export To Excel"
+                                        style="position: relative; margin-top: 9px; width: 13px; opacity: 0.9;"
+                                        src="./Images/Buttons/excelicon.png" /></div>
+                                <div *ngIf="menuItem.LabelTextCodeCode==null">{{menuItem.DisplayText}}
+                                <img *ngIf="menuItem.EventCode == 'LoadExcelSupplierInvoices'" title="Export To Excel"
+                                    style="position: relative; margin-top: 9px; width: 13px; opacity: 0.9;"
+                                    src="./Images/Buttons/excelicon.png" /></div>
+                            
                             </button>
                             <div *ngIf="menuItem.MenuButtonType=='separator' && !menuItem.IsHidden" class="ToggleButtonSeparator">
                             </div>

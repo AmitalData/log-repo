@@ -12,6 +12,7 @@ import { SupplierInvoiceSelectionComponent } from './Components/DeclarationPayme
 import { PointersFromInvoicesSelectionComponent } from './Components/Documents/PointersFromInvoicesSelectionComponent';
 import { DeclarationQueryComponent } from './Components/DeclarationQueryComponent';
 import { DeclarationCancellationComponent } from './Components/DeclarationCancellation/DeclarationCancellationComponent';
+import { LoadExcelSupplierInvoicesComponent } from './Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent';
 import { ExportDeclarationClosingDataComponent } from './Components/CloseDeclaration/ExportDeclarationClosingDataComponent';
 import { DeclarationPaymentExportComponent } from './Components/DeclarationPayment/DeclarationPaymentExportComponent';
 
@@ -32,6 +33,7 @@ export const Components =
         DeclarationQueryComponent,
         SendManifestComponent,
         DeclarationCancellationComponent,
+        LoadExcelSupplierInvoicesComponent,
         ExportDeclarationClosingDataComponent,
     ];
 
@@ -54,6 +56,7 @@ export class ModuleDeclarations {
             case "DeclarationQueryComponent": { myResult = DeclarationQueryComponent; break; }
             case "SendManifestComponent": { myResult = SendManifestComponent; break; }
             case "DeclarationCancellationComponent": { myResult = DeclarationCancellationComponent; break; }
+            case "LoadExcelSupplierInvoicesComponent": { myResult = LoadExcelSupplierInvoicesComponent; break; }
             case "ExportDeclarationClosingDataComponent": { myResult = ExportDeclarationClosingDataComponent; break; }
 
         }
