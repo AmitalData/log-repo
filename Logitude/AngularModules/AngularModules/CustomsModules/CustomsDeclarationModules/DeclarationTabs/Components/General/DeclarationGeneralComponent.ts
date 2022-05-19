@@ -1371,8 +1371,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         if (!AppTool.IsNullOrEmpty(tab)) {
 
             let msg: string = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteConsignment");
-            if(this.EntityPM.Direction === 'E' && this.EntityPM.TransportModeId === 'O' /* && tab.EntityPM.EXPORTSTORAGESID == null */ )
-                msg =  TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '!\n' + msg;
+            if(this.EntityPM.Direction === 'E' && this.EntityPM.TransportModeId === 'O' && tab.EntityPM.ExportStoragesId)
+                msg = TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '!\n' + msg;
 
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 300;

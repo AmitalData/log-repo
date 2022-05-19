@@ -1081,13 +1081,14 @@ export class ConsigmentTabContentComponent
     async onBlurCargoId(cargoNumber: 'a' | 'b' | 'c', newVlue: string) {
         if(
             this.declarationPM.Direction !== 'E' || 
-            this.declarationPM.TransportModeId !== 'O'  || 
-            /* this.EntityPM.EXPORTSTORAGESID == nul  || */
+            this.declarationPM.TransportModeId !== 'O' || 
+            !this.EntityPM.ExportStoragesId ||
             this.CargoIdKeyOrigin[cargoNumber] == newVlue) return;
 
-        if (await this.ConfirmDisconnectExportStorage())
+        if (await this.ConfirmDisconnectExportStorage()) {
             this.updateCargoIdKeyOrigin();
-        else
+            this.EntityPM.ExportStoragesId = null;
+        } else
             switch (cargoNumber) {
                 case 'a':
                     this.ManifestNumber = this.CargoIdKeyOrigin[cargoNumber]
