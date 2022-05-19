@@ -838,10 +838,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
 				}
- 
-				ContainerTrackingProviderUpdateClass.FillContainerTrackingProvider();
-
- 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ContainerTrackingRequest", ObjectTables, ContainerTrackingRequestUpdateClass.HashString))
@@ -3571,8 +3567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	
 	   	   ContainerStatusSourceUpdateClass.FillContainerStatusSource();
 	
-	   	   ContainerTrackingProviderUpdateClass.FillContainerTrackingProvider();
-	
+	   
 	   
 	   
 	   

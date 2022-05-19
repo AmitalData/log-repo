@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(string code)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -57,11 +57,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("ContainerTrackingProvider", "READ", authToken.Tenant);
 				
 		    	IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
 				ContainerTrackingProviderRepository  containerTrackingProviderRepository = new ContainerTrackingProviderRepository(MyContext);
 				ContainerTrackingProviderList entityList = null;
-				ContainerTrackingProvider entityPoco = containerTrackingProviderRepository.GetSingleContainerTrackingProvider(code );
+				ContainerTrackingProvider entityPoco = containerTrackingProviderRepository.GetSingleContainerTrackingProvider(id , authToken.Tenant);
 
 				if (entityPoco != null)
 				{
@@ -94,15 +95,16 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("ContainerTrackingProvider", "READ", authToken.Tenant);
 
 
 				IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
 				ContainerTrackingProviderRepository  containerTrackingProviderRepository = new ContainerTrackingProviderRepository(MyContext);
-				IQueryable<ContainerTrackingProvider> entityPocos = containerTrackingProviderRepository.GetContainerTrackingProviders();
+				IQueryable<ContainerTrackingProvider> entityPocos = containerTrackingProviderRepository.GetContainerTrackingProviders(authToken.Tenant);
 
 				ContainerTrackingProviderQuery containerTrackingProviderQuery = new ContainerTrackingProviderQuery(containerTrackingProviderRepository);
 			    IQueryable<ContainerTrackingProviderList> entityLists = containerTrackingProviderQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Code);
+				entityLists = entityLists.OrderByDescending(d => d.Id);
 				List<ContainerTrackingProviderList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -124,7 +126,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				
+				                
+				SecurityUtility.CheckContactFeature("ContainerTrackingProvider", "READ", authToken.Tenant);
+	
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "ContainerTrackingProvider",
@@ -214,7 +218,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 								
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
                 ContainerTrackingProviderRepository  containerTrackingProviderRepository = new ContainerTrackingProviderRepository(MyContext);
-                IQueryable<ContainerTrackingProvider> entityPocos = containerTrackingProviderRepository.GetContainerTrackingProviders();
+                IQueryable<ContainerTrackingProvider> entityPocos = containerTrackingProviderRepository.GetContainerTrackingProviders(tenant);
 
                 ContainerTrackingProviderQuery containerTrackingProviderQuery = new ContainerTrackingProviderQuery(containerTrackingProviderRepository);
                 
@@ -288,7 +292,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Code);
+                                entityLists = entityLists.OrderByDescending(d => d.Id);
                                 break;
                             }
                     }
@@ -297,7 +301,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Code);
+                entityLists = entityLists.OrderByDescending(d => d.Id);
             } 
 
 			ServiceResponse response = new ServiceResponse();

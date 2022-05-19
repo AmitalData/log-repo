@@ -330,6 +330,17 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Ocean Insights Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+             if (FeatureLocator.HasFeaturePermession("General", "CONTAINERTRACKINGSETTINGS") && SessionLocator.Tenant == 0) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "CTPS";
+                item.ObjectTableName = "ContainerTrackingProvider";
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "ContainerTrackingProvider")[0].Id
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
+
+             }
 
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemUserPassword")) {
                 var item = new MenusTablePM();
@@ -1878,6 +1889,7 @@ class MaintenanceMenuItem {
                 case "USPC": { myResult = "User Packages"; break; }
                 case "TENT": { myResult = "List of Tenants"; break; }
                 case "LOGS": { myResult = "Communication Logs"; break; }
+                case "CTPS": { myResult = "Container Tracking Settings"; break; }
                 case "MNGT": { myResult = "Error Logs"; break; }
                 case "APLG": { myResult = "API Logs"; break; }
                 case "FACS": { myResult = "Define your accounting settings"; break; }

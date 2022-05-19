@@ -29,42 +29,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             shipmentContext = ShipmentsContext.GetContext(tenant);
         }
 
-        public IQueryable<ContainerTrackingProvider> GetContainerTrackingProviders(int tenant)
+        public ContainerTrackingProvider GetSingleContainerTrackingProvider(string id, int tenant)
         {
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            Tenant tenantEntity = tenantRepository.GetSingleTenant(tenant); ////
-            if (tenantEntity.IsHybrid)
-            {
-                return context.ContainerTrackingProviders;
-            }
-            else
-            {
-                return context.ContainerTrackingProviders.Where(s => s.Code != "A");
-            }            
+            return (from a in context.ContainerTrackingProviders
+                    where a.Id == id && a.Tenant == tenant
+                    select a).FirstOrDefault();
         }
-
-        public IQueryable<ContainerTrackingProvider> GetAll()
-        {
-            return context.ContainerTrackingProviders;
-        }
-
-        public IQueryable<ContainerTrackingProvider> GetContainerTrackingProviders()
-        {
-            return context.ContainerTrackingProviders;
-        }
-
-        public ContainerTrackingProvider GetSingleContainerTrackingProvider(string code)
-        {
-            return (from a in context.ContainerTrackingProviders where a.Code == code select a).FirstOrDefault();
-        }
-
-
-        public string GetSingleContainerTrackingProviderNameByCode(string code)
-        {
-            return (from a in context.ContainerTrackingProviders where a.Code == code select a.Name).FirstOrDefault();
-        }
-
-
 
         public void Add(ContainerTrackingProvider entity)
         {
@@ -83,14 +53,14 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             context.SetAsModified(entity);
         }
 
-        public List<ContainerTrackingProvider> All()
+        public IQueryable<ContainerTrackingProvider> GetContainerTrackingProviders(int tenant)
         {
-            return context.ContainerTrackingProviders.ToList();
+            return context.ContainerTrackingProviders.Where(e => e.Tenant == tenant);
         }
 
         public IShipmentsContext context
         {
-            get {return shipmentContext; }
+            get { return shipmentContext; }
         }
 
         public void SubmitChanges()
@@ -98,14 +68,24 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             context.SaveChanges();
         }
 
+
         public List<ContainerTrackingProvider> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
         public ContainerTrackingProvider GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
+        }
+        public ContainerTrackingProvider GetBySourceCode(string sourceCode)
+        {
+            return context.ContainerTrackingProviders.Where(e => e.SourceCode == sourceCode).FirstOrDefault();
+        }
+
+        public List<ContainerTrackingProvider> All()
+        {
+            return context.ContainerTrackingProviders.ToList();
         }
     }
 }

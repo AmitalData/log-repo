@@ -20,21 +20,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             this.repository = repository;
         }
-
-        public ContainerTrackingProviderPM GetSinglePM(string code)
+        
+        public ContainerTrackingProviderPM GetSinglePM(string id, int tenant)
         {
-            if (string.IsNullOrEmpty(code))
+            if (string.IsNullOrEmpty(id))
                 return null;
 
-            ContainerTrackingProviderPM entity = (from a in repository.context.ContainerTrackingProviders where a.Code == code
+            ContainerTrackingProviderPM entity = (from a in repository.context.ContainerTrackingProviders
+                                                  where a.Id == id && a.Tenant == tenant
                                                   select new ContainerTrackingProviderPM()
                                                   {
-                                                      Code = a.Code,
+                                                      SourceCode = a.SourceCode,
                                                       Name = a.Name,
+                                                      Id = a.Id,
+                                                      Tenant = a.Tenant,
                                                       SearchFields = a.SearchFields,
                                                       APIKey = a.APIKey,
                                                       CallbackURL = a.CallbackURL,
-                                                      ProviderURL = a.ProviderURL
+                                                      ProviderURL = a.ProviderURL,
+                                                      LogitudeToken = a.LogitudeToken
                                                   }).FirstOrDefault();
 
             return entity;
@@ -47,12 +51,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IQueryable<ContainerTrackingProviderList> result = (from a in iQueryable
                                                                 select new ContainerTrackingProviderList()
                                                                 {
-                                                                    Code = a.Code,
+                                                                    SourceCode = a.SourceCode,
                                                                     Name = a.Name,
+                                                                    Id = a.Id,
+                                                                    Tenant = a.Tenant,
                                                                     SearchFields = a.SearchFields,
                                                                     APIKey = a.APIKey,
                                                                     CallbackURL = a.CallbackURL,
-                                                                    ProviderURL = a.ProviderURL
+                                                                    ProviderURL = a.ProviderURL,
+                                                                    LogitudeToken = a.LogitudeToken
                                                                 });
             return result;
         }
