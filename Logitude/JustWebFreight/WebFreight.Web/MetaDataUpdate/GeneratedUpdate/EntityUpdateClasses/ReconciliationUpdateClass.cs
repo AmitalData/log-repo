@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationUpdateClass
    {  		
-		public const string HashString = "aea7b53034abc36fdf409d8751e33f22";
+		public const string HashString = "5c823683afc3bb5bc07d6b8cd5c606cb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "Reconciliation",
-			      				    Code =  "1672",
+			      				    Code =  "e58a",
 			      				    Name =  "Reconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1240,6 +1240,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ReconciliationTextCode_ReconciliationOOpenTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.OpenTransactions", DefaultText = "Open Transactions",LocalDefaultText = @"תנועות פתוחות", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ReconciliationTextCode_ReconciliationONoLinesSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.NoLinesSelected", DefaultText = "No lines was marked",LocalDefaultText = @"יש לסמן את השורות שברצונך להוריד", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationOMultiCurrencyGlaccountReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.MultiCurrencyGlaccountReconciliation", DefaultText = "A currency GLAccount is attached to the MULTI GLAccount - disconnection must be performed before performing a adjust journal",LocalDefaultText = @"לכרטיס המולטי חובר כרטיס מטבעי - יש לבצע ניתוק בטרם ביצוע פעולת מיון", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
