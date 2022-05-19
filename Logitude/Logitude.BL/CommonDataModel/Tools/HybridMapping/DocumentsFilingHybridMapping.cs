@@ -7,6 +7,8 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
+using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
+using Logitude.ShipmentOrderModule.Data.Repositories;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -381,6 +383,11 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                         {
                             documentsFilingPM.EntityId = card.Id;
                         }
+                        break;
+                    case "shipmentorder":
+                        ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository(documentsFilingPM.Tenant);
+                        ShipmentOrder shipmentOrder = shipmentOrderRepository.GetSingleByOrderNumber(documentsFilingPM.EntityNumber, documentsFilingPM.Tenant);
+                        documentsFilingPM.EntityId = shipmentOrder?.Id;
                         break;
                 }
             }
