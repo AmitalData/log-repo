@@ -104,7 +104,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     {
                         entityPM.ExportInsuranceAmount = String.Format("{0:0.00}", item.Amount) + " " + item.CurrencyTypeCode;
                     }
-                    if (item.TypeCode == "144")
+                    if (item.TypeCode == "104")
                     {
                         entityPM.ExportFreightAmount = String.Format("{0:0.00}", item.Amount) + " " + item.CurrencyTypeCode;
                     }
