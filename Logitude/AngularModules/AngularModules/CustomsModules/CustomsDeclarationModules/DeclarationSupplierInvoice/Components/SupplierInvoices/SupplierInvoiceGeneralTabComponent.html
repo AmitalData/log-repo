@@ -894,7 +894,7 @@
                                                         <log-column [width]="'10'" [Alignment]="'right'" *ngIf='isInsurance || isFreightCharge'>
                                                             <ng-template let-item>
                                                                 <log-cell-template #logcelltemplate>                                                                    
-                                                                    <td style="width: 7px; height: 27px;" *ngIf='(!item.CurrencyTypeName || !item.Amount) && ((item.TypeName === "ביטוח" && isInsurance ) || (item.TypeName === "הובלה" && isFreightCharge))'>
+                                                                    <td style="width: 7px; height: 27px;" *ngIf='(!item.CurrencyTypeName || !item.Amount) && ((item.TypeName === "ביטוח" && isInsurance ) || (item.TypeName === "הובלה בפועל" && isFreightCharge))'>
                                                                         <div style="width: 7px; height: 7px; background: #FFCB00; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
                                                                     </td>
                                                                 </log-cell-template>

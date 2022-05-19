@@ -421,6 +421,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(tenant);
             declarationUpdateService.DeclarationConsignmentsFastDelete(declarationPM, context);
             declarationUpdateService.DeclarationRecipientFastDelete(declarationPM, context);
+            declarationUpdateService.DeclarationClosingDataFastDelete(declarationPM, context);
             declarationUpdateService.DeclarationSupplierInvoicesFastDelete(declarationPM, context);
 
             var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);

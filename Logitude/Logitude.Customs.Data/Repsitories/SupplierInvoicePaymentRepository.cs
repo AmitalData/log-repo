@@ -25,7 +25,14 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
-   }
+        public void FastDeleteMulti(DeclarationKeys entityKeyFields)
+        {
+
+            (context as DbContextBase)
+                .DeleteWhere<SupplierInvoicePayment>(rec => rec.DeclarationId == entityKeyFields.Id);
+        }
+
+    }
 
 }
    

@@ -87,6 +87,7 @@
 
                         var data = JSON.stringify(userdata);
                         window.sessionStorage.setItem("userdata", data);
+                        window.sessionStorage.setItem("AmitalSSOAngular", window.location.href);
                         window.sessionStorage.setItem("LogoCode", "U.N.I");
                         var version = "";
                         if (userdata.HtmlVersion) version = userdata.HtmlVersion;
@@ -100,7 +101,10 @@
                         //alert("Angular" + version + "/index.html");
                         //myIframe.src = "Angular" + version + "/index.html?AmitalMode=true"; // "index.html";//"http://localhost:3000/";
                         //myIframe.src = "Angular" + version + "/indexAmital.html"; // "index.html";//"http://localhost:3000/";
-                        myIframe.src = "Angular" + version + "/index.html"; // "index.html";//"http://localhost:3000/";
+                        
+                        //myIframe.src = "Angular" + version + "/index.html"; // "index.html";//"http://localhost:3000/";
+                        myIframe.src = "Angular" + version + "/index.html" + window.location.search;
+                        
 
                     }
                 },
@@ -259,9 +263,9 @@
 
 
 
-            $(document).ready(function () {
-                //alert();
-                AmitalSSO();
+        $(document).ready(function () {
+            //alert();
+            AmitalSSO();
             });
     </script>
 </head>
@@ -363,7 +367,11 @@
 
             _JavascriptGateway.LastRequestFromAngular = JSON.parse(myRequestWrapperJSON);
             RefreshResponseDiv(_JavascriptGateway.LastRequestFromAngular);
-            if (JSBridge) {
+            if (window.JSBridge == null || window.JSBridge === undefined) {
+                console.error("window.JSBridge == null")
+            }
+            else if (window.JSBridge)
+            {
 
                 if (JSBridge.AngularSendEvent2Uniface) {
                     if (!_JavascriptGateway.LastRequestFromAngular) {
@@ -520,7 +528,6 @@
             _JavascriptGateway.LastRequestFromAngular = JSON.stringify(myRequestWrapperJSON);
             RaiseUnifaceRequestEvent(_JavascriptGateway.LastRequestFromAngular.UnifreightMessage);
         }
-
         //DefaultLogIn();
     </script>
 </body>
