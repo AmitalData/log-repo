@@ -9,11 +9,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
         public ContainerTrackingProviderMap()
         {
             // Primary Key
-            this.HasKey(t => t.Code);
+            this.HasKey(t => t.Id);
             // Properties
-            this.Property(t => t.Code)
+            this.Property(t => t.Id)
                 .IsRequired()
-                .HasMaxLength(100)
+                .HasMaxLength(15)
                 .IsUnicode(false);
 
 
@@ -35,8 +35,18 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 .HasMaxLength(2000)
                 .IsUnicode(true);
 
+            this.Property(t => t.LogitudeToken)
+                .HasMaxLength(2000)
+                .IsUnicode(true);
+
+            this.Property(t => t.SourceCode)
+                .HasMaxLength(3)
+                .IsUnicode(true);
+
             // Table & Column Mappings
             this.ToTable("ContainerTrackingProviders");
+
+
             
         }
     }

@@ -5,17 +5,17 @@
   DBType="Main"
   Module="Shipment">
   <Column
-    Name="Code"
+    Name="SourceCode"
+    OldNames="Code"
     Type="varchar"
     Size="3">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
     Name="Name"
     Type="varchar"
-    Size="3">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
@@ -47,4 +47,32 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="LogitudeToken"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="SourceCode"
+    ReferencedTable="ContainerStatusSources"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="Tenant,SourceCode" />
 </Table>

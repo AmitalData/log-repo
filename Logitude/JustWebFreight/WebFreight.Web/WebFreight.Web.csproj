@@ -1152,6 +1152,7 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerTrackingResponsesViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerTrackingProvidersController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerTrackingRequestController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerTrackingResponsesController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\ImporterShipmentOrderDocumentsController.cs" />

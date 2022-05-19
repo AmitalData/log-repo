@@ -746,7 +746,6 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ContainerDataQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpDeliveryFromToTypeQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickupDeliveryService.cs" />
-    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\ContainerTrackingProvidersDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\ContainerTrackingProvidersStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\ContainerCustomFilter.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalCustomFilter.cs" />
@@ -3024,6 +3023,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\AWBSpecialHandlingCodeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\CustomsTransferHeaderMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\LogitudeOceanInsightsRequestMapping.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ContainerTrackingProviderMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Assembly.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestsCountMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Concurrency.cs" />
@@ -3056,6 +3056,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCarrierStatus.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\SpecialServicesTypeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\AWBAdditionalHandlingInfoService.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ContainerTrackingProviderService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ContainerTrackingResponseService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ContainerTrackingRequestService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ContainerService.cs" />

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerTrackingProviderUpdateClass
    {  		
-		public const string HashString = "c6cfd48c473354ddf0013946c2556dac";
+		public const string HashString = "33ea36544a350dfb3f282e1b4626d374";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,37 +89,37 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "ContainerTrackingProvider",
 			      				    IsNew =  true,
 			      				    DBTableName =  "ContainerTrackingProviders",
-			      				    ObjectTableSingular =  "Container Tracking Provider",
-			      				    ObjectTablePlural =  "Container Tracking Providers",
+			      				    ObjectTableSingular =  "Container Tracking Setting",
+			      				    ObjectTablePlural =  "Container Tracking Settings",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
-			      				    KeyPropertyPath =  "Code",
+			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
+			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
-			      				    IsAutoComplete =  false,
+			      				    IsMain =  true,
+			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Code",
+			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Container Tracking Provider",
-			      				    Code =  "a637",
+			      				    DefaultText =  "Container Tracking Setting",
+			      				    Code =  "70a6",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -144,12 +144,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Code",
+					 						FieldName =  "SourceCode",
 					  						ObjectTableName =  "ContainerTrackingProvider",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "ContainerStatusSource",
 					  						MinLength =  0,
 					  						MaxLength =  3,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -157,21 +158,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  3,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Code",
-					  						ListPropertyPath =  "Code",
+					  						PMPropertyPath =  "SourceCode",
+					  						ListPropertyPath =  "SourceCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
-					  						UniqueField =  false,
+					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "ContainerTrackingProviders",
+					  						ValidForQuerySection1 =  "Container Tracking Provider",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -180,10 +182,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
+					  						FullFieldLable =  "SourceCode",
+					  						DefaultText =  "Source Code",
+					  						ListFieldLable =  "SourceCodeListLable",
+					  						ListLableDefaultText =  "Source Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -206,7 +208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ContainerTrackingProvider",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  200,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -214,14 +216,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  3,
-					  						DisplayInList =  false,
+					  						SystemMaxLength =  200,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -229,7 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "ContainerTrackingProviders",
+					  						ValidForQuerySection1 =  "Container Tracking Provider",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -280,6 +283,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -287,7 +291,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "ContainerTrackingProviders",
+					  						ValidForQuerySection1 =  "Container Tracking Provider",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -331,13 +335,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2000,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CallbackURL",
 					  						ListPropertyPath =  "CallbackURL",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -345,6 +350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container Tracking Provider",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -355,6 +361,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CallbackURL",
 					  						DefaultText =  "Callback URL",
+					  						ListFieldLable =  "CallbackURLListLable",
+					  						ListLableDefaultText =  "Callback URL",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -386,13 +394,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2000,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "APIKey",
 					  						ListPropertyPath =  "APIKey",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -400,6 +409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container Tracking Provider",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -410,6 +420,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "APIKey",
 					  						DefaultText =  "API Key",
+					  						ListFieldLable =  "APIKeyListLable",
+					  						ListLableDefaultText =  "API Key",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -441,13 +453,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2000,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ProviderURL",
 					  						ListPropertyPath =  "ProviderURL",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -455,6 +468,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container Tracking Provider",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -465,7 +479,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProviderURL",
 					  						DefaultText =  "Provider URL",
+					  						ListFieldLable =  "ProviderURLListLable",
+					  						ListLableDefaultText =  "Provider URL",
 					  						IsMaxLength =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LogitudeToken",
+					  						ObjectTableName =  "ContainerTrackingProvider",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LogitudeToken",
+					  						ListPropertyPath =  "LogitudeToken",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container Tracking Provider",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LogitudeToken",
+					  						DefaultText =  "Logitude Token",
+					  						ListFieldLable =  "LogitudeTokenListLable",
+					  						ListLableDefaultText =  "Logitude Token",
+					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -482,20 +557,115 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup ContainerTrackingProviderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "70a6", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ContainerTrackingProviderQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5d49", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ContainerTrackingProviderObjectTable = objectTables.ContainsKey("ContainerTrackingProvider") ? objectTables["ContainerTrackingProvider"] : null;
+            if (ContainerTrackingProviderObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                ContainerTrackingProviderObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ContainerTrackingProvider" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode ContainerTrackingProviderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerTrackingProvider.Q.ContainerTrackingSetting", DefaultText = @"Container Tracking Setting",LocalDefaultText = "", ObjectTableId = ContainerTrackingProviderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerTrackingProviderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainerTrackingProvider.Q.ContainerTrackingSetting", ObjectTableId = ContainerTrackingProviderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerTrackingProviderFeatures.ContainerTrackingSetting", NameTextCodeDefaultText = "Container Tracking Setting", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerTrackingProviderObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query ContainerTrackingSettingQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTrackingProviderTextCode_0.Id, NameTextCodeCode = ContainerTrackingProviderTextCode_0.Code, ObjectTableName = "ContainerTrackingProvider", Code = "Container Tracking Setting",  QueryGroupCode = "70a6", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerTrackingProviderObjectTable.Id, QuerySection = "ContainerTrackingProvider", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContainerTrackingProviderFeature_0.Id,FeatureUniqeCode= ContainerTrackingProviderFeature_0.FeatureUniqeCode, DefaultSortName = "SourceCode", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ContainerTrackingSettingQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTrackingSettingQuery.Id,QueryCode = ContainerTrackingSettingQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContainerTrackingProvider.SourceCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ContainerTrackingSettingQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTrackingSettingQuery.Id,QueryCode = ContainerTrackingSettingQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContainerTrackingProvider.Name" , ColumnWidth = 155 }, addedQueryColumns);
+
+			 QueryColumn ContainerTrackingSettingQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTrackingSettingQuery.Id,QueryCode = ContainerTrackingSettingQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContainerTrackingProvider.CallbackURL" , ColumnWidth = 256 }, addedQueryColumns);
+
+			 QueryColumn ContainerTrackingSettingQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTrackingSettingQuery.Id,QueryCode = ContainerTrackingSettingQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContainerTrackingProvider.APIKey" , ColumnWidth = 145 }, addedQueryColumns);
+
+			 QueryColumn ContainerTrackingSettingQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTrackingSettingQuery.Id,QueryCode = ContainerTrackingSettingQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ContainerTrackingProvider.ProviderURL" , ColumnWidth = 138 }, addedQueryColumns);
+
+			 QueryColumn ContainerTrackingSettingQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTrackingSettingQuery.Id,QueryCode = ContainerTrackingSettingQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ContainerTrackingProvider.LogitudeToken" , ColumnWidth = 274 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable ContainerTrackingProviderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerTrackingProvider" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ContainerTrackingProviderObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ContainerTrackingProvider").ToList();
+		       
+	      
+
+	         Screen ContainerTrackingProviderContainerTrackingProviderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ContainerTrackingProvider.HeaderScreen", Name = "ContainerTrackingProviderHeaderScreen", ObjectTableId = ContainerTrackingProviderObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField ContainerTrackingProviderContainerTrackingProviderHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ContainerTrackingProviderContainerTrackingProviderHeaderScreenScreen0.Id,ScreenCode = ContainerTrackingProviderContainerTrackingProviderHeaderScreenScreen0.Code, ObjectFieldCode = "ContainerTrackingProvider.SourceCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
+		    ContainerTrackingProviderObjectTable.HeaderScreenId = ContainerTrackingProviderContainerTrackingProviderHeaderScreenScreen0.Id;
+		    ContainerTrackingProviderObjectTable.HeaderScreenCode = ContainerTrackingProviderContainerTrackingProviderHeaderScreenScreen0.Code;
+
+	   		  
+	      
+
+	         Screen ContainerTrackingProviderGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ContainerTrackingProvider.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ContainerTrackingProviderObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+             ScreenField ContainerTrackingProviderContainerTrackingProviderGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ContainerTrackingProviderGeneralTabScreenScreen1.Id,ScreenCode = ContainerTrackingProviderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ContainerTrackingProvider.SourceCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerTrackingProviderContainerTrackingProviderGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ContainerTrackingProviderGeneralTabScreenScreen1.Id,ScreenCode = ContainerTrackingProviderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ContainerTrackingProvider.ProviderURL", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerTrackingProviderContainerTrackingProviderGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ContainerTrackingProviderGeneralTabScreenScreen1.Id,ScreenCode = ContainerTrackingProviderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ContainerTrackingProvider.CallbackURL", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerTrackingProviderContainerTrackingProviderGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ContainerTrackingProviderGeneralTabScreenScreen1.Id,ScreenCode = ContainerTrackingProviderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ContainerTrackingProvider.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerTrackingProviderContainerTrackingProviderGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ContainerTrackingProviderGeneralTabScreenScreen1.Id,ScreenCode = ContainerTrackingProviderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ContainerTrackingProvider.APIKey", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerTrackingProviderContainerTrackingProviderGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = ContainerTrackingProviderGeneralTabScreenScreen1.Id,ScreenCode = ContainerTrackingProviderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ContainerTrackingProvider.LogitudeToken", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ContainerTrackingProviderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerTrackingProvider" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ContainerTrackingProviderGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerTrackingProvider.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ContainerTrackingProviderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ContainerTrackingProviderGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainerTrackingProvider.Tab.General", ObjectTableId = ContainerTrackingProviderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerTrackingProviderFeatures.CTSG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerTrackingProviderObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTSG",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = ContainerTrackingProviderGeneralFeature_TH0.Id,FeatureUniqeCode = ContainerTrackingProviderGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ContainerTrackingProviderObjectTable.Id, TabNameTextCodeId = ContainerTrackingProviderGeneralTextCode_TH0.Id, TabNameTextCodeCode = ContainerTrackingProviderGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable ContainerTrackingProviderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerTrackingProvider" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature ContainerTrackingProviderFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ContainerTrackingProviderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerTrackingProvider.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerTrackingProviderObjectTable);
+		   Feature ContainerTrackingProviderFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ContainerTrackingProviderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerTrackingProvider.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerTrackingProviderObjectTable);
+		   Feature ContainerTrackingProviderFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ContainerTrackingProviderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerTrackingProvider.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerTrackingProviderObjectTable);
+		   Feature ContainerTrackingProviderFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ContainerTrackingProviderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerTrackingProvider.Features.PackageFeature", NameTextCodeDefaultText = "ContainerTrackingProvider Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerTrackingProviderObjectTable);    
 	    
 		}
 
@@ -549,18 +719,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    
 }
 
-
-	    public void FillContainerTrackingProvider()
-        { 
-            var repo = new ContainerTrackingProviderRepository(0);
-            var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
-            new FillCloseTables().FillCloseTable<
-                                ContainerTrackingProvider,
-                                Logitude.BL.ShipmentsModel.ContainerTrackingProviderDetails,
-                                ContainerTrackingProviderRepository>(repo, dic);
-        }
-
-	    
+    
 
    }
     
