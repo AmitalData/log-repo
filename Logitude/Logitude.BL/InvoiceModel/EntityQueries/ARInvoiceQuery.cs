@@ -1423,6 +1423,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             PartnerId = a.PartnerId,
                             GlobalTaxCalculation = a.GlobalTaxCalculation,
                             PaymentReferences=a.PaymentReferences,
+                            SATCancelReasonCode = a.SATCancelReasonCode,
                         };
 
             return query;
@@ -1575,6 +1576,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              HouseNumbers = entity.HouseNumbers,
                              GlobalTaxCalculation = entity.GlobalTaxCalculation,
                              PaymentReferences = entity.PaymentReferences,
+                             SATCancelReasonCode = entity.SATCancelReasonCode,
                          };
 
             return result;
@@ -1699,6 +1701,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               HouseNumbers = a.HouseNumbers,
                                               GlobalTaxCalculation = a.GlobalTaxCalculation,
                                               PaymentReferences = a.PaymentReferences,
+                                              SATCancelReasonCode = a.SATCancelReasonCode,
                                           }).ToList();
             return invoices;
         }
@@ -1829,6 +1832,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     HouseNumbers = entityPOCO.HouseNumbers,
                     GlobalTaxCalculation = entityPOCO.GlobalTaxCalculation,
                     PaymentReferences = entityPOCO.PaymentReferences,
+                    SATCancelReasonCode = entityPOCO.SATCancelReasonCode,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2194,6 +2198,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PartnerName = entity.Partner.EnglishName,
                              GlobalTaxCalculation = entity.GlobalTaxCalculation,
                              PaymentReferences = entity.PaymentReferences,
+                             SATCancelReasonCode = entity.SATCancelReasonCode,
                          };
 
             return result;

@@ -85,7 +85,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public void BuildProfactCommunicationLog()
         {
             Comprobante comprobante = GetProfactComprobante();
-            sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = comprobante, EntityId = arPaymentPM.Id, EntityReference = arPaymentPM.PaymentNo.ToString(), IsCancellation = true, IsPayment = true});
+            sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = comprobante, ARPaymentPM = arPaymentPM, IsCancellation = true, IsPayment = true});
         }
 
         private Comprobante GetProfactComprobante()
