@@ -609,5 +609,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? QuoteFreightExpirationDate { get; set; }
         public DateTime? MainCarriageETDTime { get; set; }
         public DateTime? MainCarriageETATime { get; set; }
+        public string PackagesQuantityAndType { get; set; }
     }
 }
