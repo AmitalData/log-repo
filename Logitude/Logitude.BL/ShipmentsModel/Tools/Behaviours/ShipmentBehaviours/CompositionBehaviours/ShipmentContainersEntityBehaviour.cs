@@ -247,13 +247,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                         case ChangeSetOperation.None:
                         case ChangeSetOperation.Insert:
                             {
-                                this.CreateContainer(itemPM);
+                                if (!string.IsNullOrEmpty(itemPM.ContainerNumber))
+                                {
+                                    this.CreateContainer(itemPM);
+                                }
                                 break;
                             }
 
                         case ChangeSetOperation.Update:
                             {
-                                if (string.IsNullOrEmpty(itemPM.ContainerEntityId))
+                                if (string.IsNullOrEmpty(itemPM.ContainerEntityId) && !string.IsNullOrEmpty(itemPM.ContainerNumber))
                                 {
                                     this.CreateContainer(itemPM);
                                 }
