@@ -124,14 +124,14 @@ namespace CommunicationWorkerRole.Services.ShipmentOrderDocuments
         private DocumentsFilingAM GetDocumentsFilingAM()
         {
             var documentsFiling = documentsFilingQuery.GetSinglePM(documentFilingId, tenant.Value);
-            return shipmentOrderDocumentsFilingAMMap.Map(documentsFiling);
+            return shipmentOrderDocumentsFilingAMMap.Map(documentsFiling, shipmentOrderId);
         }
         private void SendDocumentsFilingAM(DocumentsFilingAM documentFilingAM)
         {
             APILogsUtility.UpdateAPILogStatus(apiLog.Id, apiLog.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Sending Shipment Order Document" + DateTime.Now, TrimXmlString(documentFilingAM), null, null, "");
             using (var client = new HttpClient())
             {
-           
+
                 client.DefaultRequestHeaders.Add("Token", token);
                 client.DefaultRequestHeaders.Add("CorrelationId", messageId);
 
