@@ -30,7 +30,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void AfterUpdating(InterestTransactionPM entityPM, EntityPM entityParentPM)
         {
             string arInvoiceInterestEntityType = "1";
-            if (entityPM.InterestEntityType != arInvoiceInterestEntityType)
+            string journalInterestEntityTypeCode = "3";
+            if (entityPM.InterestEntityType != arInvoiceInterestEntityType && 
+                (entityPM.InterestEntityType != journalInterestEntityTypeCode || 
+                    (String.IsNullOrEmpty(entityPM.SearchFields) && String.IsNullOrEmpty(EntityPOCO.SearchFields))))
             {
                 BuildSearchField(entityPM);
             }
