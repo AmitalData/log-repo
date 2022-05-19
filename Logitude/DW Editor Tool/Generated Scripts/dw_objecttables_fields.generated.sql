@@ -1904,6 +1904,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ContainersShipmentDeliveryATDNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ContainersShipmentDeliveryATDNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_ContainersShipmentDeliveryATDNewId,0,'Fact_Containers','[Shipment Delivery ATD]','Shipment Delivery ATD','Dimension','false',0,0,'DIM_Dates','false','false','true','Delivery','false','false','false','Container.ShipmentDeliveryATD','false','false','false')  
+declare @Fact_ContainersCustomsReleaseDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ContainersCustomsReleaseDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_ContainersCustomsReleaseDateNewId,0,'Fact_Containers','[Customs Release Date]','Customs Release Date','Dimension','false',0,0,'DIM_Dates','false','false','true','Customs','false','false','false','Container.CustomsReleaseDate','false','false','false')  
+declare @Fact_ContainersCustomsReleaseStateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ContainersCustomsReleaseStateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_ContainersCustomsReleaseStateNewId,0,'Fact_Containers','[Customs Release State]','Customs Release State','Text','false',0,10,'false','false','true','Customs','false','false','false','Container.CustomsReleaseState','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_InlandDomesticShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InlandDomesticShipmentsNewId OUTPUT,'DWObjectTable' 
@@ -3305,3 +3311,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsIT#NewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsIT#NewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection,RecordType) Values(@Fact_ShipmentsIT#NewId,0,'Fact_Shipments','[IT #]','IT #','Text','false',0,25,'false','false','true','Customs','false','false','false','Shipment.ITNumber','false','false','false','Shipment')  
+declare @Fact_ShipmentsISFDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsISFDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection,RecordType) Values(@Fact_ShipmentsISFDateNewId,0,'Fact_Shipments','[ISF Date]','ISF Date','Dimension','false',0,0,'DIM_Dates','false','false','true','Customs','false','false','false','Shipment.ISFDate','false','false','false','Shipment')  
+declare @Fact_ShipmentsISF#NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsISF#NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection,RecordType) Values(@Fact_ShipmentsISF#NewId,0,'Fact_Shipments','[ISF #]','ISF #','Text','false',0,25,'false','false','true','Customs','false','false','false','Shipment.ISFNumber','false','false','false','Shipment')  
