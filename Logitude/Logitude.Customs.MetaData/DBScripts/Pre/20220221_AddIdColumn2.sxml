@@ -2,7 +2,7 @@
 <Script DBType="Main" Module="Customs" Pre="true">
 	<Sql Version="1">
 	</Sql>
-	<Oracle Version="3">
+	<Oracle Version="4">
 		<![CDATA[
 			EXECUTE IMMEDIATE 'CREATE TABLE SUPPLIERINVOICEFREIGHTAMO_T AS SELECT * FROM SUPPLIERINVOICEFREIGHTAMOUNTS';
 
