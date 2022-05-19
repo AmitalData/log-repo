@@ -203,11 +203,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private string AddPackageDetailsToPackagesQuantityAndType(string packagesQuantityAndType, int? quantity, string packageTypeCode)
         {
             string allPackagesQuantityAndType = packagesQuantityAndType;
-            if (!string.IsNullOrEmpty(packageTypeCode) && quantity!= null)
+            if (quantity == null || quantity <= 0)
             {
-                string quantityAndTypeField = quantity + "x" + packageTypeCode;
-                allPackagesQuantityAndType += (!string.IsNullOrEmpty(allPackagesQuantityAndType) ? ", " : "") + quantityAndTypeField;
+                return allPackagesQuantityAndType;
             }
+
+            if (!string.IsNullOrEmpty(packageTypeCode))
+            {
+                allPackagesQuantityAndType += (!string.IsNullOrEmpty(allPackagesQuantityAndType) ? ", " : "") + (quantity + "x" + packageTypeCode);
+            }
+
+            else
+            {
+                allPackagesQuantityAndType += (!string.IsNullOrEmpty(allPackagesQuantityAndType) ? ", " : "") + quantity;
+            }
+
             return allPackagesQuantityAndType;
         }
 
