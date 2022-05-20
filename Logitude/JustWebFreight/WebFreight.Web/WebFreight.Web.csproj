@@ -1154,6 +1154,7 @@
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
+    <Compile Include="DataContracts\BrandingData.cs" />
     <Compile Include="DataContracts\DataProviderField.cs" />
     <Compile Include="DataContracts\ExcelReportArguments.cs" />
     <Compile Include="DataContracts\ExcelReportResult.cs" />
@@ -2725,6 +2726,7 @@
     <Compile Include="Helpers\AutomationModel\SendInterface\SendInterfaceDataContractService.cs" />
     <Compile Include="Helpers\AutomationModel\SendInterface\ShipmentAPISendInterfaceDataContract.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
+    <Compile Include="Helpers\BrandingHelper.cs" />
     <Compile Include="Helpers\CrmWebServicesValidator.cs" />
     <Compile Include="Helpers\DataWarehouse\FactQuoteBusinessUnitFilter.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />

@@ -14134,7 +14134,14 @@
       FeatureDefaultText="&quot;Erase Data&quot;" />
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;TenantManagement.TH.LogitudeDigitalBranding&quot;"
+      DefaultText="&quot;Digital Portal Branding&quot;"
+      LocalDefaultText="&quot;Digital Portal Branding&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;SYSDISENABLED&quot;"
