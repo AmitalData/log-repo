@@ -21,6 +21,7 @@ import { SharedLogisticsPartnersPermissiosComponent } from './Components/SharedL
 import { SharedInvoicesWorkspaceComponent } from './Components/Workspaces/SharedInvoicesWorkspaceComponent';
 import { SharedShipmentsWorkspaceComponent } from './Components/Workspaces/SharedShipmentsWorkspaceComponent';
 import { TemplateTypeComponent } from './Components/TemplateTypeComponent';
+import { SharedLogisticsDigitalPortalComponent } from './Components/SharedLogisticsDigitalPortalComponent';
 
 export const ControlsComponents =
     [
@@ -29,7 +30,8 @@ export const ControlsComponents =
         CargoTrackingMilestonesPermissiosComponent,
         SharedLogisticsDocumentPermissiosComponent,
         SharedLogisticsMoneyPermissiosComponent,
-        SharedLogisticsPartnersPermissiosComponent,        
+        SharedLogisticsPartnersPermissiosComponent,
+        SharedLogisticsDigitalPortalComponent,
     ];
 
 
@@ -58,6 +60,7 @@ export const Components =
         SharedInvoicesWorkspaceComponent,
         SharedShipmentsWorkspaceComponent,
         TemplateTypeComponent,
+        SharedLogisticsDigitalPortalComponent,
     ];
 
 export class ModuleDeclarations {
@@ -88,7 +91,8 @@ export class ModuleDeclarations {
             case "SharedLogisticsPartnersPermissiosComponent": { myResult = SharedLogisticsPartnersPermissiosComponent; break; }
             case "SharedInvoicesWorkspaceComponent": { myResult = SharedInvoicesWorkspaceComponent; break; }
             case "SharedShipmentsWorkspaceComponent": { myResult = SharedShipmentsWorkspaceComponent; break; } 
-            case "TemplateTypeComponent": { myResult = TemplateTypeComponent; break; } 
+            case "TemplateTypeComponent": { myResult = TemplateTypeComponent; break; }
+            case "SharedLogisticsDigitalPortalComponent": { myResult = SharedLogisticsDigitalPortalComponent; break; }
         }
 
         return myResult;
