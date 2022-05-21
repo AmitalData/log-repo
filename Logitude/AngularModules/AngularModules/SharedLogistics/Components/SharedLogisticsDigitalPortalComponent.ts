@@ -4,16 +4,9 @@ import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceRespo
 import { TenantPMService } from '../../Common/Services/StandardPMs/TenantPMService';
 import { TenantPM } from '../../Common/EntityPMs/TenantPM';
 import { ApiQueryFilters } from '../../Infrastructure/DataContracts/ApiQueryFilters';
-import { DocumentTypeListService } from '../../Common/Services/StandardLists/DocumentTypeListService';
-import { AttachmentsList } from '../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/AttachmentsList';
-import { DocumentTypeList } from '../../Common/EntityLists/DocumentTypeList';
-import { MessageWindow } from '../../Controls/Windows/MessageWindow';
-import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
-import { DocsOutDataViewModel } from '../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocsOutDataViewModel';
-import { DocumentOutPMService } from '../../Common/Services/ExtendedPMs/DocumentOutPMService';
-import { DocumentTypePMExtendedService } from '../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
-import { EntityPartner } from '../../Infrastructure/DataContracts/EntityPartner';
-import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
+import { ListComponentArgs } from '../../Infrastructure/Args';
+import { EntityResourceService } from '../../Infrastructure/Services/EntityResourceService';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     templateUrl: './SharedLogisticsDigitalPortalComponent.html',
@@ -21,10 +14,13 @@ import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
 
 export class SharedLogisticsDigitalPortalComponent implements OnInit {
 
-    SharedLogisticsActivatedEnabled: boolean = false;
+    public SharedLogisticsActivatedEnabled: boolean = false;
     private tenantPMService: TenantPMService;
     private myTenantPM: TenantPM;
-    private documentTypeCode = "SLCIN";
+    private filterAgrs: ApiQueryFilters;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         this.InitalizeServices();
     }
@@ -66,8 +62,25 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
     }
 
     InviteLinkClick() {
-
+        var backButtonTitle = "Shared Logistics";
+        var displayTitle = "Customers";
+        var objectTableName = "Customer";
+        var queryCode = "Shared Logistics Customers";
+        this.filterAgrs = new ApiQueryFilters();
+        var listArgs = new ListComponentArgs();
+        listArgs.Filters = this.filterAgrs;
+        listArgs.QueryCode = queryCode;
+        listArgs.ObjectTableName = objectTableName;
+        listArgs.DisplayTitle = displayTitle;
+        listArgs.BackButtonTitle = backButtonTitle;
+        listArgs.IsDigitalPortalMenuClicked = true;
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
     }
-
-
 }
