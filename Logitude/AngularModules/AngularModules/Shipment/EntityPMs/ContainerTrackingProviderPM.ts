@@ -59,6 +59,10 @@ export class ContainerTrackingProviderPM {
     public get LogitudeToken() { return this.logitudeToken; }
     public set LogitudeToken(newValue: string) { if (this.logitudeToken != newValue) { this.logitudeToken = newValue; this.MarkAsDirty("SearchFields"); } }
        
+    private providerURL: string;
+    public get ProviderURL() { return this.providerURL; }
+    public set ProviderURL(newValue: string) { if (this.providerURL != newValue) { this.providerURL = newValue; this.MarkAsDirty("SearchFields"); } }
+       
 	 
 
     public OldEntityPM: ContainerTrackingProviderPM;

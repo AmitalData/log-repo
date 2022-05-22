@@ -48,7 +48,7 @@
   NoTS="false"
   NoDefaultFeatures="false"
   HasCompactSearch="false"
-  ApplyDefaultValues="false"
+  ApplyDefaultValues="true"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
