@@ -1,19 +1,8 @@
 import { OnInit, Component, ViewChild, ElementRef } from '@angular/core';
-import { ExportDeclarationClosingDataPM } from '../../../../../Customs/EntityPMs/ExportDeclarationClosingDataPM';
-import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
-import { ExportDeclarationClosingDataPMService } from '../../../../../Customs/Services/StandardPMs/ExportDeclarationClosingDataPMService';
-import { Time } from '@angular/common';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ConsignmentPM } from '../../../../../Customs/EntityPMs/ConsignmentPM';
-import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
-import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
-import { CustomMessageProgressComponent, ShowProgressBarParams } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
-import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
-import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { Guid } from '../../../../../Infrastructure/Utilities/Guid';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { ImageParameter } from '../../../../../Infrastructure/DataContracts/ImageParameter';
@@ -34,7 +23,8 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
     IsShowProgressBar: boolean = false;
     UploadButtonIsEnabled: boolean = true;
     filterImageParameter: ImageParameter;
-    UploadSuccessLabel: boolean
+    UploadSuccessLabel: boolean;
+    FileData: number;
     Placeholder: any = "";
     ProgressBarPercentText: string;
     public UploadFileId: string = Guid.NewRandomString();
