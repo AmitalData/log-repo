@@ -8,11 +8,11 @@ namespace WebFreight.Web.Helpers
     public class BrandingHelper
     {
         const string brandingImageExtensionType = "png";
-        public BrandingData GetBrandingDataByTenant(int tenant)
+        public BrandingData GetBrandingDataByDomain(string domain)
         {
             BrandingData brandingData = new BrandingData();
-            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
-            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(domain);
 
             if (tenantManagementPM == null)
             {

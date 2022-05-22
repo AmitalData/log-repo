@@ -1,4 +1,4 @@
-﻿
+
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 export class SharedLogisticContactPM {
@@ -81,6 +81,10 @@ export class SharedLogisticContactPM {
     private templateId: string;
     public get TemplateId() { return this.templateId; }
     public set TemplateId(newValue: string) { this.templateId = newValue; this.MarkAsDirty(); }
+
+    private isDigitalPortal: boolean;
+    public get IsDigitalPortal() { return this.isDigitalPortal; }
+    public set IsDigitalPortal(newValue: boolean) { this.isDigitalPortal = newValue; this.MarkAsDirty(); }
 
     public OldEntityPM: SharedLogisticContactPM;
 

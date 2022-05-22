@@ -42,7 +42,11 @@ export class GeneralEmailSender {
     DocumentTypeCode: string;
     EventRefreshName: string;
     LoadingSendingComponent: boolean = false;
-    constructor(objecttablename: string, documentTypeCode: string, entityId: string, entityReference: string, childEntityId: string, childEntityReference: string, documentFilingId: string, subject: string, attachments: AttachmentsList[], eventRefreshName: string = null, entityPM: any = null, isCrm: boolean = false, eventTypeCode: string = null, fromMail: string = null) {
+    public IsToEmailIsDisabled: boolean = false;
+    IsDigitalPortal: boolean = false;
+    ToMail: string;
+
+    constructor(objecttablename: string, documentTypeCode: string, entityId: string, entityReference: string, childEntityId: string, childEntityReference: string, documentFilingId: string, subject: string, attachments: AttachmentsList[], eventRefreshName: string = null, entityPM: any = null, isCrm: boolean = false, eventTypeCode: string = null, fromMail: string = null,toMail:string = null, isDigitalPortal: boolean = false) {
         this.LoadingSendingComponent = true;
         this.CurrentObjectTableId = window.ObjectTables.filter(d => d.Name == objecttablename)[0].Id;
         this.ObjectTableName = window.ObjectTables.filter(d => d.Name == objecttablename)[0].Name;
@@ -60,10 +64,12 @@ export class GeneralEmailSender {
         this.EntityPM = entityPM;
         this.IsCrm = isCrm;
         this.EventTypeCode = eventTypeCode;
-        this.ToSpecificeEmail = "";
-
+        this.IsDigitalPortal = isDigitalPortal;
+        this.ToSpecificeEmail = this.IsDigitalPortal ? toMail : "";
+        this.ToMail = toMail;
     }
-     
+
+
     SetIsShareDocumentsViaEmail() {
         this.IsShareDocumentsViaEmail = true;
     }
@@ -93,7 +99,7 @@ export class GeneralEmailSender {
         windowArgs.ObjecttableName = this.ObjectTableName ? this.ObjectTableName : "";
         windowArgs.ObjectTableId = this.CurrentObjectTableId ? this.CurrentObjectTableId : "";
         windowArgs.Subject = this.Subject ? this.Subject : "";
-        windowArgs.ToEmail = this.Replyto ? this.Replyto : "";
+        windowArgs.ToEmail = this.IsDigitalPortal ? (this.ToMail ? this.ToMail : "") : (this.Replyto ? this.Replyto : "");
         windowArgs.From = this.From ? this.From : "";
         windowArgs.PartnersObslist = this.PartnersObslist;
         windowArgs.IsUserFromReport = this.PartnersObslist ? true : false;
@@ -112,7 +118,7 @@ export class GeneralEmailSender {
 
     ShowFullSendControll() {
 
-        if (this.EntityPM) {
+        if (this.EntityPM || this.IsDigitalPortal) {
 
             var documentTypeListService = new DocumentTypeListService();
             var documentOutPM = null;
@@ -224,6 +230,7 @@ export class GeneralEmailSender {
 
         var windowArgs: any = {};
         windowArgs.IsShareDocumentsViaEmail = this.IsShareDocumentsViaEmail;
+        windowArgs.IsDigitalPortal = this.IsDigitalPortal;
         var logWindow = new LogitudeWindow();
         logWindow.Width = sendWindowWidth;
         logWindow.Height = SelectedInternalDocument.WindowHeight = sendWindowHeight;
