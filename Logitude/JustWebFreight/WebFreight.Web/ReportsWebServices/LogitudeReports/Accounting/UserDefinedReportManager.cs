@@ -194,7 +194,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                              Code = b.LineTypeCode == GLAccountType ? b.GLAccountDisplayNumber : b.ChartsofAccountCode,
                                                              EnglishType = b.LineTypeCode == GLAccountType ? "GLAccount" : "Chart of Account",
                                                              LocalType = b.LineTypeCode == GLAccountType ? "כרטיס" : "קבוצת מאזן",
-                                                             ChartsofAccountTypeCode = b.ChartOfAccountTypeCode,
+                                                             ChartsofAccountTypeCode = b.CalculatedChartsOfAccountsId,
                                                              ParentChartsofAccountTypeCode = CalculatedChartsOfAccount.ChartOfAccountTypeCode + "_" + b.Id,
                                                              ChartsofAccountId = b.ChartOfAccountId,
                                                              LineTypeCode = b.LineTypeCode,
