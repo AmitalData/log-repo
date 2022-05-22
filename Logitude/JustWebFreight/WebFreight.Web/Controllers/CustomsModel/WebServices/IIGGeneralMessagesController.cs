@@ -43,6 +43,46 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
+        public HttpResponseMessage PostUnifreightGatewayMessages(UnifreightGatewayParams requestParams)
+        {
+            try
+            {
+
+                //CUSTOM19 - TOKEN
+                //3d75bc21-2e20-4e3a-8792-1ba057a4408f
+                //24fd2056-23b1-4921-8804-1ae02e70fcb3
+
+                // use messageing service
+                string DataOut1 = "";
+                string DataOut2 = "";
+                string SUCCESS = "";
+                string MoreParams = requestParams.MoreParams;
+                string MessageOut = "";
+
+                var service = new UnifreightGatewayService();
+                service.ProccessRequest(requestParams.AssemblyQualifiedName, requestParams.DataIn1, requestParams.DataIn2,
+                    out DataOut1,
+                    out DataOut2,
+                    out SUCCESS,
+                    ref MoreParams,
+                    out MessageOut
+                    );
+
+                requestParams.DataOut1 = DataOut1;
+                requestParams.DataOut2 = DataOut2;
+                requestParams.SUCCESS = SUCCESS;
+                requestParams.MoreParams = MoreParams;
+                requestParams.MessageOut = MessageOut;
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, requestParams);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage PostMorningMessages(MorningMessageRequestParams requestParams)
         {
@@ -917,5 +957,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     }
 
 
-   
+    public class UnifreightGatewayParams
+    {
+
+        public string Token { get; set; }
+        public string AssemblyQualifiedName { get; set; }
+        public string DataIn1 { get; set; }
+        public string DataIn2 { get; set; }
+
+
+
+        public string DataOut1 { get; set; }
+        public string DataOut2 { get; set; }
+
+        public string SUCCESS { get; set; }
+        public string MoreParams { get; set; }
+        public string MessageOut { get; set; }
+    }
+
+
 }
