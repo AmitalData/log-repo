@@ -625,7 +625,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     OpenDeclarationLoadExcelSupplierInvoiceWindow() {
         var args: any = {
-            Declaration: this.EntityPM,
+            DeclarationId : this.EntityPM.Id,
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;

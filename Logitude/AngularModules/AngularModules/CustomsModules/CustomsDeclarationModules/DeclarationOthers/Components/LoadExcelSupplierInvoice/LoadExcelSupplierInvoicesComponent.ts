@@ -17,6 +17,8 @@ import { DeclarationWebService } from '../../../../../Customs/Services/WebServic
 import { Guid } from '../../../../../Infrastructure/Utilities/Guid';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { ImageParameter } from '../../../../../Infrastructure/DataContracts/ImageParameter';
+import { SupplierInvoiceService } from '../../../../../Customs/Services/Others/SupplierInvoiceService';
+import { AppTool } from '../../../../../Infrastructure/Tools';
 declare var attachmentUploader, ResultAsArray: any;
 @Component({
     selector: 'LoadExcelSupplierInvoicesComponent',
@@ -37,6 +39,7 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
     ProgressBarPercentText: string;
     public UploadFileId: string = Guid.NewRandomString();
     private CurrentSession = SessionLocator.SelectedSession;
+    public DeclarationId: string;
 
     constructor(private EntityResourceService: EntityResourceService) {
         super();
@@ -49,21 +52,27 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
     }
 
     
-    SetWindowArgs(args: any) {
-        /*this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
-            //this.DecPM = args.EntityPM;
-
-        });*/
+    SetWindowArgs(args: any)
+    {
+        if (!AppTool.IsNullOrEmpty(args))
+        {
+            this.DeclarationId = args.DeclarationId;
+        }
     }
-    OpenUpLoadFile() {
+
+    OpenUpLoadFile()
+    {
         document.getElementById(this.UploadFileId).click();
     }
-    public ShowMessage(message: string) {
+
+    public ShowMessage(message: string)
+    {
         var messageWindow: MessageWindow = new MessageWindow();
         messageWindow.Show(message);
     }
 
-    UploadFile(event: any) {
+    UploadFile(event: any)
+    {
         var file: any = attachmentUploader(this.UploadFileId);
         if (file) {
             var temp = file.name.split('.');
@@ -97,7 +106,8 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
         }
     }
 
-    ArrayBufferToBase64(file: any, viewmodel: any) {
+    ArrayBufferToBase64(file: any, viewmodel: any)
+    {
         var reader: FileReader = new FileReader();
         var reader = new FileReader();
         reader.onload = function (e) {
@@ -117,7 +127,8 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
         reader.readAsArrayBuffer(file);
     }
 
-    IncreaseProgressBar(ProgressBarValue: number) {
+    IncreaseProgressBar(ProgressBarValue: number)
+    {
         debugger;
         var elem = document.getElementById("myBar") as HTMLProgressElement;
         if (ProgressBarValue == 100) {
@@ -131,6 +142,21 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
             elem.dataset['label'] = this.ProgressBarPercentText;
         }
 
+    }
+
+    OkButtonClicked()
+    {
+        var supplierInvoiceService = new SupplierInvoiceService();
+        supplierInvoiceService.PutSupplierInvioceFromFileRequest(this.filterImageParameter, SessionLocator.Tenant, this.CustomerId, this.DeclarationId).subscribe((myServiceResponse: ServiceResponse) => {
+
+            if (myServiceResponse.HasError) {
+                this.ShowMessage(myServiceResponse.ErrorsArray[0]);
+            }
+            else {
+                this.ShowMessage(myServiceResponse.Result);
+            }
+            
+        });
     }
 
     CancelButtonClicked() {
