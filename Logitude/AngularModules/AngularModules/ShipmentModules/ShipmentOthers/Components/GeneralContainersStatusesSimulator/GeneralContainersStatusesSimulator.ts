@@ -1,12 +1,13 @@
 import { Component, Type } from '@angular/core';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ShipmentContainersWebService, ShipmentContainerSimulator } from '../../../../Shipment/Services/ShipmentContainersWebService';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { GeneralContainerStatusSimulatorArgs } from 'Shipment/DataContract/GeneralContainerStatusSimulatorArgs';
 
 @Component({
-    
+
     templateUrl: './GeneralContainersStatusesSimulatorComponent.html',
 })
 
@@ -17,6 +18,7 @@ export class GeneralContainersStatusesSimulator {
     private shipmentId: string;
     private containerNumber: string;
     private carrierId: string;
+    public Data: string = null;
 
 
     constructor() {
@@ -32,24 +34,8 @@ export class GeneralContainersStatusesSimulator {
         }
     }
 
-    public AnalyzeQueueId: string = null;
-    public XML_Text: string = null;
 
-    private useAnalyzeQueueId: boolean = false;
-    get UseAnalyzeQueueId() { return this.useAnalyzeQueueId; }
-    set UseAnalyzeQueueId(value: boolean) {
-        if (this.useAnalyzeQueueId != value) {
-            this.useAnalyzeQueueId = value;
-
-            if (value) {
-                this.XML_Text = null;
-            }
-
-            else {
-                this.AnalyzeQueueId = null;
-            }
-        }
-    }
+    
 
     CancelClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -57,32 +43,29 @@ export class GeneralContainersStatusesSimulator {
 
     SimulateClicked() {
         var errors: string[] = [];
-
         this.ValidationErrorsList = errors;
 
-        if (errors.length == 0) {
-            this.CurrentSession.StartBusyIndicator("Simulating...");
+        this.CurrentSession.StartBusyIndicator("Simulating...");
 
-            var simulator = new ShipmentContainerSimulator();
-            simulator.AnalyzeQueueId = this.AnalyzeQueueId;
-            simulator.XmlString = this.XML_Text;
-            simulator.IsFromContainer = this.isFromContainer;
-            simulator.ShipmentId = this.shipmentId;
-            simulator.ContainerNumber = this.containerNumber;
-            simulator.CarrierId = this.carrierId;
-            
-           
-                    this.semulator(simulator)
-                    
-            
+        var simulatorArgs = new GeneralContainerStatusSimulatorArgs();
+        simulatorArgs.Data = this.Data;
+        simulatorArgs.IsFromContainer = this.isFromContainer;
+        simulatorArgs.ShipmentId = this.shipmentId;
+        simulatorArgs.ContainerNumber = this.containerNumber;
+        simulatorArgs.CarrierId = this.carrierId;
 
-             
-        }
+
+        this.semulator(simulatorArgs)
+
+
+
+
+
     }
 
-    semulator(simulator:ShipmentContainerSimulator){
+    semulator(simulatorArgs: GeneralContainerStatusSimulatorArgs) {
         var myService = new ShipmentContainersWebService();
-        myService.VisionContainerSimulator(simulator).subscribe((myResponse: ServiceResponse) => {
+        myService.VisionContainerSimulator(simulatorArgs).subscribe((myResponse: ServiceResponse) => {
 
             this.CurrentSession.StopBusyIndicator();
 
@@ -93,7 +76,7 @@ export class GeneralContainersStatusesSimulator {
             else {
                 var myResult: ShipmentContainerSimulator = myResponse.Result;
 
-                if (myResult.Success) {                       
+                if (myResult.Success) {
                     var messageWindow = new MessageWindow();
                     messageWindow.Show("Simulated Successfully");
                 }
@@ -102,7 +85,7 @@ export class GeneralContainersStatusesSimulator {
                     this.ValidationErrorsList = myResult.Errors;
                 }
             }
-        });           
+        });
     }
 }
 
