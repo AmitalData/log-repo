@@ -684,7 +684,7 @@ accountingValidationContextServiceProvider
                 catch (Exception eeee)
                 {
 
-                    errorsList.Add(TranslateMyTextCode("JournalReconciles-validate:" + eeee.Message, myJournalPM.Tenant));
+                    errorsList.Add(eeee.Message);
                 }
             }
 
