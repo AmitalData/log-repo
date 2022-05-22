@@ -253,12 +253,12 @@ namespace WebFreight.Web.App_Code
         }
         #endregion
 
-        public HttpResponseMessage GetBrandingDataByTenant(int tenant)
+        public HttpResponseMessage GetBrandingDataByDomain(string domain)
         {
             try
             {
                 BrandingHelper brandingHelper = new BrandingHelper();
-                BrandingData brandingData = brandingHelper.GetBrandingDataByTenant(tenant);
+                BrandingData brandingData = brandingHelper.GetBrandingDataByDomain(domain);
                 return Request.CreateResponse(HttpStatusCode.OK, brandingData);
             }
             catch (Exception ex)

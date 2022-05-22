@@ -46,11 +46,6 @@ import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGr
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { IsMultiUpdateValid } from 'Infrastructure/Helpers/MultiUpdateHelper';
-import { DocsOutDataViewModel } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocsOutDataViewModel';
-import { DocumentOutPMService } from '../../../Common/Services/ExtendedPMs/DocumentOutPMService';
-import { DocumentTypeListService } from '../../../Common/Services/StandardLists/DocumentTypeListService';
-import { DocumentOutPM } from '../../../Common/EntityPMs/DocumentOutPM';
-import { DocumentTypeTemplateViewModel } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel';
 
 
 @Component({
@@ -59,7 +54,7 @@ import { DocumentTypeTemplateViewModel } from '../../../InfrastructureModules/In
     templateUrl: './ListComponent.html',
     //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent, QueryListComponent, LocationDirective, SearchTextBox],
     //pipes: [TextCodeTranslationPipe],
-    providers: [ListComponentArgs, EntityListService, EntityResourceService, PubSubService, PubSubService1, EntityPMService, TotangoService, DocumentOutPMService, DocumentTypeListService],
+    providers: [ListComponentArgs, EntityListService, EntityResourceService, PubSubService, PubSubService1, EntityPMService, TotangoService],
 })
 
 export class ListComponent implements OnInit, AfterViewInit {
@@ -486,8 +481,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public _ListComponentArgs: ListComponentArgs, private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef,
-        public _documentOutPMService: DocumentOutPMService, public _documentTypeListService: DocumentTypeListService) {
+    constructor(public _ListComponentArgs: ListComponentArgs, private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
         var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
 
@@ -2044,25 +2038,24 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 }
                                 case 'Customer': 
                                 case 'Card': {
+                                    var windowArgs: any = {};
                                     if (this.listArgs.IsDigitalPortalMenuClicked) {
-                                        this.GetSharedDocument(selectedEntityId, entityList, $event);
+                                        windowArgs.IsDigitalPortal = true;
                                     }
-                                    else {
-                                        var windowArgs: any = {};
-                                        windowArgs.CurrentEntity = entityList;
-                                        windowArgs.IsCargoTrackingMenuClicked = this.listArgs.IsCargoTrackingMenuClicked;
-                                        var logWindow = new LogitudeWindow();
-                                        logWindow.Width = 960;
-                                        logWindow.Height = 570;
-                                        logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Customers";
-                                        logWindow.WindowArgs = windowArgs;
-                                        logWindow.IsShowCloseButton = true;
-                                        logWindow.Show('./SharedLogistics/Components/InviteCustomersComponent');
-                                        logWindow.WindowClosed.subscribe(($event1: any) => {
-                                            this.isEditControlOpened = false;
-                                            this.OnBackFromEdit(selectedEntityId, $event)
-                                        });
-                                    }
+                                    windowArgs.CurrentEntity = entityList;
+                                    windowArgs.IsCargoTrackingMenuClicked = this.listArgs.IsCargoTrackingMenuClicked;
+                                    var logWindow = new LogitudeWindow();
+                                    logWindow.Width = 960;
+                                    logWindow.Height = 570;
+                                    logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Customers";
+                                    logWindow.WindowArgs = windowArgs;
+                                    logWindow.IsShowCloseButton = true;
+                                    logWindow.Show('./SharedLogistics/Components/InviteCustomersComponent');
+                                    logWindow.WindowClosed.subscribe(($event1: any) => {
+                                        this.isEditControlOpened = false;
+                                        this.OnBackFromEdit(selectedEntityId, $event)
+                                    });
+
                                     break;
                                 }
                                 case 'Customs.Client': {
@@ -2535,53 +2528,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
             //this.CurrentSession.StopBusyIndicator();
         }
-    }
-
-    private GetSharedDocument(selectedEntityId: string, entityList, $event) {
-        var documentCode = "SLCIN";
-        var AllDocumentTypeList = [];
-        var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-        apiQueryFilters.GetAll = true;
-        apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res: any) => {
-
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                AllDocumentTypeList = pmResponse.Result;
-            }
-
-            var documentType = AllDocumentTypeList.filter(a => a.Tenant == SessionInfo.LoggedUserTenant && (a.Code == documentCode))[0];
-            var selectedInternalDocument = new DocsOutDataViewModel(documentType, null, "", "", "", "", null, null, null, entityList, "SharedLogistics", documentType);
-            this.OpenSendEmailWindow(selectedEntityId, selectedInternalDocument, $event);
-        });
-    }
-   
-    private OpenSendEmailWindow(selectedEntityId: string, selectedInternalDocument, $event) {
-        var widthwindow = window.innerWidth;
-        var heighthwindow = window.innerHeight;
-        var percentagewidthwindow = widthwindow * 0.252;
-        var percentageHeightwindow = heighthwindow * 0.1764705;
-        var sendWindowHeight = heighthwindow - percentageHeightwindow;
-        var sendWindowWidth = widthwindow - percentagewidthwindow;
-        if (sendWindowWidth < 1000) sendWindowWidth = 1000;
-        if (sendWindowHeight < 600) sendWindowHeight = 600;
-        selectedInternalDocument.ModeSendDocument = "Send";
-        selectedInternalDocument.PageRequestSendComponent = "ListComponent";
-        selectedInternalDocument.ToSpecificeEmail = "";
-        selectedInternalDocument.CurrentDocument = new DocumentOutPM();
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = selectedInternalDocument.WindowWidth = sendWindowWidth;
-        logWindow.Height = selectedInternalDocument.WindowHeight = sendWindowHeight;
-
-        logWindow.Title = "Send Message";
-        logWindow.DataContext = selectedInternalDocument;
-        logWindow.NotifyOnClose = true;
-        logWindow.IsShowCloseButton = true;
-        logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/SendDocumentComponent");
-        logWindow.WindowClosed.subscribe(($event1: any) => {
-            this.isEditControlOpened = false;
-            this.OnBackFromEdit(selectedEntityId, $event)
-        });
     }
 
     private OpenEditComponent(selectedEntityId: any, myObjectTableName: string, $event: any)
