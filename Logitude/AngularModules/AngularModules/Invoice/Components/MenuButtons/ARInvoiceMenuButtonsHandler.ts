@@ -287,6 +287,23 @@ export class ARInvoiceMenuButtonsHandler {
                             break;
                         }
 
+                        case "ResendToSAT": {
+                            const SATTransferWithErrorStatusCode: string = "TE";
+                            button.IsHidden = this.EntityPM.SATTransferStatusCode != SATTransferWithErrorStatusCode && !this.IsShownResendSATButtonForVoided();
+                            button.DisplayText = "Resend to SAT";
+
+                            break;
+                        }
+
+                        case "SolvedManual": {
+                            const sATTransferWithErrorStatusCode: string = "TE";
+                            const sATSolvedManualStatusCode: string = "SM";
+                            button.IsHidden = this.EntityPM.SATTransferStatusCode != sATTransferWithErrorStatusCode && this.EntityPM.SATTransferStatusCode != sATSolvedManualStatusCode;                       
+                            if(!button.IsHidden) myButtonIsDisabled = this.EntityPM.SATTransferStatusCode == sATSolvedManualStatusCode;
+
+                            break;
+                        }
+
                         case "InvoiceOperationsSeparator":
                         case "VoidARInvoiceOperationsSeparator": {
                             if (SessionLocator.TenantPM.AccountingActivated == true) {
@@ -315,6 +332,15 @@ export class ARInvoiceMenuButtonsHandler {
             }
         }
     }
+    private IsShownResendSATButtonForVoided() {
+        const profact4SATInterfaceCode: string = "PROF40";
+        const voidedInvoiceStatusCode: string = "VD";
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != profact4SATInterfaceCode) return false;
+        if (this.EntityPM.StatusCode != voidedInvoiceStatusCode) return false;
+        if (AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) return false;
+        return true;
+    }
+
     public MenuButtonClick(menuButton: MenuButtonPM) {
         if (!this.isButtonClicked) {
 
@@ -344,7 +370,7 @@ export class ARInvoiceMenuButtonsHandler {
                 }
 
                 case "VoidARInvoice": {
-                    this.VoidClicked();
+                    this.ShowInvoiceCancelaReason();
                     break;
                 }
 
@@ -373,8 +399,18 @@ export class ARInvoiceMenuButtonsHandler {
                     break;
                 }
 
+                case "ResendToSAT": {
+                    this.ResendToSAT();
+                    break;
+                }
+
                 case "BlockFromTransfer": {
                     this.BlockFromTransferToQBO();
+                    break;
+                }
+
+                case "SolvedManual": {
+                    this.SolvedManual();
                     break;
                 }
             }
@@ -433,6 +469,22 @@ export class ARInvoiceMenuButtonsHandler {
         });
     }
 
+    ResendToSAT() {
+        this.EntityPM.ResendToSAT = true;
+        this.EntityPM.SetVoided = false;
+        this.EntityPM.SetApproved = false;
+        this.EntityPM.SetReTransfer = false;
+        this.EntityPM.SetCancelDraft = false;
+        const SATInTransferStatusCode: string = "TG";
+        this.EntityPM.SATTransferStatusCode = SATInTransferStatusCode;
+        this.entityArgs.EditComponent.SaveChanges("Resending Invoice to SAT");
+    }
+
+    SolvedManual() {
+        this.EntityPM.SATTransferStatusCode = "SM";
+        //this.EntityPM.TransmissionError = ""; // or ng if
+        this.entityArgs.EditComponent.SaveChanges("Solved Manual");
+    }
 
     SendToQBOApproved(Text: string) {
         this.EntityPM.SetReSendQBO = true;
@@ -791,12 +843,6 @@ export class ARInvoiceMenuButtonsHandler {
         var isQuickBooks: boolean = false;
         var isTransferingToQuickBooks: boolean = false;
 
-
-        if (this.EntityPM.SATTransferStatusCode == "TD" && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
-            this.ShowBlockVoidingInvoicesInSATMessage();    
-            return;
-        }
-
         if (SessionLocator.AccountingSystemPM.Code == "QBO" || SessionLocator.AccountingSystemPM.Code == "QBOG") {
             isQuickBooks = true;
             isTransferingToQuickBooks = true;
@@ -854,13 +900,35 @@ export class ARInvoiceMenuButtonsHandler {
 
 
 
-    ShowBlockVoidingInvoicesInSATMessage() {
-        var messageWindow = new MessageWindow();
-            messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.BlockVoidingInvoicesInSAT"));
-            this.StopFlags();
+    ShowInvoiceCancelaReason() {
+
+        if (this.EntityPM.SATTransferStatusCode != "TD" || SessionLocator.SATInterfaceSettings.SATInterfaceCode != "PROF40") {
+            this.VoidClicked();
+            return;
+        }
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 400;
+        logWindow.Height = 150;
+        logWindow.Title = "Void";
+        logWindow.Show('./Invoice/Components/MenuButtons/ARInvoice/ARInvoiceCancellationReasionComponent');
+
+        logWindow.WindowClosed.subscribe(cancelReason => {
+            this.SetSATCancelReason(cancelReason);
+        });
     }
 
 
+
+    private SetSATCancelReason(cancelReason: any) {
+        if (cancelReason == "Reject") {
+            this.StopFlags();
+            return;
+        }
+        
+        this.EntityPM.SATCancelReasonCode = cancelReason;
+        this.VoidClicked();
+    }
 
     AccountingCheck() {
         if (this.EntityPM.MainEntityId) {

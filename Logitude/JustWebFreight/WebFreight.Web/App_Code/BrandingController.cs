@@ -14,6 +14,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http; 
 using System.Web.Http;
+using WebFreight.Web.DataContracts;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.App_Code
 { 
@@ -250,10 +252,21 @@ namespace WebFreight.Web.App_Code
             }
         }
         #endregion
+
+        public HttpResponseMessage GetBrandingDataByDomain(string domain)
+        {
+            try
+            {
+                BrandingHelper brandingHelper = new BrandingHelper();
+                BrandingData brandingData = brandingHelper.GetBrandingDataByDomain(domain);
+                return Request.CreateResponse(HttpStatusCode.OK, brandingData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
-
-
-
 }
 public class BrandingResult
 {

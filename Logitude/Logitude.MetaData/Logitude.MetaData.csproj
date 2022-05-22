@@ -194,12 +194,14 @@
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPPaymentInvoicesNumbers.sxml" />
     <None Include="DBScripts\CommonModel\202223031100_UpdateAutomaticLastUpdateDateOnPackageTypes.sxml" />
     <None Include="DBScripts\InfrastructureModel\202202171015_FillEventTriggerField.sxml" />
+    <None Include="DBScripts\QuoteModel\202204250813_AddVarAmountsToQuoteTemplateTextCode.sxml" />
+    <None Include="DBScripts\QuoteModel\202202101211_FillConnectedToQuoteField.sxml" />
     <None Include="DBScripts\QuoteModel\202231032230_FillVATAmountsOnQuoteCharges.sxml" />
-
     <None Include="DBScripts\ShipmentModel\202204191435_AddHorseNameToShipmentsSearchFields.sxml" />
-
+    <None Include="DBScripts\ShipmentModel\202205191150_FillShipmentPackagesTypeAndQuantity.sxml" />
+    <None Include="DBScripts\ShipmentModel\202208051503_UpdateContainerSearchFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
-
+    <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
     <None Include="DBScripts\ShipmentModel\202223031230_UpdateAutomaticLastUpdateDateOnShipmentPackage.sxml" />
     <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.scxml" />
     <None Include="DBScripts\CommonModel\UpdateSharedLogisticsInvitationStatusCode.sxml" />
@@ -210,6 +212,7 @@
     <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="DBTables\QuoteModel\ValidByType.dxml" />
+    <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
@@ -427,8 +430,6 @@
     <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\QuoteModel\202108312250_DeleteFromRelatedDataToQuoteField.sxml" />
     <None Include="DBScripts\QuoteModel\202108312330_FillQuotePackagesQuantity.sxml" />
-    <None Include="DBScripts\ShipmentModel\202202051200_AddContainersExceptionEvents.sxml" />
-    <None Include="DBScripts\ShipmentModel\202201221830_AddPODReceivedEventAndStatusToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202109121000_FillShipperNotExporterReference1.ssxxml" />
     <None Include="DBScripts\QuoteModel\202109141136_FillFromToInlandDomesticTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202107291118_CalculateVolumetricWeightForShipmentsAndShipmentPackages.sxml">
@@ -626,12 +627,9 @@
     <None Include="DBScripts\ShipmentModel\202107151520_UpdateIsAddedManuallyShipmentSubTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202108260927_UpdateContainersFieldsFromShipmentField.sxml" />
     <None Include="DBScripts\ShipmentModel\202109021032_FillDomesticFromToAdPartner.sxml" />
-    <None Include="DBScripts\ShipmentModel\202111071410_FillContainersShipmentCreateDate.sxml" />
-    <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnMaster.soxml" />
     <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnShipment.soxml" />
     <None Include="DBScripts\ShipmentModel\202202141010_UpdateAutomaticLastUpdateDateOnPayableProratedAmounts.sxml" />
     <None Include="DBScripts\ShipmentModel\202211010335_UpdateAutomaticLastUpdateDateOnContainerStatuses.sxml" />
-    <None Include="DBScripts\ShipmentModel\202117101748_UpdateAutomaticLastUpdateDateOnShipmentSubTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.soxml" />
     <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />

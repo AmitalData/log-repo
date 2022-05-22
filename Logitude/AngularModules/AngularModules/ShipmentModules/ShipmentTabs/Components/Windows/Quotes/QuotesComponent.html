@@ -48,6 +48,7 @@
                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">Open Date</td>
                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">Start Date</td>
                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">Expiration Date</td>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">Valid by</td>
                                 <td style="width: 85px; min-width: 85px; max-width: 85px;">Stage</td>
                                 <td style="width: 90px; min-width: 90px; max-width: 90px;">Type</td>
                                 <td style="width: 120px; min-width: 120px; max-width: 120px;">Carrier</td>
@@ -82,8 +83,12 @@
                                     {{item.StartDate | DateTimeToDatePipe}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;" [ngStyle]="{color: item.ExpirationDate | DateTimeToColorPipe}">
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;" [ngStyle]="{color: item.ExpirationDate | DateTimeToColorPipe: null : ExpirationDateComparisonDate}">
                                     {{item.ExpirationDate | DateTimeToDatePipe}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    {{item.ValidByDate | DateTimeToDatePipe}}
                                 </td>
 
                                 <td class="GridViewCell" style="width: 85px; min-width: 85px; max-width: 85px;" [ngStyle]="{color: item.StageName | StringToColorPipe, background: item.StageBackground}">

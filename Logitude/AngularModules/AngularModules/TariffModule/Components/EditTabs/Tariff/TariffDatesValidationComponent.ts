@@ -81,7 +81,7 @@ export class TariffDatesValidationComponent extends BaseComponent {
             }
         }
 
-        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFS") {
+        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFS" || this.TariffType == "ICC" || this.TariffType == "ECC" || this.TariffType == "IFT" || this.TariffType == "ICS" || this.TariffType == "ECS") {
             if (this.LineExpirationDate == null) {
                 this.ValidationErrorsList.push("Expiration Date is required");
             }
@@ -102,7 +102,7 @@ export class TariffDatesValidationComponent extends BaseComponent {
             }
         }
 
-        if (this.ValidationErrorsList.length == 0 && (this.TariffType != "ASC" && this.TariffType != "OSC" && this.TariffType != "OFS")) {
+        if (this.ValidationErrorsList.length == 0 && (this.TariffType != "ASC" && this.TariffType != "OSC" && this.TariffType != "OFS" && this.TariffType != "ICC" && this.TariffType != "ECC" && this.TariffType != "IFT" && this.TariffType != "ICS" && this.TariffType != "ECS")) {
             this.CurrentSession.CloseCurrentWindowEmit("ok");
         }      
     }

@@ -135,6 +135,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return GLAccounts;
         }
 
+        public List<GLAccount> GetControlAccountForChartOfAccount(int tenant, string chartsofAccountId)
+        {
+            List<GLAccount> GLAccounts = this.repository.GetAll(tenant)
+                .Where(s => s.Inactive == false 
+                            && s.ChartOfAccountsId == chartsofAccountId
+                            && s.IsControlAccount == true).ToList();
+            return GLAccounts;
+        }
+
         public IQueryable<CardGLAccountDataView> GetQAllVendorGLAccountCardsHavingDeduction(int tenant)
         {
             var pocoGLAccountCard = this.repository.GetQAllVendorGLAccountCardsHavingDeduction(tenant);
@@ -516,6 +525,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             var pms = this.repository.GetByGLAccountsIdList(GLAccountsIdList, tenant);
             return pms.Select(rec => this.GetEntityPM(rec)).ToList();
+        }
+
+        public GLAccountPM GetControlGLAccountByChart(String chartOfAccountsId, int tenant)
+        {
+            var rec = this.repository.GetControlGLAccountByChart(chartOfAccountsId, tenant);
+            return this.GetEntityPM(rec);
         }
 
         internal IQueryable<GLAccount> GetQAllControlAccount(int tenant)

@@ -184,6 +184,8 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.Field39).HasColumnName("Field39").HasMaxLength(250).IsUnicode(true);
 
             this.Property(t => t.Field40).HasColumnName("Field40").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.NumberOfConnectedQuotes).HasColumnName("NumberOfConnectedQuotes");
         }
     }
 }

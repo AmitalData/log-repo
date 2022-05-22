@@ -863,6 +863,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             List<string> allShipmentIds = totalList.Select(s => s.ShipmentId).ToList();
             List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard").Include("ConsigneeCard").Include("Direction")
+                                                         join sc in shipmentsContext.ShipmentComputedFields 
+                                                         on d.Id equals sc.Id into shipmentJoin
+                                                         from m in shipmentJoin.DefaultIfEmpty()
                                                          where d.Tenant == tenant && allShipmentIds.Contains(d.Id)
                                                          select new ShipmentEntityClass
                                                          {
@@ -873,6 +876,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                              DescriptionOfGoods = d.DescriptionOfGoods,
                                                              ConsigneeName = d.ConsigneeCard == null ? null : d.ConsigneeCard.EnglishName,
                                                              Direction = d.Direction == null ? null : d.Direction.Name,
+                                                             ContainersNumbersArray = m.ContainersNumbers,
                                                          }).ToList();
 
             List<Branch> branches = (from d in commonContext.Branches where d.Tenant == tenant select d).ToList();
@@ -932,6 +936,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.Shipper = shipmentEntity.ShipperName;
                     record.Consignee = shipmentEntity.ConsigneeName;
                     record.ShipmentDirection = shipmentEntity.Direction;
+                    record.ContainersNumbersArray = shipmentEntity.ContainersNumbersArray;
                 }
 
                 if (record.BranchId != null)
@@ -1101,5 +1106,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public string ShipperRef2 { get; set; }
         public string DescriptionOfGoods { get; set; }
         public string Direction { get; set; }
+        public string ContainersNumbersArray { get; set; }
     }
 }

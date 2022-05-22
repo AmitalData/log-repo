@@ -282,7 +282,7 @@ namespace WebFreight.Web.Helpers
                     scope.Complete();
                 }
 
-                if (tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsMobileActivated)
+                if (!sharedLogisticsContact.IsDigitalPortal && (tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsMobileActivated))
                 {
                     string from = GetEmailFrom(sharedLogisticsContact.Tenant);
 

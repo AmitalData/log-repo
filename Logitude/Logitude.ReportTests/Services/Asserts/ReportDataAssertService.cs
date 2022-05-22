@@ -1,33 +1,50 @@
 ﻿using System.Linq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using Logitude.Base;
+using Logitude.ReportTests.Models;
+using System.Dynamic;
+using System.Collections.Generic;
+using System;
+
 namespace Logitude.ReportTests.Services
 {
-    public class ReportDataAssertService
+    public class ReportDataAssertService<T> where T : BaseDataProvider
     {
-        protected object reportDataProvider;
+        protected T reportDataProvider;
+        private List<string> errors;
 
-        public void Initialize(object reportDataProvider)
+        public void Initialize(T reportDataProvider)
         {
             this.reportDataProvider = reportDataProvider;
         }
 
         public void AssertFields(Table table)
         {
-            table.CreateDynamicSet().ToList().ForEach(field =>
-            {
-                //AssertField(
-                //    field.Get<string>("FieldName"),
-                //    field.Get<string>("Operation"),
-                //    field.Get<string>("ValueOne"),
-                //    field.Get<string>("ValueTwo"));
-            });
+            errors = new List<string>();
+            table.CreateDynamicSet().ToList().ForEach(field => { AssertField(field); });
+            if (errors.Any()) throw new System.Exception("Unexpected Response\r\n" + string.Join("\r\n", errors));
         }
 
-        private bool AssertField(string fieldName, string operation, string valueOne, string valueTwo)
+        private void AssertField(ExpandoObject reportFliterItemObject)
         {
-            return false;
+            ReportAsserter<T> reportAsserter = BuildReportAsserter(reportFliterItemObject);
+            var error = reportAsserter.Assert(reportDataProvider);
+            if (error != null) errors.Add(error);
+        }
+
+        private ReportAsserter<T> BuildReportAsserter(ExpandoObject reportFliterItemObject)
+        {
+            var values = new List<object>
+            {
+                reportFliterItemObject.Get<string>("ValueOne"),
+                reportFliterItemObject.Get<string>("ValueTwo")
+            };
+            return new ReportAsserter<T>().Build(reportFliterItemObject.Get<string>("FieldName"), ToEnum(reportFliterItemObject.Get<string>("Operation"), Operators.Equal), values);
+        }
+
+        public S ToEnum<S>(string value, S defaultValue) where S : struct
+        {
+            return string.IsNullOrEmpty(value) ? defaultValue : Enum.TryParse<S>(value, true, out S result) ? result : defaultValue;
         }
     }
 }

@@ -149,8 +149,8 @@ namespace CommunicationWorkerRole
                 emailParams = new EmailCommunicationParams()
                 {
                     From = "admin@fnarsoft.com",
-                    To = "jalal@logitudeworld.com;ahmada@logitudeworld.com",
-                    CC = "Perla@logitudeworld.com;zaki@logitudeworld.com;isra@logitudeworld.com;maram@logitudeworld.com;fajr@logitudeworld.com;eman@logitudeworld.com;diaa@logitudeworld.com;maryam@logitudeworld.com;azhar@logitudeworld.com;mujahed@logitudeworld.com;balqees@logitudeworld.com",
+                    To = "Perla@logitudeworld.com",
+                    CC = "fajr@logitudeworld.com;eman@logitudeworld.com;maryam@logitudeworld.com;azhar@logitudeworld.com;mujahed@logitudeworld.com;balqees@logitudeworld.com;a.khanfar@logitudeworld.com;a.hamamreh@logitudeworld.com;dana@logitudeworld.com;mohammadj@logitudeworld.com;ahmedm@logitudeworld.com",
                     BCC = "",
                     Subject = "SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,

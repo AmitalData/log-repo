@@ -17,6 +17,8 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {NewEntityArgs} from '../../../../Infrastructure/Args';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
+import { CustomerPMService } from '../../../../Common/Services/StandardPMs/CustomerPMService';
+import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
 
 @Component({
     selector: 'PartnersTabComponent',
@@ -79,10 +81,12 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     public CardListService: CardListService;
     public AddressListService: AddressListService;
     public ContactListService: ContactListService;
+    public CustomerPMService: CustomerPMService;
     InitializeServices() {
         this.CardListService = new CardListService();
         this.AddressListService = new AddressListService();
         this.ContactListService = new ContactListService();
+        this.CustomerPMService = new CustomerPMService();
     }
 
     ngOnInit() {
@@ -214,7 +218,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             this.EntityPM.CustomerReference1 = this.EntityPM.ShipperReference1;
             this.EntityPM.CustomerReference2 = this.EntityPM.ShipperReference2;
         }
-
+        this.OnCustomerGroupChanged(null, this.EntityPM.CustomerId);
         this.OnCustomerChanged();
     }
 
@@ -238,13 +242,13 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
                             if (AppTool.IsNullOrEmpty(list.SalesmanUserId)) {
                                 this.UpdateSalesmanId = null;
                                 this.UpdateSalesmanName = null;
-                                this.UpdateSalesmanText = "Customer changed, update the salesman to Empty ?";                                
+                                this.UpdateSalesmanText = "Customer changed, update the salesman to Empty ?";
                             }
 
                             else {
                                 this.UpdateSalesmanId = list.SalesmanUserId;
                                 this.UpdateSalesmanName = list.SalesmanUserEnglishName;
-                                this.UpdateSalesmanText = "Customer changed, update the salesman to " + list.SalesmanUserEnglishName + " ?";                                
+                                this.UpdateSalesmanText = "Customer changed, update the salesman to " + list.SalesmanUserEnglishName + " ?";
                             }
 
                             this.IsUpdateSalesmanVisible = true;
@@ -255,6 +259,37 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             });
         }
     }
+
+    OnCustomerGroupChanged(oldCustomerId, newCustomerId) {
+        this.CustomerPMService.get(oldCustomerId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var oldCustomer: CustomerPM = myResponse.Result;
+                var oldImportLocalCustomerGroupId = oldCustomer.ImportLocalCustomerGroupId;
+                var oldExportLocalCustomerGroupId = oldCustomer.ExportLocalCustomerGroupId;
+
+                this.CustomerPMService.get(newCustomerId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var newCustomer: CustomerPM = myResponse.Result;
+                        var newImportLocalCustomerGroupId = newCustomer.ImportLocalCustomerGroupId;
+                        var newExportLocalCustomerGroupId = newCustomer.ExportLocalCustomerGroupId;
+
+                        if (this.EntityPM.DirectionId == "E" && newExportLocalCustomerGroupId != oldExportLocalCustomerGroupId) {
+                            this.CurrentSession.FireEvent("UpdateTariffSaleCharges");
+                        }
+                        else if (this.EntityPM.DirectionId == "I" && newImportLocalCustomerGroupId != oldImportLocalCustomerGroupId) {
+                            this.CurrentSession.FireEvent("UpdateTariffSaleCharges");
+                        }
+                        else if (this.EntityPM.DirectionId == "R" || this.EntityPM.DirectionId == "D") {
+                            if (newExportLocalCustomerGroupId != oldExportLocalCustomerGroupId || newImportLocalCustomerGroupId != oldImportLocalCustomerGroupId) {
+                                this.CurrentSession.FireEvent("UpdateTariffSaleCharges");
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     UpdateSalesmanClicked() {
         if (this.SalesmanUpdated) {
             this.EntityPM.SalesmanUserId = this.UpdateSalesmanId;
@@ -508,6 +543,7 @@ export class PartnerItem extends BaseComponent {
     }
 
     SetAsCustomer() {
+        this.fatherComponent.OnCustomerGroupChanged(this.EntityPM.CustomerId, this.PartnerId);
         this.EntityPM.CustomerId = null;
         this.EntityPM.CustomerName = null;
         this.EntityPM.CustomerNote = null;
@@ -546,7 +582,7 @@ export class PartnerItem extends BaseComponent {
                     break;
                 }
         }
-
+        
         this.EntityPM.CustomerId = this.PartnerId;
         this.EntityPM.CustomerName = this.PartnerName;
         this.EntityPM.CustomerNote = this.Note;
@@ -668,8 +704,9 @@ export class PartnerItem extends BaseComponent {
     }
     set CustomerId(newValue: string) {
         if (this.EntityPM.CustomerId != newValue) {
-            this.EntityPM.CustomerId = newValue;
+            this.EntityPM.CustomerId = newValue; 
             this.GetPartnerCard();
+            
         }
     }
 

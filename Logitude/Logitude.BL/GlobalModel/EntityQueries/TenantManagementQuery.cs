@@ -48,6 +48,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        InvertedLogoId = a.InvertedLogoId,
                                                        BrowserIconId = a.BrowserIconId,
                                                        CustomerURL = a.CustomerURL,
+                                                       ActivatePrivateSite = a.ActivatePrivateSite,
 
                                                    }).FirstOrDefault();
 
@@ -207,6 +208,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      RegisteredAirlines = a.RegisteredAirlines,
                                                      PendingAirlines = a.PendingAirlines,
                                                      EnableBranding = a.EnableBranding,
+                                                     ActivatePrivateSite = a.ActivatePrivateSite,
                                                      ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
                                                      DeclarationMessage = a.DeclarationMessage,
                                                      ContactEmail = a.ContactEmail,
@@ -409,6 +411,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   RegisteredAirlines = a.RegisteredAirlines,
                                                   PendingAirlines = a.PendingAirlines,
                                                   EnableBranding = a.EnableBranding,
+                                                  ActivatePrivateSite = a.ActivatePrivateSite,
                                                   ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
                                                   DeclarationMessage = a.DeclarationMessage,
                                                   ContactEmail = a.ContactEmail,
@@ -612,6 +615,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         RegisteredAirlines = a.RegisteredAirlines,
                         PendingAirlines = a.PendingAirlines,
                         EnableBranding = a.EnableBranding,
+                        ActivatePrivateSite = a.ActivatePrivateSite,
                         ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
                         DeclarationMessage = a.DeclarationMessage,
                         ContactEmail = a.ContactEmail,
@@ -902,6 +906,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        ShardLogisticTotalLastWeek = a.ShardLogisticTotalLastWeek,
                        ShardLogisticTotalLastMonth = a.ShardLogisticTotalLastMonth,
                        EnableBranding = a.EnableBranding,
+                       ActivatePrivateSite = a.ActivatePrivateSite,
                        ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
                        DeclarationMessage = a.DeclarationMessage,
                        ContactEmail = a.ContactEmail,
@@ -1177,6 +1182,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              RegisteredAirlines = a.RegisteredAirlines,
                                              PendingAirlines = a.PendingAirlines,
                                              EnableBranding = a.EnableBranding,
+                                             ActivatePrivateSite = a.ActivatePrivateSite,
                                              ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
                                              DeclarationMessage = a.DeclarationMessage,
                                              ContactEmail = a.ContactEmail,

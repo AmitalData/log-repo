@@ -206,6 +206,7 @@ namespace Logitude.Server.Tools
                     AdditionalFields = communicationParams.AdditionalFields,
                     ExceptionMessage = communicationParams.ExceptionMessage,
                     UniqueNumber = communicationParams.UniqueNumber,
+                    WasAnalyzed = communicationParams.WasAnalyzed,
                 };
                 communicationLogRepository.Add(commLog);
                 communicationLogRepository.SubmitChanges();
@@ -684,7 +685,7 @@ namespace Logitude.Server.Tools
         public string AdditionalFields { get; set; }
         public string ExceptionMessage { get; set; }
         public string UniqueNumber { get; set; }
-
+        public bool? WasAnalyzed { get; set; }
     }
 
 

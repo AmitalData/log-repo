@@ -24,6 +24,7 @@ export class HomeComponent
     companyLabel: string = "DSV";
     companyName: string = "Unifreight Cloud Services";
     Domain:string;
+    brandingData: any;
     public baseUrl:string;
 
 
@@ -41,7 +42,7 @@ export class HomeComponent
         this.cargoTrackingDataExtendedService.get(ServiceHelper.GetcargoTrackingDataRequest(this.baseUrl)).subscribe((response: any) =>
         {
             if (response.Result) {
-
+                this.brandingData = response.Result;
                 if (response?.Result?.ForceHttps)
                      this.RedirectAppToHttps();
 

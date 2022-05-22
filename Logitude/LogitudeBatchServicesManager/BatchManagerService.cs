@@ -19,10 +19,12 @@ namespace LogitudeBatchServicesManager
     {
         private static List<int> ManagedProcessesIds = new List<int>();
         private static List<ProcessStartInfo> ManagedProcessesInfos = new List<ProcessStartInfo>();
-        
+        private static bool IsServiceStop { get; set; }
+
         private System.Timers.Timer BatchManagerServiceTimer;
         public BatchManagerService()
         {
+
             InitializeComponent();
         }
 
@@ -30,6 +32,7 @@ namespace LogitudeBatchServicesManager
         {
             try
             {
+                IsServiceStop = false;
                 ManagedProcessesIds = new List<int>();
                 ManagedProcessesInfos = new List<ProcessStartInfo>();
                 if (BatchManagerServiceTimer == null)
@@ -60,14 +63,13 @@ namespace LogitudeBatchServicesManager
 
         private void BatchManagerServiceTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+            if (IsServiceStop) return;
             foreach (var processId in ManagedProcessesIds)
             {
-                 
                 if (!CheckIsProcessRunning(processId))
                 {
                     RestartProcess(processId); 
                 }
-
             }
         }
 
@@ -106,8 +108,10 @@ namespace LogitudeBatchServicesManager
             StartBatchManagerService();
         }
 
+
         protected override void OnStop()
         {
+            IsServiceStop = true;
             foreach (var processId in ManagedProcessesIds)
             {
                 KillProcess(processId);
@@ -144,9 +148,11 @@ namespace LogitudeBatchServicesManager
 
         private void LaunchLogitudeBatchServices(List<BatchProcess> Processes, int processDelayStartInSeconds)
         {
+            if (IsServiceStop) return;
             EventLog.WriteEntry("Start LaunchLogitudeBatchServices");
             foreach (var Process in Processes)
             {
+                if (IsServiceStop) return;
                 StartProcessWithArgs(Process);
                 System.Threading.Thread.Sleep(new TimeSpan(0, 0, processDelayStartInSeconds));
             }

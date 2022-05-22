@@ -26,6 +26,7 @@ export class CommunicationsTabComponent implements OnDestroy {
     public IsResourcesReady: boolean = false;
     public TabHeaderTextCode: string;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsShowWasAnalyzed = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.ItemsSource = [];
 
@@ -33,6 +34,7 @@ export class CommunicationsTabComponent implements OnDestroy {
             this.IsResourcesReady = true;
             this.Listen();
             this.InitTab();
+            this.SetIsShowWasAnalyzed();
         });
     }
 
@@ -67,6 +69,12 @@ export class CommunicationsTabComponent implements OnDestroy {
 
         this.ObjectTableId = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0].Id;
         this.LoadData();
+    }
+
+    private SetIsShowWasAnalyzed() {
+        this.IsShowWasAnalyzed = false; 
+        if (this.ObjectTableName == 'Container')
+            this.IsShowWasAnalyzed = true;
     }
 
     private myService: CommunicationLogListService;

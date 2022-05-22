@@ -383,7 +383,7 @@
                                          && SelectedShipment && SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---'" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'( ' + (SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( ' ' + SelectedShipment.IncotermCode + ' ' ) : '' ): '') + ')'}}</span>
                         </td>
                         <td style="float:right;min-width:170px;">
-                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{ ReferencesLabel }}</span>
+                            <span [title]="ReferencesLabel" style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{ ShortReferencesLabel }}</span>
                         </td>
                     </tr>
                     <tr>

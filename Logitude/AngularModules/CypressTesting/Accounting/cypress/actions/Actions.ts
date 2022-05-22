@@ -639,7 +639,7 @@ export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
 export function changeSATInterfaceSettings(AccountingsSystem: string) {
     NavigatesToAccountingSettings()
     cy.Click(BaseSelectors.buttonspan, AccountingSelectors.ContainSATInterfaceSettings, true)
-    cy.SelectDropDownListItem(AccountingSelectors.LogLovSATInterfaceSettingsLogLov, AccountingsSystem)
+    cy.SelectComboDropDownListItem(AccountingSelectors.SATInterfaceValue, AccountingsSystem)
     
 }
 export const SearchInvoice = (invoiceNumber) => {

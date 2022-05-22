@@ -16,6 +16,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -2706,6 +2708,69 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetAllCarrierServiceLinesByCarrierId(string carrierId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                CarrierServiceLineQuery carrierServiceLineQuery = new CarrierServiceLineQuery(tenant);
+                List<CarrierServiceLinePM> serviceLinePMs = carrierServiceLineQuery.GetCarrierServiceLinePMsByCardId(carrierId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, serviceLinePMs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetRemoveServiceLineFromCarrier(string serviceLineId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                CarrierServiceLineRepository serviceLineRepository = new CarrierServiceLineRepository(commonDataContext);
+                CarrierServiceLine serviceLine = serviceLineRepository.GetSingleCarrierServiceLine(serviceLineId, tenant);
+
+                if (serviceLine != null)
+                {
+                    this.ValidateConnectedShipmentsToServiceLine(serviceLine);
+                    serviceLineRepository.Remove(serviceLine);
+                    commonDataContext.SaveChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private void ValidateConnectedShipmentsToServiceLine(CarrierServiceLine serviceLine)
+        {
+            ShipmentRepository shipmentRepository = new ShipmentRepository(serviceLine.Tenant);
+            IQueryable<ShipmentMasterData> shipments = shipmentRepository.GetMasterByServiceLineId(serviceLine.Id, serviceLine.Tenant);
+
+            if(shipments.Count() > 0)
+            {
+                throw new ApplicationException("Can't delete Service lines which are connected to shipments");
             }
         }
     }

@@ -18,9 +18,7 @@ import { ShipmentDomainService } from '../../../../../Shipment/Services/Shipment
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { ShipmentPMService } from '../../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 
-
-@Component({
-    
+@Component({    
     templateUrl: './QuotesComponent.html',
 })
 
@@ -34,7 +32,7 @@ export class QuotesComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private shipmentDomainService: ShipmentDomainService;
     private EntityArgs: EntityArgs;
-
+    public ExpirationDateComparisonDate: Date;
     constructor() {
         this.myService = new QuoteListService();
         this.shipmentDomainService = new ShipmentDomainService();
@@ -44,7 +42,24 @@ export class QuotesComponent {
         this.EntityPM = args['EntityPM'];
         this.AllRates = args['AllRates'];
         this.EntityArgs = args['EntityArgs'];
-        this.LoadData();
+        this.SetExpirationDateComparisonDate();
+        this.LoadData();        
+    }
+    SetExpirationDateComparisonDate() {
+        var myExpiredDateFilter: Date;
+        if (this.EntityPM.MainCarriageATD != null) {
+            myExpiredDateFilter = this.EntityPM.MainCarriageATD;
+        }
+
+        else if (this.EntityPM.MainCarriageETD != null) {
+            myExpiredDateFilter = this.EntityPM.MainCarriageETD;
+        }
+
+        else {
+            myExpiredDateFilter = DateTool.GetCurrentDateAsUtc();
+        }
+
+        this.ExpirationDateComparisonDate = myExpiredDateFilter;
     }
 
     private selectedItem: QuoteItem = null;
@@ -64,7 +79,6 @@ export class QuotesComponent {
         }
     }
 
-    private 
     private isShowingExpiredQuotes: boolean = false;
     get IsShowingExpiredQuotes() { return this.isShowingExpiredQuotes; }
     set IsShowingExpiredQuotes(value: boolean) {
@@ -93,7 +107,8 @@ export class QuotesComponent {
         filters.PageIndex = 0;
         filters.PageSize = 100;
         filters.SortBy = "OpenDate";
-        filters.SortDirection = "Descending";
+        filters.SortDirection = "Descending";        
+
         var myToDate: Date = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
         myToDate.setUTCHours(23);
         myToDate.setUTCMinutes(59);
@@ -108,6 +123,10 @@ export class QuotesComponent {
         filters.addAdditionalFilter("IsShowingUsedSpotRateQuotes", this.IsShowingUsedSpotRateQuotes, null, null, "Equals", true, false, false, "Boolean");
         filters.addAdditionalFilter("StartDate", myToDate, null, null, "LessThanOrEqual", false, false, false, "Date");
         filters.addAdditionalFilter("IsShowingExpiredQuotes", this.IsShowingExpiredQuotes, null, null, "Equals", true, false, false, "Boolean");
+
+        if (!this.IsShowingExpiredQuotes) {
+            filters.addAdditionalFilter("ExpirationDate", this.ExpirationDateComparisonDate, null, null, "GreaterThanOrEqual", false, false, false, "Date");
+        }
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.AgentId)) {
             filters.addAdditionalFilter("RoutingRatesAgentId", this.EntityPM.AgentId, null, null, "StartsWith", true, false, false, "string");
@@ -132,7 +151,7 @@ export class QuotesComponent {
                     }
 
                     list.forEach(item => {
-                        this.ItemsSource.push(new QuoteItem(item, this.EntityPM.GrossWeight));
+                        this.ItemsSource.push(new QuoteItem(item, this.EntityPM));
                     });
                 }
             }
@@ -279,11 +298,14 @@ export class QuotesComponent {
 class QuoteItem {
     public Entity: QuoteList = null;
     private shipmentGrossWeight: number = 0;
-    constructor(entity: QuoteList, shipmentGrossWeight: number) {
+    private shipmentPM: ShipmentPM;
+    constructor(entity: QuoteList, shipment: ShipmentPM) {
         this.Entity = entity;
-        this.shipmentGrossWeight = shipmentGrossWeight;
+        this.shipmentPM = shipment;
+        this.shipmentGrossWeight = shipment.GrossWeight;
         this.SetDiffernece();
         this.SetStageBackground();
+        this.SetValidByDate();
     }
 
     get Id() { return this.Entity.Id; }
@@ -292,6 +314,21 @@ class QuoteItem {
     get ExpirationDate() { return this.Entity.ExpirationDate; }
     get StageName() { return this.Entity.StageName; }
     get StartDate() { return this.Entity.StartDate; }
+
+    public ValidByDate: Date;
+    private SetValidByDate() {
+        if (this.shipmentPM.MainCarriageATD != null) {
+            this.ValidByDate = this.shipmentPM.MainCarriageATD;
+        }
+
+        else if (this.shipmentPM.MainCarriageETD != null) {
+            this.ValidByDate = this.shipmentPM.MainCarriageETD;
+        }
+
+        else {
+            this.ValidByDate = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
+        }
+    }
 
     get QuoteTypeName() { return this.Entity.QuoteTypeName; }
     get CarrierName() { return this.Entity.CarrierName; }

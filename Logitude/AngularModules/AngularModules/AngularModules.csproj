@@ -171,12 +171,14 @@
     <Content Include="CommonModules\CommonOthers\Components\ProductType\EditTabs\ProductTypeGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\AddEditAreaComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\AddEditPartnerAddressComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\AddEdit\AddEditServiceLineComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\ChooseCountryPortComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\ChoosePortComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\AreasTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Contact\ContactOccasionsTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\CustomAgent\CustomAgentDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Participant\ParticipantDocsInTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\ServiceLinesTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippingLineDocsInTabComponent.html" />
@@ -348,6 +350,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\PerVendorReportFilterComponent.html" />
     <Content Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.html" />
+    <Content Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\GeneralTabComponent.html" />
@@ -406,6 +409,8 @@
     <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\AddEdit\AddEditCustomerProductItemComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerProductItemsTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\ZipCodeSelection\ZipCodeSelectionComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\AddEdit\AddEditServiceLineComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ServiceLinesTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
@@ -413,6 +418,7 @@
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DocumentFile.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\CarrierServiceLineList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomerTeamList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\MentionList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\PortTimeZoneList.ts" />
@@ -424,6 +430,7 @@
     <TypeScriptCompile Include="Common\EntityPMInitServices\PortTimeZonePMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ShippingLinePMInitService.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CarrierServiceLinePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerTeamPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HTSCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\MentionPM.ts" />
@@ -435,6 +442,7 @@
     <TypeScriptCompile Include="Common\Services\DocumentServices\DocumentFileService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CarrierAreaExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ShippingLineExtendedPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\CarrierServiceLineListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerTeamListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\MentionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\PortTimeZoneListService.ts" />
@@ -442,6 +450,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\RegimenFiscalListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\CarrierServiceLinePMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerTeamPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\MentionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\PortTimeZonePMService.ts" />
@@ -4686,6 +4695,7 @@
     <TypeScriptCompile Include="Report\Components\Workspaces\MainReportsWorkspace.ts" />
     <TypeScriptCompile Include="Report\DataContracts\SchedulerDetails.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\TenantAccessSettingsComponent.ts" />

@@ -998,6 +998,18 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.ETAAsDateFormat = shipment.MainCarriageFinalDestinationETA;
                     invoicedataprovider.ATAAsDateFormat = shipment.MainCarriageFinalDestinationATA;
 
+                    invoicedataprovider.Transshipment1FlightNumber = shipment.Transshipment1FullCarrierNumber;
+                    invoicedataprovider.Transshipment1ETD = shipment.Transshipment1ETD;
+                    invoicedataprovider.Transshipment1ETA = shipment.Transshipment1ETA;
+                    invoicedataprovider.Transshipment1ATD = shipment.Transshipment1ATD;
+                    invoicedataprovider.Transshipment1ATA = shipment.Transshipment1ATA;
+                    invoicedataprovider.Transshipment1VesselName = shipment.Transshipment1VesselName;
+                    invoicedataprovider.Transhipment1VoyageNo = shipment.Transshipment1CarrierNumber;
+                    invoicedataprovider.Transshipment2VesselName = shipment.Transshipment2VesselName;
+                    invoicedataprovider.Transhipment2VoyageNo = shipment.Transshipment2CarrierNumber;
+                    invoicedataprovider.Transshipment3VesselName = shipment.Transshipment3VesselName;
+                    invoicedataprovider.Transhipment3VoyageNo = shipment.Transshipment3CarrierNumber;
+
                     // Inland + Domestic
                     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
                     {
@@ -1968,8 +1980,8 @@ namespace WebFreight.Web.ReportsWebServices
                                         reportinvoiceline.VatAmountInInvoiceCurrency = String.Format("{0:#,0.00}", vatamountininvoicecurrecy);
                                         reportinvoiceline.VatAmountInForeignCurrency = String.Format("{0:#,0.00}", vatAmountInForeignCurrecy);
                                         reportinvoiceline.VatAmountInInvoiceCurrency_Double = vatamountininvoicecurrecy;
-
                                         reportinvoiceline.LocalAmountWithVAT = lineAmount_Local + vatamountinlocalcurrency;
+                                        reportinvoiceline.VatAmountInForeignCurrency_Double = vatAmountInForeignCurrecy;
                                     }
                                 }
 
@@ -2164,8 +2176,8 @@ namespace WebFreight.Web.ReportsWebServices
                                     reportinvoiceline.VatAmountInInvoiceCurrency = String.Format("{0:#,0.00}", vatamountininvoicecurrecy);
                                     reportinvoiceline.VatAmountInForeignCurrency = String.Format("{0:#,0.00}", vatamountinForeigncurrecy);
                                     reportinvoiceline.VatAmountInInvoiceCurrency_Double = vatamountininvoicecurrecy;
-
                                     reportinvoiceline.LocalAmountWithVAT = lineAmount_Local + vatamountinlocalcurrency;
+                                    reportinvoiceline.VatAmountInForeignCurrency_Double = vatamountinForeigncurrecy;
                                 }
 
                                 else
@@ -3327,8 +3339,8 @@ namespace WebFreight.Web.ReportsWebServices
                                     reportinvoiceline.VatAmountInInvoiceCurrency = String.Format("{0:#,0.00}", vatamountininvoicecurrecy);
                                     reportinvoiceline.VatAmountInForeignCurrency = String.Format("{0:#,0.00}", vatamountinForeigncurrecy);
                                     reportinvoiceline.VatAmountInInvoiceCurrency_Double = vatamountininvoicecurrecy;
-
                                     reportinvoiceline.LocalAmountWithVAT = lineAmount_Local + vatamountinlocalcurrency;
+                                    reportinvoiceline.VatAmountInForeignCurrency_Double = vatamountinForeigncurrecy;
                                 }
                             }
 
@@ -3502,8 +3514,8 @@ namespace WebFreight.Web.ReportsWebServices
                                     reportinvoiceline.VatAmountInInvoiceCurrency = String.Format("{0:#,0.00}", vatamountininvoicecurrecy);
                                     reportinvoiceline.VatAmountInForeignCurrency = String.Format("{0:#,0.00}", vatamountinForeigncurrecy);
                                     reportinvoiceline.VatAmountInInvoiceCurrency_Double = vatamountininvoicecurrecy;
-
                                     reportinvoiceline.LocalAmountWithVAT = lineAmount_Local + vatamountinlocalcurrency;
+                                    reportinvoiceline.VatAmountInForeignCurrency_Double = vatamountinForeigncurrecy;
                                 }
                             }
 
@@ -3849,8 +3861,8 @@ namespace WebFreight.Web.ReportsWebServices
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                                     myRecord.ShipmentRouting = myShipment.Routing;
                                     myRecord.ConnectedQuoteNumber = myShipment.QuoteNumber;
+                                    myRecord.ProjectNumber = myShipment.ProjectNumber;
                                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
-
 
                                     #region From:To Location
                                     if (myShipment.TransportModeId == "I" && myShipment.DirectionId == "D")

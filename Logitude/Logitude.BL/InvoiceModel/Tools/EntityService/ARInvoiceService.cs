@@ -522,7 +522,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-            if (this.entityPM.SetVoided)
+            if (IsSendInvoiceSATCancellation())
             {
                 this.sATInterfaceHelper.HandleInvoiceSATCancellation(entityPM, invoice);
             }
@@ -609,11 +609,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
 
-                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant , EntityId = entityPM.Id });
+                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
 
-                ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId); 
+                ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
 
-                 
+
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
 
@@ -639,7 +639,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdateInvoiceAmountDue();
                     this.UpdatePaidDate();
                 }
-                
+
                 this.BuildSearchFields();
                 entityAutomationService.RunAutomation();
             }
@@ -647,8 +647,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
             ARPaymentReferencesService ARPaymentReferencesService = new ARPaymentReferencesService(this.objectContext);
-            invoice.PaymentReferences = ARPaymentReferencesService.GetARInvoicePaymentRefreneces(invoice); 
-              
+            invoice.PaymentReferences = ARPaymentReferencesService.GetARInvoicePaymentRefreneces(invoice);
+
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
@@ -672,7 +672,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.AfterServiceFinished();
         }
 
-         
+        private bool IsSendInvoiceSATCancellation()
+        {
+            const string cancelWithErrorOperationCode = "01";
+            if (this.entityPM.SATCancelReasonCode == cancelWithErrorOperationCode && string.IsNullOrEmpty(this.entityPM.RelatedInvoice))
+            {
+                return false;
+            }
+            return this.entityPM.SetVoided;
+        }
 
         private void ARInvoiceStockNumber()
         {
@@ -3200,12 +3208,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         int invoiceLineNumber = 0;
         DateTime? dateForInterest;
+        InterestTransactionPM interestTransaction;
         private void  CreateInterestTransactionLine(ARInvoiceLinePM invoiceLine, ARInvoiceTotalVAT invoiceTotalVat)
         {
             ++invoiceLineNumber;
              dateForInterest = entityPM.DateForInterest == null ? DateTime.Now : entityPM.DateForInterest;
             GLAccountPM account = GetGLAccount(entityPM);
-            InterestTransactionPM interestTransaction = new InterestTransactionPM();
+            interestTransaction = new InterestTransactionPM();
             if (invoiceLine != null) {
 
                 interestTransaction= CreateInterestTransactionLineForInvoiceLine(invoiceLine);
@@ -3237,6 +3246,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ChangeSetOp = ChangeSetOperation.Insert,
             };
             return InterestTransactionVatLine;
+        }
+
+        private void BuildSearchFieldForInterest(string journalNumber, string invoiceNumber)
+        {
+            string searchFields = "";
+
+            MethodHelper.AddToSearchFields(ref searchFields, journalNumber);
+            MethodHelper.AddToSearchFields(ref searchFields, invoiceNumber);
+            interestTransaction.SearchFields = searchFields;
+            interestTransaction.ChangeSetOp = ChangeSetOperation.Update;
+            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+
+            interestTransactionUpdateService.Update(interestTransaction);
         }
 
         private DateTime GetIntrestValueDate(ARInvoiceLinePM invoiceLine)
@@ -3826,6 +3848,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
                     AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
                     journalUpdate.Update(journal);
+                    if (interestTransaction != null) {
+                        BuildSearchFieldForInterest(journal.JournalNumber, entityPM.InvoiceNumber);
+                    }
                 }
             }
         }
@@ -4189,6 +4214,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdatePaymentsNumbers();
                 this.OnApprovingInvoice();
                 this.OnVoidingInvoise();
+                this.OnResendToSAT();
+            }
+        }
+
+        private void OnResendToSAT()
+        {
+            if (!entityPM.ResendToSAT) return;
+            if (string.IsNullOrEmpty(invoice.TransmissionError)) return;
+
+            const string voidInvoiceStatusCode = "VD";
+            if (invoice.StatusCode == voidInvoiceStatusCode && IsSendInvoiceSATCancellation())
+            {
+                this.sATInterfaceHelper.HandleInvoiceSATCancellation(entityPM, invoice);
+            }
+            else
+            {
+                this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
             }
         }
         private void UpdatePaymentsNumbers()

@@ -304,6 +304,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                IncludeImportDutyCharges = f.IncludeImportDutyCharges,
                                                InsuranceValue = f.InsuranceValue,
                                                ValidByTypeCode = f.ValidByTypeCode,
+                                               ConnectedToOpportunity = f.ConnectedToOpportunity,
                                            };
             return result;
         }
@@ -1443,6 +1444,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 IncludeImportDutyCharges = entityPOCO.IncludeImportDutyCharges,
                 InsuranceValue = entityPOCO.InsuranceValue,
                 ValidByTypeCode = entityPOCO.ValidByTypeCode,
+                ConnectedToOpportunity = entityPOCO.ConnectedToOpportunity,
             };
 
             int tenant = entityPOCO.Tenant;
@@ -2751,6 +2753,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 IsChargeBySteps = item.IsChargeBySteps,
                 SalesWithVATAmount = item.SaleTotalAmount + item.VatAmount,
                 QuoteChargesGroupCode = item.QuoteChargesGroupCode,
+                VATAmountInLocalCurrency = item.VATAmountInLocalCurrency,
+                VATAmountInLineSaleCurrency = item.VATAmountInLineSaleCurrency,
+                SaleTotalAmountIncludingVAT = item.SaleTotalAmountIncludingVAT,
+                SaleTotalAmountLocalIncludingVAT = item.SaleTotalAmountLocalIncludingVAT,
             };
             return saleChargePM;
         }

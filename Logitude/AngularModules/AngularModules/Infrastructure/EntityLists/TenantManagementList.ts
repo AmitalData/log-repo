@@ -160,5 +160,6 @@ export class TenantManagementList {
 		WhatsAppMessagingPhoneNumber: string;
 		ActivatedforDeclarationApprove: boolean;
 		DeclarationMessage: string;
-	
-}
+        ActivatePrivateSite: boolean;
+
+}

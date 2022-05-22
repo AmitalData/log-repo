@@ -6,6 +6,7 @@ using Profact.TimbraCFDI;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -42,8 +43,12 @@ namespace CommunicationWorkerRole.Services.SAT
 					string rfcEmisor = comprobante.Emisor.Rfc.Trim();
 
 					string folioFiscal = digitalTi.UUID.Trim();
+					
+					string motivoCancelacion = invoice.SATCancelReasonCode.Trim();
 
-					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI(rfcEmisor, folioFiscal);
+					string folioSustitucion = GetFolioSustitucion(invoice);
+
+					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI40(rfcEmisor, folioFiscal, motivoCancelacion, folioSustitucion);
 
 					if (resultadoCancelacion.Exitoso)
 					{
@@ -105,7 +110,18 @@ namespace CommunicationWorkerRole.Services.SAT
 				}
 			}
 		}
-	}
+
+        private static string GetFolioSustitucion(ARInvoice invoice)
+        {
+			switch (invoice.SATCancelReasonCode)
+			{
+				case "01": return invoice.RelatedInvoice;
+				case "02": return "Comprobante emitido con errores sin relación";
+				case "03": return "No se llevó a cabo la operación";
+				default: return "0";
+			}
+        }
+    }
 
 	public class SATInvoiceProfact40CancellationServiceArgs
 	{

@@ -78,8 +78,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidateMainCarriageCarrierDueToTransportMode(entityPM);
                 ValidatePartnerTypes(entityPM);
                 ValidateShipmentSubType(entityPM);
-                ValidateShipmentOperationalClose(entityPM, entityPoco);
-                ValidateShipmentAccountingClose(entityPM, entityPoco);
+
+                if (FeatureToggleHelper.HasFeatureToggle("TSV", entityPM.Tenant))
+                {
+                    ValidateShipmentOperationalClose(entityPM, entityPoco);
+                    ValidateShipmentAccountingClose(entityPM, entityPoco);
+                }
             }
         }
         public static string GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote, int tenant)
@@ -185,7 +189,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     throw new OptimisticConcurrencyException(msg);
                 }
             }
-            if (!entityPM.IsUpdatedOceanInsightsAnalyzer)
+            if (!entityPM.IsUpdatedOceanInsightsAnalyzer && !entityPM.IsHybrid)
             {
                 ValidateOceanInsightsConcurrencyGUID(entityPM, entityPoco);
             }

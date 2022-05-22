@@ -3399,7 +3399,7 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -9150,7 +9150,8 @@
         ObjectFieldName="&quot;PartnerTypeId&quot;"
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
-       IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen

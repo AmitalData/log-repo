@@ -798,6 +798,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 code = code + "," + surcharge.LineId;
             }
 
+            var argumentsPriceCheck = { VersionId: surcharge.VersionId, LineId: surcharge.LineId, ChargeableWeightInKG: this.chargeableWeightInKG };
+            editWindow.EditComponentArguments = argumentsPriceCheck;
             editWindow.ShowEditComponent(surcharge.TariffId, "Tariff", code);
         }
     }

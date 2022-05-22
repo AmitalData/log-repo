@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AutomationResultEmailRecipientUpdateClass
    {  		
-		public const string HashString = "e8b5145ed5df0f769d2e5c25340c125c";
+		public const string HashString = "c8973c0e8638ea1dc6e5e8c51ac28b76";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Automation Result Email Recipient",
-			      				    Code =  "ba06",
+			      				    Code =  "97a3",
 			      				    Name =  "AutomationResultEmailRecipient",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -221,6 +221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsNotifyBack",
 					  						ListPropertyPath =  "IsNotifyBack",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

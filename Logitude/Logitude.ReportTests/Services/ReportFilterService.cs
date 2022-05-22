@@ -1,22 +1,22 @@
 ﻿using Logitude.ReportTests.Models;
 using Logitude.ReportTests.Models.Builders;
-using Logitude.Base;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using System.Dynamic;
+using Logitude.ReportTests.Services.Mapps;
 
 namespace Logitude.ReportTests.Services
 {
-    public class ReportFilterService
+    public class ReportFilterService<T> where T : ReportFilterMapper
     {
 
         private readonly ReportService reportService;
-        private readonly ReportFilterItemService reportFilterItemService;
+        private readonly ReportFilterItemService<T> reportFilterItemService;
 
         public ReportFilterService()
         {
-            reportFilterItemService = new ReportFilterItemService();
+            reportFilterItemService = new ReportFilterItemService<T>();
             reportService = new ReportService();
         }
 

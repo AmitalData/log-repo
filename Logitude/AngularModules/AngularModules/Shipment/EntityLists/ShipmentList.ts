@@ -515,5 +515,8 @@ export class ShipmentList {
 		FirstPickupFullAddress: string;
 		LastDeliveryFullAddress: string;
 		QuoteFreightExpirationDate: Date;
+		MainCarriageETDTime: Date;
+		MainCarriageETATime: Date;
+		PackagesQuantityAndType: string;
 	
 }

@@ -310,6 +310,11 @@ export class ShipmentComputedFieldsPM {
     public set AccountingClosedByUserId(newValue: string) { if (this.accountingClosedByUserId != newValue) { this.accountingClosedByUserId = newValue; this.MarkAsDirty("AccountingClosedByUserId"); } }
        
 	 
+    private packagesQuantityAndType: string;
+    public get PackagesQuantityAndType() { return this.packagesQuantityAndType; }
+    public set PackagesQuantityAndType(newValue: string) { if (this.packagesQuantityAndType != newValue) { this.packagesQuantityAndType = newValue; this.MarkAsDirty("PackagesQuantityAndType"); } }
+       
+	 
 
     public OldEntityPM: ShipmentComputedFieldsPM;
 		

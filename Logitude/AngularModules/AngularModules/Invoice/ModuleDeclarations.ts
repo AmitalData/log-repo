@@ -41,7 +41,9 @@ import {ARInvoiceMenuButtonsComponent} from './Components/MenuButtonsComponents/
 import {CreditLimitPopupComponent} from './Components/NewEntity/CreditLimitPopupComponent';
 import {SettingsComponent} from './Components/Workspaces/SettingsComponent';
 import {SATInterfaceSettingsComponent} from './Components/Workspaces/SATInterfaceSettingsComponent'; 
-import {SendPaymentWindowComponent} from './Components/SAT/SendPaymentWindowComponent';
+import { SendPaymentWindowComponent } from './Components/SAT/SendPaymentWindowComponent';
+import { ARInvoiceCancellationReasionComponent } from './Components/MenuButtons/ARInvoice/ARInvoiceCancellationReasionComponent';
+
 
 export const Components =
     [
@@ -78,7 +80,8 @@ export const Components =
         SATInterfaceSettingsComponent,
         SendPaymentWindowComponent,
         AccountingTab_AccountingPaymentMethod,
-        AccountingTab_APPaymentMethod,        
+        AccountingTab_APPaymentMethod,
+        ARInvoiceCancellationReasionComponent,
     ];
 
 export class ModuleDeclarations {
@@ -121,6 +124,7 @@ export class ModuleDeclarations {
             case "AccountingTab_AccountingPaymentMethod": { myResult = AccountingTab_AccountingPaymentMethod; break; }     
             case "AccountingTab_APPaymentMethod": { myResult = AccountingTab_APPaymentMethod; break; }
             case "ExternalTransmissionSettingsComponent": { myResult = ExternalTransmissionSettingsComponent; break; }
+            case "ARInvoiceCancellationReasionComponent": { myResult = ARInvoiceCancellationReasionComponent; break; }
         }
 
         return myResult;

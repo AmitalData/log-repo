@@ -332,7 +332,7 @@ namespace WebFreight.Web.DataProviders
         public double? VatableAmount_ZERO { get; set; }
         public double? VatableAmount_REIM { get; set; }
         public double? VatableAmount_12 { get; set; }
-        
+
         public string FreightPC { get; set; }
         public double? USD_MXN_ExchangeRate { get; set; }
         public double? InvoiceToAccountingExchangeRate { get; set; }
@@ -399,7 +399,7 @@ namespace WebFreight.Web.DataProviders
         }
 
         public decimal AmountInWords { get; set; }
-         
+
         public string DeclarationNumber { get; set; }
         public DateTime? DeclarationDate { get; set; }
         public DateTime? CustomsClearanceDate { get; set; }
@@ -439,7 +439,7 @@ namespace WebFreight.Web.DataProviders
         public string CompleteShipmentType { get; set; }
 
         public double TotalProfitCurr { get; set; }
-        
+
         public string Notify1Address { get; set; }
         public string Notify1VATNumber { get; set; }
 
@@ -513,7 +513,7 @@ namespace WebFreight.Web.DataProviders
             public double? subInLocal { get; set; }
             public string LocalCurrency { get; set; }
             public DateTime? CreateDate { get; set; }
-            public DateTime? DueDate { get; set; }            
+            public DateTime? DueDate { get; set; }
             public double? VAT1Amount { get; set; }
             public double? VAT2Amount { get; set; }
             public double? VAT3Amount { get; set; }
@@ -548,7 +548,7 @@ namespace WebFreight.Web.DataProviders
             public double? TotalGrands { get; set; }
             public string Currency { get; set; }
             public double? totalGrandTotal { get; set; }
-            
+
             public double? VAT1Amount { get; set; }
             public double? VAT2Amount { get; set; }
             public double? VAT3Amount { get; set; }
@@ -597,7 +597,7 @@ namespace WebFreight.Web.DataProviders
         public string CarrierCBSA { get; set; }
         public string CarrierCAAT { get; set; }
         public string AccountDisplayNumber { get; set; }
-        
+
         public string ShipperNotExporter { get; set; }
         public string ShipperNotExporterAddress { get; set; }
         public string ConsigneeNotImporter { get; set; }
@@ -615,6 +615,18 @@ namespace WebFreight.Web.DataProviders
         public int? StorageFreeDays { get; set; }
         public int? StorageDays { get; set; }
         public List<StoragePricing> ShipmentStoragePricings { get; set; }
+
+        public string Transshipment1FlightNumber { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+        public DateTime? Transshipment1ETA { get; set; }
+        public DateTime? Transshipment1ATD { get; set; }
+        public DateTime? Transshipment1ATA { get; set; }
+        public string Transshipment1VesselName { get; set; }
+        public string Transhipment1VoyageNo { get; set; }
+        public string Transshipment2VesselName { get; set; }
+        public string Transhipment2VoyageNo { get; set; }
+        public string Transshipment3VesselName { get; set; }
+        public string Transhipment3VoyageNo { get; set; }
     }
 
     public class SAT
@@ -737,7 +749,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-
+        public string ProjectNumber { get; set; }
     }
 
     public class ReportInvoiceLine
@@ -793,6 +805,7 @@ namespace WebFreight.Web.DataProviders
         public double? NONVATableAmountInLocalCurrency_double { get; set; }
 
         public string VatAmountInForeignCurrency { get; set; }
+        public double? VatAmountInForeignCurrency_Double { get; set; }
         public string ForeignToInvoiceExchangeRate { get; set; }
         public double? ForeignToInvoiceExchangeRate_Double { get; set; }
 

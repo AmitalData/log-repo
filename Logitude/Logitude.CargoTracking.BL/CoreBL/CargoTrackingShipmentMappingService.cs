@@ -25,7 +25,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         ShipmentPM shipmentPM;
 
 
-        public void MapCargoTrackingShipmentFields(CargoTrackingShipmentPM cargoShipmentPM, Dictionary<string,CargoTrackingMilestoneList> milestoneDictionary)
+        public void MapCargoTrackingShipmentFields(CargoTrackingShipmentPM cargoShipmentPM, Dictionary<string, CargoTrackingMilestoneList> milestoneDictionary)
         {
             this.cargoShipmentPM = cargoShipmentPM;
             GetConnectedEntities();
@@ -121,7 +121,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 shipmentOrders = shipmentOrderQuery.GetConnectedShipmentOrdersByShipmentId(cargoShipmentPM.ForwardingShipmentHeaderId, cargoShipmentPM.Tenant);
             }
-            else {
+            else
+            {
                 shipmentOrders = shipmentOrderQuery.GetConnectedShipmentOrdersByShipmentNumber(cargoShipmentPM.ShipmentNumber, cargoShipmentPM.Tenant);
             }
             if (shipmentOrders.Any())
@@ -139,7 +140,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         {
             CargoTrackingShipmenPartnersCardsBuilder partnerCardsBuilder = new CargoTrackingShipmenPartnersCardsBuilder(shipmentOrderPM, shipmentPM, cargoShipmentPM);
             cargoShipmentPM.PartnerCards = partnerCardsBuilder.BuildPartnerCards();
-        }        
+        }
 
         private void SetRoutePortsCodes(CargoTrackingShipmentPM cargoShipmentPM)
         {
@@ -207,7 +208,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             shipmentPM = shipmentQuery.GetShipmentPMForCargoTrackingByEntityId(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
             return shipmentPM;
         }
-       
+
         private List<ShipmentPackagePM> GetShipmentPackages()
         {
             ShipmentQuery shipmentQuery = new ShipmentQuery(cargoShipmentPM.Tenant);
@@ -280,7 +281,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private List<DocumentsFilingPM> GetShipmentDocumentsFilings()
         {
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(cargoShipmentPM.Tenant);
-            
+
             List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
 
             if (!string.IsNullOrWhiteSpace(cargoShipmentPM.ForwardingShipmentHeaderId))
@@ -292,7 +293,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             return documentsFilingPM;
         }
 
-        private void AddForwardingShipmentsDocsToCustomsShipment(List<DocumentsFilingPM> documentsFilingPM , List<DocumentsFilingPM> forwardingShipmentDocumentsFiling) {
+        private void AddForwardingShipmentsDocsToCustomsShipment(List<DocumentsFilingPM> documentsFilingPM, List<DocumentsFilingPM> forwardingShipmentDocumentsFiling)
+        {
             if (forwardingShipmentDocumentsFiling.Any())
             {
                 documentsFilingPM.AddRange(forwardingShipmentDocumentsFiling);

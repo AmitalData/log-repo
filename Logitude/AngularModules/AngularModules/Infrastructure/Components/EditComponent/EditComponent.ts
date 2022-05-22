@@ -2077,7 +2077,16 @@ export class TabItem {
     constructor(itemPM: any) {
         this.Code = itemPM.Code;
         this.EntityPM = itemPM;
-        this.TextCode = itemPM.TabNameTextCodeCode;
+        this.TextCode = this.GetTextCode(itemPM);
+    }
+
+    private GetTextCode(itemPM: any) {
+        var textCode = itemPM.TabNameTextCodeCode;
+        if ((ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "Simplog")
+            && itemPM.TabNameTextCodeCode == "TenantManagement.TH.CargoTrackingBranding") {
+            textCode = "TenantManagement.TH.LogitudeDigitalBranding";
+        }
+        return textCode;
     }
 }
 class LoadedTabItem {

@@ -43,6 +43,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         ShipmentRepository repository;
         private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
         private const string MasterUserId = "13793";
+        private bool isMultipleUpdate = false;
         public ShipmentQuery(int tenant)
         {
             repository = new ShipmentRepository(tenant);
@@ -195,6 +196,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ManifestReason = masterData.ManifestReason;
                 shipmentPM.ManifestStatusCode = masterData.ManifestStatusCode;
                 shipmentPM.ProrateReceivables = masterData.ProrateReceivables;
+                shipmentPM.CarrierServiceLineId = masterData.CarrierServiceLineId;
 
                 #region Carrier
 
@@ -1918,7 +1920,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
             {
-                Shipment masterShipment = (from a in repository.context.Shipments
+                IShipmentsContext repShipmentContext = isMultipleUpdate ? new ShipmentRepository(tenant).context : repository.context;
+                Shipment masterShipment = (from a in repShipmentContext.Shipments
                                            where a.Id == shipment.MasterShipmentDataId && a.Tenant == tenant
                                            select a).FirstOrDefault();
                 if(masterShipment != null)
@@ -4379,6 +4382,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public List<ShipmentPM> GetShipmentPMsByIds(List<string> shipmentIds, int tenant)
         {
+            isMultipleUpdate = true;
             if (shipmentIds.Count() == 0) return null;
 
             List<Shipment> shipments = repository.GetShipmentsFromIds(shipmentIds, tenant);
@@ -12682,6 +12686,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                IsShipmentOrder = f.IsShipmentOrder,
                                FirstPickupFullAddress = f.FirstPickupFullAddress,
                                LastDeliveryFullAddress = f.LastDeliveryFullAddress,
+                               MainCarriageETDTime = f.MainCarriageETD,
+                               MainCarriageETATime = f.MainCarriageETA,
+                               PackagesQuantityAndType = f.PackagesQuantityAndType,
                            };
             return myResult;
         }
@@ -13080,6 +13087,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OperationalStatusName = f.OperationalStatusName,
                     FirstPickupFullAddress = f.FirstPickupFullAddress,
                     LastDeliveryFullAddress = f.LastDeliveryFullAddress,
+                    MainCarriageETDTime = f.MainCarriageETD,
+                    MainCarriageETATime = f.MainCarriageETA,
+                    PackagesQuantityAndType = f.PackagesQuantityAndType,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

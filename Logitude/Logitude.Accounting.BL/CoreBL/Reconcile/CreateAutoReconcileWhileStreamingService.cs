@@ -11,6 +11,7 @@ using Logitude.Accounting.BL.Validators;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools.Utils;
 using System.Diagnostics;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -108,16 +109,26 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             var newLTranListOfAccountID = _NewLedgerTransactionsWithCounters.Where(r => r.AccountId == currentAccountId).ToList();
+            // if accountId is same for credit & debit tranasction, we get only credit tranasctions
+            if (newLTranListOfAccountID.Count == _NewLedgerTransactionsWithCounters.Count)
+            {
+                newLTranListOfAccountID = newLTranListOfAccountID.Where(r => r.LocalAmountCredit > 0).ToList();
+            }
             decimal totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
 
             bool Same_glaccount_for_debit_and_creditV2Enable = true;
             bool isAdjustJournalSameAccount = IsAdjustJournalSameAccount(totalNewLedgerOpenAmount);
+            bool isAdjustJournalDifferentAccount = IsAdjustJournalDifferentAccount(totalNewLedgerOpenAmount);
             if (Same_glaccount_for_debit_and_creditV2Enable &&
                 isAdjustJournalSameAccount
                     )
             {
                 totalNewLedgerOpenAmount = OnAdjustJournalSameAccount_UseFirstLine(ref newLTranListOfAccountID);
 
+            }
+            else if (isAdjustJournalDifferentAccount)
+            {
+                throw new ApplicationException(TranslateTextsClass.Translate("Reconciliation.O.MultiCurrencyGlaccountReconciliation", _JournalPM.Tenant));
             }
             else
             {
@@ -192,6 +203,14 @@ namespace Logitude.Accounting.BL.CoreBL
                             totalNewLedgerOpenAmount == 0 && // its  adjust !!
                             _NewLedgerTransactionsWithCounters.Count == 2 &&
                             _NewLedgerTransactionsWithCounters[0].AccountId == _NewLedgerTransactionsWithCounters[1].AccountId;
+        }
+
+        private bool IsAdjustJournalDifferentAccount(decimal totalNewLedgerOpenAmount)
+        {
+            return _JournalPM.AccountingEntityCode == "10" /*Reconciliation*/ &&
+                            totalNewLedgerOpenAmount == 0 && // its  adjust !!
+                            _NewLedgerTransactionsWithCounters.Count == 2 &&
+                            _NewLedgerTransactionsWithCounters[0].AccountId != _NewLedgerTransactionsWithCounters[1].AccountId;
         }
 
         private static decimal OnAdjustJournalSameAccount_UseFirstLine(ref List<LedgerTransactionPM> newLTranListOfAccountID)

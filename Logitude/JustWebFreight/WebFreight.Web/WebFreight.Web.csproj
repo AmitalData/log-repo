@@ -1070,6 +1070,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\MixPanelController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportExecutionLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ShippingLineExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CarrierServiceLineViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerGroupViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerTeamViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
@@ -1091,6 +1092,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestReportsConnectInvoiceController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightMeasurementViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightRoundingViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CarrierServiceLineController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomerGroupController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomerTeamController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\HorseController.Generated.cs" />
@@ -1152,6 +1154,7 @@
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
+    <Compile Include="DataContracts\BrandingData.cs" />
     <Compile Include="DataContracts\DataProviderField.cs" />
     <Compile Include="DataContracts\ExcelReportArguments.cs" />
     <Compile Include="DataContracts\ExcelReportResult.cs" />
@@ -1176,6 +1179,7 @@
     <Compile Include="DataProviders\LogitudeCRMReportDataProvider.cs" />
     <Compile Include="DataProviders\ProductItemLine.Shared.cs" />
     <Compile Include="DataProviders\RoutingDataProvider.cs" />
+    <Compile Include="DataProviders\SpotRateQuoteReportDataProvider.cs" />
     <Compile Include="DataProviders\TaxDeductionReportPerVendorDataProvider.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIMainCarriageLegsHelper.cs" />
@@ -2716,7 +2720,13 @@
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\AutomationModel\OnUpdateDocumentService.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\ARInvoiceAPISendInterfaceDataContract.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\ISendInterfaceDataContract.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\SendInterfaceDataContract.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\SendInterfaceDataContractService.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\ShipmentAPISendInterfaceDataContract.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
+    <Compile Include="Helpers\BrandingHelper.cs" />
     <Compile Include="Helpers\CrmWebServicesValidator.cs" />
     <Compile Include="Helpers\DataWarehouse\FactQuoteBusinessUnitFilter.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />
@@ -2781,6 +2791,7 @@
     <Compile Include="Helpers\QuotesRequestService.cs" />
     <Compile Include="Helpers\QuoteTemplateChargeGroupService.cs" />
     <Compile Include="Helpers\QuoteTemplate\QuoteTemplateSettingDataUpdater.cs" />
+    <Compile Include="Helpers\QuoteTemplate\QuoteTemplateVatAmountsService.cs" />
     <Compile Include="Helpers\Reports\ReportManipulationDataService.cs" />
     <Compile Include="Helpers\ResetUserPasswordDocumentService.cs" />
     <Compile Include="Helpers\SharedLogisticReportService.cs" />
@@ -2949,6 +2960,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CargoTenantMilestoneDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierAreasPortUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierAreaUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierServiceLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CarrierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesExternalAccountsByProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesTypeUpdateClass.cs" />
@@ -3567,6 +3579,7 @@
     <Content Include="Monitoring\DeclarationApprovalRequestMonitoring.aspx" />
     <Content Include="Monitoring\DocumentApprovalQueueMonitoring.aspx" />
     <Content Include="Monitoring\DocumentFilingBackupBatchMonitoring.aspx" />
+    <Content Include="Monitoring\DocumentsExecutionLogProgressStatus.aspx" />
     <Content Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
@@ -5757,6 +5770,13 @@
     <Compile Include="Monitoring\DocumentFilingBackupBatchMonitoring.aspx.designer.cs">
       <DependentUpon>DocumentFilingBackupBatchMonitoring.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\DocumentsExecutionLogProgressStatus.aspx.cs">
+      <DependentUpon>DocumentsExecutionLogProgressStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\DocumentsExecutionLogProgressStatus.aspx.designer.cs">
+      <DependentUpon>DocumentsExecutionLogProgressStatus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx.cs">
       <DependentUpon>DocumentsExecutionLogWaitingStatus.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6109,6 +6129,9 @@
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\FlightBookingsManifestManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Quots\SpotRate\SpotRateQuoteReportDataProviderService.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Quots\SpotRate\SpotRateQuoteReportFilterService.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Quots\SpotRate\SpotRateQuoteReportService.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\WorkPerDaysCategoryManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VehiclesManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\AccountingLedgerManager.cs" />

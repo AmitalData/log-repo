@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -25,6 +26,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private ICommonDataContext commonContext;
         private string logFolder;
         private ContactPM loggedContact;
+        private string EntityId = string.Empty;
+        private string EntityReference = string.Empty;
 
         public SATCommunicationLogBuilder(int tenant)
         {
@@ -36,6 +39,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public void Build(SATCommunicationLogArgs args)
         {
             logFolder = "SATInterface";
+            EntityId = GetEntityId(args);
+            EntityReference = GetEntityReference(args);
             string logSubject = GetSATLogSubject(args);
             byte[] profactoXmlData = GetProfactoXmlData(args);
             Document document = CreateNewDocument(profactoXmlData);
@@ -43,6 +48,16 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             WriteDocumentOnBlobStorage(profactoXmlData, document);
             SendSATInterfaceQueueMessage(args, commLog);
             CreateSATTraceEvent(args);
+        }
+
+        private string GetEntityId(SATCommunicationLogArgs args)
+        {
+            return args.IsPayment ? args.ARPaymentPM.Id : args.ARInvoicePM.Id;
+        }
+
+        private string GetEntityReference(SATCommunicationLogArgs args)
+        {
+            return args.IsPayment ? args.ARPaymentPM.PaymentNo.ToString() : args.ARInvoicePM.InvoiceNumber.ToString();
         }
 
         private string GetSATLogSubject(SATCommunicationLogArgs args)
@@ -87,12 +102,32 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
             string rfcEmisor = args.Comprobante.Emisor.Rfc.Trim();
             string folioFiscal = digitalTi.UUID.Trim();
-            const string motivoCancelaOperation = "03";
+            string motivoCancelaOperation = GetCancelReason(args);// "03";
+            string folioSustitucion = GetFolioSustitucion(args);
 
             SATCancellation cancellatio = new SATCancellation() { rfcEmisor = rfcEmisor, folioFiscal = folioFiscal, motivoCancelacion = motivoCancelaOperation, folioSustitucion = "No se llevó a cabo la operación" };
             profactoXmlData = LogitudeXmlSerializer.SerializeObject<SATCancellation>(cancellatio);
 
             return profactoXmlData;
+        }
+
+        private string GetCancelReason(SATCommunicationLogArgs args)
+        {
+            const string cancelOperationCarriedOutCode = "03";
+            if (args.IsPayment) return cancelOperationCarriedOutCode;
+            return args.ARInvoicePM.SATCancelReasonCode;
+        }
+
+        private string GetFolioSustitucion(SATCommunicationLogArgs args)
+        {
+            if (args.IsPayment) return "No se llevó a cabo la operación";
+            switch (args.ARInvoicePM.SATCancelReasonCode)
+            {
+                case "01": return args.ARInvoicePM.RelatedInvoice;
+                case "02": return "Comprobante emitido con errores sin relación";
+                case "03": return "No se llevó a cabo la operación";
+                default: return "0";
+            }
         }
 
         private Document CreateNewDocument(byte[] profactoXmlData)
@@ -129,7 +164,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 To = "Profact " + SATData.CurrentComprobanteVersion,
                 InOut = "O",
                 From = currentTenant.Company,
-                EntityId = args.EntityId,
+                EntityId = EntityId,
                 ObjectTableId = GetObjectTableId(args),
                 Subject = logSubject,
                 Tenant = tenant,
@@ -138,7 +173,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 CommunicationStatusTypeCode = "W",
                 CreatedByUserId = loggedContact.Id,
                 DocumentId = document.Id,
-                EntityReference = args.EntityReference,
+                EntityReference = EntityReference,
                 SearchFields = GetSeactFields(args, logSubject),
                 CreateDateUTC = DateTime.UtcNow,
                 QueueName = SATData.SATInterfaceQueueMessageCode,
@@ -171,7 +206,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private string GetSeactFields(SATCommunicationLogArgs args, string logSubject)
         {
-            return args.EntityReference + "," + logFolder + "," + "O" + "," + logSubject;
+            return EntityReference + "," + logFolder + "," + "O" + "," + logSubject;
         }
 
         private void WriteDocumentOnBlobStorage(byte[] profactoXmlData, Document document)
@@ -206,7 +241,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
-                EntityId = args.EntityId,
+                EntityId = EntityId,
                 ObjectTableName = GetObjectTableName(args),
                 Tenant = tenant,
                 UserId = loggedContact.Id,
@@ -218,8 +253,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
     public class SATCommunicationLogArgs
     {
         public Comprobante Comprobante { get; set; }
-        public string EntityId { get; set; }
-        public string EntityReference { get; set; }
+        public ARInvoicePM ARInvoicePM { get; set; }
+        public ARPaymentPM ARPaymentPM { get; set; }
         public bool IsCancellation { get; set; }
         public bool IsPayment { get; set; }
     }

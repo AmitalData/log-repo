@@ -4,6 +4,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class AWBDataProvider : BaseDataProvider
     {
+        public string ShipmentNumberLink { get; set; }
         public string BranchSignature { get; set; }
         public string MainCarriageCarrierPrefix { get; set; }        
         public string MainCarriageCarrierAddress { get; set; }

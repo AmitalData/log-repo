@@ -162,6 +162,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ShipmentSubTypeName = shipment.ShipmentSubTypeName;
                 myDataProvider.ShipmentRouting = shipment.Routing;
                 myDataProvider.IncotermCode = shipment.IncotermCode;
+                myDataProvider.ShipmentNumberLink = DataProviders.General.BuildShipmentNumberLink(shipmentId, shipment.ShipmentLevelCode, shipment.SecurityKey, tenant);
 
                 this.FillINTTRADocumentProperties(myDataProvider);                
                 

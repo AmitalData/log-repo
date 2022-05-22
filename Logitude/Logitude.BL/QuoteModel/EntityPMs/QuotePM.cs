@@ -752,5 +752,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? InsuranceValue { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ValidByTypeCode { get; set; }
+        public bool? ConnectedToOpportunity { get; set; }
     }
 }

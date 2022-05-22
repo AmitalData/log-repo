@@ -393,7 +393,7 @@ namespace Logitude.Accounting.BL.DataContract
                         transaction.LocalAmountCredit = duplicatedCreditLines.Sum(d => d.LocalAmountCredit);
                     }
                     taxDeductionReportLine.TaxDeductionLocalAmount = Math.Round(transaction.LocalAmountCredit, 0);
-                    taxDeductionReportLine.TaxDeductionPercentage = (int?)(transaction.LocalAmountCredit == 0 ? 0 : Math.Round(((transaction.LocalAmountCredit / (decimal)taxDeductionReportLine.AmountInLocalCurrency)) * 100, 2));
+                    taxDeductionReportLine.TaxDeductionPercentage = (int?)(transaction.LocalAmountCredit == 0 || taxDeductionReportLine.AmountInLocalCurrency == 0 || taxDeductionReportLine.AmountInLocalCurrency == null ? 0 : Math.Round(((transaction.LocalAmountCredit / (decimal)taxDeductionReportLine.AmountInLocalCurrency)) * 100, 2));
                     GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == transaction.OppositeAccountId).FirstOrDefault();
                     taxDeductionReportLine.DeductionType = account != null ? account.DeductionFileTypeCode : null;
                     if (taxDeductionReportLine.VendorId != null) lines.Add(taxDeductionReportLine);
@@ -532,7 +532,7 @@ namespace Logitude.Accounting.BL.DataContract
                     }
                         groupedbyVendor.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency.Value;
                         groupedbyVendor.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount.Value;
-                       groupedbyVendor.TotalAmount =(decimal?)groupedbyVendor.SumOfAmountInLocalCurrency + groupedbyVendor.SumOfTaxDeductionLocalAmount;
+                       groupedbyVendor.TotalAmount =(decimal?)groupedbyVendor.SumOfAmountInLocalCurrency;
                     if (groupedbyVendor.SumOfAmountInLocalCurrency > 0 || groupedbyVendor.SumOfAmountInLocalCurrency < 0)
                     {
                         byVendorList.Add(groupedbyVendor);

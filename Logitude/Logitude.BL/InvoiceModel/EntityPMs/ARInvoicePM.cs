@@ -428,5 +428,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string AgentReference1 { get; set; }
         public string AgentReference2 { get; set; }
         public bool BillToIsCustomer { get; set; }
+        public bool ResendToSAT { get; set; }
+        public string SATCancelReasonCode { get; set; }
     }
 }

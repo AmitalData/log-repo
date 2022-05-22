@@ -197,6 +197,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string HouseNumbers { get; set; }
         public string GlobalTaxCalculation { get; set; }
         public string PaymentReferences { get; set; }
+        public string SATCancelReasonCode { get; set; }
 
     }
 }

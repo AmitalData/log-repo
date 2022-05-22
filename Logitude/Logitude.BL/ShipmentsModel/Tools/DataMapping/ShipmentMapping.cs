@@ -1768,6 +1768,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.Transshipment3VesselName = entityPM.Transshipment3VesselName;
                     entityMasterData.OnCarriageAdditionalTransportModeCode = entityPM.OnCarriageAdditionalTransportModeCode;
                     entityMasterData.SplitOnCarriage = entityPM.SplitOnCarriage;
+                    entityMasterData.CarrierServiceLineId = entityPM.CarrierServiceLineId;
 
                     if (entityPM.TransportModeId == "I")
                     {

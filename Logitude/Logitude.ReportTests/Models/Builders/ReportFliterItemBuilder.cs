@@ -36,32 +36,43 @@ namespace Logitude.ReportTests.Models.Builders
         {
             _reportFliterItem = new ReportFliterItem
             {
-                Operator = "Equals",
             };
             return this;
         }
 
-        public ReportFliterItemBuilder FieldName(string fieldName)
+        public ReportFliterItemBuilder Name(string name)
         {
-            _reportFliterItem.FieldName = fieldName;
+            _reportFliterItem.Name = name;
             return this;
         }
 
-        public ReportFliterItemBuilder FieldValue(object fieldValue)
+        public ReportFliterItemBuilder Value(object value)
         {
-            _reportFliterItem.FieldValue = fieldValue;
+            _reportFliterItem.Value = value;
             return this;
         }
 
-        public ReportFliterItemBuilder FieldDataType(string fieldDataType)
+        public ReportFliterItemBuilder Map(string map)
         {
-            _reportFliterItem.FieldDataType = fieldDataType;
+            _reportFliterItem.Map = map;
             return this;
         }
 
-        public ReportFliterItemBuilder Operator(string operatr)
+        public ReportFliterItemBuilder EntityName(string entityName)
         {
-            _reportFliterItem.Operator = operatr;
+            _reportFliterItem.EntityName = entityName;
+            return this;
+        }
+
+        public ReportFliterItemBuilder SearchKeyValue(string searchKeyValue)
+        {
+            _reportFliterItem.SearchKeyValue = searchKeyValue;
+            return this;
+        }
+
+        public ReportFliterItemBuilder Operator(string searchKeyName)
+        {
+            _reportFliterItem.SearchKeyName = searchKeyName;
             return this;
         }
     }

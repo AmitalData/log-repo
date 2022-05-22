@@ -62,6 +62,13 @@ namespace Logitude.BL.InvoiceModel
                 SearchFields = "TG,Transferring", 
                 Name = "Transferring", 
 			});
+			 
+            all.Add(new SATTransferStatusDetails()
+            {    
+                Code = "SM", 
+                SearchFields = "SM,Solved Manual", 
+                Name = "Solved Manual", 
+			});
 			
             return all;
        }

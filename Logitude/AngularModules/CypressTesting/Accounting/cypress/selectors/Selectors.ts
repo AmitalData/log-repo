@@ -183,6 +183,7 @@ export class AccountingSelectors extends RegexSelectors {
       //#region SATInterfaceSettings
       public static readonly SATInterfaceSettingsLogLov = "#SATInterfaceSetting_SATInterfaceCode"
       public static readonly LogLovSATInterfaceSettingsLogLov = "#LogLov_SATInterfaceSetting_SATInterfaceCode"
+      public static readonly SATInterfaceValue='[data-cy="SAT Interface Value"]'
       public static readonly SATexchangerate = "#ConfirmWindow_Yes_0";
       public static readonly ARInvoiceInvoice= "#ARInvoice_InvoiceNumber";
       public static readonly ManuallySet= "#ComboBox_0_2";

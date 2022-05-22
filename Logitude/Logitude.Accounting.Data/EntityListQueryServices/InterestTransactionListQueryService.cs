@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -21,18 +21,67 @@ using Logitude.Accounting.Data.Repositories;
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
 
-	public partial class InterestTransactionListQueryService
-	{
-		private IQueryable<InterestTransactionList> GetIqueryableList(IQueryable<InterestTransaction> interestTransactionQuery, int tenant)
+    public partial class InterestTransactionListQueryService
+    {
+        private const string DummyInterestReportIdFilterValue = "999";
+        private IQueryable<InterestTransactionList> GetIqueryableList(IQueryable<InterestTransaction> interestTransactionQuery, int tenant)
         {
+            var interestTransactionsForAdustmentsAndRevaluationJournals = from interestTransaction in interestTransactionQuery
+
+                                                                          join journal in context.Journals.Include("AccountingEntity")
+                                                                          on new { AccountingEntityId = interestTransaction.EntityId } equals
+                                                                             new
+                                                                             {
+                                                                                 AccountingEntityId = journal.Id
+                                                                             }
+
+                                                                          join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
+                                                                          into reportJoinData
+                                                                          from report in reportJoinData.DefaultIfEmpty()
+                                                                          where journal.AccountingEntityCode == Enums.AccountingEntityValues.Adjustment || journal.AccountingEntityCode == Enums.AccountingEntityValues.Revaluation
+
+                                                                          select new InterestTransactionList()
+                                                                          {
+
+                                                                              Id = interestTransaction.Id,
+                                                                              Tenant = interestTransaction.Tenant,
+                                                                              CreateDateTime = interestTransaction.CreateDateTime,
+                                                                              UpdateDateTime = interestTransaction.UpdateDateTime,
+                                                                              SearchFields = interestTransaction.SearchFields,
+                                                                              GLAccountId = interestTransaction.GLAccountId,
+                                                                              InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
+                                                                              EntityId = interestTransaction.EntityId,
+                                                                              OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
+                                                                              LocalAmount = interestTransaction.LocalAmount,
+                                                                              ForeignAmount = interestTransaction.ForeignAmount,
+                                                                              CurrencyId = interestTransaction.CurrencyId,
+                                                                              InterestValueDate = interestTransaction.InterestValueDate,
+                                                                              InterestReportId = interestTransaction.InterestReportId,
+                                                                              IsClosed = interestTransaction.IsClosed,
+                                                                              IsCancelled = interestTransaction.IsCancelled,
+                                                                              InterestReportNumber = report == null ? null : report.ReportNumber,
+
+                                                                              JournalId = journal.Id,
+                                                                              JournalNumber = journal.JournalNumber,
+                                                                              AccountingDate = journal.AccountingDate,
+
+                                                                              Source = journal.AccountingEntityReference,
+                                                                              SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
+                                                                              SourceTypeCode = journal.AccountingEntityCode,
+                                                                              SourceId = journal.AccountingEntityId,
+                                                                              AccountingEntityCode = interestTransaction.AccountingEntityCode
+                                                                          };
             IQueryable<InterestTransactionList> query
                 = (from interestTransaction in interestTransactionQuery
 
                    join journal in context.Journals.Include("AccountingEntity")
                    on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode } equals
-                      new { AccountingEntityId = journal.AccountingEntityCode == Enums.AccountingEntityValues.Adjustment ? journal.Id : journal.AccountingEntityId,
-                            journal.AccountingEntityCode }
-                      
+                      new
+                      {
+                          AccountingEntityId = journal.AccountingEntityId,
+                          journal.AccountingEntityCode
+                      }
+
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
                    into reportJoinData
                    from report in reportJoinData.DefaultIfEmpty()
@@ -67,7 +116,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        SourceTypeCode = journal.AccountingEntityCode,
                        SourceId = journal.AccountingEntityId,
                        AccountingEntityCode = interestTransaction.AccountingEntityCode
-                   });
+                   }).Union(interestTransactionsForAdustmentsAndRevaluationJournals);
 
             return query;
         }
@@ -197,7 +246,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return iconTxt;
         }
 
-
         public InterestTransactionList GetSingle(string id,int tenant)
         {
             InterestTransaction interestTransaction = GetInterestTransaction(id, tenant);
@@ -233,7 +281,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                 JournalId = journal?.Id,
                 JournalNumber = journal?.JournalNumber,
-                AccountingDate = journal?.AccountingDate??DateTime.MinValue,
+                AccountingDate = journal?.AccountingDate ?? DateTime.MinValue,
                 Source = journal?.AccountingEntityReference,
                 SourceType = journal?.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
                 SourceTypeCode = journal?.AccountingEntityCode,
@@ -273,17 +321,24 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
 
         private IQueryable<InterestTransaction> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
-		{
+        {
+            var customInterestReportIdFilter = queryOperations.QueryFilterItems.Where(x => x.FieldName == "InterestReportId" && x.IsCustom).FirstOrDefault();
+            if (customInterestReportIdFilter != null)
+            {
+                iQueryable = iQueryable.Where(x => x.InterestReportId == null || x.InterestReportId == DummyInterestReportIdFilterValue);
+                return iQueryable;
+            }
+            else
+            {
+                return iQueryable;
+            }
+        }
+        private IQueryable<InterestTransaction> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
+        {
+            return iQueryable;
+        }
 
-			return iQueryable;
-		}
-		private IQueryable<InterestTransaction> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<InterestTransaction> iQueryable, int tenant)
-		{
-			return iQueryable;
-		}
-
-	}
+    }
 
 
 }
-	

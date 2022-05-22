@@ -379,16 +379,7 @@ namespace Logitude.BL.QuoteModel
                         {
                             queryableData =  queryableData.Where(d => d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now || d.ExpirationDate < DateTime.Now);
                         }                         
-                    }
-
-                    //if (item.FieldName == "MyFollowUps")
-                    //{
-                    //    string email = SecurityUtility.GetAuthenticatedUser();
-                    //    ContactQuery contactQuery = new ContactQuery(tenant);
-                    //    ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
-
-                    //    queryableData = queryableData.Where(d => d.FollowUpOwnerId == loggedContact.Id);
-                    //}
+                    } 
                 }
             }
 

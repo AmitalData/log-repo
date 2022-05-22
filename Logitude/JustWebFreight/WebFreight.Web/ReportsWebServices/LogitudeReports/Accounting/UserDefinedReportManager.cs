@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL.Reports;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -193,7 +194,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                              Code = b.LineTypeCode == GLAccountType ? b.GLAccountDisplayNumber : b.ChartsofAccountCode,
                                                              EnglishType = b.LineTypeCode == GLAccountType ? "GLAccount" : "Chart of Account",
                                                              LocalType = b.LineTypeCode == GLAccountType ? "כרטיס" : "קבוצת מאזן",
-                                                             ChartsofAccountTypeCode = b.CalculatedChartsOfAccountsId,
+                                                             ChartsofAccountTypeCode = b.ChartOfAccountTypeCode,
                                                              ParentChartsofAccountTypeCode = CalculatedChartsOfAccount.ChartOfAccountTypeCode + "_" + b.Id,
                                                              ChartsofAccountId = b.ChartOfAccountId,
                                                              LineTypeCode = b.LineTypeCode,
@@ -386,7 +387,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private decimal GetChartsofAccountAmountFromLedgerTransactionBalanceFilter(string chartsofAccountsId, DateTime fromDate, DateTime toDate)
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(accountingContext);
-            List<GLAccount> GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(this.tenant, chartsofAccountsId);
+
+            List<GLAccount> GLAccountsConnectedWithChartofAccount = new List<GLAccount>();
+
+            var chartOfAccount = iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.FirstOrDefault(r => r.ChartsofAccountId == chartsofAccountsId);
+
+            var chartOfAccountsWithControlAccounts
+                = new string[] { ChartOfAccountsTypeValues.Works, ChartOfAccountsTypeValues.Customers, ChartOfAccountsTypeValues.Vendors };
+
+            if (!ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.ChartsofAccountTypeCode))
+                GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, chartsofAccountsId);
+            else
+                GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, chartsofAccountsId);
+
+
             decimal ChartsofAccountAmount = 0;
             foreach (GLAccount glAccount in GLAccountsConnectedWithChartofAccount)
             {
@@ -460,7 +474,19 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     itemToRemove = iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.Single(r => r.LineTypeCode == ChartofAccountType && r.ChartsofAccountId == ChartsofAccountsId);
                     iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.Remove(itemToRemove);
                 }
-                List<GLAccount> GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(this.tenant, ChartsofAccountsId);
+
+                List<GLAccount> GLAccountsConnectedWithChartofAccount = new List<GLAccount>();
+
+                var chartOfAccount =  iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.FirstOrDefault(r => r.ChartsofAccountId == ChartsofAccountsId);
+
+                var chartOfAccountsWithControlAccounts 
+                    = new string[] {  ChartOfAccountsTypeValues.Works, ChartOfAccountsTypeValues.Customers, ChartOfAccountsTypeValues.Vendors };
+
+                if (!ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.ChartsofAccountTypeCode))
+                    GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, ChartsofAccountsId);
+                else
+                    GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, ChartsofAccountsId);
+
                 foreach (GLAccount GLAccount in GLAccountsConnectedWithChartofAccount)
                 {
                     if (this.ExpandChartOfAccountToGLAccounts)

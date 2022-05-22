@@ -40,13 +40,14 @@
     declare @LastShipmentDate as datetime
 
 
-	   declare @BillTo as varchar(70)
-
+	declare @BillTo as varchar(70)
+	declare @PaymentTerm as varchar(40)
 
 	DECLARE PartnersCursor CURSOR READ_ONLY
 	FOR
 	SELECT dw_Partners.Id,dw_Partners.Code ,dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, customerTeamUser.Name, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant ,dw_Countries.Code,dw_Contacts.Email ,  dw_Partners.ReceivablesAccountingCard, dw_Partners.address1,dw_Partners.address2, dw_Partners.Phone
-	,dw_Regions.Name , dw_CustomerSizes.Name ,dw_Industries.Name , dw_Partners.VatNumber , dw_Customers.CreditLimitAmount , dw_Customers.CreditLimitOpenBalance,dw_LeadSources.Name, dw_Partners.AutomaticLastUpdateDate, dw_Partners.InActive, dw_Customers.FirstShipmentDate, dw_Customers.LastShipmentDate ,null
+	,dw_Regions.Name , dw_CustomerSizes.Name ,dw_Industries.Name , dw_Partners.VatNumber , dw_Customers.CreditLimitAmount , dw_Customers.CreditLimitOpenBalance,dw_LeadSources.Name, dw_Partners.AutomaticLastUpdateDate, dw_Partners.InActive, dw_Customers.FirstShipmentDate, dw_Customers.LastShipmentDate ,null,
+	dw_PaymentTerms.EnglishName
 	From dw_Partners
 	--inner JOIN dw_Partners billTo ON dw_Partners.BillToId = billTo.Id
 	left JOIN dw_Customers ON dw_Partners.Id = dw_Customers.Id
@@ -66,14 +67,18 @@
 	inner join dw_PartnerTypes  on dw_Partners.PartnerTypeId=dw_PartnerTypes.Id
 	inner JOIN dw_DWHSettings ON dw_Partners.Tenant = dw_DWHSettings.Tenant
 	inner JOIN dw_Countries ON dw_Partners.CountryId = dw_Countries.Id
+	left JOIN dw_PaymentTerms ON dw_Partners.PaymentTermId = dw_PaymentTerms.Id
 	--where dw_Partners.id !='-1'
-	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id ,@Code, @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager, @CustomerTeam , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail,@ReceivablesAccountingCard,@address1, @address2, @Phone , @Region,@CustomerSize,@Industry ,@VatNumber , @CreditLimitAmount , @CreditLimitOpenBalance,@LeadSource, @AutomaticLastUpdateDate, @InActive, @FirstShipmentDate, @LastShipmentDate ,@BillTo
+	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id ,@Code, @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager, @CustomerTeam , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail,@ReceivablesAccountingCard,@address1, @address2, @Phone , @Region,@CustomerSize,@Industry ,@VatNumber , @CreditLimitAmount , @CreditLimitOpenBalance,@LeadSource, @AutomaticLastUpdateDate, @InActive, @FirstShipmentDate, @LastShipmentDate ,@BillTo,
+	@PaymentTerm
 	WHILE @@FETCH_STATUS = 0																																																																								
 	BEGIN																																																																													
 	
-	insert into #DIM_PartnersTemp (Id,Code,Name,[Local Name],City,Country,[State Name],[Zip Code],[Primary Contact],[Account Manager],[Customer Team],Salesman,[Customer Rank],[Partner Type],[Source Tenant],[Parent Tenant] ,[Country Code],[Primary Contact Email] , [Receivables Accounting Card]  ,[Address1],[Address2],[Phone] , [Region],[Customer Size],[Industry],[Vat Number] , [Credit Limit Amount (Local)] , [Open Balance (Local)] , [Lead Source], [Automatic Last Update Date], [InActive], [Customer First Shipment Date], [Customer Last Shipment Date] , [Bill To]) values(@Id,@Code, @Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager, @CustomerTeam , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant,@CountryCode,@PrimaryContactEmail, @ReceivablesAccountingCard,@address1,  @address2,  @Phone,@Region,@CustomerSize,@Industry ,@VatNumber , @CreditLimitAmount , @CreditLimitOpenBalance , @LeadSource, @AutomaticLastUpdateDate, @InActive, @FirstShipmentDate, @LastShipmentDate , @BillTo)
+	insert into #DIM_PartnersTemp (Id,Code,Name,[Local Name],City,Country,[State Name],[Zip Code],[Primary Contact],[Account Manager],[Customer Team],Salesman,[Customer Rank],[Partner Type],[Source Tenant],[Parent Tenant] ,[Country Code],[Primary Contact Email] , [Receivables Accounting Card]  ,[Address1],[Address2],[Phone] , [Region],[Customer Size],[Industry],[Vat Number] , [Credit Limit Amount (Local)] , [Open Balance (Local)] , [Lead Source], [Automatic Last Update Date], [InActive], [Customer First Shipment Date], [Customer Last Shipment Date] , [Bill To], [Payment Term]) values(@Id,@Code, @Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager, @CustomerTeam , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant,@CountryCode,@PrimaryContactEmail, @ReceivablesAccountingCard,@address1,  @address2,  @Phone,@Region,@CustomerSize,@Industry ,@VatNumber , @CreditLimitAmount , @CreditLimitOpenBalance , @LeadSource, @AutomaticLastUpdateDate, @InActive, @FirstShipmentDate, @LastShipmentDate , @BillTo,
+	@PaymentTerm)
 
-	FETCH NEXT FROM PartnersCursor INTO @Id ,@Code , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager, @CustomerTeam , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail, @ReceivablesAccountingCard,@address1,  @address2,  @Phone ,@Region,@CustomerSize,@Industry ,@VatNumber , @CreditLimitAmount , @CreditLimitOpenBalance  , @LeadSource, @AutomaticLastUpdateDate, @InActive, @FirstShipmentDate, @LastShipmentDate , @BillTo
+	FETCH NEXT FROM PartnersCursor INTO @Id ,@Code , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager, @CustomerTeam , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail, @ReceivablesAccountingCard,@address1,  @address2,  @Phone ,@Region,@CustomerSize,@Industry ,@VatNumber , @CreditLimitAmount , @CreditLimitOpenBalance  , @LeadSource, @AutomaticLastUpdateDate, @InActive, @FirstShipmentDate, @LastShipmentDate , @BillTo,
+	@PaymentTerm
 		End
 	CLOSE PartnersCursor
 	DEALLOCATE PartnersCursor

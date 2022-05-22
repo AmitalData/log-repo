@@ -44,8 +44,8 @@
 
                                 <!-- Seller -->
                                 <tr class="FormFieldRow" *ngIf="IsSellerVisible">
-                                    <td [attr.title]="SellerToolTip">
-                                        <LogLabel [ObjectFieldName]="'SellerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    <td>
+                                        <LogLabel [ShowTitle]="true" [Title]="SellerToolTip" [ObjectFieldName]="'SellerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
                                         <LogLov [ObjectFieldName]="'SellerId'"

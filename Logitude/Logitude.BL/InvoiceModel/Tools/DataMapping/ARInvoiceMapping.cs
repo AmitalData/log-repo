@@ -24,6 +24,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
     public class ARInvoiceMapping
     {
+        private const string sATSolvedManualStatusCode = "SM";
+
         public static void MapEntity(ARInvoicePM entityPM, ARInvoice entity, bool isNewState, string loggedContactId)
         {
             DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
@@ -58,6 +60,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
 
 
+            }
+
+            if (entityPM.ResendToSAT || entityPM.SATTransferStatusCode == sATSolvedManualStatusCode)
+            {
+                entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
             }
 
             entity.ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate;
@@ -98,6 +105,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.HouseNumbers = entityPM.HouseNumbers;
             entity.GlobalTaxCalculation = entityPM.GlobalTaxCalculation == "None" ? null : entityPM.GlobalTaxCalculation;
             entity.PaymentReferences = entityPM.PaymentReferences;
+            entity.SATCancelReasonCode = entityPM.SATCancelReasonCode;
 
             if (entityPM.HouseNumber != null)
             {
@@ -341,6 +349,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
             CardPM card = GetCardById(billToId, tenant);
+            if(card.GLAccountId == null) return null;
             GLAccountPM billToAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
             if (billToAccount != null)
             {

@@ -29,7 +29,8 @@
     </LogLov>-->
                             <ComboBox (SelectedItemChanged)="SelectedSATInterface = $event"
                                       [SelectedItem]="SelectedSATInterface" [ItemsSource]="SATInterfaces"
-                                      [Binding]="'Name'"></ComboBox>
+                                      [Binding]="'Name'"
+                                      [attr.data-cy]="'SAT Interface Value'" ></ComboBox>
                         </td>
 
                         <td>

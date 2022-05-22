@@ -21,6 +21,8 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
 
@@ -44,6 +46,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public BrowserIconId: string;
     public ShipmentHeaderImageId: string;
     private entityResourceService: EntityResourceService = new EntityResourceService();
+    public BrandingTabName = "Cargo Tracking Branding";
     constructor(public entityArgs: EntityArgs)
     {
         super();
@@ -52,6 +55,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.InitializeImageIds();
 
         this.SetColorsFromEntity();
+        this.SetBrandingTabName();
     }
 
     private SetColorsFromEntity()
@@ -65,7 +69,12 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             this.secondaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.SecondaryColor);
         }
     }
-
+    SetBrandingTabName() {
+        this.BrandingTabName = "Cargo Tracking Branding";
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "Simplog") {
+            this.BrandingTabName = TextCodeTranslator.Translate("TenantManagement.TH.LogitudeDigitalBranding");
+        }
+    }
     private InitializeImageIds()
     {
         this.BackgroundId = this.EntityPM.BackgroundId;
@@ -73,7 +82,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.InvertedLogoId = this.EntityPM.InvertedLogoId;
         this.BrowserIconId = this.EntityPM.BrowserIconId;
         this.ShipmentHeaderImageId = this.EntityPM.ShipmentHeaderImageId;
-        
+
     }
 
     RemoveImage(name){
@@ -141,7 +150,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.ValidateMainColorCode(hexColor);
         this.UpdateEntityMainColor();
     }
-    
+
     get PermissionBuildMonths()
     {
         return this.EntityPM.PermissionBuildMonths;
@@ -261,6 +270,16 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     {
         if (this.EntityPM.CustomerURL != value) {
             this.EntityPM.CustomerURL = value;
+
+        }
+    }
+
+    get ActivatePrivateSite() {
+        return this.EntityPM.ActivatePrivateSite;
+    }
+    set ActivatePrivateSite(value: boolean) {
+        if (this.EntityPM.ActivatePrivateSite != value) {
+            this.EntityPM.ActivatePrivateSite = value;
 
         }
     }

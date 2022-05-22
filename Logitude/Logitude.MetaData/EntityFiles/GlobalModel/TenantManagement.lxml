@@ -13276,6 +13276,77 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;32e54f4c-79ec-4975-adf7-59759451ef64&quot;"
+    FieldName="&quot;ActivatePrivateSite&quot;"
+    OldNames="ActivatePrivateSite"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;TenantManagement&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ActivatePrivateSite&quot;"
+    ListPropertyPath="&quot;ActivatePrivateSite&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ActivatePrivateSite&quot;"
+    DefaultText="&quot;Activate Private Site&quot;"
+    ListFieldLable="&quot;ActivatePrivateSiteListLable&quot;"
+    ListLableDefaultText="&quot;Activate Private Site&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;All Tenant Managements&quot;"
     TextCode="&quot;All Tenant Managements&quot;"
@@ -13440,7 +13511,8 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;IsActive&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13512,7 +13584,8 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;ActiveTrail&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13584,7 +13657,8 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;PayingCustomers&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13656,7 +13730,8 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;NotRecuringTenants&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -14059,7 +14134,14 @@
       FeatureDefaultText="&quot;Erase Data&quot;" />
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;TenantManagement.TH.LogitudeDigitalBranding&quot;"
+      DefaultText="&quot;Digital Portal Branding&quot;"
+      LocalDefaultText="&quot;Digital Portal Branding&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;SYSDISENABLED&quot;"

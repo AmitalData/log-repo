@@ -58,6 +58,10 @@ RETURNS VARCHAR(MAX)
 AS
 BEGIN
   IF(@ValueWithDefaultUnitCode IS NULL) RETURN NULL
+  IF(CHARINDEX(''('', @ValueWithDefaultUnitCode) > 0)
+  BEGIN
+  set @ValueWithDefaultUnitCode = REPLACE(@ValueWithDefaultUnitCode, ''('', '' ('')
+  END
   IF(CHARINDEX('' ('', @ValueWithDefaultUnitCode) > 0)
   BEGIN
   DECLARE @PositionToSplit INT

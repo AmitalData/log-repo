@@ -389,5 +389,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public bool IsHybrid { get; set; }
         public string WhatsAppMessagingPhoneNumber { get; set; }
         public double? CargoTokenTimeout { get; set; }
+        public bool ActivatePrivateSite { get; set; }
+
     }
 }

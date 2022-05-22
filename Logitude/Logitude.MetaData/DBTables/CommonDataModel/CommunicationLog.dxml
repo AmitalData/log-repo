@@ -317,6 +317,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="WasAnalyzed"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DocumentsFilingId"
     ReferencedTable="DocumentsFilings"
@@ -366,6 +372,8 @@
     Columns="CreateDateUTC" />
   <Index
     Columns="EntityId" />
+  <Index
+    Columns="EntityId,Tenant" />
   <Index
     Columns="CreateDateUTC,CommunicationStatusTypeCode" />
   <Index

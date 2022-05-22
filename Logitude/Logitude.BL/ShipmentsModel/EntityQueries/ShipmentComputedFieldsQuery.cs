@@ -86,7 +86,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         ExpectedArrivalNoticeSent = a.ExpectedArrivalNoticeSent,
                         T1Received = a.T1Received,
                         AccountingClosedByUserId = a.AccountingClosedByUserId,
-
+                        PackagesQuantityAndType = a.PackagesQuantityAndType,
                     }).FirstOrDefault();
         }
 
@@ -153,7 +153,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                  MainCarriageATA = a.MainCarriageATA,
                                                                  MainCarriageETD = a.MainCarriageETD,
                                                                  MainCarriageETA = a.MainCarriageETA,
-                                                                 MainCarriageATD = a.MainCarriageATD, 
+                                                                 MainCarriageATD = a.MainCarriageATD,
+                                                                 PackagesQuantityAndType = a.PackagesQuantityAndType,
                                                              });
             return result;
         }

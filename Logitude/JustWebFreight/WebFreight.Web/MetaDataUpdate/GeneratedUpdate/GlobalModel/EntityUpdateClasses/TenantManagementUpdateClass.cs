@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class TenantManagementUpdateClass
    {  		
-		public const string HashString = "c1398c81751f2a546ade75a78d775733";
+		public const string HashString = "ed1e4ca71b78ca598761446133305794";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10167,6 +10167,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ActivatePrivateSite",
+					  						ObjectTableName =  "TenantManagement",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ActivatePrivateSite",
+					  						ListPropertyPath =  "ActivatePrivateSite",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ActivatePrivateSite",
+					  						DefaultText =  "Activate Private Site",
+					  						ListFieldLable =  "ActivatePrivateSiteListLable",
+					  						ListLableDefaultText =  "Activate Private Site",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -10269,7 +10327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 			 QueryColumn InactiveTenantManagementsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "TenantManagement.TTY" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter InactiveTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.IsActive", PredefinedValue = "false",PredefinedValue2 = null, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter InactiveTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.IsActive", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10294,7 +10352,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 			 QueryColumn TrialTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "TenantManagement.TrialEndDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter TrialTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.ActiveTrail", PredefinedValue = "false",PredefinedValue2 = null, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter TrialTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.ActiveTrail", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10319,7 +10377,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 			 QueryColumn PayingTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "TenantManagement.IsRecurring" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter PayingTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.PayingCustomers", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter PayingTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.PayingCustomers", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10344,7 +10402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 			 QueryColumn NotRecuringTenantsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "TenantManagement.IsRecurring" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter NotRecuringTenantsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.NotRecuringTenants", PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter NotRecuringTenantsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.NotRecuringTenants", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -10813,7 +10871,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode TenantManagementTextCode_TenantManagementTHLogitudeDigitalBranding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.LogitudeDigitalBranding", DefaultText = "Digital Portal Branding",LocalDefaultText = @"Digital Portal Branding", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

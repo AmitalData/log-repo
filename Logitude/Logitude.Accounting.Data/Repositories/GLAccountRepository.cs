@@ -103,6 +103,16 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
+        public GLAccount GetControlGLAccountByChart(string chartOfAccountsId, int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.ChartOfAccountsId == chartOfAccountsId && a.Tenant == tenant
+                            && a.IsControlAccount.HasValue && a.IsControlAccount.Value == true
+                            && (!a.Inactive.HasValue || a.Inactive.Value == false)
+                    select a).FirstOrDefault();
+        }
+
+
         public IQueryable<GLAccount> GetQuaryAllControlAccount(int tenant)
        {
            return (from a in context.GLAccounts

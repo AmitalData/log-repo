@@ -470,6 +470,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new HTSCodeMap());
             modelBuilder.Configurations.Add(new ProductItemMap());
             modelBuilder.Configurations.Add(new MentionMap());
+            modelBuilder.Configurations.Add(new CarrierServiceLineMap());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -1047,7 +1048,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<PortTimeZone> PortTimeZones { get; set; }
         public IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
         public IDbSet<Mention> Mentions { get; set; }
-
+        public IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
 
         public DbConnection GetConnection()
         {

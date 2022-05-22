@@ -40,7 +40,7 @@ Feature: Create Standalone Shipment From Delivery
         And all fields should be dim in Delivery window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the Delivery is FullResponsibility and from partner to partner with different countries
+    Scenario: when the Delivery is FullResponsibility and from partner to partner with different countries
         Given the user in the shipment's routings tab
         And add a new Delivery leg with the following details
             | FullResponsibility | True                      |
@@ -52,7 +52,7 @@ Feature: Create Standalone Shipment From Delivery
         When click create Standalone Shipment
         Then a validation message with "Both Addresses must be in the same country since the direction is Domestic" error should appear
 
-    Scenario: Create standalone shipment when the Delivery is FullResponsibility and from partner to partner with same countries
+    Scenario: when the Delivery is FullResponsibility and from partner to partner with same countries
         Given the user in the shipment's routings tab
         And add a new Delivery leg with the following details
             | From        | Partner        |
@@ -67,7 +67,7 @@ Feature: Create Standalone Shipment From Delivery
         And all fields should be dim in Delivery window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the Delivery is not FullResponsibility and from partner to partner with same countries
+    Scenario: when the Delivery is not FullResponsibility and from partner to partner with same countries
         Given the user in the shipment's routings tab
         And add a new Delivery leg with the following details
             | From        | Partner        |
@@ -78,7 +78,7 @@ Feature: Create Standalone Shipment From Delivery
         When save the Delivery
         Then the Create Standalone Shipment button Should be dim
 
-    Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Partner to Casual Address with same countries
+    Scenario: when the Delivery is FullResponsibility and from Partner to Casual Address with same countries
         Given the user in the shipment's routings tab
         And  add a new Delivery leg with the following details
             | From        | Partner            |
@@ -94,7 +94,7 @@ Feature: Create Standalone Shipment From Delivery
         And all fields should be dim in Delivery window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the Delivery is FullResponsibility and from port to port with same countries
+    Scenario: when the Delivery is FullResponsibility and from port to port with same countries
         Given the user in the shipment's routings tab
         And add a new Delivery leg with the following details
             | From     | Port                   |
@@ -109,7 +109,7 @@ Feature: Create Standalone Shipment From Delivery
         And all fields should be dim in Delivery window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to Casual Address with same countries
+    Scenario: FullResponsibility and from Casual Address to Casual Address with same countries
         Given  the user in the shipment's routings tab
         And add a new Delivery leg with the following details
             | From        | CasualAddress      |
@@ -126,7 +126,7 @@ Feature: Create Standalone Shipment From Delivery
         And all fields should be dim in Delivery window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to port with same countries
+    Scenario: when the Delivery is FullResponsibility and from Casual Address to port with same countries
         Given the user in the shipment's routings tab
         And add a new Delivery leg with the following details
             | From        | CasualAddress      |

@@ -658,7 +658,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         {
             if (entityPM.ConvertToLCL || entityPM.ConvertToFCL)
             {
-                DeletePackagesAndCharges();
+                this.DeletePackagesAndCharges();                
 
                 if (entityPM.ConvertToFCL)
                 {
@@ -671,11 +671,13 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     entityPM.ShipmentTypeId = "LCLD";
                 }
                 this.GenerateDefaultCharges();
+                this.RecalculateRatioAfterConversion();
             }
 
             if (entityPM.ConvertTransportMode)
             {
-                DeletePackagesAndCharges();
+                this.DeletePackagesAndCharges();
+                this.RecalculateRatioAfterConversion();
                 this.GenerateDefaultCharges();
             }
         }
@@ -716,6 +718,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             entityPM.QuotePackages.Clear();
             entityPM.QuoteCharges.Clear();
+        }
+        private void RecalculateRatioAfterConversion()
+        {
+            entityPM.Ratio = MethodHelper.ComputeRatio(entityPM.DirectionId, entityPM.TransportModeId, entityPM.ShipmentTypeId, loggedTenant);
         }
         private void FillDefaultSubType()
         {

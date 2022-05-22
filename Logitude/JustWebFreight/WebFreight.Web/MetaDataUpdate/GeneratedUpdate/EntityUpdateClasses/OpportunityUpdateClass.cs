@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OpportunityUpdateClass
    {  		
-		public const string HashString = "77ff41d001aa3961c2e62a1528324e7c";
+		public const string HashString = "78a2debeb3082dd60d4f4b8d400354ef";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4701,6 +4701,126 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "NumberOfConnectedQuotes",
+					  						ObjectTableName =  "Opportunity",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "NumberOfConnectedQuotes",
+					  						ListPropertyPath =  "NumberOfConnectedQuotes",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Opportunity",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "NumberOfConnectedQuotes",
+					  						DefaultText =  "No. of Quotes",
+					  						ListFieldLable =  "NumberOfConnectedQuotesListLable",
+					  						ListLableDefaultText =  "No. of Quotes",
+					  						ShortFieldLable =  "NumberOfConnectedQuotes",
+					  						ShortFieldLableDefaultText =  "Quotes",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastStageBeforeClosureName",
+					  						ObjectTableName =  "Opportunity",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  60,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastStageBeforeClosureName",
+					  						ListPropertyPath =  "LastStageBeforeClosureName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Opportunity",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastStageBeforeClosureName",
+					  						DefaultText =  "Last Stage Before Closure",
+					  						ListFieldLable =  "LastStageBeforeClosureNameListLable",
+					  						ListLableDefaultText =  "Last Stage Before Closure",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -4773,7 +4893,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn MyOpenOpportunitiesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyOpenOpportunitiesQuery.Id,QueryCode = MyOpenOpportunitiesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Opportunity.StageName" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter MyOpenOpportunitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.MyOpenOpportunities", PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyOpenOpportunitiesQuery.Id,QueryCode = MyOpenOpportunitiesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter MyOpenOpportunitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.MyOpenOpportunities", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyOpenOpportunitiesQuery.Id,QueryCode = MyOpenOpportunitiesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -4794,7 +4914,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllOpenOpportunitiesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenOpportunitiesQuery.Id,QueryCode = AllOpenOpportunitiesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Opportunity.StageName" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllOpenOpportunitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.AllOpenOpportunities", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllOpenOpportunitiesQuery.Id,QueryCode = AllOpenOpportunitiesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllOpenOpportunitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.AllOpenOpportunities", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllOpenOpportunitiesQuery.Id,QueryCode = AllOpenOpportunitiesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -4815,7 +4935,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn MyClosedOpportunitiesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyClosedOpportunitiesQuery.Id,QueryCode = MyClosedOpportunitiesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Opportunity.StageName" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter MyClosedOpportunitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.MyClosedOpportunities", PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyClosedOpportunitiesQuery.Id,QueryCode = MyClosedOpportunitiesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter MyClosedOpportunitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.MyClosedOpportunities", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyClosedOpportunitiesQuery.Id,QueryCode = MyClosedOpportunitiesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -4836,7 +4956,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllClosedOpportunitiesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClosedOpportunitiesQuery.Id,QueryCode = AllClosedOpportunitiesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Opportunity.StageName" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllClosedOpportunitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.AllClosedOpportunities", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllClosedOpportunitiesQuery.Id,QueryCode = AllClosedOpportunitiesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllClosedOpportunitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.AllClosedOpportunities", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllClosedOpportunitiesQuery.Id,QueryCode = AllClosedOpportunitiesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -4879,7 +4999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CancelledOpportunitiesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledOpportunitiesQuery.Id,QueryCode = CancelledOpportunitiesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Opportunity.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter CancelledOpportunitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.CancelledOpportunities", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CancelledOpportunitiesQuery.Id,QueryCode = CancelledOpportunitiesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CancelledOpportunitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.CancelledOpportunities", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CancelledOpportunitiesQuery.Id,QueryCode = CancelledOpportunitiesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -4906,7 +5026,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenByStageQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenByStageQuery.Id,QueryCode = OpenByStageQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Opportunity.NextActivityDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenByStageQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.OpenByStageOpp", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenByStageQuery.Id,QueryCode = OpenByStageQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenByStageQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Opportunity.OpenByStageOpp", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenByStageQuery.Id,QueryCode = OpenByStageQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

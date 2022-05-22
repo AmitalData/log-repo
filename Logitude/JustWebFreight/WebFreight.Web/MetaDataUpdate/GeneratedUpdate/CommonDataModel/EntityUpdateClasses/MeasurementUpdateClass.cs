@@ -661,7 +661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn AllMeasurementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id,QueryCode = AllMeasurementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Measurement.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllMeasurementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Measurement.IsContainer", PredefinedValue = "false",PredefinedValue2 = null, QueryId = AllMeasurementsQuery.Id,QueryCode = AllMeasurementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllMeasurementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Measurement.IsContainer", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllMeasurementsQuery.Id,QueryCode = AllMeasurementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
