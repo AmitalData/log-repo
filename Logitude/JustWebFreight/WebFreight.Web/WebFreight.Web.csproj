@@ -6219,6 +6219,7 @@
       <DependentUpon>RegisterShipmentPackageWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ContainerTrackingProvider.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ContainerStatusSource.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AWB.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AccountingInformationIdentifier.cs" />
