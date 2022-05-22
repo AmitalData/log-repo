@@ -88,44 +88,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             //entityPM.ExporterCode = cardPM?.VatNumber;
             entityPM.ExporterCode = client?.Code;
             entityPM.StorageStatusIsOpen = entityPOCO.StorageStatus != null && entityPOCO.StorageStatus.ToLower() == "open";
-
-            try
-            {
-                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                {
-                    Tenant = 1,
-                    objectTableName = "Customs.ExportStorage",
-                    EventCode = "ER1",
-                    notes = "DO_NOT_RAISE_EVENT",
-                    CommunicationLoggingEntityReference = entityPM.Id,
-                    EntityId = entityPM.Id,
-                    UserId = "1-9",
-
-                    CommunicationSubject = "FU Status ER1 from logitude (Declaration Sent To Customs)",
-                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                    {
-                        entname = "MSCSTORAGE",
-                        primary_number = entityPM.StorageNo,
-                        status = "new",
-                        xml_status = "new",
-                        status_id = "ER1",
-                        status_DateTime = DateTime.Now,
-                        //status_place = "FRA",
-                        //status_save = "no_fail",
-                        comments = "",
-                    }
-                };
-                //if (!dirtyDeclarationPM.IsConnectedToUnifreight) myAmitalEventTracerModel.NotConnectedToUniface = true;
-
-                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = ER1  entity= " + entityPM.Id + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
-
-            }
-            catch (System.Exception)
-            {
-                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
-                throw;
-            }
         }
 
         private void BuildSearchFields(ExportStoragePM entityPM, ExportStorage entityPOCO, bool isNewEntity)
