@@ -23,6 +23,7 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
     this.initEntity()
 
     this.disabledInputs();
+    
   }
 
 
@@ -76,6 +77,6 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
   
   public get FinalDestinationPortCode() {return this.EntityPM.FinalDestinationPortCode}
   
-  public get IsDangerousGoods() {return this.EntityPM.IsDangerousGoods}
+  public get IsDangerousGoods() {return this.EntityPM.IsDangerousGoods===undefined?false:this.EntityPM.IsDangerousGoods;} 
 
 }

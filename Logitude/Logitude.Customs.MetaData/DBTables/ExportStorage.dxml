@@ -156,7 +156,7 @@
   <Column
     Name="ExportLoadingPortcode"
     Type="varchar"
-    Size="10">
+    Size="17">
     <Constraints
       Nullable="true" />
   </Column>
@@ -214,6 +214,26 @@
   <Relation
     ForeignKeyColumn="CustomsStatus"
     ReferencedTable="CargoStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ExportLoadingPortcode"
+    ReferencedTable="UnloadingSiteType"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="StorageSiteCode"
+    ReferencedTable="DeliverySiteTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ExportUnloadingPortCode"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="FinalDestinationPortCode"
+    ReferencedTable="InternationalSites"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation

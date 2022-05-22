@@ -156,7 +156,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         if (this.SearchFieldsFilter) {
             filters.AdditionalFilters.push(this.SearchFieldsFilter);
         }
-debugger;
+
         filters.PageSize = 30;
         filters.PageIndex = 0; // decremented 1 in the service
         filters.GetAll = false;
@@ -306,7 +306,7 @@ debugger;
 
 
     SendButtonClicked() {
-        debugger;
+ 
 
 
         let ArrayExportStorageId = this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
