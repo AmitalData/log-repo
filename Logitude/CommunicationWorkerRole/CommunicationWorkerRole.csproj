@@ -242,6 +242,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
     <Reference Include="nsoftware.IPWorksSSH, Version=16.0.6800.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
       <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSH.dll</HintPath>
     </Reference>
@@ -260,6 +263,10 @@
     </Reference>
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Profact4.0.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\Bin\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid.SmtpApi">
       <HintPath>..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
@@ -389,7 +396,10 @@
     <Compile Include="CargoTrackingImporterApprovalReceivedWR.cs" />
     <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
     <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />
+    <Compile Include="Services\ContainerTraking\RequestContainerStatusService.cs" />
+    <Compile Include="Services\ContainerTraking\VizionService.cs" />
     <Compile Include="UpdateContainerStatusWorkerRole.cs" />
+    <Compile Include="CreateRequestContainerStatusWorkerRole.cs" />
     <Compile Include="ImporterShipmentOrdersWorkerRole.cs" />
     <Compile Include="MultiEntityUpdate\IMultiEntityUpdater.cs" />
     <Compile Include="MultiEntityUpdate\MultiEntityUpdater.cs" />

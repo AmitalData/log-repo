@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.DataContracts;
+using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -7,6 +8,7 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using Simplog.Data.CommonDataModel;
@@ -18,6 +20,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -27,18 +30,94 @@ using System.Transactions;
 
 namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 {
-    public class ContainerTrackingService
+    public class GeneralContainerTrackingService
     {
         ICommonDataContext commonContext;
 
-        public ShipmentContainerSimulator SimulateVizionApiContainerStatus(ShipmentContainerSimulator simulator)
+        public void GeneralSimulateContainerStatus(GeneralContainerStatusSimulatorArgs simulatorArgs)
         {
-            VisionContainerStatus vizionContainerStatus = JsonConvert.DeserializeObject<VisionContainerStatus>(simulator.XmlString);
-            var result = CallApi<object>("http://localhost:9996/", "api/ContainerTracking/PostVizionUpdateContainerStatus", vizionContainerStatus, Method.POST);
-            simulator.Success = true;
-            return simulator;
+            
+            InitializeContext(simulatorArgs.Tenant);
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                var document = AddRequstDocument(simulatorArgs);
+                var commLog = AddRequstCommunicationLog(simulatorArgs, document);
+                SendCommunicationLogMessage(commLog, simulatorArgs.Tenant);
+                scope.Complete();
+            }
+
+            
         }
 
+        private Document AddRequstDocument(GeneralContainerStatusSimulatorArgs simulatorArgs)
+        {
+            DocumentRepository documentrepository = new DocumentRepository(commonContext);
+            var byteArray = ConvertObjectToByteArray(simulatorArgs);
+            Document document = CreateDocument(simulatorArgs.Tenant, byteArray);
+            documentrepository.Add(document);
+            documentrepository.SubmitChanges();
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            BlobFileInfo fileInfo = CreateBlobFile(document, byteArray);
+            storageservice.Write(byteArray, fileInfo);
+            return document;
+        }
+
+        private byte[] ConvertObjectToByteArray(object simulatorArgs)
+        {
+            MemoryStream ms = new MemoryStream();
+            using (BsonDataWriter writer = new BsonDataWriter(ms))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(writer, simulatorArgs);
+            }
+
+            var bsonByteArray = ms.ToArray();
+            return bsonByteArray;
+        }
+
+        private CommunicationLog AddRequstCommunicationLog(GeneralContainerStatusSimulatorArgs simulatorArgs, Document document)
+        {
+            CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
+
+            ObjectTable objectTable = GetObjectTableForSimulate(simulatorArgs);
+            var commLog = CreateRequstCommunicationLog(objectTable, simulatorArgs, document);
+            communicationLogRepository.Add(commLog);
+            communicationLogRepository.SubmitChanges();
+            return commLog;
+        }
+
+        private ObjectTable GetObjectTableForSimulate(GeneralContainerStatusSimulatorArgs simulatorArgs)
+        {
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(simulatorArgs.Tenant);
+
+            if (simulatorArgs.IsFromContainer)
+                return objecttableRep.GetObjectTableByName("Shipment", 0, true);
+            else
+                return objecttableRep.GetObjectTableByName("Container", 0, true);
+        }
+
+        private CommunicationLog CreateRequstCommunicationLog(ObjectTable objectTable, GeneralContainerStatusSimulatorArgs simulatorArgs, Document document)
+        {
+            return new CommunicationLog()
+            {
+                Id = IdCounter.GetNumber("CommunicationLog", simulatorArgs.Tenant),
+                LastStatusDate = TenantServerConfigration.GetCurrentDateTime(simulatorArgs.Tenant),
+                InOut = "O",
+                ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
+                Subject = "Request Update Container Status",
+                Tenant = simulatorArgs.Tenant,
+                DocumentId = document.Id,
+                CommunicationLogTypeCode = "Q",
+                CommunicationStatusTypeCode = "W",
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(simulatorArgs.Tenant),
+                CreateDateUTC = DateTime.UtcNow,
+                LastStatusDateUTC = DateTime.UtcNow,
+                QueueName = "GeneralRequestUpdateContainerStatus",
+                Priority = 1,
+                EntityReference = simulatorArgs.IsFromContainer? simulatorArgs.ShipmentId : simulatorArgs.ShipmentId
+
+            };
+        }
 
         public void UpdateStatusFromVizion(HttpRequestMessage request, VisionContainerStatus containerStatus)
         {
@@ -129,9 +208,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             {
                 try
                 {
-                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, "Before adding message to queue ImporterApprovalReceived " + DateTime.Now.ToString(), null);
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, $"Before adding message to queue {commLog.QueueName} " + DateTime.Now.ToString(), null);
                     SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant);
-                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, "after adding message to queue  ImporterApprovalReceived " + DateTime.Now.ToString(), null);
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, $"after adding message to queue  {commLog.QueueName} " + DateTime.Now.ToString(), null);
                 }
                 catch (Exception ex)
                 {
@@ -142,7 +221,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                         errorMessage += Environment.NewLine + ex.StackTrace;
                     }
 
-                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, "Exception occured while adding message to queue ImporterApprovalReceived " + DateTime.Now.ToString(), errorMessage);
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, $"Exception occured while adding message to queue {commLog.QueueName} " + DateTime.Now.ToString(), errorMessage);
 
                 }
             }
@@ -165,45 +244,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         {
             commonContext = CommonDataContext.GetContext(tenant);
         }
-        public T CallApi<T>(string BaseUrl, string url, object o, Method m, string token = null)
-        {
-
-            RestSharp.RestClient restClient = new RestSharp.RestClient(BaseUrl);
-            RestRequest restRequest = new RestRequest(url, m) { RequestFormat = DataFormat.Json };
-            if (!string.IsNullOrEmpty(token))
-            {
-                restRequest.AddHeader("Token", token);
-            }
-            restRequest.AddJsonBody(o);
-            var restResponse = restClient.ExecuteAsync<T>(restRequest).Result;
-            if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.Accepted)
-            {
-
-                return restResponse.Data;
-            }
-            else if (restResponse.StatusCode == HttpStatusCode.NotFound)
-            {
-                throw new Exception("URL NotFound");
-            }
-            else
-            {
-                JObject jObject = JObject.Parse(restResponse.Content);
-                if (jObject["ErrorMessage"] != null)
-                {
-                    var ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
-                    throw new Exception(ErrorMessage);
-                }
-                else
-                {
-                    var ErrorMessage = "Response Status Code: " + restResponse.StatusCode.ToString() + "\n" + jObject.ToString();
-                    throw new Exception(ErrorMessage);
-                }
-
-            }
-
-
-        }
-
+        
 
     }
 }
