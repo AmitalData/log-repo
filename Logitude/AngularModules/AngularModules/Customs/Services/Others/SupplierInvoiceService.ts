@@ -87,11 +87,10 @@ export class SupplierInvoiceService {
         return defer(() => {
             return this._http.put(this._apiUrl + "/PutSupplierInvioceFromFileRequest?" + "tenant=" + tenant
                 + "&clientId=" + clientId + "&declarationId=" + declarationId, JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
-                    var result = response.json();
                     
                     var serviceResponse: ServiceResponse;
                     serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = result;
+                    serviceResponse.Result = response;
                     return serviceResponse;
                 }), catchError(ServiceHelper.HandleServiceError));
 
