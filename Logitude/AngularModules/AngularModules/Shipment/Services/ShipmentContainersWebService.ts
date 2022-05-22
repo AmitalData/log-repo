@@ -4,6 +4,7 @@ import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceRespo
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
+import { GeneralContainerStatusSimulatorArgs } from 'Shipment/DataContract/GeneralContainerStatusSimulatorArgs';
 
 @Injectable()
 
@@ -55,7 +56,7 @@ export class ShipmentContainersWebService {
         });
     }
 
-    VisionContainerSimulator(entity: ShipmentContainerSimulator) {
+    GeneralContainerSimulator(entity: GeneralContainerStatusSimulatorArgs) {
         return defer(() => {
 
             var mappedEntity: ShipmentContainerSimulator = this.MapJsonToShipmentContainerSimulator(entity, false);
