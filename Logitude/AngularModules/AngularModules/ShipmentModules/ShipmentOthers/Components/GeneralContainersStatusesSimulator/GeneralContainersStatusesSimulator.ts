@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, Type } from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ShipmentContainersWebService, ShipmentContainerSimulator } from '../../../../Shipment/Services/ShipmentContainersWebService';
@@ -7,16 +7,17 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     
-    templateUrl: './ContainersStatusesSimulatorComponent.html',
+    templateUrl: './GeneralContainersStatusesSimulatorComponent.html',
 })
 
-export class ContainersStatusesSimulatorComponent {
+export class GeneralContainersStatusesSimulator {
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     private isFromContainer = false;
     private shipmentId: string;
     private containerNumber: string;
     private carrierId: string;
+
 
     constructor() {
 
@@ -69,29 +70,39 @@ export class ContainersStatusesSimulatorComponent {
             simulator.ShipmentId = this.shipmentId;
             simulator.ContainerNumber = this.containerNumber;
             simulator.CarrierId = this.carrierId;
-            var myService = new ShipmentContainersWebService();
+            
+           
+                    this.semulator(simulator)
+                    
+            
 
-            myService.Simulate(simulator).subscribe((myResponse: ServiceResponse) => {
+             
+        }
+    }
 
-                this.CurrentSession.StopBusyIndicator();
+    semulator(simulator:ShipmentContainerSimulator){
+        var myService = new ShipmentContainersWebService();
+        myService.VisionContainerSimulator(simulator).subscribe((myResponse: ServiceResponse) => {
 
-                if (myResponse.HasError) {
-                    this.ValidationErrorsList = myResponse.ErrorsArray;
+            this.CurrentSession.StopBusyIndicator();
+
+            if (myResponse.HasError) {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+
+            else {
+                var myResult: ShipmentContainerSimulator = myResponse.Result;
+
+                if (myResult.Success) {                       
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show("Simulated Successfully");
                 }
 
                 else {
-                    var myResult: ShipmentContainerSimulator = myResponse.Result;
-
-                    if (myResult.Success) {                       
-                        var messageWindow = new MessageWindow();
-                        messageWindow.Show("Simulated Successfully");
-                    }
-
-                    else {
-                        this.ValidationErrorsList = myResult.Errors;
-                    }
+                    this.ValidationErrorsList = myResult.Errors;
                 }
-            });            
-        }
+            }
+        });           
     }
 }
+

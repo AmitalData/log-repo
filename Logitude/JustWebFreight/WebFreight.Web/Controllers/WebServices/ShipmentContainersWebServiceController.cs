@@ -38,12 +38,13 @@ using WebFreight.Web.WcfApi;
 using ContainerOISimulator;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.Tools.ContainerTracking;
+using Logitude.BL.ShipmentsModel.APIDataContract;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
     public class ShipmentContainersWebServiceController : ApiController
     {
-      
+
 
         public HttpResponseMessage Post(ShipmentContainerSimulator simulator)
         {
@@ -66,20 +67,15 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage PostVisionContainerSimulator(ShipmentContainerSimulator simulator)
+        public HttpResponseMessage PostSimulateGeneralContainerStatus(GeneralContainerStatusSimulatorArgs simulatorArgs)
         {
             try
             {
                 ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
-                ContainerTrackingService containerTrackingService = new ContainerTrackingService();
-                if (simulator.IsFromContainer)
-                {
-                    shipmentContainerSimulator = containerTrackingService.SimulateVizionApiContainerStatus(simulator);
-                }
-                else
-                {
-                    //shipmentContainerSimulator = RunContainerStatusResponseSimulator(simulator);
-                }
+                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService();
+
+                shipmentContainerSimulator = containerTrackingService.SimulateVizionApiContainerStatus(simulatorArgs);
+
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentContainerSimulator);
             }
 

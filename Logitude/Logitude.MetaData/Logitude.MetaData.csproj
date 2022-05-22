@@ -198,6 +198,7 @@
     <None Include="DBScripts\QuoteModel\202202101211_FillConnectedToQuoteField.sxml" />
     <None Include="DBScripts\QuoteModel\202231032230_FillVATAmountsOnQuoteCharges.sxml" />
     <None Include="DBScripts\ShipmentModel\202204191435_AddHorseNameToShipmentsSearchFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202205220940_CreateRequestContainerStatusWorkerRole.sxml" />
     <None Include="DBScripts\ShipmentModel\202208051503_UpdateContainerSearchFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
     <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
