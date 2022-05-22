@@ -45,6 +45,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             shipment.Shipper = this.HandleUnassignedCard(shipment.Shipper, CardsTypes.Shipper.ToString(), customerObjectTableName);
             shipment.Consignee = this.HandleUnassignedCard(shipment.Consignee, CardsTypes.Consignee.ToString(), customerObjectTableName);
             shipment.Customer = this.HandleCustomerUnassignedCard(shipment.Customer, shipment);
+            shipment.ShipperNotExporter = this.HandleUnassignedCard(shipment.ShipperNotExporter, CardsTypes.ShipperNotExporter.ToString(), customerObjectTableName);
+            shipment.ConsigneeNotImporter = this.HandleUnassignedCard(shipment.ConsigneeNotImporter, CardsTypes.ConsigneeNotImporter.ToString(), customerObjectTableName);
 
             return shipment;
         }
@@ -57,6 +59,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             shipment.Shipper = this.HandleUnassignedCard(shipment.Shipper, CardsTypes.Shipper.ToString(), customerObjectTableName);
             shipment.Consignee = this.HandleUnassignedCard(shipment.Consignee, CardsTypes.Consignee.ToString(), customerObjectTableName);
             shipment.Customer = this.HandleCustomerUnassignedCard(shipment.Customer, shipment);
+            //shipment.ShipperNotExporter = this.HandleUnassignedCard(shipment.ShipperNotExporter, CardsTypes.ShipperNotExporter.ToString(), customerObjectTableName);
+            //shipment.ConsigneeNotImporter = this.HandleUnassignedCard(shipment.ConsigneeNotImporter, CardsTypes.ConsigneeNotImporter.ToString(), customerObjectTableName);
 
             return shipment;
         }
@@ -68,6 +72,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 
             shipment.Shipper = this.HandleUnassignedCard(shipment.Shipper, CardsTypes.Shipper.ToString(), customerObjectTableName);
             shipment.Consignee = this.HandleUnassignedCard(shipment.Consignee, CardsTypes.Consignee.ToString(), customerObjectTableName);
+            //shipment.ShipperNotExporter = this.HandleUnassignedCard(shipment.ShipperNotExporter, CardsTypes.ShipperNotExporter.ToString(), customerObjectTableName);
+            //shipment.ConsigneeNotImporter = this.HandleUnassignedCard(shipment.ConsigneeNotImporter, CardsTypes.ConsigneeNotImporter.ToString(), customerObjectTableName);
 
             return shipment;
         }
@@ -78,6 +84,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 
             this.HandleShipmentUnassignedData(shipment.UnassignedShipperAddress, shipmentPM, CardsTypes.Shipper.ToString());
             this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeAddress, shipmentPM, CardsTypes.Consignee.ToString());
+            this.HandleShipmentUnassignedData(shipment.UnassignedShipperNotExporterAddress, shipmentPM, CardsTypes.ShipperNotExporter.ToString());
+            this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeNotImporterAddress, shipmentPM, CardsTypes.ConsigneeNotImporter.ToString());
             this.HandleUnassignedCustomerType(shipmentPM);
 
             return shipmentPM;
@@ -88,6 +96,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             shipmentPM.ShipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
             this.HandleShipmentUnassignedData(shipment.UnassignedShipperAddress, shipmentPM, CardsTypes.Shipper.ToString());
             this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeAddress, shipmentPM, CardsTypes.Consignee.ToString());
+            //this.HandleShipmentUnassignedData(shipment.UnassignedShipperNotExporterAddress, shipmentPM, CardsTypes.ShipperNotExporter.ToString());
+            //this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeNotImporterAddress, shipmentPM, CardsTypes.ConsigneeNotImporter.ToString());
             this.HandleUnassignedCustomerType(shipmentPM);
 
             return shipmentPM;
@@ -98,6 +108,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             shipmentPM.ShipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
             this.HandleShipmentUnassignedData(shipment.UnassignedShipperAddress, shipmentPM, CardsTypes.Shipper.ToString());
             this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeAddress, shipmentPM, CardsTypes.Consignee.ToString());
+            //this.HandleShipmentUnassignedData(shipment.UnassignedShipperNotExporterAddress, shipmentPM, CardsTypes.ShipperNotExporter.ToString());
+            //this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeNotImporterAddress, shipmentPM, CardsTypes.ConsigneeNotImporter.ToString());
 
             return shipmentPM;
         }
@@ -138,8 +150,15 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 
             if (this.CardTypeSameAsCustomerCode == CardsTypes.Shipper.ToString())
                 card.Code = shipment?.Shipper?.Code;
+
             else if (this.CardTypeSameAsCustomerCode == CardsTypes.Consignee.ToString())
                 card.Code = shipment?.Consignee?.Code;
+
+            else if (this.CardTypeSameAsCustomerCode == CardsTypes.ShipperNotExporter.ToString())
+                card.Code = shipment?.ShipperNotExporter?.Code;
+
+            else if (this.CardTypeSameAsCustomerCode == CardsTypes.ConsigneeNotImporter.ToString())
+                card.Code = shipment?.ConsigneeNotImporter?.Code;
 
             return card;
         }
@@ -193,7 +212,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             return objectTableId;
         }
 
-        private void HandleShipmentUnassignedData(Address shipperAddress, ShipmentPM shipmentPM, string cardtype)
+        private void HandleShipmentUnassignedData(Address address, ShipmentPM shipmentPM, string cardtype)
         {
             if (!this.HasUnassignedData)
                 return;
@@ -204,7 +223,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             if (string.IsNullOrEmpty(ReceivedCodes[cardtype]))
                 return;
 
-            shipmentPM.ShipmentUnassignedFields.Add(this.GetShipmentUnassignedField(shipperAddress, cardtype));
+            shipmentPM.ShipmentUnassignedFields.Add(this.GetShipmentUnassignedField(address, cardtype));
         }
 
         private ShipmentUnassignedFieldPM GetShipmentUnassignedField(Address address, string cardtype)
@@ -242,9 +261,20 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             {
                 shipmentPM.ShipmentCustomerTypeCode = "SHI";
             }
+
             else if (this.CardTypeSameAsCustomerCode == CardsTypes.Consignee.ToString())
             {
                 shipmentPM.ShipmentCustomerTypeCode = "CON";
+            }
+
+            else if (this.CardTypeSameAsCustomerCode == CardsTypes.ShipperNotExporter.ToString())
+            {
+                shipmentPM.ShipmentCustomerTypeCode = "SNE";
+            }
+
+            else if (this.CardTypeSameAsCustomerCode == CardsTypes.ConsigneeNotImporter.ToString())
+            {
+                shipmentPM.ShipmentCustomerTypeCode = "CNI";
             }
         }
     }
@@ -252,7 +282,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
     public enum CardsTypes
     {
         Shipper,
-        Consignee
+        Consignee,
+        ShipperNotExporter,
+        ConsigneeNotImporter,
     }
-
 }
