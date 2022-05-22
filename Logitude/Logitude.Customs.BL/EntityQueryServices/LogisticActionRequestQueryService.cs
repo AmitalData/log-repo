@@ -41,10 +41,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
             repo.SubmitChanges();
         }
 
-        public bool GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType)
-        {
-            return new LogisticActionRequestRepository(Tenant).GetExistByCargoKey(id, cargoIdentifierKey1, cargoIdentifierKey2, cargoIdentifierKey3, cargoIdentifierType);
-            
-        }
     }
 }
