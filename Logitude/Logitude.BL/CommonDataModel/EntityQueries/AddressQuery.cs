@@ -346,6 +346,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   where a.Tenant == tenant
                                     && a.CardId == cardId
                                   && a.AddressTypeId.ToUpper() == typeId.ToUpper()
+                                  &&!a.InActive
                                   select a).FirstOrDefault();
 
             if (entityPOCO != null)
