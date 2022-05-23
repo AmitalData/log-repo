@@ -70,7 +70,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void EnsureAbilityToCreateClosingJournal()
         {
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-            var canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, tenant);
+            var canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, tenant);
             if (!canHaveClosingJournal)
                 throw new ApplicationException(TranslateTextsClass.Translate("TaxReport.O.ClosingJournalValidationMessage",tenant));
         }
