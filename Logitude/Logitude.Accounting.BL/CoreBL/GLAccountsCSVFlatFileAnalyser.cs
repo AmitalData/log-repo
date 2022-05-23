@@ -329,29 +329,53 @@ namespace Logitude.Accounting.BL.CoreBL
                | gLAccountPM.DisplayNumber != cleanGLAccountPM.DisplayNumber
                | gLAccountPM.ExternalDisplayNumber != cleanGLAccountPM.ExternalDisplayNumber
                | gLAccountPM.IsMultiCurrency != cleanGLAccountPM.IsMultiCurrency
+
                | gLAccountPM.CurrencyCode != cleanGLAccountPM.CurrencyCode
                | gLAccountPM.CurrencyId != cleanGLAccountPM.CurrencyId
                | gLAccountPM.ChartOfAccountsId != cleanGLAccountPM.ChartOfAccountsId
                | gLAccountPM.ChartOfAccountsTypeCode != cleanGLAccountPM.ChartOfAccountsTypeCode
+
                | gLAccountPM.AccountTypeCode != cleanGLAccountPM.AccountTypeCode
                | gLAccountPM.RevenueExpenseType != cleanGLAccountPM.RevenueExpenseType
                | gLAccountPM.EnglishName != cleanGLAccountPM.EnglishName
                | gLAccountPM.LocalName != cleanGLAccountPM.LocalName
+
                | gLAccountPM.IsVATExempt != cleanGLAccountPM.IsVATExempt
                | gLAccountPM.ReconcileMethodCode != cleanGLAccountPM.ReconcileMethodCode;
             return rv;
         }
 
-        public static T DeepCopy<T>(T other)
+        public GLAccountPM DeepCopy(GLAccountPM other)
         {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Context = new StreamingContext(StreamingContextStates.Clone);
-                formatter.Serialize(ms, other);
-                ms.Position = 0;
-                return (T)formatter.Deserialize(ms);
-            }
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    BinaryFormatter formatter = new BinaryFormatter();
+            //    formatter.Context = new StreamingContext(StreamingContextStates.Clone);
+            //    formatter.Serialize(ms, other);
+            //    ms.Position = 0;
+            //    return (GLAccountPM)formatter.Deserialize(ms);
+            //}
+            GLAccountPM gLAccCopy = new GLAccountPM();
+
+            gLAccCopy.InternalNumber = other.InternalNumber;
+            gLAccCopy.DisplayNumber = other.DisplayNumber;
+            gLAccCopy.ExternalDisplayNumber = other.ExternalDisplayNumber;
+            gLAccCopy.IsMultiCurrency = other.IsMultiCurrency;
+
+            gLAccCopy.CurrencyCode = other.CurrencyCode;
+            gLAccCopy.CurrencyId = other.CurrencyId;
+            gLAccCopy.ChartOfAccountsId = other.ChartOfAccountsId;
+            gLAccCopy.ChartOfAccountsTypeCode = other.ChartOfAccountsTypeCode;
+
+            gLAccCopy.AccountTypeCode = other.AccountTypeCode;
+            gLAccCopy.RevenueExpenseType = other.RevenueExpenseType;
+            gLAccCopy.EnglishName = other.EnglishName;
+            gLAccCopy.LocalName = other.LocalName;
+
+            gLAccCopy.IsVATExempt = other.IsVATExempt;
+            gLAccCopy.ReconcileMethodCode = other.ReconcileMethodCode;
+
+            return (gLAccCopy);
         }
 
         static string ConvertFromDosHebrewToWinHebrew(string FileContent862)
