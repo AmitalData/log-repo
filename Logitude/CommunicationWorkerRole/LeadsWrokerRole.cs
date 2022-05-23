@@ -58,7 +58,7 @@ namespace CommunicationWorkerRole
     public class LeadsWrokerRole : WorkerEntryPoint
     {
         private LogitudeLeadRepository leadRepository = null;
-
+        private UserRepository userRepository;
         public override void Run()
         {
 
@@ -192,6 +192,7 @@ namespace CommunicationWorkerRole
              LogitudeLead lead = GetLogitudeLeads(commLog);
             if (lead != null && lead.StatusCode == "InProgress" && (lead.IsEmailVerified || (lead.IsEmailVerified == false && lead.IsSentToCustomer == false)))
             {
+                lead.LeadSource = "";
                 CreateTenant(lead);
             }
 
@@ -240,7 +241,7 @@ namespace CommunicationWorkerRole
 
                 ICommonDataContext commonContext = CommonDataContext.GetContext(crmTenant);
 
-                UserRepository userRepository = new UserRepository(demoTenant);
+                userRepository = new UserRepository(demoTenant);
                 UserQuery userQuery = new UserQuery(userRepository);
                 BranchRepository branchRepository = new BranchRepository(demoTenant);
                 DepartmentRepository departmentRepository = new DepartmentRepository(demoTenant);
@@ -297,7 +298,7 @@ namespace CommunicationWorkerRole
 
 
                         HtmlTemplate.Append("<div style='text-align:left'>");
-                        HtmlTemplate.Append("Dear " + leadContact.EnglishName + ", " + (!string.IsNullOrEmpty(lead.CompanyName) && lead.CompanyName != "Unassigned" ? lead.CompanyName : ""));// " (" + lead.Country + ")");
+                        HtmlTemplate.Append("Dear " + leadContact.EnglishName);
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("Thank you for your interest in Logitude World, the first Freight Forwarding solution built in the cloud.");
                         HtmlTemplate.Append("<br /><br />");
@@ -806,8 +807,8 @@ namespace CommunicationWorkerRole
 
         private void SendPasswordEmailToUser(int demoTenant, int crmTenant, User ownerUser, LogitudeLead lead, ObjectTable table, StringBuilder HtmlTemplate, UserPM createdUser)
         {
-            HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;color:#4472C4'>");
-            HtmlTemplate.Append("Dear " + lead.ContactName + " , " + lead.CompanyName + " (" + lead.Country + ") ");
+            HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;'>");
+            HtmlTemplate.Append("Dear " + lead.ContactName);
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Thank you for verifying your account!");
             HtmlTemplate.Append("<br /><br />");
@@ -830,13 +831,6 @@ namespace CommunicationWorkerRole
 
 
             HtmlTemplate.Append("<a href='https://logitudeworld.com/wp-content/uploads/2019/09/getting_around.pdf'>https://logitudeworld.com/wp-content/uploads/2019/09/getting_around.pdf</a>");
-            HtmlTemplate.Append("<br /><br />");
-
-            HtmlTemplate.Append("The demo environment provides access to majority of Logitude modules, including the e-AWB module, which was also designed to be run as a stand-alone application.");
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("Please use the following link for a Quick Tour Guide of the e-AWB module:");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<a href='https://logitudeworld.com/wp-content/uploads/2021/01/eawb_quicktour.pdf'>https://logitudeworld.com/wp-content/uploads/2021/01/eawb_quicktour.pdf</a>");
 
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("If you want to explore our Logitude World in more detail, we can create a private environment for you. To get the 30-days free trial Please let us know.");
@@ -1230,6 +1224,8 @@ namespace CommunicationWorkerRole
                 EmailBody = emailbody,
                 Tenant = crmTenant,
                 IsBodySecured = isBodySecured,
+                LoggingUserId = GetCrmUserId(crmTenant),
+
             };
             Communications.AddEmailCommunicationLogQueue(emailParams, crmTenant);
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
@@ -1242,6 +1238,14 @@ namespace CommunicationWorkerRole
 
             SendHtmlDocumentForOpportunity(messageByte, messagetxtByte, crmTenant, parameters.To, parameters.Subject, parameters.Cc, parameters.Bcc, ownerUser.Id, lead.OpportunityId, lead.CustomerId, table.Id, null, null);
         }
+
+        private string GetCrmUserId(int crmTenant)
+        {
+            if (LogitudeSettings.DeploymentStage != "Simplog") return null;
+            var crmUserEmail = "info@logitudeworld.com";
+            return userRepository.GetSingleUserByEmail(crmUserEmail, crmTenant, false)?.Id;
+        }
+
         private void BuildOpportunitySearchFields(Opportunity entity)
         {
             string result = "";
