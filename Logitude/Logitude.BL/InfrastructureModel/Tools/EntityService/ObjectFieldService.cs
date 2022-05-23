@@ -579,7 +579,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             return FeatureToggleHelper.HasFeatureToggle("CTL", theEntityPm.Tenant) &&
                 theEntityPm.ObjectTableId.Equals(ObjectTableQuery.GetObjectTableByCode("Shipment", theEntityPm.Tenant)?.Id) &&
-                theEntityPm.IsCustom.Equals(true) && theEntityPm.DataTypeCode != "LookUp";
+                theEntityPm.IsCustom.Equals(true);
         }
 
         private void AddKafkaQueueMessage()

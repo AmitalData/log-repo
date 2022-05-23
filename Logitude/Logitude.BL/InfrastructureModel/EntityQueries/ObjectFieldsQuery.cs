@@ -358,14 +358,20 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<ObjectFieldPM> GetCustomFieldsByTableIdForCTool(string tableId, int tenant)
         {
-            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable")
-                                                                                         .Include("TextCode")
+            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable")
+                                                                                         .Include("FullNameTextCode")
+                                                                                         .Include("ShortNameTextCode")
+                                                                                         .Include("ListTextCode")
+                                                                                         .Include("HelpTextCode")
+                                                                                         .Include("ObjectTable")
+                                                                                         .Include("ObjectTable_MultiTable")
+
                                                 where a.Tenant == tenant
                                                 && a.ObjectTableId == tableId
-                                                && (a.DataTypeCode != "LookUp")
                                                 && a.IsCustom == true && a.InActive == false
                                                 select new ObjectFieldPM()
                                                 {
+                                                    IsMaxLength = a.IsMaxLength,
                                                     AutomaticField = a.AutomaticField,
                                                     CanFilter = a.CanFilter,
                                                     ConverterName = a.ConverterName,
@@ -409,6 +415,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     SystemRequired = a.SystemRequired,
                                                     Tenant = a.Tenant,
                                                     UniqueField = a.UniqueField,
+                                                    ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
+                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
+                                                    ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
+                                                    HelpTextCodeCode = a.HelpTextCodeCode,
+                                                    ListTextCodeCode = a.ListTextCodeCode,
+                                                    ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
+                                                    ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
+                                                    HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
                                                     ValidForQuerySection2 = a.ValidForQuerySection2,
                                                     ValidForQuerySection1 = a.ValidForQuerySection1,
                                                     IsRestrictable = a.IsRestrictable,
@@ -431,7 +447,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     NumberOfDigits = a.NumberOfDigits,
                                                     DependencyFilter1IsList = a.DependencyFilter1IsList,
                                                     DependencyFilter2IsList = a.DependencyFilter2IsList,
-                                                    IsMaxLength = a.IsMaxLength,
+                                                    FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
                                                     AllowedinAutomationConditions = a.AllowedinAutomationConditions,
                                                     AutomationEmailRecipient = a.AutomationEmailRecipient,
                                                     AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
@@ -455,13 +471,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    FullNameTextCodeDefaultText = a.FullNameTextCode.DefaultText
-
                                                 }).ToList();
 
             return objectFields;
