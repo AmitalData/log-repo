@@ -102,10 +102,11 @@
                     <table>
                         <tr class="SimpleGridHeaderRow">
                             <td style="width: 25px; max-width: 25px;padding-right: 4px;"></td>
-                            <td style="width: 130px; max-width: 130px;padding-right: 4px;">Container Type</td>
+                            <td *ngIf="!IsPackageList" style="width: 130px; max-width: 130px;padding-right: 4px;">Container Type</td>
+                            <td *ngIf="IsPackageList" style="width: 130px; max-width: 130px;padding-right: 4px;">Package Type</td>
                             <td style="width: 80px; max-width: 80px;padding-right: 4px;">Pieces</td>
-                            <td style="width: 140px; max-width: 140px;padding-right: 4px;">Container #</td>
-                            <td style="width: 80px; max-width: 80px;padding-right: 4px;">Seal</td>
+                            <td *ngIf="!IsPackageList" style="width: 140px; max-width: 140px;padding-right: 4px;">Container #</td>
+                            <td *ngIf="!IsPackageList" style="width: 80px; max-width: 80px;padding-right: 4px;">Seal</td>
                             <td style="width: 90px; max-width: 90px;padding-right: 4px;">Volume</td>
                             <td style="width: 90px; max-width: 90px;padding-right: 4px;">Gross Weight</td>
                             <td></td>
@@ -132,11 +133,11 @@
                                     {{item.Quantity}}
                                 </td>
 
-                                <td class="CellStretched  TextTrimming" style="width: 140px; max-width: 140px;padding-left: 4px;">
+                                <td *ngIf="!IsPackageList" class="CellStretched  TextTrimming" style="width: 140px; max-width: 140px;padding-left: 4px;">
                                     {{item.ContainerNumber}}
                                 </td>
 
-                                <td class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
+                                <td *ngIf="!IsPackageList" class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
                                     {{item.ShipperSeal}}
                                 </td>
 
@@ -180,11 +181,11 @@
                                     {{item.Quantity}}
                                 </td>
 
-                                <td class="CellStretched  TextTrimming" style="width: 140px; max-width: 140px;padding-left: 4px;">
+                                <td *ngIf="!IsPackageList" class="CellStretched  TextTrimming" style="width: 140px; max-width: 140px;padding-left: 4px;">
                                     {{item.ContainerNumber}}
                                 </td>
 
-                                <td class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
+                                <td *ngIf="!IsPackageList" class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
                                 </td>
 
                                 <td class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; padding-left: 4px;">
