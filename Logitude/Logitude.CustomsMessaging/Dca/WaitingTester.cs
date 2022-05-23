@@ -24,7 +24,7 @@ namespace Logitude.CustomsMessaging.Dca
                 var messageRestoreRequestParams= new MessageRestoreRequestParams
                 {
                     //SuppressSplitWR = true,
-                    Tenant = 1,
+                    Tenant = 6,
                     FromDate = DateTime.Now.AddHours(-15),
                     ToDate = DateTime.Now,
                     InterfaceManagementsCode = "2470",
@@ -37,12 +37,15 @@ namespace Logitude.CustomsMessaging.Dca
                 var messageWaitingRequestParams = new MessageWaitingRequestParams
                 {
                     //SuppressSplitWR = true,
-                    Tenant = 1,
-                    FromDate = DateTime.Now.AddDays(-5),
+                    Tenant = 6,
+                    FromDate = DateTime.Now.AddDays(-1),
                     ToDate = DateTime.Now,
                     InterfaceManagementsCode = "2470",
-                    RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceBatch
+                    //InterfaceManagementsCode= "SendDF_MSG2470_ReleaseGoodsMessage_Out.",
+                    //RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceBatch
+                    RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceInteractive
                 };
+
                 var res = o.Send(messageWaitingRequestParams);
 
             }
