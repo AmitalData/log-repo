@@ -121,9 +121,17 @@ export class CustomsDocumentTicketViewModel {
     _SInvoiceNumber: string = null;
     _IsClassified: boolean = false;
     private EntityResourceService: EntityResourceService;
+    private readonly customDocumentNewVersionService: CustomDocumentNewVersionService = new CustomDocumentNewVersionService();
     //*****************************************//
-    constructor(public customsDocumentsTicketPM: CustomsDocumentsTicketPM, customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[],
-        private isNew: boolean, public isDisplayOnly: boolean, public EntityPM: any, private objectTableName: string, private iCustomsDocumentsController: ICustomsDocumentsController) {
+    constructor(
+        public customsDocumentsTicketPM: CustomsDocumentsTicketPM, 
+        customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[], 
+        private isNew: boolean, 
+        public isDisplayOnly: boolean, 
+        public EntityPM: any, 
+        private objectTableName: string, 
+        private iCustomsDocumentsController: ICustomsDocumentsController,        
+        ) {
         this.EntityResourceService = new EntityResourceService();
         if (customsDocumentMetaDataValuePMs != null) {
             this.customsDocumentMetaDataValuePMs = customsDocumentMetaDataValuePMs.filter(d => d.CustomsDocumentId == customsDocumentsTicketPM.DocumentsFilingId);
@@ -232,7 +240,7 @@ export class CustomsDocumentTicketViewModel {
         });
         var leading: MetaDataValueViewModel = this.metaDataList.filter(d => d.IsLeading)[0];
         if (leading) {
-            this.LeadingMetaDataValue = leading.MetaDataValue == "True" ? "כן" : (leading.MetaDataValue == "False" ? "לא" : leading.MetaDataValue);
+            this.LeadingMetaDataValue = leading.MetaDataValue == "True" ? "כן" : (leading.MetaDataValue == "False" ? "לם" : leading.MetaDataValue);
             this.LeadingMetaDataName = leading.MetaDataTypeName;
         }
         else if (this.customDocumentTypeMetaDataLists != null) {
@@ -287,7 +295,7 @@ export class CustomsDocumentTicketViewModel {
             var leading: CustomDocumentTypeMetaDataList = this.customDocumentTypeMetaDataLists.filter(d => d.IsLeading && d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
             if (leading) {
                 var leadingValue: CustomsDocumentMetaDataValuePM = this.customsDocumentMetaDataValuePMs.filter(d => d.MetaDataTypeCode == leading.MetaDataTypeCode)[0];
-                this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "כן" : (leadingValue.MetaDataValue == "False" ? "לא" : leadingValue.MetaDataValue)) : null;
+                this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "כן" : (leadingValue.MetaDataValue == "False" ? "לם" : leadingValue.MetaDataValue)) : null;
                 this.LeadingMetaDataName = leading.MetaDataTypeName;
             }
             else if (this.customDocumentTypeMetaDataLists != null) {
@@ -296,7 +304,7 @@ export class CustomsDocumentTicketViewModel {
                 leading = types.filter(d => d.Mandatory && d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
                 if (leading != null) {
                     var leadingValue: CustomsDocumentMetaDataValuePM = this.customsDocumentMetaDataValuePMs.filter(d => d.MetaDataTypeCode == leading.MetaDataTypeCode)[0];
-                    this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "כן" : (leadingValue.MetaDataValue == "False" ? "לא" : leadingValue.MetaDataValue)) : null;
+                    this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "כן" : (leadingValue.MetaDataValue == "False" ? "לם" : leadingValue.MetaDataValue)) : null;
                     this.LeadingMetaDataName = leading.MetaDataTypeName;
                 }
             }
@@ -426,7 +434,7 @@ export class CustomsDocumentTicketViewModel {
             messageWindow.Width = 400;
             messageWindow.Height = 200;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים");
+            messageWindow.Show("ההצהרה כבר הוגשה - לם ניתן לקשר מסמכים חדשים");
             messageWindow.WindowClosed.subscribe((event: any) => {
 
                 messageWindow.Close();
@@ -710,6 +718,30 @@ export class CustomsDocumentTicketViewModel {
                     this.customsDocumentMetaDataValuePMs.push(item);
                 }
             }
+
+
+    async ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {    
+        if (relatedDocumentViewModel == null || await this.checkFileBiggerFrom200MB(relatedDocumentViewModel)) return;
+
+        if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == null)
+            relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
+
+        if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)
+            this.connectDocument(relatedDocumentViewModel);
+
+        else if (!relatedDocumentViewModel.CustomDocument.CustomsDocId) {
+            relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
+            this.connectDocument(relatedDocumentViewModel);
+
+        } else if (!relatedDocumentViewModel.CustomDocument.DeclarationId) {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            const accept: boolean = await this.confirmConnectionDiffrentDocTypeMsg();
+            
+            if (accept) {
+                relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
+                await this.customDocumentNewVersionService.NewVersion(relatedDocumentViewModel.CustomDocument);
+                SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+                this.connectDocument(relatedDocumentViewModel);
         }
     }
 
@@ -821,7 +853,7 @@ export class CustomsDocumentTicketViewModel {
         if (this.customsDocumentsTicketPM.DocumentStatusCode == "8") {
             //var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
             //if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-            var message = ".לא ניתן לנתק מסמך בתהליך אימות";
+            var message = ".לם ניתן לנתק מסמך בתהליך םימות";
             //}
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
@@ -839,7 +871,7 @@ export class CustomsDocumentTicketViewModel {
         else if (this.customsDocumentsTicketPM.VerificationStatusTypeCode == "4" || this.customsDocumentsTicketPM.VerificationStatusTypeCode == "5" || this.customsDocumentsTicketPM.VerificationStatusTypeCode == "6") {
             //var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
             //if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-            var message = ".לא ניתן לנתק מסמך אומת/נדחה";
+            var message = ".לם ניתן לנתק מסמך םומת/נדחה";
             //}
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
@@ -861,7 +893,7 @@ export class CustomsDocumentTicketViewModel {
                         if (this.isDisplayOnly) {
                             var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
                             if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-                                message = ".לא ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד";
+                                message = ".לם ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד";
                             }
                             var confirmWindow = new ConfirmWindow();
                             confirmWindow.Width = 400;
@@ -892,7 +924,7 @@ export class CustomsDocumentTicketViewModel {
                         else {
                             var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
                             if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-                                message = "לא ניתן לנתק מסמך נדרש – קיימת בקשה בתהליך";
+                                message = "לם ניתן לנתק מסמך נדרש – קיימת בקשה בתהליך";
                             }
                             var confirmWindow = new ConfirmWindow();
                             confirmWindow.Width = 400;
@@ -912,7 +944,7 @@ export class CustomsDocumentTicketViewModel {
                         if (response.Result.IsDisplayOnly) {
                             var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
                             if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-                                message = ".לא ניתן לנתק מסמך עם בקשה בתהליך";
+                                message = ".לם ניתן לנתק מסמך עם בקשה בתהליך";
                             }
                             var confirmWindow = new ConfirmWindow();
                             confirmWindow.Width = 400;
@@ -944,25 +976,25 @@ export class CustomsDocumentTicketViewModel {
             var entitySpecialCondition = this.iCustomsDocumentsController.GetAddEditDocumentsEntitySpecialCondition();
             if ((this.isDisplayOnly || !entitySpecialCondition) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {//(Regular doc in a paid declaration) or just disabled declaration
                 applyDisconnect = false;
-                message = "ההצהרה לתצוגה בלבד - לא ניתן לנתק מסמכים";
+                message = "ההצהרה לתצוגה בלבד - לם ניתן לנתק מסמכים";
             }
             if (this.isDisplayOnly && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.CustomsDocId)) {//(Regular doc that was already sent to customs)
                 applyDisconnect = false;
-                message = ".לא ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד";
+                message = ".לם ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד";
             }
 
             if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {//(Requested doc that was verified/denied/in verification process)
                 applyDisconnect = false;
-                message = ".לא ניתן לנתק מסמך אומת/נדחה/בתהליך אימות";
+                message = ".לם ניתן לנתק מסמך םומת/נדחה/בתהליך םימות";
             }
 
             if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {//Requested Doc that wasn't send to customs for verification allow disconnect according to design.
                 applyDisconnect = true;
-                //message = "לא ניתן לנתק מסמך נדרש – קיימת בקשה בתהליך";
+                //message = "לם ניתן לנתק מסמך נדרש – קיימת בקשה בתהליך";
             }
             if (this.customsDocumentsTicketPM.DocumentStatusCode == '7') {
                 applyDisconnect = false;
-                message = "לא ניתן לנתק את המסמך - קיימת בקשה בתהליך";
+                message = "לם ניתן לנתק םת המסמך - קיימת בקשה בתהליך";
             }
         }
         if (applyDisconnect) {
@@ -1146,7 +1178,7 @@ export class CustomsDocumentTicketViewModel {
             messageWindow.Width = 400;
             messageWindow.Height = 200;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים");
+            messageWindow.Show("ההצהרה כבר הוגשה - לם ניתן לקשר מסמכים חדשים");
             messageWindow.WindowClosed.subscribe((event: any) => {
 
                 messageWindow.Close();
