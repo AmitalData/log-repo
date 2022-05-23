@@ -33,6 +33,8 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
     public IsInlandDomestic: boolean = false;
     public IsShipperVisible: boolean = false;
     public IsConsigneeVisible: boolean = false;
+    public IsShipperNotExporterVisible: boolean = false;
+    public IsConsigneeNotImporterVisible: boolean = false;
     private customerObjecTableId: string;
     constructor() {
         super();
@@ -64,15 +66,35 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
             });
         }
 
+        if (this.IsShipperNotExporterVisible) {
+            this.myAddressListService.getSingle(this.EntityPM.ShipperNotExporterAddressId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.ShipperNotExporterAddressList = myResponse.Result;
+                }
+            });
+        }
+
+        if (this.IsConsigneeNotImporterVisible) {
+            this.myAddressListService.getSingle(this.EntityPM.ConsigneeNotImporterAddressId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.ConsigneeNotImporterAddressList = myResponse.Result;
+                }
+            });
+        }
+
         this.Clone();
     }
 
     SetUIProperties() {
         this.IsShipperVisible = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "Shipper" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0;
         this.IsConsigneeVisible = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "Consignee" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0;
+        this.IsShipperNotExporterVisible = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "ShipperNotExporter" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0;
+        this.IsConsigneeNotImporterVisible = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "ConsigneeNotImporter" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0;
 
         this.UIProperties.SetEnabled("ShipperName", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ConsigneeName", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ShipperNotExporterName", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ConsigneeNotImporterName", this.ObjectTableName, false);
     }
 
     private RefreshPartnerTab() {
@@ -111,6 +133,8 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
             }
         });
     }
+
+    //Shipper
     get ShipperName() { return this.EntityPM.ShipperName; }
     public ShipperAddressList: AddressList;
     private updatedShipperId: string;
@@ -188,6 +212,7 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
         this.myShipperAddressList = newValue;
     }
 
+    //Consignee
     get ConsigneeName() { return this.EntityPM.ConsigneeName; }
     public ConsigneeAddressList: AddressList;
     private updatedConsigneeId: string;
@@ -200,9 +225,9 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
     }
 
     private consigneeCard: CardList;
-    private OnConsigneeChanged() {       
+    private OnConsigneeChanged() {
         if (AppTool.IsNullOrEmpty(this.UpdatedConsigneeId)) {
-            this.SetConsigneeFields();            
+            this.SetConsigneeFields();
         }
 
         else {
@@ -211,7 +236,7 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
                     this.consigneeCard = myResponse.Result;
                     if (this.consigneeCard) {
                         this.UpdatedConsigneeAddressId = this.consigneeCard.MainAddressId;
-                        this.UpdatedConsigneeContactId = this.consigneeCard.PrimaryContactId;                        
+                        this.UpdatedConsigneeContactId = this.consigneeCard.PrimaryContactId;
                     }
                 }
             });
@@ -244,7 +269,7 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
             }
 
             else {
-                this.LoadAddress(newValue, "C");                
+                this.LoadAddress(newValue, "C");
             }
         }
     }
@@ -261,7 +286,147 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
     get UpdatedConsigneeAddressList() { return this.myConsigneeAddressList; }
     set UpdatedConsigneeAddressList(newValue: AddressList) {
         this.myConsigneeAddressList = newValue;
-    }   
+    }    
+
+    //ShipperNotExporter
+    get ShipperNotExporterName() { return this.EntityPM.ShipperNotExporterName; }
+    public ShipperNotExporterAddressList: AddressList;
+    private updatedShipperNotExporterId: string;
+    get UpdatedShipperNotExporterId() { return this.updatedShipperNotExporterId; }
+    set UpdatedShipperNotExporterId(newValue: string) {
+        if (this.updatedShipperNotExporterId != newValue) {
+            this.updatedShipperNotExporterId = newValue;
+            this.OnShipperNotExporterChanged();
+        }
+    }
+
+    private shipperNotExporterCard: CardList;
+    private OnShipperNotExporterChanged() {
+        if (AppTool.IsNullOrEmpty(this.UpdatedShipperNotExporterId)) {
+            this.SetShipperNotExporterFields();
+        }
+
+        else {
+            this.myCardListService.getSingle(this.UpdatedShipperNotExporterId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.shipperNotExporterCard = myResponse.Result;
+                    if (this.shipperNotExporterCard) {
+                        this.UpdatedShipperNotExporterAddressId = this.shipperNotExporterCard.MainAddressId;
+                        this.UpdatedShipperNotExporterContactId = this.shipperNotExporterCard.PrimaryContactId;
+                    }
+                }
+            });
+        }
+    }
+
+    private SetShipperNotExporterFields() {
+        this.EntityPM.ShipperNotExporterContactId = null;
+        this.EntityPM.ShipperNotExporterName = null;
+        this.EntityPM.ShipperNotExporterNote = null;
+        this.EntityPM.ShipperNotExporterReference1 = null;
+        this.EntityPM.ShipperNotExporterReference2 = null;
+        this.EntityPM.KnownConsignorNumber = null;
+        this.EntityPM.KCExpirationDate = null;
+        this.UpdatedShipperNotExporterAddressId = null;
+    }
+
+    private updatedShipperNotExporterAddressId: string;
+    get UpdatedShipperNotExporterAddressId() { return this.updatedShipperNotExporterAddressId; }
+    set UpdatedShipperNotExporterAddressId(newValue: string) {
+        if (this.updatedShipperNotExporterAddressId != newValue) {
+            this.updatedShipperNotExporterAddressId = newValue;
+
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.UpdatedShipperNotExporterAddressList = null;
+            }
+
+            else {
+                this.LoadAddress(newValue, "SNE");
+            }
+        }
+    }
+
+    private updatedShipperNotExporterContactId: string;
+    get UpdatedShipperNotExporterContactId() { return this.updatedShipperNotExporterContactId; }
+    set UpdatedShipperNotExporterContactId(newValue: string) {
+        if (this.updatedShipperNotExporterContactId != newValue) {
+            this.updatedShipperNotExporterContactId = newValue;
+        }
+    }
+
+    private myShipperNotExporterAddressList: AddressList;
+    get UpdatedShipperNotExporterAddressList() { return this.myShipperNotExporterAddressList; }
+    set UpdatedShipperNotExporterAddressList(newValue: AddressList) {
+        this.myShipperNotExporterAddressList = newValue;
+    }
+
+    //ConsigneeNotImporter
+    get ConsigneeNotImporterName() { return this.EntityPM.ConsigneeNotImporterName; }
+    public ConsigneeNotImporterAddressList: AddressList;
+    private updatedConsigneeNotImporterId: string;
+    get UpdatedConsigneeNotImporterId() { return this.updatedConsigneeNotImporterId; }
+    set UpdatedConsigneeNotImporterId(newValue: string) {
+        if (this.updatedConsigneeNotImporterId != newValue) {
+            this.updatedConsigneeNotImporterId = newValue;
+            this.OnConsigneeNotImporterChanged();
+        }
+    }
+
+    private consigneeNotImporterCard: CardList;
+    private OnConsigneeNotImporterChanged() {
+        if (AppTool.IsNullOrEmpty(this.UpdatedConsigneeNotImporterId)) {
+            this.SetConsigneeNotImporterFields();
+        }
+
+        else {
+            this.myCardListService.getSingle(this.UpdatedConsigneeNotImporterId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.consigneeNotImporterCard = myResponse.Result;
+                    if (this.consigneeNotImporterCard) {
+                        this.UpdatedConsigneeNotImporterAddressId = this.consigneeNotImporterCard.MainAddressId;
+                        this.UpdatedConsigneeNotImporterContactId = this.consigneeNotImporterCard.PrimaryContactId;
+                    }
+                }
+            });
+        }
+    }
+
+    private SetConsigneeNotImporterFields() {
+        this.EntityPM.ConsigneeNotImporterContactId = null;
+        this.EntityPM.ConsigneeNotImporterName = null;
+        this.EntityPM.ConsigneeNotImporterNote = null;
+        this.UpdatedConsigneeNotImporterAddressId = null;
+    }
+
+    private updatedConsigneeNotImporterAddressId: string;
+    get UpdatedConsigneeNotImporterAddressId() { return this.updatedConsigneeNotImporterAddressId; }
+    set UpdatedConsigneeNotImporterAddressId(newValue: string) {
+        if (this.updatedConsigneeNotImporterAddressId != newValue) {
+            this.updatedConsigneeNotImporterAddressId = newValue;
+
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.UpdatedConsigneeNotImporterAddressList = null;
+            }
+
+            else {
+                this.LoadAddress(newValue, "CNI");
+            }
+        }
+    }
+
+    private updatedConsigneeNotImporterContactId: string;
+    get UpdatedConsigneeNotImporterContactId() { return this.updatedConsigneeNotImporterContactId; }
+    set UpdatedConsigneeNotImporterContactId(newValue: string) {
+        if (this.updatedConsigneeNotImporterContactId != newValue) {
+            this.updatedConsigneeNotImporterContactId = newValue;
+        }
+    }
+
+    private myConsigneeNotImporterAddressList: AddressList;
+    get UpdatedConsigneeNotImporterAddressList() { return this.myConsigneeNotImporterAddressList; }
+    set UpdatedConsigneeNotImporterAddressList(newValue: AddressList) {
+        this.myConsigneeNotImporterAddressList = newValue;
+    }
 
     LoadAddress(addressId: string, partner: string) {
         this.myAddressListService.getSingle(addressId).subscribe((myResponse: ServiceResponse) => {
@@ -272,6 +437,14 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
 
                 else if (partner == "C") {
                     this.UpdatedConsigneeAddressList = myResponse.Result;
+                }
+
+                else if (partner == "SNE") {
+                    this.UpdatedShipperNotExporterAddressList = myResponse.Result;
+                }
+
+                else if (partner == "CNI") {
+                    this.UpdatedConsigneeNotImporterAddressList = myResponse.Result;
                 }
             }
         });
@@ -286,7 +459,10 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
                 var title = "New " + myPartnerCode;
                 var isShipperMyCustomer: boolean = this.EntityPM.ShipmentCustomerTypeCode == "SHI" ? true : false;
                 var isConsigneeMyCustomer: boolean = this.EntityPM.ShipmentCustomerTypeCode == "CON" ? true : false;
-                var isCustomer = isShipperMyCustomer || isConsigneeMyCustomer;
+                var isShipperNotExportnerMyCustomer: boolean = this.EntityPM.ShipmentCustomerTypeCode == "SNE" ? true : false;
+                var isConsigneeNotImporterMyCustomer: boolean = this.EntityPM.ShipmentCustomerTypeCode == "CNI" ? true : false;
+
+                var isCustomer = isShipperMyCustomer || isConsigneeMyCustomer || isShipperNotExportnerMyCustomer || isConsigneeNotImporterMyCustomer;
 
                 var args = new NewEntityArgs();
                 if (!isCustomer) {
@@ -310,6 +486,14 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
 
                             else if (myPartnerCode == "Consignee") {
                                 this.UpdatedConsigneeId = comp.EntityPM.Id;
+                            }
+
+                            else if (myPartnerCode == "ShipperNotExporter") {
+                                this.UpdatedShipperNotExporterId = comp.EntityPM.Id;
+                            }
+
+                            else if (myPartnerCode == "ConsigneeNotImporter") {
+                                this.UpdatedConsigneeNotImporterId = comp.EntityPM.Id;
                             }
                         }
                     });
@@ -336,6 +520,14 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
 
             if (this.IsConsigneeVisible && !AppTool.IsNullOrEmpty(this.UpdatedConsigneeId)) {
                 this.UpdateConsignee();
+            }
+
+            if (this.IsShipperNotExporterVisible && !AppTool.IsNullOrEmpty(this.UpdatedShipperNotExporterId)) {
+                this.UpdateShipperNotExporter();
+            }
+
+            if (this.IsConsigneeNotImporterVisible && !AppTool.IsNullOrEmpty(this.UpdatedConsigneeNotImporterId)) {
+                this.UpdateConsigneeNotImporter();
             }
 
             this.UpdateCustomer();
@@ -392,6 +584,40 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
             this.EntityPM.ConsigneePickAddressId = this.consigneeCard.PickAddressId;
         }
     }
+    private UpdateShipperNotExporter() {
+        this.EntityPM.ShipperNotExporterId = this.UpdatedShipperNotExporterId;
+        this.EntityPM.ShipperNotExporterAddressId = this.UpdatedShipperNotExporterAddressId;
+        this.EntityPM.ShipperNotExporterContactId = this.UpdatedShipperNotExporterContactId;
+
+        if (this.shipperNotExporterCard) {
+            var unassignedShipperNotExporter: ShipmentUnassignedFieldPM = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "ShipperNotExporter")[0];
+            if (unassignedShipperNotExporter
+                && unassignedShipperNotExporter.ReplacedDataId != this.EntityPM.ShipperNotExporterId
+                && this.unassignedEntities.filter(d => d.ObjectTableId == this.customerObjecTableId && d.UnassignedCode == this.shipperNotExporterCard.Code).length == 0) {
+                unassignedShipperNotExporter.ReplacedDataId = this.EntityPM.ShipperNotExporterId;
+            }
+
+            this.EntityPM.ShipperNotExporterName = this.shipperNotExporterCard.EnglishName;
+            this.EntityPM.ShipperNotExporterNote = this.shipperNotExporterCard.Notes;
+        }
+    }
+    private UpdateConsigneeNotImporter() {
+        this.EntityPM.ConsigneeNotImporterId = this.UpdatedConsigneeNotImporterId;
+        this.EntityPM.ConsigneeNotImporterAddressId = this.UpdatedConsigneeNotImporterAddressId;
+        this.EntityPM.ConsigneeNotImporterContactId = this.UpdatedConsigneeNotImporterContactId;
+
+        if (this.consigneeNotImporterCard) {
+            var unassignedConsigneeNotImporter: ShipmentUnassignedFieldPM = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "ConsigneeNotImporter")[0];
+            if (unassignedConsigneeNotImporter
+                && unassignedConsigneeNotImporter.ReplacedDataId != this.EntityPM.ConsigneeNotImporterId
+                && this.unassignedEntities.filter(d => d.ObjectTableId == this.customerObjecTableId && d.UnassignedCode == this.consigneeNotImporterCard.Code).length == 0) {
+                unassignedConsigneeNotImporter.ReplacedDataId = this.EntityPM.ConsigneeNotImporterId;
+            }
+
+            this.EntityPM.ConsigneeNotImporterName = this.consigneeNotImporterCard.EnglishName;
+            this.EntityPM.ConsigneeNotImporterNote = this.consigneeNotImporterCard.Notes;
+        }
+    }
     private UpdateCustomer() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.ShipmentCustomerTypeCode))
             return;
@@ -406,6 +632,18 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
             this.EntityPM.CustomerId = this.UpdatedConsigneeId;
             this.EntityPM.CustomerContactId = this.UpdatedConsigneeContactId;
             this.EntityPM.CustomerAddressId = this.UpdatedConsigneeAddressId
+        }
+
+        if (this.EntityPM.ShipmentCustomerTypeCode == "SNE" && !AppTool.IsNullOrEmpty(this.UpdatedShipperNotExporterId)) {
+            this.EntityPM.CustomerId = this.UpdatedShipperNotExporterId;
+            this.EntityPM.CustomerContactId = this.UpdatedShipperNotExporterContactId;
+            this.EntityPM.CustomerAddressId = this.UpdatedShipperNotExporterAddressId
+        }
+
+        else if (this.EntityPM.ShipmentCustomerTypeCode == "CNI" && !AppTool.IsNullOrEmpty(this.UpdatedConsigneeNotImporterId)) {
+            this.EntityPM.CustomerId = this.UpdatedConsigneeNotImporterId;
+            this.EntityPM.CustomerContactId = this.UpdatedConsigneeNotImporterContactId;
+            this.EntityPM.CustomerAddressId = this.UpdatedConsigneeNotImporterAddressId
         }
     }
 

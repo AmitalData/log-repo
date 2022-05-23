@@ -2900,6 +2900,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? QuoteFreightExpirationDate { get; set; }
         public string CarrierServiceLineId { get; set; }
+        public string UnassignedShipperNotExporterAddressId { get; set; }
+        public string UnassignedConsigneeNotImporterAddressId { get; set; }
     }
 
     public class TransshipmentLeg
