@@ -194,7 +194,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                              Code = b.LineTypeCode == GLAccountType ? b.GLAccountDisplayNumber : b.ChartsofAccountCode,
                                                              EnglishType = b.LineTypeCode == GLAccountType ? "GLAccount" : "Chart of Account",
                                                              LocalType = b.LineTypeCode == GLAccountType ? "כרטיס" : "קבוצת מאזן",
-                                                             ChartsofAccountTypeCode = b.ChartOfAccountTypeCode,
+                                                             ChartsofAccountTypeCode = b.CalculatedChartsOfAccountsId,
+                                                             OriginalChartOfAccountTypeCode = b.ChartOfAccountTypeCode,
                                                              ParentChartsofAccountTypeCode = CalculatedChartsOfAccount.ChartOfAccountTypeCode + "_" + b.Id,
                                                              ChartsofAccountId = b.ChartOfAccountId,
                                                              LineTypeCode = b.LineTypeCode,
@@ -218,6 +219,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 LocalType = "כרטיס",
                 EnglishType = "GLAccount",
                 ChartsofAccountTypeCode = line.ChartsofAccountTypeCode,
+                OriginalChartOfAccountTypeCode = line.OriginalChartOfAccountTypeCode,
                 ParentChartsofAccountTypeCode = line.ParentChartsofAccountTypeCode,
                 LineTypeCode = GLAccountType,
             };
@@ -268,6 +270,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 IsSubParent = true,
                 ParentChartsofAccountTypeCode = period.Id,
                 ChartsofAccountTypeCode = period.ChartOfAccountTypeCode,
+                OriginalChartOfAccountTypeCode = period.ChartOfAccountTypeCode,
                 SubParentEnglishType = period.EnglishName != null ? period.EnglishName : period.LocalName,
                 SubParentLocalType = period.LocalName != null ? period.LocalName : period.EnglishName,
             }); ;
@@ -395,7 +398,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             var chartOfAccountsWithControlAccounts
                 = new string[] { ChartOfAccountsTypeValues.Works, ChartOfAccountsTypeValues.Customers, ChartOfAccountsTypeValues.Vendors };
 
-            if (!ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.ChartsofAccountTypeCode))
+            if (!ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.OriginalChartOfAccountTypeCode))
                 GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, chartsofAccountsId);
             else
                 GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, chartsofAccountsId);
@@ -482,7 +485,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 var chartOfAccountsWithControlAccounts 
                     = new string[] {  ChartOfAccountsTypeValues.Works, ChartOfAccountsTypeValues.Customers, ChartOfAccountsTypeValues.Vendors };
 
-                if (!ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.ChartsofAccountTypeCode))
+                if (!ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.OriginalChartOfAccountTypeCode))
                     GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, ChartsofAccountsId);
                 else
                     GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, ChartsofAccountsId);
