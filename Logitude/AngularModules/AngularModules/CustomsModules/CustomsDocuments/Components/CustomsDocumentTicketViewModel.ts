@@ -120,6 +120,7 @@ export class CustomsDocumentTicketViewModel {
     _SInvoiceNumber: string = null;
     _IsClassified: boolean = false;
     private EntityResourceService: EntityResourceService;
+    private readonly customDocumentNewVersionService: CustomDocumentNewVersionService = new CustomDocumentNewVersionService();
     //*****************************************//
     constructor(
         public customsDocumentsTicketPM: CustomsDocumentsTicketPM, 
@@ -128,8 +129,7 @@ export class CustomsDocumentTicketViewModel {
         public isDisplayOnly: boolean, 
         public EntityPM: any, 
         private objectTableName: string, 
-        private iCustomsDocumentsController: ICustomsDocumentsController,
-        private readonly customDocumentNewVersionService: CustomDocumentNewVersionService,
+        private iCustomsDocumentsController: ICustomsDocumentsController,        
         ) {
         this.EntityResourceService = new EntityResourceService();
         if (customsDocumentMetaDataValuePMs != null) {
@@ -729,9 +729,13 @@ export class CustomsDocumentTicketViewModel {
             this.connectDocument(relatedDocumentViewModel);
 
         } else if (!relatedDocumentViewModel.CustomDocument.DeclarationId) {
-            if ((await this.confirmConnectionDiffrentDocTypeMsg())) {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            const accept: boolean = await this.confirmConnectionDiffrentDocTypeMsg();
+            
+            if (accept) {
                 relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
                 await this.customDocumentNewVersionService.NewVersion(relatedDocumentViewModel.CustomDocument);
+                SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
                 this.connectDocument(relatedDocumentViewModel);
             }
 

@@ -173,9 +173,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     IsActionButtonsEnabled: boolean;
     WindowArgs: any;
+    private readonly customDocumentNewVersionService: CustomDocumentNewVersionService = new CustomDocumentNewVersionService();
+
     //***********************************************************************//
     constructor(
-        private readonly customDocumentNewVersionService: CustomDocumentNewVersionService,
     ) {
         super();
     }
