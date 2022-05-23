@@ -135,10 +135,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return GLAccounts;
         }
 
+
         public List<GLAccount> GetControlAccountForChartOfAccount(int tenant, string chartsofAccountId)
         {
             List<GLAccount> GLAccounts = this.repository.GetAll(tenant)
-                .Where(s => s.Inactive == false 
+                .Where(s => s.Inactive == false
                             && s.ChartOfAccountsId == chartsofAccountId
                             && s.IsControlAccount == true).ToList();
             return GLAccounts;

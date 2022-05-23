@@ -167,10 +167,10 @@ namespace WebFreight.Web.App_Code
 
         public bool GetIsDocumentsApprovalRequried(string entityId, int tenant)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            //string token = HttpContext.Current.Request.Headers["Token"];
+            //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
 
             ShipmentAdditionalCloudDataRepository rep = new ShipmentAdditionalCloudDataRepository(tenant);
             ShipmentAdditionalCloudData shipment = rep.GetSingleShipmentAdditionalCloudData(entityId, tenant);
@@ -185,10 +185,10 @@ namespace WebFreight.Web.App_Code
 
         public bool GetPutDocumentsApprovedByUserName(string entityId, string documentsApprovedByUserName, int tenant)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            //string token = HttpContext.Current.Request.Headers["Token"];
+            //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
 
             ShipmentAdditionalCloudDataRepository rep = new ShipmentAdditionalCloudDataRepository(tenant);
             ShipmentAdditionalCloudData shipment = rep.GetSingleShipmentAdditionalCloudData(entityId, tenant);
@@ -206,10 +206,10 @@ namespace WebFreight.Web.App_Code
 
         public bool OpenDocumentApprovalQueue(string entityId, string documentsApprovedByUserName, int tenant)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            //string token = HttpContext.Current.Request.Headers["Token"];
+            //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
 
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("DocumentApprovalQueue", 0);
