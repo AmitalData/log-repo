@@ -62,8 +62,9 @@ namespace WebFreight.Web.DataProviders
         public string SubParentEnglishType { get; set; }
         public bool IsParent { get; set; }
         public bool IsSubParent { get; set; }
+        public string OriginalChartOfAccountTypeCode { get; set; }
     }
 
- 
+
 
 }
