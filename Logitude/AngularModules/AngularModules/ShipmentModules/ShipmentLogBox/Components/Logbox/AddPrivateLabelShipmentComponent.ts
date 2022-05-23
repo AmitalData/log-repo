@@ -680,12 +680,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
  
     OkButtonClicked() {
         this.ValidationErrorsList = [];
-        if (this.DirectionId == 'C') {
-            this.SaveChanges();
-        } else { 
-            this.CreateExportShipment();
-        }
-
+        if (this.DirectionId == 'C') this.SaveChanges();
+        else this.CreateExportShipment();
     }
      
     private CreateExportShipment() {
@@ -762,6 +758,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.EntityPM.ShipmentLevelCode = "A";
         this.EntityPM.FromPortId = this.FromPort;
         this.EntityPM.IsShipmentOrder = this.TransportModeId == 'O';
+        this.EntityPM.ShipmentOrderPackages = this.GetShipmentOrderPackages();
         this.SetOrderPackagesOnFinish();
         this._EntityStatusListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {
@@ -778,6 +775,27 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
 
 
+    }
+
+    GetShipmentOrderPackages(): ShipmentOrderPackagePM[] {
+        if(this.EntityPM.ShipmentOrderPackages && this.EntityPM.ShipmentOrderPackages.length != 0) return this.EntityPM.ShipmentOrderPackages;
+        var shipmentOrderPackage = new ShipmentOrderPackagePM(null); 
+        shipmentOrderPackage.Tenant = this.EntityPM.Tenant;
+        shipmentOrderPackage.IsContainer = false;
+        shipmentOrderPackage.Quantity = this.BookingNumberOfPackages;
+        shipmentOrderPackage.GrossWeight = this.OrderGrossWeight;
+        shipmentOrderPackage = this.CalculateShipmentOrderPackageVolume(shipmentOrderPackage);
+       
+        var shipmentOrderPackages = [];
+        shipmentOrderPackages.push(shipmentOrderPackage);
+        return shipmentOrderPackages;
+    }
+
+    CalculateShipmentOrderPackageVolume(shipmentOrderPackage : ShipmentOrderPackagePM): ShipmentOrderPackagePM {
+        if(this.BookingVolume) return shipmentOrderPackage;
+        shipmentOrderPackage.VolumetricWeight = AppTool.GetWeightFromWeight(this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, shipmentOrderPackage.GrossWeight);
+        shipmentOrderPackage.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, shipmentOrderPackage.VolumetricWeight, this.EntityPM.Ratio)
+        return shipmentOrderPackage;
     }
    
     private SetDocumentFilingIds() {
