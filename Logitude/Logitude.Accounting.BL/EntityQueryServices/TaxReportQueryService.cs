@@ -15,6 +15,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.DataContract;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -48,9 +49,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public IQueryable<TaxReportLine> GetReportLines(string taxReportId, int tenant)
         {
+            var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
+                   .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
+
             IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
                     where a.TaxReportId == taxReportId && a.Tenant == tenant
-                    select a);
+                                               select a);
+            if (sameReferenceAndOppositeVatLines.Count > 0) {
+                var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
+                query = query.Where(x => !taxReportLinesReferences.Contains(x.Reference));
+            }
             return query;
         }
         public List<TaxReportLinePM> GetReportLinesPMs(string taxReportId, int tenant)
@@ -118,21 +126,38 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public bool CheckIfTaxReportCanHaveClosingJournal(string taxReportId, int tenant)
         {
-            bool hasReconciledLines = (from line in context.TaxReportLines
-                                       join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
-                                       where line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0
-                                                && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-                                       select line).Any();
+            var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
+                   .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
+            var query = from line in context.TaxReportLines
+                        join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
+                        where line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit
+                                 && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                        select line;
+            if (sameReferenceAndOppositeVatLines.Count > 0)
+            {
+                var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
+                query = query.Where(x => !taxReportLinesReferences.Contains(x.Reference));
+            }
+            bool hasReconciledLines = query.Any();
             return !hasReconciledLines;
         }
 
         public List<TaxReportLine> GetTaxReportReconciledLines(string taxReportId, int tenant)
         {
-            List<TaxReportLine> reconciledLines = (from line in context.TaxReportLines
-                                                   join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
-                                                   where line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0
-                                                            && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-                                                   select line).ToList();
+            var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
+                      .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
+            var query = from line in context.TaxReportLines
+                        join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
+                        where line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit
+                                 && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                        select line;
+            if (sameReferenceAndOppositeVatLines.Count > 0)
+            {
+                var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
+                query = query.Where(x => !taxReportLinesReferences.Contains(x.Reference));
+            }
+
+            List<TaxReportLine> reconciledLines = query.ToList();
             return reconciledLines;
         }
 
