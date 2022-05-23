@@ -55,6 +55,24 @@ export class ShipmentContainersWebService {
         });
     }
 
+    VisionContainerSimulator(entity: ShipmentContainerSimulator) {
+        return defer(() => {
+
+            var mappedEntity: ShipmentContainerSimulator = this.MapJsonToShipmentContainerSimulator(entity, false);
+
+            return this._httpClient.post(this._apiUrl+'/PostVisionContainerSimulator', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
+
+                var mappedResult: ShipmentContainerSimulator = this.MapJsonToShipmentContainerSimulator(myJsonResult, true, entity);
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = mappedResult;
+                return myResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     MapJsonToShipmentContainerSimulator(jsonPM: any, getCallMap: boolean = true, entity: ShipmentContainerSimulator = null) {
         if (!entity) {
             entity = new ShipmentContainerSimulator();

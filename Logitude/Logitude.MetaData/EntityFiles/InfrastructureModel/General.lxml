@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;10fb&quot;"
+  Code="&quot;297f&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5149,6 +5149,12 @@
       LocalDefaultText="&quot;מקורי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Shipment.ContainerTracking&quot;"
+      DefaultText="&quot;Container Tracking Settings&quot;"
+      LocalDefaultText="&quot;Container Tracking Settings&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7299,6 +7305,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.SHLOGDIGITALPORTAL&quot;"
       FeatureDefaultText="&quot;Digital Portal&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CONTAINERTRACKINGSETTINGS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CONTAINERTRACKINGSETTINGS&quot;"
+      FeatureDefaultText="&quot;Container Tracking Settings&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

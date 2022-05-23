@@ -210,13 +210,19 @@
     <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.scxml" />
     <None Include="DBScripts\ShipmentModel\202202241410_FillLastDeilverypFullAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
+    <None Include="DBScripts\ShipmentModel\202205160324_UpdateContainerStatusWorkerRole.sxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="DBTables\QuoteModel\ValidByType.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingProviders.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingResponses.dxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingResponses.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingRequest.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainersExternalData.lxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdatePortSearchFieldsFunction.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateShippingLineSearchFieldsFunction.dxml" />
@@ -1726,6 +1732,7 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentCustomsTransmission.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingProviders.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentLevel.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentOrderPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPackage.lxml">
