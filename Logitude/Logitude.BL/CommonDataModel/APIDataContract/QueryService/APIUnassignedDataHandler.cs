@@ -44,10 +44,10 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 
             shipment.Shipper = this.HandleUnassignedCard(shipment.Shipper, CardsTypes.Shipper.ToString(), customerObjectTableName);
             shipment.Consignee = this.HandleUnassignedCard(shipment.Consignee, CardsTypes.Consignee.ToString(), customerObjectTableName);
-            shipment.Customer = this.HandleCustomerUnassignedCard(shipment.Customer, shipment);
             shipment.ShipperNotExporter = this.HandleUnassignedCard(shipment.ShipperNotExporter, CardsTypes.ShipperNotExporter.ToString(), customerObjectTableName);
             shipment.ConsigneeNotImporter = this.HandleUnassignedCard(shipment.ConsigneeNotImporter, CardsTypes.ConsigneeNotImporter.ToString(), customerObjectTableName);
-
+            shipment.Customer = this.HandleCustomerUnassignedCard(shipment.Customer, shipment);
+            
             return shipment;
         }
 
@@ -59,9 +59,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             shipment.Shipper = this.HandleUnassignedCard(shipment.Shipper, CardsTypes.Shipper.ToString(), customerObjectTableName);
             shipment.Consignee = this.HandleUnassignedCard(shipment.Consignee, CardsTypes.Consignee.ToString(), customerObjectTableName);
             shipment.Customer = this.HandleCustomerUnassignedCard(shipment.Customer, shipment);
-            //shipment.ShipperNotExporter = this.HandleUnassignedCard(shipment.ShipperNotExporter, CardsTypes.ShipperNotExporter.ToString(), customerObjectTableName);
-            //shipment.ConsigneeNotImporter = this.HandleUnassignedCard(shipment.ConsigneeNotImporter, CardsTypes.ConsigneeNotImporter.ToString(), customerObjectTableName);
-
             return shipment;
         }
 
@@ -72,9 +69,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 
             shipment.Shipper = this.HandleUnassignedCard(shipment.Shipper, CardsTypes.Shipper.ToString(), customerObjectTableName);
             shipment.Consignee = this.HandleUnassignedCard(shipment.Consignee, CardsTypes.Consignee.ToString(), customerObjectTableName);
-            //shipment.ShipperNotExporter = this.HandleUnassignedCard(shipment.ShipperNotExporter, CardsTypes.ShipperNotExporter.ToString(), customerObjectTableName);
-            //shipment.ConsigneeNotImporter = this.HandleUnassignedCard(shipment.ConsigneeNotImporter, CardsTypes.ConsigneeNotImporter.ToString(), customerObjectTableName);
-
+           
             return shipment;
         }
 
@@ -96,8 +91,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             shipmentPM.ShipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
             this.HandleShipmentUnassignedData(shipment.UnassignedShipperAddress, shipmentPM, CardsTypes.Shipper.ToString());
             this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeAddress, shipmentPM, CardsTypes.Consignee.ToString());
-            //this.HandleShipmentUnassignedData(shipment.UnassignedShipperNotExporterAddress, shipmentPM, CardsTypes.ShipperNotExporter.ToString());
-            //this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeNotImporterAddress, shipmentPM, CardsTypes.ConsigneeNotImporter.ToString());
             this.HandleUnassignedCustomerType(shipmentPM);
 
             return shipmentPM;
@@ -108,8 +101,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             shipmentPM.ShipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
             this.HandleShipmentUnassignedData(shipment.UnassignedShipperAddress, shipmentPM, CardsTypes.Shipper.ToString());
             this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeAddress, shipmentPM, CardsTypes.Consignee.ToString());
-            //this.HandleShipmentUnassignedData(shipment.UnassignedShipperNotExporterAddress, shipmentPM, CardsTypes.ShipperNotExporter.ToString());
-            //this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeNotImporterAddress, shipmentPM, CardsTypes.ConsigneeNotImporter.ToString());
 
             return shipmentPM;
         }
