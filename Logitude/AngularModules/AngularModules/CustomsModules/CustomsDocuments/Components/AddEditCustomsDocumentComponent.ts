@@ -25,6 +25,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConnectedToItem } from './ConnectedToItem';
 import { ICustomsDocumentsController } from './ICustomsDocumentsController';
+import { CustomDocumentNewVersionService } from '../services/CustomDocumentNewVersion.service';
 
 @Component({ 
     
