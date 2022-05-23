@@ -129,14 +129,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                      group item by item.EmployeeUserId into g
                                      select new { EmployeeUserId = g.Key, Items = g };
 
-                    foreach (var employeeItemGroup in employeeUserGroups)
+                    foreach (string employeeId in employeeUsersIdsList)
                     {
                         EmployeeTimeSheetGroupData employeeTimeSheetGroup = new EmployeeTimeSheetGroupData();
 
+                        var employeeItemGroup = employeeUserGroups.Where(d => d.EmployeeUserId == employeeId).FirstOrDefault();
                         employeeTimeSheetGroup.EmployeeTimeDaysOff = new List<EmployeeTimeDayOff>();
                         employeeTimeSheetGroup.EmployeeTimeSheetList = new List<EmployeeTimeSheetData>();
-                        employeeTimeSheetGroup.EmployeeId = employeeItemGroup.EmployeeUserId;
-                        employeeTimeSheetGroup.EmployeeName = employeeUserNames[employeeItemGroup.EmployeeUserId];
+                        employeeTimeSheetGroup.EmployeeId = employeeId;
+                        employeeTimeSheetGroup.EmployeeName = employeeUserNames[employeeId];
 
                         foreach (var dateItem in dateList)
                         {
@@ -158,8 +159,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                 }
                             }
 
-                            List<TMOfficeHour> item_TMOfficeHour = list_TMOfficeHour.Where(a => a.WorkDate.Date == dateItem.Date && a.UserId == employeeItemGroup.EmployeeUserId).ToList();
-                            List<TMEmployeeTime> item_TMEmployeeTime = employeeItemGroup.Items.Where(d => d.DateOfWork.Date == dateItem.Date).ToList();
+                            List<TMOfficeHour> item_TMOfficeHour = list_TMOfficeHour.Where(a => a.WorkDate.Date == dateItem.Date && a.UserId == employeeId).ToList();
+                            List<TMEmployeeTime> item_TMEmployeeTime = new List<TMEmployeeTime>();
+                            if (employeeItemGroup != null)
+                            {
+                                item_TMEmployeeTime = employeeItemGroup.Items.Where(d => d.DateOfWork.Date == dateItem.Date).ToList();
+                            }
 
                             double totalMinutesFromClock = 0;
                             foreach (var item in item_TMOfficeHour)
