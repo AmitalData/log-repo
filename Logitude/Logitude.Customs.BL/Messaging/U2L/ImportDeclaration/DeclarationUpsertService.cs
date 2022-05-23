@@ -317,9 +317,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.CustomerId = TranslateCustomer(_AmitalCustomsFile.CustomerId);//check translate
                 if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
                 {
-                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                    MyGenericResponseObj.Message += "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
-                    return;
+                        MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                        MyGenericResponseObj.Message += "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
+                        return;
                 }
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.Direction))
                 {
@@ -1392,19 +1392,37 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     AppendLogLine("Customer Card does not exist for Amital Customer Code " + amitalCustomerCode);
                     MyGenericResponseObj.Message = "Customer Card does not exist for Amital Customer Code " + amitalCustomerCode;
-                    return null;
+                    
+                    if(!CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight)
+                        return null;
+
                     AppendLogLine("Open A new Card in the same Transaction Scope ");
-                    //repository = new CardRepository(ResolvedTenant());
-                    myCard = new Card();
-                    myCard.Id = IdCounter.GetNumber("Card", ResolvedTenant()).ToString();
-                    myCard.Code = amitalCustomerCode;
-                    myCard.Tenant = ResolvedTenant();
-                    myCard.EnglishName = _AmitalCustomsFile.EnglishName;
-                    myCard.LocalName = _AmitalCustomsFile.HebrewName;
-                    myCard.PartnerTypeId = "CS";
-                    myCard.CreateDate = DateTime.Now;
-                    repository.Add(myCard);
-                    repository.SubmitChanges();
+                    var cardRep = new CardRepository(ResolvedTenant());
+
+                    myCard = new Card()
+                    {
+                        Id = IdCounter.GetNumber("Card", ResolvedTenant()).ToString(),
+                        Code = _AmitalCustomsFile.CustomerId,
+                        EnglishName = _AmitalCustomsFile.EnglishName,
+                        LocalName = _AmitalCustomsFile.HebrewName,
+                        InActive = true,
+                        VatNumber = _AmitalCustomsFile.ImporterId,
+                        PartnerTypeId = "CS",
+                        Tenant = ResolvedTenant(),
+                        CreateDate = DateTime.Now,
+                        CountryCode = _AmitalCustomsFile.OriginCountryCode,
+                        SearchFields =
+                           _AmitalCustomsFile.CustomerId + ", " +
+                           _AmitalCustomsFile.EnglishName + ", " +
+                           _AmitalCustomsFile.HebrewName + ", " +
+                           _AmitalCustomsFile.ImporterId + ", " +
+                           "CS, " +
+                           _AmitalCustomsFile.OriginCountryCode
+                    };
+
+                    cardRep.Add(myCard);
+                    cardRep.SubmitChanges();
+
                     AppendLogLine("Create new Card  = " + amitalCustomerCode + " because could not translate to Logitude Id");
 
                     //Create a new customer
@@ -1424,7 +1442,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     customerRepository.SubmitChanges();
                     AppendLogLine("Create new Customer (Customer tables)  = " + amitalCustomerCode);
 
-                    RunStoredProcedureClass.UpdateCardSearcsRecords(myCard.Id, myCard.Tenant);
+                    //RunStoredProcedureClass.UpdateCardSearcsRecords(myCard.Id, myCard.Tenant);
 
                 }
             }
