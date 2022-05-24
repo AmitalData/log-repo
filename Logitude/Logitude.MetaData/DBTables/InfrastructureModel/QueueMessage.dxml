@@ -143,7 +143,13 @@
 	<Constraints
       Nullable="true" />
 	</Column>
-	
+
+	<!--communicationlogs or CustomsRequestsSheets-->
+	<Column
+    Name="EntityId"
+    Type="varchar"
+    Size="40">
+	</Column>
 	
 	<Relation
     ForeignKeyColumn="QueueDefinitionCode"
