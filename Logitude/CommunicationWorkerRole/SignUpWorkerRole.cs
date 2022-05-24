@@ -85,10 +85,10 @@ namespace CommunicationWorkerRole
 
                 if (signUpInfo.IsCrmTenant)
                 {
-                   CardRepository cardRepository = new CardRepository(signUpInfo.Tenant);
-                   string accountingCard = cardRepository.GetAccountingCardFromCard(signUpInfo.CustomerId, signUpInfo.Tenant);
-                   if (string.IsNullOrEmpty(accountingCard))  CreateTenant(signUpInfo);
-                   else return;
+                    CardRepository cardRepository = new CardRepository(signUpInfo.Tenant);
+                    string accountingCard = cardRepository.GetAccountingCardFromCard(signUpInfo.CustomerId, signUpInfo.Tenant);
+                    if (string.IsNullOrEmpty(accountingCard))  CreateTenant(signUpInfo);
+                    else return;
 
                 }
                 else CreateTenant(signUpInfo);
@@ -154,11 +154,11 @@ namespace CommunicationWorkerRole
                     BCC = "",
                     Subject = "SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,
-                    Tenant = 0, 
+                    Tenant = 0,
                     IsBodySecured = true,
-                    
+
                 };
-              
+
             }
             else if(LogitudeSettings.DeploymentStage == "logboxwe1")
             {
@@ -185,7 +185,7 @@ namespace CommunicationWorkerRole
                     Tenant = 0,
                     IsBodySecured = true,
                 };
-             
+
             }
             else
             {
@@ -202,7 +202,7 @@ namespace CommunicationWorkerRole
                 //{
                 //        parameters.To += "eldad@amital.co.il;itzik@amital.co.il;YaronC@AMITAL.CO.IL";
                 //}
-                
+
                 //Debug.WriteLine(parameters.To);
                 //EmailingHelper.SendEmail(parameters);
 
@@ -313,7 +313,7 @@ namespace CommunicationWorkerRole
         public void WorkOnceSuppressClearQ()
         {
 
-            
+
             _SignUpWorkerRole.SuppressClearQ = true;
             _SignUpWorkerRole.WorkOnce();
         }
