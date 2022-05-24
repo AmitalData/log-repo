@@ -19,8 +19,18 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         private object entityPM;
         private MainEntityChangeService mainEntityChangeService { get; set; }
         private List<Automation> createTaskAutomations = new List<Automation>();
-        public bool DependencyOnLastEntityUpdate { get { return false; } }
         public string ResultCode { get { return "CREATETASK"; } }
+
+
+        public  bool DependencyOnLastEntityUpdate { get { return (processType == "OnCreate") ? true : false; } }
+
+        private string processType = string.Empty;
+        public AutomationCreateTaskService(string processType)
+        {
+            this.processType = processType;
+        }
+
+
 
         public void Run(AutomationResultArgs automationResultArgs)
         {

@@ -18,13 +18,18 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
     public class AutomationEventCreationService : GeneralAutomationResultService, IAutomationResultService
     {
 
-        public bool DependencyOnLastEntityUpdate { get { return false; } }
         public string ResultCode { get { return "EVENTCREATION"; } }
 
         private AutomationResultArgs automationResultArgs;
-        public AutomationEventCreationService()
+    
+        public  bool DependencyOnLastEntityUpdate { get { return (processType == "OnCreate") ? true : false; } }
+
+        private string processType = string.Empty;
+        public AutomationEventCreationService(string processType)
         {
+            this.processType = processType;
         }
+
 
         public void Run(AutomationResultArgs automationResultArgs)
         {
