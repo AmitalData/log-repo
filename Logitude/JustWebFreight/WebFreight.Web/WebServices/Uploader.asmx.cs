@@ -333,8 +333,10 @@ namespace WebFreight.Web.WebServices
                     }
                     else
                     {
-                        imagedetailid = card.ImageDetailId;
+                        UpdateImageDetails(new ImageDetailPM() { Id = card.ImageDetailId, Tenant = card.Tenant, Extension = extension, Size = fileSize }, imageDetailRep);
                     }
+
+                    imagedetailid = card.ImageDetailId;
 
                 }
 
@@ -456,6 +458,23 @@ namespace WebFreight.Web.WebServices
             }
             return imagedetailid;
         }
+
+
+
+
+        private void UpdateImageDetails(ImageDetailPM imageDetailPM , ImageDetailRepository imageDetailRepository )
+        {
+            var imagedetail = new ImageDetailRepository().GetSingleImageDetail(imageDetailPM.Id , imageDetailPM.Tenant);
+            if (imagedetail == null) return;
+            imagedetail.Extension = imageDetailPM.Extension;
+            imagedetail.Size = imageDetailPM.Size;
+            imageDetailRepository.Update(imagedetail);
+            imageDetailRepository.SubmitChanges();
+        }
+
+
+
+
 
         byte[] datainByte;
 
