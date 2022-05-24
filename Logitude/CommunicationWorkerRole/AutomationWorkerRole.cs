@@ -401,7 +401,7 @@ namespace CommunicationWorkerRole
                                             var entityPM = GetEntity(objectTable.Name, entityId, Tenant);
                                             if (entityPM != null)
                                             {
-                                                new AutomationFollowUpResultService().AddAutomationFollowUp(entityPM, entityChange, AutomationConditionFieldLists, automationLastUpdateDate, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
+                                                new AutomationFollowUpResultService(automation.Type).AddAutomationFollowUp(entityPM, entityChange, AutomationConditionFieldLists, automationLastUpdateDate, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
                                                 // UpdateEntitiy(entityPM, objectTable.Name, entityChange.CreateByUserId, Tenant);
                                             }
                                         }
@@ -433,7 +433,7 @@ namespace CommunicationWorkerRole
                                             var entityPM = GetEntity(objectTable.Name, entityId, Tenant);
                                             if (entityPM != null)
                                             {
-                                                new AutomationQueuedTaskResultService().AddAutomationQueuedTask(entityPM, entityChange, AutomationConditionFieldLists, automationLastUpdateDate, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
+                                                new AutomationQueuedTaskResultService(automation.Type).AddAutomationQueuedTask(entityPM, entityChange, AutomationConditionFieldLists, automationLastUpdateDate, entityChangesAutomationsLists, automation, entityChangesAutomation, dateBefore);
                                                 UpdateEntitiy(entityPM, objectTable.Name, entityChange.CreateByUserId, Tenant);
                                             }
                                         }
@@ -569,7 +569,7 @@ namespace CommunicationWorkerRole
 
         private static void ApplyEventCreationAutomation(AutomationEventCreationArguments automationEventCreationArguments)
         {
-            new AutomationEventCreationService().CreateEvent(automationEventCreationArguments);
+            new AutomationEventCreationService(automationEventCreationArguments.Automation.Type).CreateEvent(automationEventCreationArguments);
             MarkEntityChangeExecutedRecord(automationEventCreationArguments.EntityChange, automationEventCreationArguments.EntityChangeAutomation, automationEventCreationArguments.EntityChangesAutomationsLists);
         }
 
