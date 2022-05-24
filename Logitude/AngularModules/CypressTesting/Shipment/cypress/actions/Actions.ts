@@ -299,7 +299,7 @@ export function ValidateShipmentEventActions(eventSelector: string, excpectedMSG
         // let actualMSG = interception.response.body[0].Notes;
         // assert.equal(actualMSG, excpectedMSG);
         let IndexOfEvent = interception.response.body.map(function (t: { Notes: string; }) { return t.Notes; }).indexOf(excpectedMSG);
-        assert
+        assert.notEqual(IndexOfEvent, "-1")
     });
 }
 
