@@ -152,7 +152,8 @@ using Simplog.Data.ShipmentsModel;
 			       
 					   				   }
 				   
-				   temp.ChangeSetOp = item.ChangeSet;					
+				   temp.ChangeSetOp = item.ChangeSet;
+				   temp.Type = item.PickUpDeliveryTypeCode;					
 					MyList.Add(temp);
 				}
 					
@@ -481,6 +482,14 @@ using Simplog.Data.ShipmentsModel;
 						temp.ChangeSet = item.ChangeSetOp;
 
 					 
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.PickUpDeliveryTypeCode = item.Type;
+
+										}  
 
 										   
 						MyList.Add(temp);
