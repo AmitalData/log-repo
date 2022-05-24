@@ -1,7 +1,7 @@
 export class CustomizationSelectors {
     public static readonly SettingMenu = "[data-cy='SettingsMenuButton']";
     public static readonly CustomizationTab = "[data-cy='CustomizationId']"
-    public static readonly SearchModule = "#null_Search";
+    public static readonly SearchModule = "#null_Search_1";
     public static readonly CustomeFields = "[data-cy='CustomFieldtId']";
     public static readonly AddCustomField = "#Add";
     public static readonly EditField = "#edit";

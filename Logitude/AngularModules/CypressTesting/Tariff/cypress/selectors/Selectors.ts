@@ -2,6 +2,7 @@ export class TariffSelectors {
     //#region Buttons Without Id 
     public static readonly NewFreightCostToggleButton = "div[id^='NEWTARIFF']:first";
     public static readonly NewSurchargeCostToggleButton = "div[id^='NEWTARIFF']:last";
+    public static readonly NewSurchargeCostButton = "#NEWTARIFF_2";
     public static readonly NewFreightCostToggleMenuButton = "div[id^='NEWTARIFF']:first .ToggleButtonMenu button";
     public static readonly NewSurchargeCostToggleMenuButton = "div[id^='NEWTARIFF']:last .ToggleButtonMenu button";
     public static readonly EditTariffAllInChargesButton = "newairfreightcostcomponent button[id^='Edit']:last";

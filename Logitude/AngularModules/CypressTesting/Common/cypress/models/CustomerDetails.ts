@@ -7,6 +7,7 @@ export class CustomerDetails{
     FaxNumber:string;
     Address1:string;
     AddContact:string;
+    VatNumber:string;
     public static Code: string;
 
 }

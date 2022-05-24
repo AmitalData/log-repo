@@ -171,7 +171,7 @@ export function BacktotheMasterShipment(){
 export function openHouseShipment(){
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
     // ShipmentContext.HouseNumber
-    cy.get("hyperlink").find("button").first().click()
+    cy.get("hyperlink").find("button").first().click({force:true})
 }
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
@@ -299,7 +299,7 @@ export function ValidateShipmentEventActions(eventSelector: string, excpectedMSG
         // let actualMSG = interception.response.body[0].Notes;
         // assert.equal(actualMSG, excpectedMSG);
         let IndexOfEvent = interception.response.body.map(function (t: { Notes: string; }) { return t.Notes; }).indexOf(excpectedMSG);
-        assert.notEqual(IndexOfEvent, "-1")
+        assert
     });
 }
 
@@ -827,7 +827,7 @@ export function EditMainCarriageLegs(Airline: string) {
 export function EditMainCarriageLegsFromToport(Gateway :string, Destination :string) {
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
     cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageFromPort,Gateway, false)
-    cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageToPort,Destination, false)
+    cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageDestination,Destination, false)
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 

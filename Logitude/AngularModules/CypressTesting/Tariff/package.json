@@ -4,6 +4,7 @@
     "step_definitions": "cypress/tests/"
   },
   "devDependencies": {
+    "@cypress/browserify-preprocessor": "^3.0.2",
     "cucumber": "^7.0.0-rc.0",
     "cypress": "^6.9.1",
     "cypress-cucumber-preprocessor": "^4.0.0",
