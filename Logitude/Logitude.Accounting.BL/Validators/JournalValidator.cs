@@ -683,8 +683,18 @@ accountingValidationContextServiceProvider
                 }
                 catch (Exception eeee)
                 {
+                    if (eeee.Message == "Reconciliation.O.MultiCurrencyGlaccountReconciliation")
+                    {
+                        //var errorMessage = OverrideITextCodeTranslator.Translate(eeee.Message, myJournalPM.Tenant);
+                        bool useLocal = ToUseLocalText(myJournalPM.Tenant);
 
-                    errorsList.Add(eeee.Message);
+                        //trans = TextCodesTranslator.TranslateText(textCodeCode, tenant);
+                        var errorMessage = TranslateTextsClass.Translate(eeee.Message, myJournalPM.Tenant, useLocal) /*+ " " + _JLineNumberTExt*/;
+                        errorsList.Add(errorMessage);
+                    }
+                    else {
+                        errorsList.Add(eeee.Message);
+                    }
                 }
             }
 

@@ -12,6 +12,10 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools.Utils;
 using System.Diagnostics;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.Resolvers;
+using Logitude.BL.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -128,7 +132,11 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else if (isAdjustJournalDifferentAccount)
             {
-                throw new ApplicationException(TranslateTextsClass.Translate("Reconciliation.O.MultiCurrencyGlaccountReconciliation", _JournalPM.Tenant));
+                //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", _JournalPM.Tenant)) as ILoggedContactUtil;
+                //var loggedcontact = loggedContactUtil.GetLoggedContact(_JournalPM.Tenant);
+                //bool showLocal = !(bool)loggedcontact?.DontShowLocal;
+                // var contact = LoggedContactResolver.GetLoggedContact(_JournalPM.Tenant);
+                throw new ApplicationException("Reconciliation.O.MultiCurrencyGlaccountReconciliation");
             }
             else
             {
