@@ -886,13 +886,13 @@ export function ActualFinalArrivalDatewhentherearetransshipmentsinMaster(){
 export function AsserationActualFinalArrivalinHouse(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.HouserActual).contains('04/05/2021').should('exist')
+    cy.get(ShipmentSelectors.MastertransshipmentsActual).contains('04/05/2021').should('exist')
 }
 
 export function AsserationEstimatedFinalArrivalDateinHouse(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.EstimatedFinalArrivalDateHouse).contains('02/05/2021').should('exist')
+    cy.get(ShipmentSelectors.EstimatedFinalArrivalDateMaster).contains('02/05/2021').should('exist')
 }
 export function AsserationFinalArrivalinHouse(){
     cy.BackButton('Operations')
