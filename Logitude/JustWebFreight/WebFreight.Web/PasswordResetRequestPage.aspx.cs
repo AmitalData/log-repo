@@ -29,11 +29,8 @@ namespace WebFreight.Web
                     {
                         myPartner = "logbox";
                     }
-                    else
-                    {
-
-                        myPartner = "logitude";
-                    }
+                    else myPartner = "logitude";
+                    if (LogitudeSettings.WorkEnvironment == "cloud") myPartner = "cloud";
                 }
 
                 else

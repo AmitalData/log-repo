@@ -44,6 +44,7 @@ namespace WebFreight.Web.Helpers
                     InvertedLogoId = tenantManagementPM.InvertedLogoId,
                     CustomerURL = tenantManagementPM.CustomerURL,
                     ActivatePrivateSite = tenantManagementPM.ActivatePrivateSite,
+                    ContactEmail = tenantManagementPM.ContactEmail,
                     
                 };
                 SetCargoTrackingImages(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);

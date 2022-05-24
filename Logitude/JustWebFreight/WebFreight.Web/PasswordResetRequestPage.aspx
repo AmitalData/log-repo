@@ -169,6 +169,7 @@
                                                                          <a id="BrandingContactUs"  style="display:none"   >Contact us</a> 
                                                                         <a id="ConnectaContactUs"  style="display:none" href="mailto:admin@pangea-network.com" >Contact us</a> 
                                                                         <a id="PangeaContactUs"  style="display:none" href="mailto:admin@pangea-network.com"  >Contact us</a> 
+                                                                        <a id="CloudContactUs"  style="display:none" href="mailto:support@amital.co.il"  >Contact us</a> 
  
                                                                      
                                                                   </p>
@@ -644,6 +645,8 @@
             else if (myCode == "pangea") {
                 $("#PangeaContactUs").css("display", "inline");
                 $("#Image3Link").attr("href", "https://www.logitudeworld.com/demo-evn/");
+            } else if (myCode == "cloud") {
+                $("#CloudContactUs").css("display", "inline");
             }
             if (myCode != "pangea" && myCode != "connecta" && myCode != "aerolineas" && myCode != "atlas")
              {
@@ -664,7 +667,7 @@
                     if (myCode == "logbox") {
                         $("#LogBoxContactUs").css("display", "inline");
                     }
-                    else {
+                    else if (myCode != "cloud"){
                         $("#DefaultContactUs").css("display", "inline");
                     }
 

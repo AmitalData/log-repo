@@ -49,7 +49,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        BrowserIconId = a.BrowserIconId,
                                                        CustomerURL = a.CustomerURL,
                                                        ActivatePrivateSite = a.ActivatePrivateSite,
-
+                                                       ContactEmail = a.ContactEmail
                                                    }).FirstOrDefault();
 
 
