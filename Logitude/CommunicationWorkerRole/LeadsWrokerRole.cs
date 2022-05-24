@@ -304,7 +304,9 @@ namespace CommunicationWorkerRole
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("We value your inquiry to get new access to our demo environment. Your details are currently available in our database and one of our dedicated team members will get in touch with you shortly.");
                         HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("If you have any questions or inquiries please, feel free to contact us at <a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
+                        HtmlTemplate.Append("If you have any questions or inquiries please, feel free to contact us at");
+                        HtmlTemplate.Append("<br />");
+                        HtmlTemplate.Append("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("Best Regards,");
                         HtmlTemplate.Append("<br />");
@@ -598,16 +600,20 @@ namespace CommunicationWorkerRole
 
                         #region send email to customer
                         string path = LogitudeSettings.LogitudeURL + "/SignUpVerification.aspx?id=" + lead.Id;
-                        HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;color:#4472C4'>");
-                        HtmlTemplate.Append("Dear " + (!string.IsNullOrEmpty(lead.ContactName) && lead.ContactName != "Unassigned" ? (lead.ContactName + ", ") : ",") + (!string.IsNullOrEmpty(lead.CompanyName) && lead.CompanyName != "Unassigned" ? lead.CompanyName : ""));// " (" + lead.Country + ")");
+                        HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;'>");
+                        HtmlTemplate.Append("Dear " + lead.ContactName);
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("Thank You for your interest in Logitude World, the first Freight Forwarding Software built totally in the cloud.");
                         HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("In order to proceed with the demo environment. Please, confirm your details in the following link: <a href='" + path + "'/>" + path + "</a>");
+                        HtmlTemplate.Append("In order to proceed with the demo environment. Please, confirm your details in the following link:");
+                        HtmlTemplate.Append("<br />");
+                        HtmlTemplate.Append("<a href='" + path + "'/>" + path + "</a>");
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("As a result, we will send you an email with a username and password for Logitude's demo environment and a Quick Tour Guide.");
                         HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("If you have any questions or inquiries. Please, feel free to contact us at <a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
+                        HtmlTemplate.Append("If you have any questions or inquiries. Please, feel free to contact us at");
+                        HtmlTemplate.Append("<br />");
+                        HtmlTemplate.Append("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("Best Regards,");
                         HtmlTemplate.Append("<br />");
