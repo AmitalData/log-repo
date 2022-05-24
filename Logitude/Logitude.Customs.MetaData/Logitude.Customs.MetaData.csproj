@@ -337,6 +337,7 @@
     <None Include="DBTables\DeclarationPending.dxml" />
     <None Include="DBTables\DeclarationReferantData.dxml" />
     <None Include="DBTables\DeclarationStatementType.dxml" />
+    <None Include="DBTables\DeclarationStatus.dxml" />
     <None Include="DBTables\DeclarationStatusType.dxml" />
     <None Include="DBTables\DeclarationTax.dxml" />
     <None Include="DBTables\Deficit.dxml" />

@@ -192,6 +192,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeclarationPending> DeclarationPendings { get; }
 		 IDbSet<DeclarationReferantData> DeclarationReferantDatas { get; }
 		 IDbSet<DeclarationStatementType> DeclarationStatementTypes { get; }
+		 IDbSet<DeclarationStatus> DeclarationStatuses { get; }
 		 IDbSet<DeclarationStatusType> DeclarationStatusTypes { get; }
 		 IDbSet<DeclarationTax> DeclarationTaxes { get; }
 		 IDbSet<Deficit> Deficits { get; }

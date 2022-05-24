@@ -173,6 +173,7 @@
     <Compile Include="EntityKeys\DeclarationMamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\DeclarationPendingKeys.cs" />
     <Compile Include="EntityKeys\DeclarationReferantDataKeys.cs" />
+    <Compile Include="EntityKeys\DeclarationStatusKeys.cs" />
     <Compile Include="EntityKeys\DeficitDecisionKeys.cs" />
     <Compile Include="EntityKeys\DeliveryTypeKeys.cs" />
     <Compile Include="EntityKeys\DocumentRejectTypeKeys.cs" />
@@ -304,6 +305,7 @@
     <Compile Include="EntityListQueryServices\DeclarationMamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationPendingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationReferantDataListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DeclarationStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeficitDecisionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeliveryTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentRejectTypeListQueryService.cs" />
@@ -389,6 +391,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeclarationMamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationPendingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationReferantDataListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DeclarationStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeficitDecisionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeliveryTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentRejectTypeListQueryService.Generated.cs" />
@@ -567,6 +570,7 @@
     <Compile Include="EntityLists\Generated\DeclarationMamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationPendingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationReferantDataList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DeclarationStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeficitDecisionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeliveryTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DocumentRejectTypeList.Generated.cs" />
@@ -699,6 +703,7 @@
     <Compile Include="EntityMapping\DeclarationMamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\DeclarationPendingMap.cs" />
     <Compile Include="EntityMapping\DeclarationReferantDataMap.cs" />
+    <Compile Include="EntityMapping\DeclarationStatusMap.cs" />
     <Compile Include="EntityMapping\DeficitDecisionMap.cs" />
     <Compile Include="EntityMapping\DeliveryTypeMap.cs" />
     <Compile Include="EntityMapping\DocumentRejectTypeMap.cs" />
@@ -830,6 +835,7 @@
     <Compile Include="EntityPOCOs\DeclarationMamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\DeclarationPending.cs" />
     <Compile Include="EntityPOCOs\DeclarationReferantData.cs" />
+    <Compile Include="EntityPOCOs\DeclarationStatus.cs" />
     <Compile Include="EntityPOCOs\DeficitDecision.cs" />
     <Compile Include="EntityPOCOs\DeliveryType.cs" />
     <Compile Include="EntityPOCOs\DocumentRejectType.cs" />
@@ -962,6 +968,7 @@
     <Compile Include="Repsitories\DeclarationMamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\DeclarationPendingRepository.cs" />
     <Compile Include="Repsitories\DeclarationReferantDataRepository.cs" />
+    <Compile Include="Repsitories\DeclarationStatusRepository.cs" />
     <Compile Include="Repsitories\DeficitDecisionRepository.cs" />
     <Compile Include="Repsitories\DeliveryTypeRepository.cs" />
     <Compile Include="Repsitories\DocumentRejectTypeRepository.cs" />
@@ -1047,6 +1054,7 @@
     <Compile Include="Repsitories\Generated\DeclarationMamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationPendingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationReferantDataRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DeclarationStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeficitDecisionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeliveryTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentRejectTypeRepository.Generated.cs" />

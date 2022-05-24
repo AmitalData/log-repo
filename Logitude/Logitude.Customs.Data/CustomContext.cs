@@ -418,6 +418,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationStatusMap());
+	
             modelBuilder.Configurations.Add(new DeclarationStatusTypeMap());
 	
             modelBuilder.Configurations.Add(new DeclarationTaxMap());
@@ -2356,6 +2358,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationStatementType> DeclarationStatementTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationStatus> DeclarationStatuses 
 	 {
 	      get; set;
 	 
