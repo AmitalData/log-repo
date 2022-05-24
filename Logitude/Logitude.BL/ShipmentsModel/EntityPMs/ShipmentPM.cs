@@ -2854,9 +2854,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InlandDomesticFromCity { get; set; }
+        public string InlandDomesticFromStateId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InlandDomesticToCity { get; set; }
+        public string InlandDomesticToStateId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InlandDomesticFromCountryId { get; set; }

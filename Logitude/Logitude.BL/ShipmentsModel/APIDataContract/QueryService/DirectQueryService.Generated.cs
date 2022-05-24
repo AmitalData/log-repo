@@ -719,6 +719,23 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.UnassignedConsigneeNotImporterAddress = AddressService54.AddressCustomDataMapping(MyEntityPM.UnassignedConsigneeNotImporterAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
+
+				   if(MyEntityPM.InlandDomesticFromStateId != null)
+				   {
+					   StateQueryService StateService53 = new StateQueryService(Tenant);
+					   					   temp.InlandDomesticFromState = StateService53.GetStateById(MyEntityPM.InlandDomesticFromStateId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.InlandDomesticToStateId != null)
+				   {
+					   StateQueryService StateService54 = new StateQueryService(Tenant);
+					   					   temp.InlandDomesticToState = StateService54.GetStateById(MyEntityPM.InlandDomesticToStateId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
 				   					
 				   return temp;
 			}
@@ -2379,6 +2396,48 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
+					StateQueryService InlandDomesticFromStateStateService = new StateQueryService(Tenant);
+					if(MyEntity.InlandDomesticFromState != null)
+					{
+						var myInlandDomesticFromStatePM = InlandDomesticFromStateStateService.StateDataMappingAndValidatin(MyEntity.InlandDomesticFromState,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myInlandDomesticFromStatePM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.InlandDomesticFromStateId = myInlandDomesticFromStatePM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					StateQueryService InlandDomesticToStateStateService = new StateQueryService(Tenant);
+					if(MyEntity.InlandDomesticToState != null)
+					{
+						var myInlandDomesticToStatePM = InlandDomesticToStateStateService.StateDataMappingAndValidatin(MyEntity.InlandDomesticToState,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myInlandDomesticToStatePM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.InlandDomesticToStateId = myInlandDomesticToStatePM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+			
 										   
 					return temp;
 		    }
@@ -2392,4 +2451,4 @@ using Simplog.Data.ShipmentsModel;
 
 						   
    }
-}
+}

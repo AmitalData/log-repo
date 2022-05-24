@@ -300,6 +300,11 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public Address UnassignedConsigneeNotImporterAddress { get; set; }
 
+    public State InlandDomesticFromState { get; set; }
+    
+    public State InlandDomesticToState { get; set; }
+
+
     public  string  ComputingPartnerCode { get; set; }
 
     }
