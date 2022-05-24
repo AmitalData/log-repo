@@ -765,13 +765,14 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
         }
 
 
-        await new CustomsCollateralWebService().updateMulti(
+        const customsCollateralList: CustomsCollateralPM[] = await new CustomsCollateralWebService().updateMulti(
             this.selectAll ? this.collateralToNotSendlist : this.collateralToSendlist, 
             this.collateralPM.DeclarationId, 
             this.selectAll,
             this.EntityPM
             );
         
+        this.collateralToSendlist = customsCollateralList.map(x=> x.Id);
 
         // let count: number = 0;
         // for (var i = 0; i < this.collateralToSendlist.length; i++) {
@@ -788,7 +789,6 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
         //     );
         // }
-
 
 
         let requestParams: SendCollateralRequestParams = new SendCollateralRequestParams();
