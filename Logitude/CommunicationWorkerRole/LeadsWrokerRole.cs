@@ -607,7 +607,7 @@ namespace CommunicationWorkerRole
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("In order to proceed with the demo environment. Please, confirm your details in the following link:");
                         HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<a href='" + path + "'/>" + path + "</a>");
+                        HtmlTemplate.Append("<a href='" + path + "'>" + path + "</a>");
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("As a result, we will send you an email with a username and password for Logitude's demo environment and a Quick Tour Guide.");
                         HtmlTemplate.Append("<br /><br />");
@@ -827,7 +827,7 @@ namespace CommunicationWorkerRole
             HtmlTemplate.Append("In order to log in. Please, follow the link below (or copy and paste it into your browser):");
 
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<a href='" + LogitudeSettings.LogitudeURL + "'/>" + LogitudeSettings.LogitudeURL + "</a>");
+            HtmlTemplate.Append("<a href='" + LogitudeSettings.LogitudeURL + "'>" + LogitudeSettings.LogitudeURL + "</a>");
 
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("The access is to Logitude's demo environment where other customers might be using at the same time, and kindly note that the trial period ends in 7 days.");
