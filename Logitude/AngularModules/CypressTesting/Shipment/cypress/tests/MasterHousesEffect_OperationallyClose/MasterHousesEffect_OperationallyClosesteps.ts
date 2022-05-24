@@ -83,7 +83,7 @@ Then("the house should connect successfully", () => {
 });
 //#endregion
 When("close the master shipment Operationally", () => {
-
+    cy.wait(1000)
     Actions.OperationalCloseShipment();
 });
 
@@ -95,7 +95,7 @@ Then("the master should close operationally successfully", () => {
 });
 Then("the connected house should close operationally successfully",()=>{
     Actions.openHouseShipment()
-   // Actions.ValidateShipmentHouseFields(true)
+  // Actions.ValidateShipmentHouseFields(true)
    Actions.ValidateShipmentHouseCloseoperationally(true)
 })
 When("reopen master operationally with {string} Note",(note)=>{

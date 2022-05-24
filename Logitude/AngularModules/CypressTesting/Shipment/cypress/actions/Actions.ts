@@ -169,9 +169,11 @@ export function BacktotheMasterShipment(){
 
 }
 export function openHouseShipment(){
+    cy.wait(1000)
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
-    // ShipmentContext.HouseNumber
-    cy.get("hyperlink").find("button").first().click({force:true})
+     //ShipmentContext.HouseNumber
+    cy.wait(1000)
+    cy.get("hyperlink").eq(1).first().click({force:true})
 }
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
@@ -222,6 +224,7 @@ export function CancelShipment(note: string) {
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 export function OperationalCloseShipment() {
+    cy.get(ShipmentSelectors.ShipmentMoreList).click({force:true})
     cy.Click(ShipmentSelectors.ShipmentMoreList,null, true);
     cy.Click(ShipmentSelectors.OperationalCloseButton+BaseSelectors.LastElement,null);
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
