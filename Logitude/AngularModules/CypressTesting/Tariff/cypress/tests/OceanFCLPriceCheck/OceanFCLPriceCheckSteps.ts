@@ -90,6 +90,7 @@ Given("add the following surcharge line", (dataTable) => {
   cy.wait(3000)
   let surchargeCostTariffLineDetails = Assists.CreateSet<SurchargeCostTariffLineDetails>(dataTable);
   Actions.AddSurchargeCostTariffLines(surchargeCostTariffLineDetails, "FCL")
+  cy.get(TariffSelectors.SaveTariff).click({ force: true })
   Actions.CheckIfVersionApproved2()
 });
 

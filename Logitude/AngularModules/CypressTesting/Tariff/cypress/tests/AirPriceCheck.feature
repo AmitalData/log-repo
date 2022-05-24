@@ -1,5 +1,5 @@
-#@release 
-@FeatureToggle
+#@release @FeatureToggle
+ @fixReleaseBugs
 Feature: Air Price Check
     The authenticated user will create new air freight cost tariff,
     add tariff line in draft version tab, then approve it,
