@@ -398,7 +398,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             var chartOfAccountsWithControlAccounts
                 = new string[] { ChartOfAccountsTypeValues.Works, ChartOfAccountsTypeValues.Customers, ChartOfAccountsTypeValues.Vendors };
 
-            if (!ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.OriginalChartOfAccountTypeCode))
+            if (chartOfAccount.OriginalChartOfAccountTypeCode == ChartOfAccountsTypeValues.Works || 
+                !ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.OriginalChartOfAccountTypeCode))
                 GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, chartsofAccountsId);
             else
                 GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, chartsofAccountsId);
@@ -480,12 +481,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 List<GLAccount> GLAccountsConnectedWithChartofAccount = new List<GLAccount>();
 
-                var chartOfAccount =  iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.FirstOrDefault(r => r.ChartsofAccountId == ChartsofAccountsId);
+                //var chartOfAccount =  iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.FirstOrDefault(r => r.ChartsofAccountId == ChartsofAccountsId);
+
+                ChartOfAccountRepository repo = new ChartOfAccountRepository(tenant);
+                var chartOfAccount = repo.GetSingle(ChartsofAccountsId, tenant);
 
                 var chartOfAccountsWithControlAccounts 
                     = new string[] {  ChartOfAccountsTypeValues.Works, ChartOfAccountsTypeValues.Customers, ChartOfAccountsTypeValues.Vendors };
 
-                if (!ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.OriginalChartOfAccountTypeCode))
+                if (chartOfAccount.TypeCode == ChartOfAccountsTypeValues.Works ||
+                    !ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.TypeCode)
+                    )
                     GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, ChartsofAccountsId);
                 else
                     GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, ChartsofAccountsId);
