@@ -992,7 +992,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                             return Responce;
                         }
                     }
-                    else
+                    else if(entityAM.TransportModeId != "A")
                     {
                         Responce.ErrorType = "Validation Error";
                         Responce.ErrorMessage = "PackageTypeCode field is required.";
