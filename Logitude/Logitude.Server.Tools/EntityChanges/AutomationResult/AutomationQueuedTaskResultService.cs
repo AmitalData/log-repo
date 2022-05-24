@@ -21,10 +21,21 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
     public class AutomationQueuedTaskResultService : GeneralAutomationResultService, IAutomationResultService
     {
-        public bool DependencyOnLastEntityUpdate { get { return false; } }
         public string ResultCode { get { return "QUEUE"; } }
 
         AutomationResultArgs automationResultArgs { get; set; }
+
+
+        public  bool DependencyOnLastEntityUpdate { get { return (processType == "OnCreate") ? true : false; } }
+
+        private string processType = string.Empty;
+        public AutomationQueuedTaskResultService(string processType)
+        {
+            this.processType = processType;
+        }
+
+
+
         public void Run(AutomationResultArgs automationResultArgs)
         {
             this.automationResultArgs = automationResultArgs;

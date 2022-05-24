@@ -16,7 +16,11 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
     public class AutomationSetValueResultService : GeneralAutomationResultService, IAutomationResultService
     {
 
+
         public bool DependencyOnLastEntityUpdate { get { return false; } }
+
+  
+
         public string ResultCode { get { return "FIELDSET"; } }
 
         AutomationResultArgs automationResultArgs { get; set; }

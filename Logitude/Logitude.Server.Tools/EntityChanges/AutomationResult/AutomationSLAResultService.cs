@@ -12,8 +12,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
   public  class AutomationSLAResultService : GeneralAutomationResultService, IAutomationResultService
     {
-        public bool DependencyOnLastEntityUpdate { get { return false; } }
         public string ResultCode { get { return "SETSLA"; } }
+        public bool DependencyOnLastEntityUpdate { get { return false; } }
 
         AutomationResultArgs automationResultArgs { get; set; }
         public void Run(AutomationResultArgs automationResultArgs)

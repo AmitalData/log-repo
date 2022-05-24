@@ -21,8 +21,17 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         private List<Automation> onUpdateDocumentAutomations = new List<Automation>();
         private int tenant;
         private EntityChange entityChange;
-        public bool DependencyOnLastEntityUpdate { get { return false; } }
         public string ResultCode { get { return "ONUPDATEDOCUMENT"; } }
+
+
+        public bool DependencyOnLastEntityUpdate { get { return (processType == "OnCreate") ? true : false; } }
+
+        private string processType = string.Empty;
+        public AutomationOnUpdateDocumentService(string processType)
+        {
+            this.processType = processType;
+        }
+
 
         public void Run(AutomationResultArgs automationResultArgs)
         {

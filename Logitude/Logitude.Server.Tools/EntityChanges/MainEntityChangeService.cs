@@ -34,7 +34,6 @@ namespace Logitude.Server.Tools.EntityChanges
         private GeneralEntityChangeService generalEntityChangeService { get; set; }
         private AutomationObjectFieldService automationObjectFieldService { get; set; }
         private EntityChangeRepository entityChangeRepository { get; set; }
-        public bool IsHaveAutomationDependencyOnLastEntityUpdate { get; set; }
         public bool IsChild { get; set; }
 
         public MainEntityChangeService(EntityChangeArgs entityChangeArgs)
@@ -63,16 +62,16 @@ namespace Logitude.Server.Tools.EntityChanges
         private List<IAutomationResultService> GetAutomationResultLists()
         {
             var result = new List<IAutomationResultService>();
-            result.Add(new AutomationFollowUpResultService());
+            result.Add(new AutomationFollowUpResultService(this.entityChangeArgs.ProcessType));
             result.Add(new AutomationSetValueResultService());
             result.Add(new AutomationSLAResultService());
-            result.Add(new AutomationQueuedTaskResultService());
+            result.Add(new AutomationQueuedTaskResultService(this.entityChangeArgs.ProcessType));
             result.Add(new AutomationSendInterfaceResultService());
-            result.Add(new AutomationEmailResultService());
-            result.Add(new AutomationSendDocumentResultService());
-            result.Add(new AutomationCreateTaskService());
-            result.Add(new AutomationEventCreationService());
-            result.Add(new AutomationOnUpdateDocumentService());
+            result.Add(new AutomationEmailResultService(this.entityChangeArgs.ProcessType));
+            result.Add(new AutomationSendDocumentResultService(this.entityChangeArgs.ProcessType));
+            result.Add(new AutomationCreateTaskService(this.entityChangeArgs.ProcessType));
+            result.Add(new AutomationEventCreationService(this.entityChangeArgs.ProcessType));
+            result.Add(new AutomationOnUpdateDocumentService(this.entityChangeArgs.ProcessType));
             return result;
         }
 
