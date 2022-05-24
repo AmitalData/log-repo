@@ -84,23 +84,25 @@ export class AutonomyKeywordComponent
     ngOnInit(): void {
             if(this.entityArgs.EntityPM != null) {
                 this.EntityPM = this.entityArgs.EntityPM;
-                switch (this.EntityPM.KeywordtypeCode) {
-                    case "1": {
-                        this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[0];
-                        break;
-                    }
-                    case "2": {
-                        this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[1];
-                        break;
-                    }
-                    case "3": {
-                        this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[2];
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
-                }
+                this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[+this.EntityPM.KeywordtypeCode - 1];
+
+                // switch (this.EntityPM.KeywordtypeCode) {
+                //     case "1": {
+                //         this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[0];
+                //         break;
+                //     }
+                //     case "2": {
+                //         this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[1];
+                //         break;
+                //     }
+                //     case "3": {
+                //         this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[2];
+                //         break;
+                //     }
+                //     default: {
+                //         break;
+                //     }
+                // }
         } else {
             this.isNewRecord = true;
             this.EntityPM = new CustomsAutonomyKeywordPM();
