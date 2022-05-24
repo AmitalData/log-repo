@@ -16,6 +16,7 @@ namespace WebFreight.Web.DataContracts
         public int ARInvoicesSATFailedCount { get; set; }
         public int ARInvoicesFailedCount { get; set; }
         public int ARPaymentFailedCount { get; set; }
+        public int ARInvoicesSATVoidedNotTransferredCount { get; set; }
 
     }
 

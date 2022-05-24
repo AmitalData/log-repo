@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class UsoCFDIUpdateClass
    {  		
-		public const string HashString = "ce184bda8de8f22cb9b61d7c2526975a";
+		public const string HashString = "9c3b6426c1d9a7e5ef8f669e30bfcbef";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "UsoCFDI",
 			      				    IsNew =  false,
 			      				    DBTableName =  "UsoCFDIs",
-			      				    OldDBTableName =  "UsoCFDIs",
 			      				    ObjectTableSingular =  "Uso CFDI",
 			      				    ObjectTablePlural =  "Uso CFDIs",
 			      				    HasCustomFilter =  false,
@@ -122,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Uso CFDI",
-			      				    Code =  "766f",
+			      				    Code =  "a6d6",
 			      				    Name =  "UsoCFDI",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -149,7 +148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
+											OldFieldName =  "Code",
 					  						ObjectTableName =  "UsoCFDI",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -212,8 +211,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
+					 						FieldName =  "Name",	
+				                            OldFieldName =  "Name",
 					  						ObjectTableName =  "UsoCFDI",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -277,7 +276,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "UsoCFDI",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -342,8 +340,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
-
+	    {   
+ 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
