@@ -41,7 +41,7 @@ export class TaxReportMenuButtonsHandler {
                     switch (button.EventCode) {
                         case "TRCN":
                             {
-                                if (this.EntityPM.IsCancelled) {
+                                if (this.EntityPM.IsCancelled || this.EntityPM.StatusCode == TaxReportStatus.TransmittedAndClosingJournal) {
                                     button.IsDisabled = true;
                                 }
                                 else {
