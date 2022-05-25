@@ -494,6 +494,29 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+
+        public HttpResponseMessage PostCancelClosingJournal(string taxReportId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    TaxReportClosingService closingService = new TaxReportClosingService(tenant, taxReportId, true);
+                    closingService.CancelClosingJournal();
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, closingService.journalPM);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         private string EncodeStringFromImageParameter(ImageParameter fileUploadParamerter)
         {
             byte[] dataBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
