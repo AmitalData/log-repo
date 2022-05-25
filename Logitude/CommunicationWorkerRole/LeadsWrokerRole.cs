@@ -312,7 +312,7 @@ namespace CommunicationWorkerRole
                         HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>");
                         HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
                         HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
+                        HtmlTemplate.Append("<img width='258' height='150' src='cid:logo0' />");
                         HtmlTemplate.Append("</div>");
                         string emailbody = HtmlTemplate.ToString();
 
@@ -328,6 +328,7 @@ namespace CommunicationWorkerRole
                                 Subject = "Your inquiry re Logitude World demo",
                                 EmailBody = emailbody,
                                 Tenant = crmTenant,
+                                LoggingUserId = GetCrmUserId(crmTenant),
                             };
                         }
                         else
@@ -619,7 +620,7 @@ namespace CommunicationWorkerRole
                         HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
                         HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
                         HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
+                        HtmlTemplate.Append("<img width='258' height='150' src='cid:logo0' />");
                         HtmlTemplate.Append("</div>");
                         string emailbody = HtmlTemplate.ToString();
                         EmailParameters parameters = new EmailParameters();
@@ -848,7 +849,7 @@ namespace CommunicationWorkerRole
             HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
             HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
+            HtmlTemplate.Append("<img width='258' height='150' src='cid:logo0' />");
             HtmlTemplate.Append("</div>");
 
             string emailbody = HtmlTemplate.ToString();
@@ -865,6 +866,7 @@ namespace CommunicationWorkerRole
                     EmailBody = emailbody,
                     Tenant = demoTenant,
                     IsBodySecured = true,
+                    LoggingUserId = GetCrmUserId(crmTenant),
                 };
             }
             else
@@ -890,7 +892,7 @@ namespace CommunicationWorkerRole
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
             byte[] messageByte = enc.GetBytes(emailbody);
 
-            string txtMessage = emailbody.Replace("<div style='text-align:left'>", "").Replace("<br />", Environment.NewLine).Replace("<img width='258' height='101' src='cid:logo0' />", "").Replace("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>", "info@logitudeworld.com")
+            string txtMessage = emailbody.Replace("<div style='text-align:left'>", "").Replace("<br />", Environment.NewLine).Replace("<img width='258' height='150' src='cid:logo0' />", "").Replace("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>", "info@logitudeworld.com")
                 .Replace("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>", "http://www.Logitudeworld.com").Replace(" <a href='", "").Replace("</a>", "").Replace("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>", "").Replace("</div>", "")
                 .Replace("<b>", "").Replace("</b>", "").Replace("<div style='text-align:right;margin-right:150px'>", "").Replace("<div style='text-align:left;'>", "");
             byte[] messagetxtByte = enc.GetBytes(txtMessage);
@@ -1236,7 +1238,7 @@ namespace CommunicationWorkerRole
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
             byte[] messageByte = enc.GetBytes(emailbody);
 
-            string txtMessage = emailbody.Replace("<div style='text-align:left'>", "").Replace("<br />", Environment.NewLine).Replace("<img width='258' height='101' src='cid:logo0' />", "").Replace("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>", "info@logitudeworld.com")
+            string txtMessage = emailbody.Replace("<div style='text-align:left'>", "").Replace("<br />", Environment.NewLine).Replace("<img width='258' height='150' src='cid:logo0' />", "").Replace("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>", "info@logitudeworld.com")
                 .Replace("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>", "http://www.Logitudeworld.com").Replace(" <a href='" + path + "'/>", "")
                 .Replace("</a>", "").Replace("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>", "").Replace("</div>", "");
             byte[] messagetxtByte = enc.GetBytes(txtMessage);
