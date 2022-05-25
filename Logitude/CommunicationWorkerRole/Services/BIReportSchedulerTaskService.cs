@@ -81,15 +81,21 @@ namespace CommunicationWorkerRole.Services
             }
             catch (Exception ex)
             {
-                string logsMessage = reportSchedulerTaskService.GetAllTaskLogs();
-                string errorMessage = new StringBuilder().Append(logsMessage).AppendLine().ToString();
-                errorMessage += new StringBuilder().Append("Exception Message: ").AppendLine().Append(ex.Message).AppendLine().ToString();
-                errorMessage += new StringBuilder().Append("Stack Trace:").AppendLine().Append(ex.StackTrace).AppendLine().ToString();
-
-                throw new Exception(errorMessage);
+                HandleTaskFailure(ex);
+                return;
             }
         }
-        
+
+        private void HandleTaskFailure(Exception ex)
+        {
+            string logsMessage = reportSchedulerTaskService.GetAllTaskLogs();
+            string errorMessage = new StringBuilder().Append(logsMessage).AppendLine().ToString();
+            errorMessage += new StringBuilder().Append("Exception Message: ").AppendLine().Append(ex.Message).AppendLine().ToString();
+            errorMessage += new StringBuilder().Append("Stack Trace:").AppendLine().Append(ex.StackTrace).AppendLine().ToString();
+
+            throw new Exception(errorMessage);
+        }
+
         private byte[] GetBIReportData(SchedulerDetails schedulerDetails, TasksSchedulerPM reportTask)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing bi report data"));

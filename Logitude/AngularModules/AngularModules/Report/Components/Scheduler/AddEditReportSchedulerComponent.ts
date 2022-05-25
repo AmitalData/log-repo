@@ -372,14 +372,18 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.PageChild_PRREP.EntityPM['DWQueryId'] = myResult.Result.DWQueryId;
         this.bIReportPMService.insert(this.PageChild_PRREP.EntityPM).subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError) {
-                this.PageChild_PRREP.EntityPM['Id'] = serviceResponse.Result.Id;
-                this.PageChild_PRREP.SaveBIReport();
-                this.SaveBIReportSchedulerDetails(serviceResponse.Result.Id, myResult.Result.DWQueryId);
+                this.SubmitSavingNewBIReport(serviceResponse, myResult);
             }
             else if (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) {
                 this.ShowErrorWindow(serviceResponse.ErrorsArray[0]);
             }
         });
+    }
+
+    private SubmitSavingNewBIReport(serviceResponse: ServiceResponse, myResult: any) {
+        this.PageChild_PRREP.EntityPM['Id'] = serviceResponse.Result.Id;
+        this.PageChild_PRREP.SaveBIReport();
+        this.SaveBIReportSchedulerDetails(serviceResponse.Result.Id, myResult.Result.DWQueryId);
     }
 
     private SaveReportSchedulerDetails() {
