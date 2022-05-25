@@ -26,5 +26,6 @@ namespace Logitude.Accounting.Def.EntityPMs
         public const string ARPaymentReturnToCustomer = "ARPaymentReturnToCustomer";
         public const string RevaluationApprove = "RevaluationApprove";
         public const string TaxReportClosingJournal = "TaxReportClosingJournal";
+        public const string TaxReportCancelClosingJournal = "TaxReportCancelClosingJournal";
     }
 }
