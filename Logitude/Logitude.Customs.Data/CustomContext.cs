@@ -466,6 +466,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ExportStorageMap());
 	
+            modelBuilder.Configurations.Add(new ExternalFieldMappingMap());
+	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
 	
             modelBuilder.Configurations.Add(new FaultInspectionTypeMap());
@@ -689,6 +691,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new SpecializationTypeMap());
 	
             modelBuilder.Configurations.Add(new SplitOrMergeReasonMap());
+	
+            modelBuilder.Configurations.Add(new StatusFieldTypeMap());
 	
             modelBuilder.Configurations.Add(new StorageMessageTypeMap());
 	
@@ -2507,6 +2511,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ExternalFieldMapping> ExternalFieldMappings 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<FacilitationType> FacilitationTypes 
 	 {
 	      get; set;
@@ -3174,6 +3184,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SplitOrMergeReason> SplitOrMergeReasons 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<StatusFieldType> StatusFieldTypes 
 	 {
 	      get; set;
 	 

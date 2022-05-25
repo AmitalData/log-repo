@@ -103,6 +103,7 @@
     <Compile Include="EntityPMs\Generated\ExportReferencePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExportStoragePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExportStorgePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ExternalFieldMappingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FclLclCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FullnessCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\HandingCodePM.Generated.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="EntityPMs\Generated\ReferenceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReleaseMessageTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SecurityClearenceTypeCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\StatusFieldTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\StuffingSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SuppInvoiceItemsAbachStatementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsPricePM.Generated.cs" />

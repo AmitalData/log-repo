@@ -361,6 +361,7 @@
     <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\ExportReference.dxml" />
     <None Include="DBTables\ExportStorage.dxml" />
+    <None Include="DBTables\ExternalFieldMapping.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
     <None Include="DBTables\FclLclCode.dxml" />
@@ -469,6 +470,7 @@
     <None Include="DBTables\SpecialActionDescriptionType.dxml" />
     <None Include="DBTables\SpecializationType.dxml" />
     <None Include="DBTables\SplitOrMergeReason.dxml" />
+    <None Include="DBTables\StatusFieldType.dxml" />
     <None Include="DBTables\StorageMessageType.dxml" />
     <None Include="DBTables\StorageStatus.dxml" />
     <None Include="DBTables\SubCountry.dxml" />
@@ -533,6 +535,7 @@
     </None>
     <None Include="EntityFiles\DeclarationStatus.lxml" />
     <None Include="EntityFiles\ExportStorage.lxml" />
+    <None Include="EntityFiles\ExternalFieldMapping.lxml" />
     <None Include="EntityFiles\PhysicalCheckSearchResultType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
@@ -553,6 +556,7 @@
     <None Include="EntityFiles\ExportReference.lxml" />
     <None Include="EntityFiles\ExportStorge.lxml" />
     <None Include="EntityFiles\CustomsDocumentUpload.lxml" />
+    <None Include="EntityFiles\StatusFieldType.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />
     <None Include="EntityFiles\HandingCode.lxml" />
     <None Include="EntityFiles\NDMessageActionCode.lxml" />

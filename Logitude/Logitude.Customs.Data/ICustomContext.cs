@@ -216,6 +216,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ExporterRoleType> ExporterRoleTypes { get; }
 		 IDbSet<ExportReference> ExportReferences { get; }
 		 IDbSet<ExportStorage> ExportStorages { get; }
+		 IDbSet<ExternalFieldMapping> ExternalFieldMappings { get; }
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FclLclCode> FclLclCodes { get; }
@@ -328,6 +329,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<SpecialActionDescriptionType> SpecialActionDescriptionTypes { get; }
 		 IDbSet<SpecializationType> SpecializationTypes { get; }
 		 IDbSet<SplitOrMergeReason> SplitOrMergeReasons { get; }
+		 IDbSet<StatusFieldType> StatusFieldTypes { get; }
 		 IDbSet<StorageMessageType> StorageMessageTypes { get; }
 		 IDbSet<StorageStatus> StorageStatuses { get; }
 		 IDbSet<StuffingSiteType> StuffingSiteTypes { get; }
