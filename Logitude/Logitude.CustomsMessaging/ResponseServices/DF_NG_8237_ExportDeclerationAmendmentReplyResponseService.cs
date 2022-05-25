@@ -432,27 +432,36 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
                                             }
                                             break;
-                                    };
+                                        };
+                                    }
+                                    break;
                                 }
-                                break;
-                            }
+                        }
+                   }
+ 
+                if (!isExportClose)
+                {
+                    if (customResponse.Response.Error != null && (!new string[] { "1", "2" }.Contains(_MyDeclarationPM.AmendmentStatus)))
+                    {
+                        DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
+                        this._MyDeclarationPM.AmendmentErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
                     }
                 }
-
-                if (customResponse.Response.Error != null && (!new string[] { "1", "2" }.Contains(_MyDeclarationPM.AmendmentStatus)))
+                else
                 {
-                    DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
-                    if (!isExportClose)
-                        this._MyDeclarationPM.AmendmentErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
-                    else
+                    if (customResponse.Response.Error != null)
                     {
+                        DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
                         this._MyDeclarationPM.ExportClosedErrorXML = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
-
                         if (mydDclarationErrorPointerService._declarationErrorPointer != null &&
                             mydDclarationErrorPointerService._declarationErrorPointer.Entitites != null &&
                             mydDclarationErrorPointerService._declarationErrorPointer.Entitites.Exists(x =>
                             (x.FieldErrors != null && x.FieldErrors.Any(y => y.ListVersionID == "1")) || (x.EntityErrors != null && x.EntityErrors.Any(y => y.ListVersionID == "1"))))
                             HasErors = true;
+                    }
+                    else
+                    {
+                        this._MyDeclarationPM.ExportClosedErrorXML = null;
                     }
                 }
 
