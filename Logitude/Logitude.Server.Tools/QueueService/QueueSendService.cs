@@ -185,7 +185,9 @@ namespace Logitude.Server.Tools.QueueService
 
         public bool UseRabbitMQ { get;  set; }
         public string QueueGroupCodeRabbit { get; set; }
-        public string CommunicationOrRequestId { get; set; }
+        public string EntityCode { get; set; }
+        public string EntityId { get; set; }
+        
     }
     public class RabbitQueueCodeService
     {

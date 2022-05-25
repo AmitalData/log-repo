@@ -146,9 +146,21 @@
 
 	<!--communicationlogs or CustomsRequestsSheets-->
 	<Column
+    Name="EntityCode"
+    Type="varchar"
+    Size="40">
+		<Constraints
+  Nullable="true" />
+
+	</Column>
+
+	<Column
     Name="EntityId"
     Type="varchar"
     Size="40">
+		<Constraints
+  Nullable="true" />
+
 	</Column>
 	
 	<Relation
@@ -168,6 +180,12 @@
 	<Index
   Columns="Status,NextRunDateTime,UseRabbitMQ,HaveRabbitMQ"
    />
+
+
+	<Index
+  Columns="EntityCode,EntityId"
+   />
+
 
 
 </Table>

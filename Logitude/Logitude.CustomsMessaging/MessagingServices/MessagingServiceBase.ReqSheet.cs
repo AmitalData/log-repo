@@ -1732,7 +1732,8 @@ Exception:" + ee.Message
                     TimeSpan timeSpan = futureSendDateTime.Value.Subtract(DateTime.Now);
                     queueSendModel.Delay = timeSpan;
                 }
-                queueSendModel.CommunicationOrRequestId = _CustomsRequestsSheetService?.MyCustomsRequestsSheetPM?.Id;
+                queueSendModel.EntityCode = "CustomsRequestsSheet".ToLower();//"CustomsRequestsSheet";
+                queueSendModel.EntityId = _CustomsRequestsSheetService?.MyCustomsRequestsSheetPM?.Id;
 
                 //_CustomsRequestsSheetService = customsRequestsSheetService;
                 bool explictStop = false;
