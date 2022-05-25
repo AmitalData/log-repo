@@ -178,8 +178,8 @@ namespace Logitude.BL.CommonDataModel
             all.Add(new UsoCFDIDetails()
             {    
                 Code = "S01", 
-                Name = "Sin efectos fisc", 
-                SearchFields = "S01,Sin efectos fisc", 
+                Name = "Sin efectos fiscales.", 
+                SearchFields = "S01,Sin efectos fiscales.", 
 			});
 			
             return all;

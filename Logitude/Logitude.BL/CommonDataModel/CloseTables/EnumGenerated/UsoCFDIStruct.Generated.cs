@@ -32,7 +32,7 @@ namespace Logitude.BL.CommonDataModel.CloseTables
        public const string Gastosdetransportaciónescolarobligatoria = "D08";  
        public const string Depósitosencuentasparaelahorroprimasquetengancomobaseplanesdepensiones = "D09";  
        public const string Pagosporservicioseducativoscolegiaturas = "D10";  
-       public const string Sinefectosfisc = "S01";  
+       public const string Sinefectosfiscales = "S01";  
     }
 }
 
