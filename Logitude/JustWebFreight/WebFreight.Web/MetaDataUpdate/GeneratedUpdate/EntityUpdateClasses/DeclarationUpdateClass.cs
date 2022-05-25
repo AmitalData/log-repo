@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "6af33dc6ccea2d1e9035ca4a3b5cc5ce";
+		public const string HashString = "57441fb5e49388a8b420dd93487f06a0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -486,7 +486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  60,
 					  						DisplayInList =  true,
-					  						IsCustomFilter =  true,
+					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
