@@ -74,6 +74,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Country ToCountry { get; set; }
     
     public string ChangeSetOp { get; set; }
+    
+    public string Type { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
