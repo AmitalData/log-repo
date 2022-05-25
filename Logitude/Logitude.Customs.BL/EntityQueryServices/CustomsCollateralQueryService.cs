@@ -72,9 +72,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return customsCollateralList;
         }
 
-        public void UpdateMulti(string[] ids, string declarationId, bool selectAll, CustomsCollateralsAnswerPM customsCollateralsAnswerPM, int tenant)
+        public List<CustomsCollateral> UpdateMulti(string[] ids, string declarationId, bool selectAll, CustomsCollateralsAnswerPM customsCollateralsAnswerPM, int tenant)
         {
-            CustomsCollateralUpdateService updateService = new CustomsCollateralUpdateService(context); 
+            CustomsCollateralUpdateService updateService = new CustomsCollateralUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant); 
 
             List<CustomsCollateral> customsCollateralList =
                 selectAll ? 
@@ -89,6 +89,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 customsCollateralPM.ChangeSetOp = ChangeSetOperation.Update;
                 updateService.Update(customsCollateralPM, true);
             });
+
+            return customsCollateralList;
         }
     }
 }

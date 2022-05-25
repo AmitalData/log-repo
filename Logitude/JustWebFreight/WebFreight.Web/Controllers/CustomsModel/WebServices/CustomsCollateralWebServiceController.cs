@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.Security;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -32,9 +33,9 @@ namespace WebFreight.Web.Controllers.WebServices
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
-                new CustomsCollateralQueryService(authToken.Tenant).UpdateMulti(body.ids, body.declarationId, body.selectAll, body.customsCollateralsAnswerPM, authToken.Tenant);
+               List<CustomsCollateral> CustomsCollateralList = new CustomsCollateralQueryService(authToken.Tenant).UpdateMulti(body.ids, body.declarationId, body.selectAll, body.customsCollateralsAnswerPM, authToken.Tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK, CustomsCollateralList);
             }
 
             catch (Exception ex)
@@ -49,14 +50,6 @@ namespace WebFreight.Web.Controllers.WebServices
             public string declarationId { get; set; }
             public bool selectAll { get; set; }
             public CustomsCollateralsAnswerPM customsCollateralsAnswerPM { get; set; }
-
-            public CustomsCollateralWebServiceMultiParams(string[] ids, string declarationId, bool selectAll, CustomsCollateralsAnswerPM customsCollateralsAnswerPM)
-            {
-                this.ids = ids;
-                this.declarationId = declarationId;
-                this.selectAll = selectAll;
-                this.customsCollateralsAnswerPM = customsCollateralsAnswerPM;
-            }
         }
     }
 }
