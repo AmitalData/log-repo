@@ -21,6 +21,7 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.DataContracts;
 
 namespace CommunicationWorkerRole
 {
@@ -226,6 +227,7 @@ namespace CommunicationWorkerRole
             this.HandelPODShipmentEvent(isPODReceived, podReceivedDate, pODReceivedByUserId);
             shipmentRepository.Update(shipment);
             shipmentRepository.SubmitChanges();
+            RunStoredProcedureClass.UpdateShipmentStatus(shipment.Id, shipment.Tenant);
         }
 
         private void UpdateShipmentContainers(string shipmentId, DateTime? podReceivedDate, int tenant)
@@ -264,6 +266,7 @@ namespace CommunicationWorkerRole
             ShipmentMasterData master = this.GetMasterShipment();
             var shipmentTracing = new ShipmentTracing(shipmentPM, shipment, master, pODReceivedByUserId, isNew);
             shipmentTracing.TracePODReceived(isPODReceived, podReceivedDate);
+          
         }
 
         private ShipmentMasterData GetMasterShipment()
