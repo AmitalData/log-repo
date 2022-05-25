@@ -42,6 +42,7 @@ namespace WebFreight.Web.DataProviders
         public string Transshipment2FlightNumberAndDate { get; set; }
         public string InsurrenceValue { get; set; }//custom default X X X        
         public string SCI { get; set; }
+        public string MainHarmonize { get; set; }
         public string TotalQuantity { get; set; }
         public string GrossWeight { get; set; }
         public string GrossWeightInKG { get; set; }

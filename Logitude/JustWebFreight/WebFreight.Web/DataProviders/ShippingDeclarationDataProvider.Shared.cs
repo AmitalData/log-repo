@@ -546,5 +546,13 @@ namespace WebFreight.Web.DataProviders
         public string IncotermCode { get; set; }
         public string FirstPickupTruckerCode { get; set; }
         public string LastDeliveryTruckerCode { get; set; }
+
+        public string DangerousClassNumber { get; set; }
+        public string DangerousUnNumber { get; set; }
+        public string DangerousPackagingGroup { get; set; }
+        public string EmergencyContactName { get; set; }
+        public string DangerousIMDGCode { get; set; }
+        public string DangerousFlashPoint { get; set; }
+        public string DangerousMaterialDescription { get; set; }
     }
 }
