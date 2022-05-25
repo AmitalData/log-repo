@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Uso CFDI&quot;"
-  Code="&quot;a6d6&quot;"
+  Code="&quot;cda3&quot;"
   Name="&quot;UsoCFDI&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -424,8 +424,8 @@
       SearchFields="&quot;D10,Pagos por servicios educativos (colegiaturas).&quot;" />
     <Record
       Code="&quot;S01&quot;"
-      Name="&quot;Sin efectos fisc&quot;"
-      SearchFields="&quot;S01,Sin efectos fisc&quot;" />
+      Name="&quot;Sin efectos fiscales.&quot;"
+      SearchFields="&quot;S01,Sin efectos fiscales.&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
