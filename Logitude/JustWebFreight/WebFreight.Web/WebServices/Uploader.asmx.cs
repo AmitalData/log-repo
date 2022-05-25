@@ -358,8 +358,11 @@ namespace WebFreight.Web.WebServices
                     }
                     else
                     {
-                        imagedetailid = contact.ImageDetailId;
+                        UpdateImageDetails(new ImageDetailPM() { Id = contact.ImageDetailId, Tenant = contact.Tenant, Extension = extension, Size = fileSize }, imageDetailRep);
                     }
+
+                    imagedetailid = contact.ImageDetailId;
+
                 }
                 else
                 {
@@ -464,7 +467,7 @@ namespace WebFreight.Web.WebServices
 
         private void UpdateImageDetails(ImageDetailPM imageDetailPM , ImageDetailRepository imageDetailRepository )
         {
-            var imagedetail = new ImageDetailRepository().GetSingleImageDetail(imageDetailPM.Id , imageDetailPM.Tenant);
+            var imagedetail = imageDetailRepository.GetSingleImageDetail(imageDetailPM.Id , imageDetailPM.Tenant);
             if (imagedetail == null) return;
             imagedetail.Extension = imageDetailPM.Extension;
             imagedetail.Size = imageDetailPM.Size;
