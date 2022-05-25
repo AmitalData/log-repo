@@ -219,6 +219,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private ContainersExternalDataRepository containersExternalDataRepository;
         private ContainersExternal containersExternal;
         private bool IsUpdatingShipmentDateFields  = false;
+        private bool IsUpdatingEmptyLeg = false;
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
@@ -699,6 +700,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                                 this.CreateShipmentContainerStatus(item);
                                 this.UpdateContainer();
                                 this.UpdatePackage();
+                                this.UpdateEmptyReturnLeg();
                                 this.UpdateShipment();
                                 this.SaveShipment(shipmentPM);
                             }
@@ -1346,6 +1348,33 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
+        private void UpdateEmptyReturnLeg()
+        {
+            this.IsUpdatingEmptyLeg = false;
+            ShipmentDeliveryPM delivery = this.GetEmptyReturnLeg();
+            if (delivery != null)
+            {
+                this.IsUpdatingEmptyLeg = true;
+                delivery.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                delivery.ETA = container.EstimatedEmptyReturn;
+                delivery.ATA = container.ActualEmptyReturn;
+            }
+        }
+        private ShipmentDeliveryPM GetEmptyReturnLeg()
+        {
+            ShipmentDeliveryPM shipmentDelivery = null;
+
+            ShipmentPickUpDeliveryPackageRepository pickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(shipmentContext);
+            List<ShipmentPickUpDeliveryPackage> packages = pickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(containerId, logitudeTenant.Value);
+            if (packages != null && packages.Count > 0)
+            {
+                List<string> deliveryPackagesIds = packages.Select(s => s.ShipmentPickUpDeliveryId).ToList();
+                shipmentDelivery = shipmentPM.ShipmentDeliveries.Where(a => deliveryPackagesIds.Contains(a.Id) && a.PickUpDeliveryTypeCode == "EMPT").FirstOrDefault();                
+            }
+
+            return shipmentDelivery;
+        }
+
         private ContainerUpdatedFields BuildContainerUpdatedFields()
         {
             ContainerUpdatedFields containerUpdatedFields = new ContainerUpdatedFields();
@@ -2436,7 +2465,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void SaveShipment(ShipmentPM shipmentPM)
         {
-            if (shipmentPM.IsUpdatedOceanInsightsAnalyzer || this.IsUpdatingPackages)
+            if (shipmentPM.IsUpdatedOceanInsightsAnalyzer || this.IsUpdatingPackages || this.IsUpdatingEmptyLeg)
             {
                 string systemEmail = "system@tenant" + this.logitudeTenant.Value + ".com";
                 ShipmentService service = new ShipmentService(shipmentContext, shipmentPM, systemEmail);

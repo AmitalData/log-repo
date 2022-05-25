@@ -45,7 +45,7 @@ namespace WebFreight.Web.Controllers.WebServices
     {
       
 
-        public HttpResponseMessage Post(ShipmentContainerSimulator simulator)
+        public HttpResponseMessage PostOceanInsightSimulator(ShipmentContainerSimulator simulator)
         {
             try
             {
