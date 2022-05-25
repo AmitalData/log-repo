@@ -518,5 +518,6 @@ export class ShipmentList {
 		MainCarriageETDTime: Date;
 		MainCarriageETATime: Date;
 		PackagesQuantityAndType: string;
+		ConnectedtoMaster: boolean;
 	
 }
