@@ -87,7 +87,7 @@
                             </tr>
 
                             <!-- Back Button + Title -->
-                            <tr style="height: 1px;">
+                            <tr *ngIf="!IsScheduler" style="height: 1px;">
                                 <td>
                                     <table>
                                         <tr>
@@ -261,7 +261,7 @@
                                             </td>
 
                                             <td *ngIf="SelectedFiltersDataSource" style="width: 57px;">
-                                                <button id="{{'RunBIReport' | IdGeneratorPipe}}" [class.RunBIButtonShake]="IsFilterValueChanged == true" [class.RunBIButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">Run Report</button>
+                                                <button id="{{'RunBIReport' | IdGeneratorPipe}}" [class.RunBIButtonShake]="IsFilterValueChanged == true" [class.RunBIButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">{{IsScheduler ? 'Preview' : 'Run'}} Report</button>
                                             </td>
 
                                             <td style="width: 5px;">
@@ -286,6 +286,13 @@
                                             <td style="float:right;width:240px; ">
                                                 <table>
                                                     <tr>
+                                                        <td [hidden]="!IsScheduler" style="width: 100px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td [hidden]="!CanScheduler" style="width: 25px;">
+                                                            <button class="Button" style="width:25px;float:left;" (click)="onBIReportSchedulerClick()"><img class="CenterCenter" style="width: 22px;height: 22px; " title="Report Scheduler" src="./Images/ReportScheduler.png" /></button>
+                                                        </td>
                                                         <td [hidden]="!HasCopyFeature" style="width: 25px;">
                                                             <button class="Button" style="width:25px;float:left;" (click)="onCopyBIReportClick()"><img class="CenterCenter" title="Copy" src="./Images/Buttons/copy.report.png" /></button>
                                                         </td>
@@ -293,7 +300,7 @@
                                                             <button *ngIf="ShowStaticFilters == true" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = false"><img style="width:23px;" class="CenterCenter" [attr.title]="ShowStaticFilters ? 'Hide fixed filters' : ''" src="./Images/HideFilters.png" /></button>
                                                             <button *ngIf="ShowStaticFilters == false" [disabled]="!hasFixedFilter" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = true"><img style="width:23px;" class="CenterCenter" [attr.title]="!ShowStaticFilters ? 'Show fixed filters' : ''" src="./Images/ShowFilters.png" /></button>
                                                         </td>
-                                                        <td style="width: 25px;">
+                                                        <td [hidden]="IsScheduler" style="width: 25px;">
                                                             <button class="Button" style="width:25px;float:left;" (click)="onBIReportColumnsClick()"><img style="width:18px;" class="CenterCenter" title="Show/Hide/Reorder Column(s)" src="./Images/Columns.png" /></button>
                                                             <!--<img src="./Images/Columns.png" (click)="onBIReportColumnsClick()" title="Show/Hide/Reorder Column(s)" style="cursor: pointer; height:18px;" [className]="'LeftCenter'" />-->
                                                         </td>
@@ -307,15 +314,15 @@
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width: 57px;">
+                                                        <td [hidden]="IsNewScheduler" style="width: 57px;">
                                                             <button id="{{'EditQueryBuilder' | IdGeneratorPipe}}" [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
                                                         </td>
 
-                                                        <td style="width: 2px;">
+                                                        <td *ngIf="!IsScheduler" style="width: 2px;">
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width: 55px;">
+                                                        <td *ngIf="!IsScheduler" style="width: 55px;">
                                                             <button *ngIf="!HasChanges" class="Button" (click)="SaveBIReport()">
                                                                 <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="'CenterCenter'" />
                                                                 <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>

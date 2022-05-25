@@ -31,6 +31,7 @@ export class AddEditReportTaskSchedulerComponent {
     public SchedulerFormats: CodeNameClass[] = [];
     public SelectedFormat: CodeNameClass;
     public SelectedFormatAdvanced: string;
+    public IsBIReport: boolean;
     schedulerExtendedPMService: SchedulerExtendedPMService;
     private parentComponent: AddEditReportSchedulerComponent;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -41,11 +42,12 @@ export class AddEditReportTaskSchedulerComponent {
     SetDataContext(DataContext: any) {
         this.DataContext = DataContext['DataContext'];
         this.EntityPM = DataContext['DataContext'].EntityPM;
-        this.EntityPM.EntityId = this.DataContext.fatherComponent.ReportList.Id;
+        this.IsBIReport = this.DataContext.fatherComponent.IsBIReport;
+        this.EntityPM.EntityId = this.IsBIReport ? this.DataContext.fatherComponent.BIReportEntity['Id'] : this.DataContext.fatherComponent.ReportList.Id;
         this.FillSchedulerFormats();
         this.SetSchedulerFormat();
         this.SetSchedulerResultType();
-        this.EntityPM.ProcedureCode = 'ReportSchedulerTask';
+        this.EntityPM.ProcedureCode = this.IsBIReport ? 'BIReportSchedulerTask' : 'ReportSchedulerTask';
         this.parentComponent = DataContext['parentComponent'];
         this.BuildSchedulerDetailsData();
         this.Clone();
@@ -62,7 +64,9 @@ export class AddEditReportTaskSchedulerComponent {
     private FillSchedulerFormats() {
         this.SchedulerFormats.push(new CodeNameClass("PDF", "PDF"));
         this.SchedulerFormats.push(new CodeNameClass("EXCL", "Excel File"));
-        this.SchedulerFormats.push(new CodeNameClass("EXCLA", "Excel File (Advanced)"));
+        if (!this.IsBIReport) {
+            this.SchedulerFormats.push(new CodeNameClass("EXCLA", "Excel File (Advanced)"));
+        }
     }
 
     private SetSchedulerFormat() {
@@ -336,8 +340,9 @@ export class AddEditReportTaskSchedulerComponent {
 
     SaveButtonClicked(reportSchedulerDetails: ReportSchedulerDetails) {
         this.CurrentSession.StartBusyIndicatorSaving();
-
-        this.SetReportDetails(reportSchedulerDetails);
+        if (reportSchedulerDetails) {
+            this.SetReportDetails(reportSchedulerDetails);
+        }
         if (this.DataContext.IsNew) {
             this.DataContext.SchedulerDetails.ReportDetails.CreatedByUserId =
                 SessionLocator.LoggedUserId;
@@ -408,6 +413,8 @@ export class AddEditReportTaskSchedulerComponent {
         this.DataContext.SchedulerDetails.ReportDetails.MainCustomerFieldName = reportSchedulerDetails.MainCustomerFieldName;
         this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportSchedulerDetails.ReportFilterItems;
         this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportSchedulerDetails.ReportTemplateId;
+        this.DataContext.SchedulerDetails.ReportDetails.BIReportEntityId = reportSchedulerDetails.BIReportEntityId;
+        this.DataContext.SchedulerDetails.ReportDetails.DWQueryId = reportSchedulerDetails.DWQueryId;
         this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateType = reportSchedulerDetails.ReportTemplateType;
         const recepients = reportSchedulerDetails.Recepients;
         this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To

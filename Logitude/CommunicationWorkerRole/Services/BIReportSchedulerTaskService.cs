@@ -1,0 +1,194 @@
+﻿using CommunicationWorkerRole.ReportScheduler;
+using CommunicationWorkerRole.Tasks;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.CommonDataModel.CustomFilters;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.FTP;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Export;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
+using System.Transactions;
+using WebFreight.Web.DataContracts;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.BIReport;
+
+namespace CommunicationWorkerRole.Services
+{
+    public class BIReportSchedulerTaskService
+    {
+        
+        int trackerCounter = 0;
+        string[,] trackerLogs = new string[,] //tracker(Step, DateTime)
+        {
+            {"Prepare bi report scheduler details", null},
+            {"Get bi report data", null},
+            {"Send email to reciepents", null},
+        };
+
+        TaskManagerBase currentTask;
+        ReportSchedulerTaskService reportSchedulerTaskService;
+        public BIReportSchedulerTaskService(TaskManagerBase task)
+        {
+            this.currentTask = task;
+            reportSchedulerTaskService = new ReportSchedulerTaskService(task);
+        }
+        
+        public void RunTask(TasksSchedulerPM reportTask)
+        {
+            try
+            {
+                SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
+                reportTask.CreatedBy = schedulerDetails.ReportDetails.CreatedByUserId;
+                byte[] biReportData = GetBIReportData(schedulerDetails, reportTask);
+
+                if (reportTask.ResultType == null || reportTask.ResultType == "Email" )
+                {
+                    SendPdfBIReportToReceipent(reportTask, schedulerDetails, biReportData);
+                }
+                else if(reportTask.ResultType == "FTP")
+                {
+                    SendBIReportToFTP(reportTask, schedulerDetails, biReportData);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                string logsMessage = reportSchedulerTaskService.GetAllTaskLogs();
+                string errorMessage = new StringBuilder().Append(logsMessage).AppendLine().ToString();
+                errorMessage += new StringBuilder().Append("Exception Message: ").AppendLine().Append(ex.Message).AppendLine().ToString();
+                errorMessage += new StringBuilder().Append("Stack Trace:").AppendLine().Append(ex.StackTrace).AppendLine().ToString();
+
+                throw new Exception(errorMessage);
+            }
+        }
+        
+        private byte[] GetBIReportData(SchedulerDetails schedulerDetails, TasksSchedulerPM reportTask)
+        {
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing bi report data"));
+            ExportBIReportService exportBIReportService = new ExportBIReportService();
+            BIReportXMLData bIReportXMLData = GetBIReportXMLData(schedulerDetails, reportTask);
+            bIReportXMLData.ExportDataType = reportTask.Format == "PDF" || string.IsNullOrEmpty(reportTask.Format) ? "Pdf" : "xlsx";
+            return exportBIReportService.Run(bIReportXMLData, reportTask.Tenant);
+        }
+
+        private BIReportXMLData GetBIReportXMLData(SchedulerDetails schedulerDetails, TasksSchedulerPM reportTask)
+        {
+            BIReportXMLDataService bIReportXMLDataService = new BIReportXMLDataService();
+            return bIReportXMLDataService.GetByBIReportId(schedulerDetails.ReportDetails.BIReportEntityId, schedulerDetails.ReportDetails.DWQueryId, reportTask.Tenant);
+        }
+
+        private void SendPdfBIReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, byte[] biReportData)
+        {
+            schedulerDetails.ReportDetails.Recepients = GetBIReportPermittedContacts(reportTask, schedulerDetails);
+            if (schedulerDetails.ReportDetails.Recepients != null)
+            {
+                TryToSendBIReport(reportTask, schedulerDetails, biReportData);
+            }
+        }
+
+        private ReportSchedulerRecepients GetBIReportPermittedContacts(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
+        {
+            List<ContactList> allPermittedContacts = reportSchedulerTaskService.GetAllPermittedContacts(reportTask.Tenant, null);
+            ReportSchedulerRecepients recepients = reportSchedulerTaskService.RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
+            return recepients;
+        }
+
+        private void TryToSendBIReport(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, byte[] biReportData)
+        {
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting bi report to pdf file"));
+            string documentId = reportSchedulerTaskService.CreateDocument(reportTask.Name, reportTask.Tenant, biReportData);//GetDocumentId
+
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
+            ReportSchedulerRecepients reportRecepients = schedulerDetails.ReportDetails.Recepients;
+            SendHtmlDocument(documentId, reportRecepients, reportTask);
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
+        }
+
+        private SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
+        {
+            SchedulerDetails schedulerDetails = LogitudeXmlSerializer.DeserializeObject<SchedulerDetails>(reportTask.SchedulerDetailsXML);
+            schedulerDetails.Tenant = reportTask.Tenant;
+
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
+            return schedulerDetails;
+        }
+
+        private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
+        {
+            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+            Byte[] htmlData = enc.GetBytes("");
+            string reportTableId = GetBIReportTableId(reportTask.Tenant);
+            htmlEditorHelper.SendHtmlDocument(htmlData, null, null, reportTask.Tenant, recepients.To, reportTask.Name, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
+        }
+
+        private string GetBIReportTableId(int tenant)
+        {
+            ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
+            string reportId = objectTableQuery.GetObjectTableIdByName("BIReport");
+            return reportId;
+        }
+        
+        private void SendBIReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, byte[] biReportData)
+        {
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
+            if (schedulerDetails.FTPDetails == null)
+            {
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("FTPDetails is missing"));
+                return;
+            }
+
+            this.trackerLogs[trackerCounter, 0] = "Uploading bi report to ftp";
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
+
+            string p_message = "";
+            string p_status = "";
+            string schedulerFormatExtension = reportTask.Format == "PDF" ? "pdf" : "xlsx";
+            string fileName = reportTask.Name + "." + schedulerFormatExtension;
+            FTPServiceMod ftpService = new FTPServiceMod(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
+            ftpService.Upload(fileName, schedulerDetails.FTPDetails.Folder, biReportData, out p_message, out p_status, true, true);
+
+            if (p_status == "-1")
+            {
+                currentTask.LogWarning(p_message);
+            }
+            else
+            {
+                currentTask.LogInfo(p_message);
+            }
+        }
+    }
+}

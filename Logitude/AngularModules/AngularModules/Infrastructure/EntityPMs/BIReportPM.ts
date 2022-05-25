@@ -124,6 +124,16 @@ export class BIReportPM {
     public set LastRunId(newValue: string) { if (this.lastRunId != newValue) { this.lastRunId = newValue; this.MarkAsDirty("LastRunId"); } }
        
 	 
+    private availableForScheduling: boolean;
+    public get AvailableForScheduling() { return this.availableForScheduling; }
+    public set AvailableForScheduling(newValue: boolean) { if (this.availableForScheduling != newValue) { this.availableForScheduling = newValue; this.MarkAsDirty("AvailableForScheduling"); } }
+       
+	 
+    private isScheduler: boolean;
+    public get IsScheduler() { return this.isScheduler; }
+    public set IsScheduler(newValue: boolean) { if (this.isScheduler != newValue) { this.isScheduler = newValue; this.MarkAsDirty("IsScheduler"); } }
+       
+	 
 
     public OldEntityPM: BIReportPM;
 		

@@ -480,6 +480,52 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool availableForScheduling ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AvailableForScheduling  
+	   {
+	    
+	     get
+		{
+		   return availableForScheduling;
+		 }
+		 set
+		 {
+		   if(availableForScheduling != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailableForScheduling",OldValue=availableForScheduling,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   availableForScheduling=value;
+		   }
+			
+		 }
+	   }
+	  private bool isScheduler ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsScheduler  
+	   {
+	    
+	     get
+		{
+		   return isScheduler;
+		 }
+		 set
+		 {
+		   if(isScheduler != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsScheduler",OldValue=isScheduler,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isScheduler=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
