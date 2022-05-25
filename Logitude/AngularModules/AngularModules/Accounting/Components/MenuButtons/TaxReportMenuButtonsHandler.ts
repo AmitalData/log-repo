@@ -72,6 +72,10 @@ export class TaxReportMenuButtonsHandler {
                             button.IsDisabled = this.EntityPM.StatusCode != TaxReportStatus.Transmitted;
                             break;
                         }
+                        case MenuButton.CancelClosingJournal: {
+                            button.IsDisabled = this.EntityPM.StatusCode != TaxReportStatus.TransmittedAndClosingJournal;
+                            break;
+                        }
                     }
 
                     this.SetMenuButtonEnabilityAccordingToCancelationProgress(button);
@@ -196,6 +200,10 @@ export class TaxReportMenuButtonsHandler {
                     this.CreateClosingJournalButtonClicked();
                     break;
                 }
+                case MenuButton.CancelClosingJournal: {
+                    this.CancelClosingJournal();
+                    break;
+                }
 
         }
 
@@ -284,13 +292,33 @@ export class TaxReportMenuButtonsHandler {
                 new MessageWindow().Show(error || 'Somthing wrong happend!');
             });
     }
+
+    CancelClosingJournal() {
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this.taxReportExtendedPMService.CancelClosingJournal(this.EntityPM.Id)
+            .subscribe((response: ServiceResponse) => {
+                this.StopBusyIndicator();
+                if (response.HasError) {
+                    const message = new MessageWindow();
+                    message.ShowErrorIcon = true;
+                    message.Width = 400;
+                    message.Show(response.ErrorsArray.join('\n'));
+                } else {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+            }, (error) => {
+                new MessageWindow().Show(error || 'Somthing wrong happend!');
+            });
+    }
 }
 
 enum MenuButton {
 
     Upload = "UPLD",
     ReturnToDraft ="RTDR",
-    ClosingJournal = 'TRCJ'
+    ClosingJournal = 'TRCJ',
+    CancelClosingJournal = 'TRCCJ'
 
 }
 
