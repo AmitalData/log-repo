@@ -320,7 +320,7 @@ namespace WebFreight.Web.DataProviders
         public string Incoterm { get; set; }
         public string Salesman { get; set; }
         public string SalesmanEmail { get; set; }
-        public string UserPhoneNumber { get; set; }   
+        public string UserPhoneNumber { get; set; }
         public string UserMobileNumber { get; set; }
         public double? TotalPayables { get; set; }
         public string CustomsAgent { get; set; }
@@ -440,7 +440,7 @@ namespace WebFreight.Web.DataProviders
         public string ChargeableWeightUnitCode { get; set; }
 
         public string PickupTo { get; set; }
-     
+
         public string IssuingCarrierAgentName { get; set; }
         public string ARInvoices { get; set; }
         public string SpecialServicesTypeName { get; set; }
@@ -499,7 +499,7 @@ namespace WebFreight.Web.DataProviders
         //To show the first pickup address
         //If no pickup, show pickup/delivery address of the shipper
         //If no pickup/delivery address, show the chosen address on the shipper
-        public string PickUpAddress_New { get; set; }       
+        public string PickUpAddress_New { get; set; }
 
         //To show the last delivery address
         //If no delivery, show pickup/delivery address of the consignee

@@ -81,7 +81,7 @@ namespace WebFreight.Web.ReportsWebServices
                 this.routingDataProvider = new RoutingDataProvider(shipmentPM);
                 awbDp.AWBAccount = shipmentPM.AccountNumber == null ? "" : shipmentPM.AccountNumber;
                 awbDp.SCI = shipmentPM.SCI == null ? "" : shipmentPM.SCI;
-                awbDp.SCI = shipmentPM.MainHarmonize ?? "";
+                awbDp.MainHarmonize = shipmentPM.MainHarmonize ?? "";
 
                 awbDp.AWBComments = shipmentPM.AWBComments == null ? "" : shipmentPM.AWBComments;
                 if (!string.IsNullOrEmpty(shipmentPM.AWBPrintingComments))
