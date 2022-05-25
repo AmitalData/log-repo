@@ -14,6 +14,9 @@ namespace Logitude.BL.ShipmentsModel.CloseTables
        public const string OBLRequired = "OBLR";  
        public const string Seaway = "SEWY";  
        public const string BLSurrender = "BLSR";  
+       public const string AgainstOriginal = "AGOR";  
+       public const string SeaWaybill = "SEWA";  
+       public const string BLEndorsedByBank = "BLEB";  
     }
 }
 
