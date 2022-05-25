@@ -169,9 +169,11 @@ export class LoginComponent implements OnInit {
             this.StartLoginProcess();
         }
 
-         if(isDevMode())
+
+        if (isDevMode())
             this.developerLogin();
     }
+
     async developerLogin() {
         this.Email = 'itzik@amital.co.il'
         this.Password = 'xhx@word3';
