@@ -592,7 +592,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     DeclarationPM oldDeclaration = new DeclarationQueryService(entityPM.Tenant).GetSingle(entityPM.Id, true, false);
 
-                    oldDeclaration.Consignments.ForEach(oldCon =>
+                    oldDeclaration?.Consignments.ForEach(oldCon =>
                     {
                         bool isDisconnect = oldCon.ExportStoragesId != null && !entityPM.Consignments.Any(con => oldCon.DeclarationId == con.DeclarationId && oldCon.ManifestNumber == con.ManifestNumber && oldCon.SecondCargoID == con.SecondCargoID && oldCon.ThirdCargoID == con.ThirdCargoID);
                         if (isDisconnect)
