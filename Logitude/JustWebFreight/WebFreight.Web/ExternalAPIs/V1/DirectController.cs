@@ -10,8 +10,6 @@ using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Transactions;
@@ -21,18 +19,13 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
-using Logitude.Infrastructure.Data;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
 using WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers;
 using Simplog.Data.Helpers;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
-using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.CommonDataModel.APIDataContract.QueryService;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Marvin.JsonPatch;
-using Container = Logitude.BL.ShipmentsModel.APIDataContract.ApiV1.Container;
-using Simplog.Data.ShipmentsModel.Repositories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -49,6 +42,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 Direct Result = Service.GetDirectById(id, tenant, include);
+                this.MapInlandDomesticStates(Result, tenant);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -71,6 +65,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 Direct Result = Service.GetDirectByShipmentNumber(number, tenant, include);
+                this.MapInlandDomesticStates(Result, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -221,6 +216,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
 
                         var result = mappingService.GetDirectById(entityPM.Id, authToken.Tenant, null);
+                        this.MapInlandDomesticStates(result, authToken.Tenant);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Direct API", authToken.Tenant);
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -268,7 +264,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage Patch(string id ,JsonPatchDocument<Direct> directPatchEntity)
+        public HttpResponseMessage Patch(string id, JsonPatchDocument<Direct> directPatchEntity)
         {
             if (ModelState.IsValid)
             {
@@ -299,10 +295,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
             Direct directShipment = this.GetDirectShipment(id, authToken.Tenant);
             directPatchEntity.ApplyTo(directShipment);
 
-            return this.UpdateDirectShipment(directShipment,authToken.Tenant);
+            return this.UpdateDirectShipment(directShipment, authToken.Tenant);
         }
 
-        private Direct UpdateDirectShipment(Direct entity,int tenant)
+        private Direct UpdateDirectShipment(Direct entity, int tenant)
         {
             string computingPartnerCode = "";
             if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
@@ -383,6 +379,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
 
                 var result = mappingService.GetDirectById(directPM.Id, tenant, null);
+                this.MapInlandDomesticStates(result, tenant);
                 APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", tenant);
                 return result;
             }
@@ -416,7 +413,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             CardRepository cardRepository = new CardRepository(entityPM.Tenant);
             CardQuery cardQuery = new CardQuery(entityPM.Tenant);
-            Card card = cardRepository.GetSingleCard(entityPM.MainCarriageFromPartnerId, entityPM.Tenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.MainCarriageFromPartnerId, entityPM.Tenant);
 
             if (card != null)
             {
@@ -435,11 +432,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
         }
-        private void SetFromPortAddress(ShipmentPM entityPM) 
+        private void SetFromPortAddress(ShipmentPM entityPM)
         {
             PortRepository portRepository = new PortRepository(entityPM.Tenant);
-            Port port = portRepository.GetSinglePort(entityPM.MainCarriageFromPortId, entityPM.Tenant);
-            if(port != null)
+            Simplog.Data.CommonDataModel.EntityPOCOs.Port port = portRepository.GetSinglePort(entityPM.MainCarriageFromPortId, entityPM.Tenant);
+            if (port != null)
             {
                 entityPM.MainCarriageFromPortAddress = "Port Of: " + port.EnglishName;
             }
@@ -448,7 +445,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             CardRepository cardRepository = new CardRepository(entityPM.Tenant);
             CardQuery cardQuery = new CardQuery(entityPM.Tenant);
-            Card card = cardRepository.GetSingleCard(entityPM.MainCarriageToPartnerId, entityPM.Tenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.MainCarriageToPartnerId, entityPM.Tenant);
 
             if (card != null)
             {
@@ -470,7 +467,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
         private void SetToPortAddress(ShipmentPM entityPM)
         {
             PortRepository portRepository = new PortRepository(entityPM.Tenant);
-            Port port = portRepository.GetSinglePort(entityPM.MainCarriageToPortId, entityPM.Tenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Port port = portRepository.GetSinglePort(entityPM.MainCarriageToPortId, entityPM.Tenant);
             if (port != null)
             {
                 entityPM.MainCarriageToPortAddress = "Port Of: " + port.EnglishName;
@@ -559,14 +556,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                 this.SetCustomerTypeCode(entityPM);
 
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, tenant);
+                Simplog.Data.CommonDataModel.EntityPOCOs.Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, tenant);
                 if (address != null)
                 {
                     entityPM.CustomerAddressId = address.Id;
                 }
 
                 CardRepository cardRepository = new CardRepository(tenant);
-                Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, tenant);
+                Simplog.Data.CommonDataModel.EntityPOCOs.Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, tenant);
                 if (customer != null)
                 {
                     if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
@@ -658,7 +655,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
         }
         private ShipmentPM UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
         {
-            ExternalAPIShipmentPartnersModifier externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersModifier(shipmentsContext,shipmentPM);
+            ExternalAPIShipmentPartnersModifier externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersModifier(shipmentsContext, shipmentPM);
             return externalAPIShipmentPartnersUpdate.UpdatePartners();
         }
         private void InitOceanOrInlandPackages(Direct entity)
@@ -688,10 +685,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return;
             }
 
-            foreach (Container item in entity.Containers)
+            foreach (Logitude.BL.ShipmentsModel.APIDataContract.ApiV1.Container item in entity.Containers)
             {
                 item.Pieces = 1;
-            }                     
+            }
         }
         private void SetClosurePropertiers(ShipmentPM entityPM)
         {
@@ -723,7 +720,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             if (!string.IsNullOrEmpty(entityPM.IncotermId))
             {
                 IncotermRepository myIncotermRepository = new IncotermRepository(entityPM.Tenant);
-                Incoterm myIncoterm = myIncotermRepository.GetSingleIncoterm(entityPM.IncotermId, entityPM.Tenant);
+                Simplog.Data.CommonDataModel.EntityPOCOs.Incoterm myIncoterm = myIncotermRepository.GetSingleIncoterm(entityPM.IncotermId, entityPM.Tenant);
                 if (myIncoterm != null)
                 {
                     entityPM.FreightPrepaidCollectId = myIncoterm.Freight;
@@ -731,7 +728,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
         }
-        private Direct GetDirectShipment(string id,int tenant)
+        private Direct GetDirectShipment(string id, int tenant)
         {
             if (id == null)
                 throw new Exception("ShipmentId is required");
@@ -740,6 +737,33 @@ namespace WebFreight.Web.ExternalAPIs.V1
             Direct directShipment = Service.GetDirectById(id, tenant, "");
 
             return directShipment;
+        }
+        private void MapInlandDomesticStates(Direct result, int tenant)
+        {
+            CountryCityRepository countryCityRepository = new CountryCityRepository(tenant);
+            if (result.InlandDomesticFromTypeCode != null && result.InlandDomesticFromTypeCode.Code == "CASL")
+            {
+                CountryCity countryCity = countryCityRepository.GetSingleCountryCityByNameAndCountry(result.InlandDomesticFromCity, result.InlandDomesticFromCountry.Id, tenant);
+                result.InlandDomesticFromState = this.GetStateDataContract(countryCity);                
+            }
+
+            if (result.InlandDomesticToTypeCode != null && result.InlandDomesticToTypeCode.Code == "CASL")
+            {
+                CountryCity countryCity = countryCityRepository.GetSingleCountryCityByNameAndCountry(result.InlandDomesticToCity, result.InlandDomesticToCountry.Id, tenant);
+                result.InlandDomesticToState = this.GetStateDataContract(countryCity);                
+            }
+        }
+
+        private Logitude.BL.CommonDataModel.APIDataContract.ApiV1.State GetStateDataContract(CountryCity countryCity)
+        {
+            Logitude.BL.CommonDataModel.APIDataContract.ApiV1.State state = null;
+            if (countryCity != null)
+            {
+                StateQueryService stateQueryService = new StateQueryService(countryCity.Tenant);
+                state = stateQueryService.GetStateById(countryCity.StateId, countryCity.Tenant, "");
+            }
+
+            return state;
         }
     }
 }
