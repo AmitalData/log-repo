@@ -626,7 +626,7 @@
     ObjectFieldNotRequired="false"
     SystemMaxLength="60"
     DisplayInList="true"
-    IsCustomFilter="true"
+    IsCustomFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -24968,7 +24968,6 @@
       LocalDefaultText="&quot;הובלה בפועל&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
