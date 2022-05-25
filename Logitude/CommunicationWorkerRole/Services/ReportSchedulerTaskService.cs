@@ -231,7 +231,7 @@ namespace CommunicationWorkerRole.Services
             return fieldValue;
         }
 
-        private ReportSchedulerRecepients RemoveNonPermittedContacts(ReportSchedulerRecepients recepients, List<ContactList> allPermittedContacts)
+        public ReportSchedulerRecepients RemoveNonPermittedContacts(ReportSchedulerRecepients recepients, List<ContactList> allPermittedContacts)
         {
             List<ActivatedEmail> toEmails = FillAllRecepients(recepients.To, false);
             List<ActivatedEmail> ccEmails = FillAllRecepients(recepients.Cc, false);
@@ -323,7 +323,7 @@ namespace CommunicationWorkerRole.Services
             return recepients;
         }
 
-        private List<ContactList> GetAllPermittedContacts(int tenant, string cardId)
+        public List<ContactList> GetAllPermittedContacts(int tenant, string cardId)
         {
             QueryOperations queryOperations = new QueryOperations()
             {
@@ -426,15 +426,13 @@ namespace CommunicationWorkerRole.Services
 
             if (memoryStream != null)
             {
-                documentId = CreateDocument(reportName, tenant, memoryStream);
+                documentId = CreateDocument(reportName, tenant, memoryStream.ToArray());
             }
             return documentId;
         }
 
-        private string CreateDocument(string reportName, int tenant, MemoryStream memoryStream)
+        public string CreateDocument(string reportName, int tenant, byte[] ByteData)
         {
-            byte[] ByteData = memoryStream.ToArray();
-
             DocumentRepository documentRepository = new DocumentRepository(tenant);
             Document document = new Document()
             {
@@ -586,7 +584,7 @@ namespace CommunicationWorkerRole.Services
             return reportId;
         }
 
-        private string GetAllTaskLogs()
+        public string GetAllTaskLogs()
         {
             string logsMessage = "";
             int trackerLogsCount;

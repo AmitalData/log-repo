@@ -596,6 +596,78 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "PF4,Profact 4.0", 
                 Description = "Add Profact Version 4.0 to SAT Interfaces", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BAR", 
+                Name = "ARInvoice BI Report Scheduler", 
+                SearchFields = "BAR,ARInvoice BI Report Scheduler", 
+                Description = "ARInvoice BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BCH", 
+                Name = "Shipment Charges BI Report Scheduler", 
+                SearchFields = "BCH,Shipment Charges BI Report Scheduler", 
+                Description = "Shipment Charges BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BCO", 
+                Name = "Container BI Report Scheduler", 
+                SearchFields = "BCO,Container BI Report Scheduler", 
+                Description = "Container BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BID", 
+                Name = "Inland Domestic Shipments BI Report Scheduler", 
+                SearchFields = "BID,Inland Domestic Shipments BI Report Scheduler", 
+                Description = "Inland Domestic Shipments BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BIN", 
+                Name = "Invoice BI Report Scheduler", 
+                SearchFields = "BIN,Invoice BI Report Scheduler", 
+                Description = "Invoice BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BMC", 
+                Name = "Master Charges BI Report Scheduler", 
+                SearchFields = "BMC, Master Charges BI Report Scheduler", 
+                Description = "Master Charges BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BMA", 
+                Name = "Master BI Report Scheduler", 
+                SearchFields = "BMA,Master BI Report Scheduler", 
+                Description = "Master BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BQU", 
+                Name = "Quote BI Report Scheduler", 
+                SearchFields = "BQU,Quote BI Report Scheduler", 
+                Description = "Quote BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BSH", 
+                Name = "Shipment BI Report Scheduler", 
+                SearchFields = "BSH,Shipment BI Report Scheduler", 
+                Description = "Shipment BI Report Scheduler", 
+			});
 			
             return all;
        }

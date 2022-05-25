@@ -28,6 +28,8 @@ export class BIReportList {
 	LastRunByUserName: string;
 	FactTableName: string;
 	LastRunId: string;
+	AvailableForScheduling: boolean;
+	IsScheduler: boolean;
 	
 }
  
