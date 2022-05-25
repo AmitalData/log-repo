@@ -887,15 +887,13 @@ export class CustomsDocumentsComponent
         if(documnetUpload.length !== this.CustomsDocumentsTicketViewModels.length) {
             const msg: MessageWindow = new MessageWindow();
             msg.Show(TextCodeTranslator.Translate("Customs.Declaration.O.HaveMandatory") || 'יש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים אילו לא יעלו למכס');
-            await msg.WindowClosed.toPromise()
+            await new Promise<void>(resolve =>  msg.WindowClosed.subscribe(()=> resolve()));
         }
                 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this.RefreshEntity();
-
         await Promise.all(documnetUpload.map(async (docTicket: CustomsDocumentTicketViewModel) => {
-            const doc: CustomsDocumentPM =  await this.getCustomDocument(docTicket);
+            const doc: CustomsDocumentPM =  await this.getCustomDocument(docTicket.DocumentsFilingId);
             doc.DeclarationId = this.EntityPM.Id;
             doc.CurrentCustomsDocumentsTicketId = docTicket.customsDocumentsTicketPM.Id; 
             doc.IsSendToQueue = true;
@@ -931,7 +929,7 @@ export class CustomsDocumentsComponent
     }
 
     private async checkOrginalDoc(documnetUpload: CustomsDocumentTicketViewModel[]) {
-        const metaDataValues: CustomsDocumentMetaDataValuePM[] = documnetUpload.reduce((res: CustomsDocumentMetaDataValuePM[], customDocument: CustomsDocumentTicketViewModel) => {
+        let metaDataValues: CustomsDocumentMetaDataValuePM[] = documnetUpload.reduce((res: CustomsDocumentMetaDataValuePM[], customDocument: CustomsDocumentTicketViewModel) => {
             const haveIsOrginalDoc: boolean = customDocument.CustomDocumentTypeMetaDataLists.some(type => type.MetaDataTypeCode === '87');
             const value: CustomsDocumentMetaDataValuePM = customDocument.CustomsDocumentMetaDataValuePMs.find(d => d?.MetaDataTypeCode === '87');
             if(haveIsOrginalDoc && !value?.MetaDataValue)
@@ -942,17 +940,38 @@ export class CustomsDocumentsComponent
 
         if (metaDataValues.length === 0) return true;
 
-        const isApprove: boolean = await this.confirmCheckOrginalDocWindow();        
-        if(isApprove) 
-            metaDataValues.forEach(val => { if (val) val.MetaDataValue = 'True' });
+        const isApprove: boolean = await this.confirmCheckOrginalDocWindow();
+
+        if(isApprove) {
+            metaDataValues = metaDataValues.filter(val=> val);
+            const ids: string[] = metaDataValues.map(x => x.CustomsDocumentId);
+            await this.updateCustomsDocuments(ids);
+        }
         
         return isApprove;
     }
-
-
-    private getCustomDocument(customsDocumentsTicket: CustomsDocumentTicketViewModel): Promise<CustomsDocumentPM> {
-        const documentsFilingId: string = encodeURIComponent(customsDocumentsTicket.DocumentsFilingId);
+    
+    
+    private async updateCustomsDocuments(customsDocumentIds: string[]): Promise<void> {
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         
+        await Promise.all(
+            customsDocumentIds.map(async customsDocumentId => {
+                const doc: CustomsDocumentPM = await this.getCustomDocument(customsDocumentId);
+                doc.CustomsDocumentMetaDataValues.find(x => x.MetaDataTypeCode === '87').MetaDataValue = 'True'
+
+                return new Promise<void>((resolve, reject) =>
+                    new CustomsDocumentPMService().update(doc).subscribe(() => resolve()));
+            })
+        )
+        
+        SessionLocator.SelectedSession.StopBusyIndicator();
+    }
+
+
+    private getCustomDocument(_documentsFilingId: string): Promise<CustomsDocumentPM> {      
+        const documentsFilingId: string = encodeURIComponent(_documentsFilingId);
+  
         return new Promise<CustomsDocumentPM>((resolve, reject) =>
             this.iCustomsDocumentsController.CheckRequestsInProgress(documentsFilingId).subscribe((response: ServiceResponse) =>
                 this.customsDocumentPMService.get(documentsFilingId).subscribe((resp: ServiceResponse) => 
