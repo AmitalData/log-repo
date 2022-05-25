@@ -78,7 +78,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             List<CustomsCollateral> customsCollateralList =
                 selectAll ? 
-                    repository.GetDeclarationCollateralsList(declarationId, tenant).FindAll(x => !ids.Contains(x.Id)) : 
+                    repository.GetDeclarationCollateralsList(declarationId, tenant).FindAll(x => !ids.Contains(x.Id) && x.IsClosed == false) : 
                     repository.GetDeclarationCollateralsList(ids);
 
             customsCollateralList.ForEach(customsCollateralItem =>
