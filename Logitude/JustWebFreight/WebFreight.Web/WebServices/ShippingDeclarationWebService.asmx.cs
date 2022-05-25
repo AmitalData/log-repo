@@ -164,6 +164,13 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.IncotermCode = shipment.IncotermCode;
                 myDataProvider.ShipmentNumberLink = DataProviders.General.BuildShipmentNumberLink(shipmentId, shipment.ShipmentLevelCode, shipment.SecurityKey, tenant);
 
+                myDataProvider.DangerousClassNumber = shipment.DangerousClassNumber;
+                myDataProvider.DangerousUnNumber = shipment.DangerousUnNumber;
+                myDataProvider.DangerousPackagingGroup = shipment.DangerousPackagingGroup;
+                myDataProvider.EmergencyContactName = GetEmergencyContact(shipment.EmergencyContactId, contactRepository);
+                myDataProvider.DangerousIMDGCode = shipment.DangerousIMDGCode;
+                myDataProvider.DangerousFlashPoint = shipment.DangerousFlashPoint;
+                myDataProvider.DangerousMaterialDescription = shipment.DangerousMaterialDescription;
                 this.FillINTTRADocumentProperties(myDataProvider);                
                 
                 if (shipment.DocumentsClosingDate != null)
@@ -3866,6 +3873,12 @@ namespace WebFreight.Web.WebServices
             }
 
             return myDataProvider;
+        }
+
+        private string GetEmergencyContact(string emergencyContactId, ContactRepository contactRepository)
+        {
+            if (string.IsNullOrEmpty(emergencyContactId)) return null;
+            return contactRepository.GetSingleContact(emergencyContactId, tenant)?.EnglishName;
         }
 
         private string FillInlandDomecticCountryCode(ShipmentPM shipment)
