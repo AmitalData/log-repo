@@ -1417,4 +1417,5 @@ export class AccountReceivablesSummary {
     public  ARInvoicesSATFailedCount: number;
     public  ARInvoicesFailedCount: number;
     public  ARPaymentFailedCount: number;
+    public  ARInvoicesSATVoidedNotTransferredCount: number;
 }

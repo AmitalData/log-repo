@@ -17303,6 +17303,91 @@
         CustomPredefined="false" />
     </QueryFilters>
   </Query>
+  <Query
+    Code="&quot;SATVoidedNotTransferred&quot;"
+    TextCode="&quot;SAT Voided Not Transferred&quot;"
+    LocalTextCode="&quot;SAT Voided Not Transferred&quot;"
+    QueryGroupCode="&quot;INVC&quot;"
+    IndexOrder="13"
+    ObjectTableName="&quot;ARInvoice&quot;"
+    QuerySection="&quot;ARInvoice&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;InvoiceNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;BillToName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DueDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;AmountDue&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        PredefinedValue="&quot;NT&quot;"
+        ObjectFieldName="&quot;SATTransferStatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+      <QueryFilter
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        PredefinedValue="&quot;Void&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="1"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;ARInvoice&quot;"
