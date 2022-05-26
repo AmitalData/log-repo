@@ -119,7 +119,7 @@ namespace LogitudeTransferData
         {
             var tenant = int.Parse(textBox1.Text);
             List<ObjectFieldPM> AllObjectFieldPMs = GetAllCustomObjectFields(tenant);
-            // Here we get all CustomFields except Lookup and PickList types
+            // Here we get all CustomFields except PickList
             List<ObjectFieldPM> notPickListObjectFieldPMs = AllObjectFieldPMs.FindAll(o => o.DataTypeCode != "PickList");
             ProduceKafkaMessages<ObjectFieldPM>(notPickListObjectFieldPMs, KakaMessageTypes.CustomField);
 

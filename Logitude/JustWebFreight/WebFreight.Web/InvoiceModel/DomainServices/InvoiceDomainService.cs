@@ -111,6 +111,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
                 result.ARGeneralInvoiceDraftCount = iQueryable_Data.Where(d => d.IsGeneralInvoice && d.StatusCode == "DR").Count();
                 result.ARInvoicesSATFailedCount = iQueryable_Data.Where(d => d.SATTransferStatusCode == "TE").Count();
                 result.ARInvoicesFailedCount = iQueryable_Data2.Where(d => d.TransferStatusCode == "ET").Count();
+                result.ARInvoicesSATVoidedNotTransferredCount = iQueryable_Data2.Where(d => d.StatusCode == "VD" && d.SATTransferStatusCode == "NT").Count();
 
 
             }

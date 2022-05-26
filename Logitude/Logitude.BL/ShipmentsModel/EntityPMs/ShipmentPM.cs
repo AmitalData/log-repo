@@ -2854,9 +2854,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InlandDomesticFromCity { get; set; }
+        public string InlandDomesticFromStateId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InlandDomesticToCity { get; set; }
+        public string InlandDomesticToStateId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InlandDomesticFromCountryId { get; set; }
@@ -2900,6 +2902,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? QuoteFreightExpirationDate { get; set; }
         public string CarrierServiceLineId { get; set; }
+        public string UnassignedShipperNotExporterAddressId { get; set; }
+        public string UnassignedConsigneeNotImporterAddressId { get; set; }
     }
 
     public class TransshipmentLeg

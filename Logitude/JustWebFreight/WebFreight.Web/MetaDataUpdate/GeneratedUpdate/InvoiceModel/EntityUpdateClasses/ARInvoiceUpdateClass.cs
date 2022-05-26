@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "35a05a6d97536a84596020a38ab82837";
+		public const string HashString = "cbd0d2e94dfb3295ad5e28c78c81c835";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9335,6 +9336,63 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SATCancelReasonCode",
+					  						ObjectTableName =  "ARInvoice",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  5,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SATCancelReasonCode",
+					  						ListPropertyPath =  "SATCancelReasonCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SATCancelReasonCode",
+					  						DefaultText =  "SAT Cancel Reason Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -9410,6 +9468,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			   TextCode ARInvoiceTextCode_12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ErrorInTransfer", DefaultText = @"Error In Transfer",LocalDefaultText = "Error In Transfer", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ARInvoiceFeature_12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoice.Q.ErrorInTransfer", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoiceFeatures.ErrorInTransfer", NameTextCodeDefaultText = "ErrorInTransfer", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARInvoiceObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ARInvoiceTextCode_13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.SATVoidedNotTransferred", DefaultText = @"SAT Voided Not Transferred",LocalDefaultText = "SAT Voided Not Transferred", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ARInvoiceFeature_13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoice.Q.SATVoidedNotTransferred", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoiceFeatures.SATVoidedNotTransferred", NameTextCodeDefaultText = "SATVoidedNotTransferred", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARInvoiceObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -9786,6 +9848,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 
              AdvancedQueryFilter ErrorInTransferQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARInvoice.SATTransferStatusCode", PredefinedValue = "SM",PredefinedValue2 = null, CustomPredefined = false, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
+  
+	      
+
+			  Query SATVoidedNotTransferredQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_13.Id, NameTextCodeCode = ARInvoiceTextCode_13.Code, ObjectTableName = "ARInvoice", Code = "SATVoidedNotTransferred",  QueryGroupCode = "INVC", IndexOrder = 13, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_13.Id,FeatureUniqeCode= ARInvoiceFeature_13.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn SATVoidedNotTransferredQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ARInvoice.InvoiceNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATVoidedNotTransferredQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ARInvoice.ARInvoiceTypeName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATVoidedNotTransferredQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ARInvoice.BillToName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATVoidedNotTransferredQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ARInvoice.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATVoidedNotTransferredQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ARInvoice.DueDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATVoidedNotTransferredQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ARInvoice.InvoiceCurrencyCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATVoidedNotTransferredQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARInvoice.AmountInInvoiceCurrency" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATVoidedNotTransferredQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARInvoice.AmountDue" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATVoidedNotTransferredQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ARInvoice.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SATVoidedNotTransferredQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ARInvoice.CreatedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter SATVoidedNotTransferredQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARInvoice.SATTransferStatusCode", PredefinedValue = "NT",PredefinedValue2 = null, CustomPredefined = false, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter SATVoidedNotTransferredQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARInvoice.StatusName", PredefinedValue = "Void",PredefinedValue2 = null, CustomPredefined = false, QueryId = SATVoidedNotTransferredQuery.Id,QueryCode = SATVoidedNotTransferredQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

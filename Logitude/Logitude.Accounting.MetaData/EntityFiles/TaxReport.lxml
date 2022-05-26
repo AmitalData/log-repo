@@ -3218,6 +3218,12 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="4"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;TRCCJ&quot;"
+        DefaultText="&quot;Cancel Closing Journal&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="5"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

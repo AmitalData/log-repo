@@ -155,5 +155,6 @@ export class ARInvoiceList {
 		HouseNumbers: string;
 		GlobalTaxCalculation: string;
 		PaymentReferences: string;
+		SATCancelReasonCode: string;
 	
 }

@@ -159,7 +159,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
   GetImageFile(imageId: string, extension: string, isFirEvent: boolean = false) {
     extension = this.Extension?this.Extension:extension;
     var type = "Base64";
-    if (this.EntityName == "Quotation" || this.EntityName == "Airline") {
+      if (this.EntityName == "Quotation" || this.EntityName == "Airline" || this.EntityName == "Customer") {
       type += ("^ImageDetail");
     }
 

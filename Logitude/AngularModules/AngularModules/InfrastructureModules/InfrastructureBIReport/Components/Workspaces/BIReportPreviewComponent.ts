@@ -27,6 +27,7 @@ import { LastRunDetailExtendedPMService } from '../../../../Infrastructure/Servi
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/BIReportExtendedPMService';
 import { isNullOrUndefined } from 'util';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 @Component({
 
     templateUrl: 'BIReportPreviewComponent.html',
@@ -41,6 +42,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public EntityId: string;
     public DWQueryId: string;
     public FolderId: string;
+    public IsScheduler: boolean;
+    public IsNewScheduler: boolean;
+    public CanScheduler: boolean;
     public DWQueryData: DWQueryData;
     BackButtonLable: string = "BI Reports";
     SelectedFiltersDataSource: any[] = [];
@@ -77,7 +81,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public filterButtonTitle = "No available fixed filters"; 
      
     @Output() ComputeFiltersCommand = new EventEmitter();
-    constructor() {
+    constructor(private entityResourceService: EntityResourceService) {
         super();
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
@@ -91,9 +95,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList.push('Sorry! You have no permission to run the report.');
         }
         else {
-            this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy");
-            this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
-            this.HasDownloadFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDownload");
+            this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy") && !this.IsScheduler;
+            this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete") && !this.IsScheduler;
+            this.HasDownloadFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDownload") && !this.IsScheduler; 
             this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe((myResult: any) => {
                 if (!myResult.HasError) {
                     this.DWQueryData = myResult.Result;
@@ -142,6 +146,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.EntityId = args['EntityId'];
         this.FolderId = args['FolderId'];
         this.BackButtonLable = args['BackButtonLable'] != undefined ? args['BackButtonLable'] : "BI Reports";
+        this.IsScheduler = args['IsScheduler'];
+        this.IsNewScheduler = args['IsNewScheduler'];
     }
     InitializeServices() {
         this._InfrastructureDomainService = new InfrastructureDomainService();
@@ -176,6 +182,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     this.ReportXML = result;
                     this.BIReportXMLData = result;
                     this.EntityPM = result.BIReportPM;
+                    this.CanScheduler = this.EntityPM != null ? this.EntityPM.AvailableForScheduling && !this.IsScheduler : false;
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                     // this.BuildColumns(result);
                     if (IsBIReportUpdated) {
@@ -853,6 +860,21 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             if (d) {
                 //this.LoadData();
             }
+        });
+    }
+
+    onBIReportSchedulerClick() {
+        this.entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe((response: any) => {
+
+            var windowArgs: any = {};
+            windowArgs.BIReportEntity = this.EntityPM;
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 1200;
+            logWindow.Height = 1000;
+
+            logWindow.Title = this.EntityPM['Name'] + " Scheduler";
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./Report/Components/Scheduler/MainReportSchedulerComponent');
         });
     }
 

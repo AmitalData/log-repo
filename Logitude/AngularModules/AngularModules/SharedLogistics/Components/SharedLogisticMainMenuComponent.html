@@ -6,22 +6,27 @@
                 <ul class="PagesMenu">
                     <li [class.SelectedPageMenu]="SelectedItem == 'SHLO'" (click)="SelectedItem = 'SHLO'">Shared Logistics and Mobile</li>
 
+                    <li *ngIf="IsDigitalPortalVisibile" [class.SelectedPageMenu]="SelectedItem == 'DIGP'" (click)="SelectedItem = 'DIGP'">Digital Portal</li>
+
                     <li *ngIf="CustomerTenantAccessVisibility" [class.SelectedPageMenu]="SelectedItem == 'LOBO'" (click)="SelectedItem = 'LOBO'">Access Management</li>
 
                     <li *ngIf="CargoTrackingAccessVisibility" [class.SelectedPageMenu]="SelectedItem == 'CATR'" (click)="SelectedItem = 'CATR'">Cargo Tracking</li>
-                    <li *ngIf="CtoolAccessVisibility" [class.SelectedPageMenu]="SelectedItem == 'CTOOL'" (click)="SelectedItem = 'CTOOL'">CTool</li>
 
+                    <li *ngIf="CtoolAccessVisibility" [class.SelectedPageMenu]="SelectedItem == 'CTOOL'" (click)="SelectedItem = 'CTOOL'">CTool</li>
                 </ul>
             </td>
         </tr>
-
-
 
         <tr>
             <td class="CellStretch">
                 <!--SharedLogistics-->
                 <div class="CellContent" [hidden]="SelectedItem != 'SHLO'">
                     <div LocationDirective Code="SHLO"></div>
+                </div>
+
+                <!--Digital Portal-->
+                <div class="CellContent" [hidden]="SelectedItem != 'DIGP'">
+                    <div LocationDirective Code="DIGP"></div>
                 </div>
 
                 <!--LogBox-->

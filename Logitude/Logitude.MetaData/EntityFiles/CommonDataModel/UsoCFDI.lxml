@@ -4,7 +4,7 @@
   ObjectTableName="&quot;UsoCFDI&quot;"
   IsNew="false"
   DBTableName="&quot;UsoCFDIs&quot;"
-  OldDBTableName="&quot;UsoCFDIs&quot;"
+  DBTableOldNames="UsoCFDIs"
   ObjectTableSingular="&quot;Uso CFDI&quot;"
   ObjectTablePlural="&quot;Uso CFDIs&quot;"
   HasCustomFilter="false"
@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Uso CFDI&quot;"
-  Code="&quot;766f&quot;"
+  Code="&quot;cda3&quot;"
   Name="&quot;UsoCFDI&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -55,6 +55,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;2ec5&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -68,7 +69,7 @@
   <field
     Id="&quot;80b54eed-eb2a-4fa8-a8a4-ad23ef21aab7&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -119,6 +120,7 @@
     ListLableDefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -132,6 +134,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Code&quot;"
@@ -143,7 +146,7 @@
   <field
     Id="&quot;01568605-7c69-4a8d-96bd-233bf0a38e92&quot;"
     FieldName="&quot;Name&quot;"
-    OldFieldName="&quot;Name&quot;"
+    OldNames="Name"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -194,6 +197,7 @@
     ListLableDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -207,6 +211,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Name&quot;"
@@ -218,7 +223,7 @@
   <field
     Id="&quot;48bad0be-a014-4f67-bd48-9a64f97d97a9&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -269,6 +274,7 @@
     HelpTextDefaultText="&quot;Searching by :&#xA;1: code&#xA;2: name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -282,6 +288,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -289,6 +296,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;UsoCFDIHeaderScreen&quot;"
+    ObjectTableName="&quot;UsoCFDI&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -350,6 +366,66 @@
       Code="&quot;I06&quot;"
       Name="&quot;Comunicaciones telefónicas&quot;"
       SearchFields="&quot;I06,Comunicaciones telefónicas&quot;" />
+    <Record
+      Code="&quot;I01&quot;"
+      Name="&quot;Construcciones.&quot;"
+      SearchFields="&quot;I01,Construcciones.&quot;" />
+    <Record
+      Code="&quot;I05&quot;"
+      Name="&quot;Dados, troqueles, moldes, matrices y herramental.&quot;"
+      SearchFields="&quot;I05,Dados, troqueles, moldes, matrices y herramental.&quot;" />
+    <Record
+      Code="&quot;I07&quot;"
+      Name="&quot;Comunicaciones satelitales.&quot;"
+      SearchFields="&quot;I07,Comunicaciones satelitales.&quot;" />
+    <Record
+      Code="&quot;I08&quot;"
+      Name="&quot;Otra maquinaria y equipo.&quot;"
+      SearchFields="&quot;I08,  Otra maquinaria y equipo.&quot;" />
+    <Record
+      Code="&quot;D01&quot;"
+      Name="&quot;Honorarios médicos, dentales y gastos hospitalarios.&quot;"
+      SearchFields="&quot;D01,  Honorarios médicos, dentales y gastos hospitalarios.&quot;" />
+    <Record
+      Code="&quot;D02&quot;"
+      Name="&quot;Gastos médicos por incapacidad o discapacidad.&quot;"
+      SearchFields="&quot;D02,  Gastos médicos por incapacidad o discapacidad.&quot;" />
+    <Record
+      Code="&quot;D03&quot;"
+      Name="&quot;Gastos funerales.&quot;"
+      SearchFields="&quot;D03,Gastos funerales.&quot;" />
+    <Record
+      Code="&quot;D04&quot;"
+      Name="&quot;Donativos.&quot;"
+      SearchFields="&quot;D04,Donativos.&quot;" />
+    <Record
+      Code="&quot;D05&quot;"
+      Name="&quot;Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación).&quot;"
+      SearchFields="&quot;D05,Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación).&quot;" />
+    <Record
+      Code="&quot;D06&quot;"
+      Name="&quot;Aportaciones voluntarias al SAR.&quot;"
+      SearchFields="&quot;D06,Aportaciones voluntarias al SAR.&quot;" />
+    <Record
+      Code="&quot;D07&quot;"
+      Name="&quot;Primas por seguros de gastos médicos.&quot;"
+      SearchFields="&quot;D07,Primas por seguros de gastos médicos.&quot;" />
+    <Record
+      Code="&quot;D08&quot;"
+      Name="&quot;Gastos de transportación escolar obligatoria.&quot;"
+      SearchFields="&quot;D08,Gastos de transportación escolar obligatoria.&quot;" />
+    <Record
+      Code="&quot;D09&quot;"
+      Name="&quot;Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones.&quot;"
+      SearchFields="&quot;D09,Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones.&quot;" />
+    <Record
+      Code="&quot;D10&quot;"
+      Name="&quot;Pagos por servicios educativos (colegiaturas).&quot;"
+      SearchFields="&quot;D10,Pagos por servicios educativos (colegiaturas).&quot;" />
+    <Record
+      Code="&quot;S01&quot;"
+      Name="&quot;Sin efectos fiscales.&quot;"
+      SearchFields="&quot;S01,Sin efectos fiscales.&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

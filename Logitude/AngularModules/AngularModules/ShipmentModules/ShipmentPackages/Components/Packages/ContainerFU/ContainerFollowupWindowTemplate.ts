@@ -25,6 +25,8 @@ export class ContainerFollowupWindowTemplate {
     public HasRouting: boolean = false;
     public ActionRoutingLinkText: string;
     public DeleteRoutingLinkText: string;
+    public ETATextCode: string = "ShipmentPackage.F.EmptyContainerReturnETA";
+    public ATATextCode: string = "ShipmentPackage.F.EmptyContainerReturnATA";
     constructor() {
 
     }
@@ -45,6 +47,11 @@ export class ContainerFollowupWindowTemplate {
                     this.IsDeliveryConnectedWithMultiContainers = true;
                 }
             }
+        }
+
+        else {
+            this.ETATextCode = "ShipmentPackage.O.ExpectedEmptyReturn";
+            this.ATATextCode = "ShipmentPackage.O.ActualEmptyReturn";
         }
 
         this.SetProperties();

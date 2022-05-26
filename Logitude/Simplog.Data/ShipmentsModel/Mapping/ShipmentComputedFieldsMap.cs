@@ -60,11 +60,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MainCarriageETD).IsOptional();
             this.Property(t => t.MainCarriageATA).IsOptional();
             this.Property(t => t.MainCarriageATD).IsOptional();
-
-
-
-
-
+            this.Property(t => t.PackagesQuantityAndType).HasMaxLength(2000).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentComputedFields");
@@ -159,7 +155,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MainCarriageETD).HasColumnName("MainCarriageETD");
             this.Property(t => t.MainCarriageATA).HasColumnName("MainCarriageATA");
             this.Property(t => t.MainCarriageATD).HasColumnName("MainCarriageATD");
-
+            this.Property(t => t.PackagesQuantityAndType).HasColumnName("PackagesQuantityAndType");
 
         }
     }

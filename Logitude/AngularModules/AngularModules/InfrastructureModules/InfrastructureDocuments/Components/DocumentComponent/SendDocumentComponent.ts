@@ -146,6 +146,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     IsResendEmail: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     IsEnableEditTemplate: boolean = false;
+    IsDigitalPortal: boolean = false;
+    public IsToEmailIsDisabled: boolean = false;
 
     constructor(public _communicationLogExtendedPMService: CommunicationLogExtendedPMService, public _communicationAttachmentExtendedPMService: CommunicationAttachmentExtendedPMService, public _documentOutPMService: DocumentOutPMService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService, public _documentTypePMService: DocumentTypePMExtendedService, private cd: ChangeDetectorRef, public _documentTypeListService: DocumentTypeListService) {
 
@@ -169,6 +171,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         this.AttachmentListId = Guid.newGuid();
         this.AttachmentsLists = new Array<AttachmentsList>();
         this.DocumentTypeTemplatePMLists = [];
+        this.CheclIsToEmailIsDisabled();
     }
 
     ngOnInit() {
@@ -180,6 +183,18 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     SetWindowArgs(args: any) {
         this.IsShareDocumentsViaEmail = args.IsShareDocumentsViaEmail;
+        this.IsDigitalPortal = args.IsDigitalPortal;
+        this.CheclIsToEmailIsDisabled();
+    }
+
+    CheclIsToEmailIsDisabled() {
+        this.IsToEmailIsDisabled = false;
+        if (this.IsDigitalPortal) {
+            this.IsToEmailIsDisabled = true;
+        }
+        else if (!this.IsSendEditMode) {
+            this.IsToEmailIsDisabled = true;
+        }
     }
 
     CheckEditTemplateFeature() {
@@ -302,7 +317,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
         }
         else this.Start(dataContext);
-
+        this.CheclIsToEmailIsDisabled();
 
 
     }
@@ -371,7 +386,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                     this.Subject = this.SelectedInternalDocument.Subject;
                 }
                 else {
-                    this.Subject = this.CurrentDocument.DocumentTypeSubject != null ? this.CurrentDocument.DocumentTypeSubject : this.CurrentDocument.DocumentTypeName;
+                    this.Subject = this.CurrentDocument?.DocumentTypeSubject != null ? this.CurrentDocument?.DocumentTypeSubject : this.CurrentDocument?.DocumentTypeName;
                 }
             }
             this.LoadDocumentTypeTemplates(null);

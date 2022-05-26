@@ -136,6 +136,8 @@ export class ShipmentShortTitleComponent {
     UpdateUnassigedDataClicked() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.WindowArgs = this.EntityPM;
+        logitudeWindow.Height = 600;
+        logitudeWindow.Width = 950;
         logitudeWindow.Title = "Unassiged Data Management - " + this.EntityPM.ShipmentNumber;
         logitudeWindow.Show("./Shipment/Components/UnassigedData/UpdateUnassigedDataComponent");
         logitudeWindow.WindowClosed.subscribe(s => {

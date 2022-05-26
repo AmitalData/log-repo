@@ -1,0 +1,54 @@
+<div style="position:absolute; width:100%;height:100%; background:white;">
+    <table>
+        <tr>
+            <td colspan="3">
+                <div style="height:25px"></div>
+            </td>
+        </tr>
+
+        <tr style="height:100%">
+            <td style="width:380px;">
+                <table>
+
+                    <tr style="vertical-align:top;height:50%;">
+                        <td style="vertical-align:top">
+
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <label>Digital Portal Settings</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="vertical-align:top;height:5px">
+                                    <td></td>
+                                </tr>
+                                <tr style="vertical-align:top;">
+                                    <td style="vertical-align:top">
+
+                                        <div>
+                                            <!-- Invitations -->
+                                            <div class="QueriesSection">
+                                                <div>Invitations</div>
+                                                <div>
+                                                    <p [attr.data-cy]="'Invite Customers'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="InviteLinkClick()">Invite Customers</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+

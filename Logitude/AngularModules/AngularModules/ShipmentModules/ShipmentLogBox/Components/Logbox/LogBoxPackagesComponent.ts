@@ -43,6 +43,10 @@ export class LogBoxPackagesComponent implements OnInit, AfterViewInit {
     public showShipmentOrderPackages: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
+    private AirTransportModeId = 'A';
+    private LCLShipmentTypeId = 'LCLD';
+    private ExportDirectionId = 'E';
+
     constructor() {
 
 
@@ -65,4 +69,7 @@ export class LogBoxPackagesComponent implements OnInit, AfterViewInit {
         this.CurrentSession.CloseCurrentWindow();
     } 
     
+    get IsPackageList(): boolean {
+        return this.ShipmentPM.DirectionId == this.ExportDirectionId && (this.ShipmentPM.TransportModeId == this.AirTransportModeId || this.ShipmentPM.ShipmentTypeId == this.LCLShipmentTypeId);
+    }
 }

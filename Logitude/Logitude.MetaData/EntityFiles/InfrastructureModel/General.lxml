@@ -7301,6 +7301,15 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
+      Code="&quot;SHLOGDIGITALPORTAL&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHLOGDIGITALPORTAL&quot;"
+      FeatureDefaultText="&quot;Digital Portal&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
       Code="&quot;CONTAINERTRACKINGSETTINGS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.CONTAINERTRACKINGSETTINGS&quot;"

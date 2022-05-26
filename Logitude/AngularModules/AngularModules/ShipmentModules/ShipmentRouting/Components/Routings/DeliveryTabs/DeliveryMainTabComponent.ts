@@ -29,6 +29,8 @@ export class DeliveryMainTabComponent extends BaseComponent {
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
+    public ETATextCode: string = "ShipmentPickUpDelivery.F.ETA";
+    public ATATextCode: string = "ShipmentPickUpDelivery.F.ATA";
     constructor() {
         super();
         this.InitServices();
@@ -55,6 +57,11 @@ export class DeliveryMainTabComponent extends BaseComponent {
         this.IsLCLEntity = AppTool.IsLCLEntity(this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId);
         this.IsFCLEntity = AppTool.IsFCLEntity(this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId);
         this.FullResponsibilityHelp = TextCodeTranslator.Translate("ShipmentPickUpDelivery.FullResponsibilityHelpText");
+
+        if (this.EntityPM.PickUpDeliveryTypeCode == "EMPT") {
+            this.ETATextCode = "ShipmentPickUpDelivery.O.ExpectedEmptyReturn";
+            this.ATATextCode = "ShipmentPickUpDelivery.O.ActualEmptyReturn";
+        }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 

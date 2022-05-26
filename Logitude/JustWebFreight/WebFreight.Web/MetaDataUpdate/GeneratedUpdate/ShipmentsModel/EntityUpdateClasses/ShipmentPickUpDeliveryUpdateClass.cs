@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPickUpDeliveryUpdateClass
    {  		
-		public const string HashString = "f41fd7192022d26e8c5500f0db060582";
+		public const string HashString = "619adfdda103ebe8dbd67c93dd4ee2fe";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Pickup Delivery",
-			      				    Code =  "5a6d",
+			      				    Code =  "740d",
 			      				    Name =  "ShipmentPickUpDelivery",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -3086,6 +3086,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryTHDocsIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOExpectedEmptyReturn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.ExpectedEmptyReturn", DefaultText = "Expected Empty Return",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPickUpDeliveryTextCode_ShipmentPickUpDeliveryOActualEmptyReturn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPickUpDelivery.O.ActualEmptyReturn", DefaultText = "Actual Empty Return",LocalDefaultText = null, ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

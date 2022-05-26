@@ -348,15 +348,23 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     }
 
     DeleteUassignedPartners(code: string) {
-        if (!["CONSI", "SHIPR"].includes(code))
+        if (!["CONSI", "SHIPR", "SHPNT", "CONNT"].includes(code))
             return;
 
         if (code == "SHIPR") {
             this.RemoveUnassignedPartner("Shipper");
         }
 
-        if (code == "CONSI") {
+        else if (code == "CONSI") {
             this.RemoveUnassignedPartner("Consignee");
+        }
+
+        else if (code == "SHPNT") {
+            this.RemoveUnassignedPartner("ShipperNotExporter");
+        }
+
+        else if (code == "CONNT") {
+            this.RemoveUnassignedPartner("ConsigneeNotImporter");
         }
     }
     RemoveUnassignedPartner(fieldName : string ) {
@@ -606,6 +614,22 @@ export class PartnerItem extends BaseComponent {
                     }
                     break
                 }
+
+                case "SHPNT": {
+                    if (this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "ShipperNotExporter" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0) {
+                        this.IsPartnerUnassigned = true;
+                        this.PartnerHeaderClassName = "Unassigned";
+                    }
+                    break
+                }
+
+                case "CONNT": {
+                    if (this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "ConsigneeNotImporter" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0) {
+                        this.IsPartnerUnassigned = true;
+                        this.PartnerHeaderClassName = "Unassigned";
+                    }
+                    break
+                }
             }
         }
     }
@@ -616,6 +640,8 @@ export class PartnerItem extends BaseComponent {
         switch (this.Code) {
             case "CONSI":
             case "SHIPR":
+            case "SHPNT":
+            case "CONNT":
                 {
                     if (this.IsPartnerUnassigned) {
                         this.IsEditPartnerEnabled = false;

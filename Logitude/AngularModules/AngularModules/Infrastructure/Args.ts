@@ -23,7 +23,7 @@ export class ListComponentArgs {
     public QuerySection: string;
     public IsCargoTrackingMenuClicked: boolean = false;
     public DontCheckQueryFeature: boolean = false;
-
+    public IsDigitalPortalMenuClicked: boolean = false;
     
 }
 

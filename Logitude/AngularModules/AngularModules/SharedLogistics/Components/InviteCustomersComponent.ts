@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { Guid } from '../../Infrastructure/Utilities/Guid';
@@ -13,11 +13,12 @@ import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
 import { ContactItemClass } from '../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
 import { MessageWindow } from '../../Controls/Windows/MessageWindow';
 import { ContactPM } from '../../Common/EntityPMs/ContactPM';
-
 import { EntityResourceService } from '../../Infrastructure/Services/EntityResourceService';
 import { DocumentTypeTemplatePMExtendedService } from 'Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
 import { DocumentTypeTemplatePM } from 'Common/EntityPMs/DocumentTypeTemplatePM';
-import { DataProviderFieldsNestedList } from 'Report/Components/DataProviderFieldsNestedList';
+import { GeneralEmailSender } from '../../Infrastructure/Helpers/GeneralEmailSender';
+import { AppTool } from '../../Infrastructure/Tools';
+
 @Component({
 
     selector: 'InviteCustomersComponent',
@@ -25,13 +26,13 @@ import { DataProviderFieldsNestedList } from 'Report/Components/DataProviderFiel
     //inputs: ['PartnerTypeId', , 'DateParameter', 'DataContext', 'OnCloseWindowEvent'],
     providers: [SharedLogisticContactService],
 })
-export class InviteCustomersComponent implements OnInit {
+export class InviteCustomersComponent implements OnInit, OnDestroy {
 
     CurrentEntity: CustomerList;
     IsCargoTrackingMenuClicked: boolean;
     NoContactsVisibility: boolean;
     public SharedLogisticCustomerLineList: CustomerLineViewModel[];
-
+    IsDigitalPortal: boolean = false;
     CustomerName: string;
     CustomerCode: string;
     InvitationStatus: string;
@@ -46,12 +47,27 @@ export class InviteCustomersComponent implements OnInit {
     constructor(public _sharedLogisticContactService: SharedLogisticContactService) {
         this.documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
         this.CurrentSession.StartBusyIndicatorLoading();
+        this.Listen();
+    }
+
+    private SendToCustomerEvent: any = null;
+    Listen() {
+        if (!this.SendToCustomerEvent) {
+            this.SendToCustomerEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "SendDigitalPortalCompleted") {
+                    this.SendInvitaion(null);
+                }
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SendToCustomerEvent);
     }
 
     ngOnInit() {
 
     }
-
 
     LoadData() {
 
@@ -105,13 +121,28 @@ export class InviteCustomersComponent implements OnInit {
     SaveChanges(item: SharedLogisticContactPM, haveInternetAccess) {
         this.haveInternetAccess = haveInternetAccess;
         this.sharedLogisticContact = item;
-        if (this.CanChangeTemplate && haveInternetAccess) {
-            this.ShowTemplateTypePicker();
-            return;
+
+        if (this.IsDigitalPortal == true) {
+            this.SendDigitaPortalDocument();
         }
-        this.SendInvitaion(null);
+        else {
+            if (this.CanChangeTemplate && haveInternetAccess) {
+                this.ShowTemplateTypePicker();
+                return;
+            }
+            this.SendInvitaion(null);
+        }
     }
 
+    GeneralEmailSender: GeneralEmailSender;
+    SendDigitaPortalDocument() {
+        var eventRefreshName =  "SendDigitalPortalCompleted";
+        if (!this.GeneralEmailSender || (this.GeneralEmailSender && !this.GeneralEmailSender.LoadingSendingComponent)) {
+            this.GeneralEmailSender = new GeneralEmailSender("SharedLogistics", "SLCIN", null, null, this.CurrentEntity.Id, "", "", null, null, eventRefreshName, null, false, null, null, this.sharedLogisticContact.Email, this.IsDigitalPortal);
+            this.GeneralEmailSender.ShowFullSendControll();
+        }
+    }
+    
     ShowTemplateTypePicker() {
         var windowArgs: any = {};
         windowArgs.DataViewModel = this;
@@ -128,6 +159,7 @@ export class InviteCustomersComponent implements OnInit {
 
 
     private SendInvitaion(templateId) {
+        this.sharedLogisticContact.IsDigitalPortal = this.IsDigitalPortal;
         this.sharedLogisticContact.InternetAccess = this.haveInternetAccess;
         this.sharedLogisticContact.IsCargoTrackingInvitation = this.IsCargoTrackingMenuClicked;
         this.sharedLogisticContact.TemplateId = templateId;
@@ -225,12 +257,12 @@ export class InviteCustomersComponent implements OnInit {
     }
 
     SetWindowArgs(args: any) {
-
         this.CurrentEntity = args.CurrentEntity;
         this.IsCargoTrackingMenuClicked = args.IsCargoTrackingMenuClicked;
         this.CustomerName = this.CurrentEntity.EnglishName;
         this.CustomerCode = this.CurrentEntity.Code;
         this.InvitationStatus = this.CurrentEntity.SharedLogisticsInvitationStatusName;
+        this.IsDigitalPortal = args.IsDigitalPortal;
         this.LoadData();
     }
 

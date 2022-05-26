@@ -5,7 +5,7 @@ import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirectiv
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+
     selector: 'SharedLogisticMainMenuComponent',
     templateUrl: './SharedLogisticMainMenuComponent.html',
     providers: [EntityResourceService],
@@ -14,8 +14,8 @@ import {EntityResourceService} from '../../Infrastructure/Services/EntityResourc
 export class SharedLogisticMainMenuComponent {
     public CustomerTenantAccessVisibility: boolean = false;
     public CargoTrackingAccessVisibility: boolean = false;
-    
     public CtoolAccessVisibility: boolean = false;
+    public IsDigitalPortalVisibile: boolean = false;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService) {
@@ -56,21 +56,16 @@ export class SharedLogisticMainMenuComponent {
     }
 
     private SetSelectedItem() {
-     
-       
-            this.CustomerTenantAccessVisibility = false;
-            this.CargoTrackingAccessVisibility = false;
-            this.CtoolAccessVisibility = false;
+        this.CustomerTenantAccessVisibility = false;
+        this.CargoTrackingAccessVisibility = false;
+        this.CtoolAccessVisibility = false;
+        this.IsDigitalPortalVisibile = false;
 
+        this.SelectedItem = "SHLO";
 
-            this.SelectedItem = "SHLO";
-      
         if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES")) {
             this.CustomerTenantAccessVisibility = true;
-           
         }
-
-        
 
         if (FeatureLocator.HasFeaturePermession("General", "SHLOGCARGOTRACKING")) {
             this.CargoTrackingAccessVisibility = true;
@@ -81,6 +76,9 @@ export class SharedLogisticMainMenuComponent {
             this.CtoolAccessVisibility = true;
         }
 
+        if (FeatureLocator.HasFeaturePermession("General", "SHLOGDIGITALPORTAL")) {
+            this.IsDigitalPortalVisibile = true;
+        }
     }
 
     private selectedItem: string;
@@ -105,7 +103,7 @@ export class SharedLogisticMainMenuComponent {
                 if (myLocation != null) {
 
                     switch (this.SelectedItem) {
-                    //SharedLogistics
+                        //SharedLogistics
                         case "SHLO": {
                             if (this.Page_SHIP == null) {
                                 SessionLocator.DynamicLoader.Load('./SharedLogistics/Components/SharedLogisticsMainComponent', myLocation.viewContainerRef)
@@ -117,8 +115,19 @@ export class SharedLogisticMainMenuComponent {
 
                             break;
                         }
+                        //DIGP
+                        case "DIGP": {
+                            if (this.Page_BOOK == null) {
+                                SessionLocator.DynamicLoader.Load('./SharedLogistics/Components/SharedLogisticsDigitalPortalComponent', myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.Page_SHIP = cmpRef.instance;
+                                        //this.Page_SHIP.InitComponent();
+                                    });
+                            }
 
-                          //LogBox
+                            break;
+                        }
+                        //LogBox
                         case "LOBO": {
                             if (this.Page_BOOK == null) {
                                 SessionLocator.DynamicLoader.Load('./SharedLogistics/Components/CutsomerTenantAccessManagementComponent', myLocation.viewContainerRef)
@@ -131,7 +140,7 @@ export class SharedLogisticMainMenuComponent {
                             break;
                         }
 
-                          //CargoTracking
+                        //CargoTracking
                         case "CATR": {
                             if (this.Page_CATR == null) {
                                 SessionLocator.DynamicLoader.Load('./SharedLogistics/Components/SharedLogisticsMainComponent', myLocation.viewContainerRef)
@@ -153,7 +162,7 @@ export class SharedLogisticMainMenuComponent {
                             }
                             break;
                         }
-                            
+
 
 
                     }

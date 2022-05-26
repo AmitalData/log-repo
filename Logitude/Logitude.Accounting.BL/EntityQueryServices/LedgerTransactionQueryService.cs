@@ -676,6 +676,24 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return transactions.Select(poco => GetEntityPM(poco)).ToList();
         }
 
+        public List<ReconciliationPM> GetReconciliationsByJournalId(string journalId, int tenant)
+        {
+            var ledgerTranasctions = GetByJournalId(journalId, tenant);
+            var reconLines = new List<ReconciliationLinePM>();
+            if (ledgerTranasctions.Any())
+            {
+                reconLines = GetReconciliationLinesForTransactions(tenant, ledgerTranasctions);
+            }
+            var reconciliations = new List<ReconciliationPM>();
+            if (reconLines.Any())
+            {
+                List<string> recosIds = reconLines.Select(d => d.ReconciliationId).ToList();
+                ReconciliationQueryService recoQuery = new ReconciliationQueryService(tenant);
+                reconciliations = recoQuery.GetReconciliationsByIds(recosIds, tenant);
+            }
+
+            return reconciliations;
+        }
 
         public List<LedgerTransactionPM> GetReconciledInvoicesTransactionsForARPayment(string arpaymentId, string billToGLAccountId, int tenant)
         {

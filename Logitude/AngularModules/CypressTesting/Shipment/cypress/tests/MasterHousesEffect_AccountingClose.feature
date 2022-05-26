@@ -1,5 +1,6 @@
 
 #@release
+@fixReleaseBugs
 Feature:   Accounting Close , Accounting Reopen For Master And House Shipment
  The user creates a master Export Air Shipment, creates a house Export Air Shipmen within the master, operationally closes the shipment, 
  closes accounting, reopens accounting.

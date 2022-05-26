@@ -85,6 +85,7 @@ Then("the shipment should update successfully", () => {
 
 //#region add pre forwarding and on forwarding on house shipment
 Given("navigates routing tab in house shipment", () => {
+    cy.get(ShipmentSelectors.ShipmentsTab).click({force:true})
     cy.get(ShipmentSelectors.HouseHyperLink).eq(0).click({ force: true })
     cy.Click(ShipmentSelectors.RoutingsTab_Number + BaseSelectors.LastElement, null)
 });

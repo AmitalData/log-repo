@@ -517,5 +517,7 @@ export class ShipmentList {
 		QuoteFreightExpirationDate: Date;
 		MainCarriageETDTime: Date;
 		MainCarriageETATime: Date;
+		PackagesQuantityAndType: string;
+		ConnectedtoMaster: boolean;
 	
 }

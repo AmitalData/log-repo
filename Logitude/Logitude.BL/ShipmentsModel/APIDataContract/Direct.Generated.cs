@@ -295,6 +295,15 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Card Notify2 { get; set; }
     
     public string Notify2Reference { get; set; }
+    
+    public Address UnassignedShipperNotExporterAddress { get; set; }
+    
+    public Address UnassignedConsigneeNotImporterAddress { get; set; }
+
+    public State InlandDomesticFromState { get; set; }
+    
+    public State InlandDomesticToState { get; set; }
+
 
     public  string  ComputingPartnerCode { get; set; }
 

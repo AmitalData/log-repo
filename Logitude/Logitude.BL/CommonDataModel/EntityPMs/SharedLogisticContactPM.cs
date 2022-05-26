@@ -25,5 +25,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime? LastLoginDate { get; set; }
         public bool IsCargoTrackingInvitation { get; set; }
         public string TemplateId { get; set; }
+        public bool IsDigitalPortal { get; set; }
     }
 }

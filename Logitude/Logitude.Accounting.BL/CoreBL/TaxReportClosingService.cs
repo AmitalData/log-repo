@@ -16,6 +16,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -30,14 +33,18 @@ namespace Logitude.Accounting.BL.CoreBL
         public JournalPM journalPM;
         const string TaxReportLineInputType = "I";
         const string TaxReportLineOutType = "O";
-        public TaxReportClosingService(int tenant, string taxReportId)
+        public TaxReportClosingService(int tenant, string taxReportId, bool cancelCreatedJournal = false)
         {
             this.tenant = tenant;
             this.taxReportId = taxReportId;
-
-            GetRelatedEntities();
-            
-            Validate();
+            if (!cancelCreatedJournal)
+            {
+                GetRelatedEntities();
+                Validate();
+            }
+            else {
+                GetTaxReport();
+            }
         }
 
         private void Validate()
@@ -70,7 +77,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void EnsureAbilityToCreateClosingJournal()
         {
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-            var canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, tenant);
+            var canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, tenant);
             if (!canHaveClosingJournal)
                 throw new ApplicationException(TranslateTextsClass.Translate("TaxReport.O.ClosingJournalValidationMessage",tenant));
         }
@@ -96,7 +103,60 @@ namespace Logitude.Accounting.BL.CoreBL
             SetTaxReportAsTransmittedAndClosingJournal();
         }
 
+        public void CancelClosingJournal()
+        {
 
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                VoidJournal();
+                SetTaxReportAsCancelled();
+                CancelReconciliations();
+                scope.Complete();
+            }
+        }
+
+        private void VoidJournal()
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            JournalQueryService journalQuery = new JournalQueryService(MyContext);
+            IQueryable<JournalPM> journalPMsQuery = journalQuery.GetJournalsByAccountingEntityId(taxReportId, tenant);
+            var journalPMsList = journalPMsQuery.Where(r => r.AccountingEntityCode == AccountingEntityValues.TaxReport).ToList();
+            if (journalPMsList.Count == 1)
+            {
+                journalPM = journalPMsList.FirstOrDefault();
+            }
+            else if (journalPMsList.Count == 0)
+            {
+                throw new ApplicationException("Couldn't find any Journal for this tax report");
+            }
+            else
+            {
+                throw new ApplicationException("Find more then 1 Journal for this tax report");
+            }
+            var service = new JournalVoidUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+            var StornoOverrideM = new StornoOverrideM()
+            {
+                AccountingEntityCode = journalPM.AccountingEntityCode,
+                AccountingEntityId = journalPM.AccountingEntityId,
+                AccountingEntityReference = journalPM.AccountingEntityReference,
+            };
+            journalPM = service.VoidJournal(journalPM.Id, tenant, StornoOverrideM);
+            AddAccountingEntityJournal(AccountingEntityJournalActions.TaxReportCancelClosingJournal);
+        }
+
+        private void CancelReconciliations() {
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
+            var Reconciliations = transactionsQuery.GetReconciliationsByJournalId(journalPM.Id, tenant);
+            ReconciliationUpdateService service = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            foreach (var item in Reconciliations) {
+                item.IsCancelled = true;
+                service.InitializeEntityPM(item);
+                item.ChangeSetOp = ChangeSetOperation.Update;
+                service.Update(item, true);
+            }
+        }
 
         private void CreateJournal()
         {
@@ -153,6 +213,14 @@ namespace Logitude.Accounting.BL.CoreBL
         private void SetTaxReportAsTransmittedAndClosingJournal()
         {
             taxReportPM.StatusCode = VatReportStatusValues.TransmittedAndClosingJournal;
+
+            SubmitTaxReport();
+        }
+
+        private void SetTaxReportAsCancelled()
+        {
+            taxReportPM.IsCancelled = true;
+            taxReportPM.StatusCode = VatReportStatusValues.Cancelled;
 
             SubmitTaxReport();
         }
@@ -377,7 +445,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<TaxReportLine> GetTaxReportLines(string taxReportLineType)
         {
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-            return taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == taxReportLineType).ToList();
+            return taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == taxReportLineType && d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).ToList();
         }
 
         private List<LedgerTransaction> GetLedgerTransactionsForOutputTaxReportLines(List<TaxReportLine> taxReportLines)

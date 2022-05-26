@@ -6,7 +6,7 @@ namespace WebFreight.Web.DataProviders
     {
         public string ShipmentNumberLink { get; set; }
         public string BranchSignature { get; set; }
-        public string MainCarriageCarrierPrefix { get; set; }        
+        public string MainCarriageCarrierPrefix { get; set; }
         public string MainCarriageCarrierAddress { get; set; }
         public string MAWBShort { get; set; }
         public string MAWBFull { get; set; }
@@ -42,6 +42,7 @@ namespace WebFreight.Web.DataProviders
         public string Transshipment2FlightNumberAndDate { get; set; }
         public string InsurrenceValue { get; set; }//custom default X X X        
         public string SCI { get; set; }
+        public string MainHarmonize { get; set; }
         public string TotalQuantity { get; set; }
         public string GrossWeight { get; set; }
         public string GrossWeightInKG { get; set; }
@@ -142,7 +143,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipperCountry { get; set; }
         public string ShipperTel { get; set; }
         public string ShipperFax { get; set; }
-        public string ShipperZipCode { get; set; }       
+        public string ShipperZipCode { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress1 { get; set; }
         public string ConsigneeAddress2 { get; set; }
@@ -150,7 +151,7 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeCountry { get; set; }
         public string ConsigneeTel { get; set; }
         public string ConsigneeFax { get; set; }
-        public string ConsigneeZipCode { get; set; }        
+        public string ConsigneeZipCode { get; set; }
 
         public List<CommodityLine> CommoditiesLinesList { get; set; }
 
@@ -201,7 +202,7 @@ namespace WebFreight.Web.DataProviders
         public string Branch { get; set; }
 
         public string ShipperAddress_WithName { get; set; }
-        public string ShipperNotExporterAddress_WithName { get; set; }        
+        public string ShipperNotExporterAddress_WithName { get; set; }
         public string ConsigneeAddress_WithName { get; set; }
         public string NotifyAddress_WithName { get; set; }
         public string NotifyAddress2_WithName { get; set; }

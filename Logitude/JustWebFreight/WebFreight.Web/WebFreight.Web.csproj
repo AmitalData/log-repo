@@ -1016,6 +1016,10 @@
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.PortTimeZone.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelArguments.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelHelper.cs" />
+    <Compile Include="ContainerTracking\ContainerTrackingGeneralAnalyzer.cs" />
+    <Compile Include="ContainerTracking\ContainerTrackingUpdateManager.cs" />
+    <Compile Include="ContainerTracking\OceanInsightAnalyzer.cs" />
+    <Compile Include="ContainerTracking\VizionAnalyzer.cs" />
     <Compile Include="Controllers\AccountingModel\BankCodeController.cs" />
     <Compile Include="Controllers\AccountingModel\ChargesTypeOpController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CalculatedChartsLineTypeViewsController.Generated.cs" />
@@ -1160,6 +1164,7 @@
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
+    <Compile Include="DataContracts\BrandingData.cs" />
     <Compile Include="DataContracts\DataProviderField.cs" />
     <Compile Include="DataContracts\ExcelReportArguments.cs" />
     <Compile Include="DataContracts\ExcelReportResult.cs" />
@@ -2731,6 +2736,8 @@
     <Compile Include="Helpers\AutomationModel\SendInterface\SendInterfaceDataContractService.cs" />
     <Compile Include="Helpers\AutomationModel\SendInterface\ShipmentAPISendInterfaceDataContract.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
+    <Compile Include="Helpers\BrandingHelper.cs" />
+    <Compile Include="Helpers\BIReport\BIReportXMLDataService.cs" />
     <Compile Include="Helpers\CrmWebServicesValidator.cs" />
     <Compile Include="Helpers\DataWarehouse\FactQuoteBusinessUnitFilter.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />
@@ -6215,6 +6222,7 @@
       <DependentUpon>RegisterShipmentPackageWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ContainerTrackingProvider.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ContainerStatusSource.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AWB.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AccountingInformationIdentifier.cs" />

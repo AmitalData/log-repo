@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package&quot;"
-  Code="&quot;6713&quot;"
+  Code="&quot;2976&quot;"
   Name="&quot;ShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -9331,6 +9331,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AutomaticLastUpdateDate&quot;"
     ListPropertyPath="&quot;AutomaticLastUpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -9414,7 +9415,7 @@
     <DataContract
       Name="&quot;Container&quot;"
       Version="&quot;ApiV1&quot;"
-      IncludeTenant0Data="&quot;False&quot;">
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -9684,7 +9685,7 @@
     <DataContract
       Name="&quot;AirPackage&quot;"
       Version="&quot;ApiV1&quot;"
-      IncludeTenant0Data="&quot;False&quot;">
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -9922,7 +9923,7 @@
     <DataContract
       Name="&quot;OceanOrInlandPackage&quot;"
       Version="&quot;ApiV1&quot;"
-      IncludeTenant0Data="&quot;False&quot;">
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -10435,6 +10436,16 @@
     <TextCode
       Code="&quot;ShipmentPackage.O.EditFullTruckLoad&quot;"
       DefaultText="&quot;Edit Full Truck Load&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ShipmentPackage.O.ExpectedEmptyReturn&quot;"
+      DefaultText="&quot;Expected Empty Return&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ShipmentPackage.O.ActualEmptyReturn&quot;"
+      DefaultText="&quot;Actual Empty Return&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -20,6 +20,7 @@ import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFiel
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 import {ContainerTrackingProviderPM} from '../../EntityPMs/ContainerTrackingProviderPM';
+import { ContainerTrackingProviderPMInitService } from 'Shipment/EntityPMInitServices/ContainerTrackingProviderPMInitService';
 
 
 @Injectable()
@@ -45,8 +46,9 @@ export class ContainerTrackingProviderPMService {
 						var entity: ContainerTrackingProviderPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
+							ContainerTrackingProviderPMInitService.InitValues(entity, false);
+							ContainerTrackingProviderPMInitService.ApplyUIPoperties(entity, false);
 						}
-
 						var serviceResponse: ServiceResponse = new ServiceResponse();
 						serviceResponse.Result = entity;
               
@@ -222,6 +224,10 @@ export class ContainerTrackingProviderPMService {
 		    var entityPM: ContainerTrackingProviderPM;
 			entityPM = new ContainerTrackingProviderPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+			
+			ContainerTrackingProviderPMInitService.InitValues(entityPM, true);
+			ContainerTrackingProviderPMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 

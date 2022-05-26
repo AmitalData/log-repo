@@ -784,5 +784,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsShipmentOrder { get; set; }
         public string FirstPickupFullAddress { get; set; }
         public string LastDeliveryFullAddress { get; set; }
+        public string PackagesQuantityAndType { get; set; }
     }
 }

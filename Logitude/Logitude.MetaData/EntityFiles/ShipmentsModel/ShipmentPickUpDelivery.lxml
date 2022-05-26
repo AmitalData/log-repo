@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Pickup Delivery&quot;"
-  Code="&quot;5a6d&quot;"
+  Code="&quot;59d1&quot;"
   Name="&quot;ShipmentPickUpDelivery&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -3791,7 +3791,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;Delivery&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"
@@ -4219,10 +4220,26 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;Type&quot;"
+        FieldName="&quot;PickUpDeliveryTypeCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
     <DataContract
       Name="&quot;PickUp&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"
@@ -4650,6 +4667,21 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;Type&quot;"
+        FieldName="&quot;PickUpDeliveryTypeCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
@@ -4717,6 +4749,16 @@
       Code="&quot;ShipmentPickUpDelivery.TH.DocsIn&quot;"
       DefaultText="&quot;Docs In&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ShipmentPickUpDelivery.O.ExpectedEmptyReturn&quot;"
+      DefaultText="&quot;Expected Empty Return&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ShipmentPickUpDelivery.O.ActualEmptyReturn&quot;"
+      DefaultText="&quot;Actual Empty Return&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />

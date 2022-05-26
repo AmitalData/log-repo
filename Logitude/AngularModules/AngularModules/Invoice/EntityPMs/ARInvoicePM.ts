@@ -1152,6 +1152,11 @@ export class ARInvoicePM {
     public set ResendToSAT(newValue: boolean) { if (this.resendToSAT != newValue) { this.resendToSAT = newValue; this.MarkAsDirty("ResendToSAT"); } }
        
 	 
+    private sATCancelReasonCode: string;
+    public get SATCancelReasonCode() { return this.sATCancelReasonCode; }
+    public set SATCancelReasonCode(newValue: string) { if (this.sATCancelReasonCode != newValue) { this.sATCancelReasonCode = newValue; this.MarkAsDirty("SATCancelReasonCode"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		

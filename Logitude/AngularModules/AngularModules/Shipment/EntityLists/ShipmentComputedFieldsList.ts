@@ -68,5 +68,6 @@ export class ShipmentComputedFieldsList {
 		MainCarriageETD: Date;
 		MainCarriageATA: Date;
 		MainCarriageATD: Date;
+		PackagesQuantityAndType: string;
 	
 }

@@ -3690,14 +3690,12 @@ export class ShipmentPackageItem extends BaseComponent {
         });
     }
     AddRouting(typeCode: string) {
-
         var myDeliveryIndex = 1;
         var myWindowTitle: string = null;
         var myPickUpDeliveryTypeCode: string = null;
         switch (typeCode) {
             case "R": {
                 myPickUpDeliveryTypeCode = "EMPT";
-
                 myWindowTitle = TextCodeTranslator.Translate("Shipment.O.Routings.AddEmptyCR");
 
                 if (this.ShipmentPM.ShipmentContainerReturnIndex) {
@@ -3763,6 +3761,7 @@ export class ShipmentPackageItem extends BaseComponent {
         newDeliveryPackagePM.Harmonize = this.EntityPM.Harmonize;
         newDeliveryPackagePM.OriginalShipmentPackageId = this.EntityPM.Id;
         newDeliveryPackagePM.IsMultiHarmonize = this.EntityPM.IsMultiHarmonize;
+        newDeliveryPackagePM.ContainerEntityId = this.EntityPM.ContainerEntityId;
 
         this.EntityPM.ShipmentPackageHarmonizes.forEach(harmonizeItem => {
             var harmonize = new PickUpDeliveryPackageHarmonizePM(null);

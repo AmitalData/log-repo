@@ -105,8 +105,8 @@ namespace Logitude.Accounting.BL.Validators
     {
 
 
-        
 
+        const string statusCode_JournalCancelled = "5";
         private string _JLineNumberTExt;
         string TenantCurrency;
         RatesTableRepository ratesTableRepository;
@@ -308,7 +308,7 @@ namespace Logitude.Accounting.BL.Validators
 
 
                     seq++;
-                    if (currJournalLinePM.Line != seq)
+                    if (currJournalLinePM.Line != seq && myJournalPM.StatusCode != statusCode_JournalCancelled)
                     {
                         errorsList.AddNew(JournalValidator.M_LineSequence + seq.ToString() + " !=" + currJournalLinePM.Line.ToString());
                     }
@@ -683,8 +683,18 @@ accountingValidationContextServiceProvider
                 }
                 catch (Exception eeee)
                 {
+                    if (eeee.Message == "Reconciliation.O.MultiCurrencyGlaccountReconciliation")
+                    {
+                        //var errorMessage = OverrideITextCodeTranslator.Translate(eeee.Message, myJournalPM.Tenant);
+                        bool useLocal = ToUseLocalText(myJournalPM.Tenant);
 
-                    errorsList.Add(TranslateMyTextCode("JournalReconciles-validate:" + eeee.Message, myJournalPM.Tenant));
+                        //trans = TextCodesTranslator.TranslateText(textCodeCode, tenant);
+                        var errorMessage = TranslateTextsClass.Translate(eeee.Message, myJournalPM.Tenant, useLocal) /*+ " " + _JLineNumberTExt*/;
+                        errorsList.Add(errorMessage);
+                    }
+                    else {
+                        errorsList.Add(eeee.Message);
+                    }
                 }
             }
 

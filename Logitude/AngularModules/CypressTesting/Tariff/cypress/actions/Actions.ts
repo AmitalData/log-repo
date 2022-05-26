@@ -307,6 +307,7 @@ export function CheckIfVersionApproved2() {
 }
 
 export function TariffApprove2() {
+    cy.get(TariffSelectors.SaveTariff).click({ force: true })
     DefineRequestPutTariff();
     cy.Click(BaseSelectors.GreenButton, TariffSelectors.ContainsApproveVersion);
     AssertPutTariff();
@@ -426,8 +427,8 @@ function FillFreightCostWizardFields(freightCostType: string, tariffDetails: Tar
 }
 
 function OpenNewSurchargeCostWizard(surchargeCostType: string) {
-    cy.Click(TariffSelectors.NewSurchargeCostToggleButton, null);
-    cy.Click(TariffSelectors.NewSurchargeCostToggleMenuButton, surchargeCostType);
+    cy.get(TariffSelectors.NewSurchargeCostButton).click({force:true})
+    cy.Click(TariffSelectors.NewSurchargeCostButton, surchargeCostType);
 }
 
 function FillSurchargeCostWizardFields(tariffDetails: TariffDetails) {
@@ -608,7 +609,7 @@ function DefineRequestPostUploadExcelFile() {
 }
 
 function AssertPutTariff() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutTariff, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.PutTariff,200);
 }
 
 function AssertPostUpdateTariff() {
