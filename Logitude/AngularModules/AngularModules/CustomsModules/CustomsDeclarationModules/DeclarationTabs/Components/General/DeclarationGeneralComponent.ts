@@ -1481,7 +1481,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
     ChangeTransportMode() {
-        if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode)) {
+        if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode) && this.EntityPM.Direction!="E") {
             this.customsHouseTypeExtendedPMService.GetHouseTypewithAdditional(this.DeclarationOfficeCode).subscribe((result: ServiceResponse) => {
                 if (!AppTool.IsNullOrEmpty(result.Result)) {
 
