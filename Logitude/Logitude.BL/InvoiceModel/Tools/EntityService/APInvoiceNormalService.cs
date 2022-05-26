@@ -163,6 +163,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             APInvoiceHelper helper = new APInvoiceHelper();
             helper.APInvoiceQuickbooksValidating(entityPM, setApproved, initializer.IsNewEntity, initializer.Context, initializer.CommonContext);
+            entityAutomationService.RunAutomation();
             APInvoiceMapping.MapEntity(entityPM, invoice, initializer.IsNewEntity);
             initializer.Repository.Add(invoice);
             initializer.Repository.SubmitChanges();
@@ -188,8 +189,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.RunStoredProcedures();
             }
+            entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
 
-            entityAutomationService.RunAutomation();
 
         }
 

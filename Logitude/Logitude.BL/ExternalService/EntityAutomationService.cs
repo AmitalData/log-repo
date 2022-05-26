@@ -28,6 +28,7 @@ namespace Logitude.BL.ExternalService
         private object oldEntityPM = null;
         private string entityId = string.Empty;
         private EntityAutomationArgs entityAutomationArgs = null;
+        private MainEntityChangeService mainEntityChangeService = null;
         public EntityAutomationService(EntityAutomationArgs args)
         {
             this.entityPM = args.EntityPM;
@@ -54,10 +55,17 @@ namespace Logitude.BL.ExternalService
         {
             string entityChangeFieldXml = automationType == "OnCreate" ? "" : GetEntityChangeFieldXml();
 
-            var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() {EntityPM = entityPM, OldEntityPM= oldEntityPM , ProcessType = automationType, EntityChangeFieldXml = entityChangeFieldXml  , ObjectTableName = objectTableName , EntityId = this.entityId, Tenant = tenant, StartDate = DateTime.Now , OtherObjectTableName = entityAutomationArgs.OtherObjectTableName, ExternalEntity = entityAutomationArgs.ExternalEntity });
+            mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() {EntityPM = entityPM, OldEntityPM= oldEntityPM , ProcessType = automationType, EntityChangeFieldXml = entityChangeFieldXml  , ObjectTableName = objectTableName , EntityId = this.entityId, Tenant = tenant, StartDate = DateTime.Now , OtherObjectTableName = entityAutomationArgs.OtherObjectTableName, ExternalEntity = entityAutomationArgs.ExternalEntity  , DontExecuteAutomationThatDependencyOnLastEntityUpdate = automationType == "OnCreate"  ? true:false});
             mainEntityChangeService.AddEntityChange();
 
         }
+
+        public void RunAutomationThatDependencyOnLastEntityUpdate()
+        {
+            if (!mainEntityChangeService.CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate()) return;
+            mainEntityChangeService.ExecuteAutomationThatDependencyOnLastEntityUpdate(entityPM);
+        }
+
 
         private List<ObjectFieldPM> GetObjectFieldsUsedInAutomation()
         {
