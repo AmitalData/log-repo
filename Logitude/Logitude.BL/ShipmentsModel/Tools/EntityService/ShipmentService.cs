@@ -306,6 +306,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeIsHTSMissingField();
                 this.ComputeHasUnassignedField();
 
+                RunAutomation("OnCreate");
+
                 ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 this.ComputeETAAndETDHouseFields();
@@ -356,13 +358,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 BuildImportersQueue();
                 RunStoredProcedures();
                 BuildAgentSharedManifest();
-                RunAutomation("OnCreate");
 
                 SendAutomaticallyOceanOnsightsRequest();
                 if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
                 {
                     AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
                 }
+                RunAutomationThatDependencyOnLastEntityUpdate();
+
 
                 scope.Complete();
 
@@ -611,15 +614,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             foreach (MainEntityChangeService mainEntityChangeService in mainEntityChangeServices)
             {
-                if (mainEntityChangeService.CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate())
-                {
-                    ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentQuery, mainEntityChangeService);
-                }
+                ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentQuery, mainEntityChangeService);
             }
         }
 
         private void ExecuteAutomationThatDependencyOnLastEntityUpdate(ShipmentQuery shipmentQuery, MainEntityChangeService mainEntityChangeService)
         {
+            if (!mainEntityChangeService.CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate()) return;
             var shipmentPM = !mainEntityChangeService.IsChild ? entityPM : ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM);
             List<TraceEventPM> shipmentTraceEventPMs = shipmentPM.EventList;
             shipmentQuery.MapEventsListForAPI(shipmentPM);
@@ -2512,12 +2513,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 MapMainCarriageLegsForAutomation(); //temp Solution
                 GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
                 object externalEntity = (entityPM.ShipmentLevelCode != "H" && entityMasterData != null) ? this.entityPM : null;
+              
                 if (type == "OnCreate")
                 {
                     bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(tableName, "OnCreate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
-                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName });
+                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName , DontExecuteAutomationThatDependencyOnLastEntityUpdate  = true});
                         mainEntityChangeService.AddEntityChange();
                         mainEntityChangeServices.Add(mainEntityChangeService);
                     }

@@ -139,7 +139,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
             entityAutomationService.RunAutomation();
-
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
             this.invoiceRepository.Add(invoice);
             this.invoiceRepository.SubmitChanges();
@@ -148,6 +147,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.RunStoredProcedures();
 
             this.CreateAPInvoiceMessage();
+            entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
+
         }
 
         public void Update(bool mapComposition = false)

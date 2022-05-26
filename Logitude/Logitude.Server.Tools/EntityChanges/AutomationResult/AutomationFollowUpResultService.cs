@@ -16,15 +16,20 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
    public class AutomationFollowUpResultService: GeneralAutomationResultService , IAutomationResultService
     {
-        public bool DependencyOnLastEntityUpdate { get { return false; } }
+
+
         public string ResultCode { get { return "FOLLOWUP"; } }
+        public bool DependencyOnLastEntityUpdate { get { return (processType == "OnCreate") ? true : false; } }
 
-        public AutomationFollowUpResultService()
+        private string processType = string.Empty;
+        public AutomationFollowUpResultService(string processType)
         {
+            this.processType = processType;
         }
-
         public void Run(AutomationResultArgs automationResultArgs)
         {
+
+
             List<Automation> followUpautomationsList = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode || d.ResultCode == "DOCOUTFOLLOWUP" || d.ResultCode == "DOCINFOLLOWUP").ToList();
 
             if (followUpautomationsList.Count > 0)

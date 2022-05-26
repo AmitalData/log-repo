@@ -160,10 +160,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setVoided = entityPM.SetVoided;
 
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
-            entityAutomationService.RunAutomation();
 
             APInvoiceHelper helper = new APInvoiceHelper();
             helper.APInvoiceQuickbooksValidating(entityPM, setApproved, initializer.IsNewEntity, initializer.Context, initializer.CommonContext);
+            entityAutomationService.RunAutomation();
             APInvoiceMapping.MapEntity(entityPM, invoice, initializer.IsNewEntity);
             initializer.Repository.Add(invoice);
             initializer.Repository.SubmitChanges();
@@ -189,6 +189,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.RunStoredProcedures();
             }
+            entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
+
+
         }
 
         List<APInvoiceLinePM> UnexpectedPayablesInvoiceLines_ForAPI = new List<APInvoiceLinePM>();

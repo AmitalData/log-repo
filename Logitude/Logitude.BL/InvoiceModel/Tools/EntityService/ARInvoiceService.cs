@@ -301,7 +301,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             SetSatStatus();
 
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , OldEntityPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant , EntityId = entityPM.Id});
-            entityAutomationService.RunAutomation();
 
             if (!entityPM.IsConsolidationInvoice)
             {
@@ -309,6 +308,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             SetPrintNotesForInterestInvoice(entityPM);
+            entityAutomationService.RunAutomation();
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
@@ -331,6 +331,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
+
+            entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
+
         }
 
         private void InitializeSalesmanField()
