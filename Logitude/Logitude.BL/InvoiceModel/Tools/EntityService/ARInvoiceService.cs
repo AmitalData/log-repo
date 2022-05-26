@@ -4222,7 +4222,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void OnResendToSAT()
         {
             if (!entityPM.ResendToSAT) return;
-            if (string.IsNullOrEmpty(invoice.TransmissionError)) return;
+            if (!AllowResendToSAT()) return;
 
             const string voidInvoiceStatusCode = "VD";
             if (invoice.StatusCode == voidInvoiceStatusCode && IsSendInvoiceSATCancellation(true))
@@ -4234,6 +4234,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
             }
         }
+
+        private bool AllowResendToSAT()
+        {
+            const string cancelWithErrorOperationCode = "01";
+            if (invoice.SATCancelReasonCode == cancelWithErrorOperationCode)
+            {
+                return !string.IsNullOrEmpty(this.entityPM.RelatedInvoice);
+            }
+
+            return !string.IsNullOrEmpty(invoice.TransmissionError);
+        }
+
         private void UpdatePaymentsNumbers()
         {
             if (this.isUpdatingPayments)

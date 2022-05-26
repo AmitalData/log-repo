@@ -62,7 +62,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
             }
 
-            if (entityPM.ResendToSAT || entityPM.SATTransferStatusCode == sATSolvedManualStatusCode)
+            if (entityPM.ResendToSAT || entityPM.SetVoided || entityPM.SATTransferStatusCode == sATSolvedManualStatusCode)
             {
                 entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
             }
