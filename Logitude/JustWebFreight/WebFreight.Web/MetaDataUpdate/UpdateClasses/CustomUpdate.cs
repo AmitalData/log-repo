@@ -18006,6 +18006,16 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             customsDocumentUploadRepository.SubmitChanges();
         }
 
+        public void FillStatusFieldTypeTable()
+        {
+            var repo = new StatusFieldTypeRepository(0);
+            var dic = repo.GetAll().ToDictionary<StatusFieldType, string, StatusFieldType>(rec => rec.Code, a => a);
+            this.FillCloseTable<
+                                Logitude.Customs.Data.EntityPOCOs.StatusFieldType,
+                                Logitude.Customs.BL.ClosedTable.StatusFieldTypeDetails,
+                                Logitude.Customs.Data.Repsitories.StatusFieldTypeRepository>(repo, dic);
+        }
+
         public void FillPendingErrorPlaceTable()
         {
             PendingErrorPlaceRepository pendingErrorPlaceRepository = new PendingErrorPlaceRepository(0);

@@ -420,6 +420,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationStatusMap());
+	
             modelBuilder.Configurations.Add(new DeclarationStatusTypeMap());
 	
             modelBuilder.Configurations.Add(new DeclarationTaxMap());
@@ -467,6 +469,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ExportReferenceMap());
 	
             modelBuilder.Configurations.Add(new ExportStorageMap());
+	
+            modelBuilder.Configurations.Add(new ExternalFieldMappingMap());
 	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
 	
@@ -701,6 +705,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new SpecializationTypeMap());
 	
             modelBuilder.Configurations.Add(new SplitOrMergeReasonMap());
+	
+            modelBuilder.Configurations.Add(new StatusFieldTypeMap());
 	
             modelBuilder.Configurations.Add(new StorageMessageTypeMap());
 	
@@ -2389,6 +2395,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<DeclarationStatus> DeclarationStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<DeclarationStatusType> DeclarationStatusTypes 
 	 {
 	      get; set;
@@ -2528,6 +2540,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ExportStorage> ExportStorages 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExternalFieldMapping> ExternalFieldMappings 
 	 {
 	      get; set;
 	 
@@ -3230,6 +3248,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SplitOrMergeReason> SplitOrMergeReasons 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<StatusFieldType> StatusFieldTypes 
 	 {
 	      get; set;
 	 

@@ -167,7 +167,6 @@
     <None Include="DBScripts\Pre\20210726_CustomPartnerFTPSDropIndex.sxml" />
     <None Include="DBScripts\Pre\20210929_AddMoveTypes.sxml" />
     <None Include="DBScripts\Pre\20211125_UpdateIsMultiCustomer.sxml" />
-
     <None Include="DBScripts\Pre\20220221_AddIdColumn2.sxml" />
 
    
@@ -345,6 +344,7 @@
     <None Include="DBTables\DeclarationPending.dxml" />
     <None Include="DBTables\DeclarationReferantData.dxml" />
     <None Include="DBTables\DeclarationStatementType.dxml" />
+    <None Include="DBTables\DeclarationStatus.dxml" />
     <None Include="DBTables\DeclarationStatusType.dxml" />
     <None Include="DBTables\DeclarationTax.dxml" />
     <None Include="DBTables\Deficit.dxml" />
@@ -369,6 +369,7 @@
     <None Include="DBTables\ExportLogisticPermitAction.dxml" />
     <None Include="DBTables\ExportReference.dxml" />
     <None Include="DBTables\ExportStorage.dxml" />
+    <None Include="DBTables\ExternalFieldMapping.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
     <None Include="DBTables\FclLclCode.dxml" />
@@ -482,6 +483,7 @@
     <None Include="DBTables\SpecialActionDescriptionType.dxml" />
     <None Include="DBTables\SpecializationType.dxml" />
     <None Include="DBTables\SplitOrMergeReason.dxml" />
+    <None Include="DBTables\StatusFieldType.dxml" />
     <None Include="DBTables\StorageMessageType.dxml" />
     <None Include="DBTables\StorageStatus.dxml" />
     <None Include="DBTables\SubCountry.dxml" />
@@ -549,7 +551,9 @@
     <None Include="EntityFiles\DeclarationCasualDetails.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\DeclarationStatus.lxml" />
     <None Include="EntityFiles\ExportStorage.lxml" />
+    <None Include="EntityFiles\ExternalFieldMapping.lxml" />
     <None Include="EntityFiles\PhysicalCheckSearchResultType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
@@ -572,6 +576,7 @@
     <None Include="EntityFiles\ExportReference.lxml" />
     <None Include="EntityFiles\ExportStorge.lxml" />
     <None Include="EntityFiles\CustomsDocumentUpload.lxml" />
+    <None Include="EntityFiles\StatusFieldType.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />
     <None Include="EntityFiles\HandingCode.lxml" />
     <None Include="EntityFiles\NDMessageActionCode.lxml" />

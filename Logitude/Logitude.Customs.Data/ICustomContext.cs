@@ -193,6 +193,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeclarationPending> DeclarationPendings { get; }
 		 IDbSet<DeclarationReferantData> DeclarationReferantDatas { get; }
 		 IDbSet<DeclarationStatementType> DeclarationStatementTypes { get; }
+		 IDbSet<DeclarationStatus> DeclarationStatuses { get; }
 		 IDbSet<DeclarationStatusType> DeclarationStatusTypes { get; }
 		 IDbSet<DeclarationTax> DeclarationTaxes { get; }
 		 IDbSet<Deficit> Deficits { get; }
@@ -217,6 +218,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ExportLogisticPermitAction> ExportLogisticPermitActions { get; }
 		 IDbSet<ExportReference> ExportReferences { get; }
 		 IDbSet<ExportStorage> ExportStorages { get; }
+		 IDbSet<ExternalFieldMapping> ExternalFieldMappings { get; }
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FclLclCode> FclLclCodes { get; }
@@ -334,6 +336,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<SpecialActionDescriptionType> SpecialActionDescriptionTypes { get; }
 		 IDbSet<SpecializationType> SpecializationTypes { get; }
 		 IDbSet<SplitOrMergeReason> SplitOrMergeReasons { get; }
+		 IDbSet<StatusFieldType> StatusFieldTypes { get; }
 		 IDbSet<StorageMessageType> StorageMessageTypes { get; }
 		 IDbSet<StorageStatus> StorageStatuses { get; }
 		 IDbSet<StuffingSiteType> StuffingSiteTypes { get; }
