@@ -596,6 +596,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "PF4,Profact 4.0", 
                 Description = "Add Profact Version 4.0 to SAT Interfaces", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CP4", 
+                Name = "SAT New Cancellation process", 
+                SearchFields = "CP4,SAT New Cancellation process", 
+                Description = "Activate SAT New Cancellation process", 
+			});
 			
             return all;
        }
