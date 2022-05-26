@@ -643,6 +643,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AmitalSSOAngular2.html" />
     <Content Include="css\asp.css" />
     <Content Include="css\fonts\DejaVu\LICENSE.txt" />
     <Content Include="css\fonts\glyphs\KendoUIGlyphs.svg" />
