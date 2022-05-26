@@ -602,31 +602,6 @@ namespace CommunicationWorkerRole
                 }
             }
 
-
-            //string sentByUser = string.IsNullOrEmpty(currentLog.CreatedByUser.Contact.EnglishName) ? "Simplgo User" : currentLog.CreatedByUser.Contact.EnglishName;
-            string sentByUser = "";
-            if (currentLog != null)
-            {
-                if (currentLog.CreatedByUser != null)
-                {
-                    if (currentLog.CreatedByUser.Contact != null)
-                    {
-                        if (!string.IsNullOrEmpty(currentLog.CreatedByUser.Contact.EnglishName))
-                        {
-                            sentByUser = currentLog.CreatedByUser.Contact.EnglishName;
-                        }
-                    }
-                }
-            }
-            if (!string.IsNullOrEmpty(currentLog.From))
-            {
-                if (currentLog.From.Contains("no-reply"))
-                {
-                    sentByUser = "";
-                }
-            }
-
-
             CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
 
             if (!ValidateAttachmenstSize(attachmentsList))
@@ -739,7 +714,6 @@ namespace CommunicationWorkerRole
                 IsBodyHtml = true,
                 Tenant = currentLog.Tenant,
                 Body = htmlTemplate.ToString(),
-                SentByUser = sentByUser,
                 Subject = currentLog.Subject,
                 Retries = currentLog.Retries,
             };
@@ -748,23 +722,15 @@ namespace CommunicationWorkerRole
 
             if (!string.IsNullOrEmpty(currentLog.ReplyToList) && !string.IsNullOrWhiteSpace(currentLog.ReplyToList))
             {
-
                 string[] replyToList = currentLog.ReplyToList.Split(';');
                 foreach (string replyto in replyToList)
                 {
                     parameters.ReplyToList.Add(replyto);
                 }
-
-
             }
 
-            string contactName = "";
 
-            if (!string.IsNullOrEmpty(parameters.From) && parameters.From.Contains('@'))
-            {
-                ContactRepository contactRepository = new ContactRepository(currentLog.Tenant);
-                contactName = contactRepository.GetConactNameByemail(parameters.From, currentLog.Tenant);
-            }
+            parameters.SentByUser = GetSentByUserName(currentLog, parameters);
 
             if (parameters.ReplyToList != null && parameters.ReplyToList.Count > 0)
             {
@@ -772,11 +738,6 @@ namespace CommunicationWorkerRole
                 {
                     parameters.From = parameters.From.Split('@')[0] + "@" + parameters.ReplyToList[0].Split('@')[1];
                 }
-            }
-
-            if (!string.IsNullOrEmpty(contactName))
-            {
-                parameters.SentByUser = contactName;
             }
 
             parameters.CommunicationLogId = currentLog.Id;
@@ -787,7 +748,7 @@ namespace CommunicationWorkerRole
             // After sent successfully, change status to done 
 
             EmailProvider provider = EmailingHelper.GetEmailProvider(parameters.Tenant, parameters.Retries, parameters.IsProviderNumberSpecified, parameters.ProviderNumber);
- 
+
             if (provider != null && provider.SupportsEmailDelivery)
             {
                 currentLog.CommunicationStatusTypeCode = "C";
@@ -803,7 +764,22 @@ namespace CommunicationWorkerRole
             commLogrepository.Update(currentLog);
             commLogrepository.SubmitChanges();
         }
-         
+
+        private string GetSentByUserName(CommunicationLog currentLog, EmailParameters emailParameters)
+        {
+            string sentByUser = (currentLog?.CreatedByUser?.Contact?.EnglishName) ?? "";
+            if (!string.IsNullOrEmpty(currentLog.From) && currentLog.From.Contains("no-reply")) sentByUser = "";
+
+
+            if (string.IsNullOrEmpty(emailParameters.From) || !emailParameters.From.Contains('@')) return sentByUser;
+            ContactRepository contactRepository = new ContactRepository(currentLog.Tenant);
+            string contactMe = contactRepository.GetConactNameByemail(emailParameters.From, currentLog.Tenant);
+            if (contactMe == null && currentLog.From == "info@logitudeworld.com" && LogitudeSettings.DeploymentStage == "Simplog") 
+                contactMe = contactRepository.GetConactNameByemail(emailParameters.From, LogitudeSettings.LogitudeCRMTenantNumber);
+
+            return string.IsNullOrEmpty(contactMe) ? sentByUser : contactMe;
+        }
+
         private bool ValidateAttachmenstSize(List<CommunicationAttachment> attachmentsList)
         {
             double? attachementsSize = GetBytesAttachmentSize(attachmentsList); 
