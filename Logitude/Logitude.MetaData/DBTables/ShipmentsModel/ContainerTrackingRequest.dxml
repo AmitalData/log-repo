@@ -87,4 +87,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsSimulate"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>
