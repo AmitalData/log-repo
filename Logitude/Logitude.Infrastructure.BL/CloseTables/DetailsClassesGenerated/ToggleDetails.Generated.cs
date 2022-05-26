@@ -668,6 +668,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "BSH,Shipment BI Report Scheduler", 
                 Description = "Shipment BI Report Scheduler", 
 			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CP4", 
+                Name = "SAT New Cancellation process", 
+                SearchFields = "CP4,SAT New Cancellation process", 
+                Description = "Activate SAT New Cancellation process", 
+			});
 			
             return all;
        }

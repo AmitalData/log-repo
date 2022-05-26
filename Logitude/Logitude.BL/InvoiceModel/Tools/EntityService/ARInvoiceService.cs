@@ -524,7 +524,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-            if (IsSendInvoiceSATCancellation())
+            if (IsSendInvoiceSATCancellation(false))
             {
                 this.sATInterfaceHelper.HandleInvoiceSATCancellation(entityPM, invoice);
             }
@@ -674,14 +674,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.AfterServiceFinished();
         }
 
-        private bool IsSendInvoiceSATCancellation()
+        private bool IsSendInvoiceSATCancellation(bool discardStatus)
         {
             const string cancelWithErrorOperationCode = "01";
             if (this.entityPM.SATCancelReasonCode == cancelWithErrorOperationCode && string.IsNullOrEmpty(this.entityPM.RelatedInvoice))
             {
                 return false;
             }
-            return this.entityPM.SetVoided;
+
+            return discardStatus ? true : this.entityPM.SetVoided;
         }
 
         private void ARInvoiceStockNumber()
@@ -4226,7 +4227,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (string.IsNullOrEmpty(invoice.TransmissionError)) return;
 
             const string voidInvoiceStatusCode = "VD";
-            if (invoice.StatusCode == voidInvoiceStatusCode && IsSendInvoiceSATCancellation())
+            if (invoice.StatusCode == voidInvoiceStatusCode && IsSendInvoiceSATCancellation(true))
             {
                 this.sATInterfaceHelper.HandleInvoiceSATCancellation(entityPM, invoice);
             }

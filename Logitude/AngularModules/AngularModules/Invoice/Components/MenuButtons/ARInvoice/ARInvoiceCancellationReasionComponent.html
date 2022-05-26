@@ -12,6 +12,7 @@
                     <td style="width: 250px;">
                         <ComboBox (SelectedItemChanged)="SelectdSATCancelReason = $event"
                                   [SelectedItem]="SelectdSATCancelReason" [ItemsSource]="SATCancelReasons"
+                                  [AdditionalTitleBinding]="'Code'"
                                   [Binding]="'Name'">
                         </ComboBox>
                     </td>
