@@ -791,7 +791,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private static bool IsCanceledInvoiceFromSAT(ARInvoice relatedInvoice)
         {
-            return relatedInvoice != null && relatedInvoice.StatusCode == SATData.VoidedInvoiceStatusCode && (relatedInvoice.SATTransferStatusCode == SATData.CanceledSATTransferStatusCode || relatedInvoice.SATTransferStatusCode == SATData.TransferedSATTransferStatusCode);
+            const string cancelWithErrorOperationCode = "01";
+            return relatedInvoice != null && relatedInvoice.StatusCode == SATData.VoidedInvoiceStatusCode && (relatedInvoice.SATTransferStatusCode == SATData.CanceledSATTransferStatusCode || relatedInvoice.SATTransferStatusCode == SATData.TransferedSATTransferStatusCode || (relatedInvoice.SATTransferStatusCode == SATData.NotTransferedSATTransferStatusCode && relatedInvoice.SATCancelReasonCode == cancelWithErrorOperationCode));
         }
 
         private List<ARInvoice> GetShipmentInvoicesByEntityIdAndARInvoiceId()
