@@ -39,7 +39,7 @@ namespace CommunicationWorkerRole
             }
             catch (Exception exception)
             {
-                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Vizion Update Container Status start fail", null, null);
+                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "General Update Container Status start fail", null, null);
                 Thread.Sleep(10000);
             }
         }
@@ -51,8 +51,16 @@ namespace CommunicationWorkerRole
             {
                 return;
             }
-
-            new ContainerTrackingWRService(queueService, queueResponse).ExecuteQueue();
+            try
+            {
+                new ContainerTrackingWRService(queueService, queueResponse).ExecuteQueue();
+                queueService.Complete();
+            }
+            catch (Exception)
+            {
+                queueService.CompleteAsFailed();
+                throw;
+            }
         }
 
         private void ConnectClient()
@@ -60,18 +68,21 @@ namespace CommunicationWorkerRole
             try
             {
                 InitializeQueueService();
+                queueService.Complete();
 
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Vizion Update Container Status start fail", null, null);
+                queueService.CompleteAsFailed();
+
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "General Update Container Status start fail", null, null);
             }
         }
 
         private void InitializeQueueService()
         {
             queueService = new DbQueueService();
-            queueService.InitializeQueue("VizionUpdateContainerStatus", 0);
+            queueService.InitializeQueue("GeneralUpdateContainerStatus", 0);
         }
     }
 }

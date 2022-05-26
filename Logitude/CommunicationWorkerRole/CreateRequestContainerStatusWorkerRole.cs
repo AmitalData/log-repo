@@ -36,9 +36,11 @@ namespace CommunicationWorkerRole
             {
                 InitializeQueueService();
                 ExecuteQueue();
+                queueService.Complete();
             }
             catch (Exception exception)
             {
+                queueService.CompleteAsFailed();
                 ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "General Request Update Container Status start fail", null, null);
                 Thread.Sleep(10000);
             }
@@ -52,7 +54,8 @@ namespace CommunicationWorkerRole
                 return;
             }
 
-            new ContainerTrackingWRService(queueService, queueResponse).ExecuteQueue();
+            new RequestContainerStatusService(queueService, queueResponse).ExecuteQueue();
+
         }
 
         private void ConnectClient()

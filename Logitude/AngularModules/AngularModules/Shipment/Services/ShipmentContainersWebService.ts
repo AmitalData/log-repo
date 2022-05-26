@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import { GeneralContainerStatusSimulatorArgs } from 'Shipment/DataContract/GeneralContainerStatusSimulatorArgs';
+import { UnsubscribeArgs } from 'Shipment/DataContract/UnsubscribeArgs';
 
 @Injectable()
 
@@ -37,6 +38,7 @@ export class ShipmentContainersWebService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    
 
     Simulate(entity: ShipmentContainerSimulator) {
         return defer(() => {
@@ -58,16 +60,20 @@ export class ShipmentContainersWebService {
 
     GeneralContainerSimulator(entity: GeneralContainerStatusSimulatorArgs) {
         return defer(() => {
-
-            var mappedEntity: ShipmentContainerSimulator = this.MapJsonToShipmentContainerSimulator(entity, false);
-
-            return this._httpClient.post(this._apiUrl+'/PostVisionContainerSimulator', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
-
-                var mappedResult: ShipmentContainerSimulator = this.MapJsonToShipmentContainerSimulator(myJsonResult, true, entity);
-
+            return this._httpClient.post(this._apiUrl+'/PostSimulateGeneralContainerStatus', JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myResponse = new ServiceResponse();
-                myResponse.Result = mappedResult;
+                myResponse.Result = res;
+                return myResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    ViziionUnsubscribe(args: UnsubscribeArgs) {
+        return defer(() => {
+            return this._httpClient.post(this._apiUrl+'/PostUnsubscribeFromVizion', JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myResponse = new ServiceResponse();
+                myResponse.Result = res;
                 return myResponse;
 
             }), catchError(ServiceHelper.HandleServiceError));

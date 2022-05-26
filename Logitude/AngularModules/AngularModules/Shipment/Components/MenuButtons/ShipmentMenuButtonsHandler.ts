@@ -25,6 +25,9 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConvertDirectionArgs } from './ShipmenDirectionConvertComponent';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
+import { ShipmentContainersWebService } from 'Shipment/Services/ShipmentContainersWebService';
+import { $ } from 'protractor';
+import { UnsubscribeArgs } from 'Shipment/DataContract/UnsubscribeArgs';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
@@ -506,6 +509,12 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             break;
                         }
 
+                    case "ViziionUnsubscribe":
+                        {
+                            this.ViziionUnsubscribe();
+                            break;
+                        }
+
                     default: {
                         this.isButtonClicked = false;
                         break;
@@ -513,6 +522,19 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 }
             }
         }
+    }
+    ViziionUnsubscribe() {
+        var shipmentContainersWebService = new ShipmentContainersWebService();
+        this.CurrentSession.StartBusyIndicator("Unsubscribe...");
+        var args:UnsubscribeArgs =  {
+            ContainerId:null,
+            ShipmentId:this.EntityPM.Id,
+            IsFromContainer:false,
+            SourceCode:'VZN'
+        }
+        shipmentContainersWebService.ViziionUnsubscribe(args).subscribe(e=>{
+            this.CurrentSession.StopBusyIndicator();
+        })
     }
 
     private SaveCompletedEvent: any = null;

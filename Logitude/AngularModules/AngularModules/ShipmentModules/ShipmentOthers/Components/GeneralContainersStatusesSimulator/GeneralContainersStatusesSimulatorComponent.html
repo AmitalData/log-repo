@@ -4,40 +4,23 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
-
-    <tr *ngIf="false" style="height: 1px;">
-        <td>
-            <table>
-                <tr>
-                    <td style="width: 1px;">
-                        <CheckBox [IsChecked]="UseAnalyzeQueueId" (Checked)="UseAnalyzeQueueId = $event" [Text]="'Use Analyze Queue Id'"></CheckBox>
-                    </td>
-
-                    <td style="width: 10px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width: 100px;">
-                        <input type="text" [(ngModel)]="AnalyzeQueueId" [disabled]="!UseAnalyzeQueueId" />
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-    <tr style="height: 5px;">
-        <td>
-            <div></div>
+    <tr>
+        <td style="height: 51px;">
+            <div style="display:flex">
+                <div style="width:100px;">Source:</div>
+                <div style="width:200px;">
+                    <LogLov [ObjectFieldName]="'sourceCode'" [ObjectTableName]="'ContainerTrackingProvider'"
+                        [DataContext]="DataContext" [LookUpTableName]="'ContainerTrackingProvider'">
+                    </LogLov>
+                </div>
+            </div>
         </td>
     </tr>
 
     <tr>
         <td>
-            <textarea [(ngModel)]="Data" [disabled]="UseAnalyzeQueueId"></textarea>
+            <div style="width:100px;">Response:</div>
+            <textarea [(ngModel)]="generalContainerStatusSimulatorArgs.Data"></textarea>
         </td>
     </tr>
 
@@ -66,4 +49,3 @@
         </td>
     </tr>
 </table>
-

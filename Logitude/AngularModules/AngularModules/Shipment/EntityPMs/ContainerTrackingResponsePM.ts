@@ -15,7 +15,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
-export class ContainerTrackingRequestPM {
+export class ContainerTrackingResponsePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -30,44 +30,14 @@ export class ContainerTrackingRequestPM {
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
-    private createDate: Date;
-    public get CreateDate() { return this.createDate; }
-    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
-       
-	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private provider: string;
-    public get Provider() { return this.provider; }
-    public set Provider(newValue: string) { if (this.provider != newValue) { this.provider = newValue; this.MarkAsDirty("Provider"); } }
-       
-	 
-    private containerNumber: string;
-    public get ContainerNumber() { return this.containerNumber; }
-    public set ContainerNumber(newValue: string) { if (this.containerNumber != newValue) { this.containerNumber = newValue; this.MarkAsDirty("ContainerNumber"); } }
-       
-	 
-    private master: string;
-    public get Master() { return this.master; }
-    public set Master(newValue: string) { if (this.master != newValue) { this.master = newValue; this.MarkAsDirty("Master"); } }
-       
-	 
-    private requestId: string;
-    public get RequestId() { return this.requestId; }
-    public set RequestId(newValue: string) { if (this.requestId != newValue) { this.requestId = newValue; this.MarkAsDirty("RequestId"); } }
-       
-	 
-    private containerId: string;
-    public get ContainerId() { return this.containerId; }
-    public set ContainerId(newValue: string) { if (this.containerId != newValue) { this.containerId = newValue; this.MarkAsDirty("ContainerId"); } }
-       
-	 
-    private shipmentId: string;
-    public get ShipmentId() { return this.shipmentId; }
-    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
+    private createDate: Date;
+    public get CreateDate() { return this.createDate; }
+    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
        
 	 
     private searchFields: string;
@@ -75,18 +45,18 @@ export class ContainerTrackingRequestPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private carrierCode: string;
-    public get CarrierCode() { return this.carrierCode; }
-    public set CarrierCode(newValue: string) { if (this.carrierCode != newValue) { this.carrierCode = newValue; this.MarkAsDirty("CarrierCode"); } }
+    private communicationLogId: string;
+    public get CommunicationLogId() { return this.communicationLogId; }
+    public set CommunicationLogId(newValue: string) { if (this.communicationLogId != newValue) { this.communicationLogId = newValue; this.MarkAsDirty("CommunicationLogId"); } }
        
 	 
-    private status: string;
-    public get Status() { return this.status; }
-    public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
+    private containerTrackingRequestId: string;
+    public get ContainerTrackingRequestId() { return this.containerTrackingRequestId; }
+    public set ContainerTrackingRequestId(newValue: string) { if (this.containerTrackingRequestId != newValue) { this.containerTrackingRequestId = newValue; this.MarkAsDirty("ContainerTrackingRequestId"); } }
        
 	 
 
-    public OldEntityPM: ContainerTrackingRequestPM;
+    public OldEntityPM: ContainerTrackingResponsePM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -97,12 +67,12 @@ export class ContainerTrackingRequestPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ContainerTrackingRequest");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ContainerTrackingResponse");
            
         }
 	 }
     }
-    private MyClone: ContainerTrackingRequestPM;
+    private MyClone: ContainerTrackingResponsePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

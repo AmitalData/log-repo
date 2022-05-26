@@ -71,12 +71,37 @@ namespace WebFreight.Web.Controllers.WebServices
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
                 GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService();
 
-                shipmentContainerSimulator = containerTrackingService.SimulateVizionApiContainerStatus(simulatorArgs);
+                containerTrackingService.GeneralSimulateContainerStatus(simulatorArgs);
 
-                return Request.CreateResponse(HttpStatusCode.OK, shipmentContainerSimulator);
+                return Request.CreateResponse(HttpStatusCode.OK, simulatorArgs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage PostUnsubscribeFromVizion(UnsubscribeArgs unsubscribeArgs)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
+                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService();
+
+                var result  = containerTrackingService.UnsubscribeFromVizion(unsubscribeArgs, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
