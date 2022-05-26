@@ -308,6 +308,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             SetPrintNotesForInterestInvoice(entityPM);
+            entityAutomationService.RunAutomation();
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
@@ -331,7 +332,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
 
-            entityAutomationService.RunAutomation();
+            entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
 
         }
 
