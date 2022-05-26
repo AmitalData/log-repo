@@ -2518,14 +2518,16 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             this.DestroyMe = false;
             //this.IsAdvancedSearchOpened = false;
             res.subscribe((aa: any) => {
+                const backFromEdid: any = { Data: aa.Result, rowIndex: $event.rowIndex, rowData: $event.rowData };
+
                 if (!AppTool.IsNullOrEmpty($event) && !AppTool.IsNullOrEmpty($event.BackFromEdit)) {
-                    $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
+                    $event.BackFromEdit.emit(backFromEdid);
                 } else {
                     if (AppTool.IsNullOrEmpty($event.rowIndex)) {
                         console.warn('$event.rowIndex is null' + aa.Result)
                     } else {
-                        if(this.MyLogGridComponent){this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });}
-                        if(this.MyLogGridComponentV2){this.MyLogGridComponentV2.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });}
+                        if(this.MyLogGridComponent){this.MyLogGridComponent.BackFromEditAction(backFromEdid);}
+                        if(this.MyLogGridComponentV2){this.MyLogGridComponentV2.BackFromEditAction(backFromEdid);}
                         
                     }
                     
