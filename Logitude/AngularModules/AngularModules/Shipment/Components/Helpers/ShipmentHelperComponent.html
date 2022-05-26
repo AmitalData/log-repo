@@ -40,7 +40,9 @@
         <td style="padding-right: 5px;" *ngIf="IsShipmentContainersVisible">
             <button class="Button" (click)="ContainersRequestStatusClicked()">Containers Request Status</button>
         </td>
-
+        <td style="padding-right: 5px;" *ngIf="IsGeneralSimulatorVisible">
+            <button class="Button" (click)="GeneralShipmentContainersSimulatorClicked()">General Container Statuses Simulator</button>
+        </td>
         <td *ngIf="IsAWBWizardButtonVisible">
             <button class="Button" (click)="AWBButtonClicked()">{{AWBWizardButtonLabel}}</button>
         </td>

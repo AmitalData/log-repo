@@ -43,4 +43,15 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public int retry_count { get; set; }
 
     }
+    public class VizionCarrier
+    {
+        public string scac { get; set; }
+        public string name { get; set; }
+        public string carrier_code { get; set; }
+    }
+    public class UnsubscribeResult
+    {
+        public string message { get; set; }
+
+    }
 }

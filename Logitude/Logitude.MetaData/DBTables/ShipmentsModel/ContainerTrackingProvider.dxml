@@ -52,7 +52,7 @@
     Type="varchar"
     Size="1000">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Id"
@@ -73,6 +73,4 @@
     ReferencedTable="ContainerStatusSources"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
-  <UniqueConstraint
-    Columns="Tenant,SourceCode" />
 </Table>

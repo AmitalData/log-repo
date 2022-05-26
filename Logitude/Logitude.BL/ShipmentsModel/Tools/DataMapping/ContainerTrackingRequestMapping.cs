@@ -22,13 +22,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             {
                 containerTrackingRequest.Id = containerTrackingRequestPM.Id;
                 containerTrackingRequest.Tenant = containerTrackingRequestPM.Tenant;
-                containerTrackingRequest.CreateDate = containerTrackingRequestPM.CreateDate;
+                containerTrackingRequest.CreateDate = DateTime.Now;
             }
             BuildSearchField(containerTrackingRequestPM, containerTrackingRequest);
             containerTrackingRequest.ContainerNumber = containerTrackingRequestPM.ContainerNumber;
             containerTrackingRequest.Master = containerTrackingRequestPM.Master;
             containerTrackingRequest.Provider = containerTrackingRequestPM.Provider;
             containerTrackingRequest.RequestId = containerTrackingRequestPM.RequestId;
+            containerTrackingRequest.ShipmentId = containerTrackingRequestPM.ShipmentId;
+            containerTrackingRequest.CarrierCode = containerTrackingRequestPM.CarrierCode;
+            containerTrackingRequest.Status = containerTrackingRequestPM.Status;
+            containerTrackingRequest.ContainerId = containerTrackingRequestPM.ContainerId;
             
 
         }

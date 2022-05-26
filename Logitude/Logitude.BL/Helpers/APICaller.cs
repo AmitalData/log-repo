@@ -11,7 +11,7 @@ namespace Logitude.BL.Helpers
 {
     public static class APICaller
     {
-        public static T CallApi<T>( string url, object o, Method m, string token = null)
+        public static T CallApi<T>(string url, object o, Method m, string token = null)
         {
 
             RestSharp.RestClient restClient = new RestSharp.RestClient();
@@ -19,8 +19,12 @@ namespace Logitude.BL.Helpers
             if (!string.IsNullOrEmpty(token))
             {
                 restRequest.AddHeader("Token", token);
+
             }
-            restRequest.AddJsonBody(o);
+
+            restRequest.AddHeader("workerrolename", "development");
+            if (o != null)
+                restRequest.AddJsonBody(o);
             var restResponse = restClient.ExecuteAsync<T>(restRequest).Result;
             if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.Accepted)
             {

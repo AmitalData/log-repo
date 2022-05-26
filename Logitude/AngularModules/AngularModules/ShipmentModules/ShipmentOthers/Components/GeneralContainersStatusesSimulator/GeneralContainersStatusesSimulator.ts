@@ -5,87 +5,55 @@ import { ShipmentContainersWebService, ShipmentContainerSimulator } from '../../
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { GeneralContainerStatusSimulatorArgs } from 'Shipment/DataContract/GeneralContainerStatusSimulatorArgs';
+import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 
 @Component({
 
     templateUrl: './GeneralContainersStatusesSimulatorComponent.html',
 })
 
-export class GeneralContainersStatusesSimulator {
+export class GeneralContainersStatusesSimulatorComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
+
     private CurrentSession = SessionLocator.SelectedSession;
-    private isFromContainer = false;
-    private shipmentId: string;
-    private containerNumber: string;
-    private carrierId: string;
-    public Data: string = null;
-
-
+    public generalContainerStatusSimulatorArgs: GeneralContainerStatusSimulatorArgs = <GeneralContainerStatusSimulatorArgs>{};
+    public sourceCode;
+    DataContext = this;
     constructor() {
-
+        super();
     }
 
     SetWindowArgs(args: any) {
         if (args) {
-            this.isFromContainer = args.IsFromContainer;
-            this.shipmentId = args.ShipmentId;
-            this.containerNumber = args.ContainerNumber;
-            this.carrierId = args.CarrierId;
+            this.generalContainerStatusSimulatorArgs = args;
         }
     }
 
 
-    
+
 
     CancelClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
     SimulateClicked() {
-        var errors: string[] = [];
-        this.ValidationErrorsList = errors;
-
         this.CurrentSession.StartBusyIndicator("Simulating...");
-
-        var simulatorArgs = new GeneralContainerStatusSimulatorArgs();
-        simulatorArgs.Data = this.Data;
-        simulatorArgs.IsFromContainer = this.isFromContainer;
-        simulatorArgs.ShipmentId = this.shipmentId;
-        simulatorArgs.ContainerNumber = this.containerNumber;
-        simulatorArgs.CarrierId = this.carrierId;
-
-
-        this.semulator(simulatorArgs)
-
-
-
-
-
-    }
-
-    semulator(simulatorArgs: GeneralContainerStatusSimulatorArgs) {
+        this.generalContainerStatusSimulatorArgs.ContainerStatusSourceCode = this.sourceCode
         var myService = new ShipmentContainersWebService();
-        myService.VisionContainerSimulator(simulatorArgs).subscribe((myResponse: ServiceResponse) => {
+        myService.GeneralContainerSimulator(this.generalContainerStatusSimulatorArgs).subscribe((myResponse: ServiceResponse) => {
 
             this.CurrentSession.StopBusyIndicator();
+            var messageWindow = new MessageWindow();
+            if (myResponse.Result.Success) {
+                this.ValidationErrorsList = [];
+                messageWindow.Show("Simulated Successfully");
+            }else{
+                this.ValidationErrorsList = myResponse.Result.Errors;
+            } 
 
-            if (myResponse.HasError) {
-                this.ValidationErrorsList = myResponse.ErrorsArray;
-            }
-
-            else {
-                var myResult: ShipmentContainerSimulator = myResponse.Result;
-
-                if (myResult.Success) {
-                    var messageWindow = new MessageWindow();
-                    messageWindow.Show("Simulated Successfully");
-                }
-
-                else {
-                    this.ValidationErrorsList = myResult.Errors;
-                }
-            }
         });
     }
+
+
 }
 

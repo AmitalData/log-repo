@@ -6,16 +6,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class ContainerTrackingRequestList {
+export class ContainerTrackingResponseList {
    		Id: string;
-		CreateDate: Date;
 		Tenant: number;
-		Provider: string;
-		ContainerNumber: string;
-		Master: string;
-		RequestId: string;
-		ContainerId: string;
-		ShipmentId: string;
+		CreateDate: Date;
 		SearchFields: string;
+		CommunicationLogId: string;
+		ContainerTrackingRequestId: string;
 	
 }

@@ -7,13 +7,14 @@
 //------------------------------------------------------------------------------
 
 export class ContainerTrackingProviderList {
-    Id: string;
-    Tenant: number;
-    SourceCode: string;
-    Name: string;
-    SearchFields: string;
-    CallbackURL: string;
-    APIKey: string;
-    ProviderURL: string;
-    LogitudeToken: string;
-}
+   		Id: string;
+		Tenant: number;
+		SourceCode: string;
+		Name: string;
+		SearchFields: string;
+		CallbackURL: string;
+		APIKey: string;
+		ProviderURL: string;
+		LogitudeToken: string;
+	
+}

@@ -15,7 +15,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
-export class ContainerTrackingProviderPM {
+export class ContainerTrackingResponsePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -35,14 +35,9 @@ export class ContainerTrackingProviderPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private sourceCode: string;
-    public get SourceCode() { return this.sourceCode; }
-    public set SourceCode(newValue: string) { if (this.sourceCode != newValue) { this.sourceCode = newValue; this.MarkAsDirty("SourceCode"); } }
-       
-	 
-    private name: string;
-    public get Name() { return this.name; }
-    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
+    private createDate: Date;
+    public get CreateDate() { return this.createDate; }
+    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
        
 	 
     private searchFields: string;
@@ -50,28 +45,18 @@ export class ContainerTrackingProviderPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private callbackURL: string;
-    public get CallbackURL() { return this.callbackURL; }
-    public set CallbackURL(newValue: string) { if (this.callbackURL != newValue) { this.callbackURL = newValue; this.MarkAsDirty("CallbackURL"); } }
+    private communicationLogId: string;
+    public get CommunicationLogId() { return this.communicationLogId; }
+    public set CommunicationLogId(newValue: string) { if (this.communicationLogId != newValue) { this.communicationLogId = newValue; this.MarkAsDirty("CommunicationLogId"); } }
        
 	 
-    private aPIKey: string;
-    public get APIKey() { return this.aPIKey; }
-    public set APIKey(newValue: string) { if (this.aPIKey != newValue) { this.aPIKey = newValue; this.MarkAsDirty("APIKey"); } }
-       
-	 
-    private providerURL: string;
-    public get ProviderURL() { return this.providerURL; }
-    public set ProviderURL(newValue: string) { if (this.providerURL != newValue) { this.providerURL = newValue; this.MarkAsDirty("ProviderURL"); } }
-       
-	 
-    private logitudeToken: string;
-    public get LogitudeToken() { return this.logitudeToken; }
-    public set LogitudeToken(newValue: string) { if (this.logitudeToken != newValue) { this.logitudeToken = newValue; this.MarkAsDirty("LogitudeToken"); } }
+    private containerTrackingRequestId: string;
+    public get ContainerTrackingRequestId() { return this.containerTrackingRequestId; }
+    public set ContainerTrackingRequestId(newValue: string) { if (this.containerTrackingRequestId != newValue) { this.containerTrackingRequestId = newValue; this.MarkAsDirty("ContainerTrackingRequestId"); } }
        
 	 
 
-    public OldEntityPM: ContainerTrackingProviderPM;
+    public OldEntityPM: ContainerTrackingResponsePM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -82,12 +67,12 @@ export class ContainerTrackingProviderPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ContainerTrackingProvider");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ContainerTrackingResponse");
            
         }
 	 }
     }
-    private MyClone: ContainerTrackingProviderPM;
+    private MyClone: ContainerTrackingResponsePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);
