@@ -94,6 +94,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         if (this.declarationPM.Direction == "E") {
             this.TypeCodeFilterItems = new ApiQueryFilters();
             this.TypeCodeFilterItems.addAdditionalFilter("Code", "160", null, null, "NotContains", false, false, false, "string", false, true);
+            this.TypeCodeFilterItems.addAdditionalFilter("Code", "104", null, null, "NotContains", false, false, false, "string", false, true);
 
             this.UCRList = new ObservableCollection([]);
             for (let item of this.InvoicePM.SupplierInvoiceUCRs) {
