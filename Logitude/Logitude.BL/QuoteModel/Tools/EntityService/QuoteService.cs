@@ -178,6 +178,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
 
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuotePM(), AutomationType = "OnCreate", ObjectTableName = "Quote", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
+            entityAutomationService.RunAutomation();
             QuoteMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
             entityRepository.Add(entityPoco);
@@ -191,8 +192,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             ObjectTableRepository objecttableRepository = new ObjectTableRepository(tenant);
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Quote", 0, true);
             ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "N", initializer.LoggedContactId);
-
-            entityAutomationService.RunAutomation();
+            entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
         }
 
         public class QuoteChangeTracking

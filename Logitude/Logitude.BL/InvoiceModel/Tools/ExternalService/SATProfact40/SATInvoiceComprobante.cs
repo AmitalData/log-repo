@@ -266,30 +266,50 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
 
             string billToCountryCode = GetBillToCountryCode();
+            bool isMexicoCountry = IsMexicoCountry(billToCountryCode);
 
             return new ComprobanteReceptor
             {
                 Nombre = !string.IsNullOrEmpty(billToCard.SATCustomerName) ? billToCard.SATCustomerName : billToCard.EnglishName,
-                RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode,
-                DomicilioFiscalReceptor = billToAddressZipCode,
-                Rfc = GetReceptorRfc(billToCountryCode),
-                UsoCFDI = GetReceptorUsoCFDI(),
+                RegimenFiscalReceptor = GetRegimenFiscalReceptor(isMexicoCountry),
+                DomicilioFiscalReceptor = GetDomicilioFiscalReceptor(billToAddressZipCode, isMexicoCountry),
+                Rfc = GetReceptorRfc(isMexicoCountry),
+                UsoCFDI = GetReceptorUsoCFDI(isMexicoCountry),
                 NumRegIdTrib = GetNumRegIdTrib(billToCountryCode),
                 ResidenciaFiscal = GetResidenciaFiscal(billToCountryCode),
                 ResidenciaFiscalSpecified = GetResidenciaFiscalSpecified(billToCountryCode)
             };
         }
 
-        private string GetReceptorRfc(string billToCountryCode)
+        private string GetRegimenFiscalReceptor(bool isMexicoCountry)
         {
-            if (IsMexicoCountry(billToCountryCode))
+            const string regimenFiscalReceptor616Code = "616";
+            if (!isMexicoCountry)
             {
-                return !string.IsNullOrEmpty(billToCard.VatNumber) ? billToCard.VatNumber : "AAA010101AAA";
+                return regimenFiscalReceptor616Code;
             }
-            else
+
+            return arInvoicePM.RegimenFiscalCode;
+        }
+
+        private string GetDomicilioFiscalReceptor(string billToAddressZipCode, bool isMexicoCountry)
+        {
+            if (!isMexicoCountry)
             {
-                return !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : "XEXX010101000";
+                return GetLugarExpedicion(GetBranchAddress(), currentTenant);
             }
+
+            return billToAddressZipCode;
+        }
+
+        private string GetReceptorRfc(bool isMexicoCountry)
+        {
+            if (!isMexicoCountry)
+            {
+                return SATData.OutSideMexicoRfc;
+            }
+
+            return !string.IsNullOrEmpty(billToCard.VatNumber) ? billToCard.VatNumber : "AAA010101AAA";
         }
 
         private string GetNumRegIdTrib(string billToCountryCode)
@@ -332,8 +352,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return countryCode == "MEX" || countryCode == "MX";
         }
 
-        private string GetReceptorUsoCFDI()
+        private string GetReceptorUsoCFDI(bool isMexicoCountry)
         {
+            const string usoCFDIS01Code = "S01";
+            if (!isMexicoCountry)
+            {
+                return usoCFDIS01Code;
+            }
+
             if (!string.IsNullOrEmpty(arInvoicePM.UsoCFDICode))
             {
                 return arInvoicePM.UsoCFDICode;
