@@ -13,6 +13,9 @@ namespace WebFreight.Web.ContainerTracking
         public VizionAnalyzer()
         {
 
+
+
+
         }
 
         public ContainerUpdatedFields Run()
