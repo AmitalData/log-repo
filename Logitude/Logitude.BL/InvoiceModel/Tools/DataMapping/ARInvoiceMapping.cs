@@ -62,10 +62,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
             }
 
-            if (entityPM.ResendToSAT || entityPM.SetVoided || entityPM.SATTransferStatusCode == sATSolvedManualStatusCode)
-            {
+            //if (entityPM.ResendToSAT || entityPM.SetVoided || entityPM.SATTransferStatusCode == sATSolvedManualStatusCode)
+            //{
                 entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
-            }
+            //}
 
             entity.ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate;
             entity.BranchId = entityPM.BranchId;
