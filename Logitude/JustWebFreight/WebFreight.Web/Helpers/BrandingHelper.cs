@@ -16,25 +16,30 @@ namespace WebFreight.Web.Helpers
         {
             BrandingData brandingData = new BrandingData();
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(domain);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetTenantBrandingDataByDomain(domain);
 
             if (tenantManagementPM == null)
             {
                 return null;
             }
-
-            brandingData = new BrandingData()
+            if (!tenantManagementPM.EnableBranding)
             {
-                Tenant = tenantManagementPM.Id,
-                MainColor = string.IsNullOrEmpty( tenantManagementPM.MainColor)? "#7F8181": tenantManagementPM.MainColor,
-                SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor) ? "#D21745" : tenantManagementPM.SecondaryColor,
-                BackgroundId = tenantManagementPM.BackgroundId,
-                BrowserIconId = tenantManagementPM.BrowserIconId,
-                ComapnylogoId = tenantManagementPM.ComapnylogoId,
-                InvertedLogoId = tenantManagementPM.InvertedLogoId,
-                CustomerURL = tenantManagementPM.CustomerURL,
-                ActivatePrivateSite = tenantManagementPM.ActivatePrivateSite,
-            };
+                brandingData.MainColor = string.IsNullOrEmpty(tenantManagementPM.MainColor) ? "#7F8181" : tenantManagementPM.MainColor;
+                brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor) ? "#D21745" : tenantManagementPM.SecondaryColor;
+                brandingData.Tenant = tenantManagementPM.Id;
+                brandingData.ComapnylogoId = tenantManagementPM.ComapnylogoId;
+                SetBrandingImagesBytes(brandingData);
+                return brandingData;
+            } 
+            brandingData.Tenant = tenantManagementPM.Id;
+            brandingData.MainColor = string.IsNullOrEmpty(tenantManagementPM.MainColor) ? "#7F8181" : tenantManagementPM.MainColor;
+            brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor) ? "#D21745" : tenantManagementPM.SecondaryColor;
+            brandingData.BackgroundId = tenantManagementPM.BackgroundId;
+            brandingData.BrowserIconId = tenantManagementPM.BrowserIconId;
+            brandingData.ComapnylogoId = tenantManagementPM.ComapnylogoId;
+            brandingData.InvertedLogoId = tenantManagementPM.InvertedLogoId;
+            brandingData.CustomerURL = tenantManagementPM.CustomerURL;
+            brandingData.ActivatePrivateSite = tenantManagementPM.ActivatePrivateSite;
 
             SetBrandingImagesBytes(brandingData);
             return brandingData;
