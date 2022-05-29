@@ -9993,6 +9993,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ConnectedPaymentsNumbers&quot;"
     ListPropertyPath="&quot;ConnectedPaymentsNumbers&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -10125,7 +10126,8 @@
         ObjectFieldName="&quot;IsGeneralInvoice&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10216,7 +10218,8 @@
         ObjectFieldName="&quot;DraftGeneralAPInvoices&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10307,7 +10310,8 @@
         ObjectFieldName="&quot;ApprovalGeneralAPInvoices&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10465,7 +10469,8 @@
         PredefinedValue="&quot;WA&quot;"
         ObjectFieldName="&quot;StatusCode&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10540,7 +10545,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;UnpaidInvoices&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10607,7 +10613,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;NotReadyInvoices&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10664,7 +10671,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;MarkedAsBlockedForTransfer&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10731,7 +10739,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;ErrorInTransferInvoices&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -10817,7 +10826,8 @@
         ObjectFieldName="&quot;TransferStatusCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -11295,7 +11305,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;APInvoice&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Tenant&quot;"
         FieldName="&quot;Tenant&quot;"
@@ -12029,6 +12040,21 @@
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;CreatedByUser&quot;"
+        FieldName="&quot;CreatedByUserId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;User&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"

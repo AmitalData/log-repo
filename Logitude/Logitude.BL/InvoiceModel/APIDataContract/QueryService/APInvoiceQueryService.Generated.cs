@@ -206,7 +206,16 @@ using Simplog.Data.InvoiceModel;
 				}
 
 							 
-				   temp.TotalVATOnly = MyEntityPM.TotalVATOnly;					
+				   temp.TotalVATOnly = MyEntityPM.TotalVATOnly; 
+
+			  
+				   if(MyEntityPM.CreatedByUserId != null)
+				   {
+					   UserQueryService UserService10 = new UserQueryService(Tenant);
+					   					   temp.CreatedByUser = UserService10.GetUserById(MyEntityPM.CreatedByUserId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -708,11 +717,11 @@ using Simplog.Data.InvoiceModel;
 
 					if(MyEntity.InvoiceLines != null && MyEntity.InvoiceLines.Count > 0)
 					{
-						APInvoiceLineQueryService APInvoiceLineService10 = new APInvoiceLineQueryService(Tenant);
+						APInvoiceLineQueryService APInvoiceLineService11 = new APInvoiceLineQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMappingAndValidatin(MyEntity.InvoiceLines,Tenant,ComputingPartnerName,IsUpdate);
+							temp.InvoiceLines = APInvoiceLineService11.APInvoiceLineDataMappingAndValidatin(MyEntity.InvoiceLines,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -756,11 +765,11 @@ using Simplog.Data.InvoiceModel;
 
 					if(MyEntity.TotalVATs != null && MyEntity.TotalVATs.Count > 0)
 					{
-						APInvoiceTotalVATQueryService APInvoiceTotalVATService10 = new APInvoiceTotalVATQueryService(Tenant);
+						APInvoiceTotalVATQueryService APInvoiceTotalVATService11 = new APInvoiceTotalVATQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMappingAndValidatin(MyEntity.TotalVATs,Tenant,ComputingPartnerName,IsUpdate);
+							temp.TotalVATs = APInvoiceTotalVATService11.APInvoiceTotalVATDataMappingAndValidatin(MyEntity.TotalVATs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -776,6 +785,27 @@ using Simplog.Data.InvoiceModel;
 
 										}  
 
+					
+					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
+					if(MyEntity.CreatedByUser != null)
+					{
+						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myCreatedByUserPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.CreatedByUserId = myCreatedByUserPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
 										   
 					return temp;
 		    }
