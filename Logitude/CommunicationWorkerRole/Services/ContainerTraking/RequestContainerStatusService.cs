@@ -38,7 +38,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
         private CommunicationLog CommunicationLog;
         private CommunicationLogRepository CommunicationLogRep;
         private int Tenant;
-        private GeneralContainerStatusSimulatorArgs ContainerStatusSimulatorArgs;
+        private GeneralContainerTrackingArgs ContainerStatusSimulatorArgs;
         private Shipment Shipment;
         private ShipmentMasterData ShipmentMasterData;
         private IShipmentsContext ShipmentContext;
@@ -77,7 +77,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
             return communicationLog;
         }
 
-        private GeneralContainerStatusSimulatorArgs GetContainerStatusSimulatorArgsFromDecuments()
+        private GeneralContainerTrackingArgs GetContainerStatusSimulatorArgsFromDecuments()
         {
             Logitude.Server.Tools.BlobFileInfo fileInfo = CreateBlobFileInfo();
 
@@ -88,7 +88,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
                 throw new Exception("GeneralContainerStatusSimulatorArgs document file not found!");
             }
             var datatext = Encoding.UTF8.GetString(datainByte);
-            var args = JsonConvert.DeserializeObject<GeneralContainerStatusSimulatorArgs>(datatext);
+            var args = JsonConvert.DeserializeObject<GeneralContainerTrackingArgs>(datatext);
             return args;
 
 

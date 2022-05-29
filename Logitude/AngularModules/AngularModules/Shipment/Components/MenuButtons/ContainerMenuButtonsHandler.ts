@@ -11,7 +11,7 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { MenuButtonsTemplateArgs } from './MenuButtonsTemplateComponent';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ShipmentContainersWebService } from 'Shipment/Services/ShipmentContainersWebService';
-import { UnsubscribeArgs } from 'Shipment/DataContract/UnsubscribeArgs';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 export class ContainerMenuButtonsHandler implements OnDestroy {
@@ -169,12 +169,12 @@ export class ContainerMenuButtonsHandler implements OnDestroy {
     ViziionUnsubscribe() {
         var shipmentContainersWebService = new ShipmentContainersWebService();
         this.CurrentSession.StartBusyIndicator("Unsubscribe...");
-        var args:UnsubscribeArgs =  {
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
             ContainerId:this.EntityPM.Id,
             ShipmentId:null,
             IsFromContainer:true,
-            IsSimulate:false,
-            SourceCode:'VZN'
+            IsSimulator:false,
+            SourceCode:'VZN',
         }
         shipmentContainersWebService.ViziionUnsubscribe(args).subscribe(e=>{
             this.CurrentSession.StopBusyIndicator();

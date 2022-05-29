@@ -27,7 +27,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             Source = context.ContainerTrackingProviders.Where(e => e.SourceCode == ContainerStatusSourceValues.Vizion).FirstOrDefault();
         }
 
-        public VizionReferenceResponce SendRequest(GeneralContainerStatusSimulatorArgs containerStatusSimulatorArgs, Shipment shipment)
+        public VizionReferenceResponce SendRequest(GeneralContainerTrackingArgs containerStatusSimulatorArgs, Shipment shipment)
         {
             if (containerStatusSimulatorArgs.IsFromContainer)
             {
@@ -52,7 +52,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             return result;
         }
 
-        private ReferenceViaCarrierCodeRequest CreateReferenceViaCarrierCodeRequest(GeneralContainerStatusSimulatorArgs containerStatusSimulatorArgs, Shipment shipment)
+        private ReferenceViaCarrierCodeRequest CreateReferenceViaCarrierCodeRequest(GeneralContainerTrackingArgs containerStatusSimulatorArgs, Shipment shipment)
         {
             return new ReferenceViaCarrierCodeRequest()
             {
@@ -71,7 +71,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             };
         }
 
-        private VizionReferenceResponce CallCreateReferenceViaCarrierCodeApi(GeneralContainerStatusSimulatorArgs containerStatusSimulatorArgs, Shipment shipment)
+        private VizionReferenceResponce CallCreateReferenceViaCarrierCodeApi(GeneralContainerTrackingArgs containerStatusSimulatorArgs, Shipment shipment)
         {
             var referenceViaCarrierCodeRequest = CreateReferenceViaCarrierCodeRequest(containerStatusSimulatorArgs, shipment);
             var result = APICaller.CallApi<VizionReferenceResponce>(Source.ProviderURL+ "/references", referenceViaCarrierCodeRequest, Method.POST);

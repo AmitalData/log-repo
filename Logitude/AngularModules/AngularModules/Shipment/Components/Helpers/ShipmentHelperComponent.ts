@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList'; 
 import { DocumentTypePMExtendedService } from 'Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
-import { GeneralContainerStatusSimulatorArgs } from 'Shipment/DataContract/GeneralContainerStatusSimulatorArgs';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 
 @Component({    
     templateUrl: './ShipmentHelperComponent.html',
@@ -136,7 +136,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     }
     GeneralShipmentContainersSimulatorClicked() {
         var logWindow = new LogitudeWindow();
-        var args:GeneralContainerStatusSimulatorArgs = {
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs>{
             ContainerStatusSourceCode: null,
             IsFromContainer: false,
             ShipmentId: this.EntityPM.Id,

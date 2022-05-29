@@ -67,7 +67,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage PostSimulateGeneralContainerStatus(GeneralContainerStatusSimulatorArgs simulatorArgs)
+        public HttpResponseMessage PostSimulateGeneralContainerStatus(GeneralContainerTrackingArgs simulatorArgs)
         {
             try
             {
@@ -76,9 +76,8 @@ namespace WebFreight.Web.Controllers.WebServices
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
-                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService();
-
-                containerTrackingService.GeneralSimulateContainerStatus(simulatorArgs);
+                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(simulatorArgs);
+                containerTrackingService.GeneralSimulateContainerStatus();
 
                 return Request.CreateResponse(HttpStatusCode.OK, simulatorArgs);
             }
@@ -88,7 +87,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage PostUnsubscribeFromVizion(UnsubscribeArgs unsubscribeArgs)
+        public HttpResponseMessage PostUnsubscribeFromVizion(GeneralContainerTrackingArgs unsubscribeArgs)
         {
             try
             {
@@ -96,10 +95,10 @@ namespace WebFreight.Web.Controllers.WebServices
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                unsubscribeArgs.Tenant = tenant;
                 ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
-                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService();
-
-                var result  = containerTrackingService.UnsubscribeFromVizion(unsubscribeArgs, tenant);
+                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(unsubscribeArgs);
+                var result  = containerTrackingService.UnsubscribeFromVizion();
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }

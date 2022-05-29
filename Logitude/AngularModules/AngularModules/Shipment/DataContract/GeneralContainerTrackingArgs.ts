@@ -1,4 +1,4 @@
-export class GeneralContainerStatusSimulatorArgs {
+export class GeneralContainerTrackingArgs {
     public Data: string;
     public Tenant: number;
     public IsFromContainer: boolean;
@@ -7,4 +7,8 @@ export class GeneralContainerStatusSimulatorArgs {
     public ContainerId: string;
     public ContainerNumber: string;
     public ContainerStatusSourceCode: string;
+    public SourceCode: string;
+    public Errors: string[];
+    public Success: boolean;
+    public Master: string;
 }

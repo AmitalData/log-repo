@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.APIDataContract
 {
-    public class GeneralContainerStatusSimulatorArgs
+    public class GeneralContainerTrackingArgs
     {
         public string Data { get; set; }
         public bool IsFromContainer { get; set; }
@@ -21,8 +21,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public bool Success { get; set; }
         public List<string> Errors { get; set; }
         public string Master { get; internal set; }
+        public string SourceCode { get; set; }
 
-        public GeneralContainerStatusSimulatorArgs()
+        public GeneralContainerTrackingArgs()
         {
             Success = true;
             Errors = new List<string>();
@@ -30,7 +31,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
 
     }
 
-    public class UnsubscribeArgs
+    public class UnsubscribeArgs00
     {
         public bool IsFromContainer { get; set; }
         public string ContainerId { get; set; }

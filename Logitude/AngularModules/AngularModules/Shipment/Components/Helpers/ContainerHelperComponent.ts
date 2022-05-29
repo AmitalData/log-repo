@@ -8,7 +8,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { GeneralContainerStatusSimulatorArgs } from 'Shipment/DataContract/GeneralContainerStatusSimulatorArgs';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 
 @Component({
 
@@ -78,7 +78,7 @@ export class ContainerHelperComponent implements OnDestroy {
     }
     GeneralShipmentContainersSimulatorClicked() {
         var logWindow = new LogitudeWindow();
-        var args:GeneralContainerStatusSimulatorArgs = {
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
             ContainerId : this.EntityPM.Id,
             ContainerNumber : this.EntityPM.ContainerNumber,
             ContainerStatusSourceCode:null,

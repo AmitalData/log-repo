@@ -7610,6 +7610,7 @@
     <TypeScriptCompile Include="Shipment\Components\UnassigedData\UpdateUnassigedDataComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\AMANACComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainersFUsComponent.ts" />
+    <TypeScriptCompile Include="Shipment\DataContract\GeneralContainerTrackingArgs.ts" />
     <TypeScriptCompile Include="Shipment\DataContract\LogboxShipmentExportExcelArgs.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerFollowUpList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerList.ts" />
