@@ -206,6 +206,7 @@
     <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MentionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UnassignedEntity.cs" />
@@ -632,6 +633,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\RuleUpdateHistory.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerProcedure.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
+    <Compile Include="InfrastructureModel\Mapping\ChildEntitiesCustomFieldMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldCategoriesMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWCategoriesMap.cs" />
@@ -647,6 +649,7 @@
     <Compile Include="InfrastructureModel\Mapping\RuleUpdateHistoryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SchedulerProcedureMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
+    <Compile Include="InfrastructureModel\Repositories\ChildEntitiesCustomFieldRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWObjectFieldCategoriesRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryColumnRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryFilterRepository.cs" />

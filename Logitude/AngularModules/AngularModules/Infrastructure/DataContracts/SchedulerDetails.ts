@@ -32,6 +32,8 @@ export class ReportSchedulerDetails {
     public CreatedByUserId: string;
     public Recepients: ReportSchedulerRecepients;
     public ReportTemplateId: string;
+    public BIReportEntityId: string;
+    public DWQueryId: string;
     public ReportTemplateType: string;
     public ReportFilterItems: Array<QueryFilterItem>;
     public MainCustomerFieldName: string;

@@ -368,6 +368,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new WorkerRoleNameMap());
             modelBuilder.Configurations.Add(new QueryExportExecutionLogMap());
+            modelBuilder.Configurations.Add(new ChildEntitiesCustomFieldMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
@@ -835,6 +836,12 @@ namespace Simplog.Data.InfrastructureModel
         //}
 
         public IDbSet<SchedulerProcedure> SchedulerProcedures
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<ChildEntitiesCustomField> ChildEntitiesCustomFields
         {
             get;
             set;

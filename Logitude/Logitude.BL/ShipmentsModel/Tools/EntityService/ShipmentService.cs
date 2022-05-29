@@ -7,6 +7,7 @@ using Logitude.BL.ExternalService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -76,6 +77,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private FollowUpRepository followUpRepository;
         private ShipmentOrderPackageRepository shipmentOrderPackageRepository;
         private ShipmentPackageRepository shipmentPackageRepository;
+        private ChildEntitiesCustomFieldRepository childEntitiesCustomFieldRepository;
         private InsideShipmentPackageRepository insideShipmentPackageRepository;
         private ShipmentAWBPrintOnlyRepository shipmentAWBPrintOnlyRepository;
         private ShipmentReceivableRepository shipmentReceivableRepository;
@@ -126,6 +128,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.entityMasterData = initializer.EntityMasterData;
             this.shipmentMasterDataRepository = initializer.MasterDataRepository;
             this.shipmentPackageRepository = initializer.ShipmentPackageRepository;
+            this.childEntitiesCustomFieldRepository = initializer.childEntitiesCustomFieldRepository;
             this.shipmentContainerStatusRepository = initializer.ShipmentContainerStatusRepository;
             this.insideShipmentPackageRepository = initializer.InsideShipmentPackageRepository;
             this.shipmentPackageItemRepository = initializer.ShipmentPackageItemRepository;
@@ -4692,6 +4695,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentMapping.MapPcakge(itemPM, itemPoco, true, this.loggedTenant);
             shipmentPackageRepository.Add(itemPoco);
 
+            ChildEntitiesCustomField childEntitiesCustomField = ChildEntitiesCustomFieldMapping.MapPMTOPoco(itemPM, "ShipmentPackage");
+            //Add Or Update
+
             if (!string.IsNullOrEmpty(itemPM.OriginalShipmentPackageId))
             {
                 ShipmentPackage originPackage = shipmentPackageRepository.GetSingleShipmentPackage(itemPM.OriginalShipmentPackageId, tenant);
@@ -4750,6 +4756,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             ShipmentMapping.MapPcakge(itemPM, itemPoco, false, this.loggedTenant);
             shipmentPackageRepository.Update(itemPoco);
+
+            ChildEntitiesCustomField childEntitiesCustomField = ChildEntitiesCustomFieldMapping.MapPMTOPoco(itemPM, "ShipmentPackage");
+            //Add Or Update
 
             if (!string.IsNullOrEmpty(itemPoco.OriginalShipmentPackageId))
             {
@@ -5577,6 +5586,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             ShipmentPackage itemPoco = shipmentPackageRepository.GetSingleShipmentPackage(myPackage.Id, tenant);
                             ShipmentMapping.MapPcakge(myPackage, itemPoco, false, this.loggedTenant);
                             shipmentPackageRepository.Update(itemPoco);
+                            
+                            ChildEntitiesCustomField childEntitiesCustomField = ChildEntitiesCustomFieldMapping.MapPMTOPoco(myPackage, "ShipmentPackage");
+                            //Add Or Update
                         }
                         #endregion
                     }
@@ -5601,6 +5613,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 ShipmentPackage itemPoco = shipmentPackageRepository.GetSingleShipmentPackage(myPackage.Id, tenant);
                                 ShipmentMapping.MapPcakge(myPackage, itemPoco, false, this.loggedTenant);
                                 shipmentPackageRepository.Update(itemPoco);
+
+                                ChildEntitiesCustomField childEntitiesCustomField = ChildEntitiesCustomFieldMapping.MapPMTOPoco(myPackage, "ShipmentPacakge");
+                                //Add Or Update
                             }
                         }
                     }

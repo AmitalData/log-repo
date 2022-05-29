@@ -212,6 +212,7 @@
     <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202205160324_UpdateContainerStatusWorkerRole.sxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
+    <None Include="DBTables\InfrastructureModel\ChildEntitiesCustomField.dxml" />
     <None Include="DBTables\QuoteModel\ValidByType.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingProviders.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
@@ -219,6 +220,7 @@
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\ChildEntitiesCustomField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerTrackingResponses.lxml" />

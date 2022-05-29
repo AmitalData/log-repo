@@ -1990,6 +1990,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportFolderPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportsTypePM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\ChildEntitiesCustomFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectTablePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryColumnPM.ts" />
@@ -7585,6 +7586,7 @@
     <TypeScriptCompile Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Helpers\ContainerHelperComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
+    <TypeScriptCompile Include="Shipment\Components\ListTemplates\AvailableForSchedulingCellDisplayListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\RemoveTasksButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\EditShipmentButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\ApprovePaymentButtonListTemplate.ts" />

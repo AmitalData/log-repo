@@ -12689,6 +12689,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageETDTime = f.MainCarriageETD,
                                MainCarriageETATime = f.MainCarriageETA,
                                PackagesQuantityAndType = f.PackagesQuantityAndType,
+                               ConnectedtoMaster = f.ShipmentLevelCode == "H" && f.ShipmentMasterDataId != null,
                            };
             return myResult;
         }
@@ -13090,6 +13091,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageETDTime = f.MainCarriageETD,
                     MainCarriageETATime = f.MainCarriageETA,
                     PackagesQuantityAndType = f.PackagesQuantityAndType,
+                    ConnectedtoMaster = f.ShipmentLevelCode == "H" && f.ShipmentMasterDataId != null,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -13379,6 +13381,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DestinationWarehouseName = f.DestinationWarehouseName,
                     HasUnassignedData = f.HasUnassignedData,
                     OperationalStatusName = f.OperationalStatusName,
+                    ConnectedtoMaster = f.ShipmentLevelCode == "H" && f.ShipmentMasterDataId != null,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

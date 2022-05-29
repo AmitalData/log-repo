@@ -41,7 +41,7 @@
 
              <div style="width:300px;display:inline-block;height:152px;margin-top:-20px;margin-left:265px;vertical-align:central">
             
-                  <img id="Img1" width="299" style="margin-top:0px;vertical-align:top;margin-bottom:10px;margin-left:0px;height: 100px" src="images/LoginScreen/header.jpg" />
+                  <img id="Img1" width="299" style="margin-top:0px;vertical-align:top;margin-bottom:10px;margin-left:0px;height: 100px" src="images/ApplicationLogo/LogitudeLogo.jpg" />
                 
                  <div style="height:30px"></div>
                 <div  style="font-family:Lucida Sans Unicode;visibility:collapse; font-weight:bold;height:23px; color:#0094FF"> <p style="display:inline; font-size:16px;"> Sign up  </p> </div> 

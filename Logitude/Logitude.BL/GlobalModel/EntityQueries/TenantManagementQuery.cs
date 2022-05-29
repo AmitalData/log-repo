@@ -56,6 +56,32 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return TenantManagement;
         }
 
+        public TenantManagementPM GetTenantBrandingDataByDomain(string domain)
+        {
+
+            domain = TrimDomainByRegex(domain);
+            TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
+                                                   where a.CustomerURL == domain && a.Id != 0 && a.GlobalTenant.IsActive
+                                                   select new TenantManagementPM()
+                                                   {
+                                                       Id = a.Id,
+                                                       MainColor = a.MainColor,
+                                                       SecondaryColor = a.SecondaryColor,
+                                                       BackgroundId = a.BackgroundId,
+                                                       ShipmentHeaderImageId = a.ShipmentHeaderImageId,
+                                                       ComapnylogoId = a.ComapnylogoId,
+                                                       InvertedLogoId = a.InvertedLogoId,
+                                                       BrowserIconId = a.BrowserIconId,
+                                                       CustomerURL = a.CustomerURL,
+                                                       ActivatePrivateSite = a.ActivatePrivateSite,
+                                                       ContactEmail = a.ContactEmail,
+                                                       EnableBranding = a.EnableBranding
+                                                   }).FirstOrDefault();
+
+
+            return TenantManagement;
+        }
+
         public int GetTenantSinglePMByDomain(string domain)
         {
 

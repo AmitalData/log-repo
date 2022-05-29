@@ -54,6 +54,10 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string FactTableName  { get; set; }
        [DataMember]
        public string LastRunId  { get; set; }
+       [DataMember]
+       public bool AvailableForScheduling  { get; set; }
+       [DataMember]
+       public bool IsScheduler  { get; set; }
    }
 
 }

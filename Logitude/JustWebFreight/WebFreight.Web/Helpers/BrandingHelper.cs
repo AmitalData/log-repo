@@ -1,5 +1,9 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
+using System;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.WebServices;
 
@@ -12,38 +16,57 @@ namespace WebFreight.Web.Helpers
         {
             BrandingData brandingData = new BrandingData();
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(domain);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetTenantBrandingDataByDomain(domain);
 
             if (tenantManagementPM == null)
             {
                 return null;
             }
-
-            brandingData = new BrandingData()
+            if (!tenantManagementPM.EnableBranding)
             {
-                Tenant = tenantManagementPM.Id,
-                MainColor = tenantManagementPM.MainColor,
-                SecondaryColor = tenantManagementPM.SecondaryColor,
-                BackgroundId = tenantManagementPM.BackgroundId,
-                BrowserIconId = tenantManagementPM.BrowserIconId,
-                ComapnylogoId = tenantManagementPM.ComapnylogoId,
-                InvertedLogoId = tenantManagementPM.InvertedLogoId,
-                CustomerURL = tenantManagementPM.CustomerURL,
-                ActivatePrivateSite = tenantManagementPM.ActivatePrivateSite,
-            };
+                brandingData.MainColor = string.IsNullOrEmpty(tenantManagementPM.MainColor) ? "#7F8181" : tenantManagementPM.MainColor;
+                brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor) ? "#D21745" : tenantManagementPM.SecondaryColor;
+                brandingData.Tenant = tenantManagementPM.Id;
+                brandingData.ComapnylogoId = tenantManagementPM.ComapnylogoId;
+                SetBrandingImagesBytes(brandingData);
+                return brandingData;
+            } 
+            brandingData.Tenant = tenantManagementPM.Id;
+            brandingData.MainColor = string.IsNullOrEmpty(tenantManagementPM.MainColor) ? "#7F8181" : tenantManagementPM.MainColor;
+            brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor) ? "#D21745" : tenantManagementPM.SecondaryColor;
+            brandingData.BackgroundId = tenantManagementPM.BackgroundId;
+            brandingData.BrowserIconId = tenantManagementPM.BrowserIconId;
+            brandingData.ComapnylogoId = tenantManagementPM.ComapnylogoId;
+            brandingData.InvertedLogoId = tenantManagementPM.InvertedLogoId;
+            brandingData.CustomerURL = tenantManagementPM.CustomerURL;
+            brandingData.ActivatePrivateSite = tenantManagementPM.ActivatePrivateSite;
 
             SetBrandingImagesBytes(brandingData);
-
-
             return brandingData;
         }
 
         private void SetBrandingImagesBytes(BrandingData brandingData)
         {
             brandingData.BackgroundBytes = SetImageBase64(brandingData.BackgroundId);
-            brandingData.ComapnylogoBytes = SetImageBase64(brandingData.ComapnylogoId);
+            var comapnylogoBytes = SetImageBase64(brandingData.ComapnylogoId);
+            brandingData.ComapnylogoBytes = comapnylogoBytes == null ? this.GetTenantLogo(brandingData.Tenant) : comapnylogoBytes;
             brandingData.InvertedLogoBytes = SetImageBase64(brandingData.InvertedLogoId);
             brandingData.BrowserIconBytes = SetImageBase64(brandingData.BrowserIconId);
+        }
+
+        private byte[] GetTenantLogo(int tenant)
+        {
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = "logo" + tenant,
+                FolderName = "logos",
+                Extension = "jpg",
+                Tenant = tenant,
+            };
+
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            byte[] datainByte = storageservice.Read(fileInfo);
+            return datainByte;
         }
 
         private byte[] SetImageBase64(string backgroundId)

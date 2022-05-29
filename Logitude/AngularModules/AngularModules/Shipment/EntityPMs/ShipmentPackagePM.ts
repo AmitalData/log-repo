@@ -18,13 +18,15 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPM';
 
 
-export class ShipmentPackagePM {
+export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
       constructor(_entityParentPM: any) {
+          super();
           this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
@@ -706,7 +708,7 @@ export class ShipmentPackagePM {
     public get ContainerStatusSourceCode() { return this.containerStatusSourceCode; }
     public set ContainerStatusSourceCode(newValue: string) { if (this.containerStatusSourceCode != newValue) { this.containerStatusSourceCode = newValue; this.MarkAsDirty("ContainerStatusSourceCode"); } }
 
-    public OldEntityPM: ShipmentPackagePM;
+    public OldEntityPM: ChildEntitiesCustomFieldPM;
 
     private entityParentPM: any;
     public get EntityParentPM() { return this.entityParentPM; }
@@ -731,7 +733,7 @@ export class ShipmentPackagePM {
             }
         }
     }
-    private MyClone: ShipmentPackagePM;
+    private MyClone: ChildEntitiesCustomFieldPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

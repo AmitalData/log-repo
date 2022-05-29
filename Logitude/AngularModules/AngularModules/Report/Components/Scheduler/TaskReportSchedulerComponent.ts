@@ -26,6 +26,8 @@ export class TaskReportSchedulerComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     public ReportGroupList: ReportGroupList;
     public ReportList: ReportList;
+    public BIReportEntity: any;
+    public IsBIReport: boolean;
     filterAgrs: ApiQueryFilters;
     SchedulerType: string = "Report";
     IsEditReportSchedulerEventAlreadyExist: boolean = false;
@@ -60,6 +62,10 @@ export class TaskReportSchedulerComponent implements OnInit {
     SetWindowArgs(windowArgs) {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
+        this.BIReportEntity = windowArgs.BIReportEntity;
+        if (this.BIReportEntity) {
+            this.IsBIReport = true;
+        }
     }
 
     public SelectedRow: any;
@@ -76,8 +82,12 @@ export class TaskReportSchedulerComponent implements OnInit {
         newItem.TriggerType = "O"; 
         newItem.Type = this.SchedulerType;
         var y;
-
-        this.AddReportScheduler(newItem); 
+        if (this.BIReportEntity) {
+            this.AddEditReportScheduler(newItem);
+        }
+        else {
+            this.AddReportScheduler(newItem);
+        }
      
     }
 
@@ -93,34 +103,39 @@ export class TaskReportSchedulerComponent implements OnInit {
     }
 
     AddEditReportScheduler(newItem: TasksSchedulerPM) {
-         
-            var windowArgs: any = {};
-            windowArgs.ReportGroupList = this.ReportGroupList;
-            windowArgs.ReportList = this.ReportList;
 
-            var logWindow = new LogitudeWindow();
-            logWindow.Height = 820;
-            logWindow.Width = 1250;
-            logWindow.Title = this.ReportList.Name + " Scheduler Details";
-            logWindow.DataContext = new TaskReportSchedulerItemClass(newItem, this, true);
-            logWindow.WindowArgs = windowArgs;
-            logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
-            logWindow.WindowClosed.subscribe(closed => {
-                this.IsEditReportSchedulerEventAlreadyExist = false;
-            }); 
+        var windowArgs: any = {};
+        windowArgs.ReportGroupList = this.ReportGroupList;
+        windowArgs.ReportList = this.ReportList;
+        windowArgs.BIReportEntity = this.BIReportEntity;
+        var logWindow = new LogitudeWindow();
+        logWindow.Height = 820;
+        logWindow.Width = 1250;
+        logWindow.Title = this.GetAddEditReportSchedulerWindowTitle();
+        logWindow.DataContext = new TaskReportSchedulerItemClass(newItem, this, true);
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
+        logWindow.WindowClosed.subscribe(closed => {
+            this.IsEditReportSchedulerEventAlreadyExist = false;
+        });
+    }
+
+    GetAddEditReportSchedulerWindowTitle() {
+        return (this.IsBIReport ? this.BIReportEntity['Name'] : this.ReportList.Name) + " Scheduler Details";
     }
 
     EditTaskClicked(DataContext) {
         var windowArgs: any = {};
         windowArgs.ReportGroupList = this.ReportGroupList;
         windowArgs.ReportList = this.ReportList;
+        windowArgs.BIReportEntity = this.BIReportEntity;
         windowArgs.TasksSchedulerId = DataContext.EntityPM.Id;
 
         var logWindow = new LogitudeWindow();
         DataContext.fatherComponent = this;
         logWindow.DataContext = DataContext;
         logWindow.WindowArgs = windowArgs;
-        logWindow.Title = this.ReportList.Name + " Scheduler Details";
+        logWindow.Title = this.GetAddEditReportSchedulerWindowTitle();;
         logWindow.Height = 820;
         logWindow.Width = 1250;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
@@ -283,7 +298,12 @@ export class TaskReportSchedulerComponent implements OnInit {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "Type");
         }
         filters.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
-        filters.addAdditionalFilter("EntityId", this.ReportList.Id, null, null, "Equals", true, false, false, "String");
+        let entityId = this.IsBIReport ? this.BIReportEntity['Id'] : this.ReportList.Id;
+        filters.addAdditionalFilter("EntityId", entityId, null, null, "Equals", true, false, false, "String");
+
+
+        let taskProcedureCode = this.IsBIReport ? "BIReportSchedulerTask" : "ReportSchedulerTask";
+        filters.addAdditionalFilter("ProcedureCode", taskProcedureCode, null, null, "Equals", true, false, false, "String");
 
         
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
