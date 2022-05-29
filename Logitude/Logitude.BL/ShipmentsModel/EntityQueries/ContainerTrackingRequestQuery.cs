@@ -52,11 +52,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
         }
-        public ContainerTrackingRequestPM GetActiveRequest(UnsubscribeArgs unsubscribeArgs, int tenant)
+        public ContainerTrackingRequestPM GetActiveRequest(GeneralContainerTrackingArgs unsubscribeArgs, int tenant)
         {
             var containerTrackingRequestQuery = repository.context.ContainerTrackingRequests.Where(e => e.Tenant == tenant
                 && e.Status == ContainerTrackingRequestStatus.Active
-                && e.IsSimulate == unsubscribeArgs.IsSimulate
+                && e.IsSimulate == unsubscribeArgs.IsSimulator
                 && e.Provider == unsubscribeArgs.SourceCode);
             if (unsubscribeArgs.IsFromContainer)
             {

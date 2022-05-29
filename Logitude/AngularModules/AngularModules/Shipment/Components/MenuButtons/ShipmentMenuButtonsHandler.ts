@@ -27,7 +27,7 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 import { ShipmentContainersWebService } from 'Shipment/Services/ShipmentContainersWebService';
 import { $ } from 'protractor';
-import { UnsubscribeArgs } from 'Shipment/DataContract/UnsubscribeArgs';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
@@ -533,11 +533,11 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
     ViziionUnsubscribe() {
         var shipmentContainersWebService = new ShipmentContainersWebService();
         this.CurrentSession.StartBusyIndicator("Unsubscribe...");
-        var args:UnsubscribeArgs =  {
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs>  {
             ContainerId:null,
             ShipmentId:this.EntityPM.Id,
             IsFromContainer:false,
-            IsSimulate:false,
+            IsSimulator:false,
             SourceCode:'VZN'
         }
         shipmentContainersWebService.ViziionUnsubscribe(args).subscribe(e=>{
