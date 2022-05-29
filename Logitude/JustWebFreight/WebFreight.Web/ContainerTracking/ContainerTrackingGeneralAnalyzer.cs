@@ -1,6 +1,9 @@
-﻿using Logitude.BL.Helpers;
+﻿using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Server.Tools;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -11,6 +14,8 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace WebFreight.Web.ContainerTracking
@@ -22,6 +27,7 @@ namespace WebFreight.Web.ContainerTracking
         private CommunicationLogRepository communicationLogRepository;
         private int tenant_Zero;
         private ArrayOfQueueTask externalTasksQueues;
+        private VisionContainerStatus visionContainerStatus;
         private int? logitudeTenant = null;
         private string trackingSource;
         private ContainerUpdatedFields containerUpdatedFields;
@@ -47,10 +53,8 @@ namespace WebFreight.Web.ContainerTracking
         private void Deserialize()
         {
             try
-            {
-                MemoryStream memorystream = new MemoryStream(analyzeQueue.MessageBody);
-                XmlSerializer serializer = new XmlSerializer(typeof(ArrayOfQueueTask));
-                externalTasksQueues = (ArrayOfQueueTask)serializer.Deserialize(memorystream);
+            {                
+                this.AnalyzeMessageBody();               
             }
 
             catch (Exception ex)
@@ -65,24 +69,39 @@ namespace WebFreight.Web.ContainerTracking
 
             if (externalTasksQueues != null)
             {
-                this.AnalyzeData(analyzeQueue.From);
+                this.AnalyzeData();
             }
         }
-        private void AnalyzeData(string from)
+        private void AnalyzeMessageBody()
+        {
+            if (trackingSource == ContainerStatusSourceValues.OceanInsights)
+            {
+                MemoryStream memorystream = new MemoryStream(analyzeQueue.MessageBody);
+                XmlSerializer serializer = new XmlSerializer(typeof(ArrayOfQueueTask));
+                externalTasksQueues = (ArrayOfQueueTask)serializer.Deserialize(memorystream);
+            }
+
+            else if (trackingSource == ContainerStatusSourceValues.Vizion)
+            {
+                var datatext = Encoding.UTF8.GetString(analyzeQueue.MessageBody);
+                visionContainerStatus = JsonConvert.DeserializeObject<VisionContainerStatus>(datatext);
+            }
+        }
+        private void AnalyzeData()
         {
             try
             {
                 this.ConnectAnalyzeQueueToTenantAndEntity();
 
-                if (trackingSource == "Ocean Insight")
+                if (trackingSource == ContainerStatusSourceValues.OceanInsights)
                 {
                     OceanInsightAnalyzer oceanInsightAnalyzer = new OceanInsightAnalyzer(externalTasksQueues);
                     containerUpdatedFields = oceanInsightAnalyzer.Run();
                 }
 
-                else if (trackingSource == "Vizion")
+                else if (trackingSource == ContainerStatusSourceValues.Vizion)
                 {
-                    VizionAnalyzer vizionAnalyzer = new VizionAnalyzer();
+                    VizionAnalyzer vizionAnalyzer = new VizionAnalyzer(visionContainerStatus);
                     containerUpdatedFields = vizionAnalyzer.Run();
                 }
 
@@ -114,7 +133,23 @@ namespace WebFreight.Web.ContainerTracking
         private void StartUpdating()
         {
             ContainerTrackingUpdateManager manager = new ContainerTrackingUpdateManager(containerUpdatedFields);
-            manager.Update();
+
+            if (trackingSource == ContainerStatusSourceValues.OceanInsights)
+            {                
+                manager.Update();
+            }
+
+            else if (trackingSource == ContainerStatusSourceValues.Vizion)
+            {
+                var allContainerTrackingRequests = containerUpdatedFields.ShipmentContext.ContainerTrackingRequests.Where(e => e.RequestId == visionContainerStatus.reference_id && e.Status == ContainerTrackingRequestStatus.Active).ToList();
+                foreach (var containerTrackingRequest in allContainerTrackingRequests)
+                {
+                    // comm log
+                    //get container (containerId)
+                    // get shipment (shipment id)
+                    manager.Update();
+                }
+            }            
         }
         private void DoneAnalyzeQueue()
         {
