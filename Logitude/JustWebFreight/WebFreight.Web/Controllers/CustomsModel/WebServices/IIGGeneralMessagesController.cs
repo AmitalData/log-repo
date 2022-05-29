@@ -775,7 +775,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             try
             {
-               string logKey = PerformanceLogger.LogCurrentTime();
+                string logKey = PerformanceLogger.LogCurrentTime();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -784,10 +784,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
                 DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
-                var q =declarationCourierStatusQuery.GetVirtual(tenant);
+                var q = declarationCourierStatusQuery.GetVirtual(tenant);
                 //var myLazyLoadEvent = amitalLazyLoadEvent.MyLazyLoadEvent as LazyLoadEvent;
-                q=q.LazyFilters(amitalLazyLoadEvent , 
-                    ()=> { return declarationCourierStatusQuery.GetVirtual(tenant); } 
+                q = q.LazyFilters(amitalLazyLoadEvent,
+                    () => { return declarationCourierStatusQuery.GetVirtual(tenant); }
                     );
 
                 ServiceResponse response = new ServiceResponse();
@@ -800,9 +800,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
                     amitalLazyLoadEvent.sortField = "DeclarationId";
                 }
-                
+
                 q = q.LazyOrderBy(amitalLazyLoadEvent);
-                
+
                 q = q.LazySkipTake(amitalLazyLoadEvent);
 
                 response.Result = q.ToList(); ;
@@ -821,9 +821,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         static Car[] _Cars = null;
         public HttpResponseMessage GetVirtualCar
-           (bool GetCount, int first, int rows,  string sortField/*: "CreatAt"*/, int  sortOrder/*: 1*/)
+           (bool GetCount, int first, int rows, string sortField/*: "CreatAt"*/, int sortOrder/*: 1*/)
         {
-            int max = 105;  
+            int max = 105;
 
             try
             {
@@ -845,7 +845,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
                 }
-                
+
 
                 ServiceResponse response = new ServiceResponse();
                 if (GetCount)
@@ -853,17 +853,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     int count = max;
                     response.Count = count;
                 }
-                var lazyLoadEvent = new AmitalLazyLoadEvent() {
+                var lazyLoadEvent = new AmitalLazyLoadEvent()
+                {
                     first = first,
                     rows = rows,
                     sortField = sortField,
                     sortOrder = sortOrder
                 };
                 var q = _Cars.ToList().AsQueryable<Car>();
-                if (!string.IsNullOrWhiteSpace(sortField)  && sortField!="undefined")
+                if (!string.IsNullOrWhiteSpace(sortField) && sortField != "undefined")
                 {
                     //sortField
-                    q=q.LazyOrderBy(lazyLoadEvent);
+                    q = q.LazyOrderBy(lazyLoadEvent);
 
 
                 }
@@ -902,7 +903,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             return new Car()
             {
-                vin =id.ToString(), //this.generateVin(),
+                vin = id.ToString(), //this.generateVin(),
                 brand = this.generateBrand(id),
                 color = this.generateColor(id),
                 CreatAt = this.generateYear(id)
@@ -937,7 +938,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         DateTime generateYear(int id)
         {
-            return (DateTime.Now.Date.AddDays(-1*id));
+            return (DateTime.Now.Date.AddDays(-1 * id));
             //return 2000 + random.Next(21);
         }
     }
