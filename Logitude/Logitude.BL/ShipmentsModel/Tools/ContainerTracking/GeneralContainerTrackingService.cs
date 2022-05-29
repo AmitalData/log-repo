@@ -185,7 +185,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         public void UpdateStatusFromVizion( VisionContainerStatus containerStatus)
         {
             var shipmentsContext = ShipmentsContext.GetContext(0);
-            var allContainerTrackingRequests = shipmentsContext.ContainerTrackingRequests.Where(e => e.RequestId == containerStatus.reference_id).ToList();
+            var allContainerTrackingRequests = shipmentsContext.ContainerTrackingRequests.Where(e => e.RequestId == containerStatus.reference_id && e.Status == ContainerTrackingRequestStatus.Active).ToList();
             foreach (var containerTrackingRequest in allContainerTrackingRequests)
             {
                 BuildCommunicationLogUpdateStatus(containerStatus, containerTrackingRequest);
@@ -354,7 +354,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         public UnsubscribeResult UnsubscribeFromVizion(UnsubscribeArgs unsubscribeArgs, int tenant)
         {
             var containerTrackingRequest = GetContainerTrackingRequest(unsubscribeArgs, tenant);
-            var result = new VizionService().Unsubscribe(containerTrackingRequest);
+            if (containerTrackingRequest == null)
+                throw new Exception("There is no active request to unsubscribe");
+            var result = new UnsubscribeResult() { message = "Reference unsubscribed successfully" };
+            if (!unsubscribeArgs.IsSimulate)
+                result = new VizionService().Unsubscribe(containerTrackingRequest);
             InActiveContainerTrackingRequest(containerTrackingRequest);
             return result;
         }
