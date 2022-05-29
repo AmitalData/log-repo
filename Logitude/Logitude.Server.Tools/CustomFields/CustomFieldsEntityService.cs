@@ -95,6 +95,7 @@ namespace Logitude.Server.Tools.CustomFields
             childEntitiesCustomFieldRepository.SubmitChanges();
         }
 
+
         private bool IsChildEntitiesCustomFieldIsNew(ChildEntitiesCustomField childEntitiesCustomField)
         {
             return !(this.childEntitiesCustomFields.Where(d => d.ChildEntityId == childEntitiesCustomField.ChildEntityId).Any());
@@ -103,7 +104,7 @@ namespace Logitude.Server.Tools.CustomFields
         private ChildEntitiesCustomField GetChildEntitiesCustomField(object childEntity)
         {
             string childEntityId = GetPropertyValue(childEntity, "Id").ToString();
-            var childEntitiesCustomField = childEntitiesCustomFields.Where(d => d.Id == childEntityId).FirstOrDefault();
+            var childEntitiesCustomField = childEntitiesCustomFields.Where(d => d.ChildEntityId == childEntityId).FirstOrDefault();
             if (childEntitiesCustomField != null) return childEntitiesCustomField;
             return new ChildEntitiesCustomField()
             {
@@ -121,7 +122,8 @@ namespace Logitude.Server.Tools.CustomFields
 
         private object GetCustomFieldValue(object entity, ObjectField objectField)
         {
-            return new CustomFieldClass(objectField.FieldName, customChildEntityServiceArgs.ChildObjectTableName, GetPropertyValue(entity, objectField.FieldName).ToString());
+            var propertyValue = GetPropertyValue(entity, objectField.FieldName);
+            return new CustomFieldClass(objectField.FieldName, customChildEntityServiceArgs.ChildObjectTableName, propertyValue != null ? propertyValue.ToString():"") ;
 
         }
 
