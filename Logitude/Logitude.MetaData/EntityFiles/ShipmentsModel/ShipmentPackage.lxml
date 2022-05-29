@@ -30,13 +30,13 @@
   IsSaveButtonVisible="true"
   IsComposition="true"
   EnableSecurity="true"
-  AllowCustomFields="false"
+  AllowCustomFields="true"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package&quot;"
-  Code="&quot;2976&quot;"
+  Code="&quot;fa31&quot;"
   Name="&quot;ShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -9374,10 +9374,11 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Screen
-    Name="&quot;ShipmentPackageHeaderScreen&quot;"
+    Name="&quot;Additional Fields&quot;"
     ObjectTableName="&quot;ShipmentPackage&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;ShipmentPackage.AdditionalFields&quot;"
     NumberOfColumns="2"
     NumberOfRows="1">
     <ScreenFields />

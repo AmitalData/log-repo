@@ -26,7 +26,7 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
       constructor(_entityParentPM: any) {
-          super();
+          super("ShipmentPackage");
           this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
@@ -708,7 +708,7 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
     public get ContainerStatusSourceCode() { return this.containerStatusSourceCode; }
     public set ContainerStatusSourceCode(newValue: string) { if (this.containerStatusSourceCode != newValue) { this.containerStatusSourceCode = newValue; this.MarkAsDirty("ContainerStatusSourceCode"); } }
 
-    public OldEntityPM: ChildEntitiesCustomFieldPM;
+    public OldEntityPM: ShipmentPackagePM;
 
     private entityParentPM: any;
     public get EntityParentPM() { return this.entityParentPM; }
@@ -733,7 +733,7 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
             }
         }
     }
-    private MyClone: ChildEntitiesCustomFieldPM;
+    private MyClone: ShipmentPackagePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

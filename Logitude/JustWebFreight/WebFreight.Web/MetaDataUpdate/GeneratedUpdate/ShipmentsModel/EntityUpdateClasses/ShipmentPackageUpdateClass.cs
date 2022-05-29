@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPackageUpdateClass
    {  		
-		public const string HashString = "a96123b5735536ce2ae2b870024412cb";
+		public const string HashString = "ece0b691f9cad2609401df8a3769053f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,12 +113,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  true,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Package",
-			      				    Code =  "2976",
+			      				    Code =  "fa31",
 			      				    Name =  "ShipmentPackage",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -5936,12 +5936,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		       
 	      
 
-	         Screen ShipmentPackageShipmentPackageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentPackage.HeaderScreen", Name = "ShipmentPackageHeaderScreen", ObjectTableId = ShipmentPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    ShipmentPackageObjectTable.HeaderScreenId = ShipmentPackageShipmentPackageHeaderScreenScreen0.Id;
-		    ShipmentPackageObjectTable.HeaderScreenCode = ShipmentPackageShipmentPackageHeaderScreenScreen0.Code;
-
-	   		  
+	         Screen ShipmentPackageAdditionalFieldsScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentPackage.AdditionalFields", Name = "Additional Fields", ObjectTableId = ShipmentPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
