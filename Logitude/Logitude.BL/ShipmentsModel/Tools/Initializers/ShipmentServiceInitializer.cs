@@ -12,6 +12,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -40,6 +41,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public AddressRepository AddressRepository { get; private set; }
         public ContactRepository ContactRepository { get; private set; }
         public ShipmentPackageRepository ShipmentPackageRepository { get; private set; }
+        public ChildEntitiesCustomFieldRepository childEntitiesCustomFieldRepository { get; private set; }
         public ShipmentContainerStatusRepository ShipmentContainerStatusRepository { get; private set; }
         public InsideShipmentPackageRepository InsideShipmentPackageRepository { get; private set; }
         public ShipmentPackageItemRepository ShipmentPackageItemRepository { get; private set; }
@@ -106,6 +108,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.Repository = new ShipmentRepository(ShipmentContext);
             this.MasterDataRepository = new ShipmentMasterDataRepository(ShipmentContext);
             this.ShipmentPackageRepository = new ShipmentPackageRepository(ShipmentContext);
+            this.childEntitiesCustomFieldRepository = new ChildEntitiesCustomFieldRepository(Tenant);
             this.ShipmentContainerStatusRepository = new ShipmentContainerStatusRepository(ShipmentContext);
             this.InsideShipmentPackageRepository = new InsideShipmentPackageRepository(ShipmentContext);
             this.ShipmentPackageItemRepository = new ShipmentPackageItemRepository(ShipmentContext);

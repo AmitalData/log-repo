@@ -9,6 +9,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using System;
 using Simplog.Data.InfrastructureModel;
+using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -200,6 +201,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             myResult.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(myResult?.Id, tenant);
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             this.MapTheLastStatusName(myResult, webFreightContext);
+
+            ChildEntitiesCustomFieldMapping.MapPocoToPM(myResult, "ShipmentPackage");
             return myResult;
         }
 
@@ -359,6 +362,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 }
                 this.MapTheLastStatusName(package, webFreightContext);
+                ChildEntitiesCustomFieldMapping.MapPocoToPM(package, "ShipmentPackage");
             }
             return shipmentPackages;
         }

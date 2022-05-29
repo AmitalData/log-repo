@@ -2097,5 +2097,7 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs => throw new NotImplementedException();
 
         public IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs => throw new NotImplementedException();
+
+        public IDbSet<ChildEntitiesCustomField> ChildEntitiesCustomFields => throw new NotImplementedException();
     }
 }
