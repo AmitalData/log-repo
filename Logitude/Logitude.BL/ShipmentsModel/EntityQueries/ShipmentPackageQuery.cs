@@ -363,8 +363,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
 
-            CustomFieldsEntityService<ShipmentPackagePM> customFieldsEntityService = new CustomFieldsEntityService<ShipmentPackagePM>(new CustomFieldsEntityServiceArgs() { Tenant = tenant, EntityId = shipmentId, ObjectTableName = "Shipment", ChildObjectTableName = "ShipmentPackage"});
-            customFieldsEntityService.MapCustomFields(shipmentPackages);
+            new CustomFieldsEntityService().SetCustomFieldsValues(new CustomChildEntityServiceArgs(){ Tenant = tenant,  EntityId = shipmentId ,  ObjectTableName = "Shipment",ChildObjectTableName = "ShipmentPackage",ChildEntities = shipmentPackages.Cast<object>().ToList()});
 
             return shipmentPackages;
         }

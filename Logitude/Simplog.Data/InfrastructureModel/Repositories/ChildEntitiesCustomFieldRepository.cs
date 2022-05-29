@@ -69,5 +69,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public IQueryable<ChildEntitiesCustomField> GetChildEntitiesCustomFields(int tenant)
+        {
+            return context.ChildEntitiesCustomFields.Where(d => d.Tenant == tenant);
+        }
     }
 }

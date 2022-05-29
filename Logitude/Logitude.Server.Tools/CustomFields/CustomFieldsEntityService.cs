@@ -1,4 +1,7 @@
-﻿using Simplog.Data.InfrastructureModel.Repositories;
+﻿using Logitude.BL.Helpers;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -9,91 +12,131 @@ using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.CustomFields
 {
-    public class CustomFieldsEntityService<T>
+    public class CustomFieldsEntityService
     {
 
-        string objectTableId = string.Empty;
-        string entityId = string.Empty;
-        string childObjectTableId = string.Empty;
-        string childEntityId = string.Empty;
+        private string objectTableId = string.Empty;
+        private string entityId = string.Empty;
+        private string childObjectTableId = string.Empty;
+        private int tenant; 
+        private List<ChildEntitiesCustomField> childEntitiesCustomFields = null;
+        private CustomChildEntityServiceArgs customChildEntityServiceArgs;
+        private CustomFieldResolver customFieldResolver = null;
+        private List<ObjectField> customObjectFields = null;
+        private List<object> childEntities = null;
 
-        private List<CustomFieldsEntity> customFieldsEntities = null;
-        private CustomFieldsEntityServiceArgs customFieldsEntityServiceArgs;
-        public CustomFieldsEntityService(CustomFieldsEntityServiceArgs customFieldsEntityServiceArgs)
+        
+        private ChildEntitiesCustomFieldRepository childEntitiesCustomFieldRepository;
+        public CustomFieldsEntityService()
         {
-            this.customFieldsEntityServiceArgs = customFieldsEntityServiceArgs;
-            this.objectTableId = ObjectTableRepository.GetObjectTableByName(customFieldsEntityServiceArgs.ObjectTableName);
-            this.childObjectTableId = ObjectTableRepository.GetObjectTableByName(customFieldsEntityServiceArgs.ChildObjectTableName);
-            this.entityId = customFieldsEntityServiceArgs.EntityId;
-            this.childEntityId = customFieldsEntityServiceArgs.ChildEntityId;
-            this.GetCustomFieldsEntitis();
-        }
-
-        private List<CustomFieldsEntity> GetCustomFieldsEntitis()
-        {
-            /* Poco--*/
-            var customFieldsEntities = new List<CustomFieldsEntity>();
-            customFieldsEntities.Add(new CustomFieldsEntity() { Tenant = 1, Id = entityId, ChildEntityId = "1-1", ObjectTableId = objectTableId, ChildObjectTableId = "1-2", Field1 = "Abed", Field2 = "Test", Field3 = "ssss" });
-            customFieldsEntities.Add(new CustomFieldsEntity() { Tenant = 1, Id = entityId, ChildEntityId = "1-2", ObjectTableId = objectTableId, ChildObjectTableId = "1-3", Field1 = "Abed2", Field2 = "Test2", Field3 = "ssss2" });
-            return customFieldsEntities;
         }
 
 
 
-
-        public void MapCustomFields(List<T> shipmentPackages)
+        private void Initialize(CustomChildEntityServiceArgs customChildEntityServiceArgs)
         {
-            foreach (T shipmentPackage in shipmentPackages)
+            this.customChildEntityServiceArgs = customChildEntityServiceArgs;
+            this.childEntities = customChildEntityServiceArgs.ChildEntities;
+            this.objectTableId = ObjectTableRepository.GetObjectTableByName(customChildEntityServiceArgs.ObjectTableName);
+            this.childObjectTableId = ObjectTableRepository.GetObjectTableByName(customChildEntityServiceArgs.ChildObjectTableName);
+            this.entityId = customChildEntityServiceArgs.EntityId;
+            this.tenant = customChildEntityServiceArgs.Tenant;
+            this.customFieldResolver = new CustomFieldResolver();
+            this.childEntitiesCustomFieldRepository = new ChildEntitiesCustomFieldRepository(customChildEntityServiceArgs.Tenant);
+            this.customObjectFields = this.GetCustomObjectFields();
+            this.childEntitiesCustomFields = this.GetChildEntitiesCustomFields();
+        }
+
+
+
+        public void SetCustomFieldsValues(CustomChildEntityServiceArgs customChildEntityServiceArgs)
+        {
+            this.Initialize(customChildEntityServiceArgs);
+
+            if (childEntities == null || childEntities.Count() == 0 || customObjectFields.Count() == 0) return;
+           
+            foreach (ObjectField customObjectField in customObjectFields)
             {
-                string entityId = GetPropertyValue(shipmentPackage, "Id").ToString();
-                var customFieldsEntity = customFieldsEntities.Where(d => d.ChildEntityId == entityId).FirstOrDefault();
-                if (customFieldsEntity != null)
+                foreach (object childEntity in childEntities)
                 {
-                    int count = 0;
-                    while (count <= 40)
+                    if (childEntity != null)
                     {
-                        SetPropertyValue(shipmentPackage, "Field1", new CustomFieldClass("Field1", customFieldsEntityServiceArgs.ChildObjectTableName, GetPropertyValue(customFieldsEntity, "Field1").ToString()));
-                        count += 1;
+                        ChildEntitiesCustomField childEntitiesCustomField = GetChildEntitiesCustomField(childEntity);
+                        if (childEntitiesCustomField != null)
+                        {
+                            SetPropertyValue(childEntity, customObjectField.FieldName, GetCustomFieldValue(childEntitiesCustomField, customObjectField));
+                        }
                     }
                 }
             }
         }
 
-
-
-
-        //entityPoco.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
-
-
-
-
-
-
-        private object GetCustomFieldValue(CustomFieldsEntity customFieldsEntity)
+        public void UpdateCustomFields(CustomChildEntityServiceArgs customChildEntityServiceArgs)
         {
-            return new CustomFieldClass("Field1", "Shipment", "");
-        }
+            this.Initialize(customChildEntityServiceArgs);
 
-        public void UpdateCustomFields(List<T> entities)
-        {
-            foreach (T t in entities)
+            if (childEntities == null || childEntities.Count() == 0 || customObjectFields.Count() == 0) return;
+            foreach (object childEntity in childEntities)
             {
-                string entityId = GetPropertyValue(t, "Id").ToString();
-                var customFieldsEntity = customFieldsEntities.Where(d => d.ChildEntityId == entityId).FirstOrDefault();
-                if (customFieldsEntity != null)
+                ChildEntitiesCustomField childEntitiesCustomField = GetChildEntitiesCustomField(childEntity);
+                foreach (ObjectField customObjectField in customObjectFields)
                 {
-                    SetPropertyValue(t, "Field1", null);
-                    SetPropertyValue(t, "Field2", null);
-                    SetPropertyValue(t, "Field3", null);
-                    SetPropertyValue(t, "Field4", null);
-                    SetPropertyValue(t, "Field5", null);
+                    CustomFieldClass customFieldClass = GetPropertyValue(childEntity, customObjectField.FieldName) as CustomFieldClass;
+                    SetPropertyValue(childEntitiesCustomField, customObjectField.FieldName, customFieldClass.Value);
                 }
+
+                if (IsChildEntitiesCustomFieldIsNew(childEntitiesCustomField))
+                {
+                    childEntitiesCustomFieldRepository.Add(childEntitiesCustomField);
+                }
+                else childEntitiesCustomFieldRepository.Update(childEntitiesCustomField);
             }
+
+            childEntitiesCustomFieldRepository.SubmitChanges();
         }
 
+        private bool IsChildEntitiesCustomFieldIsNew(ChildEntitiesCustomField childEntitiesCustomField)
+        {
+            return !(this.childEntitiesCustomFields.Where(d => d.ChildEntityId == childEntitiesCustomField.ChildEntityId).Any());
+        }
+
+        private ChildEntitiesCustomField GetChildEntitiesCustomField(object childEntity)
+        {
+            string childEntityId = GetPropertyValue(childEntity, "Id").ToString();
+            var childEntitiesCustomField = childEntitiesCustomFields.Where(d => d.Id == childEntityId).FirstOrDefault();
+            if (childEntitiesCustomField != null) return childEntitiesCustomField;
+            return new ChildEntitiesCustomField()
+            {
+                Id = IdCounter.GetNumber("ChildEntitiesCustomField", tenant).ToString(),
+                Tenant = tenant,
+                ObjectTableId = objectTableId,
+                ChildEntityId = childEntityId,
+                EntityId = entityId,
+                ChildObjectTableId = childObjectTableId,
+            };
 
 
 
+        }
+
+        private object GetCustomFieldValue(object entity, ObjectField objectField)
+        {
+            return new CustomFieldClass(objectField.FieldName, customChildEntityServiceArgs.ChildObjectTableName, GetPropertyValue(entity, objectField.FieldName).ToString());
+
+        }
+
+        private List<ObjectField> GetCustomObjectFields()
+        {
+            return ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(customChildEntityServiceArgs.ChildObjectTableName, tenant).ToList();
+        }
+
+        private List<ChildEntitiesCustomField> GetChildEntitiesCustomFields()
+        {
+
+          return  childEntitiesCustomFieldRepository.GetChildEntitiesCustomFields(tenant).Where(d=>d.EntityId == entityId && d.ObjectTableId == d.ObjectTableId && d.ChildObjectTableId == childObjectTableId).ToList();
+
+        
+        }
         private void SetPropertyValue(object obj, string property, object value)
         {
             var prop = obj.GetType().GetProperty(property, BindingFlags.Public | BindingFlags.Instance);
@@ -118,7 +161,7 @@ namespace Logitude.Server.Tools.CustomFields
 
 
 
-    public class CustomFieldsEntity
+    public class CustomChildEntity
     {
         public string Id { get; set; }
         public int Tenant { get; set; }
@@ -144,7 +187,7 @@ namespace Logitude.Server.Tools.CustomFields
 
 
 
-    public class CustomFieldsEntityServiceArgs
+    public class CustomChildEntityServiceArgs
     {
 
         public int Tenant { get; set; }
@@ -155,6 +198,8 @@ namespace Logitude.Server.Tools.CustomFields
         public string ObjectTableName { get; set; }
 
         public string ChildObjectTableName { get; set; }
+
+        public  List<object> ChildEntities { get; set; }
 
     }
 

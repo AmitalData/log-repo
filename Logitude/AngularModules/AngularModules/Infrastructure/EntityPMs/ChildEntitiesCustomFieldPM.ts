@@ -292,14 +292,14 @@ export class ChildEntitiesCustomFieldPM {
         }
 	 }
     }
-    private MyClone: ChildEntitiesCustomFieldPM;
+    //private MyClone: ChildEntitiesCustomFieldPM;
 
-    public CloneMe() {
-        ServiceHelper.CloneEntityPM(this);
-    }
+    //public CloneMe() {
+    //    ServiceHelper.CloneEntityPM(this);
+    //}
 
-    public RejectChanges() {
-        ServiceHelper.RejectEntityPMChanges(this);
-    }
+    //public RejectChanges() {
+    //    ServiceHelper.RejectEntityPMChanges(this);
+    //}
 
 }
