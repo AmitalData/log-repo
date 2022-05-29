@@ -53,6 +53,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateUnifreight(DeclarationPM dirtyDeclarationPM)
         {
+            if (!CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight)
+            {
+                return;
+            }
             DateTime stopLogAt = DateTime.MinValue;
 
             bool fromAmendment = false;
