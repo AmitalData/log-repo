@@ -27,6 +27,8 @@ import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequest
 import { loggerService } from 'Infrastructure/Utilities/logger.service';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
+import { Validator } from 'Infrastructure/Validators/Validator';
+import { LogisticActionRequestService } from 'Customs/Services/Others/LogisticActionRequestService';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -68,6 +70,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     public ThirdCargoIdPlaceholder: string = " ";
     public ManifestNumberPlaceholder: string = " ";
     _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
+    LogisticActionRequestService: LogisticActionRequestService = new LogisticActionRequestService();
 
     get ExportFileNo() { return this.entityPM?.ExportFileNo }
     set ExportFileNo(value: string) {
@@ -415,9 +418,13 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     async SaveEntityChanges() {
         this.logger.sendError('start SaveEntityChange', 'entityPM: ' + JSON.stringify(this.entityPM));
         const isInsert: boolean = !this.entityPM.Id;
-
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-
+        const errMess = await this.CheckIfLogisticActionRequestExist();
+        if (!AppTool.IsNullOrEmpty(errMess)) {
+            this.ValidationErrorsList.push(errMess);
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            return;
+        }
         const res = await this.logtuideTableDataService.getDataFromService(
             (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM)))
 
@@ -428,6 +435,21 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         return res;
     }
 
+    async CheckIfLogisticActionRequestExist() {
+        return new Promise(resolve => {
+            this.LogisticActionRequestService.GetIfLogisticActionRequestExists(this.entityPM.Id, this.entityPM.CargoIdentifierKey1, this.entityPM.CargoIdentifierKey2, this.entityPM.CargoIdentifierKey3, this.entityPM.CargoIdentifierType).subscribe((Result: any) => {
+                var mm: ServiceResponse = Result;
+                if (!mm.HasError) {
+                    if (mm.Result) {
+                        var errorMsg: string = TextCodeTranslator.Translate("Customs.General.O.LogisticActionRequestAlreadyExist");
+                        if (AppTool.IsNullOrEmpty(errorMsg)) errorMsg = "����� ���� ������ ���� �� ���� ���� ����";
+                        resolve(errorMsg);
+                    }
+                }
+                resolve("");
+            });
+        });
+    }
 
     invalidate(): boolean {
         if (!this.submit) return;

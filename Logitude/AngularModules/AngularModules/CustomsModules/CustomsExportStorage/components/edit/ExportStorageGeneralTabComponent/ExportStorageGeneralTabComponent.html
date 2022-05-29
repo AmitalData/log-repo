@@ -37,7 +37,7 @@
             [DataContext]="DataContext"
             [HideColumns]="true"
             [LookUpTableName]="'Customs.DeliverySiteType'"
-            [SelectedValue]="ExportLoadingPortcode">
+            [SelectedValue]="StorageSiteCode">
             </LogLov>
     </div>
 
@@ -80,7 +80,7 @@
         [DataContext]="DataContext"
         [HideColumns]="true"
         [LookUpTableName]="'Customs.InternationalSite'"
-        [SelectedValue]="ExportLoadingPortcode">
+        [SelectedValue]="ExportUnloadingPortCode">
         </LogLov>
     </div>
     <div class="row">        
@@ -90,7 +90,7 @@
         [DataContext]="DataContext"
         [HideColumns]="true"
         [LookUpTableName]="'Customs.InternationalSite'"
-        [SelectedValue]="ExportLoadingPortcode">
+        [SelectedValue]="FinalDestinationPortCode">
         </LogLov>
     </div>
     <div class="row">        

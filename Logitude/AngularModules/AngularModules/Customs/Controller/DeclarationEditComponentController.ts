@@ -34,7 +34,8 @@ export class DeclarationEditComponentController implements IEditComponentControl
         }
         
         var indexOfTab = allTabs.findIndex(t => t.Code == "CloD");
-        if (AppTool.IsNullOrEmpty(currentEntity.ExportClosedErrorXML)) {
+      
+        if (AppTool.IsNullOrEmpty(currentEntity.ExportClosedErrorXML) && !currentEntity.IsExportClosed ) {
             if (indexOfTab > -1) {
                 allTabs.splice(indexOfTab, 1);
             }

@@ -233,11 +233,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.ActionCode = entityPM.ActionCode;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActionCode))
-            {
-				entityPOCO.ActionCode = entityPM.ActionCode;
-			}
-			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -374,13 +369,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsDangerousGoods = entityPOCO.IsDangerousGoods;
             }
 
-			
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActionCode))
             {
 					entityPM.ActionCode = entityPOCO.ActionCode;
             }
-
-		
 
 		}
 
