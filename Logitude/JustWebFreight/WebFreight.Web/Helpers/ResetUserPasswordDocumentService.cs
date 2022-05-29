@@ -4,6 +4,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Linq;
 using System.Transactions;
+using WebFreight.Web.Params;
 
 namespace WebFreight.Web.Helpers
 {

@@ -1108,6 +1108,9 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExporterRoleTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LoadingSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\AutonomyRegionTypeController.Generated.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalPortalPasswordController.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalPortalResetUserPasswordService.cs" />
+    <Compile Include="Controllers\DigitalPortal\Helpers\DigitalPortalPasswordHelper.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBuildTablesController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingSearchController.cs" />
@@ -6054,6 +6057,12 @@
     <Compile Include="Monitoring\WebHookCommunicationMonitoring.aspx.designer.cs">
       <DependentUpon>WebHookCommunicationMonitoring.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Params\EmailBodyArgs.cs" />
+    <Compile Include="Params\EmailBodyParams.cs" />
+    <Compile Include="Params\EmailBodyResults.cs" />
+    <Compile Include="Params\EmailCommunicationLogBuilderArgs.cs" />
+    <Compile Include="Params\EmailMessageParams.cs" />
+    <Compile Include="Params\EmailParameters.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
