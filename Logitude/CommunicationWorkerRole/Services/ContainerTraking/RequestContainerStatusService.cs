@@ -62,11 +62,9 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
             CommunicationLog = GetCommunicationLog();
             ContainerStatusSimulatorArgs = GetContainerStatusSimulatorArgsFromDecuments();
             ShipmentContext = ShipmentsContext.GetContext(ContainerStatusSimulatorArgs.Tenant);
-            ShipmentContext.SaveChanges();
 
             Shipment = GetShipment();
             ShipmentMasterData = GetShipmentMasterData();
-            ShipmentContext.SaveChanges();
 
         }
 
@@ -160,14 +158,12 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
 
         private void UpdateVizionContainerStatus()
         {
-            ShipmentContext.SaveChanges();
             var source = GetSource();
             string requestId = CheckIfExistRequest();
             if (requestId == null)
             {
-                requestId = CreateNewRequest(source);
+                requestId = CreateNewRequest();
             }
-            ShipmentContext.SaveChanges();
             if (CheckIfExistRequest(ContainerStatusSimulatorArgs.Tenant) == null)
                 AddContainerTrackingRequest(requestId);
             if (ContainerStatusSimulatorArgs.IsSimulator)
@@ -175,7 +171,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
 
         }
 
-        private string CreateNewRequest(ContainerTrackingProvider source)
+        private string CreateNewRequest()
         {
             string requestId;
             if (ContainerStatusSimulatorArgs.IsSimulator)
@@ -238,7 +234,8 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
                 ShipmentId = Shipment.Id,
                 Status = ContainerTrackingRequestStatus.Active,
                 CarrierCode = ContainerStatusSimulatorArgs.CarrierCode,
-                ContainerId = ContainerStatusSimulatorArgs.ContainerId
+                ContainerId = ContainerStatusSimulatorArgs.ContainerId,
+                IsSimulate = ContainerStatusSimulatorArgs.IsSimulator
             };
         }
 

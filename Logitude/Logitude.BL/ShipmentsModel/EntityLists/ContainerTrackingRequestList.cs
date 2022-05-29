@@ -18,5 +18,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CarrierCode { get; set; }
         public string Status { get; set; }
         public string SearchFields { get; set; }
+        public bool IsSimulate { get; set; }
     }
 }
