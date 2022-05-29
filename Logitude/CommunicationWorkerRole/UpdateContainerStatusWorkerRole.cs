@@ -1,9 +1,13 @@
 ﻿using CommunicationWorkerRole.Services.ContainerTraking;
+using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using WebFreight.Web.ContainerTracking;
 
 namespace CommunicationWorkerRole
 {
@@ -15,7 +19,7 @@ namespace CommunicationWorkerRole
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "UpdateContainerStatusWorkerRole";
             DoneItemsInRange = new Dictionary<DateTime, int>();
-            ConnectClient();
+            
             return base.OnStart();
         }
 
@@ -34,7 +38,6 @@ namespace CommunicationWorkerRole
 
             try
             {
-                InitializeQueueService();
                 ExecuteQueue();
             }
             catch (Exception exception)
@@ -46,43 +49,21 @@ namespace CommunicationWorkerRole
 
         private void ExecuteQueue()
         {
-            var queueResponse = queueService.Receive();
-            if (queueResponse == null || queueResponse.MessageId == null)
+            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+            AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("GeneralContainerTrackingReceiver");
+            LastActivity = DateTime.UtcNow;
+
+            if (analyzeQueue != null)
             {
-                return;
+                ContainerTrackingGeneralAnalyzer analyzer = new ContainerTrackingGeneralAnalyzer(ContainerStatusSourceValues.Vizion, analyzeQueue, analyzeQueueRepository);
+                analyzer.Run();
+                LogDoneItemInMemory();
             }
-            try
+            else
             {
-                new ContainerTrackingWRService(queueService, queueResponse).ExecuteQueue();
-                queueService.Complete();
-            }
-            catch (Exception)
-            {
-                queueService.CompleteAsFailed();
-                throw;
+                Thread.Sleep(3000);
             }
         }
 
-        private void ConnectClient()
-        {
-            try
-            {
-                InitializeQueueService();
-                queueService.Complete();
-
-            }
-            catch (Exception ex)
-            {
-                queueService.CompleteAsFailed();
-
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "General Update Container Status start fail", null, null);
-            }
-        }
-
-        private void InitializeQueueService()
-        {
-            queueService = new DbQueueService();
-            queueService.InitializeQueue("GeneralUpdateContainerStatus", 0);
-        }
     }
 }

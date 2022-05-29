@@ -25,6 +25,9 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -193,15 +196,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             };
         }
 
-        public void UpdateStatusFromVizion( VisionContainerStatus containerStatus)
+        public void UpdateStatusFromVizion(VisionContainerStatus containerStatus)
         {
-            var shipmentsContext = ShipmentsContext.GetContext(0);
-            var allContainerTrackingRequests = shipmentsContext.ContainerTrackingRequests.Where(e => e.RequestId == containerStatus.reference_id && e.Status == ContainerTrackingRequestStatus.Active).ToList();
-            foreach (var containerTrackingRequest in allContainerTrackingRequests)
-            {
-                BuildCommunicationLogUpdateStatus(containerStatus, containerTrackingRequest);
-            }
+            this.InsertNewAnalyzeQueue(containerStatus);
+        }
+        private void InsertNewAnalyzeQueue(object containerStatus)
+        {
+            IGlobalContext globalContext = GlobalContext.GetContext();
+            AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository(globalContext);
+            byte[] analyzeQueueMessageBody = this.ConvertObjectToByteArray(containerStatus);
 
+            AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+            {
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
+                From = "GeneralContainerTrackingReceiver",
+                Id = IdCounter.GetNumber("AnalyzeQueue", 0),
+                MessageBody = analyzeQueueMessageBody,
+                Status = "W",
+                Retries = 0,
+                ConnectedToEntity = false,
+                ConnectedToTenant = false,
+                FileSize = analyzeQueueMessageBody.Length,
+                Tenant = 0,
+            };
+            analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+            analyzeQueueReposiory.Add(analyzeQueue);
+            analyzeQueueReposiory.SubmitChanges();
         }
 
         private void BuildCommunicationLogUpdateStatus(VisionContainerStatus containerStatus, ContainerTrackingRequest containerTrackingRequest)
