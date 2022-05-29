@@ -46,6 +46,20 @@
         }
     </style>
     <script>
+
+        function ChangeUrl(title, url) {
+            if (typeof (history.pushState) != "undefined") {
+                var obj = { Title: title, Url: url };
+                history.pushState(obj, obj.Title, obj.Url);
+            } else {
+                alert("Browser does not support HTML5.");
+            }
+        }
+        function uuidv4() {
+            return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        }
         function LoginToAngular(userdata, locationsearch) {
 
 
@@ -101,8 +115,9 @@
                         //alert("Angular" + version + "/index.html");
                         //myIframe.src = "Angular" + version + "/index.html?AmitalMode=true"; // "index.html";//"http://localhost:3000/";
                         //myIframe.src = "Angular" + version + "/indexAmital.html"; // "index.html";//"http://localhost:3000/";
-                        
+
                         //myIframe.src = "Angular" + version + "/index.html"; // "index.html";//"http://localhost:3000/";
+                        
                         myIframe.src = "Angular" + version + "/index.html" + locationsearch;
                         
 
@@ -132,6 +147,7 @@
                 ///http://itzik-7-new/WebFreight.Web/AmitalSSOAngular.html?token=336a9151-a77f-48ae-b19d-01ea29410de9&tenant=1&AmitalSSOAngular=1
                 ///http://localhost:9996/AmitalSSOAngular.html?token=336a9151-a77f-48ae-b19d-01ea29410de9&tenant=1&AmitalSSOAngular=1
                 let locationsearch = window.location.search;
+                ChangeUrl("הצהרת יצוא", "ShowExportDec.html?ttt=" + uuidv4());
                 var base = getParameterByName("T", locationsearch);
                 if (base) {
                     locationsearch = "?" + atob(base);

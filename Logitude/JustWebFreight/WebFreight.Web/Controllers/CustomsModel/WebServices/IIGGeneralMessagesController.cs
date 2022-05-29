@@ -43,6 +43,46 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
+        public HttpResponseMessage PostUnifreightGatewayMessages(UnifreightGatewayParams requestParams)
+        {
+            try
+            {
+
+                //CUSTOM19 - TOKEN
+                //3d75bc21-2e20-4e3a-8792-1ba057a4408f
+                //24fd2056-23b1-4921-8804-1ae02e70fcb3
+
+                // use messageing service
+                string DataOut1 = "";
+                string DataOut2 = "";
+                string SUCCESS = "";
+                string MoreParams = requestParams.MoreParams;
+                string MessageOut = "";
+
+                var service = new UnifreightGatewayService();
+                service.ProccessRequest(requestParams.AssemblyQualifiedName, requestParams.DataIn1, requestParams.DataIn2,
+                    out DataOut1,
+                    out DataOut2,
+                    out SUCCESS,
+                    ref MoreParams,
+                    out MessageOut
+                    );
+
+                requestParams.DataOut1 = DataOut1;
+                requestParams.DataOut2 = DataOut2;
+                requestParams.SUCCESS = SUCCESS;
+                requestParams.MoreParams = MoreParams;
+                requestParams.MessageOut = MessageOut;
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, requestParams);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage PostMorningMessages(MorningMessageRequestParams requestParams)
         {
@@ -735,7 +775,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             try
             {
-               string logKey = PerformanceLogger.LogCurrentTime();
+                string logKey = PerformanceLogger.LogCurrentTime();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -744,10 +784,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
                 DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
-                var q =declarationCourierStatusQuery.GetVirtual(tenant);
+                var q = declarationCourierStatusQuery.GetVirtual(tenant);
                 //var myLazyLoadEvent = amitalLazyLoadEvent.MyLazyLoadEvent as LazyLoadEvent;
-                q=q.LazyFilters(amitalLazyLoadEvent , 
-                    ()=> { return declarationCourierStatusQuery.GetVirtual(tenant); } 
+                q = q.LazyFilters(amitalLazyLoadEvent,
+                    () => { return declarationCourierStatusQuery.GetVirtual(tenant); }
                     );
 
                 ServiceResponse response = new ServiceResponse();
@@ -760,9 +800,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
                     amitalLazyLoadEvent.sortField = "DeclarationId";
                 }
-                
+
                 q = q.LazyOrderBy(amitalLazyLoadEvent);
-                
+
                 q = q.LazySkipTake(amitalLazyLoadEvent);
 
                 response.Result = q.ToList(); ;
@@ -781,9 +821,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         static Car[] _Cars = null;
         public HttpResponseMessage GetVirtualCar
-           (bool GetCount, int first, int rows,  string sortField/*: "CreatAt"*/, int  sortOrder/*: 1*/)
+           (bool GetCount, int first, int rows, string sortField/*: "CreatAt"*/, int sortOrder/*: 1*/)
         {
-            int max = 105;  
+            int max = 105;
 
             try
             {
@@ -805,7 +845,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
                 }
-                
+
 
                 ServiceResponse response = new ServiceResponse();
                 if (GetCount)
@@ -813,17 +853,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     int count = max;
                     response.Count = count;
                 }
-                var lazyLoadEvent = new AmitalLazyLoadEvent() {
+                var lazyLoadEvent = new AmitalLazyLoadEvent()
+                {
                     first = first,
                     rows = rows,
                     sortField = sortField,
                     sortOrder = sortOrder
                 };
                 var q = _Cars.ToList().AsQueryable<Car>();
-                if (!string.IsNullOrWhiteSpace(sortField)  && sortField!="undefined")
+                if (!string.IsNullOrWhiteSpace(sortField) && sortField != "undefined")
                 {
                     //sortField
-                    q=q.LazyOrderBy(lazyLoadEvent);
+                    q = q.LazyOrderBy(lazyLoadEvent);
 
 
                 }
@@ -862,7 +903,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             return new Car()
             {
-                vin =id.ToString(), //this.generateVin(),
+                vin = id.ToString(), //this.generateVin(),
                 brand = this.generateBrand(id),
                 color = this.generateColor(id),
                 CreatAt = this.generateYear(id)
@@ -897,7 +938,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         DateTime generateYear(int id)
         {
-            return (DateTime.Now.Date.AddDays(-1*id));
+            return (DateTime.Now.Date.AddDays(-1 * id));
             //return 2000 + random.Next(21);
         }
     }
@@ -917,5 +958,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     }
 
 
-   
+    public class UnifreightGatewayParams
+    {
+
+        public string Token { get; set; }
+        public string AssemblyQualifiedName { get; set; }
+        public string DataIn1 { get; set; }
+        public string DataIn2 { get; set; }
+
+
+
+        public string DataOut1 { get; set; }
+        public string DataOut2 { get; set; }
+
+        public string SUCCESS { get; set; }
+        public string MoreParams { get; set; }
+        public string MessageOut { get; set; }
+    }
+
+
 }
