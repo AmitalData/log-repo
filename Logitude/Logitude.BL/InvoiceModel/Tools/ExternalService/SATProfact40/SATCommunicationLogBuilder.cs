@@ -105,7 +105,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             string motivoCancelaOperation = GetCancelReason(args);// "03";
             string folioSustitucion = GetFolioSustitucion(args);
 
-            SATCancellation cancellatio = new SATCancellation() { rfcEmisor = rfcEmisor, folioFiscal = folioFiscal, motivoCancelacion = motivoCancelaOperation, folioSustitucion = "No se llevó a cabo la operación" };
+            SATCancellation cancellatio = new SATCancellation() { rfcEmisor = rfcEmisor, folioFiscal = folioFiscal, motivoCancelacion = motivoCancelaOperation, folioSustitucion = folioSustitucion };
             profactoXmlData = LogitudeXmlSerializer.SerializeObject<SATCancellation>(cancellatio);
 
             return profactoXmlData;

@@ -69,7 +69,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private bool ValidateTransferToSAT()
         {
-            if (arInvoice.SATTransferStatusCode == SATData.InTransferingSATTransferStatusCode)
+            const string SATCancelErrorsInRelationReasonCode = "01";
+            if (arInvoice.SATTransferStatusCode == SATData.InTransferingSATTransferStatusCode && arInvoice.SATCancelReasonCode != SATCancelErrorsInRelationReasonCode)
                 throw new ApplicationException("You are not allowed to void the invoice while its status is Transferring to SAT");
 
             if (!string.IsNullOrEmpty(arInvoice.SATXML))
