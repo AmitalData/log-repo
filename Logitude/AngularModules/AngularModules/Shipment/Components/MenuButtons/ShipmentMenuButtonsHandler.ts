@@ -396,6 +396,13 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         }
                     }
 
+                    if (button.EventCode == "ViziionUnsubscribe") {
+                        if (!buttonEnabled) 
+                            button.IsHidden = true;
+                        if(this.EntityPM.ShipmentTypeId != "FCLD")
+                            button.IsHidden = true;
+                    }
+
 
                     if (button.EventCode == "SendCartaPorte") {
                         button.IsHidden = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE" || !SessionLocator.SATInterfaceSettings.IsCartaPorteTransferEnabled;

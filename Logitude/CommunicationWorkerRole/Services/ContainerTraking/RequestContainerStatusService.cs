@@ -162,7 +162,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
             string requestId = CheckIfExistRequest();
             if (requestId == null)
             {
-                requestId = CreateNewRequest(source);
+                requestId = CreateNewRequest();
             }
             if (CheckIfExistRequest(ContainerStatusSimulatorArgs.Tenant) == null)
                 AddContainerTrackingRequest(requestId);
@@ -171,7 +171,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
 
         }
 
-        private string CreateNewRequest(ContainerTrackingProvider source)
+        private string CreateNewRequest()
         {
             string requestId;
             if (ContainerStatusSimulatorArgs.IsSimulator)
