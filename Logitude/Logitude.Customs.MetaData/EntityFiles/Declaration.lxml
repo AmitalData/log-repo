@@ -626,7 +626,7 @@
     ObjectFieldNotRequired="false"
     SystemMaxLength="60"
     DisplayInList="true"
-    IsCustomFilter="true"
+    IsCustomFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
