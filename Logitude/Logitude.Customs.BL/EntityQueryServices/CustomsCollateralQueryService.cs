@@ -72,23 +72,26 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return customsCollateralList;
         }
 
-        public void UpdateMulti(string[] ids, string declarationId, bool selectAll, CustomsCollateralsAnswerPM customsCollateralsAnswerPM, int tenant)
+        public List<CustomsCollateral> UpdateMulti(string[] ids, string declarationId, bool selectAll, CustomsCollateralsAnswerPM customsCollateralsAnswerPM, int tenant)
         {
-            CustomsCollateralUpdateService updateService = new CustomsCollateralUpdateService(context); 
+            CustomsCollateralUpdateService updateService = new CustomsCollateralUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant); 
 
             List<CustomsCollateral> customsCollateralList =
                 selectAll ? 
-                    repository.GetDeclarationCollateralsList(declarationId, tenant).FindAll(x => !ids.Contains(x.Id)) : 
+                    repository.GetDeclarationCollateralsList(declarationId, tenant).FindAll(x => !ids.Contains(x.Id) && x.IsClosed == false) : 
                     repository.GetDeclarationCollateralsList(ids);
 
             customsCollateralList.ForEach(customsCollateralItem =>
             {
                 CustomsCollateralPM customsCollateralPM = GetEntityPM(customsCollateralItem);
+                customsCollateralsAnswerPM.ChangeSetOp = ChangeSetOperation.Insert;
                 customsCollateralPM.CustomsCollateralsAnswers.Add(customsCollateralsAnswerPM);                
 
                 customsCollateralPM.ChangeSetOp = ChangeSetOperation.Update;
                 updateService.Update(customsCollateralPM, true);
             });
+
+            return customsCollateralList;
         }
     }
 }
