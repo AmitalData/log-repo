@@ -198,7 +198,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         public void UpdateStatusFromVizion(VisionContainerStatus containerStatus)
         {
-            this.InsertNewAnalyzeQueue(containerStatus);
+
+            var shipmentsContext = ShipmentsContext.GetContext(0);
+            var allContainerTrackingRequests = shipmentsContext.ContainerTrackingRequests.Where(e => e.RequestId == containerStatus.reference_id && e.Status == ContainerTrackingRequestStatus.Active).ToList();
+            foreach (var containerTrackingRequest in allContainerTrackingRequests)
+            {
+                BuildCommunicationLogUpdateStatus(containerStatus, containerTrackingRequest);
+            }
+
+            //this.InsertNewAnalyzeQueue(containerStatus);
         }
         private void InsertNewAnalyzeQueue(object containerStatus)
         {
