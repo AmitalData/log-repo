@@ -259,7 +259,7 @@ namespace WebFreight.Web.Helpers
                 documentOutId = documentOutRepository.GetDocumentOutIdByDocumentTypeIdAndEntityId(entityId, automation.DocumentTypeId, objectTableId, automation.Tenant);
                 if (string.IsNullOrEmpty(documentOutId))
                 {
-                    DocumentHelper documentHelper = new DocumentHelper();
+                    DocumentHelper documentHelper = new DocumentHelper(true);
                     DocumentOutPM documentOutPM = documentHelper.CreateDocumentOut(automation.DocumentTypeId, entityId, "", "", objectTableId, tenant, userId);
                     if (documentOutPM != null) documentOutId = documentOutPM.Id;
                 }

@@ -28,8 +28,17 @@ namespace Logitude.BL.Helpers
     public class DocumentHelper
     {
 
+        private readonly bool IsAutomation;
+        private int Tenant;
+
+        public DocumentHelper(bool isAutomation = false)
+        {
+            IsAutomation = isAutomation;
+        }
+
         public DocumentOutPM CreateDocumentOut(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, int tenant, string userId = null)
         {
+            this.Tenant = tenant;
             try
             {
                 ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
@@ -74,7 +83,7 @@ namespace Logitude.BL.Helpers
                 documentsFilingRepository.Add(newDocumentFiling);
 
                 //----------------------------------------
-                DocumentOut newDocument = new DocumentOut() { EmailTemplateId = emailTemplateId, DocumentTemplateId = documentTemplateId, Tenant = tenant, Issued = false, };
+                DocumentOut newDocument = CreateDocumentOutInstance(userId, documentTemplateId, emailTemplateId);
                 newDocument.Id = newDocumentFiling.Id;
                 documentOutRepository.Add(newDocument);
 
@@ -123,6 +132,16 @@ namespace Logitude.BL.Helpers
                 ExceptionHandler.HandleException(new Exception(Error), DateTime.Now, 0, "", authenticateduser, "", ip);
                 throw new Exception(Error);
             }
+        }
+
+        private DocumentOut CreateDocumentOutInstance(string userId, string documentTemplateId, string emailTemplateId)
+        {
+            DocumentOut documentOut = new DocumentOut() { EmailTemplateId = emailTemplateId, DocumentTemplateId = documentTemplateId, Tenant = Tenant, Issued = false };
+            if (!IsAutomation) return documentOut;
+            documentOut.Issued = true;
+            documentOut.IssuedDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+            documentOut.IssuedByUserId = userId;
+            return documentOut;
         }
 
         private string RandomString(int length)
