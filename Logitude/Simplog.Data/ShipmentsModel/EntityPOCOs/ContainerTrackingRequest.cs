@@ -22,6 +22,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string SearchFields { get; set; }
         public string CarrierCode { get; set; }
         public string Status { get; set; }
+        public bool IsSimulate { get; set; }
+
 
     }
 }

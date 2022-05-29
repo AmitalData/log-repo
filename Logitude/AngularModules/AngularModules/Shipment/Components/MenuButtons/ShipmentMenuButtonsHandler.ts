@@ -530,10 +530,18 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             ContainerId:null,
             ShipmentId:this.EntityPM.Id,
             IsFromContainer:false,
+            IsSimulate:false,
             SourceCode:'VZN'
         }
         shipmentContainersWebService.ViziionUnsubscribe(args).subscribe(e=>{
             this.CurrentSession.StopBusyIndicator();
+            var messageWindow = new MessageWindow();
+            if(e.HasError){
+                messageWindow.Show(e.ErrorsArray.join(', '));
+            }else{
+                var messageWindow = new MessageWindow();
+                messageWindow.Show(e.Result.message);
+            }
         })
     }
 

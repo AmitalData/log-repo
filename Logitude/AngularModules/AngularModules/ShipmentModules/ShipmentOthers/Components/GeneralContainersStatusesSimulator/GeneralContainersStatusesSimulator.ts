@@ -6,6 +6,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { GeneralContainerStatusSimulatorArgs } from 'Shipment/DataContract/GeneralContainerStatusSimulatorArgs';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { UnsubscribeArgs } from 'Shipment/DataContract/UnsubscribeArgs';
 
 @Component({
 
@@ -54,6 +55,28 @@ export class GeneralContainersStatusesSimulatorComponent extends BaseComponent {
         });
     }
 
+    ViziionUnsubscribe() {
+        var shipmentContainersWebService = new ShipmentContainersWebService();
+        this.CurrentSession.StartBusyIndicator("Unsubscribe...");
+        var args:UnsubscribeArgs =  {
+            ContainerId:this.generalContainerStatusSimulatorArgs.ContainerId,
+            ShipmentId:this.generalContainerStatusSimulatorArgs.ShipmentId,
+            IsFromContainer:false,
+            IsSimulate:true,
+            SourceCode:'VZN'
+        }
+        shipmentContainersWebService.ViziionUnsubscribe(args).subscribe(e=>{
+            this.CurrentSession.StopBusyIndicator();
+            if(e.HasError){
+                this.ValidationErrorsList = e.ErrorsArray;
+            }else{
+                var messageWindow = new MessageWindow();
+                this.ValidationErrorsList = [];
+                messageWindow.Show(e.Result.message);
+            }
+            
+        })
+    }
 
 }
 

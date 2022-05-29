@@ -36,5 +36,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public string ContainerId { get; set; }
         public string ShipmentId { get; set; }
         public string SourceCode { get; set; }
+        public bool IsSimulate { get; set; }
+
     }
 }

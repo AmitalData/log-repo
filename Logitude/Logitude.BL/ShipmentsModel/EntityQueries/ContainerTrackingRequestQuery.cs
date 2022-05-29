@@ -44,7 +44,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      ContainerId = a.ContainerId,
                                                      CreateDate = a.CreateDate,
                                                      ShipmentId = a.ShipmentId,
-                                                     Status = a.Status
+                                                     Status = a.Status,
+                                                     IsSimulate = a.IsSimulate,
                                                  }).FirstOrDefault();
 
             return entity;
@@ -55,6 +56,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             var containerTrackingRequestQuery = repository.context.ContainerTrackingRequests.Where(e => e.Tenant == tenant
                 && e.Status == ContainerTrackingRequestStatus.Active
+                && e.IsSimulate == unsubscribeArgs.IsSimulate
                 && e.Provider == unsubscribeArgs.SourceCode);
             if (unsubscribeArgs.IsFromContainer)
             {
@@ -62,7 +64,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             else
             {
-                containerTrackingRequestQuery = containerTrackingRequestQuery.Where(e => e.ContainerId == unsubscribeArgs.ShipmentId);
+                containerTrackingRequestQuery = containerTrackingRequestQuery.Where(e => e.ShipmentId == unsubscribeArgs.ShipmentId);
             }
             ContainerTrackingRequestPM entity = containerTrackingRequestQuery.Select(a => new ContainerTrackingRequestPM()
             {
@@ -78,6 +80,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CreateDate = a.CreateDate,
                 ShipmentId = a.ShipmentId,
                 Status = a.Status,
+                IsSimulate = a.IsSimulate,
             }).FirstOrDefault();
 
             return entity;
@@ -102,6 +105,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                    CreateDate = a.CreateDate,
                                                                    ShipmentId = a.ShipmentId,
                                                                    Status = a.Status,
+                                                                   IsSimulate = a.IsSimulate,
                                                                });
             return result;
         }
