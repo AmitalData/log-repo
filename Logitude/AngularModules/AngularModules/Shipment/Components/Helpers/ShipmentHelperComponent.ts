@@ -53,7 +53,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
             this.Listen();
             this.BuildComponent();
-            this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator");
+            this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator") && this.EntityPM.ShipmentTypeId == "FCLD";
 
         }
     }
