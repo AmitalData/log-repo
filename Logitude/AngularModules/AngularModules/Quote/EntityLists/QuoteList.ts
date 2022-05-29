@@ -147,6 +147,7 @@ export class QuoteList {
 		AutomaticallyCloseDays: number;
 		UpdateDate: Date;
 		UpdatedByUserId: string;
+		UpdatedByUser: string;
 		ProductCode: string;
 		IncotermCode: string;
 		TransitTime: string;
