@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using WebFreight.Web.ContainerTracking;
 using WebFreight.Web.Helpers.Analyzers;
 using WebFreight.Web.Helpers.TicketAnalyzer;
 
@@ -30,7 +31,8 @@ namespace CommunicationWorkerRole
 
                         if (analyzeQueue != null)
                         {
-                            ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueRepository);
+                            //ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueRepository);
+                            ContainerTrackingGeneralAnalyzer analyzer = new ContainerTrackingGeneralAnalyzer("Ocean Insight", analyzeQueue, analyzeQueueRepository);
                             analyzer.Run();
                             LogDoneItemInMemory();
                         }
