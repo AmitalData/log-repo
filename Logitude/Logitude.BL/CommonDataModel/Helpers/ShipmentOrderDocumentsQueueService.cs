@@ -14,7 +14,10 @@ namespace Logitude.BL.CommonDataModel.Helpers
 
         public void Build(DocumentsFilingPM documentsFiling)
         {
-            var objectTableName = ObjectTableRepository.GetSingleObjectTableById(documentsFiling.ObjectTableId, documentsFiling.Tenant).Name;
+
+            if (string.IsNullOrEmpty(documentsFiling.ObjectTableId)) return;
+
+            var objectTableName = ObjectTableRepository.GetSingleObjectTableById(documentsFiling.ObjectTableId, documentsFiling.Tenant)?.Name;
             if (objectTableName != "ShipmentOrder") return;
 
             ShipmentOrder shipmentOrder = GetShipmentOrder(documentsFiling);
