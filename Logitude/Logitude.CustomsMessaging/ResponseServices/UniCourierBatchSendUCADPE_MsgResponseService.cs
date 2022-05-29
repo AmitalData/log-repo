@@ -60,6 +60,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationIdsList.RemoveAll(x => rp.allWithoutdeclarationIdsList.Contains(x));
 
             List<string> declarationIdsListToSend = new List<string> { };
+            List<string> customsReferencesListToSend = new List<string> { };
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
             foreach (var item in declarationIdsList)
             {
@@ -71,6 +72,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
+                    CustomsDocumentQueryService myCustomsDocumentQueryService = new CustomsDocumentQueryService(customContext);
+                    CustomsDocumentPM customsDocumentPM = myCustomsDocumentQueryService.GetSingle(customsDocumentsTicketPMList.FirstOrDefault().DocumentsFilingId, false, false);
+                    if (customsDocumentPM != null && !string.IsNullOrEmpty(customsDocumentPM.CustomsDocId))
+                    {
+                        customsReferencesListToSend.Add(customsDocumentPM.CustomsDocId);
+                    }
                     declarationIdsListToSend.Add(item);
                 }
             }
@@ -79,13 +86,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DeclarationPM _MyDeclarationPM;
             var myDeclarationQueryService = new DeclarationQueryService(customContext);
 
-            foreach (var item in declarationIdsListToSend)
+            foreach (var item in customsReferencesListToSend)
             {
                 _MyDeclarationPM = myDeclarationQueryService.GetSingle(item, false, false);
                 if (_MyDeclarationPM != null)
                 {
                     LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask for Declaration: " + item);
-                    unifreightTaskService.OpenUnifreighTask(_MyDeclarationPM, "L2USID", null, false, "");
+                    unifreightTaskService.OpenUnifreighTaskGen(_MyDeclarationPM, "GDMFILING", item, "L2USID", null, false, "", false);
                 }
             }
         }
