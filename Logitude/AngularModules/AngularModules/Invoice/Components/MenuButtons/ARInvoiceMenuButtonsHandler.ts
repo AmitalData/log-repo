@@ -487,17 +487,21 @@ export class ARInvoiceMenuButtonsHandler {
         this.EntityPM.SetApproved = false;
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelDraft = false;
-        this.EntityPM.SATTransferStatusCode = this.GetSATTransferStatusCode();
+        this.EntityPM.SATTransferStatusCode = this.GetSATTransferStatusCode(false);
         this.entityArgs.EditComponent.SaveChanges("Resending Invoice to SAT");
     }
 
-    private GetSATTransferStatusCode() {
+    private GetSATTransferStatusCode(IsSetVoid) {
         const SATCancelErrorsInRelationReasonCode: string = "01";
         const SATNotTransferedStatusCode: string = "NT";
         const SATInTransferStatusCode: string = "TG";
 
         if (this.EntityPM.SATCancelReasonCode == SATCancelErrorsInRelationReasonCode && AppTool.IsNullOrEmpty(this.EntityPM.RelatedInvoice)) {
             return SATNotTransferedStatusCode;
+        }
+
+        if (IsSetVoid) {
+            return this.EntityPM.SATTransferStatusCode;
         }
 
         return SATInTransferStatusCode;
@@ -960,6 +964,7 @@ export class ARInvoiceMenuButtonsHandler {
         }
         
         this.EntityPM.SATCancelReasonCode = cancelReason;
+        this.EntityPM.SATTransferStatusCode = this.GetSATTransferStatusCode(true);
         this.VoidClicked();
     }
 
