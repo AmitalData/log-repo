@@ -161,6 +161,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public int? AutomaticallyCloseDays { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
+        public string UpdatedByUser { get; set; }
+
         public string ProductCode { get; set; }
         public string IncotermCode { get; set; }
         public string TransitTime { get; set; }

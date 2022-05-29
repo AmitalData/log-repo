@@ -371,6 +371,7 @@ namespace WebFreight.Web.QuoteModel.DomainServices
                     ShipperReference1 = f.ShipperReference1,
                     LastModified = f.LastModified,
                     CreatedByUser = f.CreatedByUser.Contact.EnglishName,
+                    UpdatedByUser = f.UpdatedByUser.Contact.EnglishName,
                     QuoteTypeCode = f.QuoteTypeCode,
                     ShipmentType = f.ShipmentType == null ? null : f.ShipmentType.Name,
                     DirectionId = f.DirectionId,
