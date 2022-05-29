@@ -1387,7 +1387,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     AppendLogLine("Customer Card does not exist for Amital Customer Code " + amitalCustomerCode);
                     MyGenericResponseObj.Message = "Customer Card does not exist for Amital Customer Code " + amitalCustomerCode;
-                    
+
                     if(CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight)
                         return null;
 
