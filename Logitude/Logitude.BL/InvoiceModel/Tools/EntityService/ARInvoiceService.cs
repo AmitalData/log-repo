@@ -525,7 +525,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-            if (this.entityPM.SetVoided)
+            if (IsSendInvoiceSATCancellation(false))
             {
                 this.sATInterfaceHelper.HandleInvoiceSATCancellation(entityPM, invoice);
             }
@@ -612,11 +612,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
 
-                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant , EntityId = entityPM.Id });
+                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
 
-                ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId); 
+                ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
 
-                 
+
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
 
@@ -642,7 +642,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdateInvoiceAmountDue();
                     this.UpdatePaidDate();
                 }
-                
+
                 this.BuildSearchFields();
                 entityAutomationService.RunAutomation();
             }
@@ -650,8 +650,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
             ARPaymentReferencesService ARPaymentReferencesService = new ARPaymentReferencesService(this.objectContext);
-            invoice.PaymentReferences = ARPaymentReferencesService.GetARInvoicePaymentRefreneces(invoice); 
-              
+            invoice.PaymentReferences = ARPaymentReferencesService.GetARInvoicePaymentRefreneces(invoice);
+
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
@@ -675,7 +675,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.AfterServiceFinished();
         }
 
+        private bool IsSendInvoiceSATCancellation(bool discardStatus)
+        {
+            const string cancelWithErrorOperationCode = "01";
+            if (this.entityPM.SATCancelReasonCode == cancelWithErrorOperationCode && string.IsNullOrEmpty(this.entityPM.RelatedInvoice))
+            {
+                return false;
+            }
 
+            return discardStatus ? true : this.entityPM.SetVoided;
+        }
 
         private void ARInvoiceStockNumber()
         {
@@ -4215,11 +4224,31 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void OnResendToSAT()
         {
-            if (entityPM.ResendToSAT && !string.IsNullOrEmpty(invoice.TransmissionError))
+            if (!entityPM.ResendToSAT) return;
+            if (!AllowResendToSAT()) return;
+
+            const string voidInvoiceStatusCode = "VD";
+            if (invoice.StatusCode == voidInvoiceStatusCode && IsSendInvoiceSATCancellation(true))
+            {
+                this.sATInterfaceHelper.HandleInvoiceSATCancellation(entityPM, invoice);
+            }
+            else
             {
                 this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
             }
         }
+
+        private bool AllowResendToSAT()
+        {
+            const string cancelWithErrorOperationCode = "01";
+            if (invoice.SATCancelReasonCode == cancelWithErrorOperationCode)
+            {
+                return !string.IsNullOrEmpty(this.entityPM.RelatedInvoice);
+            }
+
+            return !string.IsNullOrEmpty(invoice.TransmissionError);
+        }
+
         private void UpdatePaymentsNumbers()
         {
             if (this.isUpdatingPayments)

@@ -7,7 +7,7 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
     selector: 'ComboBox',
 
     templateUrl: './ComboBox.html',
-    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithCheckBoxes', 'WithIcons', 'CyData','ListType'],
+    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithCheckBoxes', 'WithIcons', 'CyData','ListType', 'AdditionalTitleBinding'],
 })
 
 export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
@@ -40,6 +40,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     public WithIcons: boolean = false;
     public WithCheckBoxes: boolean = false;
     public Binding: string = null;
+    public AdditionalTitleBinding: string = null;
     public ControlId: string = null;
     public DropdownId: string = null;
     public ListControlId: string = null;
