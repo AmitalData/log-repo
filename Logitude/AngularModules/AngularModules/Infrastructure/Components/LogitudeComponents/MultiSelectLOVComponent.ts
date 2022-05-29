@@ -147,8 +147,10 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
         this._CD.detectChanges();
     }
     addOnBlur() {
-        if (this.MyLogLovV2Component.SelectedItem == null) {
+        var list: any[] = this.DataContext[this.LOVListComponentPropName];
+        if (this.MyLogLovV2Component.SelectedItem == null && list.length == 0) {
             this.DropdownDisplayClose();
+
         }
     }
 
