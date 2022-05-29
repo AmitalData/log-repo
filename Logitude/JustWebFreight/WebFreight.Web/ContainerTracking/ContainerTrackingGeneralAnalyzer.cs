@@ -1,7 +1,11 @@
-﻿using Logitude.Server.Tools;
+﻿using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
@@ -68,27 +72,15 @@ namespace WebFreight.Web.ContainerTracking
         {
             try
             {
-                this.ConnectAnalyzeQueue();
-            }
-            catch (Exception ex)
-            {
-                this.OnCatchAnalyzingError(ex);
-                throw ex;
-            }
-        }
-        private void ConnectAnalyzeQueue()
-        {
-            try
-            {
                 this.ConnectAnalyzeQueueToTenantAndEntity();
 
-                if(trackingSource == "Ocean Insight")
+                if (trackingSource == "Ocean Insight")
                 {
                     OceanInsightAnalyzer oceanInsightAnalyzer = new OceanInsightAnalyzer(externalTasksQueues);
                     containerUpdatedFields = oceanInsightAnalyzer.Run();
                 }
 
-                else if(trackingSource == "Vizion")
+                else if (trackingSource == "Vizion")
                 {
                     VizionAnalyzer vizionAnalyzer = new VizionAnalyzer();
                     containerUpdatedFields = vizionAnalyzer.Run();
@@ -101,6 +93,7 @@ namespace WebFreight.Web.ContainerTracking
             catch (Exception ex)
             {
                 this.OnCatchAnalyzingError(ex);
+                throw ex;
             }
         }
         private void ConnectAnalyzeQueueToTenantAndEntity()
@@ -204,6 +197,12 @@ namespace WebFreight.Web.ContainerTracking
 
     public class ContainerUpdatedFields
     {
+        public int Tenant { get; set; }
+        public IShipmentsContext ShipmentContext { get; set; }
+        public ContainerRepository ContainerRepository { get; set; }
+        public ShipmentPM ShipmentPM { get; set; }
+        public ContainerPM ContainerPM { get; set; }
+        public ContainersExternal ContainersExternal { get; set; }
         public DateTime? MainCarriageETD { get; set; }
         public DateTime? MainCarriageETA { get; set; }
         public DateTime? MainCarriageATD { get; set; }
@@ -307,5 +306,8 @@ namespace WebFreight.Web.ContainerTracking
         public DateTime? CarrierReleaseDate { get; set; }
         public DateTime? AvailablityDate { get; set; }
         public string AvailabilityLocation { get; set; }
+        public string ContainerStatus { get; set; }
+        public string ShipmentPackageId { get; set; }
+        public DateTime? EventDate { get; set; }
     }
 }

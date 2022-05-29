@@ -628,13 +628,7 @@ namespace WebFreight.Web.ContainerTracking
                             {
                                 this.CreateShipmentContainerStatus(item);
                                 this.GetContainersExternalData();
-                                this.BuildContainerUpdatedFields();
-
-                                //this.UpdateContainer();
-                                //this.UpdatePackage();
-                                //this.UpdateEmptyReturnLeg();
-                                //this.UpdateShipment();
-                                //this.SaveShipment(shipmentPM);
+                                this.BuildContainerUpdatedFields();                                
                             }
                         }
                     }
@@ -1292,6 +1286,7 @@ namespace WebFreight.Web.ContainerTracking
         private void BuildContainerUpdatedFields()
         {
             containerUpdatedFields = new ContainerUpdatedFields();
+            containerUpdatedFields.Tenant = logitudeTenant.Value;
             containerUpdatedFields.CurrentStatusDate = this.GetEventDate();
             containerUpdatedFields.CurrentStatus = this.GetContainerStatusName();
             containerUpdatedFields.CurrentLocation = this.ComputeCurrentStatusLocation();
@@ -1318,7 +1313,6 @@ namespace WebFreight.Web.ContainerTracking
             containerUpdatedFields.CustomsReleaseState = customs_release_state;
             containerUpdatedFields.CarrierReleaseState = carrier_release_state;
             containerUpdatedFields.TransshipmentCount = ts_count;
-
             containerUpdatedFields.MainCarriageETD = this.ComputeMainCarriageETD();
             containerUpdatedFields.MainCarriageETA = this.ComputeMainCarriageETA();
             containerUpdatedFields.MainCarriageATD = this.ComputeMainCarriageATD();
@@ -1383,6 +1377,14 @@ namespace WebFreight.Web.ContainerTracking
             containerUpdatedFields.CustomsReleaseDate = this.ComputeCustomsReleaseDate();
             containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
             containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
+            containerUpdatedFields.ShipmentContext = shipmentContext;
+            containerUpdatedFields.ContainerRepository = containerRepository;
+            containerUpdatedFields.ShipmentPM = shipmentPM;
+            containerUpdatedFields.ContainerPM = container;
+            containerUpdatedFields.ContainersExternal = containersExternal;
+            containerUpdatedFields.ContainerStatus = container_status;
+            containerUpdatedFields.ShipmentPackageId = shipmentPackagesId;
+            containerUpdatedFields.EventDate = this.GetEventDate();
         }
 
         private DateTime? ComputeMainCarriageETD()
