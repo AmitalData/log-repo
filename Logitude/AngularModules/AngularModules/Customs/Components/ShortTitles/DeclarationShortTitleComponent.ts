@@ -81,7 +81,7 @@ export class DeclarationShortTitleComponent {
 
         }
         else {
-            if (this.EntityPM.CustomFileNo) {
+            if (this.EntityPM.CustomFileNo && this.EntityPM.CustomerName) {
                 this._EntityNumber = this.EntityPM.CustomFileNo;
             }
             else if (this.EntityPM.CustomFileNo == null && this.EntityPM.CustomerName) {
