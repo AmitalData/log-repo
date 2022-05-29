@@ -84,6 +84,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             customsCollateralList.ForEach(customsCollateralItem =>
             {
                 CustomsCollateralPM customsCollateralPM = GetEntityPM(customsCollateralItem);
+                customsCollateralsAnswerPM.ChangeSetOp = ChangeSetOperation.Insert;
                 customsCollateralPM.CustomsCollateralsAnswers.Add(customsCollateralsAnswerPM);                
 
                 customsCollateralPM.ChangeSetOp = ChangeSetOperation.Update;
