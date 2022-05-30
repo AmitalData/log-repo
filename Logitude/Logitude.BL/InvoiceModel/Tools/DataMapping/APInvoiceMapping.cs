@@ -24,7 +24,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 if (isNewState)
                 {
                     entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-                    entityPM.CreatedByUserId = loggedContact.Id;
+                    if (string.IsNullOrWhiteSpace(entityPM.CreatedByUserId))
+                    {
+                        entityPM.CreatedByUserId = loggedContact.Id;
+                    }
                     entity.Id = entityPM.Id;
                     entity.InternalNumber = entityPM.InternalNumber;
                     entity.Tenant = entityPM.Tenant;
@@ -116,7 +119,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             }
 
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            entityPM.UpdatedByUserId = loggedContact.Id;
+            if (string.IsNullOrWhiteSpace(entityPM.UpdatedByUserId))
+            {
+                entityPM.UpdatedByUserId = loggedContact.Id;
+            }
             entity.UpdateDate = entityPM.UpdateDate;
             entity.UpdatedByUserId = entityPM.UpdatedByUserId;
             entity.MainEntityId = entityPM.MainEntityId;
