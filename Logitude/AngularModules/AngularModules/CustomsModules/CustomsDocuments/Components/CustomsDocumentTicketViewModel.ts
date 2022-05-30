@@ -732,23 +732,25 @@ export class CustomsDocumentTicketViewModel {
         if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)
             this.connectDocument(relatedDocumentViewModel);
 
-        else if (!relatedDocumentViewModel.CustomDocument.CustomsDocId) {
-            relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
-            this.connectDocument(relatedDocumentViewModel);
-
-        } else if (!relatedDocumentViewModel.CustomDocument.DeclarationId) {
-            SessionLocator.SelectedSession.StopBusyIndicator();
-            const accept: boolean = await this.confirmConnectionDiffrentDocTypeMsg();
-            
-            if (accept) {
+        else {
+            if (!relatedDocumentViewModel.CustomDocument.CustomsDocId) {
                 relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
-                await this.customDocumentNewVersionService.NewVersion(relatedDocumentViewModel.CustomDocument);
-                SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
                 this.connectDocument(relatedDocumentViewModel);
-            }
 
-        } else 
-            this.cnotConnectDiffrentTypeDocumentMessage();        
+            } else if (!relatedDocumentViewModel.CustomDocument.DeclarationId) {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                const accept: boolean = await this.confirmConnectionDiffrentDocTypeMsg();
+                
+                if (accept) {
+                    relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
+                    await this.customDocumentNewVersionService.NewVersion(relatedDocumentViewModel.CustomDocument, true);
+                    SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+                    this.connectDocument(relatedDocumentViewModel);
+                }
+                
+            } else 
+                this.cnotConnectDiffrentTypeDocumentMessage();        
+        }
     }
 
     private async checkFileBiggerFrom200MB(relatedDocumentViewModel: RelatedDocumentViewModel) {
