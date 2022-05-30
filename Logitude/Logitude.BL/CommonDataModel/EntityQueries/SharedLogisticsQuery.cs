@@ -25,6 +25,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 url = systemURL.Replace("/" + test[test.Length - 1], "");
             }
             string cargoTrackingPath = GetCargoTrackingUrlPath(url);
+            string brandingURLPath = GetBrandingURLPath(systemURL);
             return new SharedLogisticsPM()
             {
                 SystemURL = "<a style=" + styleLink + " href='" + systemURL + "'" + ">" + url + "</a>",
@@ -35,6 +36,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 ResetPasswordURL = "<a style=" + styleLink + " href='" + url + "[ResetPasswordURL]" + "'" + ">Reset my Password</a>",
                 InviteeName = "[InviteeName]",
                 URLprivateCargoTracking = "<a style=" + styleLink + " href='" + cargoTrackingPath + "'" + ">" + cargoTrackingPath + "</a>",
+                BrandingURL = "<a style=" + styleLink + " href='" + brandingURLPath + "'" + ">" + brandingURLPath + "</a>",
             };
         }
 
@@ -44,6 +46,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             cargoURL = cargoURL.Replace("https://", "");
             string cargoTrackingPath = "https://" + cargoURL.Split('/')[0] + "/CargoTracking/cargo-tracking/login";
             return cargoTrackingPath;
+        }
+        private static string GetBrandingURLPath(string systemURL)
+        {
+            string brandingURLPath = "https://" + systemURL + "/login";
+            return brandingURLPath;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Logitude.BL.CommonDataModel
         public string InvitationPassword { get; set; }
         public string InviteeName { get; set; }
         public string URLprivateCargoTracking { get; set; }
-
+        public string BrandingURL { get; set; }
     }
 }
    
