@@ -22,7 +22,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
             foreach (APInvoicePaymentPM invoicePayment in aPInvoice.InvoicePayments.Where(d=> d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete))
             {
                 this.AddNumberToNumbersField(ref numbersField, invoicePayment.PaymentNumber);
-                this.TrimLengthTo1000(ref numbersField);                
+                this.TrimLength(ref numbersField);                
             }
 
             return numbersField;
@@ -34,7 +34,19 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
             foreach (APPaymentInvoicePM paymentInvoice in aPPayment.PaymentInvoices.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete))
             {                
                 this.AddNumberToNumbersField(ref numbersField, paymentInvoice.APInvoiceNumber);
-                this.TrimLengthTo1000(ref numbersField);                
+                this.TrimLength(ref numbersField);                
+            }
+
+            return numbersField;
+        }
+
+        public string CopmuteARPaymentInvoicesNumbers(ARPaymentPM aRPayment)
+        {
+            string numbersField = "";
+            foreach (ARPaymentInvoicePM paymentInvoice in aRPayment.PaymentInvoices.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete))
+            {
+                this.AddNumberToNumbersField(ref numbersField, paymentInvoice.ARInvoiceNumber);
+                this.TrimLength(ref numbersField, 4000);
             }
 
             return numbersField;
@@ -46,7 +58,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
             foreach (APInvoicePayment payment in payments)
             {
                 this.AddNumberToNumbersField(ref numbersField, payment.APInvoice?.InvoiceNumber);
-                this.TrimLengthTo1000(ref numbersField);
+                this.TrimLength(ref numbersField);
             }
 
             return numbersField;
@@ -59,13 +71,13 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
                 allNumbersField = string.IsNullOrEmpty(allNumbersField) ? connectedNumber : allNumbersField + ", " + connectedNumber;
             }
         }
-        private void TrimLengthTo1000(ref string allNumbersField)
+        private void TrimLength(ref string allNumbersField, int lenght = 1000)
         {
             if (!string.IsNullOrEmpty(allNumbersField))
             {
-                if (allNumbersField.Length > 1000)
+                if (allNumbersField.Length > lenght)
                 {
-                    allNumbersField = allNumbersField.Substring(0, 1000);
+                    allNumbersField = allNumbersField.Substring(0, lenght);
                 }
             }
         }
