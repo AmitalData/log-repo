@@ -172,31 +172,6 @@ namespace Logitude.Server.Tools.CustomFields
 
 
 
-    public class CustomChildEntity
-    {
-        public string Id { get; set; }
-        public int Tenant { get; set; }
-        public string EntityId { get; set; }
-
-        public string ChildEntityId { get; set; }
-
-        public string ObjectTableId { get; set; }
-
-        public string ChildObjectTableId { get; set; }
-
-
-        public string Field1 { get; set; }
-        public string Field2 { get; set; }
-        public string Field3 { get; set; }
-        public string Field4 { get; set; }
-        public string Field5 { get; set; }
-
-
-    }
-
-
-
-
 
     public class ChildEntitiesCustomFieldArgs
     {
