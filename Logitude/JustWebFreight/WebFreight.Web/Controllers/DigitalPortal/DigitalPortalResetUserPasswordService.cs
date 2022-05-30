@@ -71,7 +71,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string tenantName = tenantManagementPM != null ? tenantManagementPM.Name : "";
             string siteUri = tenantManagementPM != null ? tenantManagementPM.CustomerURL : "";
             string environment = "Logitude";
-            string senderEmail = "no-reply@" + SecurityUtility.getLoggedDomain();
+            string senderEmail = "no-reply@" + siteUri;
             string teamName = "Digital Portal Team";
 
             var emailMessageParams = new EmailMessageParams
@@ -184,8 +184,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         private EmailParameters BuildEmailCommunicationLog(EmailCommunicationLogBuilderArgs emailCommunicationLogBuilderArgs, TenantManagmentPrivateLabelsPM privatelabel)
         {
             string tenantName = tenantManagementPM != null ? tenantManagementPM.Name : "";
-            string envir = "Cargo Tracking";
-            string fromemail = "no-reply@" + SecurityUtility.getLoggedDomain();
+            string envir = "Digital Portal";
+            string fromemail = "no-reply@" + tenantManagementPM.CustomerURL;
             string subject = $"Your {tenantName} {envir} Password";
 
             if (!string.IsNullOrEmpty(emailCommunicationLogBuilderArgs.Result.HtmlTemplate))
