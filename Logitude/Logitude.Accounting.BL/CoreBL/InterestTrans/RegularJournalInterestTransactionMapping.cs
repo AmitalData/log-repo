@@ -23,7 +23,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                 return;
             }
             if (regularJournal.AccountingEntityCode != AccountingEntityValues.Journal 
-                && regularJournal.AccountingEntityCode != AccountingEntityValues.Adjustment)
+                && regularJournal.AccountingEntityCode != AccountingEntityValues.Adjustment && regularJournal.AccountingEntityCode != AccountingEntityValues.BankAdjustment)
             {
                 return;
             }
@@ -65,7 +65,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
 
         private string GetInterestEntityType(JournalPM journal)
         {
-            if (journal.AccountingEntityCode == AccountingEntityValues.Journal)
+            if (journal.AccountingEntityCode == AccountingEntityValues.Journal || journal.AccountingEntityCode == AccountingEntityValues.BankAdjustment)
             {
                 return InterestEntityTypes.Journal;
             }
@@ -92,7 +92,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             var repoGLAccountFastFetch = new GLAccountRepository(regularJournal.Tenant);
             var myPartners = repoGLAccountFastFetch.GetByGLAccountsIdList(myPartnerIds.ToList(), regularJournal.Tenant);
             var ClientIds = myPartners
-                .Where(r => r.AccountTypeCode == GLAccountTypeEnum.Client.ToIntString())
+                .Where(r => r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Revenues+"" &&
+                r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Expenses+"" && r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Workers+"")
                 .Select(r => r.Id);
 
 
@@ -160,7 +161,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             var repoGLAccountFastFetch = new GLAccountRepository(externalJournal.Tenant);
             var myPartners = repoGLAccountFastFetch.GetByGLAccountsIdList(myPartnerIds.ToList(), externalJournal.Tenant);
             var ClientIds = myPartners
-                .Where(r => r.AccountTypeCode == GLAccountTypeEnum.Client.ToIntString())
+                .Where(r => r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Revenues + "" &&
+                r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Expenses + "" && r.ChartOfAccountsTypeCode != (int)ChartOfAccountsTypeEnum.Workers + "")
                 .Select(r => r.Id);
 
 
