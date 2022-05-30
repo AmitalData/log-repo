@@ -395,5 +395,9 @@
     Size="2000">
     <Constraints
       Nullable="true" />
+ 
   </Column>
+    <Index
+    Columns="Tenant,EntityId,ObjectTableId,ChildObjectTableId" />
+
 </Table>
