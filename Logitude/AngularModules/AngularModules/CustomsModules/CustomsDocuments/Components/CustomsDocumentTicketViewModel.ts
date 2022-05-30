@@ -735,7 +735,7 @@ export class CustomsDocumentTicketViewModel {
                 
                 if (accept) {
                     relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
-                    await this.customDocumentNewVersionService.NewVersion(relatedDocumentViewModel.CustomDocument);
+                    await this.customDocumentNewVersionService.NewVersion(relatedDocumentViewModel.CustomDocument, true);
                     SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
                     this.connectDocument(relatedDocumentViewModel);
                 }
