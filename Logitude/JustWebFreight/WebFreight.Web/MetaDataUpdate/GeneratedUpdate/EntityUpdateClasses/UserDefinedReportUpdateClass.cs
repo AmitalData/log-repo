@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class UserDefinedReportUpdateClass
    {  		
-		public const string HashString = "3be678a52dd89159d764b9040f48a105";
+		public const string HashString = "7eedb5367ee89d9066952a5fabfad9d4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1261,7 +1261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode UserDefinedReportTextCode_UserDefinedReportOAtLeastOnePeriodIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.AtLeastOnePeriodIsRequired", DefaultText = "At least one period is required",LocalDefaultText = @"חובה להקליד לפחות תקופה אחת ", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode UserDefinedReportTextCode_UserDefinedReportOZeroCloseBalanceLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.ZeroCloseBalanceLabel", DefaultText = "Exclude GLAccount with Close Balance 0",LocalDefaultText = @"כלול כרטיסים ללא תנועות עם יתרה 0", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode UserDefinedReportTextCode_UserDefinedReportOZeroCloseBalanceLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserDefinedReport.O.ZeroCloseBalanceLabel", DefaultText = "Exclude GLAccount with Close Balance 0",LocalDefaultText = @"לא לכלול כרטיסים ללא תנועות עם יתרה 0", ObjectTableId = UserDefinedReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
