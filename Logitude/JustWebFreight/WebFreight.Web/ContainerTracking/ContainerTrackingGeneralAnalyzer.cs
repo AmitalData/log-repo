@@ -2,12 +2,20 @@
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -16,6 +24,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using System.Xml.Serialization;
 
 namespace WebFreight.Web.ContainerTracking
@@ -144,10 +153,16 @@ namespace WebFreight.Web.ContainerTracking
                 var allContainerTrackingRequests = containerUpdatedFields.ShipmentContext.ContainerTrackingRequests.Where(e => e.RequestId == visionContainerStatus.reference_id && e.Status == ContainerTrackingRequestStatus.Active).ToList();
                 foreach (var containerTrackingRequest in allContainerTrackingRequests)
                 {
-                    // comm log
-                    //get container (containerId)
-                    // get shipment (shipment id)
-                    manager.Update();
+                    if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
+                        FillContainerId(containerTrackingRequest, visionContainerStatus);
+                    BuildCommunicationLogUpdateStatus(containerTrackingRequest);
+                    if (!string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
+                    {
+                        //get container (containerId)
+                        // get shipment (shipment id)
+                        manager.Update();
+                    }
+                    
                 }
             }            
         }
@@ -208,6 +223,123 @@ namespace WebFreight.Web.ContainerTracking
             analyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(analyzeQueue.Tenant);
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
+        }
+
+        private void BuildCommunicationLogUpdateStatus( ContainerTrackingRequest containerTrackingRequest)
+        {
+            
+            using (TransactionScope scope = Simplog.Server.Infrastructure.Helpers.TransactionFactory.GetTransaction())
+            {
+                var byteArray = ConvertObjectToByteArray(visionContainerStatus);
+                var document = AddDocument(containerTrackingRequest.Tenant, byteArray);
+                var commLog = AddResponseCommunicationLog(containerTrackingRequest, document);
+                AddContainerTrackingResponse(commLog, containerTrackingRequest);
+                scope.Complete();
+            }
+        }
+        private byte[] ConvertObjectToByteArray(object simulatorArgs)
+        {
+            var objectText = JsonConvert.SerializeObject(simulatorArgs);
+            var jsonByteArray = Encoding.UTF8.GetBytes(objectText);
+            return jsonByteArray;
+        }
+        private void AddContainerTrackingResponse(CommunicationLog commLog, ContainerTrackingRequest containerTrackingRequest)
+        {
+            var containerTrackingResponse = CreateContainerTrackingResponse(commLog, containerTrackingRequest);
+            var shipmentContext = ShipmentsContext.GetContext(containerTrackingRequest.Tenant);
+            ContainerTrackingResponseService containerTrackingResponseService = new ContainerTrackingResponseService(shipmentContext, containerTrackingRequest.Tenant);
+            containerTrackingResponseService.Create(containerTrackingResponse);
+        }
+
+        private ContainerTrackingResponsePM CreateContainerTrackingResponse(CommunicationLog commLog, ContainerTrackingRequest containerTrackingRequest)
+        {
+            return new ContainerTrackingResponsePM()
+            {
+                CommunicationLogId = commLog.Id,
+                Tenant = containerTrackingRequest.Tenant,
+                ContainerTrackingRequestId = containerTrackingRequest.Id,
+            };
+        }
+
+        private void FillContainerId(ContainerTrackingRequest containerTrackingRequest, VisionContainerStatus containerStatus)
+        {
+            var shipmentContext = ShipmentsContext.GetContext(containerTrackingRequest.Tenant);
+            var container = shipmentContext.Containers.Where(r => r.ShipmentId == containerTrackingRequest.ShipmentId && containerStatus.payload.container_id == r.ContainerNumber).FirstOrDefault();
+            if (container == null)
+                return;
+            containerTrackingRequest.ContainerId = container.Id;
+        }
+
+        private Document AddDocument(int tenant, byte[] byteArray)
+        {
+            var commonContext = CommonDataContext.GetContext(tenant);
+            DocumentRepository documentrepository = new DocumentRepository(commonContext);
+            Document document = CreateDocument(tenant, byteArray);
+            documentrepository.Add(document);
+            documentrepository.SubmitChanges();
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            BlobFileInfo fileInfo = CreateBlobFile(document, byteArray);
+            storageservice.Write(byteArray, fileInfo);
+            return document;
+        }
+        private BlobFileInfo CreateBlobFile(Document document, byte[] byteData)
+        {
+            return new BlobFileInfo()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                Tenant = document.Tenant,
+                FileSize = byteData.Length,
+
+            };
+        }
+       
+        private Document CreateDocument(int tenant, byte[] byteData)
+        {
+            return new Document()
+            {
+                CreateDate = DateTime.Now,
+                Extension = "json",
+                FileSize = byteData.Length,
+                Tenant = tenant,
+                Id = IdCounter.GetNumber("Document", tenant),
+                HasFile = true,
+                Folder = "ContainerTrackingStatus",
+            };
+        }
+        private CommunicationLog AddResponseCommunicationLog(ContainerTrackingRequest containerTrackingRequest, Document document)
+        {
+            var commonContext = CommonDataContext.GetContext(containerTrackingRequest.Tenant);
+
+            CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(containerTrackingRequest.Tenant);
+            var objectTableName = string.IsNullOrEmpty(containerTrackingRequest.ContainerId) ? "Shipment" : "Container";
+            ObjectTable objectTable = objecttableRep.GetObjectTableByName(objectTableName, 0, true);
+            var commLog = CreateResponseCommunicationLog(objectTable, containerTrackingRequest, document);
+            communicationLogRepository.Add(commLog);
+            communicationLogRepository.SubmitChanges();
+            return commLog;
+        }
+        private CommunicationLog CreateResponseCommunicationLog(ObjectTable objectTable, ContainerTrackingRequest containerTrackingRequest, Document document)
+        {
+            return new CommunicationLog()
+            {
+                Id = IdCounter.GetNumber("CommunicationLog", containerTrackingRequest.Tenant),
+                LastStatusDate = TenantServerConfigration.GetCurrentDateTime(containerTrackingRequest.Tenant),
+                InOut = "I",
+                ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
+                Subject = "General Update Container Status",
+                Tenant = containerTrackingRequest.Tenant,
+                CommunicationStatusTypeCode = "D",
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(containerTrackingRequest.Tenant),
+                DocumentId = document.Id,
+                CreateDateUTC = DateTime.UtcNow,
+                LastStatusDateUTC = DateTime.UtcNow,
+                Priority = 1,
+                EntityId = string.IsNullOrEmpty(containerTrackingRequest.ContainerId) ? containerTrackingRequest.ShipmentId : containerTrackingRequest.ContainerId
+
+            };
         }
     }
 
