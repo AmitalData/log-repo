@@ -77,7 +77,8 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
     public CustomerDependencyProperty2: string = "True";
 
     private ComputeCustomerDependency() {
-        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV && this.IsAllowAgentFeatureToggle()) {
+        var allowAgentFeatureToggle = this.IsAllowAgentFeatureToggle();
+        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV && allowAgentFeatureToggle != null) {
             this.CustomerDependencyProperty1 = "PO,CS,AG";
             this.CustomerDependencyProperty2 = null;
         }
