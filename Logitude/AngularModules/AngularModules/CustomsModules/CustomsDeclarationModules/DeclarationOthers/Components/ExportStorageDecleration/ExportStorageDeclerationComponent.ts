@@ -439,4 +439,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.declarationPM = windowArgs.DeclarationPM;
         this.ExportFile = this.declarationPM.ExportFile;
     }
+    CheackIsSelected(){
+
+      (this.IsSelected==undefined || !this.IsSelected)?this.OnAllBtnClicked():this.OnNoneBtnClicked()
+    }
 }
