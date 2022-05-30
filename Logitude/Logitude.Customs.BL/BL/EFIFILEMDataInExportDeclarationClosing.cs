@@ -26,17 +26,16 @@ namespace Logitude.Customs.BL.BL
                 entityPM.DeclarationId = dec.Id;
                 entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                 entityPM.Tenant = tenant;
-                foreach (var con in dec.Consignments)
+                var list = dec.Consignments.Where(con => con.ConsignmentType == "E").ToList();
+                if (list.Count == 1)
                 {
-                    if (con.ConsignmentType == "E")
-                    {
-                        entityPM.FinalCargoTypeCode = con.CargoTypeCode;
-                        entityPM.FinalSecondCargoId = con.SecondCargoID;
-                        entityPM.FinalThirdCargoId = con.ThirdCargoID;
-                        entityPM.FinalManifestNumber = con.ManifestNumber;
-                        entityPM.FinalShipCode = con.ShipCode;
-                        entityPM.FinalLoadingSite = con.ExportLoadingPortCode;
-                    }
+                    var con = list.FirstOrDefault();
+                    entityPM.FinalCargoTypeCode = con.CargoTypeCode;
+                    entityPM.FinalSecondCargoId = con.SecondCargoID;
+                    entityPM.FinalThirdCargoId = con.ThirdCargoID;
+                    entityPM.FinalManifestNumber = con.ManifestNumber;
+                    entityPM.FinalShipCode = con.ShipCode;
+                    entityPM.FinalLoadingSite = con.ExportLoadingPortCode;
                 }
                 entityPM = SetEFIFILEMData(declarationid, tenant, entityPM, dec);
             }
@@ -51,14 +50,21 @@ namespace Logitude.Customs.BL.BL
 
             if (setting.IsConnectedToUniFreight)
             {
+                var isFromNewEntity = true;
                 if (dec == null)
+                {
+                    isFromNewEntity = false;
                     dec = new DeclarationQueryService(tenant).GetSingle(declarationid, true, false);
-
+                }
                 if (dec != null && dec.ExportFile != null && dec.Direction == "E" && dec.TransportModeId == "A") 
                 {
-                    entityPM.FinalCargoTypeCode = "36";
-                    entityPM.FinalSecondCargoId = "";
-                    entityPM.FinalThirdCargoId = "";
+                    if (isFromNewEntity)
+                    {
+                        entityPM.FinalCargoTypeCode = "36";
+                        entityPM.FinalSecondCargoId = "";
+                        entityPM.FinalThirdCargoId = "";
+                        entityPM.FinalManifestNumber = "";
+                    }
                     List<AmitalContext> _AmitalContextList = new List<AmitalContext>();
                     var tenantAmitalContext = _AmitalContextList.FirstOrDefault(rec => rec.TenantSeed == tenant);
                     if (tenantAmitalContext == null)
@@ -98,7 +104,8 @@ namespace Logitude.Customs.BL.BL
                                     AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
                                 }
                                 entityPM.MAIN_AWB = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
-                                entityPM.FinalManifestNumber = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
+                                if (isFromNewEntity)
+                                    entityPM.FinalManifestNumber = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
                             }
                         }
                     }
