@@ -47,6 +47,7 @@ using Logitude.BL.Resolvers;
 using Logitude.BL.ExternalService;
 using Logitude.BL.InvoiceModel.CloseTables;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours;
+using Logitude.BL.InvoiceModel.Tools.Behaviours;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -90,6 +91,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private Tenant TenantObject;
         private string QBOARPaymentId;
         List<VATTypesGroup> allVatGroups;
+        string loggedUserEmail;
+        private InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour;
         public ARInvoiceService(IInvoiceContext objectContext, int tenant)
         {
             this.sATInterfaceHelper = new SATInterfaceHelper();
@@ -111,7 +114,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             this.contactRepository = new ContactRepository(myCommonContext);
- 
+            this.invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
+
             allShipments = new List<Shipment>();
             allReceivables = new List<ShipmentReceivable>();
             shipmentRepository = new ShipmentRepository(myShipmentContext);
@@ -121,7 +125,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant select d).ToList();
             this.GetAccountingSystem();
         }
-        string loggedUserEmail;
+        
         public ARInvoiceService(IInvoiceContext objectContext, int tenant, string loggedUserEmail)
         {
             this.sATInterfaceHelper = new SATInterfaceHelper();
@@ -143,6 +147,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             this.contactRepository = new ContactRepository(myCommonContext);
+            this.invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
 
             allShipments = new List<Shipment>();
             allReceivables = new List<ShipmentReceivable>();
@@ -175,6 +180,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.accountingSettingRepository = new AccountingSettingRepository(commonMockContext);
             this.accountingSystemRepository = new AccountingSystemRepository(commonMockContext);
             this.contactRepository = new ContactRepository(commonMockContext);
+            this.invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
 
             allShipments = new List<Shipment>();
             allReceivables = new List<ShipmentReceivable>();
@@ -3377,6 +3383,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             invoicePaymentRepository.SubmitChanges();
+            this.UpdatePaymentInvoicesNumbers();
         }
 
         private void CreateInvoicePayment(ARInvoicePaymentPM itemPM)
@@ -4652,6 +4659,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             entityPM.SubTotalInInvoiceCurrency = MethodHelper.Round(invoiceLines.Sum(s => s.InvoiceCurrencyAmount), 2);
             entityPM.AmountInLocalCurrency = MethodHelper.Round(entityPM.SubTotalInLocalCurrency + entityPM.TotalVATs.Sum(s => s.LocalVATAmount), 2);
             entityPM.AmountInInvoiceCurrency = MethodHelper.Round(entityPM.SubTotalInInvoiceCurrency + entityPM.TotalVATs.Sum(s => s.InvoiceCurrencyVATAmount), 2);
+        }
+        private void UpdatePaymentInvoicesNumbers()
+        {
+            foreach (ARInvoicePaymentPM item in invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete))
+            {
+                ARPayment aRPayment = paymentRepository.GetSingleARPayment(item.ARPaymentId, tenant);
+                if (aRPayment == null)
+                {
+                    return;
+                }
+
+                IQueryable<ARInvoicePayment> invoices = invoicePaymentRepository.GetARInvoicePaymentByPaymentId(item.ARPaymentId, tenant);
+                aRPayment.InvoiceNumbers = invoicePaymentNumbersBehaviour.CopmuteARPaymentInvoicesNumbersFromInvoicePayments(invoices);
+                aRPayment.InvoiceNumber = invoicePaymentNumbersBehaviour.BuildARPyaymentSingleInvoiveNumber(invoices, objectContext);
+                paymentRepository.Update(aRPayment);
+            }
         }
     }
 }

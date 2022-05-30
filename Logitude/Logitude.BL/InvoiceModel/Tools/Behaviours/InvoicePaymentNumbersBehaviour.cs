@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,47 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
             return numbersField;
         }
 
+        public string CopmuteARPaymentInvoicesNumbersFromInvoicePayments(IQueryable<ARInvoicePayment> invoices)
+        {
+            string numbersField = "";
+            foreach (ARInvoicePayment invoicePayment in invoices)
+            {
+                this.AddNumberToNumbersField(ref numbersField, invoicePayment.ARInvoice?.InvoiceNumber);
+                this.TrimLength(ref numbersField, 4000);
+            }
+
+            return numbersField;
+        }
+
+        public string BuildARPyaymentSingleInvoiveNumber(IQueryable<ARInvoicePayment> invoices, IInvoiceContext objectContext)
+        {
+            string invoiceNumber = null;
+            if (invoices.Count() > 0)
+            {
+                if (invoices.Count() == 1)
+                {
+                    string invoiceId = invoices.Select(s => s.ARInvoiceId).FirstOrDefault();
+
+                    var data = (from d in objectContext.ARInvoices
+                                where d.Tenant == this.tenant
+                                && d.Id == invoiceId
+                                select new
+                                {
+                                    InvoiceNumber = d.InvoiceNumber,
+                                }).FirstOrDefault();
+
+                    invoiceNumber = data.InvoiceNumber;
+                }
+
+                else
+                {
+                    invoiceNumber = "Multi";
+                }
+            }
+
+            return invoiceNumber;
+        }
+
         private void AddNumberToNumbersField(ref string allNumbersField, string connectedNumber)
         {
             if (!string.IsNullOrEmpty(connectedNumber))
@@ -80,6 +122,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
                     allNumbersField = allNumbersField.Substring(0, lenght);
                 }
             }
-        }
+        }        
     }
 }
