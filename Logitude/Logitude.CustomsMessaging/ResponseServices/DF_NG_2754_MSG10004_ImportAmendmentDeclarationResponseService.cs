@@ -538,6 +538,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                 declarationPM.DeclarationTaxes = GetDeclarationTaxesPM(declaration, declarationOrg, declarationId, tenant);
+                if (declarationOrg != null && !_isUpdateAfterAccept)
+                {
+                    declarationPM.ReferentUserId = declarationOrg.ReferentUserId;
+                    LogMessagingUtil.Instance.AppendLine("set ReferentUserId to new declaration after save");
+                }
 
                 if (isUpdateAfterAccept)
                 {
