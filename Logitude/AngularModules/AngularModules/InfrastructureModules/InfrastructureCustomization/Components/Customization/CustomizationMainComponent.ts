@@ -99,8 +99,7 @@ export class CustomizationMainComponent {
 
         myTablesItems.forEach(field => {
             var table: ObjectTablePM = tablesList.filter(d => d.Id == field.ObjectTableID)[0];
-            //if (table != null && this.HaveObjectTableAccess(table)) {
-            if (table != null ) {
+            if (table != null && this.HaveObjectTableAccess(table)) {
                 myData.push(field);
             }
         });
