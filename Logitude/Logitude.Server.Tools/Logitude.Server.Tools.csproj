@@ -242,8 +242,7 @@
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
-    <Compile Include="CustomFields\CustomFieldsEntityPM.cs" />
-    <Compile Include="CustomFields\CustomFieldsEntityService.cs" />
+    <Compile Include="CustomFields\ChildEntitiesCustomFieldService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationOnUpdateDocumentService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationEventCreationService.cs" />
     <Compile Include="Helpers\UpdatePortSearchFieldService.cs" />

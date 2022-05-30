@@ -631,7 +631,6 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\WorkerRoleNameMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
-    <Compile Include="InfrastructureModel\Tools\EntityService\ChildEntitiesCustomFieldService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\ImageLibraryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\MultiEntityUpdateLogService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\PrivateLabelShipmentService.cs" />

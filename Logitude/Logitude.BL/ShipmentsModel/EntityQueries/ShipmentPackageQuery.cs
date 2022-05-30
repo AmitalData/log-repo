@@ -363,9 +363,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
 
-            new CustomFieldsEntityService().SetCustomFieldsValues(new CustomChildEntityServiceArgs(){ Tenant = tenant,  EntityId = shipmentId ,  ObjectTableName = "Shipment",ChildObjectTableName = "ShipmentPackage",ChildEntities = shipmentPackages.Cast<object>().ToList()});
+            ChildEntitiesCustomFieldService.Set(new ChildEntitiesCustomFieldArgs()
+            {   Tenant = tenant,
+                EntityId = shipmentId ,
+                ObjectTableName = "Shipment",
+                ChildObjectTableName = "ShipmentPackage",
+                ChildEntities = shipmentPackages.Cast<object>().ToList()
+            });
 
             return shipmentPackages;
+
         }
 
         private void MapTheLastStatusName(ShipmentPackagePM package, IWebFreightContext webFreightContext)
