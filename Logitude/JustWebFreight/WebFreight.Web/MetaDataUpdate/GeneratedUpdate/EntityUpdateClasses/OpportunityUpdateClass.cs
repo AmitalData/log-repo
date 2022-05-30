@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OpportunityUpdateClass
    {  		
-		public const string HashString = "78a2debeb3082dd60d4f4b8d400354ef";
+		public const string HashString = "68f2ae2cb8b372c25e65358752ff253a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -293,13 +293,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
-					  						DependencyFilter1Value =  "PO,CS",
-					  						DependencyFilter2Value =  "True",
-					  						DependencyFilter1Type =  "Constant",
-					  						DependencyFilter2Type =  "Constant",
-					  						DependencyFilter1IsList =  true,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Opportunity",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
@@ -4787,6 +4780,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastStageBeforeClosureName",
 					  						ListPropertyPath =  "LastStageBeforeClosureName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
