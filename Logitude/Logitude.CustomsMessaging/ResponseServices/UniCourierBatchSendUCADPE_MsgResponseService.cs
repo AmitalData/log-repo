@@ -77,8 +77,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customsDocumentPM != null && !string.IsNullOrEmpty(customsDocumentPM.CustomsDocId))
                     {
                         customsReferencesListToSend.Add(customsDocumentPM.CustomsDocId);
+                        declarationIdsListToSend.Add(item);
                     }
-                    declarationIdsListToSend.Add(item);
                 }
             }
 
@@ -86,12 +86,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DeclarationPM _MyDeclarationPM;
             var myDeclarationQueryService = new DeclarationQueryService(customContext);
 
-            foreach (var item in customsReferencesListToSend)
+            for (int i=0; i < customsReferencesListToSend.Count(); ++i)
             {
-                _MyDeclarationPM = myDeclarationQueryService.GetSingle(item, false, false);
+                var decID = declarationIdsListToSend.ElementAt(i);
+                var item = customsReferencesListToSend.ElementAt(i);
+                _MyDeclarationPM = myDeclarationQueryService.GetSingle(decID, false, false);
                 if (_MyDeclarationPM != null)
                 {
-                    LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask for Declaration: " + item);
+                    LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask for FILING with reference " + item + " attached to Declaration: " + decID);
                     unifreightTaskService.OpenUnifreighTaskGen(_MyDeclarationPM, "GDMFILING", item, "L2USID", null, false, "", false);
                 }
             }
