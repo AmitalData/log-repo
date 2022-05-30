@@ -107,8 +107,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             this.aPInvoicePM = RestClientAPIAPInvoice!=null? RestClientAPIAPInvoice: APInvoiceDataMappingAndValidatin(myEntity, tenant, computingPartnerName);
             aPInvoicePM.Tenant = tenant;
             aPInvoicePM.StatusCode = "AD";
-            aPInvoicePM.CreatedByUserId = myUser.Id;
-            aPInvoicePM.UpdatedByUserId = myUser.Id;
+            if (string.IsNullOrWhiteSpace(RestClientAPIAPInvoice.CreatedByUserId)) {
+                aPInvoicePM.CreatedByUserId = myUser.Id;
+            }
+
+            if (string.IsNullOrWhiteSpace(RestClientAPIAPInvoice.UpdatedByUserId))
+            {
+                aPInvoicePM.UpdatedByUserId = myUser.Id;
+            }
+
             aPInvoicePM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             aPInvoicePM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
