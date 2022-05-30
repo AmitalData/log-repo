@@ -92,8 +92,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             var repoGLAccountFastFetch = new GLAccountRepository(regularJournal.Tenant);
             var myPartners = repoGLAccountFastFetch.GetByGLAccountsIdList(myPartnerIds.ToList(), regularJournal.Tenant);
             var ClientIds = myPartners
-                .Where(r => r.AccountTypeCode == GLAccountTypeEnum.Client.ToIntString())
-                .Select(r => r.Id);
+                .Where(r => r.ChartOfAccountsTypeCode != "1" &&
+                r.ChartOfAccountsTypeCode != "2" && r.ChartOfAccountsTypeCode != "6")
+                .Select(r => r.Id).ToList();
 
 
             var creditLines =
@@ -160,7 +161,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             var repoGLAccountFastFetch = new GLAccountRepository(externalJournal.Tenant);
             var myPartners = repoGLAccountFastFetch.GetByGLAccountsIdList(myPartnerIds.ToList(), externalJournal.Tenant);
             var ClientIds = myPartners
-                .Where(r => r.AccountTypeCode == GLAccountTypeEnum.Client.ToIntString())
+                .Where(r => r.ChartOfAccountsTypeCode != "1" &&
+                r.ChartOfAccountsTypeCode != "2" && r.ChartOfAccountsTypeCode != "6")
                 .Select(r => r.Id);
 
 
