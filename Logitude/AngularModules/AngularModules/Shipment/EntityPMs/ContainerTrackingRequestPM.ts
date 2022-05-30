@@ -60,9 +60,29 @@ export class ContainerTrackingRequestPM {
     public set RequestId(newValue: string) { if (this.requestId != newValue) { this.requestId = newValue; this.MarkAsDirty("RequestId"); } }
        
 	 
+    private containerId: string;
+    public get ContainerId() { return this.containerId; }
+    public set ContainerId(newValue: string) { if (this.containerId != newValue) { this.containerId = newValue; this.MarkAsDirty("ContainerId"); } }
+       
+	 
+    private shipmentId: string;
+    public get ShipmentId() { return this.shipmentId; }
+    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
+       
+	 
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+    private carrierCode: string;
+    public get CarrierCode() { return this.carrierCode; }
+    public set CarrierCode(newValue: string) { if (this.carrierCode != newValue) { this.carrierCode = newValue; this.MarkAsDirty("CarrierCode"); } }
+       
+	 
+    private status: string;
+    public get Status() { return this.status; }
+    public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
        
 	 
 

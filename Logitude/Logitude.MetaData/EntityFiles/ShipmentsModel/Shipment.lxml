@@ -103480,6 +103480,13 @@
         IndexOrder="25"
         LocalDefaultText="&quot;Transmit to SAT&quot;"
         IsPackagable="true" />
+      <MenuItem
+        EventCode="&quot;ViziionUnsubscribe&quot;"
+        DefaultText="&quot;Viziion Unsubscribe&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="26"
+        LocalDefaultText="&quot;Viziion Unsubscribe&quot;"
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>

@@ -1,9 +1,13 @@
 ﻿using CommunicationWorkerRole.Services.ContainerTraking;
+using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using WebFreight.Web.ContainerTracking;
 
 namespace CommunicationWorkerRole
 {
@@ -15,7 +19,7 @@ namespace CommunicationWorkerRole
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "UpdateContainerStatusWorkerRole";
             DoneItemsInRange = new Dictionary<DateTime, int>();
-            ConnectClient();
+            
             return base.OnStart();
         }
 
@@ -23,7 +27,6 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning) StartWork();
         }
-
         private void StartWork()
         {
             if (General.IsUpdating())
@@ -39,7 +42,7 @@ namespace CommunicationWorkerRole
             }
             catch (Exception exception)
             {
-                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Vizion Update Container Status start fail", null, null);
+                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "General Update Container Status start fail", null, null);
                 Thread.Sleep(10000);
             }
         }
@@ -51,8 +54,16 @@ namespace CommunicationWorkerRole
             {
                 return;
             }
-
-            new ContainerTrackingWRService(queueService, queueResponse).ExecuteQueue();
+            try
+            {
+                new ContainerTrackingWRService(queueService, queueResponse).ExecuteQueue();
+                queueService.Complete();
+            }
+            catch (Exception)
+            {
+                queueService.CompleteAsFailed();
+                throw;
+            }
         }
 
         private void ConnectClient()
@@ -60,18 +71,58 @@ namespace CommunicationWorkerRole
             try
             {
                 InitializeQueueService();
+                queueService.Complete();
 
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Vizion Update Container Status start fail", null, null);
+                queueService.CompleteAsFailed();
+
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "General Update Container Status start fail", null, null);
             }
         }
 
         private void InitializeQueueService()
         {
             queueService = new DbQueueService();
-            queueService.InitializeQueue("VizionUpdateContainerStatus", 0);
+            queueService.InitializeQueue("GeneralUpdateContainerStatus", 0);
         }
+        //private void StartWork()
+        //{
+        //    if (General.IsUpdating())
+        //    {
+        //        Thread.Sleep(60000);
+        //        return;
+        //    }
+
+        //    try
+        //    {
+        //        ExecuteQueue();
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "General Update Container Status start fail", null, null);
+        //        Thread.Sleep(10000);
+        //    }
+        //}
+
+        //private void ExecuteQueue()
+        //{
+        //    AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+        //    AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("GeneralContainerTrackingReceiver");
+        //    LastActivity = DateTime.UtcNow;
+
+        //    if (analyzeQueue != null)
+        //    {
+        //        ContainerTrackingGeneralAnalyzer analyzer = new ContainerTrackingGeneralAnalyzer(ContainerStatusSourceValues.Vizion, analyzeQueue, analyzeQueueRepository);
+        //        analyzer.Run();
+        //        LogDoneItemInMemory();
+        //    }
+        //    else
+        //    {
+        //        Thread.Sleep(3000);
+        //    }
+        //}
+
     }
 }

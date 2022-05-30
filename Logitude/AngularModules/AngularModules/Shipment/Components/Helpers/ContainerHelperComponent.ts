@@ -8,7 +8,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ContainerStatusSimulatorTypes } from 'ShipmentModules/ShipmentOthers/Components/ShipmentContainersStatuses/ContainersStatusesSimulatorComponent';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 
 @Component({
 
@@ -23,13 +23,13 @@ export class ContainerHelperComponent implements OnDestroy {
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public IsSimulatorVisible: boolean = false;
-    public IsVisionSimulatorVisible: boolean = false;
+    public IsGeneralSimulatorVisible: boolean = false;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         this.EntityPM = this.entityArgs.EntityPM;
 
         if (this.EntityPM) {
             this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
-            this.IsVisionSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator");
+            this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator");
             this.Listen();
         }
     }
@@ -76,11 +76,21 @@ export class ContainerHelperComponent implements OnDestroy {
         logWindow.Title = "Shipment Containers Statuses Simulator";
         logWindow.Show('./ShipmentModules/ShipmentOthers/Components/ShipmentContainersStatuses/ContainersStatusesSimulatorComponent');
     }
-    VisionShipmentContainersSimulatorClicked() {
+    GeneralShipmentContainersSimulatorClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { ShipmentId: this.EntityPM.ShipmentId, IsFromContainer: true, ContainerNumber: this.EntityPM.ContainerNumber, CarrierId: this.EntityPM.MainCarriageCarrierId,Type:ContainerStatusSimulatorTypes.Vision };
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
+            ContainerId : this.EntityPM.Id,
+            ContainerNumber : this.EntityPM.ContainerNumber,
+            ContainerStatusSourceCode:null,
+            IsFromContainer : true,
+            ShipmentId:this.EntityPM.ShipmentId,
+            Tenant :this.EntityPM.Tenant,
+            IsSimulator:true,
+            Data:null
+        }
+        logWindow.WindowArgs = args;
         logWindow.Title = "Shipment Containers Statuses Simulator";
-        logWindow.Show('./ShipmentModules/ShipmentOthers/Components/ShipmentContainersStatuses/ContainersStatusesSimulatorComponent');
+        logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);

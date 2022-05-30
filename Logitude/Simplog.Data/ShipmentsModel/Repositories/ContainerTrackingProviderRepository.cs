@@ -55,7 +55,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public IQueryable<ContainerTrackingProvider> GetContainerTrackingProviders(int tenant)
         {
-            return context.ContainerTrackingProviders.Where(e => e.Tenant == tenant);
+            return context.ContainerTrackingProviders.Where(e => e.Tenant == tenant || e.Tenant == 0);
         }
 
         public IShipmentsContext context

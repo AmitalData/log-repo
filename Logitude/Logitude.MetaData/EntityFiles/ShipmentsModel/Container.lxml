@@ -20307,6 +20307,13 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="2"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;ViziionUnsubscribe&quot;"
+        DefaultText="&quot;Viziion Unsubscribe&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="3"
+        LocalDefaultText="&quot;Viziion Unsubscribe&quot;"
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>

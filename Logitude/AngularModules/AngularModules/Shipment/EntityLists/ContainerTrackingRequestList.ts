@@ -14,6 +14,10 @@ export class ContainerTrackingRequestList {
 		ContainerNumber: string;
 		Master: string;
 		RequestId: string;
+		ContainerId: string;
+		ShipmentId: string;
+		CarrierCode: string;
+		Status: string;
 		SearchFields: string;
 	
 }

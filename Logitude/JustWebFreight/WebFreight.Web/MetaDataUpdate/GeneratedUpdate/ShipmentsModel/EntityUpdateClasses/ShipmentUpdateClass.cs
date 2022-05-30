@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "25600d6aa1f6ec78fb5b0810bd9c1291";
+
+		public const string HashString = "dbeefc9596b2d0bebd10723308d76692";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -54062,6 +54063,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              			   Feature ShipmentFeature_MB017 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SplitShipment", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SplitShipment", NameTextCodeDefaultText = "Split Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
              			   Feature ShipmentFeature_MB018 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToAMANAC", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendtoAMANAC", NameTextCodeDefaultText = "Send to AMANAC", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
              			   Feature ShipmentFeature_MB019 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendCartaPorte", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.TransmittoSAT", NameTextCodeDefaultText = "Transmit to SAT", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
+             			   Feature ShipmentFeature_MB020 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViziionUnsubscribe", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ViziionUnsubscribe", NameTextCodeDefaultText = "Viziion Unsubscribe", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -54551,6 +54553,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ShipmentFeature_MB019.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ShipmentMenuButton023 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ViziionUnsubscribe",
+						Index = 26, 
+						IsActive = true,
+						LabelTextCodeCode = "Shipment.B.ViziionUnsubscribe",
+						LabelTextCodeDefaultText = "Viziion Unsubscribe",
+						Tenant = 0,
+						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
+						ParentMenuButtonId = ShipmentMenuButton0.Id,
+						ObjectTableId = ShipmentObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ShipmentFeature_MB020.Id,
+						Style = null,
+						LocalDefaultText = "Viziion Unsubscribe",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ShipmentFeature_MB020.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

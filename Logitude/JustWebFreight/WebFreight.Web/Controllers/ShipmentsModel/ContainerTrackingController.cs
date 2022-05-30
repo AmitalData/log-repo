@@ -55,8 +55,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
         {
             try
             {
-                ContainerTrackingService containerTrackingService = new ContainerTrackingService();
-                containerTrackingService.UpdateStatusFromVizion(Request, containerStatus);
+                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService();
+                containerTrackingService.UpdateStatusFromVizion(containerStatus);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception e)

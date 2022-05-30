@@ -13,6 +13,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ContainerNumber { get; set; }
         public string Master { get; set; }
         public string RequestId { get; set; }
+        public string ContainerId { get; set; }
+        public string ShipmentId { get; set; }
         public string SearchFields { get; set; }
+        public string CarrierCode { get; set; }
+        public string Status { get; set; }
+        public bool IsSimulate { get; set; }
     }
 }

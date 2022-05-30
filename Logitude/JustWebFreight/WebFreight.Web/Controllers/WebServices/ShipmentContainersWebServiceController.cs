@@ -38,12 +38,13 @@ using WebFreight.Web.WcfApi;
 using ContainerOISimulator;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.Tools.ContainerTracking;
+using Logitude.BL.ShipmentsModel.APIDataContract;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
     public class ShipmentContainersWebServiceController : ApiController
     {
-      
+
 
         public HttpResponseMessage PostOceanInsightSimulator(ShipmentContainerSimulator simulator)
         {
@@ -66,21 +67,40 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage PostVisionContainerSimulator(ShipmentContainerSimulator simulator)
+        public HttpResponseMessage PostSimulateGeneralContainerStatus(GeneralContainerTrackingArgs simulatorArgs)
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
-                ContainerTrackingService containerTrackingService = new ContainerTrackingService();
-                if (simulator.IsFromContainer)
-                {
-                    shipmentContainerSimulator = containerTrackingService.SimulateVizionApiContainerStatus(simulator);
-                }
-                else
-                {
-                    //shipmentContainerSimulator = RunContainerStatusResponseSimulator(simulator);
-                }
-                return Request.CreateResponse(HttpStatusCode.OK, shipmentContainerSimulator);
+                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(simulatorArgs);
+                containerTrackingService.GeneralSimulateContainerStatus();
+
+                return Request.CreateResponse(HttpStatusCode.OK, simulatorArgs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage PostUnsubscribeFromVizion(GeneralContainerTrackingArgs unsubscribeArgs)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                unsubscribeArgs.Tenant = tenant;
+                ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
+                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(unsubscribeArgs);
+                var result  = containerTrackingService.UnsubscribeFromVizion();
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)

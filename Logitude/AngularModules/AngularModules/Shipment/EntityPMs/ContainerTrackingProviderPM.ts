@@ -17,7 +17,7 @@ import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldCl
 
 export class ContainerTrackingProviderPM {
 
-      PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
           this.UIProperties = new UIProperties(this); 
@@ -34,10 +34,20 @@ export class ContainerTrackingProviderPM {
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
-
+	 
+    private sourceCode: string;
+    public get SourceCode() { return this.sourceCode; }
+    public set SourceCode(newValue: string) { if (this.sourceCode != newValue) { this.sourceCode = newValue; this.MarkAsDirty("SourceCode"); } }
+       
+	 
     private name: string;
     public get Name() { return this.name; }
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
+       
+	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
     private callbackURL: string;
@@ -45,23 +55,19 @@ export class ContainerTrackingProviderPM {
     public set CallbackURL(newValue: string) { if (this.callbackURL != newValue) { this.callbackURL = newValue; this.MarkAsDirty("CallbackURL"); } }
        
 	 
-    private apiKey: string;
-    public get APIKey() { return this.apiKey; }
-    public set APIKey(newValue: string) { if (this.apiKey != newValue) { this.apiKey = newValue; this.MarkAsDirty("Master"); } }
+    private aPIKey: string;
+    public get APIKey() { return this.aPIKey; }
+    public set APIKey(newValue: string) { if (this.aPIKey != newValue) { this.aPIKey = newValue; this.MarkAsDirty("APIKey"); } }
        
 	 
-    private nameURL: string;
-    public get NameURL() { return this.nameURL; }
-    public set NameURL(newValue: string) { if (this.nameURL != newValue) { this.nameURL = newValue; this.MarkAsDirty("RequestId"); } }
+    private providerURL: string;
+    public get ProviderURL() { return this.providerURL; }
+    public set ProviderURL(newValue: string) { if (this.providerURL != newValue) { this.providerURL = newValue; this.MarkAsDirty("ProviderURL"); } }
        
 	 
     private logitudeToken: string;
     public get LogitudeToken() { return this.logitudeToken; }
-    public set LogitudeToken(newValue: string) { if (this.logitudeToken != newValue) { this.logitudeToken = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-    private providerURL: string;
-    public get ProviderURL() { return this.providerURL; }
-    public set ProviderURL(newValue: string) { if (this.providerURL != newValue) { this.providerURL = newValue; this.MarkAsDirty("SearchFields"); } }
+    public set LogitudeToken(newValue: string) { if (this.logitudeToken != newValue) { this.logitudeToken = newValue; this.MarkAsDirty("LogitudeToken"); } }
        
 	 
 
@@ -91,4 +97,4 @@ export class ContainerTrackingProviderPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

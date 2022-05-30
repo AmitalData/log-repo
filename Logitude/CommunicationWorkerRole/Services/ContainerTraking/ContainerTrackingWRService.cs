@@ -1,4 +1,10 @@
 ﻿using Logitude.Server.Tools.QueueService;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,30 +17,62 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
     {
         private readonly DbQueueService queueService;
         private readonly QueueResponse queueResponse;
+        private ICommonDataContext Commoncontext;
+        private CommunicationLog CommunicationLog;
+        private CommunicationLogRepository CommunicationLogRep;
+        private int Tenant;
+        private Shipment Shipment;
+        private IShipmentsContext ShipmentContext;
         public ContainerTrackingWRService(DbQueueService queueService, QueueResponse queueResponse)
         {
             this.queueService = queueService;
             this.queueResponse = queueResponse;
-            //SetQueueResponseFields();
-            //InitiallizeServices();
-            //InitiallizeFields();
+
+            InitiallizeFields();
         }
+        
         public void ExecuteQueue()
         {
-            //if (queueService == null || queueResponse == null || tenant == null || string.IsNullOrEmpty(shipmentOrderId)) return;
-            //GetApiLog();
-            //GetToken();
-            //try
-            //{
-            //    ShipmentOrderAM shipmentOrderAM = GetShipmentOrderAM();
-            //    SendShipmentAM(shipmentOrderAM);
-            //    queueService.Complete();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HandleQueueException(ex);
-            //}
+            FailCommunicationLog("Not implemented");
+            throw new Exception("Not implemented");
+        }
+        private void InitiallizeFields()
+        {
+            Tenant = int.Parse(queueResponse.MessageValues["Tenant"]);
+            Commoncontext = CommonDataContext.GetContext(Tenant);
+            CommunicationLogRep = new CommunicationLogRepository(Commoncontext);
+            CommunicationLog = GetCommunicationLog();
+            //ShipmentContext = ShipmentsContext.GetContext(ContainerStatusSimulatorArgs.Tenant);
+            //Shipment = GetShipment();
 
+        }
+        private CommunicationLog GetCommunicationLog()
+        {
+            var communicationLogId = queueResponse.MessageValues["CommunicationLogId"];
+            CommunicationLog communicationLog = CommunicationLogRep.GetSingleCommunicationLog(communicationLogId, Tenant);
+            return communicationLog;
+        }
+        private void FailCommunicationLog(string message)
+        {
+            CommunicationLog.CommunicationStatusTypeCode = "F";
+            CommunicationLog.ExceptionMessage = message;
+            CommunicationLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(CommunicationLog.Tenant);
+            CommunicationLog.DoneDateUTC = DateTime.UtcNow;
+            CommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(CommunicationLog.Tenant);
+            CommunicationLog.LastStatusDateUTC = DateTime.UtcNow;
+            CommunicationLogRep.Update(CommunicationLog);
+            CommunicationLogRep.SubmitChanges();
+        }
+
+        private void CompleteCommunicationLog()
+        {
+            CommunicationLog.CommunicationStatusTypeCode = "D";
+            CommunicationLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(CommunicationLog.Tenant);
+            CommunicationLog.DoneDateUTC = DateTime.UtcNow;
+            CommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(CommunicationLog.Tenant);
+            CommunicationLog.LastStatusDateUTC = DateTime.UtcNow;
+            CommunicationLogRep.Update(CommunicationLog);
+            CommunicationLogRep.SubmitChanges();
         }
     }
 }

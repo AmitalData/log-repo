@@ -177,7 +177,13 @@
       <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -556,11 +562,13 @@
     <Compile Include="CommonDataModel\Tools\Validating\TariffCarrierTranslationValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\VATValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\AccountingPartnerValidating.cs" />
+    <Compile Include="DataContracts\ContainerTrackingRequestStatus.cs" />
     <Compile Include="DataContracts\ExportDocumentArgs.cs" />
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="DataContracts\VisionContainerStatus.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
     <Compile Include="Helpers\AddManualTraceEventsHelper.cs" />
+    <Compile Include="Helpers\APICaller.cs" />
     <Compile Include="Helpers\ContainersExternal.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldsGroupedService.cs" />
@@ -695,7 +703,9 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceShipmentsDataBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\EntityAutomationAPInvoiceMappingPMFields.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\InvoicePaymentNumbersBehaviour.cs" />
-    <Compile Include="ShipmentsModel\Tools\ContainerTracking\ContainerTrackingService.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\GeneralContainerTrackingArgs.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\VizionModels.cs" />
+    <Compile Include="ShipmentsModel\Tools\ContainerTracking\GeneralContainerTrackingService.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentBankTranferMapping.cs" />
     <Compile Include="InvoiceModel\Tools\EntityService\ARPaymentReferencesService.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Base\Emisor.cs" />
@@ -3019,6 +3029,7 @@
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateCrossDockBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateDocumentFilingBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentComputedFieldsBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\ContainerTracking\VizionService.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\AWBSpecialHandlingCodeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\CustomsTransferHeaderMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\LogitudeOceanInsightsRequestMapping.cs" />

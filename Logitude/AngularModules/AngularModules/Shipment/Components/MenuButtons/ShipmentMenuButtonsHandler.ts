@@ -25,6 +25,9 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConvertDirectionArgs } from './ShipmenDirectionConvertComponent';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
+import { ShipmentContainersWebService } from 'Shipment/Services/ShipmentContainersWebService';
+import { $ } from 'protractor';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
@@ -393,6 +396,13 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         }
                     }
 
+                    if (button.EventCode == "ViziionUnsubscribe") {
+                        if (!buttonEnabled) 
+                            button.IsHidden = true;
+                        if(this.EntityPM.ShipmentTypeId != "FCLD")
+                            button.IsHidden = true;
+                    }
+
 
                     if (button.EventCode == "SendCartaPorte") {
                         button.IsHidden = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE" || !SessionLocator.SATInterfaceSettings.IsCartaPorteTransferEnabled;
@@ -506,6 +516,12 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             break;
                         }
 
+                    case "ViziionUnsubscribe":
+                        {
+                            this.ViziionUnsubscribe();
+                            break;
+                        }
+
                     default: {
                         this.isButtonClicked = false;
                         break;
@@ -513,6 +529,27 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 }
             }
         }
+    }
+    ViziionUnsubscribe() {
+        var shipmentContainersWebService = new ShipmentContainersWebService();
+        this.CurrentSession.StartBusyIndicator("Unsubscribe...");
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs>  {
+            ContainerId:null,
+            ShipmentId:this.EntityPM.Id,
+            IsFromContainer:false,
+            IsSimulator:false,
+            SourceCode:'VZN'
+        }
+        shipmentContainersWebService.ViziionUnsubscribe(args).subscribe(e=>{
+            this.CurrentSession.StopBusyIndicator();
+            var messageWindow = new MessageWindow();
+            if(e.HasError){
+                messageWindow.Show(e.ErrorsArray.join(', '));
+            }else{
+                var messageWindow = new MessageWindow();
+                messageWindow.Show(e.Result.message);
+            }
+        })
     }
 
     private SaveCompletedEvent: any = null;

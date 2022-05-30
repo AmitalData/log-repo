@@ -199,9 +199,9 @@
     <None Include="DBScripts\QuoteModel\202202101211_FillConnectedToQuoteField.sxml" />
     <None Include="DBScripts\QuoteModel\202231032230_FillVATAmountsOnQuoteCharges.sxml" />
     <None Include="DBScripts\ShipmentModel\202204191435_AddHorseNameToShipmentsSearchFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202205220940_CreateRequestContainerStatusWorkerRole.sxml" />
+    <None Include="DBScripts\ShipmentModel\202208051503_UpdateContainerSearchFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202205191150_FillShipmentPackagesTypeAndQuantity.sxml" />
-    <None Include="DBScripts\ShipmentModel\202208051503_UpdateContainerSearchFields.soxml" />
-    <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
     <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
     <None Include="DBScripts\ShipmentModel\202223031230_UpdateAutomaticLastUpdateDateOnShipmentPackage.sxml" />
     <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.scxml" />
@@ -215,16 +215,16 @@
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="DBTables\InfrastructureModel\ChildEntitiesCustomField.dxml" />
     <None Include="DBTables\QuoteModel\ValidByType.dxml" />
-    <None Include="DBTables\ShipmentsModel\ContainerTrackingProviders.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingProvider.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
-    <None Include="DBTables\ShipmentsModel\ContainerTrackingResponses.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingResponse.dxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ChildEntitiesCustomField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingResponses.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingResponse.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerTrackingRequest.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainersExternalData.lxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdatePortSearchFieldsFunction.dxml" />
@@ -1735,7 +1735,7 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentCustomsTransmission.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingProviders.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingProvider.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentLevel.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentOrderPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPackage.lxml">

@@ -16,6 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList'; 
 import { DocumentTypePMExtendedService } from 'Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 
 @Component({    
     templateUrl: './ShipmentHelperComponent.html',
@@ -32,6 +33,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsSimulatorVisible: boolean = false; 
     ShareDocumentsViaEmailDocumentTypeCode = "SDVE"; 
     public documentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
+    public IsGeneralSimulatorVisible: boolean = false;
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
@@ -51,6 +53,8 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
             this.Listen();
             this.BuildComponent();
+            this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator") && this.EntityPM.ShipmentTypeId == "FCLD";
+
         }
     }
 
@@ -130,7 +134,22 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
         }
     }
-
+    GeneralShipmentContainersSimulatorClicked() {
+        var logWindow = new LogitudeWindow();
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs>{
+            ContainerStatusSourceCode: null,
+            IsFromContainer: false,
+            ShipmentId: this.EntityPM.Id,
+            Tenant: this.EntityPM.Tenant,
+            IsSimulator: true,
+            Data: null,
+            ContainerId: null,
+            ContainerNumber: null
+        }
+        logWindow.WindowArgs = args;
+        logWindow.Title = "Shipment Containers Statuses Simulator";
+        logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
+    }
     private ShowHideShippingInstructionsButton() {
         this.IsShippingInstructionsVisible = false;
 
@@ -383,7 +402,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
         }
     }
-
+    
     ImportWizard() {
         var isFullWizard: boolean = this.IsFullWizard();
         if (isFullWizard) {

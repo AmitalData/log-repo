@@ -21,7 +21,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             {
                 containerTrackingResponse.Id = containerTrackingResponsePM.Id;
                 containerTrackingResponse.Tenant = containerTrackingResponsePM.Tenant;
-                containerTrackingResponse.CreateDate = containerTrackingResponsePM.CreateDate;
+                containerTrackingResponse.CreateDate = DateTime.Now;
             }
             BuildSearchField(containerTrackingResponsePM, containerTrackingResponse);
             containerTrackingResponse.CommunicationLogId = containerTrackingResponsePM.CommunicationLogId;
