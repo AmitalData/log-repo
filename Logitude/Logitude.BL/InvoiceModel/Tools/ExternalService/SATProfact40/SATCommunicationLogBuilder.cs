@@ -12,6 +12,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -123,11 +125,34 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             if (args.IsPayment) return "No se llevó a cabo la operación";
             switch (args.ARInvoicePM.SATCancelReasonCode)
             {
-                case "01": return args.ARInvoicePM.RelatedInvoice;
+                case "01": return GetRelatedInvoiceUUID(args);
                 case "02": return "Comprobante emitido con errores sin relación";
                 case "03": return "No se llevó a cabo la operación";
                 default: return "0";
             }
+        }
+
+        private string GetRelatedInvoiceUUID(SATCommunicationLogArgs args)
+        {
+            if (string.IsNullOrEmpty(args.ARInvoicePM.RelatedInvoice)) return "";
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(args.ARInvoicePM.Tenant);
+            ARInvoice arInvoice = aRInvoiceRepository.GetARInvoiceByInvoiceNumber(args.ARInvoicePM.Tenant, args.ARInvoicePM.RelatedInvoice);
+            if(arInvoice == null) return "";
+            Comprobante relatedInvoiceComprobante = GetProfactComprobante(arInvoice);
+            if (relatedInvoiceComprobante.Complemento.Any == null) return "";
+            List<System.Xml.XmlElement> myLXmlComplementos = relatedInvoiceComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+            var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+            if (timbreFiscalDigitalElement == null) return "";
+
+            Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+            return digitalTi?.UUID?.Trim();
+        }
+
+        private Comprobante GetProfactComprobante(ARInvoice arInvoice)
+        {
+            Encoding uTF8Encoding = Encoding.UTF8;
+            byte[] profactoXMLData = uTF8Encoding.GetBytes(arInvoice.SATXML);
+            return LogitudeXmlSerializer.DeserializeObject<Comprobante>(profactoXMLData);
         }
 
         private Document CreateNewDocument(byte[] profactoXmlData)
