@@ -194,6 +194,7 @@
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPPaymentInvoicesNumbers.sxml" />
     <None Include="DBScripts\CommonModel\202223031100_UpdateAutomaticLastUpdateDateOnPackageTypes.sxml" />
     <None Include="DBScripts\InfrastructureModel\202202171015_FillEventTriggerField.sxml" />
+    <None Include="DBScripts\InvoiceModel\202205300930_FillARPaymentInvoicesNumbers.sxml" />
     <None Include="DBScripts\QuoteModel\202204250813_AddVarAmountsToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\QuoteModel\202202101211_FillConnectedToQuoteField.sxml" />
     <None Include="DBScripts\QuoteModel\202231032230_FillVATAmountsOnQuoteCharges.sxml" />

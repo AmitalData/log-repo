@@ -38,6 +38,7 @@ using Logitude.Accounting.Def.BLExt;
 using Logitude.BL.Resolvers;
 using Logitude.BL.InvoiceModel.CoreBL;
 using Logitude.BL.InvoiceModel.CloseTables;
+using Logitude.BL.InvoiceModel.Tools.Behaviours;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -70,6 +71,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool SetVoided = false;
         private string DraftStatusCode = "DR";
         private  ARPaymentBankTranferRepository paymentBankTranferRepository;
+        private InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour;
         public ARPaymentService(IInvoiceContext objectContext, int tenant)
         {
             this.sATInterfaceHelper = new SATInterfaceHelper();
@@ -85,6 +87,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.changedList = new List<ARPaymentInvoicePM>();
             this.paymentBankTranferRepository = new ARPaymentBankTranferRepository(this.objectContext);
             loggedContact = GetLoggedContactPM(tenant);
+            invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
 
             this.GetAccountingSystem();
         }
@@ -95,6 +98,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool canTransferToFTP;
         private AccountingSetting accountingSetting;
         private bool isTransferEnabled = false;
+        
         private void GetAccountingSystem()
         {
             this.accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
@@ -154,6 +158,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARPaymentHelper service = new ARPaymentHelper();
             service.ARPaymentQuickbooksValidating(_arpaymentPM, setApproved, false, paymentPoco, objectContext, myCommonContext, isVoidingInvoice, setCancelApproved, _arpaymentPM.SetReSendQBO, false);
 
+            this.BuildInvoicesNumbers();
             BuildSearchFields();
 
             AccountingPaymentMethod ARPaymentMethod = GetARPaymentMethod();
@@ -201,29 +206,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             GetPaymentForeignFields();
-
             BuildEntitiesNumbers();
-
             VoidARPaymentInFullAccounting(_arpaymentPM, setVoided);
 
             // DropBox
             CreateARPaymentMessage(setApproved);
-
-            //// Full Accounting => Reconciliation
-            //if (theEntityPm.IsFullAccounting == true)
-            //{
-            //    //check glaccountid
-            //    if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
-            //    {
-            //        throw new ApplicationException("Hey! no glaccount provided!!"); // this case shouldn't be correct because glaccountid should be filled in the client, otherwise check client
-            //    }
-
-            //    //CreateReconciliationService _recoSvc = new CreateReconciliationService();
-            //    CreateReconciliationForARPayment(theEntityPm);
-
-            //    UpdateTransactions(theEntityPm);
-            //}
-
         }
 
         private void FillFullAccountingPaymentInvoices(ARPaymentPM _arpaymentPM)
@@ -448,6 +435,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, paymentPoco, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }
+
+            this.BuildInvoicesNumbers();
             this.BuildSearchFields();
 
             // DropBox
@@ -1341,12 +1330,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             get { return paymentPM.AccountingPaymentMethodCode == "CH"; }
         }
 
-
-
-       
-
-    
-       
         private GLAccountPM GetPaymentGLAccount()
         {
             GLAccountPM glAccount = null;
@@ -1446,8 +1429,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             if (paymentPM.InvoiceNumber != invoiceNumber || paymentPM.ShipmentNumber != shipmentNumber)
-            {
-                
+            {                
                 paymentPM.InvoiceNumber = invoiceNumber;
                 paymentPM.ShipmentNumber = shipmentNumber;
                 paymentPoco.InvoiceNumber = paymentPM.InvoiceNumber;
@@ -2222,6 +2204,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return loggedcontact;
         }
         #endregion
+
+        private void BuildInvoicesNumbers()
+        {
+            paymentPM.InvoiceNumbers = invoicePaymentNumbersBehaviour.CopmuteARPaymentInvoicesNumbers(paymentPM);
+            paymentPoco.InvoiceNumbers = paymentPM.InvoiceNumbers;
+        }
     }
 
     public struct ARPaymentChequeStatusValues

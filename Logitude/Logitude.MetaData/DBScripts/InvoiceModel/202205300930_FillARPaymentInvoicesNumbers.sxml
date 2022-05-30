@@ -1,0 +1,74 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARPayments">
+  <Sql Version="1">
+    <![CDATA[
+    
+    
+    
+declare @PaymentId as varchar(15)
+declare @Tenant as int
+declare @ConnectedInvoicesNumbers as varchar(1000)
+declare @SavedInvoicesNumbers as varchar(1000)
+declare @InvoicesCount as int
+
+BEGIN 
+		DECLARE PaymentsCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id, Tenant
+		FROM ARPayments
+		where  OpenAmount != AmountInPaymentCurrency and $LastCounterWhere$
+		OPEN PaymentsCursor FETCH NEXT FROM PaymentsCursor INTO @PaymentId, @Tenant
+		WHILE @@FETCH_STATUS = 0
+			BEGIN
+
+				set @ConnectedInvoicesNumbers = ''
+				set @SavedInvoicesNumbers = ''
+				set @InvoicesCount = (select COUNT(*) from ARInvoicePayments where ARPaymentId = @PaymentId and Tenant = @Tenant)
+				
+				if (@InvoicesCount > 0)
+				begin
+					
+					declare @InvoiceId as varchar(15)
+					declare @InvoiceNumber as varchar(20)
+
+					BEGIN 
+							DECLARE ARInvoicePaymentsCursor CURSOR READ_ONLY
+							FOR
+							SELECT ARInvoiceId
+							FROM ARInvoicePayments
+							where Tenant = @Tenant and ARPaymentId = @PaymentId
+							OPEN ARInvoicePaymentsCursor FETCH NEXT FROM ARInvoicePaymentsCursor INTO @InvoiceId 
+							WHILE @@FETCH_STATUS = 0
+								BEGIN
+
+									set @InvoiceNumber = (select InvoiceNumber from ARInvoices where Id = @InvoiceId and Tenant = @Tenant)									
+									
+									if (@ConnectedInvoicesNumbers = '') set @ConnectedInvoicesNumbers = @InvoiceNumber
+									else set @ConnectedInvoicesNumbers = @ConnectedInvoicesNumbers + ', ' + @InvoiceNumber											
+
+									
+								FETCH NEXT FROM ARInvoicePaymentsCursor INTO @InvoiceId
+								END
+							CLOSE ARInvoicePaymentsCursor
+							DEALLOCATE ARInvoicePaymentsCursor
+					END
+				end
+
+				if(LEN(@ConnectedInvoicesNumbers) > 4000)				
+					set @SavedInvoicesNumbers = SUBSTRING(@ConnectedInvoicesNumbers, 1, 4000)				
+
+				else 
+					set @SavedInvoicesNumbers = @ConnectedInvoicesNumbers
+				
+				update ARPayments set InvoiceNumbers = @SavedInvoicesNumbers where Id = @PaymentId and Tenant = @Tenant
+
+			FETCH NEXT FROM PaymentsCursor INTO @PaymentId, @Tenant
+			END
+		CLOSE PaymentsCursor
+		DEALLOCATE PaymentsCursor
+END
+
+
+    ]]>
+  </Sql>
+</Script>
+

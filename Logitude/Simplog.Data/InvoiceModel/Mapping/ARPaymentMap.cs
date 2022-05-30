@@ -44,22 +44,16 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.SATPaymentMethodCode).HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.SATTransferStatusCode).IsRequired().HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.BankAccountLiteId).HasMaxLength(15).IsUnicode(true);
-            this.Property(t => t.TransmissionError)
-     .HasMaxLength(8000)
-     .IsUnicode(true);
-
+            this.Property(t => t.TransmissionError).HasMaxLength(8000).IsUnicode(true);
             this.Property(t => t.SATAdditionalFieldsXML).IsMaxLength().IsUnicode(true);
             this.Property(t => t.MetodoPagoCode).HasMaxLength(3).IsUnicode(false);
-
             this.Property(t => t.TipoCadenaPago).HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.CadPago).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.CertPago).IsMaxLength().IsUnicode(false);
             this.Property(t => t.SelloPago).IsMaxLength().IsUnicode(false);
             this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
-
             this.Property(t => t.CancelationNotes).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.AccountingCancelationDate);
-
             this.Property(t => t.Field1).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field2).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field3).HasMaxLength(250).IsUnicode(true);
@@ -70,6 +64,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Field8).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field9).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field10).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.InvoiceNumbers).HasMaxLength(4000).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("ARPayments");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -147,6 +143,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Field10).HasColumnName("Field10");
             this.Property(t => t.CancelationNotes).HasColumnName("CancelationNotes");
             this.Property(t => t.AccountingCancelationDate).HasColumnName("AccountingCancelationDate");
+            this.Property(t => t.InvoiceNumbers).HasColumnName("InvoiceNumbers");
 
             // Relationships
             this.HasOptional(t => t.ARAccount).WithMany().HasForeignKey(d => d.ARAccountId);
