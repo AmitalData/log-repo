@@ -91,8 +91,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 }
                 else {
                     this.EntityPM.IsDirty = false;
-
                 }
+                
+                if(this.DecPM.Direction === "E" && this.DecPM.TransportModeId === 'O')
+                    this.FinalCargoTypeCode = '37'
 
                 /*this.EntityPM = new ExportDeclarationClosingDataPM();
                 this.EntityPM.DeclarationId = id;
