@@ -585,10 +585,12 @@
     <Compile Include="InfrastructureModel\EntityLists\EntityStatusTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ImageLibraryList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\QuoteChargesGroupList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\ChildEntitiesCustomFieldPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EntityStatusTypePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ImageLibraryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\MultiEntityUpdateLogPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\QuoteChargesGroupPM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\ChildEntitiesCustomFieldQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EntityStatusTypeQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ImageLibraryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\MultiEntityUpdateLogQuery.cs" />
@@ -622,6 +624,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\WorkerRoleNameQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\Services\QuoteUpdateService.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\ChildEntitiesCustomFieldMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ImageLibraryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\MultiEntityUpdateLogMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\QuoteChargesGroupMapping.cs" />

@@ -9,6 +9,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using System;
 using Simplog.Data.InfrastructureModel;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -360,7 +361,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
                 this.MapTheLastStatusName(package, webFreightContext);
             }
+
+
+            ChildEntitiesCustomFieldService.Set(new ChildEntitiesCustomFieldArgs()
+            {   Tenant = tenant,
+                EntityId = shipmentId ,
+                ObjectTableName = "Shipment",
+                ChildObjectTableName = "ShipmentPackage",
+                ChildEntities = shipmentPackages.Cast<object>().ToList()
+            });
+
             return shipmentPackages;
+
         }
 
         private void MapTheLastStatusName(ShipmentPackagePM package, IWebFreightContext webFreightContext)

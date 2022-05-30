@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Initializers
 {
-    public class ShipmentServiceInitializer: IServiceInitializer
+    public class ShipmentServiceInitializer : IServiceInitializer
     {
         public int Tenant { get; private set; }
         public bool IsNewEntity { get; private set; }

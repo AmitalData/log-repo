@@ -23,6 +23,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.CustomFields;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
@@ -205,7 +206,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.calculateProfit = false;
                 this.calculatePayables = false;
                 this.calculateReceivables = false;
-                
+
                 this.initializer.HandleBehaviours();
 
                 this.entityMasterData = this.initializer.EntityMasterData;
@@ -305,6 +306,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeFinalDestination();
                 this.ComputeIsHTSMissingField();
                 this.ComputeHasUnassignedField();
+                this.SaveChildEntitiesCustomFields();
 
                 RunAutomation("OnCreate");
 
@@ -365,7 +367,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
                 }
                 RunAutomationThatDependencyOnLastEntityUpdate();
-
 
                 scope.Complete();
 
@@ -530,13 +531,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         shipmentTracing.TraceTerminalData();
                     }
+                    this.SaveChildEntitiesCustomFields();
+
 
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
 
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                     this.UpdateShipmentFollowUpsCollection();
                     UpdateStandaloneShipments();
-                    
+
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
                     this.ComputeAgentComputed(entityPM, entityPoco);
                     entityRepository.Update(entityPoco);
@@ -544,8 +547,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
-                    
-                    if (entityPM.IsStandalonePickupDelivery) {
+
+                    if (entityPM.IsStandalonePickupDelivery)
+                    {
                         this.CopyForwarderShipmentPackagesFromStandalone();
                     }
 
@@ -644,7 +648,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             var queueMessage = new Dictionary<string, string>() {
                 { "ShipmentId", entityPM.Id },
                 { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage,tenant);
+            queueservice.Send(queueMessage, tenant);
         }
 
         private void UpdatePayablesLinesVatAmounts()
@@ -658,7 +662,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private  void UpdateStandaloneShipments()
+        private void UpdateStandaloneShipments()
         {
             if (IsUpdatingStandaloneShipments())
             {
@@ -736,9 +740,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void RemoveDeletedItemsFromPickUpPackages()
         {
-            foreach(ShipmentPickUpPM shipmentPickUpPM in this.entityPM.ShipmentPickUps)
+            foreach (ShipmentPickUpPM shipmentPickUpPM in this.entityPM.ShipmentPickUps)
             {
-                  this.MapShipmentPickUpPackages(shipmentPickUpPM);
+                this.MapShipmentPickUpPackages(shipmentPickUpPM);
             }
         }
         private void MapShipmentPickUpPackages(ShipmentPickUpPM shipmentPickUpPM)
@@ -754,7 +758,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void RemoveDeletedItemsFromDeliveryPackages()
         {
-            foreach(ShipmentDeliveryPM shipmentDeliveryPM in this.entityPM.ShipmentDeliveries)
+            foreach (ShipmentDeliveryPM shipmentDeliveryPM in this.entityPM.ShipmentDeliveries)
             {
                 MapShipmentDeliveryPackages(shipmentDeliveryPM);
             }
@@ -1351,8 +1355,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                             }
                         }
-                        
-                       
+
+
                     }
                     OpenForwarderShipmentQueue();
 
@@ -2513,13 +2517,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 MapMainCarriageLegsForAutomation(); //temp Solution
                 GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
                 object externalEntity = (entityPM.ShipmentLevelCode != "H" && entityMasterData != null) ? this.entityPM : null;
-              
+
                 if (type == "OnCreate")
                 {
                     bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(tableName, "OnCreate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
-                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName , DontExecuteAutomationThatDependencyOnLastEntityUpdate  = true});
+                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true });
                         mainEntityChangeService.AddEntityChange();
                         mainEntityChangeServices.Add(mainEntityChangeService);
                     }
@@ -2610,7 +2614,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentMapping.ComputeMainCarriageFinalDestinationDates(this.entityMasterData, this.entityPM, true);
             ShipmentChangeTracking shipmentChangeTracking = new ShipmentChangeTracking() { ChangeTrackingPM = new ShipmentPM() };
             ShipmentQuery query = new ShipmentQuery(tenant);
-            query.MapShipmentToShipmentPMForAutomation(new AutomationShipmentMappingArgs { ShipmentPM = shipmentChangeTracking.ChangeTrackingPM, Shipment = this.entityPoco, ShipmentMasterDataList =  null, MasterData = this.entityMasterData, ShipmentPMBeforeNewMapping = this.entityPM });
+            query.MapShipmentToShipmentPMForAutomation(new AutomationShipmentMappingArgs { ShipmentPM = shipmentChangeTracking.ChangeTrackingPM, Shipment = this.entityPoco, ShipmentMasterDataList = null, MasterData = this.entityMasterData, ShipmentPMBeforeNewMapping = this.entityPM });
             ShipmentQuery.MapFieldsBeforeTrackingChangedForAutomation(entityPM, initializer);
             shipmentChangeTracking.ChangeTrackingPM.StatusId = entityPM.OldStatusValue;
             if (entityPM.ShipmentLevelCode == "H") shipmentChangeTracking.ChangeTrackingPM.StatusId = entityPM.StatusId;
@@ -6531,21 +6535,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void HandleUnassignedComputingPartnerTranslation(ShipmentUnassignedFieldPM shipmentUnassignedField)
         {
             Card card = cardRepository.GetSingleCard(shipmentUnassignedField.ReplacedDataId, tenant);
-            ComputingPartner partner = this.GetComputingPartner(shipmentUnassignedField.ComputingPartnrCode);   
-            
+            ComputingPartner partner = this.GetComputingPartner(shipmentUnassignedField.ComputingPartnrCode);
+
             if (partner == null || card == null)
             {
-                return;                              
+                return;
             }
 
             ComputingPartnerTable computingPartnerTable = computingPartnerTableRepository.GetSingleComputingPartnerTable(tenant, shipmentUnassignedField.ObjectTableId, partner.Id);
-            if(computingPartnerTable == null)
+            if (computingPartnerTable == null)
             {
                 return;
             }
 
             ComputingPartnerTranslation computingPartnerTranslation = computingPartnerTranslationRepository.GetSingleTranslationByOurCode(partner.Id, shipmentUnassignedField.ObjectTableId, card.Code, tenant);
-            if(computingPartnerTranslation == null)
+            if (computingPartnerTranslation == null)
             {
                 this.CreateNewComputingPartnerTranslation(partner.Id, shipmentUnassignedField.ObjectTableId, card.Code, shipmentUnassignedField.ReceivedCode);
             }
@@ -6582,7 +6586,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 CreatedByUserId = loggedContact.Id,
                 UpdatedByUserId = loggedContact.Id,
-                SearchFields = ourCode + "," + partnerCode,                
+                SearchFields = ourCode + "," + partnerCode,
             };
 
             computingPartnerTranslationRepository.Add(computingPartnerTranslation);
@@ -7195,7 +7199,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
-        }        
+        }
 
         private void UpdateTariffUsedDate(string tariffId)
         {
@@ -7494,7 +7498,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void ChangePickupDliveryNumbersOnShipmentDirectionConverted()
         {
-            if(entityPM.ShipmentPickUps.Count > 0)
+            if (entityPM.ShipmentPickUps.Count > 0)
             {
                 this.ChangePickupsNumbers();
             }
@@ -7506,7 +7510,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void ChangePickupsNumbers()
         {
-            foreach(ShipmentPickUpPM pickUp in entityPM.ShipmentPickUps.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
+            foreach (ShipmentPickUpPM pickUp in entityPM.ShipmentPickUps.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
             {
                 pickUp.PickUpDeliveryNumber = this.GetNewPickupDeliveryNumber(pickUp.PickUpDeliveryNumber, !string.IsNullOrEmpty(pickUp.ParentPickUpDeliveryId));
                 pickUp.ChangeSetOp = ChangeSetOperation.Update;
@@ -7541,7 +7545,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 string actualickupdeliveryNumber = oldNumber.Replace(entityPM.OldShipmentNumber + "/", "");
                 string[] numberArray = actualickupdeliveryNumber.Split('/');
                 newNumber = entityPM.ShipmentNumber + "/" + Convert.ToInt32(numberArray[0]);
-                
+
                 if (isChild && numberArray.Length > 1)
                 {
                     newNumber = entityPM.ShipmentNumber + "/" + Convert.ToInt32(numberArray[0]) + "/" + Convert.ToInt32(numberArray[1]);
@@ -7698,7 +7702,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 return null;
             }
 
-            Address partnerAddress = myAddressRepository.GetSingleAddress(addressId, tenant);            
+            Address partnerAddress = myAddressRepository.GetSingleAddress(addressId, tenant);
             return this.GetAddress(partnerAddress);
         }
         private string GetFullAddressByCASLAddress(string countryId, string city, string zipCode)
@@ -7819,6 +7823,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             return myResult;
         }
+
+        private void SaveChildEntitiesCustomFields()
+        {
+                ChildEntitiesCustomFieldService.Update(new ChildEntitiesCustomFieldArgs()
+                {
+                    Tenant = tenant,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Shipment",
+                    ChildObjectTableName = "ShipmentPackage",
+                    ChildEntities = entityPM.ShipmentPackages.Cast<object>().ToList()
+                });
+        }
+
     }
 
     public class NumberOfInsidePackagesHelper

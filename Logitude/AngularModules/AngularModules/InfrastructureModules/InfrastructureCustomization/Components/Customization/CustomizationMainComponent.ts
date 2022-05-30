@@ -94,12 +94,13 @@ export class CustomizationMainComponent {
             myTablesItems = this.allTablesItems;
         }
 
-        var tablesList: ObjectTablePM[] = window.ObjectTables.filter(d => (d.IsMain && d.EnableSecurity && !d.IsClosed && !d.IsComposition) || d.Name == "Address");
+        var tablesList: ObjectTablePM[] = window.ObjectTables.filter(d => (d.IsMain && d.EnableSecurity && !d.IsClosed && !d.IsComposition) || d.Name == "Address" || (d.IsComposition && d.AllowCustomFields));
         var myData: FieldsTranslations[] = [];
 
         myTablesItems.forEach(field => {
             var table: ObjectTablePM = tablesList.filter(d => d.Id == field.ObjectTableID)[0];
-            if (table != null && this.HaveObjectTableAccess(table)) {
+            //if (table != null && this.HaveObjectTableAccess(table)) {
+            if (table != null ) {
                 myData.push(field);
             }
         });

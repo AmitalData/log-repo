@@ -5,6 +5,7 @@ using System.Web;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 
 namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
@@ -135,6 +136,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ChassisNumber = itemPM.ChassisNumber;
             itemPoco.RegistrationNumber = itemPM.RegistrationNumber;
             itemPoco.CountryId = itemPM.CountryId;
+
+            ChildEntitiesCustomFieldMapping.MapPMTOPoco(itemPM, "ShipmentPackage");
         }
 
         public static void MapCommodityPackage(CommodityPackagePM itemPM, ShipmentPackage itemPoco, bool isNewEntity)
