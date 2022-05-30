@@ -146,17 +146,15 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        CreatedByPartner = a.CreatedByPartner,
                                        IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
-
                                        AccountingCancelationDate = a.AccountingCancelationDate,
                                        CancelationNotes = a.CancelationNotes,
-
                                        PaymentCurrencySign= a.PaymentCurrency.Sign,
                                        PartnerId = a.PartnerId,
-
+                                       InvoiceNumbers = a.InvoiceNumbers,
                                    }).FirstOrDefault();
 
 
-            BuildAllInvoicesNumbersField(payment);
+            //BuildAllInvoicesNumbersField(payment);
 
             ARInvoicePaymentRepository entityRepository = new ARInvoicePaymentRepository(repository.context);
             ARInvoicePaymentQuery entityQuery = new ARInvoicePaymentQuery(entityRepository);
@@ -596,7 +594,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    SATTransferStatusCode = entity.SATTransferStatusCode,
                                                    SATTransferStatusName = entity.SATTransferStatus != null ? entity.SATTransferStatus.Name : null,
                                                    TransmissionError = entity.TransmissionError,
-
                                                    MetodoPagoCode = entity.MetodoPagoCode,
                                                    TipoCadenaPago = entity.TipoCadenaPago,
                                                    CadPago = entity.CadPago,
@@ -623,6 +620,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    AccountingCancelationDate = entity.AccountingCancelationDate,
                                                    CancelationNotes = entity.CancelationNotes,
                                                    PartnerId = entity.PartnerId,
+                                                   InvoiceNumbers = entity.InvoiceNumbers,
                                                };
             return query2;
         }
