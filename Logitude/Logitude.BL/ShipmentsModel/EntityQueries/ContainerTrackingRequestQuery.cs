@@ -64,7 +64,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             else
             {
-                containerTrackingRequestQuery = containerTrackingRequestQuery.Where(e => e.ShipmentId == unsubscribeArgs.ShipmentId);
+                containerTrackingRequestQuery = containerTrackingRequestQuery.Where(e => e.ShipmentId == unsubscribeArgs.ShipmentId && e.ContainerNumber == null);
             }
             ContainerTrackingRequestPM entity = containerTrackingRequestQuery.Select(a => new ContainerTrackingRequestPM()
             {

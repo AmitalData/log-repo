@@ -193,7 +193,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
             var previousReqesutQuery = ShipmentContext.ContainerTrackingRequests
                 .Where(e=>e.Status == ContainerTrackingRequestStatus.Active && e.CarrierCode == ContainerStatusSimulatorArgs.CarrierCode).AsQueryable();
             if (ContainerStatusSimulatorArgs.IsFromContainer)
-                previousReqesutQuery = previousReqesutQuery.Where(e => e.ContainerNumber == ContainerStatusSimulatorArgs.ContainerNumber || e.Master == ShipmentMasterData.Master);
+                previousReqesutQuery = previousReqesutQuery.Where(e => e.ContainerNumber == ContainerStatusSimulatorArgs.ContainerNumber || (e.Master == ShipmentMasterData.Master && e.ContainerNumber == null));
             else
                 previousReqesutQuery = previousReqesutQuery.Where(e => e.Master == ShipmentMasterData.Master);
 
