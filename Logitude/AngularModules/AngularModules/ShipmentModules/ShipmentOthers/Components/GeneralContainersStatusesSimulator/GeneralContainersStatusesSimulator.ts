@@ -4,9 +4,8 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { ShipmentContainersWebService, ShipmentContainerSimulator } from '../../../../Shipment/Services/ShipmentContainersWebService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import { GeneralContainerStatusSimulatorArgs } from 'Shipment/DataContract/GeneralContainerStatusSimulatorArgs';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { UnsubscribeArgs } from 'Shipment/DataContract/UnsubscribeArgs';
+import { GeneralContainerTrackingArgs } from '../../../../Shipment/DataContract/GeneralContainerTrackingArgs';
 
 @Component({
 
@@ -17,7 +16,7 @@ export class GeneralContainersStatusesSimulatorComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
 
     private CurrentSession = SessionLocator.SelectedSession;
-    public generalContainerStatusSimulatorArgs: GeneralContainerStatusSimulatorArgs = <GeneralContainerStatusSimulatorArgs>{};
+    public generalContainerStatusSimulatorArgs: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs>{};
     public sourceCode;
     DataContext = this;
     constructor() {
@@ -58,11 +57,11 @@ export class GeneralContainersStatusesSimulatorComponent extends BaseComponent {
     ViziionUnsubscribe() {
         var shipmentContainersWebService = new ShipmentContainersWebService();
         this.CurrentSession.StartBusyIndicator("Unsubscribe...");
-        var args:UnsubscribeArgs =  {
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs>{
             ContainerId:this.generalContainerStatusSimulatorArgs.ContainerId,
             ShipmentId:this.generalContainerStatusSimulatorArgs.ShipmentId,
-            IsFromContainer:false,
-            IsSimulate:true,
+            IsFromContainer: this.generalContainerStatusSimulatorArgs.IsFromContainer,
+            IsSimulator:true,
             SourceCode:'VZN'
         }
         shipmentContainersWebService.ViziionUnsubscribe(args).subscribe(e=>{
