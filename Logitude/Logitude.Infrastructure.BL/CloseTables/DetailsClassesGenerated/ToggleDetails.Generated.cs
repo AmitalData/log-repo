@@ -668,6 +668,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "BSH,Shipment BI Report Scheduler", 
                 Description = "Shipment BI Report Scheduler", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Show Agents in Opportunities' Customers LOV", 
+                Description = "Show Agents in Opportunities' Customers LOV", 
+                Code = "SAC", 
+                SearchFields = "Show Agents in Opportunities' Customers LOV", 
+			});
 			
             return all;
        }
