@@ -41,7 +41,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class CustDocRelatedDocsWebServiceController : ApiController
     {
-        public HttpResponseMessage GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, string filterVlaue, string declarationType)
+        public HttpResponseMessage GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, string filterVlaue, string declarationType,string ExportFile)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
                         }
                     }
-                    else if (filterVlaue == "forwarding" || (declarationType == "E" && filterVlaue == "all"))
+                    else if (filterVlaue == "forwarding")
                     {
                     List<string> externalEntityReferences;
                     if (declarationType=="E")
@@ -99,14 +99,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                     else if (filterVlaue == "all")
                     {
-                    List<string> externalEntityReferences;
-                  
-                        externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
-                  
+                        List<string> externalEntityReferences;
 
+                     
+                         if (declarationType != "E")
+                         {
+                             externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
+                         }
+                         else {
+                              externalEntityReferences = new List<string> { ExportFile };
+                         }
+                  
                         if (referenceNumber != null)
                         {
-                            documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, externalEntityReferences, authToken.Tenant);
+                            documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, externalEntityReferences, authToken.Tenant, declarationType);
                         }
                         else
                         {
