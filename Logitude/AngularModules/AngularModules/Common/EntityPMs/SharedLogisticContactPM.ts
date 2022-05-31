@@ -86,6 +86,10 @@ export class SharedLogisticContactPM {
     public get IsDigitalPortal() { return this.isDigitalPortal; }
     public set IsDigitalPortal(newValue: boolean) { this.isDigitalPortal = newValue; this.MarkAsDirty(); }
 
+    private hTMLTemplate: string;
+    public get HTMLTemplate() { return this.hTMLTemplate; }
+    public set HTMLTemplate(newValue: string) { this.hTMLTemplate = newValue; this.MarkAsDirty(); }
+
     public OldEntityPM: SharedLogisticContactPM;
 
     public IsDirty: boolean;
