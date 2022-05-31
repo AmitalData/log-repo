@@ -42,19 +42,21 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
-
+    private HTMLTemplate: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedLogisticContactService: SharedLogisticContactService) {
         this.documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
-        this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading(); 
         this.Listen();
     }
 
     private SendToCustomerEvent: any = null;
+    private SessionEvent: any = null;
     Listen() {
         if (!this.SendToCustomerEvent) {
             this.SendToCustomerEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-                if (s == "SendDigitalPortalCompleted") {
+                if (s.Name == "DigitalPortalHTMLTemplate") {
+                    this.HTMLTemplate = s.Value;
                     this.SendInvitaion(null);
                 }
             });
@@ -63,6 +65,7 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SendToCustomerEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     ngOnInit() {
@@ -136,7 +139,7 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
 
     GeneralEmailSender: GeneralEmailSender;
     SendDigitaPortalDocument() {
-        var eventRefreshName =  "SendDigitalPortalCompleted";
+        var eventRefreshName =  "DigitalPortalHTMLTemplate";
         if (!this.GeneralEmailSender || (this.GeneralEmailSender && !this.GeneralEmailSender.LoadingSendingComponent)) {
             this.GeneralEmailSender = new GeneralEmailSender("SharedLogistics", "SLCIN", null, null, this.CurrentEntity.Id, "", "", null, null, eventRefreshName, null, false, null, null, this.sharedLogisticContact.Email, this.IsDigitalPortal);
             this.GeneralEmailSender.ShowFullSendControll();
@@ -164,6 +167,10 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
         this.sharedLogisticContact.IsCargoTrackingInvitation = this.IsCargoTrackingMenuClicked;
         this.sharedLogisticContact.TemplateId = templateId;
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+
+        if (this.IsDigitalPortal)
+            this.sharedLogisticContact.HTMLTemplate = this.HTMLTemplate;
+
         this._sharedLogisticContactService.ContactInternetAccessInvitation(this.sharedLogisticContact).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();

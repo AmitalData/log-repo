@@ -26,5 +26,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsCargoTrackingInvitation { get; set; }
         public string TemplateId { get; set; }
         public bool IsDigitalPortal { get; set; }
+        public string HTMLTemplate { get; set; }
     }
 }

@@ -282,7 +282,7 @@ namespace WebFreight.Web.Helpers
                     scope.Complete();
                 }
 
-                if (!sharedLogisticsContact.IsDigitalPortal && (tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsMobileActivated))
+                if (tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsMobileActivated)
                 {
                     string from = GetEmailFrom(sharedLogisticsContact.Tenant);
 
@@ -418,6 +418,9 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageFroShardLogisticsAndMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
+            bool isHTMLTemplate = CheckDigitalPortalHTMLTemplate(sharedLogisticContact);
+            if(isHTMLTemplate) return sharedLogisticContact.HTMLTemplate;
+
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, sharedLogisticContact);
@@ -470,8 +473,16 @@ namespace WebFreight.Web.Helpers
             }
         }
 
+        private static bool CheckDigitalPortalHTMLTemplate(SharedLogisticContactPM sharedLogisticContact)
+        {
+            return sharedLogisticContact.IsDigitalPortal;
+        }
+
         private static string GetEmailMessageFroMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
+            bool isHTMLTemplate = CheckDigitalPortalHTMLTemplate(sharedLogisticContact);
+            if (isHTMLTemplate) return sharedLogisticContact.HTMLTemplate;
+
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, sharedLogisticContact);
@@ -528,6 +539,9 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageForShardLogistics(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
+            bool isHTMLTemplate = CheckDigitalPortalHTMLTemplate(sharedLogisticContact);
+            if (isHTMLTemplate) return sharedLogisticContact.HTMLTemplate;
+
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, sharedLogisticContact);
@@ -581,6 +595,9 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageForCloud(Contact contact, Tenant tenantCompany, string password, string currentUsername, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
+            bool isHTMLTemplate = CheckDigitalPortalHTMLTemplate(sharedLogisticContact);
+            if (isHTMLTemplate) return sharedLogisticContact.HTMLTemplate;
+
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, sharedLogisticContact);

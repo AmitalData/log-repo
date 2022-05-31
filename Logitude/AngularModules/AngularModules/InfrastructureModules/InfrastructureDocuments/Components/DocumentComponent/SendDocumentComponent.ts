@@ -1117,83 +1117,83 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             return;
         }
 
+        if (!this.IsDigitalPortal) {
+            this._htmlEditorService.sendDocumentHtml(filter).subscribe((res: any) => {
+                var response: ServiceResponse = res;
 
-        this._htmlEditorService.sendDocumentHtml(filter).subscribe((res:any) => {
-            var response: ServiceResponse = res;
+                if (!response.HasError) {
+                    this.IsSendDocumentSucceeded = true;
+                    this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityIdAndDocumentOutId(this.EntityId, this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe((res: any) => {
+                        var pmResponse: ServiceResponse = res;
+                        if (!pmResponse.HasError) {
+                            var myResult = pmResponse.Result;
 
-            if (!response.HasError) {
-                this.IsSendDocumentSucceeded = true;
-                this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityIdAndDocumentOutId(this.EntityId, this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe((res:any) => {
-                    var pmResponse: ServiceResponse = res;
-                    if (!pmResponse.HasError) {
-                        var myResult = pmResponse.Result;
+                            this.CommunicationLogs = new Array<CommunicationLogPMViewModel>();
+                            myResult.forEach((item) => {
+                                this.CommunicationLogs.push(new CommunicationLogPMViewModel(item));
+                            });
+                            this.SelectedInternalDocument.CommunicationLogObsList = this.CommunicationLogs.filter(d => d.CurrentEntityPm.DocumentOutId == this.SelectedInternalDocument.CurrentDocument.Id);
 
-                        this.CommunicationLogs = new Array<CommunicationLogPMViewModel>();
-                        myResult.forEach((item) => {
-                            this.CommunicationLogs.push(new CommunicationLogPMViewModel(item));
-                        });
-                        this.SelectedInternalDocument.CommunicationLogObsList = this.CommunicationLogs.filter(d => d.CurrentEntityPm.DocumentOutId == this.SelectedInternalDocument.CurrentDocument.Id);
+                            this._documentOutPMService.getSingleDocumentOutPM(this.SelectedInternalDocument.CurrentDocument.Id, this.SelectedInternalDocument.CurrentDocument.Tenant).subscribe((res: any) => {
 
-                        this._documentOutPMService.getSingleDocumentOutPM(this.SelectedInternalDocument.CurrentDocument.Id, this.SelectedInternalDocument.CurrentDocument.Tenant).subscribe((res:any) => {
+                                var pmResponse: ServiceResponse = res;
+                                if (!pmResponse.HasError) {
+                                    var updated = pmResponse.Result;
+                                    if (updated) {
+                                        this.SelectedInternalDocument.CurrentDocument = updated;
+                                        this.SelectedInternalDocument.Issued = true;
 
-                            var pmResponse: ServiceResponse = res;
-                            if (!pmResponse.HasError) {
-                                var updated = pmResponse.Result;
-                                if (updated) {
-                                    this.SelectedInternalDocument.CurrentDocument = updated;
-                                    this.SelectedInternalDocument.Issued = true;
-
-                                    this.SelectedInternalDocument.IssuedByUserName = this.SelectedInternalDocument.CurrentDocument.IssuedByUserName = updated.IssuedByUserName;
-                                    this.SelectedInternalDocument.IssuedDate = this.SelectedInternalDocument.CurrentDocument.IssuedDate = updated.IssuedDate;
+                                        this.SelectedInternalDocument.IssuedByUserName = this.SelectedInternalDocument.CurrentDocument.IssuedByUserName = updated.IssuedByUserName;
+                                        this.SelectedInternalDocument.IssuedDate = this.SelectedInternalDocument.CurrentDocument.IssuedDate = updated.IssuedDate;
+                                    }
                                 }
-                            }
 
-                            if (this.SelectedInternalDocument.CommunicationLogObsList && this.SelectedInternalDocument.CommunicationLogObsList.length > 0) {
+                                if (this.SelectedInternalDocument.CommunicationLogObsList && this.SelectedInternalDocument.CommunicationLogObsList.length > 0) {
 
-                                this.SelectedInternalDocument.HasTree = true;
-                                this.SelectedInternalDocument.SetCommunicationLogListHeight();
-                            }
-
-
-                            if (!AppTool.IsNullOrEmpty(this.EventRefreshName)) {
-                                this.CurrentSession.FireEvent(this.EventRefreshName);
-                            }
-
-                           
-                            this.CurrentSession.CurrentWindow.Close("SendEnd");
-
-                            this.ShowIndicationMessage();
-
-                        });
-                    }
-                    else {
+                                    this.SelectedInternalDocument.HasTree = true;
+                                    this.SelectedInternalDocument.SetCommunicationLogListHeight();
+                                }
 
 
-                        this.CloseButtonClicked();
-
-                    }
-
-
-                });
-
-                if (this.CurrentSession.CurrentEditComponent) this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                if (!AppTool.IsNullOrEmpty(this.EventRefreshName)) {
+                                    this.CurrentSession.FireEvent(this.EventRefreshName);
+                                }
 
 
-            }
-            else {
-                 this.CurrentSession.StopBusyIndicator();
-                this.IsSendDocumentFailed = true;
-                if (response.ErrorsArray && response.ErrorsArray.length > 0) {
-                    this.ShowMessage(response.ErrorsArray[0], "Logitude Message");
+                                this.CurrentSession.CurrentWindow.Close("SendEnd");
+
+                                this.ShowIndicationMessage();
+
+                            });
+                        }
+                        else {
+
+
+                            this.CloseButtonClicked();
+
+                        }
+
+
+                    });
+
+                    if (this.CurrentSession.CurrentEditComponent) this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+
                 }
-            }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.IsSendDocumentFailed = true;
+                    if (response.ErrorsArray && response.ErrorsArray.length > 0) {
+                        this.ShowMessage(response.ErrorsArray[0], "Logitude Message");
+                    }
+                }
 
 
-        });
-
-
-
-
+            });
+        }
+        else {
+            this.CurrentSession.CurrentWindow.Close("DigitalPortal" + "," + this.SelectedDocumentTypeTemplateViewModel.HtmlData);
+        }
     }
 
     private ShowIndicationMessage() {

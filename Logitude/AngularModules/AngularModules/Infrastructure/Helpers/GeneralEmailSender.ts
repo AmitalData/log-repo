@@ -45,6 +45,7 @@ export class GeneralEmailSender {
     public IsToEmailIsDisabled: boolean = false;
     IsDigitalPortal: boolean = false;
     ToMail: string;
+    private CurrentSession = SessionLocator.SelectedSession;
 
     constructor(objecttablename: string, documentTypeCode: string, entityId: string, entityReference: string, childEntityId: string, childEntityReference: string, documentFilingId: string, subject: string, attachments: AttachmentsList[], eventRefreshName: string = null, entityPM: any = null, isCrm: boolean = false, eventTypeCode: string = null, fromMail: string = null,toMail:string = null, isDigitalPortal: boolean = false) {
         this.LoadingSendingComponent = true;
@@ -240,7 +241,12 @@ export class GeneralEmailSender {
         logWindow.IsShowCloseButton = true; 
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/SendDocumentComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event != null && $event.includes("DigitalPortal")) {
+                var htmlTemplate = $event.split(",")[1];
+                this.CurrentSession.SessionEvent.emit({ Name: "DigitalPortalHTMLTemplate", Value: htmlTemplate});
+            }
+        });
         this.LoadingSendingComponent = false;
-
     }
 }   
