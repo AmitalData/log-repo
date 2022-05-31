@@ -9,13 +9,24 @@
         <td>
             <div class="MediaFill">
                 <table *ngIf="AdvancedAutomationSendInterfaceDetails">
-                    <tr class="FormFieldRow">
+                    <tr *ngIf="SelectedInterfaceCode == ShipmentInterfaceCode" class="FormFieldRow">
                         <td style="width:130px;vertical-align:central">
                             <LogLabel [Text]="'Include Events Types'" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:250px;">
                             <div style="height: 100%; width: 100%;">
                                 <LogCheckBox [ObjectFieldName]="'IncludeEvents'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr *ngIf="SelectedInterfaceCode == ARInvoiceInterfaceCode" class="FormFieldRow">
+                        <td style="width:155px;vertical-align:central">
+                            <LogLabel [Text]="'Include Shipment Details'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogCheckBox [ObjectFieldName]="'IncludeShipmentDetails'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                             </div>
                         </td>
                         <td></td>

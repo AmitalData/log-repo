@@ -64,10 +64,19 @@ namespace Simplog.Data.Helpers
             public string BasicAuthPassword { get; set; }
         }
 
-        [DataContract(Namespace = "")]
-        public class AdvancedAutomationSendInterfaceDetails
-        {
-            [DataMember]
-            public bool IncludeEvents { get; set; }
+    [DataContract(Namespace = "")]
+    public class AdvancedAutomationSendInterfaceDetails
+    {
+        [DataMember]
+        public bool IncludeEvents { get; set; }
+        [DataMember]
+        public AdvancedARInvoiceAutomationSendInterfaceDetails AdvancedARInvoiceAutomationSendInterfaceDetails { get; set; }
+    }
+
+    [DataContract(Namespace = "")]
+    public class AdvancedARInvoiceAutomationSendInterfaceDetails
+    {
+        [DataMember]
+        public bool IncludeShipmentDetails { get; set; }
     }
 }
