@@ -19,12 +19,12 @@ export class CustDocRelatedDocsWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustDocRelatedDocsWebService';
     }
 
-    GetDocumentsFilingsForRelatedDocuments(entityId: string, childEntityId: string, objectTableId: string, directionCode: string, referenceNumber: string, filterVlaue: string, declarationType: string = null) {
+    GetDocumentsFilingsForRelatedDocuments(entityId: string, childEntityId: string, objectTableId: string, directionCode: string, referenceNumber: string, filterVlaue: string, declarationType: string = null,ExportFile?: string) {
     
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDocumentsFilingsForRelatedDocuments?' + 'entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&referenceNumber=' + referenceNumber + '&filterVlaue=' + filterVlaue + '&declarationType='+ declarationType , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDocumentsFilingsForRelatedDocuments?' + 'entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&referenceNumber=' + referenceNumber + '&filterVlaue=' + filterVlaue + '&declarationType='+ declarationType + '&ExportFile='+ ExportFile, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
