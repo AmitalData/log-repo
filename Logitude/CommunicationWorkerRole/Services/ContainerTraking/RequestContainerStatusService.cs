@@ -158,7 +158,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
 
         private void UpdateVizionContainerStatus()
         {
-            string requestId = CheckIfExistRequest();
+            string requestId = null;// CheckIfExistRequest();
             if (requestId == null)
             {
                 requestId = CreateNewRequest();

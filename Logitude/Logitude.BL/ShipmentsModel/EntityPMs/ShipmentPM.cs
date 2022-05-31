@@ -2110,6 +2110,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdatedByGLSHKAnalyzer { get; set; }
         public bool IsUpdatedByINTTRAAnalyzer { get; set; }
         public bool IsUpdatedOceanInsightsAnalyzer { get; set; }
+        public bool IsUpdatedVizionAnalyzer { get; set; }
         public bool IsUpdatedOceanInsightsMainCarriageDates { get; set; }
 
         public bool IsCreatedFromCustomerOverview { get; set; }

@@ -53,6 +53,16 @@ namespace WebFreight.Web.ContainerTracking
             MapConcurrencyFields();
             SaveContainer();
         }
+        public void SetContainer(ContainerPM containerPM)
+        {
+            this.containerPM = containerPM;
+            this.tenant = containerPM.Tenant;
+        }
+        public void SetShipment(ShipmentPM shipmentPM)
+        {
+            this.shipmentPM = shipmentPM;
+            this.tenant = shipmentPM.Tenant;
+        }
         private void MapContainerFields()
         {
             this.FillFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD, containerPM);

@@ -1,5 +1,9 @@
-﻿using Logitude.BL.DataContracts;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,20 +13,23 @@ namespace WebFreight.Web.ContainerTracking
 {
     public class VizionAnalyzer
     {
-        
+
         private ContainerUpdatedFields containerUpdatedFields;
         private VisionContainerStatus visionContainerStatus;
-        private Dictionary<string, VisionMilestone> MilestonesDictinoary;
+        private Dictionary<string, List<VisionMilestone>> MilestonesDictinoary;
 
 
         public VizionAnalyzer(VisionContainerStatus visionContainerStatus)
         {
-            var shipmentsContext = ShipmentsContext.GetContext(0);
+            this.visionContainerStatus = visionContainerStatus;
             containerUpdatedFields = new ContainerUpdatedFields();
+            containerUpdatedFields.ShipmentContext = ShipmentsContext.GetContext(0);
+            containerUpdatedFields.ContainerRepository = new ContainerRepository(containerUpdatedFields.ShipmentContext);
         }
 
         public ContainerUpdatedFields Run()
         {
+
             if (visionContainerStatus == null || !(visionContainerStatus.payload?.milestones?.Count >= 0))
                 return containerUpdatedFields;
             MilestonesDictinoary = GetMilstonesAsDictinoary(visionContainerStatus.payload.milestones);
@@ -32,42 +39,92 @@ namespace WebFreight.Web.ContainerTracking
 
         private void MapFields()
         {
-            if (IsExist(VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort, true))
-                containerUpdatedFields.MainCarriageETA = GetValue(VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort);
-            if (IsExist(VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort, false))
-                containerUpdatedFields.MainCarriageATA = GetValue(VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort);
-            if (IsExist(VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort, true))
-                containerUpdatedFields.MainCarriageETD = GetValue(VizionMmilestoneDescriptionEnums.VesselDepartureFromOriginPort);
-            if (IsExist(VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort, false))
-                containerUpdatedFields.MainCarriageATD = GetValue(VizionMmilestoneDescriptionEnums.VesselDepartureFromOriginPort);
+            MapArrivedField();
+            MapDepartureField();
+
         }
 
-        private DateTime? GetValue(string destinationPort)
+        private void MapDepartureField()
         {
-            var milestone = MilestonesDictinoary[destinationPort];
-            return milestone.timestamp;
+            if (!IsExist(VizionMmilestoneDescriptionEnums.VesselDepartureFromOriginPort))
+                return;
+            string pOLLocation = null;
+            var plannedMilistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselDepartureFromOriginPort].FirstOrDefault(e => e.planned);
+            if (plannedMilistone != null)
+            {
+                containerUpdatedFields.EstimatedPOLVesselDeparture = plannedMilistone.planned ? plannedMilistone.timestamp : containerUpdatedFields.MainCarriageETA;
+                pOLLocation = plannedMilistone.location?.unlocode;
+            }
+
+            var milistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselDepartureFromOriginPort].FirstOrDefault(e => !e.planned);
+            if (milistone != null)
+            {
+                containerUpdatedFields.ActualPOLVesselDeparture = milistone.planned ? containerUpdatedFields.MainCarriageATA : milistone.timestamp;
+                pOLLocation = string.IsNullOrEmpty(milistone.location?.unlocode) ? pOLLocation : milistone.location?.unlocode;
+
+            }
+            if (!string.IsNullOrEmpty(pOLLocation))
+            {
+                containerUpdatedFields.POLLocation = milistone.location.unlocode;
+            }
         }
 
-        private bool IsExist(string destinationPort, bool planned)
+        private void MapArrivedField()
         {
-            if (!MilestonesDictinoary.ContainsKey(destinationPort))
+            if (!IsExist(VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort))
+                return;
+            string pODLocation = null;
+            var plannedMilistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort].FirstOrDefault(e => e.planned);
+            if(plannedMilistone != null)
+            {
+                containerUpdatedFields.EstimatedPODVesselArrival = plannedMilistone.planned ? plannedMilistone.timestamp : containerUpdatedFields.MainCarriageETA;
+                pODLocation = plannedMilistone.location?.unlocode;
+            }
+            
+            var milistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort].FirstOrDefault(e => !e.planned);
+            if(milistone != null)
+            {
+                containerUpdatedFields.ActualPODVesselArrival = milistone.planned ? containerUpdatedFields.MainCarriageATA : milistone.timestamp;
+                pODLocation = string.IsNullOrEmpty(milistone.location?.unlocode) ? pODLocation : milistone.location?.unlocode;
+
+            }
+            if (!string.IsNullOrEmpty(pODLocation))
+            {
+                containerUpdatedFields.PODLocation = pODLocation;
+            }
+
+        }
+
+       
+        private DateTime? GetValue(string key)
+        {
+            var milestone = MilestonesDictinoary[key];
+            return null;
+        }
+
+        private bool IsExist(string description)
+        {
+            if (!MilestonesDictinoary.ContainsKey(description))
                 return false;
-            var milestone = MilestonesDictinoary[destinationPort];
-            if (milestone.planned == planned)
-                return true;
-            return false;
+            return true;
         }
 
-        private Dictionary<string, VisionMilestone> GetMilstonesAsDictinoary(List<VisionMilestone> milestones)
+        private Dictionary<string, List<VisionMilestone>> GetMilstonesAsDictinoary(List<VisionMilestone> milestones)
         {
-            var milestonesDictinoary = new Dictionary<string, VisionMilestone>(milestones.Count);
+            var milestonesDictinoary = new Dictionary<string, List<VisionMilestone>>(milestones.Count);
             foreach (var item in milestones)
             {
-                if (milestonesDictinoary.ContainsKey(item.description))
-                    continue;
-                milestonesDictinoary.Add(item.description, item);
+                if (!milestonesDictinoary.ContainsKey(item.description))
+                    milestonesDictinoary.Add(item.description, new List<VisionMilestone>() { item });
+                milestonesDictinoary[item.description].Add(item);
+
             }
             return milestonesDictinoary;
+        }
+
+        private string GetMilstonesKey(string description, string unlocode, bool planned)
+        {
+            return $"{description}-{unlocode}-{planned}";
         }
     }
 
