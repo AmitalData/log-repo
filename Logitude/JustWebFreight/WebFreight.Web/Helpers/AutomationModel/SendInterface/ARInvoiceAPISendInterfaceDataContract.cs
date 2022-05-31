@@ -40,13 +40,8 @@ namespace WebFreight.Web.Helpers.AutomationModel.SendInterface
         {
             const string genericInterfaceCode = "GI";
             const string advancedGenericInterfaceCode = "AI";
-            if (automationSendInterface.AdvancedAutomationSendInterfaceDetails == null)
-                return genericInterfaceCode;
-            
-            if (automationSendInterface.AdvancedAutomationSendInterfaceDetails.AdvancedARInvoiceAutomationSendInterfaceDetails == null)
-                return genericInterfaceCode;
-            
-            if (automationSendInterface.AdvancedAutomationSendInterfaceDetails.AdvancedARInvoiceAutomationSendInterfaceDetails.IncludeShipmentDetails)
+                        
+            if (automationSendInterface.AdvancedAutomationSendInterfaceDetails?.ARInvoiceDetails?.IncludeShipmentDetails == true)
                 return advancedGenericInterfaceCode;
             
             return genericInterfaceCode;

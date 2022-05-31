@@ -70,11 +70,11 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public bool IncludeEvents { get; set; }
         [DataMember]
-        public AdvancedARInvoiceAutomationSendInterfaceDetails AdvancedARInvoiceAutomationSendInterfaceDetails { get; set; }
+        public ARInvoiceDetails ARInvoiceDetails { get; set; }
     }
 
     [DataContract(Namespace = "")]
-    public class AdvancedARInvoiceAutomationSendInterfaceDetails
+    public class ARInvoiceDetails
     {
         [DataMember]
         public bool IncludeShipmentDetails { get; set; }

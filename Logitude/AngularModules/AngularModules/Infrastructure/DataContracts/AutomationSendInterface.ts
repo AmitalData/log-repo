@@ -4,7 +4,7 @@ export class AutomationSendInterface {
         this.FTPDetails = new FTPAutomationDetails();
         this.WebHookDetails = new WebHookAutomationDetails();
         this.AdvancedAutomationSendInterfaceDetails = new AdvancedAutomationSendInterfaceDetails();
-        this.AdvancedAutomationSendInterfaceDetails.AdvancedARInvoiceAutomationSendInterfaceDetails = new AdvancedARInvoiceAutomationSendInterfaceDetails();
+        this.AdvancedAutomationSendInterfaceDetails.ARInvoiceDetails = new ARInvoiceDetails();
     }
 
 
@@ -40,9 +40,9 @@ export class WebHookAutomationDetails {
 
 export class AdvancedAutomationSendInterfaceDetails {
     public IncludeEvents: boolean;
-    public AdvancedARInvoiceAutomationSendInterfaceDetails: AdvancedARInvoiceAutomationSendInterfaceDetails;
+    public ARInvoiceDetails: ARInvoiceDetails;
 }
 
-export class AdvancedARInvoiceAutomationSendInterfaceDetails {
+export class ARInvoiceDetails {
     public IncludeShipmentDetails: boolean;
 }

@@ -186,7 +186,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 System.Type type13 = typeof(AutomationEvent);
                 System.Type type14 = typeof(AutomationOnUpdateDocument);
                 System.Type type15 = typeof(OnUpdateDocumentTypeAttachment);
-                System.Type type16 = typeof(AdvancedARInvoiceAutomationSendInterfaceDetails);
+                System.Type type16 = typeof(ARInvoiceDetails);
 
 
 

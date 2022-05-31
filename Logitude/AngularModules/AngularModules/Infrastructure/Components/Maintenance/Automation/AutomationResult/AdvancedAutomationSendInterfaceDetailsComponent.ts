@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { BaseComponent } from '../../../LogitudeComponents/BaseComponent';
-import { AdvancedAutomationSendInterfaceDetails, AutomationSendInterface, AdvancedARInvoiceAutomationSendInterfaceDetails } from '../../../../DataContracts/AutomationSendInterface';
+import { AdvancedAutomationSendInterfaceDetails, AutomationSendInterface, ARInvoiceDetails } from '../../../../DataContracts/AutomationSendInterface';
 import { SessionLocator } from '../../../../Utilities/SessionLocator';
 
 @Component({
@@ -11,7 +11,7 @@ export class AdvancedAutomationSendInterfaceDetailsComponent extends BaseCompone
     public DataContext: any;
     public AutomationSendInterface: AutomationSendInterface;
     public AdvancedAutomationSendInterfaceDetails: AdvancedAutomationSendInterfaceDetails;
-    public AdvancedARInvoiceAutomationSendInterfaceDetails: AdvancedARInvoiceAutomationSendInterfaceDetails;
+    public ARInvoiceDetails: ARInvoiceDetails;
     public ObjectTableName: string = "AdvancedAutomationSendInterfaceDetails";
     public SelectedInterfaceCode: string;
     public ShipmentInterfaceCode: string = "ShipmentAPI";
@@ -38,7 +38,7 @@ export class AdvancedAutomationSendInterfaceDetailsComponent extends BaseCompone
         }
 
         this.SelectedInterfaceCode = this.AutomationSendInterface.InterfaceName;
-        this.AdvancedARInvoiceAutomationSendInterfaceDetails = this.AdvancedAutomationSendInterfaceDetails.AdvancedARInvoiceAutomationSendInterfaceDetails;
+        this.ARInvoiceDetails = this.AdvancedAutomationSendInterfaceDetails.ARInvoiceDetails;
 
         if (this.SelectedInterfaceCode == this.ShipmentInterfaceCode) {
             this.FillShipmentDetails();
@@ -53,10 +53,10 @@ export class AdvancedAutomationSendInterfaceDetailsComponent extends BaseCompone
     }
 
     FillARInvoiceDetails() {
-        if (!this.AdvancedARInvoiceAutomationSendInterfaceDetails) {
-            this.AdvancedARInvoiceAutomationSendInterfaceDetails = new AdvancedARInvoiceAutomationSendInterfaceDetails();
+        if (!this.ARInvoiceDetails) {
+            this.ARInvoiceDetails = new ARInvoiceDetails();
         }
-        this.IncludeShipmentDetails = this.AdvancedARInvoiceAutomationSendInterfaceDetails.IncludeShipmentDetails;
+        this.IncludeShipmentDetails = this.ARInvoiceDetails.IncludeShipmentDetails;
     }
 
     SaveButtonClicked() {
@@ -75,7 +75,7 @@ export class AdvancedAutomationSendInterfaceDetailsComponent extends BaseCompone
     }
 
     SaveARInvoiceDetails() {
-        this.AdvancedARInvoiceAutomationSendInterfaceDetails.IncludeShipmentDetails = this.IncludeShipmentDetails;
+        this.ARInvoiceDetails.IncludeShipmentDetails = this.IncludeShipmentDetails;
     }
 
     CloseButtonClicked() {
