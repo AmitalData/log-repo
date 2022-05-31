@@ -39,6 +39,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                           into reportJoinData
                                                                           from report in reportJoinData.DefaultIfEmpty()
                                                                           where journal.AccountingEntityCode == Enums.AccountingEntityValues.Adjustment || journal.AccountingEntityCode == Enums.AccountingEntityValues.Revaluation
+                                                                          || journal.AccountingEntityCode == Enums.AccountingEntityValues.Journal || journal.AccountingEntityCode == Enums.AccountingEntityValues.BankAdjustment
 
                                                                           select new InterestTransactionList()
                                                                           {
@@ -85,7 +86,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
                    into reportJoinData
                    from report in reportJoinData.DefaultIfEmpty()
-
+                   where journal.AccountingEntityCode != Enums.AccountingEntityValues.Adjustment && journal.AccountingEntityCode != Enums.AccountingEntityValues.Revaluation
+                         && journal.AccountingEntityCode != Enums.AccountingEntityValues.Journal && journal.AccountingEntityCode != Enums.AccountingEntityValues.BankAdjustment
                    select new InterestTransactionList()
                    {
 
