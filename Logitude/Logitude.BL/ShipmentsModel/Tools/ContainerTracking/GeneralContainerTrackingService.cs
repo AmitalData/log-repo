@@ -144,6 +144,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             storageservice.Write(byteArray, fileInfo);
             return document;
         }
+        private BlobFileInfo CreateBlobFile(Document document, byte[] byteData)
+        {
+            return new BlobFileInfo()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                Tenant = document.Tenant,
+                FileSize = byteData.Length,
+
+            };
+        }
         private Document CreateDocument(int tenant, byte[] byteData)
         {
             return new Document()
@@ -157,18 +169,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                 Folder = "ContainerTrackingStatus",
             };
         }
-        private Document AddDocument(int tenant, byte[] byteArray)
-        {
-            var commonContext = CommonDataContext.GetContext(tenant);
-            DocumentRepository documentrepository = new DocumentRepository(commonContext);
-            Document document = CreateDocument(tenant, byteArray);
-            documentrepository.Add(document);
-            documentrepository.SubmitChanges();
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            BlobFileInfo fileInfo = CreateBlobFile(document, byteArray);
-            storageservice.Write(byteArray, fileInfo);
-            return document;
-        }
+        
         private byte[] ConvertObjectToByteArray(object simulatorArgs)
         {
             var objectText =  JsonConvert.SerializeObject(simulatorArgs);
@@ -222,15 +223,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         public void UpdateStatusFromVizion(VisionContainerStatus containerStatus)
         {
-
-            var shipmentsContext = ShipmentsContext.GetContext(0);
-            var allContainerTrackingRequests = shipmentsContext.ContainerTrackingRequests.Where(e => e.RequestId == containerStatus.reference_id && e.Status == ContainerTrackingRequestStatus.Active).ToList();
-            foreach (var containerTrackingRequest in allContainerTrackingRequests)
-            {
-                BuildCommunicationLogUpdateStatus(containerStatus, containerTrackingRequest);
-            }
-
-            //this.InsertNewAnalyzeQueue(containerStatus);
+            this.InsertNewAnalyzeQueue(containerStatus);
         }
         private void InsertNewAnalyzeQueue(object containerStatus)
         {

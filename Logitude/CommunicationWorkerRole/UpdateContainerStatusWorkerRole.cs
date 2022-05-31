@@ -27,6 +27,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning) StartWork();
         }
+
         private void StartWork()
         {
             if (General.IsUpdating())
@@ -37,7 +38,6 @@ namespace CommunicationWorkerRole
 
             try
             {
-                InitializeQueueService();
                 ExecuteQueue();
             }
             catch (Exception exception)
@@ -49,80 +49,21 @@ namespace CommunicationWorkerRole
 
         private void ExecuteQueue()
         {
-            var queueResponse = queueService.Receive();
-            if (queueResponse == null || queueResponse.MessageId == null)
-            {
-                return;
-            }
-            try
-            {
-                new ContainerTrackingWRService(queueService, queueResponse).ExecuteQueue();
-                queueService.Complete();
-            }
-            catch (Exception)
-            {
-                queueService.CompleteAsFailed();
-                throw;
-            }
-        }
+            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+            AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("GeneralContainerTrackingReceiver");
+            LastActivity = DateTime.UtcNow;
 
-        private void ConnectClient()
-        {
-            try
+            if (analyzeQueue != null)
             {
-                InitializeQueueService();
-                queueService.Complete();
-
+                ContainerTrackingGeneralAnalyzer analyzer = new ContainerTrackingGeneralAnalyzer(ContainerStatusSourceValues.Vizion, analyzeQueue, analyzeQueueRepository);
+                analyzer.Run();
+                LogDoneItemInMemory();
             }
-            catch (Exception ex)
+            else
             {
-                queueService.CompleteAsFailed();
-
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "General Update Container Status start fail", null, null);
+                Thread.Sleep(3000);
             }
         }
-
-        private void InitializeQueueService()
-        {
-            queueService = new DbQueueService();
-            queueService.InitializeQueue("GeneralUpdateContainerStatus", 0);
-        }
-        //private void StartWork()
-        //{
-        //    if (General.IsUpdating())
-        //    {
-        //        Thread.Sleep(60000);
-        //        return;
-        //    }
-
-        //    try
-        //    {
-        //        ExecuteQueue();
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "General Update Container Status start fail", null, null);
-        //        Thread.Sleep(10000);
-        //    }
-        //}
-
-        //private void ExecuteQueue()
-        //{
-        //    AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-        //    AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("GeneralContainerTrackingReceiver");
-        //    LastActivity = DateTime.UtcNow;
-
-        //    if (analyzeQueue != null)
-        //    {
-        //        ContainerTrackingGeneralAnalyzer analyzer = new ContainerTrackingGeneralAnalyzer(ContainerStatusSourceValues.Vizion, analyzeQueue, analyzeQueueRepository);
-        //        analyzer.Run();
-        //        LogDoneItemInMemory();
-        //    }
-        //    else
-        //    {
-        //        Thread.Sleep(3000);
-        //    }
-        //}
 
     }
 }

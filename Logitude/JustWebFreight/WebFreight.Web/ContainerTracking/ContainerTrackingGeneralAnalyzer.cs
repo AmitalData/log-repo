@@ -2,6 +2,7 @@
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -62,8 +63,8 @@ namespace WebFreight.Web.ContainerTracking
         private void Deserialize()
         {
             try
-            {                
-                this.AnalyzeMessageBody();               
+            {
+                this.AnalyzeMessageBody();
             }
 
             catch (Exception ex)
@@ -76,10 +77,9 @@ namespace WebFreight.Web.ContainerTracking
                 throw ex;
             }
 
-            if (externalTasksQueues != null)
-            {
-                this.AnalyzeData();
-            }
+            
+            this.AnalyzeData();
+           
         }
         private void AnalyzeMessageBody()
         {
@@ -102,13 +102,13 @@ namespace WebFreight.Web.ContainerTracking
             {
                 this.ConnectAnalyzeQueueToTenantAndEntity();
 
-                if (trackingSource == ContainerStatusSourceValues.OceanInsights)
+                if (trackingSource == ContainerStatusSourceValues.OceanInsights && externalTasksQueues != null)
                 {
                     OceanInsightAnalyzer oceanInsightAnalyzer = new OceanInsightAnalyzer(externalTasksQueues);
                     containerUpdatedFields = oceanInsightAnalyzer.Run();
                 }
 
-                else if (trackingSource == ContainerStatusSourceValues.Vizion)
+                else if (trackingSource == ContainerStatusSourceValues.Vizion && visionContainerStatus != null)
                 {
                     VizionAnalyzer vizionAnalyzer = new VizionAnalyzer(visionContainerStatus);
                     containerUpdatedFields = vizionAnalyzer.Run();
@@ -144,7 +144,7 @@ namespace WebFreight.Web.ContainerTracking
             ContainerTrackingUpdateManager manager = new ContainerTrackingUpdateManager(containerUpdatedFields);
 
             if (trackingSource == ContainerStatusSourceValues.OceanInsights)
-            {                
+            {
                 manager.Update();
             }
 
@@ -158,14 +158,33 @@ namespace WebFreight.Web.ContainerTracking
                     BuildCommunicationLogUpdateStatus(containerTrackingRequest);
                     if (!string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
                     {
-                        //get container (containerId)
-                        // get shipment (shipment id)
+                        manager.SetContainer(GetContanerPM(containerTrackingRequest));
+                        manager.SetShipment(GetShipmentPM(containerTrackingRequest));
                         manager.Update();
                     }
-                    
+
                 }
-            }            
+            }
         }
+
+        private ContainerPM GetContanerPM(ContainerTrackingRequest containerTrackingRequest)
+        {
+
+            var containerRepository = new ContainerRepository(containerUpdatedFields.ShipmentContext);
+            var containerQuery = new ContainerQuery(containerRepository);
+            var containerPM = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(containerTrackingRequest.ContainerNumber, containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
+            return containerPM;
+
+        }
+        private ShipmentPM GetShipmentPM(ContainerTrackingRequest containerTrackingRequest)
+        {
+            var shipmentRepository = new ShipmentRepository(containerUpdatedFields.ShipmentContext);
+            var shipmentQuery = new ShipmentQuery(shipmentRepository);
+            var shipmentPM = shipmentQuery.GetSinglePM(containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
+            return shipmentPM;
+
+        }
+
         private void DoneAnalyzeQueue()
         {
             analyzeQueue.Status = "D";
@@ -225,9 +244,9 @@ namespace WebFreight.Web.ContainerTracking
             analyzeQueueRepository.SubmitChanges();
         }
 
-        private void BuildCommunicationLogUpdateStatus( ContainerTrackingRequest containerTrackingRequest)
+        private void BuildCommunicationLogUpdateStatus(ContainerTrackingRequest containerTrackingRequest)
         {
-            
+
             using (TransactionScope scope = Simplog.Server.Infrastructure.Helpers.TransactionFactory.GetTransaction())
             {
                 var byteArray = ConvertObjectToByteArray(visionContainerStatus);
@@ -294,7 +313,7 @@ namespace WebFreight.Web.ContainerTracking
 
             };
         }
-       
+
         private Document CreateDocument(int tenant, byte[] byteData)
         {
             return new Document()
@@ -331,6 +350,7 @@ namespace WebFreight.Web.ContainerTracking
                 ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
                 Subject = "General Update Container Status",
                 Tenant = containerTrackingRequest.Tenant,
+                CommunicationLogTypeCode = "A",
                 CommunicationStatusTypeCode = "D",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(containerTrackingRequest.Tenant),
                 DocumentId = document.Id,

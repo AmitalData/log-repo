@@ -45,7 +45,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     {
                         MapConcurrencyFields_OCINS(entityPM, entityPoco, entityMasterData);
                     }
-
+                    else if (entityPM.IsUpdatedVizionAnalyzer)
+                    {
+                        MapConcurrencyFields_VZN(entityPM, entityPoco, entityMasterData);
+                    }
                     else
                     {
                         MapConcurrencyFields_OnEdited(entityPM, entityPoco, entityMasterData);
@@ -60,6 +63,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 }
 
                 MapCalculatedFields(entityPM, entityPoco, entityMasterData);
+            }
+        }
+
+        private static void MapConcurrencyFields_VZN(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
+        {
+            if (entityPM.ShipmentLevelCode != "H")
+            {
+                if (entityMasterData != null)
+                {
+                    entityPoco.OIConcurrencyGUID = entityPM.OINewConcurrencyGUID;
+                    entityMasterData.MainCarriageATD = entityPM.MainCarriageATD;
+                    entityMasterData.MainCarriageETD = entityPM.MainCarriageETD;
+                    entityMasterData.MainCarriageETA = entityPM.MainCarriageETA;
+                    entityMasterData.MainCarriageATA = entityPM.MainCarriageATA;
+                }
             }
         }
 
