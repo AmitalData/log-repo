@@ -97,7 +97,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                     EntityId = itLine.JournalId,
                                     OriginalEntityLineNumber = itLine.JournalLineNumber,
 
-                                    AccountEntityCode = null,
+                                    AccountEntityCode = "1",
                                     ForeignAmount = itLine.ForeignAmount,
                                     LocalAmount = itLine.LocalAmount,
                                     CurrencyId = itLine.CurrencyId,
