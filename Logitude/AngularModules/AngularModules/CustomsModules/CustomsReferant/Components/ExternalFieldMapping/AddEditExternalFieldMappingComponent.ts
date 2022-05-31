@@ -12,7 +12,9 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 export class AddEditExternalFieldMappingComponent
     extends BaseComponent
     implements OnInit {
-
+        
+        
+    public DataContext: any = this;
     public ObjectTableName: string = "Customs.ExternalFieldMapping";
     public EntityPM: ExternalFieldMappingPM;
     isWindowMode: boolean = false;
