@@ -1764,6 +1764,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
                     case "Customs.CourierPendingReason":
+                    case "Customs.ExternalFieldMapping":
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     case "Customs.ExceptionReason":

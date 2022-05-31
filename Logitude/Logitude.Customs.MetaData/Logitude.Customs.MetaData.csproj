@@ -194,6 +194,7 @@
     <None Include="DBTables\AuthorizedSignerPermit.dxml" />
     <None Include="DBTables\AutonomyRegionType.dxml" />
     <None Include="DBTables\AutonomyType.dxml" />
+    <None Include="DBTables\AvailableStatusField.dxml" />
     <None Include="DBTables\Bank.dxml" />
     <None Include="DBTables\BuyerRoleType.dxml" />
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
@@ -548,6 +549,7 @@
     <None Include="EntityFiles\ExportLogisticPermitAction.lxml" />
     <None Include="EntityFiles\LogisticActionRequest.lxml" />
     <None Include="EntityFiles\LogisticActionRequestType.lxml" />
+    <None Include="EntityFiles\AvailableStatusField.lxml" />
     <None Include="EntityFiles\DeclarationCasualDetails.lxml">
       <SubType>Designer</SubType>
     </None>

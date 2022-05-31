@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExternalFieldMappingUpdateClass
    {  		
-		public const string HashString = "39161693fe30ce42d8c8f3d9af69f35c";
+		public const string HashString = "6d81ba1c01725475a421b439138aaa44";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ExternalFieldMapping",
-			      				    Code =  "9949",
+			      				    Code =  "300e",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -204,10 +204,360 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Field",
+					  						ObjectTableName =  "Customs.ExternalFieldMapping",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Field",
+					  						ListPropertyPath =  "Field",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExternalFieldMapping",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Field",
+					  						DefaultText =  "Field ",
+					  						FullLocalDefaultText =  "Field",
+					  						ListFieldLable =  "FieldListLable",
+					  						ListLableDefaultText =  "Field",
+					  						ListLocalDefaultText =  "Field",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusCode",
+					  						ObjectTableName =  "Customs.ExternalFieldMapping",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  3,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  3,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusCode",
+					  						ListPropertyPath =  "StatusCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExternalFieldMapping",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusCode",
+					  						DefaultText =  "Status Code",
+					  						FullLocalDefaultText =  "סטטוס ",
+					  						ListFieldLable =  "StatusCodeListLable",
+					  						ListLableDefaultText =  "Status Code",
+					  						ListLocalDefaultText =  "סטטוס ",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusFieldType",
+					  						ObjectTableName =  "Customs.ExternalFieldMapping",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.StatusFieldType",
+					  						MinLength =  0,
+					  						MaxLength =  3,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  3,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusFieldType",
+					  						ListPropertyPath =  "StatusFieldType",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExternalFieldMapping",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusFieldType",
+					  						DefaultText =  "Status Field Type",
+					  						ListFieldLable =  "StatusFieldTypeListLable",
+					  						ListLableDefaultText =  "Status Field Type",
+					  						ListLocalDefaultText =  "סוג שדה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusName",
+					  						ObjectTableName =  "Customs.ExternalFieldMapping",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  50,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  50,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusName",
+					  						ListPropertyPath =  "StatusName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExternalFieldMapping",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusName",
+					  						DefaultText =  "Status Name",
+					  						FullLocalDefaultText =  "שם סטטוס",
+					  						ListFieldLable =  "StatusNameListLable",
+					  						ListLableDefaultText =  "StatusName",
+					  						ListLocalDefaultText =  "שם סטטוס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InActive",
+					  						ObjectTableName =  "Customs.ExternalFieldMapping",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InActive",
+					  						ListPropertyPath =  "InActive",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExternalFieldMapping",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InActive",
+					  						DefaultText =  "InActive",
+					  						ListFieldLable =  "InActiveListLable",
+					  						ListLableDefaultText =  "InActive",
+					  						ListLocalDefaultText =  "לא פעיל",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup ExternalFieldMappingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "300e", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ExternalFieldMappingQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8614", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ExternalFieldMappingObjectTable = objectTables.ContainsKey("Customs.ExternalFieldMapping") ? objectTables["Customs.ExternalFieldMapping"] : null;
+            if (ExternalFieldMappingObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                ExternalFieldMappingObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ExternalFieldMapping" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode ExternalFieldMappingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalFieldMapping.Q.AllExternalFieldMapping", DefaultText = @"Referant Status Mapping",LocalDefaultText = "מיפוי סטטוסים", ObjectTableId = ExternalFieldMappingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ExternalFieldMappingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalFieldMapping.Q.AllExternalFieldMapping", ObjectTableId = ExternalFieldMappingObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalFieldMappingFeatures.AllExternalFieldMapping", NameTextCodeDefaultText = "AllExternalFieldMapping", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExternalFieldMappingObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AllExternalFieldMappingQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExternalFieldMappingTextCode_0.Id, NameTextCodeCode = ExternalFieldMappingTextCode_0.Code, ObjectTableName = "Customs.ExternalFieldMapping", Code = "AllExternalFieldMapping",  QueryGroupCode = "300e", IndexOrder = 0, Tenant = 0, ObjectTableId = ExternalFieldMappingObjectTable.Id, QuerySection = "Customs.ExternalFieldMapping", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ExternalFieldMappingFeature_0.Id,FeatureUniqeCode= ExternalFieldMappingFeature_0.FeatureUniqeCode, DefaultSortName = "Field", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllExternalFieldMappingQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalFieldMappingQuery.Id,QueryCode = AllExternalFieldMappingQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExternalFieldMapping.Field" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllExternalFieldMappingQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalFieldMappingQuery.Id,QueryCode = AllExternalFieldMappingQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ExternalFieldMapping.StatusCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllExternalFieldMappingQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalFieldMappingQuery.Id,QueryCode = AllExternalFieldMappingQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ExternalFieldMapping.StatusFieldType" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllExternalFieldMappingQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalFieldMappingQuery.Id,QueryCode = AllExternalFieldMappingQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ExternalFieldMapping.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllExternalFieldMappingQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalFieldMappingQuery.Id,QueryCode = AllExternalFieldMappingQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ExternalFieldMapping.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -228,7 +578,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ExternalFieldMappingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ExternalFieldMapping" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ExternalFieldMappingGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExternalFieldMapping.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = ExternalFieldMappingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ExternalFieldMappingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalFieldMapping.Tab.General", ObjectTableId = ExternalFieldMappingObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalFieldMappingFeatures.EFMT", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalFieldMappingObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EFMT",HtmlComponentName = "AddEditExternalFieldMappingComponent",HtmlComponentUrl = "./CustomsModules/CustomsReferant/Components/ExternalFieldMapping/AddEditExternalFieldMappingComponent", FeatureId = ExternalFieldMappingGeneralFeature_TH0.Id,FeatureUniqeCode = ExternalFieldMappingGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./CustomsModules/CustomsReferant/Components/ExternalFieldMapping/AddEditExternalFieldMappingComponent", ObjectTableId = ExternalFieldMappingObjectTable.Id, TabNameTextCodeId = ExternalFieldMappingGeneralTextCode_TH0.Id, TabNameTextCodeCode = ExternalFieldMappingGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

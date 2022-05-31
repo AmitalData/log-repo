@@ -73,6 +73,7 @@
     <Compile Include="EntityPMs\Generated\AmendRequestRejectReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmountTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutonomyRegionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AvailableStatusFieldPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BuyerRoleTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CancellationReasonRequestTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CancellationRequestStatusPM.Generated.cs" />

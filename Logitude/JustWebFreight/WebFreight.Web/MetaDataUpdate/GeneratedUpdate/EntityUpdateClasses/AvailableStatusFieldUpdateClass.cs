@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class StatusFieldTypeUpdateClass
+   public class AvailableStatusFieldUpdateClass
    {  		
-		public const string HashString = "a38df475aaf276701e2c60b057d152f6";
+		public const string HashString = "a6c1ee9d70c7b9164ae7b6fcf6d6310f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.StatusFieldType",
+	             				    ObjectTableName =  "Customs.AvailableStatusField",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.StatusFieldTypes",
-			      				    ObjectTableSingular =  "StatusFieldType",
-			      				    ObjectTablePlural =  "StatusFieldTypes",
+			      				    DBTableName =  "Customs.AvailableStatusFields",
+			      				    ObjectTableSingular =  "AvailableStatusField",
+			      				    ObjectTablePlural =  "AvailableStatusFields",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -104,20 +104,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Code",
-			      				    LookUp2 =  "Name",
-			      				    KeyPropertyPath =  "Code",
+			      				    LookUp1 =  "FieldCode",
+			      				    LookUp2 =  "FieldCode",
+			      				    KeyPropertyPath =  "FieldCode",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
+			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
-			      				    IsAutoComplete =  true,
+			      				    IsMain =  true,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Code",
+			      				    SortingByObjectField =  "FieldCode",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -126,11 +126,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "סוג סטטוס",
-			      				    Code =  "ae78",
+			      				    DefaultText =  "AvailableStatusField",
+			      				    Code =  "d065",
 			      				    Name =  " Query Group",
-			      				    CloseTableCode =  "Code",
-			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
@@ -142,7 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  StatusFieldTypeUpdateClass.HashString,
+			      				    HashString =  AvailableStatusFieldUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -153,27 +151,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Code",
-					  						ObjectTableName =  "Customs.StatusFieldType",
+					 						FieldName =  "FieldCode",
+					  						ObjectTableName =  "Customs.AvailableStatusField",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  3,
-					  						IsRequired =  false,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  3,
-					  						DisplayInList =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "Code",
-					  						ListPropertyPath =  "Code",
-					  						DisplayInLookUpIndex =  0,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "FieldCode",
+					  						ListPropertyPath =  "FieldCode",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -181,7 +178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "StatusFieldType",
+					  						ValidForQuerySection1 =  "Customs.AvailableStatusField",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -190,10 +187,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
+					  						FullFieldLable =  "FieldCode",
+					  						DefaultText =  "FieldCode",
+					  						ListFieldLable =  "FieldCodeListLable",
+					  						ListLableDefaultText =  "FieldCode",
+					  						ListLocalDefaultText =  "FieldCode",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -212,70 +210,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Name",
-					  						ObjectTableName =  "Customs.StatusFieldType",
-					  						FieldsDataType =  "Text",
+					 						FieldName =  "IsAvailable",
+					  						ObjectTableName =  "Customs.AvailableStatusField",
+					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  50,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  50,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "Name",
-					  						ListPropertyPath =  "Name",
-					  						DisplayInLookUpIndex =  1,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "StatusFieldType",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.StatusFieldType",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  1000,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -283,15 +222,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  1000,
-					  						DisplayInList =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SearchFields",
-					  						ListPropertyPath =  "SearchFields",
-					  						DisplayInLookUpIndex =  0,
+					  						PMPropertyPath =  "IsAvailable",
+					  						ListPropertyPath =  "IsAvailable",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -299,7 +237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "StatusFieldType",
+					  						ValidForQuerySection1 =  "Customs.AvailableStatusField",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -308,11 +246,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search ...",
-					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search ...",
-					  						IsMaxLength =  true,
+					  						FullFieldLable =  "IsAvailable",
+					  						DefaultText =  "Is Available",
+					  						FullLocalDefaultText =  "פנוי",
+					  						ListFieldLable =  "IsAvailableListLable",
+					  						ListLableDefaultText =  "IsAvailable",
+					  						ListLocalDefaultText =  "פנוי",
+					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -333,19 +273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {   
-
-		   ObjectTable StatusFieldTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.StatusFieldType" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> StatusFieldTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.StatusFieldType").ToList();
-		       
-	      
-
-	         Screen StatusFieldTypeCustomsStatusFieldTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "StatusFieldType.HeaderScreen", Name = "Customs.StatusFieldTypeHeaderScreen", ObjectTableId = StatusFieldTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    StatusFieldTypeObjectTable.HeaderScreenId = StatusFieldTypeCustomsStatusFieldTypeHeaderScreenScreen0.Id;
-		    StatusFieldTypeObjectTable.HeaderScreenCode = StatusFieldTypeCustomsStatusFieldTypeHeaderScreenScreen0.Code;
-
-	   		  
+	    {    
 
 	    }
 
@@ -354,13 +282,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable AvailableStatusFieldObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AvailableStatusField" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature AvailableStatusFieldFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AvailableStatusFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "AvailableStatusField.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AvailableStatusFieldObjectTable);
+		   Feature AvailableStatusFieldFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AvailableStatusFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "AvailableStatusField.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AvailableStatusFieldObjectTable);
+		   Feature AvailableStatusFieldFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AvailableStatusFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "AvailableStatusField.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AvailableStatusFieldObjectTable);
+		   Feature AvailableStatusFieldFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = AvailableStatusFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "AvailableStatusField.Features.PackageFeature", NameTextCodeDefaultText = "AvailableStatusField Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AvailableStatusFieldObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable StatusFieldTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.StatusFieldType" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable AvailableStatusFieldObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AvailableStatusField" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -374,7 +308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = StatusFieldTypeObjectTable.Id,
+                ObjectTableId = AvailableStatusFieldObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -392,7 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = StatusFieldTypeObjectTable.Id,
+                ObjectTableId = AvailableStatusFieldObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
