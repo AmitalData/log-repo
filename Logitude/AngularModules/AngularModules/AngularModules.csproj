@@ -317,6 +317,7 @@
     <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsContainerizationListTemplate.html" />
     <Content Include="CustomsModules\CustomsPhysicalCheck\Components\EditTabs\SearchReasult\PhysicalCheckSearchReasultTabComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\InterfaceTenantPriorityComponent.html" />
+    <Content Include="CustomsModules\CustomsReferant\Components\ExternalFieldMapping\AddEditExternalFieldMappingComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.html" />
     <Content Include="Customs\Components\ListActionBar\PhysicalCheckListActionBarComponent.html" />
@@ -572,6 +573,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\TransportModeListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\Components\EditTabs\SearchReasult\PhysicalCheckSearchReasultTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\InterfaceTenantPriorityComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ExternalFieldMapping\AddEditExternalFieldMappingComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
