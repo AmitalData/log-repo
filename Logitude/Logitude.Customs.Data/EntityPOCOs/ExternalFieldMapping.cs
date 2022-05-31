@@ -25,6 +25,19 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("Field")]
+	    public string Field { get; set; }
+        [Column("StatusCode")]
+	    public string StatusCode { get; set; }
+        [ForeignKey("StatusFieldTypeEntity")]
+        [Column("StatusFieldType")]
+	    public string StatusFieldType { get; set; }
+	      
+        public virtual StatusFieldType StatusFieldTypeEntity { get; set; }
+        [Column("StatusName")]
+	    public string StatusName { get; set; }
+        [Column("InActive")]
+	    public bool InActive { get; set; }
     }
 }
 	 

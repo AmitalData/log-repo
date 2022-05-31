@@ -108,6 +108,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AutonomyTypeMap());
 	
+            modelBuilder.Configurations.Add(new AvailableStatusFieldMap());
+	
             modelBuilder.Configurations.Add(new BankMap());
 	
             modelBuilder.Configurations.Add(new BuyerRoleTypeMap());
@@ -1432,6 +1434,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<AutonomyType> AutonomyTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AvailableStatusField> AvailableStatusFields 
 	 {
 	      get; set;
 	 

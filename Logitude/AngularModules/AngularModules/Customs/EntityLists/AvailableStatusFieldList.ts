@@ -6,16 +6,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class ExternalFieldMappingList {
+export class AvailableStatusFieldList {
    
-	Id: string;
 	Tenant: number;
-	SearchFields: string;
-	Field: string;
-	StatusCode: string;
-	StatusFieldType: string;
-	StatusName: string;
-	InActive: boolean;
+	FieldCode: string;
+	IsAvailable: boolean;
 	
 }
  

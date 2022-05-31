@@ -330,6 +330,7 @@
     <Compile Include="EntityDataMappings\AuthorizedSignerPermitDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutonomyRegionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutonomyTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AvailableStatusFieldDataMapping.cs" />
     <Compile Include="EntityDataMappings\BankDataMapping.cs" />
     <Compile Include="EntityDataMappings\BuyerRoleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CancellationReasonRequestTypeDataMapping.cs" />
@@ -540,6 +541,7 @@
     <Compile Include="EntityDataMappings\Generated\AuthorizedSignerPermitDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutonomyRegionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutonomyTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AvailableStatusFieldDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BankDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BuyerRoleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CancellationReasonRequestTypeDataMapping.Generated.cs" />
@@ -1076,6 +1078,7 @@
     <Compile Include="EntityQueryServices\Generated\AmendmentFieldStatusTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendRequestRejectReasonTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutonomyRegionTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AvailableStatusFieldQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BuyerRoleTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
@@ -1619,6 +1622,7 @@
     <Compile Include="EntityUpdateServices\Generated\AmendmentFieldStatusTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmendRequestRejectReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmountTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AvailableStatusFieldUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BuyerRoleTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationReasonRequestTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationRequestStatusUpdateService.Generated.cs" />

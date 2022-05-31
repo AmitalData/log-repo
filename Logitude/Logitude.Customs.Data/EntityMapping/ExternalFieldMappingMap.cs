@@ -28,6 +28,16 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.Field).HasColumnName("Field").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.StatusCode).HasColumnName("StatusCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.StatusFieldType).HasColumnName("StatusFieldType").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.StatusName).HasColumnName("StatusName").HasMaxLength(50).IsUnicode(true);
+
+            this.Property(t => t.InActive).HasColumnName("InActive");
         }
     }
 }

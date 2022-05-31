@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class ExternalFieldMappingPM {
+export class AvailableStatusFieldPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -24,48 +24,23 @@ export class ExternalFieldMappingPM {
       }
  	 
     
-    private id: string;
-    public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private searchFields: string;
-    public get SearchFields() { return this.searchFields; }
-    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+    private fieldCode: string;
+    public get FieldCode() { return this.fieldCode; }
+    public set FieldCode(newValue: string) { if (this.fieldCode != newValue) { this.fieldCode = newValue; this.MarkAsDirty("FieldCode"); } }
        
 	 
-    private field: string;
-    public get Field() { return this.field; }
-    public set Field(newValue: string) { if (this.field != newValue) { this.field = newValue; this.MarkAsDirty("Field"); } }
-       
-	 
-    private statusCode: string;
-    public get StatusCode() { return this.statusCode; }
-    public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
-       
-	 
-    private statusFieldType: string;
-    public get StatusFieldType() { return this.statusFieldType; }
-    public set StatusFieldType(newValue: string) { if (this.statusFieldType != newValue) { this.statusFieldType = newValue; this.MarkAsDirty("StatusFieldType"); } }
-       
-	 
-    private statusName: string;
-    public get StatusName() { return this.statusName; }
-    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
-       
-	 
-    private inActive: boolean;
-    public get InActive() { return this.inActive; }
-    public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
+    private isAvailable: boolean;
+    public get IsAvailable() { return this.isAvailable; }
+    public set IsAvailable(newValue: boolean) { if (this.isAvailable != newValue) { this.isAvailable = newValue; this.MarkAsDirty("IsAvailable"); } }
        
 	 
 
-    public OldEntityPM: ExternalFieldMappingPM;
+    public OldEntityPM: AvailableStatusFieldPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -76,13 +51,13 @@ export class ExternalFieldMappingPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ExternalFieldMapping");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.AvailableStatusField");
            
         }
        }
     }
 
-    private MyClone: ExternalFieldMappingPM;
+    private MyClone: AvailableStatusFieldPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

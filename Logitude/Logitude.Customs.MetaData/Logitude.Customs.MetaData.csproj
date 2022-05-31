@@ -189,6 +189,7 @@
     <None Include="DBTables\AuthorizedSignerPermit.dxml" />
     <None Include="DBTables\AutonomyRegionType.dxml" />
     <None Include="DBTables\AutonomyType.dxml" />
+    <None Include="DBTables\AvailableStatusField.dxml" />
     <None Include="DBTables\Bank.dxml" />
     <None Include="DBTables\BuyerRoleType.dxml" />
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
@@ -530,6 +531,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\AvailableStatusField.lxml" />
     <None Include="EntityFiles\DeclarationCasualDetails.lxml">
       <SubType>Designer</SubType>
     </None>

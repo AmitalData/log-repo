@@ -24,7 +24,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         SearchFields,
+	         SearchFields, 
+	         Field, 
+	         StatusCode, 
+	         StatusFieldType, 
+	         StatusName, 
+	         InActive,
 	      }
 
 
@@ -33,7 +38,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         SearchFields,
+	         SearchFields, 
+	         Field, 
+	         StatusCode, 
+	         StatusFieldType, 
+	         StatusName, 
+	         InActive,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -50,6 +60,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
 				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field))
+            {
+				entityPOCO.Field = entityPM.Field;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+				entityPOCO.StatusCode = entityPM.StatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusFieldType))
+            {
+				entityPOCO.StatusFieldType = entityPM.StatusFieldType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusName))
+            {
+				entityPOCO.StatusName = entityPM.StatusName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
+            {
+				entityPOCO.InActive = entityPM.InActive;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -73,6 +108,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field))
+            {
+					entityPM.Field = entityPOCO.Field;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
+            {
+					entityPM.StatusCode = entityPOCO.StatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusFieldType))
+            {
+					entityPM.StatusFieldType = entityPOCO.StatusFieldType;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusName))
+            {
+					entityPM.StatusName = entityPOCO.StatusName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InActive))
+            {
+					entityPM.InActive = entityPOCO.InActive;
+            }
+
 		}
 
 		public void PMToOldPM(ExternalFieldMappingPM entityPM, ExternalFieldMappingPM oldEntityPM)
@@ -89,6 +149,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.SearchFields = entityPM.SearchFields;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field))
+            {
+                oldEntityPM.Field = entityPM.Field;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+                oldEntityPM.StatusCode = entityPM.StatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusFieldType))
+            {
+                oldEntityPM.StatusFieldType = entityPM.StatusFieldType;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusName))
+            {
+                oldEntityPM.StatusName = entityPM.StatusName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
+            {
+                oldEntityPM.InActive = entityPM.InActive;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ExternalFieldMappingPM entityPM)
@@ -101,6 +186,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.StatusName)) //T4 find type == nText 
+            {
+                entityPM.StatusName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StatusName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
