@@ -4,6 +4,11 @@ using WebFreight.Web.DataContracts;
 using Logitude.SystemLogs;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
+using System.Net.Http;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Linq;
+using System.Net;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -34,9 +39,51 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         }
 
+        [ActionName("PostDigitalPortalChangePassword")]
+        public HttpResponseMessage PostDigitalPortalChangePassword(ResetPasswordParameters param, string email)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(email)) email = email.ToLower();
+                string newPassword = param.NewPassword;
+                bool isResetRequest = param.IsResetRequest;
+                string requestNumber = param.RequestNumber;
+                bool succeeded = false;
 
+                if (!string.IsNullOrEmpty(email))
+                {
+                    PasswordChangeHelper passwordChangeHelper = new PasswordChangeHelper();
+                    if (isResetRequest && !string.IsNullOrEmpty(requestNumber))
+                    {
+                        IGlobalContext globalContext = GlobalContext.GetContext();
+                        GlobalContact contact = globalContext.GlobalContacts.Where(c => c.Email == email && c.InActive == false).FirstOrDefault();
 
+                        PasswordResetRequest request = globalContext.PasswordResetRequests.Where(r => r.RequestNumber == requestNumber && r.Email.ToLower() == email.ToLower() && r.IsDone == false).FirstOrDefault();
+                        if (request != null)
+                        {
+                            passwordChangeHelper.ValidationPassword(email, newPassword);
+                            succeeded = passwordChangeHelper.ChangePassword(email, newPassword);
+                            if (succeeded)
+                            {
+                                request.IsDone = true;
+                                globalContext.SaveChanges();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        passwordChangeHelper.ValidationPassword(email, newPassword, param.OldPassword, true);
+                        succeeded = passwordChangeHelper.ChangePassword(email, newPassword, param.OldPassword);
+                    }
+                }
 
+                return Request.CreateResponse(HttpStatusCode.OK, succeeded);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+    
     }    
- 
 }
