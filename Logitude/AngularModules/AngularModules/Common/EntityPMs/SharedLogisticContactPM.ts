@@ -90,6 +90,22 @@ export class SharedLogisticContactPM {
     public get HTMLTemplate() { return this.hTMLTemplate; }
     public set HTMLTemplate(newValue: string) { this.hTMLTemplate = newValue; this.MarkAsDirty(); }
 
+    private toEmail: string;
+    public get ToEmail() { return this.toEmail; }
+    public set ToEmail(newValue: string) { this.toEmail = newValue; this.MarkAsDirty(); }
+
+    private subject: string;
+    public get Subject() { return this.subject; }
+    public set Subject(newValue: string) { this.subject = newValue; this.MarkAsDirty(); }
+
+    private cc: string;
+    public get Cc() { return this.cc; }
+    public set Cc(newValue: string) { this.cc = newValue; this.MarkAsDirty(); }
+
+    private bcc: string;
+    public get Bcc() { return this.bcc; }
+    public set Bcc(newValue: string) { this.bcc = newValue; this.MarkAsDirty(); }
+
     public OldEntityPM: SharedLogisticContactPM;
 
     public IsDirty: boolean;
