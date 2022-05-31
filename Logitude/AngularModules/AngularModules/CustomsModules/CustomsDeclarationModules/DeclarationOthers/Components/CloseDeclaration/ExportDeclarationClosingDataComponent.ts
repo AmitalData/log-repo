@@ -286,7 +286,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             });
 
         this.DeclarationService.PostSendDeclarationClosingAmendment(searchParams).subscribe((response: ServiceResponse) => {
-
+            
             if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && !AppTool.IsNullOrEmpty(response.Result.UserMessage) && response.Result.HasException) {
                //this.ValidationErrors.push(response.Result.UserMessage);
                 //this.FillValidationErrors("Errors");
@@ -298,15 +298,22 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DEGC";
                 this.CurrentSession.CurrentEditComponent.SetSelectedTab();
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                if (!response.Result.HasException) {
+                    var tab = this.CurrentSession.CurrentEditComponent.TabsItemsSource.filter(d => d.Code == "CloD")[0];
+                    tab.IsDisabled = false;
+                }
+
             }
             //if reject
             else {
                 this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "CloD";
                 this.CurrentSession.CurrentEditComponent.SetSelectedTab();
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                var tab = this.CurrentSession.CurrentEditComponent.TabsItemsSource.filter(d => d.Code == "CloD")[0];
+                tab.IsDisabled = false;
             }
 
-
+           
             SessionLocator.SelectedSession.CloseCurrentWindow();
         });
 
