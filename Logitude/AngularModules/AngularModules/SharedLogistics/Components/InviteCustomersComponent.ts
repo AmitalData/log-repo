@@ -43,6 +43,11 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
     private HTMLTemplate: string;
+    private ToEmail: string;
+    private Subject: string;
+    private Cc: string;
+    private Bcc: string;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedLogisticContactService: SharedLogisticContactService) {
         this.documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
@@ -56,7 +61,11 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
         if (!this.SendToCustomerEvent) {
             this.SendToCustomerEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s.Name == "DigitalPortalHTMLTemplate") {
-                    this.HTMLTemplate = s.Value;
+                    this.HTMLTemplate = s.htmlString;
+                    this.ToEmail = s.To;
+                    this.Subject = s.Subject;
+                    this.Cc = s.Cc;
+                    this.Bcc = s.Bcc;
                     this.SendInvitaion(null);
                 }
             });
@@ -168,8 +177,13 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
         this.sharedLogisticContact.TemplateId = templateId;
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
-        if (this.IsDigitalPortal)
+        if (this.IsDigitalPortal) {
             this.sharedLogisticContact.HTMLTemplate = this.HTMLTemplate;
+            this.sharedLogisticContact.ToEmail = this.ToEmail;
+            this.sharedLogisticContact.Subject = this.Subject;
+            this.sharedLogisticContact.Cc = this.Cc;
+            this.sharedLogisticContact.Bcc = this.Bcc;
+        }
 
         this._sharedLogisticContactService.ContactInternetAccessInvitation(this.sharedLogisticContact).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;

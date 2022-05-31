@@ -27,5 +27,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string TemplateId { get; set; }
         public bool IsDigitalPortal { get; set; }
         public string HTMLTemplate { get; set; }
+        public string ToEmail { get; set; }
+        public string Subject { get; set; }
+        public string Cc { get; set; }
+        public string Bcc { get; set; }
     }
 }

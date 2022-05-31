@@ -285,7 +285,6 @@ namespace WebFreight.Web.Helpers
                 if (tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsMobileActivated)
                 {
                     string from = GetEmailFrom(sharedLogisticsContact.Tenant);
-
                     string subject = GetInvitationSubject(tenantCompany, sharedLogisticsContact);
                     if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
                     {
@@ -294,14 +293,23 @@ namespace WebFreight.Web.Helpers
                         from = !string.IsNullOrEmpty(messageArgs.From) ? messageArgs.From : from;
                     }
 
+                    string to = contact.Email;
+                    string cC = messageArgs.CC;
+                    string bcc = messageArgs.BCC;
+                    if (sharedLogisticsContact.IsDigitalPortal)
+                    {
+                        subject = sharedLogisticsContact.Subject;
+                        cC = sharedLogisticsContact.Cc;
+                        bcc = sharedLogisticsContact.Bcc;
+                    }
 
                     EmailCommunicationParams emailParams = new EmailCommunicationParams()
                     {
                         Subject = subject,
                         From = from,
-                        To = contact.Email,
-                        CC = messageArgs.CC,
-                        BCC = messageArgs.BCC,
+                        To = to,
+                        CC = cC,
+                        BCC = bcc,
                         EmailBody = emailMessage,
                         Tenant = sharedLogisticsContact.Tenant,
                         LoggingUserId = contact.Id,
@@ -311,8 +319,6 @@ namespace WebFreight.Web.Helpers
                     Communications.AddEmailCommunicationLogQueue(emailParams, sharedLogisticsContact.Tenant);
 
                     ActivityLog.SendTotangoContactActivity(contact.Email, "Contact", ActivityDescription, sharedLogisticsContact.Tenant, false, null, "PC");
-
-
                 }
             }
             else
@@ -419,17 +425,21 @@ namespace WebFreight.Web.Helpers
         private static string GetEmailMessageFroShardLogisticsAndMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
             bool isHTMLTemplate = CheckDigitalPortalHTMLTemplate(sharedLogisticContact);
-            if(isHTMLTemplate) return sharedLogisticContact.HTMLTemplate;
-
+            
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, sharedLogisticContact);
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
-                    if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                    var htmlTemplate = messageArgs.HtmlTemplate;
+                    if (isHTMLTemplate)
                     {
-                        messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
+                        htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                    }
+                    if (!string.IsNullOrEmpty(htmlTemplate))
+                    {
+                        messageArgs.HtmlTemplate = ResolveInvitationvariable(htmlTemplate, contact, password);
                         return messageArgs.HtmlTemplate;
                     }
 
@@ -481,7 +491,6 @@ namespace WebFreight.Web.Helpers
         private static string GetEmailMessageFroMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
             bool isHTMLTemplate = CheckDigitalPortalHTMLTemplate(sharedLogisticContact);
-            if (isHTMLTemplate) return sharedLogisticContact.HTMLTemplate;
 
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
@@ -489,9 +498,14 @@ namespace WebFreight.Web.Helpers
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
-                    if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                    var htmlTemplate = messageArgs.HtmlTemplate;
+                    if (isHTMLTemplate)
                     {
-                        messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
+                        htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                    }
+                    if (!string.IsNullOrEmpty(htmlTemplate))
+                    {
+                        messageArgs.HtmlTemplate = ResolveInvitationvariable(htmlTemplate, contact, password);
                         return messageArgs.HtmlTemplate;
                     }
 
@@ -540,7 +554,6 @@ namespace WebFreight.Web.Helpers
         private static string GetEmailMessageForShardLogistics(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
             bool isHTMLTemplate = CheckDigitalPortalHTMLTemplate(sharedLogisticContact);
-            if (isHTMLTemplate) return sharedLogisticContact.HTMLTemplate;
 
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
@@ -548,13 +561,17 @@ namespace WebFreight.Web.Helpers
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
-                    if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                    var htmlTemplate = messageArgs.HtmlTemplate;
+                    if (isHTMLTemplate)
                     {
-
-                        messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
+                        htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                    }
+                    if (!string.IsNullOrEmpty(htmlTemplate))
+                    {
+                       
+                        messageArgs.HtmlTemplate = ResolveInvitationvariable(htmlTemplate, contact, password);
                         return messageArgs.HtmlTemplate;
                     }
-
 
                 }
 
@@ -596,7 +613,6 @@ namespace WebFreight.Web.Helpers
         private static string GetEmailMessageForCloud(Contact contact, Tenant tenantCompany, string password, string currentUsername, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
             bool isHTMLTemplate = CheckDigitalPortalHTMLTemplate(sharedLogisticContact);
-            if (isHTMLTemplate) return sharedLogisticContact.HTMLTemplate;
 
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
@@ -604,9 +620,14 @@ namespace WebFreight.Web.Helpers
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
-                    if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                    var htmlTemplate = messageArgs.HtmlTemplate;
+                    if (isHTMLTemplate)
                     {
-                        messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
+                        htmlTemplate = sharedLogisticContact.HTMLTemplate;
+                    }
+                    if (!string.IsNullOrEmpty(htmlTemplate))
+                    {
+                        messageArgs.HtmlTemplate = ResolveInvitationvariable(htmlTemplate, contact, password);
                         return messageArgs.HtmlTemplate;
                     }
 
