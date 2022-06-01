@@ -4260,6 +4260,7 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.RecordsList = new List<OpportunityStageChangingDataProvider.StageChangingRecord>();
 
             ICRMContext context = CRMContext.GetContext(tenant);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             OpportunityStageListQueryService oppStageQuery = new OpportunityStageListQueryService(context);
 
             IQueryable<OpportunityStageList> iQueryable = oppStageQuery.GetOpportunityStagesByTenant(tenant);
@@ -4306,6 +4307,9 @@ namespace WebFreight.Web.ReportsWebServices
                 iQueryable = iQueryable.Where(d => myLeadSourcesList.Contains(d.LeadSourceId));
             }
 
+            var customerIds = iQueryable.Select(y => y.CustomerId).Distinct().ToList();
+            var customers = commonDataContext.Customers.Where(x => customerIds.Contains(x.Id)).ToList();
+
             foreach (OpportunityStageList item in iQueryable.OrderByDescending(d => d.LastModifiedDate))
             {
                 OpportunityStageChangingDataProvider.StageChangingRecord record = new OpportunityStageChangingDataProvider.StageChangingRecord();
@@ -4333,6 +4337,13 @@ namespace WebFreight.Web.ReportsWebServices
                 record.Salesman = item.OwnerName;
                 record.StartDate = item.StartDate;
                 record.EndDate = item.EndDate;
+
+                var customer = customers.FirstOrDefault(x => x.Id == item.CustomerId);
+                if (customer != null)
+                {
+                    record.CustomerPrimaryContactName = customer.PrimaryContactName;
+                    record.CustomerPrimaryContactEmail = customer.PrimaryContactEmail;
+                }
 
                 dataProvider.RecordsList.Add(record);
             }
