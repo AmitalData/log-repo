@@ -851,6 +851,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
             }
 
+            else if (this.SelectedDateType == "ACD") iQueryable_Shipments = FilterShipmentsByAccountingCloseDate(iQueryable_Shipments);
+
             if (!this.IncludeCancelledShipments)
             {
                 iQueryable_Shipments = iQueryable_Shipments.Where(d => !d.IsCancelled);
@@ -863,6 +865,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             return iQueryable_Shipments;
         }
+
+        private IQueryable<ShipmentDataView> FilterShipmentsByAccountingCloseDate(IQueryable<ShipmentDataView> iQueryable_Shipments)
+        {
+            iQueryable_Shipments = iQueryable_Shipments.Where(d => d.AccountingCloseDate != null);
+            if (this.FromDate != null) iQueryable_Shipments = iQueryable_Shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.AccountingCloseDate) >= System.Data.Entity.DbFunctions.TruncateTime(this.FromDate));
+            if (this.ToDate != null) iQueryable_Shipments = iQueryable_Shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.AccountingCloseDate) <= System.Data.Entity.DbFunctions.TruncateTime(this.ToDate));
+            return iQueryable_Shipments;
+        }
+
         private void BuildInvoicesLists(List<string> allShipmentsIds)
         {
             IQueryable<APInvoice> iQueryable_APInvoices = (from d in myInvoiceContext.APInvoiceEntities.Include("APInvoice")
