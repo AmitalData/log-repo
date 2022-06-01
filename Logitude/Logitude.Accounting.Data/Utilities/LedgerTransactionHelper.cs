@@ -33,6 +33,7 @@ namespace Logitude.Accounting.Data.Utilities
                 EntityIconsDictionary.Add("10", "AJ");// 10-Adjustment
                 EntityIconsDictionary.Add("11", "YT");// Year Transfer
                 EntityIconsDictionary.Add("12", "BA");// Bank Adjustment
+                EntityIconsDictionary.Add("13", "TR");// Tax Report
             }
         }
         public string getEntityIcon(string _sourceTypeCode)
