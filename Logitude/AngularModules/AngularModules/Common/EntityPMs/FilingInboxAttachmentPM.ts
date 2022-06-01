@@ -8,76 +8,81 @@
 //------------------------------------------------------------------------------
 
 
-import { UIProperties, UIProperty } from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
-import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
-import { Output, EventEmitter } from '@angular/core';
-import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass';
+import {FilingInboxAttachToolTip} from './FilingInboxAttachToolTip';
+import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
+import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
+import {Output, EventEmitter}  from '@angular/core';
+import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
 export class FilingInboxAttachmentPM {
 
-    @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-    public UIProperties: UIProperties;
-    constructor() {
-        this.UIProperties = new UIProperties(this);
-        this.IsDirty = false;
-    }
-
-
+      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+      public UIProperties: UIProperties;
+	  constructor() {
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
+      }
+ 	 
+    
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-
-
+       
+	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-
-
+       
+	 
     private fileName: string;
     public get FileName() { return this.fileName; }
     public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
-
-
+       
+	 
     private documentId: string;
     public get DocumentId() { return this.documentId; }
     public set DocumentId(newValue: string) { if (this.documentId != newValue) { this.documentId = newValue; this.MarkAsDirty("DocumentId"); } }
-
-
+       
+	 
     private filingInboxId: string;
     public get FilingInboxId() { return this.filingInboxId; }
     public set FilingInboxId(newValue: string) { if (this.filingInboxId != newValue) { this.filingInboxId = newValue; this.MarkAsDirty("FilingInboxId"); } }
-
-
-
-    //private attachLogs: FilingInboxAttachToolTip[];
-    //   get  AttachLogs() {
-    //       if (this.attachLogs == null) {
-    //           this.attachLogs = [];
-    //       }
-
-    //       return this.attachLogs;
-    //   }
-    //   set  AttachLogs(newValue: FilingInboxAttachToolTip[]) {
-    //       if (this.attachLogs != newValue) {
-    //           this.attachLogs = newValue;
-    //       }
-    //   }
-    public AttachLogs: Array<any> = [];
-
-    public OldEntityPM: FilingInboxAttachmentPM;
-
-    public IsDirty: boolean;
-    MarkAsDirty(propertyName: string = null) {
-        this.IsDirty = true;
-
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FilingInboxAttachment");
-
+       
+	 
+     
+	private attachLogs: FilingInboxAttachToolTip[];
+    get  AttachLogs() {
+        if (this.attachLogs == null) {
+            this.attachLogs = [];
         }
+
+        return this.attachLogs;
+    }
+    set  AttachLogs(newValue: FilingInboxAttachToolTip[]) {
+        if (this.attachLogs != newValue) {
+            this.attachLogs = newValue;
+        }
+    }
+    //public AttachLogs: Array<FilingInboxAttachToolTipPM>= [];
+ 
+    public OldEntityPM: FilingInboxAttachmentPM;
+		
+    public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
+    MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
+        this.IsDirty = true;
+		  	
+        if (propertyName != null) {
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FilingInboxAttachment");
+           
+        }
+	 }
     }
     private MyClone: FilingInboxAttachmentPM;
 
@@ -89,4 +94,4 @@ export class FilingInboxAttachmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

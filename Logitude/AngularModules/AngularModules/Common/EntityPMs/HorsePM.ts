@@ -130,6 +130,11 @@ export class HorsePM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private genderCode: string;
+    public get GenderCode() { return this.genderCode; }
+    public set GenderCode(newValue: string) { if (this.genderCode != newValue) { this.genderCode = newValue; this.MarkAsDirty("GenderCode"); } }
+       
+	 
 
     public OldEntityPM: HorsePM;
 		

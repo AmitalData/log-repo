@@ -2846,6 +2846,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
         public IDbSet<Mention> Mentions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public IDbSet<CarrierServiceLine> CarrierServiceLines { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<HorseGender> HorseGenders { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 

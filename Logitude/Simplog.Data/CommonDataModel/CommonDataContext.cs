@@ -471,6 +471,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new ProductItemMap());
             modelBuilder.Configurations.Add(new MentionMap());
             modelBuilder.Configurations.Add(new CarrierServiceLineMap());
+            modelBuilder.Configurations.Add(new HorseGenderMap());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -1049,7 +1050,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
         public IDbSet<Mention> Mentions { get; set; }
         public IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
-
+        public IDbSet<HorseGender> HorseGenders { get; set; }
         public DbConnection GetConnection()
         {
             return this.Database.Connection;

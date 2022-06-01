@@ -57,6 +57,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  UpdateDate = a.UpdateDate,
                                  UpdatedByUserId = a.UpdatedByUserId,
                                  SearchFields = a.SearchFields,
+                                 GenderCode = a.GenderCode,
                              }).FirstOrDefault();
 
             return horse;
@@ -89,6 +90,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               UpdateDate = a.UpdateDate,
                                               UpdatedByUserId = a.UpdatedByUserId,
                                               SearchFields = a.SearchFields,
+                                              GenderCode = a.GenderCode,
                                           });
             return ports;
         }
@@ -123,6 +125,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                SearchFields = a.SearchFields,
                                                CreatedByUserName = a.CreatedByUser == null ? null : a.CreatedByUser.Contact.EnglishName,
                                                UpdatedByUserName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact.EnglishName,
+                                               GenderCode = a.GenderCode,
                                            };
             return result;
         }
