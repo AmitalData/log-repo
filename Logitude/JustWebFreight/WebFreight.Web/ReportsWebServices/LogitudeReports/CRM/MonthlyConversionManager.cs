@@ -28,6 +28,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
         private string resellerId = null;
         private string stageCount = null;
         private List<string> myLeadSourcesList = new List<string>();
+        private bool IncludeCancelled = false;
+
         public MonthlyConversionManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -45,6 +47,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
             QueryFilterItem filterItem_LeadSources = queryOperations.QueryFilterItems.Where(d => d.FieldName == "LeadSources").FirstOrDefault();
             QueryFilterItem filterItem_Reseller = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ResellerId").FirstOrDefault();
             QueryFilterItem filterItem_StageCount = queryOperations.QueryFilterItems.Where(d => d.FieldName == "StageCount").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeCancelled = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeCancelled").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             fromDate = todayDate;
@@ -132,6 +135,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                     stageCount = filterItem_StageCount.FieldValue.ToString();
                 }
             }
+
+            if (filterItem_IncludeCancelled?.FieldValue != null)
+                IncludeCancelled = Convert.ToBoolean(filterItem_IncludeCancelled.FieldValue);
         }
 
         public byte[] GetData()
@@ -165,10 +171,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
 
             IQueryable<Opportunity> iQueryable_Opportunities =
                 (from a in opportunityRepository.GetAllForReport(tenant)
-                 where a.IsCancelled == false
-                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate)
+                 where System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate)
                  && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate)
                  select a);
+
+            if (!IncludeCancelled)
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.IsCancelled == false);
+            }
 
             if (!string.IsNullOrEmpty(opportunityTypeCode))
             {
