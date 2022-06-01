@@ -265,7 +265,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                                 UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
-                                                if (_MyDeclarationPM.AmendmentOriginalDeclartation != declarationParent.AmendmentOriginalDeclartation)
+                                                if (_MyDeclarationPM.Id != declarationParent.Id)
                                                 {
                                                     UpdateParentDec(myDeclarationUpdateService, declarationParent);
                                                 }
