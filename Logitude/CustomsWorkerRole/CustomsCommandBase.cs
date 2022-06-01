@@ -30,6 +30,7 @@ using System.Transactions;
 using Logitude.Server.Tools.Utils;
 using System.Configuration;
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
+using Newtonsoft.Json;
 
 namespace CustomsWorkerRole
 {
@@ -259,11 +260,11 @@ namespace CustomsWorkerRole
 
                             if (response == null || (response != null && response.MessageId == null))
                             {
+                                QueueThreadStateService.Upsert(GetWRKey(), "No Work");
                                 //Thread.Sleep(TimeSpan.FromSeconds(5));
                                 Thread.Sleep(TimeSpan.FromMilliseconds(300));
                                 break;
                             }
-
                             PerformanceM.EnqueueLastInstance();
                             PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
                             PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
@@ -350,7 +351,7 @@ namespace CustomsWorkerRole
                 int tenant = -1;
                 string analyzeClass = msgResponse.Properties["InterfaceTypeCode"].ToString();
 
-                
+
 
 
                 if (String.IsNullOrWhiteSpace(analyzeClass))
@@ -395,6 +396,11 @@ namespace CustomsWorkerRole
                 PerformanceM.LastInstance.RequestSheetID = correlationId;
                 PerformanceM.LastInstance.QueueDefinitionCode = myCustomsCommandEnum.ToString();
                 LogMessagingUtilWR.Instance.AppendLine("ResolveAndExecute");
+                QueueThreadStateService.Upsert(
+    GetWRKey(),
+    $"QId:{msgResponse.MessageId},Tenant:{tenant},RequestSheetID:{correlationId},Interface:{analyzeClass},QDefinition:{PerformanceM.LastInstance.QueueDefinitionCode}"
+    );
+
                 MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
 
 
@@ -432,6 +438,28 @@ namespace CustomsWorkerRole
                 return false;
                 //throw;
             }
+        }
+
+        private string GetWRKey()
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(Thread.CurrentThread.Name))
+                {
+                    return Thread.CurrentThread.Name;
+                }
+                else
+                {
+                    return $"{this.GetType().Name}:Thread.CurrentThread?.ManagedThreadId.ToString()";
+                }
+                
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+            
         }
 
         public string _QueueNameOverride { get; set; }
