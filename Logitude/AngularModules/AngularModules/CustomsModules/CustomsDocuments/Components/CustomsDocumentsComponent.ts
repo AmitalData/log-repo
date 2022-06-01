@@ -929,36 +929,43 @@ export class CustomsDocumentsComponent
     }
 
     private async checkOrginalDoc(documnetUpload: CustomsDocumentTicketViewModel[]) {
-        let metaDataValues: CustomsDocumentMetaDataValuePM[] = documnetUpload.reduce((res: CustomsDocumentMetaDataValuePM[], customDocument: CustomsDocumentTicketViewModel) => {
+        let documentsFilingIds: string[] = documnetUpload.reduce((res: string[], customDocument: CustomsDocumentTicketViewModel) => {
             const haveIsOrginalDoc: boolean = customDocument.CustomDocumentTypeMetaDataLists.some(type => type.MetaDataTypeCode === '87');
             const value: CustomsDocumentMetaDataValuePM = customDocument.CustomsDocumentMetaDataValuePMs.find(d => d?.MetaDataTypeCode === '87');
             if(haveIsOrginalDoc && !value?.MetaDataValue)
-                res.push(value)
+                res.push(customDocument.DocumentsFilingId)
 
             return res;
         },[]);
 
-        if (metaDataValues.length === 0) return true;
+        if (documentsFilingIds.length === 0) return true;
 
         const isApprove: boolean = await this.confirmCheckOrginalDocWindow();
 
-        if(isApprove) {
-            metaDataValues = metaDataValues.filter(val=> val);
-            const ids: string[] = metaDataValues.map(x => x.CustomsDocumentId);
-            await this.updateCustomsDocuments(ids);
-        }
+        if(isApprove)
+            await this.updateCustomsDocuments(documentsFilingIds);
         
         return isApprove;
     }
     
     
-    private async updateCustomsDocuments(customsDocumentIds: string[]): Promise<void> {
+    private async updateCustomsDocuments(documentsFilingIds: string[]): Promise<void> {
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         
         await Promise.all(
-            customsDocumentIds.map(async customsDocumentId => {
-                const doc: CustomsDocumentPM = await this.getCustomDocument(customsDocumentId);
-                doc.CustomsDocumentMetaDataValues.find(x => x.MetaDataTypeCode === '87').MetaDataValue = 'True'
+            documentsFilingIds.map(async documentsFilingId => {
+                const doc: CustomsDocumentPM = await this.getCustomDocument(documentsFilingId);
+                let value: CustomsDocumentMetaDataValuePM = doc.CustomsDocumentMetaDataValues.find(x => x.MetaDataTypeCode === '87');
+                if(!value) {
+                    value = new CustomsDocumentMetaDataValuePM(null);
+                    value.ChangeSetOp = 'Insert';
+                    value.MetaDataTypeCode = '87';
+                    value.Tenant = this.EntityPM.Tenant;
+                    value.CustomsDocumentId = documentsFilingId;
+                    
+                    doc.AddCustomsDocumentMetaDataValue(value);
+                }
+                value.MetaDataValue = 'True'
 
                 return new Promise<void>((resolve, reject) =>
                     new CustomsDocumentPMService().update(doc).subscribe(() => resolve()));
