@@ -137,7 +137,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.RegistrationNumber = itemPM.RegistrationNumber;
             itemPoco.CountryId = itemPM.CountryId;
 
-            ChildEntitiesCustomFieldMapping.MapPMTOPoco(itemPM, "ShipmentPackage");
         }
 
         public static void MapCommodityPackage(CommodityPackagePM itemPM, ShipmentPackage itemPoco, bool isNewEntity)
