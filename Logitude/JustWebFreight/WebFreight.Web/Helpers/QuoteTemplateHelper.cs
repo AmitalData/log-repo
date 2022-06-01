@@ -534,6 +534,10 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALINCLUDINGVATLOCALPACKAGES", "Total Including VAT(Local)", "Total Including VAT(Local)", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALINCLUDINGVATLOCALCONTAINERS", "Total Including VAT(Local)", "Total Including VAT(Local)", "Containers"));
 
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("ISREGIONALTAXPACKAGES", "Is Regional Tax", "Is Regional Tax", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("ISREGIONALTAXCONTAINERS", "Is Regional Tax", "Is Regional Tax", "Containers"));
+
+
             quoteTemplateTextCodeRepository.SubmitChanges();
         }   
 
