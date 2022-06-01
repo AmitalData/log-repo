@@ -142,7 +142,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 bool avoidSign = false;
                 bool notApprovedYet = false;
                 if (!notApprovedYet)
-                {
+                {                    
                     avoidSign = AvoidSign(_RequestParams);
                     if (avoidSign)
                     {
@@ -361,6 +361,13 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             try
             {
+                //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('FSN', 'Force Sign', 'Force Sign')
+                //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE)
+                //VALUES('FSN_3', '3', TO_TIMESTAMP('2022-06-01 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-06-01 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'FSN', '3', '0', 'FSN')
+                if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", requestParams.Tenant))
+                {
+                    return false;
+                }
                 FeatureQuery featureQuery = new FeatureQuery();
 
 
