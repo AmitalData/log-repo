@@ -21,7 +21,7 @@ namespace Logitude.Server.Tools.QueueService
         {
             try
             {
-                var state = $"{DateTime.Now.ToString()}:{queueThreadState}";
+                var state = $"StartAt-{DateTime.Now.ToString("T")}-S:{queueThreadState}";
                 _ConcurrentQueueState.AddOrUpdate(queueThreadCode, state
                      , 
                     (keyToUpdate, existingValue) =>
@@ -42,14 +42,15 @@ namespace Logitude.Server.Tools.QueueService
             var sb= new StringBuilder();
             try
             {
-                var keys = _ConcurrentQueueState.Keys.ToList();
+                var keys = _ConcurrentQueueState.Keys.ToList().OrderBy(k => k);
+                
                 foreach (var key in keys)
                 {
                     var value = _ConcurrentQueueState[key];
                     sb
                         //.Append(JsonConvert.SerializeObject(key, Formatting.None, new JsonSerializerSettings { }))
                         .Append(key.ToString())
-                        .Append(":")
+                        .Append(">")
                         .AppendLine(value);
                 }
 
