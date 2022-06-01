@@ -56,6 +56,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      IsCancelled = a.Opportunity == null ? false : a.Opportunity.IsCancelled,
                                                      LeadSourceId = a.Opportunity == null ? null : a.Opportunity.LeadSourceId,
                                                      OpportunityTypeId = a.Opportunity != null ? (a.Opportunity.OpportunityType != null ? a.Opportunity.OpportunityType.Id : null) : null,
+                                                     CustomerId = a.Opportunity != null ? a.Opportunity.CustomerId : null,
                                                  });
             return query;
         }
