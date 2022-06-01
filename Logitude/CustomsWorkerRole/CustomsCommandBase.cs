@@ -396,10 +396,19 @@ namespace CustomsWorkerRole
                 PerformanceM.LastInstance.RequestSheetID = correlationId;
                 PerformanceM.LastInstance.QueueDefinitionCode = myCustomsCommandEnum.ToString();
                 LogMessagingUtilWR.Instance.AppendLine("ResolveAndExecute");
-                QueueThreadStateService.Upsert(
-    GetWRKey(),
-    $"QId:{msgResponse.MessageId},Tenant:{tenant},RequestSheetID:{correlationId},Interface:{analyzeClass},QDefinition:{PerformanceM.LastInstance.QueueDefinitionCode}"
-    );
+                try
+                {
+                    QueueThreadStateService.Upsert(
+        GetWRKey(),
+        $"Interface:{analyzeClass},RequestSheetID:{correlationId},QId:{msgResponse?.MessageId},QDefinition:{PerformanceM.LastInstance?.QueueDefinitionCode}"
+        );
+
+                }
+                catch //(Exception)
+                {
+
+                    
+                }
 
                 MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
 
