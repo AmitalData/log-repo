@@ -94,7 +94,7 @@ Then("the master should close operationally successfully", () => {
 
 });
 Then("the house should close operationally successfully",()=>{
-    Actions.openHouseShipment()
+    Actions.openHouseShipment(ShipmentContext.HouseNumber)
      Actions.ValidateShipmentHouseCloseoperationally(true)
 })
 When('close master Accountly',()=>{
@@ -112,7 +112,7 @@ Then('the master should close successfully',()=>{
 
 })
 Then('the connected house should close successfully',()=>{
-    Actions.openHouseShipment()
+    Actions.openHouseShipment(ShipmentContext.HouseNumber)
     Actions.ValidateCloseAccoutingHouse(true)
 })
 
@@ -126,6 +126,6 @@ Then('the master should reopen successfully',()=>{
     Actions.ValidateCloseAccoutingMaster(false)
 })
 Then('the connected house should reopen successfully',()=>{
-    Actions.openHouseShipment()
+    Actions.openHouseShipment(ShipmentContext.HouseNumber)
     Actions.ValidateCloseAccoutingHouse(false)
 })

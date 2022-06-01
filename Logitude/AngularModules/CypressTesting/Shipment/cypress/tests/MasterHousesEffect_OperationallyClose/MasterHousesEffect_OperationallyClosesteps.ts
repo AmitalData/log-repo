@@ -13,6 +13,7 @@ let MasterShipmentDetails: ShipmentDetails;
 let shipmentDetails: ShipmentDetails;
 let EventNote;
 let shipmentNumber: string;
+let HouseNumber : string
 //#endregion
 
 //#region Create master export air shipment
@@ -94,7 +95,7 @@ Then("the master should close operationally successfully", () => {
     Actions.ValidateCloseShipmentFields(true);
 });
 Then("the connected house should close operationally successfully",()=>{
-    Actions.openHouseShipment()
+    Actions.openHouseShipment(ShipmentContext.HouseNumber)
   // Actions.ValidateShipmentHouseFields(true)
    Actions.ValidateShipmentHouseCloseoperationally(true)
 })
@@ -107,7 +108,7 @@ Then('the master should reopen successfully',()=>{
     Actions.ValidateCloseShipmentFields(false);
 })
 Then('the connected house should reopen successfully',()=>{
-    Actions.openHouseShipment()
+    Actions.openHouseShipment(ShipmentContext.HouseNumber)
    Actions.ValidateShipmentHouseFieldsReactive(false)
    //Actions.ValidateShipmentHouseCloseoperationally(false)
 

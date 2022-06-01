@@ -145,7 +145,7 @@ export function EditContinerNumberinMaster(){
 }
 export function AsserationChangrContinerNumberinHouse(){
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
-    openHouseShipment()
+    openHouseShipment(ShipmentContext.HouseNumber)
     cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
     cy.get(ShipmentSelectors.ShipmentcontinernumbereHouse).contains('DDDD88889').should('exist')
     
@@ -168,12 +168,12 @@ export function BacktotheMasterShipment(){
     cy.Navigate(ShipmentSelectors.BacktoMasterShipment); 
 
 }
-export function openHouseShipment(){
+export function openHouseShipment(Housenumberopen: any){
     cy.wait(1000)
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
      //ShipmentContext.HouseNumber
     cy.wait(1000)
-    cy.get("hyperlink").eq(1).first().click({force:true})
+    cy.get("hyperlink").contains(parseInt(Housenumberopen, 10)).click({force:true})
 }
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
@@ -811,8 +811,8 @@ export function AsserationUpdateMaincarrigeHouseShipment() {
     //cy.get(ShipmentSelectors.MainCarrigeHouse).should('be.disabled')
      BaseAssertion.AssertElementDisabled(ShipmentSelectors.MainCarrigeHouse,BaseSelectors.BeDisabled)
      BaseAssertion.AssertElementHaveValue(ShipmentSelectors.MainCarrigeHouse,'Frankfurt am Main')
-     BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentMainCarriageToPort,BaseSelectors.BeDisabled)
-     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageToPort,'Tel Aviv-Yafo')  
+     BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentMainCarriageDestination,BaseSelectors.BeDisabled)
+     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageDestination,'Tel Aviv-Yafo')  
 }
 
 

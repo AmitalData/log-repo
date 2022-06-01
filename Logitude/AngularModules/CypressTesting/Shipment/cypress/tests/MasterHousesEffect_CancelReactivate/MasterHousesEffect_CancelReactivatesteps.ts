@@ -72,7 +72,7 @@ Then('the master should Cancel successfully',()=>{
 })
 
 Then("the house should Cancel successfully", () => {
-    Actions.openHouseShipment()
+    Actions.openHouseShipment(ShipmentContext.HouseNumber)
     //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
     Actions.ValidateCancelIconExist(true);
     Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTabHouse, EventNote);
@@ -92,7 +92,7 @@ Then('the master should Reactivate successfully',()=>{
 })
 
 Then("the house should Reactivate successfully", () => {
-    Actions.openHouseShipment()
+    Actions.openHouseShipment(ShipmentContext.HouseNumber)
     //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
     Actions.ValidateCancelIconExist(false);
     Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTabHouseA, EventNote);

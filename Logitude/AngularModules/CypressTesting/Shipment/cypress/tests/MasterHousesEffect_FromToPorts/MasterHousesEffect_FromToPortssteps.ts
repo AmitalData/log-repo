@@ -77,7 +77,7 @@ Then('the master should update successfully',()=>{
   
 })
 Then('the connceted house main carriage leg should update with the following',()=>{
-    Actions.openHouseShipment()
+    Actions.openHouseShipment(Housenumberopen)
    Actions. AsserationUpdateMaincarrigeHouseShipment()
 
     
