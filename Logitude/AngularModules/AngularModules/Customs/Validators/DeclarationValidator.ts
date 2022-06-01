@@ -209,6 +209,15 @@ export class DeclarationValidator {
         var errorMessage: string = "";
 
         if (this._DeclarationPM != null) {
+           
+           
+            if(this._DeclarationPM.IsExportClosed&& this._DeclarationPM.DeclarationStatusTypeCode=="36"){
+                errorMessage = "Customs.General.O.DeclarationStatClosed";
+                if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                    this.ValidationErrorMessageCodes.push(errorMessage);
+                }
+
+            }
             if (this._DeclarationPM.Direction != "E" && this._DeclarationPM.PaymentDate) {
                 errorMessage = "Customs.General.O.NoPaymentDate";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
@@ -221,6 +230,8 @@ export class DeclarationValidator {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
             }
+          
+           
         }
     }
 

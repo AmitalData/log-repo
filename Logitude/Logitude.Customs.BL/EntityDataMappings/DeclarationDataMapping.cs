@@ -99,18 +99,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CancelRequestStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentRejectionReasonName);
 
-            if (entityPM.Direction == "E")
-            {
-                var DeclarationStatementTypeQueryService = new DeclarationStatementTypeQueryService(entityPOCO.Tenant);
-                var amendmentStatus = DeclarationStatementTypeQueryService.GetSingle(entityPOCO.AmendmentStatus, false, true);
-                if (amendmentStatus != null)
-                {
-                    entityPM.AmendmentStatusName = amendmentStatus.LocalName;
-
-                }
-            }
-            else
-            {
+           
                 var amendmentStatusRepository = new AmendmentStatusQueryService(entityPOCO.Tenant);
                 var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus, false, true);
                 if (amendmentStatus != null)
@@ -118,7 +107,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.AmendmentStatusName = amendmentStatus.Name;
 
                 }
-            }
+
 
           
            if(entityPOCO.IsAmendment == true)
@@ -174,24 +163,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             else if (entityPOCO.IsAmendment != true)
             {
-                var declarations = declarationQuery.GetDeclarationAmendmentsById/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
-
-                var declaration = declarations.FirstOrDefault(x => new string[] { "1",  "3", "6" }.Contains(x.AmendmentStatus));
-                if (declaration != null)
+                if (!string.IsNullOrEmpty(entityPOCO.ExportClosedErrorXML))
                 {
-                    if (declaration.AmedmentType == "2")
-                    {
-                        //closeDeclaration
-                        entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsClosingAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
-                    }
-                    else 
-                    {
-                        entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
-                    } 
+                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName + ' ' + "(שהתקבל מהמכס עבור התיקון )";
                 }
                 else
                 {
-                    declaration = declarations.FirstOrDefault(x => new string[] { "2", "4", }.Contains(x.AmendmentStatus));
+                        var declarations = declarationQuery.GetDeclarationAmendmentsById/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
+                    
+                    var declaration = declarations.FirstOrDefault(x => new string[] { "1",  "3", "6" }.Contains(x.AmendmentStatus));
                     if (declaration != null)
                     {
                         if (declaration.AmedmentType == "2")
@@ -199,9 +179,25 @@ namespace Logitude.Customs.BL.EntityDataMappings
                             //closeDeclaration
                             entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsClosingAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
                         }
-                        else
+                        else 
                         {
-                            entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName; ;
+                            entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
+                        } 
+                    }
+                    else
+                    {
+                        declaration = declarations.FirstOrDefault(x => new string[] { "2", "4", }.Contains(x.AmendmentStatus));
+                        if (declaration != null)
+                        {
+                            if (declaration.AmedmentType == "2")
+                            {
+                                //closeDeclaration
+                                entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsClosingAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
+                            }
+                            else
+                            {
+                                entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName; ;
+                            }
                         }
                     }
                 }
