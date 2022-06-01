@@ -116,7 +116,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 if (declarationPM.Direction == "E")
                                 {
-                                    RaiseEvent(declarationPM, null, status_id: "HTR", status_DateTime: statusDateTime);
+                                    RaiseEvent(declarationPM, "1-5975", status_id: "HTR", status_DateTime: statusDateTime);
                                 }
                             }
 
@@ -390,7 +390,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             };
 
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true);
+
 
 
         }
