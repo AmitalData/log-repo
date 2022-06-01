@@ -2087,6 +2087,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOClosingCancellations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClosingCancellations", DefaultText = "Closing Cancellations",LocalDefaultText = @"סגירת ביטולים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralONoDetailsForActualFreightAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NoDetailsForActualFreightAmount", DefaultText = "Not have amount Actual freight Actual details for supplier",LocalDefaultText = @"אין פרטי מחיר הובלה בפועל ליצואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }
