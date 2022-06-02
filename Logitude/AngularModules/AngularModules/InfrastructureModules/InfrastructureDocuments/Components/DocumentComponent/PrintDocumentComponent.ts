@@ -1205,7 +1205,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub = this.initializeStartCheckDocumentBuildViaWorkerRoleTimer().subscribe(respose => {
 
 
-            if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
+            if (!this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
                 this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub.unsubscribe();
                 this.IsStartCheckDocumentBuildViaWorkerRoleTimer = false;
                 return;
