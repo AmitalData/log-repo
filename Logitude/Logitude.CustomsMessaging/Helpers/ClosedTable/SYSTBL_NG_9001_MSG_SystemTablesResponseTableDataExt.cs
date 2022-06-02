@@ -129,7 +129,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     }
     public class ItemGovernmentProcedureType
     {
-        public string LeadingDocumentTypeID { get; set; }
-       
+        public String LeadDocumentTypeID { get; set; }
+
     }
 }

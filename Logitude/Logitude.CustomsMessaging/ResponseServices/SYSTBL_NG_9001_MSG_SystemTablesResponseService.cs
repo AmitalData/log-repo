@@ -876,16 +876,16 @@ ID List :
                                                     {
                                                         LogMessagingUtil.Instance.Append(
                        @"1422:ItemGovernmentProcedureType:Calc=
- if (dr[""LeadingDocumentTypeID""].ToString() != null)
-       newExt.MyIncotemrsFileValidation.LeadDocumentTypeName = dr[""LeadingDocumentTypeID""].ToString();");
+ if (dr[""LeadDocumentTypeID""].ToString() != null)
+       newExt.MyItemGovernmentProcedureType.LeadDocumentTypeID = dr[""LeadDocumentTypeID""].ToString();");
 
                                                         writeHighlight = true;
                                                     }
-                                                    
-                                                    if (dr["LeadingDocumentTypeID"].ToString() != null)
+
+                                                    if (dr["LeadDocumentTypeID"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyIncotemrsFileValidation.LeadDocumentTypeName = dr["LeadingDocumentTypeID"].ToString(); ;
+                                                        newExt.MyItemGovernmentProcedureType.LeadDocumentTypeID = dr["LeadDocumentTypeID"].ToString(); ;
                                                     }
 
                                                     extList.Add(newExt);

@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.Def.Contracts;
 using Logitude.Customs.Def.Validators;
+using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +11,12 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.Def.EntityPMs
 {
-    public partial class ItemGovernmentProcedureTypePM : IIIGClosedTable  
+
+    [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+    public partial class ItemGovernmentProcedureTypePM : EntityPM, IIIGClosedTable, IIIGClosedTableDummyTenant
     {
         [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
         [DataMember]
-        public string LeadingDocumentTypeID { get; set; }
+        public int Tenant { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         {
             var gov = mehesTableRow.MyItemGovernmentProcedureType ?? new ItemGovernmentProcedureType();
             return base.IsEqual(mehesTableRow, curDbPM)
-                && gov.LeadingDocumentTypeID == curDbPM.LeadingDocumentTypeID;
+                && gov.LeadDocumentTypeID == curDbPM.LeadDocumentTypeID;
 
 
         }
@@ -38,7 +38,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         {
             base.SetOtherFields(mehesTableRow, curDbPM);
             var gov = mehesTableRow.MyItemGovernmentProcedureType ?? new ItemGovernmentProcedureType();
-            curDbPM.LeadingDocumentTypeID = gov.LeadingDocumentTypeID;
+            curDbPM.LeadDocumentTypeID = gov.LeadDocumentTypeID;
         }
     }
 }
