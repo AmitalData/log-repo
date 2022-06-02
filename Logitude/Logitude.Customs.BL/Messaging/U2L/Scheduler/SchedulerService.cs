@@ -1099,16 +1099,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     {
                         var xml = XmlGenericUtil<isReferantAddOnResponseXML>.SerializeObject(responseXML);
                         MyGenericResponseObj.ResponseXml = xml;
+                        AppendLogLine("Check for UniReferantData was Successful, Referant Data will be transfered from unifreight (user:" + AuthenticationUtil.ResolveUserId(tenant) + ")");
                     }
                 }
                 else
                 {
-                    AppendLogLine("Check for UniReferantData Feature Failed, Referant Data will not be transfered from unifreight");
+                    AppendLogLine("Check for UniReferantData Feature Failed, Referant Data will not be transfered from unifreight (user:" + AuthenticationUtil.ResolveUserId(tenant) + ")");
                 }
             }
             catch (SecurityException ex)
             {
-                AppendLogLine("Check for UniReferantData Feature Failed,  Referant Data will not be transfered from unifreight, Message: " + ex.Message);
+                AppendLogLine("Check for UniReferantData Feature Failed,  Referant Data will not be transfered from unifreight (user:" + AuthenticationUtil.ResolveUserId(ResolvedTenant()) + "), Message: " + ex.Message);
             }
         }
 
