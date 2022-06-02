@@ -213,6 +213,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
         }
 
+        
         private void WorkUntilQEmpty_Db()
         {
             CreateFtpDefinitionsEvery10Min();
@@ -222,6 +223,8 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
                 foreach (CustomsPartnerFtpPM ftpDef in _FtpDefinitions)
                 {
+
+                    QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), $"FtpHost:{ftpDef?.MyFtpDetail?.Host}@{ftpDef?.MyFtpDetail?.UserName}");
                     LastActivity = DateTime.UtcNow;
                     if (ftpDef.MyFtpDetail.UseSFTP)
                     {

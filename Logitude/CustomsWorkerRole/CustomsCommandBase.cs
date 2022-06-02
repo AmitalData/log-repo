@@ -512,7 +512,7 @@ namespace CustomsWorkerRole
 
                             if (response == null || (response != null && response.MessageId == null))
                             {
-                                QueueThreadStateService.Upsert(GetWRKey(), "No Work");
+                                QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
                                 //Thread.Sleep(TimeSpan.FromSeconds(5));
                                 Thread.Sleep(TimeSpan.FromMilliseconds(300));
                                 break;
@@ -653,7 +653,7 @@ namespace CustomsWorkerRole
                 try
                 {
                     QueueThreadStateService.Upsert(
-        GetWRKey(),
+        QueueThreadStateService.GetWRKey(this.GetType().Name),
         $"Interface:{analyzeClass},RequestSheetID:{correlationId},QId:{msgResponse?.MessageId},QDefinition:{PerformanceM.LastInstance?.QueueDefinitionCode}"
         );
 
@@ -703,28 +703,7 @@ namespace CustomsWorkerRole
             }
         }
 
-        private string GetWRKey()
-        {
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(Thread.CurrentThread.Name))
-                {
-                    return Thread.CurrentThread.Name;
-                }
-                else
-                {
-                    return $"{this.GetType().Name}:Thread.CurrentThread?.ManagedThreadId.ToString()";
-                }
-                
-            }
-            catch (Exception)
-            {
-
-                return null;
-            }
-            
-        }
-
+        
         public string _QueueNameOverride { get; set; }
     }
 }
