@@ -54,6 +54,10 @@ namespace CustomsWorkerRole.L2U
             CommunicationLogRepository commLogrepository = new CommunicationLogRepository(_Context);
             LogMessagingUtil.Instance.AppendLine("ProccessReceivedMessage()")
                     .Append("CommunicationLogId:").Append(_CommunicationLogId).Append(",Tenant").Append(_Tenant);
+
+            QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), 
+                $"CommLog:{_CommunicationLogId}");
+
             _WaitingCommLog = communicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
             if (_WaitingCommLog == null)
             {
