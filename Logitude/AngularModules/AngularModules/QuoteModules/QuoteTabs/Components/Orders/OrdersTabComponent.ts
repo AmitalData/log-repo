@@ -168,12 +168,14 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
         this.EntityPM.UIProperties.SetEnabled("DimFactor", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.EntityPM.UIProperties.SetEnabled("TransitTime", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.EntityPM.UIProperties.SetEnabled("DepartureFrequency", this.ObjectTableName, this.IsQuoteEditEnabled);
-
         this.EntityPM.UIProperties.SetEnabled("SpecialServicesTypeId", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.EntityPM.UIProperties.SetEnabled("IncludeInsurance", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.EntityPM.UIProperties.SetEnabled("IsStackable", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.EntityPM.UIProperties.SetEnabled("IncludeImportDutyCharges", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.EntityPM.UIProperties.SetEnabled("InsuranceValue", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.EntityPM.UIProperties.SetEnabled("ValueOfGoodsCurrencyId", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.EntityPM.UIProperties.SetEnabled("ValueOfGoodsCurrencyId", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.EntityPM.UIProperties.SetEnabled("ValueOfGoods", this.ObjectTableName, this.IsQuoteEditEnabled);
         ServiceLocator.RulesValidator.ApplyAllConditionalBlockFieldRules(this.EntityPM, this.ObjectTableName);
     }
     private SetUIProperties_AutomaticallyClosed() {
@@ -223,6 +225,20 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
 
         else {
             this.MeasurmentsButtonToolTip = TextCodeTranslator.Translate("Quote.B.Details.HideMeasurmentsSettings");
+        }
+    }
+
+    get ValueOfGoods() { return this.EntityPM.ValueOfGoods; }
+    set ValueOfGoods(newValue: number) {
+        if (this.EntityPM.ValueOfGoods != newValue) {
+            this.EntityPM.ValueOfGoods = newValue;
+        }
+    }
+
+    get ValueOfGoodsCurrencyId() { return this.EntityPM.GrossWeightUnitCode; }
+    set ValueOfGoodsCurrencyId(newValue: string) {
+        if (this.EntityPM.ValueOfGoodsCurrencyId != newValue) {
+            this.EntityPM.ValueOfGoodsCurrencyId = newValue;
         }
     }
 

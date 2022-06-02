@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteUpdateClass
    {  		
-		public const string HashString = "32888c36184e092269377e4054f9dff8";
+		public const string HashString = "871d6f992306fce277cfd1516e7b02e7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16982,7 +16982,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 		       
 	      
 
-	         Screen QuoteGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Quote.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen QuoteGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Quote.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = QuoteObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField QuoteQuoteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.SalesmanUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -16991,10 +16991,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
              ScreenField QuoteQuoteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.DepartmentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField QuoteQuoteGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.BranchId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          
-             ScreenField QuoteQuoteGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.ValueOfGoods", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          
-             ScreenField QuoteQuoteGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = QuoteGeneralTabScreenScreen0.Id,ScreenCode = QuoteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Quote.ValueOfGoodsCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 
