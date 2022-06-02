@@ -153,17 +153,21 @@ namespace WebFreight.Web.ContainerTracking
                 var allContainerTrackingRequests = containerUpdatedFields.ShipmentContext.ContainerTrackingRequests.Where(e => e.RequestId == visionContainerStatus.reference_id && e.Status == ContainerTrackingRequestStatus.Active).ToList();
                 foreach (var containerTrackingRequest in allContainerTrackingRequests)
                 {
-                    if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
-                        FillContainerId(containerTrackingRequest, visionContainerStatus);
-                    BuildCommunicationLogUpdateStatus(containerTrackingRequest);
-                    if (!string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
-                    {
-                        manager.SetContainer(GetContanerPM(containerTrackingRequest));
-                        manager.SetShipment(GetShipmentPM(containerTrackingRequest));
-                        manager.Update();
-                    }
-
+                    HandelUpdateManager(manager, containerTrackingRequest);
                 }
+            }
+        }
+
+        private void HandelUpdateManager(ContainerTrackingUpdateManager manager, ContainerTrackingRequest containerTrackingRequest)
+        {
+            if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
+                FillContainerId(containerTrackingRequest, visionContainerStatus);
+            var comunicationLog = BuildCommunicationLogUpdateStatus(containerTrackingRequest);
+            if (!string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
+            {
+                manager.SetContainer(GetContanerPM(containerTrackingRequest));
+                manager.SetShipment(GetShipmentPM(containerTrackingRequest));
+                manager.Update();
             }
         }
 
@@ -244,7 +248,7 @@ namespace WebFreight.Web.ContainerTracking
             analyzeQueueRepository.SubmitChanges();
         }
 
-        private void BuildCommunicationLogUpdateStatus(ContainerTrackingRequest containerTrackingRequest)
+        private CommunicationLog BuildCommunicationLogUpdateStatus(ContainerTrackingRequest containerTrackingRequest)
         {
 
             using (TransactionScope scope = Simplog.Server.Infrastructure.Helpers.TransactionFactory.GetTransaction())
@@ -254,6 +258,7 @@ namespace WebFreight.Web.ContainerTracking
                 var commLog = AddResponseCommunicationLog(containerTrackingRequest, document);
                 AddContainerTrackingResponse(commLog, containerTrackingRequest);
                 scope.Complete();
+                return commLog;
             }
         }
         private byte[] ConvertObjectToByteArray(object simulatorArgs)
@@ -357,6 +362,7 @@ namespace WebFreight.Web.ContainerTracking
                 CreateDateUTC = DateTime.UtcNow,
                 LastStatusDateUTC = DateTime.UtcNow,
                 Priority = 1,
+                WasAnalyzed = true,
                 EntityId = string.IsNullOrEmpty(containerTrackingRequest.ContainerId) ? containerTrackingRequest.ShipmentId : containerTrackingRequest.ContainerId
 
             };
