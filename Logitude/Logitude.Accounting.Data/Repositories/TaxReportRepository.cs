@@ -93,7 +93,7 @@ namespace Logitude.Accounting.Data.Repositories
         public IQueryable<TaxReport> GetTransmittedReports( int tenant)
         {
             return (from a in context.TaxReports
-                    where a.StatusCode=="T" && a.Tenant == tenant
+                    where (a.StatusCode=="T" || a.StatusCode == TaxReportTransmittedAndJournalCreatedStatus) && a.Tenant == tenant
                     select a);
         }
 
