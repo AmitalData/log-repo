@@ -491,6 +491,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
                                                       TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : null,
                                                      PhysicalCheck = a.PhysicalCheck,
+                                                     DeclarationTypeCode = a.DeclarationTypeCode,
+                                                    
+                                                      DeclarationTypeName=a.DeclarationType.LocalName,
                                                  });
 
 
@@ -518,6 +521,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             {
                 iQueryable = iQueryable.Where(x => string.IsNullOrEmpty(x.ExportContainerizationID) == true);
             }
+            var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "CustomerName");
+
+            if (filter != null)
+            {
+                 iQueryable = iQueryable.Where(x => (x.CustomerCard.LocalName != null ? x.CustomerCard.LocalName : x.CustomerCard.EnglishName).ToLower().StartsWith(filter.FieldValue.ToString().ToLower()));
+            }
+
 
             return iQueryable;
         }
