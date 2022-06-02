@@ -2669,6 +2669,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             if (SessionLocator.TenantPM.CountryCode == "US") {
                 isVisible = true;
             }
+
+            else if (FeatureLocator.HasFeaturePermession("Warehouse", "AddWarehouses")){
+                isVisible = true;
+            }
         }
 
         else if (this.ObjectTableName == "ShippingLine" || this.ObjectTableName == "Airline" || this.ObjectTableName == "Port") {
