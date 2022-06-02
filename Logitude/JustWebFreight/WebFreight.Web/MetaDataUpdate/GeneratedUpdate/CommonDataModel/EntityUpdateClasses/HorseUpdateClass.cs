@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HorseUpdateClass
    {  		
-		public const string HashString = "99009696de7d1cb904f3f18bbfa1562e";
+		public const string HashString = "b9cfa79d922988253c085e2c1d4a3118";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,6 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
+			      				    ServerModuleName =  "",
 			      				    NewWizardComponentPath =  "./Common/Components/Maintenance/Horse/NewHorseComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,

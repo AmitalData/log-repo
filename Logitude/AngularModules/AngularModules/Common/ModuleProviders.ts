@@ -178,6 +178,7 @@ import { HorseListService } from './Services/StandardLists/HorseListService';
 import { HorsePMService } from './Services/StandardPMs/HorsePMService';
 import { LogitudeGridExportToExcelExtendedPMService } from './Services/ExtendedPMs/LogitudeGridExportToExcelExtendedPMService';
 import { ShippingLineExtendedPMService } from './Services/ExtendedPMs/ShippingLineExtendedPMService';
+import { HorseGenderListService } from './Services/StandardLists/HorseGenderListService';
 
 // Extended Lists
 import {CarrierExtendedListService} from './Services/ExtendedLists/CarrierExtendedListService';
@@ -449,6 +450,7 @@ export class ModuleProviders {
             case "MentionListService": { myResult = new MentionListService(); break; }
             case "MentionPMService": { myResult = new MentionPMService(); break; }
             case "CarrierServiceLineListService": { myResult = new CarrierServiceLineListService(); break; }
+            case "HorseGenderListService": { myResult = new HorseGenderListService(); break; }
         }
 
         return myResult;

@@ -54,26 +54,17 @@
 
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'Gender'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'GenderCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'Gender'" [Text]="Gender" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogLov [ObjectFieldName]="'GenderCode'"
+                                            [SelectedValue]="GenderCode"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'HorseGender'">
+                                    </LogLov>
                                 </td>
-
-                                <!--<td>
-                                    <table>
-                                        <tr>
-                                            <td style="width:194px;">
-                                                <ComboBox [ItemsSource]="Genders" [SelectedItem]="Gender" (SelectedItemChanged)="Gender=$event"></ComboBox>
-                                            </td>
-
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>-->
                             </tr>
 
                             <tr class="FormFieldRow">
@@ -84,7 +75,7 @@
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'Breed'" [Text]="Breed" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
-                            </tr>                           
+                            </tr>
 
                             <tr class="FormFieldRow">
                                 <td>
@@ -98,10 +89,9 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Country'">
                                     </LogLov>
-
                                 </td>
                             </tr>
-                            
+
                             <tr>
                                 <td>
                                     <div></div>

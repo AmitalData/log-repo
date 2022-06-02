@@ -3328,7 +3328,6 @@ namespace WebFreight.Web.WebServices
                             packageline.HorseName = horse.Name;
                             packageline.HorseYearOfBirth = horse.YearOfBirth;
                             packageline.HorseColor = horse.Color;
-                            packageline.HorseGender = horse.Gender;
                             packageline.HorseBreed = horse.Breed;
                             packageline.HorseDiscipline = horse.Discipline;
                             packageline.HorseTravelBehavior = horse.TravelBehavior;
@@ -3347,6 +3346,18 @@ namespace WebFreight.Web.WebServices
                                 if (country != null)
                                 {
                                     packageline.HorseCountryOfBirthName = country.EnglishName;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(horse.GenderCode))
+                            {
+                                HorseGender gender = (from pa in commonContext.HorseGenders
+                                                   where pa.Code == horse.GenderCode
+                                                      select pa).FirstOrDefault();
+
+                                if (gender != null)
+                                {
+                                    packageline.HorseGender = gender.Name;
                                 }
                             }
                         }
@@ -3930,7 +3941,6 @@ namespace WebFreight.Web.WebServices
                     insidePackage.HorseName = horse.Name;
                     insidePackage.HorseYearOfBirth = horse.YearOfBirth;
                     insidePackage.HorseColor = horse.Color;
-                    insidePackage.HorseGender = horse.Gender;
                     insidePackage.HorseBreed = horse.Breed;
                     insidePackage.HorseDiscipline = horse.Discipline;
                     insidePackage.HorseTravelBehavior = horse.TravelBehavior;
@@ -3949,6 +3959,18 @@ namespace WebFreight.Web.WebServices
                         if (country != null)
                         {
                             insidePackage.HorseCountryOfBirthName = country.EnglishName;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(horse.GenderCode))
+                    {
+                        HorseGender gender = (from pa in commonContext.HorseGenders
+                                              where pa.Code == horse.GenderCode
+                                              select pa).FirstOrDefault();
+
+                        if (gender != null)
+                        {
+                            insidePackage.HorseGender = gender.Name;
                         }
                     }
                 }
@@ -4448,7 +4470,6 @@ namespace WebFreight.Web.WebServices
                     line.HorseName = horse.Name;
                     line.HorseYearOfBirth = horse.YearOfBirth;
                     line.HorseColor = horse.Color;
-                    line.HorseGender = horse.Gender;
                     line.HorseBreed = horse.Breed;
                     line.HorseDiscipline = horse.Discipline;
                     line.HorseTravelBehavior = horse.TravelBehavior;
@@ -4466,6 +4487,18 @@ namespace WebFreight.Web.WebServices
                         if (country != null)
                         {
                             line.HorseCountryOfBirthName = country.EnglishName;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(horse.GenderCode))
+                    {
+                        HorseGender gender = (from pa in commonContext.HorseGenders
+                                              where pa.Code == horse.GenderCode
+                                              select pa).FirstOrDefault();
+
+                        if (gender != null)
+                        {
+                            line.HorseGender = gender.Name;
                         }
                     }
                 }

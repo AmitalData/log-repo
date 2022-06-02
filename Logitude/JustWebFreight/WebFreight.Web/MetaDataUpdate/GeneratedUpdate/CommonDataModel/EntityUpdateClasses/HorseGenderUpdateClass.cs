@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HorseGenderUpdateClass
    {  		
-		public const string HashString = "283f635b6279a04be447723ce6ae7b93";
+		public const string HashString = "e35a624f53d0bbb5219c848eb0415de6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Horse Gender",
-			      				    Code =  "7aa9",
+			      				    Code =  "5ebd",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -150,7 +150,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  1,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -208,15 +208,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "HorseGender",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  3,
-					  						IsRequired =  false,
+					  						MaxLength =  40,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  3,
+					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
@@ -304,7 +304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DefaultText =  "Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
-					  						IsMaxLength =  true,
+					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,

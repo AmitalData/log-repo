@@ -44,6 +44,7 @@
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
+  ServerModuleName="&quot;&quot;"
   NewWizardComponentPath="&quot;./Common/Components/Maintenance/Horse/NewHorseComponent&quot;"
   NoViewController="false"
   NoPMController="false"

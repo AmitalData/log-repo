@@ -17,12 +17,12 @@
     Type="varchar"
     Size="40">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="SearchFields"
     Type="nvarchar"
-    Size="-1">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
