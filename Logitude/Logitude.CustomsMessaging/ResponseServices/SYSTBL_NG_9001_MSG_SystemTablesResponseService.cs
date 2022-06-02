@@ -859,6 +859,41 @@ ID List :
                         break;
 
                     }
+                case "1422":
+                case "ItemGovernmentProcedureType":
+                    {
+
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt =
+                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyItemGovernmentProcedureType = new Helpers.ClosedTable.ItemGovernmentProcedureType();
+                                                    if (!writeHighlight)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(
+                       @"1422:ItemGovernmentProcedureType:Calc=
+ if (dr[""LeadingDocumentTypeID""].ToString() != null)
+       newExt.MyIncotemrsFileValidation.LeadDocumentTypeName = dr[""LeadingDocumentTypeID""].ToString();");
+
+                                                        writeHighlight = true;
+                                                    }
+                                                    
+                                                    if (dr["LeadingDocumentTypeID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyIncotemrsFileValidation.LeadDocumentTypeName = dr["LeadingDocumentTypeID"].ToString(); ;
+                                                    }
+
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+                        break;
+
+                    }
                 default:
                     break;
             }

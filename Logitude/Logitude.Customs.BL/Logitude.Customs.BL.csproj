@@ -2014,6 +2014,7 @@
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeficitDecisionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ExportStorageUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ItemGovernmentProcedureTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\UIMessageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ValidCustomsItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ValidCustomsItemUpdateService.Generated.cs" />
