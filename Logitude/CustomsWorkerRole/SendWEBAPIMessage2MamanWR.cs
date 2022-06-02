@@ -218,6 +218,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
                         if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
                         {
+                            QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "Sleep...");
                             //Thread.Sleep(TimeSpan.FromSeconds(5));
                             Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
                             break;
@@ -241,10 +242,22 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
 
 
-
+        
         public void ProccessReceivedMessage()
         {
-            //InitParams();
+
+            LogMessagingUtil.Instance.Clear();
+
+            _CommunicationLogId = _ReceivedBrokeredMessage.MessageValues["CommunicationLogId"].ToString();
+            int.TryParse(_ReceivedBrokeredMessage.MessageValues["Tenant"].ToString(), out _Tenant);
+
+            LogMessagingUtil.Instance
+                .AppendLine("ProccessReceivedMessage()")
+                .AppendLine("QUEUEMessageId:" + _ReceivedBrokeredMessage.MessageId)
+                .AppendLine("RetryNumber:" + _ReceivedBrokeredMessage.RetryNumber)
+                .AppendLine("CommunicationLogId:" + _CommunicationLogId)
+                .AppendLine(",Tenant" + _Tenant);
+            QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), $"CommLog:{_CommunicationLogId},QId:{_ReceivedBrokeredMessage.MessageId}");
 
             _Context = CommonDataContext.GetContext(_Tenant);
             _CommunicationLogRep = new CommunicationLogRepository(_Context);

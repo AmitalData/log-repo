@@ -333,6 +333,7 @@ namespace CustomsWorkerRole
                         if (receivedMessage == null || String.IsNullOrWhiteSpace(receivedMessage.MessageId))
                         {
                             //Thread.Sleep(TimeSpan.FromSeconds(5));
+                            QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "Sleep...");
                             Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
                             break;
                         }

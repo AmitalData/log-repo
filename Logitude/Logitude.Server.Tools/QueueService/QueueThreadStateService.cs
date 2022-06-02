@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.QueueService
@@ -17,6 +18,27 @@ namespace Logitude.Server.Tools.QueueService
             _ConcurrentQueueState= new ConcurrentDictionary<string, string>();
         }
 
+        public static string GetWRKey(string thisGetTypeName)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(Thread.CurrentThread.Name))
+                {
+                    return Thread.CurrentThread.Name;
+                }
+                else
+                {
+                    return $"{thisGetTypeName}:{Thread.CurrentThread?.ManagedThreadId.ToString()}";
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+
+        }
         public static void Upsert(string queueThreadCode ,string queueThreadState)
         {
             try
