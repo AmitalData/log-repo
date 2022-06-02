@@ -1,5 +1,6 @@
 ﻿using AmitalCustomsWindowsService.Utils;
 using CustomsWorkerRole.Test;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.Utils;
 using System;
 using System.Collections.Generic;
@@ -111,7 +112,7 @@ LastError:{4}",
                 }
 
                 //SendReqSheetStatistic();
-
+                var myQueueThreadState= QueueThreadStateService.GetState();
                 string bad = "bgcolor=red";
                 string Good = "bgcolor=Green";
                 return string.Format(
@@ -142,7 +143,12 @@ LastError:{4}",
             "LastGetServiceBusStateAt :" + _LastGetServiceBusStateAt.ToString() + Environment.NewLine + _AllQ,
             "LastClacReqSheetStatistic At:" + ReqSheetStatisticClass._LastSendReqSheetStatistic.ToString() + Environment.NewLine + ReqSheetStatisticClass.MySheetStatistic
 
-            );
+            ) + 
+            Environment.NewLine +
+            myQueueThreadState;
+
+                    
+                    ;
             }
             catch (Exception e)
             {
