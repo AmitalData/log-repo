@@ -151,13 +151,20 @@
                                 <td style="width:15px;"></td>
                                 <td style="height: 22px;width:145px;">
                                     <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
-                                        Gateway
+                                        {{ShipmentDirection == 'E' ? 'Destination' : 'Gateway'}}
                                     </label>
                                 </td>
                                 <td style="width:12px;"></td>
-                                <td style="height: 22px;width:185px;">
+                                <td *ngIf="ShipmentDirection != 'E'" style="height: 22px;width:185px;">
                                     <LogLov [RunToggleMode]="true"
                                             [ObjectFieldName]="'FromPortId'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'">
+                                    </LogLov>
+                                </td>
+                                <td *ngIf="ShipmentDirection == 'E'" style="height: 22px;width:185px;">
+                                    <LogLov [RunToggleMode]="true"
+                                            [ObjectFieldName]="'ToPortId'"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Port'">
                                     </LogLov>
