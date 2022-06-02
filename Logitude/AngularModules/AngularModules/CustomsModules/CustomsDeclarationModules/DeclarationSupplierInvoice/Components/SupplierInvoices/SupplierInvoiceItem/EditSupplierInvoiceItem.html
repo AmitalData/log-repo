@@ -1560,7 +1560,8 @@
                                                                                         [HideColumns]="true"
                                                                                         [LookUpTableName]="'Customs.ItemGovernmentProcedureType'"
                                                                                         (SelectedItemChanged)="item.SetLocalName($event, 'ProcessTypeName')"
-                                                                                        [FocusOnMe]="true">
+                                                                                        [FocusOnMe]="true"
+                                                                                        [QueryFilterItems]="ProcessTypeCodeFilterItems">
                                                                                 </LogLov>
 
                                                                             </div>
