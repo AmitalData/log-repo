@@ -1973,7 +1973,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return whereClose;
         }
 
-        public List<DocumentsFilingPM> GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, List<string> externalEntityReferences, int tenant)
+        public List<DocumentsFilingPM> GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, List<string> externalEntityReferences, int tenant, string declarationType = null)
         {
 
             ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
@@ -2227,6 +2227,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 }).ToList();
 
                 externalDocumentPMs = externalDocumentPMs.Concat(docs).ToList();
+
+
+                if (declarationType == "E") { 
+                   externalDocumentPMs = externalDocumentPMs.GroupBy(x => x.Id).Select(x => x.First()).ToList();
+                }
+
+
             }
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
