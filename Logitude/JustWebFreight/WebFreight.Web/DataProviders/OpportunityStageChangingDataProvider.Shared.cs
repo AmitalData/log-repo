@@ -35,6 +35,8 @@ namespace WebFreight.Web.DataProviders
             public string Salesman { get; set; }
             public DateTime? StartDate { get; set; }
             public DateTime? EndDate { get; set; }
+            public string CustomerPrimaryContactName { get; set; }
+            public string CustomerPrimaryContactEmail { get; set; }
         }
     }
 }

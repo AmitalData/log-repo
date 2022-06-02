@@ -158,8 +158,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
 
         private void UpdateVizionContainerStatus()
         {
-            var source = GetSource();
-            string requestId = CheckIfExistRequest();
+            string requestId = null;// CheckIfExistRequest();
             if (requestId == null)
             {
                 requestId = CreateNewRequest();
@@ -167,7 +166,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
             if (CheckIfExistRequest(ContainerStatusSimulatorArgs.Tenant) == null)
                 AddContainerTrackingRequest(requestId);
             if (ContainerStatusSimulatorArgs.IsSimulator)
-                SimulateVizionUpdateContainerStatus(source);
+                SimulateVizionUpdateContainerStatus();
 
         }
 
@@ -208,10 +207,10 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
             return null;
         }
 
-        private void SimulateVizionUpdateContainerStatus(ContainerTrackingProvider source)
+        private void SimulateVizionUpdateContainerStatus()
         {
+            var source = GetSource();
             VisionContainerStatus vizionContainerStatus = JsonConvert.DeserializeObject<VisionContainerStatus>(ContainerStatusSimulatorArgs.Data);
-
             var result = APICaller.CallApi<object>(source.CallbackURL, vizionContainerStatus, Method.POST);
         }
 

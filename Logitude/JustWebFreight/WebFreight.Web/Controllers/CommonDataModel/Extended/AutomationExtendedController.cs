@@ -186,17 +186,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 System.Type type13 = typeof(AutomationEvent);
                 System.Type type14 = typeof(AutomationOnUpdateDocument);
                 System.Type type15 = typeof(OnUpdateDocumentTypeAttachment);
+                System.Type type16 = typeof(ARInvoiceDetails);
 
 
 
 
 
- 
 
 
 
 
-                System.Type[] types = new System.Type[15];
+
+                System.Type[] types = new System.Type[16];
                 types[0] = type1;
                 types[1] = type2;
                 types[2] = type3;
@@ -213,6 +214,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 types[12] = type13;
                 types[13] = type14;
                 types[14] = type15;
+                types[15] = type16;
 
                 entityPM.AutomationXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.AutomatedDataBackup, types);
             }

@@ -363,7 +363,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
 
-            ChildEntitiesCustomFieldService.Set(new ChildEntitiesCustomFieldArgs()
+           new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
             {   Tenant = tenant,
                 EntityId = shipmentId ,
                 ObjectTableName = "Shipment",

@@ -7826,13 +7826,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void SaveChildEntitiesCustomFields()
         {
-                ChildEntitiesCustomFieldService.Update(new ChildEntitiesCustomFieldArgs()
+                var shipmentPackages = initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                new ChildEntitiesCustomFieldService().Update(new ChildEntitiesCustomFieldArgs()
                 {
                     Tenant = tenant,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Shipment",
                     ChildObjectTableName = "ShipmentPackage",
-                    ChildEntities = entityPM.ShipmentPackages.Cast<object>().ToList()
+                    ChildEntities = shipmentPackages.Cast<object>().ToList()
                 });
         }
 
