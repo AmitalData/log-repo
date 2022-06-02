@@ -505,6 +505,7 @@
     <Compile Include="EntityPMs\SupplierInvoiceItemVehiclePM.cs" />
     <Compile Include="EntityPMs\SupplierInvoicePM.cs" />
     <Compile Include="EntityPMs\TapagConnectionTablePM.cs" />
+    <Compile Include="EntityPMs\ItemGovernmentProcedureTypePM.cs" />
     <Compile Include="EntityPMs\TradeAgreementPM.cs" />
     <Compile Include="EntityPMs\UIMessagePM.cs" />
     <Compile Include="EntityPMs\ValidCustomsItemPM.cs" />
