@@ -88,15 +88,16 @@ export function GetSharedKey() {
 }
 
 export function LoginSecondTenant() {
+    let mode = Cypress.env("Mode");
 
     cy.fixture("Login.json").then(loginData => {
         let email = loginData.customerCareEmail;
         let password = loginData.customerCarePassword;
         let url = loginData.url;
-        let tenant = loginData.secondTenant;
+        let tenant =  mode.toLowerCase() === "development" ? loginData.secondTenant :Cypress.env("secondTenant") ;
         Authentication.CompleteLoginProcess(email, password, url, tenant);
     });
-
+    
 }
 
 export function FillSharedKey() {
