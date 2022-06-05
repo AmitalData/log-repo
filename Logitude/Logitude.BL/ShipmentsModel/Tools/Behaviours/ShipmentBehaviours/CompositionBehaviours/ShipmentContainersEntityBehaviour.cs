@@ -192,6 +192,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.ShipmentPackagesChangeSet != null && this.initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())
                 return true;
+            if (this.initializer.EntityPM.IsOperationalClosed != this.initializer.EntityPOCO.IsOperationalClosed)
+                return true;
+            if (this.initializer.EntityPM.ShipmentNumber != this.initializer.EntityPOCO.ShipmentNumber)
+                return true;
+            if (this.initializer.EntityPM.NumberOfContainers != this.initializer.EntityPOCO.NumberOfContainers)
+                return true;
+            if (this.initializer.EntityPM.HandlerUserId != this.initializer.EntityPOCO.HandlerUserId)
+                return true;
+            if (this.initializer.EntityPM.CustomerId != this.initializer.EntityPOCO.CustomerId)
+                return true;
+            if (this.initializer.EntityPM.ShipmentTypeId != this.initializer.EntityPOCO.ShipmentTypeId)
+                return true;
+            if (this.initializer.EntityPM.PODReceivedDate != this.initializer.EntityPOCO.PODReceivedDate)
+                return true;
+            if (this.initializer.EntityPM.DestinationWarehouseId != this.initializer.EntityPOCO.DestinationWarehouseId)
+                return true;
             return false;
         }
 
