@@ -39,7 +39,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string GLSHKURL { get; set; }
         public string GLSHKEnv { get; set; }
         public string NotificationHubName { get; set; }
-        public string NotificationHubConnectionString  { get; set; }
+        public string NotificationHubConnectionString { get; set; }
         public string CustomerTenantsURL { get; set; }
         public string ForwarderTenantsURL { get; set; }
         public string DomainName { get; set; }
@@ -54,7 +54,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public double AndroidPodAppMinimumVersion { get; set; }
         public double IOSPodAppMinimumVersion { get; set; }
         public string MinimumOutlookVersion { get; set; }
-        public bool SameUserLoginEnabled  { get; set; }
+        public bool SameUserLoginEnabled { get; set; }
         public string DropboxAppKey { get; set; }
         public string DropboxAppSecret { get; set; }
         public string ABMProductId { get; set; }
@@ -84,5 +84,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string AmitalCloudEnvironmentURL { get; set; }
 
         public string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
-}
+        public string ReleaseDateString { get; set; }
+    }
 }

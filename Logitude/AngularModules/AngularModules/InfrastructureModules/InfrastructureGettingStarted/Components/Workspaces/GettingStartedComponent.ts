@@ -19,6 +19,7 @@ import {ContactPM} from '../../../../Common/EntityPMs/ContactPM';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import { UserArgs} from '../../../../Infrastructure/Args';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -31,8 +32,12 @@ export class GettingStartedComponent extends BaseComponent {
     public VideosObslist: HelpResourceArgs[] = [];
     public HowToObslist: HelpResourceArgs[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    public ReleaseDateString: string;
     constructor() {
         super();
+
+        this.ReleaseDateString = ObjectsLocator.GlobalSetting.ReleaseDateString;
+
         this.LoadData();
         this.CheckFeatures1();
         this.CheckFeatures2();
