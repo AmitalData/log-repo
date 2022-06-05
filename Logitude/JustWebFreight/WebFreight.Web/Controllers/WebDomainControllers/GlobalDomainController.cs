@@ -119,6 +119,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
                         myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
                         myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
+                        myResult.ReleaseDateString = mySetting.ReleaseDateString;
 
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
@@ -780,16 +781,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public bool SameUserLoginEnabled { get; set; }
         public string LayoutDirection { get; set; }
         public string ProductInfo { get; internal set; }
-
         public string ProductMessage { get; internal set; }
-
         public bool ReportsRunUsingWR { get; set; }
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }
         public string ReleaseNotesURL { get; set; }
-
         public string LogitudeDemoTenants { get; set; }
         public DateTime? TMPersonalAccessExpirationDate { get; set; }
+        public string ReleaseDateString { get; set; }
     }
 
     public class TenantManagementJS

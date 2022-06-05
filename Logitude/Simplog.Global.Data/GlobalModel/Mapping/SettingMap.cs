@@ -74,7 +74,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.LogitudeDemoTenants).IsUnicode(false).HasColumnName("LogitudeDemoTenants");
             this.Property(t => t.AmitalCloudEnvironmentURL).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasMaxLength(50).IsUnicode(true);
-            
+            this.Property(t => t.ReleaseDateString).HasMaxLength(50).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("Settings");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -131,7 +132,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.OITenantNumber).HasColumnName("OITenantNumber");
             this.Property(t => t.AmitalCloudEnvironmentURL).HasColumnName("AmitalCloudEnvironmentURL");
             this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey");
-            
+            this.Property(t => t.ReleaseDateString).HasColumnName("ReleaseDateString");
+
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
