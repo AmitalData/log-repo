@@ -222,17 +222,15 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         quoteDomainService.GetQuoteSettings().subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError == false) {
                 if (myResponse.Result) {
-                    if (myResponse.Result.Id) {
-                        this.QuoteSetting = myResponse.Result;
-                        this.ExpirationDays = this.QuoteSetting.QuoteExpirationDays;
-                    }
+                    this.QuoteSetting = myResponse.Result;
+                    this.ExpirationDays = this.QuoteSetting.QuoteExpirationDays;
 
                     if (this.IsCopyFromQuote) {
                         this.InitializeCopy(this.sourceEntityPM);
                     }
                 }
 
-                this.IsAutomaticallyClosed = true;                
+                this.IsAutomaticallyClosed = true;
             }
         });
     }

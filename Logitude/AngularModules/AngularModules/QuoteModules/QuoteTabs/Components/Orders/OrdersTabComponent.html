@@ -298,13 +298,40 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ValueOfGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'ValueOfGoods'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [Text]="ValueOfGoods">
+                                                    </LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ValueOfGoodsCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ValueOfGoodsCurrencyId'"
+                                                            [SelectedValue]="ValueOfGoodsCurrencyId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"
+                                                            [LookUpTableName]="'Currency'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
 
                                             <tr>
                                                 <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
-
                                         </table>
                                     </td>
 
@@ -450,7 +477,6 @@
                 </div>
             </td>
         </tr>
-
     </table>
 </div>
 

@@ -29110,7 +29110,7 @@
     IsHeaderScreen="false"
     Code="&quot;Quote.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="6">
+    NumberOfRows="4">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -29131,16 +29131,6 @@
         Column="0"
         Row="3"
         ObjectFieldName="&quot;BranchId&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="4"
-        ObjectFieldName="&quot;ValueOfGoods&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="5"
-        ObjectFieldName="&quot;ValueOfGoodsCurrencyId&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>
