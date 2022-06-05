@@ -21,13 +21,13 @@ BEGIN
 			  
               set @GenderCode = null
 
-              if(@Gender = 'Male' or @Gender = 'Mare' or @Gender = '')
+              if(@Gender = 'Male' or @Gender = 'Colt' or @Gender = 'Stallion' or @Gender = 'TB' or @Gender = 'Coly')
                 set @GenderCode = 'M'
 
-              else if(@Gender = 'Female' or @Gender = '' or @Gender = '')
+              else if(@Gender = 'Female' or @Gender = 'Mare' or @Gender = 'Filly')
                 set @GenderCode = 'F'
 
-              else if(@Gender = 'Castrated' or @Gender = '' or @Gender = '')
+              else if(@Gender = 'Castrated' or @Gender = 'Gelding' or @Gender = 'MALE CASTRATED' or @Gender = 'GRLDING' or @Gender = 'Macho Castrado' or @Gender = 'Gel')
                 set @GenderCode = 'C'
 
               update Horses set GenderCode = @GenderCode where Id = @HorseId
