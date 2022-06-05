@@ -983,6 +983,76 @@
     <Constraints
       Nullable="true" />
   </Column>
+	<Column
+	  Name="InlandDomesticFromStateId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="InlandDomesticToStateId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="InlandDomesticToAddress1"
+	  Type="nvarchar"
+	  Size="65">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="InlandDomesticToAddress2"
+	  Type="nvarchar"
+	  Size="65">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="InlandDomesticToPhone"
+	  Type="varchar"
+	  Size="40">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="InlandDomesticToFax"
+	  Type="varchar"
+	  Size="40">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="InlandDomesticFromAddress1"
+	  Type="nvarchar"
+	  Size="65">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="InlandDomesticFromAddress2"
+	  Type="nvarchar"
+	  Size="65">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="InlandDomesticFromPhone"
+	  Type="varchar"
+	  Size="40">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="InlandDomesticFromFax"
+	  Type="varchar"
+	  Size="40">
+		<Constraints
+		  Nullable="true" />
+	</Column>	
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"
@@ -1218,6 +1288,16 @@
     ReferencedTable="CarrierServiceLines"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+	ForeignKeyColumn="InlandDomesticFromStateId"
+	ReferencedTable="States"
+	ReferencedColumn="Id"
+	ReferencedTableSchema="dbo" />
+  <Relation
+	ForeignKeyColumn="InlandDomesticToStateId"
+	ReferencedTable="States"
+	ReferencedColumn="Id"
+	ReferencedTableSchema="dbo" />	
   <Index
     Columns="Master,InterlineId" />
   <Index

@@ -741,6 +741,14 @@
 
                                                     <tr>
                                                         <td colspan="2">
+                                                            <div style="float:right;">
+                                                                <Hyperlink (click)="InlandDomesticAddressMoreDetailsClick('From')" [Text]="'More Details'"></Hyperlink>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td colspan="2">
                                                             <div></div>
                                                         </td>
                                                     </tr>
@@ -913,6 +921,14 @@
                                                                     [DataContext]="DataContext"
                                                                     [LookUpTableName]="'Country'">
                                                             </LogLov>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <div style="float:right;">
+                                                                <Hyperlink (click)="InlandDomesticAddressMoreDetailsClick('To')" [Text]="'More Details'"></Hyperlink>
+                                                            </div>
                                                         </td>
                                                     </tr>
 

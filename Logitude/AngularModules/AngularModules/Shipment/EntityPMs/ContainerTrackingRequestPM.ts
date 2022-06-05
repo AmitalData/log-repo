@@ -85,6 +85,11 @@ export class ContainerTrackingRequestPM {
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
        
 	 
+    private isSimulate: boolean;
+    public get IsSimulate() { return this.isSimulate; }
+    public set IsSimulate(newValue: boolean) { if (this.isSimulate != newValue) { this.isSimulate = newValue; this.MarkAsDirty("IsSimulate"); } }
+       
+	 
 
     public OldEntityPM: ContainerTrackingRequestPM;
 		

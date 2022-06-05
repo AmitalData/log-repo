@@ -373,6 +373,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.MainCarriageFromPortAddress = masterData.MainCarriageFromPortAddress;
                     shipmentPM.MainCarriageToPortAddress = masterData.MainCarriageToPortAddress;
 
+                    shipmentPM.InlandDomesticToAddress1 = masterData.InlandDomesticToAddress1;
+                    shipmentPM.InlandDomesticToAddress2 = masterData.InlandDomesticToAddress2;
+                    shipmentPM.InlandDomesticToPhone = masterData.InlandDomesticToPhone;
+                    shipmentPM.InlandDomesticToFax = masterData.InlandDomesticToFax;
+                    shipmentPM.InlandDomesticToStateId = masterData.InlandDomesticToStateId;
+
+                    shipmentPM.InlandDomesticFromAddress1 = masterData.InlandDomesticFromAddress1;
+                    shipmentPM.InlandDomesticFromAddress2 = masterData.InlandDomesticFromAddress2;
+                    shipmentPM.InlandDomesticFromPhone = masterData.InlandDomesticFromPhone;
+                    shipmentPM.InlandDomesticFromFax = masterData.InlandDomesticFromFax;
+                    shipmentPM.InlandDomesticFromStateId = masterData.InlandDomesticFromStateId;
+
                     if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromAddressId))
                     {
                         Address fromAddress = addressRepository.GetSingleAddress(shipmentPM.MainCarriageFromAddressId, tenant);
@@ -12690,6 +12702,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageETATime = f.MainCarriageETA,
                                PackagesQuantityAndType = f.PackagesQuantityAndType,
                                ConnectedtoMaster = f.ShipmentLevelCode == "H" && f.ShipmentMasterDataId != null,
+
+                               InlandDomesticToAddress1 = f.InlandDomesticToAddress1,
+                               InlandDomesticToAddress2 = f.InlandDomesticToAddress2,
+                               InlandDomesticToPhone = f.InlandDomesticToPhone,
+                               InlandDomesticToFax = f.InlandDomesticToFax,
+                               InlandDomesticToStateName = f.InlandDomesticToStateName,
+                               InlandDomesticToStateId = f.InlandDomesticToStateId,
+
+                               InlandDomesticFromAddress1 = f.InlandDomesticFromAddress1,
+                               InlandDomesticFromAddress2 = f.InlandDomesticFromAddress2,
+                               InlandDomesticFromPhone = f.InlandDomesticFromPhone,
+                               InlandDomesticFromFax = f.InlandDomesticFromFax,
+                               InlandDomesticFromStateName = f.InlandDomesticFromStateName,
+                               InlandDomesticFromStateId = f.InlandDomesticFromStateId,
+
                            };
             return myResult;
         }
@@ -13092,6 +13119,20 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageETATime = f.MainCarriageETA,
                     PackagesQuantityAndType = f.PackagesQuantityAndType,
                     ConnectedtoMaster = f.ShipmentLevelCode == "H" && f.ShipmentMasterDataId != null,
+
+                    InlandDomesticToAddress1 = f.InlandDomesticToAddress1,
+                    InlandDomesticToAddress2 = f.InlandDomesticToAddress2,
+                    InlandDomesticToPhone = f.InlandDomesticToPhone,
+                    InlandDomesticToFax = f.InlandDomesticToFax,
+                    InlandDomesticToStateName = f.InlandDomesticToStateName,
+                    InlandDomesticToStateId = f.InlandDomesticToStateId,
+
+                    InlandDomesticFromAddress1 = f.InlandDomesticFromAddress1,
+                    InlandDomesticFromAddress2 = f.InlandDomesticFromAddress2,
+                    InlandDomesticFromPhone = f.InlandDomesticFromPhone,
+                    InlandDomesticFromFax = f.InlandDomesticFromFax,
+                    InlandDomesticFromStateName = f.InlandDomesticFromStateName,
+                    InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

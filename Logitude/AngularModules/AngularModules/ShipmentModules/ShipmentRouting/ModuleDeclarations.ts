@@ -26,6 +26,7 @@ import { ChooseStandaloneShipmentComponent } from './Components/Routings/ChooseS
 import { SelectStandalonePackagesComponent } from './Components/Routings/SelectStandalonePackagesComponent';
 import { StandAlonePickupDeilveryActionsComponent } from './Components/Routings/StandAlonePickupDeilveryActionsComponent';
 import { ChooseVesselComponent } from './Components/Routings/ChooseVesselComponent';
+import { InlandDomesticAddressComponent } from './Components/Routings/InlandDomesticAddressComponent';
 
 export const Components =
     [
@@ -56,6 +57,7 @@ export const Components =
         SelectStandalonePackagesComponent,
         StandAlonePickupDeilveryActionsComponent,
         ChooseVesselComponent,
+        InlandDomesticAddressComponent,
     ];
 
 export const ControlsComponents =
@@ -97,6 +99,7 @@ export class ModuleDeclarations {
             case "SelectStandalonePackagesComponent": { myResult = SelectStandalonePackagesComponent; break; }
             case "StandAlonePickupDeilveryActionsComponent": { myResult = StandAlonePickupDeilveryActionsComponent; break; }
             case "ChooseVesselComponent": { myResult = ChooseVesselComponent; break; }
+            case "InlandDomesticAddressComponent": { myResult = InlandDomesticAddressComponent; break; }
         }
 
         return myResult;

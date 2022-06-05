@@ -1799,6 +1799,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         entityMasterData.MainCarriageFromPortId = entityPM.MainCarriageFromPortId;
                         entityMasterData.MainCarriageToPortId = entityPM.MainCarriageToPortId;
                         entityMasterData.MainCarriageFinalDestinationPortId = entityPM.MainCarriageToPortId;
+
+                        entityMasterData.InlandDomesticToAddress1 = entityPM.InlandDomesticToAddress1;
+                        entityMasterData.InlandDomesticToAddress2 = entityPM.InlandDomesticToAddress2;
+                        entityMasterData.InlandDomesticToPhone = entityPM.InlandDomesticToPhone;
+                        entityMasterData.InlandDomesticToFax = entityPM.InlandDomesticToFax;
+                        entityMasterData.InlandDomesticToStateId = entityPM.InlandDomesticToStateId;
+
+                        entityMasterData.InlandDomesticFromAddress1 = entityPM.InlandDomesticFromAddress1;
+                        entityMasterData.InlandDomesticFromAddress2 = entityPM.InlandDomesticFromAddress2;
+                        entityMasterData.InlandDomesticFromPhone = entityPM.InlandDomesticFromPhone;
+                        entityMasterData.InlandDomesticFromFax = entityPM.InlandDomesticFromFax;
+                        entityMasterData.InlandDomesticFromStateId = entityPM.InlandDomesticFromStateId;
                     }
 
                     if (entityPM.TransportModeId == "A")

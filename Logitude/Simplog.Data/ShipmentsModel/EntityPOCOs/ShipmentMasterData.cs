@@ -265,5 +265,24 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string OnCarriageVesselName { get; set; }
         public string CarrierServiceLineId { get; set; }
         public virtual CarrierServiceLine CarrierServiceLine { get; set; }
+
+        public string InlandDomesticToAddress1 { get; set; }
+        public string InlandDomesticToAddress2 { get; set; }
+        public string InlandDomesticToPhone { get; set; }
+        public string InlandDomesticToFax { get; set; }
+        public string InlandDomesticToStateId { get; set; }
+
+        [ForeignKey("InlandDomesticToStateId")]
+        public virtual State InlandDomesticToState { get; set; }
+
+
+        public string InlandDomesticFromAddress1 { get; set; }
+        public string InlandDomesticFromAddress2 { get; set; }
+        public string InlandDomesticFromPhone { get; set; }
+        public string InlandDomesticFromFax { get; set; }
+        public string InlandDomesticFromStateId { get; set; }
+
+        [ForeignKey("InlandDomesticFromStateId")]
+        public virtual State InlandDomesticFromState { get; set; }
     }
 }

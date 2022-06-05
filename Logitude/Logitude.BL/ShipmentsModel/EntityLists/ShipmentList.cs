@@ -611,5 +611,20 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? MainCarriageETATime { get; set; }
         public string PackagesQuantityAndType { get; set; }
         public bool ConnectedtoMaster { get; set; }
+
+
+        public string InlandDomesticToAddress1 { get; set; }
+        public string InlandDomesticToAddress2 { get; set; }
+        public string InlandDomesticToPhone { get; set; }
+        public string InlandDomesticToFax { get; set; }
+        public string InlandDomesticToStateId { get; set; }
+        public string InlandDomesticToStateName { get; set; }
+
+        public string InlandDomesticFromAddress1 { get; set; }
+        public string InlandDomesticFromAddress2 { get; set; }
+        public string InlandDomesticFromPhone { get; set; }
+        public string InlandDomesticFromFax { get; set; }
+        public string InlandDomesticFromStateId { get; set; }
+        public string InlandDomesticFromStateName { get; set; }
     }
 }
