@@ -138,11 +138,12 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 CondicionesDePago = GetCondicionesDePago(),
                 TipoCambio = GetARInvoiceCurrencyExchangeRate(),
                 TipoCambioSpecified = !IsMexicanInvoiceCurrency(),
-                InformacionGlobal = GetInformacionGlobal(),
                 LugarExpedicion = GetLugarExpedicion(GetBranchAddress(), currentTenant),
                 Conceptos = GetConceptoList().ToArray(),
                 CfdiRelacionados = GetRelatedInvoiceTag()
             };
+
+            comprobante.InformacionGlobal = GetInformacionGlobal(comprobante.Receptor);
 
 
             List<ARInvoiceTotalVATPM> arTotalVats = GetARInvoiceTotalVATPMs();
@@ -267,24 +268,36 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             string billToCountryCode = GetBillToCountryCode();
             bool isMexicoCountry = IsMexicoCountry(billToCountryCode);
+            string publicInGeneralMexicoRfc = GetPublicInGeneralMexicoRfc(isMexicoCountry);
 
             return new ComprobanteReceptor
             {
-                Nombre = !string.IsNullOrEmpty(billToCard.SATCustomerName) ? billToCard.SATCustomerName : billToCard.EnglishName,
-                RegimenFiscalReceptor = GetRegimenFiscalReceptor(isMexicoCountry),
-                DomicilioFiscalReceptor = GetDomicilioFiscalReceptor(billToAddressZipCode, isMexicoCountry),
-                Rfc = GetReceptorRfc(isMexicoCountry),
-                UsoCFDI = GetReceptorUsoCFDI(isMexicoCountry),
+                Nombre = GetNombre(publicInGeneralMexicoRfc),
+                RegimenFiscalReceptor = GetRegimenFiscalReceptor(isMexicoCountry, publicInGeneralMexicoRfc),
+                DomicilioFiscalReceptor = GetDomicilioFiscalReceptor(billToAddressZipCode, isMexicoCountry, publicInGeneralMexicoRfc),
+                Rfc = GetReceptorRfc(isMexicoCountry, publicInGeneralMexicoRfc),
+                UsoCFDI = GetReceptorUsoCFDI(isMexicoCountry, publicInGeneralMexicoRfc),
                 NumRegIdTrib = GetNumRegIdTrib(billToCountryCode),
                 ResidenciaFiscal = GetResidenciaFiscal(billToCountryCode),
                 ResidenciaFiscalSpecified = GetResidenciaFiscalSpecified(billToCountryCode)
             };
         }
 
-        private string GetRegimenFiscalReceptor(bool isMexicoCountry)
+        private string GetPublicInGeneralMexicoRfc(bool isMexicoCountry)
+        {
+            return isMexicoCountry && string.IsNullOrEmpty(billToCard.VatNumber) ? SATData.PublicInGeneralMexicoRfc : "";
+        }
+
+        private string GetNombre(string publicInGeneralMexicoRfc)
+        {
+            if (publicInGeneralMexicoRfc == SATData.PublicInGeneralMexicoRfc) return SATData.PublicInGeneralNombre;
+            return !string.IsNullOrEmpty(billToCard.SATCustomerName) ? billToCard.SATCustomerName : billToCard.EnglishName;
+        }
+
+        private string GetRegimenFiscalReceptor(bool isMexicoCountry, string publicInGeneralMexicoRfc)
         {
             const string regimenFiscalReceptor616Code = "616";
-            if (!isMexicoCountry)
+            if (!isMexicoCountry || publicInGeneralMexicoRfc == SATData.PublicInGeneralMexicoRfc)
             {
                 return regimenFiscalReceptor616Code;
             }
@@ -292,9 +305,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return arInvoicePM.RegimenFiscalCode;
         }
 
-        private string GetDomicilioFiscalReceptor(string billToAddressZipCode, bool isMexicoCountry)
+        private string GetDomicilioFiscalReceptor(string billToAddressZipCode, bool isMexicoCountry, string publicInGeneralMexicoRfc)
         {
-            if (!isMexicoCountry)
+            if (!isMexicoCountry || publicInGeneralMexicoRfc == SATData.PublicInGeneralMexicoRfc)
             {
                 return GetLugarExpedicion(GetBranchAddress(), currentTenant);
             }
@@ -302,14 +315,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return billToAddressZipCode;
         }
 
-        private string GetReceptorRfc(bool isMexicoCountry)
+        private string GetReceptorRfc(bool isMexicoCountry, string publicInGeneralMexicoRfc)
         {
             if (!isMexicoCountry)
             {
                 return SATData.OutSideMexicoRfc;
             }
 
-            return !string.IsNullOrEmpty(billToCard.VatNumber) ? billToCard.VatNumber : "AAA010101AAA";
+            return !string.IsNullOrEmpty(billToCard.VatNumber) ? billToCard.VatNumber : publicInGeneralMexicoRfc;
         }
 
         private string GetNumRegIdTrib(string billToCountryCode)
@@ -352,10 +365,10 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return countryCode == "MEX" || countryCode == "MX";
         }
 
-        private string GetReceptorUsoCFDI(bool isMexicoCountry)
+        private string GetReceptorUsoCFDI(bool isMexicoCountry, string publicInGeneralMexicoRfc)
         {
             const string usoCFDIS01Code = "S01";
-            if (!isMexicoCountry)
+            if (!isMexicoCountry || publicInGeneralMexicoRfc == SATData.PublicInGeneralMexicoRfc)
             {
                 return usoCFDIS01Code;
             }
@@ -392,15 +405,18 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return invoiceCurrency.Code == SATData.MexicanInvoiceCurrencyCode;
         }
 
-        private ComprobanteInformacionGlobal GetInformacionGlobal()
+        private ComprobanteInformacionGlobal GetInformacionGlobal(ComprobanteReceptor comprobanteReceptor)
         {
-            if (!arInvoicePM.IsConsolidationInvoice) return null;
+            const string dailyPeriodCode = "01";
+            bool isPublicInGeneral = comprobanteReceptor.Nombre == SATData.PublicInGeneralNombre;
+            string periodCode = isPublicInGeneral ? dailyPeriodCode : arInvoicePM.PeriodCode;
+
+            if (!arInvoicePM.IsConsolidationInvoice && !isPublicInGeneral) return null;
 
             DateTime arInvoiceDate = (DateTime)arInvoicePM.InvoiceDate;
-            Dictionary<int, string> satMonths = GetSatMonths();
             return new ComprobanteInformacionGlobal
             {
-                Periodicidad = arInvoicePM.PeriodCode,
+                Periodicidad = periodCode,
                 Meses = arInvoiceDate.Month.ToString().PadLeft(2, '0'),
                 Año = Convert.ToInt16(arInvoiceDate.Year),
             };
