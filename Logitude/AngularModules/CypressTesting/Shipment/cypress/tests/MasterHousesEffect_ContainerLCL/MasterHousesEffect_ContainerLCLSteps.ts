@@ -46,13 +46,16 @@ When("create house with {string} as Shipper", (Shipper) => {
 Then("the house should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         ShipmentContext.HouseNumber = interception.response.body.House;
+        console.log(ShipmentContext.HouseNumber)
     })
+
 });
 Then("the house should connect successfully", () => {
     Actions.CheckBusyIndicator()
     Actions.ValidateCheckHouseCheckBox();
 });
 Given('the user in the house package tab', () => {
+    console.log(ShipmentContext.HouseNumber)
     Actions.openHouseShipment(ShipmentContext.HouseNumber)
     cy.Navigate(ShipmentSelectors.ShipmentPackagesTab + ShipmentSelectors.LastElementShipment)
 })
