@@ -1,4 +1,4 @@
-#@devrelease
+@devrelease
 Feature: Sharing Manifests with agent
     The user check Sharing Manifest with agent Prerequisites, then create a shipment and share it,
     from other side check shared Manifest and test actions of create, Cancel Manifest,and Mark as Completed
