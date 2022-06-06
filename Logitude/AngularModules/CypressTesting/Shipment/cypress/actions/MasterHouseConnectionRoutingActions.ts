@@ -4,7 +4,7 @@ import { BaseSelectors } from '../../../Base/cypress/selectors/BaseSelectors';
 
 export function FillPreForwarding(transportMode: string, fromPort: string) {
     cy.Click(ShipmentSelectors.RoutingToggle_Number + BaseSelectors.LastElement, null)
-    cy.Click(ShipmentSelectors.PreForwarding, null)
+    cy.get(ShipmentSelectors.PreForwarding).click({force:true})
     cy.FillLogLov(ShipmentSelectors.ShipmentPreForwardingTransportModeId, transportMode, true)
     cy.FillLogLov(ShipmentSelectors.ShipmentPreForwardingFromPortId, fromPort, false)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
