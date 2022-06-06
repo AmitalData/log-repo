@@ -150,7 +150,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             if (filter != null)
             {
 
-                iQueryable = iQueryable.Where(x => x.DeclarationId == null || x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("המכלה"));
+                iQueryable = iQueryable.Where(x => x.DeclarationId == null || (x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("המכלה")));//&&x.Id != "1-83" && x.DeclarationId!= "1-7567")
             }
             var filter2 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsExportFileNo");
             if (filter2 != null)
