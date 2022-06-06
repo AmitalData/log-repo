@@ -54,6 +54,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     OriginCountryName = entityPoco.OriginCountry == null ? null : entityPoco.OriginCountry.EnglishName,
                     ShipperId = entityPoco.ShipperId,
                     ShipperName = entityPoco.Shipper == null ? null : entityPoco.Shipper.EnglishName,
+                    ProductValue = entityPoco.ProductValue,
+                    ProductValueCurrencyId = entityPoco.ProductValueCurrencyId,
+                    Quantity = entityPoco.Quantity,
+                    ProductValueCurrencyCode = entityPoco.ProductValueCurrency == null ? null : entityPoco.ProductValueCurrency.Code,
                 };
 
                 HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
@@ -83,6 +87,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    OriginCountryName = entity.OriginCountry == null ? null : entity.OriginCountry.EnglishName,
                                                    ShipperId = entity.ShipperId,
                                                    ShipperName = entity.Shipper == null ? null : entity.Shipper.EnglishName,
+                                                   ProductValue = entity.ProductValue,
+                                                   ProductValueCurrencyId = entity.ProductValueCurrencyId,
+                                                   Quantity = entity.Quantity,
+                                                   ProductValueCurrencyCode = entity.ProductValueCurrency == null ? null : entity.ProductValueCurrency.Code,
                                                };
             return result;
         }
@@ -108,6 +116,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
                                                     ShipperId = a.ShipperId,
                                                     ShipperName = a.Shipper == null ? null : a.Shipper.EnglishName,
+                                                    ProductValue = a.ProductValue,
+                                                    ProductValueCurrencyId = a.ProductValueCurrencyId,
+                                                    Quantity = a.Quantity,
+                                                    ProductValueCurrencyCode = a.ProductValueCurrency == null ? null : a.ProductValueCurrency.Code,
                                                 }).ToList();
             if (productItems != null)
             { 
