@@ -561,7 +561,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     ContinueCreateShipmentProcess() {
         this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe((myResult:any) => {
             if (myResult.Result) {
-                this.ToPortId = myResult.Result.Id;
+                this.ToPortId = this.ShipmentDirection == "E" ? this.ToPortId : myResult.Result.Id;
                 if (AppTool.IsNullOrEmpty(this.SourceEntity.FromPortId)) {
                     this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result:any) => {
                         this.FromPortId = Result.Result.Id;
