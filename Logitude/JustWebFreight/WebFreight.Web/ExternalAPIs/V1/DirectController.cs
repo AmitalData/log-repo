@@ -42,7 +42,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 Direct Result = Service.GetDirectById(id, tenant, include);
-                this.MapInlandDomesticStates(Result, tenant);
+                //this.MapInlandDomesticStates(Result, tenant);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -65,7 +65,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 Direct Result = Service.GetDirectByShipmentNumber(number, tenant, include);
-                this.MapInlandDomesticStates(Result, tenant);
+                //this.MapInlandDomesticStates(Result, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -216,7 +216,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
 
                         var result = mappingService.GetDirectById(entityPM.Id, authToken.Tenant, null);
-                        this.MapInlandDomesticStates(result, authToken.Tenant);
+                        //this.MapInlandDomesticStates(result, authToken.Tenant);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Direct API", authToken.Tenant);
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -379,7 +379,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
 
                 var result = mappingService.GetDirectById(directPM.Id, tenant, null);
-                this.MapInlandDomesticStates(result, tenant);
+                //this.MapInlandDomesticStates(result, tenant);
                 APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", tenant);
                 return result;
             }
