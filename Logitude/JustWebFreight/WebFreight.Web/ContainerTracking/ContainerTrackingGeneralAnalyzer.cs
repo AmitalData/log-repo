@@ -65,6 +65,7 @@ namespace WebFreight.Web.ContainerTracking
             try
             {
                 this.AnalyzeMessageBody();
+                this.AnalyzeData();
             }
 
             catch (Exception ex)
@@ -78,7 +79,7 @@ namespace WebFreight.Web.ContainerTracking
             }
 
             
-            this.AnalyzeData();
+            
            
         }
         private void AnalyzeMessageBody()
