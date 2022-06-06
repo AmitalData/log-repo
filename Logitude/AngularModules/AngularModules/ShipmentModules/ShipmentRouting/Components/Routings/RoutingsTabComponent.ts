@@ -1821,6 +1821,23 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             });
         }
     }
+
+    public InlandDomesticAddressMoreDetailsClick(addressType: string) {
+        var windowArgs: any = {};
+        windowArgs.shipmentPM = this.EntityPM;
+        windowArgs.tenant = SessionLocator.Tenant;
+        windowArgs.addressType = addressType;
+        windowArgs.objectTableName = this.ObjectTableName;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 250;
+        logWindow.Title = addressType + ' Routings Address Detail';
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/InlandDomesticAddressComponent");
+
+    }
+    
 }
 export class RoutingItem extends BaseComponent {
     public EntityPM: ShipmentPM;

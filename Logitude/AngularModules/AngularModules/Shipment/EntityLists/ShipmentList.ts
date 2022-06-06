@@ -519,5 +519,17 @@ export class ShipmentList {
 		MainCarriageETATime: Date;
 		PackagesQuantityAndType: string;
 		ConnectedtoMaster: boolean;
+		InlandDomesticToAddress1: string;
+		InlandDomesticToAddress2: string;
+		InlandDomesticToPhone: string;
+		InlandDomesticToFax: string;
+		InlandDomesticToStateId: string;
+		InlandDomesticToStateName: string;
+		InlandDomesticFromAddress1: string;
+		InlandDomesticFromAddress2: string;
+		InlandDomesticFromPhone: string;
+		InlandDomesticFromFax: string;
+		InlandDomesticFromStateId: string;
+		InlandDomesticFromStateName: string;
 	
 }

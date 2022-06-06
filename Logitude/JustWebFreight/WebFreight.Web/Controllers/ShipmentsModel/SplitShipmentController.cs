@@ -398,6 +398,18 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 HandlerUserId = oldEntity.HandlerUserId,
                 PlannedCargoReadyDate = oldEntity.PlannedCargoReadyDate,
                 ApprovedCargoReadyDate = oldEntity.ApprovedCargoReadyDate,
+
+                InlandDomesticToAddress1 = oldEntity.InlandDomesticToAddress1,
+                InlandDomesticToAddress2 = oldEntity.InlandDomesticToAddress2,
+                InlandDomesticToPhone = oldEntity.InlandDomesticToPhone,
+                InlandDomesticToFax = oldEntity.InlandDomesticToFax,
+                InlandDomesticToStateId = oldEntity.InlandDomesticToStateId,
+
+                InlandDomesticFromAddress1 = oldEntity.InlandDomesticFromAddress1,
+                InlandDomesticFromAddress2 = oldEntity.InlandDomesticFromAddress2,
+                InlandDomesticFromPhone = oldEntity.InlandDomesticFromPhone,
+                InlandDomesticFromFax = oldEntity.InlandDomesticFromFax,
+                InlandDomesticFromStateId = oldEntity.InlandDomesticFromStateId,
             };
 
             this.CopyPartners(entityPM, oldEntity);

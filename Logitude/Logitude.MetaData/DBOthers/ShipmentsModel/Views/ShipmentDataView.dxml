@@ -10,6 +10,18 @@ AS
 SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber,dbo.Shipments.DeclarationNumber,dbo.Shipments.IncludesCustoms,dbo.Shipments.CustomsClearanceDate,dbo.Shipments.DeclarationDate, dbo.Shipments.ShipperReference1, dbo.Shipments.ARInvoiceIssued, dbo.Shipments.CreditNoteIssued,dbo.Shipments.ValueOfGoods,
                          dbo.ShipmentMasterDatas.Tenant AS ShipmentMasterDataTenant, dbo.ShipmentMasterDatas.Id AS ShipmentMasterDataId, dbo.shipments.SLAC,
                          dbo.Shipments.FirstARInvoiceApprovalDate,
+                         dbo.ShipmentMasterDatas.InlandDomesticToAddress1,
+                         dbo.ShipmentMasterDatas.InlandDomesticToAddress2,
+                         dbo.ShipmentMasterDatas.InlandDomesticToPhone,
+                         dbo.ShipmentMasterDatas.InlandDomesticToFax,
+                         dbo.ShipmentMasterDatas.InlandDomesticToStateId,
+                         InlandDomesticToState.EnglishName AS InlandDomesticToStateName,
+                         dbo.ShipmentMasterDatas.InlandDomesticFromAddress1,
+                         dbo.ShipmentMasterDatas.InlandDomesticFromAddress2,
+                         dbo.ShipmentMasterDatas.InlandDomesticFromPhone,
+                         dbo.ShipmentMasterDatas.InlandDomesticFromFax,
+                         dbo.ShipmentMasterDatas.InlandDomesticFromStateId,
+                         InlandDomesticFromState.EnglishName AS InlandDomesticFromStateName,
                          dbo.ShipmentMasterDatas.InlandDomesticFromZipCode,
                          dbo.ShipmentMasterDatas.InlandDomesticToZipCode,
                          dbo.ShipmentMasterDatas.InlandDomesticFromCity,
@@ -416,7 +428,10 @@ FROM            dbo.Shipments LEFT OUTER JOIN
 						 dbo.States AS FromPortsStates ON FromPorts.StateId = FromPortsStates.Id  LEFT OUTER JOIN
 						 dbo.States AS ToPortsStates ON ToPorts.StateId = ToPortsStates.Id LEFT OUTER JOIN
 						 dbo.States AS MainCarriageFromPortsStates ON MainCarriageFromPorts.StateId = MainCarriageFromPortsStates.Id LEFT OUTER JOIN
-						 dbo.States AS MainCarriageFinalDestinationPortsStates ON MainCarriageFinalDestinationPorts.StateId = MainCarriageFinalDestinationPortsStates.Id
+						 dbo.States AS MainCarriageFinalDestinationPortsStates ON MainCarriageFinalDestinationPorts.StateId = MainCarriageFinalDestinationPortsStates.Id LEFT OUTER JOIN
+						
+						 dbo.States AS InlandDomesticToState ON InlandDomesticToState.Id = ShipmentMasterDatas.InlandDomesticToStateId LEFT OUTER JOIN
+						 dbo.States AS InlandDomesticFromState ON InlandDomesticFromState.Id = ShipmentMasterDatas.InlandDomesticFromStateId
     ]]>
   </SqlScript>
   <OracleScript>
