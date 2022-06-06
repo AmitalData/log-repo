@@ -2343,7 +2343,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                         invoicedataprovider.SAT.RegimenFiscalReceptorCode = GetRegimenFiscalReceptorCode(currentInvoice.RegimenFiscalCode, billToCard.RegimenFiscalCode);
                         invoicedataprovider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptorName(currentInvoice.RegimenFiscalCode, billToCard.RegimenFiscalCode, currentInvoice.Tenant);
-                        invoicedataprovider.SAT.BillToSATName = billToCard?.SATCustomerName;
+                        invoicedataprovider.SAT.BillToSATName = GetBillToSATName(billToCard);
                         invoicedataprovider.SAT.FormadePago = currentInvoice.SATPaymentMethodCode;
 
 
@@ -4122,7 +4122,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Card billToCard = GetBillToCard(entityPM);
                         invoiceDataProvider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptorName(entityPM.RegimenFiscalCode, billToCard.RegimenFiscalCode, entityPM.Tenant);
                         invoiceDataProvider.SAT.RegimenFiscalReceptorCode = GetRegimenFiscalReceptorCode(entityPM.RegimenFiscalCode, billToCard.RegimenFiscalCode);
-                        invoiceDataProvider.SAT.BillToSATName = billToCard?.SATCustomerName;
+                        invoiceDataProvider.SAT.BillToSATName = GetBillToSATName(billToCard);
                         invoiceDataProvider.SAT.FormadePago = entityPOCO.SATPaymentMethodCode;
 
                         invoiceDataProvider.WaterMark = "Draft";
@@ -4219,6 +4219,11 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return invoiceDataProvider;
+        }
+
+        private static string GetBillToSATName(Card billToCard)
+        {
+            return !string.IsNullOrEmpty(billToCard.SATCustomerName) ? billToCard.SATCustomerName : billToCard.EnglishName;
         }
 
         private static Card GetBillToCard(ARInvoicePM currentInvoice)

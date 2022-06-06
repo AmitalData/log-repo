@@ -112,7 +112,7 @@ namespace WebFreight.Web.ReportsWebServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(currentPayment.Tenant);
             Card billToCard = (from a in commonContext.Cards where a.Id == currentPayment.BillToId select a).FirstOrDefault();
 
-            paymentDataProvider.SAT.BillToSATName = billToCard?.SATCustomerName;
+            paymentDataProvider.SAT.BillToSATName = !String.IsNullOrEmpty(billToCard.SATCustomerName) ? billToCard.SATCustomerName : billToCard.EnglishName;
         }
 
         private static void MapPagosFields(PaymentDataProvider paymentDataProvider, Profact.TimbraCFDI40.Comprobante comprobante)
