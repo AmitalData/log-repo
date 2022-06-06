@@ -105,6 +105,26 @@ export class ProductItemPM {
     public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
        
 	 
+    private productValue: number;
+    public get ProductValue() { return this.productValue; }
+    public set ProductValue(newValue: number) { if (this.productValue != newValue) { this.productValue = newValue; this.MarkAsDirty("ProductValue"); } }
+       
+	 
+    private productValueCurrencyId: string;
+    public get ProductValueCurrencyId() { return this.productValueCurrencyId; }
+    public set ProductValueCurrencyId(newValue: string) { if (this.productValueCurrencyId != newValue) { this.productValueCurrencyId = newValue; this.MarkAsDirty("ProductValueCurrencyId"); } }
+       
+	 
+    private quantity: number;
+    public get Quantity() { return this.quantity; }
+    public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }
+       
+	 
+    private productValueCurrencyCode: string;
+    public get ProductValueCurrencyCode() { return this.productValueCurrencyCode; }
+    public set ProductValueCurrencyCode(newValue: string) { if (this.productValueCurrencyCode != newValue) { this.productValueCurrencyCode = newValue; this.MarkAsDirty("ProductValueCurrencyCode"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }

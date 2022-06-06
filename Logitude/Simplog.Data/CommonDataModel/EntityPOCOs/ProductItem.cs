@@ -19,6 +19,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string UPC { get; set; }
         public string OriginCountryId { get; set; }
         public string ShipperId { get; set; }
+        public double? ProductValue { get; set; }
+        public string ProductValueCurrencyId { get; set; }
+        public int? Quantity { get; set; }
+
+        [ForeignKey("ProductValueCurrencyId")]
+        public virtual Currency ProductValueCurrency { get; set; }
 
         [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }
