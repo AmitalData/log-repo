@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .Disabled {
         opacity: 0.5;
         pointer-events: none;
@@ -178,7 +178,19 @@
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'LookUp'">
                                 <td style="height: 22px;">
                                     <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
-                                        <ComboBox [ItemsSource]="LookUpTables" (SelectedItemChanged)="LookUpTablesSelectionMethod($event)" [SelectedItem]="LookUpTable" [Binding]="'Name'"></ComboBox>
+                                        <LogLov (SelectedItemChanged)="LookUpTablesSelectionMethod($event)"
+                                                [QueryFilterItems]="LookUpTablesFilterItems"
+                                                [ObjectFieldName]="'ObjectTableId'"
+                                                [ObjectTableName]="'ObjectTable'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'ObjectTable'"
+                                                [NoValidation]="true"
+                                                [IsFreeText]="true"
+                                                [SelectedValue]="LookUpTableId"
+                                                [HideColumns]="true"
+                                                [HideLastColumn]="true"
+                                                [CustomizedWidth]="326">
+                                        </LogLov>
                                     </div>
                                 </td>
                             </tr>

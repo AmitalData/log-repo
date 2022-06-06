@@ -15,6 +15,7 @@ import {ObjectFieldPMService} from '../../../../Infrastructure/Services/Standard
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 import {LoginService} from '../../../../Infrastructure/Services/LoginService';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 
 declare var window: any;
@@ -90,7 +91,17 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.PickListSelectionMethod(this.objectField.CustomPickListCode);
             this.UIProperties.SetEnabled("Code", "ObjectField", false);
         }
+        this.InitLookUpTables();
     }
+
+    LookUpTablesFilterItems: ApiQueryFilters;
+    InitLookUpTables() {
+        this.LookUpTablesFilterItems = new ApiQueryFilters();
+        this.LookUpTablesFilterItems.addAdditionalFilter("IsLookUp", true, null, null, "Equals", false, false, false, "boolean");
+        this.LookUpTablesFilterItems.addAdditionalFilter("LookUp1", "", null, null, "IsNotNull", false, false, false, "string");
+        this.LookUpTablesFilterItems.addAdditionalFilter("ClientModuleName", "", null, null, "IsNotNull", false, false, false, "string");
+    }
+
     public get CustomFieldDataType() {
         var fieldDataType = this.DataTypeCollection.filter(d => d.Code == this.objectField.DataTypeCode)[0];
         return fieldDataType;
@@ -325,6 +336,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     }
 
     LookUpTablesSelectionMethod(item) {
+        if (!item) return;
         this.ContolFieldsList1 = [];
         this.ContolFieldsList2 = [];
         
