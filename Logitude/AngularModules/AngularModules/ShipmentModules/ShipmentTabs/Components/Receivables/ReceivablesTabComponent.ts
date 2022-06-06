@@ -20,7 +20,6 @@ import {CurrencyListService} from '../../../../Common/Services/StandardLists/Cur
 import {MeasurementListService} from '../../../../Common/Services/StandardLists/MeasurementListService';
 import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
-import {UserListService} from '../../../../Common/Services/StandardLists/UserListService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
@@ -61,7 +60,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     private CurrentSession = SessionLocator.SelectedSession;
     public CommonDomainService: CommonDomainService;
     public CardListService: CardListService;
-    private UserListService: UserListService;
+    public IsNewInvoiceVisible: boolean = false;
+    public IsNewCreditNoteVisible: boolean = false;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -76,7 +76,6 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.myDomainService = new ShipmentDomainService();
         this.CommonDomainService = new CommonDomainService();
         this.CardListService = new CardListService();
-        this.UserListService = new UserListService();
 
         this.Listen();
         this.Initialize();
@@ -100,6 +99,14 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                     this.IsCustomsToggleVisible = true;
                 }
             }
+        }
+
+        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "NewInvoice")) {
+            this.IsNewInvoiceVisible = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "NewCreditNote")) {
+            this.IsNewCreditNoteVisible = true;
         }
 
         if (this.IsCustomsToggleVisible) {
