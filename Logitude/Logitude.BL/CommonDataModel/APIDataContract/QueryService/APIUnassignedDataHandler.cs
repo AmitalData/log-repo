@@ -16,7 +16,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
     public class APIUnassignedDataHandler
     {
         public bool HasUnassignedData;
-        public Dictionary<string, string> ReceivedCodes;
+        public List<APICard> ReceivedCodes;
         private CardQuery query = null;
         private int tenant;
         private string computingPartnerName = null;
@@ -34,7 +34,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             this.unassignedEntityQuery = new UnassignedEntityQuery(this.tenant);
             this.computingPartnerName = computingPartnerName;
             this.HasUnassignedData = false;
-            this.ReceivedCodes = new Dictionary<string, string>();
+            this.ReceivedCodes = new List<APICard>();
         }
 
         public Direct HandleUnassignedDirectShipmentData(Direct shipment)
@@ -120,8 +120,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             if (this.IsCardExsist(card, cardType))
                 return card;
 
-            string cardReceivedCode = card.PartnerCode != null ? card.PartnerCode : card.Code;
-            ReceivedCodes.Add(cardType, cardReceivedCode);
+            ReceivedCodes.Add(new APICard()
+            {
+                PartnerType = cardType, 
+                OurCode = card.Code,
+                PartnerCode = card.PartnerCode,
+            });
+
             card.Code = GetUnassignedCardCode(cardTypeObjectTableName);
             card.PartnerCode = null;
             this.HasUnassignedData = card.Code != null ? true : this.HasUnassignedData;
@@ -134,10 +139,10 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             if (card == null)
                 return null;
 
-            if (!ReceivedCodes.ContainsValue(card.Code))
+            if (!ReceivedCodes.Where(d => d.PartnerCode == card.PartnerCode || d.OurCode == card.Code).Any())
                 return card;
 
-            this.CardTypeSameAsCustomerCode = ReceivedCodes.FirstOrDefault(x => x.Value == card.Code).Key;
+            this.CardTypeSameAsCustomerCode = ReceivedCodes.Where(d => d.PartnerCode == card.PartnerCode || d.OurCode == card.Code).FirstOrDefault()?.PartnerType;
 
             if (this.CardTypeSameAsCustomerCode == CardsTypes.Shipper.ToString())
                 card.Code = shipment?.Shipper?.Code;
@@ -151,6 +156,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             else if (this.CardTypeSameAsCustomerCode == CardsTypes.ConsigneeNotImporter.ToString())
                 card.Code = shipment?.ConsigneeNotImporter?.Code;
 
+            card.PartnerCode = null;
             return card;
         }
 
@@ -208,10 +214,11 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             if (!this.HasUnassignedData)
                 return;
 
-            if (!ReceivedCodes.ContainsKey(cardtype))
+            if (!ReceivedCodes.Where(d => d.PartnerType == cardtype).Any())
                 return;
 
-            if (string.IsNullOrEmpty(ReceivedCodes[cardtype]))
+            APICard aPICard = ReceivedCodes.Where(d => d.PartnerType == cardtype).FirstOrDefault();
+            if (aPICard != null && string.IsNullOrEmpty(aPICard.PartnerCode) && string.IsNullOrEmpty(aPICard.OurCode))
                 return;
 
             shipmentPM.ShipmentUnassignedFields.Add(this.GetShipmentUnassignedField(address, cardtype));
@@ -219,13 +226,17 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 
         private ShipmentUnassignedFieldPM GetShipmentUnassignedField(Address address, string cardtype)
         {
+            APICard aPICard = ReceivedCodes.Where(d => d.PartnerType == cardtype).FirstOrDefault();
             ShipmentUnassignedFieldPM shipmentUnassignedFieldPM = new ShipmentUnassignedFieldPM();
-            shipmentUnassignedFieldPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-            shipmentUnassignedFieldPM.FieldName = cardtype;
-            shipmentUnassignedFieldPM.ReceivedData = this.ConvertAddressToXML(address);
-            shipmentUnassignedFieldPM.ReceivedCode = ReceivedCodes[cardtype];
-            shipmentUnassignedFieldPM.ObjectTableId = this.GetObjectTableId("Card");
-            shipmentUnassignedFieldPM.ComputingPartnrCode = computingPartnerName;
+            if (aPICard != null)
+            {                
+                shipmentUnassignedFieldPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                shipmentUnassignedFieldPM.FieldName = cardtype;
+                shipmentUnassignedFieldPM.ReceivedData = this.ConvertAddressToXML(address);
+                shipmentUnassignedFieldPM.ReceivedCode = !string.IsNullOrEmpty(aPICard.PartnerCode) ? aPICard.PartnerCode : aPICard.OurCode;
+                shipmentUnassignedFieldPM.ObjectTableId = this.GetObjectTableId("Card");
+                shipmentUnassignedFieldPM.ComputingPartnrCode = computingPartnerName;
+            }
 
             return shipmentUnassignedFieldPM;
         }
@@ -276,5 +287,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
         Consignee,
         ShipperNotExporter,
         ConsigneeNotImporter,
+    }
+
+    public class APICard
+    {
+        public string PartnerType { get; set; }
+        public string PartnerCode { get; set; }
+        public string OurCode { get; set; }
     }
 }
