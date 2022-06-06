@@ -336,21 +336,13 @@ export class ARInvoiceMenuButtonsHandler {
         const SATTransferWithErrorStatusCode: string = "TE";
         const SATNotTransferedStatusCode: string = "NT";
         const SATCancelErrorsInRelationReasonCode: string = "01";
-
-        if (this.EntityPM.SATCancelReasonCode == SATCancelErrorsInRelationReasonCode && this.EntityPM.SATTransferStatusCode == SATNotTransferedStatusCode) {
-            return false;
-        }
-
-        return this.EntityPM.SATTransferStatusCode != SATTransferWithErrorStatusCode && !this.IsShownResendSATButtonForVoided();
-    }
-
-    private IsShownResendSATButtonForVoided() {
         const profact4SATInterfaceCode: string = "PROF40";
-        const voidedInvoiceStatusCode: string = "VD";
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != profact4SATInterfaceCode) return false;
-        if (this.EntityPM.StatusCode != voidedInvoiceStatusCode) return false;
-        if (AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) return false;
-        return true;
+
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != profact4SATInterfaceCode) return true;
+        if (this.EntityPM.SATCancelReasonCode == SATCancelErrorsInRelationReasonCode && this.EntityPM.SATTransferStatusCode == SATNotTransferedStatusCode) return false;
+        if (AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) return true;
+
+        return this.EntityPM.SATTransferStatusCode != SATTransferWithErrorStatusCode;
     }
 
     public MenuButtonClick(menuButton: MenuButtonPM) {
