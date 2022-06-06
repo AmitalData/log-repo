@@ -116,7 +116,7 @@ namespace Logitude.Server.Tools.CustomFields
             ChildEntitiesCustomField childEntitiesCustomField = GetChildEntitiesCustomField(childEntity);
             foreach (ObjectField customObjectField in customObjectFields)
             {
-                SetPropertyValue(childEntitiesCustomField, customObjectField.FieldName, (GetPropertyValue(childEntity, customObjectField.FieldName) as CustomFieldClass).Value);
+                SetPropertyValue(childEntitiesCustomField, customObjectField.FieldName, (GetPropertyValue(childEntity, customObjectField.FieldName) as CustomFieldClass)?.Value);
             }
 
             if (IsNewEntity(childEntitiesCustomField))
