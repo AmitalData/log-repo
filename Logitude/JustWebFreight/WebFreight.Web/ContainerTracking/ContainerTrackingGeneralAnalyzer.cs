@@ -65,7 +65,6 @@ namespace WebFreight.Web.ContainerTracking
             try
             {
                 this.AnalyzeMessageBody();
-                this.AnalyzeData();
             }
 
             catch (Exception ex)
@@ -79,7 +78,7 @@ namespace WebFreight.Web.ContainerTracking
             }
 
             
-            
+            this.AnalyzeData();
            
         }
         private void AnalyzeMessageBody()
@@ -205,7 +204,7 @@ namespace WebFreight.Web.ContainerTracking
             analyzeQueue.ErrorMessage = analyzeQueue.ErrorMessage.Length > 7950 ? analyzeQueue.ErrorMessage.Substring(0, 7950) : analyzeQueue.ErrorMessage;
             analyzeQueue.StackTrace = analyzeQueue.StackTrace.Length > 7950 ? analyzeQueue.StackTrace.Substring(0, 7950) : analyzeQueue.StackTrace;
 
-            if (ex.Message.StartsWith("--"))
+            if (ex.Message.StartsWith("--") || trackingSource != ContainerStatusSourceValues.OceanInsights)
             {
                 analyzeQueue.Status = "F";
             }
