@@ -87,19 +87,38 @@ export function GetSharedKey() {
     })
 }
 
-export function LoginSecondTenant() {
+export function LoginSecondTenant(customerCareUser = true) {
     let mode = Cypress.env("Mode");
 
-    cy.fixture("Login.json").then(loginData => {
-        let email = loginData.customerCareEmail;
-        let password = loginData.customerCarePassword;
-        let url = loginData.url;
-        let tenant =  mode.toLowerCase() === "development" ? loginData.secondTenant :Cypress.env("secondTenant") ;
-        Authentication.CompleteLoginProcess(email, password, url, tenant);
-    });
-    
+    if (mode.toLowerCase() === "development") {
+        DevelopmentModeLogin(customerCareUser)
+    }
+    else {
+        ReleaseModeLogin(customerCareUser)
+    }
 }
 
+function DevelopmentModeLogin(customerCareUser) {
+
+    cy.fixture("Login.json").then(loginData => {
+
+        let email = customerCareUser ? loginData.customerCareEmail : loginData.email;
+        let password = customerCareUser ? loginData.customerCarePassword : loginData.password;
+        let url = loginData.url;
+        let tenant = customerCareUser ? loginData.secondTenant : null;
+        Authentication.CompleteLoginProcess(email, password, url, tenant);
+    });
+}
+
+function ReleaseModeLogin(customerCareUser) {
+
+    let email = customerCareUser ? Cypress.env("CustomerCareEmail") : Cypress.env("Email");
+    let password = customerCareUser ? Cypress.env("CustomerCarePassword") : Cypress.env("Password");
+    let url = Cypress.env("Url");
+    let tenant = customerCareUser ? Cypress.env("secondTenant") : null;
+    Authentication.CompleteLoginProcess(email, password, url, tenant);
+
+}
 export function FillSharedKey() {
     cy.get(SharedManifestsSelectors.AgentTHSharedLogistics).click()
     cy.get(SharedManifestsSelectors.AcceptInvitation).click()
