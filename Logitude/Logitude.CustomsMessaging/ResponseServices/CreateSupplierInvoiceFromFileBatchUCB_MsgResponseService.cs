@@ -49,95 +49,156 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 LogMessagingUtil.Instance.AppendLine("customResponse.Declarationid: " + customResponse.Declarationid);
 
-                //todo:
                 ReadDataFromCsvFile(customResponse.decodedString);
-                UpdateDB();
+                UpdateDB(customResponse.Declarationid, requestParams.Tenant);
 
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyResponseData.Succeeded = true;
             }
         }
-        private void UpdateDB()
+        private void UpdateDB(string declarationid, int tenant)
         {
-
+            var context = CustomContext.GetContext(tenant);
+            var declarationQueryService = new DeclarationQueryService(context);
+            DeclarationPM declarationPM = declarationQueryService.GetSingle(declarationid, true, false);
+            foreach (var invoiceFromFile in fromFile)
+            {
+                var invoiceFromDB = declarationPM.SupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == invoiceFromFile.InvoiceNumber);
+                if (invoiceFromDB == null)
+                {
+                    // create new invoice
+                    var invoice = new SupplierInvoicePM 
+                    {
+                        InvoiceNumber = invoiceFromFile.InvoiceNumber,
+                        DeclarationId = declarationid,
+                        IssueDate = invoiceFromFile.IssueDate,
+                        VendorId = invoiceFromFile.VendorId,
+                        IncotermCode = invoiceFromFile.Incoterm,
+                        InvoiceCurrencyTypeCode = invoiceFromFile.InvoiceCurrencyTypeCode,
+                    };
+                    invoice.ChangeSetOp = ChangeSetOperation.Insert;
+                    invoice.SupplierInvoiceItems = new List<SupplierInvoiceItemPM>();
+                    foreach (var invoiceItemFromFile in invoiceFromFile.SupplierInvoiceItems)
+                    {
+                        var invoiceItem = new SupplierInvoiceItemPM
+                        {
+                            DeclarationId = declarationid,
+                            ItemPriceCurrencyCode = invoiceFromFile.InvoiceCurrencyTypeCode,
+                            ItemPrice = invoiceItemFromFile.ItemPrice,
+                            TradeAgreementCode = invoiceItemFromFile.TradeAgreemenCode,
+                            OriginCountryCode = invoiceItemFromFile.OriginCountryCode,
+                            InvoiceQuantity = 1,
+                            InvoiceNumber = invoiceFromFile.InvoiceNumber,
+                            ClassificationCode = invoiceItemFromFile.ClassificationCode//todo
+                            //InvoiceQuantityType = todo
+                        };
+                        invoiceItem.ChangeSetOp = ChangeSetOperation.Insert;
+                        invoice.SupplierInvoiceItems.Add(invoiceItem);
+                    }
+                    declarationPM.SupplierInvoices.Add(invoice);
+                }
+                else
+                {
+                    //create invoiceitems
+                    //invoiceFromDB.SupplierInvoiceItems
+                }
+            }
         }
         private void ReadDataFromCsvFile(string decodedString)
         {
-            var lines = decodedString.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            List<string> results = new List<string>();
-            foreach (string line in lines)
+
+            try
             {
-                results.AddRange(Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))"));
-            }
-            Boolean CodeExist = false;
-            for (int i = 17; i < results.Count;) // the excel has 17 cols  , Excel Analayze
-            {
-                CodeExist = false;
-                string invoiceNumber = results[i];
-                foreach (var item in fromFile) // check if code exist in list already
+
+
+                var lines = decodedString.Split(new string[] { "\n" }, StringSplitOptions.None).ToList();
+
+                Boolean CodeExist = false;
+                for (int i = 1; i < lines.Count; i++)
                 {
-                    if (item.InvoiceNumber == invoiceNumber)
+                    if (string.IsNullOrWhiteSpace(lines[i])) continue;
+                    string[] data = Regex.Split(lines[i], ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+
+                    CodeExist = false;
+                    string invoiceNumber = data[0];
+                    foreach (var item in fromFile) // check if code exist in list already
                     {
-                        CodeExist = true;
-                        item.SupplierInvoiceItems.Add(new InvoiceItemFromFile
+                        if (item.InvoiceNumber == invoiceNumber)
                         {
-                            ItemPriceCurrencyCode = results[i + 4],
-                            RichbitFileNumber = results[i + 5],
-                            VehicleChassisNumber = results[i + 6],
-                            ClassificationCode = results[i + 7],//todo
-                            ItemDescription = results[i + 8],
-                            ItemPrice = results[i + 9],
-                            TradeAgreemenCode = results[i + 10],
-                            OriginCountryCode = results[i + 11],
-                            FreightAmount = results[i + 12],
-                            FreightAmountCurrencyType = results[i + 13],
-                            AdditionalQuantity = results[i + 14],
-                            AdditionalQuantityCurrencyType = results[i + 15],
-                            ModificationAndDiscountTypeAmount = results[i + 16],
-                        });
-                        break;
-                    }
-                }
-                if (!CodeExist)
-                {
-                    InvoiceFromFile row = new InvoiceFromFile();
-                    row.InvoiceNumber = invoiceNumber;
-                    row.InvoiceCurrencyTypeCode = results[i + 4];
-                    row.VendorId = results[i + 2];//todo
-                    row.Incoterm = results[i + 3];//todo
-                    if(!DateTime.TryParse(results[i + 1], out row.IssueDate))
-                    {
-                        LogMessagingUtil.Instance.AppendLine("IssueDate is not valid ");
-                    }
-                    row.SupplierInvoiceItems = new List<InvoiceItemFromFile>
-                    {
-                        new InvoiceItemFromFile
-                        {
-                            ItemPriceCurrencyCode = results[i + 4],
-                            RichbitFileNumber = results[i + 5],
-                            VehicleChassisNumber = results[i + 6],
-                            ClassificationCode = results[i + 7],//todo
-                            ItemDescription = results[i + 8],
-                            ItemPrice = results[i + 9],
-                            TradeAgreemenCode = results[i + 10],
-                            OriginCountryCode = results[i + 11],
-                            FreightAmount = results[i + 12],
-                            FreightAmountCurrencyType = results[i + 13],
-                            AdditionalQuantity = results[i + 14],
-                            AdditionalQuantityCurrencyType = results[i + 15],
-                            ModificationAndDiscountTypeAmount = results[i + 16],
+                            CodeExist = true;
+                            item.SupplierInvoiceItems.Add(new InvoiceItemFromFile
+                            {
+                                ItemPriceCurrencyCode = data[4],
+                                RichbitFileNumber = data[5],
+                                VehicleChassisNumber = data[6],
+                                ClassificationCode = data[7],//todo
+                                ItemDescription = data[8],
+                                ItemPrice = string.IsNullOrWhiteSpace(data[9]) ? (decimal?)null : Convert.ToDecimal(data[9]),
+                                TradeAgreemenCode = data[10],
+                                OriginCountryCode = data[11],
+                                FreightAmount = data[12],
+                                FreightAmountCurrencyType = data[13],
+                                AdditionalQuantity = data[14],
+                                AdditionalQuantityCurrencyType = data[15],
+                                ModificationAndDiscountTypeAmount = data[16],
+                            });
+                            break;
                         }
-                    };
-                    fromFile.Add(row);
+                    }
+                    if (!CodeExist)
+                    {
+                        InvoiceFromFile row = new InvoiceFromFile();
+                        row.InvoiceNumber = invoiceNumber;
+                        row.InvoiceCurrencyTypeCode = data[4];
+                        row.VendorId = data[2];//todo
+                        row.Incoterm = data[3];//todo
+                        if (!string.IsNullOrWhiteSpace(data[1]))
+                        {
+                            DateTime date;
+                            if (!DateTime.TryParse(data[1], out date))
+                            {
+                                LogMessagingUtil.Instance.AppendLine("IssueDate is not valid ");
+                            }
+                            else
+                            {
+                                row.IssueDate = date;
+                            }
+                        }
+
+                        row.SupplierInvoiceItems = new List<InvoiceItemFromFile>
+                        {
+                            new InvoiceItemFromFile
+                            {
+                            ItemPriceCurrencyCode = data[4],
+                            RichbitFileNumber = data[5],
+                            VehicleChassisNumber = data[6],
+                            ClassificationCode = data[7],//todo
+                            ItemDescription = data[8],
+                            ItemPrice = string.IsNullOrWhiteSpace(data[9]) ? (decimal?)null : Convert.ToDecimal(data[9]),
+                            TradeAgreemenCode = data[10],
+                            OriginCountryCode = data[11],
+                            FreightAmount = data[12],
+                            FreightAmountCurrencyType = data[13],
+                            AdditionalQuantity = data[14],
+                            AdditionalQuantityCurrencyType = data[15],
+                            ModificationAndDiscountTypeAmount = data[16],
+                            }
+                        };
+                        fromFile.Add(row);
+                    }
                 }
-                i += 17;
+            }
+            catch (Exception e)
+            {
+                LogMessagingUtil.Instance.AppendLine(e.ToString());
+                throw;
             }
         }
 
         private class InvoiceFromFile
         {
             public string InvoiceNumber;
-            public DateTime IssueDate;
+            public DateTime? IssueDate;
             public string InvoiceCurrencyTypeCode;
             public string VendorId;
             public string Incoterm;
@@ -147,7 +208,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private class InvoiceItemFromFile
         {
             public string ItemPriceCurrencyCode;
-            public string ItemPrice;
+            public decimal? ItemPrice;
             public string TradeAgreemenCode;
             public string OriginCountryCode;
             public string RichbitFileNumber;
