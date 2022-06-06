@@ -433,9 +433,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     if (button.EventCode == "ExportStorageDecleration") {
                         if (this.EntityPM.TransportModeId == "O" && this.EntityPM.Direction == "E") {
                             button.IsDisabled = false;
+                            button.IsHidden=false;
                         }
                         else {
                             button.IsDisabled = true;
+                            button.IsHidden=true;
                         }
                     }
                 }
