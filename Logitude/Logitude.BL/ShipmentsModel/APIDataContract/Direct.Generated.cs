@@ -299,11 +299,26 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Address UnassignedShipperNotExporterAddress { get; set; }
     
     public Address UnassignedConsigneeNotImporterAddress { get; set; }
-
+    
     public State InlandDomesticFromState { get; set; }
     
     public State InlandDomesticToState { get; set; }
-
+    
+    public string InlandDomesticToAddress1 { get; set; }
+    
+    public string InlandDomesticToAddress2 { get; set; }
+    
+    public string InlandDomesticToPhone { get; set; }
+    
+    public string InlandDomesticToFax { get; set; }
+    
+    public string InlandDomesticFromAddress1 { get; set; }
+    
+    public string InlandDomesticFromAddress2 { get; set; }
+    
+    public string InlandDomesticFromPhone { get; set; }
+    
+    public string InlandDomesticFromFax { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

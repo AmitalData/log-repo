@@ -719,11 +719,13 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.UnassignedConsigneeNotImporterAddress = AddressService54.AddressCustomDataMapping(MyEntityPM.UnassignedConsigneeNotImporterAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
+				    
 
+			  
 				   if(MyEntityPM.InlandDomesticFromStateId != null)
 				   {
-					   StateQueryService StateService53 = new StateQueryService(Tenant);
-					   					   temp.InlandDomesticFromState = StateService53.GetStateById(MyEntityPM.InlandDomesticFromStateId,Tenant,ComputingPartnerName); 
+					   StateQueryService StateService55 = new StateQueryService(Tenant);
+					   					   temp.InlandDomesticFromState = StateService55.GetStateById(MyEntityPM.InlandDomesticFromStateId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -731,12 +733,19 @@ using Simplog.Data.ShipmentsModel;
 			  
 				   if(MyEntityPM.InlandDomesticToStateId != null)
 				   {
-					   StateQueryService StateService54 = new StateQueryService(Tenant);
-					   					   temp.InlandDomesticToState = StateService54.GetStateById(MyEntityPM.InlandDomesticToStateId,Tenant,ComputingPartnerName); 
+					   StateQueryService StateService56 = new StateQueryService(Tenant);
+					   					   temp.InlandDomesticToState = StateService56.GetStateById(MyEntityPM.InlandDomesticToStateId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
-				   					
+				   
+				   temp.InlandDomesticToAddress1 = MyEntityPM.InlandDomesticToAddress1;
+				   temp.InlandDomesticToAddress2 = MyEntityPM.InlandDomesticToAddress2;
+				   temp.InlandDomesticToPhone = MyEntityPM.InlandDomesticToPhone;
+				   temp.InlandDomesticToFax = MyEntityPM.InlandDomesticToFax;
+				   temp.InlandDomesticFromAddress1 = MyEntityPM.InlandDomesticFromAddress1;
+				   temp.InlandDomesticFromAddress2 = MyEntityPM.InlandDomesticFromAddress2;
+				   temp.InlandDomesticFromPhone = MyEntityPM.InlandDomesticFromPhone;
+				   temp.InlandDomesticFromFax = MyEntityPM.InlandDomesticFromFax;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1038,9 +1047,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService55 = new AirPackageQueryService(Tenant);
+						AirPackageQueryService AirPackageService57 = new AirPackageQueryService(Tenant);
 						 								
-							temp.ShipmentPackages = AirPackageService55.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPackages = AirPackageService57.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1051,9 +1060,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService55 = new OceanOrInlandPackageQueryService(Tenant);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService57 = new OceanOrInlandPackageQueryService(Tenant);
 						 								
-							temp.ShipmentPackages = OceanOrInlandPackageService55.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPackages = OceanOrInlandPackageService57.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1064,9 +1073,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService55 = new ContainerQueryService(Tenant);
+						ContainerQueryService ContainerService57 = new ContainerQueryService(Tenant);
 						 								
-							temp.ShipmentPackages = ContainerService55.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPackages = ContainerService57.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1200,9 +1209,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService55 = new DeliveryQueryService(Tenant);
+						DeliveryQueryService DeliveryService57 = new DeliveryQueryService(Tenant);
 						 								
-							temp.ShipmentDeliveries = DeliveryService55.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentDeliveries = DeliveryService57.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1213,9 +1222,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService55 = new PickUpQueryService(Tenant);
+						PickUpQueryService PickUpService57 = new PickUpQueryService(Tenant);
 						 								
-							temp.ShipmentPickUps = PickUpService55.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPickUps = PickUpService57.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1327,11 +1336,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService55 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService57 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentReceivables = ReceivableService55.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentReceivables = ReceivableService57.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1343,11 +1352,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService55 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService57 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentPayables = PayableService55.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPayables = PayableService57.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1586,9 +1595,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						MainCarriageLegQueryService MainCarriageLegService55 = new MainCarriageLegQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService57 = new MainCarriageLegQueryService(Tenant);
 						 								
-							temp.MainCarriageLegs = MainCarriageLegService55.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
+							temp.MainCarriageLegs = MainCarriageLegService57.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -2240,11 +2249,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.EventList != null && MyEntity.EventList.Count > 0)
 					{
-						EventQueryService EventService55 = new EventQueryService(Tenant);
+						EventQueryService EventService57 = new EventQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.EventList = EventService55.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName,IsUpdate);
+							temp.EventList = EventService57.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -2256,11 +2265,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AddManualEvents != null && MyEntity.AddManualEvents.Count > 0)
 					{
-						EventQueryService EventService55 = new EventQueryService(Tenant);
+						EventQueryService EventService57 = new EventQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.AddManualEvents = EventService55.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName,IsUpdate);
+							temp.AddManualEvents = EventService57.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -2396,6 +2405,7 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
+					
 					StateQueryService InlandDomesticFromStateStateService = new StateQueryService(Tenant);
 					if(MyEntity.InlandDomesticFromState != null)
 					{
@@ -2404,12 +2414,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myInlandDomesticFromStatePM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								
+						 								
 								temp.InlandDomesticFromStateId = myInlandDomesticFromStatePM.Id;
 						  
-							}  
 
 							
 						} 
@@ -2425,19 +2432,63 @@ using Simplog.Data.ShipmentsModel;
 						if(myInlandDomesticToStatePM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								
+						 								
 								temp.InlandDomesticToStateId = myInlandDomesticToStatePM.Id;
 						  
-							}  
 
 							
 						} 
 
 					}
 			
-			
+					
+                    							
+						temp.InlandDomesticToAddress1 = MyEntity.InlandDomesticToAddress1;
+
+					 
+
+					
+                    							
+						temp.InlandDomesticToAddress2 = MyEntity.InlandDomesticToAddress2;
+
+					 
+
+					
+                    							
+						temp.InlandDomesticToPhone = MyEntity.InlandDomesticToPhone;
+
+					 
+
+					
+                    							
+						temp.InlandDomesticToFax = MyEntity.InlandDomesticToFax;
+
+					 
+
+					
+                    							
+						temp.InlandDomesticFromAddress1 = MyEntity.InlandDomesticFromAddress1;
+
+					 
+
+					
+                    							
+						temp.InlandDomesticFromAddress2 = MyEntity.InlandDomesticFromAddress2;
+
+					 
+
+					
+                    							
+						temp.InlandDomesticFromPhone = MyEntity.InlandDomesticFromPhone;
+
+					 
+
+					
+                    							
+						temp.InlandDomesticFromFax = MyEntity.InlandDomesticFromFax;
+
+					 
+
 										   
 					return temp;
 		    }
@@ -2451,4 +2502,4 @@ using Simplog.Data.ShipmentsModel;
 
 						   
    }
-}
+}
