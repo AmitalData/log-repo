@@ -20,7 +20,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.EntityChanges;
 
-namespace WebFreight.Web.Helpers.WorkerRoleHelpers
+namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
 {
     public class DocumentsExecutionService
     {
@@ -31,7 +31,8 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         private DocumentsExecutionLogRepository documentsExecutionLogRepository = null;
         private DocumentsExecutionLog documentsExecutionLog = null;
         private DateTime startDate = DateTime.Now;
- 
+        private string childObjectTableName = string.Empty;
+
         public DocumentsExecutionService(DbQueueService queueService, QueueResponse queueResponse)
         {
             this.queueService = queueService;
@@ -78,6 +79,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
             if (exportDocumentArgs != null)
             {
+                childObjectTableName =!string.IsNullOrEmpty(exportDocumentArgs.ChildObjectTableId) ? ObjectTableRepository.GetNameById(exportDocumentArgs.ChildObjectTableId , exportDocumentArgs.Tenant) :""; 
                 List<DocumentTypeCopiesDetails> documentTypeCopiesDetails = new List<DocumentTypeCopiesDetails>();
                 string authenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
                 Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
@@ -87,12 +89,14 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                     string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
                     documentTypeCopiesDetails.Add(new DocumentTypeCopiesDetails() { DocumentTypeCopyId = documentTypeCopyId, DocumentId = result });
                 });
+
                 UpdateDocumentOut(exportDocumentArgs);
+                if (childObjectTableName == "ARInvoice") UpdateARInvoicePrintingDetails(exportDocumentArgs); 
+
                 DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
                 documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
                 
                 RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
-
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();
             }
@@ -101,6 +105,13 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("RequestXML is null"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
                 queueService.Complete();
             }
+        }
+
+        private void UpdateARInvoicePrintingDetails(ExportDocumentArgs exportDocumentArgs)
+        {
+            ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService(exportDocumentArgs.Tenant, exportDocumentArgs.ChildEntityId);
+            aRInvoicePrintDetailsService.Update();
+
         }
 
         private void RunAutomation(ExportDocumentArgs exportDocumentArgs, string automationType, List<DocumentTypeCopiesDetails> documentTypeCopiesDetails)

@@ -342,6 +342,16 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             var currentTenantTables = q.ToList();
             return currentTenantTables;
         }
+
+        public static string GetNameById(string id , int tenant)
+        {
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+            return (from a in webFreightContext.ObjectTables
+                    where a.Id == id
+                    select a.Name).FirstOrDefault();
+        }
+
+
     }
 
 

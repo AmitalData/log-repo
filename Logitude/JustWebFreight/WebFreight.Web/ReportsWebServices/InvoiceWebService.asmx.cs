@@ -1446,7 +1446,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
 
-                    this.SaveInvoice(currentInvoice);                   
+                    //this.SaveInvoice(currentInvoice);                   
                 }
                 #endregion
 
@@ -3186,7 +3186,7 @@ namespace WebFreight.Web.ReportsWebServices
                             invoiceDataProvider.IssuedByUserEmail = contact.Email;
                         }
 
-                        this.SaveInvoice(entityPOCO);
+                        //this.SaveInvoice(entityPOCO);
                     }
                 }
                 #endregion
