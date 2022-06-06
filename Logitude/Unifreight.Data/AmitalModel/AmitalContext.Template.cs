@@ -9359,10 +9359,803 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region MSPSPED
+
+            modelBuilder.Entity<MSPSPED>()
+                .HasKey(p => p.SPDNO)
+                .ToTable("MSPSPED", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.SPDNO)
+                    .HasColumnName(@"SPD_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.TRANSPORTTYPE)
+                    .HasColumnName(@"TRANSPORT_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.OPENDATE)
+                    .HasColumnName(@"OPEN_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.AWBDATE)
+                    .HasColumnName(@"AWB_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.SPDTYPE)
+                    .HasColumnName(@"SPD_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.MAINCARRIER)
+                    .HasColumnName(@"MAIN_CARRIER")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.SHIPPINGAGENTID)
+                    .HasColumnName(@"SHIPPING_AGENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.MAINAWB)
+                    .HasColumnName(@"MAIN_AWB")
+                    .HasMaxLength(20)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.AGENTID)
+                    .HasColumnName(@"AGENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.LOADPORTID)
+                    .HasColumnName(@"LOADPORT_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.DESTPORTID)
+                    .HasColumnName(@"DESTPORT_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.FINALPORT)
+                    .HasColumnName(@"FINAL_PORT")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.FINALPORTNAM)
+                    .HasColumnName(@"FINAL_PORT_NAM")
+                    .HasMaxLength(36)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.CURRID)
+                    .HasColumnName(@"CURR_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.WTVALCODE)
+                    .HasColumnName(@"WTVAL_CODE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.OTHERCODE)
+                    .HasColumnName(@"OTHER_CODE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.SPEDCLOSE)
+                    .HasColumnName(@"SPED_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.FLIGHTDATE)
+                    .HasColumnName(@"FLIGHT_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.BRANCHID)
+                    .HasColumnName(@"BRANCH_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.HANDAGNT)
+                    .HasColumnName(@"HAND_AGNT")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.VENDORREF)
+                    .HasColumnName(@"VENDOR_REF")
+                    .HasMaxLength(30)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.WGTUNIT)
+                    .HasColumnName(@"WGT_UNIT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.MOVETYPE)
+                    .HasColumnName(@"MOVE_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.SPDSUBTYPE)
+                    .HasColumnName(@"SPD_SUBTYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.VESSELCODE)
+                    .HasColumnName(@"VESSEL_CODE")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.ALLIN)
+                    .HasColumnName(@"ALL_IN")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.NOTIFYID)
+                    .HasColumnName(@"NOTIFY_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.BANKID)
+                    .HasColumnName(@"BANK_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.SHIPPERID)
+                    .HasColumnName(@"SHIPPER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.HAZARDID)
+                    .HasColumnName(@"HAZARD_ID")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.VOLUNIT)
+                    .HasColumnName(@"VOL_UNIT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.MANCLOSE)
+                    .HasColumnName(@"MAN_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.BOOKID)
+                    .HasColumnName(@"BOOK_ID")
+                    .HasColumnType("int");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.DEPARTMENT)
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.VOYAGENO)
+                    .HasColumnName(@"VOYAGE_NO")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.TRANSHIPPORT)
+                    .HasColumnName(@"TRANSHIP_PORT")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.TRANSHIPPORT1)
+                    .HasColumnName(@"TRANSHIP_PORT_1")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.CONTINPORT)
+                    .HasColumnName(@"CONT_IN_PORT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.ETSDATE)
+                    .HasColumnName(@"ETS_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.MANIFESTNO)
+                    .HasColumnName(@"MANIFEST_NO")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.SERVICEID)
+                    .HasColumnName(@"SERVICE_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.VOYAGEID)
+                    .HasColumnName(@"VOYAGE_ID")
+                    .HasColumnType("int");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.TALLY)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.ACCOUNTINGCLOSE)
+                    .HasColumnName(@"ACCOUNTING_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.OPENCLOSEAC)
+                    .HasColumnName(@"OPEN_CLOSE_AC")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.RANAR)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.CARGOTYPE)
+                    .HasColumnName(@"CARGO_TYPE")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.STOPFU)
+                    .HasColumnName(@"STOP_FU")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.STATUSID)
+                    .HasColumnName(@"STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.LSTSTATUSID)
+                    .HasColumnName(@"LST_STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.LSTSTATUSDATE)
+                    .HasColumnName(@"LST_STATUS_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.STATUSDATE)
+                    .HasColumnName(@"STATUS_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.RECAPID)
+                    .HasColumnName(@"RECAP_ID")
+                    .HasColumnType("int");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.ETSTIME)
+                    .HasColumnName(@"ETS_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.VOYAGEYEAR)
+                    .HasColumnName(@"VOYAGE_YEAR")
+                    .HasColumnType("int");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.FLIGHTTIME)
+                    .HasColumnName(@"FLIGHT_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.SPDCANCEL)
+                    .HasColumnName(@"SPD_CANCEL")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.INLANDMODE)
+                    .HasColumnName(@"INLAND_MODE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.TRUCKTYPE)
+                    .HasColumnName(@"TRUCK_TYPE")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.TRUCKNO)
+                    .HasColumnName(@"TRUCK_NO")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.PROFITCLOSE)
+                    .HasColumnName(@"PROFIT_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.SHIPPERSTUFFYN)
+                    .HasColumnName(@"SHIPPER_STUFF_YN")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.CARRIERVOYAGENO)
+                    .HasColumnName(@"CARRIER_VOYAGE_NO")
+                    .HasMaxLength(20)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.PAYMENTTERM)
+                    .HasColumnName(@"PAYMENT_TERM")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.FILLERC1)
+                    .HasColumnName(@"FILLER_C_1")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.FILLERC2)
+                    .HasColumnName(@"FILLER_C_2")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.FILLERB1)
+                    .HasColumnName(@"FILLER_B_1")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.FILLERB2)
+                    .HasColumnName(@"FILLER_B_2")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.PROFITCLSDATE)
+                    .HasColumnName(@"PROFIT_CLS_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.PROFITCLSTIME)
+                    .HasColumnName(@"PROFIT_CLS_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.FILLERD1)
+                    .HasColumnName(@"FILLER_D_1")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.FILLERD2)
+                    .HasColumnName(@"FILLER_D_2")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.CONTNO)
+                    .HasColumnName(@"CONT_NO")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.SEAL1)
+                    .HasColumnName(@"SEAL_1")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MSPSPED>()
+                .Property(p => p.PACKTYPE)
+                    .HasColumnName(@"PACK_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region MFIFILEM
+
+            modelBuilder.Entity<MFIFILEM>()
+                .HasKey(p => p.FILENO)
+                .ToTable("MFIFILEM", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.TRANSPORTTYPE)
+                    .HasColumnName(@"TRANSPORT_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.OPENDATE)
+                    .HasColumnName(@"OPEN_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FILETYPE)
+                    .HasColumnName(@"FILE_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.SMP)
+                    .HasMaxLength(20)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.SPEDNO)
+                    .HasColumnName(@"SPED_NO")
+                    .HasColumnType("int");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.SHIPPERID)
+                    .HasColumnName(@"SHIPPER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.IMPORTERID)
+                    .HasColumnName(@"IMPORTER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.NOTIFYID)
+                    .HasColumnName(@"NOTIFY_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.NOTIFY2)
+                    .HasColumnName(@"NOTIFY_2")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.NOTIFY3)
+                    .HasColumnName(@"NOTIFY_3")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.BANKID)
+                    .HasColumnName(@"BANK_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.LOADPORT)
+                    .HasColumnName(@"LOAD_PORT")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.LOADPORTNAM)
+                    .HasColumnName(@"LOAD_PORT_NAM")
+                    .HasMaxLength(36)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FINALPORT)
+                    .HasColumnName(@"FINAL_PORT")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FINALPORTNAM)
+                    .HasColumnName(@"FINAL_PORT_NAM")
+                    .HasMaxLength(36)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FLIGHTPORT)
+                    .HasColumnName(@"FLIGHT_PORT")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FLIGHTPORTNAM)
+                    .HasColumnName(@"FLIGHT_PORT_NAM")
+                    .HasMaxLength(36)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.PAYMENTTERM)
+                    .HasColumnName(@"PAYMENT_TERM")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.SMPDATE)
+                    .HasColumnName(@"SMP_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.POD)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.INLANDYN)
+                    .HasColumnName(@"INLAND_YN")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.BRANCHID)
+                    .HasColumnName(@"BRANCH_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FILECLOSE)
+                    .HasColumnName(@"FILE_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FLIGHTDATE)
+                    .HasColumnName(@"FLIGHT_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.REQFLIGHTDATE)
+                    .HasColumnName(@"REQ_FLIGHT_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.MOVETYPE)
+                    .HasColumnName(@"MOVE_TYPE")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.ORIGION)
+                    .HasMaxLength(17)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.ORIGIONCODE)
+                    .HasColumnName(@"ORIGION_CODE")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.VESSELCODE)
+                    .HasColumnName(@"VESSEL_CODE")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.AGENTID)
+                    .HasColumnName(@"AGENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.HAZARD)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.DEPARTMENT)
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.CONTACTID)
+                    .HasColumnName(@"CONTACT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.SALESMAN)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.CONTACTPERSON)
+                    .HasColumnName(@"CONTACT_PERSON")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.VOYAGENO)
+                    .HasColumnName(@"VOYAGE_NO")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.TRANSHIPPORT)
+                    .HasColumnName(@"TRANSHIP_PORT")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.TRANSHIPPORT1)
+                    .HasColumnName(@"TRANSHIP_PORT_1")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.EXPDDATE)
+                    .HasColumnName(@"EXPD_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.EXPADATE)
+                    .HasColumnName(@"EXPA_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.STATUSID)
+                    .HasColumnName(@"STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FOLUPDATE)
+                    .HasColumnName(@"FOL_UP_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.LSTSTATUSID)
+                    .HasColumnName(@"LST_STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.PROFILEID)
+                    .HasColumnName(@"PROFILE_ID")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.LSTSTATUSDATE)
+                    .HasColumnName(@"LST_STATUS_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.PRIORITY)
+                    .HasColumnType("int");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.USERID)
+                    .HasColumnName(@"USER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.EXCEPTIONYN)
+                    .HasColumnName(@"EXCEPTION_YN")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.STOPFU)
+                    .HasColumnName(@"STOP_FU")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.UNSTUFFING)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FILECANCEL)
+                    .HasColumnName(@"FILE_CANCEL")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.SERVICEID)
+                    .HasColumnName(@"SERVICE_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.CLIENTID)
+                    .HasColumnName(@"CLIENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.BOOKID)
+                    .HasColumnName(@"BOOK_ID")
+                    .HasColumnType("int");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.ACCOUNTINGCLOSE)
+                    .HasColumnName(@"ACCOUNTING_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.CLIENTCOMMISSION)
+                    .HasColumnName(@"CLIENT_COMMISSION")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.TARIFFREF)
+                    .HasColumnName(@"TARIFF_REF")
+                    .HasMaxLength(20)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.SERVICEMODE)
+                    .HasColumnName(@"SERVICE_MODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.TARIFFOWNER)
+                    .HasColumnName(@"TARIFF_OWNER")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.COMMOWNER)
+                    .HasColumnName(@"COMM_OWNER")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.LINE)
+                    .HasMaxLength(5)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.TRANSPORTNAM)
+                    .HasColumnName(@"TRANS_PORT_NAM")
+                    .HasMaxLength(36)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.TRANSPORT1NAM)
+                    .HasColumnName(@"TRANS_PORT_1_NAM")
+                    .HasMaxLength(36)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.NOTEXPORTERID)
+                    .HasColumnName(@"NOTEXPORTER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.ORIGINPRINTHBL)
+                    .HasColumnName(@"ORIGIN_PRINT_HBL")
+                    .HasColumnType("int");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.INLANDMODE)
+                    .HasColumnName(@"INLAND_MODE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.TRUCKTYPE)
+                    .HasColumnName(@"TRUCK_TYPE")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.TRUCKNO)
+                    .HasColumnName(@"TRUCK_NO")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.SWITCHPORT)
+                    .HasColumnName(@"SWITCH_PORT")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.BILLTOPARTNER)
+                    .HasColumnName(@"BILLTO_PARTNER")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.QUOTENO)
+                    .HasColumnName(@"QUOTE_NO")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.INSURANCECOMPAN)
+                    .HasColumnName(@"INSURANCE_COMPAN")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.BILLTO)
+                    .HasColumnName(@"BILL_TO")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.UNIT)
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.UNITVALUE)
+                    .HasColumnName(@"UNIT_VALUE")
+                    .HasColumnType("int");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FILLERC1)
+                    .HasColumnName(@"FILLER_C_1")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FILLERC2)
+                    .HasColumnName(@"FILLER_C_2")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FILLERB1)
+                    .HasColumnName(@"FILLER_B_1")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FILLERB2)
+                    .HasColumnName(@"FILLER_B_2")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FILLERD1)
+                    .HasColumnName(@"FILLER_D_1")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.FILLERD2)
+                    .HasColumnName(@"FILLER_D_2")
+                    .HasColumnType("date");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.QUOTE)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.ISFMODE)
+                    .HasColumnName(@"ISF_MODE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.ISFNUMBER)
+                    .HasColumnName(@"ISF_NUMBER")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.NONEEDCUSTOMS)
+                    .HasColumnName(@"NO_NEED_CUSTOMS")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.OPERATIONREFERANT)
+                    .HasColumnName(@"OPERATION_REFERANT")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.TRACINGREFERANT)
+                    .HasColumnName(@"TRACING_REFERANT")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.ISFTRANSACTIONNO)
+                    .HasColumnName(@"ISF_TRANSACTION_NO")
+                    .HasMaxLength(40)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MFIFILEM>()
+                .Property(p => p.LOGBOXREF)
+                    .HasColumnName(@"LOGBOX_REF")
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
             #region Disabled conventions
 
 
-#endregion
+            #endregion
             return modelBuilder;///base.OnModelCreating(modelBuilder);
         }
 
@@ -9484,6 +10277,8 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<EFIFILEM> EFIFILEMs { get; set; }
         public virtual DbSet<ESPSPED> ESPSPEDs { get; set; }
         public virtual DbSet<GITITEMAP> GITITEMAPs { get; set; }
+        public virtual DbSet<MSPSPED> MSPSPEDs { get; set; }
+        public virtual DbSet<MFIFILEM> MFIFILEMs { get; set; }
 
     }
 }

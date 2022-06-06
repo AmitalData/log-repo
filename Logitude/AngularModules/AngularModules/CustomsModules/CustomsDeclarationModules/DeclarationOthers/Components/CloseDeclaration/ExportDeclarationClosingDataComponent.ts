@@ -17,6 +17,7 @@ import { DeclarationWebService } from '../../../../../Customs/Services/WebServic
 import { AmendmentRequestParams } from '../../../../../Customs/DataContract/RequestParams/AmendmentRequestParams';
 import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { ExportDeclarationClosingDatasExtendPMService } from 'Customs/Services/ExtendedPMs/ExportDeclarationClosingDatasExtendPMService';
+import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
@@ -64,6 +65,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.DeclarationIsClosed = true
                 this.setInputsReadOnly();
             }
+
+            this.initOceanExportData();
         });
     }
 
@@ -343,6 +346,18 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
             });
         }
+    }
+
+    async initOceanExportData() {
+        if(this.DecPM.Direction !== 'E' || this.DecPM.TransportModeId !== 'O' || !(await this.isConnectedToUniFreight())) return;
+
+        
+    }
+
+    isConnectedToUniFreight(): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) =>             
+            new CustomsSettingListService().getSingleFromCache(this.DecPM.Tenant.toString()).subscribe((response: ServiceResponse) => 
+                resolve(response.Result.IsConnectedToUniFreight)))
     }
 }
 

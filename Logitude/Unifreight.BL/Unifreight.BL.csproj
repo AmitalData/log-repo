@@ -141,6 +141,8 @@
     <Compile Include="EntityDataMappings\GGGQCDataMapping.cs" />
     <Compile Include="EntityDataMappings\GTBSERLVDataMapping.cs" />
     <Compile Include="EntityDataMappings\ITBPORTDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MFIFILEMDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MSPSPEDDataMapping.cs" />
     <Compile Include="EntityDataMappings\MTBCARRDataMapping.cs" />
     <Compile Include="EntityDataMappings\MTBPORTDataMapping.cs" />
     <Compile Include="EntityDataMappings\RTBPORTDataMapping.cs" />
@@ -305,6 +307,8 @@
     <Compile Include="EntityPMs\UGenerated\GTRTRANPM.cs" />
     <Compile Include="EntityPMs\UGenerated\ITBPCKTYPM.cs" />
     <Compile Include="EntityPMs\UGenerated\ITBPORTPM.cs" />
+    <Compile Include="EntityPMs\UGenerated\MFIFILEMPM.cs" />
+    <Compile Include="EntityPMs\UGenerated\MSPSPEDPM.cs" />
     <Compile Include="EntityPMs\UGenerated\MTBCARRPM.cs" />
     <Compile Include="EntityPMs\UGenerated\MTBPORTPM.cs" />
     <Compile Include="EntityPMs\UGenerated\RTBPORTPM.cs" />
@@ -394,6 +398,8 @@
     <Compile Include="EntityQueryServices\GTRTRANQueryService.cs" />
     <Compile Include="EntityQueryServices\ITBPCKTYQueryService.cs" />
     <Compile Include="EntityQueryServices\ITBPORTQueryService.cs" />
+    <Compile Include="EntityQueryServices\MFIFILEMQueryService.cs" />
+    <Compile Include="EntityQueryServices\MSPSPEDQueryService.cs" />
     <Compile Include="EntityQueryServices\MTBCARRQueryService.cs" />
     <Compile Include="EntityQueryServices\MTBPORTQueryService.cs" />
     <Compile Include="EntityQueryServices\RTBPORTQueryService.cs" />
