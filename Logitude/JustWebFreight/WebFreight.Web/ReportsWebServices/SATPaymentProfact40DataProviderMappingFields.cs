@@ -15,6 +15,7 @@ using WebFreight.Web.DataProviders;
 using System.Drawing;
 using Profact.TimbraCFDI40.Complementos.Pagos20;
 using System.Text;
+using Simplog.Data.CommonDataModel;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -64,6 +65,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             MapBillToDetails(currentPayment, paymentDataProvider);
             MapRegimenFiscalReceptor(currentPayment, paymentDataProvider, comprobante);
+            MapBillToCardDetails(currentPayment, paymentDataProvider);
             paymentDataProvider.SAT.LugarExpedicion = comprobante.LugarExpedicion;
             paymentDataProvider.SAT.NoCertificado = comprobante.NoCertificado;
             paymentDataProvider.SAT.Certificado = comprobante.Certificado;
@@ -97,10 +99,20 @@ namespace WebFreight.Web.ReportsWebServices
 
         private static void MapRegimenFiscalReceptor(ARPayment currentPayment, PaymentDataProvider paymentDataProvider, Comprobante comprobante)
         {
+            paymentDataProvider.SAT.RegimenFiscalReceptorCode = comprobante.Receptor.RegimenFiscalReceptor;
             if (!string.IsNullOrEmpty(comprobante.Receptor.RegimenFiscalReceptor))
             {
-                paymentDataProvider.SAT.RegimenFiscalReceptor = SATInvoiceProfact40DataProviderMappingFields.GetRegimenFiscalReceptor(comprobante.Receptor.RegimenFiscalReceptor, currentPayment.Tenant);
+                paymentDataProvider.SAT.RegimenFiscalReceptor = SATInvoiceProfact40DataProviderMappingFields.GetRegimenFiscalReceptorName(comprobante.Receptor.RegimenFiscalReceptor, currentPayment.Tenant);
             }
+        }
+        private static void MapBillToCardDetails(ARPayment currentPayment, PaymentDataProvider paymentDataProvider)
+        {
+            if (string.IsNullOrEmpty(currentPayment.BillToId)) return;
+
+            ICommonDataContext commonContext = CommonDataContext.GetContext(currentPayment.Tenant);
+            Card billToCard = (from a in commonContext.Cards where a.Id == currentPayment.BillToId select a).FirstOrDefault();
+
+            paymentDataProvider.SAT.BillToSATName = billToCard?.SATCustomerName;
         }
 
         private static void MapPagosFields(PaymentDataProvider paymentDataProvider, Profact.TimbraCFDI40.Comprobante comprobante)
