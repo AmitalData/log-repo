@@ -1832,7 +1832,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
         logWindow.Height = 250;
-        logWindow.Title = 'test';
+        logWindow.Title = addressType + ' Routings Address Detail';
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/InlandDomesticAddressComponent");
 
