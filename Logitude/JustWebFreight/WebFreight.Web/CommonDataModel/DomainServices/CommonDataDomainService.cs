@@ -1138,7 +1138,114 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             return count;
         }
 
+        [Query(HasSideEffects = true)]
+        public IQueryable<HorseGenderList> GetHorseGenderFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
+            HorseGenderRepository horseGenderRepository = new HorseGenderRepository(tenant);
+            HorseGenderQuery horseGenderQuery = new HorseGenderQuery(horseGenderRepository);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+            IQueryable<HorseGender> horseGenders = horseGenderRepository.GetHorseGenders();
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            horseGenders = filter.GetFilteredQuery<HorseGender>(nonListQueryOperation, horseGenders);
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<HorseGenderList> query2 = horseGenderQuery.GetIQueryableEntityList(horseGenders);
+
+            query2 = filter.GetFilteredQuery<HorseGenderList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(HorseGenderList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("HorseGender", tenant).ToList();
+
+                ObjectField objectField = (from a in shipmentObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+                    switch (objectField.DataTypeCode.ToLower())
+                    {
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<HorseGenderList, string>(queryOperations, query2);
+                                break;
+                            }
+                        case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<HorseGenderList, double>(queryOperations, query2);
+                                break;
+                            }
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<HorseGenderList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<HorseGenderList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<HorseGenderList, bool>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderByDescending(d => d.Name);
+                                break;
+                            }
+                    }
+                }
+            }
+            else
+            {
+                query2 = query2.OrderByDescending(d => d.Name);
+            }
+            //--------------------------------------------------------------------------------------------------
+
+            query2 = query2.Skip(skippedPorts);
+            query2 = query2.Take(queryOperations.PageSize);
+            return query2;
+        }
+
+        public int GetHorseGenderFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            HorseGenderRepository horseGenderRepository = new HorseGenderRepository(tenant);
+            HorseGenderQuery horseGenderQuery = new HorseGenderQuery(horseGenderRepository);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+            IQueryable<HorseGender> horseGenders = horseGenderRepository.GetHorseGenders();
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            horseGenders = filter.GetFilteredQuery<HorseGender>(nonListQueryOperation, horseGenders);
+
+            IQueryable<HorseGenderList> query2 = horseGenderQuery.GetIQueryableEntityList(horseGenders);
+
+            query2 = filter.GetFilteredQuery<HorseGenderList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
     }
 }
 

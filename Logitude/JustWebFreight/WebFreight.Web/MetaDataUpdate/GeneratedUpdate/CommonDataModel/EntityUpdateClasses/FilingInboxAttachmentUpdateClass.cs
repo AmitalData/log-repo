@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class FilingInboxAttachmentUpdateClass
    {  		
-		public const string HashString = "9adfe1d13a881b1675815ef771e44a25";
+		public const string HashString = "5312c1495f058ff3db684103bf60c074";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "FilingInboxAttachment",
 			      				    IsNew =  false,
 			      				    DBTableName =  "FilingInboxAttachments",
-			      				    OldDBTableName =  "FilingInboxAttachments",
 			      				    ObjectTableSingular =  "Filing Inbox Attachment",
 			      				    ObjectTablePlural =  "Filing Inbox Attachments",
 			      				    HasCustomFilter =  false,
@@ -119,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Filing Inbox Attachment",
-			      				    Code =  "5101",
+			      				    Code =  "684a",
 			      				    Name =  "FilingInboxAttachment",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DocumentId",
-					  						OldFieldName =  "DocumentId",
 					  						ObjectTableName =  "FilingInboxAttachment",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -207,7 +205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FilingInboxId",
-					  						OldFieldName =  "FilingInboxId",
 					  						ObjectTableName =  "FilingInboxAttachment",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "FilingInbox",

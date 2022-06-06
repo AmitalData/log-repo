@@ -188,6 +188,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DWHEnvironmentSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\HorseGender.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\HTSCode.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Mention.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PortTimeZone.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="CommonDataModel\Mapping\CarrierServiceLineMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\HorseGenderMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HTSCodeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\MentionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PostalCodeMap.cs" />
@@ -204,6 +206,7 @@
     <Compile Include="CommonDataModel\Repositories\CarrierServiceLineRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\HorseGenderRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MentionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />

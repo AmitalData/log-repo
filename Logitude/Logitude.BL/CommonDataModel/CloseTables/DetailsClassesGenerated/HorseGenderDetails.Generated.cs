@@ -1,0 +1,61 @@
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityPMs; 
+using Simplog.Data.CommonDataModel;
+
+namespace Logitude.BL.CommonDataModel
+{
+   public class HorseGenderDetails : HorseGender, ICloseTable<HorseGender, HorseGenderDetails>
+   {
+       public List<HorseGenderDetails> GetAll()
+       {
+		    var all = new List<HorseGenderDetails>();  
+            all.Add(new HorseGenderDetails()
+            {    
+                Code = "M", 
+                Name = "Male", 
+                SearchFields = "M,Male", 
+			});
+			 
+            all.Add(new HorseGenderDetails()
+            {    
+                Code = "F", 
+                Name = "Female", 
+                SearchFields = "F,Female", 
+			});
+			 
+            all.Add(new HorseGenderDetails()
+            {    
+                Code = "C", 
+                Name = "Castrated", 
+                SearchFields = "C,Castrated", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(HorseGender newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;  
+			newPoco.SearchFields = GetSearchFields(this);    
+        }
+
+		public string GetSearchFields(HorseGender rec)
+        {   
+           return String.Concat(rec.Code,",",rec.Name,",");
+        }
+   }
+}
+

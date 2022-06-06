@@ -45,11 +45,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
 
     
-    public partial class HorseViewsController : ApiController
+    public partial class HorseGenderViewsController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string code)
         {
 		  try
             {
@@ -57,21 +57,20 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Horse", "READ", authToken.Tenant);
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
-				HorseRepository  horseRepository = new HorseRepository(MyContext);
-				HorseList entityList = null;
-				Horse entityPoco = horseRepository.GetSingleHorse(id , authToken.Tenant);
+				HorseGenderRepository  horseGenderRepository = new HorseGenderRepository(MyContext);
+				HorseGenderList entityList = null;
+				HorseGender entityPoco = horseGenderRepository.GetSingleHorseGender(code );
 
 				if (entityPoco != null)
 				{
-									List<Horse> singleEntityList = new List<Horse>();
+									List<HorseGender> singleEntityList = new List<HorseGender>();
 					singleEntityList.Add(entityPoco);
 
-					HorseQuery horseQuery = new HorseQuery(horseRepository);
-					IQueryable<Horse> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<HorseList> iQueryableEntityList = horseQuery.GetIQueryableEntityList(iQueryable);
+					HorseGenderQuery horseGenderQuery = new HorseGenderQuery(horseGenderRepository);
+					IQueryable<HorseGender> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<HorseGenderList> iQueryableEntityList = horseGenderQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
@@ -95,17 +94,16 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Horse", "READ", authToken.Tenant);
 
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
-				HorseRepository  horseRepository = new HorseRepository(MyContext);
-				IQueryable<Horse> entityPocos = horseRepository.GetHorses(authToken.Tenant);
+				HorseGenderRepository  horseGenderRepository = new HorseGenderRepository(MyContext);
+				IQueryable<HorseGender> entityPocos = horseGenderRepository.GetHorseGenders();
 
-				HorseQuery horseQuery = new HorseQuery(horseRepository);
-			    IQueryable<HorseList> entityLists = horseQuery.GetIQueryableEntityList(entityPocos);
+				HorseGenderQuery horseGenderQuery = new HorseGenderQuery(horseGenderRepository);
+			    IQueryable<HorseGenderList> entityLists = horseGenderQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.Name);
-				List<HorseList> listResult = entityLists.ToList();
+				List<HorseGenderList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -126,21 +124,19 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				                
-				SecurityUtility.CheckContactFeature("Horse", "READ", authToken.Tenant);
-	
+				
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Horse",
+                    ObjectTableName = "HorseGender",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Horses",
+                    QuerySection = "HorseGenders",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> HorseObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Horse",tenant);
+				List<ObjectField> HorseGenderObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("HorseGender",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -163,7 +159,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = HorseObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = HorseGenderObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -190,7 +186,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = HorseObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = HorseGenderObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -217,34 +213,30 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
-                HorseRepository  horseRepository = new HorseRepository(MyContext);
-                IQueryable<Horse> entityPocos = horseRepository.GetHorses(tenant);
+                HorseGenderRepository  horseGenderRepository = new HorseGenderRepository(MyContext);
+                IQueryable<HorseGender> entityPocos = horseGenderRepository.GetHorseGenders();
 
-
-                HorseQuery horseQuery = new HorseQuery(horseRepository);
+                HorseGenderQuery horseGenderQuery = new HorseGenderQuery(horseGenderRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				
-                entityPocos = genericFilter.GetFilteredQuery<Horse>(nonListQueryOperation, entityPocos);
-
+                entityPocos = genericFilter.GetFilteredQuery<HorseGender>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<HorseList> entityLists = horseQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<HorseGenderList> entityLists = horseGenderQuery.GetIQueryableEntityList(entityPocos);
 
-                List<HorseList> listResult111 = entityLists.ToList();
+                entityLists = genericFilter.GetFilteredQuery<HorseGenderList>(listQueryOperation, entityLists);
 
-                entityLists = genericFilter.GetFilteredQuery<HorseList>(listQueryOperation, entityLists);
-                listResult111 = entityLists.ToList();
-
-
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
-                   PropertyInfo propInfo = typeof(HorseList).GetProperty(queryOperations.SortByColumnName);
+                   PropertyInfo propInfo = typeof(HorseGenderList).GetProperty(queryOperations.SortByColumnName);
                    
 
-                   ObjectField objectField = (from a in HorseObjectFields
+                   ObjectField objectField = (from a in HorseGenderObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -252,7 +244,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                    {
                     if (objectField.IsCustom)
                     {
-                        entityLists = sortClass.GetSorterQuery<HorseList, string>(queryOperations, entityLists);
+                        entityLists = sortClass.GetSorterQuery<HorseGenderList, string>(queryOperations, entityLists);
                     }
                     else
                     {
@@ -262,36 +254,36 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                         case "text":
 						case "lookup":
                             {
-                                entityLists = sortClass.GetSorterQuery<HorseList, string>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<HorseGenderList, string>(queryOperations, entityLists);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                entityLists = sortClass.GetSorterQuery<HorseList, double>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<HorseGenderList, double>(queryOperations, entityLists);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                entityLists = sortClass.GetSorterQuery<HorseList, DateTime>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<HorseGenderList, DateTime>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                entityLists = sortClass.GetSorterQuery<HorseList, int>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<HorseGenderList, int>(queryOperations, entityLists);
                                 break;
                             }
                         case "boolean":
                             {
-                                entityLists = sortClass.GetSorterQuery<HorseList, bool>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<HorseGenderList, bool>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                entityLists = sortClass.GetSorterQuery<HorseList, decimal>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<HorseGenderList, decimal>(queryOperations, entityLists);
                                 break;
                             }
                         default:
@@ -314,17 +306,14 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
               {
 					response.Count = entityLists.Count();
     		  }
-
-                listResult111 = entityLists.ToList();
-
-                if (!queryOperations.GetAll)
+			  	if(!queryOperations.GetAll)
 				 {
 
                   entityLists = entityLists.Skip(skippedEntities);
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<HorseList> listResult = entityLists.ToList();
+			   List<HorseGenderList> listResult = entityLists.ToList();
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "PackageType",
 			      				    IsNew =  false,
 			      				    DBTableName =  "PackageTypes",
-			      				    OldDBTableName =  "PackageTypes",
 			      				    ObjectTableSingular =  "Package Type",
 			      				    ObjectTablePlural =  "Package Types",
 			      				    DescriptionDefaultText =  "Maintain the details of the types of packages you service – cartons, pallets, containers, etc.",
@@ -151,7 +150,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TEU",
-					  						OldFieldName =  "TEU",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -216,7 +214,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Volume",
-					  						OldFieldName =  "Volume",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -281,7 +278,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ContainerSize",
-					  						OldFieldName =  "ContainerSize",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -346,7 +342,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TransportModeId",
-					  						OldFieldName =  "TransportModeId",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -411,7 +406,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -476,7 +470,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -541,7 +534,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -606,7 +598,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -669,7 +660,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsOcean",
-					  						OldFieldName =  "IsOcean",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -734,7 +724,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsAir",
-					  						OldFieldName =  "IsAir",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -799,7 +788,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsInland",
-					  						OldFieldName =  "IsInland",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -864,7 +852,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AddedManually",
-					  						OldFieldName =  "AddedManually",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -929,7 +916,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsContainer",
-					  						OldFieldName =  "IsContainer",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -994,7 +980,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1060,7 +1045,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PrintAs",
-					  						OldFieldName =  "PrintAs",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1125,7 +1109,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1190,7 +1173,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1253,7 +1235,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PartnerCode",
-					  						OldFieldName =  "PartnerCode",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1316,7 +1297,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsRefrigerated",
-					  						OldFieldName =  "IsRefrigerated",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1379,7 +1359,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsVehicle",
-					  						OldFieldName =  "IsVehicle",
 					  						ObjectTableName =  "PackageType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
