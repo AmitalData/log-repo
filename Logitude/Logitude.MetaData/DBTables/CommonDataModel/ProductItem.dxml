@@ -95,6 +95,25 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ProductValue"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProductValueCurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Quantity"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Customers"
@@ -108,6 +127,11 @@
   <Relation
     ForeignKeyColumn="ShipperId"
     ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ProductValueCurrencyId"
+    ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <UniqueConstraint

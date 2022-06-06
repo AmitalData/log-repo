@@ -22,5 +22,9 @@ export class ProductItemList {
 		OriginCountryName: string;
 		ShipperId: string;
 		ShipperName: string;
+		ProductValue: number;
+		ProductValueCurrencyId: string;
+		Quantity: number;
+		ProductValueCurrencyCode: string;
 	
 }

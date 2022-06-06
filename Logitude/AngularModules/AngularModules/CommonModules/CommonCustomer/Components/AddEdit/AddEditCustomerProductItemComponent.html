@@ -9,11 +9,11 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:340px;">
+                    <td style="width:380px;">
                         <table>
                             <!-- SKU -->
                             <tr class="FormFieldRow">
-                                <td style="width:120px;">
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'SKU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -23,7 +23,7 @@
 
                             <!-- Name -->
                             <tr class="FormFieldRow">
-                                <td>
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -33,7 +33,7 @@
 
                             <!-- Brand -->
                             <tr class="FormFieldRow">
-                                <td>
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'Brand'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -43,7 +43,7 @@
 
                             <!-- Shipper -->
                             <tr class="FormFieldRow">
-                                <td>
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'ShipperId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -60,7 +60,7 @@
 
                             <!-- Origin Country -->
                             <tr class="FormFieldRow">
-                                <td>
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'OriginCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -74,9 +74,21 @@
                                 </td>
                             </tr>
 
+                            
+                            <!-- Quantity -->
+                            <tr class="FormFieldRow">
+                                <td style="width:160px;">
+                                    <LogLabel [ObjectFieldName]="'Quantity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="DataContext.Quantity" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+
                             <!-- InActive -->
                             <tr class="FormFieldRow">
-                                <td>
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -101,7 +113,7 @@
                         <table>
                             <!-- ASIN -->
                             <tr class="FormFieldRow">
-                                <td style="width:80px;">
+                                <td style="width:100px;">
                                     <LogLabel [ObjectFieldName]="'ASIN'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width:250px;">
@@ -115,7 +127,7 @@
 
                             <!-- UPC -->
                             <tr class="FormFieldRow">
-                                <td style="width:80px;">
+                                <td style="width:100px;">
                                     <LogLabel [ObjectFieldName]="'UPC'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -127,6 +139,36 @@
                                 </td>
                             </tr>
 
+                            <!-- ProductValue -->
+                            <tr class="FormFieldRow">
+                                <td style="width:100px;">
+                                    <LogLabel [ObjectFieldName]="'ProductValue'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:250px;">
+                                    <LogTextBox [ObjectFieldName]="'ProductValue'" [Text]="DataContext.ProductValue" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td>
+                                    <div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- ProductValueCurrencyId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ProductValueCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'ProductValueCurrencyId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Currency'"
+                                            [SelectedValue]="DataContext.ProductValueCurrencyId"
+                                            (SelectedItemChanged)="DataContext.ProductValueCurrency = $event">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
                             <tr style="height:5px;">
                                 <td>
                                     <div></div>
@@ -135,7 +177,7 @@
 
                             <!-- Description -->
                             <tr class="FormFieldRow" style="height:50px;">
-                                <td style="width:80px;vertical-align:top">
+                                <td style="width:100px;vertical-align:top">
                                     <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="height:60px;">
