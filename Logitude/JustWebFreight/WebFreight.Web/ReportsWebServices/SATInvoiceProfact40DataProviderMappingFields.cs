@@ -52,17 +52,12 @@ namespace WebFreight.Web.ReportsWebServices
             MapRegimenFiscalReceptor(currentInvoice, invoicedataprovider, comprobante);
             MapCadenaOriginal(currentInvoice, invoicedataprovider);
             MapCFDIRelacionadoDetails(invoicedataprovider, comprobante);
-            MapBillToCardDetails(currentInvoice, invoicedataprovider);
+            MapBillToCardDetails(invoicedataprovider, comprobante);
         }
 
-        private static void MapBillToCardDetails(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider)
+        private static void MapBillToCardDetails(InvoiceDataProvider invoicedataprovider, Comprobante comprobante)
         {
-            if (string.IsNullOrEmpty(currentInvoice.BillToId)) return;
-
-            ICommonDataContext commonContext = CommonDataContext.GetContext(currentInvoice.Tenant);
-            Card billToCard = (from a in commonContext.Cards where a.Id == currentInvoice.BillToId select a).FirstOrDefault();
-            
-            invoicedataprovider.SAT.BillToSATName = billToCard?.SATCustomerName;
+            invoicedataprovider.SAT.BillToSATName = comprobante.Receptor?.Nombre;
         }
 
         private static void MapRegimenFiscalReceptor(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider, Comprobante comprobante)
