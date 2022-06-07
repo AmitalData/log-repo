@@ -100,6 +100,11 @@ export class QuoteTemplateSettingPM {
     public set ShowFixedPriceContainers(newValue: boolean) { if (this.showFixedPriceContainers != newValue) { this.showFixedPriceContainers = newValue; this.MarkAsDirty("ShowFixedPriceContainers"); } }
        
 	 
+    private showUnitsContainers: boolean;
+    public get ShowUnitsContainers() { return this.showUnitsContainers; }
+    public set ShowUnitsContainers(newValue: boolean) { if (this.showUnitsContainers != newValue) { this.showUnitsContainers = newValue; this.MarkAsDirty("ShowUnitsContainers"); } }
+       
+	 
     private showChargeDescriptionPackages: boolean;
     public get ShowChargeDescriptionPackages() { return this.showChargeDescriptionPackages; }
     public set ShowChargeDescriptionPackages(newValue: boolean) { if (this.showChargeDescriptionPackages != newValue) { this.showChargeDescriptionPackages = newValue; this.MarkAsDirty("ShowChargeDescriptionPackages"); } }

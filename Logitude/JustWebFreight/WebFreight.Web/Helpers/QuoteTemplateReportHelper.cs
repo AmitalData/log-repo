@@ -2788,6 +2788,11 @@ namespace Logitude.BL.Helpers
 
                 }
 
+                if (setting.ShowUnitsContainers) {
+                    allContainersHeaderColumns.Add("UNITSCONTAINERS", GetHeaderColumn("UNITSCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes));
+
+                }
+
                 if (setting.ShowMeasurementContainers)
                 {
                     allContainersHeaderColumns.Add("MEASUREMENTCONTAINERS", GetHeaderColumn("MEASUREMENTCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes));
@@ -3076,6 +3081,7 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowChargeCodeContainers) ++TdCount;
                 if (setting.ShowChargeNameContainers) ++TdCount;
                 if (setting.ShowMeasurementContainers) ++TdCount;
+                if(setting.ShowUnitsContainers) ++TdCount;
                 if (setting.ShowFixedPriceContainers)
                 {
                     if (ViewFixedPrice) ++TdCount;
@@ -3473,14 +3479,18 @@ namespace Logitude.BL.Helpers
                         row += 1;
                     }
 
+
+                    if (setting.ShowUnitsContainers)
+                    {
+                        string saleUnitPriceValues = GetUnitPricePackagesValue(quoteTemplateBuildArges, chargePM, included);
+                        allTableRows.Add("UNITSCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleUnitPriceValues, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                        row += 1;
+                    }
+
                     if (setting.ShowMeasurementContainers)
                     {
                         var value = setting.RightToLeft ? chargePM.SaleMeasurementLocalName : chargePM.SaleMeasurementShortName;
                         allTableRows.Add("MEASUREMENTCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = value, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
-
-
-
-
                         row += 1;
                     }
 

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateSettingUpdateClass
    {  		
-		public const string HashString = "14506e25e47ee5deb1382b30a3c74803";
+		public const string HashString = "a701e6b2a135c2b0df505b95cab5edd6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote TemplateS Setting",
-			      				    Code =  "87ef",
+			      				    Code =  "4446",
 			      				    Name =  "QuoteTemplateSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Quote",

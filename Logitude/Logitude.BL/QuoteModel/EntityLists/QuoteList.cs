@@ -17,6 +17,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string QuoteTemplateId { get; set; }
         public string QuoteCutomerTypeCode { get; set; }
         public string CustomerName { get; set; }
+        public string CustomerCode { get; set; }
+
         public string CustomerId { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
@@ -25,6 +27,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string ShipperId { get; set; }
         public string ShipperReference1 { get; set; }
         public string ShipperReference2 { get; set; }
+        public string ShipperCode { get; set; }
+
         public string Consignee { get; set; }
         public string ConsigneeId { get; set; }
         public string ConsigneeReference1 { get; set; }
