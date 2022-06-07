@@ -150,7 +150,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             if (filter != null)
             {
                 IQueryable<ConsignmentList> query = (from a in context.Consignments.Where(y => y.DeclarationId == filter.FieldValue.ToString()).Select(r => new { r.ExportStoragesId })select new ConsignmentList { ExportStoragesId=a.ExportStoragesId });
-                filter.FieldValue.ToString();
                 iQueryable = iQueryable.Where(x => x.DeclarationId == null ||
                 (x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("המכלה") 
                     &&  !query.Any(t => t.ExportStoragesId == x.Id)));             
