@@ -150,9 +150,10 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
-                string text = TranslateTextsClassTranslate("JournalsCSV.O.FailedWhilePerforming", 0, useLocal);
+                //string text = TranslateTextsClassTranslate("JournalsCSV.O.FailedWhilePerforming", 0, useLocal);
 
-                throw new ApplicationException($"{text} ", e);
+                //throw new ApplicationException($"{text} ", e);
+                throw;
             }
 
 
