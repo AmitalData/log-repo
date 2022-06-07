@@ -38,6 +38,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public bool ShowMeasurementPackages { get; set; }
         public bool ShowMeasurementContainers { get; set; }
+        public bool ShowUnitsContainers { get; set; }
 
         public bool ShowFixedPriceContainers { get; set; }
         public bool ShowUnitsPackages { get; set; }

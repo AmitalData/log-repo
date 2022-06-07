@@ -20,6 +20,9 @@ namespace Logitude.BL.QuoteModel.DataContracts
 
         [DataMember]
         public string PricingContinersSplitChargeType { get; set; }
+
+        [DataMember]
+        public bool ShowUnitsContainers { get; set; }
     }
 
     public class PricesFieldSettings

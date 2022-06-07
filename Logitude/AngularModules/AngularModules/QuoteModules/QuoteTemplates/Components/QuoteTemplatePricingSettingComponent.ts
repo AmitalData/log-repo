@@ -173,6 +173,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
                 return this.DisplayRegoinalTax;
                 break;
             case "UNITSPACKAGES":
+            case "UNITSCONTAINERS":
             case "FIXEDPRICECONTAINERS":
                 return (!this.IsRoutingRates && this.QuoteTemplateSectionTypeName == 'Packages') || this.QuoteTemplateSectionTypeName != 'Packages';
                 break;
@@ -199,8 +200,11 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
                 return "QuoteTemplate.S.ShowMeasurement";
                 break;
             case "UNITSPACKAGES":
+            case "UNITSCONTAINERS":
+                return "QuoteTemplate.S.ShowUnits";
+                break;
             case "FIXEDPRICECONTAINERS":
-                return this.QuoteTemplateSectionTypeName == "Packages" ? "QuoteTemplate.S.ShowUnits" : "QuoteTemplate.S.ShowFixedPrice";
+                return "QuoteTemplate.S.ShowFixedPrice";
                 break;
             case "UNITPRICEPACKAGES":
             case "PRICEBYCONTAINERS":

@@ -17,6 +17,7 @@ export class QuoteList {
 		QuoteTemplateId: string;
 		QuoteCutomerTypeCode: string;
 		CustomerName: string;
+		CustomerCode: string;
 		CustomerId: string;
 		CustomerReference1: string;
 		CustomerReference2: string;
@@ -25,6 +26,7 @@ export class QuoteList {
 		ShipperId: string;
 		ShipperReference1: string;
 		ShipperReference2: string;
+		ShipperCode: string;
 		Consignee: string;
 		ConsigneeId: string;
 		ConsigneeReference1: string;

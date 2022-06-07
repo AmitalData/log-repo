@@ -39,7 +39,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.ShowContainerNameInsteadOfCodeContainers = itemPM.ShowContainerNameInsteadOfCodeContainers;
             itemPoco.ShowFixedPriceContainers = itemPM.ShowFixedPriceContainers;
             itemPoco.ShowTitleQuoteDetails = itemPM.ShowTitleQuoteDetails;
-            
+            itemPoco.ShowUnitsContainers = itemPM.ShowUnitsContainers;
 
             itemPoco.ShowSaleCurrencyColumnPackages = itemPM.ShowSaleCurrencyColumnPackages;
             itemPoco.ShowSaleCurrencyColumnContainers = itemPM.ShowSaleCurrencyColumnContainers;

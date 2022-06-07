@@ -109,6 +109,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             }
 
             IQueryable<QuoteList> result = from f in iQueryable.Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard").Include("MoveType").Include("ShipmentSubType")
+                                                               .Include("ShipperCard").Include("CustomerCard")
                                            select new QuoteList()
                                            {
                                                IsClosed = f.IsClosed,
@@ -121,6 +122,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                TransportModeName = f.TransportMode == null ? "" : f.TransportMode.Name,
                                                QuoteViewId = f.Id,
                                                CustomerName = f.CustomerName,
+                                               CustomerCode = f.CustomerCard != null ? f.CustomerCard.Code : "",
+                                               ShipperCode = f.ShipperCard != null ? f.ShipperCard.Code : "",
                                                ShipmentType = f.ShipmentType == null ? "" : f.ShipmentType.Name,
                                                Field1 = f.Field1,
                                                Field2 = f.Field2,

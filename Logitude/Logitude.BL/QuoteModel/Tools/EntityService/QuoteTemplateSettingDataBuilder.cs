@@ -64,8 +64,11 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         {
             List<PricesFieldSettings> pricesTableSettings = GetPricesPackagesListSettingsBySectionType(sectionType);
             PropertyInfo propInfo = quoteTemplateSetting.GetType().GetProperty(fieldDBName);
-
-            pricesTableSettings.Add(new PricesFieldSettings()
+            if (propInfo == null)
+            {
+                propInfo = (quoteTemplateSetting.GetType().GetProperty("QuoteTemplateSettingData") != null) ? quoteTemplateSetting.GetType().GetProperty("QuoteTemplateSettingData").GetType().GetProperty(fieldDBName) : new QuoteTemplateSettingData().GetType().GetProperty(fieldDBName);
+            }
+                pricesTableSettings.Add(new PricesFieldSettings()
             {
                 Name = fieldDBName,
                 Code = fieldCode,
@@ -82,7 +85,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             return sectionType == "PP" ? PricesPackagesTableSettings : PricesContainersTableSettings;
         }
 
-        private void BuildPricesContainersTableSettings()
+        public void BuildPricesContainersTableSettings()
         {
             PricesContainersTableSettings = new List<PricesFieldSettings>();
             string sectionType = "PC";
@@ -91,6 +94,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             AddNewPricesFieldSettingToPricesTableSettings("ShowChargeNameContainers", "CHARGECONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowChargeCodeContainers", "CHARGECODECONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowMeasurementContainers", "MEASUREMENTCONTAINERS", sectionType);
+            AddNewPricesFieldSettingToPricesTableSettings("ShowUnitsContainers", "UNITSCONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowFixedPriceContainers", "FIXEDPRICECONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowPriceByContainerColumn", "PRICEBYCONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowSaleCurrencyColumnContainers", "TOTALCONTAINERS", sectionType);
@@ -102,6 +106,33 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             AddNewPricesFieldSettingToPricesTableSettings("ShowRegionalTAXContainers", "ISREGIONALTAXCONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowVATTypeContainers", "VATTYPECONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowVATPercentageContainers", "VATPERCENTAGECONTAINERS", sectionType);
+        }
+
+
+       public QuoteTemplateSettingData UpdateQuoteTemplateSettingData(QuoteTemplateSettingData quoteTemplateSettingData)
+        {
+            BuildPricesContainersTableSettings();
+
+            foreach (PricesFieldSettings pricesFieldSetting in PricesContainersTableSettings)
+            {
+                var item = quoteTemplateSettingData.PricesContainersTableSettings.Where(d => d.Code == pricesFieldSetting.Code).FirstOrDefault();
+                if (item == null)
+                {
+                    quoteTemplateSettingData.PricesContainersTableSettings.Add(pricesFieldSetting);
+                }
+            }
+
+            BuildPricesPackagesTableSettings();
+
+            foreach (PricesFieldSettings pricesFieldSetting in PricesPackagesTableSettings)
+            {
+                var item = quoteTemplateSettingData.PricesPackagesTableSettings.Where(d => d.Code == pricesFieldSetting.Code).FirstOrDefault();
+                if (item == null)
+                {
+                    quoteTemplateSettingData.PricesPackagesTableSettings.Add(pricesFieldSetting);
+                }
+            }
+            return quoteTemplateSettingData;
         }
     }
 }
