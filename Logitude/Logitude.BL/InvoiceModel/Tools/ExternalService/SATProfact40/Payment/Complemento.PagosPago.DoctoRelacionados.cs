@@ -207,7 +207,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
             ComprobanteImpuestosResults comprobanteImpuestosResults = sATInvoiceComprobante.GetComprobanteImpuestos(arTotalVats, sATInvoiceComprobante.GetConceptoList().ToArray());
 
-            comprobanteImpuestosResults?.ComprobanteImpuestos.Traslados.ToList().ForEach(comprobanteImpuestosTraslado =>
+            comprobanteImpuestosResults?.ComprobanteImpuestos?.Traslados?.ToList().ForEach(comprobanteImpuestosTraslado =>
             {
                 trasladoDRList.Add(GetNewPagosPagoDoctoRelacionadoImpuestosDRTrasladoDR(comprobanteImpuestosTraslado));
             });
