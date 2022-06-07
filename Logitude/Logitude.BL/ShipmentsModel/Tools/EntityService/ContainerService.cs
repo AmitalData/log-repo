@@ -64,10 +64,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.SetUpdatedByUser();
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
             this.MapContainerClosedDate(entityPM, containerPoco);
-            
+
             if (!string.IsNullOrEmpty(containerPm.EmptyReturnLocationPortId) && (containerPm.EstimatedEmptyReturn != containerPoco.EstimatedEmptyReturn || containerPm.ActualEmptyReturn != containerPoco.ActualEmptyReturn))
             {
                 this.HandleEmptyReturnLeg();
+                this.containerPm.ConcurrencyGUID = entityRepository.GetConcurrencyGUIDByContainerId(this.containerPm.Id, tenant);
             }
 
             ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
