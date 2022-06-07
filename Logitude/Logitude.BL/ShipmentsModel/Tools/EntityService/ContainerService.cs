@@ -183,7 +183,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void RunAutomation(string processType, ContainerPM entityPM)
         {
-            var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, ProcessType = processType, ObjectTableName = "Container", EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now });
+            var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, ProcessType = processType, ObjectTableName = "Container", EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now, EntityReference = entityPM.ContainerNumber });
             mainEntityChangeService.AddEntityChange();
         }
         private void MapShipmentConcurrencyFields()

@@ -628,7 +628,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             var shipmentPM = !mainEntityChangeService.IsChild ? entityPM : ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM);
             List<TraceEventPM> shipmentTraceEventPMs = shipmentPM.EventList;
             shipmentQuery.MapEventsListForAPI(shipmentPM);
-            mainEntityChangeService.ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentPM);
+            mainEntityChangeService.ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentPM, shipmentPM.ShipmentNumber);
             shipmentPM.EventList = shipmentTraceEventPMs;
         }
 
@@ -2523,7 +2523,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(tableName, "OnCreate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
-                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true });
+                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName , DontExecuteAutomationThatDependencyOnLastEntityUpdate  = true, EntityReference = entityPM.ShipmentNumber});
                         mainEntityChangeService.AddEntityChange();
                         mainEntityChangeServices.Add(mainEntityChangeService);
                     }
@@ -2534,7 +2534,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(tableName, "OnUpdate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
-                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, OldEntityPM = shipmentChangeTracking.ChangeTrackingPM, ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true });
+                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, OldEntityPM = shipmentChangeTracking.ChangeTrackingPM, ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true, EntityReference = entityPM.ShipmentNumber});
                         mainEntityChangeService.AddEntityChange();
                         mainEntityChangeServices.Add(mainEntityChangeService);
 

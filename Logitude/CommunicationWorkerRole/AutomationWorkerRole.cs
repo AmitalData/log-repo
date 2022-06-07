@@ -64,6 +64,7 @@ namespace CommunicationWorkerRole
         int Tenant = 0;
         string entityChangeId = string.Empty;
         string automationId = string.Empty;
+        string entityReference = null;
         string entityId = string.Empty;
         int AutomationCount = 0;
         string type = string.Empty;
@@ -114,6 +115,7 @@ namespace CommunicationWorkerRole
                                 entityChangeId = response.MessageValues["EntityChangeId"].ToString();
                                 type = response.MessageValues["Type"].ToString();
                                 automationId = response.MessageValues["AutomationId"].ToString();
+                                entityReference = response.MessageValues.ContainsKey("EntityReference") ? response.MessageValues["EntityReference"]?.ToString() : null;
                                 entityId = response.MessageValues["EntityId"];
                                 executedImmediately = response.MessageValues["ExecutedImmediately"] != null ? bool.Parse(response.MessageValues["ExecutedImmediately"].ToString()) : false;
                                 ExtraDetails = response.MessageValues.ContainsKey("ExtraDetails") ? response.MessageValues["ExtraDetails"] : "";
@@ -217,7 +219,7 @@ namespace CommunicationWorkerRole
                                 if (validateResult.IsAutomationValid && executedImmediately && validateResult.Type == "Delayed")
                                 {
                                     DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
-                                    generalAutomationResultService.AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = type, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = generalAutomationResultService.GetAutomationDelayTime(delaytimeDetails, AutomationConditionFieldLists, entityChange.Tenant) });
+                                    generalAutomationResultService.AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = type, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = generalAutomationResultService.GetAutomationDelayTime(delaytimeDetails, AutomationConditionFieldLists, entityChange.Tenant), EntityReference = entityReference });
                                     queueservice.Complete();
                                     LogDoneItemInMemory();
 
@@ -245,7 +247,7 @@ namespace CommunicationWorkerRole
                                         string documentId = GetSendInterfaceDataContractDocumentId(entityChange, automationSendInterface);
                                         if (automationSendInterface.SendVia == "EMAIL")
                                         {
-                                            entityChangesAutomation.ComunicationLogId = new AutomationHelper().ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTable != null ? objectTable.Name : "", ExternalAttachmentDocumentId = documentId });
+                                            entityChangesAutomation.ComunicationLogId = new AutomationHelper().ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTable != null ? objectTable.Name : "", ExternalAttachmentDocumentId = documentId, EntityReference = entityReference });
                                         }
                                         else if (automationSendInterface.SendVia == "FTP")
                                         {
@@ -277,7 +279,7 @@ namespace CommunicationWorkerRole
                                     {
                                         AutomationSendDocument automationSendDocument = automatedBackup.AutomationSendDocument;
                                         string objectTableName = objectTable != null ? objectTable.Name : "";
-                                        AutomationSendEmailArgs automationSendEmailArgs = new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId, DocumentCopyId = automatedBackup.DocumentCopyId };
+                                        AutomationSendEmailArgs automationSendEmailArgs = new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId, DocumentCopyId = automatedBackup.DocumentCopyId, EntityReference = entityReference };
                                         if (automationSendDocument.SendVia == "EMAIL")
                                         {
                                             AutomationHelper automationHelper = new AutomationHelper();
@@ -321,7 +323,7 @@ namespace CommunicationWorkerRole
                                     {
                                         string objectTableName = objectTable != null ? objectTable.Name : "";
                                         AutomationHelper automationHelper = new AutomationHelper();
-                                        string comunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId, DocumentCopyId = automatedBackup.DocumentCopyId });
+                                        string comunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId, DocumentCopyId = automatedBackup.DocumentCopyId, EntityReference = entityReference });
                                         MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
                                     }
                                     else

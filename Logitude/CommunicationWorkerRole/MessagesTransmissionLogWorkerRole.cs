@@ -223,7 +223,7 @@ namespace CommunicationWorkerRole
 
             if (myLog != null)
             {
-                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = myLog, ProcessType = "OnCreate", ObjectTableName = "LogitudeMessagesTransmissionLog", EntityId = myLog.Id, Tenant = tenant });
+                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = myLog, ProcessType = "OnCreate", ObjectTableName = "LogitudeMessagesTransmissionLog", EntityId = myLog.Id, Tenant = tenant, EntityReference = myLog.AWBNumber});
                 mainEntityChangeService.AddEntityChange();
             }
         }

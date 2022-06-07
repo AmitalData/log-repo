@@ -137,7 +137,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, setApproved, isNewEntity, this.objectContext, this.myCommonContext);
 
 
-            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.InvoiceNumber});
             entityAutomationService.RunAutomation();
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
             this.invoiceRepository.Add(invoice);
@@ -185,7 +185,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, setApproved, isNewEntity, this.objectContext, this.myCommonContext);
             }
             
-            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationAPInvoiceMappingPMFields() });
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationAPInvoiceMappingPMFields(), EntityReference = entityPM.InvoiceNumber});
             entityAutomationService.RunAutomation();
 
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
