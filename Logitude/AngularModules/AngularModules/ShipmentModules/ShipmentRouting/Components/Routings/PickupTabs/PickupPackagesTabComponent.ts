@@ -18,6 +18,7 @@ import { ShipmentPackagePM } from '../../../../../Shipment/EntityPMs/ShipmentPac
 import { PackagesTabComponent, ShipmentPackageItem } from '../../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     
@@ -75,8 +76,9 @@ export class PickupPackagesTabComponent {
 
         this.IsAddContainerVisible = false;
         if (this.IsFCLEntity) {
-            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-            if (featureToggle) {
+            //var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+            //if (featureToggle) {
+            if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated")) {          
                 this.IsAddContainerVisible = true;
                 this.IsEditingEnabled = false;
             }

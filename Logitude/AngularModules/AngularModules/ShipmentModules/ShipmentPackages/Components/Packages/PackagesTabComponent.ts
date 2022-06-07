@@ -1736,7 +1736,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.Show(myPath);
     }
     DeletePackageClicked(itemComponent: ShipmentPackageItem) {
-        if (this.IsContainerFeatureToggleVisible && !this.EntityPM.IsStandalonePickupDelivery) {
+        if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated") && !this.EntityPM.IsStandalonePickupDelivery) {
             this.CurrentSession.StartBusyIndicatorLoading();
             var shipmentDomainService = new ShipmentDomainService();
             var containerId = itemComponent.EntityPM.ContainerEntityId;
@@ -1980,7 +1980,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     DeletePackagesButtonClicked() {
-        if (this.IsContainerFeatureToggleVisible && this.EntityPM.ShipmentPackages.length > 0 && !this.EntityPM.IsStandalonePickupDelivery) {
+        if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated") && this.EntityPM.ShipmentPackages.length > 0 && !this.EntityPM.IsStandalonePickupDelivery) {
             this.CurrentSession.StartBusyIndicatorLoading();
             var shipmentDomainService = new ShipmentDomainService();
             var shipmentId = this.EntityPM.Id;
