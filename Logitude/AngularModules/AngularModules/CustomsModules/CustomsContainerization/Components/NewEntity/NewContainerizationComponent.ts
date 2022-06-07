@@ -480,7 +480,6 @@ export class NewContainerizationComponent extends BaseComponent {
 
             this.declarationWebService.GetDeclarationByConsignmentParames(ArrayDeclartiosId).subscribe(res => {
 
-
                 if (res.Result !=null && res.Result!=0) {
                     myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות אותם מזהים ​שלא צורפו להמכלה הנוכחית   ${res.Result}  `);
                     myConfirmWindow.WindowClosed.subscribe(event => {
