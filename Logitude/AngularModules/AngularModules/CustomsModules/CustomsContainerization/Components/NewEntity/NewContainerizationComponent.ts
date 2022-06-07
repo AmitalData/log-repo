@@ -458,7 +458,7 @@ export class NewContainerizationComponent extends BaseComponent {
             this.declarationWebService.GetDeclarationByConsignmentParames(ArrayDeclartiosId).subscribe(res => {
                 if (res.Result !=null) {
                     debugger;
-                    myConfirmWindow.Show(`שים לב ישנם הצהרות נוספות  בעלות אותה מזהים שלא צורפה להמכלה הנוכחית ${res.Result} `);
+                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות אותם מזהים ​שלא צורפו להמכלה הנוכחית ${res.Result} `);
                     myConfirmWindow.WindowClosed.subscribe(event => {
                         if (myConfirmWindow.Yes == true) {
                             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
@@ -482,7 +482,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
 
                 if (res.Result !=null && res.Result!=0) {
-                    myConfirmWindow.Show(`שים לב ישנם הצהרות נוספות בעלות אותם מזהים שלא צורפו להמכלה הנוכחית   ${res.Result}  `);
+                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות אותם מזהים ​שלא צורפו להמכלה הנוכחית   ${res.Result}  `);
                     myConfirmWindow.WindowClosed.subscribe(event => {
 
                         if (myConfirmWindow.Yes == true) {
