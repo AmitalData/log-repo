@@ -25,6 +25,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string OriginCountryName { get; set; }
         public string ShipperId { get; set; }
         public string ShipperName { get; set; }
+        public double? ProductValue { get; set; }
+        public string ProductValueCurrencyId { get; set; }
+        public int? Quantity { get; set; }
+        public string ProductValueCurrencyCode { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         private List<HTSCodePM> HTScodes;

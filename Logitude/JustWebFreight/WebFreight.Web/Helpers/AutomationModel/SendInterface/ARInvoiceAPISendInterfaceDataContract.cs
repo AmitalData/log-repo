@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -27,11 +28,23 @@ namespace WebFreight.Web.Helpers.AutomationModel.SendInterface
         }
 
         public object GetObject(SendInterfaceDataContractObjectArgs sendInterfaceDataContractObjectArgs)
-        {
-            ARInvoiceMessageHelper aRInvoiceMessageHelper = new ARInvoiceMessageHelper(entityPM, sendInterfaceDataContractObjectArgs.Tenant, true);
+        {   
+            string selectedInterfaceCode = GetSelectedInterfaceCode(sendInterfaceDataContractObjectArgs.AutomationSendInterface);
+            ARInvoiceMessageHelper aRInvoiceMessageHelper = new ARInvoiceMessageHelper(entityPM, sendInterfaceDataContractObjectArgs.Tenant, selectedInterfaceCode);
             object sendInterfaceDataContractObject = aRInvoiceMessageHelper.Transfer();
 
             return sendInterfaceDataContractObject;
+        }
+
+        private string GetSelectedInterfaceCode(AutomationSendInterface automationSendInterface)
+        {
+            const string genericInterfaceCode = "GI";
+            const string advancedGenericInterfaceCode = "AI";
+                        
+            if (automationSendInterface.AdvancedAutomationSendInterfaceDetails?.ARInvoiceDetails?.IncludeShipmentDetails == true)
+                return advancedGenericInterfaceCode;
+            
+            return genericInterfaceCode;
         }
     }
 }

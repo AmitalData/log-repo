@@ -22,6 +22,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             Card billToCard = cardRepository.GetSingleCard(arPaymentPM.BillToId, arPaymentPM.Tenant);
             string billToAddressZipCode = GetbillToAddressZipCode(arPaymentPM);
             const string electronicPaymentReceiptCode = "CP01";
+            string billToCountryCode = SATBaseProfact40Service.GetBillToCountryCode(arPaymentPM.BillToAddressId, arPaymentPM.Tenant, commonContext);
+            bool isBillToMexicoCountry = IsBillToMexicoCountry(billToCountryCode);
 
             comprobanteReceptor.RegimenFiscalReceptor = billToCard.RegimenFiscalCode;
             comprobanteReceptor.DomicilioFiscalReceptor = billToAddressZipCode;
@@ -29,11 +31,10 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             comprobanteReceptor.UsoCFDI = electronicPaymentReceiptCode;
 
 
-            string billToCountryCode = SATBaseProfact40Service.GetBillToCountryCode(arPaymentPM.BillToAddressId, arPaymentPM.Tenant, commonContext);
-            if (IsBillToMexicoCountry(billToCountryCode))
+            
+            if (isBillToMexicoCountry)
             {
-                comprobanteReceptor.Rfc = GetMexicoReceptorRfc(billToCard);
-                return comprobanteReceptor;
+                return GetMexicoRfcReceptor(comprobanteReceptor, billToCard, currentTenant);
             }
 
             comprobanteReceptor.Rfc = !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : SATData.OutSideMexicoRfc;
@@ -42,10 +43,26 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             comprobanteReceptor.NumRegIdTrib = !string.IsNullOrEmpty(comprobanteReceptor.Rfc) ? comprobanteReceptor.Rfc : SATData.OutSideMexicoRfc;
 
             if(comprobanteReceptor.Rfc == SATData.OutSideMexicoRfc) {
-                comprobanteReceptor.RegimenFiscalReceptor = LugarExpedicion.Get(new LugarExpedicionArgs { CommonContext = commonContext, BranchId = arPaymentPM.BranchId, CurrentTenantZipCode = currentTenant.Address.ZipCode, Tenant = arPaymentPM.Tenant });
+                comprobanteReceptor.DomicilioFiscalReceptor = LugarExpedicion.Get(new LugarExpedicionArgs { CommonContext = commonContext, BranchId = arPaymentPM.BranchId, CurrentTenantZipCode = currentTenant.Address.ZipCode, Tenant = arPaymentPM.Tenant });
             }
             
             return comprobanteReceptor;
+        }
+
+        private static ComprobanteReceptor GetMexicoRfcReceptor(ComprobanteReceptor comprobanteReceptor, Card billToCard, Tenant currentTenant)
+        {
+            string publicInGeneralMexicoRfc = GetPublicInGeneralMexicoRfc(billToCard);
+            bool IsPublicInGeneral = publicInGeneralMexicoRfc == SATData.PublicInGeneralMexicoRfc;
+            ComprobanteReceptor MexicoReceptor = comprobanteReceptor;
+            MexicoReceptor.Rfc = GetMexicoReceptorRfc(billToCard, publicInGeneralMexicoRfc);
+            if (!IsPublicInGeneral)
+            {
+                return MexicoReceptor;
+            }
+            const string regimenFiscalReceptor616Code = "616";
+            MexicoReceptor.RegimenFiscalReceptor = regimenFiscalReceptor616Code;
+            MexicoReceptor.DomicilioFiscalReceptor = LugarExpedicion.Get(new LugarExpedicionArgs { CommonContext = commonContext, BranchId = arPaymentPM.BranchId, CurrentTenantZipCode = currentTenant.Address.ZipCode, Tenant = arPaymentPM.Tenant });
+            return MexicoReceptor;
         }
 
         private static string GetSATCustomerName(Card billToCard)
@@ -56,9 +73,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             return billToCard.EnglishName;
         }
 
-        private static string GetMexicoReceptorRfc(Card billToCard)
+        private static string GetMexicoReceptorRfc(Card billToCard, string publicInGeneralMexicoRfc)
         {
-            return !string.IsNullOrEmpty(billToCard.VatNumber) ? billToCard.VatNumber : SATData.MexicoRfc;
+            return !string.IsNullOrEmpty(billToCard.VatNumber) ? billToCard.VatNumber : publicInGeneralMexicoRfc;
         }
 
         private static bool IsBillToMexicoCountry(string billToCountryCode)
@@ -67,6 +84,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             const string additionalMexicoCountryCode = "MX";
 
             return billToCountryCode == mexicoCountryCode || billToCountryCode == additionalMexicoCountryCode;
+        }
+
+        private static string GetPublicInGeneralMexicoRfc(Card billToCard)
+        {
+            return string.IsNullOrEmpty(billToCard.VatNumber) ? SATData.PublicInGeneralMexicoRfc : "";
         }
 
         private static string GetbillToAddressZipCode(ARPaymentPM arPaymentPM)

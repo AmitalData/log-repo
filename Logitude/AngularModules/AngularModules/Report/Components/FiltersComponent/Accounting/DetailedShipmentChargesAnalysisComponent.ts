@@ -41,6 +41,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
         this.DateFilterList.push(new CodeNameClass("CRT", "Create Date"));
         this.DateFilterList.push(new CodeNameClass("REG", "Registry Date"));
         this.DateFilterList.push(new CodeNameClass("OPC", "Operational Close Date"));
+        this.DateFilterList.push(new CodeNameClass("ACD", "Accounting Close Date"));
 
         this.selectedDateFilter = this.DateFilterList.filter(d => d.Code == "OPE")[0];
     }

@@ -51,8 +51,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private bool UsingFTP = false;
         private string FTPDetailId;
         private bool ReturnEntityFile = false;
-        private const string genericInterfaceCode = "GI";
-        private const string advancedGenericInterfaceCode = "AI";
         public ARInvoiceMessageHelper(List<ARInvoice> invoices, string filename, int tenant,  bool isDropBox = false, bool isFTP = false)
         {
             Initialize(invoices, tenant);
@@ -61,16 +59,17 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             this.UsingFTP = isFTP;
         }
 
-        public ARInvoiceMessageHelper(ARInvoicePM arInvoicePM, int tenant, bool returnEntityFile = false)
+        public ARInvoiceMessageHelper(ARInvoicePM arInvoicePM, int tenant, string selectedInterfaceCode)
         {
+            //For Automation Send Interface
             ARInvoice arInvoice = new ARInvoice(); 
             Tools.DataMapping.ARInvoiceMapping.MapEntity(arInvoicePM, arInvoice, true, arInvoicePM.CreatedByUserId);
             arInvoice.UpdatedByUserId = arInvoicePM.UpdatedByUserId;
             
             List<ARInvoice> invoices = new List<ARInvoice> { arInvoice };
             Initialize(invoices, tenant);
-            ReturnEntityFile = returnEntityFile;
-            myAccountingSystemCode = myAccountingSystemCode != advancedGenericInterfaceCode ? genericInterfaceCode : advancedGenericInterfaceCode;
+            ReturnEntityFile = true;
+            myAccountingSystemCode = selectedInterfaceCode;
         }
 
         private void Initialize(List<ARInvoice> invoices, int tenant)

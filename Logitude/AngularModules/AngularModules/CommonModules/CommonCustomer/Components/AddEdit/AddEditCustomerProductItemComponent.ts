@@ -156,6 +156,11 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.myCloner.AddField('OriginCountryName');
         this.myCloner.AddField('ShipperId');
         this.myCloner.AddField('ShipperName');
+
+        this.myCloner.AddField('ProductValue');
+        this.myCloner.AddField('ProductValueCurrencyId');
+        this.myCloner.AddField('Quantity');
+        this.myCloner.AddField('ProductValueCurrencyCode');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.CustomerPM);
     }

@@ -115,6 +115,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     public searchFields: string;
     public HasSharedDocs: boolean = true;
     public AllowCreateAirExportShipmentsWithoutDocuments: boolean = false;
+    public ShipmentDirection: string;
     @Output() SearchFieldchangeevent = new EventEmitter();
     DataSource = {
         pageSize: 20,
@@ -135,7 +136,8 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
         this.SourceEntity = args.SourceEntity;
         this.HasSharedDocs = args.HasSharedDocs;
         this.AllowCreateAirExportShipmentsWithoutDocuments = this.SourceEntity.TransportModeId == "A" && this.SourceEntity.DirectionId == "E" && SessionLocator.PrivateLableSettings.CreateShipmentsWithoutDocs;
-        if (this.SourceEntity) { 
+        if (this.SourceEntity) {
+            this.ShipmentDirection = this.SourceEntity.DirectionId;
             if (this.SourceEntity.TransportModeId == "O") {
                 this.TransportationTypes = [new TransportationTypes("Ashdod", "O", "ASH", "IL"), new TransportationTypes("Haifa", "O", "HFA", "IL"), new TransportationTypes("Eilat", "O", "ETH", "IL")];                
             }
@@ -395,8 +397,13 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     public set SelectedTransportationTypes(newValue: TransportationTypes) {
         this.selectedTransportationTypes = newValue;
         this.TransportModeId = newValue.TransporationType;
-        this.ToPortId = newValue.ToPortCode;
+        this.ToPortId = this.GetToPortId(newValue);
 
+    }
+
+    GetToPortId(selectedTransport: TransportationTypes) {
+        let exportShipmentDirection = "E";
+        return this.ShipmentDirection == exportShipmentDirection ? this.SourceEntity.ToPortId : selectedTransport.ToPortCode;
     }
 
     onTransportationTypeChange($event) {
@@ -554,7 +561,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     ContinueCreateShipmentProcess() {
         this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe((myResult:any) => {
             if (myResult.Result) {
-                this.ToPortId = myResult.Result.Id;
+                this.ToPortId = this.ShipmentDirection == "E" ? this.ToPortId : myResult.Result.Id;
                 if (AppTool.IsNullOrEmpty(this.SourceEntity.FromPortId)) {
                     this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result:any) => {
                         this.FromPortId = Result.Result.Id;

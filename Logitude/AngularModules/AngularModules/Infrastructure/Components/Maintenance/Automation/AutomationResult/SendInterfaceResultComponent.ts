@@ -205,7 +205,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
     ShowAdvancedDetails() {
         var windowArgs: any = {};
-        windowArgs.AdvancedAutomationSendInterfaceDetails = this.automationSendInterface.AdvancedAutomationSendInterfaceDetails;
+        windowArgs.AutomationSendInterface = this.automationSendInterface;
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;

@@ -12,6 +12,7 @@ import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { CountryList } from '../../../../Common/EntityLists/CountryList';
 import { CardList } from '../../../../Common/EntityLists/CardList';
+import { CurrencyPM } from 'Common/EntityPMs/CurrencyPM';
 
 @Component({
     templateUrl: './CustomerProductItemsTabComponent.html',
@@ -315,6 +316,45 @@ export class CustomerProductItem extends BaseComponent {
             this.ShipperName = null;
         }
     }
+
+    get ProductValue() { return this.EntityPM.ProductValue; }
+    set ProductValue(newValue: number) {
+        if (this.EntityPM.ProductValue != newValue) {
+            this.EntityPM.ProductValue = newValue;
+        }
+    }
+
+    get Quantity() { return this.EntityPM.Quantity; }
+    set Quantity(newValue: number) {
+        if (this.EntityPM.Quantity != newValue) {
+            this.EntityPM.Quantity = newValue;
+        }
+    }
+
+    get ProductValueCurrencyId() { return this.EntityPM.ProductValueCurrencyId; }
+    set ProductValueCurrencyId(newValue: string) {
+        if (this.EntityPM.ProductValueCurrencyId != newValue) {
+            this.EntityPM.ProductValueCurrencyId = newValue;
+        }
+    }
+
+    get ProductValueCurrencyCode() { return this.EntityPM.ProductValueCurrencyCode; }
+    set ProductValueCurrencyCode(newValue: string) {
+        if (this.EntityPM.ProductValueCurrencyCode != newValue) {
+            this.EntityPM.ProductValueCurrencyCode = newValue;
+        }
+    }
+
+    productValueCurrency: CurrencyPM;
+    get ProductValueCurrency() { return this.productValueCurrency; }
+    set ProductValueCurrency(value: CurrencyPM) {
+        if (this.productValueCurrency != value) {
+            this.productValueCurrency = value;
+        }
+        if (value) this.ProductValueCurrencyCode = value.Code;    
+        else this.ProductValueCurrencyCode = null;    
+    }
+
 }
 
 export class CustomerHTSCode extends BaseComponent {
