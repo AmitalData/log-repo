@@ -484,6 +484,7 @@ export class NewContainerizationComponent extends BaseComponent {
                     myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות אותם מזהים ​שלא צורפו להמכלה הנוכחית   ${res.Result}  `);
                     myConfirmWindow.WindowClosed.subscribe(event => {
 
+                        
                         if (myConfirmWindow.Yes == true) {
                             var windowArgs: any = {};
                             if (this.declarationPM != null && this.declarationPM.ProcedureCurrentName != null && this.declarationPM.ProcedureCurrentName.includes("טעינה ישירה")) {
