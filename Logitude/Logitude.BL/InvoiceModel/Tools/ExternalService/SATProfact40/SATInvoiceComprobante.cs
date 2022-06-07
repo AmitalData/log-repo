@@ -1099,7 +1099,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 {
                     comprobanteImpuestos.Traslados = trasladoList.ToArray();
                     comprobanteImpuestos.TotalImpuestosTrasladados = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(totalTraslados);//Math.Abs(TotalImpuestosTrasladados);
-                    comprobanteImpuestos.TotalImpuestosTrasladadosSpecified = true;
+                    comprobanteImpuestos.TotalImpuestosTrasladadosSpecified = IsTotalImpuestosTrasladadosSpecified(comprobanteImpuestos);
 
                     if (comprobanteImpuestos.Traslados.Where(t => t.TipoFactor == "Tasa").Any())
                     {
@@ -1179,6 +1179,17 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
 
             return null;
+        }
+
+        private bool IsTotalImpuestosTrasladadosSpecified(ComprobanteImpuestos comprobanteImpuestos)
+        {
+            int exentoFactorTrasladosCount = comprobanteImpuestos.Traslados.Where(Traslado => Traslado.TipoFactor == "Exento").Count();
+            bool HasExentoFactorOnly = exentoFactorTrasladosCount > 0 && (exentoFactorTrasladosCount == comprobanteImpuestos.Traslados.Count());
+            if (HasExentoFactorOnly)
+            {
+                return comprobanteImpuestos.TotalImpuestosTrasladados.ToString() != "0.00";
+            }
+            return true;
         }
 
         private static void MapImpuestosTraslado(decimal TotalImpuestosTrasladados, ARInvoiceTotalVATPM totalVat, ComprobanteImpuestosTraslado traslado)

@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.DataContracts;
 using Logitude.Server.Tools;
 using Profact.TimbraCFDI40;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -41,19 +42,31 @@ namespace WebFreight.Web.ReportsWebServices
             invoicedataprovider.SAT.QR = "https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?" + "&id=" + digitalTi.UUID + "&re=" + tenantSettings.VatNumber + "&rr=" + invoicedataprovider.BillToVatNumber + "&tt=" + invtotal
                 + "&fe=" + fe;
 
-            MapBillToDetails(currentInvoice, invoicedataprovider);
+            MapBillToAddressDetails(currentInvoice, invoicedataprovider);
             invoicedataprovider.SAT.FormadePago = comprobante.FormaPago;
             MapRegimenFiscal(invoicedataprovider, comprobante);
             MapTipoDeComprobante(invoicedataprovider, comprobante);
             invoicedataprovider.SAT.LugardeExpedicion = comprobante.LugarExpedicion;
             MapMetodoPago(invoicedataprovider, comprobante);
             MapUsoCFDI(invoicedataprovider, allUsoCFDIs, comprobante);
-            invoicedataprovider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptor(comprobante.Receptor.RegimenFiscalReceptor, currentInvoice.Tenant);
+            MapRegimenFiscalReceptor(currentInvoice, invoicedataprovider, comprobante);
             MapCadenaOriginal(currentInvoice, invoicedataprovider);
             MapCFDIRelacionadoDetails(invoicedataprovider, comprobante);
+            MapBillToCardDetails(invoicedataprovider, comprobante);
         }
 
-        private static void MapBillToDetails(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider)
+        private static void MapBillToCardDetails(InvoiceDataProvider invoicedataprovider, Comprobante comprobante)
+        {
+            invoicedataprovider.SAT.BillToSATName = comprobante.Receptor?.Nombre;
+        }
+
+        private static void MapRegimenFiscalReceptor(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider, Comprobante comprobante)
+        {
+            invoicedataprovider.SAT.RegimenFiscalReceptorCode = comprobante.Receptor?.RegimenFiscalReceptor;
+            invoicedataprovider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptorName(comprobante.Receptor.RegimenFiscalReceptor, currentInvoice.Tenant);
+        }
+
+        private static void MapBillToAddressDetails(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider)
         {
             if (string.IsNullOrEmpty(currentInvoice.BillToAddressId)) return;
 
@@ -115,7 +128,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
         }
 
-        public static string GetRegimenFiscalReceptor(string regimenFiscalReceptorCode, int tenant)
+        public static string GetRegimenFiscalReceptorName(string regimenFiscalReceptorCode, int tenant)
         {
             RegimenFiscalRepository regimenFiscalRepository = new RegimenFiscalRepository(tenant);
             RegimenFiscal regimenFiscalReceptor = regimenFiscalRepository.GetRegimenFiscals().Where(reg => reg.Code == regimenFiscalReceptorCode).FirstOrDefault();

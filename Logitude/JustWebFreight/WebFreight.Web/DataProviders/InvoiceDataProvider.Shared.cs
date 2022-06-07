@@ -655,6 +655,8 @@ namespace WebFreight.Web.DataProviders
         
         public Image QRImage { get; set; }
         public string RegimenFiscalReceptor { get; set; }
+        public string RegimenFiscalReceptorCode { get; set; }
+        public string BillToSATName { get; set; }
         public string BillToCity { get; set; }
         public string BillToCountry { get; set; }
         public string BillToPostalCode { get; set; }
