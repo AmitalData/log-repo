@@ -146,7 +146,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         var filters = new ApiQueryFilters;
         //filters.addAdditionalFilter("DeclarationId", "123", null, null, "IsNull", false, false, false, "string");
         filters.addAdditionalFilter("StorageStatus", "Cancel", null, null, "NotEqual", false, false, false, "string");
-        filters.addAdditionalFilter("DeclarationIdAndProcedureCurrentName", "", null, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("DeclarationIdAndProcedureCurrentName", this.declarationPM.Id, null, null, "Contains", true, false, false, "string");
         filters.addAdditionalFilter("IsExportFileNo", this.declarationPM.ExportFile, null, null, "Contains", true, false, false, "string");
 
 
