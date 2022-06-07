@@ -52,6 +52,7 @@ using System.Threading.Tasks;
 using System.Web;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.WorkerRole.DocsOut;
 using WebFreight.Web.Helpers.WorkerRoleHelpers;
 
 namespace CommunicationWorkerRole
