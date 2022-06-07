@@ -20,6 +20,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         {
             Initializer();
         }
+        public VizionService(ContainerTrackingProvider source)
+        {
+            Source = source;
+        }
 
         private void Initializer()
         {
@@ -41,15 +45,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         private VizionReferenceResponce CallCreateReferenceViaBillofLading(Shipment shipment)
         {
+            var headers = GetHeaders();
             var referenceViaBillOfLadingRequest = CreateCreateReferenceViaBillOfLadingRequest(shipment);
-            var result = APICaller.CallApi<VizionReferenceResponce>(Source.ProviderURL + "/references", referenceViaBillOfLadingRequest, Method.POST);
+            var result = APICaller.CallApi<VizionReferenceResponce>(Source.ProviderURL + "/references", referenceViaBillOfLadingRequest, Method.POST, headers);
             return result;
 
         }
         public List<VizionCarrier> GetAllCarriers()
         {
-            var result = APICaller.CallApi<List<VizionCarrier>>(Source.ProviderURL+ "/carriers", null, Method.GET);
+            var headers = GetHeaders();
+            var result = APICaller.CallApi<List<VizionCarrier>>(Source.ProviderURL+ "/carriers", null, Method.GET, headers);
             return result;
+        }
+
+        private List<KeyValuePair<string, string>> GetHeaders()
+        {
+            var headers =  new List<KeyValuePair<string, string>>();
+            headers.Add(new KeyValuePair<string, string>("X-API-Key", Source.APIKey));
+            return headers;
         }
 
         private ReferenceViaCarrierCodeRequest CreateReferenceViaCarrierCodeRequest(GeneralContainerTrackingArgs containerStatusSimulatorArgs, Shipment shipment)
@@ -73,14 +86,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         private VizionReferenceResponce CallCreateReferenceViaCarrierCodeApi(GeneralContainerTrackingArgs containerStatusSimulatorArgs, Shipment shipment)
         {
+            var headers = GetHeaders();
             var referenceViaCarrierCodeRequest = CreateReferenceViaCarrierCodeRequest(containerStatusSimulatorArgs, shipment);
-            var result = APICaller.CallApi<VizionReferenceResponce>(Source.ProviderURL+ "/references", referenceViaCarrierCodeRequest, Method.POST);
+            var result = APICaller.CallApi<VizionReferenceResponce>(Source.ProviderURL+ "/references", referenceViaCarrierCodeRequest, Method.POST, headers);
             return result;
         }
 
         public UnsubscribeResult Unsubscribe(ContainerTrackingRequestPM containerTrackingRequest)
         {
-            var result = APICaller.CallApi<UnsubscribeResult>(Source.ProviderURL + "/references/"+ containerTrackingRequest.RequestId, null, Method.DELETE);
+            var headers = GetHeaders();
+            var result = APICaller.CallApi<UnsubscribeResult>(Source.ProviderURL + "/references/"+ containerTrackingRequest.RequestId, null, Method.DELETE, headers);
+            return result;
+        }
+
+        internal object GetActiveRequests()
+        {
+            var headers = GetHeaders();
+            var result = APICaller.CallApi<List<ActiveRequest>>(Source.ProviderURL + "/references", null, Method.GET, headers);
             return result;
         }
     }

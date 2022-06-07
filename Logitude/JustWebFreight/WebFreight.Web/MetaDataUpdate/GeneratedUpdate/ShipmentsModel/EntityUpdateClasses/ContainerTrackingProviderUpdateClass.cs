@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
+			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -714,6 +714,81 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   ObjectTable ContainerTrackingProviderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerTrackingProvider" && d.Tenant == 0).FirstOrDefault(); 			   Feature ContainerTrackingProviderFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GetCarrier", ObjectTableId = ContainerTrackingProviderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerTrackingProvider.Features.GetCarrier", NameTextCodeDefaultText = "Get Carrier", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerTrackingProviderObjectTable);
+             			   Feature ContainerTrackingProviderFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTVRef", ObjectTableId = ContainerTrackingProviderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerTrackingProvider.Features.GetActiveRequests", NameTextCodeDefaultText = "Get Active Requests", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerTrackingProviderObjectTable);
+              
+
+		   TextCodeRepository.SubmitChanges();
+		   FeaturesRepository.SubmitChanges();
+		   MenuButtonGroup ContainerTrackingProviderMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+				{
+					MenuButtonGroupType = "ContainerTrackingProviderEdit",
+					Name = "CTPEditButtonsGroup",
+					ObjectTableId = ContainerTrackingProviderObjectTable.Id,
+					Tenant = 0
+				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+   
+			   MenuButton ContainerTrackingProviderMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "Actions",
+						Index = 0, 
+						IsActive = false,
+						LabelTextCodeCode = "ContainerTrackingProvider.B.More",
+						LabelTextCodeDefaultText = "More",
+						Tenant = 0,
+						MenuButtonGroupId = ContainerTrackingProviderMenuButtonGroup.Id,
+						ObjectTableId = ContainerTrackingProviderObjectTable.Id,
+						MenuButtonType = "dropdownbutton",
+						FeatureId = null,
+						Style = null,
+						LocalDefaultText = null,
+						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+			   MenuButton ContainerTrackingProviderMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "GetCarrier",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "ContainerTrackingProvider.B.GetCarrier",
+						LabelTextCodeDefaultText = "Get Carrier",
+						Tenant = 0,
+						MenuButtonGroupId = ContainerTrackingProviderMenuButtonGroup.Id,
+						ParentMenuButtonId = ContainerTrackingProviderMenuButton0.Id,
+						ObjectTableId = ContainerTrackingProviderObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ContainerTrackingProviderFeature_MB00.Id,
+						Style = null,
+						LocalDefaultText = "Get Carrier",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ContainerTrackingProviderFeature_MB00.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ContainerTrackingProviderMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ACTVRef",
+						Index = 1, 
+						IsActive = true,
+						LabelTextCodeCode = "ContainerTrackingProvider.B.GetActiveRequests",
+						LabelTextCodeDefaultText = "Get Active Requests",
+						Tenant = 0,
+						MenuButtonGroupId = ContainerTrackingProviderMenuButtonGroup.Id,
+						ParentMenuButtonId = ContainerTrackingProviderMenuButton0.Id,
+						ObjectTableId = ContainerTrackingProviderObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ContainerTrackingProviderFeature_MB01.Id,
+						Style = null,
+						LocalDefaultText = "Get Active Requests",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ContainerTrackingProviderFeature_MB01.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

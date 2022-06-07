@@ -50,8 +50,8 @@
   NoTS="false"
   NoDefaultFeatures="false"
   HasCompactSearch="false"
-  ApplyDefaultValues="true"
-  HasMenuButtons="false"
+  ApplyDefaultValues="false"
+  HasMenuButtons="true"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
@@ -861,6 +861,31 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <MenuButtons
+    MenuButtonGroupType="&quot;ContainerTrackingProviderEdit&quot;"
+    MenuButtonGroupName="&quot;CTPEditButtonsGroup&quot;">
+    <MenuButton
+      EventCode="&quot;Actions&quot;"
+      DefaultText="&quot;More&quot;"
+      MenuButtonType="&quot;dropdownbutton&quot;"
+      IndexOrder="0"
+      IsPackagable="false">
+      <MenuItem
+        EventCode="&quot;GetCarrier&quot;"
+        DefaultText="&quot;Get Carrier&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="0"
+        LocalDefaultText="&quot;Get Carrier&quot;"
+        IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;ACTVRef&quot;"
+        DefaultText="&quot;Get Active Requests&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="1"
+        LocalDefaultText="&quot;Get Active Requests&quot;"
+        IsPackagable="false" />
+    </MenuButton>
+  </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
