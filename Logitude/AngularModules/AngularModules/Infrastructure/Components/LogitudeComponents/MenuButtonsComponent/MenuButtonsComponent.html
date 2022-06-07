@@ -80,12 +80,9 @@
                 [disabled]="button.IsDisabled" [style.width.px]="button.Width"
                 style="margin: 0px 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
                 [attr.title]="button.LabelTextCodeCode | TextCodeTranslationPipe">
-                <img *ngIf="button.DisplayText=='הומכל'" src="./Images/Icons/MiniGreenTick.png" style="margin-right: -20px; margin-left:10px; margin-top: 1px; width: 18px;
-                    ">
-
+                <img *ngIf="button.DisplayText=='הומכל'" src="./Images/Icons/MiniGreenTick.png"
+                    style="margin-right: -20px; margin-left:10px; margin-top: 1px; width: 18px; ">
                 {{button.DisplayText}}
-
-
             </button>
 
             <div [style.opacity]="IsDisableMenuOther && button.LabelTextCodeCode == 'Quote.B.Actions' ?'0.5':'1'"
