@@ -105,7 +105,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private static void MapPagosFields(PaymentDataProvider paymentDataProvider, Profact.TimbraCFDI40.Comprobante comprobante)
         {
-            if (!comprobante.Pagos20Specified || comprobante.Complemento.Any == null) return; //////
+            if (comprobante.Complemento.Any == null) return;
 
             List<XmlElement> LXmlComplementos = comprobante.Complemento.Any.ToList();
             XmlElement documentElement = LXmlComplementos.First();
@@ -113,6 +113,7 @@ namespace WebFreight.Web.ReportsWebServices
             Profact.TimbraCFDI40.Complementos.Pagos20.Pagos pagos = Profact.TimbraCFDI.XMLUtilerias.DeserializaObjeto<Profact.TimbraCFDI40.Complementos.Pagos20.Pagos>(documentElement.OuterXml);
             Profact.TimbraCFDI40.Complementos.Pagos20.PagosPago pagoItem = pagos.Pago.ToList().FirstOrDefault();
             if (pagoItem == null) return;
+            if (pagoItem.DoctoRelacionado?.Length == 0) return;
 
             paymentDataProvider.SAT.NumOperacion = pagoItem.NumOperacion;
             paymentDataProvider.SAT.FechaPago = pagoItem.FechaPago;
@@ -130,10 +131,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private static void MapPagosPagoDoctoRelacionado(PaymentDataProvider paymentDataProvider, PagosPagoDoctoRelacionado doctoItem)
         {
-            PaymentDataProvider.InvoicePayments invoicePayment = null;
-            string invoicenumber = doctoItem.Folio;
-            invoicenumber = GetInvoiceNumberValue(paymentDataProvider, doctoItem, invoicenumber);
-            invoicePayment = GetInvoicePaymentValue(paymentDataProvider, doctoItem, invoicenumber);
+            PaymentDataProvider.InvoicePayments invoicePayment = GetInvoicePaymentValue(paymentDataProvider, doctoItem);
 
             if (invoicePayment == null) return;
             invoicePayment.UUID = doctoItem.IdDocumento;
@@ -149,31 +147,17 @@ namespace WebFreight.Web.ReportsWebServices
 
         }
 
-        private static PaymentDataProvider.InvoicePayments GetInvoicePaymentValue(PaymentDataProvider paymentDataProvider, PagosPagoDoctoRelacionado doctoItem, string invoicenumber)
+        private static PaymentDataProvider.InvoicePayments GetInvoicePaymentValue(PaymentDataProvider paymentDataProvider, PagosPagoDoctoRelacionado doctoItem)
         {
-            PaymentDataProvider.InvoicePayments invoicePayment;
-            if (!string.IsNullOrEmpty(doctoItem.Serie) && doctoItem.Serie != "A")
-            {
-                return paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
-            }
+            string invoicenumber = doctoItem.Folio;
 
+            PaymentDataProvider.InvoicePayments invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
+            if (invoicePayment != null) return invoicePayment;
+
+            invoicenumber = doctoItem.Serie + doctoItem.Folio;
             invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
-            return invoicePayment == null ? paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber) : invoicePayment;
+            return invoicePayment;
 
-        }
-
-        private static string GetInvoiceNumberValue(PaymentDataProvider paymentDataProvider, PagosPagoDoctoRelacionado doctoItem, string invoicenumber)
-        {
-            if (!string.IsNullOrEmpty(doctoItem.Serie) && doctoItem.Serie != "A")
-            {
-                return invoicenumber = doctoItem.Serie + doctoItem.Folio;
-            }
-            else if (paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber) == null)
-            {
-                return invoicenumber = doctoItem.Serie + doctoItem.Folio;
-            }
-
-            return invoicenumber;
         }
 
         private static void MapAdditionalFields(ARPayment currentPayment, PaymentDataProvider paymentDataProvider)

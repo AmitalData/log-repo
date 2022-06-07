@@ -735,22 +735,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 {
 
                                     PaymentDataProvider.InvoicePayments invoicePayment = null;
-                                    string invoicenumber = doctoItem.Folio;
-                                    if (!string.IsNullOrEmpty(doctoItem.Serie) && doctoItem.Serie != "A")
-                                    {
-                                        invoicenumber = doctoItem.Serie + doctoItem.Folio;
-                                        invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
-                                    }
-                                    else
-                                    {
-                                        invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
-                                        if(invoicePayment == null)
-                                        {
-                                            invoicenumber = doctoItem.Serie + doctoItem.Folio;
-                                            invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
-                                        }
-
-                                    }
+                                    invoicePayment = GetInvoicePayment(paymentDataProvider, doctoItem);
                                     if (invoicePayment != null)
                                     {
                                         invoicePayment.UUID = doctoItem.IdDocumento;
@@ -784,9 +769,21 @@ namespace WebFreight.Web.ReportsWebServices
             }
         }
 
+        private static PaymentDataProvider.InvoicePayments GetInvoicePayment(PaymentDataProvider paymentDataProvider, Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado doctoItem)
+        {
+            string invoicenumber = doctoItem.Folio;
+
+            PaymentDataProvider.InvoicePayments invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
+            if (invoicePayment != null) return invoicePayment;
+
+            invoicenumber = doctoItem.Serie + doctoItem.Folio;
+            invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
+            return invoicePayment;
+        }
+
         //private void MapPaymentInvoiceProfact33Fields(ARPayment currentPayment, ARInvoice currentInvoice, PaymentDataProvider.InvoicePayments invoicePaymentDataProvider, Tenant tenantSettings)
         //{
-           
+
 
         //    UsoCFDIRepository usoCFDIRepository = new UsoCFDIRepository(currentInvoice.Tenant);
         //    List<UsoCFDI> allUsoCFDIs = usoCFDIRepository.GetUsoCFDIs().ToList();
