@@ -95,6 +95,11 @@ export class DocumentsExecutionLogPM {
     public set Subject(newValue: string) { if (this.subject != newValue) { this.subject = newValue; this.MarkAsDirty("Subject"); } }
        
 	 
+    private executedByServerName: string;
+    public get ExecutedByServerName() { return this.executedByServerName; }
+    public set ExecutedByServerName(newValue: string) { if (this.executedByServerName != newValue) { this.executedByServerName = newValue; this.MarkAsDirty("ExecutedByServerName"); } }
+       
+	 
 
     public OldEntityPM: DocumentsExecutionLogPM;
 		
