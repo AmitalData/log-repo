@@ -41,7 +41,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         private  bool GetIsPrintedValue(ARInvoicePM aRInvoicePM)
         {
             bool isPrinted = aRInvoicePM.IsPrinted;
-            if (aRInvoicePM.IsFromInterestBatchInvoice == false) return isPrinted;
+            if (aRInvoicePM.IsFromInterestBatchInvoice == true) return isPrinted;
           
             switch (aRInvoicePM.StatusCode)
             {

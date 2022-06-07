@@ -1879,7 +1879,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         if (this.AutomationCondationAndList.length == 0 && this.AutomationCondationOrList.length == 0 && this.CurrentEntityPM.Type == "OnUpdate") {
-            this.ValidationErrorsList.push("Please add at least one condation");
+            this.ValidationErrorsList.push("Please add at least one condition");
         }
 
         if (this.CurrentEntityPM.Type == "OnDocumentUpdate") {
@@ -2051,7 +2051,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
  
     ValidateOnDocumentUpdate() {
         if (this.AutomationCondationAndList.length == 0 && this.AutomationCondationOrList.length == 0 && this.CurrentEntityPM.Type == "OnDocumentUpdate") {
-            this.ValidationErrorsList.push("Please add at least one condation");
+            this.ValidationErrorsList.push("Please add at least one condition");
         }
         if (this.CurrentEntityPM.ResultCode == "ONUPDATEDOCUMENT" && (!this.AutomationOnUpdateDocument || (this.AutomationOnUpdateDocument && !this.AutomationOnUpdateDocument.DocumentTypeLists) || (this.AutomationOnUpdateDocument && this.AutomationOnUpdateDocument.DocumentTypeLists && this.AutomationOnUpdateDocument.DocumentTypeLists.length == 0))) {
             this.ValidationErrorsList.push("Please add at least one Document");
