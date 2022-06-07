@@ -1,4 +1,4 @@
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
 import { ExportDeclarationClosingDataPM } from '../../../../../Customs/EntityPMs/ExportDeclarationClosingDataPM';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -40,7 +40,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public IsNew: boolean = false;
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
 
-    constructor(private EntityResourceService: EntityResourceService) {
+    constructor(
+        private EntityResourceService: EntityResourceService, 
+        private readonly cdr: ChangeDetectorRef, 
+        ) {
         super();
     }
 
@@ -176,7 +179,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         }
         return null;
     }
-    set FlightDate(value: Date) {
+    public set FlightDate(value: Date) {
         if (this.EntityPM.FLIGHT_DATE != value)
             this.EntityPM.FLIGHT_DATE = value;
     }
@@ -361,11 +364,12 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         console.log(exportData)
         if(!exportData) return;
         
-        this.FlightDate = exportData.flightDate 
-        this.LoadingSite = exportData.loadingSite 
-        this.Smp = exportData.HAWB 
-        this.MainAWB = exportData.MAWB 
-        
+        this.FlightDate = exportData.flightDate;
+        // this.FinalLoadingSiteName = exportData.loadingSite;
+        this.Smp = exportData.HAWB;
+        this.MainAWB = exportData.MAWB;
+
+        this.cdr.detectChanges();
     }
 
     isConnectedToUniFreight(): Promise<boolean> {

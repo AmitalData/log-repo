@@ -21,7 +21,7 @@ export class ExportDeclarationClosingWebService {
     }
 
 
-    getUnifreightData(exportfile: string) {
+    getUnifreightData(exportfile: string): Promise<ExportData> {
         const ajax: Observable<any> = this._http.get(
             this._apiUrl + "/UnifreightData",
             {
@@ -32,4 +32,12 @@ export class ExportDeclarationClosingWebService {
 
         return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
+}
+
+
+export type ExportData = {
+    loadingSite?: string;
+    flightDate?: any;
+    MAWB?: any;
+    HAWB?: any;
 }
