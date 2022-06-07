@@ -88,7 +88,7 @@ Then("the link of standalon should display", () => {
 
 //#region Update Standalone
 Given("the user in the standalone shipment routings tab", () => {
-    cy.Click(BaseSelectors.HyperlinkButtonControl, StandaloneShipmenNumber)
+    cy.Click(BaseSelectors.HyperlinkButtonControl+BaseSelectors.LastElement, StandaloneShipmenNumber,null)
     cy.Click(ShipmentSelectors.RoutingsTab_Number + BaseSelectors.LastElement, null)
 })
 
