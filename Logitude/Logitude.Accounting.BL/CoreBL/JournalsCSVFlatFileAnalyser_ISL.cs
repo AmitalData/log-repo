@@ -159,10 +159,11 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
-                string text = TranslateTextsClassTranslate("JournalsCSV.O.FailedWhilePerforming", 0, useLocal);
-                if (String.IsNullOrEmpty(text)) text = "failed while performing";
+                //string text = TranslateTextsClassTranslate("JournalsCSV.O.FailedWhilePerforming", 0, useLocal);
+                //if (String.IsNullOrEmpty(text)) text = "failed while performing";
 
-                throw new ApplicationException($"{text} ", e);
+                //throw new ApplicationException($"{text} ", e);
+                throw;
             }
 
 
