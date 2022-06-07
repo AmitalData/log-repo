@@ -662,8 +662,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (consignment.DMExtensions != null)
                 {
                     consignmentPM.CargoDescription = GetValueTextType(consignment.DMExtensions.CargoDescription);
-                    consignmentPM.FinalDestinationPortCode = consignment.DMExtensions.FinalDestinationPort.Value;
-                    consignmentPM.ShipCode = consignment.DMExtensions.ShipID.Value;
+                    consignmentPM.FinalDestinationPortCode = consignment.DMExtensions.FinalDestinationPort?.Value;
+                    consignmentPM.ShipCode = consignment.DMExtensions.ShipID?.Value;
                     //if (consignment.DMExtensions.LastReleaseFromWarehousInd != null)
                     //{
                     //    if (consignment.DMExtensions.LastReleaseFromWarehousInd.Value == true)
