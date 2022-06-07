@@ -242,7 +242,8 @@ if(hasCompstionCustomField)
 <#+
 }
 else{
-#>         this.EntityParentPM = _entityParentPM;
+#>
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
  <#+

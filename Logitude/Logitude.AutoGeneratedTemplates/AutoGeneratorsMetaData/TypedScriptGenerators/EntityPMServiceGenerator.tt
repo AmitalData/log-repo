@@ -761,9 +761,22 @@ private void GenerateCompositionFieldMap(dynamic entity,dynamic field,bool insid
 	 	
 	string fieldName = field.FieldName.ToString().Trim('"');
 	string pmname = multitableName + "PM";
+	bool hasCompstionCustomField = false;
+	int numberOfCustomFields = 51;
 
-	
-	
+		string templateDirectory2 = Path.GetDirectoryName(Host.TemplateFile);
+       string xmlFilePath2 = Path.Combine(templateDirectory2, SrcFolder) + "/"+multitableName + ".lxml";
+        if(Directory.Exists(xmlFilePath2) || File.Exists(xmlFilePath2))
+         {
+	       var childEntity = FromEntityPMServiceFile(xmlFilePath2);
+		   if(childEntity.AllowCustomFields.GetType() == typeof(string)  && childEntity.AllowCustomFields == "true" && childEntity.IsComposition.GetType() == typeof(string)  && childEntity.IsComposition == "true")
+             {
+	                     hasCompstionCustomField = true;
+              }
+ 
+	 }
+
+
 	
 	string parentpmname = GetFieldObjectTableName(field) + "PM";
 
@@ -807,8 +820,36 @@ private void GenerateCompositionFieldMap(dynamic entity,dynamic field,bool insid
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
+				  <#+
+if(hasCompstionCustomField)
+{
+#>      <#+
+#>
+             
+			    var customFields: Array<string> = [];
+                for (var i = 1; i < <#= numberOfCustomFields #>; i++) {
+                    customFields.push("Field" + i);
+                }
+
+                var property = pmKeys[key];
+                if (customFields.indexOf(property) > -1) {
+                    if (jItem[property]) {
+                        var customFieldClass: CustomFieldClass = new CustomFieldClass(jItem[property].Value, jItem[property].FieldName, jItem[property].TableName);
+                        new<#= pmname #>[property] = customFieldClass;
+                    }
+                }
+                else {
+                    new<#= pmname #>[property] = jItem[property];
+                }
+<#+
+}
+else{
+#>
                 var pmProperty = pmKeysArray[pmKey];
                 new<#= pmname #>[pmProperty] = jItem[pmProperty];
+<#+
+} 
+	   #>
             }
            
 			 
