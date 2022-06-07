@@ -89,7 +89,7 @@ Then("the link of standalon should display", () => {
 
 //#region Add Packages in  Standalone shipment
 Given("the user in the standalone shipment Packages tab", () => {
-  cy.Click(BaseSelectors.HyperlinkButtonControl, StandaloneShipmenNumber)
+  cy.Click(BaseSelectors.HyperlinkButtonControl+BaseSelectors.LastElement, StandaloneShipmenNumber,null)
   StandaloneAction.StandaloneShipmentOpenPackageTab()
 })
 

@@ -51,8 +51,8 @@ Given("unchecked the FullResponsibility", () => {
 
 Given("the user in the shipment's routings tab", () => {
   cy.Click(ShipmentSelectors.CloseBtn, null)
-  cy.Click(ShipmentSelectors.RoutingToggle, null)
-  cy.Click(ShipmentSelectors.Delivery, null)
+  cy.Click(ShipmentSelectors.RoutingToggle+BaseSelectors.LastElement, null)
+  cy.Click(ShipmentSelectors.Delivery+BaseSelectors.LastElement, null)
   cy.Click(BaseSelectors.Button, ShipmentConstants.AddDelivery)
 })
 
