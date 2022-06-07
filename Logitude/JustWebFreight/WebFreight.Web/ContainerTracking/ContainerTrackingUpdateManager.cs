@@ -42,7 +42,6 @@ namespace WebFreight.Web.ContainerTracking
         {
             this.UpdateContainer();
             this.UpdatePackage();
-            this.UpdateEmptyReturnLeg();
             this.UpdateShipment();
             this.SaveShipment();
         }
@@ -197,7 +196,6 @@ namespace WebFreight.Web.ContainerTracking
             containerService.Update(containerPM, containerUpdatedFields.ContainersExternal);
         }
 
-
         private void UpdatePackage()
         {
             this.isUpdatingPackages = false;
@@ -220,42 +218,8 @@ namespace WebFreight.Web.ContainerTracking
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     this.isUpdatingPackages = true;
                 }
-                //else if (eventData > package.LastStatusDate)
-                //{
-                //    package.LastStatusCode = container_status;
-                //    package.LastStatusDate = eventData;
-                //    package.ContainerStatusSourceCode = oceanInsightsSource;
-                //    package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                //    this.isUpdatingPackages = true;
-                //}
             }
-        }
-        private void UpdateEmptyReturnLeg()
-        {
-            this.isUpdatingEmptyLeg = false;
-            ShipmentDeliveryPM delivery = this.GetEmptyReturnLeg();
-            if (delivery != null)
-            {
-                this.isUpdatingEmptyLeg = true;
-                delivery.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                delivery.ETA = containerPM.EstimatedEmptyReturn;
-                delivery.ATA = containerPM.ActualEmptyReturn;
-            }
-        }
-        private ShipmentDeliveryPM GetEmptyReturnLeg()
-        {
-            ShipmentDeliveryPM shipmentDelivery = null;
-
-            ShipmentPickUpDeliveryPackageRepository pickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(containerUpdatedFields.ShipmentContext);
-            List<ShipmentPickUpDeliveryPackage> packages = pickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(containerPM.Id, tenant);
-            if (packages != null && packages.Count > 0)
-            {
-                List<string> deliveryPackagesIds = packages.Select(s => s.ShipmentPickUpDeliveryId).ToList();
-                shipmentDelivery = shipmentPM.ShipmentDeliveries.Where(a => deliveryPackagesIds.Contains(a.Id) && a.PickUpDeliveryTypeCode == "EMPT").FirstOrDefault();
-            }
-
-            return shipmentDelivery;
-        }
+        }        
         private void UpdateShipment()
         {
             if (FeatureToggleHelper.HasFeatureToggle("OIU", tenant))

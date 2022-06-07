@@ -5303,6 +5303,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             itemPM.Id = IdCounter.GetNumber("ShipmentPickUpDelivery", tenant).ToString();
             itemPM.ShipmentId = entityPM.Id;
+            itemPM.ShipmentNumber = entityPM.ShipmentNumber;
             itemPM.Tenant = tenant;
 
             if (itemPM.PickUpDeliveryTypeCode == "EMPT")

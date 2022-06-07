@@ -65,6 +65,11 @@ export class SharedLogisticsPM {
     public set URLprivateCargoTracking(newValue: string) { if (this.uRLprivateCargoTracking != newValue) { this.uRLprivateCargoTracking = newValue; this.MarkAsDirty("URLprivateCargoTracking"); } }
        
 	 
+    private brandingURL: string;
+    public get BrandingURL() { return this.brandingURL; }
+    public set BrandingURL(newValue: string) { if (this.brandingURL != newValue) { this.brandingURL = newValue; this.MarkAsDirty("BrandingURL"); } }
+       
+	 
 
     public OldEntityPM: SharedLogisticsPM;
 		
