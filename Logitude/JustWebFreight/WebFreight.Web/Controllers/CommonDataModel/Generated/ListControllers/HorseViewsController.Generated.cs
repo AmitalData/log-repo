@@ -220,7 +220,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 HorseRepository  horseRepository = new HorseRepository(MyContext);
                 IQueryable<Horse> entityPocos = horseRepository.GetHorses(tenant);
 
-
                 HorseQuery horseQuery = new HorseQuery(horseRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
@@ -229,16 +228,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				
                 entityPocos = genericFilter.GetFilteredQuery<Horse>(nonListQueryOperation, entityPocos);
-
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<HorseList> entityLists = horseQuery.GetIQueryableEntityList(entityPocos);
 
-                List<HorseList> listResult111 = entityLists.ToList();
-
                 entityLists = genericFilter.GetFilteredQuery<HorseList>(listQueryOperation, entityLists);
-                listResult111 = entityLists.ToList();
 
-
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(HorseList).GetProperty(queryOperations.SortByColumnName);
@@ -314,10 +310,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
               {
 					response.Count = entityLists.Count();
     		  }
-
-                listResult111 = entityLists.ToList();
-
-                if (!queryOperations.GetAll)
+			  	if(!queryOperations.GetAll)
 				 {
 
                   entityLists = entityLists.Skip(skippedEntities);
