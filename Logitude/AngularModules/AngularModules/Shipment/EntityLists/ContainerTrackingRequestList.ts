@@ -19,5 +19,6 @@ export class ContainerTrackingRequestList {
 		CarrierCode: string;
 		Status: string;
 		SearchFields: string;
+		IsSimulate: boolean;
 	
 }

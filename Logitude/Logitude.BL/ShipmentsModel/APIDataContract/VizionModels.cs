@@ -54,4 +54,31 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public string message { get; set; }
 
     }
+
+    public class Organization
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public bool active { get; set; }
+        public DateTime created_at { get; set; }
+        public DateTime updated_at { get; set; }
+    }
+
+    public class ActiveRequest
+    {
+        public string id { get; set; }
+        public string container_id { get; set; }
+        public object bill_of_lading { get; set; }
+        public string carrier_scac { get; set; }
+        public string callback_url { get; set; }
+        public string organization_id { get; set; }
+        public object parent_reference_id { get; set; }
+        public bool active { get; set; }
+        public string last_update_status { get; set; }
+        public DateTime created_at { get; set; }
+        public DateTime updated_at { get; set; }
+        public DateTime last_update_attempted_at { get; set; }
+        public int retry_count { get; set; }
+        public Organization organization { get; set; }
+    }
 }
