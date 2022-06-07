@@ -400,7 +400,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("AutomationQueue", automationQueueArgs.Tenant);
             string extraDetails = GetAutomationExtraDetails(automationQueueArgs);
-            queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", automationQueueArgs.EntityChangeId }, { "Tenant", automationQueueArgs.Tenant.ToString() }, { "Type", automationQueueArgs.AutomationType }, { "EntityId", automationQueueArgs.EntityId }, { "AutomationId", automationQueueArgs.AutomationId }, { "ExternalId", automationQueueArgs.ExternalId }, { "ExtraDetails", extraDetails }, { "ExecutedImmediately", automationQueueArgs.ExecutedImmediately.ToString() } }, automationQueueArgs.Tenant, automationQueueArgs.AutomationDelayTime, null, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", automationQueueArgs.EntityChangeId }, { "Tenant", automationQueueArgs.Tenant.ToString() }, { "Type", automationQueueArgs.AutomationType }, { "EntityId", automationQueueArgs.EntityId }, { "AutomationId", automationQueueArgs.AutomationId }, { "ExternalId", automationQueueArgs.ExternalId }, { "ExtraDetails", extraDetails }, { "ExecutedImmediately", automationQueueArgs.ExecutedImmediately.ToString() }, { "EntityReference", automationQueueArgs.EntityReference } }, automationQueueArgs.Tenant, automationQueueArgs.AutomationDelayTime, null, null, null);
 
         }
 
@@ -568,8 +568,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         public TimeSpan? AutomationDelayTime { get; set; }
         public bool ExecutedImmediately { get; set; }
         public object ExtraDetails { get; set; }
-
-
+        public string EntityReference { get; set; }
     }
 
 

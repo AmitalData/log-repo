@@ -49,7 +49,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         {
             foreach (Automation automation in onUpdateDocumentAutomations)
             {
-                AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant, ExtraDetails = automationResultArgs.ExtraDetails, ExecutedImmediately = true });
+                AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant, ExtraDetails = automationResultArgs.ExtraDetails, ExecutedImmediately = true, EntityReference = automationResultArgs.EntityReference });
             }
         }
 

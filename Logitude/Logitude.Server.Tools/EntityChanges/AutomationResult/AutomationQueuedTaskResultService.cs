@@ -77,7 +77,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                         if (validateResult.Type == "Delayed")
                         {
                             DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
-                            AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = processtype, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationFieldLists, entityChange.Tenant) });
+                            AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = processtype, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationFieldLists, entityChange.Tenant), EntityReference = automationResultArgs.EntityReference });
                         }
 
                         else

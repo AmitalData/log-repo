@@ -117,7 +117,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 }
 
       
-                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = "Ticket", EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now });
+                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = "Ticket", EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now, EntityReference = entityPM.TicketNumber });
                 mainEntityChangeService.AddEntityChange();
 
                 this.SetTimeIssues(entityPM, null);
@@ -216,7 +216,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 bool IsChangeSLAViaAutomation = false;
                 if (!entityPM.IsUpdateByAutomation)
                 {
-                     var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, OldEntityPM = this.OldEntityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = this.EntityChangeFieldXml, ObjectTableName = "Ticket", EntityId = entityPM.Id, Tenant = entityPM.Tenant });
+                     var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, OldEntityPM = this.OldEntityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = this.EntityChangeFieldXml, ObjectTableName = "Ticket", EntityId = entityPM.Id, Tenant = entityPM.Tenant, EntityReference = entityPM.TicketNumber });
                      mainEntityChangeService.AddEntityChange();
                      IsChangeSLAViaAutomation = mainEntityChangeService.IsChangeSLA;
 

@@ -96,7 +96,7 @@ namespace Logitude.Server.Tools.EntityChanges
                     AutomationConditionFields automationConditionFields = automationObjectFieldService.GetAutomationConditionFields(automationFieldLists, automationObjectTable, otherAutomationObjectTable);
                     entityChange.AutomationConditionFieldsXml = LogitudeXmlSerializer.SerializeObjectToXmlString(automationConditionFields);
 
-                    automationResultArgs = new AutomationResultArgs() { EntityPM = entityChangeArgs.EntityPM, EntityChange = entityChange, AutomationLists = automationLists, AutomationFieldLists = automationFieldLists, AutomationObjectTable = automationObjectTable, OtherAutomationObjectTable = otherAutomationObjectTable, EntityChangeArgs = entityChangeArgs, MainEntityChangeService = this, ExtraDetails = entityChangeArgs.ExtraDetails };
+                    automationResultArgs = new AutomationResultArgs() { EntityPM = entityChangeArgs.EntityPM, EntityChange = entityChange, AutomationLists = automationLists, AutomationFieldLists = automationFieldLists, AutomationObjectTable = automationObjectTable, OtherAutomationObjectTable = otherAutomationObjectTable, EntityChangeArgs = entityChangeArgs, MainEntityChangeService = this, ExtraDetails = entityChangeArgs.ExtraDetails, EntityReference = entityChangeArgs.EntityReference };
                     var automationResultLists = entityChangeArgs.DontExecuteAutomationThatDependencyOnLastEntityUpdate ? AutomationResultLists.Where(d=>d.DependencyOnLastEntityUpdate == false).ToList() : AutomationResultLists;
                     foreach (IAutomationResultService service in automationResultLists)
                     {
@@ -229,9 +229,10 @@ namespace Logitude.Server.Tools.EntityChanges
             return entityChange;
         }
 
-        public void ExecuteAutomationThatDependencyOnLastEntityUpdate(object entity)
+        public void ExecuteAutomationThatDependencyOnLastEntityUpdate(object entity, string entityReference)
         {
             automationResultArgs.EntityPM = entity;
+            automationResultArgs.EntityReference = entityReference;
             foreach (IAutomationResultService service in AutomationResultLists.Where(d => d.DependencyOnLastEntityUpdate).ToList())
             {
                 service.Run(automationResultArgs);
@@ -269,6 +270,7 @@ namespace Logitude.Server.Tools.EntityChanges
         public Object ExternalEntity { get; set; }
         public bool DontExecuteAutomationThatDependencyOnLastEntityUpdate { get; set; }
         public object ExtraDetails { get; set; }
+        public string EntityReference { get; set; }
     }
 
     public class OnUpdateDocumentDetails
@@ -297,8 +299,7 @@ namespace Logitude.Server.Tools.EntityChanges
         public MainEntityChangeService MainEntityChangeService { get; set; }
         public Object EntityPM { get; set; }
         public object ExtraDetails { get; set; }
-
-
+        public string EntityReference { get; set; }
     }
 
     public class AutomationObjectTableClass
