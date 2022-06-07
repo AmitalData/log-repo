@@ -11,14 +11,18 @@ namespace Logitude.BL.Helpers
 {
     public static class APICaller
     {
-        public static T CallApi<T>(string url, object o, Method m, string token = null)
+        public static T CallApi<T>(string url, object o, Method m, List<KeyValuePair<string,string>> headers = null)
         {
 
             RestSharp.RestClient restClient = new RestSharp.RestClient();
             RestRequest restRequest = new RestRequest(url, m) { RequestFormat = DataFormat.Json };
-            if (!string.IsNullOrEmpty(token))
+            if (headers != null)
             {
-                restRequest.AddHeader("Token", token);
+                foreach (var item in headers)
+                {
+                    restRequest.AddHeader(item.Key, item.Value);
+                }
+                
 
             }
 

@@ -1,6 +1,8 @@
 ﻿using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
+using Logitude.BL.ShipmentsModel.Tools.ContainerTracking;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
@@ -19,6 +21,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -37,6 +40,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ContainerTrackingProviderPM entityPM;
         private IShipmentsContext objectContext;
         private ContainerTrackingProviderRepository entityRepository;
+        public ContainerTrackingProviderService(int tenant)
+        {
+            this.tenant = tenant;
+            this.ObjectContext = ShipmentsContext.GetContext(tenant);
+            this.entityRepository = new ContainerTrackingProviderRepository(objectContext);
+        }
         public ContainerTrackingProviderService(IShipmentsContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -57,6 +66,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.SubmitChanges();
         }
 
+        public object GetSupportedCarrier(string id)
+        {
+            var provider = ObjectContext.ContainerTrackingProviders.Where(e => e.Id == id).FirstOrDefault();
+            if (provider == null)
+                throw new ApplicationException("Container Tracking Setting not exist");
+            switch(provider.SourceCode )
+            {
+                case ContainerStatusSourceValues.Vizion:
+                    return GetVizionSupportedCarrier(provider);
+                default:
+                    throw new ApplicationException("Container Tracking Source not implement");
+            }
+
+            
+        }
+
+        private object GetVizionSupportedCarrier(ContainerTrackingProvider provider)
+        {
+            var vizionService = new VizionService(provider);
+            return vizionService.GetAllCarriers();
+        }
+
         private void Validate(ContainerTrackingProviderPM theEntityPm)
         {
             var isExist = entityRepository.GetBySourceCode(theEntityPm.SourceCode) != null;
@@ -64,6 +95,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 throw new Exception($"This source {theEntityPm.SourceCode} has already been added");
             }
+        }
+
+        public object GetActiveRequests(string id)
+        {
+            var provider = ObjectContext.ContainerTrackingProviders.Where(e => e.Id == id).FirstOrDefault();
+            if (provider == null)
+                throw new ApplicationException("Container Tracking Setting not exist");
+            switch (provider.SourceCode)
+            {
+                case ContainerStatusSourceValues.Vizion:
+                    return GetVizionActiveRequests(provider);
+                default:
+                    throw new ApplicationException("Container Tracking Source not implement");
+            }
+        }
+
+        private object GetVizionActiveRequests(ContainerTrackingProvider provider)
+        {
+            var vizionService = new VizionService(provider);
+            return vizionService.GetActiveRequests();
         }
 
         public void Update(ContainerTrackingProviderPM theEntityPm)

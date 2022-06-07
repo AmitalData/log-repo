@@ -39,6 +39,7 @@ import { ContainerMenuButtonsHandler } from './Components/MenuButtons/ContainerM
 import { ContainerTrackingProviderListService } from './Services/StandardLists/ContainerTrackingProvidersListService';
 import { ContainerTrackingProviderPMService } from './Services/StandardPMs/ContainerTrackingProvidersPMService';
 import { ContainerStatusSourceListService } from './Services/StandardLists/ContainerStatusSourceListService';
+import { ContainerTrackingProviderMenuButtonsHandler } from './Components/MenuButtons/ContainerTrackingProviderMenuButtonsHandler';
 //import { ShipmentTabsService } from './MetaDataServices/TabsServices/ShipmentTabsService';
 //import { ShipmentHeaderScreenService } from './MetaDataServices/HeaderScreenServices/ShipmentHeaderScreenService';
 //import { ShipmentMenuButtonService } from './MetaDataServices/MenuButtonServices/ShipmentMenuButtonService';
@@ -97,6 +98,7 @@ export class ModuleProviders {
             case "MessagingStockMenuButtonsHandler": { myResult = new MessagingStockMenuButtonsHandler(); break; }
             case "ShipmentMenuButtonsHandler": { myResult = new ShipmentMenuButtonsHandler(); break; }
             case "ContainerMenuButtonsHandler": { myResult = new ContainerMenuButtonsHandler(); break; }
+            case "ContainerTrackingProviderMenuButtonsHandler": { myResult = new ContainerTrackingProviderMenuButtonsHandler(); break; }
             //case "ShipmentTabsService": { myResult = new ShipmentTabsService(); break; }
             //case "ShipmentHeaderScreenService": { myResult = new ShipmentHeaderScreenService(); break; }
             //case "ShipmentMenuButtonService": { myResult = new ShipmentMenuButtonService(); break; }

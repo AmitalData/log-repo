@@ -1147,6 +1147,7 @@
     <Compile Include="Controllers\ShipmentOrderModel\ShipmentOrderExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ContainerAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\ContainerTrackingController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Extended\ContainerTrackingProvidersController.Extended.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\ForwarderOExportShipmentsController.cs" />
