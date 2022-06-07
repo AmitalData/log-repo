@@ -513,6 +513,7 @@ export class NewContainerizationComponent extends BaseComponent {
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
     }
+    
     OnValueChange(searchValue: any) {
         if (searchValue == null) {
             this.OnNoneBtnClicked()
