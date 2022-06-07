@@ -118,5 +118,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     where shipment.Id == shipmentId && shipment.Tenant == tenant 
                     select shipment.ConcurrencyGUID).FirstOrDefault();
         }
+
+        public string GetConcurrencyGUIDByContainerId(string containerId, int tenant)
+        {
+            return (from container in context.Containers
+                    where container.Id == containerId && container.Tenant == tenant
+                    select container.ConcurrencyGUID).FirstOrDefault();
+        }
     }
 }
