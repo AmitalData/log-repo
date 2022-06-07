@@ -92,7 +92,7 @@ Then("the link of standalon should display", () => {
 
 //#region THe blus buttom will not appear in Standalone Shipment
 Given("the user in the standalone shipment Packages tab", () => {
-    cy.Click(BaseSelectors.HyperlinkButtonControl, StandaloneShipmenNumber)
+    cy.Click(BaseSelectors.HyperlinkButtonControl+BaseSelectors.LastElement, StandaloneShipmenNumber)
 })
 
 When("click add full truack container", () => {

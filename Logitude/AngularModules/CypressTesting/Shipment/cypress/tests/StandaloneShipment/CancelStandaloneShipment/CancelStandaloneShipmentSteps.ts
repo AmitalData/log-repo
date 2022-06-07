@@ -48,7 +48,7 @@ Given("save the pickup", () => {
 });
 
 Given("the user in standalone shipment", () => {
-  cy.Click(BaseSelectors.HyperlinkButtonControl, standaloneShipmentNumber, true)
+  cy.Click(BaseSelectors.HyperlinkButtonControl+BaseSelectors.LastElement, standaloneShipmentNumber, true)
 })
 
 When("create shipment", () => {
