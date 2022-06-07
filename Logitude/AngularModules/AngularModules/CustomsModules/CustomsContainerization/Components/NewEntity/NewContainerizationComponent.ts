@@ -263,7 +263,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CreateDateTime',
             DataTypeCode: 'String',
-            Display: "תאריך פתיחת הצהרה",
+            Display: "תםריך פתיחת הצהרה",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -285,7 +285,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFile',
             DataTypeCode: 'String',
-            Display: "מס' תיק יצוא",
+            Display: "מס' תיק יצום",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -458,7 +458,7 @@ export class NewContainerizationComponent extends BaseComponent {
             this.declarationWebService.GetDeclarationByConsignmentParames(ArrayDeclartiosId).subscribe(res => {
                 if (res.Result !=null) {
                     debugger;
-                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות אותם מזהים ​שלא צורפו להמכלה הנוכחית ${res.Result} `);
+                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות םותם מזהים ​שלם צורפו להמכלה הנוכחית ${res.Result} `);
                     myConfirmWindow.WindowClosed.subscribe(event => {
                         if (myConfirmWindow.Yes == true) {
                             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
@@ -481,7 +481,7 @@ export class NewContainerizationComponent extends BaseComponent {
             this.declarationWebService.GetDeclarationByConsignmentParames(ArrayDeclartiosId).subscribe(res => {
 
                 if (res.Result !=null && res.Result!=0) {
-                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות אותם מזהים ​שלא צורפו להמכלה הנוכחית   ${res.Result}  `);
+                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות םותם מזהים ​שלם צורפו להמכלה הנוכחית   ${res.Result}  `);
                     myConfirmWindow.WindowClosed.subscribe(event => {
 
                         
@@ -631,6 +631,12 @@ export class NewContainerizationComponent extends BaseComponent {
         } else {
             this.SearchFieldsFilter = null;
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+        }
+    }
+    
+    OnValueChange(searchValue: any) {
+        if (searchValue == null) {
+            this.OnNoneBtnClicked()
         }
     }
     CancelButtonClicked() {
