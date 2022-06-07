@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\CacheHelper.cs" />
+    <Compile Include="BL\ExportDeclarationClosing.cs" />
     <Compile Include="BL\QuoteOpCarriers.cs" />
     <Compile Include="BL\QuoteOPIncoterms.cs" />
     <Compile Include="BL\QuoteOPPorts.cs" />

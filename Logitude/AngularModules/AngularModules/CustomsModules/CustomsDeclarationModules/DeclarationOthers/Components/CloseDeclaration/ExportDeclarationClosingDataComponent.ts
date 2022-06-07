@@ -18,10 +18,11 @@ import { AmendmentRequestParams } from '../../../../../Customs/DataContract/Requ
 import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { ExportDeclarationClosingDatasExtendPMService } from 'Customs/Services/ExtendedPMs/ExportDeclarationClosingDatasExtendPMService';
 import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
+import { ExportDeclarationClosingWebService } from 'Customs/Services/WebServices/ExportDeclarationClosingWebService';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
-    templateUrl: './ExportDeclarationClosingDataComponent.html',
+    templateUrl: './ExportDeclarationClosingDataComponent.html',    
 })
 
 export class ExportDeclarationClosingDataComponent extends BaseComponent {
@@ -37,6 +38,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     exportDeclarationClosingDatasExtendPMService: ExportDeclarationClosingDatasExtendPMService = new ExportDeclarationClosingDatasExtendPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     public IsNew: boolean = false;
+    private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
 
     constructor(private EntityResourceService: EntityResourceService) {
         super();
@@ -169,10 +171,14 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public get FlightDate() {
         if (this.EntityPM != null && this.EntityPM.FLIGHT_DATE != null) {
             var myFormats = DateTool.GetDateFormats(this.EntityPM.FLIGHT_DATE);
-            return myFormats.DateString;
+            return myFormats.DateString as any;
             // + " " + myFormats.ShortTimeString;
         }
         return null;
+    }
+    set FlightDate(value: Date) {
+        if (this.EntityPM.FLIGHT_DATE != value)
+            this.EntityPM.FLIGHT_DATE = value;
     }
 
     get Smp() { return this.EntityPM ? this.EntityPM.SMP : null; }
@@ -351,6 +357,14 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     async initOceanExportData() {
         if(this.DecPM.Direction !== 'E' || this.DecPM.TransportModeId !== 'O' || !(await this.isConnectedToUniFreight())) return;
 
+        const exportData = await this.exportDeclarationClosingWebService.getUnifreightData(this.DecPM.ExportFile);
+        console.log(exportData)
+        if(!exportData) return;
+        
+        this.FlightDate = exportData.flightDate 
+        this.LoadingSite = exportData.loadingSite 
+        this.Smp = exportData.HAWB 
+        this.MainAWB = exportData.MAWB 
         
     }
 
