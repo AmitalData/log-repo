@@ -648,6 +648,7 @@ export class NewContainerizationComponent extends BaseComponent {
                 this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
                 this.containerizationExtendedListService.SelectedDeclarations = true;
             } else {
+                
                 this.entityPM = windowArgs.EntityPM;
             }
         }
