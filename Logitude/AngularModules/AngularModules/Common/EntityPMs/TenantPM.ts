@@ -745,6 +745,11 @@ export class TenantPM {
     public set EnableDeliveryOptions(newValue: boolean) { if (this.enableDeliveryOptions != newValue) { this.enableDeliveryOptions = newValue; this.MarkAsDirty("EnableDeliveryOptions"); } }
        
 	 
+    private automaticallyClosingField: string;
+    public get AutomaticallyClosingField() { return this.automaticallyClosingField; }
+    public set AutomaticallyClosingField(newValue: string) { if (this.automaticallyClosingField != newValue) { this.automaticallyClosingField = newValue; this.MarkAsDirty("AutomaticallyClosingField"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

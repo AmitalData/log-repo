@@ -200,6 +200,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public int? AutomaticallyCloseDays { get; set; }
         public bool EnableDeliveryOptions { get; set; }
-
+        public string AutomaticallyClosingField { get; set; }
     }
 }

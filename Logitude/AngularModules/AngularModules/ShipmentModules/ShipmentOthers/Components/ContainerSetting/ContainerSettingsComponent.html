@@ -21,8 +21,30 @@
                                             </tr>
                                         </table>
                                     </SectionHead>
+
                                     <SectionBody>
                                         <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 170px;">
+                                                    <LogLabel [ObjectFieldName]="'AutomaticallyClosingField'" [NoObjectField]="true" [Text]="'Automatically Closing Field'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <ComboBox [SelectedItem]="SelectedClosingField" [ItemsSource]="ClosingFieldsItemSource" (SelectedItemChanged)="SelectedClosingField = $event" [Binding]="'Name'"></ComboBox>
+                                                            </td>
+                                                            <td style="width:18px;">
+                                                                <div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
 
                                             <tr class="FormFieldRow">
                                                 <td style="width: 170px;">

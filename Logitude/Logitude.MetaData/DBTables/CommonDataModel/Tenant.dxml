@@ -770,6 +770,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticallyClosingField"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"

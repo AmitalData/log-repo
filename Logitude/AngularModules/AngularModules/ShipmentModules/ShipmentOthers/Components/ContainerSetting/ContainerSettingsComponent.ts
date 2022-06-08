@@ -6,6 +6,7 @@ import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantP
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     templateUrl: './ContainerSettingsComponent.html',
@@ -19,14 +20,14 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     private CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: string[];
     public reloadingTranslation: boolean;
-    public ClosingContainerToolTipMessage: string = "How many days after the Actual Empty Return Date to wait before automatically closing the container."; 
-
+    public ClosingContainerToolTipMessage: string = "How many days after the Actual Empty Return Date to wait before automatically closing the container.";
+    public ClosingFieldsItemSource: CodeNameClass[] = [];
     constructor() {
         super();
     }
 
     ngOnInit() {
-        this.GetCurrentTenant();
+        this.GetCurrentTenant();        
     }
 
     private GetCurrentTenant() {
@@ -34,13 +35,43 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
             this.tenant = response.Result;
             this.IsVisible = true;
+            this.BuildClosingFieldsItemSource();
         });
+    }
+
+    BuildClosingFieldsItemSource() {
+        this.ClosingFieldsItemSource = [];
+        this.ClosingFieldsItemSource.push(new CodeNameClass("EMPTR", "Empty Return"));
+        this.ClosingFieldsItemSource.push(new CodeNameClass("SHATA", "Shipment ATA"));
+
+        this.selectedClosingField = this.ClosingFieldsItemSource.filter(d => d.Code == this.AutomaticallyClosingField)[0];
+    }
+
+    private selectedClosingField: CodeNameClass;
+    get SelectedClosingField() { return this.selectedClosingField; }
+    set SelectedClosingField(value: CodeNameClass) {
+        if (this.selectedClosingField != value) {
+            this.selectedClosingField = value;
+
+            if (value) this.AutomaticallyClosingField = value.Code;
+            else {
+                this.AutomaticallyClosingField = null;
+                this.AutomaticallyCloseDays = null;
+            }
+        }
     }
 
     get AutomaticallyCloseDays() { return this.tenant.AutomaticallyCloseDays; }
     set AutomaticallyCloseDays(value: number) {
         if (this.tenant.AutomaticallyCloseDays != value) {
             this.tenant.AutomaticallyCloseDays = value;
+        }
+    }
+
+    get AutomaticallyClosingField() { return this.tenant.AutomaticallyClosingField; }
+    set AutomaticallyClosingField(value: string) {
+        if (this.tenant.AutomaticallyClosingField != value) {
+            this.tenant.AutomaticallyClosingField = value;
         }
     }
 
