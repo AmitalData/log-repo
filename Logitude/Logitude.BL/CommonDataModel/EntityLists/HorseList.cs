@@ -35,5 +35,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string UpdatedByUserId { get; set; }
         public string UpdatedByUserName { get; set; }
         public string SearchFields { get; set; }
+        public string GenderCode { get; set; }
     }
 }

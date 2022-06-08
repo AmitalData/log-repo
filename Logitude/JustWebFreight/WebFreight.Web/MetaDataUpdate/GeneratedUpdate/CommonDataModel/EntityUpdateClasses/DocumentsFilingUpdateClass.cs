@@ -1527,7 +1527,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn AllDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DocumentsFiling.IsRequested" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "DocumentsFiling.DirectionCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "DocumentsFiling.DirectionCode", PredefinedValue = "I",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -1550,10 +1550,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn RequestedDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DocumentsFiling.IsRequested" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter RequestedDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "DocumentsFiling.DirectionCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter RequestedDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "DocumentsFiling.DirectionCode", PredefinedValue = "I",PredefinedValue2 = null, CustomPredefined = false, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter RequestedDocumentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "DocumentsFiling.IsRequested", PredefinedValue = "true",PredefinedValue2 = null, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter RequestedDocumentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "DocumentsFiling.IsRequested", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

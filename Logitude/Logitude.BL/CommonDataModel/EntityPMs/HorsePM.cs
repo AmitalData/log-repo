@@ -31,5 +31,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
         public string SearchFields { get; set; }
+        public string GenderCode { get; set; }
     }
 }

@@ -1221,7 +1221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn TodayReportExecutionLogQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter TodayReportExecutionLogQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter TodayReportExecutionLogQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, CustomPredefined = false, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      

@@ -32,5 +32,6 @@ export class HorseList {
 		UpdatedByUserId: string;
 		UpdatedByUserName: string;
 		SearchFields: string;
+		GenderCode: string;
 	
 }
