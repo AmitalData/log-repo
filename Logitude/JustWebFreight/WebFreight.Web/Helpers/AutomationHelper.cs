@@ -292,6 +292,7 @@ namespace WebFreight.Web.Helpers
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 CommunicationLogTypeCode = "E",
                 CommunicationStatusTypeCode = "W",
+                EntityReference = automationSendEmailArgs.EntityReference
 
             };
 
@@ -729,8 +730,7 @@ namespace WebFreight.Web.Helpers
         public int Tenant { get; set; }
         public string ReportTemplateId { get; set; }
         public string DocumentCopyId { get; set; }
-
-
+        public string EntityReference { get; set; }
     }
 
 

@@ -28,7 +28,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             {
                 foreach (Automation automation in automationsEmail)
                 {
-                    AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = automationResultArgs.EntityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = automationResultArgs.EntityChange.Id, Tenant = automation.Tenant, ExecutedImmediately = true });
+                    AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = automationResultArgs.EntityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = automationResultArgs.EntityChange.Id, Tenant = automation.Tenant, ExecutedImmediately = true , EntityReference  = automationResultArgs.EntityReference});
                 }
             }
         }

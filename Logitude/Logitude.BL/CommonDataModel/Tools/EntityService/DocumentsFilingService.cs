@@ -994,7 +994,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(entityDetails.CombinedObjectTableName, automationType, theEntityPm.Tenant);
             if (!isHaveAutomation) return;
 
-            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityDetails.EntityPM, ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = theEntityPm.EntityId, Tenant = theEntityPm.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentDetails { Type = "Upload", DocumentId = theEntityPm.DocumentId, DocumentTypeId = theEntityPm.DocumentTypeId }, OtherObjectTableName = entityDetails.OtherObjectTableName });
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityDetails.EntityPM, ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = theEntityPm.EntityId, Tenant = theEntityPm.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentDetails { Type = "Upload", DocumentId = theEntityPm.DocumentId, DocumentTypeId = theEntityPm.DocumentTypeId }, OtherObjectTableName = entityDetails.OtherObjectTableName, EntityReference = theEntityPm.EntityReference });
             mainEntityChangeService.AddEntityChange();
         }
 
