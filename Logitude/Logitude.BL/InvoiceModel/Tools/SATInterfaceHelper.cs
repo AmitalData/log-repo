@@ -38,6 +38,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.Resolvers;
 using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40;
+using Profact.TimbraCFDI33.Complementos.Pagos10;
 
 namespace Logitude.BL.InvoiceModel.Tools
 {
@@ -2351,7 +2352,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             int tenant = payment.Tenant;
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
-            if(satSetting != null && satSetting.SATInterfaceCode == "PROF40")
+            if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
             {
                 SATPaymentProfact40Service sATPaymentProfact40Service = new SATPaymentProfact40Service(payment, comprobanteXmlPagos, arinvoiceRep);
                 sATPaymentProfact40Service.UpdateStatus();
@@ -2367,10 +2368,15 @@ namespace Logitude.BL.InvoiceModel.Tools
                                                         select a).ToList();
 
             List<ARInvoiceSATDetails> currentPaymentInvoiceDetails = GetCurrentPaymentInvoicesDetails(currentPaymentARInvoices);
-            XmlElement xmlPagos = comprobanteXmlPagos;
-            Profact.TimbraCFDI33.Complementos.Pagos10.Pagos pagos = Profact.TimbraCFDI.XMLUtilerias.DeserializaObjeto<Profact.TimbraCFDI33.Complementos.Pagos10.Pagos>(xmlPagos.OuterXml);
-            Profact.TimbraCFDI33.Complementos.Pagos10.PagosPago pagoItem = pagos.Pago[0];
-            List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado> doctos = pagoItem.DoctoRelacionado.ToList();
+            List<PagosPagoDoctoRelacionado> doctos;
+            try
+            {
+                doctos = GetPagosPagoDoctoRelacionados(comprobanteXmlPagos);
+            }
+            catch (Exception ex)
+            {
+                doctos = GetNewInstancePagosPago10DoctoRelacionados(comprobanteXmlPagos);
+            }
             foreach (Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado doctoItem in doctos)
             {
                 ARInvoiceSATDetails relatedInvoice = currentPaymentInvoiceDetails.FirstOrDefault(d => d.UUID == doctoItem.IdDocumento);
@@ -2421,6 +2427,30 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
 
             arinvoiceRep.SubmitChanges();
+        }
+
+        private static List<PagosPagoDoctoRelacionado> GetPagosPagoDoctoRelacionados(XmlElement comprobanteXmlPagos)
+        {
+            XmlElement xmlPagos = comprobanteXmlPagos;
+            Profact.TimbraCFDI33.Complementos.Pagos10.Pagos pagos = Profact.TimbraCFDI.XMLUtilerias.DeserializaObjeto<Profact.TimbraCFDI33.Complementos.Pagos10.Pagos>(xmlPagos.OuterXml);
+            Profact.TimbraCFDI33.Complementos.Pagos10.PagosPago pagoItem = pagos.Pago[0];
+            List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado> doctos = pagoItem.DoctoRelacionado.ToList();
+            return doctos;
+        }
+
+        private static List<PagosPagoDoctoRelacionado> GetNewInstancePagosPago10DoctoRelacionados(XmlElement comprobanteXmlPagos)
+        {
+            XmlElement xmlPagos = comprobanteXmlPagos;
+            Profact.TimbraCFDI40.Complementos.Pagos20.Pagos pagos = Profact.TimbraCFDI.XMLUtilerias.DeserializaObjeto<Profact.TimbraCFDI40.Complementos.Pagos20.Pagos>(xmlPagos.OuterXml);
+            Profact.TimbraCFDI40.Complementos.Pagos20.PagosPago pagoItem = pagos.Pago[0];
+            List<Profact.TimbraCFDI40.Complementos.Pagos20.PagosPagoDoctoRelacionado> doctos = pagoItem.DoctoRelacionado.ToList();
+
+            List<PagosPagoDoctoRelacionado> pagosPagoDoctoRelacionados = new List<PagosPagoDoctoRelacionado>();
+            doctos.ForEach(docto => {
+                pagosPagoDoctoRelacionados.Add(new PagosPagoDoctoRelacionado { IdDocumento = docto.IdDocumento });
+            });
+
+            return pagosPagoDoctoRelacionados;
         }
 
         private List<ARInvoiceSATDetails> GetCurrentPaymentInvoicesDetails(List<ARInvoice> currentPaymentARInvoices)
