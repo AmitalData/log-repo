@@ -1193,16 +1193,15 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         }
         else {
             var htmlString = filter.HtmlString;
-            this.CurrentSession.SessionEvent.emit({
-                Name: "SendDocumentToDigitalPortal",
+            this.CurrentSession.FireEvent({
+                Name: "DigitalPortalHTMLTemplate",
                 htmlString: htmlString,
                 To: this.ToEmail,
                 Bcc: this.Bcc,
                 CC: this.Cc,
                 Subject: filter.Subject
             });
-
-            this.CurrentSession.CurrentWindow.Close(htmlString);
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 
