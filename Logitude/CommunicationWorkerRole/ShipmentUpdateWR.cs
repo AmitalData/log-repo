@@ -23,6 +23,8 @@ namespace CommunicationWorkerRole
 
         public override void Run()
         {
+            var ShipmentUpdateMessageProducer = new Producer();
+
             while (IsRunning)
             {
                 if (!General.IsUpdating())
@@ -35,8 +37,6 @@ namespace CommunicationWorkerRole
                         if (response.MessageId != null)
                         {
                             var entityPMString = GetSerializedExtendedShipmentById(response);
-
-                            var ShipmentUpdateMessageProducer = new Producer();
                             var result = ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic, KakaMessageTypes.ShipmentUpdate, entityPMString);
 
                             queueservice.Complete();
