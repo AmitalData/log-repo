@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "a1b7642a47b51de407c3d56552f0c4f2";
+		public const string HashString = "a521fe2b8c7535329bba7f37fdda074b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15118,6 +15118,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ContainerFeature_FIELDSCUSTOMIZATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FIELDSCUSTOMIZATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.FIELDSCUSTOMIZATION", NameTextCodeDefaultText = @"Fields Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerObjectTable);
 
 		   Feature ContainerFeature_RULESCUSTOMIZATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RULESCUSTOMIZATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.RULESCUSTOMIZATION", NameTextCodeDefaultText = @"Rules Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerObjectTable);
+
+		   Feature ContainerFeature_ContainersActivated = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainersActivated", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.ContainersActivated", NameTextCodeDefaultText = @"Containers Activated" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerObjectTable);
 
    
 	    

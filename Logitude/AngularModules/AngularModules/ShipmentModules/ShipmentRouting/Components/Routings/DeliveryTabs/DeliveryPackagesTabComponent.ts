@@ -118,8 +118,9 @@ export class DeliveryPackagesTabComponent {
 
         this.IsAddContainerVisible = false;
         if (this.IsFCLEntity) {
-            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-            if (featureToggle) {
+            //var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+            //if (featureToggle) {
+            if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated")) {
                 this.IsAddContainerVisible = true;
                 this.IsEditingEnabled = false;
             }

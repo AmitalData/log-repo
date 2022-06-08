@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;f135&quot;"
+  Code="&quot;3b79&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -579,9 +579,9 @@
       Description="&quot;Only Allow Pickups/Deliveries to be Created with a Standalone Shipment&quot;" />
     <Record
       Code="&quot;OIU&quot;"
-      Name="&quot;Ocean Insights Shipment Update&quot;"
-      SearchFields="&quot;OIU,Ocean Insights Shipment Update&quot;"
-      Description="&quot;Ocean Insights Shipment Update&quot;" />
+      Name="&quot;Shipment Update from Container&quot;"
+      SearchFields="&quot;OIU,Shipment Update from Container&quot;"
+      Description="&quot;Shipment Update from Container&quot;" />
     <Record
       Code="&quot;SFC&quot;"
       Name="&quot;Show file name as computed&quot;"

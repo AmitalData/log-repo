@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
+using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -297,7 +298,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool ShouldUpdateContainers()
         {
-            if (!IsOceanInsightFeatureToggleExistInTenant( this.initializer.Tenant))
+            if (!IsContainerFeatureActivated())
                 return false;
 
             if (initializer.EntityPM.TransportModeId != "O")
@@ -322,6 +323,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                                                 && a.Tenant == 0
                                                 select a).Any();
             return isOceanInsightFeatureToggleExist;
+        }
+        private bool IsContainerFeatureActivated()
+        {
+            return SecurityUtility.CheckFeature("Container", "ContainersActivated", this.initializer.Tenant);
         }
 
         private void CreateContainer(ShipmentPackagePM shipmentPackage)
@@ -447,7 +452,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void SendAutomaticallyOceanOnsightsRequest()
         {
-            if (IsSendAutomaticallyOceanOnsightsRequestByContainer())
+            if (IsSendAutomaticallyOceanOnsightsRequestByContainer() && IsOceanInsightFeatureToggleExistInTenant(this.initializer.Tenant))
             {
                 var allUpdatedContainers = initializer.ShipmentPackagesChangeSet.Where(a => a.ContainerNumber != null);
                 foreach (var container in allUpdatedContainers)
