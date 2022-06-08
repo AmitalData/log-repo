@@ -86,7 +86,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
             else
             {
-                profactoXmlData = LogitudeXmlSerializer.SerializeObject<Comprobante>(args.Comprobante);
+                profactoXmlData = args.IsVersion3 ? LogitudeXmlSerializer.SerializeObject<Profact.TimbraCFDI33.Comprobante>(args.ComprobanteV3) : LogitudeXmlSerializer.SerializeObject<Comprobante>(args.Comprobante);
             }
 
             return profactoXmlData;
@@ -94,15 +94,16 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private byte[] GetCancellationProfactoXmlData(SATCommunicationLogArgs args, byte[] profactoXmlData)
         {
-            if (args.Comprobante.Complemento.Any == null) return profactoXmlData;
+            if (!args.IsVersion3 && args.Comprobante.Complemento.Any == null) return profactoXmlData;
+            if (args.IsVersion3 && args.ComprobanteV3.Complemento.Any == null) return profactoXmlData;
 
-            List<System.Xml.XmlElement> myLXmlComplementos = args.Comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+            List<System.Xml.XmlElement> myLXmlComplementos = args.IsVersion3 ? args.ComprobanteV3.Complemento.Any.ToList<System.Xml.XmlElement>() : args.Comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
             var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
 
             if (timbreFiscalDigitalElement == null) return profactoXmlData;
 
             Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-            string rfcEmisor = args.Comprobante.Emisor.Rfc.Trim();
+            string rfcEmisor = args.IsVersion3 ? args.ComprobanteV3.Emisor.Rfc.Trim() : args.Comprobante.Emisor.Rfc.Trim();
             string folioFiscal = digitalTi.UUID.Trim();
             string motivoCancelaOperation = GetCancelReason(args);// "03";
             string folioSustitucion = GetFolioSustitucion(args);
@@ -278,9 +279,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
     public class SATCommunicationLogArgs
     {
         public Comprobante Comprobante { get; set; }
+        public Profact.TimbraCFDI33.Comprobante ComprobanteV3 { get; set; }
         public ARInvoicePM ARInvoicePM { get; set; }
         public ARPaymentPM ARPaymentPM { get; set; }
         public bool IsCancellation { get; set; }
         public bool IsPayment { get; set; }
+        public bool IsVersion3 { get; set; }
     }
 }
