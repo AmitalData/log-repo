@@ -61,7 +61,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 List<DocumentsFilingPM> documentFilings = null;
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(authToken.Tenant);
-                CFICONNQueryService queryService = new CFICONNQueryService(AmitalContext.GetContext(authToken.Tenant));
+                CFICONNQueryService queryService = null;
+                if (declarationType != "E")
+                {
+                    queryService = new CFICONNQueryService(AmitalContext.GetContext(authToken.Tenant));
+                }
+                
 
                 //externalEntityReferences.Add("1091");
                 //externalEntityReferences.Add("1088");
@@ -128,7 +133,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     }
                     else
                     {
-                        documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
+                        documentFilings =  documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
                     }
                    }
                     
