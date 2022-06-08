@@ -513,7 +513,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         param.CargoIdentifierKey3 = this.entityPM.CargoIdentifierKey3;
         param.PackagingTypeCode = this.entityPM.PackagingTypeCode;
         param.Quantity = this.entityPM.Quantity;
-        param.CustomsFile = this.entityPM.DeclarationId == null ? this.entityPM.ExportFileNo : this.declartionVal.CustomFileNo;
+        param.CustomsFile = this.entityPM.DeclarationId == null ? this.entityPM.ExportFileNo : this.declartionVal?.CustomFileNo;
         param.Tenant = this.entityPM.Tenant;
         return param;
     }
