@@ -56,6 +56,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private const string InvoiceAutoCreditStatus = "AC";
         private const string InvoiceAlreadyReconciledMessage = "One or more invoices ledger transactions have been already reconciled";
         private const string BillToNotConnectedMessage = "The bill to is not connected to a GL Account.";
+        private const string WorksChartOfAccountTypeCode = "6";
         private int tenant;
         private bool isNewEntity;
         private bool isUpdateTotalVats;
@@ -3295,7 +3296,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine)
         {
             string interestTransactionGLAccount = null;
-            GLAccountPM debitGLAcount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant);
+            GLAccountPM debitGLAcount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant, entityPM.BillToGLAccountId);
             if (debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
             {
                 var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, invoiceLine.ForiegnCurrencyId, invoiceLine.Tenant);
@@ -3868,7 +3869,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void UpdateJournalLinesDebitAccounts(List<JournalLinePM> journalLines)
         {
-            GLAccountPM debitGLAcount = getDebitGLAccount(invoice.BillToId, invoice.Tenant);
+            GLAccountPM debitGLAcount = getDebitGLAccount(invoice.BillToId, invoice.Tenant, invoice.BillToGLAccountId);
 
             if (debitGLAcount == null)
                 throw new ApplicationException(BillToNotConnectedMessage);
@@ -4079,14 +4080,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return splittedAccount;
         }
 
-        private GLAccountPM getDebitGLAccount(string billToId, int tenant)
+        private GLAccountPM getDebitGLAccount(string billToId, int tenant, string billToGLAccountId = null)
         {
-            GLAccountPM glaAccount = null;
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            GLAccountPM glaAccount = null; 
+            if (billToGLAccountId != null) {
+                var billToGLAccount = glAccountQuery.GetSingleGLAccountPM(billToGLAccountId, tenant);
+                if (billToGLAccount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode) {
+                    return billToGLAccount;
+                }
+            }
             CardRepository cardRep = new CardRepository(tenant);
             Card card = cardRep.GetSingleCard(billToId, tenant);
             if (card != null)
             {
-                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
                 glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
             }
 
