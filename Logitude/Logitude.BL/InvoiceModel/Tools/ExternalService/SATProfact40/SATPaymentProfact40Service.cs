@@ -105,14 +105,35 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             ARPaymentPM entityPM = paymentQuery.GetSinglePM(arPpayment.Id, tenant);
             List<ARInvoice> currentPaymentARInvoices = GetCurrentPaymentARInvoices(entityPM);
             List<ARInvoiceSATDetails> currentPaymentInvoiceDetails = GetCurrentPaymentInvoicesDetails(currentPaymentARInvoices);
-            List<PagosPagoDoctoRelacionado> doctos = GetPagosPagoDoctoRelacionados();
-
+            List<PagosPagoDoctoRelacionado> doctos;
+            try
+            {
+                doctos = GetPagosPagoDoctoRelacionados();
+            }
+            catch(Exception ex)
+            {
+                doctos = GetNewInstancePagosPago20DoctoRelacionados();
+            }
             foreach (PagosPagoDoctoRelacionado doctoItem in doctos)
             {
                 UpdateRelatedARInvoiceStatus(currentPaymentInvoiceDetails, doctoItem);
             }
 
             arInvoiceRep.SubmitChanges();
+        }
+        
+        private List<PagosPagoDoctoRelacionado> GetNewInstancePagosPago20DoctoRelacionados()
+        {
+            XmlElement xmlPagos = comprobanteXmlPagos;
+            Profact.TimbraCFDI33.Complementos.Pagos10.Pagos pagos = Profact.TimbraCFDI.XMLUtilerias.DeserializaObjeto<Profact.TimbraCFDI33.Complementos.Pagos10.Pagos>(xmlPagos.OuterXml);
+            Profact.TimbraCFDI33.Complementos.Pagos10.PagosPago pagoItem = pagos.Pago[0];
+            List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado> doctos = pagoItem.DoctoRelacionado.ToList();
+            List<PagosPagoDoctoRelacionado> PagosPagoDoctoRelacionados = new List<PagosPagoDoctoRelacionado>();
+            doctos.ForEach(docto => {
+                PagosPagoDoctoRelacionados.Add(new PagosPagoDoctoRelacionado { IdDocumento = docto.IdDocumento });
+            });
+
+            return PagosPagoDoctoRelacionados;
         }
 
         private List<ARInvoice> GetCurrentPaymentARInvoices(ARPaymentPM entityPM)

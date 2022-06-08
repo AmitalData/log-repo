@@ -84,15 +84,27 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         public void BuildProfactCommunicationLog()
         {
-            Comprobante comprobante = GetProfactComprobante();
-            sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = comprobante, ARPaymentPM = arPaymentPM, IsCancellation = true, IsPayment = true});
+            try {
+                Comprobante comprobante = GetProfactComprobante();
+                sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = comprobante, ARPaymentPM = arPaymentPM, IsCancellation = true, IsPayment = true });
+            }
+            catch(Exception ex)
+            {
+                Profact.TimbraCFDI33.Comprobante comprobanteV3 = GetProfactComprobanteV3();
+                sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { ComprobanteV3 = comprobanteV3, IsVersion3 = true, ARPaymentPM = arPaymentPM, IsCancellation = true, IsPayment = true });
+            }
         }
 
         private Comprobante GetProfactComprobante()
         {
-            Encoding encoding = Encoding.UTF8;
-            byte[] profactoXMLData = encoding.GetBytes(arPayment.SATXML);
+            byte[] profactoXMLData = Encoding.UTF8.GetBytes(arPayment.SATXML);
             return LogitudeXmlSerializer.DeserializeObject<Comprobante>(profactoXMLData);
+        }
+
+        private Profact.TimbraCFDI33.Comprobante GetProfactComprobanteV3()
+        {
+            byte[] profactoXMLData = Encoding.UTF8.GetBytes(arPayment.SATXML);
+            return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData);
         }
     }
 }

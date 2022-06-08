@@ -28,20 +28,21 @@ namespace CommunicationWorkerRole.Services.SAT
 
 			SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
 
-			Profact.TimbraCFDI40.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(payment.SATXML);
 			bool isProduction = satSetting.Token != "mvpNUXmQfK8=";
 			Profact.TimbraCFDI40.Conector conector = new Profact.TimbraCFDI40.Conector(isProduction);
 			conector.EstableceCredenciales(satSetting.Token);
 
-			if (comprobante.Complemento.Any != null)
+			ComprobanteDetails comprobanteDetails = SATInterfaceWorkerRole.GetcomprobanteDetails(payment.SATXML);
+
+			if (comprobanteDetails.ComplementoAny != null)
 			{
-				List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+				List<System.Xml.XmlElement> myLXmlComplementos = comprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
 				var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
 				if (timbreFiscalDigitalElement != null)
 				{
 					Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
 
-					string rfcEmisor = comprobante.Emisor.Rfc.Trim();
+					string rfcEmisor = comprobanteDetails.RfcEmisor;
 
 					string folioFiscal = digitalTi.UUID.Trim();
 
@@ -65,7 +66,7 @@ namespace CommunicationWorkerRole.Services.SAT
 						arPaymentRep.Update(payment);
 						arPaymentRep.SubmitChanges();
 
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante.Complemento.Any[0], arInvoiceRep, arPaymentRep);
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobanteDetails.ComplementoAny[0], arInvoiceRep, arPaymentRep);
 
 					}
 					else

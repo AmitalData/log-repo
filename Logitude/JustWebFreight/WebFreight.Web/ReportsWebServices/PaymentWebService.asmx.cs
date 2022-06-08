@@ -476,11 +476,13 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
-                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33") && tenantSettings != null)
+                int currentDocumentSATVersion = GetcurrentDocumentSATVersion(currentPayment.SATXML);
+
+                if (satSetting != null && currentDocumentSATVersion == 3 && tenantSettings != null)
                 {
                     this.MapPaymentProfact33Fields(currentPayment, paymentDataProvider, tenantSettings, invoiceCotnext, billToCard);
                 }
-                else if (satSetting != null && satSetting.SATInterfaceCode == "PROF40" && tenantSettings != null)
+                else if (satSetting != null && currentDocumentSATVersion == 4 && tenantSettings != null)
                 {
                     SATPaymentProfact40DataProviderMappingFields.MapProfact40Fields(currentPayment, paymentDataProvider, invoiceCotnext, billToCard);
                 }
@@ -496,6 +498,21 @@ namespace WebFreight.Web.ReportsWebServices
             customFieldResolver.SetDataProviderCustomFieldsValues("ARPayment", tenant, currentPayment, paymentDataProvider);
 
             return paymentDataProvider;
+        }
+
+        private int GetcurrentDocumentSATVersion(string sATXML)
+        {
+            int currentDocumentSATVersion = 4;
+            try
+            {
+                LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(sATXML);
+                return currentDocumentSATVersion;
+            }
+            catch (Exception ex)
+            {
+                currentDocumentSATVersion = 3;
+                return currentDocumentSATVersion;
+            }
         }
 
         private string GetProjectNumber(string referenceId, int tenant)
