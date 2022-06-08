@@ -51,6 +51,11 @@ namespace CommunicationWorkerRole
                                 }
                             }
                         }
+                        else
+                        {
+                            Thread.Sleep(5000);
+
+                        }
                     }
                     catch (Exception ex)
                     {

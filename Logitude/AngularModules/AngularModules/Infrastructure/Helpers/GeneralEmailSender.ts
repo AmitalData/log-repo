@@ -1,6 +1,5 @@
 declare var System: any;
 declare var window: any;
-import { OnDestroy } from '@angular/core';
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
 import {DocumentTypeListService} from '../../Common/Services/StandardLists/DocumentTypeListService';
@@ -19,7 +18,7 @@ import {EntityPartner} from '../../Infrastructure/DataContracts/EntityPartner';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import { AppTool } from '../../Infrastructure/Tools';
 
-export class GeneralEmailSender implements OnDestroy {
+export class GeneralEmailSender {
     public ObjectTableName: string;
     public CurrentObjectTableId: string;
     PartnersObslist: EntityPartner[];
@@ -69,29 +68,8 @@ export class GeneralEmailSender implements OnDestroy {
         this.IsDigitalPortal = isDigitalPortal;
         this.ToSpecificeEmail = this.IsDigitalPortal ? toMail : "";
         this.ToMail = toMail;
-        this.Listen();
     }
 
-    private SendDocumentToDigitalPortalEvent: any = null;
-    Listen() {
-        if (!this.SendDocumentToDigitalPortalEvent) {
-            this.SendDocumentToDigitalPortalEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-                if (s.Name == "SendDocumentToDigitalPortal") {
-                    this.CurrentSession.SessionEvent.emit({
-                        Name: "DigitalPortalHTMLTemplate",
-                        htmlString: s.htmlString,
-                        Subject: s.Subject,
-                        To: s.ToEmail,
-                        Bcc: s.Bcc,
-                        CC: s.Cc
-                    });
-                }
-            });
-        }
-    }
-    ngOnDestroy() {
-        AppTool.KillEventEmitter(this.SendDocumentToDigitalPortalEvent);
-    }
     SetIsShareDocumentsViaEmail() {
         this.IsShareDocumentsViaEmail = true;
     }
