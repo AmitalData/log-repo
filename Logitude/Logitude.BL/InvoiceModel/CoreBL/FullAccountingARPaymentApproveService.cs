@@ -124,7 +124,6 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             else
             {
                 ARPaymentChequePM cheque = CreateARPaymentCheque();
-                CreateInterestTransactionLine(cheque, paymentPM);
                 AddChequeToCashbook(cheque);
                 newlyAddedCheque = cheque;
             }
@@ -146,25 +145,24 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         }
 
         private int originalEntityLineNumber = 0;
-        private void CreateInterestTransactionLine(ARPaymentChequePM cheque, ARPaymentPM payment)
+        public InterestTransactionPM GetInterestTransactionLineForCheque(ARPaymentChequePM cheque, ARPaymentPM payment)
         {
             if (payment.BillToPartnerTypeId == PartnerTypeId_Customer)
             {
                 InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(cheque, payment);
-                IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
-                interestTransactionUpdateService.Create(interestTransaction);
-
+                return interestTransaction;
             }
+            return null;
         }
 
-        private void CreateInterestTransactionLineForBankTransfer(ARPaymentBankTranferPM bankTranfer, ARPaymentPM payment)
+        public InterestTransactionPM GetInterestTransactionLineForBankTransfer(ARPaymentBankTranferPM bankTranfer, ARPaymentPM payment)
         {
             if (payment.BillToPartnerTypeId == PartnerTypeId_Customer)
             {
                 InterestTransactionPM interestTransaction = MapInterestTransactionPMFromBankTransferARPaymentPM(bankTranfer, payment);
-                IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
-                interestTransactionUpdateService.Create(interestTransaction);
+                return interestTransaction;
             }
+            return null;
         }
 
         private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentChequePM cheque, ARPaymentPM payment)
@@ -242,7 +240,6 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 if (!IsDraft)
                 {
                     AddChequeToCashbook(cheque);
-                    CreateInterestTransactionLine(cheque, paymentPM);
                 }
             }
         }
@@ -256,9 +253,6 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 {
                     ARPaymentBankTranferPM aRPaymentBankTranferPM = InitializeARPaymentBankTransfer(paymentPM, bankTransfer, ref LineNumberCounter);
                     SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
-                    if (!IsDraft) {
-                        CreateInterestTransactionLineForBankTransfer(aRPaymentBankTranferPM, paymentPM);
-                    }
                     
                 }
             }
@@ -266,10 +260,6 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             {
                 ARPaymentBankTranferPM aRPaymentBankTranferPM = CreateFirstARPaymentBankTransfer(paymentPM);
                 SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
-                if (!IsDraft)
-                {
-                    CreateInterestTransactionLineForBankTransfer(aRPaymentBankTranferPM, paymentPM);
-                }
             }
         }
         private void SaveARPaymentBankTranfer(ARPaymentBankTranferPM aRPaymentBankTranfer)
