@@ -74,6 +74,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AllowCustomersInAgentsLOV).IsRequired();
             this.Property(t => t.VatUniquePartnerTypeCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.AutomaticallyClosingField).HasMaxLength(5).IsUnicode(false);
 
             this.ToTable("Tenants");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -132,6 +133,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
             this.Property(t => t.DisplayDocumentsAndEvents).HasColumnName("DisplayDocumentsAndEvents");
             this.Property(t => t.AutomaticallyCloseDays).HasColumnName("AutomaticallyCloseDays");
+            this.Property(t => t.AutomaticallyClosingField).HasColumnName("AutomaticallyClosingField");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

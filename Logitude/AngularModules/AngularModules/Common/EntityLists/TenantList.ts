@@ -112,5 +112,6 @@ export class TenantList {
 		IsCargoTrackWebAccessActivated: boolean;
 		AutomaticallyCloseDays: number;
 		EnableDeliveryOptions: boolean;
+		AutomaticallyClosingField: string;
 	
 }
