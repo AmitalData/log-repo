@@ -1834,8 +1834,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (arInvoice.SATXML != null)
                 {
-                    Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(arInvoice.SATXML);
-                    List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = GetComprobanteComplementos(arInvoice.SATXML);
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
@@ -1878,6 +1877,33 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             return dataProvider;
+        }
+
+        private List<System.Xml.XmlElement> GetComprobanteComplementos(string sATXML)
+        {
+            try
+            {
+                Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(sATXML);
+                return comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+            }
+            catch(Exception ex)
+            {
+                return GetNewVersionsComprobanteComplementos(sATXML);
+            }
+        }
+
+        private static List<System.Xml.XmlElement> GetNewVersionsComprobanteComplementos(string sATXML)
+        {
+            try
+            {
+                Profact.TimbraCFDI40.Comprobante comprobante40 = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(sATXML);
+                return comprobante40.Complemento.Any.ToList<System.Xml.XmlElement>();
+            }
+            catch (Exception ex1)
+            {
+                Profact.TimbraCFDI33.Comprobante comprobante33 = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(sATXML);
+                return comprobante33.Complemento.Any.ToList<System.Xml.XmlElement>();
+            }
         }
 
         private List<Shipment>  GetShipmentsByARInvoicesMainEntityId(IQueryable<ARInvoiceList> aRInvoices, int tenant)
