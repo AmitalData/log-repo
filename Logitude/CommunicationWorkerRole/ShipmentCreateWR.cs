@@ -37,6 +37,10 @@ namespace CommunicationWorkerRole
                             var result = ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsCreateTopic, KakaMessageTypes.ShipmentCreate, serializedShipmentUpdateMessage);
                             queueservice.Complete();
                         }
+                        else
+                        {
+                            Thread.Sleep(5000);
+                        }
                     }
                     catch (Exception ex)
                     {

@@ -41,6 +41,10 @@ namespace CommunicationWorkerRole
 
                             queueservice.Complete();
                         }
+                        else
+                        {
+                            Thread.Sleep(5000);
+                        }
                     }
                     catch (Exception ex)
                     {

@@ -37,6 +37,10 @@ namespace CommunicationWorkerRole
                             var result = producer.Produce(KafkaTopics.ContainerCreateTopic, KakaMessageTypes.ContainerCreate, JsonContainerPM);
                             queueservice.Complete();
                         }
+                        else
+                        {
+                            Thread.Sleep(5000);
+                        }
                     }
                     catch (Exception ex)
                     {
