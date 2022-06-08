@@ -1289,7 +1289,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 ChangeSetOp = ChangeSetOperation.Insert,
                                 DeclarationId = declarationId,
                                 TypeCode = GetValueCodeType(customsValuation.ChargesTypeCode),
-                                //  CurrencyTypeCode = customsValuation.OtherChargeDeductionAmount.currencyID,
+                                CurrencyTypeCode = customsValuation.OtherChargeDeductionAmount.currencyID.ToString(),
                                 Amount = GetValueAmountType(customsValuation.OtherChargeDeductionAmount),
                                 Tenant = tenant
                             };

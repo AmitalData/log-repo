@@ -458,7 +458,7 @@ export class NewContainerizationComponent extends BaseComponent {
             this.declarationWebService.GetDeclarationByConsignmentParames(ArrayDeclartiosId).subscribe(res => {
                 if (res.Result !=null) {
                     debugger;
-                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות אותם מזהים ​שלא צורפו להמכלה הנוכחית ${res.Result} `);
+                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות םותם מזהים ​שלם צורפו להמכלה הנוכחית ${res.Result} `);
                     myConfirmWindow.WindowClosed.subscribe(event => {
                         if (myConfirmWindow.Yes == true) {
                             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
@@ -481,7 +481,7 @@ export class NewContainerizationComponent extends BaseComponent {
             this.declarationWebService.GetDeclarationByConsignmentParames(ArrayDeclartiosId).subscribe(res => {
 
                 if (res.Result !=null && res.Result!=0) {
-                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות אותם מזהים ​שלא צורפו להמכלה הנוכחית   ${res.Result}  `);
+                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות םותם מזהים ​שלם צורפו להמכלה הנוכחית   ${res.Result}  `);
                     myConfirmWindow.WindowClosed.subscribe(event => {
 
                         
@@ -572,8 +572,7 @@ export class NewContainerizationComponent extends BaseComponent {
                                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             cmpRef.instance.ComponentRef = cmpRef;
-                                            debugger;
-                                            cmpRef.instance.Run({
+                                    cmpRef.instance.Run({
 
                                                 EntityId: response.Result.Id,
                                                 ObjectTableName: "Customs.Containerization"
@@ -583,8 +582,7 @@ export class NewContainerizationComponent extends BaseComponent {
                                             });
                                         });
                                     if (!response.HasError) {
-                                        debugger;
-                                        var params = this.getParams(response, event);
+                                var params = this.getParams(response, event);
                                         CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, params.PBId, "שליחת המכלה", false).then((res) => { });
                                         this.containerizationMessagesService.SendContainerization(params)
                                             .subscribe(res1 => {
@@ -633,12 +631,13 @@ export class NewContainerizationComponent extends BaseComponent {
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
     }
-    
     OnValueChange(searchValue: any) {
         if (searchValue == null) {
             this.OnNoneBtnClicked()
         }
+       
     }
+    
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
