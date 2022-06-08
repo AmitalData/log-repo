@@ -24,6 +24,8 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
+                var TransfareOnGoingMessageProducer = new Producer();
+
                 if (!General.IsUpdating())
                 {
                     try
@@ -36,10 +38,13 @@ namespace CommunicationWorkerRole
                             object entityPM = GetEntityById(response);
                             long messageType = GetMessageType(response);
 
-                            var TransfareOnGoingMessageProducer = new Producer();
                             var serializedObjectUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
                             var result = TransfareOnGoingMessageProducer.Produce(KafkaTopics.LookupsTopic, messageType, serializedObjectUpdateMessage);
                             queueservice.Complete();
+                        }
+                        else
+                        {
+                            Thread.Sleep(5000);
                         }
                     }
                     catch (Exception ex)
