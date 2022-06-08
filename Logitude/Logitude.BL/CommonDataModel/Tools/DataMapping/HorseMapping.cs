@@ -38,7 +38,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.Inactive = entityPM.Inactive;
             entityPOCO.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             entityPOCO.UpdatedByUserId = loggedContactId;
-            
+            entityPOCO.GenderCode = entityPM.GenderCode;
+
             BuildSearchFields(entityPM, entityPOCO);
         }
 
