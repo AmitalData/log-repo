@@ -22,10 +22,10 @@ namespace CommunicationWorkerRole
 
         public override void Run()
         {
+            var TransfareOnGoingMessageProducer = new Producer();
+
             while (IsRunning)
             {
-                var TransfareOnGoingMessageProducer = new Producer();
-
                 if (!General.IsUpdating())
                 {
                     try
