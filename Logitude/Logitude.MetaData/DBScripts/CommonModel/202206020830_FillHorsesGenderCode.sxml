@@ -1,9 +1,18 @@
 ﻿<Script DBType="Main" Module="Common">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
 
      
 
+  if not exists (select Code from HorseGenders where Code = 'M')
+    insert into HorseGenders(Code, Name, SearchFields) values ('M', 'Male', 'M,Male')
+  
+  if not exists (select Code from HorseGenders where Code = 'F')
+    insert into HorseGenders(Code, Name, SearchFields) values ('F', 'Female', 'F,Female')
+    
+  if not exists (select Code from HorseGenders where Code = 'C')
+    insert into HorseGenders(Code, Name, SearchFields) values ('C', 'Castrated', 'C,Castrated')
+    
 declare @Tenant as int
 declare @GenderCode as varchar(1)
 declare @Gender as varchar(50)
