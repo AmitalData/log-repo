@@ -76,7 +76,9 @@
                                                 <tr>
                                                     <td>
                                                         <div class="ActionButton" style="width: 35px;height:23px; ">
+                                                          <div (click)="CheackIsSelected()" style="top: 3.5px; position: absolute;">
                                                             <CheckBox style="pointer-events:none;" [IsChecked]="exportStorageExtendedListService.connectedSelectAll" (Checked)="IsSelected =$event "></CheckBox>
+                                                          </div>
                                                         </div>
                                                     </td>
                                                     <td>

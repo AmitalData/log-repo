@@ -39,4 +39,11 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="LeadDocumentTypeID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

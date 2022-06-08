@@ -91,8 +91,12 @@ export class CustomsDocumentsDataProvider {
     GetCustomsDocumentsRelatedDocuments(filterValue:string) {
         switch (this.objectTableName) {
             case 'Customs.Declaration': {
-                if (this.entityPM.Direction == "E" && filterValue != "customs" ) {
-                    return this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.entityPM.Id, null, this.ObjectTableId,/*maybe change to E*/ 'I'    , this.entityPM.CustomFileNo  /*this.entityPM.ExportFile*/, filterValue, this.entityPM.Direction);
+                if (this.entityPM.Direction == "E" && filterValue == "forwarding" ) {
+                    return this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.entityPM.Id, null, this.ObjectTableId,/*maybe change to E*/ 'I'    , this.entityPM.ExportFile, filterValue, this.entityPM.Direction);
+
+                }
+                else if (this.entityPM.Direction == "E" && filterValue == "all" ) {
+                    return this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.entityPM.Id, null, this.ObjectTableId,/*maybe change to E*/ 'I'    , this.entityPM.CustomFileNo  /*this.entityPM.ExportFile*/, filterValue, this.entityPM.Direction,this.entityPM.ExportFile);
 
                 }
                 else {
