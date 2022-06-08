@@ -5251,6 +5251,47 @@ export class ShipmentPM {
     public get CarrierServiceLineId() { return this.carrierServiceLineId; }
     public set CarrierServiceLineId(newValue: string) { if (this.carrierServiceLineId != newValue) { this.carrierServiceLineId = newValue; this.MarkAsDirty("CarrierServiceLineId"); } }
 
+    private inlandDomesticToAddress1: string;
+    public get InlandDomesticToAddress1() { return this.inlandDomesticToAddress1; }
+    public set InlandDomesticToAddress1(newValue: string) { if (this.inlandDomesticToAddress1 != newValue) { this.inlandDomesticToAddress1 = newValue; this.MarkAsDirty("InlandDomesticToAddress1"); } }
+
+    private inlandDomesticToAddress2: string;
+    public get InlandDomesticToAddress2() { return this.inlandDomesticToAddress2; }
+    public set InlandDomesticToAddress2(newValue: string) { if (this.inlandDomesticToAddress2 != newValue) { this.inlandDomesticToAddress2 = newValue; this.MarkAsDirty("InlandDomesticToAddress2"); } }
+
+    private inlandDomesticToPhone: string;
+    public get InlandDomesticToPhone() { return this.inlandDomesticToPhone; }
+    public set InlandDomesticToPhone(newValue: string) { if (this.inlandDomesticToPhone != newValue) { this.inlandDomesticToPhone = newValue; this.MarkAsDirty("InlandDomesticToPhone"); } }
+
+    private inlandDomesticToFax: string;
+    public get InlandDomesticToFax() { return this.inlandDomesticToFax; }
+    public set InlandDomesticToFax(newValue: string) { if (this.inlandDomesticToFax != newValue) { this.inlandDomesticToFax = newValue; this.MarkAsDirty("InlandDomesticToFax"); } }
+
+    private inlandDomesticToStateId: string;
+    public get InlandDomesticToStateId() { return this.inlandDomesticToStateId; }
+    public set InlandDomesticToStateId(newValue: string) { if (this.inlandDomesticToStateId != newValue) { this.inlandDomesticToStateId = newValue; this.MarkAsDirty("InlandDomesticToStateId"); } }
+
+    private inlandDomesticFromAddress1: string;
+    public get InlandDomesticFromAddress1() { return this.inlandDomesticFromAddress1; }
+    public set InlandDomesticFromAddress1(newValue: string) { if (this.inlandDomesticFromAddress1 != newValue) { this.inlandDomesticFromAddress1 = newValue; this.MarkAsDirty("InlandDomesticFromAddress1"); } }
+
+    private inlandDomesticFromAddress2: string;
+    public get InlandDomesticFromAddress2() { return this.inlandDomesticFromAddress2; }
+    public set InlandDomesticFromAddress2(newValue: string) { if (this.inlandDomesticFromAddress2 != newValue) { this.inlandDomesticFromAddress2 = newValue; this.MarkAsDirty("InlandDomesticFromAddress2"); } }
+
+    private inlandDomesticFromPhone: string;
+    public get InlandDomesticFromPhone() { return this.inlandDomesticFromPhone; }
+    public set InlandDomesticFromPhone(newValue: string) { if (this.inlandDomesticFromPhone != newValue) { this.inlandDomesticFromPhone = newValue; this.MarkAsDirty("InlandDomesticFromPhone"); } }
+
+    private inlandDomesticFromFax: string;
+    public get InlandDomesticFromFax() { return this.inlandDomesticFromFax; }
+    public set InlandDomesticFromFax(newValue: string) { if (this.inlandDomesticFromFax != newValue) { this.inlandDomesticFromFax = newValue; this.MarkAsDirty("InlandDomesticFromFax"); } }
+
+    private inlandDomesticFromStateId: string;
+    public get InlandDomesticFromStateId() { return this.inlandDomesticFromStateId; }
+    public set InlandDomesticFromStateId(newValue: string) { if (this.inlandDomesticFromStateId != newValue) { this.inlandDomesticFromStateId = newValue; this.MarkAsDirty("InlandDomesticFromStateId"); } }
+
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

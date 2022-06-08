@@ -3480,6 +3480,18 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.ShipmentCustomerTypeCode = this.SourceEntityPM.ShipmentCustomerTypeCode;
             this.CustomerId = this.SourceEntityPM.CustomerId;
 
+            this.EntityPM.InlandDomesticToAddress1 = this.SourceEntityPM.InlandDomesticToAddress1;
+            this.EntityPM.InlandDomesticToAddress2 = this.SourceEntityPM.InlandDomesticToAddress2;
+            this.EntityPM.InlandDomesticToPhone = this.SourceEntityPM.InlandDomesticToPhone;
+            this.EntityPM.InlandDomesticToFax = this.SourceEntityPM.InlandDomesticToFax;
+            this.EntityPM.InlandDomesticToStateId = this.SourceEntityPM.InlandDomesticToStateId;
+
+            this.EntityPM.InlandDomesticFromAddress1 = this.SourceEntityPM.InlandDomesticFromAddress1;
+            this.EntityPM.InlandDomesticFromAddress2 = this.SourceEntityPM.InlandDomesticFromAddress2;
+            this.EntityPM.InlandDomesticFromPhone = this.SourceEntityPM.InlandDomesticFromPhone;
+            this.EntityPM.InlandDomesticFromFax = this.SourceEntityPM.InlandDomesticFromFax;
+            this.EntityPM.InlandDomesticFromStateId = this.SourceEntityPM.InlandDomesticFromStateId;
+
             ShipmentTool.CopyShipment(this.EntityPM, this.SourceEntityPM);
 
             this.CopyRoutings();
