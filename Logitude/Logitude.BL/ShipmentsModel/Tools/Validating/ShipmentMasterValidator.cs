@@ -45,8 +45,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             shipmentMainCarriageLegsValidator.ValidateRoutingsSeriesDates();
             shipmentMainCarriageLegsValidator.ValidateActualDates();
 
-            ShipmentAccountingValidator shipmentAccountingValidator = new ShipmentAccountingValidator(shipmentPM);
-            shipmentAccountingValidator.ValidateAccountingClosed();
+            //ShipmentAccountingValidator shipmentAccountingValidator = new ShipmentAccountingValidator(shipmentPM);
+            //shipmentAccountingValidator.ValidateAccountingClosed();
         }
     }
 }
