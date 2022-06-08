@@ -20,7 +20,7 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     private CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: string[];
     public reloadingTranslation: boolean;
-    public ClosingContainerToolTipMessage: string = "How many days after the Actual Empty Return Date to wait before automatically closing the container.";
+    public ClosingContainerToolTipMessage: string = "How many days after the Closing Field Date to wait before automatically closing the container.";
     public ClosingFieldsItemSource: CodeNameClass[] = [];
     constructor() {
         super();
@@ -41,7 +41,7 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
 
     BuildClosingFieldsItemSource() {
         this.ClosingFieldsItemSource = [];
-        this.ClosingFieldsItemSource.push(new CodeNameClass("EMPTR", "Empty Return"));
+        this.ClosingFieldsItemSource.push(new CodeNameClass("EMPTR", "Container Empty Return"));
         this.ClosingFieldsItemSource.push(new CodeNameClass("SHATA", "Shipment ATA"));
 
         this.selectedClosingField = this.ClosingFieldsItemSource.filter(d => d.Code == this.AutomaticallyClosingField)[0];
