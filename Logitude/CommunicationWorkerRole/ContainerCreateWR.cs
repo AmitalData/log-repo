@@ -18,6 +18,8 @@ namespace CommunicationWorkerRole
 
         public override void Run()
         {
+            var producer = new Producer();
+
             while (IsRunning)
             {
                 if (!General.IsUpdating())
@@ -31,7 +33,6 @@ namespace CommunicationWorkerRole
                         {
                             ContainerPM containerPM = GetContainerById(response);
 
-                            var producer = new Producer();
                             var JsonContainerPM = JsonConvert.SerializeObject(containerPM, Formatting.Indented);
                             var result = producer.Produce(KafkaTopics.ContainerCreateTopic, KakaMessageTypes.ContainerCreate, JsonContainerPM);
                             queueservice.Complete();
