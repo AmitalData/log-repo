@@ -57,8 +57,8 @@ namespace CommunicationWorkerRole.Services
             if (currentTenant != null && !string.IsNullOrEmpty(currentTenant.AutomaticallyClosingField))
             {
                 automaticallyCloseDays = this.currentTenant.AutomaticallyCloseDays;
-                if (currentTenant.AutomaticallyClosingField == "") closingField = container.ActualEmptyReturn;
-                else if (currentTenant.AutomaticallyClosingField == "") closingField = container.ShipmentMainCarriageATA;
+                if (currentTenant.AutomaticallyClosingField == "EMPTR") closingField = container.ActualEmptyReturn;
+                else if (currentTenant.AutomaticallyClosingField == "SHATA") closingField = container.ShipmentMainCarriageATA;
             }
 
             if (closingField == null) return;

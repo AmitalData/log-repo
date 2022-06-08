@@ -199,8 +199,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void HandleEmptyReturnLeg()
         {
-            if (!SecurityUtility.CheckFeature("Shipment", "Area.ContainersFU", tenant)) return;
-
             ShipmentPM shipmentPM = this.GetShipment();
             if (shipmentPM == null || shipmentPM.DirectionId != "I") return;
 
