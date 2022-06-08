@@ -68,7 +68,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
 
         private CommunicationLog GetNewCommunicationLog()
         {
-            string entityInterfaceName = interfaceName.Replace("API", "");
+            string entityInterfaceName = !string.IsNullOrEmpty(interfaceName)? interfaceName.Replace("API", ""):"";
             return new CommunicationLog()
             {
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
