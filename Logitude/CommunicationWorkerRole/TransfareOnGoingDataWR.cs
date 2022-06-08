@@ -42,6 +42,10 @@ namespace CommunicationWorkerRole
                             var result = TransfareOnGoingMessageProducer.Produce(KafkaTopics.LookupsTopic, messageType, serializedObjectUpdateMessage);
                             queueservice.Complete();
                         }
+                        else
+                        {
+                            Thread.Sleep(5000);
+                        }
                     }
                     catch (Exception ex)
                     {
