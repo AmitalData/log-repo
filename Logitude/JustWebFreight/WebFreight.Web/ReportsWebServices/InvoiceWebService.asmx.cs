@@ -2319,13 +2319,9 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             MapProfact32Fields(currentInvoice, invoicedataprovider, tenantSettings);
                         }
-                        else if (satSetting.SATInterfaceCode == "PROF33")
-                        {
-                            MapProfact33Fields(currentInvoice, invoicedataprovider, tenantSettings);
-                        }
                         else
                         {
-                            MapProfact40Fields(currentInvoice, invoicedataprovider, tenantSettings);
+                            MapProfactFields(currentInvoice, invoicedataprovider, tenantSettings);
                         }
                     }
                     else
@@ -2621,6 +2617,34 @@ namespace WebFreight.Web.ReportsWebServices
             if (String.IsNullOrEmpty(input))
                 return "";
             return input.First().ToString().ToUpper() + input.Substring(1);
+        }
+        
+        private static void MapProfactFields(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider, Tenant tenantSettings)
+        {
+            int currentDocumentSATVersion = GetCurrentDocumentSATVersion(currentInvoice.SATXML);
+            if (currentDocumentSATVersion == 3)
+            {
+                MapProfact33Fields(currentInvoice, invoicedataprovider, tenantSettings);
+            }
+            else
+            {
+                MapProfact40Fields(currentInvoice, invoicedataprovider, tenantSettings);
+            }
+        }
+
+        private static int GetCurrentDocumentSATVersion(string sATXML)
+        {
+            int currentDocumentSATVersion = 3;
+            try
+            {
+                Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(sATXML);
+                return currentDocumentSATVersion;
+            }
+            catch(Exception ex)
+            {
+                currentDocumentSATVersion = 4;
+                return currentDocumentSATVersion;
+            }
         }
 
         private static void MapProfact32Fields(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider, Tenant tenantSettings)
@@ -4102,13 +4126,9 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             MapProfact32Fields(entityPOCO, invoiceDataProvider, tenantSettings);
                         }
-                        else if (satSetting.SATInterfaceCode == "PROF33")
-                        {
-                            MapProfact33Fields(entityPOCO, invoiceDataProvider, tenantSettings);
-                        }
                         else
                         {
-                            MapProfact40Fields(entityPOCO, invoiceDataProvider, tenantSettings);
+                            MapProfactFields(entityPOCO, invoiceDataProvider, tenantSettings);
                         }
                     }
                     else
