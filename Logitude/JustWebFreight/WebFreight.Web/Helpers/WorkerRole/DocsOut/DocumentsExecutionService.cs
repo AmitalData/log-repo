@@ -91,7 +91,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 });
 
                 UpdateDocumentOut(exportDocumentArgs);
-                if (childObjectTableName == "ARInvoice") UpdateARInvoicePrintingDetails(exportDocumentArgs); 
+                if (childObjectTableName == "ARInvoice") UpdateARInvoicePrintingDetails(exportDocumentArgs , authenticatedUserEmail); 
 
                 DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
                 documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
@@ -107,9 +107,9 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             }
         }
 
-        private void UpdateARInvoicePrintingDetails(ExportDocumentArgs exportDocumentArgs)
+        private void UpdateARInvoicePrintingDetails(ExportDocumentArgs exportDocumentArgs ,  string loggedUserEmail)
         {
-            ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService(exportDocumentArgs.Tenant, exportDocumentArgs.ChildEntityId);
+            ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService(exportDocumentArgs.Tenant, exportDocumentArgs.ChildEntityId , loggedUserEmail);
             aRInvoicePrintDetailsService.Update();
 
         }

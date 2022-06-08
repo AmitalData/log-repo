@@ -16,18 +16,19 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         private IInvoiceContext invoiceContext;
         private string aRInvoiceId;
         private int tenant;
-
-        public ARInvoicePrintDetailsService(int tenant, string aRInvoiceId)
+        private string loggedUserEmail = string.Empty;
+        public ARInvoicePrintDetailsService(int tenant, string aRInvoiceId , string loggedUserEmail)
         {
             this.tenant = tenant;
             this.aRInvoiceId = aRInvoiceId;
+            this.loggedUserEmail = aRInvoiceId;
             this.invoiceContext = InvoiceContext.GetContext(tenant);
-            this.aRInvoiceService = new ARInvoiceService(invoiceContext, tenant);
+            this.aRInvoiceService = new ARInvoiceService(invoiceContext, tenant, loggedUserEmail);
         }
 
         public void Update()
         {
-
+             
             ARInvoicePM aRInvoicePM = GetARInvoicePM();
             if (aRInvoicePM == null) return;
             if (string.IsNullOrEmpty(aRInvoicePM.IssuedByUserId)) return;
