@@ -639,10 +639,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.OpenExportStorageDeclarationMethod()
                         break;
                     }
-                    }
             }
         }
     }
+
     OpenDeclarationCancellationWindow() {
         var args: any = {
             Declaration: this.EntityPM,
