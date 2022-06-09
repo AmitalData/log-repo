@@ -20,25 +20,28 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(SupplierInvoiceFreightAmountPM entityPM, SupplierInvoiceFreightAmount entityPOCO)
         {
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.DeclarationId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.InvoiceCounterKey);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.CurrencyTypeCode);
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-            {              
-                entityPOCO.Id = entityPM.Id;             
+            {
+              
                 entityPOCO.DeclarationId = entityPM.DeclarationId;             
                 entityPOCO.InvoiceCounterKey = entityPM.InvoiceCounterKey;              
                 entityPOCO.CurrencyTypeCode = entityPM.CurrencyTypeCode;               
                 entityPOCO.Tenant = entityPM.Tenant;
+
             }
         }
 
         public void CustomPOCOToPM(SupplierInvoiceFreightAmountPM entityPM, SupplierInvoiceFreightAmount entityPOCO)
         {
             CustomMappedPMProperties.Add(PMPropertyNames.CurrencyTypeName);
+
+
+
 
             if (entityPOCO.CurrencyTypeCode != null)
             {
@@ -48,5 +51,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
         }
    }
+
+
 }
    
