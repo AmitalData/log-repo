@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
- using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools;
 using Logitude.Customs.BL.EntityDataMappings;
@@ -52,10 +52,10 @@ namespace Logitude.CustomsMessaging.RequestServices
     {
         private ICustomContext _context;
         private DeclarationPM _DeclarationPM;
- 
+
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
-         private string _userId;
+        private string _userId;
         public override void ManipulateRequestParams(GenericRequestParams requestParams)
         {
             if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
@@ -74,14 +74,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             try
             {
                 _userId = requestParams.LoggingUserId;
-                   var siqs = new SupplierInvoiceQueryService(requestParams.Tenant);
+                var siqs = new SupplierInvoiceQueryService(requestParams.Tenant);
                 SItoAccumulate = siqs.GetSupplierInvoiceToAccumulateCount(requestParams.Tenant, requestParams.AppicationId);
                 var ssiqs = new SupplierInvoiceItemQueryService(requestParams.Tenant);
                 bool noAccumulateForNow = true;//itzik +ihab 
                 if (noAccumulateForNow)
                 {
                     countSI = siqs.GetSupplierInvoiceCountForDeclaration(requestParams.AppicationId, requestParams.Tenant);
-                    countItems = ssiqs.GetDeclarationCountOfSupplierInvoiceItems(requestParams.Tenant, requestParams.AppicationId,true);
+                    countItems = ssiqs.GetDeclarationCountOfSupplierInvoiceItems(requestParams.Tenant, requestParams.AppicationId, true);
                     LogMessagingUtil.Instance.AppendLine("GetDeclarationCountOfSupplierInvoiceItems: " + countItems.ToString());
                 }
                 else
@@ -89,7 +89,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     countItems = siqs.GetDeclarationCountOfSupplierInvoiceItemsForAccumulation(requestParams.Tenant, requestParams.AppicationId);
                     LogMessagingUtil.Instance.AppendLine("GetDeclarationCountOfSupplierInvoiceItemsForAccumulation: " + countItems.ToString());
                 }
-                
+
                 backgroundcountItems = countItems;
                 existSupplierInvoiceItemsWithParent = ssiqs.ExistSupplierInvoiceItemsWithParent(requestParams.Tenant, requestParams.AppicationId);
                 if ((countItems > 100 || SItoAccumulate > 0) && existSupplierInvoiceItemsWithParent > 0)
@@ -157,9 +157,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                     }
                     if (
-                        ( requestParams.RequestVIA == SendRequestVIA.WebServiceInteractive 
-                        || requestParams.RequestVIA == SendRequestVIA.Default) 
-                        &&  countSI > 15)
+                        (requestParams.RequestVIA == SendRequestVIA.WebServiceInteractive
+                        || requestParams.RequestVIA == SendRequestVIA.Default)
+                        && countSI > 15)
                     {
                         requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
                         LogMessagingUtil.Instance.AppendLine("ManipulateRequestParams:requestParams.RequestVIA = SendRequestVIA.WebServiceBatch");
@@ -180,7 +180,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 LogMessagingUtil.Instance.AppendLine("ManipulateRequestParams:fast=" + fast.ToString() + ":Took:" + sw.ElapsedMilliseconds);
             }
         }
- 
+
 
         public override void PostGetRequest(DF_NG_5002_MSG14001_DeclarationCancellationRequestMsg customRequest, GenericRequestParams requestParams)
         {
@@ -189,19 +189,19 @@ namespace Logitude.CustomsMessaging.RequestServices
                 this._context = CustomContext.GetContext(requestParams.Tenant);
             }
         }
- 
+
         public override DF_NG_5002_MSG14001_DeclarationCancellationRequestMsg GetRequest(GenericRequestParams requestParams)
         {
 
             _context = CustomContext.GetContext(requestParams.Tenant);
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
-           LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
+            LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
-            var dec = declarationQueryService.GetSingle(requestParams.AppicationId,false,false);
-            if(dec==null)
+            var dec = declarationQueryService.GetSingle(requestParams.AppicationId, false, false);
+            if (dec == null)
             {
                 LogMessagingUtil.Instance.AppendLine("GetRequest:Decalartion not found = " + requestParams.AppicationId);
 
@@ -219,7 +219,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.GeneralData.CancellationReasonTypeId = Convert.ToInt32(dec.CancelRequestReasonCode);
             req.GeneralData.AgentCancellationRemarks = dec.CancelRequestReasonExplanation;
             req.Attachment = GetAttachments(dec);
-                //new Attachment[1];
+            //new Attachment[1];
             //req.Attachment[0] = new Attachment() { IsAttachment = "false" , externalAttachmentID= "IIG-227-1" };
             dec.ChangeSetOp = ChangeSetOperation.Update;
             declarationUpdateService.Update(dec, true);
@@ -253,6 +253,33 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             _context = null;
             return req;
+        }
+
+        public void AutoCancellation(LogisticActionRequestRequestParams requestParams,string applicationId)
+        {
+            
+            GenericRequestParams requestParamsData=new GenericRequestParams();
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), requestParams.Tenant);
+
+            var dec = declarationQueryService.GetSingle(applicationId, false, false);
+            dec.CancelRequestReasonCode = "8";
+            declarationUpdateService.Update(dec, true);
+
+            requestParamsData.ForcePersonalSign = false;
+            requestParamsData.Tenant = requestParams.Tenant;
+            requestParamsData.LoggingUserId = requestParams.LoggingUserId;
+            requestParamsData.LoggingEntityId = requestParams.LoggingEntityId;
+            requestParamsData.AppicationId = applicationId;
+            requestParamsData.RequestVIAChangeDue = requestParams.RequestVIAChangeDue;
+            
+            requestParamsData.RequestName = "Declaration Cancellation Request";
+            requestParamsData.ResponseName = "Declaration Cancellation Response";
+            requestParamsData.RequestVIA = requestParams.RequestVIA;
+           
+            var service = new SaveDF_MSG5002_DeclarationCancellationRequestMsgService().Send(requestParamsData);
+
+
         }
         //private Attachment[] GetAttachments(string parentEntityId, int tenant)
         //{
@@ -311,16 +338,16 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private int GetNextCancelRequestNumber(DeclarationPM declarationPM)
         {
-           DeclarationQueryService declarationQueryService = new DeclarationQueryService(declarationPM.Tenant);
-
-            
-            return (declarationQueryService.GetDeclarationMaxCancelRequestNumber(declarationPM.Tenant, declarationPM.Id) +1);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(declarationPM.Tenant);
 
 
-         }
+            return (declarationQueryService.GetDeclarationMaxCancelRequestNumber(declarationPM.Tenant, declarationPM.Id) + 1);
 
-  
 
-        
+        }
+
+
+
+
     }
 }
