@@ -97,7 +97,7 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     onCheckBoxChecked($event) {
-
+       
         this.IsSelected = false;
         if (!this.entityPM.ConnectedDeclarations) {
             this.entityPM.ConnectedDeclarations = "";
@@ -229,7 +229,7 @@ export class NewContainerizationComponent extends BaseComponent {
         if (this.SearchFieldsFilter) {
             filters.AdditionalFilters.push(this.SearchFieldsFilter);
         }
-
+        this.containerizationExtendedListService.AllDeclarations = "";
         filters.PageSize = 30;
         filters.PageIndex = 0; // decremented 1 in the service
         filters.GetAll = false;
@@ -240,6 +240,7 @@ export class NewContainerizationComponent extends BaseComponent {
         var myout = this.entityListService
             .getExtendedByFilters("Customs.Containerization", filters);
         myout.then(res => {
+
         });
         debugger;
         return myout;
@@ -394,7 +395,6 @@ export class NewContainerizationComponent extends BaseComponent {
     filterAgrs: ApiQueryFilters;
     LoadConnectedItems() {
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-
     }
 
     OnNoneBtnClicked() {
@@ -402,7 +402,6 @@ export class NewContainerizationComponent extends BaseComponent {
         this.containerizationExtendedListService.connectedSelectAll = false;
         this.entityPM.ConnectedDeclarations = "";
         this.containerizationExtendedListService.ConnectedDeclarations = "";
-        this.containerizationExtendedListService.SelectedDeclarations = false;
         this.LoadConnectedItems();
     }
 
@@ -456,9 +455,9 @@ export class NewContainerizationComponent extends BaseComponent {
 
         if (this.entityPM.Id != null) {
             this.declarationWebService.GetDeclarationByConsignmentParames(ArrayDeclartiosId).subscribe(res => {
-                if (res.Result !=null) {
+                if (res.Result != null) {
                     debugger;
-                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות םותם מזהים ​שלם צורפו להמכלה הנוכחית ${res.Result} `);
+                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות אותם מזהים ​שלא צורפו להמכלה הנוכחית ${res.Result} `);
                     myConfirmWindow.WindowClosed.subscribe(event => {
                         if (myConfirmWindow.Yes == true) {
                             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
@@ -480,11 +479,11 @@ export class NewContainerizationComponent extends BaseComponent {
 
             this.declarationWebService.GetDeclarationByConsignmentParames(ArrayDeclartiosId).subscribe(res => {
 
-                if (res.Result !=null && res.Result!=0) {
-                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות םותם מזהים ​שלם צורפו להמכלה הנוכחית   ${res.Result}  `);
+                if (res.Result != null && res.Result != 0) {
+                    myConfirmWindow.Show(`שים לב ישנן הצהרות נוספות בעלות אותם מזהים ​שלא צורפו להמכלה הנוכחית  ${res.Result}  `);
                     myConfirmWindow.WindowClosed.subscribe(event => {
 
-                        
+
                         if (myConfirmWindow.Yes == true) {
                             var windowArgs: any = {};
                             if (this.declarationPM != null && this.declarationPM.ProcedureCurrentName != null && this.declarationPM.ProcedureCurrentName.includes("טעינה ישירה")) {
@@ -572,7 +571,7 @@ export class NewContainerizationComponent extends BaseComponent {
                                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run({
+                                            cmpRef.instance.Run({
 
                                                 EntityId: response.Result.Id,
                                                 ObjectTableName: "Customs.Containerization"
@@ -582,7 +581,7 @@ export class NewContainerizationComponent extends BaseComponent {
                                             });
                                         });
                                     if (!response.HasError) {
-                                var params = this.getParams(response, event);
+                                        var params = this.getParams(response, event);
                                         CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, params.PBId, "שליחת המכלה", false).then((res) => { });
                                         this.containerizationMessagesService.SendContainerization(params)
                                             .subscribe(res1 => {
@@ -635,16 +634,15 @@ export class NewContainerizationComponent extends BaseComponent {
         if (searchValue == null) {
             this.OnNoneBtnClicked()
         }
-       
+
     }
-    
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
 
     SetWindowArgs(windowArgs) {
-
         if (windowArgs.EntityPM != null) {
             if (windowArgs.EntityIsDeclarationPM == "true") {
                 this.declarationPM = windowArgs.EntityPM;
@@ -653,7 +651,7 @@ export class NewContainerizationComponent extends BaseComponent {
                 this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
                 this.containerizationExtendedListService.SelectedDeclarations = true;
             } else {
-                
+
                 this.entityPM = windowArgs.EntityPM;
             }
         }
