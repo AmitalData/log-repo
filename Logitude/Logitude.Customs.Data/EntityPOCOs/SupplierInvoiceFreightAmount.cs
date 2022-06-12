@@ -18,11 +18,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-           [ForeignKey("SupplierInvoice")]
+        [Key]
+        [ForeignKey("SupplierInvoice")]
         [Column("DeclarationId" ,Order = 1)]
 	    public string DeclarationId { get; set; }
 	      
         public virtual SupplierInvoice SupplierInvoice { get; set; }
+     [Key]
         [ForeignKey("SupplierInvoice")]
         [Column("InvoiceCounterKey" ,Order = 2)]
 	    public int InvoiceCounterKey { get; set; }
@@ -36,9 +38,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual CurrencyType CurrencyType { get; set; }
         [Column("Amount")]
 	    public decimal? Amount { get; set; }
-     [Key]
-        [Column("Id")]
-	    public string Id { get; set; }
     }
 }
 	 

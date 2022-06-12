@@ -12,20 +12,22 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class SupplierInvoiceFreightAmountList
    {
-          [DataMember]
+   
+       [Key]
+       [DataMember]
        public string DeclarationId  { get; set; }
+
+       [Key]
        [DataMember]
        public int InvoiceCounterKey  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+
+       [Key]
        [DataMember]
        public string CurrencyTypeCode  { get; set; }
        [DataMember]
        public decimal? Amount  { get; set; }
-
-       [Key]
-       [DataMember]
-       public string Id  { get; set; }
    }
 
 }
