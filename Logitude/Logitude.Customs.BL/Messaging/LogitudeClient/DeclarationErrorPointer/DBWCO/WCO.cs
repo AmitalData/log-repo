@@ -65,6 +65,16 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             //    //text = WCOResource.DBManifest_18;
             //}
             //else
+
+            bool base64Ver = true;
+            if (base64Ver)
+            {
+                string base64 = UnifreightIIG.Resources.IIGResource.DBManifest_18UTF8_base64;
+                text = Base64Decode(base64);
+
+            }
+            else
+
             {
                 text = UnifreightIIG.Resources.IIGResource.DBManifest_18UTF8; // GetResource(ResourceStreamPath);
             }
@@ -85,6 +95,14 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             //    //text = WCOResource.DB;
             //}
             //else
+            bool base64Ver = true;
+            if (base64Ver)
+            {
+                string textDBUTF8_base64 = UnifreightIIG.Resources.IIGResource.DBUTF8_base64;
+                text = Base64Decode(textDBUTF8_base64);
+
+            }
+            else
             {
                 text = UnifreightIIG.Resources.IIGResource.DBUTF8; ///GetResource(ResourceStreamPath);
             }
@@ -94,7 +112,18 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             return rows.ToList();
 
         }
-        
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
         private string GetResource(string ResourceStreamPath)
         {
             var myStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(ResourceStreamPath);
