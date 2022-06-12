@@ -78,6 +78,8 @@
     <Compile Include="BL\QuoteOPPortsHelper.cs" />
     <Compile Include="BL\QuoteOPSpecialServices.cs" />
     <Compile Include="ClosedTables\AutonomyDetails.cs" />
+    <Compile Include="BL\ReferantUnifreightStatuses.cs" />
+	  <Compile Include="ClosedTables\AutonomyDetails.cs" />
     <Compile Include="ClosedTables\SegmentsDetails.cs" />
     <Compile Include="EntityDataMappings\ATBPTILDataMapping.cs">
       <SubType>Code</SubType>
@@ -141,6 +143,7 @@
     <Compile Include="EntityDataMappings\ETBVENDDataMapping.cs" />
     <Compile Include="EntityDataMappings\GGGHDAYDataMapping.cs" />
     <Compile Include="EntityDataMappings\GGGQCDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GTBFUSTATUDataMapping.cs" />
     <Compile Include="EntityDataMappings\GTBSERLVDataMapping.cs" />
     <Compile Include="EntityDataMappings\ITBPORTDataMapping.cs" />
     <Compile Include="EntityDataMappings\MTBCARRDataMapping.cs" />
@@ -300,6 +303,7 @@
     <Compile Include="EntityPMs\UGenerated\GNDADRPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GNDCARDPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBDOCPM.cs" />
+    <Compile Include="EntityPMs\UGenerated\GTBFUSTATUPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBITEMPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBITMCNPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBMANDTPM.cs" />
@@ -391,6 +395,7 @@
     <Compile Include="EntityQueryServices\GNDADRQueryService.cs" />
     <Compile Include="EntityQueryServices\GNDCARDQueryService.cs" />
     <Compile Include="EntityQueryServices\GTBDOCQueryService.cs" />
+    <Compile Include="EntityQueryServices\GTBFUSTATUQueryService.cs" />
     <Compile Include="EntityQueryServices\GTBITEMQueryService.cs.cs" />
     <Compile Include="EntityQueryServices\GTBITMCNQueryService.cs" />
     <Compile Include="EntityQueryServices\GTBMANDTQueryService.cs" />

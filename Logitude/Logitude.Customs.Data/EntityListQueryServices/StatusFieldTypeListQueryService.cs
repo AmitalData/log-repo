@@ -37,9 +37,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<StatusFieldType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<StatusFieldType> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
-			}
+	}
 
 
 }

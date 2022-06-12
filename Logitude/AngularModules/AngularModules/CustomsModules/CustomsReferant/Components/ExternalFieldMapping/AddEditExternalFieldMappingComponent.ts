@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ExternalFieldMappingPM } from 'Customs/EntityPMs/ExternalFieldMappingPM';
+import { GTBFUSTATUWebService } from 'Customs/Services/WebServices/GTBFUSTATUWebService';
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { AppTool } from 'Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -12,27 +14,34 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 export class AddEditExternalFieldMappingComponent
     extends BaseComponent
     implements OnInit {
-        
-        
+
+
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.ExternalFieldMapping";
-    public EntityPM: ExternalFieldMappingPM;
     isWindowMode: boolean = false;
     isNewRecord: boolean = false;
     ValidationErrorsList: any[] = [];
+    private _EntityResourceService: EntityResourceService = new EntityResourceService();
+    private _GTBFUSTATUWebService: GTBFUSTATUWebService = new GTBFUSTATUWebService();
+    Loaded: boolean = false;
 
 
     constructor(public entityArgs: EntityArgs) {
         super();
-        if (AppTool.IsNullOrEmpty(entityArgs.EntityPM) || !(entityArgs.EntityPM instanceof ExternalFieldMappingPM)) {
-            this.EntityPM = new ExternalFieldMappingPM();
-            this.EntityPM.Tenant = SessionLocator.Tenant;
-            this.isWindowMode = true;
-            this.isNewRecord = true;
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
+            this._GTBFUSTATUWebService.GetAllGTBFUSTATU().subscribe((statusList: any) => {
+                this.Loaded = true;
+                if (AppTool.IsNullOrEmpty(entityArgs.EntityPM) || !(entityArgs.EntityPM instanceof ExternalFieldMappingPM)) {
+                    this.EntityPM = new ExternalFieldMappingPM();
+                    this.EntityPM.Tenant = SessionLocator.Tenant;
+                    this.isWindowMode = true;
+                    this.isNewRecord = true;
 
-        } else {
-            this.EntityPM = this.entityArgs.EntityPM;
-        }
+                } else {
+                    this.EntityPM = this.entityArgs.EntityPM;
+                }
+            });
+        });
     }
     SetWindowArgs(args: any) {
 
@@ -47,6 +56,16 @@ export class AddEditExternalFieldMappingComponent
     public get StatusFieldType() { return this.EntityPM.StatusFieldType; }
     public set StatusFieldType(newValue: string) {
         this.EntityPM.StatusFieldType = newValue;
+    }
+
+    public get StatusCode() { return this.EntityPM.StatusCode; }
+    public set StatusCode(newValue: string) {
+        this.EntityPM.StatusCode = newValue;
+    }
+
+    public get StatusName() { return this.EntityPM.StatusName }
+    public set StatusName(newValue: string) {
+        this.EntityPM.StatusName = newValue;
     }
 
     ngOnInit() {

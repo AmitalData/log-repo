@@ -11,7 +11,7 @@
     }
 </style>
 
-<table class="noselect">
+<table class="noselect" *ngIf="Loaded">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
@@ -68,6 +68,24 @@
                                 [HideColumns]="true"
                                 [FocusOnMe]="true"
                                 [SelectedValue]="StatusFieldType">
+                        </LogLov>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'StatusCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov 
+                                [ObjectFieldName]="'StatusCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'GTBFUSTATU'"
+                                [HideColumns]="true"
+                                [FocusOnMe]="true"
+                                [SelectedValue]="StatusCode">
                         </LogLov>
                     </td>
                     <td></td>
