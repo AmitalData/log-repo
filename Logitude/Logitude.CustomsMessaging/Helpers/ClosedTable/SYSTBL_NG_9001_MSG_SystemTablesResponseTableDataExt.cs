@@ -19,7 +19,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public CargoIdentifireType MyCargoIdentifireType { get; set; }
         public TradeAgreement MyTradeAgreement { get; set; }
         public ConfirmationType MyConfirmationType { get; set; }
-
+        public ItemGovernmentProcedureType MyItemGovernmentProcedureType { get; set; }
 
         internal static SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt CreateNew(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData item)
         {
@@ -126,5 +126,10 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public bool IsVehicleStandardization { get; set; }
         public bool IsQuantityMandatory { get; set; }
         public bool IsForCE { get; set; }
+    }
+    public class ItemGovernmentProcedureType
+    {
+        public String LeadDocumentTypeID { get; set; }
+
     }
 }

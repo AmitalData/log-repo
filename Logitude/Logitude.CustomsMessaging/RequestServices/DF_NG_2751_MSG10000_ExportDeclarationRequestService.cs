@@ -1047,7 +1047,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 declarationGoodsShipment.SequenceNumeric = supplierInvoicePM.SequenceNumeric.Value;
 
                 // declarationGoodsShipment.SequenceNumericSpecified = true;
-                declarationGoodsShipment.Invoice = GetDeclarationGoodsShipmentInvoice(supplierInvoicePM);
+                declarationGoodsShipment.Invoice = GetDeclarationGoodsShipmentInvoice(supplierInvoicePM, declarationPM.Direction);
                 //CustomContext context = new CustomContext();
                 //ConnectedEntity conn = new ConnectedEntity();
                 //var vendorNumber = (from v in context.Vendors where v.Id == supplierInvoicePM.VendorId select v.VendorNumber);
@@ -1176,7 +1176,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        private DeclarationGoodsShipmentInvoice GetDeclarationGoodsShipmentInvoice(SupplierInvoicePM supplierInvoicePM)
+        private DeclarationGoodsShipmentInvoice GetDeclarationGoodsShipmentInvoice(SupplierInvoicePM supplierInvoicePM, string direction)
         {
             var declarationGoodsShipmentInvoice = new DeclarationGoodsShipmentInvoice();
             declarationGoodsShipmentInvoice.ID = SetIDTypeValue<InvoiceIdentificationIDType>(supplierInvoicePM.InvoiceNumber);
@@ -1193,13 +1193,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 declarationGoodsShipmentInvoice.TypeCode = SetCodeTypeValue<InvoiceTypeCodeType>(supplierInvoicePM.AccountTypeCode);
             } // moran 13.7.14 - Task 6817 <--
-            declarationGoodsShipmentInvoice.DMExtensions = GetDMExtensionsGoodsShipment(supplierInvoicePM);
+            declarationGoodsShipmentInvoice.DMExtensions = GetDMExtensionsGoodsShipment(supplierInvoicePM, direction);
 
             return declarationGoodsShipmentInvoice;
         }
 
 
-        private DeclarationGoodsShipmentInvoiceDMExtensions GetDMExtensionsGoodsShipment(SupplierInvoicePM supplierInvoicePM)
+        private DeclarationGoodsShipmentInvoiceDMExtensions GetDMExtensionsGoodsShipment(SupplierInvoicePM supplierInvoicePM, string direction)
         {
 
             var DMExtensions = new DeclarationGoodsShipmentInvoiceDMExtensions();
@@ -1241,9 +1241,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                     DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails = new DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails();
                     declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.SequenceNumeric = supplierInvoicePayments.SequenceNumeric;
                     declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.PaymentType = SetCodeTypeValue<PaymentType>(supplierInvoicePayments.PaymentTypeCode);
-                    declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.PaymentAmount = new PaymentAmountAmountType() { Value = supplierInvoicePayments.PaymentAmount, currencyID = ISO3AlphaCurrencyCodeContentType.USD, currencyIDSpecified = true };
-
-
+                    InvoiceAmountType invoiceAmountType = SetAmountTypeValue<InvoiceAmountType>(supplierInvoicePM.InvoiceCurrencyTypeCode, supplierInvoicePM.InvoiceAmount.Value);
+                    declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.PaymentAmount = new PaymentAmountAmountType() { Value = supplierInvoicePayments.PaymentAmount, currencyID = direction == "E" ? invoiceAmountType.currencyID : ISO3AlphaCurrencyCodeContentType.USD, currencyIDSpecified = true };
                     DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.Add(declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails);
                 }
 
@@ -1366,7 +1365,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     declarationGoodsShipmentAdditionalDocument.DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensions();
                     //mirit20131222 declarationGoodsShipmentAdditionalDocument.DMExtensions.AttachmentID = SetIDTypeValue<AttachmentIDType>(CertificateItem.CustomsAttachmentID);
                     declarationGoodsShipmentAdditionalDocument.DMExtensions.LPCOTypeCode = SetCodeTypeValue<LpcoTypeCodeType>(CertificateItem.ResConfirmationTypeCode);
-                      declarationGoodsShipmentAdditionalDocument.DMExtensions.RequirementLicenseType = SetCodeTypeValue<requirementLicenseType>(CertificateItem.ReqConfirmationTypeCode);
+                    declarationGoodsShipmentAdditionalDocument.DMExtensions.RequirementLicenseType = SetCodeTypeValue<requirementLicenseType>(CertificateItem.ReqConfirmationTypeCode);
                     declarationGoodsShipmentAdditionalDocument.DMExtensions.ExternalAttachmentID = SetIDTypeValue<ExternalAttachmentIDType>(CertificateItem.CustomsAttachmentID);
                     declarationGoodsShipmentAdditionalDocument.DMExtensions.SequenceNumeric = CertificateItem.SequenceNumeric; // moran 1.8.16 - Task 21933
                                                                                                                                //   declarationGoodsShipmentAdditionalDocument.DMExtensions.SequenceNumericSpecified = true; // moran 8.8.16 - Task 21933
@@ -1401,7 +1400,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             var goodsItemAdditionalDocumentDMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensions();
             //mirit20131222 goodsItemAdditionalDocumentDMExtensions.AttachmentID = SetIDTypeValue<AttachmentIDType>(supplierInvoiceItemsCertificatesPM.CustomsAttachmentID);
-             goodsItemAdditionalDocumentDMExtensions.RequirementLicenseType = SetCodeTypeValue<requirementLicenseType>(supplierInvoiceItemsCertificatesPM.ReqConfirmationTypeCode);
+            goodsItemAdditionalDocumentDMExtensions.RequirementLicenseType = SetCodeTypeValue<requirementLicenseType>(supplierInvoiceItemsCertificatesPM.ReqConfirmationTypeCode);
             goodsItemAdditionalDocumentDMExtensions.LPCOTypeCode = SetCodeTypeValue<LpcoTypeCodeType>(supplierInvoiceItemsCertificatesPM.ResConfirmationTypeCode);
             goodsItemAdditionalDocumentDMExtensions.SequenceNumeric = supplierInvoiceItemsCertificatesPM.SequenceNumeric; // moran 1.8.16 - Task 21933
                                                                                                                           //  goodsItemAdditionalDocumentDMExtensions.SequenceNumericSpecified = true; // moran 8.8.16 - Task 21933
@@ -1568,7 +1567,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoiceItemPM.DutyRegimeProtocolCode };
             if (!string.IsNullOrEmpty(supplierInvoiceItemPM.TradeAgreementCode))
             {
-                DMExtensions.DutyRegimeCode = new DutyTaxFeeDutyRegimeCodeType() { Value= supplierInvoiceItemPM.TradeAgreementCode };
+                DMExtensions.DutyRegimeCode = new DutyTaxFeeDutyRegimeCodeType() { Value = supplierInvoiceItemPM.TradeAgreementCode };
             }
             return DMExtensions;
         }
