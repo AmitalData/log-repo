@@ -47,45 +47,25 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class ExternalFieldMappingViewsController : ApiController
+    public partial class GTBFUSTATUViewsController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
-        {
-		  try
-            {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.ExternalFieldMapping", "READ", authToken.Tenant);
-	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                ExternalFieldMappingListQueryService externalFieldMappingQuery = new ExternalFieldMappingListQueryService(MyContext);
-                ExternalFieldMappingList externalFieldMappingList = externalFieldMappingQuery.GetSingle(id);
- 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-				           
-                return Request.CreateResponse(HttpStatusCode.OK,  externalFieldMappingList);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-           
-        }
-
+       
         public HttpResponseMessage GetAll()
         {
             try
             {
+              
                 string logKey = PerformanceLogger.LogCurrentTime();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.ExternalFieldMapping", "READ", authToken.Tenant);
-	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                ExternalFieldMappingListQueryService externalFieldMappingQuery = new ExternalFieldMappingListQueryService(MyContext);
-                List<ExternalFieldMappingList> result = externalFieldMappingQuery.GetList(authToken.Tenant);
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                var _ReferantUnifreightStatuses = new Logitude.Customs.BL.BL.ReferantUnifreightStatuses();
+                var GTBFUSTATUQuery = _ReferantUnifreightStatuses.GetAllGTBFUSTATU(authToken.Tenant);
+                GTBFUSTATUListQueryService gTBFUSTATUQuery = new GTBFUSTATUListQueryService(MyContext);
+                List<GTBFUSTATUList> result = gTBFUSTATUQuery.GetList(authToken.Tenant, GTBFUSTATUQuery);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -101,27 +81,28 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
+                
                 string logKey = PerformanceLogger.LogCurrentTime();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.ExternalFieldMapping", "READ", authToken.Tenant);
-	                
+                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.ExternalFieldMapping",
+                    ObjectTableName = "GTBFUSTATU",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.ExternalFieldMappings",
+                    QuerySection = "GTBFUSTATUs",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				
-				List<ObjectField> ExternalFieldMappingObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ExternalFieldMapping",tenant);
+                var _ReferantUnifreightStatuses = new Logitude.Customs.BL.BL.ReferantUnifreightStatuses();
+                var GTBFUSTATUQuery = _ReferantUnifreightStatuses.GetAllGTBFUSTATU(tenant);
+                List<ObjectField> GTBFUSTATUObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("GTBFUSTATU",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -144,7 +125,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = ExternalFieldMappingObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = GTBFUSTATUObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -172,7 +153,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = ExternalFieldMappingObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = GTBFUSTATUObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -195,14 +176,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
-				ExternalFieldMappingListQueryService externalFieldMappingQuery = new ExternalFieldMappingListQueryService(MyContext);
-
-                List<ExternalFieldMappingList> entityLists = externalFieldMappingQuery.GetList(queryOperations, tenant);
+				GTBFUSTATUListQueryService gTBFUSTATUQuery = new GTBFUSTATUListQueryService(MyContext);
+                
+                List<GTBFUSTATUList> entityLists = gTBFUSTATUQuery.GetList(queryOperations, tenant, GTBFUSTATUQuery);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = externalFieldMappingQuery.GetListCount(queryOperations, tenant);
+                    int count = gTBFUSTATUQuery.GetListCount(queryOperations, GTBFUSTATUQuery);
                     response.Count = count;
                 }
 

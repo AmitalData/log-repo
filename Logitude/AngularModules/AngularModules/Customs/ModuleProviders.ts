@@ -251,6 +251,7 @@ import { ContainerizationListService } from './Services/StandardLists/Containeri
 import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
 import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
 import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
+import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
 
 //#endregion
 
@@ -427,6 +428,10 @@ import { ClientsPoaListService } from './Services/StandardLists/ClientsPoaListSe
 import { BuyerRoleTypeListService } from './Services/StandardLists/BuyerRoleTypeListService';
 import { AmedmentTypeListService } from './Services/StandardLists/AmedmentTypeListService';
 import { CustomsRequestsSheetWebService } from './Services/WebServices/CustomsRequestsSheetWebService';
+import { ExternalFieldMappingListService } from './Services/StandardLists/ExternalFieldMappingListService';
+import { ExternalFieldMappingPMService } from './Services/StandardPMs/ExternalFieldMappingPMService';
+import { StatusFieldTypeListService } from './Services/StandardLists/StatusFieldTypeListService';
+import { GTBFUSTATUWebService } from './Services/WebServices/GTBFUSTATUWebService';
 
 
 export class ModuleProviders {
@@ -685,6 +690,7 @@ export class ModuleProviders {
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
             case "ExporterRoleTypeListService": { myResult = new ExporterRoleTypeListService(); break; }
             case "AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
+            case "GTBFUSTATUListService": { myResult = new GTBFUSTATUListService(); break; }
 
             case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
@@ -719,6 +725,7 @@ export class ModuleProviders {
             case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }
             case "BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
             case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
+            case "ExternalFieldMappingListService": { myResult = new ExternalFieldMappingListService(); break; }
 
                 
              //#endregion                
@@ -780,6 +787,8 @@ export class ModuleProviders {
             case "ReferantTeamPMService": { myResult = new ReferantTeamPMService(); break; }
             case "ExportStorgePMService": { myResult = new ExportStorgePMService(); break; }
             case "ContainerizationPMService": { myResult = new ContainerizationPMService(); break; }
+            case "ExternalFieldMappingPMService": { myResult = new ExternalFieldMappingPMService(); break; }
+            case "StatusFieldTypeListService": { myResult = new StatusFieldTypeListService(); break; }
 
             //#endregion
 
@@ -839,6 +848,7 @@ export class ModuleProviders {
             case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
             case "NewQuoteOPWebService": { myResult = new NewQuoteOPWebService(); break; }
             case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
+            case "GTBFUSTATUWebService": { myResult = new GTBFUSTATUWebService(); break; }
 
 
             //#endregion

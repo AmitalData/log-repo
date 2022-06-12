@@ -191,6 +191,7 @@
     <Compile Include="EntityKeys\FullnessCodeKeys.cs" />
     <Compile Include="EntityKeys\GatepassRequestKeys.cs" />
     <Compile Include="EntityKeys\GatepassReturnCodeKeys.cs" />
+    <Compile Include="EntityKeys\GTBFUSTATUKeys.cs" />
     <Compile Include="EntityKeys\HandingCodeKeys.cs" />
     <Compile Include="EntityKeys\HazardousSubstanceKeys.cs" />
     <Compile Include="EntityKeys\LoadingSiteTypeKeys.cs" />
@@ -461,6 +462,7 @@
     <Compile Include="EntityListQueryServices\Generated\UIMessageAdditionalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UpdateCodeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\GTBFUSTATUListQueryService.cs" />
     <Compile Include="EntityListQueryServices\HandingCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\HazardousSubstanceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\LoadingSiteTypeListQueryService.cs" />
@@ -597,6 +599,7 @@
     <Compile Include="EntityLists\Generated\FullnessCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GatepassRequestList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GatepassReturnCodeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\GTBFUSTATUList.Generated.cs" />
     <Compile Include="EntityLists\Generated\HandingCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\HazardousSubstanceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LoadingSiteTypeList.Generated.cs" />
@@ -733,6 +736,7 @@
     <Compile Include="EntityMapping\FullnessCodeMap.cs" />
     <Compile Include="EntityMapping\GatepassRequestMap.cs" />
     <Compile Include="EntityMapping\GatepassReturnCodeMap.cs" />
+    <Compile Include="EntityMapping\GTBFUSTATUMap.cs" />
     <Compile Include="EntityMapping\HandingCodeMap.cs" />
     <Compile Include="EntityMapping\HazardousSubstanceMap.cs" />
     <Compile Include="EntityMapping\LoadingSiteTypeMap.cs" />
@@ -868,6 +872,7 @@
     <Compile Include="EntityPOCOs\FullnessCode.cs" />
     <Compile Include="EntityPOCOs\GatepassRequest.cs" />
     <Compile Include="EntityPOCOs\GatepassReturnCode.cs" />
+    <Compile Include="EntityPOCOs\GTBFUSTATU.cs" />
     <Compile Include="EntityPOCOs\HandingCode.cs" />
     <Compile Include="EntityPOCOs\HazardousSubstance.cs" />
     <Compile Include="EntityPOCOs\LoadingSiteType.cs" />

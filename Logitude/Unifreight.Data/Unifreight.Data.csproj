@@ -164,6 +164,7 @@
     <Compile Include="AmitalModel\EntityKeys\GNDADRKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GNDCARDKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBDOCKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GTBFUSTATUKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBITEMKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBITMCNKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBMANDTKeys.cs" />
@@ -368,6 +369,7 @@
     <Compile Include="AmitalModel\Repsitories\GNDADRRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GNDCARDRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBDOCRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GTBFUSTATURepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBITEMRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBITMCNRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBMANDTRepository.cs" />
