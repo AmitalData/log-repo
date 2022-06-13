@@ -20,8 +20,18 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+        public ExternalFieldMapping GetSingleByStatusFieldTypeAndStatusCode(string statusFieldType,string statusCode,int tenant)
+        {
+            var q = from a in context.ExternalFieldMappings
+                    where
+                    a.Tenant == tenant &&
+                    a.StatusFieldType == statusFieldType &&
+                    a.StatusCode == statusCode
+                    select a;
+            return q.FirstOrDefault();
+        }
 
-   }
+    }
 
 }
    

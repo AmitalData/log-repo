@@ -24,7 +24,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         Tenant, 
 	         FieldCode, 
-	         IsAvailable,
+	         IsAvailable, 
+	         StatusFieldType,
 	      }
 
 
@@ -33,7 +34,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         Tenant, 
 	         FieldCode, 
-	         IsAvailable,
+	         IsAvailable, 
+	         StatusFieldType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -50,6 +52,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAvailable))
             {
 				entityPOCO.IsAvailable = entityPM.IsAvailable;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusFieldType))
+            {
+				entityPOCO.StatusFieldType = entityPM.StatusFieldType;
 			}
 			}
 
@@ -71,6 +78,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsAvailable = entityPOCO.IsAvailable;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusFieldType))
+            {
+					entityPM.StatusFieldType = entityPOCO.StatusFieldType;
+            }
+
 		}
 
 		public void PMToOldPM(AvailableStatusFieldPM entityPM, AvailableStatusFieldPM oldEntityPM)
@@ -85,6 +97,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAvailable))
             {
                 oldEntityPM.IsAvailable = entityPM.IsAvailable;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusFieldType))
+            {
+                oldEntityPM.StatusFieldType = entityPM.StatusFieldType;
             }
 			
 		}

@@ -765,4 +765,28 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SVC"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="INA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RSG"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RSH"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

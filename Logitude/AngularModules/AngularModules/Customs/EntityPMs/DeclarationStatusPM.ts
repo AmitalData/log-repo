@@ -639,6 +639,26 @@ export class DeclarationStatusPM {
     public set FieldR20(newValue: string) { if (this.fieldR20 != newValue) { this.fieldR20 = newValue; this.MarkAsDirty("FieldR20"); } }
        
 	 
+    private sVC: Date;
+    public get SVC() { return this.sVC; }
+    public set SVC(newValue: Date) { if (this.sVC != newValue) { this.sVC = newValue; this.MarkAsDirty("SVC"); } }
+       
+	 
+    private iNA: Date;
+    public get INA() { return this.iNA; }
+    public set INA(newValue: Date) { if (this.iNA != newValue) { this.iNA = newValue; this.MarkAsDirty("INA"); } }
+       
+	 
+    private rSG: Date;
+    public get RSG() { return this.rSG; }
+    public set RSG(newValue: Date) { if (this.rSG != newValue) { this.rSG = newValue; this.MarkAsDirty("RSG"); } }
+       
+	 
+    private rSH: Date;
+    public get RSH() { return this.rSH; }
+    public set RSH(newValue: Date) { if (this.rSH != newValue) { this.rSH = newValue; this.MarkAsDirty("RSH"); } }
+       
+	 
 
     public OldEntityPM: DeclarationStatusPM;
 		

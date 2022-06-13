@@ -20,6 +20,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string FieldCode  { get; set; }
        [DataMember]
        public bool IsAvailable  { get; set; }
+       [DataMember]
+       public string StatusFieldType  { get; set; }
    }
 
 }

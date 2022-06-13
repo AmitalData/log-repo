@@ -268,6 +268,14 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.FieldR19).HasColumnName("FieldR19").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.FieldR20).HasColumnName("FieldR20").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.SVC).HasColumnName("SVC");
+
+            this.Property(t => t.INA).HasColumnName("INA");
+
+            this.Property(t => t.RSG).HasColumnName("RSG");
+
+            this.Property(t => t.RSH).HasColumnName("RSH");
         }
     }
 }

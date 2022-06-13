@@ -25,6 +25,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FieldCode { get; set; }
         [Column("IsAvailable")]
 	    public bool IsAvailable { get; set; }
+        [ForeignKey("StatusFieldTypeEntity")]
+        [Column("StatusFieldType")]
+	    public string StatusFieldType { get; set; }
+	      
+        public virtual StatusFieldType StatusFieldTypeEntity { get; set; }
     }
 }
 	 

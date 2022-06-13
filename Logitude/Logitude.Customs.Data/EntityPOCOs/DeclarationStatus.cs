@@ -265,6 +265,14 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FieldR19 { get; set; }
         [Column("FieldR20")]
 	    public string FieldR20 { get; set; }
+        [Column("SVC")]
+	    public DateTime? SVC { get; set; }
+        [Column("INA")]
+	    public DateTime? INA { get; set; }
+        [Column("RSG")]
+	    public DateTime? RSG { get; set; }
+        [Column("RSH")]
+	    public DateTime? RSH { get; set; }
     }
 }
 	 

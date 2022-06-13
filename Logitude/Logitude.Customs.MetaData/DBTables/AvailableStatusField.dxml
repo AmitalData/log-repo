@@ -24,4 +24,16 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="StatusFieldType"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="StatusFieldType"
+    ReferencedTable="StatusFieldTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

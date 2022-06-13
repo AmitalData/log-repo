@@ -20,6 +20,13 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+        public string GetAvailableFieldByStatusFieldType(int tenant,string statusFieldType)
+        {
+            return (from a in context.AvailableStatusFields
+                               where a.Tenant == tenant && a.StatusFieldType == statusFieldType && a.IsAvailable ==true
+                               select a.FieldCode).FirstOrDefault();
+            
+        }
 
    }
 

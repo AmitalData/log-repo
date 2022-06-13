@@ -34,6 +34,10 @@ export class DeclarationStatusList {
 	FieldR3: string;
 	FieldR4: string;
 	FieldR5: string;
+	SVC: Date;
+	INA: Date;
+	RSG: Date;
+	RSH: Date;
 	
 }
  

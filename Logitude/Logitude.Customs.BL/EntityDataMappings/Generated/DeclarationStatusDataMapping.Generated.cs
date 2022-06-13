@@ -144,7 +144,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FieldR17, 
 	         FieldR18, 
 	         FieldR19, 
-	         FieldR20,
+	         FieldR20, 
+	         SVC, 
+	         INA, 
+	         RSG, 
+	         RSH,
 	      }
 
 
@@ -273,7 +277,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FieldR17, 
 	         FieldR18, 
 	         FieldR19, 
-	         FieldR20,
+	         FieldR20, 
+	         SVC, 
+	         INA, 
+	         RSG, 
+	         RSH,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -890,6 +898,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FieldR20))
             {
 				entityPOCO.FieldR20 = entityPM.FieldR20;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SVC))
+            {
+				entityPOCO.SVC = entityPM.SVC;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.INA))
+            {
+				entityPOCO.INA = entityPM.INA;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RSG))
+            {
+				entityPOCO.RSG = entityPM.RSG;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RSH))
+            {
+				entityPOCO.RSH = entityPM.RSH;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1513,6 +1541,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.FieldR20 = entityPOCO.FieldR20;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SVC))
+            {
+					entityPM.SVC = entityPOCO.SVC;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.INA))
+            {
+					entityPM.INA = entityPOCO.INA;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RSG))
+            {
+					entityPM.RSG = entityPOCO.RSG;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RSH))
+            {
+					entityPM.RSH = entityPOCO.RSH;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationStatusPM entityPM, DeclarationStatusPM oldEntityPM)
@@ -2127,6 +2175,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FieldR20))
             {
                 oldEntityPM.FieldR20 = entityPM.FieldR20;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SVC))
+            {
+                oldEntityPM.SVC = entityPM.SVC;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.INA))
+            {
+                oldEntityPM.INA = entityPM.INA;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RSG))
+            {
+                oldEntityPM.RSG = entityPM.RSG;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RSH))
+            {
+                oldEntityPM.RSH = entityPM.RSH;
             }
 			
 		}

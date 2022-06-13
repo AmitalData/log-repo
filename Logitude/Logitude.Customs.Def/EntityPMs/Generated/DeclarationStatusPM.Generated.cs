@@ -2849,6 +2849,98 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? sVC ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? SVC  
+	   {
+	    
+	     get
+		{
+		   return sVC;
+		 }
+		 set
+		 {
+		   if(sVC != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SVC",OldValue=sVC,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   sVC=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? iNA ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? INA  
+	   {
+	    
+	     get
+		{
+		   return iNA;
+		 }
+		 set
+		 {
+		   if(iNA != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="INA",OldValue=iNA,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   iNA=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? rSG ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? RSG  
+	   {
+	    
+	     get
+		{
+		   return rSG;
+		 }
+		 set
+		 {
+		   if(rSG != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RSG",OldValue=rSG,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   rSG=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? rSH ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? RSH  
+	   {
+	    
+	     get
+		{
+		   return rSH;
+		 }
+		 set
+		 {
+		   if(rSH != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RSH",OldValue=rSH,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   rSH=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

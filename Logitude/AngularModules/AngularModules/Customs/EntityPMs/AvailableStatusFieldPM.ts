@@ -39,6 +39,11 @@ export class AvailableStatusFieldPM {
     public set IsAvailable(newValue: boolean) { if (this.isAvailable != newValue) { this.isAvailable = newValue; this.MarkAsDirty("IsAvailable"); } }
        
 	 
+    private statusFieldType: string;
+    public get StatusFieldType() { return this.statusFieldType; }
+    public set StatusFieldType(newValue: string) { if (this.statusFieldType != newValue) { this.statusFieldType = newValue; this.MarkAsDirty("StatusFieldType"); } }
+       
+	 
 
     public OldEntityPM: AvailableStatusFieldPM;
 		
