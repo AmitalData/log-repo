@@ -62,7 +62,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
 
             return myDeclaretionErrorXml;
         }
-        public string AnalyzeErrorPionterExport(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError[] responseError, DeclarationPM declarationPM, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO, bool isRaiseUnifreightEvent = false) // to add ref to ResponseError in Logitude.CustomsMessaging
+        public string AnalyzeErrorPionterExport(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError[] responseError, DeclarationPM declarationPM, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO_EX, bool isRaiseUnifreightEvent = false) // to add ref to ResponseError in Logitude.CustomsMessaging
         {
             if (responseError == null)
             {

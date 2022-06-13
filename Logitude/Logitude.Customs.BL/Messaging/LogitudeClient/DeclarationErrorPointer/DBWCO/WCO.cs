@@ -13,12 +13,22 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         private static WCO _Instance;
         private readonly IReadOnlyCollection<WCOErrorPointerModel> _DB;
         private readonly IReadOnlyCollection<WCOErrorPointerModel> _DBManifest;
+        private readonly IReadOnlyCollection<WCOErrorPointerModel> _DBExport;
+
 
         private List<WCOErrorPointerModel> MyCopyOfDB
         {
             get
             {
                 var myCopyOfDB = _DB.Select(rec => rec.CreateNew()).ToList();
+                return myCopyOfDB;
+            }
+        }
+        private List<WCOErrorPointerModel> MyCopyOfDBExport
+        {
+            get
+            {
+                var myCopyOfDB = _DBExport.Select(rec => rec.CreateNew()).ToList();
                 return myCopyOfDB;
             }
         }
@@ -52,6 +62,9 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
 
             var rowsDBManifest = BuildDBManifest();
             this._DBManifest = rowsDBManifest.Select((rec, currSeq) => GetWCOErrorPointerModelManifest(rec, currSeq)).ToList();
+
+            var rowsDBExport = BuildDBExport();
+            this._DBExport = rowsDBExport.Select((rec, currSeq) => GetWCOErrorPointerModelManifest(rec, currSeq)).ToList();
         }
         private List<string> BuildDBManifest()
         {
@@ -100,6 +113,34 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             {
                 string textDBUTF8_base64 = UnifreightIIG.Resources.IIGResource.DBUTF8_base64;
                 text = Base64Decode(textDBUTF8_base64);
+
+            }
+            else
+            {
+                text = UnifreightIIG.Resources.IIGResource.DBUTF8; ///GetResource(ResourceStreamPath);
+            }
+            //string text = GetResource(ResourceStreamPath);
+            var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var rows = lines.Skip(1);//remove header
+            return rows.ToList();
+
+        }
+        private List<string> BuildDBExport()
+        {
+
+           
+            string text;
+            //bool fromResource = false;
+            //if (fromResource)
+            //{
+            //    //text = WCOResource.DB;
+            //}
+            //else
+            bool base64Ver = true;
+            if (base64Ver)
+            {
+                string textDBUTF8Export_base64 = UnifreightIIG.Resources.IIGResource.DB_EXP_UTF8_base64;
+                text = Base64Decode(textDBUTF8Export_base64);
 
             }
             else
@@ -218,6 +259,10 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
                     myWCOFluent = new WCOFluent(MyCopyOfDBManifest);
                     break;
 
+                case WCOTypeEnum.WCO_EX:
+                    myWCOFluent = new WCOFluent(MyCopyOfDBExport);
+                    break;
+
                 case WCOTypeEnum.WCO:
                 default:
                     myWCOFluent = new WCOFluent(MyCopyOfDB);
@@ -231,7 +276,8 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
     public enum WCOTypeEnum
     {
         WCO = 0,
-        Manifest = 1
+        Manifest = 1,
+        WCO_EX=2
 
     }
 }
