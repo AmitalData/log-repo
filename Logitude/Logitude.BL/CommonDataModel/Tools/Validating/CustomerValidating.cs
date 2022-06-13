@@ -20,7 +20,7 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
     {
         public static void Validate(CustomerPM entityPM, bool isNewEntity, ICommonDataContext myContext)
         {
-            ValidateVatNumber(entityPM);
+            // ValidateVatNumber(entityPM);
 
             int tenant = entityPM.Tenant;
             TenantRepository tenantRepository = new TenantRepository(myContext);
