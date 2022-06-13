@@ -63,8 +63,8 @@ namespace Logitude.Customs.BL.BL
                         entityPM.FinalCargoTypeCode = "36";
                         entityPM.FinalSecondCargoId = "";
                         entityPM.FinalThirdCargoId = "";
-                        entityPM.FinalManifestNumber = "";
                     }
+                
                     List<AmitalContext> _AmitalContextList = new List<AmitalContext>();
                     var tenantAmitalContext = _AmitalContextList.FirstOrDefault(rec => rec.TenantSeed == tenant);
                     if (tenantAmitalContext == null)
@@ -72,8 +72,22 @@ namespace Logitude.Customs.BL.BL
                         tenantAmitalContext = AmitalContext.GetContext(tenant);
                         _AmitalContextList.Add(tenantAmitalContext);
                     }
-                    int.TryParse(dec.ExportFile, out int exportFile);
+                    int exportFile = 0;
+                    int.TryParse(dec.ExportFile, out exportFile);
                     var EFIFILEMData = new EFIFILEMQueryService(tenantAmitalContext).GetSingle(exportFile, false);
+                    var EFIMMNData = new EFIMMNQueryService(tenantAmitalContext).GetByFileNo(tenant,Convert.ToInt64(exportFile));
+                    if (EFIMMNData != null && EFIMMNData.Count > 0)
+                    {
+                        var Warehouse = EFIMMNData[EFIMMNData.Count - 1].WAREHOUSE;
+                        if (Warehouse != null)
+                        {
+                            var ETBVENDData = new ETBVENDQueryService(tenantAmitalContext).GetSingle(Warehouse, false);
+                            if (ETBVENDData != null)
+                            {
+                                entityPM.ChargingSite = ETBVENDData.NAMEENG;
+                            }
+                        }
+                    }
                     if (EFIFILEMData != null)
                     {
                         entityPM.SMP = EFIFILEMData.SMP;
@@ -87,11 +101,14 @@ namespace Logitude.Customs.BL.BL
                                 var ETBAIRLINEData = new ETBAIRLINEQueryService(tenantAmitalContext).GetSingle(ESPSPEDdata.MAINCARRIER, false);
                                 if (ETBAIRLINEData != null && ETBAIRLINEData.AIRLINENUM != null)
                                 {
-                                    AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
+\                                    AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
                                 }
-                                entityPM.MAIN_AWB = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
                                 if (isFromNewEntity)
                                     entityPM.FinalManifestNumber = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
+                                    AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
+                                entityPM.MAIN_AWB = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
+
+                                }
                             }
                         }
                     }

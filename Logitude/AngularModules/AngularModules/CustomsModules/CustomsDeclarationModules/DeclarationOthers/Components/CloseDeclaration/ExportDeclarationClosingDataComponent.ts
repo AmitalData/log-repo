@@ -179,6 +179,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         }
     }
 
+    get ChargingSite() { return this.EntityPM ? this.EntityPM.ChargingSite : null; }
+    set ChargingSite(value: string) {
+        if (this.EntityPM.ChargingSite != value) {
+            this.EntityPM.ChargingSite = value;
+        }
+    }
+
     get FinalCargoTypeCode() { return this.EntityPM ? this.EntityPM.FinalCargoTypeCode : null; }
     set FinalCargoTypeCode(value: string) {
         if (this.EntityPM.FinalCargoTypeCode != value) {
