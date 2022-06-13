@@ -1424,7 +1424,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
             let msg: string = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteConsignment");
             if(this.EntityPM.Direction === 'E' && this.EntityPM.TransportModeId === 'O' && tab.EntityPM.ExportStoragesId)
-                msg = TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '!\n' + msg;
+                msg = TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '\n' + msg;
 
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 300;
