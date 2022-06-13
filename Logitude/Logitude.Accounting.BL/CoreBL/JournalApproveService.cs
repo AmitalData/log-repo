@@ -34,6 +34,10 @@ using Logitude.Server.Tools;
 using System.Web;
 using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.CoreBL;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -46,6 +50,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public const string QP_JournalTenant = "JournalTenant";
         public const string QP_JournalId = "JournalId";
+        const string PartnerTypeId_Customer = "CS";
+        const string CashARPaymentAccountingMethod = "CA";
+        const string ChequeARPaymentAccountingMethod = "CH";
+        const string BankTransferARPaymentAccountingMethod = "BT";
+        const string ARPaymentApprovedStatusCode = "AD";
+        const string ARPaymentVoidedStatusCode = "VD";
 
         private string _QMessageId;
         private string _SelectedQueue;
@@ -90,7 +100,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 //
 
-
                 AccountingStreamingInNewSerializableTransaction(actions, myLedgerTransactionsWithCounters, gLAccountAgingDataPMs);
                 CalculateTotalFutureOpenChequesForCreditGlAccount(myLedgerTransactionsWithCounters);
 
@@ -105,6 +114,80 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
+        private void CreateInterestTransactions(JournalPM journalPM, IAccountingContext context) {
+            if (journalPM is null) {
+                return;
+            }
+            
+            if (journalPM.AccountingEntityCode == AccountingEntityValues.ARPayment) {
+                ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(journalPM.Tenant);
+                ARPaymentPM aRPaymentPM = aRPaymentQuery.GetSinglePM(journalPM.AccountingEntityId, journalPM.Tenant);
+                
+                if (aRPaymentPM.AccountingPaymentMethodCode == CashARPaymentAccountingMethod && aRPaymentPM.BillToPartnerTypeId == PartnerTypeId_Customer)
+                {
+                    CreateInterestTrascntionsForCashARPayment(journalPM, aRPaymentPM, context);
+                }
+                if ((aRPaymentPM.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod || aRPaymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod)
+                    && aRPaymentPM.StatusCode == ARPaymentVoidedStatusCode)
+                {
+                    CancelInterestTrascntionsForChequeOrBankTranasfersARPayment(journalPM, aRPaymentPM, context);
+                }
+                if (aRPaymentPM.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod && aRPaymentPM.StatusCode == ARPaymentApprovedStatusCode)
+                {
+                    CreateInterestTrascntionsForChequeARPayment(journalPM, aRPaymentPM, context);
+                }
+
+                if (aRPaymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod && aRPaymentPM.StatusCode == ARPaymentApprovedStatusCode)
+                {
+                    CreateInterestTrascntionsForBankTransfersARPayment(journalPM, aRPaymentPM, context);
+                }
+            }
+        }
+        
+        private void CreateInterestTrascntionsForCashARPayment(JournalPM journalPM, ARPaymentPM aRPaymentPM, IAccountingContext context)
+        {
+            ARPaymentService service = new ARPaymentService(null, journalPM.Tenant);
+            var interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
+            var interestTranasction = service.MapInterestTransactionPMFromARPaymentPM(aRPaymentPM, aRPaymentPM.StatusCode == ARPaymentVoidedStatusCode);
+            interestTransactionUpdateService.Update(interestTranasction, true);
+        }
+
+        private void CancelInterestTrascntionsForChequeOrBankTranasfersARPayment(JournalPM journalPM, ARPaymentPM aRPaymentPM, IAccountingContext context)
+        {
+            ARPaymentService service = new ARPaymentService(null, journalPM.Tenant);
+            List<InterestTransactionPM> interestTranactions = service.GetARPaymentInterestTransactionsForCancellation(aRPaymentPM);
+            var interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
+            foreach (var interestTransaction in interestTranactions)
+            {
+                interestTransactionUpdateService.Update(interestTransaction, true);
+            }
+        }
+
+        private void CreateInterestTrascntionsForChequeARPayment(JournalPM journalPM, ARPaymentPM aRPaymentPM, IAccountingContext context)
+        {
+            var interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
+            ARPaymentChequeQueryService aRPaymentChequeQuery = new ARPaymentChequeQueryService(journalPM.Tenant);
+            FullAccountingARPaymentApproveService fullAccountingARPaymentApproveService = new FullAccountingARPaymentApproveService(aRPaymentPM, journalPM.Tenant, false, false);
+
+            List<ARPaymentChequePM> arPaymentCheques = aRPaymentChequeQuery.GetListByPaymentId(aRPaymentPM.Id, journalPM.Tenant);
+            foreach (var cheque in arPaymentCheques)
+            {
+                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(cheque, aRPaymentPM);
+                interestTransactionUpdateService.Update(interestTranasction, true);
+            }
+        }
+
+        private void CreateInterestTrascntionsForBankTransfersARPayment(JournalPM journalPM, ARPaymentPM aRPaymentPM, IAccountingContext context)
+        {
+            var interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
+            FullAccountingARPaymentApproveService fullAccountingARPaymentApproveService = new FullAccountingARPaymentApproveService(aRPaymentPM, journalPM.Tenant, false, false);
+
+            foreach (var bankTranfer in aRPaymentPM.ARPaymentBankTranfers)
+            {
+                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForBankTransfer(bankTranfer, aRPaymentPM);
+                interestTransactionUpdateService.Update(interestTranasction, true);
+            }
+        }
 
         private void TryCreateStornoAutoReconcile()
         {
@@ -367,7 +450,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         WriteLogWhyTransferCardBadBalance(_Tenant, _JournalPM.Id, this._AccountingContext, stringBuilderWhyTransferCardBadBalance);
                     }
-                    
+
+                    CreateInterestTransactions(_JournalPM, _AccountingContext);
                     this._AccountingContext.SaveChanges();//due myJournalRepository.UpdateWhileStreaming 
                     scope.Complete();
 
@@ -902,7 +986,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 JournalApproveService.MyActions actions =
             JournalApproveService.MyActions.BuildLedgerTransaction | JournalApproveService.MyActions.BuildGLAccountTotalByMonths;
                 var myJournalApproveService = new JournalApproveService(tenant, qpJournalId, MessageId, selectedQueue);
-                var res = myJournalApproveService.SubmitApprove(actions);
+               var res = myJournalApproveService.SubmitApprove(actions);
 
                 if (res.Success)
                 {
