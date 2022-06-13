@@ -138,7 +138,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
 
                                                        ActionCode = en.ExportLogisticPermitAction.LocalName,
-                                                       ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName
+                                                       ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName,
+                                                       StorageSiteCode = en.StorageSiteCode,
                                                    });
             return query;
         }
