@@ -457,6 +457,11 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyModificationAndDiscountType.IsRelevantGoodsItem = true;
                                                     }
+                                                    if (dr["ExtraNumericData"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.ExtraNumericData = dr["ExtraNumericData"].ToString();
+                                                    }
                                                     extList.Add(newExt);
                                                 });
                         return extList;
