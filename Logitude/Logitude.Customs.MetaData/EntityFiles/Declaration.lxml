@@ -24714,7 +24714,7 @@
     <TextCode
       Code="&quot;Customs.Declaration.O.ConnectedDelcaration&quot;"
       DefaultText="&quot;Note a linked statement!&quot;"
-      LocalDefaultText="&quot;!שים לב האחסנה מקושרת&quot;"
+      LocalDefaultText="&quot;שים לב האחסנה מקושרת !&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
