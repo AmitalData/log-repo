@@ -7,8 +7,10 @@ import { ShipmentSelectors } from "../../selectors/Selectors";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ShipmentContext } from '../../models/ShipmentContext';
 import { PackagesDetails } from "cypress/models/PackagesDetails";
+
 let MasterShipmentDetails: ShipmentDetails;
 let packagesDetails: PackagesDetails[]
+let Housenumberopen;
 //#endregion
 
 //#region Create master export air shipment
@@ -45,18 +47,16 @@ When("create house with {string} as Shipper", (Shipper) => {
 
 Then("the house should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
-        ShipmentContext.HouseNumber = interception.response.body.House;
-        console.log(ShipmentContext.HouseNumber)
+        ShipmentContext.HouseNumber = interception.response.body.ShipmentNumber;
+        Housenumberopen=ShipmentContext.HouseNumber
     })
-
 });
 Then("the house should connect successfully", () => {
     Actions.CheckBusyIndicator()
-    Actions.ValidateCheckHouseCheckBox();
+   // Actions.ValidateCheckHouseCheckBox();
 });
 Given('the user in the house package tab', () => {
-    console.log(ShipmentContext.HouseNumber)
-    Actions.openHouseShipment(ShipmentContext.HouseNumber)
+    Actions.openHouseShipment(Housenumberopen)
     cy.Navigate(ShipmentSelectors.ShipmentPackagesTab + ShipmentSelectors.LastElementShipment)
 })
 Given("add a package with the following details", (dataTable) => {
@@ -84,10 +84,12 @@ Given('rebuild master containers by adding new container with the following deta
     cy.Navigate(ShipmentSelectors.ShipmentPackagefromhouse)
     cy.Click(ShipmentSelectors.Addcontainer, 'Add', true)
     cy.wait(1000)
-    cy.Click(ShipmentSelectors.Newcontainermaster, 'New Container', true)
+    //cy.get(ShipmentSelectors.Newcontainermaster)
+    //cy.Click(ShipmentSelectors.Newcontainermaster, 'New Container', true)
+    cy.contains('New Container').click() 
     cy.wait(1000)
     //packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
-    Actions.AddHousePackage(packagesDetails)
+    Actions.AddMasterPackage(packagesDetails)
     cy.Click(ShipmentSelectors.TEST + ShipmentSelectors.LastElementShipment, 'OK')
 })
 When('Update the shipment', () => {

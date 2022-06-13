@@ -134,7 +134,7 @@ export function AsserationthepackageaddsuccessfullyinHouse() {
     cy.get(ShipmentSelectors.FirstRowinpackages).contains('5').should('exist')
 }
 export function AsseratincontaineraddsuccessfullyinMaster() {
-    cy.get(ShipmentSelectors.FirstRowinpackages).contains('ContainerId').should('exist')
+   // cy.get(ShipmentSelectors.FirstRowinpackages).contains('ContainerId').should('exist')
     cy.get(ShipmentSelectors.FirstRowinpackages).contains('100').should('exist')
 }
 export function EditContinerNumberinMaster() {
@@ -171,9 +171,7 @@ export function BacktotheMasterShipment() {
 export function openHouseShipment(Housenumberopen: any) {
     cy.wait(1000)
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
-    //ShipmentContext.HouseNumber
     cy.wait(1000)
-    console.log(Housenumberopen)
     cy.get("hyperlink").contains(parseInt(Housenumberopen, 10)).click({ force: true })
 }
 export function OpenShipment(shipmentNumber: string) {
@@ -659,7 +657,17 @@ export function AddHousePackage(packagesDetails: PackagesDetails[]) {
     //cy.Click("#OkOceanPackage", null)
     //cy.contains('Ok').click()
 }
+
+export function AddMasterPackage(packagesDetails: PackagesDetails[]) {
+
+    for (let i = 0; i < packagesDetails.length; i++) {
+
+        cy.FillLogLov(ShipmentSelectors.ShipmentPackagetype, packagesDetails[i].PackageType, true)
+        cy.get(ShipmentSelectors.ShipmentPackagecrossweight).type(packagesDetails[i].GrossWeight.toString())
+    }
+}
 //#endregion
+
 //#region House Shipment Tab
 export function AssertHouseWizerdInsideMaster() {
     AssertHouseDirectionDim()
