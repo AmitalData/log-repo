@@ -66,6 +66,14 @@ namespace Logitude.Customs.Data.EntityLists
        public string FieldR4  { get; set; }
        [DataMember]
        public string FieldR5  { get; set; }
+       [DataMember]
+       public DateTime? SVC  { get; set; }
+       [DataMember]
+       public DateTime? INA  { get; set; }
+       [DataMember]
+       public DateTime? RSG  { get; set; }
+       [DataMember]
+       public DateTime? RSH  { get; set; }
    }
 
 }
