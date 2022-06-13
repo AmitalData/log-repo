@@ -95,12 +95,12 @@
         </tr>
 
         <!-- Quote Details -->
-        <tr style="height:257px;">
+        <tr style="height:320px;">
             <td>
                 <div class="MediaFill">
                     <SectionBox>
                         <SectionHead>{{'Quote.S.Details.QuoteDetails' | TextCodeTranslationPipe}}</SectionHead>
-                        <SectionBody>
+                        <SectionBody style="overflow-y:auto;">
                             <table>
                                 <tr>
                                     <td style="width:350px;">
@@ -108,7 +108,7 @@
 
                                             <!-- Incoterm -->
                                             <tr class="FormFieldRow">
-                                                <td style="width: 100px;">
+                                                <td style="width: 130px;">
                                                     <LogLabel [ObjectFieldName]="'IncotermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -321,7 +321,6 @@
                                                             [SelectedValue]="ValueOfGoodsCurrencyId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [HideColumns]="true"
                                                             [LookUpTableName]="'Currency'">
                                                     </LogLov>
                                                 </td>
