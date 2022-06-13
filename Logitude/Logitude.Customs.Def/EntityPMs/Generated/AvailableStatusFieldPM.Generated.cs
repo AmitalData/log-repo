@@ -89,6 +89,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string statusFieldType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusFieldType  
+	   {
+	    
+	     get
+		{
+		   return statusFieldType;
+		 }
+		 set
+		 {
+		   if(statusFieldType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusFieldType",OldValue=statusFieldType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   statusFieldType=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

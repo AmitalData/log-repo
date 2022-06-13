@@ -11,6 +11,7 @@ export class AvailableStatusFieldList {
 	Tenant: number;
 	FieldCode: string;
 	IsAvailable: boolean;
+	StatusFieldType: string;
 	
 }
  

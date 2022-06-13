@@ -19,7 +19,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(ExternalFieldMappingPM entityPM, ExternalFieldMapping entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
         }
 
         public void CustomPOCOToPM(ExternalFieldMappingPM entityPM, ExternalFieldMapping entityPOCO)

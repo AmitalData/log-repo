@@ -11,7 +11,7 @@
     }
 </style>
 
-<table class="noselect" *ngIf="Loaded">
+<table *ngIf="Loaded">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
@@ -72,7 +72,7 @@
                     </td>
                     <td></td>
                 </tr>
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="isWindowMode">
                     <td>
                         <LogLabel [ObjectFieldName]="'StatusCode'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
@@ -88,6 +88,32 @@
                                 [SelectedValue]="StatusCode">
                         </LogLov>
                     </td>
+                    <td></td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'StatusName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'StatusName'" [ObjectTableName]="ObjectTableName" [Text]="StatusName"
+                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'Text'"></LogTextBox>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- InActive -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="InActive"></LogCheckBox>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td></td>
                 </tr>
             </table>

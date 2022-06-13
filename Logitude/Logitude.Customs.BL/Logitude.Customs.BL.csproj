@@ -1371,6 +1371,7 @@
     <Compile Include="EntityQueryServices\SupplierInvoiceItemVehicleQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceModificationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeficitDecisionQueryService.cs" />
+    <Compile Include="EntityQueryServices\AvailableStatusFieldQueryService.cs" />
     <Compile Include="EntityQueryServices\UIMessageQueryService.cs" />
     <Compile Include="EntityQueryServices\ValidCustomsItemQueryService.cs" />
     <Compile Include="EntityQueryServices\GuaranteeConditionQueryService.cs" />
@@ -1573,7 +1574,8 @@
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\CityUpdateService.cs" />
+	<Compile Include="EntityUpdateServices\ExternalFieldMappingUpdateService.cs" />
+	  <Compile Include="EntityUpdateServices\CityUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsP3LoiUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsPage3AUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsPage3BUpdateService.cs" />
