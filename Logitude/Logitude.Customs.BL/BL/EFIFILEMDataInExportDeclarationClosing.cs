@@ -101,7 +101,7 @@ namespace Logitude.Customs.BL.BL
                                 var ETBAIRLINEData = new ETBAIRLINEQueryService(tenantAmitalContext).GetSingle(ESPSPEDdata.MAINCARRIER, false);
                                 if (ETBAIRLINEData != null && ETBAIRLINEData.AIRLINENUM != null)
                                 {
-\                                    AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
+                                    AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
                                 }
                                 if (isFromNewEntity)
                                 {
@@ -114,8 +114,7 @@ namespace Logitude.Customs.BL.BL
                     }
                 }
             }
-        }
             return entityPM;
         }
-}
+    }
 }
