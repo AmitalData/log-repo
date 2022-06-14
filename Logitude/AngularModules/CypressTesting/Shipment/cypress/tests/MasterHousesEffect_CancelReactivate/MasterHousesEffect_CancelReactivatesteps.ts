@@ -51,6 +51,7 @@ When("create house with {string} as Shipper", (Shipper) => {
 Then("the house should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         ShipmentContext.HouseNumber = interception.response.body.House;
+        console.log(ShipmentContext.HouseNumber)
     })
 });
 
