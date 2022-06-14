@@ -79,6 +79,10 @@
 
     <None Include="DBScripts\202206060955_RemoveInterestTransAddOppInterIfLedgerNotCreatedForJournal.sxml" />
 
+    <None Include="DBScripts\202206071236_InsertOppositeInterestTransactionsForWrongBillToGLAccountInterests.sxml" />
+    <None Include="DBScripts\202206071224_UpdateInterestTransactionsForWrongBillToGLAccountInterests.sxml" />
+    <None Include="DBScripts\202206071239_UpdateJournalLinesForWrongBillToGLAccount.sxml" />
+    <None Include="DBScripts\202206071239_UpdateLedgerTransactionsForWrongBillToGLAccount.sxml" />
     <None Include="DBScripts\202205301016_AddInterestTranasctionsForBankAdjustmentsJournals.sxml" />
     <None Include="DBScripts\202204211224_UpdateInterestTransactionsForWrongGLAccountInterests.sxml" />
     <None Include="DBScripts\202204211236_InsertOppositeInterestTransactionsForWrongGLAccountInterests.sxml" />
