@@ -101,9 +101,9 @@ namespace Logitude.Customs.BL.BL
                                 var ETBAIRLINEData = new ETBAIRLINEQueryService(tenantAmitalContext).GetSingle(ESPSPEDdata.MAINCARRIER, false);
                                 if (ETBAIRLINEData != null && ETBAIRLINEData.AIRLINENUM != null)
                                 {
-\                                    AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
+                                    AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
                                 }
-                                if (isFromNewEntity)
+                                if (isFromNewEntity) { 
                                     entityPM.FinalManifestNumber = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
                                     AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
                                 entityPM.MAIN_AWB = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
