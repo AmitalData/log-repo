@@ -8,6 +8,7 @@ namespace WebFreight.Web.DataContracts
     public class BrandingData
     {
         public int Tenant { get; set; }
+        public string Email { get; set; }
         public string MainColor { get; set; }
         public string SecondaryColor { get; set; }
         public string BackgroundId { get; set; }

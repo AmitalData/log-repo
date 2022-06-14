@@ -1,0 +1,26 @@
+﻿using System;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using WebFreight.Web.DataContracts;
+using WebFreight.Web.Helpers;
+
+namespace WebFreight.Web.Controllers.DigitalPortal
+{
+    public class DigitalBrandingController : ApiController
+    {
+        public HttpResponseMessage GetBrandingDataByDomain(string domain)
+        {
+            try
+            {
+                BrandingHelper brandingHelper = new BrandingHelper();
+                BrandingData brandingData = brandingHelper.GetBrandingDataByDomain(domain);
+                return Request.CreateResponse(HttpStatusCode.OK, brandingData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+    }
+}

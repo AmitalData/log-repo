@@ -28,6 +28,7 @@ namespace WebFreight.Web.Helpers
                 brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor) ? "#D21745" : tenantManagementPM.SecondaryColor;
                 brandingData.Tenant = tenantManagementPM.Id;
                 brandingData.ComapnylogoId = tenantManagementPM.ComapnylogoId;
+                brandingData.Email = tenantManagementPM.ContactEmail;
                 SetBrandingImagesBytes(brandingData);
                 return brandingData;
             } 
@@ -40,7 +41,7 @@ namespace WebFreight.Web.Helpers
             brandingData.InvertedLogoId = tenantManagementPM.InvertedLogoId;
             brandingData.CustomerURL = tenantManagementPM.CustomerURL;
             brandingData.ActivatePrivateSite = tenantManagementPM.ActivatePrivateSite;
-
+            brandingData.Email = tenantManagementPM.ContactEmail;
             SetBrandingImagesBytes(brandingData);
             return brandingData;
         }
