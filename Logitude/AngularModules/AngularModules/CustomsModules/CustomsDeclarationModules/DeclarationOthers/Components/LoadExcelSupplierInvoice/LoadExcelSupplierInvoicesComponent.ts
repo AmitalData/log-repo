@@ -41,6 +41,12 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
         this.customerId = value;
     }
 
+    partnerId: string;
+    get PartnerId() { return this.partnerId }
+    set PartnerId(value: string) {
+        this.partnerId = value;
+    }
+
     
     SetWindowArgs(args: any)
     {
@@ -137,7 +143,7 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
     OkButtonClicked()
     {
         var supplierInvoiceService = new SupplierInvoiceService();
-        supplierInvoiceService.PutSupplierInvioceFromFileRequest(this.filterImageParameter, SessionLocator.Tenant, this.CustomerId, this.DeclarationId).subscribe((myServiceResponse: ServiceResponse) => {
+        supplierInvoiceService.PutSupplierInvioceFromFileRequest(this.filterImageParameter, SessionLocator.Tenant, this.CustomerId, this.PartnerId, this.DeclarationId).subscribe((myServiceResponse: ServiceResponse) => {
 
             if (myServiceResponse.HasError) {
                 this.ShowMessage(myServiceResponse.ErrorsArray[0]);

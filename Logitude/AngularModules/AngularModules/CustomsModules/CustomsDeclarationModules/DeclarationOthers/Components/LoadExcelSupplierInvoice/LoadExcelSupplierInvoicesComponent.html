@@ -66,8 +66,8 @@ progress::-moz-progress-bar {
         </td>
         <td><div></div></td>
         <td colspan="1">
-            <LogLov [ObjectFieldName]="'CustomerId'"
-                    [ObjectTableName]="'Customs.Declaration'"
+            <LogLov [NoObjectField]="true"
+                    [SelectedValue]="PartnerId"
                     [DataContext]="DataContext"
                     [HideAddLink]="true"
                     [HideColumns]="false"
@@ -94,8 +94,8 @@ progress::-moz-progress-bar {
         </td>
         <td><div></div></td>
         <td style="width:170px;">
-            <LogTextBox [Placeholder]="Placeholder" [NoObjectField]="true"
-                        [HideColumns]="false" [Text]="FileName" [DataContext]="DataContext" [ForceDisable]="true"></LogTextBox>
+            <LogTextBoxV2 [NoObjectField]="true" [IsFreeText]="true"
+                        [HideColumns]="false" [Text]="FileName" [DataContext]="DataContext"></LogTextBoxV2>
         </td>
         <td style="width:60px;text-align:left">
             <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
