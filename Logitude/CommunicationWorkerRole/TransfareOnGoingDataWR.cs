@@ -22,12 +22,8 @@ namespace CommunicationWorkerRole
 
         public override void Run()
         {
-            var TransfareOnGoingMessageProducer = new Producer();
-
             while (IsRunning)
             {
-               
-
                 if (!General.IsUpdating())
                 {
                     try
@@ -40,9 +36,14 @@ namespace CommunicationWorkerRole
                             object entityPM = GetEntityById(response);
                             long messageType = GetMessageType(response);
 
+                            var TransfareOnGoingMessageProducer = new Producer();
+
                             var serializedObjectUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
                             var result = TransfareOnGoingMessageProducer.Produce(KafkaTopics.LookupsTopic, messageType, serializedObjectUpdateMessage);
+                            
                             queueservice.Complete();
+                            TransfareOnGoingMessageProducer.ProducerBuilder.Flush();
+                            TransfareOnGoingMessageProducer.ProducerBuilder.Dispose();
                         }
                         else
                         {
