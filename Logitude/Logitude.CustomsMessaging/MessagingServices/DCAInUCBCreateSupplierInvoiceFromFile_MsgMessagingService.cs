@@ -63,7 +63,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string clientId,string declarationid, string decodedString)
+        public string CreateCRS(int tenant, string clientId, string partnerId,string declarationid, string decodedString)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -87,6 +87,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 Declarationid = declarationid,
                 ClientId = clientId,
+                PartnerId = partnerId,
                 decodedString = decodedString,
                 //LoggingUserId = LoggingUserId,
                 tenant = tenant,
@@ -161,6 +162,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public int tenant { get; set; }
         public string LoggingUserId { get; set; }
         public string ClientId { get; set; }
+        public string PartnerId { get; set; }
         public string decodedString { get; set; }
         public string Declarationid { get; set; }
         public string MyMoreParams { get; set; }

@@ -82,11 +82,11 @@ export class SupplierInvoiceService {
         });
     }
 
-    PutSupplierInvioceFromFileRequest(fileUploadParamerter: any, tenant: number, clientId: string, declarationId: string) {
+    PutSupplierInvioceFromFileRequest(fileUploadParamerter: any, tenant: number, clientId: string, partnerId: string, declarationId: string) {
 
         return defer(() => {
             return this._http.put(this._apiUrl + "/PutSupplierInvioceFromFileRequest?" + "tenant=" + tenant
-                + "&clientId=" + clientId + "&declarationId=" + declarationId, JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
+                + "&clientId=" + clientId + "&partnerId=" + partnerId + "&declarationId=" + declarationId, JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
                     
                     var serviceResponse: ServiceResponse;
                     serviceResponse = new ServiceResponse();

@@ -28,12 +28,15 @@ using Microsoft.Practices.Unity;
 using Logitude.CustomsMessaging.Utils;
 using Logitude.Customs.Data.EntityListQueryServices;
 using System.Text.RegularExpressions;
+using Unifreight.Data.AmitalModel;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class CreateSupplierInvoiceFromFileBatchUCB_MsgResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DCAInUCBCreateSupplierInvoiceWithResponseContentHeader, GenericRequestParams>
     {
         private List<InvoiceFromFile> fromFile = new List<InvoiceFromFile>();
+        private AmitalContext amitalContext;
 
         public override INF_MSG_GenericResponseData GetResponse(DCAInUCBCreateSupplierInvoiceWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
@@ -44,19 +47,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
+            amitalContext = AmitalContext.GetContext(requestParams.Tenant);
+
             this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
             if (customResponse.Declarationid != null)
             {
                 LogMessagingUtil.Instance.AppendLine("customResponse.Declarationid: " + customResponse.Declarationid);
 
                 ReadDataFromCsvFile(customResponse.decodedString);
-                UpdateDB(customResponse.Declarationid, requestParams.Tenant);
+                UpdateDB(customResponse.Declarationid, customResponse.PartnerId, requestParams.Tenant);
 
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyResponseData.Succeeded = true;
             }
         }
-        private void UpdateDB(string declarationid, int tenant)
+        private void UpdateDB(string declarationid, string partnerId, int tenant)
         {
             var context = CustomContext.GetContext(tenant);
             var declarationQueryService = new DeclarationQueryService(context);
@@ -72,10 +77,116 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         InvoiceNumber = invoiceFromFile.InvoiceNumber,
                         DeclarationId = declarationid,
                         IssueDate = invoiceFromFile.IssueDate,
-                        VendorId = invoiceFromFile.VendorId,
-                        IncotermCode = invoiceFromFile.Incoterm,
-                        InvoiceCurrencyTypeCode = invoiceFromFile.InvoiceCurrencyTypeCode,
+                        
                     };
+                    invoice.SupplierInvoiceFreightAmounts = new List<SupplierInvoiceFreightAmountPM>();
+                    var freightAmount =
+                            new SupplierInvoiceFreightAmountPM
+                            {
+                                DeclarationId = declarationid,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+                                Amount = invoiceFromFile.FreightAmount,
+                            };
+                    if (!string.IsNullOrWhiteSpace(invoiceFromFile.FreightAmountCurrencyType))
+                    {
+                        var _currencyType = GetTranslationL2P(partnerId, "CTBCURRENCY", invoiceFromFile.FreightAmountCurrencyType);
+                        if (!string.IsNullOrWhiteSpace(_currencyType))
+                        {
+                            var isSuccess = SetFreightAmountCurrencyTypeCode(tenant, _currencyType, freightAmount);
+                            if (!isSuccess)
+                            {
+                                isSuccess = SetFreightAmountCurrencyTypeCode(tenant, invoiceFromFile.FreightAmountCurrencyType, freightAmount);
+                                if (!isSuccess)
+                                {
+                                    LogMessagingUtil.Instance.AppendLine("FreightAmountCurrencyType = " + invoiceFromFile.FreightAmountCurrencyType + " could not translate to Logitude Id");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var isSuccess = SetFreightAmountCurrencyTypeCode(tenant, invoiceFromFile.FreightAmountCurrencyType, freightAmount);
+                            if (!isSuccess)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("FreightAmountCurrencyType = " + invoiceFromFile.FreightAmountCurrencyType + " could not translate to Logitude Id");
+                            }
+                        }
+                    }
+                    invoice.SupplierInvoiceFreightAmounts.Add(freightAmount);
+
+                    if (!string.IsNullOrWhiteSpace(invoiceFromFile.InvoiceCurrencyTypeCode))
+                    {
+                        var _currencyType = GetTranslationL2P(partnerId, "CTBCURRENCY", invoiceFromFile.InvoiceCurrencyTypeCode);
+                        if (!string.IsNullOrWhiteSpace(_currencyType))
+                        {
+                            var isSuccess = SetCurrencyTypeCode(tenant, _currencyType, invoice);
+                            if (!isSuccess)
+                            {
+                                isSuccess = SetCurrencyTypeCode(tenant, invoiceFromFile.InvoiceCurrencyTypeCode, invoice);
+                                if (!isSuccess)
+                                {
+                                    LogMessagingUtil.Instance.AppendLine("InvoiceCurrencyTypeCode = " + invoiceFromFile.InvoiceCurrencyTypeCode + " could not translate to Logitude Id");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var isSuccess = SetCurrencyTypeCode(tenant, invoiceFromFile.InvoiceCurrencyTypeCode, invoice);
+                            if (!isSuccess)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("InvoiceCurrencyTypeCode = " + invoiceFromFile.InvoiceCurrencyTypeCode + " could not translate to Logitude Id");
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrWhiteSpace(invoiceFromFile.Incoterm))
+                    {
+                        var _incoterm = GetTranslationL2P(partnerId, "CTBUINCOTERMS", invoiceFromFile.Incoterm);
+                        if (!string.IsNullOrWhiteSpace(_incoterm))
+                        {
+                            var isSuccess = SetIncoterm(tenant, _incoterm, invoice);
+                            if (!isSuccess)
+                            {
+                                isSuccess = SetIncoterm(tenant, invoiceFromFile.Incoterm, invoice);
+                                if (!isSuccess)
+                                {
+                                    LogMessagingUtil.Instance.AppendLine("Incoterm = " + invoiceFromFile.Incoterm + " could not translate to Logitude Id");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var isSuccess = SetIncoterm(tenant, invoiceFromFile.Incoterm, invoice);
+                            if (!isSuccess)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("Incoterm = " + invoiceFromFile.Incoterm + " could not translate to Logitude Id");
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrWhiteSpace(invoiceFromFile.VendorId))
+                    {
+                        var _vendor = GetTranslationL2P(partnerId, "CTBCUSTSUP", invoiceFromFile.VendorId);
+                        if (!string.IsNullOrWhiteSpace(_vendor))
+                        {
+                            var isSuccess = SetVendor(tenant, _vendor, invoice);
+                            if(!isSuccess)
+                            {
+                                isSuccess = SetVendor(tenant, invoiceFromFile.VendorId, invoice);
+                                if (!isSuccess)
+                                {
+                                    LogMessagingUtil.Instance.AppendLine("VendorId = " + invoiceFromFile.VendorId + " could not translate to Logitude Id");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var isSuccess = SetVendor(tenant, invoiceFromFile.VendorId, invoice);
+                            if (!isSuccess)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("VendorId = " + invoiceFromFile.VendorId + " could not translate to Logitude Id");
+                            }
+                        }
+                    }
+                    
+
                     invoice.ChangeSetOp = ChangeSetOperation.Insert;
                     invoice.SupplierInvoiceItems = new List<SupplierInvoiceItemPM>();
                     foreach (var invoiceItemFromFile in invoiceFromFile.SupplierInvoiceItems)
@@ -83,15 +194,79 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var invoiceItem = new SupplierInvoiceItemPM
                         {
                             DeclarationId = declarationid,
-                            ItemPriceCurrencyCode = invoiceFromFile.InvoiceCurrencyTypeCode,
+                            ItemPriceCurrencyCode = invoice.InvoiceCurrencyTypeCode,
                             ItemPrice = invoiceItemFromFile.ItemPrice,
                             TradeAgreementCode = invoiceItemFromFile.TradeAgreemenCode,
-                            OriginCountryCode = invoiceItemFromFile.OriginCountryCode,
                             InvoiceQuantity = 1,
                             InvoiceNumber = invoiceFromFile.InvoiceNumber,
+                            ItemDescription = invoiceItemFromFile.ItemDescription,
                             ClassificationCode = invoiceItemFromFile.ClassificationCode//todo
-                            //InvoiceQuantityType = todo
                         };
+                        invoiceItem.SupplierInvoiceItemVehicles = new List<SupplierInvoiceItemVehiclePM>
+                        {
+                            new SupplierInvoiceItemVehiclePM
+                            {
+                                RichbitFileNumber = invoiceItemFromFile.RichbitFileNumber,
+                                VehicleTypeCode = "ZZZ",
+                                VehicleChassisNumber = invoiceItemFromFile.VehicleChassisNumber,
+                                DeclarationId = declarationid,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+                            }
+                        };
+                        CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
+                        invoiceItem.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(invoiceItem.ClassificationCode, tenant);
+
+                        if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.TradeAgreemenCode))
+                        {
+                            var _TradeAgreemenCode = GetTranslationL2P(partnerId, "CTBTARIFF", invoiceItemFromFile.TradeAgreemenCode);
+                            if (!string.IsNullOrWhiteSpace(_TradeAgreemenCode))
+                            {
+                                var isSuccess = SetTradeAgreemenCode(tenant, _TradeAgreemenCode, invoiceItem);
+                                if (!isSuccess)
+                                {
+                                    isSuccess = SetTradeAgreemenCode(tenant, invoiceItemFromFile.TradeAgreemenCode, invoiceItem);
+                                    if (!isSuccess)
+                                    {
+                                        LogMessagingUtil.Instance.AppendLine("TradeAgreemenCode = " + invoiceItemFromFile.TradeAgreemenCode + " could not translate to Logitude Id");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                var isSuccess = SetTradeAgreemenCode(tenant, invoiceItemFromFile.TradeAgreemenCode, invoiceItem);
+                                if (!isSuccess)
+                                {
+                                    LogMessagingUtil.Instance.AppendLine("TradeAgreemenCode = " + invoiceItemFromFile.TradeAgreemenCode + " could not translate to Logitude Id");
+                                }
+                            }
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.OriginCountryCode))
+                        {
+                            var _Country = GetTranslationL2P(partnerId, "CTBCOUNTRY", invoiceItemFromFile.OriginCountryCode);
+                            if (!string.IsNullOrWhiteSpace(_Country))
+                            {
+                                var isSuccess = SetCountry(tenant, _Country, invoiceItem);
+                                if (!isSuccess)
+                                {
+                                    isSuccess = SetCountry(tenant, invoiceItemFromFile.OriginCountryCode, invoiceItem);
+                                    if (!isSuccess)
+                                    {
+                                        LogMessagingUtil.Instance.AppendLine("OriginCountryCode = " + invoiceItemFromFile.OriginCountryCode + " could not translate to Logitude Id");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                var isSuccess = SetCountry(tenant, invoiceItemFromFile.OriginCountryCode, invoiceItem);
+                                if (!isSuccess)
+                                {
+                                    LogMessagingUtil.Instance.AppendLine("OriginCountryCode = " + invoiceItemFromFile.OriginCountryCode + " could not translate to Logitude Id");
+                                }
+                            }
+                        }
+
+
                         invoiceItem.ChangeSetOp = ChangeSetOperation.Insert;
                         invoice.SupplierInvoiceItems.Add(invoiceItem);
                     }
@@ -103,14 +278,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //invoiceFromDB.SupplierInvoiceItems
                 }
             }
+            var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+            myDeclarationUpdateService.Update(declarationPM, true);
         }
         private void ReadDataFromCsvFile(string decodedString)
         {
-
             try
             {
-
-
                 var lines = decodedString.Split(new string[] { "\n" }, StringSplitOptions.None).ToList();
 
                 Boolean CodeExist = false;
@@ -136,8 +310,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 ItemPrice = string.IsNullOrWhiteSpace(data[9]) ? (decimal?)null : Convert.ToDecimal(data[9]),
                                 TradeAgreemenCode = data[10],
                                 OriginCountryCode = data[11],
-                                FreightAmount = data[12],
-                                FreightAmountCurrencyType = data[13],
                                 AdditionalQuantity = data[14],
                                 AdditionalQuantityCurrencyType = data[15],
                                 ModificationAndDiscountTypeAmount = data[16],
@@ -150,8 +322,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         InvoiceFromFile row = new InvoiceFromFile();
                         row.InvoiceNumber = invoiceNumber;
                         row.InvoiceCurrencyTypeCode = data[4];
-                        row.VendorId = data[2];//todo
-                        row.Incoterm = data[3];//todo
+                        row.VendorId = data[2];
+                        row.Incoterm = data[3];
+                        row.FreightAmount = string.IsNullOrWhiteSpace(data[12]) ? (decimal?)null : Convert.ToDecimal(data[12]);
+                        row.FreightAmountCurrencyType = data[13];
                         if (!string.IsNullOrWhiteSpace(data[1]))
                         {
                             DateTime date;
@@ -177,8 +351,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             ItemPrice = string.IsNullOrWhiteSpace(data[9]) ? (decimal?)null : Convert.ToDecimal(data[9]),
                             TradeAgreemenCode = data[10],
                             OriginCountryCode = data[11],
-                            FreightAmount = data[12],
-                            FreightAmountCurrencyType = data[13],
                             AdditionalQuantity = data[14],
                             AdditionalQuantityCurrencyType = data[15],
                             ModificationAndDiscountTypeAmount = data[16],
@@ -195,6 +367,92 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        private bool SetTradeAgreemenCode(int tenant, string TradeAgreemenCodeId, SupplierInvoiceItemPM invoiceItem)
+        {
+            TradeAgreementRepository tradeAgreemenQueryService = new TradeAgreementRepository(tenant);
+            var tradeAgreemen = tradeAgreemenQueryService.GetSingle(TradeAgreemenCodeId);
+            if (tradeAgreemen != null)
+            {
+                invoiceItem.TradeAgreementCode = tradeAgreemen.Code;
+                return true;
+            }
+            return false;
+        }
+        private bool SetCountry(int tenant, string countryId, SupplierInvoiceItemPM invoiceItem)
+        {
+            CustomsCountryQueryService vendorQueryService = new CustomsCountryQueryService(tenant);
+            var country = vendorQueryService.GetSingle(countryId, false, true);
+            if (country != null)
+            {
+                invoiceItem.OriginCountryCode = country.Code;
+                return true;
+            }
+            return false;
+        }
+
+        private bool SetVendor(int tenant, string vendorId, SupplierInvoicePM invoice)
+        {
+            CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(tenant);
+            CustomsVendorPM vendor = vendorQueryService.GetSingle(vendorId, false, true);
+            if (vendor != null)
+            {
+                invoice.VendorName = vendor.VendorName;
+                invoice.VendorNumber = vendor.VendorNumber;
+                invoice.VendorId = vendor.Id;
+                return true;
+            }
+            return false;
+        }
+
+        private bool SetFreightAmountCurrencyTypeCode(int tenant, string currencyTypeCode, SupplierInvoiceFreightAmountPM FreightAmount)
+        {
+            CurrencyTypeQueryService incotermQueryService = new CurrencyTypeQueryService(tenant);
+            var currencyType = incotermQueryService.GetSingle(currencyTypeCode, false, true);
+            if (currencyType != null)
+            {
+                FreightAmount.CurrencyTypeCode = currencyType.Code;
+                return true;
+            }
+            return false;
+        }
+
+        private bool SetCurrencyTypeCode(int tenant, string currencyTypeCode, SupplierInvoicePM invoice)
+        {
+            CurrencyTypeQueryService incotermQueryService = new CurrencyTypeQueryService(tenant);
+            var currencyType = incotermQueryService.GetSingle(currencyTypeCode, false, true);
+            if (currencyType != null)
+            {
+                invoice.InvoiceCurrencyTypeCode = currencyType.Code;
+                return true;
+            }
+            return false;
+        }
+
+        private bool SetIncoterm(int tenant, string incotermId, SupplierInvoicePM invoice)
+        {
+            TermsOfSaleTypeRepository incotermQueryService = new TermsOfSaleTypeRepository(tenant);
+            var incoterm = incotermQueryService.GetSingle(incotermId);
+            if (incoterm != null)
+            {
+                invoice.IncotermCode = incoterm.Code;
+                invoice.IncotermName = incoterm.LocalName;
+                return true;
+            }
+            return false;
+        }
+
+        private string GetTranslationL2P(string partnerID, string tableID, string localCode)
+        {
+            var rec = (from a in amitalContext.GTRTRANs
+                       where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
+                       select a).FirstOrDefault();
+            if (rec == null)
+            {
+                return null;
+            }
+            return rec.PARTNERCODE;
+        }
+
         private class InvoiceFromFile
         {
             public string InvoiceNumber;
@@ -202,6 +460,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             public string InvoiceCurrencyTypeCode;
             public string VendorId;
             public string Incoterm;
+            public decimal? FreightAmount;
+            public string FreightAmountCurrencyType;
             public List<InvoiceItemFromFile> SupplierInvoiceItems;
         }
 
@@ -215,11 +475,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             public string VehicleChassisNumber;
             public string ClassificationCode;
             public string ItemDescription;
-            public string FreightAmount;
-            public string FreightAmountCurrencyType;
-            public string AdditionalQuantity;
-            public string AdditionalQuantityCurrencyType;
-            public string ModificationAndDiscountTypeAmount;
+            
+            public string AdditionalQuantity;//todo
+            public string AdditionalQuantityCurrencyType;//todo
+            public string ModificationAndDiscountTypeAmount;//todo
         }
     }
     
