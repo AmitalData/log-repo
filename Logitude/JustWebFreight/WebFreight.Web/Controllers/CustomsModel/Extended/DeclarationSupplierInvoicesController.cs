@@ -870,6 +870,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
                     string decodedString = Encoding.UTF8.GetString(data);
                     var messagingService = new DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService();
+                    partnerId = "METRO";
                     var sts = messagingService.CreateCRS(tenant, clientId, partnerId, declarationId, decodedString);
 
                     return Request.CreateResponse(HttpStatusCode.OK, sts);

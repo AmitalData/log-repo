@@ -76,6 +76,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         InvoiceNumber = invoiceFromFile.InvoiceNumber,
                         DeclarationId = declarationid,
+                        Tenant = tenant,
                         IssueDate = invoiceFromFile.IssueDate,
                         
                     };
@@ -84,6 +85,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             new SupplierInvoiceFreightAmountPM
                             {
                                 DeclarationId = declarationid,
+                                Tenant = tenant,
                                 ChangeSetOp = ChangeSetOperation.Insert,
                                 Amount = invoiceFromFile.FreightAmount,
                             };
@@ -185,24 +187,42 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
-                    
 
                     invoice.ChangeSetOp = ChangeSetOperation.Insert;
                     invoice.SupplierInvoiceItems = new List<SupplierInvoiceItemPM>();
-                    foreach (var invoiceItemFromFile in invoiceFromFile.SupplierInvoiceItems)
-                    {
-                        var invoiceItem = new SupplierInvoiceItemPM
-                        {
-                            DeclarationId = declarationid,
-                            ItemPriceCurrencyCode = invoice.InvoiceCurrencyTypeCode,
-                            ItemPrice = invoiceItemFromFile.ItemPrice,
-                            TradeAgreementCode = invoiceItemFromFile.TradeAgreemenCode,
-                            InvoiceQuantity = 1,
-                            InvoiceNumber = invoiceFromFile.InvoiceNumber,
-                            ItemDescription = invoiceItemFromFile.ItemDescription,
-                            ClassificationCode = invoiceItemFromFile.ClassificationCode//todo
-                        };
-                        invoiceItem.SupplierInvoiceItemVehicles = new List<SupplierInvoiceItemVehiclePM>
+                    CreateSupplierInvoiceItems(invoice, tenant, declarationid, invoiceFromFile, partnerId);
+
+                    declarationPM.SupplierInvoices.Add(invoice);
+                }
+                else
+                {
+                    //create invoiceitems
+                    CreateSupplierInvoiceItems(invoiceFromDB, tenant, declarationid, invoiceFromFile, partnerId);
+                    invoiceFromDB.ChangeSetOp = ChangeSetOperation.Update;
+                }
+            }
+            declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+            myDeclarationUpdateService.Update(declarationPM, true);
+        }
+
+        private void CreateSupplierInvoiceItems(SupplierInvoicePM invoice, int tenant, string declarationid, InvoiceFromFile invoiceFromFile, string partnerId)
+        {
+            foreach (var invoiceItemFromFile in invoiceFromFile.SupplierInvoiceItems)
+            {
+                var invoiceItem = new SupplierInvoiceItemPM
+                {
+                    DeclarationId = declarationid,
+                    Tenant = tenant,
+                    ItemPriceCurrencyCode = invoice.InvoiceCurrencyTypeCode,
+                    ItemPrice = invoiceItemFromFile.ItemPrice,
+                    TradeAgreementCode = invoiceItemFromFile.TradeAgreemenCode == "" ? null : invoiceItemFromFile.TradeAgreemenCode,
+                    InvoiceQuantity = 1,
+                    InvoiceNumber = invoiceFromFile.InvoiceNumber,
+                    ItemDescription = invoiceItemFromFile.ItemDescription,
+                    ClassificationCode = invoiceItemFromFile.ClassificationCode//todo
+                };
+                invoiceItem.SupplierInvoiceItemVehicles = new List<SupplierInvoiceItemVehiclePM>
                         {
                             new SupplierInvoiceItemVehiclePM
                             {
@@ -210,77 +230,69 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 VehicleTypeCode = "ZZZ",
                                 VehicleChassisNumber = invoiceItemFromFile.VehicleChassisNumber,
                                 DeclarationId = declarationid,
+                                Tenant = tenant,
                                 ChangeSetOp = ChangeSetOperation.Insert,
                             }
                         };
-                        CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
-                        invoiceItem.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(invoiceItem.ClassificationCode, tenant);
+                CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
+                invoiceItem.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(invoiceItem.ClassificationCode, tenant);
 
-                        if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.TradeAgreemenCode))
-                        {
-                            var _TradeAgreemenCode = GetTranslationL2P(partnerId, "CTBTARIFF", invoiceItemFromFile.TradeAgreemenCode);
-                            if (!string.IsNullOrWhiteSpace(_TradeAgreemenCode))
-                            {
-                                var isSuccess = SetTradeAgreemenCode(tenant, _TradeAgreemenCode, invoiceItem);
-                                if (!isSuccess)
-                                {
-                                    isSuccess = SetTradeAgreemenCode(tenant, invoiceItemFromFile.TradeAgreemenCode, invoiceItem);
-                                    if (!isSuccess)
-                                    {
-                                        LogMessagingUtil.Instance.AppendLine("TradeAgreemenCode = " + invoiceItemFromFile.TradeAgreemenCode + " could not translate to Logitude Id");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                var isSuccess = SetTradeAgreemenCode(tenant, invoiceItemFromFile.TradeAgreemenCode, invoiceItem);
-                                if (!isSuccess)
-                                {
-                                    LogMessagingUtil.Instance.AppendLine("TradeAgreemenCode = " + invoiceItemFromFile.TradeAgreemenCode + " could not translate to Logitude Id");
-                                }
-                            }
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.OriginCountryCode))
-                        {
-                            var _Country = GetTranslationL2P(partnerId, "CTBCOUNTRY", invoiceItemFromFile.OriginCountryCode);
-                            if (!string.IsNullOrWhiteSpace(_Country))
-                            {
-                                var isSuccess = SetCountry(tenant, _Country, invoiceItem);
-                                if (!isSuccess)
-                                {
-                                    isSuccess = SetCountry(tenant, invoiceItemFromFile.OriginCountryCode, invoiceItem);
-                                    if (!isSuccess)
-                                    {
-                                        LogMessagingUtil.Instance.AppendLine("OriginCountryCode = " + invoiceItemFromFile.OriginCountryCode + " could not translate to Logitude Id");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                var isSuccess = SetCountry(tenant, invoiceItemFromFile.OriginCountryCode, invoiceItem);
-                                if (!isSuccess)
-                                {
-                                    LogMessagingUtil.Instance.AppendLine("OriginCountryCode = " + invoiceItemFromFile.OriginCountryCode + " could not translate to Logitude Id");
-                                }
-                            }
-                        }
-
-
-                        invoiceItem.ChangeSetOp = ChangeSetOperation.Insert;
-                        invoice.SupplierInvoiceItems.Add(invoiceItem);
-                    }
-                    declarationPM.SupplierInvoices.Add(invoice);
-                }
-                else
+                if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.TradeAgreemenCode))
                 {
-                    //create invoiceitems
-                    //invoiceFromDB.SupplierInvoiceItems
+                    var _TradeAgreemenCode = GetTranslationL2P(partnerId, "CTBTARIFF", invoiceItemFromFile.TradeAgreemenCode);
+                    if (!string.IsNullOrWhiteSpace(_TradeAgreemenCode))
+                    {
+                        var isSuccess = SetTradeAgreemenCode(tenant, _TradeAgreemenCode, invoiceItem);
+                        if (!isSuccess)
+                        {
+                            isSuccess = SetTradeAgreemenCode(tenant, invoiceItemFromFile.TradeAgreemenCode, invoiceItem);
+                            if (!isSuccess)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("TradeAgreemenCode = " + invoiceItemFromFile.TradeAgreemenCode + " could not translate to Logitude Id");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var isSuccess = SetTradeAgreemenCode(tenant, invoiceItemFromFile.TradeAgreemenCode, invoiceItem);
+                        if (!isSuccess)
+                        {
+                            LogMessagingUtil.Instance.AppendLine("TradeAgreemenCode = " + invoiceItemFromFile.TradeAgreemenCode + " could not translate to Logitude Id");
+                        }
+                    }
                 }
+
+                if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.OriginCountryCode))
+                {
+                    var _Country = GetTranslationL2P(partnerId, "CTBCOUNTRY", invoiceItemFromFile.OriginCountryCode);
+                    if (!string.IsNullOrWhiteSpace(_Country))
+                    {
+                        var isSuccess = SetCountry(tenant, _Country, invoiceItem);
+                        if (!isSuccess)
+                        {
+                            isSuccess = SetCountry(tenant, invoiceItemFromFile.OriginCountryCode, invoiceItem);
+                            if (!isSuccess)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("OriginCountryCode = " + invoiceItemFromFile.OriginCountryCode + " could not translate to Logitude Id");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var isSuccess = SetCountry(tenant, invoiceItemFromFile.OriginCountryCode, invoiceItem);
+                        if (!isSuccess)
+                        {
+                            LogMessagingUtil.Instance.AppendLine("OriginCountryCode = " + invoiceItemFromFile.OriginCountryCode + " could not translate to Logitude Id");
+                        }
+                    }
+                }
+
+
+                invoiceItem.ChangeSetOp = ChangeSetOperation.Insert;
+                invoice.SupplierInvoiceItems.Add(invoiceItem);
             }
-            var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
-            myDeclarationUpdateService.Update(declarationPM, true);
         }
+
         private void ReadDataFromCsvFile(string decodedString)
         {
             try
@@ -393,7 +405,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private bool SetVendor(int tenant, string vendorId, SupplierInvoicePM invoice)
         {
             CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(tenant);
-            CustomsVendorPM vendor = vendorQueryService.GetSingle(vendorId, false, true);
+            CustomsVendorPM vendor = vendorQueryService.GetVendorByNumber(vendorId, tenant);
             if (vendor != null)
             {
                 invoice.VendorName = vendor.VendorName;
@@ -444,13 +456,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private string GetTranslationL2P(string partnerID, string tableID, string localCode)
         {
             var rec = (from a in amitalContext.GTRTRANs
-                       where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
+                       where a.PARTNERID == partnerID && a.TABLEID == tableID && a.PARTNERCODE == localCode
                        select a).FirstOrDefault();
             if (rec == null)
             {
                 return null;
             }
-            return rec.PARTNERCODE;
+            return rec.LOCALCODE;
         }
 
         private class InvoiceFromFile
