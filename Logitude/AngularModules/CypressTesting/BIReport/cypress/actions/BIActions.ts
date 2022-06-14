@@ -34,7 +34,7 @@ export const SearchBIFolder = (BIReportFolderName) => {
 export function FillBIReportDetails(BiReportDetails: BIReportDetails) {
     cy.Click(BIReportSelectors.NewButtonBIReport, null, true);
     cy.FillLogTextBox(BIReportSelectors.BIReportName, BiReportDetails.Name)
-    cy.SelectComboDropDownListItem(BIReportSelectors.BIReportFact + ":first", BiReportDetails.FactTable)
+    cy.SelectComboDropDownListItem(BIReportSelectors.BIReportFact, BiReportDetails.FactTable, 2)
 }
 
 
@@ -73,7 +73,7 @@ export function FillMasterBIReportDetails(BiReportDetails: BIReportDetails) {
     cy.Click(BIReportSelectors.NewButtonBIReport, null, true);
     cy.FillLogTextBox(BIReportSelectors.BIReportName, BiReportDetails.Name)
     // cy.get(BIReportSelectors.BIReportFact).click({force: true});
-    cy.SelectComboDropDownListItem(BIReportSelectors.BIReportFact + ":first", BiReportDetails.FactTable)
+    cy.SelectComboDropDownListItem(BIReportSelectors.BIReportFact, BiReportDetails.FactTable, 0)
 }
 
 export function AddCoulmnAndFilterMaster(columnName) {
@@ -99,7 +99,7 @@ export function FillARInvoicesBIReportDetails(BiReportDetails: BIReportDetails) 
     cy.Click(BIReportSelectors.NewButtonBIReport, null, true);
     cy.FillLogTextBox(BIReportSelectors.BIReportName, BiReportDetails.Name)
     // cy.get(BIReportSelectors.BIReportFact).click({force: true});
-    cy.SelectComboDropDownListItem(BIReportSelectors.BIReportFact + ":first", BiReportDetails.FactTable)
+    cy.SelectComboDropDownListItem(BIReportSelectors.BIReportFact, BiReportDetails.FactTable, 0)
 }
 
 export function AddCoulmnAndFilterARInvoices(columnName) {
