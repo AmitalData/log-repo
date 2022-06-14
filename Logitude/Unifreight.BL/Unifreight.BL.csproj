@@ -79,7 +79,6 @@
     <Compile Include="BL\QuoteOPSpecialServices.cs" />
     <Compile Include="ClosedTables\AutonomyDetails.cs" />
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
-	  <Compile Include="ClosedTables\AutonomyDetails.cs" />
     <Compile Include="ClosedTables\SegmentsDetails.cs" />
     <Compile Include="EntityDataMappings\ATBPTILDataMapping.cs">
       <SubType>Code</SubType>
