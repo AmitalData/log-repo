@@ -38,6 +38,7 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.CoreBL;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.Accounting.BL.DataContract;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -149,9 +150,29 @@ namespace Logitude.Accounting.BL.CoreBL
             ARPaymentService service = new ARPaymentService(null, journalPM.Tenant);
             var interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
             var interestTranasction = service.MapInterestTransactionPMFromARPaymentPM(aRPaymentPM, aRPaymentPM.StatusCode == ARPaymentVoidedStatusCode);
+            if(!CheckIfInterestTransactionCreated(interestTranasction))
             interestTransactionUpdateService.Update(interestTranasction, true);
         }
 
+        private bool CheckIfInterestTransactionCreated(InterestTransactionPM interestTransactionPM)
+        {
+            if (interestTransactionPM == null)
+            {
+                return true;
+            }
+            InterestTransactionUniqueConstraintFields uniqueConstraintFields = new InterestTransactionUniqueConstraintFields()
+            { GLAccountId = interestTransactionPM.GLAccountId,
+                Tenant = interestTransactionPM.Tenant, 
+                InterestEntityTypeCode = interestTransactionPM.InterestEntityTypeCode, 
+                EntityId = interestTransactionPM.EntityId, 
+                OriginalEntityLineNumber = interestTransactionPM.OriginalEntityLineNumber };
+
+            InterestTransactionQueryService interestTransactionQueryService = new InterestTransactionQueryService(interestTransactionPM.Tenant);
+            var interestTransaction= interestTransactionQueryService.GetTransactionByUniqueConstraintFields(uniqueConstraintFields);
+            if (interestTransaction == null) return false;
+            else return true;
+
+        }
         private void CancelInterestTrascntionsForChequeOrBankTranasfersARPayment(JournalPM journalPM, ARPaymentPM aRPaymentPM, IAccountingContext context)
         {
             ARPaymentService service = new ARPaymentService(null, journalPM.Tenant);
@@ -172,8 +193,9 @@ namespace Logitude.Accounting.BL.CoreBL
             List<ARPaymentChequePM> arPaymentCheques = aRPaymentChequeQuery.GetListByPaymentId(aRPaymentPM.Id, journalPM.Tenant);
             foreach (var cheque in arPaymentCheques)
             {
-                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(cheque, aRPaymentPM);
-                interestTransactionUpdateService.Update(interestTranasction, true);
+                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(cheque, aRPaymentPM);              
+                if (!CheckIfInterestTransactionCreated(interestTranasction) )
+                    interestTransactionUpdateService.Update(interestTranasction, true);
             }
         }
 
@@ -185,7 +207,8 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (var bankTranfer in aRPaymentPM.ARPaymentBankTranfers)
             {
                 var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForBankTransfer(bankTranfer, aRPaymentPM);
-                interestTransactionUpdateService.Update(interestTranasction, true);
+                if (!CheckIfInterestTransactionCreated(interestTranasction) )
+                    interestTransactionUpdateService.Update(interestTranasction, true);
             }
         }
 
