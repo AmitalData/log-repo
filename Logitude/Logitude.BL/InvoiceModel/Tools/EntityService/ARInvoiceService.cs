@@ -158,6 +158,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant select d).ToList();
             Contact loggedContact = contactRepository.GetSingleContactByEmail(loggedUserEmail, tenant);
             this.loggedContactId = loggedContact.Id;
+            this.loggedContactName = loggedContact.EnglishName;
 
             this.GetAccountingSystem();
         }
@@ -213,7 +214,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
             }
 
-            if (loggedContact != null)
+            if (loggedContact != null && !string.IsNullOrEmpty(loggedContact.Id))
             {
                 loggedContactId = loggedContact.Id;
                 loggedContactName = loggedContact.EnglishName;
