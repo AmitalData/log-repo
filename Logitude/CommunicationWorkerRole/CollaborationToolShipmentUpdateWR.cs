@@ -36,6 +36,10 @@ namespace CommunicationWorkerRole
                         {
                             UpdateShipmentPM(msg.Message.Value);
                         }
+                        else
+                        {
+                            Thread.Sleep(5000);
+                        }
                     }
                     catch (ConsumeException e)
                     {

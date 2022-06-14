@@ -18,6 +18,8 @@ namespace CommunicationWorkerRole
 
         public override void Run()
         {
+            var ShipmentUpdateMessageProducer = new Producer();
+
             while (IsRunning)
             {
                 if (!General.IsUpdating())
@@ -31,10 +33,13 @@ namespace CommunicationWorkerRole
                         {
                             ShipmentPM entityPM = GetShipmentById(response);
 
-                            var ShipmentUpdateMessageProducer = new Producer();
                             var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
                             var result = ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsCreateTopic, KakaMessageTypes.ShipmentCreate, serializedShipmentUpdateMessage);
                             queueservice.Complete();
+                        }
+                        else
+                        {
+                            Thread.Sleep(5000);
                         }
                     }
                     catch (Exception ex)
