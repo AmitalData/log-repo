@@ -2561,6 +2561,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 ShipmentPM shipmentPm = ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, oldHousePM);
                                 var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = this.entityPM, EntityPM = shipmentPm, OldEntityPM = oldHousePM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, ObjectTableName = "Shipment", EntityId = shipmentPm.Id, Tenant = shipmentPm.Tenant, StartDate = dateBefore, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true });
                                 mainEntityChangeService.IsChild = true;
+                                mainEntityChangeService.AddEntityChange();
                                 mainEntityChangeServices.Add(mainEntityChangeService);
                             }
                         }
