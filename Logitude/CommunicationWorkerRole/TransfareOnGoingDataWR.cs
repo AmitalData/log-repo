@@ -122,9 +122,18 @@ namespace CommunicationWorkerRole
                     return JsonConvert.DeserializeObject(EntityId);
                 case "Department":
                     return GetDepartmentById(Tenant, EntityId);
+                case "CustomerTeam":
+                    return GetCustomerTeamById(Tenant, EntityId);
                 default:
                     return null;
             }
+        }
+
+        private object GetCustomerTeamById(int tenant, string id)
+        {
+            CustomerTeamQuery customerTeamQuery = new CustomerTeamQuery(tenant);
+            CustomerTeamPM customerTeamPM = customerTeamQuery.GetSinglePM(id, tenant);
+            return customerTeamPM;
         }
 
         private object GetDepartmentById(int tenant, string id)
@@ -251,6 +260,8 @@ namespace CommunicationWorkerRole
                     return KakaMessageTypes.DisconectFromContact;
                 case "Department":
                     return KakaMessageTypes.Department;
+                case "CustomerTeam":
+                    return KakaMessageTypes.CustomerTeam;
                 default:
                     return 0;
             }

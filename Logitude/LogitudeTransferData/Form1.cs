@@ -140,6 +140,21 @@ namespace LogitudeTransferData
             ProduceKafkaMessages<DepartmentPM>(departmentPMs, KakaMessageTypes.Department);
         }
 
+        private void button13_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<CustomerTeamPM> customerTeamPMs = GetAllCustomerTeams(tenant);
+
+            ProduceKafkaMessages<CustomerTeamPM>(customerTeamPMs, KakaMessageTypes.CustomerTeam);
+        }
+
+        private List<CustomerTeamPM> GetAllCustomerTeams(int tenant)
+        {
+            CustomerTeamQuery customerTeamQuery = new CustomerTeamQuery(tenant);
+            List<CustomerTeamPM> customerTeamPMs = customerTeamQuery.GetCustomerTeamPMsByTenant(tenant).ToList();
+            return customerTeamPMs;
+        }
+
         private List<DepartmentPM> GetAllDepartments(int tenant)
         {
             DepartmentQuery departmentQuery = new DepartmentQuery(tenant);
@@ -260,5 +275,7 @@ namespace LogitudeTransferData
                 Console.WriteLine(string.Format("Exception Occurred - {0}", ex.Message));
             }
         }
+
+        
     }
 }
