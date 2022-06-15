@@ -99,7 +99,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                 simulatorArgs.Errors.Add("Response is missing");
             if(simulatorArgs.IsFromContainer && string.IsNullOrEmpty(simulatorArgs.ContainerNumber))
                 simulatorArgs.Errors.Add("Container Number is missing");
-            //CheckCarrierIsSupported(simulatorArgs);
+            CheckCarrierIsSupported();
             if(!simulatorArgs.IsFromContainer && string.IsNullOrEmpty(simulatorArgs.Master))
                 simulatorArgs.Errors.Add("Master Number is missing");
             if (simulatorArgs.Errors.Count > 0)
