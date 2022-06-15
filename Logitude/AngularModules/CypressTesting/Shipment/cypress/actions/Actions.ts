@@ -125,61 +125,62 @@ export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorCon
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
     cy.Click(saveButtonSelector, saveButtonSelectorContains, false)
 }
-export function UpdateMaster(){
+export function UpdateMaster() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment)
 }
-export function AsserationthepackageaddsuccessfullyinHouse(){
+export function AsserationthepackageaddsuccessfullyinHouse() {
     cy.get(ShipmentSelectors.FirstRowinpackages).contains('Animals').should('exist')
-cy.get(ShipmentSelectors.FirstRowinpackages).contains('100').should('exist')
-cy.get(ShipmentSelectors.FirstRowinpackages).contains('5').should('exist')
+    cy.get(ShipmentSelectors.FirstRowinpackages).contains('100').should('exist')
+    cy.get(ShipmentSelectors.FirstRowinpackages).contains('5').should('exist')
 }
-export function AsseratincontaineraddsuccessfullyinMaster(){
-cy.get(ShipmentSelectors.FirstRowinpackages).contains('ContainerId').should('exist')
-cy.get(ShipmentSelectors.FirstRowinpackages).contains('100').should('exist')
+export function AsseratincontaineraddsuccessfullyinMaster() {
+   // cy.get(ShipmentSelectors.FirstRowinpackages).contains('ContainerId').should('exist')
+    cy.get(ShipmentSelectors.FirstRowinpackages).contains('100').should('exist')
 }
-export function EditContinerNumberinMaster(){
+export function EditContinerNumberinMaster() {
     cy.Navigate(ShipmentSelectors.Editcontainernumberfrommaster)
     cy.Navigate(ShipmentSelectors.ShipmentPackageContainernumber).clear().type('DDDD88889')
-   cy.Click("#OkOceanPackage", null)
+    cy.Click("#OkOceanPackage", null)
 
 }
-export function AsserationChangrContinerNumberinHouse(){
+export function AsserationChangrContinerNumberinHouse() {
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
-    openHouseShipment()
-    cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
+    openHouseShipment(ShipmentContext.HouseNumber)
+    cy.Navigate(ShipmentSelectors.ShipmentPackagesTab + ShipmentSelectors.LastElementShipment)
     cy.get(ShipmentSelectors.ShipmentcontinernumbereHouse).contains('DDDD88889').should('exist')
-    
+
 }
 //export function GetHouseNumber() : any {
-    //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception)=>{
-    //ShipmentNumber=interception.response.body.ShipmentNumber;
-    //ShipmentNumber= interception.response.body.House;
-    //return ShipmentNumber
-    ////})
+//BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception)=>{
+//ShipmentNumber=interception.response.body.ShipmentNumber;
+//ShipmentNumber= interception.response.body.House;
+//return ShipmentNumber
+////})
 
 //}
 //export function openHouseShipment(){
-    //cy.Click(ShipmentSelectors.NewTapItem, null);
-    //cy.Click(ShipmentSelectors.ShipmentWorkspace, null)
-   //OpenShipment(ShipmentContext.HouseNumber)
+//cy.Click(ShipmentSelectors.NewTapItem, null);
+//cy.Click(ShipmentSelectors.ShipmentWorkspace, null)
+//OpenShipment(ShipmentContext.HouseNumber)
 
 //}
-export function BacktotheMasterShipment(){
-    cy.Navigate(ShipmentSelectors.BacktoMasterShipment); 
+export function BacktotheMasterShipment() {
+    cy.Navigate(ShipmentSelectors.BacktoMasterShipment);
 
 }
-export function openHouseShipment(){
+export function openHouseShipment(Housenumberopen: any) {
+    cy.wait(1000)
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
-    // ShipmentContext.HouseNumber
-    cy.get("hyperlink").find("button").first().click()
+    cy.wait(1000)
+    cy.get("hyperlink").contains(parseInt(Housenumberopen, 10)).click({ force: true })
 }
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
 
     var quickSearchDetails = {
         Selector: ShipmentSelectors.ShipmentSearchBar,
-        
-       // ShipmentSearchBar
+
+        // ShipmentSearchBar
         Parent: ShipmentSelectors.ShipmentSearchParent,
         ParentClass: ShipmentSelectors.ShipmentSearchParentClass,
         WaitURL: BaseURLs.GetQuickSearch(shipmentNumber),
@@ -193,9 +194,9 @@ export function OpenShipment(shipmentNumber: string) {
 }
 export function Asserationofeditmaincarrige(
 
-){
+) {
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
-    
+
     cy.contains('OK').click()
 }
 export function SplitShipment(packageNumber: string) {
@@ -222,8 +223,11 @@ export function CancelShipment(note: string) {
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 export function OperationalCloseShipment() {
-    cy.Click(ShipmentSelectors.ShipmentMoreList,null, true);
-    cy.Click(ShipmentSelectors.OperationalCloseButton+BaseSelectors.LastElement,null);
+    cy.wait(1000)
+    cy.get(ShipmentSelectors.ShipmentMoreList).click({ force: true })
+    cy.wait(1000)
+    cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
+    cy.Click(ShipmentSelectors.OperationalCloseButton + BaseSelectors.LastElement, null);
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 
@@ -255,38 +259,38 @@ export function ValidateCloseIconExist(IsClosed: boolean) {
         cy.get(ShipmentSelectors.ShortTitleControl).should(BaseSelectors.NotExist)
     }
 }
-export function AsserationMastershipmentNOActualFinalArrivalDate(){
+export function AsserationMastershipmentNOActualFinalArrivalDate() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.MasterShipments)
     BaseAssertion.AssertElementNotExist(ShipmentSelectors.MasternoActual)
-    
+
 }
-export function AsserationMastershipmentFinalArrivalnoactualdate(){
+export function AsserationMastershipmentFinalArrivalnoactualdate() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.MasterShipments)
     cy.get(ShipmentSelectors.MastershipmentsfinalArrival).contains('02/05/2021').should('exist')
 }
-export function AsserationHouseshipmentFinalArrivalnoactualdate(){
+export function AsserationHouseshipmentFinalArrivalnoactualdate() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
     cy.get(ShipmentSelectors.HouseFinalDate).contains('02/05/2021').should('exist')
 }
-export function AsserationHouseshipmentNOActualFinalArrivalDate(){
+export function AsserationHouseshipmentNOActualFinalArrivalDate() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    BaseAssertion. AssertElementNotExist(ShipmentSelectors.HouserActual) 
+    BaseAssertion.AssertElementNotExist(ShipmentSelectors.HouserActual)
 }
-export function AsserationHouseshipmenttransshipments(){
+export function AsserationHouseshipmenttransshipments() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
     cy.get(ShipmentSelectors.HouserActual).contains('05/05/2021').should('exist')
 }
-export function FinalArrivalAsserationHouseshipmenttransshipments(){
+export function FinalArrivalAsserationHouseshipmenttransshipments() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
     cy.get(ShipmentSelectors.HouseFinalDate).contains('05/05/2021').should('exist')
 }
-export function AsserationEstimatedFinalArrivalDateHousetransshipments(){
+export function AsserationEstimatedFinalArrivalDateHousetransshipments() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
     cy.get(ShipmentSelectors.EstimatedFinalArrivalDateHouse).contains('04/05/2021').should('exist')
@@ -327,49 +331,49 @@ export function ValidateShipmentFields(IsCanceled: boolean) {
     CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsCanceled);
     CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsCanceled);
 }
-export function ValidateCloseAccoutingMaster(IsClosed: boolean){
+export function ValidateCloseAccoutingMaster(IsClosed: boolean) {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
     CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsClosed);
     CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsClosed);
 }
-export function ValidateCloseAccoutingHouse(IsClosed: boolean){
- CheckIfDisable(ShipmentSelectors.ShipmenPayablesgTab+ShipmentSelectors.LastElementShipment,
-     ShipmentSelectors.ShipmenAddPayables+ShipmentSelectors.LastElementShipment, IsClosed);
-CheckIfDisable(ShipmentSelectors.ShipmenReceivablesTab+ShipmentSelectors.LastElementShipment, 
-    ShipmentSelectors.ShipmenAddReceivables+ShipmentSelectors.LastElementShipment, IsClosed);
+export function ValidateCloseAccoutingHouse(IsClosed: boolean) {
+    CheckIfDisable(ShipmentSelectors.ShipmenPayablesgTab + ShipmentSelectors.LastElementShipment,
+        ShipmentSelectors.ShipmenAddPayables + ShipmentSelectors.LastElementShipment, IsClosed);
+    CheckIfDisable(ShipmentSelectors.ShipmenReceivablesTab + ShipmentSelectors.LastElementShipment,
+        ShipmentSelectors.ShipmenAddReceivables + ShipmentSelectors.LastElementShipment, IsClosed);
 
 }
 
-export function ValidateShipmentHouseFields(IsCanceled: boolean){
+export function ValidateShipmentHouseFields(IsCanceled: boolean) {
     //cy.Navigate(ShipmentSelectors.PackagesTabHouse);
-   //CheckIfDisable(ShipmentSelectors.PackagesTabHouse, ShipmentSelectors.AddPackage, IsCanceled);ShipmentPackagesTab
-   cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
-   CheckIfDisable(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmentAddPackagesTab+ShipmentSelectors.LastElementShipment, IsCanceled);
-   cy.Navigate(ShipmentSelectors.ShipmenRoutingTab+BaseSelectors.LastElement)
+    //CheckIfDisable(ShipmentSelectors.PackagesTabHouse, ShipmentSelectors.AddPackage, IsCanceled);ShipmentPackagesTab
+    cy.Navigate(ShipmentSelectors.ShipmentPackagesTab + ShipmentSelectors.LastElementShipment)
+    CheckIfDisable(ShipmentSelectors.ShipmentPackagesTab + ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmentAddPackagesTab + ShipmentSelectors.LastElementShipment, IsCanceled);
+    cy.Navigate(ShipmentSelectors.ShipmenRoutingTab + BaseSelectors.LastElement)
     BaseAssertion.AssertElementHaveClass(ShipmentSelectors.ShipmenAddRoute + BaseSelectors.LastElement, "ToggleButtonDisabled")
-    cy.Navigate(ShipmentSelectors.ShipmentPartnersTab+BaseSelectors.LastElement)
+    cy.Navigate(ShipmentSelectors.ShipmentPartnersTab + BaseSelectors.LastElement)
     BaseAssertion.AssertElementHaveClass(ShipmentSelectors.ShipmentAddPartners + BaseSelectors.LastElement, "ToggleButtonDisabled")
-    CheckIfDisable(ShipmentSelectors.ShipmenPayablesgTab+ShipmentSelectors.LastElementShipment,
-        ShipmentSelectors.ShipmenAddPayables+ShipmentSelectors.LastElementShipment, IsCanceled);
-   CheckIfDisable(ShipmentSelectors.ShipmenReceivablesTab+ShipmentSelectors.LastElementShipment, 
-       ShipmentSelectors.ShipmenAddReceivables+ShipmentSelectors.LastElementShipment, IsCanceled);
+    CheckIfDisable(ShipmentSelectors.ShipmenPayablesgTab + ShipmentSelectors.LastElementShipment,
+        ShipmentSelectors.ShipmenAddPayables + ShipmentSelectors.LastElementShipment, IsCanceled);
+    CheckIfDisable(ShipmentSelectors.ShipmenReceivablesTab + ShipmentSelectors.LastElementShipment,
+        ShipmentSelectors.ShipmenAddReceivables + ShipmentSelectors.LastElementShipment, IsCanceled);
 }
-export function ValidateShipmentHouseCloseoperationally(IsClosed:boolean){
-    CheckIfDisable(ShipmentSelectors.ShipmentPackagesTab+BaseSelectors.LastElement, ShipmentSelectors.ShipmentAddPackagesTab+BaseSelectors.LastElement, IsClosed);
-    cy.Navigate(ShipmentSelectors.ShipmenRoutingTab+BaseSelectors.LastElement)
+export function ValidateShipmentHouseCloseoperationally(IsClosed: boolean) {
+    CheckIfDisable(ShipmentSelectors.ShipmentPackagesTab + BaseSelectors.LastElement, ShipmentSelectors.ShipmentAddPackagesTab + BaseSelectors.LastElement, IsClosed);
+    cy.Navigate(ShipmentSelectors.ShipmenRoutingTab + BaseSelectors.LastElement)
     BaseAssertion.AssertElementHaveClass(ShipmentSelectors.ShipmenAddRoute + BaseSelectors.LastElement, "ToggleButtonDisabled")
-    cy.Navigate(ShipmentSelectors.ShipmentPartnersTab+BaseSelectors.LastElement)
+    cy.Navigate(ShipmentSelectors.ShipmentPartnersTab + BaseSelectors.LastElement)
     BaseAssertion.AssertElementHaveClass(ShipmentSelectors.ShipmentAddPartners + BaseSelectors.LastElement, "ToggleButtonDisabled")
 }
-export function ValidateShipmentHouseFieldsReactive(IsCanceled: boolean){
+export function ValidateShipmentHouseFieldsReactive(IsCanceled: boolean) {
     cy.Navigate(ShipmentSelectors.PackageTabHouseA);
-    CheckIfDisable(ShipmentSelectors.PackageTabHouseA, ShipmentSelectors.AddPackageTabHouseA, IsCanceled); 
-    cy.Navigate(ShipmentSelectors.ShipmenRoutingTab+BaseSelectors.LastElement) 
-   
- BaseAssertion.AssertElementNotHaveClass(ShipmentSelectors.ShipmenAddRoute + BaseSelectors.LastElement, "ToggleButtonDisabled")  
- cy.Navigate(ShipmentSelectors.ShipmentPartnersTab+BaseSelectors.LastElement)
- BaseAssertion.AssertElementNotHaveClass(ShipmentSelectors.ShipmentAddPartners + BaseSelectors.LastElement, "ToggleButtonDisabled")
-                            
+    CheckIfDisable(ShipmentSelectors.PackageTabHouseA, ShipmentSelectors.AddPackageTabHouseA, IsCanceled);
+    cy.Navigate(ShipmentSelectors.ShipmenRoutingTab + BaseSelectors.LastElement)
+
+    BaseAssertion.AssertElementNotHaveClass(ShipmentSelectors.ShipmenAddRoute + BaseSelectors.LastElement, "ToggleButtonDisabled")
+    cy.Navigate(ShipmentSelectors.ShipmentPartnersTab + BaseSelectors.LastElement)
+    BaseAssertion.AssertElementNotHaveClass(ShipmentSelectors.ShipmentAddPartners + BaseSelectors.LastElement, "ToggleButtonDisabled")
+
 }
 
 export function ValidateCloseShipmentFields(IsClosed: boolean) {
@@ -380,9 +384,9 @@ export function ValidateCloseShipmentFields(IsClosed: boolean) {
     } else {
         cy.get(ShipmentSelectors.ShipmentValueOfGoods).then(($shipmentValueOfGoods) => {
             const shipmentValueOfGoods = $shipmentValueOfGoods.val()
-             expect(shipmentValueOfGoods).to.be.oneOf(['123.00','123'])
-    })
-        
+            expect(shipmentValueOfGoods).to.be.oneOf(['123.00', '123'])
+        })
+
     }
     CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentBookingNumberOfPackages, IsClosed);
     //CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentMainCarriageCarrierId, IsClosed);
@@ -394,7 +398,7 @@ export function ValidateCloseShipmentFields(IsClosed: boolean) {
     CheckIfHaveClass(ShipmentSelectors.RoutingsTab, ShipmentSelectors.RoutingToggle, 'ToggleButtonDisabled', IsClosed)
     CheckIfDisable(ShipmentSelectors.EditRoutingMainCarriage, BaseSelectors.RedButton, IsClosed);
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel);
-    
+
 }
 export function ValidatePackageDetails(tabSelector: string, partialSplitDetails: PackagesDetails, grossWeightSelector: string, isPackage: boolean) {
     cy.Navigate(tabSelector)
@@ -642,9 +646,9 @@ export function AssertPackagesTabWorkSpaceFieldsDisable() {
 }
 //#endregion
 export function AddHousePackage(packagesDetails: PackagesDetails[]) {
-    
+
     for (let i = 0; i < packagesDetails.length; i++) {
-        
+
         cy.FillLogLov(ShipmentSelectors.ShipmentPackagetype, packagesDetails[i].PackageType, true)
         cy.FillLogTextBox(ShipmentSelectors.ShipmentPackageContainernumber, packagesDetails[i].ContainerNumber)
         cy.FillLogTextBox(ShipmentSelectors.ShipmentPackageprice, packagesDetails[i].Pieces)
@@ -653,7 +657,17 @@ export function AddHousePackage(packagesDetails: PackagesDetails[]) {
     //cy.Click("#OkOceanPackage", null)
     //cy.contains('Ok').click()
 }
+
+export function AddMasterPackage(packagesDetails: PackagesDetails[]) {
+
+    for (let i = 0; i < packagesDetails.length; i++) {
+
+        cy.FillLogLov(ShipmentSelectors.ShipmentPackagetype, packagesDetails[i].PackageType, true)
+        cy.get(ShipmentSelectors.ShipmentPackagecrossweight).type(packagesDetails[i].GrossWeight.toString())
+    }
+}
 //#endregion
+
 //#region House Shipment Tab
 export function AssertHouseWizerdInsideMaster() {
     AssertHouseDirectionDim()
@@ -802,12 +816,12 @@ export function FillPickupRouting() {
 export function AsserationUpdateMaincarrigeHouseShipment() {
     cy.Navigate(ShipmentSelectors.RoutingsTabHouse);
     cy.Navigate(ShipmentSelectors.EditMainCarrigeHouse);
-   // cy.get(ShipmentSelectors.MainCarrigeHouse).should('have.text','FRA Frankfurt am Main')
+    // cy.get(ShipmentSelectors.MainCarrigeHouse).should('have.text','FRA Frankfurt am Main')
     //cy.get(ShipmentSelectors.MainCarrigeHouse).should('be.disabled')
-     BaseAssertion.AssertElementDisabled(ShipmentSelectors.MainCarrigeHouse,BaseSelectors.BeDisabled)
-     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.MainCarrigeHouse,'Frankfurt am Main')
-     BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentMainCarriageToPort,BaseSelectors.BeDisabled)
-     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageToPort,'Tel Aviv-Yafo')  
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.MainCarrigeHouse, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.MainCarrigeHouse, 'Frankfurt am Main')
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentMainCarriageDestination, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageDestination, 'Tel Aviv-Yafo')
 }
 
 
@@ -824,76 +838,101 @@ export function EditMainCarriageLegs(Airline: string) {
 }
 
 
-export function EditMainCarriageLegsFromToport(Gateway :string, Destination :string) {
+export function EditMainCarriageLegsFromToport(Gateway: string, Destination: string) {
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
-    cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageFromPort,Gateway, false)
-    cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageToPort,Destination, false)
+    cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageFromPort, Gateway, false)
+    cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageDestination, Destination, false)
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 
-   
+
 }
-export function AsserationMasterUpdateRoutind(){
-cy.get(ShipmentSelectors.RoutingRegion).contains('AA American Airlines').should('exist')
+export function AsserationMasterUpdateRoutind() {
+    cy.get(ShipmentSelectors.RoutingRegion).contains('AA American Airlines').should('exist')
 
 }
 
 export function AsserationEditMainCarriageLegsFromToport() {
-  cy.get(ShipmentSelectors.RoutingRegion).contains('Frankfurt am Main').should('exist')
-  cy.get(ShipmentSelectors.RoutingRegion).contains('Tel Aviv-Yafo').should('exist') 
+    cy.get(ShipmentSelectors.RoutingRegion).contains('Frankfurt am Main').should('exist')
+    cy.get(ShipmentSelectors.RoutingRegion).contains('Tel Aviv-Yafo').should('exist')
 }
-export function AsserationActualFinalArrivalDateinMaster(){
+export function AsserationActualFinalArrivalDateinMaster() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.MasterShipments)
-    cy.get(ShipmentSelectors.MastertransshipmentsActual).contains('04/05/2021').should('exist')
+    cy.get(ShipmentSelectors.MastertransshipmentsActual).invoke('text').then((text) => {
+        expect(text.trim()).equal('04/05/2021')
+        console.log(text)
+    });
+  //  cy.get(ShipmentSelectors.MastertransshipmentsActual).contains('04/05/2021').should('exist')
 
 }
 
-export function AsserationEstimatedFinalArrivalDateinMaster(){
+export function AsserationEstimatedFinalArrivalDateinMaster() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.MasterShipments)
-    cy.get(ShipmentSelectors.EstimatedFinalArrivalDateMaster).contains('02/05/2021').should('exist')
+    cy.get(ShipmentSelectors.EstimatedFinalArrivalDateMaster).invoke('text').then((text) => {
+        expect(text.trim()).equal('02/05/2021')
+        console.log(text)
+    });
+  //  cy.get(ShipmentSelectors.EstimatedFinalArrivalDateMaster).contains('02/05/2021').should('exist')
 
 }
-export function AsserationFinalArrivalDateinMaster(){
+export function AsserationFinalArrivalDateinMaster() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.MasterShipments)
-    cy.get(ShipmentSelectors.MastershipmentsfinalArrival).contains('04/05/2021').should('exist')
-    
-  }
-export function ActualFinalArrivalDatewhentherearetransshipmentsinMaster(){
+    cy.get(ShipmentSelectors.MastershipmentsfinalArrival).invoke('text').then((text) => {
+        expect(text.trim()).equal('04/05/2021')
+        console.log(text)
+    });
+  //  cy.get(ShipmentSelectors.MastershipmentsfinalArrival).contains('04/05/2021').should('exist')
+
+}
+export function ActualFinalArrivalDatewhentherearetransshipmentsinMaster() {
     cy.BackButton('Operations')
+
+
     cy.Navigate(ShipmentSelectors.MasterShipments)
     cy.get(ShipmentSelectors.MastertransshipmentsActual).contains('05/05/2021').should('exist')
-    
-  }
-  export function FinalArrivalDatewhentherearetransshipmentsinMaster(){
+
+}
+export function FinalArrivalDatewhentherearetransshipmentsinMaster() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.MasterShipments)
     cy.get(ShipmentSelectors.MastershipmentsfinalArrival).contains('05/05/2021').should('exist')
-    
-  }
-  
-  export function AsserationEstimatedFinalArrivalDatesinMaster(){
+
+}
+
+export function AsserationEstimatedFinalArrivalDatesinMaster() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.MasterShipments)
     cy.get(ShipmentSelectors.EstimatedFinalArrivalDateMaster).contains('04/05/2021').should('exist')
-    
-  }
-export function AsserationActualFinalArrivalinHouse(){
+
+}
+export function AsserationActualFinalArrivalinHouse() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.HouserActual).contains('04/05/2021').should('exist')
+    cy.get(ShipmentSelectors.MastertransshipmentsActual).invoke('text').then((text) => {
+        expect(text.trim()).equal('04/05/2021')
+        console.log(text)
+    });
 }
 
-export function AsserationEstimatedFinalArrivalDateinHouse(){
+export function AsserationEstimatedFinalArrivalDateinHouse() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    cy.get(ShipmentSelectors.EstimatedFinalArrivalDateHouse).contains('02/05/2021').should('exist')
+    cy.get(ShipmentSelectors.EstimatedFinalArrivalDateMaster).invoke('text').then((text) => {
+        expect(text.trim()).equal('02/05/2021')
+        console.log(text)
+    });
+    //cy.get(ShipmentSelectors.EstimatedFinalArrivalDateMaster).contains('02/05/2021').should('exist')
 }
-export function AsserationFinalArrivalinHouse(){
+export function AsserationFinalArrivalinHouse() {
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
+    cy.get(ShipmentSelectors.HouseFinalDate).invoke('text').then((text) => {
+        expect(text.trim()).equal('04/05/2021')
+        console.log(text)
+    });
     cy.get(ShipmentSelectors.HouseFinalDate).contains('04/05/2021').should('exist')
 }
 
@@ -1363,20 +1402,20 @@ function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: str
     })
 }
 
- export function EditMainCarriageDetails(MainCarriageLeg:MainCarriageLeg){
-   // EditMainCarriageLegsAddETAandATA()
-   cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
-   cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate,MainCarriageLeg. MainCarriageETADate, false)
-   cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageLeg.MainCarriageATADate, false)
-   //cy.FillLogLov(ShipmentSelectors.ShipmentPayableChargesType, payableDetails.ChargesType, true);
-    if(MainCarriageLeg.Transshipment1FromPortId){
-    cy.FillLogLov(ShipmentSelectors.Transshipment1FromPortId,MainCarriageLeg.Transshipment1FromPortId, false)
-    cy.FillLogTextBox(ShipmentSelectors.Transshipment1ETA, MainCarriageLeg.Transshipment1ETA, false)
-    cy.FillLogTextBox(ShipmentSelectors.Transshipment1ATA, MainCarriageLeg.Transshipment1ATA, false)
-    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+export function EditMainCarriageDetails(MainCarriageLeg: MainCarriageLeg) {
+    // EditMainCarriageLegsAddETAandATA()
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate, MainCarriageLeg.MainCarriageETADate, false)
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageLeg.MainCarriageATADate, false)
+    //cy.FillLogLov(ShipmentSelectors.ShipmentPayableChargesType, payableDetails.ChargesType, true);
+    if (MainCarriageLeg.Transshipment1FromPortId) {
+        cy.FillLogLov(ShipmentSelectors.Transshipment1FromPortId, MainCarriageLeg.Transshipment1FromPortId, false)
+        cy.FillLogTextBox(ShipmentSelectors.Transshipment1ETA, MainCarriageLeg.Transshipment1ETA, false)
+        cy.FillLogTextBox(ShipmentSelectors.Transshipment1ATA, MainCarriageLeg.Transshipment1ATA, false)
+        cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
 
     }
-    else{
+    else {
         cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
 
     }

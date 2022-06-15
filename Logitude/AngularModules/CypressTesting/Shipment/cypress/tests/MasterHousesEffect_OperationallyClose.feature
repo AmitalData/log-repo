@@ -1,4 +1,5 @@
-@release
+#@release
+@fixReleaseBugs
 Feature: Close Master And Connected House Operationally 
     The user creates a Master Export Air shipment, creates a House Export Air shipment from withing the Master shipment,
     update the routing tab of master shipment to close it operationallay, close the master operationally 

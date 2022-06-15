@@ -54,12 +54,12 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly MasterShipments = '#SHIPMENTS-M-Q';
   public static readonly AllShipments = '#Shipments-O-Q';
   public static readonly MasternoActual = '#row0col5';
-  public static readonly HouserActual = '#row0col13';
-  public static readonly MastertransshipmentsActual = '#row0col6';
-  public static readonly HouseFinalDate = '#span-row0col15';
-  public static readonly MastershipmentsfinalArrival = '#span-row0col8';
-  public static readonly EstimatedFinalArrivalDateMaster = '#span-row0col7';
-  public static readonly EstimatedFinalArrivalDateHouse = '#span-row0col14';
+  public static readonly HouserActual = '#row0col12';
+  public static readonly MastertransshipmentsActual = '#row0col12';
+  public static readonly HouseFinalDate = '#row0col14';
+  public static readonly MastershipmentsfinalArrival = '#row0col14';
+  public static readonly EstimatedFinalArrivalDateMaster = '#row0col13';
+  public static readonly EstimatedFinalArrivalDateHouse = '#row0col13';
   public static readonly Editcontainernumberfrommaster = '#Edit';
 
   
@@ -101,6 +101,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly NewShipmentToggleButtonItem = '#NEWSHIP .LogitudeToggleButtonItem';
   public static readonly ShipmentMainCarriageFromPort = '#Shipment_MainCarriageFromPortId';
   public static readonly ShipmentMainCarriageToPort = '#Shipment_MainCarriageToPortId';
+  public static readonly ShipmentMainCarriageDestination = '#Shipment_MainCarriageFinalDestinationPortId';
   public static readonly MasterMainCarriageFromPort = '#Master_MainCarriageFromPortId';
   public static readonly MasterMainCarriageToPort = '#Master_MainCarriageToPortId';
   public static readonly MasterAgent = '#Master_AgentId';
