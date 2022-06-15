@@ -154,18 +154,18 @@ export class ShipmentHelperComponent implements OnDestroy {
         logWindow.Title = "Shipment Containers Statuses Simulator";
         logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
     }
-    VizionSimulateClicked() {
+    VizionStatusClicked() {
         this.CurrentSession.StartBusyIndicator("Simulating...");
-        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
-            ContainerId : null,
-            ContainerNumber : null,
-            ContainerStatusSourceCode:null,
-            IsFromContainer : true,
-            ShipmentId:this.EntityPM.Id,
-            Tenant :this.EntityPM.Tenant,
-            IsSimulator:false,
-            Data:null,
-            SourceCode:'VZN'
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> <unknown>{
+            ContainerId: null,
+            ContainerNumber: null,
+            ContainerStatusSourceCode: null,
+            IsFromContainer: true,
+            ShipmentId: this.EntityPM.Id,
+            Tenant: this.EntityPM.Tenant,
+            IsSimulator: false,
+            Data: null, 
+            SourceCode: 'VZN'
         }
         var myService = new ShipmentContainersWebService();
         myService.GeneralContainerSimulator(args).subscribe((myResponse: ServiceResponse) => {
