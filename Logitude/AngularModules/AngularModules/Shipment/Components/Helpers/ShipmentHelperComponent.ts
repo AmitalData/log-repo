@@ -31,13 +31,17 @@ export class ShipmentHelperComponent implements OnDestroy {
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public IsSimulatorVisible: boolean = false; 
+    public IsVisionRequestStatus: boolean = false;
+
     ShareDocumentsViaEmailDocumentTypeCode = "SDVE"; 
     public documentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     public IsGeneralSimulatorVisible: boolean = false;
+    ValidationErrorsList: any[];
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
         this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
+        this.IsVisionRequestStatus = FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus");
 
         this.EntityPM = this.entityArgs.EntityPM;
 
@@ -149,6 +153,33 @@ export class ShipmentHelperComponent implements OnDestroy {
         logWindow.WindowArgs = args;
         logWindow.Title = "Shipment Containers Statuses Simulator";
         logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
+    }
+    VizionSimulateClicked() {
+        this.CurrentSession.StartBusyIndicator("Simulating...");
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
+            ContainerId : null,
+            ContainerNumber : null,
+            ContainerStatusSourceCode:null,
+            IsFromContainer : true,
+            ShipmentId:this.EntityPM.Id,
+            Tenant :this.EntityPM.Tenant,
+            IsSimulator:false,
+            Data:null,
+            SourceCode:'VZN'
+        }
+        var myService = new ShipmentContainersWebService();
+        myService.GeneralContainerSimulator(args).subscribe((myResponse: ServiceResponse) => {
+
+            this.CurrentSession.StopBusyIndicator();
+            var messageWindow = new MessageWindow();
+            if (myResponse.Result.Success) {
+                this.ValidationErrorsList = [];
+                messageWindow.Show("Request Sent Successfully");
+            }else{
+                this.ValidationErrorsList = myResponse.Result.Errors;
+            } 
+
+        });
     }
     private ShowHideShippingInstructionsButton() {
         this.IsShippingInstructionsVisible = false;
