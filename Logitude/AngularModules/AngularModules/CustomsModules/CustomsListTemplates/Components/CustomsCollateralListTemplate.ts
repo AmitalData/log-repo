@@ -47,6 +47,10 @@ export class CustomsCollateralListTemplate {
 
         this.IsDeclarationChecked = this._customsCollateralAnswerSharedDataService.connectedSelectAll || this.IsDeclarationChecked;
         this.handlerShareService()
+        this._customsCollateralAnswerSharedDataService.allCheckboxStateChange$.subscribe((stateCheckbox: boolean) => {
+            this.IsDeclarationChecked = stateCheckbox;
+            this.CD.detectChanges();
+        });
     }
 
 
