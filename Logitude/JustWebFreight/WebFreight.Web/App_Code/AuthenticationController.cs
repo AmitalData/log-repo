@@ -3128,17 +3128,4 @@ namespace WebFreight.Web
         public bool IsMobileLogin { get; set; }
         public int MobileVersion { get; set; }
     }
-
-
-    public class PasswordParameter
-    {
-        public string Password { get; set; }
-        public bool isHashPassword { get; set; }
-        public bool IsOneTimePassword { get; set; }
-
-    }
-
-
-
-
 }

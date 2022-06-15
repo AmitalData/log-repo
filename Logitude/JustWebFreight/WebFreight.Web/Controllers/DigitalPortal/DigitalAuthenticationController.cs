@@ -9,10 +9,38 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Linq;
 using System.Net;
+using WebFreight.Web.WebServices;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.Security;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
+using WebFreight.Web.Security;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityPMs;
+using WebFreight.Web.Helpers.MixPanel;
+using Simplog.Data.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Counters;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.QueueService;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Text;
+using Logitude.SystemLogs.POCOs;
+using Logitude.SystemLogs.Repositories;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
-    public class DigitalPortalPasswordController : ApiController
+    public class DigitalAuthenticationController : ApiController
     {
         [ActionName("PostDigitalPortalResetPassword")]
         public UserData PostDigitalPortalResetPassword(ResetPasswordParameters resetPasswordParameters)
@@ -84,6 +112,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-    
+       
+        [ActionName("PostDigitalPortalCheckPasswordUser")]
+        public HttpResponseMessage PostDigitalPortalCheckPasswordUser(ChangePasswordParameter changePasswordParameter)
+        {
+            try
+            {
+                PasswordCheckService passwordCheckService = new PasswordCheckService();
+                bool result = passwordCheckService.CheckUserPassword(changePasswordParameter.CurrentPassword, changePasswordParameter.ContactId, 0, changePasswordParameter.Email);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
     }    
 }
