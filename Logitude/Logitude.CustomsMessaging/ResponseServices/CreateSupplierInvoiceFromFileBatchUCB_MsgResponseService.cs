@@ -66,6 +66,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var context = CustomContext.GetContext(tenant);
             var declarationQueryService = new DeclarationQueryService(context);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(declarationid, true, false);
+            MyRequestSheetParam.RequestDescription = $"{declarationPM.DeclarationNumber} קליטת חשבון ספק מקובץ, הצהרה";
+
             foreach (var invoiceFromFile in fromFile)
             {
                 var invoiceFromDB = declarationPM.SupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == invoiceFromFile.InvoiceNumber);
@@ -80,41 +82,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         IssueDate = invoiceFromFile.IssueDate,
                         
                     };
-                    invoice.SupplierInvoiceFreightAmounts = new List<SupplierInvoiceFreightAmountPM>();
-                    var freightAmount =
-                            new SupplierInvoiceFreightAmountPM
-                            {
-                                DeclarationId = declarationid,
-                                Tenant = tenant,
-                                ChangeSetOp = ChangeSetOperation.Insert,
-                                Amount = invoiceFromFile.FreightAmount,
-                            };
-                    if (!string.IsNullOrWhiteSpace(invoiceFromFile.FreightAmountCurrencyType))
+                    if (invoiceFromFile.FreightAmount != null && !string.IsNullOrWhiteSpace(invoiceFromFile.FreightAmountCurrencyType))
                     {
-                        var _currencyType = GetTranslationL2P(partnerId, "CTBCURRENCY", invoiceFromFile.FreightAmountCurrencyType);
-                        if (!string.IsNullOrWhiteSpace(_currencyType))
+                        invoice.SupplierInvoiceFreightAmounts = new List<SupplierInvoiceFreightAmountPM>();
+                        var freightAmount =
+                                new SupplierInvoiceFreightAmountPM
+                                {
+                                    DeclarationId = declarationid,
+                                    Tenant = tenant,
+                                    ChangeSetOp = ChangeSetOperation.Insert,
+                                    Amount = invoiceFromFile.FreightAmount,
+                                };
+                        if (!string.IsNullOrWhiteSpace(invoiceFromFile.FreightAmountCurrencyType))
                         {
-                            var isSuccess = SetFreightAmountCurrencyTypeCode(tenant, _currencyType, freightAmount);
-                            if (!isSuccess)
+                            var _currencyType = GetTranslationL2P(partnerId, "CTBCURRENCY", invoiceFromFile.FreightAmountCurrencyType);
+                            if (!string.IsNullOrWhiteSpace(_currencyType))
                             {
-                                isSuccess = SetFreightAmountCurrencyTypeCode(tenant, invoiceFromFile.FreightAmountCurrencyType, freightAmount);
+                                var isSuccess = SetFreightAmountCurrencyTypeCode(tenant, _currencyType, freightAmount);
+                                if (!isSuccess)
+                                {
+                                    isSuccess = SetFreightAmountCurrencyTypeCode(tenant, invoiceFromFile.FreightAmountCurrencyType, freightAmount);
+                                    if (!isSuccess)
+                                    {
+                                        LogMessagingUtil.Instance.AppendLine("FreightAmountCurrencyType = " + invoiceFromFile.FreightAmountCurrencyType + " could not translate to Logitude Id");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                var isSuccess = SetFreightAmountCurrencyTypeCode(tenant, invoiceFromFile.FreightAmountCurrencyType, freightAmount);
                                 if (!isSuccess)
                                 {
                                     LogMessagingUtil.Instance.AppendLine("FreightAmountCurrencyType = " + invoiceFromFile.FreightAmountCurrencyType + " could not translate to Logitude Id");
                                 }
                             }
                         }
-                        else
-                        {
-                            var isSuccess = SetFreightAmountCurrencyTypeCode(tenant, invoiceFromFile.FreightAmountCurrencyType, freightAmount);
-                            if (!isSuccess)
-                            {
-                                LogMessagingUtil.Instance.AppendLine("FreightAmountCurrencyType = " + invoiceFromFile.FreightAmountCurrencyType + " could not translate to Logitude Id");
-                            }
-                        }
+                        invoice.SupplierInvoiceFreightAmounts.Add(freightAmount);
                     }
-                    invoice.SupplierInvoiceFreightAmounts.Add(freightAmount);
-
                     if (!string.IsNullOrWhiteSpace(invoiceFromFile.InvoiceCurrencyTypeCode))
                     {
                         var _currencyType = GetTranslationL2P(partnerId, "CTBCURRENCY", invoiceFromFile.InvoiceCurrencyTypeCode);
@@ -202,8 +206,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
             declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
-            myDeclarationUpdateService.Update(declarationPM, true);
+            try
+            {
+                LogMessagingUtil.Instance.AppendLine("===Start Saving declaration to DB===");
+                var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                myDeclarationUpdateService.Update(declarationPM, true);
+                LogMessagingUtil.Instance.AppendLine("===End Saving declaration to DB===");
+            }
+            catch (Exception e)
+            {
+                LogMessagingUtil.Instance.AppendLine("error in Saving declaration to DB: "+ e.ToString());
+                throw;
+            }
         }
 
         private void CreateSupplierInvoiceItems(SupplierInvoicePM invoice, int tenant, string declarationid, InvoiceFromFile invoiceFromFile, string partnerId)
@@ -220,8 +234,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     InvoiceQuantity = 1,
                     InvoiceNumber = invoiceFromFile.InvoiceNumber,
                     ItemDescription = invoiceItemFromFile.ItemDescription,
-                    ClassificationCode = invoiceItemFromFile.ClassificationCode//todo
+                    ClassificationCode = "84253990000"//todo
                 };
+                var classificationCode = GetTranslationL2P(partnerId, "CTBCARMOD", invoiceItemFromFile.ClassificationCode);
+                if (!string.IsNullOrWhiteSpace(classificationCode))
+                {
+                    invoiceItem.ClassificationCode = classificationCode;
+                }
+                else
+                {
+                    LogMessagingUtil.Instance.AppendLine("classificationCode = " + invoiceItemFromFile.ClassificationCode + " could not translate to Logitude Id");
+                }
                 invoiceItem.SupplierInvoiceItemVehicles = new List<SupplierInvoiceItemVehiclePM>
                         {
                             new SupplierInvoiceItemVehiclePM
@@ -374,7 +397,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             catch (Exception e)
             {
-                LogMessagingUtil.Instance.AppendLine(e.ToString());
+                LogMessagingUtil.Instance.AppendLine("fail Read Data From File: " + e.ToString());
                 throw;
             }
         }
