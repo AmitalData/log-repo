@@ -43,11 +43,11 @@ namespace CommunicationWorkerRole.Services.SAT
 
 					string rfcEmisor = comprobanteDetails.RfcEmisor;
 
-					string folioFiscal = digitalTi.UUID.Trim();
+					string folioFiscal = digitalTi.UUID?.Trim();
 					
-					string motivoCancelacion = invoice.SATCancelReasonCode.Trim();
+					string motivoCancelacion = invoice.SATCancelReasonCode?.Trim();
 
-					string folioSustitucion = GetFolioSustitucion(invoice);
+					string folioSustitucion = GetRelatedInvoiceUUID(invoice);
 
 					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI40(rfcEmisor, folioFiscal, motivoCancelacion, folioSustitucion);
 
@@ -112,17 +112,36 @@ namespace CommunicationWorkerRole.Services.SAT
 			}
 		}
 
-        private static string GetFolioSustitucion(ARInvoice invoice)
-        {
-			switch (invoice.SATCancelReasonCode)
+		private static string GetRelatedInvoiceUUID(ARInvoice invoice)
+		{
+			if (string.IsNullOrEmpty(invoice.RelatedInvoice)) return "";
+			ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(invoice.Tenant);
+			ARInvoice arInvoice = aRInvoiceRepository.GetARInvoiceByInvoiceNumber(invoice.Tenant, invoice.RelatedInvoice);
+			if (arInvoice == null) return "";
+			System.Xml.XmlElement[] relatedInvoiceComprobanteComplementoAny = GetProfactComprobanteComplementoAny(arInvoice);
+			if (relatedInvoiceComprobanteComplementoAny == null) return "";
+			List<System.Xml.XmlElement> myLXmlComplementos = relatedInvoiceComprobanteComplementoAny.ToList<System.Xml.XmlElement>();
+			var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+			if (timbreFiscalDigitalElement == null) return "";
+
+			Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+			return digitalTi?.UUID?.Trim();
+		}
+
+		private static System.Xml.XmlElement[] GetProfactComprobanteComplementoAny(ARInvoice arInvoice)
+		{
+			Encoding uTF8Encoding = Encoding.UTF8;
+			byte[] profactoXMLData = uTF8Encoding.GetBytes(arInvoice.SATXML);
+			try
 			{
-				case "01": return invoice.RelatedInvoice;
-				case "02": return "Comprobante emitido con errores sin relación";
-				case "03": return "No se llevó a cabo la operación";
-				default: return "0";
+				return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(profactoXMLData).Complemento.Any;
 			}
-        }
-    }
+			catch
+			{
+				return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData).Complemento.Any;
+			}
+		}
+	}
 
 	public class SATInvoiceProfact40CancellationServiceArgs
 	{
