@@ -22710,6 +22710,13 @@
         IndexOrder="15"
         LocalDefaultText="&quot;קישור אחסנות להצהרה&quot;"
         IsPackagable="true" />
+      <MenuItem
+        EventCode="&quot;Sending Initiated Message&quot;"
+        DefaultText="&quot;SendingInitiatedMessage&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="16"
+        LocalDefaultText="&quot;שליחת הודעה יזומה&quot;"
+        IsPackagable="true" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"
