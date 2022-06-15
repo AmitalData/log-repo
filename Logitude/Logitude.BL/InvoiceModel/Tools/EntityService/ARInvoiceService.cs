@@ -4093,12 +4093,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             CardRepository cardRep = new CardRepository(tenant);
             Card card = cardRep.GetSingleCard(billToId, tenant);
+            CheckTheCardGLAccount(card);
             if (card != null)
             {
                 glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
             }
 
             return glaAccount;
+        }
+        private void CheckTheCardGLAccount(Card card)
+        {
+            if(card.GLAccountId == null)
+            {
+                throw new Exception("The Bill To Card " + card.Code + " is not connected to a GLccount ");
+            }
         }
         #endregion
 
