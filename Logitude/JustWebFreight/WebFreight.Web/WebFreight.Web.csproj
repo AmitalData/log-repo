@@ -1113,8 +1113,9 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LoadingSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\AutonomyRegionTypeController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalBrandingController.cs" />
-    <Compile Include="Controllers\DigitalPortal\DigitalPortalPasswordController.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalAuthenticationController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalPortalResetUserPasswordService.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalShipmentController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalPortalPasswordHelper.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBuildTablesController.cs" />
@@ -2744,6 +2745,7 @@
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
     <Compile Include="Helpers\BrandingHelper.cs" />
     <Compile Include="Helpers\BIReport\BIReportXMLDataService.cs" />
+    <Compile Include="Helpers\ChangePasswordParameter.cs" />
     <Compile Include="Helpers\CrmWebServicesValidator.cs" />
     <Compile Include="Helpers\DataWarehouse\FactQuoteBusinessUnitFilter.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />
@@ -2803,6 +2805,7 @@
     <Compile Include="Helpers\MixPanel\IMixPanelActionsService.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelActionsService.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelFactory.cs" />
+    <Compile Include="Helpers\PasswordParameter.cs" />
     <Compile Include="Helpers\PODMobileDocumentsFilingService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
