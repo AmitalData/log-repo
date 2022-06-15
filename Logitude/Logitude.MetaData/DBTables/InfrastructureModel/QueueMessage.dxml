@@ -40,7 +40,7 @@
   <Column
     Name="MessageBody"
     Type="varchar"
-    Size="1000">
+    Size="2000">
     <Constraints
       Nullable="false" />
   </Column>
