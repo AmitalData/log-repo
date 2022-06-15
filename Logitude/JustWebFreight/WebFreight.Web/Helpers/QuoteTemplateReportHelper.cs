@@ -3482,8 +3482,14 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowUnitsContainers)
                     {
-                        string saleUnitPriceValues = GetUnitPricePackagesValue(quoteTemplateBuildArges, chargePM, included);
-                        allTableRows.Add("UNITSCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleUnitPriceValues, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                        string saleUnitValue = " ";
+                        if (chargePM.SaleQuantity != null)
+                        {
+                            double value = (double)chargePM.SaleQuantity;
+                            saleUnitValue = value.ToString("N"); // 1,234.512
+                        }
+                        if (included) saleUnitValue = translateInclueLable;
+                        allTableRows.Add("UNITSCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleUnitValue, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
                         row += 1;
                     }
 
