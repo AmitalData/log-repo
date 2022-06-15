@@ -151,17 +151,23 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
 
     OkButtonClicked()
     {
-        var supplierInvoiceService = new SupplierInvoiceService();
-        supplierInvoiceService.PutSupplierInvioceFromFileRequest(this.filterImageParameter, SessionLocator.Tenant, this.CustomerId, this.PartnerId, this.DeclarationId).subscribe((myServiceResponse: ServiceResponse) => {
+        if (AppTool.IsNullOrEmpty(this.UnifacePartnerCode))
+        {
+            this.ShowMessage("חובה לבחור פרטנר");
+        }
+        else
+        {
+            var supplierInvoiceService = new SupplierInvoiceService();
+            supplierInvoiceService.PutSupplierInvioceFromFileRequest(this.filterImageParameter, SessionLocator.Tenant, this.CustomerId, this.UnifacePartnerCode, this.DeclarationId).subscribe((myServiceResponse: ServiceResponse) => {
 
-            if (myServiceResponse.HasError) {
-                this.ShowMessage(myServiceResponse.ErrorsArray[0]);
-            }
-            else {
-                this.ShowMessage(myServiceResponse.Result);
-            }
-            
-        });
+                if (myServiceResponse.HasError) {
+                    this.ShowMessage(myServiceResponse.ErrorsArray[0]);
+                }
+                else {
+                    this.ShowMessage(myServiceResponse.Result);
+                }
+            });
+        }
     }
 
     CancelButtonClicked() {

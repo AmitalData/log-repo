@@ -60,22 +60,23 @@ progress::-moz-progress-bar {
     </tr>
     <tr class="FormFieldRow">
         <td>
-            <LogLabel [NoObjectField]="true"
-                      [Text]="'פרטנר'"
-                      [DataContext]="DataContext"></LogLabel>
+            <!--<LogLabel [NoObjectField]="true"
+              [Text]="'פרטנר'"
+              [DataContext]="DataContext"></LogLabel>-->
+            <button style="margin-right: 10px;font-size: 11px;" class="HyperlinkButton" (click)="ButtonPartnerClick()">בחירת פרטנר</button>
+
         </td>
         <td><div></div></td>
         <td colspan="1">
-            <LogLov [NoObjectField]="true"
+            <!--<LogLov [NoObjectField]="true"
                     [SelectedValue]="PartnerId"
                     [DataContext]="DataContext"
                     [HideAddLink]="true"
                     [HideColumns]="false"
                     [LookUpTableName]="'Card'"
                     [DisplayFieldsFromList]="'Code,LocalName,EnglishName,CityName,CountryName,PartnerTypeName'">
-            </LogLov>
+            </LogLov>-->
             {{UnifacePartnerCode}}
-            <button class="Button" (click)="ButtonPartnerClick()" >PartnerId</button>
         </td>
         <td><div></div></td>
         <td><div></div></td>
