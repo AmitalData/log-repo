@@ -49,6 +49,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CustomerTeamMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+            AddCustomerTeamKafkaQueueMessage();
         }
 
         public void Update(CustomerTeamPM entityPM)
@@ -59,6 +60,27 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CustomerTeamMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            AddCustomerTeamKafkaQueueMessage();
+        }
+
+        private void AddCustomerTeamKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPm.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "CustomerTeam" },
+                { "EntityId", entityPm.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
     }
 }
