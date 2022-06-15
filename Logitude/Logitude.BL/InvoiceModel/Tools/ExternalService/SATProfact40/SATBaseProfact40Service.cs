@@ -136,6 +136,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return null;
         }
 
+        public static int GetSATVersion(string satXML)
+        {
+            return satXML.Contains("cfd/4/cfdv40.xsd") ? 4 : 3;
+        }
+
         internal static decimal GetDecimalWithMatchCurrencyDigitsAfterPoint(decimal dNumber, string currency)
         {
             switch (currency)

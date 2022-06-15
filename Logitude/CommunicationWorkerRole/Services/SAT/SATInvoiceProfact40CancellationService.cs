@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.Tools;
+using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Profact.TimbraCFDI;
@@ -113,30 +114,43 @@ namespace CommunicationWorkerRole.Services.SAT
 		}
 
 		private static string GetRelatedInvoiceUUID(ARInvoice invoice)
-		{
-			if (string.IsNullOrEmpty(invoice.RelatedInvoice)) return "";
-			ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(invoice.Tenant);
-			ARInvoice arInvoice = aRInvoiceRepository.GetARInvoiceByInvoiceNumber(invoice.Tenant, invoice.RelatedInvoice);
-			if (arInvoice == null) return "";
-			System.Xml.XmlElement[] relatedInvoiceComprobanteComplementoAny = GetProfactComprobanteComplementoAny(arInvoice);
-			if (relatedInvoiceComprobanteComplementoAny == null) return "";
-			List<System.Xml.XmlElement> myLXmlComplementos = relatedInvoiceComprobanteComplementoAny.ToList<System.Xml.XmlElement>();
-			var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
-			if (timbreFiscalDigitalElement == null) return "";
+        {
+            if (string.IsNullOrEmpty(invoice.RelatedInvoice)) return "";
+            ARInvoice relatedARInvoice = GetRelatedARInvoice(invoice);
+            if (relatedARInvoice == null) return "";
+            System.Xml.XmlElement[] relatedInvoiceComprobanteComplementoAny = GetProfactComprobanteComplementoAny(relatedARInvoice);
+            if (relatedInvoiceComprobanteComplementoAny == null) return "";
+            System.Xml.XmlElement timbreFiscalDigitalElement = GetTimbreFiscalDigitalElement(relatedInvoiceComprobanteComplementoAny);
+            if (timbreFiscalDigitalElement == null) return "";
 
-			Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-			return digitalTi?.UUID?.Trim();
-		}
+            Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+            return digitalTi?.UUID?.Trim();
+        }
 
-		private static System.Xml.XmlElement[] GetProfactComprobanteComplementoAny(ARInvoice arInvoice)
+        private static System.Xml.XmlElement GetTimbreFiscalDigitalElement(System.Xml.XmlElement[] relatedInvoiceComprobanteComplementoAny)
+        {
+            List<System.Xml.XmlElement> myLXmlComplementos = relatedInvoiceComprobanteComplementoAny.ToList<System.Xml.XmlElement>();
+            var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+            return timbreFiscalDigitalElement;
+        }
+
+        private static ARInvoice GetRelatedARInvoice(ARInvoice invoice)
+        {
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(invoice.Tenant);
+            ARInvoice relatedARInvoice = aRInvoiceRepository.GetARInvoiceByInvoiceNumber(invoice.Tenant, invoice.RelatedInvoice);
+            return relatedARInvoice;
+        }
+
+        private static System.Xml.XmlElement[] GetProfactComprobanteComplementoAny(ARInvoice arInvoice)
 		{
 			Encoding uTF8Encoding = Encoding.UTF8;
+			int satVersion = SATBaseProfact40Service.GetSATVersion(arInvoice.SATXML);
 			byte[] profactoXMLData = uTF8Encoding.GetBytes(arInvoice.SATXML);
-			try
+			if(satVersion == 4)
 			{
 				return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(profactoXMLData).Complemento.Any;
 			}
-			catch
+			else
 			{
 				return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData).Complemento.Any;
 			}
