@@ -164,6 +164,7 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
                     this.ShowMessage(myServiceResponse.ErrorsArray[0]);
                 }
                 else {
+                    this.CurrentSession.CloseCurrentWindow();
                     this.ShowMessage(myServiceResponse.Result);
                 }
             });

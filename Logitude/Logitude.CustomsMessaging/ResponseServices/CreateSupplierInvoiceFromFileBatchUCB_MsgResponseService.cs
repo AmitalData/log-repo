@@ -201,8 +201,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                 {
                     //create invoiceitems
-                    CreateSupplierInvoiceItems(invoiceFromDB, tenant, declarationid, invoiceFromFile, partnerId);
-                    invoiceFromDB.ChangeSetOp = ChangeSetOperation.Update;
+                    /*CreateSupplierInvoiceItems(invoiceFromDB, tenant, declarationid, invoiceFromFile, partnerId);
+                    invoiceFromDB.ChangeSetOp = ChangeSetOperation.Update;*/
+                    LogMessagingUtil.Instance.AppendLine("***INVOICE "+ invoiceFromFile.InvoiceNumber + " ALREADY EXISTS, NOT CREATE");
                 }
             }
             declarationPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -330,6 +331,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     CodeExist = false;
                     string invoiceNumber = data[0];
+                    if (string.IsNullOrWhiteSpace(invoiceNumber))
+                    {
+                        //LogMessagingUtil.Instance.AppendLine("invoiceNumber cannot be null");
+                        throw new Exception("invoiceNumber cannot be null");
+                    }
+                    if (string.IsNullOrWhiteSpace(data[5]))
+                    {
+                        //LogMessagingUtil.Instance.AppendLine("RichbitFileNumber cannot be null");
+                        throw new Exception("RichbitFileNumber cannot be null");
+                    }
+                    if (string.IsNullOrWhiteSpace(data[7]))
+                    {
+                        //LogMessagingUtil.Instance.AppendLine("ClassificationCode cannot be null");
+                        throw new Exception("ClassificationCode cannot be null");
+                    }
+                    if (string.IsNullOrWhiteSpace(data[9]))
+                    {
+                        //LogMessagingUtil.Instance.AppendLine("ItemPrice cannot be null");
+                        throw new Exception("ItemPrice cannot be null");
+                    }
+
                     foreach (var item in fromFile) // check if code exist in list already
                     {
                         if (item.InvoiceNumber == invoiceNumber)
@@ -511,9 +533,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             public string ClassificationCode;
             public string ItemDescription;
             
-            public string AdditionalQuantity;//todo
-            public string AdditionalQuantityCurrencyType;//todo
-            public string ModificationAndDiscountTypeAmount;//todo
+            public string AdditionalQuantity;
+            public string AdditionalQuantityCurrencyType;
+            public string ModificationAndDiscountTypeAmount;
         }
     }
     

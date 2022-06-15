@@ -31,7 +31,7 @@ progress::-moz-progress-bar {
 </style>
 
 <table style="height: 150px;">
-    <tr class="FormFieldRow">
+    <!--<tr class="FormFieldRow">
         <td>
             <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'Customs.Declaration'"
                       [DataContext]="DataContext"></LogLabel>
@@ -57,17 +57,35 @@ progress::-moz-progress-bar {
 
 
 
-    </tr>
+    </tr>-->
+
     <tr class="FormFieldRow">
-        <td>
+        <td style="width:45px;">
+            <LogLabel [NoObjectField]="true"
+                      [Text]="'פרטנר'"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td><div></div></td>
+        <td style="width:170px">
+            <input [disabled]="true" [(ngModel)]="UnifacePartnerCode" />
+        </td>
+        <td style="width:10px;"><div></div></td>
+        <td style="width:60px;text-align:left">
+            <button style="width:55px;" class="Button" (click)="ButtonPartnerClick()">בחר</button>
+        </td>
+        <td><div></div></td>
+        <td><div></div></td>
+        <td><div></div></td>
+    </tr>
+    <!--<tr class="FormFieldRow">
+        <td>-->
             <!--<LogLabel [NoObjectField]="true"
               [Text]="'פרטנר'"
               [DataContext]="DataContext"></LogLabel>-->
-            <button style="margin-right: 10px;font-size: 11px;" class="HyperlinkButton" (click)="ButtonPartnerClick()">בחירת פרטנר</button>
-
+            <!--<button style="margin-right: 10px;font-size: 11px;" class="HyperlinkButton" (click)="ButtonPartnerClick()">בחירת פרטנר</button>
         </td>
         <td><div></div></td>
-        <td colspan="1">
+        <td colspan="1">-->
             <!--<LogLov [NoObjectField]="true"
                     [SelectedValue]="PartnerId"
                     [DataContext]="DataContext"
@@ -76,8 +94,9 @@ progress::-moz-progress-bar {
                     [LookUpTableName]="'Card'"
                     [DisplayFieldsFromList]="'Code,LocalName,EnglishName,CityName,CountryName,PartnerTypeName'">
             </LogLov>-->
-            {{UnifacePartnerCode}}
-        </td>
+            <!--{{UnifacePartnerCode
+                }}
+</td>
         <td><div></div></td>
         <td><div></div></td>
         <td><div></div></td>
@@ -86,35 +105,35 @@ progress::-moz-progress-bar {
 
 
 
-    </tr>
+    </tr>-->
 
-    <tr class="FormFieldRow">
-        <td style="width:45px;">
-            <LogLabel [NoObjectField]="true"
-                      [Text]="'קובץ'"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td><div></div></td>
-        <td style="width:170px;">
-            <LogTextBoxV2 [NoObjectField]="true" [IsFreeText]="true"
-                        [HideColumns]="false" [Text]="FileName" [DataContext]="DataContext"></LogTextBoxV2>
-        </td>
-        <td style="width:60px;text-align:left">
-            <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
-            <input #myInput accept=".csv,.CSV" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
-        </td>
-        <td style="width:100px; background-color:white">
-            <div *ngIf="IsShowProgressBar" style="height:20px;border:1px solid gray;border-radius:3px">
-                <!--<div style="height:16px;margin:1px;" ></div>-->
-                <progress id="myBar" max="100" value="20" data-label="20%"></progress>
-            </div>
-        </td>
-        <td style="width:4px;"></td>
-        <td style="width:50px;">
-            <button class="Button" (click)="DeleteFileButtonClicked()" *ngIf="filterImageParameter != null ">הסר קובץ</button>
-        </td>
-        <td><div></div></td>
-    </tr>
+<tr class="FormFieldRow">
+    <td style="width:45px;">
+        <LogLabel [NoObjectField]="true"
+                  [Text]="'קובץ'"
+                  [DataContext]="DataContext"></LogLabel>
+    </td>
+    <td><div></div></td>
+    <td style="width:170px;">
+        <input [disabled]="true" [(ngModel)]="FileName" />
+    </td>
+    <td style="width:10px;"><div></div></td>
+    <td style="width:60px;text-align:left">
+        <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
+        <input #myInput accept=".csv,.CSV" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+    </td>
+    <td style="width:100px; background-color:white">
+        <div *ngIf="IsShowProgressBar" style="height:20px;border:1px solid gray;border-radius:3px">
+            <!--<div style="height:16px;margin:1px;" ></div>-->
+            <progress id="myBar" max="100" value="20" data-label="20%"></progress>
+        </div>
+    </td>
+    <td style="width:4px;"></td>
+    <td style="width:50px;">
+        <button class="Button" (click)="DeleteFileButtonClicked()" *ngIf="filterImageParameter != null ">הסר קובץ</button>
+    </td>
+    <td><div></div></td>
+</tr>
 </table>
 <div style="height: 70px;"></div>
 <div style="float:left;">
@@ -133,7 +152,7 @@ progress::-moz-progress-bar {
                 <div></div>
             </td>
             <td width="57px">
-                <button class="RedButton" [disabled]="UploadButtonIsEnabled ||  CustomerId==null" (click)="OkButtonClicked()">אישור</button>
+                <button class="RedButton" [disabled]="UploadButtonIsEnabled" (click)="OkButtonClicked()">אישור</button>
             </td>
         </tr>
 
