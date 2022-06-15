@@ -96,7 +96,7 @@ export class ContainerHelperComponent implements OnDestroy {
         logWindow.Title = "Shipment Containers Statuses Simulator";
         logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
     }
-    VizionSimulateClicked() {
+    VizionStatusClicked() {
         this.CurrentSession.StartBusyIndicator("Simulating...");
         var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
             ContainerId : this.EntityPM.Id,
