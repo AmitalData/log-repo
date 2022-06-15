@@ -74,7 +74,8 @@ progress::-moz-progress-bar {
                     [LookUpTableName]="'Card'"
                     [DisplayFieldsFromList]="'Code,LocalName,EnglishName,CityName,CountryName,PartnerTypeName'">
             </LogLov>
-
+            {{UnifacePartnerCode}}
+            <button class="Button" (click)="ButtonPartnerClick()" >PartnerId</button>
         </td>
         <td><div></div></td>
         <td><div></div></td>

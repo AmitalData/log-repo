@@ -8,6 +8,8 @@ import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { ImageParameter } from '../../../../../Infrastructure/DataContracts/ImageParameter';
 import { SupplierInvoiceService } from '../../../../../Customs/Services/Others/SupplierInvoiceService';
 import { AppTool } from '../../../../../Infrastructure/Tools';
+import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
+import { UnifreightController, UnifreightResponseEventArgs } from 'Customs/Controller/UnifreightController';
 declare var attachmentUploader, ResultAsArray: any;
 @Component({
     selector: 'LoadExcelSupplierInvoicesComponent',
@@ -30,6 +32,13 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
     public UploadFileId: string = Guid.NewRandomString();
     private CurrentSession = SessionLocator.SelectedSession;
     public DeclarationId: string;
+    private _UnifacePartnerCode: string;
+    public get UnifacePartnerCode(): string {
+        return this._UnifacePartnerCode;
+    }
+    public set UnifacePartnerCode(value: string) {
+        this._UnifacePartnerCode = value;
+    }
 
     constructor(private EntityResourceService: EntityResourceService) {
         super();
@@ -170,6 +179,33 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
         this.ProgressBarPercentText = "";
         //this.ErrorsResultList.Clear();
         this.UploadSuccessLabel = false;
+    }
+
+    public ButtonPartnerClick(): void {
+
+        console.log("ButtonPartnerClick");
+        //if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM?.CustomFileNo, this.EntityPM?.IsConvertedDeclaration, this.EntityPM?.IsConnectedToUnifreight)) {//if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse){
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("");
+
+            const myUnifreightController = new UnifreightController(
+                this.CurrentSession.CurrentEditComponent.EntityPM,
+                "Logitude.Customs.LoadExcelSupplierInvoicesComponent");
+            myUnifreightController.RaiseLookUpAsync("GTRLPART","PARTNER_ID");
+            //myUnifreightController.RaiseLookUpAsync("ATBLPTIL","BRAN_ID");
+            myUnifreightController.GetPromise().
+                then((e :UnifreightResponseEventArgs) => { 
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    const UnifreightResponseStatus = e.UnifreightResponseStatus;
+                    const UnifreightMessage = e.UnifreightMessage;
+                    const LOV_RETURN_VALUE = UnifreightMessageM.GetStringValue(UnifreightMessage , "Response.LOV_RETURN_VALUE");
+                    console.log(LOV_RETURN_VALUE);
+                    this.UnifacePartnerCode=LOV_RETURN_VALUE;
+                });
+        } else {
+            console.error("not connect to uniface");
+        }
     }
 }
 
