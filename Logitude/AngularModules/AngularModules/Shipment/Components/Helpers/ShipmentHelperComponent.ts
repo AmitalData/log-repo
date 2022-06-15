@@ -155,17 +155,16 @@ export class ShipmentHelperComponent implements OnDestroy {
         logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
     }
     VizionStatusClicked() {
-        this.CurrentSession.StartBusyIndicator("Simulating...");
-        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> <unknown>{
+        this.CurrentSession.StartBusyIndicator("Sending...");
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
             ContainerId: null,
             ContainerNumber: null,
-            ContainerStatusSourceCode: null,
-            IsFromContainer: true,
+            IsFromContainer: false,
             ShipmentId: this.EntityPM.Id,
             Tenant: this.EntityPM.Tenant,
             IsSimulator: false,
             Data: null, 
-            SourceCode: 'VZN'
+            ContainerStatusSourceCode: 'VZN'
         }
         var myService = new ShipmentContainersWebService();
         myService.GeneralContainerSimulator(args).subscribe((myResponse: ServiceResponse) => {
@@ -173,10 +172,10 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.CurrentSession.StopBusyIndicator();
             var messageWindow = new MessageWindow();
             if (myResponse.Result.Success) {
-                this.ValidationErrorsList = [];
+                this.entityArgs.EditComponent.ValidationErrorsList = [];
                 messageWindow.Show("Request Sent Successfully");
             }else{
-                this.ValidationErrorsList = myResponse.Result.Errors;
+                this.entityArgs.EditComponent.ValidationErrorsList = myResponse.Result.Errors;
             } 
 
         });
