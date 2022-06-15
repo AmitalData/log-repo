@@ -122,6 +122,7 @@
     <Compile Include="EntityDataMappings\CFIMSVLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVPAGEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVREMDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CTBCARMODDataMapping.cs" />
     <Compile Include="EntityDataMappings\GITITEMCRDataMapping.cs" />
     <Compile Include="EntityDataMappings\ETBAIRLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\ETBPAYTRDataMapping.cs" />
@@ -246,6 +247,7 @@
     <Compile Include="EntityPMs\UGenerated\CTBAPPROVPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBAPPROVTYPEPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBBONDEDPM.cs" />
+    <Compile Include="EntityPMs\UGenerated\CTBCARMODPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBCOUNTRYPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBCURRENCYPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBERRORPM.cs" />
@@ -331,6 +333,7 @@
     <Compile Include="EntityQueryServices\CTBAPPROVQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBAPPROVTYPEQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBBONDEDQueryService.cs" />
+    <Compile Include="EntityQueryServices\CTBCARMODQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBCOUNTRYQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBCURRENCYQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBERRORQueryService.cs" />
