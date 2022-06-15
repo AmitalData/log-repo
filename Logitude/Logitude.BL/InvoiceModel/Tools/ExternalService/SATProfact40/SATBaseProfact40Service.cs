@@ -135,5 +135,59 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             return null;
         }
+
+        public static int GetSATVersion(string satXML)
+        {
+            return satXML.Contains("cfd/4/cfdv40.xsd") ? 4 : 3;
+        }
+
+        internal static decimal GetDecimalWithMatchCurrencyDigitsAfterPoint(decimal dNumber, string currency)
+        {
+            switch (currency)
+            {
+                case "CLF": return decimal.Parse(dNumber.ToString("0.0000"));
+                case "BHD":
+                case "IQD":
+                case "JOD":
+                case "KWD":
+                case "LYD":
+                case "OMR":
+                case "TND":
+                    return decimal.Parse(dNumber.ToString("0.000"));
+                case "BIF":
+                case "BYR":
+                case "CLP":
+                case "DJF":
+                case "GNF":
+                case "ISK":
+                case "JPY":
+                case "KMF":
+                case "KRW":
+                case "PYG":
+                case "RWF":
+                case "UGX":
+                case "UYI":
+                case "VND":
+                case "VUV":
+                case "XAF":
+                case "XAG":
+                case "XAU":
+                case "XBA":
+                case "XBB":
+                case "XBC":
+                case "XBD":
+                case "XDR":
+                case "XOF":
+                case "XPD":
+                case "XPF":
+                case "XPT":
+                case "XSU":
+                case "XTS":
+                case "XUA":
+                case "XXX":
+                    return decimal.Parse(dNumber.ToString("0"));
+                default: return decimal.Parse(dNumber.ToString("0.00"));
+            }
+        }
     }
 }

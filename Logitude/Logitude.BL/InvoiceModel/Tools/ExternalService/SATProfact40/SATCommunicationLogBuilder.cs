@@ -139,9 +139,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(args.ARInvoicePM.Tenant);
             ARInvoice arInvoice = aRInvoiceRepository.GetARInvoiceByInvoiceNumber(args.ARInvoicePM.Tenant, args.ARInvoicePM.RelatedInvoice);
             if(arInvoice == null) return "";
-            Comprobante relatedInvoiceComprobante = GetProfactComprobante(arInvoice);
-            if (relatedInvoiceComprobante.Complemento.Any == null) return "";
-            List<System.Xml.XmlElement> myLXmlComplementos = relatedInvoiceComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+            System.Xml.XmlElement[] relatedInvoiceComprobanteComplementoAny = GetProfactComprobanteComplementoAny(arInvoice);
+            if (relatedInvoiceComprobanteComplementoAny == null) return "";
+            List<System.Xml.XmlElement> myLXmlComplementos = relatedInvoiceComprobanteComplementoAny.ToList<System.Xml.XmlElement>();
             var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
             if (timbreFiscalDigitalElement == null) return "";
 
@@ -149,11 +149,18 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return digitalTi?.UUID?.Trim();
         }
 
-        private Comprobante GetProfactComprobante(ARInvoice arInvoice)
+        private System.Xml.XmlElement[] GetProfactComprobanteComplementoAny(ARInvoice arInvoice)
         {
             Encoding uTF8Encoding = Encoding.UTF8;
             byte[] profactoXMLData = uTF8Encoding.GetBytes(arInvoice.SATXML);
-            return LogitudeXmlSerializer.DeserializeObject<Comprobante>(profactoXMLData);
+            try
+            {
+                return LogitudeXmlSerializer.DeserializeObject<Comprobante>(profactoXMLData).Complemento.Any;
+            }
+            catch
+            {
+                return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData).Complemento.Any;
+            }
         }
 
         private Document CreateNewDocument(byte[] profactoXmlData)

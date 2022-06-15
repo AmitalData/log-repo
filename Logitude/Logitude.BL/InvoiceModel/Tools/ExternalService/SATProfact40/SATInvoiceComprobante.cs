@@ -151,6 +151,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             {
                 MapComprobanteTotalAndSubTotal(comprobante, arTotalVats);
             }
+            MapTotalAndSubTotalWithMatchCurrencyDigitsAfterPoint(comprobante);
 
             comprobante.Impuestos = GetComprobanteImpuestos(arTotalVats, comprobante.Conceptos)?.ComprobanteImpuestos;
 
@@ -162,6 +163,12 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             ComprobanteTotalAndSubTotal comprobanteTotalAndSubTotal = GetComprobanteTotalAndSubTotal(arTotalVats);
             comprobante.Total = comprobanteTotalAndSubTotal.Total;
             comprobante.SubTotal = comprobanteTotalAndSubTotal.SubTotal;
+        }
+
+        private void MapTotalAndSubTotalWithMatchCurrencyDigitsAfterPoint(Comprobante comprobante)
+        {
+            comprobante.Total = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(comprobante.Total, comprobante.Moneda);
+            comprobante.SubTotal = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(comprobante.SubTotal, comprobante.Moneda);
         }
 
         private string GetMoneda()
