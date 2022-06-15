@@ -40,6 +40,8 @@ import { TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
 import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
 import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
 import { ExportStoragePMService } from 'Customs/Services/StandardPMs/ExportStoragePMService';
+import { NotificationPMService } from 'Customs/Services/StandardPMs/NotificationPMService';
+import { NotificationPM } from 'Customs/EntityPMs/NotificationPM';
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
@@ -53,6 +55,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     MenuButtonCode: string = null;
     public EntityPM: DeclarationPM;
     public ExportStoragePM: ExportStoragePM;
+    public NotificationPM: NotificationPM;
     checkTransfer: string = ""; // moran 4.8.16 - AMI-56804
     MenuButtons: MenuButtonPM[];
     IdentityKey: string;
@@ -61,11 +64,13 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     MenuButtonsStateChangedEvent: any;
     private EntityResourceService: EntityResourceService;
     //------------------------------------------------------//
-
+   
+    public CurrentEditComponentId: string;
     //Services
     private declarationPMService: DeclarationPMService = new DeclarationPMService();
     private declarationWebService: DeclarationWebService = new DeclarationWebService();
     private declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+    private notificationPMService: NotificationPMService = new NotificationPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -448,6 +453,26 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsHidden=true;
                         }
                     }
+                    if (button.EventCode == "SendingInitiatedMessage") {
+                        if (this.CurrentSession.CurrentEditComponent != null) {
+                            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+                 
+                          this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                            this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                                if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
+                                   // this.ngOnInit();
+                                    if (tabCode =="DCNT"&&this.EntityPM.Direction == "E"){
+                                        button.IsHidden=false;
+                                    }
+                                    else{
+                                        button.IsHidden=true;
+                                    }
+                                }
+                            })
+                           );
+                        }
+                       
+                    }
                 }
                 this.IsDisplayOnlyCheckDone = true;
                 return menuButtons;
@@ -639,6 +664,13 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.OpenExportStorageDeclarationMethod()
                         break;
                     }
+                    case "SendingInitiatedMessage":
+                    {
+
+                        this.AddNotifications()
+                        break;
+                    }
+                    
             }
         }
     }
@@ -1360,7 +1392,60 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         });
 
     }
+   private AddNotifications(){
+    //this.NotificationPM.Id
+        this.NotificationPM.Tenant=SessionLocator.Tenant;
+        this.NotificationPM.NotificationDefinitionCode="5101N";
+        this.NotificationPM.CreateDate=new Date();
+        this.NotificationPM.AssigneToId=null;
+        this.NotificationPM.AssigneToNotificationTypeCode="I";
+        this.NotificationPM.DeclarationOfficeCode=this.EntityPM.ExportDeclarationOfficeCode;
+        this.NotificationPM.IsHandledByCustomOffice=true;
+        this.NotificationPM.EntityId=this.EntityPM.Id;
+        this.NotificationPM.ObjectTableId="1-343";//this.EntityPM.object;
+        this.NotificationPM.Reference1Number=this.EntityPM.CustomFileNo ;
+        this.NotificationPM.Reference2Number=null;
+        this.NotificationPM.DepartmentId=null;
+        this.NotificationPM.ClosedByAssignee=null;
+        this.NotificationPM.ClosedByCustomOfficeUserId=null;
+        this.NotificationPM.IsClosedBCustomOffice=false;
+        this.NotificationPM.IsClosedByAssignee=false;
+        this.NotificationPM.DueDate=new Date();
+        this.NotificationPM.IsSeenByAssignee=false;
+        this.NotificationPM.ResponseNotes=null;
+        this.NotificationPM.CreatedByRequestID=null;
+        this.NotificationPM.Description="הודעה יזומה למכס בגין הצהרה מס' שדה" +this.EntityPM.DeclarationNumber +"כללי";
+        this.NotificationPM.ResponseToMessage=this.EntityPM.DeclarationNumber;
+        this.NotificationPM.CustomerId=this.EntityPM.CustomerId; 
+        this.NotificationPM.SearchFields=this.NotificationPM.Reference1Number,this.NotificationPM.Reference2Number,this.NotificationPM.CustomerId,this.NotificationPM.Description,this.NotificationPM.NotificationDefinitionCode
+        this.NotificationPM.BadjCount=null;
 
+
+
+        this.notificationPMService.insert(this.NotificationPM).subscribe((myResult:any) => {
+
+            // var mm: ServiceResponse = myResult;
+            // if (!mm.HasError) {
+            //     var entity = mm.Result;
+            //     this.CurrentSession.CloseCurrentWindowEmit("ok");
+
+            //     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+            //         this.CurrentSession.SessionLocation.viewContainerRef)
+            //         .then(cmpRef => {
+            //             cmpRef.instance.ComponentRef = cmpRef;
+            //             cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName, BackButtonLabel: this.QueryNameText });
+            //             cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+            //                 this.CancelButtonClicked();
+            //             });
+            //    });
+            // }
+            // else {
+            //     this.ValidationErrorsList = mm.ErrorsArray;
+            //     this.CurrentSession.StopBusyIndicator();
+            // }
+        });
+
+   }
     private PrintReleaseMethod() // moran 29.2.16 - Task 19807
     {
 
