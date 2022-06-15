@@ -183,7 +183,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 {
                     _DeclarationReferantDataPM.OrderMoney = true;
                 }
-                
+                if (_LogitudeDeclarationReferantData.FileStatus == "VDA") _DeclarationReferantDataPM.ImporterApproval = true;
+
                 myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
 
                 AppendLogLine("DeclarationReferantDataUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();

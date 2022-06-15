@@ -180,6 +180,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string Mawb  { get; set; }
        [DataMember]
        public string Hawb  { get; set; }
+       [DataMember]
+       public bool ImporterApproval  { get; set; }
    }
 
 }

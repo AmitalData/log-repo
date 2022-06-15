@@ -119,6 +119,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Mawb { get; set; }
         [Column("Hawb")]
 	    public string Hawb { get; set; }
+        [Column("ImporterApproval")]
+	    public bool ImporterApproval { get; set; }
     }
 }
 	 
