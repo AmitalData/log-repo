@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {ContainerTrackingProviderPM} from '../../EntityPMs/ContainerTrackingProviderPM';
 
+import {ContainerTrackingProviderPMInitService} from '../../EntityPMInitServices/ContainerTrackingProviderPMInitService';
 
 @Injectable()
 
@@ -45,6 +46,8 @@ export class ContainerTrackingProviderPMService {
 						var entity: ContainerTrackingProviderPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
+                      ContainerTrackingProviderPMInitService.InitValues(entity, false);
+                      ContainerTrackingProviderPMInitService.ApplyUIPoperties(entity, false);
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -222,6 +225,10 @@ export class ContainerTrackingProviderPMService {
 		    var entityPM: ContainerTrackingProviderPM;
 			entityPM = new ContainerTrackingProviderPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			ContainerTrackingProviderPMInitService.InitValues(entityPM, true);
+			ContainerTrackingProviderPMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 
