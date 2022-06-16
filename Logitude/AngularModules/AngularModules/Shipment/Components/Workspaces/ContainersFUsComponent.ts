@@ -60,11 +60,18 @@ export class ContainersFUsComponent implements OnInit {
     }
 
     public IsContainersToggleFeatureUp: boolean = false;
+    public IsContainersFeatureActivated: boolean = false;
     private SetContainersQueriesVisibility() {
         this.IsContainersToggleFeatureUp = false;
+        this.IsContainersFeatureActivated = false;
+
         var isOceanInsightsContainersFeatureToggleUp: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
         if (isOceanInsightsContainersFeatureToggleUp && (this.IsQueryVisible_AllContainers || this.IsQueryVisible_ClosedContainers || this.IsQueryVisible_Containers || this.IsQueryVisible_CancelledContainers)) {
             this.IsContainersToggleFeatureUp = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated")) {
+            this.IsContainersFeatureActivated = true;
         }
     }
 

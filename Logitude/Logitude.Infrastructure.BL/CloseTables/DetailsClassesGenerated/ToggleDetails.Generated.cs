@@ -320,9 +320,9 @@ namespace Logitude.Infrastructure.BL
             all.Add(new ToggleDetails()
             {    
                 Code = "OIU", 
-                Name = "Ocean Insights Shipment Update", 
-                SearchFields = "OIU,Ocean Insights Shipment Update", 
-                Description = "Ocean Insights Shipment Update", 
+                Name = "Shipment Update from Container", 
+                SearchFields = "OIU,Shipment Update from Container", 
+                Description = "Shipment Update from Container", 
 			});
 			 
             all.Add(new ToggleDetails()
