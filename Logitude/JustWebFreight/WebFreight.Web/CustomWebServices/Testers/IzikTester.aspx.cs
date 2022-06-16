@@ -3,6 +3,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -26,18 +27,34 @@ namespace WebFreight.Web.CustomWebServices.Testers
             SupplierInvoiceFreightAmountPM pm = new SupplierInvoiceFreightAmountPM()
             {
                 DeclarationId = "1-6384",
-                InvoiceCounterKey = 2,
+                InvoiceCounterKey = 1,
                 CurrencyTypeCode = "USD"
             };
 
             int tenant = 0;
-            bool isValid = CheckForgienKeyClosedTable(pm, tenant);
+            //bool isValid = CheckForgienKeyClosedTable(pm, tenant);
             //bool isValid2 = CheckForgienKey<SupplierInvoiceFreightAmount>(pm, tenant);
 
-            var DeclarationRepository = new DeclarationQueryService(tenant).GetSingle("1-6789", true, true);
-            bool isValid2 = CheckForgienKeyClosedTable(DeclarationRepository, 0);
+            DeclarationPM declarationPm = new DeclarationQueryService(tenant).GetSingle("1-6801", true, true);
 
-            Response.Write(DeclarationRepository);
+            //var p = declarationPm;
+            //var z = p.GetType().GetProperty("Consignments")?.GetValue(p, null);
+
+            //bool isList =
+            //    z.GetType().FullName.StartsWith("System.Collections.Generic.List") &&
+            //    z.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>));
+
+            //if (isList)
+            //{
+            //    var val = ((IEnumerable<dynamic>)z).FirstOrDefault();
+
+            //    if (val != null && val.GetType().Name.EndsWith("PM"))
+            //        CheckForgienKeyClosedTable(val, 0);
+            //}
+
+            bool isValid2 = CheckForgienKeyClosedTable(declarationPm, 0);
+
+            Response.Write(declarationPm);
             //}
             //catch (Exception eee)
             //{
@@ -49,6 +66,9 @@ namespace WebFreight.Web.CustomWebServices.Testers
         private bool CheckForgienKeyClosedTable(object pm, int tenant, bool update = true)
         {
             bool forgienKeyValidate = true;
+
+            forgienKeyValidate = GetPMFields(pm).All(p => CheckForgienKeyClosedTable(p, tenant, update));
+
             ICustomContext objectContext = CustomContext.GetContext(tenant);
 
             var objectFieldQuery = new ObjectFieldQuery(tenant);
@@ -56,7 +76,7 @@ namespace WebFreight.Web.CustomWebServices.Testers
             string pmName = pm.GetType().Name;
             pmName = pmName.Remove(pmName.Length - 2);
             List<ForiegnKeyDetails> forgienKeys = objectFieldQuery.GetForgienKeys(tenant, pmName).ToList();
-            forgienKeys.RemoveAll(x => pm.GetType().GetProperty(x.propName) == null);
+            forgienKeys.RemoveAll(x => pm.GetType().GetProperty(x.propName) == null || GetValueFormPm(pm, x.propName) == null);
             forgienKeys.ForEach(fk =>
             {
                 if (fk.tableName.StartsWith("Customs."))
@@ -236,11 +256,12 @@ namespace WebFreight.Web.CustomWebServices.Testers
         private void SetPmProp(object pm, string prop, object value) =>
             pm.GetType().GetProperty(prop).SetValue(pm, value, null);
 
-        private List<object> GetPMFields<T>(object pm) =>
-            typeof(T).GetProperties().ToList().FindAll(prop =>
-                prop.GetCustomAttributes(true).ToList().Count() == 0)
-                .Select(x => GetValueFormPm(pm, x.Name))
-                .ToList().FindAll(x => x != null);
+
+        //private List<object> GetPMFields<T>(object pm) =>
+        //    typeof(T).GetProperties().ToList().FindAll(prop =>
+        //        prop.GetCustomAttributes(true).ToList().Count() == 0)
+        //        .Select(x => GetValueFormPm(pm, x.Name))
+        //        .ToList().FindAll(x => x != null);
 
         //private object GetValueOfForgienKeyCard(int tenant, object pm, string entityName)
         //{
@@ -265,7 +286,7 @@ namespace WebFreight.Web.CustomWebServices.Testers
 
         //    return value;
         //}        
-        
+
         private object GetValueOfForgienKeySimplogData(int tenant, object pm, string entityName, string methodName, object[] metohdArgs, int countParameter = -1)
         {
             Type repositoryType = GetSimplogDataRepositoryType(entityName);
@@ -285,5 +306,35 @@ namespace WebFreight.Web.CustomWebServices.Testers
            .Where((m) => m.Name == methodName
            && (countParameter == -1 || m.GetParameters().Length == countParameter))
            .FirstOrDefault();
+
+        private List<object> GetPMFields(object pm)
+        {
+            var res = new List<object>();
+
+            var b = pm.GetType().GetProperty("DeclarationConsignments")?.GetValue(pm, null) as List<DeclarationConsignmentPM>;
+
+            pm.GetType().GetProperties().ToList()
+                .ForEach(prop =>
+                {
+                    var propVal = GetValueFormPm(pm, prop.Name);
+                    if (propVal == null) return;
+
+                    bool isList =
+                        propVal.GetType().FullName.StartsWith("System.Collections.Generic.List") &&
+                        propVal.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>));
+
+                    if (isList)
+                    {
+                        var val = ((IEnumerable<dynamic>)propVal).FirstOrDefault();
+
+                        if (val != null && val.GetType().Name.EndsWith("PM"))
+                            res.AddRange((IEnumerable<dynamic>)propVal);
+                    }
+                    else if (propVal != null && propVal.GetType().Name.EndsWith("PM"))
+                        res.Add(propVal);
+                });
+
+            return res;
+        }
     }
 }
