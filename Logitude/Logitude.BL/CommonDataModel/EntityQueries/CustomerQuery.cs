@@ -3635,12 +3635,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             GenericSort sortClass = new GenericSort();
 
             IQueryable<CustomersDataView> customers = CustomerRepository.GetCustomersDataViews(tenant);
+            QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
+            queryOperations.QueryFilterItems.Remove(item);
+            string searchvalue = item != null ? item.FieldValue != null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() : null : null : null;
+
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
 
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+
 
             CustomerCustomFilter customfilters = new CustomerCustomFilter(tenant);
             customers = customfilters.GetFilteredQuery(queryOperations, customers);
@@ -3655,10 +3661,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             IQueryable<CustomerList> query2 = GetIQueryableEntityList(customers);
             query2 = filter.GetFilteredQuery<CustomerList>(listQueryOperation, query2);
-
             IQueryable<CustomerList> bigQuery = query2;
 
-            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+
+            if (!string.IsNullOrEmpty(searchvalue))
+            {
+                query2 = new CustomerDataSearchService().Run(
+                    new CustomerSearchArgs() 
+                    {   
+                        SearchText = searchvalue,
+                        Tenant = tenant,
+                        EntityLists = query2,
+                        SortByColumnName = queryOperations.SortByColumnName,
+                        SortDirectin = queryOperations.SortDirectin,
+                        PageSize = queryOperations.PageSize,
+                        FilterItems = queryOperations.QueryFilterItems
+
+                    }).AsQueryable();
+            }
+            else if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomerList).GetProperty(queryOperations.SortByColumnName);
                 List<ObjectField> shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customer", tenant).ToList();
@@ -3717,7 +3738,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }
                 }
             }
-
             else
             {
                 bigQuery = bigQuery.OrderByDescending(d => d.Code);
