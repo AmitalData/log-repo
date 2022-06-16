@@ -541,7 +541,6 @@ namespace WebFreight.Web.ReportsWebServices
                     ManifestDetailsClass detail = new ManifestDetailsClass();
                     NewManifestDetailsClass newDetail = new NewManifestDetailsClass();
       
-
                     detail.FileNumber = newDetail.FileNumber = shipmentView.ShipmentNumber;
                     detail.Direction = newDetail.Direction = shipmentView.DirectionName;
                     detail.ENSNumber = newDetail.ENSNumber = shipmentView.ENSNumber;
@@ -549,7 +548,8 @@ namespace WebFreight.Web.ReportsWebServices
                     detail.DocumentsClosingDate = newDetail.DocumentsClosingDate = shipmentView.DocumentsClosingDate;
                     detail.AWBHandlingInformation = newDetail.AWBHandlingInformation = shipmentView.AWBHandlingInformation;
                     detail.ITNumber = shipmentView.ITNumber;
-                   
+                    detail.CustomerName = newDetail.CustomerName = shipmentView.CustomerName;
+
                     if (!string.IsNullOrEmpty(shipmentView.OBLTypeCode))
                     {
                         OBLType type = shipmentsContext.OBLTypes.Where(d => d.Code == shipmentView.OBLTypeCode).FirstOrDefault();
