@@ -547,6 +547,7 @@ export class HomeComponent implements OnDestroy{
                 }, 500);
         }
     }
+    ShowBackButton:Boolean=true; 
     ShowExportDeclaration() {
         if (AppTool.IsNullOrEmpty(SessionLocator.ExternalParams)) {
             console.log("ShowExportDeclaration is null");
@@ -555,9 +556,12 @@ export class HomeComponent implements OnDestroy{
         //alert(SessionLocator.ExternalParams);
         //const amitalSSOAngularURL = window.sessionStorage.getItem("AmitalSSOAngularURL");
         //http://localhost:4200/AmitalSSOAngular.html?token=3F860255-DA0E-4612-99B6-E857FC531A56&tenant=1&AmitalSSOAngular=1&xxxx=132967399749219211&ExportDecId=1-7381
+        //EXPDIST//http://localhost:4200/INDEX.html?token=O8k24YE5FkJP9mu4xNQ1zm8e9WzDUNwdAIM=&tenant=1&AmitalSSOAngular=1&xxxx=132967399749219211&ExportDecId=1-7085
         const exportDecId = //this.getParameterByName("ExportDecId", amitalSSOAngularURL);
             SessionLocator.ExternalParams["ExportDecId"];
         if (!AppTool.IsNullOrEmpty(exportDecId)) {
+            this.ShowBackButton = false;
+            AmitalGatewayUtil.Instance.AmitalBrowserInUse = false;
             setTimeout(() => {
                 const objParams = {
                     LogitudeCommandId: "ShowDeclarationByIdReturnCloseSave",
