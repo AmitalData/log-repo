@@ -98,7 +98,7 @@
                     
                         <td style="left:0px;float:left">
                             
-                            <button style="width:100px" class="Button" *ngIf="this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length>0"
+                            <button style="width:100px" class="Button" *ngIf="_customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 0 || _customsCollateralAnswerSharedDataService.connectedSelectAll"
                                     (click)="OpenEditCollateralAnswerWindow()">
                                 {{
 'Customs.Declaration.O.MultiCollateralsAnswer'|
