@@ -2205,6 +2205,7 @@
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\Class1.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\DBTester.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\LogitudePointerDB.cs" />
+    <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\LogitudePointerDBExport.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\LogitudePointerModel.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\WCO.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\WCOErrorPointerModel.cs" />

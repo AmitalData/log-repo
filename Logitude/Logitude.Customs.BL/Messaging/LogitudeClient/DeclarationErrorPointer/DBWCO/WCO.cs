@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO
 {
-    public  class WCO
+    public class WCO
     {
         private static WCO _Instance;
         private readonly IReadOnlyCollection<WCOErrorPointerModel> _DB;
@@ -48,11 +48,11 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             {
                 if (WCO._Instance == null)
                 {
-                    WCO._Instance = new WCO(); 
+                    WCO._Instance = new WCO();
                 }
                 return WCO._Instance;
             }
-            
+
         }
         WCO()
         {
@@ -64,7 +64,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             this._DBManifest = rowsDBManifest.Select((rec, currSeq) => GetWCOErrorPointerModelManifest(rec, currSeq)).ToList();
 
             var rowsDBExport = BuildDBExport();
-            this._DBExport = rowsDBExport.Select((rec, currSeq) => GetWCOErrorPointerModelManifest(rec, currSeq)).ToList();
+            this._DBExport = rowsDBExport.Select((rec, currSeq) => GetWCOExportErrorPointerModel(rec, currSeq)).ToList();
         }
         private List<string> BuildDBManifest()
         {
@@ -98,7 +98,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         }
         private List<string> BuildDB()
         {
-            
+
             string ResourceStreamPath = "Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DB.csv";
             ResourceStreamPath = "Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DBUTF8.csv";
             string text;
@@ -128,7 +128,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         private List<string> BuildDBExport()
         {
 
-           
+
             string text;
             //bool fromResource = false;
             //if (fromResource)
@@ -149,7 +149,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             }
             //string text = GetResource(ResourceStreamPath);
             var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            var rows = lines.Skip(1);//remove header
+            var rows = lines.Skip(2).Take(lines.Length-5);//remove header
             return rows.ToList();
 
         }
@@ -193,7 +193,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
                     IndexSeq = currSeq,
 
                     Key = Key,// Convert.ToInt32(data[0]), //Key { get; set; } // A=1
-                    Level = Level ,//Convert.ToInt32(data[2]), //Level { get; set; } //C =3
+                    Level = Level,//Convert.ToInt32(data[2]), //Level { get; set; } //C =3
                     WCOID = data[3], //WCOID { get; set; }//D=4
                     XmlTag = data[13], //{ get; set; } // M=14
                     FieldNameHeb = data[16],
@@ -237,7 +237,39 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
                     wco.LogitudeEntity = logitudePointer.LogitudeEntity;
                     wco.LogitudeFieldID = logitudePointer.LogitudeFieldID;
                 }
-                
+
+                return wco;
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("bad format line =" + line);
+            }
+        }
+        private WCOErrorPointerModel GetWCOExportErrorPointerModel(string line, int currSeq)
+        {
+            try
+            {
+                var data = line.Split(',');
+
+                var wco = new WCOErrorPointerModel()
+                {
+                    IndexSeq = currSeq,
+
+                    Key = Convert.ToInt32(data[0]), //Key { get; set; } // A=1
+                    Level = Convert.ToInt32(data[4]), //Level { get; set; } //E =4
+                    WCOID = data[5], //WCOID { get; set; }//F=5
+                    XmlTag = data[8], //{ get; set; } // I=8
+                    FieldNameHeb = data[11],
+                };
+                var logitudePointer = LogitudePointerDBExport.Rows.FirstOrDefault(rec => rec.Key == wco.Key & rec.WCOID == wco.WCOID);
+                if (logitudePointer != null)
+                {
+                    wco.LogitudeEntity = logitudePointer.LogitudeEntity;
+                    wco.LogitudeFieldID = logitudePointer.LogitudeFieldID;
+                }
+
                 return wco;
 
             }
@@ -249,8 +281,8 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         }
 
 
-        
-        public WCOFluent CreateDB(WCOTypeEnum myWCOTypeEnum= WCOTypeEnum.WCO)
+
+        public WCOFluent CreateDB(WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO)
         {
             WCOFluent myWCOFluent = null;
             switch (myWCOTypeEnum)
@@ -268,7 +300,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
                     myWCOFluent = new WCOFluent(MyCopyOfDB);
                     break;
             }
-            
+
             return myWCOFluent;
         }
     }
@@ -277,7 +309,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
     {
         WCO = 0,
         Manifest = 1,
-        WCO_EX=2
+        WCO_EX = 2
 
     }
 }
