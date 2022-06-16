@@ -298,6 +298,7 @@ namespace WebFreight.Web.DataProviders
         public string FreightLocationAddress { get; set; }
         public string ShipperContactPhone { get; set; }
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
+        public string CustomerName { get; set; }
     }
 
     public class NewManifestDetailsClass
@@ -433,7 +434,8 @@ namespace WebFreight.Web.DataProviders
         public string FreightLocationName { get; set; }
         public string FreightLocationAddress { get; set; }
         public string ShipperContactPhone { get; set; }
-        public List<ShipmentAssemblyLine> Assemblies { get; set; }        
+        public List<ShipmentAssemblyLine> Assemblies { get; set; }
+        public string CustomerName { get; set; }
     }
 
     public class PackageDetails
