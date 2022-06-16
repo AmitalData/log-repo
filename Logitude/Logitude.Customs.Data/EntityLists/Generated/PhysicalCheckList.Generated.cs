@@ -95,7 +95,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string VehicleChassisNumber  { get; set; }
        [DataMember]
-       public string SearchResult  { get; set; }
+       public string SearchResultCode  { get; set; }
        [DataMember]
        public string SealNumber  { get; set; }
        [DataMember]
@@ -118,6 +118,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? AvailabilityDate  { get; set; }
        [DataMember]
        public string IntegratorName  { get; set; }
+       [DataMember]
+       public string SearchResultName  { get; set; }
    }
 
 }

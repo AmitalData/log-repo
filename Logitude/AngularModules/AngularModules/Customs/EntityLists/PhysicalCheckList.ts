@@ -48,7 +48,7 @@ export class PhysicalCheckList {
 	CustomerId: string;
 	NoEscortRequired: boolean;
 	VehicleChassisNumber: string;
-	SearchResult: string;
+	SearchResultCode: string;
 	SealNumber: string;
 	CheckAuthorityAttenderTypeID: string;
 	CheckAuthorityAttenderTypeName: string;
@@ -60,6 +60,7 @@ export class PhysicalCheckList {
 	IntegratorCode: string;
 	AvailabilityDate: Date;
 	IntegratorName: string;
+	SearchResultName: string;
 	
 }
  

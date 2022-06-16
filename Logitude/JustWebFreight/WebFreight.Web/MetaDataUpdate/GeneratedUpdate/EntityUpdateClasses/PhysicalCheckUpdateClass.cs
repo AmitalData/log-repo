@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "8bd1ed948ba5029931eb39d984d8da2e";
+		public const string HashString = "b7e6159b0eb6fb59a143333e0b22b82f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2778,7 +2778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "SearchResult",
+					 						FieldName =  "SearchResultCode",
 					  						ObjectTableName =  "Customs.PhysicalCheck",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.PhysicalCheckSearchResultType",
@@ -2798,8 +2798,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SearchResult",
-					  						ListPropertyPath =  "SearchResult",
+					  						PMPropertyPath =  "SearchResultCode",
+					  						ListPropertyPath =  "SearchResultCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2817,12 +2817,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchResult",
-					  						DefaultText =  "SearchResult",
-					  						FullLocalDefaultText =  "תוצאות הבדיקה",
-					  						ListFieldLable =  "SearchResultListLable",
-					  						ListLableDefaultText =  "SearchResult",
-					  						ListLocalDefaultText =  "תוצאות הבדיקה",
+					  						FullFieldLable =  "SearchResultCode",
+					  						DefaultText =  "SearchResultCode",
+					  						FullLocalDefaultText =  "תוצאות קוד הבדיקה",
+					  						ListFieldLable =  "SearchResultCodeListLable",
+					  						ListLableDefaultText =  "SearchResultCode",
+					  						ListLocalDefaultText =  "תוצאות קוד הבדיקה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3501,6 +3501,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IntegratorNameListLable",
 					  						ListLableDefaultText =  "Integrator",
 					  						ListLocalDefaultText =  "שם אינטגרטור",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SearchResultName",
+					  						ObjectTableName =  "Customs.PhysicalCheck",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchResultName",
+					  						ListPropertyPath =  "SearchResultName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.PhysicalCheck",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchResultName",
+					  						DefaultText =  "Search Result Name",
+					  						FullLocalDefaultText =  "תוצאות הבדיקה",
+					  						ListFieldLable =  "SearchResultNameListLable",
+					  						ListLableDefaultText =  "Search Result Name",
+					  						ListLocalDefaultText =  "תוצאות הבדיקה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

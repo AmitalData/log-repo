@@ -111,8 +111,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("VehicleChassisNumber")]
 	    public string VehicleChassisNumber { get; set; }
         [ForeignKey("SearchResultType")]
-        [Column("SearchResult")]
-	    public string SearchResult { get; set; }
+        [Column("SearchResultCode")]
+	    public string SearchResultCode { get; set; }
 	      
         public virtual PhysicalCheckSearchResultType SearchResultType { get; set; }
         [Column("SealNumber")]

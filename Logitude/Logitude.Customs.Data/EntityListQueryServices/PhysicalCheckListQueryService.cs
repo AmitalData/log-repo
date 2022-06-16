@@ -78,7 +78,7 @@ from myCourierMasterJoin in CourierMasterJoin
                            });
             }
 
-            IQueryable<PhysicalCheckList> query = (from a in iQueryable.Include("CargoIdentifireType").Include("CheckSite").Include("StorageSite").Include("CheckQueueType").Include("Operation").Include("Declaration.CustomerCard").Include("CheckTypeLookup")
+            IQueryable<PhysicalCheckList> query = (from a in iQueryable.Include("CargoIdentifireType").Include("CheckSite").Include("StorageSite").Include("CheckQueueType").Include("Operation").Include("Declaration.CustomerCard").Include("CheckTypeLookup").Include("SearchResultType")
                                                    join d in context.Declarations
                                                    on a.DeclarationId equals d.Id into xy
                                                    from s in xy.DefaultIfEmpty()
@@ -137,6 +137,10 @@ from myCourierMasterJoin in CourierMasterJoin
                                                        IntegratorName = myJoin != null ? myJoin.IntegratorName : null,
 
                                                        AvailabilityDate = s.AvailabilityDate,
+                                                       SearchResultCode = a.SearchResultCode,
+                                                       SearchResultName = a.SearchResultType.Name
+
+                             
 
                                                    });
         

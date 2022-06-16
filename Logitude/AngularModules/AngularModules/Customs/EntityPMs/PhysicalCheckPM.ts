@@ -244,9 +244,9 @@ export class PhysicalCheckPM {
     public set EndDate(newValue: Date) { if (this.endDate != newValue) { this.endDate = newValue; this.MarkAsDirty("EndDate"); } }
        
 	 
-    private searchResult: string;
-    public get SearchResult() { return this.searchResult; }
-    public set SearchResult(newValue: string) { if (this.searchResult != newValue) { this.searchResult = newValue; this.MarkAsDirty("SearchResult"); } }
+    private searchResultCode: string;
+    public get SearchResultCode() { return this.searchResultCode; }
+    public set SearchResultCode(newValue: string) { if (this.searchResultCode != newValue) { this.searchResultCode = newValue; this.MarkAsDirty("SearchResultCode"); } }
        
 	 
     private sealNumber: string;
@@ -267,6 +267,11 @@ export class PhysicalCheckPM {
     private checkAnwserStatus: number;
     public get CheckAnwserStatus() { return this.checkAnwserStatus; }
     public set CheckAnwserStatus(newValue: number) { if (this.checkAnwserStatus != newValue) { this.checkAnwserStatus = newValue; this.MarkAsDirty("CheckAnwserStatus"); } }
+       
+	 
+    private searchResultName: string;
+    public get SearchResultName() { return this.searchResultName; }
+    public set SearchResultName(newValue: string) { if (this.searchResultName != newValue) { this.searchResultName = newValue; this.MarkAsDirty("SearchResultName"); } }
        
 	 
 

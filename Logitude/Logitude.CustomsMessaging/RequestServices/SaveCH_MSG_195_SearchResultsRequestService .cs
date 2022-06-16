@@ -36,7 +36,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             cH_NG_195_MSG6_SearchResults.GeneralDetails.customsAgent = Convert.ToInt32(CustomsSetting.CustomsAgentId);
             cH_NG_195_MSG6_SearchResults.GeneralDetails.customsAgentSpecified = true;
-            cH_NG_195_MSG6_SearchResults.GeneralDetails.searchReasult = Convert.ToInt32( physicalCheck.SearchResult);
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.searchReasult = Convert.ToInt32( physicalCheck.SearchResultCode);
             cH_NG_195_MSG6_SearchResults.GeneralDetails.SealNumber = physicalCheck.SealNumber;
             if(string.IsNullOrEmpty(physicalCheck.CheckAuthorityAttenderTypeID))
             {
