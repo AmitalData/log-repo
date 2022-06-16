@@ -358,31 +358,36 @@ export class ScreenLayoutComponent extends BaseComponent {
         }
         else {
             var Rows = ScreenRows.filter(a => a.ColumnIndex == item.ColumnIndex)[0];
-            ScreenRows.forEach(sItem => {
-                if (sItem.ObjectFieldPMs) {
-                    var temp = sItem.ObjectFieldPMs.filter(a => a.Id == id);
-                    if (temp.length > 0) {
-                        var SField = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode == fieldCode)[0];
-                        sItem.ObjectFieldPMs = sItem.ObjectFieldPMs.filter(a => a.Id != id);
-                        sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode != fieldCode);
-                        SField.Column = item.ColumnIndex;
-                        SField.Row = position;
-                        if (Rows.ScreenFieldPMs == null) {
-                            Rows.ScreenFieldPMs = [];
-                        }
-                        if (Rows.ObjectFieldPMs == null) {
-                            Rows.ObjectFieldPMs = [];
-                        }
-                        Rows.ObjectFieldPMs.splice(position, 0, temp[0]);
-                        Rows.ScreenFieldPMs.splice(position, 0, SField);
-                    }
-                    if (sItem.ColumnIndex == item.ColumnIndex) {
-                        sItem.ScreenFieldPMs.forEach(myfield => {
-                            myfield.Row = sItem.ScreenFieldPMs.indexOf(myfield);
-                        });
-                    }
-                }
 
+
+            this.SectionScreens.forEach(sectionScreen => {
+
+                sectionScreen.ScreenRows.forEach(sItem => {
+                    if (sItem.ObjectFieldPMs) {
+                        var temp = sItem.ObjectFieldPMs.filter(a => a.Id == id);
+                        if (temp.length > 0) {
+                            var SField = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode == fieldCode)[0];
+                            sItem.ObjectFieldPMs = sItem.ObjectFieldPMs.filter(a => a.Id != id);
+                            sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode != fieldCode);
+                            SField.Column = item.ColumnIndex;
+                            SField.Row = position;
+                            if (Rows.ScreenFieldPMs == null) {
+                                Rows.ScreenFieldPMs = [];
+                            }
+                            if (Rows.ObjectFieldPMs == null) {
+                                Rows.ObjectFieldPMs = [];
+                            }
+                            Rows.ObjectFieldPMs.splice(position, 0, temp[0]);
+                            Rows.ScreenFieldPMs.splice(position, 0, SField);
+                        }
+                        if (sItem.ColumnIndex == item.ColumnIndex) {
+                            sItem.ScreenFieldPMs.forEach(myfield => {
+                                myfield.Row = sItem.ScreenFieldPMs.indexOf(myfield);
+                            });
+                        }
+                    }
+
+                });
             });
         }
     }
@@ -432,10 +437,13 @@ export class ScreenLayoutComponent extends BaseComponent {
         }
     }
 
-    OnDeleteField(item) {
+    OnDeleteField(item, section:number) {
         this.Modified = true;
         this.AllbanckStackFields.push(item);
-        this.ScreenRows.forEach(sItem => {
+
+        var screenRows = this.SectionScreens.filter(d => d.Section == section)[0].ScreenRows;
+
+        screenRows.forEach(sItem => {
             if (sItem.ObjectFieldPMs) {
                 var temp = sItem.ObjectFieldPMs.filter(a => a.Id == item.Id);
                 if (temp.length > 0) {
@@ -454,6 +462,11 @@ export class ScreenLayoutComponent extends BaseComponent {
             }
 
         });
+    }
+
+
+    public HideSectionAreaClicked(sectionScreen:SectionScreen ) {
+        sectionScreen.HideSectionArea = !sectionScreen.HideSectionArea;
     }
 
     Clone(list: any): any {
@@ -485,10 +498,15 @@ export class ScreenLayoutComponent extends BaseComponent {
 }
 
 
-export class SectionScreen {
+export class SectionScreen extends BaseComponent {
+    constructor() { super(); }
+
     public Section: number;
     public   Name: string;
-    public  ScreenRows: Array<ScreenRowDetails> = [];
+    public ScreenRows: Array<ScreenRowDetails> = [];
+    public HideSectionArea: boolean;
+    
+    
 }
 
 export class ScreenItem extends BaseComponent {
