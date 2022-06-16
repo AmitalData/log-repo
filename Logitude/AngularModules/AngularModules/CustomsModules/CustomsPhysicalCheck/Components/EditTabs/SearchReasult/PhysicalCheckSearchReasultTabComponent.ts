@@ -59,10 +59,10 @@ export class PhysicalCheckSearchReasultTabComponent
 
     
 
-    get SearchResult() { return this.EntityPM.SearchResult; }
+    get SearchResult() { return this.EntityPM.SearchResultCode; }
     set SearchResult(value: string) {
-        if (this.EntityPM.SearchResult != value) {
-            this.EntityPM.SearchResult = value;
+        if (this.EntityPM.SearchResultCode != value) {
+            this.EntityPM.SearchResultCode = value;
         }
 
         if (value) {
@@ -124,7 +124,7 @@ export class PhysicalCheckSearchReasultTabComponent
         if (this.entityArgs == null || (this.entityArgs != null && this.entityArgs.EntityPM == null)) return;
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
-        if (AppTool.IsNullOrEmpty(this.EntityPM.SearchResult))
+        if (AppTool.IsNullOrEmpty(this.EntityPM.SearchResultCode))
             this.UIProperties.SetWarning("SearchResult", this.ObjectTableName, true);
 
         this.Listen();
@@ -146,7 +146,7 @@ export class PhysicalCheckSearchReasultTabComponent
        // this.ValidationErrorsList = [];
          this.CurrentSession.StartBusyIndicator("");
         this.physicalCheckPMService.update(this.EntityPM).subscribe((response: any) => {
-            if (AppTool.IsNullOrEmpty(this.EntityPM.SearchResult)) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.SearchResultCode)) {
                  this.ValidationErrors.push("תוצםת הבדיקה שדה חובה");
 
                 var windowArgs: any = {};

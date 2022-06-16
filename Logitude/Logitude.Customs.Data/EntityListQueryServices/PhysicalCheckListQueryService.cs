@@ -137,8 +137,8 @@ from myCourierMasterJoin in CourierMasterJoin
                                                        IntegratorName = myJoin != null ? myJoin.IntegratorName : null,
 
                                                        AvailabilityDate = s.AvailabilityDate,
-                                                       SearchResultCode = a.SearchResultCode,
-                                                       SearchResultName = a.SearchResultType.Name
+                                                       //SearchResultCode = a.SearchResultCode,
+                                                       //SearchResultName = a.SearchResultType.Name
 
                              
 
