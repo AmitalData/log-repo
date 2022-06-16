@@ -110,26 +110,69 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.FillTableScreensCollection();
     }
 
+    sections: any[] = [1 ,2 ];
+    SectionScreens: SectionScreen[] = [];
     GenerateScreen(Item: any) {
-        this.ScreenRows = [];
-        for (var i = 0; i < Item.NumberOfColumns; i++) {
-            var RDetails = new ScreenRowDetails();
-            RDetails.ColumnIndex = i;
-            var myFields = this.Clone(this.currentScreenFields.filter(a => a.Column == i).sort((a, b) => { return a.Row - b.Row }));
-            myFields.forEach(field => {
-                if (RDetails.ScreenFieldPMs == null) {
-                    RDetails.ScreenFieldPMs = [];
-                }
-                if (RDetails.ObjectFieldPMs == null) {
-                    RDetails.ObjectFieldPMs = [];
-                }
-                RDetails.ScreenFieldPMs.push(field);
-                var myOField = window.ObjectFields.filter(a => a.FieldCode == field.ObjectFieldCode)[0];
-                RDetails.ObjectFieldPMs.push(myOField);
 
-            });
-            this.ScreenRows.push(RDetails);
-        }
+        this.SectionScreens = [];
+        var count = 0;
+        var count2 = 0;
+
+        var count3 = 0;
+        this.currentScreenFields.forEach(field => {
+            if (count <= 5) {
+                field.sectionId = 1;
+
+                if (count2 <= 3) field.Column =0;
+                else field.Column = 1;
+                count2 += 1;
+
+
+            } else {
+                field.sectionId = 2;
+                if (count3 <= 3) field.Column = 0;
+                else field.Column = 1;
+                count3 += 1;
+
+            }
+            count += 1;
+
+
+        });
+
+
+
+
+        this.sections.forEach(section => {
+           
+            Item.NumberOfColumns = 2;
+            var sectionScreen: SectionScreen = new SectionScreen();
+            sectionScreen.Section = section;
+            sectionScreen.Name = "Test" + section;
+            this.ScreenRows = [];
+            for (var i = 0; i < Item.NumberOfColumns; i++) {
+                var RDetails = new ScreenRowDetails();
+                RDetails.ColumnIndex = i;
+                var myFields = this.Clone(this.currentScreenFields.filter(a => a.Column == i && a.sectionId == section ).sort((a, b) => { return a.Row - b.Row }));
+                myFields.forEach(field => {
+                    if (RDetails.ScreenFieldPMs == null) {
+                        RDetails.ScreenFieldPMs = [];
+                    }
+                    if (RDetails.ObjectFieldPMs == null) {
+                        RDetails.ObjectFieldPMs = [];
+                    }
+                    RDetails.ScreenFieldPMs.push(field);
+                    var myOField = window.ObjectFields.filter(a => a.FieldCode == field.ObjectFieldCode)[0];
+                    RDetails.ObjectFieldPMs.push(myOField);
+
+                });
+                this.ScreenRows.push(RDetails);
+            }
+            sectionScreen.ScreenRows = this.ScreenRows;
+            this.SectionScreens.push(sectionScreen);
+        });
+
+
     }
 
     FillTableScreensCollection() {
@@ -273,7 +316,8 @@ export class ScreenLayoutComponent extends BaseComponent {
         event.preventDefault();
     }
 
-    onMyDrop(event: DragEvent, item: ScreenRowDetails, column: number) {
+    onMyDrop(event: DragEvent, item: ScreenRowDetails, column: number, section:number) {
+        var ScreenRows = this.SectionScreens.filter(d => d.Section == section)[0].ScreenRows;
         this.Modified = true;
         var id = event.dataTransfer.getData("Id");
         var fieldCode = event.dataTransfer.getData("FieldCode");
@@ -289,8 +333,9 @@ export class ScreenLayoutComponent extends BaseComponent {
             }
             this.banckStackFields = this.banckStackFields.filter(d => d.Id != id);
             this.AllbanckStackFields = this.AllbanckStackFields.filter(d => d.Id != id);
-            if (this.ScreenRows) {
-                var Rows = this.ScreenRows.filter(a => a.ColumnIndex == item.ColumnIndex)[0];//.push(item); 
+            if (ScreenRows) {
+
+                var Rows = ScreenRows.filter(a => a.ColumnIndex == item.ColumnIndex)[0];//.push(item); 
                 if (Rows.ScreenFieldPMs == null) {
                     Rows.ScreenFieldPMs = [];
                 }
@@ -305,15 +350,15 @@ export class ScreenLayoutComponent extends BaseComponent {
                 screenField.Tenant = SessionLocator.Tenant;
                 screenField.Row = position;
                 screenField.ObjectFieldCode = myitem.FieldCode;
-
+                //screenField.section = section;
                 Rows.ScreenFieldPMs.splice(position, 0, screenField);
                 Rows.ObjectFieldPMs.splice(position, 0, myitem);
 
             }
         }
         else {
-            var Rows = this.ScreenRows.filter(a => a.ColumnIndex == item.ColumnIndex)[0];
-            this.ScreenRows.forEach(sItem => {
+            var Rows = ScreenRows.filter(a => a.ColumnIndex == item.ColumnIndex)[0];
+            ScreenRows.forEach(sItem => {
                 if (sItem.ObjectFieldPMs) {
                     var temp = sItem.ObjectFieldPMs.filter(a => a.Id == id);
                     if (temp.length > 0) {
@@ -440,7 +485,11 @@ export class ScreenLayoutComponent extends BaseComponent {
 }
 
 
-
+export class SectionScreen {
+    public Section: number;
+    public   Name: string;
+    public  ScreenRows: Array<ScreenRowDetails> = [];
+}
 
 export class ScreenItem extends BaseComponent {
     constructor() { super(); }

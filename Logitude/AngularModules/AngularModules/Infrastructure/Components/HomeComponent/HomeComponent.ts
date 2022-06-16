@@ -228,7 +228,7 @@ export class HomeComponent implements OnDestroy{
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CUS")[0]) {
             return true;
         }
-        return false;
+        return true;
     }
 
     UserHasCustomizationSettingAccess(): boolean {

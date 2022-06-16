@@ -97,41 +97,45 @@
                     </td>
                     <td style="width:2px"></td>
                     <td>
-                        <table style="border:solid 1px silver">
-                            <tr>
-                                <td  attr.data-cy="{{'Column_' +column}}" style="width:216px;border-right:dashed 1px silver;vertical-align: top;" *ngFor="let item of ScreenRows; let column = index" >
-                                    <div (drop)="onMyDrop($event,item,column)" dropzone="true" (dragover)="onMyDragEnter($event)" style="position:absolute;top:0;bottom:0;left:0;right:0;overflow:auto;">
-                                        <div name="listItem" class="MyObjectField PreventSelect" *ngFor="let item1 of item.ObjectFieldPMs; let row = index" draggable="true" (dragstart)="OnScreenFieldDragStart($event,item1)" [attr.row]="row" [attr.column]="column">
-                                            <table attr.data-cy="{{item1.FullNameTextCodeDefaultText}}"> 
-                                                <tr>
-                                                    <td>
-                                                        <table>
-                                                            <tr style="height:1px;">
-                                                                <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                                    {{item1 != null ? item1.FullNameTextCodeDefaultText : ''}}
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="height:1px;">
-                                                                <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                                    ({{item1 != null ? item1.PMPropertyPath : ''}})
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                    <td style="width:30px;height:60px;">
-                                                        <img class="DeleteButton RightCenter" style="right: 4px;cursor: pointer;" src="Images/RedX.png" (click)="OnDeleteField(item1)" />
-                                                    </td>
-                                                </tr>
-                                            </table>
+                        <div style="height: 50%; width: 500px; vertical-align: top;" *ngFor="let sectionScreen of SectionScreens;">
+                            {{sectionScreen.Name}}
+                            <table style="border:solid 1px silver">
+                                <tr>
+                                    <td attr.data-cy="{{'Column_' +column+sectionScreen.Section}}" style="width:216px;border-right:dashed 1px silver;vertical-align: top;" *ngFor="let item of sectionScreen.ScreenRows; let column = index">
+                                        <div (drop)="onMyDrop($event,item,column,sectionScreen.Section)" dropzone="true" (dragover)="onMyDragEnter($event)" style="position:absolute;top:0;bottom:0;left:0;right:0;overflow:auto;">
+                                            <div name="listItem" class="MyObjectField PreventSelect" *ngFor="let item1 of item.ObjectFieldPMs; let row = index" draggable="true" (dragstart)="OnScreenFieldDragStart($event,item1)" [attr.row]="row" [attr.column]="column">
+                                                <table attr.data-cy="{{item1.FullNameTextCodeDefaultText}}">
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr style="height:1px;">
+                                                                    <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                                        {{item1 != null ? item1.FullNameTextCodeDefaultText : ''}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="height:1px;">
+                                                                    <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                                        ({{item1 != null ? item1.PMPropertyPath : ''}})
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td style="width:30px;height:60px;">
+                                                            <img class="DeleteButton RightCenter" style="right: 4px;cursor: pointer;" src="Images/RedX.png" (click)="OnDeleteField(item1)" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td></td>
-                            </tr>
-                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+
                     </td>
                     <td style="width:2px"></td>
                     <td style="width:216px;border:solid 1px silver;">
