@@ -31,6 +31,7 @@ using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -51,6 +52,34 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 //CUSTOM19 - TOKEN
                 //3d75bc21-2e20-4e3a-8792-1ba057a4408f
                 //24fd2056-23b1-4921-8804-1ae02e70fcb3
+                try
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", authToken.Tenant);
+
+                }
+                catch (Exception E)
+                {
+
+                    
+                    requestParams.SUCCESS = "false";
+                    bool hidesecurtityparams = true;
+                    if (hidesecurtityparams)
+                    {
+                        requestParams.MessageOut = $"authentication failed";
+                    }
+                    else
+                    {
+                        requestParams.MessageOut = E.ToString();
+                    }
+                    
+
+                    return Request.CreateResponse(HttpStatusCode.OK, requestParams);
+                }
+
 
                 // use messageing service
                 string DataOut1 = "";
@@ -82,6 +111,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+
+            
+
         }
 
         public HttpResponseMessage PostMorningMessages(MorningMessageRequestParams requestParams)
