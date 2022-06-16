@@ -1032,25 +1032,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string searchResult ;
+	  private string searchResultCode ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string SearchResult  
+       public string SearchResultCode  
 	   {
 	    
 	     get
 		{
-		   return searchResult;
+		   return searchResultCode;
 		 }
 		 set
 		 {
-		   if(searchResult != value)
+		   if(searchResultCode != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchResult",OldValue=searchResult,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchResultCode",OldValue=searchResultCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   searchResult=value;
+		   searchResultCode=value;
 		   }
 			
 		 }
@@ -1143,6 +1143,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CheckAnwserStatus",OldValue=checkAnwserStatus,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   checkAnwserStatus=value;
+		   }
+			
+		 }
+	   }
+	  private string searchResultName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchResultName  
+	   {
+	    
+	     get
+		{
+		   return searchResultName;
+		 }
+		 set
+		 {
+		   if(searchResultName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchResultName",OldValue=searchResultName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchResultName=value;
 		   }
 			
 		 }

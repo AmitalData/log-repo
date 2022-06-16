@@ -81,7 +81,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.VehicleChassisNumber).HasColumnName("VehicleChassisNumber").HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.SearchResult).HasColumnName("SearchResult").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.SearchResultCode).HasColumnName("SearchResultCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.SealNumber).HasColumnName("SealNumber").HasMaxLength(20).IsUnicode(false);
 

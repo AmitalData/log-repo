@@ -51,7 +51,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomerId, 
 	         NoEscortRequired, 
 	         VehicleChassisNumber, 
-	         SearchResult, 
+	         SearchResultCode, 
 	         SealNumber, 
 	         CheckAuthorityAttenderTypeID, 
 	         CheckAuthorityAttenderTypeName, 
@@ -106,11 +106,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         NoEscortRequired, 
 	         VehicleChassisNumber, 
 	         EndDate, 
-	         SearchResult, 
+	         SearchResultCode, 
 	         SealNumber, 
 	         CheckAuthorityAttenderTypeID, 
 	         CheckAuthorityAttenderTypeName, 
-	         CheckAnwserStatus,
+	         CheckAnwserStatus, 
+	         SearchResultName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -259,9 +260,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.VehicleChassisNumber = entityPM.VehicleChassisNumber;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchResult))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchResultCode))
             {
-				entityPOCO.SearchResult = entityPM.SearchResult;
+				entityPOCO.SearchResultCode = entityPM.SearchResultCode;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SealNumber))
@@ -435,9 +436,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.VehicleChassisNumber = entityPOCO.VehicleChassisNumber;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchResult))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchResultCode))
             {
-					entityPM.SearchResult = entityPOCO.SearchResult;
+					entityPM.SearchResultCode = entityPOCO.SearchResultCode;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SealNumber))
@@ -606,9 +607,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.VehicleChassisNumber = entityPM.VehicleChassisNumber;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchResult))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchResultCode))
             {
-                oldEntityPM.SearchResult = entityPM.SearchResult;
+                oldEntityPM.SearchResultCode = entityPM.SearchResultCode;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SealNumber))

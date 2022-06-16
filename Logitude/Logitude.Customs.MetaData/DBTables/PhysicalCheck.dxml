@@ -203,7 +203,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SearchResult"
+    Name="SearchResultCode"
+    OldNames="SearchResult"
     Type="varchar"
     Size="3">
     <Constraints
@@ -292,7 +293,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="SearchResult"
+    ForeignKeyColumn="SearchResultCode"
     ReferencedTable="PhysicalCheckSearchResultTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
