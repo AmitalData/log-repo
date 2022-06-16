@@ -37,6 +37,7 @@ export class SharedManifestsSelectors extends RegexSelectors {
     public static readonly Search='[placeholder="SearchFields"]'
     public static readonly FirstRowMAWB='[id="row0col2"]'
     public static readonly Create='[data-cy="Create"]'
+    public static readonly MasterMainCarriageCarrier='[id="Master_MainCarriageCarrierId"]'
     public static readonly CreateMaster='[data-cy="Create Master"]'
     public static readonly AgentReference='[data-cy="AgentReference"]'
     public static readonly CancelManifest='[data-cy="Cancel Manifest"]'

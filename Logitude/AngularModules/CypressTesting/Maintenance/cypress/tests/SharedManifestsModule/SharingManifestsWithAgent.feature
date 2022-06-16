@@ -1,4 +1,4 @@
-#@devrelease
+@devrelease
 Feature: Sharing Manifests with agent
     The user check Sharing Manifest with agent Prerequisites, then create a shipment and share it,
     from other side check shared Manifest and test actions of create, Cancel Manifest,and Mark as Completed
@@ -43,7 +43,9 @@ Feature: Sharing Manifests with agent
         Then the following validation appears "The master number is missing"
 
     Scenario: update MAWB number for the shipment
-        Given the user fill "11111111" as master number for the shipment and remove the consignee
+        Given the user fill master number for the shipment, MainCarriageCarrier,and remove the consignee
+            | masterNumber | 11111111 |
+            | AgentCarrier | aa       |
         When the user save the shipment
         Then the master should updated successfully
 
@@ -122,7 +124,7 @@ Feature: Sharing Manifests with agent
         Then the shared shipment should exist with same details as we send from the first agent side
 
     Scenario: Create the shipment from the second tenant(should be inserted as import )
-        When the user create the shipment
+        When the user create the shipment with "aa" as carrier
         Then an import shipment should be created
 
     Scenario: delete Master number from shipment successfully
@@ -149,7 +151,9 @@ Feature: Sharing Manifests with agent
         Then the following validation appears "The master number is missing"
 
     Scenario: update MAWB number for the shipment
-        Given the user fill "22222222" as master number for the shipment and remove the consignee
+        Given the user fill master number for the shipment, MainCarriageCarrier,and remove the consignee
+            | masterNumber | 22222222 |
+            | AgentCarrier | aa       |
         When the user save the shipment
         Then the master should updated successfully
 
@@ -201,7 +205,9 @@ Feature: Sharing Manifests with agent
         Then the following validation appears "The master number is missing"
 
     Scenario: update MAWB number for the shipment
-        Given the user fill "33333333" as master number for the shipment and remove the consignee
+        Given Given the user fill master number for the shipment, MainCarriageCarrier,and remove the consignee
+            | masterNumber | 33333333 |
+            | AgentCarrier | aa       |
         When the user save the shipment
         Then the master should updated successfully
 
