@@ -71,7 +71,7 @@
                                 <table>
                                     <tr>
                                         <td style="width: 198px; min-width: 198px; max-width: 198px;">Screen Name</td>
-                               
+
                                     </tr>
                                 </table>
                             </div>
@@ -93,91 +93,127 @@
 
                     </td>
 
-
-                    <td style=" border: 1px solid silver;border-right:0px">
-                        <table>
+                    <td *ngIf="!IsMuiltSectionScreen()">
+                        <table style="border:solid 1px silver">
                             <tr>
-                                <td style="width:20px"></td>
-
-                                <td>
-                                    <div style="width: 100%; height: 100%; vertical-align: top; overflow-x: auto;">
-
-                                        <div style="height:20px;display:block"></div>
-
-                                        <div style="height: auto; width: 500px; vertical-align: top" *ngFor="let sectionScreen of SectionScreens;">
-
-                                            <div style="height: 25px;  margin-bottom:3px">
-                                                <table>
-                                                    <tr>
-
-                                                        <td style="width:20px">
-                                                            <img style="height:20px;width:20px;margin-left:-3px" class="LeftCenter" src="../../../../Images/ArrowDown.png" [hidden]="!sectionScreen.HideSectionArea" (click)="HideSectionAreaClicked(sectionScreen)" />
-                                                            <img style="height: 20px; width: 20px; margin-left: -3px" class="LeftCenter" src="../../../../Images/ArrowUp.png" [hidden]="sectionScreen.HideSectionArea" (click)="HideSectionAreaClicked(sectionScreen)" />
-                                                        </td>
-                                                        <td style="width: 240px;">
-                                                            <div style="height: 25px; width: 240px; margin-bottom:3px">
-                                                                <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Name'" [InputType]="'text'" [DataContext]="sectionScreen"
-                                                                            [ObjectTableName]="'sectionScreen'" [HideColumns]="true"></LogTextBox>
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td><div></div></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-
-
-
-                                            <div [hidden]="sectionScreen.HideSectionArea" style="height: 315px; vertical-align: top;">
-                                                <table style="border:solid 1px silver;margin-left:20px">
-                                                    <tr>
-                                                        <td attr.data-cy="{{'Column_' +column+sectionScreen.Section}}" style="width:250px;border-right:dashed 1px silver;vertical-align: top;" *ngFor="let item of sectionScreen.ScreenRows; let column = index">
-                                                            <div (drop)="onMyDrop($event,item,column,sectionScreen.Section)" dropzone="true" (dragover)="onMyDragEnter($event)" style="position:absolute;top:0;bottom:0;left:0;right:0;overflow:auto;">
-                                                                <div name="listItem" class="MyObjectField PreventSelect" *ngFor="let item1 of item.ObjectFieldPMs; let row = index" draggable="true" (dragstart)="OnScreenFieldDragStart($event,item1)" [attr.row]="row" [attr.column]="column">
-                                                                    <table attr.data-cy="{{item1.FullNameTextCodeDefaultText}}">
-                                                                        <tr>
-                                                                            <td>
-                                                                                <table>
-                                                                                    <tr style="height:1px;">
-                                                                                        <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                                                            {{item1 != null ? item1.FullNameTextCodeDefaultText : ''}}
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr style="height:1px;">
-                                                                                        <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                                                            ({{item1 != null ? item1.PMPropertyPath : ''}})
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td></td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                            <td style="width:30px;height:60px;">
-                                                                                <img class="DeleteButton RightCenter" style="right: 4px;cursor: pointer;" src="Images/RedX.png" (click)="OnDeleteField(item1 , sectionScreen.Section)" />
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-
-                                            <div style="height:10px;"></div>
+                                <td attr.data-cy="{{'Column_' +column}}" style="width:216px;border-right:dashed 1px silver;vertical-align: top;" *ngFor="let item of ScreenRows; let column = index">
+                                    <div (drop)="onMyDrop($event,item,column)" dropzone="true" (dragover)="onMyDragEnter($event)" style="position:absolute;top:0;bottom:0;left:0;right:0;overflow:auto;">
+                                        <div name="listItem" class="MyObjectField PreventSelect" *ngFor="let item1 of item.ObjectFieldPMs; let row = index" draggable="true" (dragstart)="OnScreenFieldDragStart($event,item1)" [attr.row]="row" [attr.column]="column">
+                                            <table attr.data-cy="{{item1.FullNameTextCodeDefaultText}}">
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr style="height:1px;">
+                                                                <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                                    {{item1 != null ? item1.FullNameTextCodeDefaultText : ''}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:1px;">
+                                                                <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                                    ({{item1 != null ? item1.PMPropertyPath : ''}})
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td style="width:30px;height:60px;">
+                                                        <img class="DeleteButton RightCenter" style="right: 4px;cursor: pointer;" src="Images/RedX.png" (click)="OnDeleteField(item1)" />
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
-
-
                                     </div>
                                 </td>
+                                <td></td>
                             </tr>
                         </table>
-
-          
                     </td>
+                    <td  *ngIf="IsMuiltSectionScreen()" style=" border: 1px solid silver;border-right:0px">
+        <table>
+            <tr>
+                <td style="width:20px"></td>
+
+                <td>
+                    <div style="width: 100%; height: 100%; vertical-align: top; overflow-x: auto;">
+
+                        <div style="height:20px;display:block"></div>
+
+                        <div style="height: auto; width: 500px; vertical-align: top" *ngFor="let sectionScreen of SectionScreens;">
+
+                            <div style="height: 25px;  margin-bottom:3px">
+                                <table>
+                                    <tr>
+
+                                        <td style="width:20px">
+                                            <img style="height:20px;width:20px;margin-left:-3px" class="LeftCenter" src="../../../../Images/ArrowDown.png" [hidden]="!sectionScreen.HideSectionArea" (click)="HideSectionAreaClicked(sectionScreen)" />
+                                            <img style="height: 20px; width: 20px; margin-left: -3px" class="LeftCenter" src="../../../../Images/ArrowUp.png" [hidden]="sectionScreen.HideSectionArea" (click)="HideSectionAreaClicked(sectionScreen)" />
+                                        </td>
+                                        <td style="width: 240px;">
+                                            <div style="height: 25px; width: 240px; margin-bottom:3px">
+                                                <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Name'" [InputType]="'text'" [DataContext]="sectionScreen"
+                                                            [ObjectTableName]="'sectionScreen'" [HideColumns]="true"></LogTextBox>
+
+                                            </div>
+
+                                        </td>
+                                        <td><div></div></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+
+                            <div [hidden]="sectionScreen.HideSectionArea" style="height: 315px; vertical-align: top;">
+                                <table style="border:solid 1px silver;margin-left:20px">
+                                    <tr>
+                                        <td attr.data-cy="{{'Column_' + column +'_'+sectionScreen.Section}}"  [style.border-right]="column == '1' ? 'none':'dashed 1px silver' " style="width:250px;vertical-align: top;" *ngFor="let item of sectionScreen.ScreenRows; let column = index">
+                                            <div (drop)="onMyDrop($event,item,column,sectionScreen.Section)" dropzone="true" (dragover)="onMyDragEnter($event)" style="position:absolute;top:0;bottom:0;left:0;right:0;overflow:auto;">
+                                                <div name="listItem" class="MyObjectField PreventSelect" *ngFor="let item1 of item.ObjectFieldPMs; let row = index" draggable="true" (dragstart)="OnScreenFieldDragStart($event,item1)" [attr.row]="row" [attr.column]="column">
+                                                    <table attr.data-cy="{{item1.FullNameTextCodeDefaultText}}">
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr style="height:1px;">
+                                                                        <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                                            {{item1 != null ? item1.FullNameTextCodeDefaultText : ''}}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:1px;">
+                                                                        <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                                            ({{item1 != null ? item1.PMPropertyPath : ''}})
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td style="width:30px;height:60px;">
+                                                                <img class="DeleteButton RightCenter" style="right: 4px;cursor: pointer;" src="Images/RedX.png" (click)="OnDeleteField(item1 , sectionScreen.Section)" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div style="height:10px;"></div>
+                        </div>
+
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+    </td>
 
                     <td style="width:2px"></td>
                     <td style="width:216px;border:solid 1px silver;">
@@ -185,8 +221,8 @@
                             <div class="SimpleGridViewHeader" style="height:75px;">
                                 <table>
 
-                                    <tr style="height:25px;">
-                                        <td  style="text-align:right;height:25px;">
+                                    <tr *ngIf="IsMuiltSectionScreen()" style="height:25px;">
+                                        <td style="text-align:right;height:25px;">
                                             <button class="Button" style="width: 60px;height:17px;font-size:9px;float:right;margin-right:5px" (click)="CancelClicked()">New Section</button>
                                         </td>
 
@@ -224,11 +260,11 @@
                                                             <td></td>
                                                         </tr>
                                                     </table>
-                                                    </div>
+                                                </div>
                                             </td>
                                             <!--<td style="width:30px;height:60px;">
-                                                <img class="DeleteButton RightCenter" style="right: 4px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
-                                            </td>-->
+                                <img class="DeleteButton RightCenter" style="right: 4px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
+                            </td>-->
                                         </tr>
                                     </table>
                                 </div>
