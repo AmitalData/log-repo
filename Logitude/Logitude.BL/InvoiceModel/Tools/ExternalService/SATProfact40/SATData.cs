@@ -30,6 +30,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public static string PublicInGeneralMexicoRfc = "XAXX010101000";
         public static string PublicInGeneralNombre = "PUBLICO EN GENERAL";
         public static string MexicoCountryCode = "MX";
+        public static string TranslationMexicoCountryCode = "MEX";
         public static string LogitudeSATPaymentBankTransferMethod = "03";
         public static string SATPaymentBankTransferTypeCode = "01";
         public static string TransferedSATTransferStatusCode = "TD";
