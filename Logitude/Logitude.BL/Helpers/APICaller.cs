@@ -29,6 +29,8 @@ namespace Logitude.BL.Helpers
             restRequest.AddHeader("workerrolename", "development");
             if (o != null)
                 restRequest.AddJsonBody(o);
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
             var restResponse = restClient.ExecuteAsync<T>(restRequest).Result;
             if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.Accepted)
             {
