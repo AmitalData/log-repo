@@ -154,11 +154,11 @@ export class AccountingEntityHelper {
 
                 break;
             }
-            case "12": {
-                tableName = "ExternalReconciliation";
+            //case "12": {
+            //    tableName = "ExternalReconciliation";
 
-                break;
-            }
+            //    break;
+            //}
             case AccountingEntityValues.TaxReport: {
                 tableName = "TaxReport";
                 break;
