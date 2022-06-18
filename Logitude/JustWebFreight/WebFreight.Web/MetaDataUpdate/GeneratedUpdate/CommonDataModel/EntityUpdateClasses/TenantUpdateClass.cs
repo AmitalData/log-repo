@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TenantUpdateClass
    {  		
-		public const string HashString = "abafd6858a661984726139909e5144b3";
+		public const string HashString = "01bb7ee565a88c063f4bb59f7be53267";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tenant",
-			      				    Code =  "2d13",
+			      				    Code =  "d61e",
 			      				    Name =  "Tenant",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -7787,7 +7787,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "AutomaticallyCloseDays",
+					 						FieldName =  "EmptyReturnClosingDays",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7805,8 +7805,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "AutomaticallyCloseDays",
-					  						ListPropertyPath =  "AutomaticallyCloseDays",
+					  						PMPropertyPath =  "EmptyReturnClosingDays",
+					  						ListPropertyPath =  "EmptyReturnClosingDays",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -7823,10 +7823,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "AutomaticallyCloseDays",
-					  						DefaultText =  "Automatically Close Days",
-					  						ListFieldLable =  "AutomaticallyCloseDaysListLable",
-					  						ListLableDefaultText =  "AutomaticallyCloseDays",
+					  						FullFieldLable =  "EmptyReturnClosingDays",
+					  						DefaultText =  "Empty Return Closing Days",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7901,11 +7899,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "AutomaticallyClosingField",
+					 						FieldName =  "ShipmentATAClosingDays",
 					  						ObjectTableName =  "Tenant",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  5,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -7913,14 +7911,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  5,
+					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "AutomaticallyClosingField",
-					  						ListPropertyPath =  "AutomaticallyClosingField",
+					  						PMPropertyPath =  "ShipmentATAClosingDays",
+					  						ListPropertyPath =  "ShipmentATAClosingDays",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -7936,8 +7934,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "AutomaticallyClosingField",
-					  						DefaultText =  "Automatically Closing Field",
+					  						FullFieldLable =  "ShipmentATAClosingDays",
+					  						DefaultText =  "Shipment ATA Closing Days",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

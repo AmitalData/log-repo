@@ -196,10 +196,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public double? FCLRatio { get; set; }
         public double? LTLRatio { get; set; }
         public double? FTLRatio { get; set; }
-        public bool IsCargoTrackWebAccessActivated { get; set; }
-
-        public int? AutomaticallyCloseDays { get; set; }
+        public bool IsCargoTrackWebAccessActivated { get; set; }        
         public bool EnableDeliveryOptions { get; set; }
-        public string AutomaticallyClosingField { get; set; }
+        public int? EmptyReturnClosingDays { get; set; }
+        public int? ShipmentATAClosingDays { get; set; }
     }
 }

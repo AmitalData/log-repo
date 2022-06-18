@@ -735,19 +735,19 @@ export class TenantPM {
     public set IsCargoTrackWebAccessActivated(newValue: boolean) { if (this.isCargoTrackWebAccessActivated != newValue) { this.isCargoTrackWebAccessActivated = newValue; this.MarkAsDirty("IsCargoTrackWebAccessActivated"); } }
        
 	 
-    private automaticallyCloseDays: number;
-    public get AutomaticallyCloseDays() { return this.automaticallyCloseDays; }
-    public set AutomaticallyCloseDays(newValue: number) { if (this.automaticallyCloseDays != newValue) { this.automaticallyCloseDays = newValue; this.MarkAsDirty("AutomaticallyCloseDays"); } }
-       
-	 
     private enableDeliveryOptions: boolean;
     public get EnableDeliveryOptions() { return this.enableDeliveryOptions; }
     public set EnableDeliveryOptions(newValue: boolean) { if (this.enableDeliveryOptions != newValue) { this.enableDeliveryOptions = newValue; this.MarkAsDirty("EnableDeliveryOptions"); } }
        
 	 
-    private automaticallyClosingField: string;
-    public get AutomaticallyClosingField() { return this.automaticallyClosingField; }
-    public set AutomaticallyClosingField(newValue: string) { if (this.automaticallyClosingField != newValue) { this.automaticallyClosingField = newValue; this.MarkAsDirty("AutomaticallyClosingField"); } }
+    private emptyReturnClosingDays: number;
+    public get EmptyReturnClosingDays() { return this.emptyReturnClosingDays; }
+    public set EmptyReturnClosingDays(newValue: number) { if (this.emptyReturnClosingDays != newValue) { this.emptyReturnClosingDays = newValue; this.MarkAsDirty("EmptyReturnClosingDays"); } }
+       
+	 
+    private shipmentATAClosingDays: number;
+    public get ShipmentATAClosingDays() { return this.shipmentATAClosingDays; }
+    public set ShipmentATAClosingDays(newValue: number) { if (this.shipmentATAClosingDays != newValue) { this.shipmentATAClosingDays = newValue; this.MarkAsDirty("ShipmentATAClosingDays"); } }
        
 	 
 
