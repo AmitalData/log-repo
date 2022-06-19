@@ -1,4 +1,5 @@
-@devrelease
+#@devrelease
+@fixReleaseBugs
 Feature: BI Report
     The user creates new Bi Folder then add new BI Report and add remove columns and filters.
 
