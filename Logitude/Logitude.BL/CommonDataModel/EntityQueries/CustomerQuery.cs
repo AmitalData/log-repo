@@ -3666,12 +3666,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (!string.IsNullOrEmpty(searchvalue))
             {
-                query2 = new CustomerDataSearchService().Run(
+                bigQuery = new CustomerDataSearchService().Run(
                     new CustomerSearchArgs() 
                     {   
                         SearchText = searchvalue,
                         Tenant = tenant,
-                        EntityLists = query2,
+                        EntityLists = bigQuery,
                         SortByColumnName = queryOperations.SortByColumnName,
                         SortDirectin = queryOperations.SortDirectin,
                         PageSize = queryOperations.PageSize,
