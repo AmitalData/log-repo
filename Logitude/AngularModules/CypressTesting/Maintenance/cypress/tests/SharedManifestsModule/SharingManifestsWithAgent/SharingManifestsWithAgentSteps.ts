@@ -94,6 +94,7 @@ Then("the following validation appears {string}", (ErrorMessage) => {
 
 Given("the user fill master number for the shipment, MainCarriageCarrier,and remove the consignee", (dataTable) => {
     let mainCarriageLeg = Assists.CreateInstance<MainCarriageLegDetails>(dataTable, true);
+    MAWB=mainCarriageLeg.masterNumber;
     SharedManifestsActions.UpdateShipment(mainCarriageLeg);
 });
 When("the user save the shipment", () => {

@@ -252,8 +252,7 @@ export function CreateShipment(ShipmentNumber: string,MasterMainCarriageCarrier:
 
 export function AssertCreateShipment() {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
-        ShipmentContext.MasterNumber = interception.response.body.ShipmentNumber;
-
+        //ShipmentContext.MasterNumber = interception.response.body.ShipmentNumber;
         assert.equal(interception.response.body.DirectionName, "Import", 'valus equal')
     })
     BaseAssertion.AssertMessageWindow("Your Shipment was successfully created.")

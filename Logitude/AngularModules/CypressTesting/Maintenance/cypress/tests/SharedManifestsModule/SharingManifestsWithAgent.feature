@@ -205,7 +205,7 @@ Feature: Sharing Manifests with agent
         Then the following validation appears "The master number is missing"
 
     Scenario: update MAWB number for the shipment
-        Given Given the user fill master number for the shipment, MainCarriageCarrier,and remove the consignee
+        Given the user fill master number for the shipment, MainCarriageCarrier,and remove the consignee
             | masterNumber | 33333333 |
             | AgentCarrier | aa       |
         When the user save the shipment
