@@ -33,6 +33,12 @@ namespace Unifreight.BL.EntityQueryServices
         {
             return new CTBCARMODKeys() { CUSTOMERID = entityPOCO.CUSTOMERID };
         }
+
+        public CTBCARMODPM GetSingle(string CUSTOMERID, string CARMODEL, bool getFromCache)
+        {
+            var keys = new CTBCARMODKeys() { CUSTOMERID = CUSTOMERID, CARMODEL = CARMODEL };
+            return base.GetSingle(keys, false, getFromCache);
+        }
     }
 }
 
