@@ -227,8 +227,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     }
 
     setYellowMessage() {
-        debugger;
-        //  var CountConnectedDeclarations = this.EntityPM.ConnectedDeclarations.split(',').length - 1;
+        
         if (this.EntityPM.IsChange) {
             if ((this.EntityPM.ConnectedDeclarations.split(',').length - 1) == 1 && this.EntityPM.ContainerizationStatus != null) {
                 this.YellowMessage = TextCodeTranslator.Translate("Customs.Containerization.O.ContainerizationChangedRemainsOneDec");
