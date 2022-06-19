@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Module="Common" >
+  <Sql Version="1">
+    <![CDATA[
+
+ update chargestypes set PayDebitGLAcountLocalName = null where PayableDebitGLAcountId is null
+update ChargesTypes set RecCreditGLAcountLocalName = null where ReceivableCreditGLAccountId is null
+     
+    ]]>
+  </Sql>
+</Script>
