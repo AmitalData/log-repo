@@ -428,18 +428,20 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
 
-    OnAllBtnClickedNot() {
+    OnAllBtnClicked() {
         this.IsSelectedNot = true;
         this._customsCollateralAnswerSharedDataService.connectedSelectAll = true;
         this._customsCollateralAnswerSharedDataService._SelectedItems.Clear();
+        this._customsCollateralAnswerSharedDataService._UnSelectedItems.Clear();
         this._customsCollateralAnswerSharedDataService.disconnectedSelectAll = true;
         this._customsCollateralAnswerSharedDataService.allCheckboxStateChange$.next(true);
     }
     
-    OnNoneBtnClickedNot() {
+    OnNoneBtnClicked() {
         this.IsSelectedNot = false;
         this._customsCollateralAnswerSharedDataService.connectedSelectAll = false;
         this._customsCollateralAnswerSharedDataService._UnSelectedItems.Clear();
+        this._customsCollateralAnswerSharedDataService._SelectedItems.Clear();
         this._customsCollateralAnswerSharedDataService.disconnectedSelectAll = false;
         this._customsCollateralAnswerSharedDataService.allCheckboxStateChange$.next(false);
     }
