@@ -200,6 +200,7 @@
     <None Include="DBScripts\InvoiceModel\202205300930_FillARPaymentInvoicesNumbers.sxml" />
     <None Include="DBScripts\QuoteModel\202204250813_AddVarAmountsToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\QuoteModel\202202101211_FillConnectedToQuoteField.sxml" />
+    <None Include="DBScripts\QuoteModel\202206190103_AddQuoteFieldsToQuoteDetailsAndHeaders.sxml" />
     <None Include="DBScripts\QuoteModel\202231032230_FillVATAmountsOnQuoteCharges.sxml" />
     <None Include="DBScripts\ShipmentModel\202204191435_AddHorseNameToShipmentsSearchFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202205220940_CreateRequestContainerStatusWorkerRole.sxml" />

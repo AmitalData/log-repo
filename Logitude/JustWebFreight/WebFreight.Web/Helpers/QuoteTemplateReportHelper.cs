@@ -2285,6 +2285,7 @@ namespace Logitude.BL.Helpers
         private string GetQuoteTemplateDetailsFieldValue(string fieldname, QuotePM quotePM)
         {
             string FieldValue = "";
+
             if (fieldname == "EXPIRATIONDAYS")
             {
                 FieldValue = quotePM.ExpirationDays != null ? quotePM.ExpirationDays.ToString() : "";
@@ -2292,6 +2293,18 @@ namespace Logitude.BL.Helpers
             else if (fieldname == "EXPIRATIONDATE")
             {
                 FieldValue = quotePM.ExpirationDate != null ? ConvertToShortDate((DateTime)quotePM.ExpirationDate, quotePM.Tenant) : "";
+            }
+            else if (fieldname == "TRANSPORTMODE")
+            {
+                FieldValue = quotePM.TransportModeName;
+            }
+            else if (fieldname == "DIRECTION")
+            {
+                FieldValue = quotePM.DirectionName;
+            }
+            else if (fieldname == "STARTDATE")
+            {
+                FieldValue = quotePM.StartDate != null ? ConvertToShortDate((DateTime)quotePM.StartDate, quotePM.Tenant) : "";
             }
             else if (fieldname == "SHIPPERNAME")
             {
@@ -2545,6 +2558,18 @@ namespace Logitude.BL.Helpers
             else if (fieldname == "EXPIRATIONDATE" && quotePM.ExpirationDate != null)
             {
                 FieldValue = ConvertToShortDate((DateTime)quotePM.ExpirationDate, quotePM.Tenant);
+            }
+            else if (fieldname == "TRANSPORTMODE")
+            {
+                FieldValue = quotePM.TransportModeName;
+            }
+            else if (fieldname == "DIRECTION")
+            {
+                FieldValue = quotePM.DirectionName;
+            }
+            else if (fieldname == "STARTDATE")
+            {
+                FieldValue = quotePM.StartDate != null ? ConvertToShortDate((DateTime)quotePM.StartDate, quotePM.Tenant) : "";
             }
             else
                 if (fieldname == "CUSTOMER")
