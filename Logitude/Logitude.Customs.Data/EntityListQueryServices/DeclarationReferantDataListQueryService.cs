@@ -146,6 +146,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  RemoveInclusiveVisibility = "",          
                                                                  Hawb = a.Hawb,
                                                                  Mawb=a.Mawb,
+                                                                 ImporterApproval  = a.ImporterApproval,
                                                               }) ;
                                               return query;
 
