@@ -323,6 +323,10 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             SetCurrentMilestone();
             SetDoneMilstones();
             SetFutureMilstoneForShipment();
+            Milestone currentMilestone = cargoShipmentPM.Milestones.Where(x => x.IsCurrent == true).FirstOrDefault();
+            cargoShipmentPM.CurrentMilestoneCode = currentMilestone.Code;
+            cargoShipmentPM.CurrentMilestoneName = currentMilestone.Name;
+            cargoShipmentPM.CurrentMilestoneDate = currentMilestone.Date;
         }
         private void SetCurrentMilestone()
         {
@@ -345,7 +349,13 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         }
         private Milestone GetMostRecentNotEstimatedMilestone(List<Milestone> milestones)
         {
-            return milestones.Where(s => s.IsEstimation != true && s.Date != null).OrderByDescending(s => s.Weight).FirstOrDefault();
+            var currentMilestone = milestones.Where(s => s.IsEstimation != true && s.Date != null && s.Date.Value.Date <= DateTime.Now.Date).OrderByDescending(s => s.Weight).FirstOrDefault();
+            // get first milestone
+            if (currentMilestone == null)
+            {
+                currentMilestone = milestones.Where(s => s.IsEstimation != true && s.Date != null).OrderByDescending(s => s.Weight).LastOrDefault();
+            }
+            return currentMilestone;
         }
         private void SetFutureMilstoneForShipment()
         {
