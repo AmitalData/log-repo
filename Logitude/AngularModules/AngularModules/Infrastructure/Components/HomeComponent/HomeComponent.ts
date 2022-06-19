@@ -564,6 +564,7 @@ export class HomeComponent implements OnDestroy{
         if (!AppTool.IsNullOrEmpty(exportDecId)) {
             this.ShowBackButton = false;
             AmitalGatewayUtil.Instance.AmitalBrowserInUse = false;
+            console.log("161487-AmitalBrowserInUse = false + UnifreightEntity : BFIFILE"); 
             setTimeout(() => {
                 const objParams = {
                     LogitudeCommandId: "ShowDeclarationByIdReturnCloseSave",
@@ -575,6 +576,7 @@ export class HomeComponent implements OnDestroy{
                 //    UnifreightEntity: "CFIFILEM",
                 //    UnifreightEntityNumber: "91340690",
                 };
+
                 const event = new CustomEvent('UnifaceRequestEvent', { 'detail': objParams, });
                 this.UnifaceRequest(event);
             }, 100);
