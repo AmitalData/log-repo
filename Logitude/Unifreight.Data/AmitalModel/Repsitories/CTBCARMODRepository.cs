@@ -22,12 +22,12 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CTBCARMOD GetSingle(string CUSTOMERID)
+        /*public CTBCARMOD GetSingle(string CUSTOMERID)
         {
             return (from a in context.CTBCARMODs
                     where a.CUSTOMERID == CUSTOMERID
                     select a).FirstOrDefault();
-        }
+        }*/
 
         public IQueryable<CTBCARMOD> GetAll()
         {
@@ -80,7 +80,14 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public CTBCARMOD GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CTBCARMODKeys;
-            return this.GetSingle(keys.CUSTOMERID);
+            return this.GetSingle(keys.CUSTOMERID, keys.CARMODEL);
+        }
+
+        public CTBCARMOD GetSingle(string CUSTOMERID, string CARMODEL)
+        {
+            return (from a in context.CTBCARMODs
+                    where a.CUSTOMERID == CUSTOMERID && a.CARMODEL == CARMODEL
+                    select a).FirstOrDefault();
         }
     }
 }

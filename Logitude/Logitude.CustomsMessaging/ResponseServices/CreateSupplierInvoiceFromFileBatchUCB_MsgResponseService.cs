@@ -235,9 +235,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     InvoiceQuantity = 1,
                     InvoiceNumber = invoiceFromFile.InvoiceNumber,
                     ItemDescription = invoiceItemFromFile.ItemDescription,
-                    ClassificationCode = "84253990000"//todo
+                    //ClassificationCode = "84253990000"//todo
                 };
-                var classificationCode = GetTranslationL2P(partnerId, "CTBCARMOD", invoiceItemFromFile.ClassificationCode);
+                CTBCARMODRepository re = new CTBCARMODRepository(amitalContext);
+                var classificationCode = re.GetSingle(partnerId, invoiceItemFromFile.ClassificationCode)?.PRAT;
+                //var classificationCode = GetTranslationL2P(partnerId, "CTBCARMOD", invoiceItemFromFile.ClassificationCode);
                 if (!string.IsNullOrWhiteSpace(classificationCode))
                 {
                     invoiceItem.ClassificationCode = classificationCode;
