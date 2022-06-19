@@ -557,6 +557,8 @@ export class HomeComponent implements OnDestroy{
         //const amitalSSOAngularURL = window.sessionStorage.getItem("AmitalSSOAngularURL");
         //http://localhost:4200/AmitalSSOAngular.html?token=3F860255-DA0E-4612-99B6-E857FC531A56&tenant=1&AmitalSSOAngular=1&xxxx=132967399749219211&ExportDecId=1-7381
         //EXPDIST//http://localhost:4200/INDEX.html?token=O8k24YE5FkJP9mu4xNQ1zm8e9WzDUNwdAIM=&tenant=1&AmitalSSOAngular=1&xxxx=132967399749219211&ExportDecId=1-7085
+        //https://exportpilot.amital.co.il/CUSTOMSDEBUG/AmitalSSOAngular2.html?T=dG9rZW49TGdNR09oZXVQcHJ5dHhyWVdqU0JLSlBVYm9vTUdVTGhScFU9JnRlbmFudD0xJkFtaXRhbFNTT0FuZ3VsYXI9MSZ4eHh4PTEzMjk2NzM5OTc0OTIxOTIxMSZFeHBvcnREZWNJZD0xLTcwODU=
+
         const exportDecId = //this.getParameterByName("ExportDecId", amitalSSOAngularURL);
             SessionLocator.ExternalParams["ExportDecId"];
         if (!AppTool.IsNullOrEmpty(exportDecId)) {
