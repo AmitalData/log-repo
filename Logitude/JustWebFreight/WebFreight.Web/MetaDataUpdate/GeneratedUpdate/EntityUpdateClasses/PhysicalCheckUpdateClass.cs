@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "b7e6159b0eb6fb59a143333e0b22b82f";
+		public const string HashString = "f5dc0b5c29928f4e4b92b58a51879741";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2778,7 +2778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "SearchResultCode",
+					 						FieldName =  "SearchResult",
 					  						ObjectTableName =  "Customs.PhysicalCheck",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.PhysicalCheckSearchResultType",
@@ -2798,8 +2798,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SearchResultCode",
-					  						ListPropertyPath =  "SearchResultCode",
+					  						PMPropertyPath =  "SearchResult",
+					  						ListPropertyPath =  "SearchResult",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2817,11 +2817,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchResultCode",
-					  						DefaultText =  "SearchResultCode",
+					  						FullFieldLable =  "SearchResult",
+					  						DefaultText =  "SearchResult",
 					  						FullLocalDefaultText =  "תוצאות קוד הבדיקה",
-					  						ListFieldLable =  "SearchResultCodeListLable",
-					  						ListLableDefaultText =  "SearchResultCode",
+					  						ListFieldLable =  "SearchResultListLable",
+					  						ListLableDefaultText =  "SearchResult",
 					  						ListLocalDefaultText =  "תוצאות קוד הבדיקה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
