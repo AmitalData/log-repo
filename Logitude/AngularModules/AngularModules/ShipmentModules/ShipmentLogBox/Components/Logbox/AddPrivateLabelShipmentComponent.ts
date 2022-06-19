@@ -69,7 +69,6 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public AllowCreateShipmentsWithoutDocuments: boolean = false;
     public Order: string = "Reference";
     public RequestedDateLabel: string = "Requested Flight Date";
-    public AllowCreateOceanExport: boolean = false; 
     public FromTextCode: string;
     public ToTextCode: string; 
     public ToPortTextCode: string;
@@ -89,15 +88,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.SetUnits();
         this.SetLabels();
         this.SetFromPort();
-        this.checkAirShipmentToggle();
 
-    }
-    checkAirShipmentToggle() { 
-         let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
-        if (AirShipmentFeatureToggle) {
-            this.AllowCreateOceanExport = true;
-
-        }
     }
      
  

@@ -295,14 +295,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "PLE", 
-                Name = "PL Export Shipments", 
-                SearchFields = "PLE,PL Export Shipments,Allow to Create New Air Shipment From Private Label", 
-                Description = "Allow to Create New Air Shipment From Private Label", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Code = "CPT", 
                 Name = "Carta Porte", 
                 Description = "Carta Porte", 
@@ -668,7 +660,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "BSH,Shipment BI Report Scheduler", 
                 Description = "Shipment BI Report Scheduler", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "CP4", 
@@ -676,7 +668,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CP4,SAT New Cancellation process", 
                 Description = "Activate SAT New Cancellation process", 
 			});
-
 			 
             all.Add(new ToggleDetails()
             {    
@@ -685,7 +676,7 @@ namespace Logitude.Infrastructure.BL
                 Code = "SAC", 
                 SearchFields = "Show Agents in Opportunities' Customers LOV", 
 			});
-
+			
             return all;
        }
 

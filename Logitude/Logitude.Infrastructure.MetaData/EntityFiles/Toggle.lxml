@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;3b79&quot;"
+  Code="&quot;303c&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -563,11 +563,6 @@
       Description="&quot;Lock Counter Procedure&quot;"
       Code="&quot;LCP&quot;" />
     <Record
-      Code="&quot;PLE&quot;"
-      Name="&quot;PL Export Shipments&quot;"
-      SearchFields="&quot;PLE,PL Export Shipments,Allow to Create New Air Shipment From Private Label&quot;"
-      Description="&quot;Allow to Create New Air Shipment From Private Label&quot;" />
-    <Record
       Code="&quot;CPT&quot;"
       Name="&quot;Carta Porte&quot;"
       Description="&quot;Carta Porte&quot;"
@@ -797,7 +792,6 @@
       Name="&quot;Shipment BI Report Scheduler&quot;"
       SearchFields="&quot;BSH,Shipment BI Report Scheduler&quot;"
       Description="&quot;Shipment BI Report Scheduler&quot;" />
-
     <Record
       Code="&quot;CP4&quot;"
       Name="&quot;SAT New Cancellation process&quot;"
