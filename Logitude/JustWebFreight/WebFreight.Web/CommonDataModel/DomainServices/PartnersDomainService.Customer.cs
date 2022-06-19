@@ -138,8 +138,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-            QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
-            if(item !=null && item.FieldValue != null && queryOperations.PageSize > 0)
+            QueryFilterItem queryFilterItem = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
+            string cardSearchFieldvalue = queryFilterItem != null ? queryFilterItem.FieldValue != null ? !string.IsNullOrEmpty(queryFilterItem.FieldValue.ToString()) ? queryFilterItem.FieldValue.ToString() : null : null : null;
+            if (!string.IsNullOrEmpty(cardSearchFieldvalue) && queryOperations.PageSize > 0)
             {
                  queryOperations.PageSize = 100;
                  xmlFilters = new FilterSerializer().SerializeFilterItems(queryOperations);
