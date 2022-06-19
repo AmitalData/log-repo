@@ -1032,25 +1032,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string searchResultCode ;
+	  private string searchResult ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string SearchResultCode  
+       public string SearchResult  
 	   {
 	    
 	     get
 		{
-		   return searchResultCode;
+		   return searchResult;
 		 }
 		 set
 		 {
-		   if(searchResultCode != value)
+		   if(searchResult != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchResultCode",OldValue=searchResultCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchResult",OldValue=searchResult,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   searchResultCode=value;
+		   searchResult=value;
 		   }
 			
 		 }

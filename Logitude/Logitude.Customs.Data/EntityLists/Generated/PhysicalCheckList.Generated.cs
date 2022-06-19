@@ -95,7 +95,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string VehicleChassisNumber  { get; set; }
        [DataMember]
-       public string SearchResultCode  { get; set; }
+       public string SearchResult  { get; set; }
        [DataMember]
        public string SealNumber  { get; set; }
        [DataMember]
