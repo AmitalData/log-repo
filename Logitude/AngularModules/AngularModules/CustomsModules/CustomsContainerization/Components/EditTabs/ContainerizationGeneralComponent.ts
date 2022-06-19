@@ -137,7 +137,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         filters.GetAll = false;
         filters.GetCount = true;
         filters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
-        return this.declarationListService.getByFilters(filters)
+        return this.containerizationExtendedListService.getByFilters(filters)
             .subscribe(r => {
                 r.Result.forEach(element => {
                     if (!this.ContainerizationDeclarationList.Collection.filter(x => x.Id == element.Id).length)
