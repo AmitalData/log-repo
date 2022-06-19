@@ -568,6 +568,7 @@ export class HomeComponent implements OnDestroy{
                     LogitudeEntity: "Customs.Declaration",
                     LogitudeEntityNumber: exportDecId,
                     LogitudeViewModel: "UnifreightMassageHandler",
+                    UnifreightEntity : "BFIFILE",
                     Response: [],
                 //    UnifreightEntity: "CFIFILEM",
                 //    UnifreightEntityNumber: "91340690",
