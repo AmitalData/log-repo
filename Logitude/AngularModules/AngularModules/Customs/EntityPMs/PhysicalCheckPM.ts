@@ -244,9 +244,9 @@ export class PhysicalCheckPM {
     public set EndDate(newValue: Date) { if (this.endDate != newValue) { this.endDate = newValue; this.MarkAsDirty("EndDate"); } }
        
 	 
-    private searchResultCode: string;
-    public get SearchResultCode() { return this.searchResultCode; }
-    public set SearchResultCode(newValue: string) { if (this.searchResultCode != newValue) { this.searchResultCode = newValue; this.MarkAsDirty("SearchResultCode"); } }
+    private searchResult: string;
+    public get SearchResult() { return this.searchResult; }
+    public set SearchResult(newValue: string) { if (this.searchResult != newValue) { this.searchResult = newValue; this.MarkAsDirty("SearchResult"); } }
        
 	 
     private sealNumber: string;
