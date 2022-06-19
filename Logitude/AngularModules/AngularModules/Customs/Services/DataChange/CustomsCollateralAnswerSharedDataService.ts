@@ -30,6 +30,7 @@ export class CustomsCollateralAnswerSharedDataService {
     this.connectedSelectAll = false;
     this.IsDisplayButtonSend = false;
     this.disconnectedSelectAll = false;
-    this.SupperssOnRowSelectedAction = false;  
+    this.SupperssOnRowSelectedAction = false; 
+    this.allCheckboxStateChange$.next(false);
   }
 }
