@@ -60,7 +60,7 @@ namespace Logitude.TariffModule.BL.Helpers
                 this.salesLocalChargesTariffSearchArgs.SalesLocalCharges.AddRange(this.localCharges);
             }
 
-            salesLocalChargesTariffSearchArgs.Error = CheckIfTariffsFounded();
+            salesLocalChargesTariffSearchArgs.Error = CheckIfTariffsFounded();         
             return this.salesLocalChargesTariffSearchArgs;
         }
         private string CheckIfTariffsFounded()

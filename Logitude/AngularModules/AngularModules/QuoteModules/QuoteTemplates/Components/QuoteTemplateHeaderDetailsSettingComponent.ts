@@ -304,7 +304,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     CustomQuoteFieldList() {
         if (this.QuoteTemplateSectionTypeCode == "QD") {
 
-            var QuoteFieldNameString = "Expiration Date, Expiration Days, Shipper Name, Shipper Address, Quote Number, Shipper Contact, Shipper References , Consignee Name, Consignee Address, Consignee Contact, Consignee References, Customer Name, Customer Address, Customer Contact, Customer References, Pickup From, Delivery To, Incoterms, Service, Salesman, Description of goods , Dangerous goods, Chargeable Weight, Gross Weight, Volume, Transit Time, Notify Name, Notify Address, Notify Contact ,Move Type, Departure Frequency"  ;
+            var QuoteFieldNameString = "Expiration Date, Expiration Days, Shipper Name, Shipper Address, Quote Number, Shipper Contact, Shipper References , Consignee Name, Consignee Address, Consignee Contact, Consignee References, Customer Name, Customer Address, Customer Contact, Customer References, Pickup From, Delivery To, Incoterms, Service, Salesman, Description of goods , Dangerous goods, Chargeable Weight, Gross Weight, Volume, Transit Time, Notify Name, Notify Address, Notify Contact ,Move Type, Departure Frequency,TransportMode,Direction,Start Date";
 
 
             var quoteFieldList = QuoteFieldNameString.split(',');
@@ -364,8 +364,8 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
         }
 
-        else {
-            var QuoteFieldNameString = "Quote Date, Expiration Date, Quote Number, Customer, ATTN";
+        else { 
+            var QuoteFieldNameString = "Quote Date, Expiration Date, Quote Number, Customer, ATTN,TransportMode,Direction,Start Date";
             quoteFieldList = QuoteFieldNameString.split(',');
             
         }
@@ -735,6 +735,15 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
             Field = "Number Of Containers";
         }
 
+        else if (fieldname == "TRANSPORTMODE") {
+            Field = "Transport Mode";
+        }
+        else if (fieldname == "DIRECTION") {
+            Field = "Direction";
+        }
+        else if (fieldname == "STARTDATE") {
+            Field = "Start Date";
+        }
         return Field;
     }
 
@@ -754,15 +763,23 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         else if (fieldname == "EXPIRATIONDATE") {
             Field = "Expiration Date";
         }
-        else
-            if (fieldname == "CUSTOMER") {
-                Field = "Customer";
-            }
+        else if (fieldname == "CUSTOMER") {
+            Field = "Customer";
+        }
 
-            else
-                if (fieldname == "ATTN") {
-                    Field = "ATTN";
-                }
+        else if (fieldname == "ATTN") {
+            Field = "ATTN";
+        }
+
+        else if (fieldname == "TRANSPORTMODE") {
+            Field = "Transport Mode";
+        }
+        else if (fieldname == "DIRECTION") {
+            Field = "Direction";
+        }
+        else if (fieldname == "STARTDATE") {
+            Field = "Start Date";
+        }
         return Field;
     }
     // End Prop setting 
