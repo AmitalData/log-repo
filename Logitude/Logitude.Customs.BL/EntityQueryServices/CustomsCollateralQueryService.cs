@@ -79,7 +79,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var ccaRepo = new CustomsCollateralsAnswerRepository(context);
             List<CustomsCollateral> customsCollateralList =
                 selectAll ?
-                    repository.GetDeclarationCollateralsList(declarationId, tenant).FindAll(x => !ids.Contains(x.Id) && x.IsClosed == false) :
+                    repository.GetDeclarationCollateralsForSendToCustoms(declarationId, tenant, ids) :
                     repository.GetDeclarationCollateralsList(ids);
 
             AddCustomsCollateralsAnswerToCustomsCollaterals(customsCollateralsAnswerPM, tenant, updateService, ccaRepo, customsCollateralList);
