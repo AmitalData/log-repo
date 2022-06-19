@@ -138,17 +138,28 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-            QueryFilterItem queryFilterItem = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
-            string cardSearchFieldvalue = queryFilterItem != null ? queryFilterItem.FieldValue != null ? !string.IsNullOrEmpty(queryFilterItem.FieldValue.ToString()) ? queryFilterItem.FieldValue.ToString() : null : null : null;
+            string cardSearchFieldvalue = GetCardSearchFieldvalue(queryOperations);
             if (!string.IsNullOrEmpty(cardSearchFieldvalue) && queryOperations.PageSize > 0)
             {
-                 queryOperations.PageSize = 100;
-                 xmlFilters = new FilterSerializer().SerializeFilterItems(queryOperations);
+                xmlFilters =  UpdateQueryOperationsPageSize(queryOperations);
             }
-
 
             customerQuery = new CustomerQuery(CustomerRepository);
             return customerQuery.GetCustomerFilters(xmlFilters, tenant);
+        }
+
+        private byte[] UpdateQueryOperationsPageSize(QueryOperations queryOperations)
+        {
+            if (queryOperations == null) return null;
+            queryOperations.PageSize = 100;
+            return new FilterSerializer().SerializeFilterItems(queryOperations);
+        }
+
+        private  string GetCardSearchFieldvalue(QueryOperations queryOperations)
+        {
+            if (queryOperations == null) return null;
+            QueryFilterItem queryFilterItem = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
+            return queryFilterItem != null ? queryFilterItem.FieldValue != null ? !string.IsNullOrEmpty(queryFilterItem.FieldValue.ToString()) ? queryFilterItem.FieldValue.ToString() : null : null : null;
         }
 
         [Query(HasSideEffects = true)]
