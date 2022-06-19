@@ -759,7 +759,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="AutomaticallyCloseDays"
+    Name="EmptyReturnClosingDays"
+    OldNames="AutomaticallyCloseDays"
     Type="int">
     <Constraints
       Nullable="true" />
@@ -771,9 +772,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="AutomaticallyClosingField"
-    Type="varchar"
-    Size="5">
+    Name="ShipmentATAClosingDays"
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>

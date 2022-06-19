@@ -52,19 +52,13 @@ namespace CommunicationWorkerRole.Services
         {
             this.GetCurrentTenant(container.Tenant);
 
-            DateTime? closingField = null;
-            int? automaticallyCloseDays = null;
-            if (currentTenant != null && !string.IsNullOrEmpty(currentTenant.AutomaticallyClosingField))
-            {
-                automaticallyCloseDays = this.currentTenant.AutomaticallyCloseDays;
-                if (currentTenant.AutomaticallyClosingField == "EMPTR") closingField = container.ActualEmptyReturn;
-                else if (currentTenant.AutomaticallyClosingField == "SHATA") closingField = container.ShipmentMainCarriageATA;
-            }
+            int? emptyReturnDays = this.currentTenant?.EmptyReturnClosingDays;
+            int? shipmentATADays = this.currentTenant?.ShipmentATAClosingDays;
 
-            if (closingField == null) return;
+            DateTime emptyReturnDate = emptyReturnDays == null ? container.ActualEmptyReturn.Value : container.ActualEmptyReturn.Value.AddDays(emptyReturnDays.Value);
+            DateTime ShipmentATADate = shipmentATADays == null ? container.ShipmentMainCarriageATA.Value : container.ShipmentMainCarriageATA.Value.AddDays(shipmentATADays.Value);
 
-            var closingDate = automaticallyCloseDays == null ? closingField.Value : closingField.Value.AddDays(automaticallyCloseDays.Value);
-            if (closingDate.Date <= todayDate.Date)
+            if ((emptyReturnDate != null && emptyReturnDate.Date <= todayDate.Date) || (ShipmentATADate != null && ShipmentATADate.Date <= todayDate.Date))
             {
                 this.UpdateClosedContainer(container);
             }
