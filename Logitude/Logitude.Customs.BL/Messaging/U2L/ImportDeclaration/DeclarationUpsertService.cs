@@ -809,6 +809,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         scope.Complete();
                         return;
                     }
+
+                    if (this._MyDeclarationPM.Direction == "E")
+                        ForiegnKeyCheck.CheckClosedTable(_MyDeclarationPM, ResolvedTenant());
+
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
 
