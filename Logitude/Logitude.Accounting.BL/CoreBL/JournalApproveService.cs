@@ -116,7 +116,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
         private void CreateInterestTransactions(JournalPM journalPM, IAccountingContext context) {
-            if (journalPM is null) {
+            if (journalPM is null || journalPM.IsLedgerCreated == true) {
                 return;
             }
             
