@@ -65,7 +65,7 @@ namespace CommunicationWorkerRole
         string IgnoredBatchServicesParam = "";
         bool IgnoreServices = false;
         bool IsManagedProcess = false;
-
+        const int HalfHourInSeconds= 1800;
         //public static string DeploymentStage = "Dev";//Dev//Test1//Simplog//logitudetest3//amital//logitudetest2
         //public static string ChampEnv = "TEST";//PROD//TEST
         //
@@ -92,6 +92,7 @@ namespace CommunicationWorkerRole
         {
             try
             {
+                string threadsNames = "";
                 foreach (WorkerEntryPoint worker in workers)
                 {
                     Thread myThread = new Thread(worker.ProtectedRun) { Name = worker.ThreadName };
@@ -101,24 +102,43 @@ namespace CommunicationWorkerRole
 
 
                 foreach (Thread thread in threads)
+                {
                     thread.Start();
-
+                    threadsNames = threadsNames + thread.Name;
+                }
+            
+                ExceptionHandler.HandleException(new Exception("Started Threads:" + threadsNames), DateTime.Now, 0, null, "WorkerRole Monitor", null, null);
+                threadsNames = "";
+                string currnetInactiveThreadsNames = "";
+                int secondsTimer = 0;
                 batchServiceLogTimer.Elapsed += batchServiceLogTimer_Elapsed;
                 batchServiceLogTimer.Interval = 30000;
                 batchServiceLogTimer.Start();
                 while (!EventWaitHandle.WaitOne(0))
                 {
                     // WWB: Restart Dead Threads
+                    currnetInactiveThreadsNames = "";
                     for (Int32 i = 0; i < threads.Count; i++)
                     {
                         if (!threads[i].IsAlive)
                         {
-                            threads[i] = new Thread(workers[i].Run) { Name = threads[i].Name };
-                                                                                                                                                                                    threads[i].Start();
+                            currnetInactiveThreadsNames = currnetInactiveThreadsNames + " | "+ threads[i].Name;
+                            threads[i] = new Thread(workers[i].Run) { Name = threads[i].Name };                   
+                            threads[i].Start();
                         }
                     }
-
+                    if(secondsTimer >= HalfHourInSeconds && threadsNames == currnetInactiveThreadsNames && !string.IsNullOrEmpty(currnetInactiveThreadsNames)) // if half hour elaspsed and still the in active threads the same we will write record in DB each half an hour to not fill the logs
+                    {
+                        ExceptionHandler.HandleException(new Exception("InActive Threads:" + currnetInactiveThreadsNames), DateTime.Now, 0, null, "WorkerRole Monitor", null, null);
+                        secondsTimer = 0;
+                    }
+                    if (threadsNames != currnetInactiveThreadsNames &&  !string.IsNullOrEmpty(currnetInactiveThreadsNames) )
+                    {
+                        ExceptionHandler.HandleException(new Exception("InActive Threads:" + currnetInactiveThreadsNames), DateTime.Now, 0, null, "WorkerRole Monitor", null, null);
+                        threadsNames = currnetInactiveThreadsNames;
+                    }
                     EventWaitHandle.WaitOne(1000);
+                    secondsTimer++;
                 }
             }
             catch (SystemException e)
@@ -268,7 +288,7 @@ namespace CommunicationWorkerRole
                () => (new EntityGetReflectorService()) as IEntityGetReflectorService
                );
 
-           
+
 
 
 

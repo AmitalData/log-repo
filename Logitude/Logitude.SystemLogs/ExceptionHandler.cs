@@ -104,9 +104,12 @@ namespace Logitude.SystemLogs
 
                 if (clientDate == null)
                     clientDate = DateTime.Now;
-
+              
+                string stacktrace = "";
+                if(exception.StackTrace != null)
+                    stacktrace = exception.StackTrace;   
                 Debug.WriteLine("***HandleException** " + ErrorMessage);//May cause slowness ,But worth - If u Decides to delete ,Please inform itzik !!!!!
-                AzureLog.SaveLogsInStorage(ErrorMessage, "E", clientDate, exception.Message, exception.StackTrace, tenant, userId, userName, ip,exception);
+                AzureLog.SaveLogsInStorage(ErrorMessage, "E", clientDate, exception.Message, stacktrace, tenant, userId, userName, ip,exception);
 
             }
         }
