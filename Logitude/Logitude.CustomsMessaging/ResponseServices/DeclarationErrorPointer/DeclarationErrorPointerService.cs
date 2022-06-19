@@ -62,7 +62,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
 
             return myDeclaretionErrorXml;
         }
-        public string AnalyzeErrorPionterExport(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError[] responseError, DeclarationPM declarationPM, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO, bool isRaiseUnifreightEvent = false) // to add ref to ResponseError in Logitude.CustomsMessaging
+        public string AnalyzeErrorPionterExport(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError[] responseError, DeclarationPM declarationPM, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO_EX, bool isRaiseUnifreightEvent = false) // to add ref to ResponseError in Logitude.CustomsMessaging
         {
             if (responseError == null)
             {
@@ -196,6 +196,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                     myCargoDescription.LogitudeFieldID = "";
                 }
 
+
                 switch (myCargoDescription.LogitudeEntity)
                 {
                     case WCOErrorPointerModel.LogitudeEntityEnum.None:
@@ -296,7 +297,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 _declarationErrorPointer.Entitites.Add(myEntityErrorDetail);
             }
         }
-        private void GetLogitudeEntityExport(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError errorItem, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO, bool isRaiseUnifreightEvent = false)
+        private void GetLogitudeEntityExport(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError errorItem, WCOTypeEnum myWCOTypeEnum = WCOTypeEnum.WCO_EX, bool isRaiseUnifreightEvent = false)
         {
             int pointerLevelCounter = 0;
             WCOErrorPointerModel myCargoDescription = null;
@@ -314,7 +315,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             {
                 //string  NaturalKey = "";
                 string SequenceNumeric = "0";
-                myCargoDescription = WCO.Instance.CreateDB().GetTagID(pointerLevelCounter, pointerItem.DocumentSectionCode.Value);
+                myCargoDescription = WCO.Instance.CreateDB(myWCOTypeEnum).GetTagID(pointerLevelCounter, pointerItem.DocumentSectionCode.Value);
                 int pointerLevelCounterCurrent = pointerLevelCounter;
                 var myDB = WCO.Instance.CreateDB(myWCOTypeEnum);
 
@@ -485,7 +486,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             }
         }
 
- 
+
         private void HandleValidationCodeError(ResponseError errorItem)
         {
             switch (errorItem.ValidationCode.Value)
@@ -582,10 +583,10 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             }
 
             List<Entity> entityError = (from a in _declarationErrorPointer.Entitites
-                                       where (a.Child1Type == myChild1Type && a.Child1Sequence == myChild1Sequence
-                                       && a.Child2Type == myChild2Type && a.Child2Sequence == myChild2Sequence
-                                       && a.Child3Type == myChild3Type && a.Child3Sequence == myChild3Sequence)
-                                       select a).ToList();
+                                        where (a.Child1Type == myChild1Type && a.Child1Sequence == myChild1Sequence
+                                        && a.Child2Type == myChild2Type && a.Child2Sequence == myChild2Sequence
+                                        && a.Child3Type == myChild3Type && a.Child3Sequence == myChild3Sequence)
+                                        select a).ToList();
 
             if (entityError.Count > 0)
             {
@@ -687,7 +688,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             return myDeclaretionErrorXml;
         }
 
-        internal string AddDeclarationExceptionExport(string errorXml, string errorType, UnifreightIIG.Common.ExportDeclarationServiceReference.Exception exception,bool errorUpsert=false)
+        internal string AddDeclarationExceptionExport(string errorXml, string errorType, UnifreightIIG.Common.ExportDeclarationServiceReference.Exception exception, bool errorUpsert = false)
         {
             if (exception == null)
             {
@@ -865,7 +866,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
         }
 
         public string AddErrorPionter(DeclarationError declarationErrorPointer, string child1Type, string child1Sequence, string child2Type, string child2Sequence, string child3Type, string child3Sequence,
-           string code, string listVersionID, string messageError, string fieldcode, string other1="", string other2="", string other3="")
+           string code, string listVersionID, string messageError, string fieldcode, string other1 = "", string other2 = "", string other3 = "")
         {
             bool isNewEntity = false;
             Entity myEntityErrorDetail = new Entity();
@@ -879,7 +880,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             {
                 _declarationErrorPointer.Entitites = new List<Entity>();
             }
-            
+
             Entity currentEntityErrorDetail = FindEntityinList(child1Type, child1Sequence, child2Type, child2Sequence, child3Type, child3Sequence);
             if (currentEntityErrorDetail == null)
             {
@@ -894,7 +895,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             else
             {
                 myEntityErrorDetail = currentEntityErrorDetail;
-            }            
+            }
 
             var myFieldError = new field();
             myFieldError.Code = code;

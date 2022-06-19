@@ -721,7 +721,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             //Analyze the Errors section in the response XML 
             var swErrosXml1 = Stopwatch.StartNew();
-            this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(customResponse.Response.Error, _MyDeclarationPM, WCOTypeEnum.WCO, !_IsSubmitDeclarationResponse);
+            this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(customResponse.Response.Error, _MyDeclarationPM, WCOTypeEnum.WCO_EX, !_IsSubmitDeclarationResponse);
             this._MyDeclarationError = mydDclarationErrorPointerService._declarationErrorPointer;
             LogMessagingUtil.Instance.AppendLine("ErrosXml:Took:" + swErrosXml1.ElapsedMilliseconds);
 

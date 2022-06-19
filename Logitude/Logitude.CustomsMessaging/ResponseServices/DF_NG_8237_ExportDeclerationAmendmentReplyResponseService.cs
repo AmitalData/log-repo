@@ -444,7 +444,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.Response.Error != null && (!new string[] { "1", "2" }.Contains(_MyDeclarationPM.AmendmentStatus)))
                     {
                         DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
-                        this._MyDeclarationPM.AmendmentErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
+                        this._MyDeclarationPM.AmendmentErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO_EX);
 
                         if (mydDclarationErrorPointerService._declarationErrorPointer != null &&
                                 mydDclarationErrorPointerService._declarationErrorPointer.Entitites != null &&
@@ -458,7 +458,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.Response.Error != null)
                     {
                         DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
-                        this._MyDeclarationPM.ExportClosedErrorXML = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
+                        this._MyDeclarationPM.ExportClosedErrorXML = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO_EX);
                         if (mydDclarationErrorPointerService._declarationErrorPointer != null &&
                             mydDclarationErrorPointerService._declarationErrorPointer.Entitites != null &&
                             mydDclarationErrorPointerService._declarationErrorPointer.Entitites.Exists(x => 

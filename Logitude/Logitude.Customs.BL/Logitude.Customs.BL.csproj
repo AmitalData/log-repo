@@ -121,7 +121,7 @@
     </Reference>
     <Reference Include="UnifreightIIG.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\UnifreightIIGResources.1.0.3\lib\Net40\UnifreightIIG.Resources.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIGResources.1.0.6\lib\Net40\UnifreightIIG.Resources.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnifreightIIG.1.0.0\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
@@ -2233,6 +2233,7 @@
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\Class1.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\DBTester.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\LogitudePointerDB.cs" />
+    <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\LogitudePointerDBExport.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\LogitudePointerModel.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\WCO.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\WCOErrorPointerModel.cs" />
