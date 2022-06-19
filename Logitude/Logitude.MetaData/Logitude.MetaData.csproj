@@ -228,6 +228,7 @@
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ChildEntitiesCustomField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\ScreenSection.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerTrackingResponse.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerTrackingRequest.lxml" />
