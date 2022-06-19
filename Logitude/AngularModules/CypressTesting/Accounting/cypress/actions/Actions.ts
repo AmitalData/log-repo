@@ -293,7 +293,7 @@ export function ARApproveInvoice() {
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
 }
 export function SATARApproveInvoice(invoiceNumber: number) { 
-    cy.SelectComboDropDownListItem(AccountingSelectors.ManuallySet, 'Manually Set')
+    cy.SelectComboDropDownListItem(AccountingSelectors.ManuallySet, 'Manually Set',0)
     cy.FillLogTextBox(AccountingSelectors.ARInvoiceInvoice,`${invoiceNumber}`)
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
@@ -639,7 +639,8 @@ export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
 export function changeSATInterfaceSettings(AccountingsSystem: string) {
     NavigatesToAccountingSettings()
     cy.Click(BaseSelectors.buttonspan, AccountingSelectors.ContainSATInterfaceSettings, true)
-    cy.SelectComboDropDownListItem(AccountingSelectors.SATInterfaceValue, AccountingsSystem)
+    console.log('index')
+    cy.SelectComboDropDownListItem(AccountingSelectors.SATInterfaceValue, AccountingsSystem,0)
     
 }
 export const SearchInvoice = (invoiceNumber) => {
