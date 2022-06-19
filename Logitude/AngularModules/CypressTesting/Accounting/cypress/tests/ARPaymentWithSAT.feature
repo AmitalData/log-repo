@@ -1,11 +1,11 @@
 #@devrelease
-@fixReleaseBugs
+#@fixReleaseBugs
 Feature: AR Payment With SAT
     The user creates new AR Payment and ARprove the AR Payment
 
     Scenario: Update SAT Interface Settings
         Given the user logged in and navigate to SAT Interface settings
-        Given SAT Interface Settings as"Profact 3.3"
+        Given SAT Interface Settings as"Profact 4.0"
         When change the SAT Interface Settings
         Then SAT Interface Settings should update successfully
 
