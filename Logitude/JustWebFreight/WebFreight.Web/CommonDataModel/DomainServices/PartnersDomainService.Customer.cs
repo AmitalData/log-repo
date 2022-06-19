@@ -135,6 +135,17 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             SecurityUtility.AuthenticationOnTenant(tenant);
             SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
 
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
+            if(item !=null && item.FieldValue != null && queryOperations.PageSize > 0)
+            {
+                 queryOperations.PageSize = 100;
+                 xmlFilters = new FilterSerializer().SerializeFilterItems(queryOperations);
+            }
+
+
             customerQuery = new CustomerQuery(CustomerRepository);
             return customerQuery.GetCustomerFilters(xmlFilters, tenant);
         }
@@ -275,10 +286,18 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
             customers = myFilter.RunFilter(customers);
 
+            QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
+            queryOperations.QueryFilterItems.Remove(item);
+            string searchvalue = item != null ? item.FieldValue != null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() : null : null : null;
+
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+
+
+
 
             CustomerCustomFilter customfilters = new CustomerCustomFilter(tenant);
             customers = customfilters.GetFilteredQuery(queryOperations, customers);
@@ -287,6 +306,24 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             IQueryable<CustomerList> query2 = customerQuery.GetIQueryableEntityList(customers);
 
             query2 = filter.GetFilteredQuery<CustomerList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(searchvalue))
+            {
+               query2 = new CustomerDataSearchService().Run(
+               new CustomerSearchArgs()
+               {
+                   SearchText = searchvalue,
+                   Tenant = tenant,
+                   EntityLists = query2,
+                   SortByColumnName = queryOperations.SortByColumnName,
+                   SortDirectin = queryOperations.SortDirectin,
+                   PageSize = queryOperations.PageSize,
+                   FilterItems = queryOperations.QueryFilterItems
+
+               }).AsQueryable();
+            }
+
+
             int count = query2.Count();
             return count;
         }
