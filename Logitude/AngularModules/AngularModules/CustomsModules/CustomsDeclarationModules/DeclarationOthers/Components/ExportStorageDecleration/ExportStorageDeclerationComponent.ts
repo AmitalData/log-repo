@@ -156,7 +156,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         if (this.SearchFieldsFilter) {
             filters.AdditionalFilters.push(this.SearchFieldsFilter);
         }
-debugger;
+        debugger;
         filters.PageSize = 30;
         filters.PageIndex = 0; // decremented 1 in the service
         filters.GetAll = false;
@@ -329,7 +329,7 @@ debugger;
                                 var emptyConsignment = this.declarationPM.Consignments.find(y => y.ManifestNumber == null && y.SecondCargoID == null);
                                 if (isConsignment != undefined) {
 
-                                    this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
+                                    this.exportStorage.Result.DeclarationId = AppTool.IsNullOrEmpty(this.exportStorage.Result.DeclarationId ) ?  this.declarationPM.Id:this.exportStorage.Result.DeclarationId ;
                                     this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
                                         var index1 = this.declarationPM.Consignments.findIndex(u => u == isConsignment)
                                         this.declarationPM.Consignments[index1].ExportStoragesId = ExportStorageId;
@@ -386,9 +386,11 @@ debugger;
                                         this.declarationPM.Consignments[index2] = consignment;
 
                                     }
-
-                                    this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
-                                    this.exportStoragePMService.update(this.exportStorage.Result).subscribe();
+                                    if (AppTool.IsNullOrEmpty(this.exportStorage.Result.DeclarationId)) {
+                                        this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
+                                        this.exportStoragePMService.update(this.exportStorage.Result).subscribe();
+                                    }
+                                  
                                 }
                             }
 
@@ -418,7 +420,7 @@ debugger;
 
     async checkStorageSiteCode(StorageSiteCode: any) {
 
-      await  this.DeliverySiteTypeService.getSingle(StorageSiteCode).subscribe(res => {
+        await this.DeliverySiteTypeService.getSingle(StorageSiteCode).subscribe(res => {
             if (!AppTool.IsNullOrEmpty(res.Result))
                 return true;
             return false;
@@ -427,7 +429,7 @@ debugger;
     }
     async checkloadingPortCodAndUn(PortCode: any) {
 
-      await  this.InternationalSiteService.getSingle(PortCode).subscribe(res => {
+        await this.InternationalSiteService.getSingle(PortCode).subscribe(res => {
             if (!AppTool.IsNullOrEmpty(res.Result))
                 return true;
             return false;
