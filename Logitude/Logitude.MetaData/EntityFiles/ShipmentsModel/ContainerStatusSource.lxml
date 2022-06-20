@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Container Status Source&quot;"
-  Code="&quot;d379&quot;"
+  Code="&quot;5ece&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -329,6 +329,10 @@
       Code="&quot;OIN&quot;"
       Name="&quot;Ocean Insights&quot;"
       SearchFields="&quot;OIN,Ocean Insights&quot;" />
+    <Record
+      Code="&quot;VZN&quot;"
+      Name="&quot;Vizion&quot;"
+      SearchFields="&quot;VZN,Vizion&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

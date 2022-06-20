@@ -10,8 +10,13 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { MenuButtonsTemplateArgs } from './MenuButtonsTemplateComponent';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { ShipmentContainersWebService } from 'Shipment/Services/ShipmentContainersWebService';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 export class ContainerMenuButtonsHandler implements OnDestroy {
+    private CurrentSession = SessionLocator.SelectedSession;
+
     public EntityPM: ContainerPM;
     public entityArgs: EntityArgs
     isValid: boolean = false;
@@ -148,6 +153,11 @@ export class ContainerMenuButtonsHandler implements OnDestroy {
                         this.ExceptionResolvedContainer();
                         break;
                     }
+                    case "ViziionUnsubscribe":
+                        {
+                            this.ViziionUnsubscribe();
+                            break;
+                        }
                     default: {
                         this.isButtonClicked = false;
                         break;
@@ -155,6 +165,27 @@ export class ContainerMenuButtonsHandler implements OnDestroy {
                 }
             }
         }
+    }
+    ViziionUnsubscribe() {
+        var shipmentContainersWebService = new ShipmentContainersWebService();
+        this.CurrentSession.StartBusyIndicator("Unsubscribe...");
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
+            ContainerId:this.EntityPM.Id,
+            ShipmentId:null,
+            IsFromContainer:true,
+            IsSimulator:false,
+            SourceCode:'VZN',
+        }
+        shipmentContainersWebService.ViziionUnsubscribe(args).subscribe(e=>{
+            this.CurrentSession.StopBusyIndicator();
+            var messageWindow = new MessageWindow();
+            if(e.HasError){
+                messageWindow.Show(e.ErrorsArray.join(', '));
+            }else{
+                var messageWindow = new MessageWindow();
+                messageWindow.Show(e.Result.message);
+            }
+        })
     }
     private Validate() {
         var errors: string[] = [];

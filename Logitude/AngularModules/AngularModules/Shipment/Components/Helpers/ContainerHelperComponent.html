@@ -3,7 +3,12 @@
         <td style="padding-right: 5px;" *ngIf="IsSimulatorVisible">
             <button class="Button" (click)="ShipmentContainersSimulatorClicked()">Container Statuses Simulator</button>
         </td>
-
+        <td style="padding-right: 5px;" *ngIf="IsGeneralSimulatorVisible">
+            <button class="Button" (click)="GeneralShipmentContainersSimulatorClicked()">General Container Statuses Simulator</button>
+        </td>
+        <td style="padding-right: 5px;" *ngIf="IsVisionRequestStatus" >
+            <button class="Button" (click)="VizionStatusClicked()">Vizion Container Statuses</button>
+        </td>
         <td style="padding-right: 5px;">
             <button class="Button" (click)="ContainersRequestStatusClicked()">Container Request Status</button>
         </td>

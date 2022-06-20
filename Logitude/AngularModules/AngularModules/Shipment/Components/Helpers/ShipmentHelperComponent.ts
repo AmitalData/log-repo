@@ -16,6 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList'; 
 import { DocumentTypePMExtendedService } from 'Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 
 @Component({    
     templateUrl: './ShipmentHelperComponent.html',
@@ -30,12 +31,17 @@ export class ShipmentHelperComponent implements OnDestroy {
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public IsSimulatorVisible: boolean = false; 
+    public IsVisionRequestStatus: boolean = false;
+
     ShareDocumentsViaEmailDocumentTypeCode = "SDVE"; 
     public documentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
+    public IsGeneralSimulatorVisible: boolean = false;
+    ValidationErrorsList: any[];
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
         this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
+        this.IsVisionRequestStatus = FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus");
 
         this.EntityPM = this.entityArgs.EntityPM;
 
@@ -51,6 +57,8 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
             this.Listen();
             this.BuildComponent();
+            this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator") && this.EntityPM.ShipmentTypeId == "FCLD";
+
         }
     }
 
@@ -130,7 +138,48 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
         }
     }
+    GeneralShipmentContainersSimulatorClicked() {
+        var logWindow = new LogitudeWindow();
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs>{
+            ContainerStatusSourceCode: null,
+            IsFromContainer: false,
+            ShipmentId: this.EntityPM.Id,
+            Tenant: this.EntityPM.Tenant,
+            IsSimulator: true,
+            Data: null,
+            ContainerId: null,
+            ContainerNumber: null
+        }
+        logWindow.WindowArgs = args;
+        logWindow.Title = "Shipment Containers Statuses Simulator";
+        logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
+    }
+    VizionStatusClicked() {
+        this.CurrentSession.StartBusyIndicator("Sending...");
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
+            ContainerId: null,
+            ContainerNumber: null,
+            IsFromContainer: false,
+            ShipmentId: this.EntityPM.Id,
+            Tenant: this.EntityPM.Tenant,
+            IsSimulator: false,
+            Data: null, 
+            ContainerStatusSourceCode: 'VZN'
+        }
+        var myService = new ShipmentContainersWebService();
+        myService.GeneralContainerSimulator(args).subscribe((myResponse: ServiceResponse) => {
 
+            this.CurrentSession.StopBusyIndicator();
+            var messageWindow = new MessageWindow();
+            if (myResponse.Result.Success) {
+                this.entityArgs.EditComponent.ValidationErrorsList = [];
+                messageWindow.Show("Request Sent Successfully");
+            }else{
+                this.entityArgs.EditComponent.ValidationErrorsList = myResponse.Result.Errors;
+            } 
+
+        });
+    }
     private ShowHideShippingInstructionsButton() {
         this.IsShippingInstructionsVisible = false;
 
@@ -383,7 +432,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
         }
     }
-
+    
     ImportWizard() {
         var isFullWizard: boolean = this.IsFullWizard();
         if (isFullWizard) {

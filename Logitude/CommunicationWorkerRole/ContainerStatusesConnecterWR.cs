@@ -1,4 +1,5 @@
 ﻿using CommunicationWorkerRole.Analyzers;
+using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.SystemLogs;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using WebFreight.Web.ContainerTracking;
 using WebFreight.Web.Helpers.Analyzers;
 using WebFreight.Web.Helpers.TicketAnalyzer;
 
@@ -31,6 +33,7 @@ namespace CommunicationWorkerRole
                         if (analyzeQueue != null)
                         {
                             ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueRepository);
+                            //ContainerTrackingGeneralAnalyzer analyzer = new ContainerTrackingGeneralAnalyzer(ContainerStatusSourceValues.OceanInsights, analyzeQueue, analyzeQueueRepository);
                             analyzer.Run();
                             LogDoneItemInMemory();
                         }
