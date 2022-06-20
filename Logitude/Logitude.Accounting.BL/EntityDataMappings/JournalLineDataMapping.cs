@@ -82,7 +82,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 GLAccountPM parent = gLAccountQueryService.GetSingle(entityPOCO.CreditAccountId, false, true/*false*/);
                 entityPM.CreditAccountName = parent.LocalName;
                 entityPM.CreditAccountEnglishName = parent.EnglishName;
-                entityPM.CreditAccountNumber = parent.InternalNumber;
+                entityPM.CreditAccountNumber = parent.DisplayNumber;
                 entityPM.CreditAccountCOACode = parent.ChartOfAccountsTypeCode;
             }
 
@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 GLAccountPM parent = gLAccountQueryService.GetSingle(entityPOCO.DebitAccountId, false, true/*false*/);
                 entityPM.DebitAccountName = parent.LocalName;
                 entityPM.DebitAccountEnglishName = parent.EnglishName;
-                entityPM.DebitAccountNumber = parent.InternalNumber;
+                entityPM.DebitAccountNumber = parent.DisplayNumber;
                 entityPM.DebitAccountCOACode = parent.ChartOfAccountsTypeCode;
 
 
