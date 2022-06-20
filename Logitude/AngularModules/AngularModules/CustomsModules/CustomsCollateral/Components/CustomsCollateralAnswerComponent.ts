@@ -764,14 +764,16 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
             return;
         }
 
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
-        await new CustomsCollateralWebService().updateMulti(
+        const customsCollateralList: CustomsCollateralPM[] = await new CustomsCollateralWebService().updateMulti(
             this.selectAll ? this.collateralToNotSendlist : this.collateralToSendlist, 
             this.collateralPM.DeclarationId, 
             this.selectAll,
             this.EntityPM
             );
         
+        const collateralToSendlist = customsCollateralList.map(x=> x.Id);
 
         // let count: number = 0;
         // for (var i = 0; i < this.collateralToSendlist.length; i++) {
@@ -790,13 +792,10 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
         // }
 
 
-
         let requestParams: SendCollateralRequestParams = new SendCollateralRequestParams();
 
-        requestParams.Collaterals = this.collateralToSendlist;
+        requestParams.Collaterals = collateralToSendlist;
         requestParams.Tenant = 1;
-
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
         this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe((res:any) => {
             SessionLocator.SelectedSession.StopBusyIndicator();
