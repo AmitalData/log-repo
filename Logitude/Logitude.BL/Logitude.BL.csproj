@@ -2990,6 +2990,7 @@
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateCrossDockBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateDocumentFilingBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentComputedFieldsBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\CToolMessages\EntityChangesMessageProducer.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\AWBSpecialHandlingCodeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\CustomsTransferHeaderMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\LogitudeOceanInsightsRequestMapping.cs" />

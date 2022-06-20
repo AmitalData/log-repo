@@ -23,6 +23,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.CToolWorkflows;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
@@ -362,7 +363,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 SendAutomaticallyOceanOnsightsRequest();
                 if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
                 {
-                    AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
+                    EntityChangesMessageProducer.ProduceShipmentCreateMessage(entityPoco, entityPM);
+                    //AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
                 }
                 RunAutomationThatDependencyOnLastEntityUpdate();
 
@@ -601,8 +603,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 // Produce shipment update msg
                 //if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
                 //{
-                AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
+                //AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
                 //}
+
+                EntityChangesMessageProducer.ProduceShipmentUpdateMessage(entityPoco, entityPM);
 
                 scope.Complete();
                 #endregion
