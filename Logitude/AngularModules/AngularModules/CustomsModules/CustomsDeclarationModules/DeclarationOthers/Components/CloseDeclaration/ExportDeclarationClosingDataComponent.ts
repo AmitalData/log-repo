@@ -372,7 +372,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if(!exportData) return;
         
         this.FlightDate = exportData.flightDate;
-        // this.FinalLoadingSiteName = exportData.loadingSite;
+        this.ChargingSite = exportData.loadingSite;
         this.Smp = exportData.HAWB;
         this.MainAWB = exportData.MAWB;
 
