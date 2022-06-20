@@ -93,14 +93,14 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
                 this.EntityPM = response.Result;
-                if (response.Result.ChangeSetOp == "1") {
-                    this.EntityPM.IsDirty = true;
-                    this.IsNew = true;
-                }
-                else {
-                    this.EntityPM.IsDirty = false;
 
-                }
+                if(this.EntityPM)
+                    if (response.Result.ChangeSetOp == "1") {
+                        this.EntityPM.IsDirty = true;
+                        this.IsNew = true;
+                    } else {
+                        this.EntityPM.IsDirty = false;
+                    }
 
                 /*this.EntityPM = new ExportDeclarationClosingDataPM();
                 this.EntityPM.DeclarationId = id;

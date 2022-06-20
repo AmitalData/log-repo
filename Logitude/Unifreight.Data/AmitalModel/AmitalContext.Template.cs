@@ -10171,6 +10171,10 @@ namespace Unifreight.Data.AmitalModel
                     .HasMaxLength(1)
                     .HasColumnType("char");
             modelBuilder.Entity<EFIMMN>()
+                 .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
                     .HasColumnType("int64");
             modelBuilder.Entity<EFIMMN>()
                 .Property(p => p.FINALPORT)
