@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HorseUpdateClass
    {  		
-		public const string HashString = "b9cfa79d922988253c085e2c1d4a3118";
+		public const string HashString = "e8609d45fee9d772614ada84ce284b94";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -622,27 +622,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Gender",
+					 						FieldName =  "GenderName",
 					  						ObjectTableName =  "Horse",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  50,
+					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  50,
+					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Gender",
-					  						ListPropertyPath =  "Gender",
+					  						PMPropertyPath =  "GenderName",
+					  						ListPropertyPath =  "GenderName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -653,16 +653,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Horse",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
+					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Gender",
+					  						FullFieldLable =  "GenderName",
 					  						DefaultText =  "Gender",
-					  						ListFieldLable =  "GenderListLable",
+					  						ListFieldLable =  "GenderNameListLable",
 					  						ListLableDefaultText =  "Gender",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1527,12 +1527,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1546,8 +1547,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Horse",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1614,7 +1616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn HORSESQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Horse.Color" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn HORSESQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Horse.Gender" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn HORSESQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Horse.GenderName" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn HORSESQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Horse.Breed" , ColumnWidth = 100 }, addedQueryColumns);
 

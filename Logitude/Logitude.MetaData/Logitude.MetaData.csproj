@@ -207,6 +207,8 @@
     <None Include="DBScripts\ShipmentModel\202205220940_CreateRequestContainerStatusWorkerRole.sxml" />
     <None Include="DBScripts\ShipmentModel\202208051503_UpdateContainerSearchFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202205191150_FillShipmentPackagesTypeAndQuantity.sxml" />
+    <None Include="DBScripts\ShipmentModel\202208051503_UpdateContainerSearchFields.soxml" />
+    <None Include="DBScripts\ShipmentModel\202205220940_CreateRequestContainerStatusWorkerRole.sxml" />
     <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
     <None Include="DBScripts\ShipmentModel\202223031230_UpdateAutomaticLastUpdateDateOnShipmentPackage.sxml" />
     <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.scxml" />
@@ -218,6 +220,7 @@
     <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202205160324_UpdateContainerStatusWorkerRole.sxml" />
     <None Include="DBTables\CommonDataModel\HorseGender.dxml" />
+    <None Include="DBScripts\ShipmentModel\202205160324_UpdateContainerStatusWorkerRole.sxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="DBTables\InfrastructureModel\ChildEntitiesCustomField.dxml" />
     <None Include="DBTables\QuoteModel\ValidByType.dxml" />
