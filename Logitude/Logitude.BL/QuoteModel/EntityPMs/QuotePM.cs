@@ -753,5 +753,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ValidByTypeCode { get; set; }
         public bool? ConnectedToOpportunity { get; set; }
+        public string SummaryMarkup { get; set; }
     }
 }

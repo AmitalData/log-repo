@@ -2566,10 +2566,27 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPM.TotalSaleIncludingVATAmountInLocalCurrency = mySaleAmountLocal + myTotalVATLocal;
 
             entityPM.TicketId = GetConnectedTicketId(entityPOCO, tenant);
-
+            entityPM.SummaryMarkup = this.GetSummaryMarkup(entityPM);
             return entityPM;
         }
 
+        private string GetSummaryMarkup(QuotePM quoteEntityPM)
+        {
+            double? summaryCostAmount = 0;
+            double? summarySaleAmount = 0;
+            string markupPercentage = "";
+            if (quoteEntityPM != null)
+            {
+                var myCostAmountLocal = MethodHelper.Round(quoteEntityPM.QuoteCharges.Sum(a => a.CostTotalAmountLocal), 2);
+                var mySaleAmountLocal = MethodHelper.Round(quoteEntityPM.QuoteCharges.Where(f => f.IsAllIN == false).Sum(a => a.SaleTotalAmountLocal), 2);
+                summaryCostAmount = MethodHelper.Round(myCostAmountLocal, 2);
+                summarySaleAmount = MethodHelper.Round(mySaleAmountLocal, 2);
+
+                markupPercentage = (summaryCostAmount == 0 ? summaryCostAmount : MethodHelper.Round((summarySaleAmount - summaryCostAmount) * 100 / summaryCostAmount, 2)) + "%";
+            }
+            return markupPercentage;
+        }
+   
         private string GetConnectedTicketId(Quote entityPOCO, int tenant)
         {
             #region Ticket
