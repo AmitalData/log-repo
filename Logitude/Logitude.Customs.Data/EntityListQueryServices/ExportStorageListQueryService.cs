@@ -75,7 +75,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        SearchFields = en.SearchFields,
 
-                                                       DeclarationId = en.DeclarationId,
+                                                       DeclarationId = declaration.CustomFileNo,
 
                                                        ExportFileNo = en.ExportFileNo,
 
@@ -138,14 +138,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
 
                                                        ActionCode = en.ExportLogisticPermitAction.LocalName,
-                                                       ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName
+                                                       ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName,
+                                                       StorageSiteCode = en.StorageSiteCode,
                                                    });
             return query;
         }
 
         private IQueryable<ExportStorage> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ExportStorage> iQueryable, int tenant)
         {
-            bool flag= false;
+            bool flag = false;
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "DeclarationIdAndProcedureCurrentName");
             if (filter != null)
             {
@@ -155,8 +156,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             var filter2 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsExportFileNo");
             if (filter2 != null)
             {
-            
-                flag = !iQueryable.Any(x=>x.ExportFileNo == filter2.FieldValue.ToString()) ;
+
+                flag = !iQueryable.Any(x => x.ExportFileNo == filter2.FieldValue.ToString());
                 iQueryable = iQueryable.Where(x => flag || x.ExportFileNo == filter2.FieldValue.ToString());
 
             }

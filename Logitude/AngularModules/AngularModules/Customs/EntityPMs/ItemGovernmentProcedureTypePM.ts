@@ -49,6 +49,11 @@ export class ItemGovernmentProcedureTypePM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private leadDocumentTypeID: string;
+    public get LeadDocumentTypeID() { return this.leadDocumentTypeID; }
+    public set LeadDocumentTypeID(newValue: string) { if (this.leadDocumentTypeID != newValue) { this.leadDocumentTypeID = newValue; this.MarkAsDirty("LeadDocumentTypeID"); } }
+       
+	 
 
     public OldEntityPM: ItemGovernmentProcedureTypePM;
 		
