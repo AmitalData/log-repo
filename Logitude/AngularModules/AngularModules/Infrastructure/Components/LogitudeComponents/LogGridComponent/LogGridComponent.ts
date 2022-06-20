@@ -606,10 +606,12 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     //    }
     //}
     AdvanceFilters: ApiQueryFilters;
+    backFromEdidIsChange: boolean = false;
     public BackFromEditAction(res: any) {
         if (this.rows.filter(a => a.rowIndex == res.rowIndex).length > 0) {
             //this.rows.filter(a => a.rowIndex == res.rowIndex)[0].rowData = res.Data;
             this.controller.cachedData[res.rowIndex] = res.Data;
+            this.backFromEdidIsChange = res.rowData.IsChanged;
             this.updateDisplayList();
         }
     }
@@ -1406,7 +1408,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             //this.init();
             this.updateDisplayList();
             var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
-            if (elem) {
+            if (elem && this.backFromEdidIsChange) {
                 elem.scrollTop = 0;
             }
             //var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
