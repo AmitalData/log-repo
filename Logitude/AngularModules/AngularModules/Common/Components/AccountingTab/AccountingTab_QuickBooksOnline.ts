@@ -791,6 +791,12 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
         }
     }
 
+    get BillToId() { return this.EntityPM.BillToId; }
+    set BillToId(value: boolean) {
+        if (this.EntityPM.BillToId != value) {
+            this.EntityPM.BillToId = value;
+        }
+    }
 }
 export class CustomerCurrencies {
     constructor() {
