@@ -94,6 +94,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 CustomsCollateralPM customsCollateralPM = GetEntityPM(customsCollateralItem, true, new CustomsCollateralKeys() { Id = customsCollateralItem.Id });
                 customsCollateralsAnswerPM.CustomsCollateralId = customsCollateralPM.Id;
                 customsCollateralsAnswerPM.AllocatedAmount = customsCollateralPM.CustomsCollateralsConditions.Sum(x=> x.RequestedAmount);
+                customsCollateralsAnswerPM.AllocatedAmount = customsCollateralsAnswerPM.AllocatedAmount;
                 var ccaList = customsCollateralPM.CustomsCollateralsAnswers;
                 customsCollateralsAnswerPM.LineNumber = ccaList.Count == 0 ? 1 : ccaList.Max(m => m.LineNumber) + 1; 
 
