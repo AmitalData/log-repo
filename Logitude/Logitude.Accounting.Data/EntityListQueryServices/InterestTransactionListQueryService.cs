@@ -26,61 +26,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private const string DummyInterestReportIdFilterValue = "999";
         private IQueryable<InterestTransactionList> GetIqueryableList(IQueryable<InterestTransaction> interestTransactionQuery, int tenant)
         {
-            var interestTransactionsForAdustmentsAndRevaluationJournals = from interestTransaction in interestTransactionQuery
-
-                                                                          join journal in context.Journals.Include("AccountingEntity")
-                                                                          on new { AccountingEntityId = interestTransaction.EntityId } equals
-                                                                             new
-                                                                             {
-                                                                                 AccountingEntityId = journal.Id
-                                                                             }
-
-                                                                          join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
-                                                                          into reportJoinData
-                                                                          from report in reportJoinData.DefaultIfEmpty()
-                                                                          where journal.AccountingEntityCode == Enums.AccountingEntityValues.Adjustment || journal.AccountingEntityCode == Enums.AccountingEntityValues.Revaluation
-                                                                          || journal.AccountingEntityCode == Enums.AccountingEntityValues.Journal || journal.AccountingEntityCode == Enums.AccountingEntityValues.BankAdjustment
-
-                                                                          select new InterestTransactionList()
-                                                                          {
-
-                                                                              Id = interestTransaction.Id,
-                                                                              Tenant = interestTransaction.Tenant,
-                                                                              CreateDateTime = interestTransaction.CreateDateTime,
-                                                                              UpdateDateTime = interestTransaction.UpdateDateTime,
-                                                                              SearchFields = interestTransaction.SearchFields,
-                                                                              GLAccountId = interestTransaction.GLAccountId,
-                                                                              InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
-                                                                              EntityId = interestTransaction.EntityId,
-                                                                              OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
-                                                                              LocalAmount = interestTransaction.LocalAmount,
-                                                                              ForeignAmount = interestTransaction.ForeignAmount,
-                                                                              CurrencyId = interestTransaction.CurrencyId,
-                                                                              InterestValueDate = interestTransaction.InterestValueDate,
-                                                                              InterestReportId = interestTransaction.InterestReportId,
-                                                                              IsClosed = interestTransaction.IsClosed,
-                                                                              IsCancelled = interestTransaction.IsCancelled,
-                                                                              InterestReportNumber = report == null ? null : report.ReportNumber,
-
-                                                                              JournalId = journal.Id,
-                                                                              JournalNumber = journal.JournalNumber,
-                                                                              AccountingDate = journal.AccountingDate,
-
-                                                                              Source = journal.AccountingEntityReference,
-                                                                              SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
-                                                                              SourceTypeCode = journal.AccountingEntityCode,
-                                                                              SourceId = journal.AccountingEntityId,
-                                                                              AccountingEntityCode = interestTransaction.AccountingEntityCode
-                                                                          };
+            var interestTransactionsForAdustmentsAndRevaluationJournals = GetInterestTransactionsForAdustmentsAndRevaluationJournals(interestTransactionQuery);
             IQueryable<InterestTransactionList> query
                 = (from interestTransaction in interestTransactionQuery
 
                    join journal in context.Journals.Include("AccountingEntity")
-                   on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode } equals
+                   on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode, Tenant = interestTransaction.Tenant } equals
                       new
                       {
                           AccountingEntityId = journal.AccountingEntityId,
-                          journal.AccountingEntityCode
+                          journal.AccountingEntityCode,
+                          journal.Tenant
                       }
 
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
@@ -121,6 +77,56 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                    }).Union(interestTransactionsForAdustmentsAndRevaluationJournals);
 
             return query;
+        }
+
+        private IQueryable<InterestTransactionList> GetInterestTransactionsForAdustmentsAndRevaluationJournals(IQueryable<InterestTransaction> interestTransactionQuery) {
+            return from interestTransaction in interestTransactionQuery
+
+                        join journal in context.Journals.Include("AccountingEntity")
+                        on new { AccountingEntityId = interestTransaction.EntityId, Tenant = interestTransaction.Tenant } equals
+                            new
+                            {
+                                AccountingEntityId = journal.Id,
+                                Tenant = journal.Tenant
+                            }
+
+                        join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
+                        into reportJoinData
+                        from report in reportJoinData.DefaultIfEmpty()
+                        where journal.AccountingEntityCode == Enums.AccountingEntityValues.Adjustment || journal.AccountingEntityCode == Enums.AccountingEntityValues.Revaluation
+                        || journal.AccountingEntityCode == Enums.AccountingEntityValues.Journal || journal.AccountingEntityCode == Enums.AccountingEntityValues.BankAdjustment
+
+                        select new InterestTransactionList()
+                        {
+
+                            Id = interestTransaction.Id,
+                            Tenant = interestTransaction.Tenant,
+                            CreateDateTime = interestTransaction.CreateDateTime,
+                            UpdateDateTime = interestTransaction.UpdateDateTime,
+                            SearchFields = interestTransaction.SearchFields,
+                            GLAccountId = interestTransaction.GLAccountId,
+                            InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
+                            EntityId = interestTransaction.EntityId,
+                            OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
+                            LocalAmount = interestTransaction.LocalAmount,
+                            ForeignAmount = interestTransaction.ForeignAmount,
+                            CurrencyId = interestTransaction.CurrencyId,
+                            InterestValueDate = interestTransaction.InterestValueDate,
+                            InterestReportId = interestTransaction.InterestReportId,
+                            IsClosed = interestTransaction.IsClosed,
+                            IsCancelled = interestTransaction.IsCancelled,
+                            InterestReportNumber = report == null ? null : report.ReportNumber,
+
+                            JournalId = journal.Id,
+                            JournalNumber = journal.JournalNumber,
+                            AccountingDate = journal.AccountingDate,
+
+                            Source = journal.AccountingEntityReference,
+                            SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
+                            SourceTypeCode = journal.AccountingEntityCode,
+                            SourceId = journal.AccountingEntityId,
+                            AccountingEntityCode = interestTransaction.AccountingEntityCode
+                        };
         }
         public List<InterestTransactionList> MapListQuery(List<InterestTransactionList> interestTransactions, int tenant, bool? exportToExcell = null)
         {
