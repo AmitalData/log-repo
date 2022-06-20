@@ -85,7 +85,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     from collateral in iQueryable.Include("Declaration")
                     let d = context.Declarations.Where(x => x.Id == declarationId).Select(x => x.AmendmentOriginalDeclartation).FirstOrDefault()
 
-                    where (collateral.DeclarationId == declarationId || collateral.Declaration.Id == d) && collateral.DeclarationId != null
+                    where (collateral.DeclarationId == declarationId || collateral.Declaration.Id == d || collateral.Declaration.AmendmentOriginalDeclartation == d) && collateral.DeclarationId != null
 
                     select collateral
                  );
