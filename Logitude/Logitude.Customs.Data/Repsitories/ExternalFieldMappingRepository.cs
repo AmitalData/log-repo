@@ -30,6 +30,15 @@ namespace Logitude.Customs.Data.Repsitories
                     select a;
             return q.FirstOrDefault();
         }
+        public ExternalFieldMapping GetSingleByField(string field, int tenant)
+        {
+            var q = from a in context.ExternalFieldMappings
+                    where
+                    a.Tenant == tenant &&
+                    a.Field == field 
+                    select a;
+            return q.FirstOrDefault();
+        }
 
     }
 
