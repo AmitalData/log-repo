@@ -538,7 +538,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                     this.UpdateShipmentFollowUpsCollection();
                     UpdateStandaloneShipments();
-                    
+
+                    EntityChangesMessageProducer.ProduceShipmentUpdateMessage(entityPoco, entityPM);
+
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
                     this.ComputeAgentComputed(entityPM, entityPoco);
                     entityRepository.Update(entityPoco);
@@ -605,8 +607,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 //{
                 //AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
                 //}
-
-                EntityChangesMessageProducer.ProduceShipmentUpdateMessage(entityPoco, entityPM);
 
                 scope.Complete();
                 #endregion

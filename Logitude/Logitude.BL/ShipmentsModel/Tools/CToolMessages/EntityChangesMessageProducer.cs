@@ -30,6 +30,7 @@ namespace Logitude.Server.Tools.CToolWorkflows
                         Entity = entityPM,
                         Changes = new List<PropertyChange>()
                     };
+
                     var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
 
                     var shipmentCreateMessageProducer = new Producer();
@@ -59,7 +60,7 @@ namespace Logitude.Server.Tools.CToolWorkflows
                     CToolWorkflowMessage ctoolWorkflowMessage = new CToolWorkflowMessage()
                     {
                         Entity = JsonConvert.DeserializeObject(shipmentPMString),
-                        Changes = WorkflowEntityChanges.GetChangedProperties(entityPoco, entityPM)
+                        Changes = GetShipmentUpdateChanges(entityPoco, entityPM)
                     };
 
                     var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
@@ -86,6 +87,13 @@ namespace Logitude.Server.Tools.CToolWorkflows
             documentsFilingPM = documentsFilingPM.Where(d => d.DocumentId != null && d.HasFile == true).ToList();
 
             return documentsFilingPM;
+        }
+
+        private static List<PropertyChange> GetShipmentUpdateChanges(Shipment entityPoco, ShipmentPM entityPM)
+        {
+            List<PropertyChange> shipmentChanges = WorkflowEntityChanges.GetChangedProperties(entityPoco, entityPM);
+            List<PropertyChange> ShipmentMasterDataChanges = WorkflowEntityChanges.GetChangedProperties(entityPoco.ShipmentMasterData, entityPM);
+            return shipmentChanges.Union(ShipmentMasterDataChanges).ToList();
         }
         #endregion
 
