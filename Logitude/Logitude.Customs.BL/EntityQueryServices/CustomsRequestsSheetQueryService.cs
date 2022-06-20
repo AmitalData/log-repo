@@ -180,6 +180,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2750", // שידור הצהרות בלדר
 "DCAMU", // multi update 
 "UCADPE", // הזנה גורפת PENDING
+"DCACSIFF", // יצירת חשבון ספק מאקסל
 
             };
 
@@ -325,8 +326,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8326", // שאילתא לתצהיר יבואן
 "DCAMU", // multi update 
 "DCAUAC", // multi update 
-"UCADPE" // add multi pending
-
+"UCADPE" ,// add multi pending
+"DCACSIFF", // יצירת חשבון ספק מאקסל
 
             };
 
@@ -452,7 +453,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2757",
 "DCAMU", // multi update 
 "DCAUAC",
-"UCADPE"
+"DCACSIFF", // יצירת חשבון ספק מאקסל
+"UCADPE",
 //"8302" //בקשה לטופס הצהרה
 };
 

@@ -9606,6 +9606,115 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("varchar2");
 
             #endregion
+            #region CTBCARMOD
+
+            modelBuilder.Entity<CTBCARMOD>()
+                .HasKey(p => new { p.CUSTOMERID, p.CARMODEL })
+                .ToTable("CTBCARMOD", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.CUSTOMERID)
+                    .HasColumnName(@"CUSTOMER_ID")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.CARMODEL)
+                    .HasColumnName(@"CAR_MODEL")
+                    .IsRequired()
+                    .HasMaxLength(25)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.NAME)
+                    .HasMaxLength(70)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(70)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(70)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(70)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.FOB)
+                    .HasColumnType("double");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.FREIGHTAMOUNT)
+                    .HasColumnName(@"FREIGHT_AMOUNT")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.FREIGHTCURR)
+                    .HasColumnName(@"FREIGHT_CURR")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.INSPERC)
+                    .HasColumnName(@"INS_PERC")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.PRAT)
+                    .HasMaxLength(11)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.WEIGHT)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.ENGINEVOL)
+                    .HasColumnName(@"ENGINE_VOL")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.EXPAMOUNT)
+                    .HasColumnName(@"EXP_AMOUNT")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.EXPCURR)
+                    .HasColumnName(@"EXP_CURR")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.COMMERCIAL)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.TARIFF)
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.ABS)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.ABG)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.EPS)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.PORTFEENIS)
+                    .HasColumnName(@"PORT_FEE_NIS")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.MOTORCYCLE)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+
+            #endregion
 
 
             #region Disabled conventions
@@ -9735,5 +9844,7 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<GITITEMAP> GITITEMAPs { get; set; }
         public virtual DbSet<CFIMSVSTATL> CFIMSVSTATLs { get; set; }
         public virtual DbSet<EFIMMN> EFIMMNs { get; set; }
+        public virtual DbSet<CTBCARMOD> CTBCARMODs { get; set; }
+
     }
 }

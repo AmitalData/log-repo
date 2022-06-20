@@ -22864,6 +22864,14 @@
         IndexOrder="16"
         LocalDefaultText="&quot;שליחת הודעה יזומה&quot;"
         IsPackagable="true" />
+      <MenuItem
+        EventCode="&quot;LoadExcelSupplierInvoices&quot;"
+        DefaultText="&quot;Load Excel SupplierInvoices&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="15"
+        LocalDefaultText="&quot;הטענת חשבון ספק&quot;"
+        IsPackagable="true"
+        HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent&quot;" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"

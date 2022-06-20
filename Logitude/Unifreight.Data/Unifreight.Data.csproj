@@ -122,6 +122,7 @@
     <Compile Include="AmitalModel\EntityKeys\CTBAPPROVKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBAPPROVTYPEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBBONDEDKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBCARMODKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBCOUNTRYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBCURRENCYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBERRORKeys.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROV.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROVTYPE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBBONDED.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCARMOD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCOUNTRY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCURRENCY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCUSTSUP.cs" />
@@ -335,6 +337,7 @@
     <Compile Include="AmitalModel\Repsitories\CTBAPPROVRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBAPPROVTYPERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBBONDEDRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBCARMODRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBCOUNTRYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBCURRENCYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBERRORRepository.cs" />

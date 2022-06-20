@@ -509,6 +509,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new DCAInUCBCTML_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService>
+                ((new DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInDE_NG_5108_DecisionMessageMessagingService>
                 ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
 
