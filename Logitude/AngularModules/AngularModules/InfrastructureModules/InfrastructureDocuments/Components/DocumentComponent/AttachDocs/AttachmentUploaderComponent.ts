@@ -356,6 +356,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
 
                             this.ArrayBufferToBase64(filebuffer, this);
                             this.IsUploadInProgress = true;
+                            this.IncreaseProgressBar(result);
 
                         }
                         else {
@@ -390,6 +391,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                                         if (!pmResponse.HasError) {
                                             var myResult1 = pmResponse.Result;
                                             if (myResult1) {
+                                                this.IncreaseProgressBar(result);
                                                 this.CurrentDocument.IsUpdateSharedDocument = false;
                                                 this.IsCloseButtonVisibile = true;
                                                 this.IsCancelVisibile = false;
@@ -426,7 +428,6 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                             }
 
                         }
-                        this.IncreaseProgressBar(result);
                     }
                 }
             }
