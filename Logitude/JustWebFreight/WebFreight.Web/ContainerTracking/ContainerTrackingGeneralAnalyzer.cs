@@ -114,6 +114,7 @@ namespace WebFreight.Web.ContainerTracking
                     containerUpdatedFields = vizionAnalyzer.Run();
                 }
 
+                containerUpdatedFields.TrackingSource = trackingSource;
                 this.StartUpdating();
                 this.DoneAnalyzeQueue();
             }
@@ -502,5 +503,6 @@ namespace WebFreight.Web.ContainerTracking
         public string ContainerStatus { get; set; }
         public string ShipmentPackageId { get; set; }
         public DateTime? EventDate { get; set; }
+        public string TrackingSource { get; set; }
     }
 }

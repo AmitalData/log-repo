@@ -177,6 +177,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             if (entityPM.IsUpdatedOceanInsightsAnalyzer)
             {
                 updatedByPartner = "Ocean Insights";
+            }else if (entityPM.IsUpdatedVizionAnalyzer)
+            {
+                updatedByPartner = "Vizion";
             }
             else
             {
