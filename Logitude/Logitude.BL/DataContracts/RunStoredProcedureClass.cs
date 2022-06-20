@@ -381,7 +381,7 @@ namespace Logitude.BL.DataContracts
 
         public static void RunEreaseTenantData(int tenant, string procedureName)
         {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 string strConnString = GetConnection(tenant);
                 using (SqlConnection cn = new SqlConnection(strConnString))
