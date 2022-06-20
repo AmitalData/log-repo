@@ -74,6 +74,9 @@
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
     <Content Include="DBScripts\202204131020_AddInterestTransactionsForRegularJournals.axml" />
+    <None Include="DBScripts\202204211224_UpdateInterestTransactionsGLAccountIfInvIsNotMultiCurrency.sxml" />
+    <None Include="DBScripts\202204211239_UpdateJournalLinesGLAccountIfInvoiceMultilCurrency.sxml" />
+    <None Include="DBScripts\202206201239_UpdateLedgerTransactionsGLAccountIfInvNotMultiCurrency.sxml" />
     <None Include="DBScripts\202206151132_RemoveInterestTransAndAddOppInterestsForDraftARPayments.sxml" />
     <Content Include="DBScripts\202206021039_RemoveInterestTransAndAddOppInterestsIfLedgerNotCreated.axml" />
     <None Include="DBScripts\202206060955_RemoveInterestTransAddOppInterIfLedgerNotCreatedForJournal.sxml" />
