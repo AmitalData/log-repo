@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "3cc3455d960641cda186a2e38f9e4ec1";
+		public const string HashString = "c2a09b60108b85ef442f2faf0f566dcb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18274,7 +18274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              			   Feature DeclarationFeature_MB612 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCancellation", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationCancellation", NameTextCodeDefaultText = "Declaration Cancellation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB613 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorageDecleration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.ExportStorageDecleration", NameTextCodeDefaultText = "Export Storage Decleration", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB614 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sending Initiated Message", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.SendingInitiatedMessage", NameTextCodeDefaultText = "SendingInitiatedMessage", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB613 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LoadExcelSupplierInvoices", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.LoadExcelSupplierInvoices", NameTextCodeDefaultText = "Load Excel SupplierInvoices", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB615 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LoadExcelSupplierInvoices", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.LoadExcelSupplierInvoices", NameTextCodeDefaultText = "Load Excel SupplierInvoices", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
                    
     
 			   Feature DeclarationFeature_MB7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSPANEL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocumentsPanel", NameTextCodeDefaultText = "Declaration Documents Panel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
@@ -18810,7 +18810,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureUniqeCode=  DeclarationFeature_MB614.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton613 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton615 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "LoadExcelSupplierInvoices",
 						Index = 15, 
@@ -18822,12 +18822,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						ParentMenuButtonId = DeclarationMenuButton6.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB613.Id,
+						FeatureId=  DeclarationFeature_MB615.Id,
 						Style = null,
 						LocalDefaultText = "הטענת חשבון ספק",
                         HtmlComponentPath="./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent",
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB613.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB615.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	          
    
