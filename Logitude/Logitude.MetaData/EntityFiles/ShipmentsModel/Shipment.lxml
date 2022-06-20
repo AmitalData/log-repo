@@ -1712,9 +1712,6 @@
     FullFieldLable="&quot;BookingId&quot;"
     DefaultText="&quot;BookingId&quot;"
     FullLocalDefaultText="&quot;BookingId&quot;"
-    ListFieldLable="&quot;BookingIdListLable&quot;"
-    ListLableDefaultText="&quot;BookingId&quot;"
-    ListLocalDefaultText="&quot;BookingId&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -113286,5 +113283,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;VisionContainerStatusSimulator&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Shipment.Features.VisionContainerStatusSimulator&quot;"
+      FeatureDefaultText="&quot;Vision Container Status Simulator&quot;"
+      IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />    
   </AdditionalFeatures>
 </entity>

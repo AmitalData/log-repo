@@ -1119,6 +1119,7 @@
     DefaultText="&quot;Main Carriage Vessel&quot;"
     ListFieldLable="&quot;VesselNameListLable&quot;"
     ListLableDefaultText="&quot;Main Carriage Vessel&quot;"
+    ListLocalDefaultText="&quot;&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
