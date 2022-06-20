@@ -74,8 +74,9 @@ namespace CommunicationWorkerRole
             BatchServiceCode = "DocumentsExecutionWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
             ConnectClient();
-
+           
             new Thread(new ThreadStart(CleanUp)).Start();
+            ExceptionHandler.HandleException(new Exception("Document Worker role started"), DateTime.Now, 0, null, "Doc WorkerRole Monitor", null, null);
 
             return base.OnStart();
         }
@@ -95,6 +96,7 @@ namespace CommunicationWorkerRole
 
             if (!isUpdatedRequired) return;
             documentsExecutionLogRepository.SubmitChanges();
+            ExceptionHandler.HandleException(new Exception("Document Worker cleaned up all stuck queue messages("+ documentsExecutionLogs.Count()+") and convert them to Fail"), DateTime.Now, 0, null, "Doc WorkerRole Monitor", null, null);
         }
 
 
@@ -109,6 +111,7 @@ namespace CommunicationWorkerRole
         public override void Run()
         {
             startExecuteDate = DateTime.Now;
+            ExceptionHandler.HandleException(new Exception("Document Worker role thread start running"), DateTime.Now, 0, null, "Doc WorkerRole Monitor", null, null);
             while (IsRunning)
             {
                 if (!General.IsUpdating())
@@ -121,6 +124,7 @@ namespace CommunicationWorkerRole
                     {
                         NmuberOfRunningDocumentThreads -= 1;
                         ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
+                        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|Main thread", null, null);                 
                         Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
                     }
                 }
