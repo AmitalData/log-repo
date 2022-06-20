@@ -52,14 +52,14 @@ namespace WebFreight.Web.ContainerTracking
             var plannedMilistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselDepartureFromOriginPort].FirstOrDefault(e => e.planned);
             if (plannedMilistone != null)
             {
-                containerUpdatedFields.EstimatedPOLVesselDeparture = plannedMilistone.planned ? plannedMilistone.timestamp : containerUpdatedFields.MainCarriageETA;
+                containerUpdatedFields.EstimatedPOLVesselDeparture = plannedMilistone.planned ? plannedMilistone.timestamp : containerUpdatedFields.EstimatedPOLVesselDeparture;
                 pOLLocation = plannedMilistone.location?.unlocode;
             }
 
             var milistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselDepartureFromOriginPort].FirstOrDefault(e => !e.planned);
             if (milistone != null)
             {
-                containerUpdatedFields.ActualPOLVesselDeparture = milistone.planned ? containerUpdatedFields.MainCarriageATA : milistone.timestamp;
+                containerUpdatedFields.ActualPOLVesselDeparture = milistone.planned ? containerUpdatedFields.ActualPOLVesselDeparture : milistone.timestamp;
                 pOLLocation = string.IsNullOrEmpty(milistone.location?.unlocode) ? pOLLocation : milistone.location?.unlocode;
 
             }
@@ -77,14 +77,14 @@ namespace WebFreight.Web.ContainerTracking
             var plannedMilistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort].FirstOrDefault(e => e.planned);
             if(plannedMilistone != null)
             {
-                containerUpdatedFields.EstimatedPODVesselArrival = plannedMilistone.planned ? plannedMilistone.timestamp : containerUpdatedFields.MainCarriageETA;
+                containerUpdatedFields.EstimatedPODVesselArrival = plannedMilistone.planned ? plannedMilistone.timestamp : containerUpdatedFields.EstimatedPODVesselArrival;
                 pODLocation = plannedMilistone.location?.unlocode;
             }
             
             var milistone = MilestonesDictinoary[VizionMmilestoneDescriptionEnums.VesselArrivedAtDestinationPort].FirstOrDefault(e => !e.planned);
             if(milistone != null)
             {
-                containerUpdatedFields.ActualPODVesselArrival = milistone.planned ? containerUpdatedFields.MainCarriageATA : milistone.timestamp;
+                containerUpdatedFields.ActualPODVesselArrival = milistone.planned ? containerUpdatedFields.ActualPODVesselArrival : milistone.timestamp;
                 pODLocation = string.IsNullOrEmpty(milistone.location?.unlocode) ? pODLocation : milistone.location?.unlocode;
 
             }
