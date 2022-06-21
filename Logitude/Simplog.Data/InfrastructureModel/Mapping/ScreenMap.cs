@@ -31,8 +31,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(200)
                 .IsUnicode(false);
 
-
-
+            this.Property(t => t.Type)
+                .HasMaxLength(30)
+                .IsUnicode(false);
 
 
             // Table & Column Mappings
@@ -45,8 +46,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.IsReadOnly).HasColumnName("IsReadOnly");
             this.Property(t => t.Name).HasColumnName("Name");
+            this.Property(t => t.Type).HasColumnName("Type");
 
-            
+
             // Relationships
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.Screens)

@@ -17,6 +17,7 @@ import {ScreenLayoutComponent} from './Components/Customization/ScreenLayoutComp
 import {LanguageSettingsComponent} from './Components/LanguageSettings/LanguageSettingsComponent';
 import { RuleUpdateHistoryComponent } from './Components/Customization/RulesComponents/RuleUpdateHistoryComponent';
 import { SetWorkerRoleNameComponent } from './Components/SetWorkerRoleName/SetWorkerRoleNameComponent';
+import { AddEditScreenComponent } from './Components/Customization/AddEditScreenComponent';
 
 export const Components =
     [
@@ -38,6 +39,8 @@ export const Components =
         LanguageSettingsComponent,
         RuleUpdateHistoryComponent,
         SetWorkerRoleNameComponent,
+        AddEditScreenComponent,
+
 
     ];
 export const ControlsComponents =
@@ -70,6 +73,8 @@ export class ModuleDeclarations {
             case "LanguageSettingsComponent": { myResult = LanguageSettingsComponent; break; }
             case "RuleUpdateHistoryComponent": { myResult = RuleUpdateHistoryComponent; break; }
             case "SetWorkerRoleNameComponent": { myResult = SetWorkerRoleNameComponent; break; }
+            case "AddEditScreenComponent": { myResult = AddEditScreenComponent; break; }
+
 
         }
 

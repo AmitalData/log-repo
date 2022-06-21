@@ -59,7 +59,17 @@
     Size="200">
     <Constraints
       Nullable="false" />
+   </Column> 
+
+  <Column
+    Name="SectionId"
+    ShortName="SectionId"
+    Type="varchar"
+   Size="15">
+  <Constraints
+      Nullable="true" />
   </Column>
+ 
   <Relation
     ForeignKeyColumn="ScreenId"
     ReferencedTable="Screens"

@@ -55,6 +55,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    ObjectTableName = a.ObjectTable.Name,
                                    Tenant = a.Tenant,
                                    UserTenant = tenant,
+                                   Type = a.Type,
                                }).ToList();
 
 
@@ -101,6 +102,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       ObjectTableName = a.ObjectTable.Name,
                                       Tenant = a.Tenant,
                                       UserTenant = tenant,
+                                      Type = a.Type,
+
 
                                   }).ToList();
 
@@ -127,6 +130,29 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return screens;
         }
 
+        public ScreenPM GetSinglePM( string id,int tenant)
+        {
+            WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+            ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(tenant);
+            return (from a in repository.context.Screens.Include("ObjectTable")
+                    where a.Tenant == tenant && a.Id == id
+                    select new ScreenPM()
+                    {
+                        Code = a.Code,
+                        Id = a.Id,
+                        IsReadOnly = a.IsReadOnly,
+                        NumberOfColumns = a.NumberOfColumns,
+                        NumberOfRows = a.NumberOfRows,
+                        ObjectTableId = a.ObjectTableId,
+                        Name = a.Name,
+                        ObjectTableName = a.ObjectTable.Name,
+                        Tenant = a.Tenant,
+                        UserTenant = tenant,
+                        Type = a.Type,
+
+                    }).FirstOrDefault();
+
+        }
 
     }
 }

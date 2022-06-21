@@ -1124,6 +1124,7 @@
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\HelpResourceController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\InterestReportController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ImageLibraryExtendedListController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\ScreenExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\EntityStatusTypeViewsController.Generated.cs" />

@@ -44,5 +44,11 @@ export class ScreenPM {
     private isReadOnly: boolean;
     public get IsReadOnly() { return this.isReadOnly; }
     public set IsReadOnly(newValue: boolean) { this.isReadOnly = newValue; }
-       
+
+
+    private type: string;
+    public get Type() { return this.type; }
+    public set Type(newValue: string) { this.type = newValue; }
+
+    
 }

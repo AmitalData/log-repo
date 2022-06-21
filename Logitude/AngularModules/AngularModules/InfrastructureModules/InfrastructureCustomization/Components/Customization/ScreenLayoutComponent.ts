@@ -29,7 +29,7 @@ declare var window;
 export class ScreenLayoutComponent extends BaseComponent {
     public DataContext: ScreenLayoutComponent = this;
     public MyArgs: ScreenLayoutArgs = new ScreenLayoutArgs();
-    private ObjecttableId: string;
+    public ObjecttableId: string;
     private myService: EntityResourceService;
     public TableScreensCollection: Array<ScreenItem> = [];
     public ObjectTableName: string;
@@ -82,10 +82,6 @@ export class ScreenLayoutComponent extends BaseComponent {
     SelectionChanged(Item) {
         //this.OkClicked(false);
         this.SelectedItem = Item;
-
-        if (this.SelectedItem && this.SelectedItem.Name == "Customer Add Edit Screen") {
-            this.SelectedItem.Type = "lightening";
-        }
         if (this.Modified) {
             this.OpenConfirmWindow();
             return;
@@ -243,6 +239,18 @@ export class ScreenLayoutComponent extends BaseComponent {
         }
     }
 
+
+    public AddScreenItem(screen: ScreenPM) {
+        var screenItem = new ScreenItem();
+        screenItem.ScreenPM = screen;
+        screenItem.Name = screenItem.Name;
+        this.TableScreensCollection.push(screenItem);
+        this.SelectionChanged(screenItem);
+
+    }
+
+
+
     FillbanckStackFields() {
         this.banckStackFields = [];
         this.AllbanckStackFields = [];
@@ -363,7 +371,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     }
 
     IsMuiltSectionScreen() {
-        return this.SelectedItem && this.SelectedItem.Type == 'lightening';
+        return this.SelectedItem && this.SelectedItem.Type == 'LIGHTENING';
     }
 
     onMyDrop(event: DragEvent, screenRowDetails: ScreenRowDetails, column: number, section: number = 0) {
@@ -559,6 +567,18 @@ export class ScreenLayoutComponent extends BaseComponent {
             }
             this.SelectedItem = this.OldItem;
         });
+    }
+
+    NewScreenButtonClicked() {
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 450;
+        logitudeWindow.Height = 190;
+        logitudeWindow.Title = "New Screen"
+        let windowArgs: any = {};
+        windowArgs.ViewModel = this;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditScreenComponent');
     }
 }
 
