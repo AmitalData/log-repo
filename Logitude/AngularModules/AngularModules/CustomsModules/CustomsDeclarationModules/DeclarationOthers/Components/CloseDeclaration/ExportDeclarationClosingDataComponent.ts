@@ -1,4 +1,4 @@
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
 import { ExportDeclarationClosingDataPM } from '../../../../../Customs/EntityPMs/ExportDeclarationClosingDataPM';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -17,10 +17,12 @@ import { DeclarationWebService } from '../../../../../Customs/Services/WebServic
 import { AmendmentRequestParams } from '../../../../../Customs/DataContract/RequestParams/AmendmentRequestParams';
 import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { ExportDeclarationClosingDatasExtendPMService } from 'Customs/Services/ExtendedPMs/ExportDeclarationClosingDatasExtendPMService';
+import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
+import { ExportDeclarationClosingWebService } from 'Customs/Services/WebServices/ExportDeclarationClosingWebService';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
-    templateUrl: './ExportDeclarationClosingDataComponent.html',
+    templateUrl: './ExportDeclarationClosingDataComponent.html',    
 })
 
 export class ExportDeclarationClosingDataComponent extends BaseComponent {
@@ -36,8 +38,12 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     exportDeclarationClosingDatasExtendPMService: ExportDeclarationClosingDatasExtendPMService = new ExportDeclarationClosingDatasExtendPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     public IsNew: boolean = false;
+    private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
 
-    constructor(private EntityResourceService: EntityResourceService) {
+    constructor(
+        private EntityResourceService: EntityResourceService, 
+        private readonly cdr: ChangeDetectorRef, 
+        ) {
         super();
     }
 
@@ -85,13 +91,14 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
                 this.EntityPM = response.Result;
-                if (response.Result.ChangeSetOp == "1") {
-                    this.EntityPM.IsDirty = true;
-                    this.IsNew = true;
-                }
-                else {
-                    this.EntityPM.IsDirty = false;
-                }
+
+                if(this.EntityPM)
+                    if (response.Result.ChangeSetOp == "1") {
+                        this.EntityPM.IsDirty = true;
+                        this.IsNew = true;
+                    } else {
+                        this.EntityPM.IsDirty = false;
+                    }
 
                 if(this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O'){
                     this.FinalCargoTypeCode = '37'
@@ -115,6 +122,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.IsNew = true;*/
 
                 this.IsReady = true;
+
+                this.initOceanExportData();
             });
         }
     }
@@ -172,10 +181,14 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public get FlightDate() {
         if (this.EntityPM != null && this.EntityPM.FLIGHT_DATE != null) {
             var myFormats = DateTool.GetDateFormats(this.EntityPM.FLIGHT_DATE);
-            return myFormats.DateString;
+            return myFormats.DateString as any;
             // + " " + myFormats.ShortTimeString;
         }
         return null;
+    }
+    public set FlightDate(value: Date) {
+        if (this.EntityPM.FLIGHT_DATE != value)
+            this.EntityPM.FLIGHT_DATE = value;
     }
 
     get Smp() { return this.EntityPM ? this.EntityPM.SMP : null; }
@@ -363,6 +376,26 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
             });
         }
+    }
+
+    async initOceanExportData() {
+        if(this.DecPM.Direction !== 'E' || this.DecPM.TransportModeId !== 'O' || !(await this.isConnectedToUniFreight())) return;
+
+        const exportData = await this.exportDeclarationClosingWebService.getUnifreightData(this.DecPM.ExportFile);
+        if(!exportData) return;
+        
+        this.FlightDate = exportData.flightDate;
+        this.ChargingSite = exportData.loadingSite;
+        this.Smp = exportData.HAWB;
+        this.MainAWB = exportData.MAWB;
+
+        this.cdr.detectChanges();
+    }
+
+    isConnectedToUniFreight(): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) =>             
+            new CustomsSettingListService().getSingleFromCache(this.DecPM.Tenant.toString()).subscribe((response: ServiceResponse) => 
+                resolve(response.Result.IsConnectedToUniFreight)))
     }
 }
 
