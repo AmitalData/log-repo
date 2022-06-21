@@ -4515,6 +4515,8 @@ namespace WebFreight.Web.Helpers
                         {
                             insideEntityName = "Card";
                         }
+
+                        insideEntityName = ShouldChangeEntityNameToCustomer(objectField, currentEntity, tenant) ? "Customer" : insideEntityName;
                         // ==================================================================================
                         List<ObjectField> insideEntityObjectFields = GetEntityObjectFields(insideEntityName, tenant);//generalService.ObjectFieldsRepository.GetObjectFieldsByObjectTableName(insideEntityName, tenant).ToList();
 
@@ -4785,6 +4787,24 @@ namespace WebFreight.Web.Helpers
 
             if (resultValue == "") resultValue = " ";
             return resultValue;
+        }
+
+        private bool ShouldChangeEntityNameToCustomer(ObjectField objectField, object currentEntity, int tenant)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CCR", tenant)) return false;
+            if (objectField.FieldCode != "Shipment.ShipperNotExporterId" && objectField.FieldCode != "Shipment.ConsigneeNotImporterId") return false;
+            if (!IsCustomerExist(objectField, currentEntity, tenant)) return false;
+            
+            return true;
+        }
+
+        private bool IsCustomerExist(ObjectField objectField, object currentEntity, int tenant)
+        {
+            string fieldValue = GetEntityPropertyValue(currentEntity, objectField.FieldName);
+            if (string.IsNullOrEmpty(fieldValue)) return false;
+
+            CustomerRepository customerRepository = new CustomerRepository(tenant);
+            return customerRepository.IsCustomerExist(fieldValue, tenant);
         }
 
         private string ResolveFieldValue(string fieldValue, ObjectField field, int tenant)
