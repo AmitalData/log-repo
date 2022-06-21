@@ -66,8 +66,8 @@ namespace Logitude.Server.Tools.CToolWorkflows
                     var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
 
                     var shipmentUpdateMessageProducer = new Producer();
-                    var result = shipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsCreateTopic,
-                        KakaMessageTypes.ShipmentCreate, serializedCToolWorkflowMessage);
+                    var result = shipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic,
+                        KakaMessageTypes.ShipmentUpdate, serializedCToolWorkflowMessage);
                     shipmentUpdateMessageProducer.ProducerBuilder.Flush();
                     shipmentUpdateMessageProducer.ProducerBuilder.Dispose();
                 }
