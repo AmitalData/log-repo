@@ -199,10 +199,10 @@ import { AutomationsConditionsViewDetailsComponent } from './Components/Maintena
 import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
 import { CreateTaskResultComponent } from './Components/Maintenance/Automation/AutomationResult/CreateTaskResultComponent';
 import { EventCreationResultComponent } from './Components/Maintenance/Automation/AutomationResult/EventCreationResultComponent';
- 
- 
 
-
+import { MultiPrintMainComponent } from './Components/MultiPrint/MultiPrintMainComponent';
+import { PrintComponent } from './Components/MultiPrint/PrintComponent';
+import { MultiPrintErrorHandlerComponent } from './Components/MultiPrint/MultiPrintErrorHandlerComponent';
 
 
 //import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -414,8 +414,10 @@ export const Components =
         MultiEntityUpdateBaseComponent,
         MultiEntityUpdateErrorHandlerComponent,
         MultiUpdateCheckTemplate,
-        MultiUpdateCheckBoxComponent
-
+        MultiUpdateCheckBoxComponent,
+        MultiPrintMainComponent,
+        PrintComponent,
+        MultiPrintErrorHandlerComponent,
         
     ];
 
@@ -536,10 +538,9 @@ export class ModuleDeclarations {
             case 'MultiEntityUpdateErrorHandlerComponent': { myResult = MultiEntityUpdateErrorHandlerComponent; break; }
             case 'MultiUpdateCheckTemplate': { myResult = MultiUpdateCheckTemplate; break; }
             case 'MultiUpdateCheckBoxComponent': { myResult = MultiUpdateCheckBoxComponent; break; }
-                 
-                 
-
-                 
+            case 'MultiPrintMainComponent': { myResult = MultiPrintMainComponent; break; }
+            case 'PrintComponent': { myResult = PrintComponent; break; }
+            case 'MultiPrintErrorHandlerComponent': { myResult = MultiPrintErrorHandlerComponent; break; }
         }
 
         return myResult;

@@ -46,14 +46,10 @@ import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGr
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { IsMultiUpdateValid } from 'Infrastructure/Helpers/MultiUpdateHelper';
-
+import { IsMultiPrintValid } from 'Infrastructure/Helpers/MultiPrintHelper';
 
 @Component({
-
-
     templateUrl: './ListComponent.html',
-    //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent, QueryListComponent, LocationDirective, SearchTextBox],
-    //pipes: [TextCodeTranslationPipe],
     providers: [ListComponentArgs, EntityListService, EntityResourceService, PubSubService, PubSubService1, EntityPMService, TotangoService],
 })
 
@@ -92,7 +88,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     ConstantPageSize: number = 100;
     DontApplyVirtualization: boolean = false;
     HasMutliUpdateFeature: boolean = false;
-
+    HasMultiPrintFeature: boolean = false;
     //public Title: string;
     private title: string;//= "";
     get Title() { return this.title; }
@@ -946,46 +942,50 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     ShowViews: boolean = true;
     ResourcesLoaded: boolean = false;
   MenuTableQuerySection: string;
-  Run(args: ListComponentArgs) {
-    this.CurrentSession.AddMenuReference(this.ComponentRef);
-    this.CurrentSession.AddListComponent(this);
-      this.listArgs = args;
-    if (!this.IsDemoTenant) {
-      if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
-        this.Title = this.listArgs.DisplayTitle;
-      }
-      //args.QueryCode=this.ObjectTableName + '.' + args.QueryCode
-      this.QueryCode = args.QueryCode;
-      this.ObjectTableName = args.ObjectTableName;
-        this.HasMutliUpdateFeature = this.HasMultiUpdateFeature();
-      this.SetAddButtonTitle();
-      this.MethodName = args.MethodName;
-      this.BackBtnTitle = args.BackButtonTitle;
-      this.ShowViews = args.ShowViews;
-      this.MenuTableQuerySection = args.QuerySection;
+    Run(args: ListComponentArgs) {
+        this.CurrentSession.AddMenuReference(this.ComponentRef);
+        this.CurrentSession.AddListComponent(this);
+        this.listArgs = args;
+        if (!this.IsDemoTenant) {
+            if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
+                this.Title = this.listArgs.DisplayTitle;
+            }
 
-      this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-      this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
+            this.QueryCode = args.QueryCode;
+            this.ObjectTableName = args.ObjectTableName;
+            this.HasMutliUpdateFeature = this.HasMultiUpdateFeature();
+            this.HasMultiPrintFeature = this.IsMultiPrintFeatureOn();
+            this.SetAddButtonTitle();
+            this.MethodName = args.MethodName;
+            this.BackBtnTitle = args.BackButtonTitle;
+            this.ShowViews = args.ShowViews;
+            this.MenuTableQuerySection = args.QuerySection;
 
-      this.SearchTextValue = new FormControl();
-      this.NewButtonLable = args.NewButtonLabel;
+            this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+            this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
 
-      this.SearchTextValue.valueChanges
-        .pipe(
-          debounceTime(500),
-          distinctUntilChanged()
-        ).subscribe((search: string): any => {
-          this.searchFields = (search === "") ? this.searchFields = "" : this.searchFields = search;
-          this.SearchFieldchangeevent.emit(this.searchFields);
-        });
+            this.SearchTextValue = new FormControl();
+            this.NewButtonLable = args.NewButtonLabel;
 
-      this.GetQueries();
-      this.RunComponent();
+            this.SearchTextValue.valueChanges
+                .pipe(
+                    debounceTime(500),
+                    distinctUntilChanged()
+                ).subscribe((search: string): any => {
+                    this.searchFields = (search === "") ? this.searchFields = "" : this.searchFields = search;
+                    this.SearchFieldchangeevent.emit(this.searchFields);
+                });
+
+            this.GetQueries();
+            this.RunComponent();
+        }
     }
-  }
 
     private HasMultiUpdateFeature(): boolean {
         return this.ObjectTableName == "Shipment" && FeatureLocator.HasFeaturePermession("Shipment", "MULTIUPDATE");
+    }
+    private IsMultiPrintFeatureOn(): boolean {
+        return this.ObjectTableName == "ARInvoice" && FeatureLocator.HasFeaturePermession("General", "MultiPrint");
     }
 
     MutliUpdate() {
@@ -1032,8 +1032,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
     }
 
-
-    //HideLogGrid: boolean = false;
     TipVisibilityChanged(event) {
 
         if (event == "true") this.IsShowTipArea = true;
@@ -1046,27 +1044,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     }
 
-    //ShowTipAreaClick() {
-
-    //    this.IsShowTipArea = true;
-    //  //  this.ShowTipEvent.emit("true");
-    //}
-
-    //FilterQuerysByMenuTableQuerySection(allQueries: any) {
-
-    //    if (!AppTool.IsNullOrEmpty(this.MenuTableQuerySection)) {
-    //        return allQueries.filter(d => d.QuerySection == this.MenuTableQuerySection);
-    //    }
-    //    return allQueries;
-
-    //}
-
-
     FilterQuerysByQuerySection(allQueries: any) {
         let querySection: string = !AppTool.IsNullOrEmpty(this.MenuTableQuerySection) ? this.MenuTableQuerySection : this.ObjectTableName;
         return allQueries.filter(d => d.QuerySection == querySection || d.QuerySection == (querySection + "FollowUp"));
     }
-
 
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
@@ -2614,16 +2595,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //}
     }
 
-    //OnBackFromEdit() {
-    //    this.RefreshBtnClick();
-    //    //if (this.ReattachToDetection) {
-    //    //    this.ReattachToDetection = false;
-    //    //}
-    //    //else {
-    //    //    this.ReattachToDetection = true;
-    //    //}
-    //}
-
     BackButtonClicked() {
 
         this.DestroyListControl();
@@ -3855,5 +3826,27 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                 });
         }
+    }
+
+    MultiPrintClicked() {
+        if (!IsMultiPrintValid(this.ObjectTable.DBTableName, this.dataSource.rowCount)) return;
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 1050;
+        logitudeWindow.Height = 700;
+        logitudeWindow.Title = "Multi Print " + this.ObjectTable.DBTableName;
+
+        var windowArgs: any = {};
+        windowArgs.QueryCode = this.SelectedQueryCode;
+        windowArgs.Filters = this.CurrentQueryFilters;
+        windowArgs.Columns = this.columns;
+        windowArgs.ObjectTable = this.ObjectTable;
+        windowArgs.Title = this.Title;
+
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Infrastructure/Components/MultiPrint/MultiPrintMainComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshBtnClick();
+        });
     }
 }
