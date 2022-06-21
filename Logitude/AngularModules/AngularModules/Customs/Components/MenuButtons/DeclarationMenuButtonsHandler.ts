@@ -1414,7 +1414,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         this.NotificationPM.EntityId=this.EntityPM.Id;
         this.NotificationPM.ObjectTableId="1-343";
         this.NotificationPM.Reference1Number=this.EntityPM.CustomFileNo ;
-        this.NotificationPM.Reference2Number=this.EntityPM.DeclarationNumber;;
+        this.NotificationPM.Reference2Number=this.EntityPM.CustomFileNo;;
         this.NotificationPM.DepartmentId=null;
         this.NotificationPM.ClosedByAssignee=null;
         this.NotificationPM.ClosedByCustomOfficeUserId=null;
