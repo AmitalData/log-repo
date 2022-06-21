@@ -194,7 +194,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     invoice.ChangeSetOp = ChangeSetOperation.Insert;
                     invoice.SupplierInvoiceItems = new List<SupplierInvoiceItemPM>();
-                    CreateSupplierInvoiceItems(invoice, tenant, declarationid, invoiceFromFile, partnerId);
+                    CreateSupplierInvoiceItems(invoice, tenant, declarationid, invoiceFromFile, partnerId, declarationPM.CustomerCode);
 
                     declarationPM.SupplierInvoices.Add(invoice);
                 }
@@ -221,7 +221,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void CreateSupplierInvoiceItems(SupplierInvoicePM invoice, int tenant, string declarationid, InvoiceFromFile invoiceFromFile, string partnerId)
+        private void CreateSupplierInvoiceItems(SupplierInvoicePM invoice, int tenant, string declarationid, InvoiceFromFile invoiceFromFile, string partnerId, string customerId)
         {
             foreach (var invoiceItemFromFile in invoiceFromFile.SupplierInvoiceItems)
             {
@@ -238,7 +238,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //ClassificationCode = "84253990000"//todo
                 };
                 CTBCARMODRepository re = new CTBCARMODRepository(amitalContext);
-                var classificationCode = re.GetSingle(partnerId, invoiceItemFromFile.ClassificationCode)?.PRAT;
+                var classificationCode = re.GetSingle(customerId, invoiceItemFromFile.ClassificationCode)?.PRAT;
                 //var classificationCode = GetTranslationL2P(partnerId, "CTBCARMOD", invoiceItemFromFile.ClassificationCode);
                 if (!string.IsNullOrWhiteSpace(classificationCode))
                 {
@@ -246,7 +246,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-                    LogMessagingUtil.Instance.AppendLine("classificationCode = " + invoiceItemFromFile.ClassificationCode + " could not translate to Logitude Id");
+                    LogMessagingUtil.Instance.AppendLine("classificationCode = " + invoiceItemFromFile.ClassificationCode + " not exists for customer: "+ customerId);
+                    this.MyResponseData.Succeeded = false;
+                    this.MyResponseData.UserMessage = "לא נמצא סיווג עבור הדגם: " + invoiceItemFromFile.ClassificationCode + " והלקוח בתיק";
+                    throw new Exception("classificationCode not exists");
                 }
                 invoiceItem.SupplierInvoiceItemVehicles = new List<SupplierInvoiceItemVehiclePM>
                         {
