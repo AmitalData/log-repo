@@ -45,7 +45,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     SecurityUtility.AuthenticationOnEntityTenant("CommunicationLog", communicationLogExtendedArgs.Tenant, authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("CommunicationLog", "NEW", authToken.Tenant);
+                    //SecurityUtility.CheckContactFeature("CommunicationLog", "NEW", authToken.Tenant);
 
                     CommunicationLogExtendedService.AddCommunicationLog(communicationLogExtendedArgs, authToken.Tenant);
 
