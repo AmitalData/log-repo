@@ -676,6 +676,14 @@ namespace Logitude.Infrastructure.BL
                 Code = "SAC", 
                 SearchFields = "Show Agents in Opportunities' Customers LOV", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CCR", 
+                Name = "Activate Customer Nested Of Card In Html Editor", 
+                Description = "Activate Customer Nested Of Card In Html Editor", 
+                SearchFields = "CCR,Activate Customer Nested Of Card In Html Editor", 
+			});
 			
             return all;
        }
