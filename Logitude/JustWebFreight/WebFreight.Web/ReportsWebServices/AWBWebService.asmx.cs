@@ -2017,6 +2017,31 @@ namespace WebFreight.Web.ReportsWebServices
 
             awbDp.CommoditiesLinesList = new List<CommodityLine>();
 
+            if (shipmentPM.GrossWeight != null)
+            {
+                awbDp.GrossWeight = String.Format("{0:#,0.00}", shipmentPM.GrossWeight.Value);
+            }
+
+            if (shipmentPM.GrossWeightInKG != null)
+            {
+                awbDp.GrossWeightInKG = String.Format("{0:#,0.00}", shipmentPM.GrossWeightInKG.Value);
+            }
+
+            if (shipmentPM.ChargeableWeight != null)
+            {
+                awbDp.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
+            }
+
+            if (shipmentPM.ChargeableWeightInKG != null)
+            {
+                awbDp.ChargeableWeightInKG = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeightInKG.Value);
+            }
+
+            if (shipmentPM.NumberOfPackages != null)
+            {
+                awbDp.TotalQuantity = shipmentPM.NumberOfPackages.ToString();
+            }
+
             #region MultipleCommodities
             if (shipmentPM.IsMultipleCommodities)
             {
@@ -2183,32 +2208,26 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (shipmentPM.GrossWeight != null)
                 {
-                    awbDp.GrossWeight = String.Format("{0:#,0.00}", shipmentPM.GrossWeight.Value);
                     commodityLine.GrossWeight = String.Format("{0:#,0.00}", shipmentPM.GrossWeight.Value);
                 }
 
                 if (shipmentPM.GrossWeightInKG != null)
                 {
-                    awbDp.GrossWeightInKG = String.Format("{0:#,0.00}", shipmentPM.GrossWeightInKG.Value);
                     commodityLine.GrossWeightInKG = String.Format("{0:#,0.00}", shipmentPM.GrossWeightInKG.Value);
                 }
 
                 if (shipmentPM.ChargeableWeight != null)
                 {
-                    awbDp.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
                     commodityLine.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
                 }
 
                 if (shipmentPM.ChargeableWeightInKG != null)
                 {
-                    awbDp.ChargeableWeightInKG = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeightInKG.Value);
                     commodityLine.ChargeableWeightInKG = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeightInKG.Value);
                 }
 
-
                 if (shipmentPM.NumberOfPackages != null)
                 {
-                    awbDp.TotalQuantity = shipmentPM.NumberOfPackages.ToString();
                     commodityLine.TotalQuantity = shipmentPM.NumberOfPackages.ToString();
                 }
 
