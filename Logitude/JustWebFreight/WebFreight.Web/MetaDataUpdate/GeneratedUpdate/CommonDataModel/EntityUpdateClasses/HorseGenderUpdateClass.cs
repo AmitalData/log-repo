@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HorseGenderUpdateClass
    {  		
-		public const string HashString = "e35a624f53d0bbb5219c848eb0415de6";
+		public const string HashString = "853410ef041aa1eb0b06dde337bd21e4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Horse Gender",
-			      				    Code =  "5ebd",
+			      				    Code =  "7ea4",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -234,7 +234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "HorseGender",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
