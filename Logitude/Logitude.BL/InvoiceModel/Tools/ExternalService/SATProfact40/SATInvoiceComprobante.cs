@@ -1118,12 +1118,12 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                             traslado = comprobanteImpuestos.Traslados.Where(t => t.TipoFactor == "Tasa" && t.TasaOCuota != "0.000000").FirstOrDefault();
                         }
 
-                        if (traslado.Importe != SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalTraslados, invoiceCurrencyCode))
+                        if (traslado != null && (traslado.Importe != SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalTraslados, invoiceCurrencyCode)))
                         {
                             decimal precentage = (decimal.Parse(traslado.TasaOCuota.TrimEnd('0')) * 100);
                             throw new Exception("Due to the SAT Invoice Transmission we calculate the VAT amount per line. There is a difference between the lines VAT sum and the total VAT (" + totalTraslados + ") at the invoice level. You are not allowed to approve the invoice unless you adjust the lines with the following VAT : " + precentage.ToString().TrimEnd('0').TrimEnd('.') + "%");
                         }
-                        traslado.Importe = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalTraslados, invoiceCurrencyCode);
+                        //traslado.Importe = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalTraslados, invoiceCurrencyCode);
                     }
 
                     if (comprobanteImpuestos.Traslados.Where(t => t.TipoFactor == "Exento").Any())
