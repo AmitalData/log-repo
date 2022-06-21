@@ -44,7 +44,7 @@ export class ShipmentContainersWebService {
 
             var mappedEntity: ShipmentContainerSimulator = this.MapJsonToShipmentContainerSimulator(entity, false);
 
-            return this._httpClient.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._httpClient.post(this._apiUrl + '/PostOceanInsightSimulator, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myJsonResult = res;
 
                 var mappedResult: ShipmentContainerSimulator = this.MapJsonToShipmentContainerSimulator(myJsonResult, true, entity);
