@@ -1404,7 +1404,6 @@ export class DeclarationPM {
     public set ExportClosedErrorXML(newValue: string) { if (this.exportClosedErrorXML != newValue) { this.exportClosedErrorXML = newValue; this.MarkAsDirty("ExportClosedErrorXML"); } }
        
 	 
-
     private declarationOfficeHandlerCode: string;
     public get DeclarationOfficeHandlerCode() { return this.declarationOfficeHandlerCode; }
     public set DeclarationOfficeHandlerCode(newValue: string) { if (this.declarationOfficeHandlerCode != newValue) { this.declarationOfficeHandlerCode = newValue; this.MarkAsDirty("DeclarationOfficeHandlerCode"); } }
@@ -1413,11 +1412,11 @@ export class DeclarationPM {
     private transferExporterCode: string;
     public get TransferExporterCode() { return this.transferExporterCode; }
     public set TransferExporterCode(newValue: string) { if (this.transferExporterCode != newValue) { this.transferExporterCode = newValue; this.MarkAsDirty("TransferExporterCode"); } }
-
+       
+	 
     private isExportDeclarationAmendments: boolean;
     public get IsExportDeclarationAmendments() { return this.isExportDeclarationAmendments; }
     public set IsExportDeclarationAmendments(newValue: boolean) { if (this.isExportDeclarationAmendments != newValue) { this.isExportDeclarationAmendments = newValue; this.MarkAsDirty("IsExportDeclarationAmendments"); } }
-
        
 	 
 
@@ -1448,4 +1447,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

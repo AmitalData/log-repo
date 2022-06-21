@@ -496,7 +496,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DeclarationTypeCode = a.DeclarationTypeCode,
                                                     
                                                       DeclarationTypeName=a.DeclarationType.LocalName,
-                                                     IsExportDeclarationAmendments = arrAmentmentStatus.Contains(a.AmendmentStatus)
+                                                     IsExportDeclarationAmendments = arrAmentmentStatus.Contains(a.AmendmentStatus),
 
 
                                                      FOBValueNIS = a.FOBValueNIS,

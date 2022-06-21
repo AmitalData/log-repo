@@ -412,9 +412,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsExportClosed, 
 	         ExportClosedErrorXML, 
 	         DeclarationOfficeHandlerCode, 
-	         TransferExporterCode,
+	         TransferExporterCode, 
 	         IsExportDeclarationAmendments,
-
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
