@@ -59,7 +59,7 @@ export class ShipmentContainersWebService {
 
     GeneralContainerSimulator(entity: GeneralContainerTrackingArgs) {
         return defer(() => {
-            return this._httpClient.post(this._apiUrl+'/PostSimulateGeneralContainerStatus', JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._httpClient.post(this._apiUrl+'/PostGeneralContainerStatus', JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myResponse = new ServiceResponse();
                 myResponse.Result = res;
                 return myResponse;

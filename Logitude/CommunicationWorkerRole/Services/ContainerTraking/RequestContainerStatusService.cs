@@ -235,6 +235,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
                 ShipmentId = Shipment.Id,
                 Status = ContainerTrackingRequestStatus.Active,
                 CarrierCode = ContainerStatusSimulatorArgs.CarrierCode,
+                ScacCode = ContainerStatusSimulatorArgs.ScacCode,
                 ContainerId = ContainerStatusSimulatorArgs.ContainerId,
                 IsSimulate = ContainerStatusSimulatorArgs.IsSimulator
             };
