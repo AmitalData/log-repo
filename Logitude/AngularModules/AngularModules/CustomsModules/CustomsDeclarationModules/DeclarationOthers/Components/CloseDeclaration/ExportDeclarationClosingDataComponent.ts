@@ -70,8 +70,6 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.DeclarationIsClosed = true
                 this.setInputsReadOnly();
             }
-
-            this.initOceanExportData();
         });
     }
 
@@ -117,6 +115,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.IsNew = true;*/
 
                 this.IsReady = true;
+
+                this.initOceanExportData();
             });
         }
     }
@@ -368,7 +368,6 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if(this.DecPM.Direction !== 'E' || this.DecPM.TransportModeId !== 'O' || !(await this.isConnectedToUniFreight())) return;
 
         const exportData = await this.exportDeclarationClosingWebService.getUnifreightData(this.DecPM.ExportFile);
-        console.log(exportData)
         if(!exportData) return;
         
         this.FlightDate = exportData.flightDate;
