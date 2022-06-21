@@ -215,6 +215,7 @@ export class DeclarationList {
 	IntegratorCode: string;
 	IsExportClosed: boolean;
 	DeclarationTypeName: string;
+	IsExportDeclarationAmendments: boolean;
 	
 }
  

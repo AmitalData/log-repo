@@ -142,6 +142,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         private IQueryable<DeclarationList> GetIqueryableList(IQueryable<Declaration> iQueryable)
         {
+            var arrAmentmentStatus = new string[] { "6", "7", "8", "10" };
             /*
             var qCourierPendingReasonCode =
                 (from dp in context.DeclarationPendings
@@ -359,7 +360,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      TransferImporterCountryCode = a.TransferImporterCountryCode,
                                                      SearchFields = a.SearchFields,
                                                      DeclarationOfficeName = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
-                                                     DeclarationNumberandVersionId = a.DeclarationNumber + (string.IsNullOrEmpty(a.VersionId) ? "" : " " + a.VersionId),
+                                                     DeclarationNumberandVersionId = "1234",//a.DeclarationNumber + (string.IsNullOrEmpty(a.VersionId) ? "" : " " + a.VersionId),
                                                      //ErrosXml = a.ErrosXml,
                                                      //   TransportModeId = a.TransportModeId,
                                                      AutonomyRegionTypeCode = a.AutonomyRegionTypeCode,
@@ -494,12 +495,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DeclarationTypeCode = a.DeclarationTypeCode,
                                                     
                                                       DeclarationTypeName=a.DeclarationType.LocalName,
+                                                     IsExportDeclarationAmendments = arrAmentmentStatus.Contains(a.AmendmentStatus)
                                                  });
 
 
-
-
-            return query;
+                return query;
         }
 
 

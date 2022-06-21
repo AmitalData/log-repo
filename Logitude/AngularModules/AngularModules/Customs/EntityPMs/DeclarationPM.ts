@@ -1394,6 +1394,11 @@ export class DeclarationPM {
     public set ExportClosedErrorXML(newValue: string) { if (this.exportClosedErrorXML != newValue) { this.exportClosedErrorXML = newValue; this.MarkAsDirty("ExportClosedErrorXML"); } }
        
 	 
+    private isExportDeclarationAmendments: boolean;
+    public get IsExportDeclarationAmendments() { return this.isExportDeclarationAmendments; }
+    public set IsExportDeclarationAmendments(newValue: boolean) { if (this.isExportDeclarationAmendments != newValue) { this.isExportDeclarationAmendments = newValue; this.MarkAsDirty("IsExportDeclarationAmendments"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
