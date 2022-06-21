@@ -92,9 +92,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 else {
                     this.EntityPM.IsDirty = false;
                 }
-                
-                if(this.DecPM.Direction === "E" && this.DecPM.TransportModeId === 'O')
+
+                if(this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O'){
                     this.FinalCargoTypeCode = '37'
+                    this.FinalManifestNumber = ''; 
+                    this.FinalSecondCargoId = '';
+                    this.FinalThirdCargoId = '';
+                }
 
                 /*this.EntityPM = new ExportDeclarationClosingDataPM();
                 this.EntityPM.DeclarationId = id;
@@ -222,7 +226,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     SendButtonClicked(event: CustomSendOptionsArgs) {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-            var msg = " שדה תאריך טעינה שדה חובה";
+            var msg = " שדה תםריך טעינה שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
