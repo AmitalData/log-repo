@@ -6,8 +6,17 @@ namespace Logitude.Server.Tools.CToolWorkflows
     {
         public static T Clone<T>(T source)
         {
-            string serializedSource = JsonConvert.SerializeObject(source);
-            return JsonConvert.DeserializeObject<T>(serializedSource);
+            if (source != null)
+            {
+                string serializedSource = JsonConvert.SerializeObject(source, Formatting.Indented,
+                    new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+                return JsonConvert.DeserializeObject<T>(serializedSource);
+            }
+
+            return source;
         }
     }
 }

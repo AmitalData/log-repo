@@ -397,8 +397,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.calculateProfit = false;
                 this.calculatePayables = false;
                 this.calculateReceivables = false;
-                Shipment shipmentPocoCopy = CloneObjectService.Clone(entityPoco);
-                ShipmentPM shipmentPMCopy = CloneObjectService.Clone(entityPM);
+                Shipment shipmentPocoCopy = null;
+                ShipmentPM shipmentPMCopy = null;
 
                 if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                 {
@@ -541,6 +541,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentFollowUpsCollection();
                     UpdateStandaloneShipments();
 
+                    shipmentPocoCopy = CloneObjectService.Clone(entityPoco);
+                    shipmentPMCopy = CloneObjectService.Clone(entityPM);
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
                     this.ComputeAgentComputed(entityPM, entityPoco);
                     entityRepository.Update(entityPoco);

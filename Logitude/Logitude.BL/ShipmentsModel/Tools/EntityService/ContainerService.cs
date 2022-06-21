@@ -59,8 +59,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.containerPm = entityPM;
-            Container containerPocoCopy = CloneObjectService.Clone(containerPoco);
-            ContainerPM containerPMCopy = CloneObjectService.Clone(containerPm);
 
             containerPm.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             this.SetUpdatedByUser();
@@ -74,6 +72,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 RunAutomation("OnUpdate", entityPM);
             }
             this.HandleContainersExternalData(entityPM, containersExternal);
+
+            Container containerPocoCopy = CloneObjectService.Clone(containerPoco);
+            ContainerPM containerPMCopy = CloneObjectService.Clone(containerPm);
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Update(containerPoco);
