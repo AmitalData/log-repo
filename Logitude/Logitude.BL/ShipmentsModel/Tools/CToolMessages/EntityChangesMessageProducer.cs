@@ -65,11 +65,11 @@ namespace Logitude.Server.Tools.CToolWorkflows
 
                     var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
 
-                    var shipmentCreateMessageProducer = new Producer();
-                    var result = shipmentCreateMessageProducer.Produce(KafkaTopics.ShipmentsCreateTopic,
+                    var shipmentUpdateMessageProducer = new Producer();
+                    var result = shipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsCreateTopic,
                         KakaMessageTypes.ShipmentCreate, serializedCToolWorkflowMessage);
-                    shipmentCreateMessageProducer.ProducerBuilder.Flush();
-                    shipmentCreateMessageProducer.ProducerBuilder.Dispose();
+                    shipmentUpdateMessageProducer.ProducerBuilder.Flush();
+                    shipmentUpdateMessageProducer.ProducerBuilder.Dispose();
                 }
             }
             catch (Exception ex)
@@ -97,5 +97,62 @@ namespace Logitude.Server.Tools.CToolWorkflows
         }
         #endregion
 
+        #region Container
+        public static void ProduceContainerCreateMessage(Container containerPoco, ContainerPM containerPm)
+        {
+            try
+            {
+                if (FeatureToggleHelper.HasFeatureToggle("CTL", containerPm.Tenant))
+                {
+                    CToolWorkflowMessage ctoolWorkflowMessage = new CToolWorkflowMessage()
+                    {
+                        Entity = containerPm,
+                        Changes = new List<PropertyChange>()
+                    };
+
+                    var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
+
+                    var containerCreateMessageProducer = new Producer();
+                    var result = containerCreateMessageProducer.Produce(KafkaTopics.ContainerCreateTopic,
+                        KakaMessageTypes.ContainerCreate, serializedCToolWorkflowMessage);
+                    containerCreateMessageProducer.ProducerBuilder.Flush();
+                    containerCreateMessageProducer.ProducerBuilder.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, containerPm.Tenant, null, "ProduceContainerCreateMessage", null, null);
+            }
+        }
+
+        public static void ProduceContainerUpdateMessage(Container containerPoco, ContainerPM containerPm)
+        {
+            try
+            {
+                if (FeatureToggleHelper.HasFeatureToggle("CTL", containerPm.Tenant))
+                {
+                    var containerPMString = JsonConvert.SerializeObject(containerPm, Formatting.Indented);
+
+                    CToolWorkflowMessage ctoolWorkflowMessage = new CToolWorkflowMessage()
+                    {
+                        Entity = JsonConvert.DeserializeObject(containerPMString),
+                        Changes = WorkflowEntityChanges.GetChangedProperties(containerPoco, containerPm)
+                    };
+
+                    var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
+
+                    var containerUpdateMessageProducer = new Producer();
+                    var result = containerUpdateMessageProducer.Produce(KafkaTopics.ContainerUpdateTopic,
+                        KakaMessageTypes.ContainerUpdate, serializedCToolWorkflowMessage);
+                    containerUpdateMessageProducer.ProducerBuilder.Flush();
+                    containerUpdateMessageProducer.ProducerBuilder.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, containerPm.Tenant, null, "ProduceContainerUpdateMessage", null, null);
+            }
+        }
+        #endregion
     }
 }

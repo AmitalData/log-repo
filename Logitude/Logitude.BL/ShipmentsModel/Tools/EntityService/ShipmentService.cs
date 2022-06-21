@@ -397,6 +397,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.calculateProfit = false;
                 this.calculatePayables = false;
                 this.calculateReceivables = false;
+                Shipment shipmentPocoCopy = CloneObjectService.Clone(entityPoco);
+                ShipmentPM shipmentPMCopy = CloneObjectService.Clone(entityPM);
 
                 if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                 {
@@ -539,8 +541,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentFollowUpsCollection();
                     UpdateStandaloneShipments();
 
-                    EntityChangesMessageProducer.ProduceShipmentUpdateMessage(entityPoco, entityPM);
-
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
                     this.ComputeAgentComputed(entityPM, entityPoco);
                     entityRepository.Update(entityPoco);
@@ -607,6 +607,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 //{
                 //AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
                 //}
+                EntityChangesMessageProducer.ProduceShipmentUpdateMessage(shipmentPocoCopy, shipmentPMCopy);
 
                 scope.Complete();
                 #endregion

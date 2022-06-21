@@ -33,10 +33,6 @@ namespace Logitude.Server.Tools.CToolWorkflows
         {
             return (from propertyInfo in entityPropertiesInfo
 
-                    //let oldValue = propertyInfo.PropertyType.Name == "CustomFieldClass" ?
-                    //GetValue(GetValue(oldEntity, propertyInfo.Name), "Value") :
-                    //GetValue(oldEntity, propertyInfo.Name)
-
                     let oldValue = GetValue(oldEntity, propertyInfo.Name)
 
                     let newValue = propertyInfo.Name.StartsWith("Field") ?

@@ -242,6 +242,7 @@
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
+    <Compile Include="CToolWorkflows\CloneObjectService.cs" />
     <Compile Include="CToolWorkflows\Models\CToolWorkflowMessage.cs" />
     <Compile Include="CToolWorkflows\Models\PropertyChange.cs" />
     <Compile Include="CToolWorkflows\WorkflowEntityChanges.cs" />
