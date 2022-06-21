@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+<!--EXECUTE IMMEDIATE 'commit;';-->
+	<Oracle Version="7">
+    <![CDATA[
+EXECUTE IMMEDIATE ' alter table SUPPLIERINVOICEFREIGHTAMOUNTS add "Id" VARCHAR2(15 char) default ''1'' not null';
+
+
+	EXECUTE IMMEDIATE 'update SUPPLIERINVOICEFREIGHTAMOUNTS T1
+	set T1."Id"=(SELECT  RN FROM
+	(select  ROW_NUMBER() OVER (ORDER BY DECLARATIONID ) RN,
+	SUPPLIERINVOICEFREIGHTAMOUNTS.*
+	from SUPPLIERINVOICEFREIGHTAMOUNTS
+	) T2
+	where T1.DECLARATIONID = T2.DECLARATIONID
+	and T1.INVOICECOUNTERKEY = T2.INVOICECOUNTERKEY
+	and T1.CURRENCYTYPECODE = T2.CURRENCYTYPECODE)	
+	';
+	commit;
+
+
+    ]]>
+  </Oracle>
+</Script>
+
