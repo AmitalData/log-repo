@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public SupplierInvoiceFreightAmountList GetSingle(string id)
+        public SupplierInvoiceFreightAmountList GetSingle(string declarationid, int invoicecounterkey, string currencytypecode)
         {
             IQueryable<SupplierInvoiceFreightAmount> SupplierInvoiceFreightAmountQuery = (from a in context.SupplierInvoiceFreightAmounts
-                                                       where a.Id == id
+                                                       where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.CurrencyTypeCode == currencytypecode
                                                        select a);
 
              
