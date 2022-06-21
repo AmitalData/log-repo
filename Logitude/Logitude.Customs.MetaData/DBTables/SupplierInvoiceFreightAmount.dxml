@@ -46,4 +46,9 @@
     ReferencedTable="SupplierInvoices"
     ReferencedColumn="DeclarationId,InvoiceCounterKey"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CurrencyTypeCode"
+    ReferencedTable="CurrencyTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>
