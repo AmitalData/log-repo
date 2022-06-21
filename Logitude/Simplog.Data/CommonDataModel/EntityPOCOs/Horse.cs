@@ -15,7 +15,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Name { get; set; }
         public int? YearOfBirth { get; set; }
         public string Color { get; set; }
-        public string Gender { get; set; }
         public string Breed { get; set; }
         public string Discipline { get; set; }
         public string TravelBehavior { get; set; }

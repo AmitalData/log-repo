@@ -25,7 +25,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.Name = entityPM.Name;
             entityPOCO.YearOfBirth = entityPM.YearOfBirth;
             entityPOCO.Color = entityPM.Color;
-            entityPOCO.Gender = entityPM.Gender;
             entityPOCO.Breed = entityPM.Breed;
             entityPOCO.Discipline = entityPM.Discipline;
             entityPOCO.TravelBehavior = entityPM.TravelBehavior;
