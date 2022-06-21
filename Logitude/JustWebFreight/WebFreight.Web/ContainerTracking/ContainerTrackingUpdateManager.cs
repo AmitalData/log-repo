@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
@@ -76,7 +77,10 @@ namespace WebFreight.Web.ContainerTracking
             this.FillFieldsNewValues("ActualPOLArrival", containerUpdatedFields.ActualPOLArrival, containerPM);
             this.FillFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation, containerPM);
             this.FillFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation, containerPM);
-            containerPM.IsUpdatedOceanInsightsAnalyzer = true;
+            if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
+                containerPM.IsUpdatedVizionAnalyzer = true;
+            if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
+                containerPM.IsUpdatedOceanInsightsAnalyzer = true;
             containerPM.CurrentStatus = containerUpdatedFields.CurrentStatus;
             containerPM.CurrentLocation = containerUpdatedFields.CurrentLocation;
             containerPM.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
@@ -318,7 +322,12 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void StartProcessingUpdateShipment()
         {
-            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
+            if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
+                shipmentPM.IsUpdatedVizionAnalyzer = true;
+            if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
+                shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
+
+
             this.UpdateShipmentDates();
 
             if (this.isUpdatingShipmentDateFields)
@@ -345,7 +354,11 @@ namespace WebFreight.Web.ContainerTracking
 
             else if (POLShipmentUpdateIndicator == "Main Carriage")
             {
-                shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
+                if(containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
+                    shipmentPM.IsUpdatedVizionMainCarriageDates = true;
+                if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
+                    shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
+
                 this.FillFieldsShipmentNewValues("MainCarriageETD", containerPM.EstimatedPOLVesselDeparture, shipmentPM);
 
                 if (shipmentPM.MainCarriageATD == null)
@@ -368,7 +381,11 @@ namespace WebFreight.Web.ContainerTracking
 
             else if (PODShipmentUpdateIndicator == "Main Carriage")
             {
-                shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
+                if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
+                    shipmentPM.IsUpdatedVizionMainCarriageDates = true;
+                if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
+                    shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
+
                 this.FillFieldsShipmentNewValues("MainCarriageETA", containerPM.EstimatedPODVesselArrival, shipmentPM);
 
                 if (shipmentPM.MainCarriageATA == null)
@@ -379,7 +396,7 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void SaveShipment()
         {
-            if (shipmentPM.IsUpdatedOceanInsightsAnalyzer || this.isUpdatingPackages || this.isUpdatingEmptyLeg)
+            if (shipmentPM.IsUpdatedVizionAnalyzer || shipmentPM.IsUpdatedOceanInsightsAnalyzer || this.isUpdatingPackages || this.isUpdatingEmptyLeg)
             {
                 string systemEmail = "system@tenant" + tenant + ".com";
                 ShipmentService service = new ShipmentService(containerUpdatedFields.ShipmentContext, shipmentPM, systemEmail);
