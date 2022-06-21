@@ -23,7 +23,8 @@
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'DocumentType'"
-                                [DependencyFilter1Value]="ObjectTableId">
+                                [DependencyFilter1Value]="ObjectTableId"
+                                [HideColumns]="true">
                         </LogLov>
                     </td>
                     <td><div></div></td>
@@ -32,7 +33,7 @@
                 <tr class="FormFieldRow">
                     <td>Template:</td>
                     <td>
-                        <ComboBox (SelectedItemChanged)="alertselected($event)"
+                        <ComboBox (SelectedItemChanged)="SelectedDocumentTypeTemplate = $event"
                                   [ItemsSource]="DocumentTypeTemplateList"
                                   [SelectedItem]="SelectedDocumentTypeTemplate"
                                   [Binding]="'Name'"></ComboBox>
@@ -43,6 +44,10 @@
                 <tr class="FormFieldRow">
                     <td>Copy:</td>
                     <td>
+                        <ComboBox (SelectedItemChanged)="SelectedDocumentTypeCopy = $event"
+                                  [ItemsSource]="DocumentTypeCopiesList"
+                                  [SelectedItem]="SelectedDocumentTypeCopy"
+                                  [Binding]="'Name'"></ComboBox>
                     </td>
                     <td><div></div></td>
                 </tr>

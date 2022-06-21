@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { DocumentTypeCopyList } from '../../../Common/EntityLists/DocumentTypeCopyList';
 import { DocumentTypeTemplateList } from '../../../Common/EntityLists/DocumentTypeTemplateList';
 import { DocumentTypeTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/DocumentTypeTemplateListExtendedService';
+import { DocumentTypeCopyPMExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypeCopyPMExtendedService';
 import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
 import { CodeNameClass } from '../../DataContracts/CodeNameClass';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
@@ -34,12 +36,14 @@ export class PrintComponent extends BaseComponent implements OnInit {
     SelectedItemsCountText: string = null;
     @Output() SearchFieldchangeevent = new EventEmitter();
     public DataContext = this;
-    public SelectedDocumentTypeTemplate: CodeNameClass;
     public DocumentTypeTemplateList: CodeNameClass[];
-
+    public DocumentTypeCopiesList: CodeNameClass[];
+    private documentTypeService: DocumentTypeTemplateListExtendedService;
+    public ValidationErrorsList: string[];
     constructor(private _entityListService: EntityListService) {
         super();
         window.AllRecords = [];
+        this.documentTypeService = new DocumentTypeTemplateListExtendedService();
         this.Listen();
     }
 
@@ -128,12 +132,12 @@ export class PrintComponent extends BaseComponent implements OnInit {
     }
 
     OnUpdateFinish(entities) {
-        //this.AllRecords.forEach(function (record) {
-        //    var entity = entities.find(item => item.EntityId == record.Id);
-        //    record.UpdateSuccess = entity ? !entity.HasException : undefined;
-        //});
+        this.AllRecords.forEach(function (record) {
+            var entity = entities.find(item => item.EntityId == record.Id);
+            record.UpdateSuccess = entity ? !entity.HasException : undefined;
+        });
 
-        //this.RefreshList();
+        this.RefreshList();
     }
 
     Clone(list: any): any {
@@ -149,13 +153,9 @@ export class PrintComponent extends BaseComponent implements OnInit {
             this.LoadTemplates();
             this.LoadCopies();
         }
-    }
-    LoadCopies() {
-        throw new Error('Method not implemented.');
-    }
-    LoadTemplates() {
-        var service: DocumentTypeTemplateListExtendedService = new DocumentTypeTemplateListExtendedService();
-        service.getDocumentTypeTemplateListsForDocumentType(this.DocumentTypeId, SessionLocator.Tenant).subscribe((res: any) => {
+    }    
+    LoadTemplates() {        
+        this.documentTypeService.getDocumentTypeTemplateListsForDocumentType(this.DocumentTypeId, SessionLocator.Tenant).subscribe((res: any) => {
             this.DocumentTypeTemplateList = new Array<CodeNameClass>();
 
             var pmResponse: ServiceResponse = res;
@@ -171,12 +171,35 @@ export class PrintComponent extends BaseComponent implements OnInit {
             }
         });
     }
+    LoadCopies() {
+        this.documentTypeService.GetDocumentTypeCopiesForDocumentType(this.DocumentTypeId).subscribe((res: any) => {
+            this.DocumentTypeCopiesList = new Array<CodeNameClass>();
 
-    private documentTypeTemplateId: string;
-    get DocumentTypeTemplateId() { return this.documentTypeTemplateId; }
-    set DocumentTypeTemplateId(value: string) {
-        if (this.documentTypeTemplateId != value) {
-            this.documentTypeTemplateId = value;
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                var myResult: DocumentTypeCopyList[] = pmResponse.Result;
+                if (myResult) {
+                    myResult.filter(d => d.InActive == false).forEach((item) => {
+                        this.DocumentTypeCopiesList.push(new CodeNameClass(item.Id, item.Name));
+                    });
+                }
+            }
+        });
+    }
+
+    private selectedDocumentTypeTemplate: CodeNameClass;
+    get SelectedDocumentTypeTemplate() { return this.selectedDocumentTypeTemplate; }
+    set SelectedDocumentTypeTemplate(value: CodeNameClass) {
+        if (this.selectedDocumentTypeTemplate != value) {
+            this.selectedDocumentTypeTemplate = value;
+        }
+    }
+
+    private selectedDocumentTypeCopy: CodeNameClass;
+    get SelectedDocumentTypeCopy() { return this.selectedDocumentTypeCopy; }
+    set SelectedDocumentTypeCopy(value: CodeNameClass) {
+        if (this.selectedDocumentTypeCopy != value) {
+            this.selectedDocumentTypeCopy = value;
         }
     }
 
@@ -273,5 +296,46 @@ export class PrintComponent extends BaseComponent implements OnInit {
     }
     private ChangeSelectedItemsCountText(selectedCount) {
         this.SelectedItemsCountText = selectedCount + " of " + this.AllRecordsCount + " " + this.ObjectTable.DBTableName + " selected";
+    }
+
+    NextClicked() {
+        this.ParentComponent.NextButtonClicked();
+    }
+
+    CloseButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
+
+    PrintClick() {
+        if (!this.IsPrintValid()) {
+            return;
+        }
+
+        
+    }
+    IsPrintValid(): boolean {
+        this.ValidationErrorsList = [];
+
+        if (AppTool.IsNullOrEmpty(this.DocumentTypeId)) {
+            this.ValidationErrorsList.push("Please select document type");
+        }
+
+        if (this.SelectedDocumentTypeTemplate == null) {
+            this.ValidationErrorsList.push("Please select document template");
+        }
+
+        if (this.SelectedDocumentTypeCopy == null) {
+            this.ValidationErrorsList.push("Please select document copy");
+        }
+
+        if (!this.SelectedRecordsCount || this.SelectedRecordsCount === 0) {
+            this.ValidationErrorsList.push("Please select at least one item to print");
+        }
+
+        if (this.ValidationErrorsList.length != 0) {
+            return false;
+        }
+
+        return true;
     }
 }
