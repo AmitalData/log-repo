@@ -213,8 +213,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     if (entityPM.IsUpdatedOceanInsightsAnalyzer && entityPM.IsUpdatedOceanInsightsMainCarriageDates)
                     {
-                        string notes = this.BuildOceanInsightsEventNotes();
+                        string notes = this.BuildContainerTrackingEventNotes();
                         this.CreateTraceEvent("OISU", notes);
+                    }
+                    if (entityPM.IsUpdatedVizionAnalyzer && entityPM.IsUpdatedVizionMainCarriageDates)
+                    {
+                        string notes = this.BuildContainerTrackingEventNotes();
+                        this.CreateTraceEvent("VZSU", notes);
                     }
 
                     if (entityPM.PlannedCargoReadyDate != entityPoco.PlannedCargoReadyDate)
@@ -270,7 +275,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             return eventNotes;
         }
 
-        private string BuildOceanInsightsEventNotes()
+        private string BuildContainerTrackingEventNotes()
         {
             string notes = "";
 

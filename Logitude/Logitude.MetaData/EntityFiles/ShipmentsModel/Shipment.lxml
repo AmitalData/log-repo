@@ -104009,6 +104009,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;VZSU&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Vizion Shipment Update&quot;"
+      LocalName="&quot;Vizion Shipment Update&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons

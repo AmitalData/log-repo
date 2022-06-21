@@ -17,6 +17,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public string ContainerNumber { get; set; }
         public string CarrierId { get; set; }
         public string CarrierCode { get; set; }
+        public string ScacCode { get; set; }
         public bool IsSimulator { get; set; }
         public bool Success { get; set; }
         public List<string> Errors { get; set; }
