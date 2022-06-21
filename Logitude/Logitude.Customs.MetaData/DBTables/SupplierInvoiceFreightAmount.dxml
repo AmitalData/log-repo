@@ -9,12 +9,14 @@
     Type="varchar"
     Size="15">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
     Name="InvoiceCounterKey"
     Type="int">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -28,6 +30,7 @@
     Type="varchar"
     Size="3">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -37,14 +40,6 @@
     Scale="2">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="DeclarationId,InvoiceCounterKey"

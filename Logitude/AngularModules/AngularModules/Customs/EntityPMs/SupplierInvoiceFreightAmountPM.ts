@@ -57,11 +57,6 @@ export class SupplierInvoiceFreightAmountPM {
     public set CurrencyTypeName(newValue: string) { if (this.currencyTypeName != newValue) { this.currencyTypeName = newValue; this.MarkAsDirty("CurrencyTypeName"); } }
        
 	 
-    private id: string;
-    public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
 
     public OldEntityPM: SupplierInvoiceFreightAmountPM;
 	
