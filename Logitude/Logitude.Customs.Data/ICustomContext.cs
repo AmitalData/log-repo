@@ -37,7 +37,6 @@ namespace Logitude.Customs.Data
 		 IDbSet<AuthorizedSignerPermit> AuthorizedSignerPermits { get; }
 		 IDbSet<AutonomyRegionType> AutonomyRegionTypes { get; }
 		 IDbSet<AutonomyType> AutonomyTypes { get; }
-		 IDbSet<AvailableStatusField> AvailableStatusFields { get; }
 		 IDbSet<Bank> Banks { get; }
 		 IDbSet<BuyerRoleType> BuyerRoleTypes { get; }
 		 IDbSet<CancellationReasonRequestType> CancellationReasonRequestTypes { get; }
