@@ -303,6 +303,12 @@
       <DependentUpon>CustomsBooModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="SqlFilesExecuter.cs" />
+    <Compile Include="Update Entity\Update Entity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Update Entity\Update Entity.Designer.cs">
+      <DependentUpon>Update Entity.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddStates.resx">
       <DependentUpon>AddStates.cs</DependentUpon>
     </EmbeddedResource>
@@ -342,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SandBox\FormAccountingTester.resx">
       <DependentUpon>FormAccountingTester.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Update Entity\Update Entity.resx">
+      <DependentUpon>Update Entity.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>
