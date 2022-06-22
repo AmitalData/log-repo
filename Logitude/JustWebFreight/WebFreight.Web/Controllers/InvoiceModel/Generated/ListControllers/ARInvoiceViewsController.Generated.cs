@@ -325,7 +325,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 			ServiceResponse response = new ServiceResponse();
 
-                List<ARInvoiceList> test = new List<ARInvoiceList>();
 
             if (filters.GetCount)
               {
@@ -333,12 +332,9 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
     		  }
 			  	if(!queryOperations.GetAll)
 				 {
-                    test = entityLists.ToList();
                     entityLists = entityLists.Skip(skippedEntities);
-                    test = entityLists.ToList();
 
                   entityLists = entityLists.Take(queryOperations.PageSize);
-                    test = entityLists.ToList();
 
                 }
 			   List<ARInvoiceList> listResult = entityLists.ToList();
