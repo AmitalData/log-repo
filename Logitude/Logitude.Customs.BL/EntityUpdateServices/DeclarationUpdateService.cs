@@ -173,7 +173,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if(entityPM.IsAmendment!=true)
             entityPM.TaxationDateTime = DateTime.Now.Date;
             
-        if (entityPM.IsAmendment==true)
+        if (entityPM.IsAmendment==true || entityPM.Direction == "E")
                 entityPM.ExternalDeclarationNumber = entityPM.CustomFileNo + DateTime.Now.Year;
 
 
