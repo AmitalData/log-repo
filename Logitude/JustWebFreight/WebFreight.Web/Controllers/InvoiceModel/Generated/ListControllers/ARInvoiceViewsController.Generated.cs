@@ -324,18 +324,23 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
             } 
 
 			ServiceResponse response = new ServiceResponse();
-			
-			if (filters.GetCount)
+
+                List<ARInvoiceList> test = new List<ARInvoiceList>();
+
+            if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
     		  }
 			  	if(!queryOperations.GetAll)
 				 {
+                    test = entityLists.ToList();
+                    entityLists = entityLists.Skip(skippedEntities);
+                    test = entityLists.ToList();
 
-                  entityLists = entityLists.Skip(skippedEntities);
-				  entityLists = entityLists.Take(queryOperations.PageSize);
+                  entityLists = entityLists.Take(queryOperations.PageSize);
+                    test = entityLists.ToList();
 
-				}
+                }
 			   List<ARInvoiceList> listResult = entityLists.ToList();
                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                customFieldResolver.SetCustomFieldsValues("ARInvoice", authToken.Tenant, listResult.Cast<object>().ToList());

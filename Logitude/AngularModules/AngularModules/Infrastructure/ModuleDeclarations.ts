@@ -203,7 +203,8 @@ import { EventCreationResultComponent } from './Components/Maintenance/Automatio
 import { MultiPrintMainComponent } from './Components/MultiPrint/MultiPrintMainComponent';
 import { PrintComponent } from './Components/MultiPrint/PrintComponent';
 import { MultiPrintErrorHandlerComponent } from './Components/MultiPrint/MultiPrintErrorHandlerComponent';
-
+import { MultiPrintCheckBoxComponent } from './Components/MultiPrint/MultiPrintCheckBoxComponent';
+import { MultiPrintCheckTemplate } from './Components/MultiPrint/MultiPrintCheckTemplate';
 
 //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
@@ -418,7 +419,8 @@ export const Components =
         MultiPrintMainComponent,
         PrintComponent,
         MultiPrintErrorHandlerComponent,
-        
+        MultiPrintCheckBoxComponent,
+        MultiPrintCheckTemplate,
     ];
 
 export class ModuleDeclarations {
@@ -461,7 +463,7 @@ export class ModuleDeclarations {
             case 'ViewAutomationHistoryComponent': { myResult = ViewAutomationHistoryComponent; break; }
             case 'AutomationConditionsDetailsComponent': { myResult = AutomationConditionsDetailsComponent; break; }
             case 'OnUpdateDocumentAutomationsSettingsComponent': { myResult = OnUpdateDocumentAutomationsSettingsComponent; break; }
-            case 'DocumentAttachmentsComponent': { myResult = DocumentAttachmentsComponent; break;}
+            case 'DocumentAttachmentsComponent': { myResult = DocumentAttachmentsComponent; break; }
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
@@ -489,7 +491,7 @@ export class ModuleDeclarations {
             case 'AddFollowupComponent': { myResult = AddFollowupComponent; break; }
             case 'AddDocumentFollowupComponent': { myResult = AddDocumentFollowupComponent; break; }
             case 'DropBoxLogin': { myResult = DropBoxLogin; break; }
-              case 'StimulsoftDesigner': { myResult = StimulsoftDesigner; break; }
+            case 'StimulsoftDesigner': { myResult = StimulsoftDesigner; break; }
 
 
 
@@ -509,7 +511,7 @@ export class ModuleDeclarations {
             case 'StimulsoftDesignerComponent': { myResult = StimulsoftDesignerComponent; break; }
             case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionAreaComponent; break; }
             case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionsViewDetailsComponent; break; }
-                 
+
 
             case 'EraseTenantManagementDataComponent': { myResult = EraseTenantManagementDataComponent; break; }
 
@@ -525,13 +527,13 @@ export class ModuleDeclarations {
             case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
             case 'SendInterfaceResultComponent': { myResult = SendInterfaceResultComponent; break; }
             case 'FTPAutomationDetailsComponent': { myResult = FTPAutomationDetailsComponent; break; }
-            case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; } 
-            case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
+            case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; }
+            case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; }
             case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
             case 'AdvancedAutomationSendInterfaceDetailsComponent': { myResult = AdvancedAutomationSendInterfaceDetailsComponent; break; }
             case 'WebHookAutomationDetailsComponent': { myResult = WebHookAutomationDetailsComponent; break; }
             case 'EventCreationResultComponent': { myResult = EventCreationResultComponent; break; }
-            case 'OnUpdateDocumentResultComponent': { myResult = OnUpdateDocumentResultComponent; break; } 
+            case 'OnUpdateDocumentResultComponent': { myResult = OnUpdateDocumentResultComponent; break; }
 
             case 'MultiUpdateComponent': { myResult = MultiUpdateComponent; break; }
             case 'MultiEntityUpdateBaseComponent': { myResult = MultiEntityUpdateBaseComponent; break; }
@@ -541,6 +543,8 @@ export class ModuleDeclarations {
             case 'MultiPrintMainComponent': { myResult = MultiPrintMainComponent; break; }
             case 'PrintComponent': { myResult = PrintComponent; break; }
             case 'MultiPrintErrorHandlerComponent': { myResult = MultiPrintErrorHandlerComponent; break; }
+            case 'MultiPrintCheckBoxComponent': { myResult = MultiPrintCheckBoxComponent; break; }
+            case 'MultiPrintCheckTemplate': { myResult = MultiPrintCheckTemplate; break; }
         }
 
         return myResult;

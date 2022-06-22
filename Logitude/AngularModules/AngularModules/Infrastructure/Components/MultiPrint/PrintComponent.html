@@ -1,3 +1,15 @@
+<style>
+    .CountBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
 
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -11,12 +23,20 @@
     </tr>
 
     <!--Set Value-->
-    <tr style="width:100%">
+    <tr>
         <td>
-            <table style="margin-top:-3px">
+            <table>
+                <tr style="height:22px;">
+                    <td style="width:180px;">Document Type</td>
+                    <td style="width:10px;"><div></div></td>
+                    <td style="width:180px;">Template</td>
+                    <td style="width:10px;"><div></div></td>
+                    <td style="width:180px;">Copy</td>
+                    <td><div></div></td>
+                </tr>
+
                 <tr class="FormFieldRow">
-                    <td style="width:100px;">Document Type:</td>
-                    <td style="width:200px;">
+                    <td>
                         <LogLov [NoObjectField]="'true'"
                                 [ObjectFieldName]="'DocumentTypeId'"
                                 [SelectedValue]="DocumentTypeId"
@@ -27,22 +47,14 @@
                                 [HideColumns]="true">
                         </LogLov>
                     </td>
-                    <td><div></div></td>
-                </tr>
-
-                <tr class="FormFieldRow">
-                    <td>Template:</td>
+                    <td style="width:10px;"><div></div></td>
                     <td>
                         <ComboBox (SelectedItemChanged)="SelectedDocumentTypeTemplate = $event"
                                   [ItemsSource]="DocumentTypeTemplateList"
                                   [SelectedItem]="SelectedDocumentTypeTemplate"
                                   [Binding]="'Name'"></ComboBox>
                     </td>
-                    <td><div></div></td>
-                </tr>
-
-                <tr class="FormFieldRow">
-                    <td>Copy:</td>
+                    <td style="width:10px;"><div></div></td>
                     <td>
                         <ComboBox (SelectedItemChanged)="SelectedDocumentTypeCopy = $event"
                                   [ItemsSource]="DocumentTypeCopiesList"
@@ -51,7 +63,6 @@
                     </td>
                     <td><div></div></td>
                 </tr>
-
             </table>
         </td>
     </tr>
@@ -65,7 +76,7 @@
             <table>
                 <tr>
                     <td style="width:200px">
-                        <div style="width: 228px;text-align:center;  height:22px;" class="DisbleBox">
+                        <div style="width: 228px;text-align:center;  height:22px;" class="CountBox">
                             <div style="margin-right:5px;margin-left:-2px;float:left;width:16px;">
                                 <CheckBox [IsChecked]="IsAllRecordSelected" (Checked)="IsAllRecordSelectedChange($event,true)">
                                 </CheckBox>
@@ -97,13 +108,13 @@
                         <td>
                             <div style="height: Calc(100% - 1px);background-color:white;">
                                 <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTable"
-                                               [dataSource]="dataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                               (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
-                                               [columns]="columns" [autoLoad]="true" [rows]="items"
-                                               (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)"
-                                               (CountReady)="onCountReady($event)" [EnableRowHoverVisibility]="true"
-                                               (AllRecordsReady)="AllRecordsReady($event)"
-                                               [CheckboxProp]="'Id'" [SearchFieldchangeevent]="SearchFieldchangeevent">
+                                                  [dataSource]="dataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                                  (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
+                                                  [columns]="columns" [autoLoad]="true" [rows]="items"
+                                                  (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)"
+                                                  (CountReady)="onCountReady($event)" [EnableRowHoverVisibility]="true"
+                                                  (AllRecordsReady)="AllRecordsReady($event)"
+                                                  [CheckboxProp]="'Id'" [SearchFieldchangeevent]="SearchFieldchangeevent">
                                 </logitude-grid>
                             </div>
                         </td>

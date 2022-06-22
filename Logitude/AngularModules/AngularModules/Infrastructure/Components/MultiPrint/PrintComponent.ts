@@ -103,7 +103,6 @@ export class PrintComponent extends BaseComponent implements OnInit {
         this.Title = args.Title;
 
         this.InitGrid();
-        //this.FillObjectField();
     }
 
     private InitGrid() {
@@ -114,18 +113,18 @@ export class PrintComponent extends BaseComponent implements OnInit {
             Display: '',
             IsCustomTemplate: true,
             Styles: { width: '35px' },
-            HtmlListComponentName: 'MultiUpdateCheckBoxComponent',
-            HtmlListComponentUrl: './Infrastructure/Components/MultiUpdateComponent/MultiUpdateCheckBoxComponent',
+            HtmlListComponentName: 'MultiPrintCheckBoxComponent',
+            HtmlListComponentUrl: './Infrastructure/Components/MultiPrint/MultiPrintCheckBoxComponent',
         };
 
         var updateSuccess = {
-            FieldName: 'UpdateSuccess',
+            FieldName: 'PrintSuccess',
             DataTypeCode: 'Boolean',
-            Display: 'Update Status',
+            Display: 'Print Status',
             Styles: { width: '100px' },
             IsCustomTemplate: true,
-            HtmlListComponentName: 'MultiUpdateCheckTemplate',
-            HtmlListComponentUrl: './Infrastructure/Components/MultiUpdateComponent/MultiUpdateCheckTemplate',
+            HtmlListComponentName: 'MultiPrintCheckTemplate',
+            HtmlListComponentUrl: './Infrastructure/Components/MultiPrint/MultiPrintCheckTemplate',
         };
         this.columns.splice(0, 0, checkBoxColumn);
         this.columns.splice(1, 0, updateSuccess);
@@ -215,6 +214,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
     };
 
     GetRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+        this.Filters.PageIndex = 0;
         filters = this.Filters;
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
