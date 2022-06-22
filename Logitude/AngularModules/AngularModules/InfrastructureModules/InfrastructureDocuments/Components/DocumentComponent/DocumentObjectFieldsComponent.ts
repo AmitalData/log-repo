@@ -240,11 +240,26 @@ export class DocumentObjectFieldsComponent implements OnInit {
                 var d = "f";
             }
 
+            field.LookUpTableId = this.GetFieldLookUpTableIdValue(field);
+
+
             var view = new DocumentObjectFieldsRowViewModel(field, field.FieldName, this.ObjectTypeField);
             this.ObsList.push(view);
             this.ObsListAll.push(view);
             this.DataSource = this.ObsList;
         });
+    }
+
+    private GetFieldLookUpTableIdValue(field: ObjectFieldPM) {
+        if (!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CCR")[0]) {
+            return field.LookUpTableId;
+        }
+
+        if (field.FieldCode == "Shipment.ShipperNotExporterId" || field.FieldCode == "Shipment.ConsigneeNotImporterId") {
+            return window.ObjectTables.filter(objectTable => objectTable.Name == "Customer")[0].Id;
+        }
+
+        return field.LookUpTableId;
     }
 
     SystemDataSourceChangeSelected(selectedItem: DocumentObjectFieldsRowViewModel) {

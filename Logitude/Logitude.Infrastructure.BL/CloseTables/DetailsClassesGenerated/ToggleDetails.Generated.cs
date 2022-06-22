@@ -604,6 +604,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CP4,SAT New Cancellation process", 
                 Description = "Activate SAT New Cancellation process", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CCR", 
+                Name = "Activate Customer Nested Of Card In Html Editor", 
+                Description = "Activate Customer Nested Of Card In Html Editor", 
+                SearchFields = "CCR,Activate Customer Nested Of Card In Html Editor", 
+			});
 			
             return all;
        }
