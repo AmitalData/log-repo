@@ -1,4 +1,4 @@
-@release
+#@release
 Feature: Generic Interface AR Invoice Transfer to FTP
     The user disables the Accounting Transfer in settings, creates AR invoice,
     changes the settings for Accounting Transfer to Generic Interface and sets up FTP External Transmission,

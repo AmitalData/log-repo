@@ -1,4 +1,4 @@
-@devrelease
+#@devrelease
 Feature: Update VAT settings from Maintenance
     The user can change on VAT format type, is mandatory for and applies for
 
