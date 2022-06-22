@@ -20,17 +20,53 @@ namespace Logitude.Customs.BL
    {
        public List<CourierCustomStatusDetails> GetAll()
        {
-		    var all = new List<CourierCustomStatusDetails>(); 
+		    var all = new List<CourierCustomStatusDetails>();  
+            all.Add(new CourierCustomStatusDetails()
+            {    
+                Code = 1, 
+                Name = "Hatara", 
+                SearchFields = "1,hatara", 
+                LocalName = "null", 
+			});
+			 
+            all.Add(new CourierCustomStatusDetails()
+            {    
+                Code = 0, 
+                Name = "No Status", 
+                SearchFields = "0,no status", 
+                LocalName = "null", 
+			});
+			 
+            all.Add(new CourierCustomStatusDetails()
+            {    
+                Code = 2, 
+                Name = "Suspended", 
+                SearchFields = "2,suspended", 
+                LocalName = "null", 
+			});
+			 
+            all.Add(new CourierCustomStatusDetails()
+            {    
+                Code = 3, 
+                Name = "Suspended", 
+                SearchFields = "3,suspended", 
+                LocalName = "null", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CourierCustomStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(CourierCustomStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Name,",",rec.LocalName,",");
         }
    }
 }
