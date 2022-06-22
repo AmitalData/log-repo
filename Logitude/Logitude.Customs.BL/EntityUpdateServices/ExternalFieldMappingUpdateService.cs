@@ -21,6 +21,7 @@ using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -35,8 +36,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 throw new Exception($"מיפוי זה קיימ כבר- לא ניתן להזין מיפוי כפול");
             }
             entityPM.Id= IdCounter.GetNumber("Customs.ExternalFieldMapping", entityPM.Tenant);
-            var availableStatusFieldQueryService = new AvailableStatusFieldQueryService(entityPM.Tenant);
-            entityPM.Field = availableStatusFieldQueryService.GetAvailableFieldByStatusFieldType(entityPM.Tenant, entityPM.StatusFieldType);
+            var externalFieldMappingBL = new ExternalFieldMappingBL();
+            entityPM.Field = externalFieldMappingBL.GetAvailableFieldByStatusFieldType(entityPM.Tenant, entityPM.StatusFieldType);
+            if (entityPM.Field == null)
+            {
+                throw new Exception($"אין שדות מסוג זה פנויים למיפוי");
+            }
             base.OnCreating(entityPM, entityParentPM);
         }
         protected override void OnUpdating(ExternalFieldMappingPM entityPM, ExternalFieldMapping entityPOCO)
@@ -50,16 +55,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }*/
             base.OnUpdating(entityPM, entityPOCO);
-        }
-        protected override void AfterUpdating(ExternalFieldMappingPM entityPM, EntityPM entityParentPM)
-        {
-            ICustomContext context = this.MainContext as CustomContext;
-            var availableStatusFieldQueryService = new AvailableStatusFieldQueryService(entityPM.Tenant);
-            var availableStatusFieldPM = availableStatusFieldQueryService.GetSingle(entityPM.Field, false, false);
-            availableStatusFieldPM.IsAvailable = false;
-            availableStatusFieldPM.ChangeSetOp = ChangeSetOperation.Update;
-            var availableStatusFieldUpdateService = new AvailableStatusFieldUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-            availableStatusFieldUpdateService.Update(availableStatusFieldPM,true);
         }
 
     }

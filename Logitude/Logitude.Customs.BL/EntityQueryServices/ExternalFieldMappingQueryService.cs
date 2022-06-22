@@ -13,12 +13,16 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
-    public partial class AvailableStatusFieldQueryService
+    public partial class ExternalFieldMappingQueryService
     {
-        public string GetAvailableFieldByStatusFieldType(int tenant, string statusFieldType)
+        public bool CheckIfFieldIsUsed(string field, int tenant)
         {
-            var availableField = repository.GetAvailableFieldByStatusFieldType(tenant, statusFieldType);
-            return availableField;
+            var poco = this.repository.GetSingleByField(field, tenant);
+            if(poco == null)
+            {
+                return false;
+            }
+            return true;
         }
 
     }
