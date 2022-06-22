@@ -23,7 +23,7 @@ namespace Logitude.Customs.BL
 		    var all = new List<CourierCustomStatusDetails>();  
             all.Add(new CourierCustomStatusDetails()
             {    
-                Code = 1, 
+                Code = "1", 
                 Name = "Hatara", 
                 SearchFields = "1,hatara", 
                 LocalName = "null", 
@@ -31,7 +31,7 @@ namespace Logitude.Customs.BL
 			 
             all.Add(new CourierCustomStatusDetails()
             {    
-                Code = 0, 
+                Code = "0", 
                 Name = "No Status", 
                 SearchFields = "0,no status", 
                 LocalName = "null", 
@@ -39,7 +39,7 @@ namespace Logitude.Customs.BL
 			 
             all.Add(new CourierCustomStatusDetails()
             {    
-                Code = 2, 
+                Code = "2", 
                 Name = "Suspended", 
                 SearchFields = "2,suspended", 
                 LocalName = "null", 
@@ -47,7 +47,7 @@ namespace Logitude.Customs.BL
 			 
             all.Add(new CourierCustomStatusDetails()
             {    
-                Code = 3, 
+                Code = "3", 
                 Name = "Suspended", 
                 SearchFields = "3,suspended", 
                 LocalName = "null", 
