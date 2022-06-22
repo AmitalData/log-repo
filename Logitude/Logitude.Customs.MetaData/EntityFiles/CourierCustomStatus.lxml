@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CourierCustomStatus&quot;"
-  Code="&quot;2b30&quot;"
+  Code="&quot;8c91&quot;"
   Name="&quot;Customs.CourierCustomStatus Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -391,22 +391,22 @@
   </EventTypes>
   <Records>
     <Record
-      Code="1"
+      Code="&quot;1&quot;"
       Name="&quot;Hatara&quot;"
       SearchFields="&quot;1,hatara&quot;"
       LocalName="&quot;null&quot;" />
     <Record
-      Code="0"
+      Code="&quot;0&quot;"
       Name="&quot;No Status&quot;"
       SearchFields="&quot;0,no status&quot;"
       LocalName="&quot;null&quot;" />
     <Record
-      Code="2"
+      Code="&quot;2&quot;"
       Name="&quot;Suspended&quot;"
       SearchFields="&quot;2,suspended&quot;"
       LocalName="&quot;null&quot;" />
     <Record
-      Code="3"
+      Code="&quot;3&quot;"
       Name="&quot;Suspended&quot;"
       SearchFields="&quot;3,suspended&quot;"
       LocalName="&quot;null&quot;" />
