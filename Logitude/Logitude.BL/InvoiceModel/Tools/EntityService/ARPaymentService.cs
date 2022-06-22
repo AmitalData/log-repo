@@ -705,7 +705,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         public InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentPM payment, bool isFromVoidARPayment)
         {
             DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
-            GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
+            GLAccountPM account = GetGLAccount(payment);
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",
@@ -728,7 +728,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private InterestTransactionPM MapInterestTransactionPMFromARPayment(InterestTransactionPM transaction, ARPaymentPM payment,  int lineNumber)
         {
-            GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
+            GLAccountPM account = GetGLAccount(payment);
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",
@@ -1305,27 +1305,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             GLAccountPM glAccount = null;
             if (paymentPM.IsFullAccounting)
             {
-                glAccount = GetGLAccount(paymentPM.BillToId, paymentPM.Tenant);
+                glAccount = GetGLAccount(paymentPM);
                 paymentGLAccount = glAccount;
             }
             return glAccount;
         }
 
 
-        private GLAccountPM GetGLAccount(string billToId, int tenant)
+        private GLAccountPM GetGLAccount(ARPaymentPM payment)
         {
             GLAccountPM glaAccount = null;
-            CardRepository cardRep = new CardRepository(tenant);
-            Card card = cardRep.GetSingleCard(billToId, tenant);
+            CardRepository cardRep = new CardRepository(payment.Tenant);
+            Card card = cardRep.GetSingleCard(payment.BillToId, payment.Tenant);
             if (card != null)
             {
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, payment.Tenant);
 
                 if (glaAccount!=null && glaAccount.IsMultiCurrency.Value)
                 {
-                  string splitByCurrencyAccountId=  GetAccountIdForGLAccountCurrency(glaAccount, paymentPM.PaymentCurrencyId);
-                    glaAccount= glAccountQuery.GetSingleGLAccountPM(splitByCurrencyAccountId, tenant);
+                  string splitByCurrencyAccountId=  GetAccountIdForGLAccountCurrency(glaAccount, payment.PaymentCurrencyId);
+                    glaAccount= glAccountQuery.GetSingleGLAccountPM(splitByCurrencyAccountId, payment.Tenant);
                 }
                 else return glaAccount;
             }
@@ -1978,7 +1978,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (paymentPM.IsFullAccounting)
             {
-                GLAccountPM gla = GetGLAccount(paymentPM.BillToId, paymentPM.Tenant);
+                GLAccountPM gla = GetGLAccount(paymentPM);
                 if (gla != null)
                 {
                     paymentPM.GLAccountId = gla.Id;
