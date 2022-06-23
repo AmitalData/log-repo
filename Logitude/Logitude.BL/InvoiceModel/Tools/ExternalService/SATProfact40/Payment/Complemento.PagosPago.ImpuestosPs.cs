@@ -92,7 +92,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
                 AddRetencionDRWithTax(pRDR, invoiceTaxAmount, impuestosDRRetencionDRs);
             });
 
-            return pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.Concat(pagosPagoDoctoRelacionado.ImpuestosDR.RetencionesDR.ToArray()).ToList();
+            return pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.Concat(impuestosDRRetencionDRs.ToArray()).ToList();
         }
 
         private static void AddRetencionDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDR, decimal invoiceTaxAmount, List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> impuestosDRRetencionDRs)
@@ -116,8 +116,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
         private static void CalculateRetencionDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDR, decimal invoiceTaxAmount)
         {
-            impuestosDRRetencionDR.BaseDR *= invoiceTaxAmount;
-            impuestosDRRetencionDR.ImporteDR *= invoiceTaxAmount;
+            impuestosDRRetencionDR.BaseDR /= invoiceTaxAmount;
+            impuestosDRRetencionDR.ImporteDR /= invoiceTaxAmount;
             BuildRetencionPagosTotales(impuestosDRRetencionDR);
         }
 
@@ -261,7 +261,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
             return new PagosPagoImpuestosPRetencionP
             {
-                ImporteP = totalImporteDR,
+                ImporteP = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(totalImporteDR),
                 ImpuestoP = taxCode,
             };
         }
