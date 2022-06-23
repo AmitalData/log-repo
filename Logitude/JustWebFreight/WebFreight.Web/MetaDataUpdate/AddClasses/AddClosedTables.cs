@@ -3298,5 +3298,31 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 customsDocumentUploadRepository.Add(customsDocumentUploadDetails);
             }
         }
+
+        public static void AddPointerLevel(PointerLevel PointerLevelDetails, PointerLevelRepository pointerLevelRepository)
+        {
+            Dictionary<string, PointerLevel> tenant = pointerLevelRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(PointerLevelDetails.Code))
+            {
+                PointerLevel pointerLevel = pointerLevelRepository.GetSingle(PointerLevelDetails.Code);
+                pointerLevel.LocalName = PointerLevelDetails.LocalName;
+                pointerLevel.EnglishName = PointerLevelDetails.EnglishName;
+                pointerLevel.SearchFields = (PointerLevelDetails.Code + "," + PointerLevelDetails.LocalName).ToLower();
+                pointerLevelRepository.Update(pointerLevel);
+            }
+            else
+            {
+                PointerLevel pointerLevel = new PointerLevel()
+                {
+                    Code = PointerLevelDetails.Code,
+                    LocalName = PointerLevelDetails.LocalName,
+                    EnglishName = PointerLevelDetails.EnglishName,
+                    SearchFields = (PointerLevelDetails.Code + "," + PointerLevelDetails.LocalName).ToLower()
+                };
+                pointerLevelRepository.Add(PointerLevelDetails);
+            }
+        }
+
     }
 }

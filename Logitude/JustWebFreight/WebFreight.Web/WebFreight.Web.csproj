@@ -2845,6 +2845,7 @@
       <DependentUpon>DsvLoginUC.ascx</DependentUpon>
     </Compile>
     <Compile Include="MetaDataUpdate\DetailClasses\ContainerizationStatusCodeDetails.cs" />
+    <Compile Include="MetaDataUpdate\DetailClasses\PointerLevelDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\QuoteGroupSectionDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\MamanStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\AccountingCompanyTypeDetails.cs" />
