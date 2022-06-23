@@ -39,6 +39,8 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.CoreBL;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Accounting.BL.DataContract;
+using Logitude.Accounting.BL.Utils;
+using Simplog.Data.InvoiceModel;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -119,11 +121,11 @@ namespace Logitude.Accounting.BL.CoreBL
             if (journalPM is null || journalPM.IsLedgerCreated == true) {
                 return;
             }
-            
+
             if (journalPM.AccountingEntityCode == AccountingEntityValues.ARPayment) {
                 ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(journalPM.Tenant);
                 ARPaymentPM aRPaymentPM = aRPaymentQuery.GetSinglePM(journalPM.AccountingEntityId, journalPM.Tenant);
-                
+
                 if (aRPaymentPM.AccountingPaymentMethodCode == CashARPaymentAccountingMethod && aRPaymentPM.BillToPartnerTypeId == PartnerTypeId_Customer)
                 {
                     CreateInterestTrascntionsForCashARPayment(journalPM, aRPaymentPM, context);
@@ -142,6 +144,22 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     CreateInterestTrascntionsForBankTransfersARPayment(journalPM, aRPaymentPM, context);
                 }
+            } else if (journalPM.AccountingEntityCode == AccountingEntityValues.Journal || journalPM.AccountingEntityCode == AccountingEntityValues.Adjustment
+                 || journalPM.AccountingEntityCode == AccountingEntityValues.BankAdjustment)
+            {
+                var journalUpdateService = new JournalUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
+                journalUpdateService.CreateInterestTransactionTo_RegularJournal(journalPM);
+            }
+            else if (journalPM.AccountingEntityCode == AccountingEntityValues.Revaluation)
+            {
+                RevaluationBatch revaluationBatch = new RevaluationBatch();
+                revaluationBatch.AddInterestTransactions(journalPM, context);
+            }
+            else if (journalPM.AccountingEntityCode == AccountingEntityValues.ARInvoice)
+            {
+                IInvoiceContext _invoiceContext = InvoiceContext.GetContext(journalPM.Tenant);
+                ARInvoiceService aRInvoiceService = new ARInvoiceService(_invoiceContext, journalPM.Tenant);
+                aRInvoiceService.CreateARInvoiceInterestTransactions(journalPM.AccountingEntityId, journalPM.Tenant);
             }
         }
         

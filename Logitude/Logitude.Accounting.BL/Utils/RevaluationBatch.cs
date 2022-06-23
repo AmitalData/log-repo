@@ -169,7 +169,7 @@ namespace Logitude.Accounting.BL.Utils
                                 if (lineList.Count > 0)
                                 {
                                     var journal = WriteJournal(journalUpdateService, lineList, revaluation);
-                                    AddInterestTransactions(journal, context);
+                                    // AddInterestTransactions(journal, context);
                                     lineList.Clear();
                                 }
 
@@ -198,7 +198,7 @@ namespace Logitude.Accounting.BL.Utils
 
         }
 
-        private static void AddInterestTransactions(JournalPM journal, IAccountingContext context)
+        public void AddInterestTransactions(JournalPM journal, IAccountingContext context)
         {
             var interestTransactions = new List<InterestTransactionPM>();
             foreach (var line in journal.JournalLines)
@@ -373,7 +373,7 @@ namespace Logitude.Accounting.BL.Utils
                             if (lineList.Count >= 100)
                             {
                                 var journal = WriteJournal(journalUpdateService, lineList, revaluation, gLAccountPM);
-                                AddInterestTransactions(journal, context);
+                                // AddInterestTransactions(journal, context);
                                 lineList.Clear();
                                 //  scope.Complete();
                             }

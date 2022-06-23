@@ -537,7 +537,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     ReCheckFromDBThrowIfNotValid(entityPM);
 
-                    CreateInterestTransactionTo_RegularJournal(entityPM);
+                    // CreateInterestTransactionTo_RegularJournal(entityPM);
                     JournalApproveService.EnqueueDB(entityPM);
 
 
@@ -613,11 +613,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         public virtual void CreateInterestTransactionTo_RegularJournal(JournalPM entityPM)
         {
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
                 var myRegularJournalInterestTransactionService = new RegularJournalInterestTransactionMapping();
                 myRegularJournalInterestTransactionService.CreatelInterestTransactions(entityPM);
-            }
         }
         protected void ReCheckFromDBThrowIfNotValid(JournalPM entityPM)
         {
