@@ -80,11 +80,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             var context = ShipmentsContext.GetContext(simulatorArgs.Tenant);
             var shipment = context.Shipments.Where(e => e.Id == simulatorArgs.ShipmentId).FirstOrDefault();
             var masterID = simulatorArgs.ShipmentId;
-            if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId) )
+            if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
             {
                 masterID = shipment.MasterShipmentDataId;
             }
-            var shipmentMasterData = context.ShipmentMasterDatas.Include(e=>e.MainCarriageCarrierCard).Where(e => e.Id == masterID && e.Tenant == simulatorArgs.Tenant).FirstOrDefault();
+            var shipmentMasterData = context.ShipmentMasterDatas.Include(e => e.MainCarriageCarrierCard).Where(e => e.Id == masterID && e.Tenant == simulatorArgs.Tenant).FirstOrDefault();
 
             simulatorArgs.CarrierId = shipmentMasterData?.MainCarriageCarrierId;
             simulatorArgs.CarrierCode = shipmentMasterData?.MainCarriageCarrierCard?.Code;
@@ -93,14 +93,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         private bool CheckValidation()
         {
-            if(string.IsNullOrEmpty( simulatorArgs.CarrierId ))
+            if (string.IsNullOrEmpty(simulatorArgs.CarrierId))
                 simulatorArgs.Errors.Add("Carrier is missing");
-            if(string.IsNullOrEmpty( simulatorArgs.Data ) && simulatorArgs.IsSimulator)
+            if (string.IsNullOrEmpty(simulatorArgs.Data) && simulatorArgs.IsSimulator)
                 simulatorArgs.Errors.Add("Response is missing");
-            if(simulatorArgs.IsFromContainer && string.IsNullOrEmpty(simulatorArgs.ContainerNumber))
+            if (simulatorArgs.IsFromContainer && string.IsNullOrEmpty(simulatorArgs.ContainerNumber))
                 simulatorArgs.Errors.Add("Container Number is missing");
-            CheckCarrierIsSupported();
-            if(!simulatorArgs.IsFromContainer && string.IsNullOrEmpty(simulatorArgs.Master))
+            if (!simulatorArgs.IsSimulator)
+                CheckCarrierIsSupported();
+            if (!simulatorArgs.IsFromContainer && string.IsNullOrEmpty(simulatorArgs.Master))
                 simulatorArgs.Errors.Add("Master Number is missing");
             if (simulatorArgs.Errors.Count > 0)
             {
@@ -124,13 +125,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         private void CheckCarrierIsSupportedInVizion()
         {
             var vizionCarriers = new VizionService().GetAllCarriers();
-            if(!vizionCarriers.Where(e=>e.carrier_code == simulatorArgs.CarrierCode).Any())
+            if (!vizionCarriers.Where(e => e.carrier_code == simulatorArgs.CarrierCode).Any())
             {
-                 simulatorArgs.Errors.Add("Carrier not supported");
+                simulatorArgs.Errors.Add("Carrier not supported");
             }
         }
 
-        
+
 
         private Document AddRequstDocument()
         {
@@ -169,10 +170,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                 Folder = "ContainerTrackingStatus",
             };
         }
-        
+
         private byte[] ConvertObjectToByteArray(object simulatorArgs)
         {
-            var objectText =  JsonConvert.SerializeObject(simulatorArgs);
+            var objectText = JsonConvert.SerializeObject(simulatorArgs);
             var jsonByteArray = Encoding.UTF8.GetBytes(objectText);
             return jsonByteArray;
         }
@@ -249,7 +250,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             analyzeQueueReposiory.SubmitChanges();
         }
 
-        
+
         private void SendCommunicationLogMessage(CommunicationLog commLog, int tenant)
         {
             if (!string.IsNullOrEmpty(commLog.QueueName))
@@ -308,7 +309,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         private void InActiveContainerTrackingRequest(ContainerTrackingRequestPM containerTrackingRequest)
         {
             var shipmentContext = ShipmentsContext.GetContext(containerTrackingRequest.Tenant);
-            ContainerTrackingRequestService containerTrackingRequestService = new ContainerTrackingRequestService(shipmentContext,containerTrackingRequest.Tenant);
+            ContainerTrackingRequestService containerTrackingRequestService = new ContainerTrackingRequestService(shipmentContext, containerTrackingRequest.Tenant);
             containerTrackingRequest.Status = ContainerTrackingRequestStatus.InActive;
             containerTrackingRequestService.Update(containerTrackingRequest);
         }

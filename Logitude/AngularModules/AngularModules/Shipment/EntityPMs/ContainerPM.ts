@@ -1341,6 +1341,11 @@ export class ContainerPM {
     public set IsUpdatedOceanInsightsAnalyzer(newValue: boolean) { if (this.isUpdatedOceanInsightsAnalyzer != newValue) { this.isUpdatedOceanInsightsAnalyzer = newValue; this.MarkAsDirty("IsUpdatedOceanInsightsAnalyzer"); } }
        
 	 
+    private isUpdatedVizionAnalyzer: boolean;
+    public get IsUpdatedVizionAnalyzer() { return this.isUpdatedVizionAnalyzer; }
+    public set IsUpdatedVizionAnalyzer(newValue: boolean) { if (this.isUpdatedVizionAnalyzer != newValue) { this.isUpdatedVizionAnalyzer = newValue; this.MarkAsDirty("IsUpdatedVizionAnalyzer"); } }
+       
+	 
     private updatedByPartner: string;
     public get UpdatedByPartner() { return this.updatedByPartner; }
     public set UpdatedByPartner(newValue: string) { if (this.updatedByPartner != newValue) { this.updatedByPartner = newValue; this.MarkAsDirty("UpdatedByPartner"); } }
