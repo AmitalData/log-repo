@@ -773,7 +773,7 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.FillContainerizationStatusCodeTable();
             updateClass.FillAmedmentTypeTable();
             updateClass.FillCustomsDocumentUploadTable();
-            updateClass.FillStatusFieldTypeTable();
+           
             updateClass.FillPointerLevel();
 
         }
