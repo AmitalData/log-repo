@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "50542c0fa5ed4ebdfcf8f222f317fb55";
+		public const string HashString = "4d594f279d8d01fd01f6c26f05e27a51";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2521,7 +2521,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ExportStorageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.OpenStorages", DefaultText = @"Open Storages",LocalDefaultText = "אחסנות פתוחות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ExportStorageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.OpenStorages", DefaultText = @"Open Storages",LocalDefaultText = " אחסנות פתוחות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ExportStorageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Q.OpenStorages", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.OpenStorages", NameTextCodeDefaultText = "OpenStorages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportStorageObjectTable, addedFeatures, addedTextCodes);
  
 

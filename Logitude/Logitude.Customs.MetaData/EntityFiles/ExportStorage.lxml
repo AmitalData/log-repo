@@ -3079,7 +3079,7 @@
   <Query
     Code="&quot;OpenStorages&quot;"
     TextCode="&quot;Open Storages&quot;"
-    LocalTextCode="&quot;אחסנות פתוחות&quot;"
+    LocalTextCode="&quot; אחסנות פתוחות&quot;"
     QueryGroupCode="&quot;0c30&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.ExportStorage&quot;"
