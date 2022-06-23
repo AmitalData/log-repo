@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Declaration Courier Status&quot;"
-  Code="&quot;7b78&quot;"
+  Code="&quot;9f91&quot;"
   Name="&quot;Customs.DeclarationCourierStatus Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -6777,6 +6777,74 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;BulkFeedPending&quot;"
+    TextCode="&quot;BulkFeedPending&quot;"
+    LocalTextCode="&quot;עדכון גורף&quot;"
+    QueryGroupCode="&quot;9f91&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.DeclarationCourierStatus&quot;"
+    QuerySection="&quot;Customs.DeclarationCourierStatus&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;CourierHawb&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CourierHawb&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ImporterName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;ImporterCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CargoDescription&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;IncoTermCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;TotalInvoiceAmountInUSD&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;GrossMassMeasure&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;CasualSupplierAddress&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;CasualImporterCity&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;CourierPendingReasonName&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;Customs.DeclarationCourierStatusHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.DeclarationCourierStatus&quot;"

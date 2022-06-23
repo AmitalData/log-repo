@@ -4,12 +4,13 @@ import { CourierMasterPM } from 'Customs/EntityPMs/CourierMasterPM';
 import { CourierWorksheetSharedDataService } from 'Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 import { DeclarationCourierStatusPMService } from 'Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
-import { DeclarationsforBulkFeed,PendingWebService } from 'Customs/Services/WebServices/PendingWebService';
+import { DeclarationsforBulkFeed, PendingWebService } from 'Customs/Services/WebServices/PendingWebService';
 import { CourierMasterValidator } from 'Customs/Validators/CourierMasterValidator';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
@@ -45,9 +46,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
   declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
   checkboxAll: boolean = false;
   public MyScrollTop: number = 0;
-    filterAgrs: ApiQueryFilters;
-    public PendingFilterItems: ApiQueryFilters;
-    PendingList: string = '';
+  filterAgrs: ApiQueryFilters;
+  public PendingFilterItems: ApiQueryFilters;
+  PendingList: string = '';
   columns: any[] = []
   private _entityListService: EntityListService = new EntityListService();
 
@@ -58,13 +59,13 @@ export class BulkFeedPendingComponent extends BaseComponent {
   public set RowsItems(value: any) {
     this._RowsItems = value;
   }
-    _LOVListPendings: any[] = [];
-    get LOVListPendings() { return this._LOVListPendings; }
-    set LOVListPendings(value) {
-        if (this._LOVListPendings != value) {
-            this._LOVListPendings = value;
-        }
+  _LOVListPendings: any[] = [];
+  get LOVListPendings() { return this._LOVListPendings; }
+  set LOVListPendings(value) {
+    if (this._LOVListPendings != value) {
+      this._LOVListPendings = value;
     }
+  }
   private _SelectedRow: any;
   public get SelectedRow(): any {
     return this._SelectedRow;
@@ -89,7 +90,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
 
   constructor(
-      private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private pendingWebService: PendingWebService
+    private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private pendingWebService: PendingWebService
   ) {
     super();
   }
@@ -98,22 +99,22 @@ export class BulkFeedPendingComponent extends BaseComponent {
   ngOnInit() {
     this.buildColumns();
 
-      this.RefreshList()
-    }
+    this.RefreshList()
+  }
 
-    GetPending(){
-        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetPending(this.CourierMasterPM.Id)
-            .subscribe((resu: any) => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
-                var list: string[];
-                list = resu.Result;
-                this.PendingList = list.toString();
-                this.PendingFilterItems = new ApiQueryFilters();
-                this.PendingFilterItems.addAdditionalFilter("Code", this.PendingList, null, null, "InListExact", false, false, false, "string",false,true);
+  GetPending() {
+    SessionLocator.SelectedSession.StartBusyIndicatorCreating();
+    this._CourierMasterService.GetPending(this.CourierMasterPM.Id)
+      .subscribe((resu: any) => {
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        var list: string[];
+        list = resu.Result;
+        this.PendingList = list.toString();
+        this.PendingFilterItems = new ApiQueryFilters();
+        this.PendingFilterItems.addAdditionalFilter("Code", this.PendingList, null, null, "InListExact", false, false, false, "string", false, true);
 
-            });
-    }
+      });
+  }
 
 
   getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
@@ -165,7 +166,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
       filters.addAdditionalFilter("IncoTermCode", this.IncotermCode, null, null, "Equals", false, false, false, "string");
 
     if (this._LOVListPendings.length > 0)
-        filters.addAdditionalFilter("CourierPendingReasonList", this.UsersListString, null, null, "InList", false, false, false, "string", this._LOVListPendings.length == 0);
+      filters.addAdditionalFilter("CourierPendingReasonList", this.UsersListString, null, null, "InList", false, false, false, "string", this._LOVListPendings.length == 0);
 
 
     if (!AppTool.IsNullOrEmpty(this.WeightFrom) && !AppTool.IsNullOrEmpty(this.WeightTo))
@@ -190,20 +191,20 @@ export class BulkFeedPendingComponent extends BaseComponent {
       }
     }
 
-      switch (this._SelectedMissedDocsValue) {
-          case "T": {
-              filters.addAdditionalFilter("MissedDocumentStatusCode", "null", null, null, "Equals", false, false, false, "string");
-              break;
-          }
-          case "I": {
-              filters.addAdditionalFilter("MissedDocumentStatusCode", "I", null, null, "Equals", false, false, false, "string");
-              break;
-          }
-          case "C": {
-              filters.addAdditionalFilter("MissedDocumentStatusCode", "C", null, null, "Equals", false, false, false, "string");
-              break;
-          }
+    switch (this._SelectedMissedDocsValue) {
+      case "T": {
+        filters.addAdditionalFilter("MissedDocumentStatusCode", "null", null, null, "Equals", false, false, false, "string");
+        break;
       }
+      case "I": {
+        filters.addAdditionalFilter("MissedDocumentStatusCode", "I", null, null, "Equals", false, false, false, "string");
+        break;
+      }
+      case "C": {
+        filters.addAdditionalFilter("MissedDocumentStatusCode", "C", null, null, "Equals", false, false, false, "string");
+        break;
+      }
+    }
 
     switch (this._SelectedTotalInvoiceValue) {
       case "75": {
@@ -224,81 +225,80 @@ export class BulkFeedPendingComponent extends BaseComponent {
       filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string");
 
     return filters;
+  }
+  UsersListString: string = "";
+  UsersListStringl: string[] = [];
+  SelectedValueChangedEmitUser() {
+    var RemoveFilter = false;
+    //if (this.getFilter().AdditionalFilters.length > 0) {
+    //    this.getFilter().AdditionalFilters = this.getFilter().AdditionalFilters.filter(a => a.FieldName != "CourierPendingReasonList");
+    //}
+    this.UsersListString = "";
+    if (this._LOVListPendings.length > 0) {
+
+      this._LOVListPendings.forEach(item => { this.UsersListString += item["Code"] + ","; this.UsersListStringl.push(item["Code"]); });//Id: "1-3697"
+      this.UsersListString = this.UsersListString.slice(0, -1); // trim last comma
+    } else {
+      this.UsersListString = "HowCare"
+      RemoveFilter = true;
     }
-    UsersListString: string = "";
-    UsersListStringl: string[] = [];
-    SelectedValueChangedEmitUser() {
-        var RemoveFilter = false;
-        //if (this.getFilter().AdditionalFilters.length > 0) {
-        //    this.getFilter().AdditionalFilters = this.getFilter().AdditionalFilters.filter(a => a.FieldName != "CourierPendingReasonList");
-        //}
-        this.UsersListString = "";
-        if (this._LOVListPendings.length > 0) {
+    //this.getFilter().addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string", this._LOVListPendings.length == 0);
+    //this.SelectedValueChanged.emit({ Filters: this.getFilter(), RemoveFilter: RemoveFilter });
+  }
 
-            this._LOVListPendings.forEach(item => { this.UsersListString += item["Code"] + ","; this.UsersListStringl.push(item["Code"]); });//Id: "1-3697"
-            this.UsersListString = this.UsersListString.slice(0, -1); // trim last comma
-        } else {
-            this.UsersListString = "HowCare"
-            RemoveFilter = true;
-        }
-        debugger;
-        //this.getFilter().addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string", this._LOVListPendings.length == 0);
-        //this.SelectedValueChanged.emit({ Filters: this.getFilter(), RemoveFilter: RemoveFilter });
-    }
+  RefreshButtonClicked() {
+    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    this.RefreshList();
+    this.GetPending();
+  }
 
-    RefreshButtonClicked() {
-        this._CourierWorksheetSharedDataService._SelectedItems.Clear();
-        this.RefreshList();
-        this.GetPending();
-    }
+  OpenMultiUpdateWindow() {
+    if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
+      return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
 
-    OpenMultiUpdateWindow() {
-        if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
-            return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
+    var windowArgs: any = {
+      // Declaration: this.EntityPM,
+    };
+    windowArgs.courierMasterId = this.CourierMasterPM.Id;
+    windowArgs.declarationIdsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+    windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
+    windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
+    windowArgs.notUpdateSelf = true;
+    windowArgs.filter = this.getFilter();
+    windowArgs.filter.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
+    var logWindow = new LogitudeWindow();
+    logWindow.Width = 500;
+    logWindow.Height = 320;
+    logWindow.Title = "עדכון הצהרות";
 
-        var windowArgs: any = {
-           // Declaration: this.EntityPM,
-        };
-        windowArgs.courierMasterId = this.CourierMasterPM.Id;
-        windowArgs.declarationIdsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-        windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
-        windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
-        windowArgs.notUpdateSelf = true;
-        windowArgs.filter = this.getFilter();
-        windowArgs.filter.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 500;
-        logWindow.Height = 320;
-        logWindow.Title = "עדכון הצהרות";
+    //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
+    logWindow.WindowArgs = windowArgs;
+    logWindow.ShowCloseButton = true;
+    logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/MultiUpdateDecComponent');
+    logWindow.WindowClosed.subscribe(($event: any) => {
+      //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+    });
+  }
 
-        //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
-        logWindow.WindowArgs = windowArgs;
-        logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/MultiUpdateDecComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        });
-    }
+  async CreateInvoiceDocumentWindow() {
+    if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
+      return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
 
-    async CreateInvoiceDocumentWindow() {
-        if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
-            return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
+    var filter = this.getFilter();
+    filter.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
 
-        var filter = this.getFilter();
-        filter.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
+    SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+    const msg: string = await this.pendingWebService.postBulkFeeding(null, null, this._CourierWorksheetSharedDataService._SelectedItems.Collection,
+      this.CourierMasterPM.Id, this._CourierWorksheetSharedDataService.connectedSelectAll,
+      this._CourierWorksheetSharedDataService._UnSelectedItems.Collection, filter, true)
+    SessionLocator.SelectedSession.StopBusyIndicator();
 
-        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-        const msg: string = await this.pendingWebService.postBulkFeeding(null, null, this._CourierWorksheetSharedDataService._SelectedItems.Collection,
-            this.CourierMasterPM.Id, this._CourierWorksheetSharedDataService.connectedSelectAll,
-            this._CourierWorksheetSharedDataService._UnSelectedItems.Collection, filter, true)
-        SessionLocator.SelectedSession.StopBusyIndicator();
-
-        const myMessageWindow = new MessageWindow();
-        myMessageWindow.Width = 250;
-        myMessageWindow.Height = 150;
-        myMessageWindow.Show(msg);
-        SessionLocator.SelectedSession.CloseCurrentWindow();
-    }
+    const myMessageWindow = new MessageWindow();
+    myMessageWindow.Width = 250;
+    myMessageWindow.Height = 150;
+    myMessageWindow.Show(msg);
+    SessionLocator.SelectedSession.CloseCurrentWindow();
+  }
 
   AddPendings() {
     if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
@@ -331,10 +331,25 @@ export class BulkFeedPendingComponent extends BaseComponent {
     });
   }
 
+  Export2Excel() {
+    var windowArgs: any = {};
+    windowArgs.query = "Customs.DeclarationCourierStatus";
+    windowArgs.currentObjectTable = this.ObjectTableName;
+    windowArgs.tenant = SessionInfo.LoggedUserTenant;
+    windowArgs.userid = SessionInfo.LoggedUserId;
+    windowArgs.Filters = this.getFilter();
+    var logitudeWindow = new LogitudeWindow();
+    logitudeWindow.Width = 500;
+    logitudeWindow.Height = 200;
+    logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");//"Exporting View Data List To Excel File";
+    logitudeWindow.WindowArgs = windowArgs;
+    logitudeWindow.Show('./Infrastructure/Components/Export2ExcelControl/Export2ExcelControl');
+  }
+
 
   SetWindowArgs(args: any) {
-      this.CourierMasterPM = args?.CourierMasterPM;
-      this.GetPending();
+    this.CourierMasterPM = args?.CourierMasterPM;
+    this.GetPending();
   }
 
 
@@ -356,10 +371,10 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this._SelectedFastIndividualProcessValue = value;
     this.onFilteSelect()
   }
-    SelectedMissedDocsValueClick(value: string) {
-        this._SelectedMissedDocsValue = value;
-        this.onFilteSelect()
-    }
+  SelectedMissedDocsValueClick(value: string) {
+    this._SelectedMissedDocsValue = value;
+    this.onFilteSelect()
+  }
 
   onFilteSelect() {
     this.IsFiltered = [
@@ -538,15 +553,15 @@ export class BulkFeedPendingComponent extends BaseComponent {
       SortByName: 'CasualImporterCity'
     });
     this.columns.push({
-        FieldName: 'CourierPendingReasonName',
-        DataTypeCode: 'String',
-        Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
-        Styles: { width: '105px' },
-        IsCustomTemplate: true,
-        HtmlListComponentName: 'CourierWorksheetListTemplate',
-        HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-        ServerSideSortable: true,
-        SortByName: 'CourierPendingReasonName'
+      FieldName: 'CourierPendingReasonName',
+      DataTypeCode: 'String',
+      Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
+      Styles: { width: '105px' },
+      IsCustomTemplate: true,
+      HtmlListComponentName: 'CourierWorksheetListTemplate',
+      HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+      ServerSideSortable: true,
+      SortByName: 'CourierPendingReasonName'
     });
   }
 

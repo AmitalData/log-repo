@@ -11,6 +11,7 @@ export class LogitudeGridExportToExcelComponent {
     public QueryColumns: QueryColumnPM[] = [];
     public ObjectTableName:string;
     ExportToExcelExcute(ObjectTableName:string,filterAgrs: ApiQueryFilters,QueryColumns:QueryColumnPM[]) {
+        debugger;
         this.ObjectTableName = ObjectTableName;
         this.filterAgrs = filterAgrs;
         if(this.filterAgrs)
@@ -19,12 +20,12 @@ export class LogitudeGridExportToExcelComponent {
 
         var windowArgs: any = {};
         windowArgs.ExportExcelArgs = this.GetExportToExcelArgs();
-        windowArgs.tenant = SessionLocator.Tenant;
+        windowArgs.tenant = SessionLocator.Tenant; 
         windowArgs.ObjectTableName = this.ObjectTableName;
         windowArgs.QueryName = this.ObjectTableName;
         windowArgs.QueryType = "LogitudeGrid";
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 500;
+        var logitudeWindow = new LogitudeWindow(); 
+        logitudeWindow.Width = 500; 
         logitudeWindow.Height = 200;
         logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");//"Exporting View Data List To Excel File";
         logitudeWindow.WindowArgs = windowArgs;
@@ -34,6 +35,7 @@ export class LogitudeGridExportToExcelComponent {
     }
 
     GetExportToExcelArgs() {
+        debugger;
         this.filterAgrs.Tenant = SessionLocator.Tenant;
         var logboxShipmentExportExcelArgs: LogboxShipmentExportExcelArgs = new LogboxShipmentExportExcelArgs();
         logboxShipmentExportExcelArgs.Tenant = SessionLocator.Tenant;
