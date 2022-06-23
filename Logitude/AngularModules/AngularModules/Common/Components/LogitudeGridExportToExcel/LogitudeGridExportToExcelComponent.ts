@@ -11,7 +11,6 @@ export class LogitudeGridExportToExcelComponent {
     public QueryColumns: QueryColumnPM[] = [];
     public ObjectTableName:string;
     ExportToExcelExcute(ObjectTableName:string,filterAgrs: ApiQueryFilters,QueryColumns:QueryColumnPM[]) {
-        debugger;
         this.ObjectTableName = ObjectTableName;
         this.filterAgrs = filterAgrs;
         if(this.filterAgrs)
@@ -35,7 +34,6 @@ export class LogitudeGridExportToExcelComponent {
     }
 
     GetExportToExcelArgs() {
-        debugger;
         this.filterAgrs.Tenant = SessionLocator.Tenant;
         var logboxShipmentExportExcelArgs: LogboxShipmentExportExcelArgs = new LogboxShipmentExportExcelArgs();
         logboxShipmentExportExcelArgs.Tenant = SessionLocator.Tenant;

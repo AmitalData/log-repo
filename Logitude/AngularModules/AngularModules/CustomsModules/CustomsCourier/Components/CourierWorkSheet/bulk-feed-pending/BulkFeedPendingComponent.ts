@@ -8,7 +8,9 @@ import { DeclarationsforBulkFeed, PendingWebService } from 'Customs/Services/Web
 import { CourierMasterValidator } from 'Customs/Validators/CourierMasterValidator';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { QueryPM } from 'Infrastructure/EntityPMs/QueryPM';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
+import { ObjectFieldPMExtendedService } from 'Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
@@ -50,6 +52,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   public PendingFilterItems: ApiQueryFilters;
   PendingList: string = '';
   columns: any[] = []
+  query:any;
   private _entityListService: EntityListService = new EntityListService();
 
   private _RowsItems: any;
@@ -93,6 +96,12 @@ export class BulkFeedPendingComponent extends BaseComponent {
     private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private pendingWebService: PendingWebService
   ) {
     super();
+    var objectFieldPMExtendedService: ObjectFieldPMExtendedService = new ObjectFieldPMExtendedService();
+                objectFieldPMExtendedService.getSingleFromQueries("Customs.DeclarationCourierStatus.BulkFeedPending").subscribe((result: any) => {
+                    if (result) {
+                        this.query = result;
+                    }
+                });
   }
 
 
@@ -333,7 +342,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
   Export2Excel() {
     var windowArgs: any = {};
-    windowArgs.query = "Customs.DeclarationCourierStatus";
+    windowArgs.query = this.query;
     windowArgs.currentObjectTable = this.ObjectTableName;
     windowArgs.tenant = SessionInfo.LoggedUserTenant;
     windowArgs.userid = SessionInfo.LoggedUserId;
