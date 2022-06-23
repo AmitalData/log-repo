@@ -412,6 +412,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             DWQueryId: dWQueryId
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
+        this.PageChild_PRREP.SaveBIReportScheduler();
     }
 
     GetAllRecepients() {

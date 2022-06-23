@@ -761,6 +761,14 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
         //this.UpdateBIReport(false);
     }
+
+    SaveBIReportScheduler() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+        this._DWSubQueryPMService.UpdateDWQueryData(this.BIReportXMLData.DWQueryData).subscribe((myResult: any) => {
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        });
+    }
+
     public HasValidationError = false;
     OnRunReportComplete(MyData) {
         if (MyData.Msg == "ValidationError") {
