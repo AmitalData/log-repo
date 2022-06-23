@@ -71,10 +71,10 @@ import { BatchTaskExecutionPMService } from './Services/StandardPMs/BatchTaskExe
 import { AnalyzeQueueMenuButtonsHandler } from './Components/MenuButtons/AnalyzeQueueMenuButtonsHandler';
 import {TenantManagementMenuButtonsHandler} from './Components/MenuButtons/TenantManagementMenuButtonsHandler';
 //
-import {BusinessProcessQueueListService} from  './Services/StandardLists/BusinessProcessQueueListService'; 
+import {BusinessProcessQueueListService} from  './Services/StandardLists/BusinessProcessQueueListService';
 import {BusinessProcessQueuePMService} from  './Services/StandardPMs/BusinessProcessQueuePMService';
-import {TeamListService} from  './Services/StandardLists/TeamListService'; 
-import {TeamPMService} from './Services/StandardPMs/TeamPMService'; 
+import {TeamListService} from  './Services/StandardLists/TeamListService';
+import {TeamPMService} from './Services/StandardPMs/TeamPMService';
 import { DWQueryBuilderService } from './Services/ExtendedPMs/DWQueryBuilderService';
 
 import { BIReportFolderListService } from './Services/StandardLists/BIReportFolderListService';
@@ -103,9 +103,10 @@ import { EntityStatusTypeListService } from './Services/StandardLists/EntityStat
 
 import { ImageLibraryListService } from './Services/StandardLists/ImageLibraryListService';
 import { ImageLibraryPMService } from './Services/StandardPMs/ImageLibraryPMService';
+import { TableTabService } from './Services/ExtendedPMs/TableTabService';
 
 export class ModuleProviders {
-    
+
     public static GetInstance(name: string) {
 
         var myResult: any = null;
@@ -162,16 +163,16 @@ export class ModuleProviders {
             case "APILogsPMService": { myResult = new APILogsPMService(); break; }
             case "EmailAlertSettingPMService": { myResult = new EmailAlertSettingPMService(); break; }
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
-            case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }                
-            case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }                
-            case "TenantTypeListService": { myResult = new TenantTypeListService(); break; }   
+            case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
+            case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }
+            case "TenantTypeListService": { myResult = new TenantTypeListService(); break; }
             case "BusinessHourListService": { myResult = new BusinessHourListService(); break; }
             case "PaymentChannelListService": { myResult = new PaymentChannelListService(); break; }
             case "InboundEmailListService": { myResult = new InboundEmailListService(); break; }
             case "InboundEmailPMService": { myResult = new InboundEmailPMService(); break; }
-            case "PaymentMethodListService": { myResult = new PaymentMethodListService(); break; }   
-            case "RecurringPeriodListService": { myResult = new RecurringPeriodListService(); break; }   
-            case "TenantManagmentPrivateLabelsListService": { myResult = new TenantManagmentPrivateLabelsListService(); break; }   
+            case "PaymentMethodListService": { myResult = new PaymentMethodListService(); break; }
+            case "RecurringPeriodListService": { myResult = new RecurringPeriodListService(); break; }
+            case "TenantManagmentPrivateLabelsListService": { myResult = new TenantManagmentPrivateLabelsListService(); break; }
             case "PaymentCurrencyListService": { myResult = new PaymentCurrencyListService(); break; }
             case "AWBMessagesCCSTypeListService": { myResult = new AWBMessagesCCSTypeListService(); break; }
             case "AnalyzeQueueListService": { myResult = new AnalyzeQueueListService(); break; }
@@ -179,20 +180,20 @@ export class ModuleProviders {
             case "ErrorLogListService": { myResult = new ErrorLogListService(); break; }
             case "BatchTaskExecutionListService": { myResult = new BatchTaskExecutionListService(); break; }
             case "ErrorLogPMService": { myResult = new ErrorLogPMService(); break; }
-            case "ApiCredintialsListService": { myResult = new ApiCredintialsListService(); break; }                
+            case "ApiCredintialsListService": { myResult = new ApiCredintialsListService(); break; }
             case "AnalyzeQueueMenuButtonsHandler": { myResult = new AnalyzeQueueMenuButtonsHandler(); break; }
             case "TenantManagementMenuButtonsHandler": { myResult = new TenantManagementMenuButtonsHandler(); break; }
             case "ErrorLogPMFileLoggerService": { myResult = new ErrorLogPMFileLoggerService(); break; }
-            case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }  
-            case "BusinessProcessQueuePMService": { myResult = new BusinessProcessQueuePMService(); break; }  
+            case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }
+            case "BusinessProcessQueuePMService": { myResult = new BusinessProcessQueuePMService(); break; }
             case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
             case "BIReportExtendedListService": { myResult = new BIReportExtendedListService(); break; }
             case "LastRunDetailExtendedPMService": { myResult = new LastRunDetailExtendedPMService(); break; }
-            case "DWObjectTableExtendedListService": { myResult = new DWObjectTableExtendedListService(); break; }  
-            case "BusinessRolePMService": { myResult = new BusinessRolePMService(); break; }  
-            case "TeamListService": { myResult = new TeamListService(); break; }   
-            case "TeamPMService": { myResult = new TeamPMService(); break; }   
-            case "BatchTaskExecutionPMService": { myResult = new BatchTaskExecutionPMService(); break; } 
+            case "DWObjectTableExtendedListService": { myResult = new DWObjectTableExtendedListService(); break; }
+            case "BusinessRolePMService": { myResult = new BusinessRolePMService(); break; }
+            case "TeamListService": { myResult = new TeamListService(); break; }
+            case "TeamPMService": { myResult = new TeamPMService(); break; }
+            case "BatchTaskExecutionPMService": { myResult = new BatchTaskExecutionPMService(); break; }
             case "DWQueryBuilderService": { myResult = new DWQueryBuilderService(); break; }
             case "WebhookKeysListService": { myResult = new WebhookKeysListService(); break; }
             case "FeatureToggleListService": { myResult = new FeatureToggleListService(); break; }
@@ -208,9 +209,10 @@ export class ModuleProviders {
             case "HelpResourcePMService": { myResult = new HelpResourcePMService(); break; }
             case "BIReportFolderExtendedListService": { myResult = new BIReportFolderExtendedListService(); break; }
             case "MultiEntityUpdateLogPMService": { myResult = new MultiEntityUpdateLogPMService(); break; }
-            case "EntityStatusTypeListService": { myResult = new EntityStatusTypeListService(); break; } 
-            case "ImageLibraryListService": { myResult = new ImageLibraryListService(); break; } 
-            case "ImageLibraryPMService": { myResult = new ImageLibraryPMService(); break; } 
+            case "EntityStatusTypeListService": { myResult = new EntityStatusTypeListService(); break; }
+            case "ImageLibraryListService": { myResult = new ImageLibraryListService(); break; }
+            case "ImageLibraryPMService": { myResult = new ImageLibraryPMService(); break; }
+            case "TableTabService": { myResult = new TableTabService(); break; }
         }
 
         return myResult;

@@ -60,7 +60,31 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
         }
 
 
+        public HttpResponseMessage GetEntityScreens(string entityId)
+        {
+            try
+            {
+                AuthenticationToken authToken = AuthinticateTenant();
 
+                ScreensQuery screensQuery = new ScreensQuery(authToken.Tenant);
+                List<ScreenPM> screens = screensQuery.GetByEntity(entityId, 0);
+
+                return Request.CreateResponse(HttpStatusCode.OK, screens);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private static AuthenticationToken AuthinticateTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            return authToken;
+        }
 
         public HttpResponseMessage Post(ScreenPM entityPM)
         {

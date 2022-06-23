@@ -1,0 +1,16 @@
+.grid{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+.toolbar{
+    height: 25px;
+}
+.toolbar .Button{
+    width: fit-content;
+
+}
+.content{
+    flex: 1;
+    position: relative;
+}

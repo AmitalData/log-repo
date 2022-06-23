@@ -1,11 +1,11 @@
- 
+
 export class ObjectTableTabPM {
-      
+
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { this.id = newValue;}
-     
-	 
+
+
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { this.tenant = newValue; }
@@ -32,9 +32,9 @@ export class ObjectTableTabPM {
 
 
 
-    private tabNameTextCodeDefaultText: number;
+    private tabNameTextCodeDefaultText: string;
     public get TabNameTextCodeDefaultText() { return this.tabNameTextCodeDefaultText; }
-    public set TabNameTextCodeDefaultText(newValue: number) { this.tabNameTextCodeDefaultText = newValue; }
+    public set TabNameTextCodeDefaultText(newValue: string) { this.tabNameTextCodeDefaultText = newValue; }
 
 
     private objectTableName: string;
@@ -44,16 +44,30 @@ export class ObjectTableTabPM {
     private tabNameTextCodeCode: string;
     public get TabNameTextCodeCode() { return this.tabNameTextCodeCode; }
     public set TabNameTextCodeCode(newValue: string) { this.tabNameTextCodeCode = newValue; }
-	 
+
     private code: string;
     public get Code() { return this.code; }
     public set Code(newValue: string) { this.code = newValue; }
-    
-       
+
+
     private featureId: string;
     public get FeatureId() { return this.featureId; }
     public set FeatureId(newValue: string) { this.featureId = newValue; }
 
 
-       
-}
+    // Abdullah
+    Changeset: 'insert' | 'update' | 'delete' | null;
+    CustomOrder: number;
+    Type: 'Custom' | 'Predefined';
+    Name: string;
+    ScreenId: string;
+    ScreenName: string;
+
+    public IsHidden: boolean;
+    public Disabled: boolean;
+    public HtmlComponentName: string;
+    public HtmlComponentUrl: string;
+    public FeatureUniqeCode: string;
+
+
+}

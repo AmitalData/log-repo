@@ -36,5 +36,11 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public string HtmlComponentName { get; set; }
         public string HtmlComponentUrl { get; set; }
+
+
+        public int? CustomOrder { get; set; }
+        public string Type { get; set; } = "Predefined";
+        public string Name { get; set; }
+        public string ScreenId { get; set; }
     }
 }
