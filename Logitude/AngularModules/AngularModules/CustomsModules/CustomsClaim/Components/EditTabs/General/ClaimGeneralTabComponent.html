@@ -527,7 +527,9 @@
 
                                                         <!-- ClaimEntityType -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.ClaimEntityTypeCode' | TextCodeTranslationPipe"
-                                                                    [binding]="'ClaimEntityTypeName'" [width]="'120'" [Alignment]="'right'">
+                                                                    [binding]="'ClaimEntityTypeName'" 
+                                                                    [SortFieldName]="'ClaimEntityTypeName'"
+                                                                    [width]="'120'" [Alignment]="'right'">
                                                             <ng-template let-item>
                                                                 <log-cell-template #logcelltemplate>
                                                                     <div class="TextTrimming" style="text-align:right">
@@ -539,7 +541,9 @@
 
                                                         <!-- ClaimEntityNumber -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.ClaimEntityNumber' | TextCodeTranslationPipe"
-                                                                    [binding]="'ClaimEntityNumber'" [width]="'120'" [Alignment]="'right'">
+                                                                    [binding]="'ClaimEntityNumber'"
+                                                                    [SortFieldName]="'ClaimEntityNumber'"
+                                                                    [width]="'120'" [Alignment]="'right'">
                                                             <ng-template let-item>
                                                                 <log-cell-template #logcelltemplate>
                                                                     <div class="TextTrimming" style="text-align:right">
@@ -562,7 +566,9 @@
 
                                                         <!-- TapagNumberAndNumeral -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.O.TapagNumberAndNumeral' | TextCodeTranslationPipe"
-                                                                    [binding]="'TapagNumberAndNumeral'" [width]="'130'" [Alignment]="'right'">
+                                                                    [binding]="'TapagNumberAndNumeral'"
+                                                                    [SortFieldName]="'TapagNumberAndNumeral'"
+                                                                    [width]="'130'" [Alignment]="'right'">
                                                             <ng-template let-item>
                                                                 <log-cell-template #logcelltemplate>
                                                                     <div class="TextTrimming" style="text-align:right">
@@ -574,7 +580,9 @@
 
                                                         <!-- IsFinancialRefundDemand -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.IsFinancialRefundDemand' | TextCodeTranslationPipe"
-                                                                    [width]="'100'" [Alignment]="'right'" [binding]="'IsFinancialRefundDemand'">
+                                                                    [width]="'100'" [Alignment]="'right'" 
+                                                                    [binding]="'IsFinancialRefundDemand'"
+                                                                    [SortFieldName]="'IsFinancialRefundDemand'">
                                                             <ng-template let-item>
                                                                 <log-cell-template #logcelltemplate>
                                                                     <div div class="TextTrimming" style="text-align:center">
@@ -586,7 +594,9 @@
 
                                                         <!-- ClaimAmount -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.ClaimAmount' | TextCodeTranslationPipe"
-                                                                    [binding]="'ClaimAmount'" [width]="'100'" [Alignment]="'right'">
+                                                                    [binding]="'ClaimAmount'"
+                                                                    [SortFieldName]="'ClaimAmount'"
+                                                                    [width]="'100'" [Alignment]="'right'">
                                                             <ng-template let-item>
                                                                 <log-cell-template #logcelltemplate>
                                                                     <div class="TextTrimming" style="text-align:right">
@@ -598,7 +608,9 @@
 
                                                         <!-- ContinuousMessagesType -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.ContinuousMessagesTypeCode' | TextCodeTranslationPipe"
-                                                                    [binding]="'ContinuousMessagesTypeName'" [width]="'300'" [Alignment]="'right'">
+                                                                    [binding]="'ContinuousMessagesTypeName'"
+                                                                    [SortFieldName]="'ContinuousMessagesTypeName'" 
+                                                                    [width]="'300'" [Alignment]="'right'">
                                                             <ng-template let-item>
                                                                 <log-cell-template #logcelltemplate>
                                                                     <div class="TextTrimming" style="text-align:right">
@@ -610,7 +622,9 @@
 
                                                         <!-- DecisionCode -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntity.F.DecisionCode' | TextCodeTranslationPipe"
-                                                                    [binding]="'DecisionName'" [width]="'150'" [Alignment]="'right'">
+                                                                    [binding]="'DecisionName'"
+                                                                    [SortFieldName]="'DecisionName'" 
+                                                                    [width]="'150'" [Alignment]="'right'">
                                                             <ng-template let-item>
                                                                 <log-cell-template #logcelltemplate>
                                                                     <div class="TextTrimming" style="text-align:right">
