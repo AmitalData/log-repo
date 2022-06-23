@@ -18312,7 +18312,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AddClosedTables.AddStorageStatus(new StorageStatusDetails() { Code = "1", Name = "Approved", LocalName = "מאושר" }, storageStatusRepository);
             AddClosedTables.AddStorageStatus(new StorageStatusDetails() { Code = "2",Name = "Denied", LocalName = "נדחה" }, storageStatusRepository);
-            AddClosedTables.AddStorageStatus(new StorageStatusDetails() { Code = "3", Name = "Waiting", LocalName = "ממתין" }, storageStatusRepository);
+            AddClosedTables.AddStorageStatus(new StorageStatusDetails() { Code = "3", Name = "Waiting", LocalName = "ממתין", }, storageStatusRepository);
 
             storageStatusRepository.SubmitChanges();
 
@@ -18324,10 +18324,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             CourierCustomStatusRepository courierCustomStatusRepository = new CourierCustomStatusRepository(0);
             Dictionary<string, CourierCustomStatus> TenantCourierCustomStatuses = courierCustomStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
 
-            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "0", Name = "No Status", LocalName = "אין סטטוס" }, courierCustomStatusRepository);
-            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "1", Name = "Hatara", LocalName = "התרה" }, courierCustomStatusRepository);
-            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "2", Name = "Suspended", LocalName = "מעוכב" }, courierCustomStatusRepository);
-
+            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "0", Name = "No Status", SearchFields = "0,no status", LocalName = null }, courierCustomStatusRepository);
+            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "1", Name = "Hatara", SearchFields = "1,hatara", LocalName = null }, courierCustomStatusRepository);
+            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "2", Name = "Suspended", SearchFields = "2,suspended" ,LocalName = null }, courierCustomStatusRepository);
+            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "3", Name = "Suspended", SearchFields = "3,suspended",LocalName = null }, courierCustomStatusRepository);
             courierCustomStatusRepository.SubmitChanges();
 
         }
