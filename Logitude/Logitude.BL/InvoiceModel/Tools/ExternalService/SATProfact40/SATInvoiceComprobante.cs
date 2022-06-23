@@ -609,7 +609,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             {
                 if (lineTotal.VATPercent >= 0)
                 {
-                    AddMultiPercentageLineTranslados(lineTranslados, lineVatType, lineTotal);
+                    AddMultiPercentageLineTranslados(lineTranslados, lineTotal);
                 }
                 else
                 {
@@ -618,13 +618,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
         }
 
-        private void AddMultiPercentageLineTranslados(List<ComprobanteConceptoImpuestosTraslado> lineTranslados, VatType lineVatType, ARInvoiceTotalVATPM lineTotal)
+        private void AddMultiPercentageLineTranslados(List<ComprobanteConceptoImpuestosTraslado> lineTranslados, ARInvoiceTotalVATPM lineTotal)
         {
+            string vatTypeCode = allVatTypes.Where(d => d.Id == lineTotal.VatTypeId).FirstOrDefault()?.Code;
             ComprobanteConceptoImpuestosTraslado traslado = new ComprobanteConceptoImpuestosTraslado()
             {
                 Base = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((lineTotal.InvoiceCurrencyVatableAmount != null ? (decimal)lineTotal.InvoiceCurrencyVatableAmount.Value : 0))),
                 Impuesto = "002",
-                TipoFactor = (lineTotal.VATPercent == 0 && lineVatType.Code == "EXMPT" ? "Exento" : "Tasa"),
+                TipoFactor = (lineTotal.VATPercent == 0 && vatTypeCode == "EXMPT" ? "Exento" : "Tasa"),
             };
 
             if (traslado.TipoFactor == "Tasa")

@@ -84,7 +84,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
                 ObjetoImpDR = SATData.IncludeTaxObjetoImp,
                 ImpPagado = invoiceAmountToPay,
                 ImpPagadoSpecified = true,
-                EquivalenciaDR = GetEquivalenciaDR(invoice, arInvoiceCode),
+                EquivalenciaDR = GetEquivalenciaDR(arInvoiceCode, allInvoicePayments),
                 EquivalenciaDRSpecified = true,
                 IdDocumento = GetPagosPagoDoctoRelacionadoIdDocumento(comprobanteComplementoAnyXmlElements),
                 ImpSaldoAnt = GetPagosPagoDoctoRelacionadoImpSaldoAnt(new PagosPagoDoctoRelacionadoImpSaldo { ARPaymentPM = arPaymentPM, ARInvoice = invoice, AllInvoicePayments = allInvoicePayments, InvoiceAmount = totalInvoiceComprobante }),
@@ -132,12 +132,12 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             return invoiceComprobante != null ? invoiceComprobante.Folio : invoiceComprobanteV33.Folio;
         }
 
-        private static decimal GetEquivalenciaDR(ARInvoice invoice, string arInvoiceCode)
+        private static decimal GetEquivalenciaDR(string arInvoiceCode, List<ARInvoicePayment>  allInvoicePayments)
         {
+            double? invoiceCurrencyExchangeRate = allInvoicePayments.FirstOrDefault(p => p.ARPaymentId == arPaymentPM.Id).ExchangeRate;
             return arPaymentPM.PaymentCurrencyCode == arInvoiceCode
                 ? 1
-                : invoice.InvoiceCurrencyExchangeRate != null ? Convert.ToDecimal(invoice.InvoiceCurrencyExchangeRate.Value) : 0;
-            //return invoice.InvoiceCurrencyExchangeRate != null ? Convert.ToDecimal(invoice.InvoiceCurrencyExchangeRate.Value) : 0;
+                : invoiceCurrencyExchangeRate != null ? Convert.ToDecimal(invoiceCurrencyExchangeRate) : 0;
         }
 
         private static string GetPagosPagoDoctoRelacionadoIdDocumento(XmlElement[] comprobanteComplementoAnyXmlElements)
