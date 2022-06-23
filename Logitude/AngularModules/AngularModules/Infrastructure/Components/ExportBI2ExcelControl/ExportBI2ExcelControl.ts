@@ -45,6 +45,7 @@ export class ExportBI2ExcelControl {
     BIReportXMLData: BIReportXMLData = null;
     ExportDataType: string;
     SetWindowArgs(args: any) {
+        debugger;
         this.queryId = args.queryId;
         this.queryCode = args.queryCode;
         
