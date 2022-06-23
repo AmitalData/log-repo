@@ -329,34 +329,25 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     SaveButtonClicked() {
         if (this.IsBIReport && this.IsNew) {
-            this.SaveNewBIReportSchedulerDetails();
+            this.SaveNewDWQueryData();
         }
         else if (this.IsBIReport) {
-            this.SaveBIReportSchedulerDetails(this.BIReportEntity['Id'], this.BIReportEntity['DWQueryId']);
+            this.SaveBIReportSchedulerDetails(this.BIReportEntity['Id'], this.BIReportEntity['DWQueryId'], true);
         }
         else {
             this.SaveReportSchedulerDetails();
         }
     }
 
-    SaveNewBIReportSchedulerDetails() {
-        this.dWSubQueryPMService.getByQueryId(this.BIReportEntity['DWQueryId']).subscribe((serResult: any) => {
-            if (!serResult.HasError) {
-                this.SaveNewDWQueryData(serResult);
-            }
-            else if (serResult.ErrorsArray && serResult.ErrorsArray.length > 0) {
-                this.ShowErrorWindow(serResult.ErrorsArray[0]);
-            }
-        });
-    }
+    
 
     ShowErrorWindow(error) {
         var messageWindow: MessageWindow = new MessageWindow();
         messageWindow.Show(error);
     }
 
-    SaveNewDWQueryData(serResult: any) {
-        this.dWSubQueryPMService.insertDWQueryData(serResult.Result).subscribe((myResult: any) => {
+    SaveNewDWQueryData() {
+        this.dWSubQueryPMService.insertDWQueryData(this.PageChild_PRREP?.BIReportXMLData?.DWQueryData).subscribe((myResult: any) => {
             if (!myResult.HasError) {
                 this.SaveNewBIReport(myResult);
             }
@@ -383,7 +374,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     private SubmitSavingNewBIReport(serviceResponse: ServiceResponse, myResult: any) {
         this.PageChild_PRREP.EntityPM['Id'] = serviceResponse.Result.Id;
         this.PageChild_PRREP.SaveBIReport();
-        this.SaveBIReportSchedulerDetails(serviceResponse.Result.Id, myResult.Result.DWQueryId);
+        this.SaveBIReportSchedulerDetails(serviceResponse.Result.Id, myResult.Result.DWQueryId, false);
     }
 
     private SaveReportSchedulerDetails() {
@@ -400,7 +391,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
 
-    private SaveBIReportSchedulerDetails(bIReportEntityId, dWQueryId) {
+    private SaveBIReportSchedulerDetails(bIReportEntityId, dWQueryId, isUpdate) {
         const reportSchedulerDetails: ReportSchedulerDetails = {
             ReportFilterItems: [],
             ReportTemplateId: null,
@@ -412,7 +403,10 @@ export class AddEditReportSchedulerComponent implements OnInit {
             DWQueryId: dWQueryId
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
-        this.PageChild_PRREP.SaveBIReportScheduler();
+
+        if (isUpdate) {
+            this.PageChild_PRREP.SaveBIReportScheduler();
+        }
     }
 
     GetAllRecepients() {
