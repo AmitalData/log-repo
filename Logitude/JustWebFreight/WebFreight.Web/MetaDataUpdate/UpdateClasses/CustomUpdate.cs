@@ -18522,6 +18522,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         public void FillPointerLevel()
         {
 
+
+
             PointerLevelRepository pointerLevelRepository = new PointerLevelRepository(0);
             Dictionary<string, PointerLevel> TenantPointerLevel = pointerLevelRepository.GetAll().ToDictionary(d => d.Code, a => a);
 
