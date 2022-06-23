@@ -1188,7 +1188,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 RaiseStatus(_MyDeclarationPM, "", "VPE", xml_status);
             }
 
-            if (declarationPaymentsPM.AutomaticPayment == 1)
+            if (declarationPaymentsPM != null && declarationPaymentsPM.AutomaticPayment == 1)
             {
                 if (customResponse.DeclarationPaymentDetails == null)
                 {
