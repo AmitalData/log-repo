@@ -803,7 +803,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
 
-      
+
 
             #region Print Release
             MenuButton PrintReleaseButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails() // moran 29.2.16 - Task 19807
@@ -839,8 +839,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 FeatureId = declarationFeature_SendDeclaration.Id,
                 MenuButtonType = "control",
                 ControlPath = "Logitude.Customs.CustomsControls.SendOptionsControl",
-                HtmlComponentPath= "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendDeclarationComponent",
-                
+                HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendDeclarationComponent",
+
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
 
@@ -7483,7 +7483,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             ObjectTable customerIdentifyTypeObject = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerIdentifyType" && d.Tenant == 0).FirstOrDefault();
             ObjectTable customsInsuranceCompanyObject = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsInsuranceCompany" && d.Tenant == 0).FirstOrDefault();
 
-            
+
 
             #endregion
 
@@ -7724,7 +7724,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature courierMasterFeature1 = tenantFeatures.Where(d => d.Code == "COURIERDECLARATION" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
             #endregion
-            
+
 
             #region closed tables
 
@@ -7843,7 +7843,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature customerIdentifyTypeQueryFeature = tenantFeatures.Where(d => d.Code == "CUSTOMERIDENTIFYTYPE" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature customsInsuranceCompanyQueryFeature = tenantFeatures.Where(d => d.Code == "INSURANCECOMPANY" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
-            
+
 
 
             #endregion
@@ -7854,10 +7854,21 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             #region Open PhysicalCheck queries
 
-            Query OpenPhysicalCheckQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.Q.OpenChecks" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id, Code = "OpenChecks", QueryGroupCode = CustomsPhysicalCheckGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsPhysicalCheckObject.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true
-                , IsAddNewEntityEnabled = false
-                , FeatureId = CustomsPhysicalCheckFeature.Id,
-             //"CheckSpotLightDataTemplate"
+            Query OpenPhysicalCheckQuery = AddQueries.AddQuery(new QueryDetails()
+            {
+                NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.Q.OpenChecks" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id,
+                Code = "OpenChecks",
+                QueryGroupCode = CustomsPhysicalCheckGroup.Code,
+                IndexOrder = 0,
+                Tenant = 0,
+                ObjectTableId = CustomsPhysicalCheckObject.Id,
+                QuerySection = "Customs.PhysicalCheck",
+                SystemLevel = true
+                ,
+                IsAddNewEntityEnabled = false
+                ,
+                FeatureId = CustomsPhysicalCheckFeature.Id,
+                //"CheckSpotLightDataTemplate"
             }, QueriesRepository, tenantQueries);
 
             QueryColumn OpenPhysicalCheckQueryColumn12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPhysicalCheckQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsPhysicalCheckFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id, ColumnWidth = 90 }, QueryColumnsRepository, tenantQueryColumns);
@@ -7882,7 +7893,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             #region Closed PhysicalCheck queries
 
-            Query closedPhysicalCheckQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.Q.ClosedChecks" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id, Code = "ClosedChecks", QueryGroupCode = CustomsPhysicalCheckGroup.Code, IndexOrder = 1, Tenant = 0, ObjectTableId = CustomsPhysicalCheckObject.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsPhysicalCheckFeature.Id}, QueriesRepository, tenantQueries);
+            Query closedPhysicalCheckQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.Q.ClosedChecks" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id, Code = "ClosedChecks", QueryGroupCode = CustomsPhysicalCheckGroup.Code, IndexOrder = 1, Tenant = 0, ObjectTableId = CustomsPhysicalCheckObject.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsPhysicalCheckFeature.Id }, QueriesRepository, tenantQueries);
 
             QueryColumn closedPhysicalCheckQueryColumn12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = closedPhysicalCheckQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsPhysicalCheckFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == CustomsPhysicalCheckObject.Id).FirstOrDefault().Id, ColumnWidth = 90 }, QueryColumnsRepository, tenantQueryColumns);
 
@@ -7962,7 +7973,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn Declaration7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsDeclarationQuery.Id, IndexOrder = 6, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter Declaration_AdvancedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = CustomsDeclarationQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             AdvancedQueryFilter Declaration_AdvancedFilter2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "AmendmentDontDisplayInList" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = CustomsDeclarationQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
-            AdvancedQueryFilter Declaration_AdvancedFilter3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationTypeCode" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id,Operator="NotEqual", PredefinedValue = "2", QueryId = CustomsDeclarationQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            AdvancedQueryFilter Declaration_AdvancedFilter3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationTypeCode" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, Operator = "NotEqual", PredefinedValue = "2", QueryId = CustomsDeclarationQuery.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
 
             #endregion
             #region Declaration Without Release  query
@@ -8203,7 +8214,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn AllCustomsCollateralQyeryColumn2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralQyery.Id, IndexOrder = 1, ObjectFieldId = customsCollateralFields.Where(d => d.FieldName == "CollateralRequestStatusName" && d.ObjectTableId == customsCollateralObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn AllCustomsCollateralQyeryColumn3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralQyery.Id, IndexOrder = 2, ObjectFieldId = customsCollateralFields.Where(d => d.FieldName == "RequestValidityDate" && d.ObjectTableId == customsCollateralObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn AllCustomsCollateralQyeryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralQyery.Id, IndexOrder = 3, ObjectFieldId = customsCollateralFields.Where(d => d.FieldName == "CustomsEntityTypeName" && d.ObjectTableId == customsCollateralObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn AllCustomsCollateralQyeryColumn9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralQyery.Id, IndexOrder = 4, ObjectFieldId = customsCollateralFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == customsCollateralObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);           
+            QueryColumn AllCustomsCollateralQyeryColumn9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralQyery.Id, IndexOrder = 4, ObjectFieldId = customsCollateralFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == customsCollateralObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn AllCustomsCollateralQyeryColumn5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralQyery.Id, IndexOrder = 5, ObjectFieldId = customsCollateralFields.Where(d => d.FieldName == "EntityIdKey1" && d.ObjectTableId == customsCollateralObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn AllCustomsCollateralQyeryColumn6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralQyery.Id, IndexOrder = 6, ObjectFieldId = customsCollateralFields.Where(d => d.FieldName == "EntityIdKey2" && d.ObjectTableId == customsCollateralObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn AllCustomsCollateralQyeryColumn7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralQyery.Id, IndexOrder = 7, ObjectFieldId = customsCollateralFields.Where(d => d.FieldName == "EntityIdKey3" && d.ObjectTableId == customsCollateralObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
@@ -8337,7 +8348,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             #region Open Courier Master
             Query openCourierMaster = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.CourierMaster.O.CourierMasterOpen" && d.ObjectTableId == courierMasterObject.Id).FirstOrDefault().Id, Code = "OpenCourierMaster", QueryGroupCode = courierMasterGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsDeclarationObject.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = courierMasterFeature1.Id, Perspective = "CourierMasterWS" }, QueriesRepository, tenantQueries);
-            
+
             QueryColumn openCourierMaster1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = openCourierMaster.Id, IndexOrder = 0, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 110 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn openCourierMaster2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = openCourierMaster.Id, IndexOrder = 1, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CourierHAWB" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn openCourierMaster3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = openCourierMaster.Id, IndexOrder = 2, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "FastIndividualProcessCode" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 140 }, QueryColumnsRepository, tenantQueryColumns);
@@ -8381,7 +8392,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn courierMasterOpenIndividual5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = courierMasterOpenIndividual.Id, IndexOrder = 4, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "ProcedureCurrentName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn courierMasterOpenIndividual6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = courierMasterOpenIndividual.Id, IndexOrder = 5, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "TotalInvoiceAmountInUSD" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn courierMasterOpenIndividual7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = courierMasterOpenIndividual.Id, IndexOrder = 6, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 190 }, QueryColumnsRepository, tenantQueryColumns);
-            
+
             AdvancedQueryFilter courierMasterOpenIndividualPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsClosedForFollowUp" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = courierMasterOpenIndividual.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             AdvancedQueryFilter courierMasterOpenIndividualPredefinedFilter2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "FastIndividualProcessCode" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "I", QueryId = courierMasterOpenIndividual.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
 
@@ -8433,9 +8444,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn withoutClassification5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = withoutClassification.Id, IndexOrder = 5, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "ProcedureCurrentName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn withoutClassification6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = withoutClassification.Id, IndexOrder = 6, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "TotalInvoiceAmountInUSD" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn withoutClassification7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = withoutClassification.Id, IndexOrder = 7, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CargoDescription" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 190 }, QueryColumnsRepository, tenantQueryColumns);
-            
+
             AdvancedQueryFilter withoutClassificationPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsCourierMissingClassification" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = withoutClassification.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
-            
+
             #endregion
 
             #region Pending Payment
@@ -8448,9 +8459,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn pendingPayment4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pendingPayment.Id, IndexOrder = 4, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "DeclarationNumber" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn pendingPayment5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pendingPayment.Id, IndexOrder = 5, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "ProcedureCurrentName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn pendingPayment6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pendingPayment.Id, IndexOrder = 6, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "TotalInvoiceAmountInUSD" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
-            
+
             AdvancedQueryFilter pendingPaymentPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsPending900" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = pendingPayment.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
-            
+
             #endregion
 
             #region Pending Customs
@@ -8465,7 +8476,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn pendingCustoms6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pendingCustoms.Id, IndexOrder = 6, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "TotalInvoiceAmountInUSD" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn pendingCustoms7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pendingCustoms.Id, IndexOrder = 7, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "AcceptanceStatusName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 190 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn pendingCustoms8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pendingCustoms.Id, IndexOrder = 8, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CourierSuspentionName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 180 }, QueryColumnsRepository, tenantQueryColumns);
-            
+
             AdvancedQueryFilter pendingCustomsPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsClosedForFollowUp" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = pendingCustoms.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             AdvancedQueryFilter pendingCustomsPredefinedFilter2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CourierCustomStatusCode" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "2", QueryId = pendingCustoms.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
 
@@ -8483,9 +8494,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn pending6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pending.Id, IndexOrder = 6, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "TotalInvoiceAmountInUSD" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn pending7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pending.Id, IndexOrder = 7, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "AcceptanceStatusName" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 190 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn pending8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = pending.Id, IndexOrder = 8, ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "CourierPendingReasonList" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, ColumnWidth = 180 }, QueryColumnsRepository, tenantQueryColumns);
-            
+
             AdvancedQueryFilter pendingPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = CustomsDeclarationFields.Where(d => d.FieldName == "IsPendingNotNull" && d.ObjectTableId == CustomsDeclarationObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = pending.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
-            
+
             #endregion
             /*
             #region inactive glaccount
@@ -8633,7 +8644,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn checkEntityTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = checkEntityTypesQuery.Id, IndexOrder = 3, ObjectFieldId = checkEntityTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == checkEntityTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region CheckRepresentativeTypes
@@ -8657,7 +8668,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn checkRepresentativeTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = checkRepresentativeTypeQuery.Id, IndexOrder = 3, ObjectFieldId = checkRepresentativeTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == checkRepresentativeTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region tradeAgreements
@@ -8853,7 +8864,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn customDocumentTypeQueryColumn6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = customDocumentTypeQuery.Id, IndexOrder = 5, ObjectFieldId = customDocumentTypeFields.Where(d => d.FieldName == "AutoSetOriginalDocumentTrue" && d.ObjectTableId == customDocumentTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn customDocumentTypeQueryColumn7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = customDocumentTypeQuery.Id, IndexOrder = 6, ObjectFieldId = customDocumentTypeFields.Where(d => d.FieldName == "IsCourierManadatory" && d.ObjectTableId == customDocumentTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn customDocumentTypeQueryColumn8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = customDocumentTypeQuery.Id, IndexOrder = 7, ObjectFieldId = customDocumentTypeFields.Where(d => d.FieldName == "CustomsDocumentUploadName" && d.ObjectTableId == customDocumentTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
-            
+
 
             #endregion
 
@@ -10504,7 +10515,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn importerPeriodicDeclarationStatusQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = importerPeriodicDeclarationStatusQuery.Id, IndexOrder = 3, ObjectFieldId = importerPeriodicDeclarationStatusFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == importerPeriodicDeclarationStatusObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Guarantee Certificate Type
@@ -10529,7 +10540,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn guaranteeCertificateTypeQueryQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = guaranteeCertificateTypeQuery.Id, IndexOrder = 3, ObjectFieldId = guaranteeCertificateTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == guaranteeCertificateTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
 
@@ -10603,7 +10614,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn requestStatusQueryQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = requestStatusQuery.Id, IndexOrder = 3, ObjectFieldId = requestStatusFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == resquestStatusObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Demander Type
@@ -10628,7 +10639,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn demanderTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = demanderTypeQuery.Id, IndexOrder = 3, ObjectFieldId = demanderTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == demanderTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Storage Message Type
@@ -10653,7 +10664,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn storageMessageTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = storageMessageTypeQuery.Id, IndexOrder = 3, ObjectFieldId = storageMessageTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == storageMessageTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Special Action Description Type
@@ -10678,7 +10689,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn specialActionDescriptionTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = specialActionDescriptionTypeQuery.Id, IndexOrder = 3, ObjectFieldId = specialActionDescriptionTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == specialActionDescriptionTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region International Site
@@ -10801,7 +10812,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn faultInspectionTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = faultInspectionTypeQuery.Id, IndexOrder = 3, ObjectFieldId = faultInspectionTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == faultInspectionTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Procedural Fault Type
@@ -10826,7 +10837,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn proceduralFaultTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = proceduralFaultTypeQuery.Id, IndexOrder = 3, ObjectFieldId = proceduralFaultTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == proceduralFaultTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Procedural Fault Input Process Type
@@ -10851,7 +10862,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn proceduralFaultInputProcessTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = proceduralFaultInProcessTypeQuery.Id, IndexOrder = 3, ObjectFieldId = proceduralFaultInProcessTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == proceduralFaultInProcessTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Ransom Violation Type
@@ -10876,7 +10887,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn ransomViolationTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ransomViolationTypeQuery.Id, IndexOrder = 3, ObjectFieldId = ransomViolationTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ransomViolationTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region cargoIdentity Qualifier
@@ -10901,7 +10912,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn cargoIdentityQualifierQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cargoIdentityQualifierQuery.Id, IndexOrder = 3, ObjectFieldId = cargoIdentityQualifierFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == cargoIdentityQualifierObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Vehicle Pool Type
@@ -10926,7 +10937,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn vehiclePoolTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = vehiclePoolTypeQuery.Id, IndexOrder = 3, ObjectFieldId = vehiclePoolTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == vehiclePoolTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Vehicle Price List Type
@@ -10951,7 +10962,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn vehiclePriceListTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = vehiclePriceListTypeQuery.Id, IndexOrder = 3, ObjectFieldId = vehiclePriceListTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == vehiclePriceListTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Vehicle Manufacturer
@@ -10976,7 +10987,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn vehicleManufacturerQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = vehicleManufacturerQuery.Id, IndexOrder = 3, ObjectFieldId = vehicleManufacturerFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == vehicleManufacturerObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Converter Type
@@ -11001,7 +11012,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn converterTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = converterTypeQuery.Id, IndexOrder = 3, ObjectFieldId = converterTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == converterTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Vehicle Tecnology Type
@@ -11026,7 +11037,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn vehicleTecnologyTypeQueryolumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = vehicleTecnologyTypeQuery.Id, IndexOrder = 3, ObjectFieldId = vehicleTecnologyTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == vehicleTecnologyTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Fuel Type
@@ -11051,7 +11062,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn fuelTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = fuelTypeQuery.Id, IndexOrder = 3, ObjectFieldId = fuelTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == fuelTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Vehicle Type
@@ -11076,7 +11087,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn vehicleTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = vehicleTypeQuery.Id, IndexOrder = 3, ObjectFieldId = vehicleTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == vehicleTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region CheckEssenceLookup
@@ -11101,7 +11112,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn checkEssenceLookupQueryQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = checkEssenceLookupQuery.Id, IndexOrder = 3, ObjectFieldId = checkEssenceLookupFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == checkEssenceLookupObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region Authority
@@ -11126,7 +11137,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn authorityQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = authorityQuery.Id, IndexOrder = 3, ObjectFieldId = authorityFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == authorityObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region VehicleReductionType
@@ -11151,7 +11162,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn vehicleReductionTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = vehicleReductionTypeQuery.Id, IndexOrder = 3, ObjectFieldId = vehicleReductionTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == vehicleReductionTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region VehicleSafetyAccessoryType
@@ -11176,7 +11187,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             QueryColumn vehicleSafetyAccessoryTypeQueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = vehicleSafetyAccessoryTypeQuery.Id, IndexOrder = 3, ObjectFieldId = vehicleSafetyAccessoryTypeFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == vehicleSafetyAccessoryTypeObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
 
 
-            
+
             #endregion
 
             #region GuaranteeCustomerActivity
@@ -11349,7 +11360,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             ObjectContext.SaveChanges();
 
-        #endregion
+            #endregion
 
 
         }
@@ -11971,8 +11982,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         #region BuildCustomsDeclarationCargoSplitScreens
         private void BuildCustomsDeclarationCargoSplitScreens(Dictionary<string, Screen> tenantScreens, Dictionary<string, ScreenField> tenantScreenFields)
         {
-           
-           ObjectTable CustomsDeclarationCargoSplitObject = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationCargoSplit" && d.Tenant == 0).FirstOrDefault();
+
+            ObjectTable CustomsDeclarationCargoSplitObject = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationCargoSplit" && d.Tenant == 0).FirstOrDefault();
 
             ObjectField DeclarationIdField = ObjectContext.ObjectFields.Where(d => d.FieldName == "DeclarationId" && d.ObjectTableId == CustomsDeclarationCargoSplitObject.Id && d.Tenant == 0).FirstOrDefault();
             ObjectField RequestNumberField = ObjectContext.ObjectFields.Where(d => d.FieldName == "RequestNumber" && d.ObjectTableId == CustomsDeclarationCargoSplitObject.Id && d.Tenant == 0).FirstOrDefault();
@@ -12062,7 +12073,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField ClientCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ClientCode.Id,ObjectFieldCode = ClientCode.FieldCode, ObjectTableRuleId = ClientDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField ClientCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ClientCode.Id, ObjectFieldCode = ClientCode.FieldCode, ObjectTableRuleId = ClientDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
 
             ObjectContext.SaveChanges();
@@ -12094,7 +12105,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField CustomBankCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = InternalCode.Id,ObjectFieldCode = InternalCode.FieldCode, ObjectTableRuleId = CustomBankDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField CustomBankCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = InternalCode.Id, ObjectFieldCode = InternalCode.FieldCode, ObjectTableRuleId = CustomBankDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
 
 
             ObjectContext.SaveChanges();
@@ -12157,20 +12168,36 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             //tabs
 
-            
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = CustomsphysicalCheckGENERALFeature.Id,
+
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
+            {
+                FeatureId = CustomsphysicalCheckGENERALFeature.Id,
                 HtmlComponentName = "PhysicalCheckGeneralTabComponent",
                 HtmlComponentUrl = "./CustomsModules/CustomsPhysicalCheck/Components/EditTabs/General/PhysicalCheckGeneralTabComponent",
                 //ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl"
                 ControlPath = "Logitude.Customs.Views.PhysicalCheckAvailableTimesControl"
-                , ObjectTableId = CustomsPhysicalCheckTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "PHGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                ,
+                ObjectTableId = CustomsPhysicalCheckTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.TH.General" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "PHGC",
+                Tenant = 0,
+                IndexOrder = 0
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = CustomsphysicalCheckEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsPhysicalCheckTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "PHEV", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = COMMUNICATIONSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = CustomsPhysicalCheckTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.TH.Communications" && d.Tenant == 0).FirstOrDefault().Id, Code = "PHCM", Tenant = 0, IndexOrder = 2 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = REQUESTSHEETFeature.Id,
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
+            {
+                FeatureId = REQUESTSHEETFeature.Id,
                 HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent",
                 HtmlComponentName = "RequestSheetTabComponent",
 
-                ControlPath = " ", ObjectTableId = CustomsPhysicalCheckTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.TH.RequestSheets" && d.Tenant == 0).FirstOrDefault().Id, Code = "PHRS", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                ControlPath = " ",
+                ObjectTableId = CustomsPhysicalCheckTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.PhysicalCheck.TH.RequestSheets" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "PHRS",
+                Tenant = 0,
+                IndexOrder = 3
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
             //ObjectContext.SaveChanges();
 
@@ -12229,15 +12256,23 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             //Feature CourierDeclarationFeature = tenantFeatures.Where(d => d.Code == "COURIERDECLARATION" && d.ObjectTableId == CustomsDeclarationTable.Id).FirstOrDefault();
 
             //tabs            
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails(){HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent", HtmlComponentName = "DeclarationCorrectionsComponent",FeatureId = DeclarationCorrectionFeature.Id, ControlPath = " ",ObjectTableId = CustomsDeclarationTable.Id,TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Corrections" && d.Tenant == 0).FirstOrDefault().Id,Code = "DCCR", Tenant = 0, IndexOrder = 0}, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent", HtmlComponentName = "DeclarationCorrectionsComponent", FeatureId = DeclarationCorrectionFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Corrections" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCCR", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationGeneralComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/DeclarationGeneralComponent", FeatureId = CustomsDeclarationGENERALFeature.Id, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationGeneralTabControl", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "DEGC", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentUrl= "./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent", HtmlComponentName ="DeclarationSupplierInvoiceTabComponent", FeatureId =  CustomsDeclarationInvoicesFeature.Id, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationInvoicesTabControl", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Invoices" && d.Tenant == 0).FirstOrDefault().Id, Code = "DEIN", Tenant = 0, IndexOrder = 2 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent", HtmlComponentName = "DeclarationSupplierInvoiceTabComponent", FeatureId = CustomsDeclarationInvoicesFeature.Id, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationInvoicesTabControl", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Invoices" && d.Tenant == 0).FirstOrDefault().Id, Code = "DEIN", Tenant = 0, IndexOrder = 2 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CertificateTabComponent", HtmlComponentName = "CertificateTabComponent", FeatureId = DeclarationCertificateEntryFeature.Id, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationCertificatesTabControl", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Certificates" && d.Tenant == 0).FirstOrDefault().Id, Code = "DECR", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customsDeclarationTaxesFeature.Id,
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
+            {
+                FeatureId = customsDeclarationTaxesFeature.Id,
                 HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent",
                 HtmlComponentName = "DeclarationTaxesTabComponent",
-                ControlPath = "Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Taxes" && d.Tenant == 0).FirstOrDefault().Id, Code = "DETX", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                ControlPath = "Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl",
+                ObjectTableId = CustomsDeclarationTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Taxes" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "DETX",
+                Tenant = 0,
+                IndexOrder = 5
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
             //AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customsDeclarationPaymentsFeature.Id, ControlPath = "Logitude.Customs.Views.DeclarationPayment.DeclarationPaymentTabControl", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Payments" && d.Tenant == 0).FirstOrDefault().Id, Code = "DEPY", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = CustomsDeclarationEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "DEEV", Tenant = 0, IndexOrder = 9 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = declareCOMMUNICATIONSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Communications" && d.Tenant == 0).FirstOrDefault().Id, Code = "DECM", Tenant = 0, IndexOrder = 12 }, ObjectTableTabsRepository, TenantObjectTableTabs);
@@ -12247,18 +12282,33 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationAmendmentComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DeclarationAmendment/DeclarationAmendmentComponent", FeatureId = DeclarationAmendmentFeature.Id, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationAmendmentControl", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.DeclarationAmendment" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCDA", Tenant = 0, IndexOrder = 22 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationPhysicalCheckTabComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/PhysicalCheck/DeclarationPhysicalCheckTabComponent", FeatureId = DeclarationPhysicalCheckFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.PhysicalCheck" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCPC", Tenant = 0, IndexOrder = 8 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationPaymentOrderTabComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/PaymentOrder/DeclarationPaymentOrderTabComponent", FeatureId = DeclarationPaymentOrderFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.PaymentOrder" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCPO", Tenant = 0, IndexOrder = 7 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() {
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
+            {
                 HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent",
                 HtmlComponentName = "RequestSheetTabComponent",
-                FeatureId = DeclaratiRequestSheetFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.RequestSheet" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCRS", Tenant = 0, IndexOrder = 11 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName="",  FeatureId = DeclaratiMoreFieldsFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.MoreFields" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCMF", Tenant = 0, IndexOrder = 13 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                FeatureId = DeclaratiRequestSheetFeature.Id,
+                ControlPath = " ",
+                ObjectTableId = CustomsDeclarationTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.RequestSheet" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "DCRS",
+                Tenant = 0,
+                IndexOrder = 11
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "", FeatureId = DeclaratiMoreFieldsFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.MoreFields" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCMF", Tenant = 0, IndexOrder = 13 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationTapagTabComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Tapag/DeclarationTapagTabComponent", FeatureId = DeclaratiTapagsFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Tapags" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCTP", Tenant = 0, IndexOrder = 14 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "NotificationReplyTabComponent" ,HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/NotificationReplyTabComponent", FeatureId = DeclarationNotificationReplyFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Notification" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCNT", Tenant = 0, IndexOrder = 15 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "NotificationReplyTabComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/NotificationReplyTabComponent", FeatureId = DeclarationNotificationReplyFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Notification" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCNT", Tenant = 0, IndexOrder = 15 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
             {
                 HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/NotificationComponent",
                 HtmlComponentName = "NotificationComponent",
-                FeatureId = DeclarationNotificationFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Notifications" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCNF", Tenant = 0, IndexOrder = 16 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                FeatureId = DeclarationNotificationFeature.Id,
+                ControlPath = " ",
+                ObjectTableId = CustomsDeclarationTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Notifications" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "DCNF",
+                Tenant = 0,
+                IndexOrder = 16
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
 
 
@@ -12267,7 +12317,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Collateral/DeclarationCollateralsComponent", HtmlComponentName = "DeclarationCollateralsComponent", FeatureId = DeclarationCollateralFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "General.MH.CustomsCollateral" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCCL", Tenant = 0, IndexOrder = 18 }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
 
-         //   AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationCargoSplitTabComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSplit/DeclarationCargoSplitTabComponent", FeatureId = DeclarationCargoSplitFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.CargoSplit" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCCS", Tenant = 0, IndexOrder = 19 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            //   AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationCargoSplitTabComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSplit/DeclarationCargoSplitTabComponent", FeatureId = DeclarationCargoSplitFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.CargoSplit" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCCS", Tenant = 0, IndexOrder = 19 }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { HtmlComponentName = "DeclarationClassificationComponent", HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/DeclarationClassificationComponent", FeatureId = DeclarationClassificationFeature.Id, ControlPath = " ", ObjectTableId = CustomsDeclarationTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.Classification" && d.Tenant == 0).FirstOrDefault().Id, Code = "DCCF", Tenant = 0, IndexOrder = 20 }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
@@ -12357,10 +12407,18 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature NotificationDefnitionEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == notificationDefinitionTable.Id).FirstOrDefault();
 
             //tabs
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() {
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
+            {
                 HtmlComponentName = "GeneralTabComponent",
-                HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent" ,
-                FeatureId = NotificationDefnitionGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = notificationDefinitionTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.NotificationDefinition.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "NDGN", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent",
+                FeatureId = NotificationDefnitionGENERALFeature.Id,
+                ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl",
+                ObjectTableId = notificationDefinitionTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.NotificationDefinition.TH.General" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "NDGN",
+                Tenant = 0,
+                IndexOrder = 0
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = NotificationDefnitionEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = notificationDefinitionTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.NotificationDefinition.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "NDEV", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
 
@@ -12398,31 +12456,71 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
 
             //tabs
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vehicleGENERALFeature.Id,
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
+            {
+                FeatureId = vehicleGENERALFeature.Id,
                 HtmlComponentName = "VehicleGeneralComponent",
                 HtmlComponentUrl = "./CustomsModules/CustomsVehicle/Components/EditTabs/VehicleGeneralComponent",
-                ControlPath = " ", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHGN", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                ControlPath = " ",
+                ObjectTableId = vehicleTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.General" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "VHGN",
+                Tenant = 0,
+                IndexOrder = 0
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vehicleEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHEV", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() {
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
+            {
                 HtmlComponentName = "VehicleMoreDetailsTabComponent",
                 HtmlComponentUrl = "./CustomsModules/CustomsVehicle/Components/EditTabs/VehicleMoreDetailsTabComponent",
-                FeatureId = vehicleMOREDETAILSFeature.Id, ControlPath = " ", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.MoreDetails" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHMD", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() {
+                FeatureId = vehicleMOREDETAILSFeature.Id,
+                ControlPath = " ",
+                ObjectTableId = vehicleTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.MoreDetails" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "VHMD",
+                Tenant = 0,
+                IndexOrder = 1
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
+            {
                 HtmlComponentName = "VehiclesOwnersAndSafetyTabComponent",
                 HtmlComponentUrl = "./CustomsModules/CustomsVehicle/Components/EditTabs/VehiclesOwnersAndSafetyTabComponent",
-                FeatureId = vehiclOWNERSANDSAFETYFeature.Id, ControlPath = " ", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.OwnersAndSafety" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHOS", Tenant = 0, IndexOrder = 2 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                FeatureId = vehiclOWNERSANDSAFETYFeature.Id,
+                ControlPath = " ",
+                ObjectTableId = vehicleTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.OwnersAndSafety" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "VHOS",
+                Tenant = 0,
+                IndexOrder = 2
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vehiclCOMMUNICATIONSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.Communications" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHCM", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() {
+
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
+            {
                 HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent",
                 HtmlComponentName = "RequestSheetTabComponent",
-                FeatureId = vehiclREQUESTSHEETFeature.Id, ControlPath = " ", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.RequestSheet" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHRS", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                FeatureId = vehiclREQUESTSHEETFeature.Id,
+                ControlPath = " ",
+                ObjectTableId = vehicleTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.RequestSheet" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "VHRS",
+                Tenant = 0,
+                IndexOrder = 6
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() {
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails()
+            {
                 HtmlComponentName = "CustomsDocumentsComponent",
                 HtmlComponentUrl = "./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent",
-                FeatureId = vehicleCustomDocumentFeature.Id, ControlPath = "", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.CustomDocuments" && d.Tenant == 0).FirstOrDefault().Id, Code = "VCCD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                FeatureId = vehicleCustomDocumentFeature.Id,
+                ControlPath = "",
+                ObjectTableId = vehicleTable.Id,
+                TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.CustomDocuments" && d.Tenant == 0).FirstOrDefault().Id,
+                Code = "VCCD",
+                Tenant = 0,
+                IndexOrder = 3
+            }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
             #endregion
 
@@ -12457,7 +12555,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         #endregion
 
 
-   
+
         #region LoadTextCodes
 
         #region load other fields textCodes
@@ -12632,7 +12730,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             ObjectTable customerIdentifyTypeObject = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerIdentifyType" && d.Tenant == 0).FirstOrDefault();
             ObjectTable customsInsuranceCompanyObject = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsInsuranceCompany" && d.Tenant == 0).FirstOrDefault();
 
-            
+
             #endregion
 
             #endregion
@@ -12655,7 +12753,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #endregion
 
             #region QouteOP
-            
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.QuotesOP", DefaultText = "Quotes(OP)", LocalDefaultText = "הצעות מחיר(OP)", ObjectTableId = GeneralTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
 
             //MenusTable - teaxtcode
@@ -12671,8 +12769,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Invoices", DefaultText = "Supplier Invoices", LocalDefaultText = "חשבונות ספק", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Certificates", DefaultText = "Certificates", LocalDefaultText = "הזנת אישורים", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
 
-            
-            
+
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Taxes", DefaultText = "Taxes", LocalDefaultText = "מסים", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Payments", DefaultText = "Declaration Payment", LocalDefaultText = "הגשת תשלום", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Documents", DefaultText = "Documents", LocalDefaultText = "מסמכים", ObjectTableId = CustomsDeclarationTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
@@ -12919,7 +13017,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomerIdentifyType.Q.CustomerIdentifyTypeQuery", DefaultText = "Customer Identify Type", LocalDefaultText = "מזהה לקוח", ObjectTableId = customerIdentifyTypeObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsInsuranceCompany.Q.CustomsInsuranceCompanyQuery", DefaultText = "Customs Insurance Company", LocalDefaultText = "מכס חברה לביטוח", ObjectTableId = customsInsuranceCompanyObject.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
 
-           
+
             #endregion
 
 
@@ -13013,7 +13111,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.SelectObjectTable", DefaultText = "You must select an ObjectTable", LocalDefaultText = "עליך לבחור בלוח אובייקט", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ViewCode", DefaultText = "View Code", LocalDefaultText = "צג קוד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Existed", DefaultText = "Existed", LocalDefaultText = "קיים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.All", DefaultText = "All", LocalDefaultText = "הכל", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.All", DefaultText = "All", LocalDefaultText = "הכל", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CourierAlreadyExist", DefaultText = "There is already master courier with the same values", LocalDefaultText = "קיים בלדר ראשי עם נתונים זהים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NewCustomsFile", DefaultText = "New Customs File", LocalDefaultText = "פתיחת תיק חדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -13026,7 +13124,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.RecallClientsForCutoms", DefaultText = "Update Importers Data", LocalDefaultText = "עדכון נתוני יבואנים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.DocumentsDefinition", DefaultText = "Documents Definition", LocalDefaultText = "הגדרת סוגי מסמך למסך צרופות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.ReAnalysis", DefaultText = "Re-Analysis", LocalDefaultText = "גליון בקשות - ניתוח גורף", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-            
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CustomsExchangeRate", DefaultText = "Customs Exchange Rate", LocalDefaultText = "שערי מטבע מכס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CurrencyRate", DefaultText = "Currency Rate", LocalDefaultText = "טבלת שערים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CurrencyExchangeRateQuery", DefaultText = "Exchange Rate Query", LocalDefaultText = "שאילתא לשערים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -13060,7 +13158,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.BlockListInWarehouse.O.PhysicalPackagesQuantityBalance", DefaultText = "Physical Balance", LocalDefaultText = "יתרת אריזות פיזית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.BlockListInWarehouse.O.Value", DefaultText = "Value", LocalDefaultText = "יתרה בשח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.BlockListInWarehouse.O.SpecialActivityTypeName", DefaultText = "Special Activity Type", LocalDefaultText = "פעולה מיוחדת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-            
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CustomsMorningMessage", DefaultText = "Customs Morning Message", LocalDefaultText = "הודעות בוקר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.MorningMessageQuery", DefaultText = "Morning Message Query", LocalDefaultText = "שאילתא להודעות בוקר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.MorningMessage.O.MorningMessageResults", DefaultText = "Morning Message Results", LocalDefaultText = "תוצאות שאילתא להודעות בוקר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -13916,7 +14014,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsCollateral", DefaultText = "Customs Collateral", LocalDefaultText = "בטוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CourierMaster", DefaultText = "Courier Master", LocalDefaultText = "בלדר ראשי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
 
-            
+
             #endregion
 
             // AddTextCodes.AddTextCode(new TextCodeDetails()
@@ -14001,7 +14099,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CustomFileNo", DefaultText = "Custom File No.", LocalDefaultText = "תיק עמילות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.EndDate", DefaultText = "End Date", LocalDefaultText = "מועד סיום הבדיקה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.GeneralDetails", DefaultText = "General Details", LocalDefaultText = "נתוני בדיקה פיזית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-           
+
 
             ObjectContext.SaveChanges();
         }
@@ -14301,25 +14399,25 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDocument", DefaultText = "Send", LocalDefaultText = "שלח מסמך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteSite", DefaultText = "Delete this internal site?", LocalDefaultText = "למחוק את המעבר הפנימי ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateMandatoryFields", DefaultText = "Some lines are without Mandatory fields , Continue ?", LocalDefaultText = "קיימים אישורים שלא הוזן בהם שדות חובה , להמשיך ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ResetDeclaration", DefaultText = "Are you sure you want to reset declaration number ?", LocalDefaultText = "האם בטוח שברצונך לאפס את מספר ההצהרה ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationReset", DefaultText = "Declaration Number Was reset", LocalDefaultText = "מספר הצהרה אופס בהצלחה - יש לעדכן נתונים ולשדר מחדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-         // AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchItems", DefaultText = "Search", LocalDefaultText = "יש לציין לפחות 2 תווים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantCopy", DefaultText = "Supplier invoice exist can't copy", LocalDefaultText = "קיימים חשבונות ספק , לא ניתן לבצע העתקה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyData", DefaultText = "Copy Data from File", LocalDefaultText = "העתק נתוני מתיק עמילות ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ToFile", DefaultText = "To File", LocalDefaultText = "לתיק עמילות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteAmounts", DefaultText = "Freight And Insurance Values will be deleted", LocalDefaultText = "נתוני הובלה/ביטוח ימחקו , להמשיך ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteAmounts", DefaultText = "Freight And Insurance Values will be deleted", LocalDefaultText = "נתוני הובלה/ביטוח ימחקו , להמשיך ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionGeneral", DefaultText = "General Data", LocalDefaultText = "תיקון הצהרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionStatement", DefaultText = "Statement", LocalDefaultText = "נתוני תיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Amendments", DefaultText = "Amendments", LocalDefaultText = "שינויים שבוצעו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Date", DefaultText = "Date", LocalDefaultText = "תאריך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-         // AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Time", DefaultText = "Time", LocalDefaultText = "שעה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Version", DefaultText = "Version", LocalDefaultText = "גרסה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-         // AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Statement", DefaultText = "Statement", LocalDefaultText = "תיאור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Content", DefaultText = "Content", LocalDefaultText = "ערך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.VatChanged", DefaultText = "Customer VAT is different than Importer VAT , Continue anyway ?", LocalDefaultText = "מספר החפ לא תואם ללקוח בתיק , להמשיך בכל זאת ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyDeclaration", DefaultText = "Customer VAT is different than Importer VAT , Continue anyway ?", LocalDefaultText = "מספר החפ לא תואם ללקוח בתיק , להמשיך בכל זאת ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-        
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ResetDeclaration", DefaultText = "Are you sure you want to reset declaration number ?", LocalDefaultText = "האם בטוח שברצונך לאפס את מספר ההצהרה ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationReset", DefaultText = "Declaration Number Was reset", LocalDefaultText = "מספר הצהרה אופס בהצלחה - יש לעדכן נתונים ולשדר מחדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            // AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SearchItems", DefaultText = "Search", LocalDefaultText = "יש לציין לפחות 2 תווים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantCopy", DefaultText = "Supplier invoice exist can't copy", LocalDefaultText = "קיימים חשבונות ספק , לא ניתן לבצע העתקה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyData", DefaultText = "Copy Data from File", LocalDefaultText = "העתק נתוני מתיק עמילות ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ToFile", DefaultText = "To File", LocalDefaultText = "לתיק עמילות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteAmounts", DefaultText = "Freight And Insurance Values will be deleted", LocalDefaultText = "נתוני הובלה/ביטוח ימחקו , להמשיך ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteAmounts", DefaultText = "Freight And Insurance Values will be deleted", LocalDefaultText = "נתוני הובלה/ביטוח ימחקו , להמשיך ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionGeneral", DefaultText = "General Data", LocalDefaultText = "תיקון הצהרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionStatement", DefaultText = "Statement", LocalDefaultText = "נתוני תיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Amendments", DefaultText = "Amendments", LocalDefaultText = "שינויים שבוצעו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Date", DefaultText = "Date", LocalDefaultText = "תאריך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            // AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Time", DefaultText = "Time", LocalDefaultText = "שעה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Version", DefaultText = "Version", LocalDefaultText = "גרסה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            // AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Statement", DefaultText = "Statement", LocalDefaultText = "תיאור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Content", DefaultText = "Content", LocalDefaultText = "ערך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.VatChanged", DefaultText = "Customer VAT is different than Importer VAT , Continue anyway ?", LocalDefaultText = "מספר החפ לא תואם ללקוח בתיק , להמשיך בכל זאת ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyDeclaration", DefaultText = "Customer VAT is different than Importer VAT , Continue anyway ?", LocalDefaultText = "מספר החפ לא תואם ללקוח בתיק , להמשיך בכל זאת ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyDeclaration", DefaultText = "Copy Declaration", LocalDefaultText = "העתקת הצהרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ResetDeclaration", DefaultText = "Are you sure you want to reset declaration number ?", LocalDefaultText = "האם בטוח שברצונך לאפס את מספר ההצהרה ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -14329,7 +14427,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyData", DefaultText = "Copy Data from File", LocalDefaultText = "העתק נתוני מתיק עמילות ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ToFile", DefaultText = "To File", LocalDefaultText = "לתיק עמילות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteAmounts", DefaultText = "Freight And Insurance Values will be deleted", LocalDefaultText = "נתוני ביטוח ימחקו, להמשיך ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-         // AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteAmounts", DefaultText = "Freight And Insurance Values will be deleted", LocalDefaultText = "נתוני הובלה/ביטוח ימחקו , להמשיך ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            // AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteAmounts", DefaultText = "Freight And Insurance Values will be deleted", LocalDefaultText = "נתוני הובלה/ביטוח ימחקו , להמשיך ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionGeneral", DefaultText = "General Data", LocalDefaultText = "תיקון הצהרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectionStatement", DefaultText = "Statement", LocalDefaultText = "נתוני תיקון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Amendments", DefaultText = "Amendments", LocalDefaultText = "שינויים שבוצעו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -14341,10 +14439,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Statement", DefaultText = "Statement", LocalDefaultText = "תיאור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Content", DefaultText = "Content", LocalDefaultText = "ערך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.VatChanged", DefaultText = "Customer VAT is different than Importer VAT , Continue anyway ?", LocalDefaultText = "מספר החפ לא תואם ללקוח בתיק , להמשיך בכל זאת ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SystemMessages", DefaultText = "System Messages", LocalDefaultText = "הודעות מערכת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoAmendments", DefaultText = "There are no amendments in this declaration", LocalDefaultText = "לא בוצעו תיקונים בהצהרה זו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SaveDeclaration", DefaultText = "Data will be saved, continue?", LocalDefaultText = "?יש לשמור את נתוני ההצהרה , המשך ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-          AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateNotMandatoryFields", DefaultText = "Entered data fields are not mandatory, continue?", LocalDefaultText = "?הוזנו נתונים בשדות שאינם חובה , האם להמשיך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SystemMessages", DefaultText = "System Messages", LocalDefaultText = "הודעות מערכת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoAmendments", DefaultText = "There are no amendments in this declaration", LocalDefaultText = "לא בוצעו תיקונים בהצהרה זו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SaveDeclaration", DefaultText = "Data will be saved, continue?", LocalDefaultText = "?יש לשמור את נתוני ההצהרה , המשך ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CertificateNotMandatoryFields", DefaultText = "Entered data fields are not mandatory, continue?", LocalDefaultText = "?הוזנו נתונים בשדות שאינם חובה , האם להמשיך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CopyDeclaration", DefaultText = "Copy Declaration", LocalDefaultText = "העתקת הצהרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TransferToCollector", DefaultText = "Aprove Transfer To Collector", LocalDefaultText = "אשר העברה לגובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes); // moran 6.6.16 - AMI-56804
@@ -14445,7 +14543,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.SealCompletenessStateCodeMandatory", DefaultText = "Seal CompletenessState is mandatory", LocalDefaultText = "מצב שלמות הסגר הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateReasonCodeMandatory", DefaultText = "Update Reason field is mandatory", LocalDefaultText = "סיבת עדכון הסגר הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoSealsQuery.F.UpdateTypeCodeMandatory", DefaultText = "Update Type field is mandatory", LocalDefaultText = "סוג עדכון של הסגר הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
- 
+
             //Task 62936 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateCountryOfOrigin", DefaultText = "Update Country of Origin", LocalDefaultText = "עדכון ארץ מקור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiCountryOfOrigin", DefaultText = "This screen allows to multi update Country of Origin", LocalDefaultText = "מסך זה מאפשר לעדכן את ארץ המקור באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד התהליך ובפעולה הרצויה.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -14640,7 +14738,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         }
         #endregion
 
- 
+
 
         #region LoadTextCodes_RequestSheet
         private void LoadTextCodes_RequestSheet(Dictionary<string, TextCode> textcodes)
@@ -14840,8 +14938,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 TextCodeTypeCode = "O",
             }, TextCodeRepository, textcodes);
-            
-            
+
+
         }
 
         #endregion
@@ -15032,31 +15130,31 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             Feature containerizationFeature = tenantFeatures.Where(d => d.Code == "Containerization" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature exportDeclarationFeature = tenantFeatures.Where(d => d.Code == "ExportDeclaration" && d.FeatureTypeCode == "MENU").FirstOrDefault();
-            
+
             Feature CUSTOMSDECLARATIONFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature CUSTOMSExportDECLARATIONFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSEXPORTDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
 
             #region MenusCUSTOMSDECLARATIONFeature
 
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSDC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 4, CategoryTypeCode = null, TextCode = "General.MH.Declarations", Icon = "CustomersPath", FeatureId = CUSTOMSDECLARATIONFeature.Id,FeatureUniqeCode= CUSTOMSDECLARATIONFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSDC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 4, CategoryTypeCode = null, TextCode = "General.MH.Declarations", Icon = "CustomersPath", FeatureId = CUSTOMSDECLARATIONFeature.Id, FeatureUniqeCode = CUSTOMSDECLARATIONFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SSTT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 5, CategoryTypeCode = null, TextCode = "Customs.MH.ExportDeclaration", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id, FeatureId = exportDeclarationFeature.Id, FeatureUniqeCode = exportDeclarationFeature.FeatureUniqeCode, QuerySection = "Customs.ExportDeclaration" }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", Code = "CSRS", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 9, CategoryTypeCode = null, TextCode = "General.MH.CustomsRequestsSheets", Icon = "ReportsPath", FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSPC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 6, CategoryTypeCode = null, TextCode = "General.MH.PhysicalChecks", Icon = "CustomersPath", FeatureId = customFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.PhysicalCheck").FirstOrDefault().Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsControls/Components/NotificationComponent", Code = "CSNT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 8, CategoryTypeCode = null, TextCode = "General.MH.Notifications", Icon = "ReportsPath", FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSPO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 7, CategoryTypeCode = null, TextCode = "General.MH.PaymentOrders", Icon = "CustomersPath", FeatureId = customFeature.Id,FeatureUniqeCode = customFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.PaymentOrder").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSPO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 7, CategoryTypeCode = null, TextCode = "General.MH.PaymentOrders", Icon = "CustomersPath", FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.PaymentOrder").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsRequests/Components/CustomsRequestsComponent", Code = "CSTM", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 18, CategoryTypeCode = null, TextCode = "General.MH.Customs", Icon = "CustomersPath", FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSPF", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 12, CategoryTypeCode = null, TextCode = "General.MH.ProceduralFaults", Icon = "CustomersPath", FeatureId = customsProceduralFaultsFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ProceduralFault").FirstOrDefault().Id, FeatureUniqeCode = customsProceduralFaultsFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSVH", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 13, CategoryTypeCode = null, TextCode = "General.MH.Vehicles", Icon = "ReportsPath", FeatureId = vehiclesFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Vehicle").FirstOrDefault().Id,FeatureUniqeCode = vehiclesFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSVH", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 13, CategoryTypeCode = null, TextCode = "General.MH.Vehicles", Icon = "ReportsPath", FeatureId = vehiclesFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Vehicle").FirstOrDefault().Id, FeatureUniqeCode = vehiclesFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSCC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 10, CategoryTypeCode = null, TextCode = "General.MH.CustomsCollateral", Icon = "CustomersPath", FeatureId = customsCollateralFaultsFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsCollateral").FirstOrDefault().Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSCL", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 11, CategoryTypeCode = null, TextCode = "General.MH.Claims", Icon = "CustomersPath", FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Claim").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "COMA", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 1, CategoryTypeCode = null, TextCode = "General.MH.CourierMaster", Icon = "CustomersPath", FeatureId = customCouriersMasterFeature.Id,  ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CourierMaster").FirstOrDefault().Id,FeatureUniqeCode = customCouriersMasterFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CDCS", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 14, CategoryTypeCode = null, TextCode = "General.MH.DeclarationCargoSplits", Icon = "CustomersPath", FeatureId = customsDeclarationCargoSplitFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationCargoSplit").FirstOrDefault().Id,FeatureUniqeCode = customsDeclarationCargoSplitFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsCourier/Components/CourierWorkspaces/CourierDeclarationWorkspaceComponent", Code = "CODC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 5, CategoryTypeCode = null, TextCode = "General.MH.Declarations", Icon = "CustomersPath", FeatureId = courierDeclarationFeature.Id,FeatureUniqeCode = courierDeclarationFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "COMA", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 1, CategoryTypeCode = null, TextCode = "General.MH.CourierMaster", Icon = "CustomersPath", FeatureId = customCouriersMasterFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CourierMaster").FirstOrDefault().Id, FeatureUniqeCode = customCouriersMasterFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CDCS", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 14, CategoryTypeCode = null, TextCode = "General.MH.DeclarationCargoSplits", Icon = "CustomersPath", FeatureId = customsDeclarationCargoSplitFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationCargoSplit").FirstOrDefault().Id, FeatureUniqeCode = customsDeclarationCargoSplitFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsCourier/Components/CourierWorkspaces/CourierDeclarationWorkspaceComponent", Code = "CODC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 5, CategoryTypeCode = null, TextCode = "General.MH.Declarations", Icon = "CustomersPath", FeatureId = courierDeclarationFeature.Id, FeatureUniqeCode = courierDeclarationFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsReferant/Components/ReferantWorkspaces/ReferantWorkspaceComponent", Code = "REWP", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 2, CategoryTypeCode = null, TextCode = "General.MH.ReferantWorkspace", Icon = "CustomersPath", FeatureId = referantWorkspaceFeature.Id, FeatureUniqeCode = referantWorkspaceFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationReferantData").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "REDC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 3, CategoryTypeCode = null, TextCode = "General.MH.ReferantScreen", Icon = "CustomersPath", FeatureId = customsReferantFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationReferantData").FirstOrDefault().Id,FeatureUniqeCode = customsReferantFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "REDC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 3, CategoryTypeCode = null, TextCode = "General.MH.ReferantScreen", Icon = "CustomersPath", FeatureId = customsReferantFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationReferantData").FirstOrDefault().Id, FeatureUniqeCode = customsReferantFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSCO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 16, CategoryTypeCode = null, TextCode = "General.MH.Containerization", Icon = "CustomersPath", FeatureId = containerizationFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Containerization").FirstOrDefault().Id, FeatureUniqeCode = containerizationFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSES", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 19, CategoryTypeCode = null, TextCode = "General.MH.ExportStorage", Icon = "CustomersPath", FeatureId = exportStorageFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ExportStorge").FirstOrDefault().Id, FeatureUniqeCode = exportStorageFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsReport/Components/CustomsReportsComponent", Code = "CSRP", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 18, CategoryTypeCode = null, TextCode = "General.MH.CustomsReports", Icon = "ReportsPath", FeatureId = reportsFeature.Id, FeatureUniqeCode = reportsFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
@@ -15065,26 +15163,44 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             Feature QuoteOPFeature = tenantFeatures.Where(d => d.Code == "QuoteOP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             var quoteOPObjectTable = tenantObjectTables.FirstOrDefault(o => o.Name == "QuoteOP");
-            if (quoteOPObjectTable!=null)/// FIRST CLICK BuildOPM  !!!
+            if (quoteOPObjectTable != null)/// FIRST CLICK BuildOPM  !!!
             {
                 Feature GeneralFeature_OPSPECIALSERVICESTYPES = tenantFeatures.Where(d => d.Code == "OPSpecialServiceTypeMTC" && d.FeatureTypeCode == "MENU").FirstOrDefault();
-                
+
                 var GeneralObjectTable = tenantObjectTables.Where(o => o.Name == "General").FirstOrDefault();
                 ///AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "QOPM", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 19, CategoryTypeCode = null, TextCode = "General.MH.QuotesOP", Icon = "QuotesPath", FeatureId = QuoteOPFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "QuoteOP").FirstOrDefault().Id, FeatureUniqeCode = QuoteOPFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-                AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "QOPM", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 19, CategoryTypeCode = null, TextCode = "General.MH.QuotesOP", Icon = "QuotesPath", 
-                    FeatureId = QuoteOPFeature.Id, 
-                    ObjectTableId = quoteOPObjectTable.Id, FeatureUniqeCode = QuoteOPFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+                AddMenusTables.AddMenusTable(new MenusTableDetails()
+                {
+                    Code = "QOPM",
+                    Tenant = 0,
+                    MenuTypeCode = "Main",
+                    IndexOfOrder = 19,
+                    CategoryTypeCode = null,
+                    TextCode = "General.MH.QuotesOP",
+                    Icon = "QuotesPath",
+                    FeatureId = QuoteOPFeature.Id,
+                    ObjectTableId = quoteOPObjectTable.Id,
+                    FeatureUniqeCode = QuoteOPFeature.FeatureUniqeCode
+                }, MenusTablesRepository, tenantMenusTables);
 
                 //OPSpecialServiceTypes
                 //OPSpecialServiceTypes
-                
-                AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SPOP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 56, CategoryTypeCode = "Oth", 
-                    TextCode = "General.MC.Others.OPSpecialServiceTypes", Icon = "DocumentTypes.png", 
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "OPSpecialServicesType").FirstOrDefault().Id, 
-                    FeatureId = GeneralFeature_OPSPECIALSERVICESTYPES.Id, 
-                    FeatureUniqeCode = GeneralFeature_OPSPECIALSERVICESTYPES.FeatureUniqeCode, }, 
+
+                AddMenusTables.AddMenusTable(new MenusTableDetails()
+                {
+                    Code = "SPOP",
+                    Tenant = 0,
+                    MenuTypeCode = "MTC",
+                    IndexOfOrder = 56,
+                    CategoryTypeCode = "Oth",
+                    TextCode = "General.MC.Others.OPSpecialServiceTypes",
+                    Icon = "DocumentTypes.png",
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "OPSpecialServicesType").FirstOrDefault().Id,
+                    FeatureId = GeneralFeature_OPSPECIALSERVICESTYPES.Id,
+                    FeatureUniqeCode = GeneralFeature_OPSPECIALSERVICESTYPES.FeatureUniqeCode,
+                },
                     MenusTablesRepository, tenantMenusTables);
-                
+
             }
 
 
@@ -15123,22 +15239,29 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 FeatureUniqeCode = rerequestAnalysisFeature.FeatureUniqeCode,
             }, MenusTablesRepository, tenantMenusTables);
 
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CFTP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 59,
-                CategoryTypeCode = "CSM", TextCode = "General.MC.Customs.CustomsPartnerFtp",
+            AddMenusTables.AddMenusTable(new MenusTableDetails()
+            {
+                Code = "CFTP",
+                Tenant = 0,
+                MenuTypeCode = "MTC",
+                IndexOfOrder = 59,
+                CategoryTypeCode = "CSM",
+                TextCode = "General.MC.Customs.CustomsPartnerFtp",
                 Icon = "Settings",
                 ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsPartnerFtp").FirstOrDefault().Id,
-                FeatureId = CustomsPartnerFtpFeature.Id,FeatureUniqeCode = CustomsPartnerFtpFeature.FeatureUniqeCode
+                FeatureId = CustomsPartnerFtpFeature.Id,
+                FeatureUniqeCode = CustomsPartnerFtpFeature.FeatureUniqeCode
             }, MenusTablesRepository, tenantMenusTables);
 
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCPK", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 60, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.PendingByKeyword", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.PendingByKeyword").FirstOrDefault().Id, FeatureId = customPendingByKeywordFeature.Id ,FeatureUniqeCode = customPendingByKeywordFeature .FeatureUniqeCode}, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCPA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 61, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.AutonomyKeyword", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsAutonomyKeyword").FirstOrDefault().Id, FeatureId = CustomsAutonomyKeyword.Id ,FeatureUniqeCode = CustomsAutonomyKeyword.FeatureUniqeCode}, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCER", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 62, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.ExceptionReason", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ExceptionReason").FirstOrDefault().Id, FeatureId = ExceptionReason.Id ,FeatureUniqeCode = ExceptionReason.FeatureUniqeCode}, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCPK", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 60, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.PendingByKeyword", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.PendingByKeyword").FirstOrDefault().Id, FeatureId = customPendingByKeywordFeature.Id, FeatureUniqeCode = customPendingByKeywordFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCPA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 61, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.AutonomyKeyword", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsAutonomyKeyword").FirstOrDefault().Id, FeatureId = CustomsAutonomyKeyword.Id, FeatureUniqeCode = CustomsAutonomyKeyword.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCER", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 62, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.ExceptionReason", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ExceptionReason").FirstOrDefault().Id, FeatureId = ExceptionReason.Id, FeatureUniqeCode = ExceptionReason.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MRCF", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 63, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.ReceiptCertificateFromFile", Icon = "", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.SupplierInvioceItemCertificat").FirstOrDefault().Id, FeatureId = CustomsReceiptCertificateFromFile.Id, FeatureUniqeCode = CustomsReceiptCertificateFromFile.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MRRT", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 64, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.ReferantTeam", Icon = "", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ReferantTeam").FirstOrDefault().Id, FeatureId = CustomsReferantTeam.Id, FeatureUniqeCode = CustomsReferantTeam.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
 
 
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CMAA", Tenant = 0, MenuTypeCode = "CSM", IndexOfOrder = 0, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.Vendors", Icon = "Customer.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsVendor").FirstOrDefault().Id, FeatureId = customFeature.Id ,FeatureUniqeCode = customFeature .FeatureUniqeCode}, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CMAA", Tenant = 0, MenuTypeCode = "CSM", IndexOfOrder = 0, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.Vendors", Icon = "Customer.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsVendor").FirstOrDefault().Id, FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CMAB", Tenant = 0, MenuTypeCode = "CSM", IndexOfOrder = 1, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.Clients", Icon = "Customer.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Client").FirstOrDefault().Id, FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CM01", Tenant = 0, MenuTypeCode = "CSM", IndexOfOrder = 1, CategoryTypeCode = "Oth", TextCode = "General.MC.Tables.CheckEntityTypes", Icon = "", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CheckEntityType").FirstOrDefault().Id, FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
@@ -15178,8 +15301,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CM34", Tenant = 0, MenuTypeCode = "CSM", IndexOfOrder = 34, CategoryTypeCode = "Oth", TextCode = "General.MC.Tables.MeasurmentUnits", Icon = "", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.MeasurmentUnit").FirstOrDefault().Id, FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CM35", Tenant = 0, MenuTypeCode = "CSM", IndexOfOrder = 35, CategoryTypeCode = "Oth", TextCode = "General.MC.Tables.ModificationAndDiscountTypes", Icon = "", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ModificationAndDiscountType").FirstOrDefault().Id, FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CM36", Tenant = 0, MenuTypeCode = "CSM", IndexOfOrder = 36, CategoryTypeCode = "Oth", TextCode = "General.MC.Tables.ParagraphTypes", Icon = "", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ParagraphType").FirstOrDefault().Id, FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
-            
-            
+
+
 
 
             // General.Features.EmailAlertSetting
@@ -15692,8 +15815,16 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             Feature GeneralQuoteOPFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteOP", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.QuoteOP", NameTextCodeDefaultText = "Quote(OP)", FullLocalDefaultText = "(OP) הצעות מחיר ", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
-            Feature CustomsPartnerFtpFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CPARTNERFTP", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsPartnerFtp",
-                NameTextCodeDefaultText = "הגדרות תקשורת", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature CustomsPartnerFtpFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails()
+            {
+                Code = "CPARTNERFTP",
+                Packagable = true,
+                ObjectTableId = GeneralObjectTable.Id,
+                Tenant = tenant,
+                NameTextCodeCode = "General.Features.CustomsPartnerFtp",
+                NameTextCodeDefaultText = "הגדרות תקשורת",
+                FeatureTypeCode = "MENU"
+            }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
 
             //Feature GeneralCustomsSignFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSIGN", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsSign", NameTextCodeDefaultText = "Sign Stations", FullLocalDefaultText = "עמדות חתימה" , FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -15738,11 +15869,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 NameTextCodeCode = "General.Features.OPSpecialServiceType",
                 NameTextCodeDefaultText = @"Special Service Types(OP)"
             }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            
+
             #endregion//QuoteOP
             textCodeRep.SubmitChanges();
             FeaturesRepository.SubmitChanges();
-            
+
             //#region CustomsCollateral
             //Feature CustomsCollateralFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.CustomsCollateral.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             //Feature CustomsCollateralFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.CustomsCollateral.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -16412,7 +16543,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             // #endregion
 
 
-      
+
 
 
             #region Freight Operation
@@ -16543,7 +16674,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 LocalName = "עודכן",
                 ObjectTableId = declarationObject.Id,
                 ShortView = false,
-                EventTypeCategoryCode = "LOG", 
+                EventTypeCategoryCode = "LOG",
 
             }, EventTypesRepository, tenantEventTypes);
 
@@ -16784,8 +16915,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             }, EventTypesRepository, tenantEventTypes);
 
-            
-            
+
+
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "CDA",
@@ -16892,7 +17023,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AddEventTypes.AddEventType(new EventTypeDetails() // Task 13414 // moran 1.8.16 - Task 21654 - change CDC to VCI
             {
-                Code = "VCI", 
+                Code = "VCI",
                 EnglishName = "Custom Documents Check",
                 Tenant = 0,
                 AddedManually = false,
@@ -16903,7 +17034,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             }, EventTypesRepository, tenantEventTypes);
 
-            AddEventTypes.AddEventType(new EventTypeDetails() 
+            AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "VCS",
                 EnglishName = "Custom Documents Check",
@@ -17708,7 +17839,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 EventTypeCategoryCode = "LOG",
 
             }, EventTypesRepository, tenantEventTypes);
- 
+
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "DMA",
@@ -17771,8 +17902,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             }, EventTypesRepository, tenantEventTypes);
 
-             EventTypesRepository.SubmitChanges();
- 
+            EventTypesRepository.SubmitChanges();
+
         }
 
         #endregion
@@ -17818,7 +17949,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             var objectTablesQuoteOP = ObjectContext.ObjectTables.Where(o => o.Name == "QuoteOP").FirstOrDefault();
             Counter counterQUOTOP = CounterRepository.GetCounterByCode("QTOP", tenant);
-            if (objectTablesQuoteOP !=null && counterQUOTOP == null)
+            if (objectTablesQuoteOP != null && counterQUOTOP == null)
             {
                 Counter quoteCounter = new Counter()
                 {
@@ -17891,7 +18022,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                     Parameter2 = "I",
                 };
 
-               
+
                 CounterDefinitionRepository.Add(Quote_Export_Air_Counter);
                 CounterDefinitionRepository.Add(Quote_Export_Ocean_Counter);
                 CounterDefinitionRepository.Add(Quote_Export_Inland_Counter);
@@ -17899,7 +18030,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 CounterDefinitionRepository.Add(Quote_Import_Ocean_Counter);
                 CounterDefinitionRepository.Add(Quote_Import_Inland_Counter);
 
-               
+
             }
             #endregion
 
@@ -17956,8 +18087,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AccumalationStateRepository accumalationStateRepository = new AccumalationStateRepository(0);
 
-            AddClosedTables.AddAccumalationState(new AccumalationStateDetails() { Code = "1", Name = "Accumulate Above 998 items", LocalName= "צבור מעל 998 פריטים"}, accumalationStateRepository);
-            AddClosedTables.AddAccumalationState(new AccumalationStateDetails() { Code = "2", Name = "Always Accumulate" , LocalName= "צבור תמיד" }, accumalationStateRepository);
+            AddClosedTables.AddAccumalationState(new AccumalationStateDetails() { Code = "1", Name = "Accumulate Above 998 items", LocalName = "צבור מעל 998 פריטים" }, accumalationStateRepository);
+            AddClosedTables.AddAccumalationState(new AccumalationStateDetails() { Code = "2", Name = "Always Accumulate", LocalName = "צבור תמיד" }, accumalationStateRepository);
             AddClosedTables.AddAccumalationState(new AccumalationStateDetails() { Code = "3", Name = "Never Accumulate", LocalName = "ללא צבירה" }, accumalationStateRepository);
 
 
@@ -17983,7 +18114,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             ManifestCargoStatusRepository manifestCargoStatusRepository = new ManifestCargoStatusRepository(0);
 
-            AddClosedTables.AddManifestCargoStatus(new ManifestCargoStatusDetails() { Code = "0", Name = "NULL", LocalName="NULL" }, manifestCargoStatusRepository);
+            AddClosedTables.AddManifestCargoStatus(new ManifestCargoStatusDetails() { Code = "0", Name = "NULL", LocalName = "NULL" }, manifestCargoStatusRepository);
             AddClosedTables.AddManifestCargoStatus(new ManifestCargoStatusDetails() { Code = "1", Name = "Correct", LocalName = "תקין" }, manifestCargoStatusRepository);
             AddClosedTables.AddManifestCargoStatus(new ManifestCargoStatusDetails() { Code = "2", Name = "Incorrect", LocalName = "שגוי" }, manifestCargoStatusRepository);
             AddClosedTables.AddManifestCargoStatus(new ManifestCargoStatusDetails() { Code = "3", Name = "Declined", LocalName = "נדחה" }, manifestCargoStatusRepository);
@@ -18119,7 +18250,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             }
             if (Environment.UserInteractive && sb.Length > 0)
             {
-               // System.Windows.Forms.MessageBox.Show("Please note  !ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType> (Call Mirit !!)" + Environment.NewLine + sb.ToString());
+                // System.Windows.Forms.MessageBox.Show("Please note  !ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType> (Call Mirit !!)" + Environment.NewLine + sb.ToString());
             }
 
 
@@ -18130,7 +18261,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             where TRepository : IRepository<TPOCO> //,Logitude.Customs.BL.ClosedTable.IRepoCloseTable<TPOCO>
 
             where TPOCO : //Logitude.Customs.BL.ClosedTable.ICustomCloseTable,
-           class,new()
+           class, new()
         {
 
             if (repo == null)
@@ -18191,7 +18322,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                                 CustomsSchedulerProcedureDetails,
                                 SchedulerProcedureRepository>(repo, dic);
         }
-    
+
 
         public void FillAssigneeNotificationTypeTable()
         {
@@ -18293,8 +18424,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Dictionary<string, StorageStatus> TenantCertificatesStatuses = storageStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
 
             AddClosedTables.AddStorageStatus(new StorageStatusDetails() { Code = "1", Name = "Approved", LocalName = "מאושר" }, storageStatusRepository);
-            AddClosedTables.AddStorageStatus(new StorageStatusDetails() { Code = "2",Name = "Denied", LocalName = "נדחה" }, storageStatusRepository);
-            AddClosedTables.AddStorageStatus(new StorageStatusDetails() { Code = "3", Name = "Waiting", LocalName = "ממתין", }, storageStatusRepository);
+            AddClosedTables.AddStorageStatus(new StorageStatusDetails() { Code = "2", Name = "Denied", LocalName = "נדחה" }, storageStatusRepository);
+            AddClosedTables.AddStorageStatus(new StorageStatusDetails() { Code = "3", Name = "Waiting", LocalName = "ממתין" }, storageStatusRepository);
 
             storageStatusRepository.SubmitChanges();
 
@@ -18306,10 +18437,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             CourierCustomStatusRepository courierCustomStatusRepository = new CourierCustomStatusRepository(0);
             Dictionary<string, CourierCustomStatus> TenantCourierCustomStatuses = courierCustomStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
 
-            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "0", Name = "No Status", SearchFields = "0,no status", LocalName = null }, courierCustomStatusRepository);
-            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "1", Name = "Hatara", SearchFields = "1,hatara", LocalName = null }, courierCustomStatusRepository);
-            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "2", Name = "Suspended", SearchFields = "2,suspended" ,LocalName = null }, courierCustomStatusRepository);
-            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "3", Name = "Suspended", SearchFields = "3,suspended",LocalName = null }, courierCustomStatusRepository);
+            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "0", Name = "No Status", LocalName = "אין סטטוס" }, courierCustomStatusRepository);
+            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "1", Name = "Hatara", LocalName = "התרה" }, courierCustomStatusRepository);
+            AddClosedTables.AddCourierCustomStatus(new CourierCustomStatusDetails() { Code = "2", Name = "Suspended", LocalName = "מעוכב" }, courierCustomStatusRepository);
+
             courierCustomStatusRepository.SubmitChanges();
 
         }
@@ -18388,6 +18519,22 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             mamanStatusRepository.SubmitChanges();
 
         }
+        public void FillPointerLevel()
+        {
+
+
+
+            PointerLevelRepository pointerLevelRepository = new PointerLevelRepository(0);
+            Dictionary<string, PointerLevel> TenantPointerLevel = pointerLevelRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "I", EnglishName = null, LocalName = "חשבון ספק", SearchFields = "חשבון ספק,I" }, pointerLevelRepository);
+            AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "P", EnglishName = null, LocalName = "פרט מכס", SearchFields = "פרט מכס,P" }, pointerLevelRepository);
+            AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "D", EnglishName = "Declaration, הצהרה", LocalName = "הצהרה", SearchFields = "הצהרה,D" }, pointerLevelRepository);
+
+            pointerLevelRepository.SubmitChanges();
+
+        }
+
     }
 
 
