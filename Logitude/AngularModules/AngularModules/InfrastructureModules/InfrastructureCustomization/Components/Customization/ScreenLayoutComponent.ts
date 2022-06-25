@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+
+import { Component, QueryList, ViewChildren } from '@angular/core';
 import { GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
@@ -21,6 +22,7 @@ import { ScreenSectionPM } from '../../../../Infrastructure/EntityPMs/ScreenSect
 import { IScreenLayoutService } from '../../Interface/IScreenLayoutService';
 import { MuiltSectionScreenLayoutService } from '../../ExternalService/MuiltSectionScreenLayoutService';
 import { ClassicScreenLayoutService } from '../../ExternalService/ClassicScreenLayoutService';
+import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 
 
 
@@ -51,6 +53,8 @@ export class ScreenLayoutComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     Modified: boolean = false;
     private screenLayoutService: IScreenLayoutService;
+    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+
     constructor() {
         super();
         this.myService = new EntityResourceService();
@@ -73,6 +77,8 @@ export class ScreenLayoutComponent extends BaseComponent {
 
     GetFields() {
         this.OldItem = this.SelectedItem;
+        let screenType = this.SelectedItem.ScreenPM.Type ? this.SelectedItem.ScreenPM.Type : "ClASSIC";
+        this.LoadScreenComponent(screenType);
         this.screenLayoutService = this.GetScreenLayoutService();
         this.Modified = false;
         this.FillbanckStackFields();
@@ -96,19 +102,6 @@ export class ScreenLayoutComponent extends BaseComponent {
 
 
     SectionScreens: SectionScreenItem[] = [];
-
-
-    private BuildSectionScreen(section: any, screenItem: any) {
-
-        this.ScreenRows = [];
-        var sectionScreen: SectionScreenItem = new SectionScreenItem(section);
-        for (var i = 0; i < screenItem.NumberOfColumns; i++) {
-            var screenRowDetails = this.BuildScreenRowDetails(i, section.Number);
-            this.ScreenRows.push(screenRowDetails);
-        }
-        sectionScreen.ScreenRows = this.ScreenRows;
-        return sectionScreen;
-    }
 
     BuildScreenRowDetails(columnIndex: number, sectionNumber: number=null ) {
         var screenRowDetails = new ScreenRowDetails();
@@ -491,8 +484,8 @@ export class ScreenLayoutComponent extends BaseComponent {
     NewScreenButtonClicked() {
 
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 450;
-        logitudeWindow.Height = 190;
+        logitudeWindow.Width = 420;
+        logitudeWindow.Height = 250;
         logitudeWindow.Title = "New Screen"
         let windowArgs: any = {};
         windowArgs.ScreenLayoutComponent = this;
@@ -513,6 +506,54 @@ export class ScreenLayoutComponent extends BaseComponent {
         sectionScreen.ScreenRows = this.ScreenRows;
         sectionScreen.IsNew = true;
         this.SectionScreens.push(sectionScreen);
+
+    }
+
+
+
+
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer(screenType: string) {
+        this.Retries++;
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.LoadScreenComponent(screenType), 1);
+        }
+    }
+
+    LoadScreenComponent(screenType: string) {
+
+        if (!this.AllLocations || this.AllLocations.length == 0 || !this.AllLocations.toArray().filter(d => d.Code == screenType)[0]) {
+            this.RunComponentTimer(screenType);
+            return;
+        }
+
+        this.LoadScreen(screenType);
+
+    }
+
+    LoadScreen(screenType: string) {
+
+        if (this.AllLocations && this.AllLocations.length > 0) {
+            let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == screenType)[0];
+            if (myGeneratedComponentLocation != null) {
+                myGeneratedComponentLocation.viewContainerRef.clear();
+                SessionLocator.DynamicLoader.Load(this.GetScreenComponentPath(screenType), myGeneratedComponentLocation.viewContainerRef)
+                    .then(cmpRef => { cmpRef.instance.Run(this);});
+            }
+        }
+    }
+
+    GetScreenComponentPath(screenType:string) {
+        if (screenType == "LIGHTENING") {
+            return './InfrastructureModules/InfrastructureCustomization/Components/Customization/Screen/LighteningScreenComponent';
+        }
+       
+        return './InfrastructureModules/InfrastructureCustomization/Components/Customization/Screen/ClassicScreenComponent';
 
     }
 

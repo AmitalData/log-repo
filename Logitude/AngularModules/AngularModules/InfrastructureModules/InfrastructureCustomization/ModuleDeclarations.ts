@@ -18,6 +18,8 @@ import {LanguageSettingsComponent} from './Components/LanguageSettings/LanguageS
 import { RuleUpdateHistoryComponent } from './Components/Customization/RulesComponents/RuleUpdateHistoryComponent';
 import { SetWorkerRoleNameComponent } from './Components/SetWorkerRoleName/SetWorkerRoleNameComponent';
 import { AddEditScreenComponent } from './Components/Customization/AddEditScreenComponent';
+import { LighteningScreenComponent } from './Components/Customization/Screen/LighteningScreenComponent';
+import { ClassicScreenComponent } from './Components/Customization/Screen/ClassicScreenComponent';
 
 export const Components =
     [
@@ -40,12 +42,16 @@ export const Components =
         RuleUpdateHistoryComponent,
         SetWorkerRoleNameComponent,
         AddEditScreenComponent,
-
+        ClassicScreenComponent,
+        LighteningScreenComponent,
 
     ];
 export const ControlsComponents =
     [
         ScreenLayoutComponent,
+        ClassicScreenComponent,
+        LighteningScreenComponent,
+
     ];
 
 export class ModuleDeclarations {
@@ -74,6 +80,8 @@ export class ModuleDeclarations {
             case "RuleUpdateHistoryComponent": { myResult = RuleUpdateHistoryComponent; break; }
             case "SetWorkerRoleNameComponent": { myResult = SetWorkerRoleNameComponent; break; }
             case "AddEditScreenComponent": { myResult = AddEditScreenComponent; break; }
+            case "ClassicScreenComponent": { myResult = ClassicScreenComponent; break; }
+            case "LighteningScreenComponent": { myResult = LighteningScreenComponent; break; }
 
 
         }

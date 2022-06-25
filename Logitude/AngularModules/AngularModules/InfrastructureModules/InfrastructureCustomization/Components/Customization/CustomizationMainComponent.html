@@ -265,12 +265,12 @@
 
                     <td style="width: 5px;"><div></div></td>
 
-                    <td style="width: 57px;">
-                        <button [attr.data-cy]="'ScreenLayoutId'" class="Button"  (click)="ScreensLayoutClicked()">Screens Layout</button>
+                    <td *ngIf="(!IsObjectTableFilterEnabled || IsFieldsCustomizationEnabled) && !IsCustomFieldsMenue" style="width: 57px;">
+                        <button [attr.data-cy]="'ScreenLayoutId'" class="Button" (click)="ScreensLayoutClicked()">Screens Layout</button>
                     </td>
 
                     <td style="width: 5px;"><div></div></td>
-                    <td *ngIf="IsCustomFieldsMenue || !IsObjectTableFilterEnabled || IsFieldsCustomizationEnabled"  style="width: 57px;">
+                    <td *ngIf="IsCustomFieldsMenue || !IsObjectTableFilterEnabled || IsFieldsCustomizationEnabled" style="width: 57px;">
                         <button [attr.data-cy]="'CustomFieldtId'" class="Button" [disabled]="!IsButtonEnabled" (click)="CustomFieldsClicked()">Custom Fields</button>
                     </td>
 

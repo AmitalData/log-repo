@@ -35,7 +35,7 @@ export class AddEditScreenComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.screenLayoutComponent = args.ScreenLayoutComponent;
         this.EntityPM = this.GetNewScreenInStance();
-        this.UIProperties.SetRequired("Code", "Screen", true);
+        this.UIProperties.SetRequired("Name", "Screen", true);
 
     }
 
@@ -72,7 +72,7 @@ export class AddEditScreenComponent extends BaseComponent {
 
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.Name)) {
-            this.ValidationErrorsList.push("Name is Required");
+            this.ValidationErrorsList.push("Screen Name is Required");
             return;
         }
 

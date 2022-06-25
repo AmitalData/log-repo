@@ -11,7 +11,8 @@ export class ClassicScreenLayoutService implements IScreenLayoutService {
 
 
     public GenerateScreen(screen: any) {
-        this.screenComponent.MyArgs.ScreenRows = [];
+        this.screenComponent.ScreenRows = [];
+
         for (var i = 0; i < screen.NumberOfColumns; i++) {
             var screenRowDetails = this.screenComponent.BuildScreenRowDetails(i);
             this.screenComponent.ScreenRows.push(screenRowDetails);

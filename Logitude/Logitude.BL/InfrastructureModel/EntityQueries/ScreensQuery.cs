@@ -107,23 +107,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                                   }).ToList();
 
-
-
-
-                foreach (ScreenPM screen in currentscreens)
-                {
-                    ScreenModification mod = (from a in repository.context.ScreenModifications
-                                              where a.ScreenId == screen.Id && a.Tenant == tenant
-                                              select a).FirstOrDefault();
-                    if (mod != null)
-                    {
-                        screen.NumberOfRows = mod.NumberOfRows;
-                        screen.NumberOfColumns = mod.NumberOfColumns;
-
-                    }
-
-
-                }
             }
             screens = zeroscreens.Concat(currentscreens).ToList();
 

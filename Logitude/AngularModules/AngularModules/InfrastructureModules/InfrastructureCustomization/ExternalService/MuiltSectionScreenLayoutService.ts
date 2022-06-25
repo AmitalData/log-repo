@@ -14,7 +14,6 @@ export class MuiltSectionScreenLayoutService implements IScreenLayoutService {
     public GenerateScreen(screen: any) {
 
         this.screenComponent.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-
         this.screenComponent.SectionScreens = [];
         let screenSectionExtendedService: ScreenSectionExtendedService = new ScreenSectionExtendedService();
         screenSectionExtendedService.GetByScreenCode(this.screenComponent.SelectedItem.ScreenPM.Code).subscribe((result: any) => {
@@ -26,7 +25,7 @@ export class MuiltSectionScreenLayoutService implements IScreenLayoutService {
                 return;
             }
             myResponse.Result.forEach(section => {
-                var sectionScreenItem = this.screenComponent.BuildSectionScreen(section, screen);
+                var sectionScreenItem = this.BuildSectionScreen(section, screen);
                 this.screenComponent.SectionScreens.push(sectionScreenItem);
             });
         });
@@ -65,7 +64,17 @@ export class MuiltSectionScreenLayoutService implements IScreenLayoutService {
 
     }
 
+    private BuildSectionScreen(section: any, screenItem: any) {
 
+        this.screenComponent.ScreenRows = [];
+        var sectionScreen: SectionScreenItem = new SectionScreenItem(section);
+        for (var i = 0; i < screenItem.NumberOfColumns; i++) {
+            var screenRowDetails = this.screenComponent.BuildScreenRowDetails(i, section.Number);
+            this.screenComponent.ScreenRows.push(screenRowDetails);
+        }
+        sectionScreen.ScreenRows = this.screenComponent.ScreenRows;
+        return sectionScreen;
+    }
 
     private AddScreenSectionFields(sectionScreen: SectionScreenItem) {
         sectionScreen.ScreenRows.forEach(screenRowDetails => {

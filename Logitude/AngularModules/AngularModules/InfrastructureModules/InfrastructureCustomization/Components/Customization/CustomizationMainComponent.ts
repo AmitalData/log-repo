@@ -124,7 +124,6 @@ export class CustomizationMainComponent {
     }
 
     HaveObjectTableAccess(table: ObjectTablePM): boolean {
-        return true;
         if (this.IsCustomFieldsMenue) return true;
         if (!this.IsObjectTableFilterEnabled) return true;
         if (!this.IsCustomizationToggleActive) return false;
