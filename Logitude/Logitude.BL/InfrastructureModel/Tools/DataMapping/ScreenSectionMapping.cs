@@ -10,14 +10,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 
             if (isNewState)
             {
+                screenSection.ScreenCode = screenSectionPM.ScreenCode;
                 screenSection.Tenant = screenSectionPM.Tenant;
-                screenSection.Id = screenSectionPM.Id;
-                screenSection.ScreenCode = (screenSectionPM.ObjectTableName + screenSectionPM.Tenant.ToString() + screenSectionPM.Name.Trim().ToUpper());
-
             }
 
+
+            screenSection.Number = screenSectionPM.Number;
+            screenSection.NumberOfRows = screenSectionPM.NumberOfRows;
             screenSection.Name = screenSectionPM.Name;
-            screenSection.CreateByUserId = screenSectionPM.CreateByUserId;
+            screenSection.CreatedByUserId = screenSectionPM.CreatedByUserId;
 
         }
     }

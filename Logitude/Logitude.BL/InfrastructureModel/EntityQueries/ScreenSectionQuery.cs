@@ -27,44 +27,53 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
 
 
-        public ScreenSectionPM GetSinglePM(string id, int tenant)
+        public ScreenSectionPM GetSinglePM(string screenCode, int number , int tenant)
         {
             return (from a in repository.context.ScreenSections
-                    where a.Id == id && a.Tenant == tenant
+                    where a.ScreenCode == screenCode && a.Tenant == tenant && a.Number == number
                     select new ScreenSectionPM()
                     {
-                        Id = a.Id,
                         Tenant = a.Tenant,
                         Name = a.Name,
                         ScreenCode = a.ScreenCode,
-                        CreateByUserId = a.CreateByUserId,
+                        CreatedByUserId = a.CreatedByUserId,
+                        Number = a.Number,
+                        NumberOfRows = a.NumberOfRows,
+
                     }).FirstOrDefault();
         }
 
-        public IQueryable<ScreenSectionPM> GetScreenSectionPMs(int tenant)
+
+
+
+        public IQueryable<ScreenSectionPM> GetByScreenCode( string screenCode,int tenant)
         {
             return (from a in repository.context.ScreenSections
-                    where a.Tenant == tenant
+                    where a.Tenant == tenant && a.ScreenCode == screenCode
                     select new ScreenSectionPM()
                     {
-                        Id = a.Id,
                         Tenant = a.Tenant,
                         Name = a.Name,
                         ScreenCode = a.ScreenCode,
-                        CreateByUserId = a.CreateByUserId,
+                        CreatedByUserId = a.CreatedByUserId,
+                        Number = a.Number,
+                        NumberOfRows = a.NumberOfRows,
                     });
         }
 
+
+  
         public IQueryable<ScreenSectionList> GetIQueryableEntityList(IQueryable<ScreenSection> iQueryable)
         {
             IQueryable<ScreenSectionList> result = from a in iQueryable
                                               select new ScreenSectionList()
                                               {
-                                                  Id = a.Id,
                                                   Tenant = a.Tenant,
                                                   Name = a.Name,
                                                   ScreenCode = a.ScreenCode,
-                                                  CreateByUserId = a.CreateByUserId,
+                                                  CreatedByUserId = a.CreatedByUserId,
+                                                  Number = a.Number,
+                                                  NumberOfRows = a.NumberOfRows,
                                               };
 
             return result;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,13 +11,18 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
   public  class ScreenSectionPM
     {
 
-        [Key]
-        public string Id { get; set; }
+
         public int Tenant { get; set; }
         public string Name { get; set; }
-        public string CreateByUserId { get; set; }
+        public string CreatedByUserId { get; set; }
         public string ScreenCode { get; set; }
         public string ObjectTableName { get; set; }
+        public int NumberOfRows { get; set; }
+        public int Number { get; set; }
+
+        public ChangeSetOperation ChangeSetOp { get; set; }
+
+
 
     }
 }

@@ -543,6 +543,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                 }
+
+                new ScreenSectionService(objectContext, authToken.Tenant).Update(args.ScreenSections);
+
                 return Request.CreateResponse(HttpStatusCode.OK, args);
             }
 

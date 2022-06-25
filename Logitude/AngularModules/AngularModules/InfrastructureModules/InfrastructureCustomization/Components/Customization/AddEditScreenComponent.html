@@ -19,14 +19,33 @@
 						<table>
 							<tr>
 								<td style="width:10px"></td>
-								<td style="height: 22px; width: 50px;">
-									<label style="padding-left:10px;color: rgb(110, 113, 114);">
-										Name
-									</label>
+								<td style="height: 22px; width: 60px;">
+
+
+									<table style="table-layout: fixed;">
+										<tr>
+											<td style="width:10px; vertical-align: middle;">
+												<div *ngIf="!Name" style="width: 10px;">
+													<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+
+												</div>
+											</td>
+											<td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+												<label *ngIf="Name" class="Label" style="color:#6E7172">Name</label>
+												<label *ngIf="!Name" class="Label" style="color:red">Name</label>
+											</td>
+										</tr>
+									</table>
+
+
 								</td>
-								<td style="width:10px"></td>
+
+							
+
 								<td style="height: 22px; width: 250px; ">
+
 									<div style="width: 250px;">
+
 										<LogTextBox [ObjectFieldName]="'Name'" [DataContext]="DataContext" [Text]="Name"></LogTextBox>
 									</div>
 								</td>

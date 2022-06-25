@@ -9,16 +9,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         public ScreenSectionMap()
         {
             // Primary Key
-            this.HasKey(t => t.Id);
+            this.HasKey(t => new { t.ScreenCode, t.Number });
 
-            // Properties
-            this.Property(t => t.Id)
-                .IsRequired()
-                .HasMaxLength(15)
-                .IsUnicode(false);
 
             this.Property(t => t.Name)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
 
@@ -28,28 +22,29 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
 
 
-            this.Property(t => t.CreateByUserId)
+            this.Property(t => t.CreatedByUserId)
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
 
             // Table & Column Mappings
             this.ToTable("ScreenSections");
-            this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.Name).HasColumnName("Name");
-            this.Property(t => t.CreateByUserId).HasColumnName("CreateByUserId");
+            this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.ScreenCode).HasColumnName("ScreenCode");
+            this.Property(t => t.NumberOfRows).HasColumnName("NumberOfRows");
+            this.Property(t => t.Number).HasColumnName("Number");
 
             // Relationships
-            this.HasOptional(t => t.CreateByUser)
+            this.HasOptional(t => t.CreatedByUser)
               .WithMany()
-              .HasForeignKey(d => d.CreateByUserId);
+              .HasForeignKey(d => d.CreatedByUserId);
 
 
-            this.HasOptional(t => t.Screen)
-                .WithMany()
-                .HasForeignKey(d => d.ScreenCode);
+            //this.HasOptional(t => t.Screen)
+            //    .WithMany()
+            //    .HasForeignKey(d => d.ScreenCode);
   
 
 

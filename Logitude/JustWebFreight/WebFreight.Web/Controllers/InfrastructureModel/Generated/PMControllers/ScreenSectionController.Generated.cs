@@ -48,7 +48,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string screencode, int number)
         {
 		  try
             {
@@ -57,7 +57,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ScreenSectionQuery screenSectionQuery = new ScreenSectionQuery(authToken.Tenant);
-                ScreenSectionPM screenSectionPM = screenSectionQuery.GetSinglePM(id, authToken.Tenant);
+                ScreenSectionPM screenSectionPM = screenSectionQuery.GetSinglePM(screencode, number, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //    ActivityLog.AddAcitivityLog(entityPM.ScreenCode, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
                         scope.Complete();
@@ -133,8 +133,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        string entityName = "ScreenSection" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "ScreenSectionPM" + entityPM.Id + entityPM.Tenant;
+                        string entityName = "ScreenSection" + entityPM.ScreenCode + entityPM.Tenant;
+                        string entityPmName = "ScreenSectionPM" + entityPM.ScreenCode + entityPM.Tenant;
                         if (CacheManager.CacheWrapper.Get(entityName) != null)
                         {
                             CacheManager.CacheWrapper.Invalidate(entityName);
@@ -156,7 +156,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //   ActivityLog.AddAcitivityLog(entityPM.ScreenCode, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
 
