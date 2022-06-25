@@ -80,6 +80,14 @@ namespace Logitude.Accounting.Data.Repositories
 
             return entity;
         }
+
+        public bool CheckIfGlAccountExistsInBankAccount(string accountId, int tenant)
+        {
+
+            return (from a in context.BankAccounts
+                      where (a.GLAccountId == accountId || a.DeferredGLAccountId == accountId || a.TransferGLAcccountId == accountId) && a.Tenant == tenant
+                      select a).Any();
+        }
     }
 
 }
