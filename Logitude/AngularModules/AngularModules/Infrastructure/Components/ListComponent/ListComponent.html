@@ -277,50 +277,24 @@
 
                         <td style="vertical-align: middle;width:170px">
                             <QueryList *ngIf="ShowViews && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
-
-                             
-
-                            <!--<select style="width: 150px;" [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)">
-            <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
-        </select>-->
-                            <!--<div class="dropdown">
-        <div style="float:left;">
-            <button (click)="ShowFieldsList()" class="dropbtn " id="AddFilterButton" style="width:80px;">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</button>
-            <div id="FieldsDropdown" class="dropdown-content" style="border:solid 1px #AAAAAA;">-->
-                            <!--<select [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)" style="height:244px;" multiple>
-            <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
-        </select>-->
-                            <!--       <div *ngFor="let q of Queries">
-                            <label>{{q.NameTextCodeCode | TextCodeTranslationPipe}}</label>
-                        </div>
-                        <div style="height:27px;background-color:#dfecf7;">
-                            <a href="#">New View</a>
-                        </div>
-
-
-                </div>
-            </div>
-        </div>-->
                         </td>
-                        <td style="width: 40px;"> <img *ngIf="HasMutliUpdateFeature" src="./Images/Icons/MultiUpdate.png" title="Multi Update" (click)="MutliUpdate()" class="CenterCenter MultiUpdateIcon" /></td>
-                        <td style="width:200px;vertical-align:central">
 
+                        <td style="width: 40px;"> <img *ngIf="HasMutliUpdateFeature" src="./Images/Icons/MultiUpdate.png" title="Multi Update" (click)="MutliUpdate()" class="CenterCenter MultiUpdateIcon" /></td>
+                        <td style="width: 40px;"> <img *ngIf="HasMultiPrintFeature" src="./Images/Icons/multi-print.png" title="Multi Print" (click)="MultiPrintClicked()" class="CenterCenter MultiUpdateIcon" /></td>
+
+                        <td style="width:200px;vertical-align:central">
                             <div style="width:200px;height:20px">
                                 <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px;">Add Report From Library</p>
-
                             </div>
-
-                        </td> 
+                        </td>
 
                         <td *ngIf="(dataSource && dataSource.rowCount == ConstantPageSize && DontApplyVirtualization)" style="color: #666666; font-size: 11px; padding-left:5px;padding-right:5px;width:1px;background-color:#FFFBDA">
                             <div>  <span>Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
                         </td>
 
-
                         <td>
                             <div></div>
                         </td>
-
 
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
                             <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>

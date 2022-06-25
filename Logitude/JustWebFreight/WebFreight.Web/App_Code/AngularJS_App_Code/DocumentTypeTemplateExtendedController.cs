@@ -795,32 +795,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
+        public HttpResponseMessage GetDocumentTypeCopiesForDocumentType(string documentTypeId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                DocumentTypeCopyQuery documentTypeCopyQuery = new DocumentTypeCopyQuery(authToken.Tenant);
+                List<DocumentTypeCopyList> documentTypeCopyLists = documentTypeCopyQuery.GetDocumentTypeCopiesByDocumentTypeId(documentTypeId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, documentTypeCopyLists);
+            }
 
-
-
-
-
-        //public HttpResponseMessage GetTemplateBodyhtmlOrJsonByDocumentTemplateId(string documentTyptemplateId, int tenant, bool isHtml)
-        //{
-        //    DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
-        //    byte[] data = null;
-        //    string result = "";
-        //    if (isHtml)
-        //    {
-        //        data = documentTypeTemplateQuery.GetTemplateBodyHtmlByDocumentTypeTemplateId(documentTyptemplateId, tenant);
-        //    }
-        //    else
-        //    {
-        //        data = documentTypeTemplateQuery.GetTemplateBodyjsonByDocumentTypeTemplateId(documentTyptemplateId, tenant);
-        //    }
-
-        //    if (data != null)
-        //    {
-        //        result = System.Text.Encoding.UTF8.GetString(data);
-        //    }
-
-        //    return Request.CreateResponse(HttpStatusCode.OK, result);
-        //}
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 }
