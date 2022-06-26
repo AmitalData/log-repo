@@ -80,7 +80,7 @@
     <None Include="DBScripts\202206201236_InsertOppositeIntTransForInvoicesNotMultiCurrency.sxml" />
     <None Include="DBScripts\202206201239_UpdateLedgerTransactionsGLAccountIfInvNotMultiCurrency.sxml" />
     <Content Include="DBScripts\202206211132_UpdateCancelledARInvoicesWithCorrectBillToGlAccount.axml" />
-    <None Include="DBScripts\202206231132_RemoveInterestTransAndAddOppInterestsForAccountingEntities.sxml" />
+    <Content Include="DBScripts\202206231132_RemoveInterestTransAndAddOppInterestsForAccountingEntities.axml" />
     <None Include="DBScripts\202206151132_RemoveInterestTransAndAddOppInterestsForDraftARPayments.sxml" />
     <Content Include="DBScripts\202206021039_RemoveInterestTransAndAddOppInterestsIfLedgerNotCreated.axml" />
     <None Include="DBScripts\202206060955_RemoveInterestTransAddOppInterIfLedgerNotCreatedForJournal.sxml" />
