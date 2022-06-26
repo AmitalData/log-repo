@@ -115,7 +115,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
         {
             var result = new ItemPrintingResult();
 
-            if (!CheckValidation(result))
+            if (!CheckValidation(item,result))
                 return result;
 
             ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
@@ -130,11 +130,11 @@ namespace WebFreight.Web.Helpers.BatchPrint
             return result;
         }
 
-        private bool CheckValidation(ItemPrintingResult result)
+        private bool CheckValidation(PrintEntityKeys item, ItemPrintingResult result)
         {
             try
             {
-                GeneralValidatoin();
+                GeneralValidatoin(item);
                 CustomeValidation();
                 return true;
             }
@@ -147,10 +147,19 @@ namespace WebFreight.Web.Helpers.BatchPrint
 
         }
 
-        private void GeneralValidatoin()
+        private void GeneralValidatoin(PrintEntityKeys item)
         {
             if (template.TemplateBody == null)
                 throw new Exception("Template Body is empty");
+            if(documentType.IsDocumentOneTimePrintLimited && IsAlreadyPrinted(item))
+                throw new Exception("This document is already printed");
+
+        }
+
+        private bool IsAlreadyPrinted(PrintEntityKeys item)
+        {
+            DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(_batchPrintManagerArgs.Tenant);
+            return documentsFilingRepository.CheckIfDocumentTypeHasDocumentFilling(documentType.Id, _batchPrintManagerArgs.ObjectTableId, item.EntityId, _batchPrintManagerArgs.Tenant);
         }
 
         private User GetUser()

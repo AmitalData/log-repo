@@ -16,8 +16,10 @@ namespace WebFreight.Web.Helpers.BatchPrint
     public class BatchPrintManager : BatchTaskExecutionsService
     {
         BatchPrintManagerArgs batchPrintManagerArgs;
+        BatchTaskExecutionPM batchTaskExecution;
         public BatchPrintManager(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
+            this.batchTaskExecution = batchTaskExecution
         }
 
         public override void RunCode()
@@ -25,14 +27,21 @@ namespace WebFreight.Web.Helpers.BatchPrint
             batchPrintManagerArgs = DeserilaizeParameters();
             var batchPrinter = BatchPrinterFactory.GetBatchPrinter(batchPrintManagerArgs);
             var result = batchPrinter.PrintDocuments();
-
+            batchTaskExecution.PrametersXml = ParsParameters(result);
 
         }
 
-        
 
-        
 
+
+        private static string ParsParameters(object data)
+        {
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(BatchPrintManagerArgs));
+            serializer.Serialize(stringwriter, data);
+            string xmlParameters = stringwriter.ToString();
+            return xmlParameters;
+        }
         private BatchPrintManagerArgs DeserilaizeParameters()
         {
             string xmlParameters = BatchTaskExecution.PrametersXml;
