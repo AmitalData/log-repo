@@ -247,9 +247,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                 {
                     LogMessagingUtil.Instance.AppendLine("classificationCode = " + invoiceItemFromFile.ClassificationCode + " not exists for customer: "+ customerId);
+                    this.MyResponseData.HasException = true;
                     this.MyResponseData.Succeeded = false;
                     this.MyResponseData.UserMessage = "לא נמצא סיווג עבור הדגם: " + invoiceItemFromFile.ClassificationCode + " והלקוח בתיק";
-                    throw new Exception("classificationCode not exists");
+                    //return;
+                    throw new Exception("לא נמצא סיווג עבור הדגם: " + invoiceItemFromFile.ClassificationCode + " והלקוח בתיק");
                 }
                 invoiceItem.SupplierInvoiceItemVehicles = new List<SupplierInvoiceItemVehiclePM>
                         {
