@@ -87,7 +87,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        CargoType = en.CargoType,
 
-                                                       CustomsStatus = en.CustomsCargoStatus.LocalName,
+                                                       CustomsStatus = en.CustomsStatus,
 
                                                        ExporterID = en.ExporterID,
 
