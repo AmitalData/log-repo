@@ -1275,9 +1275,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                             //54378
                             //string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
+                            
                             string SuppressUseSend2UServer8302 = ConfigurationManager.AppSettings["20200123.SuppressUseSend2UServer8302"] ?? "";
                             if (string.IsNullOrWhiteSpace(SuppressUseSend2UServer8302)//!string.IsNullOrWhiteSpace(UseSend2UServer) 
-                                && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
+                                && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue)//DeclarationPrint
+                                && CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant).IsConnectedToUniFreight
+                                )
                             {
                                 Send2UServer(mappedPM, loggedUserId, extDocPM.Id);
                             }
