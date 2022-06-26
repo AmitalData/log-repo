@@ -91,12 +91,12 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
 
     BuildScreen(fireEmit: boolean = false) {
-        if (!this.objectTableTab || this.objectTableTab.ScreenCode) {
+        if (!this.objectTableTab || !this.objectTableTab.ScreenCode) {
             this.BuildClassicScreen(fireEmit);
             return;
         }
 
-        this.BuildMuiltSectcionsScreen(fireEmit);
+        this.BuildLighteningScreen(fireEmit);
     }
 
 
@@ -158,11 +158,12 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     }
 
 
-    private BuildMuiltSectcionsScreen(fireEmit: boolean = false) {
+    private BuildLighteningScreen(fireEmit: boolean = false) {
 
         if (this.EntityPM == null || this.isViewEnited == false) return;
         let screen = window.Screens.filter((x: any) => x.Code === this.objectTableTab.ScreenCode)[0];
         if (screen == null) return;
+
 
         this.ScreenSections = [];
         if (fireEmit) this.LoadCompleted.emit(true);
