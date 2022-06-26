@@ -1,0 +1,18 @@
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+        update InterestTransactions set GLAccountId = InterestTransactionsGlAccountCurrencies.MainGLAccountId from InterestTransactions
+		inner join (
+			Select GLAccountCurrencies.MainGLAccountId, InterestTransactions.EntityId, InterestTransactions.GLAccountId, InterestTransactions.Tenant, InterestTransactions.CurrencyId, InterestTransactions.OriginalEntityLineNumber, InterestTransactions.InterestEntityTypeCode
+			from InterestTransactions
+			inner join ARInvoiceLines on ARInvoiceLines.ARInvoiceId = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1'AND ARInvoiceLines.LineNumber = InterestTransactions.OriginalEntityLineNumber AND ARInvoiceLines.Tenant = InterestTransactions.Tenant 
+			inner join ARInvoices on ARInvoices.Id = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1' AND ARInvoices.Tenant = InterestTransactions.Tenant 
+			inner join GLAccounts on ARInvoices.BillToGLAccountId = GLAccounts.Id AND GLAccounts.Tenant = ARInvoices.Tenant
+			inner join GLAccountCurrencies on ARInvoices.BillToGLAccountId = GLAccountCurrencies.MainGLAccountId AND ARInvoices.Tenant = GLAccountCurrencies.Tenant
+			where ARInvoices.IsMultiCurrency = 0 AND GLAccountCurrencies.MainGLAccountId != InterestTransactions.GLAccountId AND ARInvoiceLines.ForiegnCurrencyId = GLAccountCurrencies.CurrencyId AND InterestReportId is null
+		) as InterestTransactionsGlAccountCurrencies
+		on InterestTransactions.EntityId = InterestTransactionsGlAccountCurrencies.EntityId AND InterestTransactions.OriginalEntityLineNumber = InterestTransactionsGlAccountCurrencies.OriginalEntityLineNumber  AND InterestTransactions.InterestEntityTypeCode = InterestTransactionsGlAccountCurrencies.InterestEntityTypeCode
+		AND InterestTransactions.Tenant = InterestTransactionsGlAccountCurrencies.Tenant
+     ]]>
+ </Sql>
+</Script>
