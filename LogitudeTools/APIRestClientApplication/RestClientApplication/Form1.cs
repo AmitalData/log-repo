@@ -62,6 +62,15 @@ namespace RestClientApplication
                     this.operationCombo.Items.Add("Get");
                 }
 
+                if (apiCombo.SelectedItem.Equals("Get Shipments by References"))
+                {
+                    this.operationCombo.SelectedItem = null;
+                    this.operationCombo.Items.Clear();
+                    this.operationCombo.Items.Add("Get Direct Shipments");
+                    this.operationCombo.Items.Add("Get House Shipments");
+                    this.operationCombo.Items.Add("Get Master Shipments");
+                }
+
                 else
                 {
                     AddGeneralOperationsToComboBox();
@@ -627,6 +636,17 @@ namespace RestClientApplication
 
                         break;
                     }
+                #endregion
+
+                #region Get Shipments by References
+                case "Get Shipments by References":
+                    {
+                        lblParameter.Visible = false;
+                        txtParameter.Visible = false;
+                        requestText = responseParameters.XMLRequestText["GetShipmentsByReferences"];
+                        apiName = "GetShipmentsByReferences";
+                        break;
+                    }
                     #endregion
             }
 
@@ -749,10 +769,25 @@ namespace RestClientApplication
 
                     else if (operationCombo.SelectedItem.Equals("Update (Patch)") && apiName == "direct")
                     {
-                        var url = txtServerUrl.Text + "/" + api+ "?id=" + txtParameter2.Text;
+                        var url = txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text;
                         var request = new HttpRequestMessage(new HttpMethod("PATCH"), url);
                         request.Content = content;
                         response = await client.SendAsync(request);
+                    }
+
+                    else if (operationCombo.SelectedItem.Equals("Get Direct Shipments"))
+                    {
+                        response = await client.PostAsync(txtServerUrl.Text + "/" + api + "/PostGetDirectShipments", content);                      
+                    }
+
+                    else if (operationCombo.SelectedItem.Equals("Get House Shipments"))
+                    {
+                        response = await client.PostAsync(txtServerUrl.Text + "/" + api + "/PostGetHouseShipments", content);
+                    }
+
+                    else if (operationCombo.SelectedItem.Equals("Get Master Shipments"))
+                    {
+                        response = await client.PostAsync(txtServerUrl.Text + "/" + api + "/PostGetMasterShipments", content);
                     }
 
                     txtReponseCode.Text = ((int)response.StatusCode).ToString();

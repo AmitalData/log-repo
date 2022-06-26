@@ -1,0 +1,118 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace Logitude.BL.ShipmentsModel.APIDataContract
+{
+    [XmlRoot("Shipments")]
+    public class Shipments
+    {
+        [XmlElement("Shipment")]
+        public List<ShipmentByReferences> ShipmentList { get; set; }
+
+        public Shipments()
+        {
+            this.ShipmentList = new List<ShipmentByReferences>();
+        }
+    }
+
+    public class ShipmentByReferences
+    {
+        public string ShipmentNumber { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public string Routing { get; set; }
+
+        [XmlElement("CardByReferences")]
+        public CardByReferences Customer { get; set; }
+
+        [XmlElement("CardByReferences")]
+        public CardByReferences Agent { get; set; }
+
+        [XmlElement("CardByReferences")]
+        public CardByReferences Shipper { get; set; }
+
+        [XmlElement("CardByReferences")]
+        public CardByReferences Consignee { get; set; }
+
+        [XmlElement("CardByReferences")]
+        public CardByReferences ShipperNotExporter { get; set; }
+
+        [XmlElement("CardByReferences")]
+        public CardByReferences ConsigneeNotImporter { get; set; }
+
+        [XmlElement("CardByReferences")]
+        public CardByReferences Forwarder { get; set; }
+        public string ShipperReference1 { get; set; }
+        public string ShipperReference2 { get; set; }
+        public string ConsigneeReference1 { get; set; }
+        public string ConsigneeReference2 { get; set; }
+        public string ShipperNotExporterReference1 { get; set; }
+        public string ShipperNotExporterReference2 { get; set; }
+        public string ConsigneeNotImporterReference1 { get; set; }
+        public string ConsigneeNotImporterReference2 { get; set; }
+        public string ForwarderReference1 { get; set; }
+        public string ForwarderReference12 { get; set; }
+        public string AgentReference1 { get; set; }
+        public string AgentReference2 { get; set; }
+
+        public ShipmentByReferences()
+        {
+            this.Customer = new CardByReferences();
+            this.Agent = new CardByReferences();
+            this.Shipper = new CardByReferences();
+            this.Consignee = new CardByReferences();
+            this.ShipperNotExporter = new CardByReferences();
+            this.ConsigneeNotImporter = new CardByReferences();
+            this.Forwarder = new CardByReferences();
+        }
+    }
+
+    public class CardByReferences
+    {
+        public string Code { get; set; }
+
+        public string EnglishName { get; set; }
+    }
+
+    [XmlRoot("Query")]
+    public class Query
+    {
+        public string ComputingPartnerCode { get; set; }
+        public string Master { get; set; }
+        public string House { get; set; }
+        public QueryCard Agent { get; set; }
+        public QueryCard Shipper { get; set; }
+        public QueryCard Consignee { get; set; }
+        public QueryCard ShipperNotExporter { get; set; }
+        public QueryCard ConsigneeNotImporter { get; set; }
+        public QueryCard Forwarder { get; set; }
+
+        public Query()
+        {
+            this.Agent = new QueryCard();
+            this.Shipper = new QueryCard();
+            this.Consignee = new QueryCard();
+            this.ShipperNotExporter = new QueryCard();
+            this.ConsigneeNotImporter = new QueryCard();
+            this.Forwarder = new QueryCard();
+        }
+    }
+
+    public class QueryCard
+    {
+        [XmlAttribute]
+        public string Code { get; set; }
+
+        [XmlAttribute]
+        public string PartnerCode { get; set; }
+
+        [XmlAttribute]
+        public string Reference1 { get; set; }
+
+        [XmlAttribute]
+        public string Reference2 { get; set; }
+    }
+}

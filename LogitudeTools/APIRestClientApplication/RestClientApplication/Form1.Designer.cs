@@ -330,7 +330,7 @@
             this.apiCombo.FormattingEnabled = true;
             this.apiCombo.Location = new System.Drawing.Point(134, 144);
             this.apiCombo.Name = "apiCombo";
-            this.apiCombo.Size = new System.Drawing.Size(136, 21);
+            this.apiCombo.Size = new System.Drawing.Size(167, 21);
             this.apiCombo.TabIndex = 38;
             this.apiCombo.SelectedIndexChanged += new System.EventHandler(this.apiCombo_SelectedIndexChanged);
             // 
@@ -339,7 +339,7 @@
             this.operationCombo.FormattingEnabled = true;
             this.operationCombo.Location = new System.Drawing.Point(134, 171);
             this.operationCombo.Name = "operationCombo";
-            this.operationCombo.Size = new System.Drawing.Size(136, 21);
+            this.operationCombo.Size = new System.Drawing.Size(167, 21);
             this.operationCombo.TabIndex = 39;
             this.operationCombo.SelectedIndexChanged += new System.EventHandler(this.operationCombo_SelectedIndexChanged);
             // 
@@ -347,7 +347,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.label8.Location = new System.Drawing.Point(286, 148);
+            this.label8.Location = new System.Drawing.Point(307, 148);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(392, 13);
             this.label8.TabIndex = 40;
@@ -370,7 +370,7 @@
             this.actionCombo.FormattingEnabled = true;
             this.actionCombo.Location = new System.Drawing.Point(134, 201);
             this.actionCombo.Name = "actionCombo";
-            this.actionCombo.Size = new System.Drawing.Size(136, 21);
+            this.actionCombo.Size = new System.Drawing.Size(167, 21);
             this.actionCombo.TabIndex = 42;
             this.actionCombo.Visible = false;
             this.actionCombo.SelectedIndexChanged += new System.EventHandler(this.actionCombo_SelectedIndexChanged);
@@ -384,7 +384,7 @@
             // 
             this.txtParameter.Location = new System.Drawing.Point(134, 234);
             this.txtParameter.Name = "txtParameter";
-            this.txtParameter.Size = new System.Drawing.Size(136, 20);
+            this.txtParameter.Size = new System.Drawing.Size(167, 20);
             this.txtParameter.TabIndex = 45;
             this.txtParameter.Visible = false;
             // 
@@ -401,7 +401,7 @@
             // 
             // txtParameter2
             // 
-            this.txtParameter2.Location = new System.Drawing.Point(394, 236);
+            this.txtParameter2.Location = new System.Drawing.Point(415, 233);
             this.txtParameter2.Name = "txtParameter2";
             this.txtParameter2.Size = new System.Drawing.Size(142, 20);
             this.txtParameter2.TabIndex = 47;
@@ -411,7 +411,7 @@
             // 
             this.lblParameter2.AutoSize = true;
             this.lblParameter2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblParameter2.Location = new System.Drawing.Point(286, 237);
+            this.lblParameter2.Location = new System.Drawing.Point(307, 234);
             this.lblParameter2.Name = "lblParameter2";
             this.lblParameter2.Size = new System.Drawing.Size(102, 17);
             this.lblParameter2.TabIndex = 46;
@@ -519,7 +519,7 @@
             // 
             this.txtParameter4.Location = new System.Drawing.Point(134, 264);
             this.txtParameter4.Name = "txtParameter4";
-            this.txtParameter4.Size = new System.Drawing.Size(136, 20);
+            this.txtParameter4.Size = new System.Drawing.Size(167, 20);
             this.txtParameter4.TabIndex = 52;
             this.txtParameter4.Visible = false;
             // 
@@ -538,7 +538,7 @@
             // 
             this.lblParameter3.AutoSize = true;
             this.lblParameter3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblParameter3.Location = new System.Drawing.Point(286, 264);
+            this.lblParameter3.Location = new System.Drawing.Point(307, 264);
             this.lblParameter3.Name = "lblParameter3";
             this.lblParameter3.Size = new System.Drawing.Size(102, 17);
             this.lblParameter3.TabIndex = 61;
@@ -547,7 +547,7 @@
             // 
             // txtParameter3
             // 
-            this.txtParameter3.Location = new System.Drawing.Point(394, 264);
+            this.txtParameter3.Location = new System.Drawing.Point(415, 264);
             this.txtParameter3.Name = "txtParameter3";
             this.txtParameter3.Size = new System.Drawing.Size(142, 20);
             this.txtParameter3.TabIndex = 62;
@@ -557,7 +557,7 @@
             // 
             this.IncludeEventsCheckBox.AutoSize = true;
             this.IncludeEventsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IncludeEventsCheckBox.Location = new System.Drawing.Point(357, 174);
+            this.IncludeEventsCheckBox.Location = new System.Drawing.Point(392, 174);
             this.IncludeEventsCheckBox.Name = "IncludeEventsCheckBox";
             this.IncludeEventsCheckBox.Size = new System.Drawing.Size(89, 17);
             this.IncludeEventsCheckBox.TabIndex = 63;
@@ -568,7 +568,7 @@
             // 
             this.Includelabel.AutoSize = true;
             this.Includelabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Includelabel.Location = new System.Drawing.Point(286, 173);
+            this.Includelabel.Location = new System.Drawing.Point(307, 175);
             this.Includelabel.Name = "Includelabel";
             this.Includelabel.Size = new System.Drawing.Size(65, 17);
             this.Includelabel.TabIndex = 64;

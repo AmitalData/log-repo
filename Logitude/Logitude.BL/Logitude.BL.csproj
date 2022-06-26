@@ -708,6 +708,7 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\EntityAutomationAPInvoiceMappingPMFields.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\InvoicePaymentNumbersBehaviour.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\GeneralContainerTrackingArgs.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\Shipments.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\VizionModels.cs" />
     <Compile Include="ShipmentsModel\Tools\ContainerTracking\GeneralContainerTrackingService.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentBankTranferMapping.cs" />
