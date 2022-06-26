@@ -1,13 +1,17 @@
 ﻿using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Stimulsoft.Report;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Logitude.Infrastructure.BL.Helpers.BatchPrint
+namespace WebFreight.Web.Helpers.BatchPrint
 {
     public class BatchPrintManager : BatchTaskExecutionsService
     {
@@ -19,9 +23,16 @@ namespace Logitude.Infrastructure.BL.Helpers.BatchPrint
         public override void RunCode()
         {
             batchPrintManagerArgs = DeserilaizeParameters();
+            var batchPrinter = BatchPrinterFactory.GetBatchPrinter(batchPrintManagerArgs);
+            var result = batchPrinter.PrintDocuments();
 
-            
+
         }
+
+        
+
+        
+
         private BatchPrintManagerArgs DeserilaizeParameters()
         {
             string xmlParameters = BatchTaskExecution.PrametersXml;

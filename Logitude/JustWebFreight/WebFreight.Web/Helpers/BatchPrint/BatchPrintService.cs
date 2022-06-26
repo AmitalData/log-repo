@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Logitude.Infrastructure.BL.Helpers.BatchPrint
+namespace WebFreight.Web.Helpers.BatchPrint
 {
     public class BatchPrintService
     {
@@ -47,7 +47,7 @@ namespace Logitude.Infrastructure.BL.Helpers.BatchPrint
                 Subject = $"Multi Print",
                 Tenant = batchPrintManagerArgs.Tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
-                ClassName = "Logitude.Infrastructure.BL.Helpers.BatchPrint.BatchPrintManager,Logitude.Infrastructure.BL",
+                ClassName = "WebFreight.Web.Helpers.BatchPrint.BatchPrintManager,WebFreight.Web",
                 CreateDate = DateTime.Now,
                 PrametersXml = xmlParameters,
                 StatusCode = "C"

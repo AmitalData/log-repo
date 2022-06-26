@@ -2744,6 +2744,13 @@
     <Compile Include="Helpers\AutomationModel\SendInterface\SendInterfaceDataContractService.cs" />
     <Compile Include="Helpers\AutomationModel\SendInterface\ShipmentAPISendInterfaceDataContract.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
+    <Compile Include="Helpers\BatchPrint\ARInvoiceBatchPrinter.cs" />
+    <Compile Include="Helpers\BatchPrint\BatchPrinter.cs" />
+    <Compile Include="Helpers\BatchPrint\BatchPrinterFactory.cs" />
+    <Compile Include="Helpers\BatchPrint\BatchPrintManager.cs" />
+    <Compile Include="Helpers\BatchPrint\BatchPrintManagerArgs.cs" />
+    <Compile Include="Helpers\BatchPrint\BatchPrintService.cs" />
+    <Compile Include="Helpers\BatchPrint\PrintingResult.cs" />
     <Compile Include="Helpers\BrandingHelper.cs" />
     <Compile Include="Helpers\BIReport\BIReportXMLDataService.cs" />
     <Compile Include="Helpers\ChangePasswordParameter.cs" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Infrastructure.BL.Helpers.BatchPrint
+namespace WebFreight.Web.Helpers.BatchPrint
 {
     public class BatchPrintManagerArgs
     {
@@ -14,7 +14,8 @@ namespace Logitude.Infrastructure.BL.Helpers.BatchPrint
         public string ObjectTableId { get; set; }
         public int Tenant { get; set; }
         public List<PrintEntityKeys> EntityIds { get; set; }
-
+        public string ChildObjectTableId { get; set; }
+        public string Email { get; set; }
     }
     public class PrintEntityKeys
     {

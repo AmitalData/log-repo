@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WebFreight.Web.Helpers.BatchPrint
+{
+    public class PrintingResult
+    {
+        public string DocumentId { get; set; }
+        public List<PrintingRow> NotValidRows { get; set; }
+
+    }
+    public class ItemPrintingResult
+    {
+        public bool IsSuccessfullyPrinted { get; set; }
+        public MemoryStream DocumentStream { get; internal set; }
+        public string Error { get; set; }
+        public string EntityId { get; set; }
+
+    }
+    public class PrintingRow
+    {
+        public string Error { get; set; }
+        public string EntityId { get; set; }
+    }
+}

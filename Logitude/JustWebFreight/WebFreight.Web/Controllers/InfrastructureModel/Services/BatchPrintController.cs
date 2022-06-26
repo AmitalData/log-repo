@@ -1,5 +1,4 @@
-﻿using Logitude.Infrastructure.BL.Helpers.BatchPrint;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -10,6 +9,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.BatchPrint;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Services
@@ -24,6 +24,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Services
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 batchPrintManagerArgs.Tenant = authToken.Tenant;
+                batchPrintManagerArgs.Email = HttpContext.Current.User.Identity.Name;
                 BatchPrintService batchPrintService = new BatchPrintService();
                 batchPrintService.Print(batchPrintManagerArgs);
 
