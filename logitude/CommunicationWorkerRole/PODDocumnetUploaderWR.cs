@@ -22,6 +22,7 @@ using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.DataContracts;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace CommunicationWorkerRole
 {
@@ -220,66 +221,17 @@ namespace CommunicationWorkerRole
             {
                 return;
             }
-            shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
-            shipment.IsPODReceived = isPODReceived;
-            shipment.PODReceivedDate = podReceivedDate;
-            this.UpdateShipmentContainers(shipmentId, podReceivedDate, tenant);
-            this.HandelPODShipmentEvent(isPODReceived, podReceivedDate, pODReceivedByUserId);
-            shipmentRepository.Update(shipment);
-            shipmentRepository.SubmitChanges();
-            RunStoredProcedureClass.UpdateShipmentStatus(shipment.Id, shipment.Tenant);
-        }
 
-        private void UpdateShipmentContainers(string shipmentId, DateTime? podReceivedDate, int tenant)
-        {
-            shipmentContext = ShipmentsContext.GetContext(tenant);
-            containerService = new ContainerService(shipmentContext, tenant);
-            List<ContainerPM> containers = GetShipmentContainers(shipmentId, tenant);
-            foreach (ContainerPM container in containers)
-            {
-                this.UpdateContainer(container, podReceivedDate);
-            }
-        }
-        private List<ContainerPM> GetShipmentContainers(string shipmentId, int tenant)
-        {
-            ContainerQuery containerQuery = new ContainerQuery(tenant);
-            List<ContainerPM> containerPMs = new List<ContainerPM>();
-            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-            shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
-            var shipmentContainers = shipmentPM?.ShipmentPackages?.Where(a => !string.IsNullOrEmpty(a.ContainerEntityId));
-            foreach (ShipmentPackagePM shipmentPackagePM in shipmentContainers)
-            {
-                containerPMs.Add(containerQuery.GetSinglePM(shipmentPackagePM.ContainerEntityId, shipmentPM.Tenant));
-            }
-            return containerPMs;
-        }
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact pODReceivedBy = contactRepository.GetSingleContact(pODReceivedByUserId, tenant);
 
-        private void UpdateContainer(ContainerPM container, DateTime? podReceivedDate)
-        {
-            container.PODReceivedOnDate = podReceivedDate;
-            containerService.Update(container);
-        }
-
-        private void HandelPODShipmentEvent(bool isPODReceived, DateTime? podReceivedDate, string pODReceivedByUserId)
-        {
-            var isNew = false;
-            ShipmentMasterData master = this.GetMasterShipment();
-            var shipmentTracing = new ShipmentTracing(shipmentPM, shipment, master, pODReceivedByUserId, isNew);
-            shipmentTracing.TracePODReceived(isPODReceived, podReceivedDate);
-          
-        }
-
-        private ShipmentMasterData GetMasterShipment()
-        {
-            ShipmentMasterData master = null;
-            if (shipmentPM.ShipmentLevelCode == "D" || shipmentPM.ShipmentLevelCode == "C")
-            {
-                master = (from d in shipmentContext.ShipmentMasterDatas
-                          where d.Id == shipment.MasterShipmentDataId
-                          select d).FirstOrDefault();
-            }
-
-            return master;
+            ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
+            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            shipmentPM.IsPODReceived = isPODReceived;
+            shipmentPM.PODReceivedDate = podReceivedDate;
+            shipmentPM.IsPODUpdatedFromWR = true;
+            ShipmentService shipmentService = new ShipmentService(shipmentRepository.context, shipmentPM, pODReceivedBy.Email);
+            shipmentService.Update(true);
         }
     }
 }
