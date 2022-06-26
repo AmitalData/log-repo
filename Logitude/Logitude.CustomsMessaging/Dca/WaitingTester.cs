@@ -27,7 +27,8 @@ namespace Logitude.CustomsMessaging.Dca
                     Tenant = 1,
                     FromDate = DateTime.Now.AddHours(-15),
                     ToDate = DateTime.Now,
-                    InterfaceManagementsCode = "2470",
+                    //InterfaceManagementsCode = "2470",
+                    InterfaceManagementsCode = "SendDF_MSG2470_ReleaseGoodsMessage_EX",
                     RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceInteractive
                 };
                 var res1= sYSTBL_NG_9010_MSG_MessageRestoreRequestMessagingService.Send(messageRestoreRequestParams);
@@ -38,10 +39,14 @@ namespace Logitude.CustomsMessaging.Dca
                 {
                     //SuppressSplitWR = true,
                     Tenant = 1,
-                    FromDate = DateTime.Now.AddDays(-5),
+                    FromDate = DateTime.Now.AddDays(-1),
                     ToDate = DateTime.Now,
-                    InterfaceManagementsCode = "2470",
-                    RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceBatch
+                    //InterfaceManagementsCode = "2470",
+                    //InterfaceManagementsCode = "SendDF_MSG2470_ReleaseGoodsMessage",
+                    InterfaceManagementsCode = "SendDF_MSG2470_ReleaseGoodsMessage_EX",
+                    //InterfaceManagementsCode= "SendDF_MSG2470_ReleaseGoodsMessage_Out.",
+                    //RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceBatch
+                    RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceInteractive
                 };
                 var res = o.Send(messageWaitingRequestParams);
 
