@@ -25,38 +25,24 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public DateTime? CreateDate { get; set; }
         public string Routing { get; set; }
 
-        [XmlElement("CardByReferences")]
         public CardByReferences Customer { get; set; }
 
-        [XmlElement("CardByReferences")]
         public CardByReferences Agent { get; set; }
-
-        [XmlElement("CardByReferences")]
-        public CardByReferences Shipper { get; set; }
-
-        [XmlElement("CardByReferences")]
-        public CardByReferences Consignee { get; set; }
-
-        [XmlElement("CardByReferences")]
-        public CardByReferences ShipperNotExporter { get; set; }
-
-        [XmlElement("CardByReferences")]
-        public CardByReferences ConsigneeNotImporter { get; set; }
-
-        [XmlElement("CardByReferences")]
-        public CardByReferences Forwarder { get; set; }
-        public string ShipperReference1 { get; set; }
-        public string ShipperReference2 { get; set; }
-        public string ConsigneeReference1 { get; set; }
-        public string ConsigneeReference2 { get; set; }
-        public string ShipperNotExporterReference1 { get; set; }
-        public string ShipperNotExporterReference2 { get; set; }
-        public string ConsigneeNotImporterReference1 { get; set; }
-        public string ConsigneeNotImporterReference2 { get; set; }
-        public string ForwarderReference1 { get; set; }
-        public string ForwarderReference12 { get; set; }
         public string AgentReference1 { get; set; }
         public string AgentReference2 { get; set; }
+        public CardByReferences Shipper { get; set; }
+        public string ShipperReference1 { get; set; }
+        public string ShipperReference2 { get; set; }
+        public CardByReferences Consignee { get; set; }
+        public string ConsigneeReference1 { get; set; }
+        public string ConsigneeReference2 { get; set; }
+        public CardByReferences ShipperNotExporter { get; set; }
+        public string ShipperNotExporterReference1 { get; set; }
+        public string ShipperNotExporterReference2 { get; set; }
+        public CardByReferences ConsigneeNotImporter { get; set; }
+        public string ConsigneeNotImporterReference { get; set; }
+        public CardByReferences Forwarder { get; set; }
+        public string ForwarderReference { get; set; }        
 
         public ShipmentByReferences()
         {
