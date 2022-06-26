@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.PhysicalCheck;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -178,14 +179,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (physicalchecksclosed)
                     {
-                        var decPM = declarationQueryService.GetSingleDeclarationById(phsicalCheckPM.DeclarationId, phsicalCheckPM.Tenant);
-                        DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                        decPM.PhysicalCheck = 2;
-                        decPM.ChangeSetOp = ChangeSetOperation.Update;
-                        LogMessagingUtil.Instance.AppendLine("CourierCustomStatusCode=" + decPM.CourierCustomStatusCode);
-                        LogMessagingUtil.Instance.AppendLine("Time before update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
-                        declarationUpdateService.Update(decPM, true);
-                        LogMessagingUtil.Instance.AppendLine("Time after update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
+
+
+                        string key = ProcessLockTableUtil.Instance.GetKey4Declaration(phsicalCheckPM.DeclarationId, requestParams.Tenant);
+                        using (var disposableToken =
+                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "physicalchecksclosed")
+                            )
+                        {
+
+                            var decPM = declarationQueryService.GetSingleDeclarationById(phsicalCheckPM.DeclarationId, phsicalCheckPM.Tenant);
+                            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                            decPM.PhysicalCheck = 2;
+                            decPM.ChangeSetOp = ChangeSetOperation.Update;
+                            LogMessagingUtil.Instance.AppendLine("CourierCustomStatusCode=" + decPM.CourierCustomStatusCode);
+                            LogMessagingUtil.Instance.AppendLine("Time before update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
+                            declarationUpdateService.Update(decPM, true);
+                            LogMessagingUtil.Instance.AppendLine("Time after update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
+                        }
                     }
 
                 }
