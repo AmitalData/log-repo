@@ -28,6 +28,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/BIReportExtendedPMService';
 import { isNullOrUndefined } from 'util';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
 @Component({
 
     templateUrl: 'BIReportPreviewComponent.html',
@@ -184,6 +185,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     this.EntityPM = result.BIReportPM;
                     this.CanScheduler = this.EntityPM != null ? this.EntityPM.AvailableForScheduling && !this.IsScheduler : false;
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
+                    this.PrepareContactList();
                     // this.BuildColumns(result);
                     if (IsBIReportUpdated) {
                         this.BIReportExtendedPMService.UpdateWithoutAGGridXML(this.EntityPM).subscribe((response: any) => {
@@ -712,6 +714,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         windowArgs.DWQueryId = this.DWQueryId;
         windowArgs.IsBIReportEditScreen = true;
         windowArgs.FactTableName = this.EntityPM.FactTableName;
+        windowArgs.IsScheduler = this.IsScheduler;
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1200;
         logWindow.Height = 780;
@@ -754,6 +757,81 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                 });
         }
     }
+
+    isPartnersChanged:boolean = false;
+    PartnersObslist: EntityPartner[];
+    PrepareContactList() {
+        if (!this.IsScheduler) return;
+        this.CleanPartnersObslist();
+        this.BIReportXMLData.DWQueryData.Filters?.FilterItems?.forEach(DWQueryDataFilter => {
+            this.FillPartnersObslist(DWQueryDataFilter);
+        });
+    }
+
+    FillPartnersObslist(DWQueryDataFilter: any) {
+        if (DWQueryDataFilter.DataTypeCode != "Dimension" || DWQueryDataFilter.DimensionTableCode != "DIM_Partners") return;
+
+        DWQueryDataFilter.MultiSelectedValueLists.forEach(MultiSelectedValueList => {
+            this.ProcessToAddPartner(MultiSelectedValueList, DWQueryDataFilter);
+        });
+    }
+
+    ProcessToAddPartner(MultiSelectedValueList: any, DWQueryDataFilter: any) {
+        let j = 1;
+        while (MultiSelectedValueList["Value" + j] != null && MultiSelectedValueList["Value" + j].Header != 'Partner Type') {
+            j += 1;
+        }
+        if (MultiSelectedValueList["Value" + j] != null) {
+            this.AddPartner(MultiSelectedValueList["Value" + j].Row, DWQueryDataFilter.TextValue);
+        }
+    }
+
+    CompareContactList() {
+        let originalPartnersObslist = this.PartnersObslist.filter(p => p.PartnerType != 'All Users');
+        this.PrepareContactList();
+        originalPartnersObslist.forEach(originalPartner => {
+            this.SetIsPartnersChanged(originalPartner);
+        });
+    }
+
+    SetIsPartnersChanged(originalPartner: EntityPartner) {
+        let partner = this.PartnersObslist.filter(p => p.PartnerType == originalPartner.PartnerType)[0];
+        if (!partner) {
+            this.isPartnersChanged = true;
+        }
+        else if (partner.PartnerId.indexOf(originalPartner.PartnerId) < 0) {
+            this.isPartnersChanged = true;
+        }
+    }
+
+    IsPartnersChanged(SelectedTabIndex) {
+        const previewBIReportPageTabIndex = '2';
+        if (SelectedTabIndex == previewBIReportPageTabIndex)
+            return this.isPartnersChanged = false;
+
+        this.CompareContactList();
+        return this.isPartnersChanged;
+    }
+
+    CleanPartnersObslist() {
+        this.PartnersObslist = [];
+    }
+
+    AddPartner(partnerType: string, partnerId: string) {
+        var partnerExist: boolean = false;
+        this.PartnersObslist.forEach(partner => {
+            partnerExist = !AppTool.IsNullOrEmpty(partner) && partner.PartnerType == partnerType;
+            partner.PartnerId = !AppTool.IsNullOrEmpty(partner) && partner.PartnerType == partnerType ? partner.PartnerId += ',' + partnerId : partner.PartnerId;
+        });
+
+        if (partnerExist) {
+            return;
+        }
+
+        var entityPartner: EntityPartner = new EntityPartner(partnerType, partnerId, false);
+        this.PartnersObslist.push(entityPartner);
+    }
+
     RunReportButtonClicked() {
         this.IsFilterValueChanged = false;
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);

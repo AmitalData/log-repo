@@ -46,6 +46,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     public IconSize: number = 17;
 
     private IsCopy: boolean = false;
+    private IsScheduler: boolean = false;
     private CopyBIReportsFromTenant: number;
     private FactTableName: string;
     private FactTableCode: string;
@@ -328,6 +329,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         this.BackCompleted = args.BackCompleted;
         this.CopyBIReportsFromTenant = args.BIReportsTenant;
         this.FactTableName = args.FactTableName;
+        this.IsScheduler = args.IsScheduler;
     }
 
     EditBIReport() {
@@ -1351,7 +1353,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         BaseFilter.FilterItems.forEach((field) => {
             var view = new DWObjectFieldsDetails(field, this);
             view.DisplayName = field.DisplayName;
-            if (view.HasTree && view.DataTypeCode != "DateTime") {
+            if (view.HasTree && view.DataTypeCode != "DateTime" && !this.IsScheduler) {
                 var defaultItem: any = this.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
                 if (defaultItem) {
                     view.Code = defaultItem.Code;
