@@ -10,6 +10,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
     {
         public string container_id { get; set; }
         public string carrier_code { get; set; }
+        public string bill_of_lading { get; set; }
         public string callback_url { get; set; }
     }
     public class CreateReferenceViaBillOfLadingRequest

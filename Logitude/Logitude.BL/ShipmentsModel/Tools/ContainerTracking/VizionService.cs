@@ -71,6 +71,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             {
                 callback_url = Source.CallbackURL,
                 carrier_code = shipment.ShipmentMasterData.MainCarriageCarrierCard.Code,
+                bill_of_lading = shipment?.ShipmentMasterData?.Master,
                 container_id = containerStatusSimulatorArgs.ContainerNumber
             };
         }
