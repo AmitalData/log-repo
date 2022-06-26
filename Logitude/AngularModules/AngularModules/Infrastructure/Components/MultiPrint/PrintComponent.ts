@@ -149,6 +149,8 @@ export class PrintComponent extends BaseComponent implements OnInit {
         if (this.documentTypeId != value) {
             this.documentTypeId = value;
 
+            this.SelectedDocumentTypeTemplate = null;
+            this.SelectedDocumentTypeCopy = null;
             this.LoadTemplates();
             this.LoadCopies();
         }

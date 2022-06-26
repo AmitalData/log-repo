@@ -5,12 +5,12 @@ export function IsMultiPrintValid(title, rowCount): boolean {
     var messageWindow: MessageWindow = new MessageWindow();
     messageWindow.Title = "Multi Print " + title;
     if (rowCount == 0) {
-        messageWindow.Show("Sorry! You can’t perform the multiple update process. The number of " + title + " in the view can't be 0");
+        messageWindow.Show("Sorry! You can’t perform the batch print process. The number of " + title + " in the view can't be 0");
         return false;
     }
 
     if (rowCount > 50) {
-        messageWindow.Show("Sorry! You can’t perform the multiple update process. The number of " + title + " in the view mustn't exceed 50");
+        messageWindow.Show("Sorry! You can’t perform the batch print process. The number of " + title + " in the view mustn't exceed 50");
         return false;
     }
 
