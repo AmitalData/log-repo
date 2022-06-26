@@ -9,7 +9,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 
 export class MultiPrintCheckTemplate {
     private CurrentSession = SessionLocator.SelectedSession;
-    public UpdateSuccess: any;
+    public PrintSuccess: any;
     public fieldName: any;
     public AdditionalData: any;
     public isRTL: boolean = false;
@@ -23,7 +23,7 @@ export class MultiPrintCheckTemplate {
         this.AdditionalData = MyAdditionalData;
 
         var record = window.AllRecords?.filter(item => item.Id == rowData.Id)[0];
-        this.UpdateSuccess = record?.UpdateSuccess;
+        this.PrintSuccess = record?.PrintSuccess;
 
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {
