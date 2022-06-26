@@ -30,14 +30,15 @@
             
     </div>
 
-    <div class="row">        
+    <div class="row">  
+        <h1>1</h1>      
             <LogLabel [ObjectFieldName]="'StorageSiteCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
             <LogLov style="width: 97px;" [ObjectFieldName]="'StorageSiteCode'"
             [ObjectTableName]="ObjectTableName"
             [DataContext]="DataContext"
             [HideColumns]="true"
             [LookUpTableName]="'Customs.DeliverySiteType'"
-            [SelectedValue]="ExportLoadingPortcode">
+            [SelectedValue]="StorageSiteCode">
             </LogLov>
     </div>
 
@@ -80,7 +81,7 @@
         [DataContext]="DataContext"
         [HideColumns]="true"
         [LookUpTableName]="'Customs.InternationalSite'"
-        [SelectedValue]="ExportLoadingPortcode">
+        [SelectedValue]="ExportUnloadingPortCode">
         </LogLov>
     </div>
     <div class="row">        
@@ -90,7 +91,7 @@
         [DataContext]="DataContext"
         [HideColumns]="true"
         [LookUpTableName]="'Customs.InternationalSite'"
-        [SelectedValue]="ExportLoadingPortcode">
+        [SelectedValue]="FinalDestinationPortCode">
         </LogLov>
     </div>
     <div class="row">        

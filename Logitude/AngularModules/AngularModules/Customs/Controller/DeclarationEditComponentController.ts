@@ -34,7 +34,9 @@ export class DeclarationEditComponentController implements IEditComponentControl
         }
         
         var indexOfTab = allTabs.findIndex(t => t.Code == "CloD");
-        if (AppTool.IsNullOrEmpty(currentEntity.ExportClosedErrorXML)) {
+      
+        /*if (AppTool.IsNullOrEmpty(currentEntity.ExportClosedErrorXML) && !currentEntity.IsExportClosed ) {*/
+        if (currentEntity.Direction != "E" ) {
             if (indexOfTab > -1) {
                 allTabs.splice(indexOfTab, 1);
             }
@@ -276,6 +278,10 @@ export class DeclarationEditComponentController implements IEditComponentControl
     public ShowDeclarationClassificationComponentTAB: boolean = false;
 
     IsDisabled(itemTabCode: string): boolean {
+        let currentEntity: DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+        if (itemTabCode == "CloD" && AppTool.IsNullOrEmpty(currentEntity.ExportClosedErrorXML) && !currentEntity.IsExportClosed) {
+            return true;
+        }
         if (itemTabCode != "DCCF") {
             return false; 
         }

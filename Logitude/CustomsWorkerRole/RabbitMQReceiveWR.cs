@@ -4,6 +4,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.RabbitMQ;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using RabbitMQ.Client;
@@ -267,6 +268,7 @@ namespace CustomsWorkerRole
 
                             if (DateTime.Now.Subtract(lastworkAt) > TimeSpan.FromMinutes(10))
                             {
+                                QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), $"Sleep..");
                                 Thread.Sleep(1000);
                                 Logger.LogMe("No work (FromMinutes(10)) or connection fail ??! - dispose old create new one", false, RabbitMQLogFILE);
                                 break;
@@ -510,14 +512,17 @@ namespace CustomsWorkerRole
             {
                 var serviceAnalyzer = customRabbitMQQueue.GetCustomAnalyzerQueueService(queue);
                 //ArtemusAnalyzer analyzer = new Artemus(analyzeQueue, analyzeQueueRepository);
+                
+                QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name),
+                    $"AnalyzeQueue:{queue?.AnalyzeQueueService},commLogId:{communicationLogId}");
                 serviceAnalyzer.Run( analyzeQueueRepository, tenant , communicationLogId , message , queue, out  log, out success);
                 scope.Complete();
             }
         }
 
+        
 
 
- 
         public override void WorkOnce()
         {
 

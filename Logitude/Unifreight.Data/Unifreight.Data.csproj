@@ -122,6 +122,7 @@
     <Compile Include="AmitalModel\EntityKeys\CTBAPPROVKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBAPPROVTYPEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBBONDEDKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBCARMODKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBCOUNTRYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBCURRENCYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBERRORKeys.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="AmitalModel\EntityKeys\GNDADRKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GNDCARDKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBDOCKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GTBFUSTATUKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBITEMKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBITMCNKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBMANDTKeys.cs" />
@@ -179,6 +181,8 @@
     <Compile Include="AmitalModel\EntityKeys\CTBUNLOADKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ITBPCKTYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ITBPORTKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\MFIFILEMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\MSPSPEDKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\MTBCARRKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\MTBPORTKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\RTBPORTKeys.cs" />
@@ -215,6 +219,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROV.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROVTYPE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBBONDED.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCARMOD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCOUNTRY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCURRENCY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCUSTSUP.cs" />
@@ -290,6 +295,8 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTRTRAN.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPCKTY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPORT.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MFIFILEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MSPSPED.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MTBCARR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MTBPORT.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.RTBPORT.cs" />
@@ -334,6 +341,7 @@
     <Compile Include="AmitalModel\Repsitories\CTBAPPROVRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBAPPROVTYPERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBBONDEDRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBCARMODRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBCOUNTRYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBCURRENCYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBERRORRepository.cs" />
@@ -383,6 +391,7 @@
     <Compile Include="AmitalModel\Repsitories\GNDADRRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GNDCARDRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBDOCRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GTBFUSTATURepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBITEMRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBITMCNRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBMANDTRepository.cs" />
@@ -392,6 +401,8 @@
     <Compile Include="AmitalModel\Repsitories\GTRTRANRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ITBPCKTYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ITBPORTRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\MFIFILEMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\MSPSPEDRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\MTBCARRRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\MTBPORTRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\RTBPORTRepository.cs" />

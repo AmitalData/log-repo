@@ -99,18 +99,27 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CancelRequestStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentRejectionReasonName);
 
-           
+            if (entityPM.Direction == "E")
+            {
+                var amendmentStatusRepository = new AmendmentRequestStatusQueryService(entityPOCO.Tenant);
+                var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus, false, true); 
+                if (amendmentStatus != null)
+                {
+                    entityPM.AmendmentStatusName = amendmentStatus.LocalName;
+                }
+            }
+            else
+            {
                 var amendmentStatusRepository = new AmendmentStatusQueryService(entityPOCO.Tenant);
                 var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus, false, true);
                 if (amendmentStatus != null)
                 {
                     entityPM.AmendmentStatusName = amendmentStatus.Name;
-
                 }
-
+            }
 
           
-           if(entityPOCO.IsAmendment == true)
+           if (entityPOCO.IsAmendment == true)
             {
                 AmendRequestRejectReasonTypeRepository amendRequestRejectReasonTypeRepository = new AmendRequestRejectReasonTypeRepository(entityPOCO.Tenant);
                 AmendRequestRejectReasonType amendRequestRejectReasonType = amendRequestRejectReasonTypeRepository.GetSingle(entityPOCO.AmendmentRejectionReason);
@@ -163,15 +172,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             else if (entityPOCO.IsAmendment != true)
             {
-                if (!string.IsNullOrEmpty(entityPOCO.ExportClosedErrorXML))
+                if (!string.IsNullOrEmpty(entityPOCO.ExportClosedErrorXML) && !entityPOCO.IsExportClosed)
                 {
-                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName + ' ' + "(שהתקבל מהמכס עבור התיקון )";
+                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
+                    entityPM.IsAmendmentDisplayOnly = true;
                 }
                 else
                 {
-                        var declarations = declarationQuery.GetDeclarationAmendmentsById/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
-                    
-                    var declaration = declarations.FirstOrDefault(x => new string[] { "1",  "3", "6" }.Contains(x.AmendmentStatus));
+                    var declarations = declarationQuery.GetDeclarationAmendmentsById/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
+
+                    var declaration = declarations.FirstOrDefault(x => new string[] { "1", "3", "6" }.Contains(x.AmendmentStatus));
                     if (declaration != null)
                     {
                         if (declaration.AmedmentType == "2")
@@ -182,7 +192,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         else 
                         {
                             entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
-                        } 
+                        }
+                        entityPM.IsAmendmentDisplayOnly = true;
                     }
                     else
                     {
@@ -198,15 +209,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
                             {
                                 entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName; ;
                             }
+                            entityPM.IsAmendmentDisplayOnly = true;
                         }
                     }
+                    //else
+                    //{
+                    //    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant , true);
+                    //}
                 }
-                //else
-                //{
-                //    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant , true);
-                //}
             }
-
 
 
             //CardRepository rep = new CardRepository(entityPM.Tenant);

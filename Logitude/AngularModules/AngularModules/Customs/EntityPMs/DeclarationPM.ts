@@ -1414,6 +1414,11 @@ export class DeclarationPM {
     public set TransferExporterCode(newValue: string) { if (this.transferExporterCode != newValue) { this.transferExporterCode = newValue; this.MarkAsDirty("TransferExporterCode"); } }
        
 	 
+    private isExportDeclarationAmendments: boolean;
+    public get IsExportDeclarationAmendments() { return this.isExportDeclarationAmendments; }
+    public set IsExportDeclarationAmendments(newValue: boolean) { if (this.isExportDeclarationAmendments != newValue) { this.isExportDeclarationAmendments = newValue; this.MarkAsDirty("IsExportDeclarationAmendments"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

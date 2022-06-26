@@ -118,8 +118,10 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     { "InterfaceCode", InterfaceCode },
                     { "InterfacePartner", InterfacePartner},
                     { "Tenant", tenant.ToString() }
-                }, tenant
-                , UseRabbitMQ
+                }, 
+                    tenant, UseRabbitMQ,
+                    "AnalyzeQueue".ToLower(),
+                    analyzeQueueID
                     );
                 return;
 

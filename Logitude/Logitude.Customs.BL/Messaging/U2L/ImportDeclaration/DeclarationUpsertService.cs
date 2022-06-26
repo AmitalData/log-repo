@@ -214,7 +214,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     //Check if Declaration was already paid, constraint in progress or Future payment was done
                     var declarationValidator = new Logitude.Customs.BL.Validators.DeclarationValidator(_MyDeclarationPM);
-                    if (_MyDeclarationPM.IsCourierDeclaration) declarationValidator.ToUpdateWithPaymentDate = true;
+                        if (_MyDeclarationPM.IsCourierDeclaration) declarationValidator.ToUpdateWithPaymentDate = true;
                     declarationValidator.DeclarationViewDisplayOnlyChecks();
                     if (declarationValidator.ErrorCode.Count > 0)
                     {
@@ -249,7 +249,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
-
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(_MyDeclarationPM.Tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(_MyDeclarationPM.Tenant);
                 this._MyDeclarationPM.MarkAsChanged = true; // moran 2.6.15 - Task 13803
 
                 MyGenericResponseObj.Stage = "Mapping";
@@ -316,9 +317,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.CustomerId = TranslateCustomer(_AmitalCustomsFile.CustomerId);//check translate
                 if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
                 {
-                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                    MyGenericResponseObj.Message += "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
-                    return;
+                        MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                        MyGenericResponseObj.Message += "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
+                        return;
                 }
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.Direction))
                 {
@@ -338,7 +339,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CasualImporterCountry))
                             {
                                 string countryCode = "";
-                                if (_AmitalCustomsFile.CasualImporterCountry.Length > 2)
+                                if (_AmitalCustomsFile.CasualImporterCountry.Length > 2 && setting.IsConnectedToUniFreight)
                                 {
                                     countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _AmitalCustomsFile.CasualImporterCountry);
                                 }
@@ -560,7 +561,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     {
                         //this._MyDeclarationPM.Consignments[0].OriginCountryCode = _AmitalCustomsFile.OriginCountryCode;
                         string countryCode = "";
-                        if (_AmitalCustomsFile.OriginCountryCode.Length > 2)
+                        if (_AmitalCustomsFile.OriginCountryCode.Length > 2 && setting.IsConnectedToUniFreight)
                         {
                             countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _AmitalCustomsFile.OriginCountryCode);
                         }
@@ -632,7 +633,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                         var packingType = new PackingTypeRepository(ResolvedTenant());
                         var myPackingType = packingType.GetSingle(_AmitalCustomsFile.PackageTypeCode);
-                        if (myPackingType == null)
+                        if (myPackingType == null && setting.IsConnectedToUniFreight)
                         {
                             string PackageTypeCode = "";
                             PackageTypeCode = GetTranslationL2P("IIGC", "CTBPACKTYPE", _AmitalCustomsFile.PackageTypeCode);
@@ -662,7 +663,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
                     {
-                        string isOverrideWeight = GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant());
+                        
+                        string isOverrideWeight = CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight ? 
+                            GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant()) : 
+                            "N";
                         if (isOverrideWeight == "Y" && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure > 0)
                         {
                             GrossMassMeasure = (decimal)this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure;
@@ -805,6 +809,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         scope.Complete();
                         return;
                     }
+
+                    if (this._MyDeclarationPM.Direction == "E")
+                        ForiegnKeyCheck.CheckClosedTable(_MyDeclarationPM, ResolvedTenant());
+
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
 
@@ -1391,19 +1399,37 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     AppendLogLine("Customer Card does not exist for Amital Customer Code " + amitalCustomerCode);
                     MyGenericResponseObj.Message = "Customer Card does not exist for Amital Customer Code " + amitalCustomerCode;
-                    return null;
+
+                    if(CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight)
+                        return null;
+
                     AppendLogLine("Open A new Card in the same Transaction Scope ");
-                    //repository = new CardRepository(ResolvedTenant());
-                    myCard = new Card();
-                    myCard.Id = IdCounter.GetNumber("Card", ResolvedTenant()).ToString();
-                    myCard.Code = amitalCustomerCode;
-                    myCard.Tenant = ResolvedTenant();
-                    myCard.EnglishName = _AmitalCustomsFile.EnglishName;
-                    myCard.LocalName = _AmitalCustomsFile.HebrewName;
-                    myCard.PartnerTypeId = "CS";
-                    myCard.CreateDate = DateTime.Now;
-                    repository.Add(myCard);
-                    repository.SubmitChanges();
+                    var cardRep = new CardRepository(ResolvedTenant());
+
+                    myCard = new Card()
+                    {
+                        Id = IdCounter.GetNumber("Card", ResolvedTenant()).ToString(),
+                        Code = _AmitalCustomsFile.CustomerId,
+                        EnglishName = _AmitalCustomsFile.EnglishName,
+                        LocalName = _AmitalCustomsFile.HebrewName,
+                        InActive = true,
+                        VatNumber = _AmitalCustomsFile.ImporterId,
+                        PartnerTypeId = "CS",
+                        Tenant = ResolvedTenant(),
+                        CreateDate = DateTime.Now,
+                        CountryCode = _AmitalCustomsFile.OriginCountryCode,
+                        SearchFields =
+                           _AmitalCustomsFile.CustomerId + ", " +
+                           _AmitalCustomsFile.EnglishName + ", " +
+                           _AmitalCustomsFile.HebrewName + ", " +
+                           _AmitalCustomsFile.ImporterId + ", " +
+                           "CS, " +
+                           _AmitalCustomsFile.OriginCountryCode
+                    };
+
+                    cardRep.Add(myCard);
+                    cardRep.SubmitChanges();
+
                     AppendLogLine("Create new Card  = " + amitalCustomerCode + " because could not translate to Logitude Id");
 
                     //Create a new customer
@@ -1423,7 +1449,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     customerRepository.SubmitChanges();
                     AppendLogLine("Create new Customer (Customer tables)  = " + amitalCustomerCode);
 
-                    RunStoredProcedureClass.UpdateCardSearcsRecords(myCard.Id, myCard.Tenant);
+                    //RunStoredProcedureClass.UpdateCardSearcsRecords(myCard.Id, myCard.Tenant);
 
                 }
             }

@@ -60,6 +60,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationIdsList.RemoveAll(x => rp.allWithoutdeclarationIdsList.Contains(x));
 
             List<string> declarationIdsListToSend = new List<string> { };
+            List<string> customsReferencesListToSend = new List<string> { };
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
             foreach (var item in declarationIdsList)
             {
@@ -71,7 +72,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-                    declarationIdsListToSend.Add(item);
+                    CustomsDocumentQueryService myCustomsDocumentQueryService = new CustomsDocumentQueryService(customContext);
+                    CustomsDocumentPM customsDocumentPM = myCustomsDocumentQueryService.GetSingle(customsDocumentsTicketPMList.FirstOrDefault().DocumentsFilingId, false, false);
+                    if (customsDocumentPM != null && !string.IsNullOrEmpty(customsDocumentPM.CustomsDocId))
+                    {
+                        customsReferencesListToSend.Add(customsDocumentPM.CustomsDocId);
+                        declarationIdsListToSend.Add(item);
+                    }
                 }
             }
 
@@ -79,13 +86,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DeclarationPM _MyDeclarationPM;
             var myDeclarationQueryService = new DeclarationQueryService(customContext);
 
-            foreach (var item in declarationIdsListToSend)
+            for (int i=0; i < customsReferencesListToSend.Count(); ++i)
             {
-                _MyDeclarationPM = myDeclarationQueryService.GetSingle(item, false, false);
+                var decID = declarationIdsListToSend.ElementAt(i);
+                var item = customsReferencesListToSend.ElementAt(i);
+                _MyDeclarationPM = myDeclarationQueryService.GetSingle(decID, false, false);
                 if (_MyDeclarationPM != null)
                 {
-                    LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask for Declaration: " + item);
-                    unifreightTaskService.OpenUnifreighTask(_MyDeclarationPM, "L2USID", null, false, "");
+                    LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask for FILING with reference " + item + " attached to Declaration: " + decID);
+                    unifreightTaskService.OpenUnifreighTaskGen(_MyDeclarationPM, "GDMFILING", item, "L2USID", null, false, "", false);
                 }
             }
         }

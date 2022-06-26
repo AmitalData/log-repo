@@ -13,6 +13,7 @@ export class ItemGovernmentProcedureTypeList {
 	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	LeadDocumentTypeID: string;
 	
 }
  

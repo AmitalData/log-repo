@@ -507,7 +507,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         }
     }
 
-    public get DeclarationOfficeHandlerCode() { return this.EntityPM.DeclarationOfficeHandlerCode; }
+    public get DeclarationOfficeHandlerCode() { return this.EntityPM.DeclarationOfficeCode; }
     public set DeclarationOfficeHandlerCode(newValue: string) {
         if (this.EntityPM.DeclarationOfficeHandlerCode != newValue) {
             this.EntityPM.DeclarationOfficeHandlerCode = newValue;
@@ -551,7 +551,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     public get DeclarationDocumentId() { return this.EntityPM.DeclarationDocumentId; }
     public set DeclarationDocumentId(newValue: string) { this.EntityPM.DeclarationDocumentId = newValue; }
 
-    public get ExporterImporterCode() { return this.EntityPM.ExporterImporterCode; }
+    public get ExporterImporterCode() { return this.EntityPM.ImporterCode; }
     public set ExporterImporterCode(newValue: string) {
         if (this.EntityPM.ExporterImporterCode != newValue) {
             this.EntityPM.ExporterImporterCode = newValue;
@@ -633,7 +633,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         this.EntityPM.LoadingDateTime = newValue;
     }
 
-    public get TransferExporterCode() { return this.EntityPM.TransferExporterCode; }
+    public get TransferExporterCode() { return this.EntityPM.TransferImporterCode; }
     public set TransferExporterCode(newValue: string) {
         if (this.EntityPM.TransferExporterCode != newValue) {
             this.EntityPM.TransferExporterCode = newValue;
@@ -1422,7 +1422,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     DeleteConsigment(tab: LogTab) {
         if (!AppTool.IsNullOrEmpty(tab)) {
 
-            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteConsignment");
+            let msg: string = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteConsignment");
+            if(this.EntityPM.Direction === 'E' && this.EntityPM.TransportModeId === 'O' && tab.EntityPM.ExportStoragesId)
+                msg = TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '\n' + msg;
+
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 300;
             confirmWindow.Height = 150;
@@ -1478,7 +1481,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
     ChangeTransportMode() {
-        if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode)) {
+        if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode) && this.EntityPM.Direction!="E") {
             this.customsHouseTypeExtendedPMService.GetHouseTypewithAdditional(this.DeclarationOfficeCode).subscribe((result: ServiceResponse) => {
                 if (!AppTool.IsNullOrEmpty(result.Result)) {
 

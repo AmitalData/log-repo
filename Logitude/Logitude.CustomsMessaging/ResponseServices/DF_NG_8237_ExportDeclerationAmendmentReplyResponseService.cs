@@ -265,7 +265,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                                 UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
-                                                if (_MyDeclarationPM.AmendmentOriginalDeclartation != declarationParent.AmendmentOriginalDeclartation)
+                                                if (_MyDeclarationPM.Id != declarationParent.Id)
                                                 {
                                                     UpdateParentDec(myDeclarationUpdateService, declarationParent);
                                                 }
@@ -432,28 +432,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
                                             }
                                             break;
-                                    };
+                                        };
+                                    }
+                                    break;
                                 }
-                                break;
-                            }
+                        }
+                   }
+ 
+                if (!isExportClose)
+                {
+                    if (customResponse.Response.Error != null && (!new string[] { "1", "2" }.Contains(_MyDeclarationPM.AmendmentStatus)))
+                    {
+                        DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
+                        this._MyDeclarationPM.AmendmentErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO_EX);
+
+                        if (mydDclarationErrorPointerService._declarationErrorPointer != null &&
+                                mydDclarationErrorPointerService._declarationErrorPointer.Entitites != null &&
+                                mydDclarationErrorPointerService._declarationErrorPointer.Entitites.Exists(x =>
+                                (x.FieldErrors != null && x.FieldErrors.Any(y => y.ListVersionID == "1")) || (x.EntityErrors != null && x.EntityErrors.Any(y => y.ListVersionID == "1"))))
+                            HasErors = true;
                     }
                 }
-
-                if (customResponse.Response.Error != null && (!new string[] { "1", "2" }.Contains(_MyDeclarationPM.AmendmentStatus)))
+                else
                 {
-                    DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
-                    if (!isExportClose)
-                        this._MyDeclarationPM.AmendmentErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
-                    else
+                    if (customResponse.Response.Error != null)
                     {
-                        this._MyDeclarationPM.ExportClosedErrorXML = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
+                        DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
+                        this._MyDeclarationPM.ExportClosedErrorXML = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO_EX);
                         if (mydDclarationErrorPointerService._declarationErrorPointer != null &&
                             mydDclarationErrorPointerService._declarationErrorPointer.Entitites != null &&
                             mydDclarationErrorPointerService._declarationErrorPointer.Entitites.Exists(x => 
                             (x.FieldErrors != null && x.FieldErrors.Any(y => y.ListVersionID == "1")) || (x.EntityErrors != null && x.EntityErrors.Any(y => y.ListVersionID == "1"))  ))
                             HasErors = true;
                     }
-
+                    else
+                    {
+                        this._MyDeclarationPM.ExportClosedErrorXML = null;
+                    }
                 }
 
                 if (myUpdateEventContextTagModel != null)
@@ -652,7 +667,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             else
             {
-                this.MyResponseData.UserMessage = "מענה לתיקון הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
+                if (HasErors)
+                    this.MyResponseData.UserMessage = "מענה לתיקון הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט עם שגיאות!!!";
+                else
+                    this.MyResponseData.UserMessage = "מענה לתיקון הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
             }
 
             this.MyRequestSheetParam = new RequestSheetParam();

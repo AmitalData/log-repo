@@ -30,7 +30,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsRelevantGoodsItem, 
 	         IsRelevantInvoice, 
 	         IsRelevantInvoiceExport, 
-	         IsRelevantGoodsItemExport,
+	         IsRelevantGoodsItemExport, 
+	         ExtraNumericData,
 	      }
 
 
@@ -45,7 +46,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsRelevantGoodsItem, 
 	         IsRelevantInvoice, 
 	         IsRelevantInvoiceExport, 
-	         IsRelevantGoodsItemExport,
+	         IsRelevantGoodsItemExport, 
+	         ExtraNumericData,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -92,6 +94,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantGoodsItemExport))
             {
 				entityPOCO.IsRelevantGoodsItemExport = entityPM.IsRelevantGoodsItemExport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExtraNumericData))
+            {
+				entityPOCO.ExtraNumericData = entityPM.ExtraNumericData;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -145,6 +152,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsRelevantGoodsItemExport = entityPOCO.IsRelevantGoodsItemExport;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExtraNumericData))
+            {
+					entityPM.ExtraNumericData = entityPOCO.ExtraNumericData;
+            }
+
 		}
 
 		public void PMToOldPM(ModificationAndDiscountTypePM entityPM, ModificationAndDiscountTypePM oldEntityPM)
@@ -191,6 +203,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.IsRelevantGoodsItemExport = entityPM.IsRelevantGoodsItemExport;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExtraNumericData))
+            {
+                oldEntityPM.ExtraNumericData = entityPM.ExtraNumericData;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ModificationAndDiscountTypePM entityPM)
@@ -207,6 +224,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ExtraNumericData)) //T4 find type == nText 
+            {
+                entityPM.ExtraNumericData = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExtraNumericData));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

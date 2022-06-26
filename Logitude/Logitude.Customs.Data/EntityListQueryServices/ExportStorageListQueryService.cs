@@ -75,7 +75,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        SearchFields = en.SearchFields,
 
-                                                       DeclarationId = en.DeclarationId,
+                                                       DeclarationId = declaration.CustomFileNo,
 
                                                        ExportFileNo = en.ExportFileNo,
 
@@ -87,7 +87,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        CargoType = en.CargoType,
 
-                                                       CustomsStatus = en.CustomsCargoStatus.LocalName,
+                                                       CustomsStatus = en.CustomsStatus,
 
                                                        ExporterID = en.ExporterID,
 
@@ -138,25 +138,28 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
 
                                                        ActionCode = en.ExportLogisticPermitAction.LocalName,
-                                                       ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName
+                                                       ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName,
+                                                       StorageSiteCode = en.StorageSiteCode,
                                                    });
             return query;
         }
 
         private IQueryable<ExportStorage> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ExportStorage> iQueryable, int tenant)
         {
-            bool flag= false;
+            bool flag = false;
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "DeclarationIdAndProcedureCurrentName");
             if (filter != null)
             {
-
-                iQueryable = iQueryable.Where(x => x.DeclarationId == null || x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("המכלה"));
+                IQueryable<ConsignmentList> query = (from a in context.Consignments.Where(y => y.DeclarationId == filter.FieldValue.ToString()).Select(r => new { r.ExportStoragesId })select new ConsignmentList { ExportStoragesId=a.ExportStoragesId });
+                iQueryable = iQueryable.Where(x => x.DeclarationId == null ||
+                (x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("המכלה") 
+                    &&  !query.Any(t => t.ExportStoragesId == x.Id)));             
             }
             var filter2 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsExportFileNo");
             if (filter2 != null)
             {
-            
-                flag = !iQueryable.Any(x=>x.ExportFileNo == filter2.FieldValue.ToString()) ;
+
+                flag = !iQueryable.Any(x => x.ExportFileNo == filter2.FieldValue.ToString());
                 iQueryable = iQueryable.Where(x => flag || x.ExportFileNo == filter2.FieldValue.ToString());
 
             }

@@ -63,4 +63,11 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ExtraNumericData"
+    Type="nvarchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

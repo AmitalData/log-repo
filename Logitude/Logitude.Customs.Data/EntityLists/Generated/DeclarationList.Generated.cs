@@ -426,6 +426,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string IntegratorCode  { get; set; }
        [DataMember]
        public bool IsExportClosed  { get; set; }
+       [DataMember]
+       public string DeclarationTypeName  { get; set; }
+       [DataMember]
+       public bool? IsExportDeclarationAmendments  { get; set; }
    }
 
 }

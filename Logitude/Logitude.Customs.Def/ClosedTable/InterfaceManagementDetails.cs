@@ -2916,6 +2916,20 @@ namespace Logitude.Customs.Def.ClosedTable
             });
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "DCACSIFF",
+                InOut = InOutEnum.I.ToString(),
+                Description = "קליטת חשבון ספק מאקסל",
+                DcaPrefixName = "DCACSIFF_OUT",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //InterfaceType = "C",
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
                 Code = "DCAUAC",
                 InOut = InOutEnum.I.ToString(),
                 Description = "עדכון פטור 92 גורף",

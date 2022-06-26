@@ -191,6 +191,12 @@ namespace Logitude.Server.Tools.QueueService
                         OracleParameter QueueCodeRabbitPar = new OracleParameter("p_QueueCodeRabbit", OracleDbType.VarChar, 256);
                         QueueCodeRabbitPar.Direction = ParameterDirection.Input;
 
+                        OracleParameter entityCodePar = new OracleParameter("p_EntityCode", OracleDbType.VarChar, 40);
+                        entityCodePar.Direction = ParameterDirection.Input;
+
+                        OracleParameter entityIdPar = new OracleParameter("p_EntityId", OracleDbType.VarChar, 40);
+                        entityIdPar.Direction = ParameterDirection.Input;
+
 
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
@@ -223,6 +229,9 @@ namespace Logitude.Server.Tools.QueueService
 
                         string myQueueCodeRabbit = RabbitQueueCodeService.GetRabbitQueueCode(this.QueueCode, queueSendModel?.QueueGroupCodeRabbit);
                         QueueCodeRabbitPar.Value = myQueueCodeRabbit.ToLower();
+                        entityCodePar.Value= queueSendModel?.EntityCode;
+                        entityIdPar.Value = queueSendModel?.EntityId;
+
 
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
@@ -237,6 +246,8 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(InterfaceTypeCodePar);
                         cmd.Parameters.Add(UseRabbitMQPar);
                         cmd.Parameters.Add(QueueCodeRabbitPar);
+                        cmd.Parameters.Add(entityCodePar);
+                        cmd.Parameters.Add(entityIdPar);
 
 
                         cmd.Parameters.Add(queueMessageIdPar);

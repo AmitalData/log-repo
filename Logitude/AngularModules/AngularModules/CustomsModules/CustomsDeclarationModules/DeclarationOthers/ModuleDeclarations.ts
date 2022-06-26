@@ -12,10 +12,11 @@ import { SupplierInvoiceSelectionComponent } from './Components/DeclarationPayme
 import { PointersFromInvoicesSelectionComponent } from './Components/Documents/PointersFromInvoicesSelectionComponent';
 import { DeclarationQueryComponent } from './Components/DeclarationQueryComponent';
 import { DeclarationCancellationComponent } from './Components/DeclarationCancellation/DeclarationCancellationComponent';
+import { LoadExcelSupplierInvoicesComponent } from './Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent';
 import { ExportDeclarationClosingDataComponent } from './Components/CloseDeclaration/ExportDeclarationClosingDataComponent';
 import { DeclarationPaymentExportComponent } from './Components/DeclarationPayment/DeclarationPaymentExportComponent';
-import { ExportStorageDeclerationComponent } from './Components/ExportStorageDecleration/ExportStorageDeclerationComponent';
 import { DeclarationFiltersMenuComponent } from './Components/FiltersMenu/DeclarationFiltersMenuComponent';
+import { ExportStorageDeclerationComponent } from './Components/ExportStorageDecleration/ExportStorageDeclerationComponent';
 
 
 
@@ -34,9 +35,10 @@ export const Components =
         DeclarationQueryComponent,
         SendManifestComponent,
         DeclarationCancellationComponent,
+        LoadExcelSupplierInvoicesComponent,
         ExportDeclarationClosingDataComponent,
-        ExportStorageDeclerationComponent,
         DeclarationFiltersMenuComponent,
+        ExportStorageDeclerationComponent
     ];
 
 export class ModuleDeclarations {
@@ -58,9 +60,11 @@ export class ModuleDeclarations {
             case "DeclarationQueryComponent": { myResult = DeclarationQueryComponent; break; }
             case "SendManifestComponent": { myResult = SendManifestComponent; break; }
             case "DeclarationCancellationComponent": { myResult = DeclarationCancellationComponent; break; }
+            case "LoadExcelSupplierInvoicesComponent": { myResult = LoadExcelSupplierInvoicesComponent; break; }
             case "ExportDeclarationClosingDataComponent": { myResult = ExportDeclarationClosingDataComponent; break; }
-            case "ExportStorageDeclerationComponent": { myResult = ExportStorageDeclerationComponent; break; }
             case "DeclarationFiltersMenuComponent": { myResult = DeclarationFiltersMenuComponent; break; }
+
+            case "ExportStorageDeclerationComponent": { myResult = ExportStorageDeclerationComponent; break; }
         }
 
         return myResult;

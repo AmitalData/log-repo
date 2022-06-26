@@ -4,15 +4,21 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.MessagingServices;
 using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using UnifreightIIG.Common.MessageLib.LogisticActionRequestDecision;
+using Logitude.CustomsMessaging.RequestServices;
+using UnifreightIIG.Common.DeclarationCancellationRequestMsgServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class LG_NG_8411_SendLogisticActionRequestDecisionResponseService
         : ResponseServiceBase<INF_MSG_GenericResponseData, LG_NG_8411_SendLogisticActionRequestDecision, GenericRequestParams>
     {
+
+
         public override INF_MSG_GenericResponseData GetResponse(LG_NG_8411_SendLogisticActionRequestDecision customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
@@ -53,7 +59,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyRequestSheetParam.CustomFileNo = larPM.DeclarationId == null ? larPM.ExportFileNo : declarationQuery.GetSingle(larPM.DeclarationId, false, false)?.CustomFileNo;
 
             UpdateLARPM(requestParams, larPM);
+            
+
         }
+
+
 
         private static bool CheckIsClosed(LG_NG_8411_SendLogisticActionRequestDecisionLogisticActionRequestDecision resData) =>
             (new List<int> { 1, 2, 5, 6, 7 }.Contains(resData.ResponseStatus));

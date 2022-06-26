@@ -137,7 +137,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         filters.GetAll = false;
         filters.GetCount = true;
         filters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
-        return this.declarationListService.getByFilters(filters)
+        return this.containerizationExtendedListService.getByFilters(filters)
             .subscribe(r => {
                 r.Result.forEach(element => {
                     if (!this.ContainerizationDeclarationList.Collection.filter(x => x.Id == element.Id).length)
@@ -147,7 +147,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.getRowNumbers();
 
             });
- 
+
     }
 
 
@@ -227,10 +227,18 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     }
 
     setYellowMessage() {
-        if (this.EntityPM.IsChange)
-            this.YellowMessage = TextCodeTranslator.Translate("Customs.Containerization.O.ContainerizationChanged");
+        
+        if (this.EntityPM.IsChange) {
+            if ((this.EntityPM.ConnectedDeclarations.split(',').length - 1) == 1 && this.EntityPM.ContainerizationStatus != null) {
+                this.YellowMessage = TextCodeTranslator.Translate("Customs.Containerization.O.ContainerizationChangedRemainsOneDec");
+            }
+            else {
+                this.YellowMessage = TextCodeTranslator.Translate("Customs.Containerization.O.ContainerizationChanged");
+            }
+        }
         else
             this.YellowMessage = null;
+
     }
 
     //#endregion

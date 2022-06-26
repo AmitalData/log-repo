@@ -73,14 +73,26 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal? GrossMassMeasure { get; set; }
         [Column("MarksNumbers")]
 	    public string MarksNumbers { get; set; }
+        [ForeignKey("UnloadingSiteType")]
         [Column("ExportLoadingPortcode")]
 	    public string ExportLoadingPortcode { get; set; }
+	      
+        public virtual UnloadingSiteType UnloadingSiteType { get; set; }
+        [ForeignKey("DeliverySiteType")]
         [Column("StorageSiteCode")]
 	    public string StorageSiteCode { get; set; }
+	      
+        public virtual DeliverySiteType DeliverySiteType { get; set; }
+        [ForeignKey("InternationalSite")]
         [Column("ExportUnloadingPortCode")]
 	    public string ExportUnloadingPortCode { get; set; }
+	      
+        public virtual InternationalSite InternationalSite { get; set; }
+        [ForeignKey("InternationalSiteS")]
         [Column("FinalDestinationPortCode")]
 	    public string FinalDestinationPortCode { get; set; }
+	      
+        public virtual InternationalSite InternationalSiteS { get; set; }
         [Column("IsDangerousGoods")]
 	    public decimal? IsDangerousGoods { get; set; }
         [ForeignKey("ExportLogisticPermitAction")]

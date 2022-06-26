@@ -317,8 +317,17 @@ namespace AmitalCustomsWindowsService.Tester
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+
             Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
             return;
+
+
+            ///clsTester.RequeByID(GetTenant(), _TBID.Text);
+            int maxTry = int.Parse(_CBInterfaceID.Text);
+            clsTester.ReAnalyze2470_CustomsWithheld(GetTenant(), maxTry);
+            return;
+
+
 
             clsTester.FeatureToggle();
 
@@ -1184,6 +1193,16 @@ namespace AmitalCustomsWindowsService.Tester
                 communicationLogId, tenant, communicationsData, out log, out success);
             ;
 
+
+        }
+
+        private void _CBInterfaceID_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _TBID_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }

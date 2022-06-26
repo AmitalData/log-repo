@@ -40,6 +40,8 @@ import { TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
 import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
 import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
 import { ExportStoragePMService } from 'Customs/Services/StandardPMs/ExportStoragePMService';
+import { NotificationPMService } from 'Customs/Services/StandardPMs/NotificationPMService';
+import { NotificationPM } from 'Customs/EntityPMs/NotificationPM';
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
@@ -53,6 +55,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     MenuButtonCode: string = null;
     public EntityPM: DeclarationPM;
     public ExportStoragePM: ExportStoragePM;
+    public NotificationPM: NotificationPM;
     checkTransfer: string = ""; // moran 4.8.16 - AMI-56804
     MenuButtons: MenuButtonPM[];
     IdentityKey: string;
@@ -60,12 +63,15 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     IsDisplayOnlyCheckDone: boolean;
     MenuButtonsStateChangedEvent: any;
     private EntityResourceService: EntityResourceService;
+    IsShowMenuBTN:boolean=false;
     //------------------------------------------------------//
-
+   
+    public CurrentEditComponentId: string;
     //Services
     private declarationPMService: DeclarationPMService = new DeclarationPMService();
     private declarationWebService: DeclarationWebService = new DeclarationWebService();
     private declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+    private notificationPMService: NotificationPMService = new NotificationPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -112,6 +118,21 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
                 })
             );
+           
+     
+              this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+
+                this.CurrentSession.CurrentEditComponent.TabChanged.subscribe((tabCode: string) => {
+                        if (tabCode =="DCNT"&&this.EntityPM.Direction == "E"){                         
+                            this.IsShowMenuBTN=true;                           
+                        }
+                        else{
+                            this.IsShowMenuBTN=false;
+                        }
+                        this.ApplyCheckMenuButtonsState(this.MenuButtons);
+                })
+               );
+            
             //this._SubSaveCompleted =
             this.CurrentSession.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -214,6 +235,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.DisplayText = "המכלה";
                         if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentCode && this.EntityPM.ProcedureCurrentName && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
                             button.IsHidden = false;
+
+                                if(!AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)){
+                                    button.DisplayText  = "הומכל";
+                                    button.LabelTextCodeCode=""
+                                    
+                                    
+                                   
+                                }
                         } else {
                             button.IsHidden = true;
                         }
@@ -433,10 +462,25 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     if (button.EventCode == "ExportStorageDecleration") {
                         if (this.EntityPM.TransportModeId == "O" && this.EntityPM.Direction == "E") {
                             button.IsDisabled = false;
+                            button.IsHidden=false;
                         }
                         else {
                             button.IsDisabled = true;
+                            button.IsHidden=true;
                         }
+                    }
+                    if (button.EventCode == "Sending Initiated Message") {
+
+
+
+                                    if (this.IsShowMenuBTN){
+                                        button.IsHidden=false;
+                                    }
+                                    else{
+                                        button.IsHidden=true;
+
+                                    }
+                    
                     }
                 }
                 this.IsDisplayOnlyCheckDone = true;
@@ -622,15 +666,44 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.DeclarationCustomsRequestsMethod();
                         break;
                     }
+                case "LoadExcelSupplierInvoices":
+                    {
+                        this.OpenDeclarationLoadExcelSupplierInvoiceWindow();
+                        break;
+                    }
                 case "ExportStorageDecleration":
                     {
 
                         this.OpenExportStorageDeclarationMethod()
                         break;
                     }
+                    case "Sending Initiated Message":
+                    {
+
+                        this.AddNotifications()
+                        break;
+                    }
             }
+                    
         }
     }
+
+    OpenDeclarationLoadExcelSupplierInvoiceWindow() {
+        var args: any = {
+            DeclarationId : this.EntityPM.Id,
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 300;
+        logWindow.Title = "הטענת חשבון ספק";
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+    }
+
     OpenDeclarationCancellationWindow() {
         var args: any = {
             Declaration: this.EntityPM,
@@ -822,8 +895,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         var messageWindow = new MessageWindow();
                         messageWindow.Width = 400;
                         messageWindow.Height = 150;
-                        messageWindow.Title = "איפוס מספר הצהרה";
-                        messageWindow.Show("לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
+                        messageWindow.Title = "םיפוס מספר הצהרה";
+                        messageWindow.Show("לם ניתן לםפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
                         return;
                     }
 
@@ -1069,7 +1142,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         messageWindow.Width = 400;
                         messageWindow.Height = 150;
                         messageWindow.Title = "שיחזור מספר הצהרה";
-                        messageWindow.Show("לא ניתן לשחזר מספר הצהרה ,ייימת בקשה מסוג הצהרה בתהליך ");
+                        messageWindow.Show("לם ניתן לשחזר מספר הצהרה ,ייימת בקשה מסוג הצהרה בתהליך ");
                         return;
                     }
 
@@ -1090,7 +1163,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                     messageWindow.Width = 400;
                                     messageWindow.Height = 150;
                                     messageWindow.Title = "שיחזור מספר הצהרה";
-                                    messageWindow.Show("לא ניתן לשחזר מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
+                                    messageWindow.Show("לם ניתן לשחזר מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
                                     return;
                                 }
 
@@ -1171,7 +1244,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         messageWindow.Width = 400;
                         messageWindow.Height = 150;
                         messageWindow.Title = "טופס הצהרה";
-                        messageWindow.Show("לא ניתן להציג טופס הצהרה ,קיימת בקשה דומה בתהליך ");
+                        messageWindow.Show("לם ניתן להציג טופס הצהרה ,קיימת בקשה דומה בתהליך ");
                         return;
                     }
 
@@ -1205,7 +1278,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession, currRequestParams.PBId,
-                "שליחת שאילתא להדפסת הצהרה", true)
+                "שליחת שםילתם להדפסת הצהרה", true)
             .then((res) => {
                 let sub =
                     this.CurrentSession.CurrentEditComponent.LoadCompleted
@@ -1338,7 +1411,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1220;
         logWindow.Height = 550;
-        logWindow.Title = ("קישור אחסנות להצהרה");
+        logWindow.Title = ("קישור םחסנות להצהרה");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/ExportStorageDecleration/ExportStorageDeclerationComponent');
@@ -1348,7 +1421,48 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         });
 
     }
+   
+   private AddNotifications(){
+           SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+         this.NotificationPM=new NotificationPM
+   
+        this.NotificationPM.Tenant=SessionLocator.Tenant;
+        this.NotificationPM.NotificationDefinitionCode="5101N";
+        this.NotificationPM.CreateDate=new Date();
+        this.NotificationPM.AssigneToId=null;
+        this.NotificationPM.AssigneToNotificationTypeCode="I";
+        this.NotificationPM.DeclarationOfficeCode=this.EntityPM.DeclarationOfficeCode;
+        this.NotificationPM.IsHandledByCustomOffice=true;
+        this.NotificationPM.EntityId=this.EntityPM.Id;
+        this.NotificationPM.ObjectTableId="1-343";
+        this.NotificationPM.Reference1Number=this.EntityPM.CustomFileNo ;
+        this.NotificationPM.Reference2Number=this.EntityPM.CustomFileNo;;
+        this.NotificationPM.DepartmentId=null;
+        this.NotificationPM.ClosedByAssignee=null;
+        this.NotificationPM.ClosedByCustomOfficeUserId=null;
+        this.NotificationPM.IsClosedBCustomOffice=false;
+        this.NotificationPM.IsClosedByAssignee=false;
+        this.NotificationPM.DueDate=new Date();
+        this.NotificationPM.IsSeenByAssignee=false;
+        this.NotificationPM.ResponseNotes=null;
+        this.NotificationPM.CreatedByRequestID=null;
+        this.NotificationPM.Description="הודעה יזומה למכס בגין הצהרה מספר " +this.EntityPM.DeclarationNumber +" כללי";
+        this.NotificationPM.ResponseToMessage=this.EntityPM.DeclarationNumber;
+        this.NotificationPM.CustomerId=this.EntityPM.CustomerId; 
+        this.NotificationPM.SearchFields=this.NotificationPM.Reference1Number,this.NotificationPM.Reference2Number,this.NotificationPM.CustomerId,this.NotificationPM.Description,this.NotificationPM.NotificationDefinitionCode
+        this.NotificationPM.BadjCount=null;
 
+
+
+        this.notificationPMService.insert(this.NotificationPM).subscribe((myResult:any) => {
+
+
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(null);
+            SessionLocator.SelectedSession.StopBusyIndicator();
+         
+        });
+
+   }
     private PrintReleaseMethod() // moran 29.2.16 - Task 19807
     {
 
@@ -1493,7 +1607,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 confirm.Title = "מחיקת Pending";
                 confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                 confirm.ShowNoButton = true;
-                confirm.Show("האם למחוק Pending?");
+                confirm.Show("הםם למחוק Pending?");
                 confirm.WindowClosed.subscribe((event: any) => {
                     if (confirm.Yes) {
                         this.CurrentSession.StartBusyIndicatorSaving();
@@ -1508,7 +1622,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             }
             else {
                 let window = new MessageWindow();
-                window.Show(" Pending לא ניתן לבצע מחיקה, לתיק לא מוגדר ");
+                window.Show(" Pending לם ניתן לבצע מחיקה, לתיק לם מוגדר ");
             }
         });
     }
@@ -1517,7 +1631,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 300;
-        confirmWindow.Show("האם ברצונך לסגור את ההצהרה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
+        confirmWindow.Show("הםם ברצונך לסגור םת ההצהרה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.declarationWebService.DeclarationClosureMethod(this.EntityPM.Id, this.EntityPM.Tenant)
@@ -1539,7 +1653,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 300;
-        confirmWindow.Show("האם ברצונך לבטל סגירת ההצהרה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
+        confirmWindow.Show("הםם ברצונך לבטל סגירת ההצהרה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.declarationWebService.CancelDeclarationClosureMethod(this.EntityPM.Id, this.EntityPM.Tenant)

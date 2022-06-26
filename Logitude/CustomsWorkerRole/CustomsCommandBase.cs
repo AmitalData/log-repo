@@ -36,6 +36,7 @@ using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
+using Newtonsoft.Json;
 
 namespace CustomsWorkerRole
 {
@@ -511,11 +512,11 @@ namespace CustomsWorkerRole
 
                             if (response == null || (response != null && response.MessageId == null))
                             {
+                                QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
                                 //Thread.Sleep(TimeSpan.FromSeconds(5));
                                 Thread.Sleep(TimeSpan.FromMilliseconds(300));
                                 break;
                             }
-
                             PerformanceM.EnqueueLastInstance();
                             PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
                             PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
@@ -602,7 +603,7 @@ namespace CustomsWorkerRole
                 int tenant = -1;
                 string analyzeClass = msgResponse.Properties["InterfaceTypeCode"].ToString();
 
-                
+
 
 
                 if (String.IsNullOrWhiteSpace(analyzeClass))
@@ -649,6 +650,20 @@ namespace CustomsWorkerRole
                 PerformanceM.LastInstance.RequestSheetID = correlationId;
                 PerformanceM.LastInstance.QueueDefinitionCode = myCustomsCommandEnum.ToString();
                 LogMessagingUtilWR.Instance.AppendLine("ResolveAndExecute");
+                try
+                {
+                    QueueThreadStateService.Upsert(
+        QueueThreadStateService.GetWRKey(this.GetType().Name),
+        $"Interface:{analyzeClass},RequestSheetID:{correlationId},QId:{msgResponse?.MessageId},QDefinition:{PerformanceM.LastInstance?.QueueDefinitionCode}"
+        );
+
+                }
+                catch //(Exception)
+                {
+
+                    
+                }
+
                 MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
 
 
@@ -688,6 +703,7 @@ namespace CustomsWorkerRole
             }
         }
 
+        
         public string _QueueNameOverride { get; set; }
     }
 }

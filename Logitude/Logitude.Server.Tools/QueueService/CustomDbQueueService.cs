@@ -182,7 +182,13 @@ namespace Logitude.Server.Tools.QueueService
             try
             {
 
-                SendCommunicationLogMessageToQueue(queueName, new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant, UseRabbitMQ);
+                SendCommunicationLogMessageToQueue(queueName, 
+                    new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant, 
+                    UseRabbitMQ,
+                    "CommunicationLog".ToLower(),
+                    communicationLogId
+
+                    );
                 //IQueueService queueservice = new DbQueueService();
                 //queueservice.InitializeQueue(queueName, 0);
                 //queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
@@ -212,7 +218,10 @@ namespace Logitude.Server.Tools.QueueService
         };
         public static List<string> SupportedRabbitMQList { get { return _SupportedRabbitMQList; }  }
 
-        public static void SendCommunicationLogMessageToQueue(string queueName, Dictionary<string, string> messageValues, int tenant,bool UseRabbitMQ)
+        public static void SendCommunicationLogMessageToQueue(string queueName, Dictionary<string, string> messageValues, int tenant,
+            bool UseRabbitMQ,
+            string entityCode, string entityId
+            )
         {
             try
             {
@@ -224,7 +233,14 @@ namespace Logitude.Server.Tools.QueueService
                 
 
                 var customDbQueueService = new CustomDbQueueService(queueName,tenant);
-                customDbQueueService.Send(messageValues, tenant, null, new QueueSendModel() { UseRabbitMQ = UseRabbitMQ });
+                customDbQueueService.Send(messageValues, tenant, null, 
+                    new QueueSendModel() { 
+                        UseRabbitMQ = UseRabbitMQ ,
+                        EntityCode= entityCode,
+                        EntityId = entityId,    
+
+
+                    });
                 //var queueservice = new DbQueueService();
                 //queueservice.InitializeQueue(queueName, 0);
                 //queueservice.Send(messageValues, tenant);

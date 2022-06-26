@@ -50,6 +50,9 @@ namespace Logitude.Customs.Data.Repsitories
             var res = context.LogisticActionRequests.Where(x => ids.Contains(x.Id));
             return res.ToList();
         }
+   
+        
     }
+
 }
    

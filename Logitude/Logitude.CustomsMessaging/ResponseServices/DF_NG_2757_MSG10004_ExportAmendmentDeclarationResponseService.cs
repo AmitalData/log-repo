@@ -662,6 +662,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (consignment.DMExtensions != null)
                 {
                     consignmentPM.CargoDescription = GetValueTextType(consignment.DMExtensions.CargoDescription);
+                    consignmentPM.FinalDestinationPortCode = consignment.DMExtensions.FinalDestinationPort?.Value;
+                    consignmentPM.ShipCode = consignment.DMExtensions.ShipID?.Value;
                     //if (consignment.DMExtensions.LastReleaseFromWarehousInd != null)
                     //{
                     //    if (consignment.DMExtensions.LastReleaseFromWarehousInd.Value == true)
@@ -1277,9 +1279,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     foreach (var customsValuation in declarationGoodsShipment.Invoice.DMExtensions.CustomsValuation)
                     {
-                        string[] ChargesTypeCode = new string[] { "67", "144", "I02" };
-                        if (!ChargesTypeCode.Contains(GetValueCodeType(customsValuation.ChargesTypeCode)))
-                        {
+                        //string[] ChargesTypeCode = new string[] { "67", "144", "I02" };
+                        //if (!ChargesTypeCode.Contains(GetValueCodeType(customsValuation.ChargesTypeCode)))
+                        //{
                             if (GetValueAmountType(customsValuation.OtherChargeDeductionAmount) == 0) continue;
 
                             SupplierInvoiceModificationPM supplierInvoiceModificationPM = new SupplierInvoiceModificationPM()
@@ -1287,12 +1289,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 ChangeSetOp = ChangeSetOperation.Insert,
                                 DeclarationId = declarationId,
                                 TypeCode = GetValueCodeType(customsValuation.ChargesTypeCode),
-                                //  CurrencyTypeCode = customsValuation.OtherChargeDeductionAmount.currencyID,
+                                CurrencyTypeCode = customsValuation.OtherChargeDeductionAmount.currencyID.ToString(),
                                 Amount = GetValueAmountType(customsValuation.OtherChargeDeductionAmount),
                                 Tenant = tenant
                             };
                             supplierInvoiceModificationPMs.Add(supplierInvoiceModificationPM);
-                        }
+                        //}
 
                         if (customsValuation.OtherChargeDeductionAmount != null)
                         {

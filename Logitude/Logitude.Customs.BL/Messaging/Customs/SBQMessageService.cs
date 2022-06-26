@@ -172,6 +172,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
             var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
             queueSendModel.UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;//currInterfaceTenantDefinition.UseRabbitMQ;
+            queueSendModel.EntityCode = "CustomsRequestsSheet".ToLower();//"CustomsRequestsSheet";
+            queueSendModel.EntityId = correlationId;
 
             queueSendModel.QueueGroupCodeRabbit = currInterfaceTenantDefinition.QueueGroupCode;
             if (!string.IsNullOrWhiteSpace(queueSendModel.InterfaceTypeCode) && queueSendModel.TenantPriority == null)

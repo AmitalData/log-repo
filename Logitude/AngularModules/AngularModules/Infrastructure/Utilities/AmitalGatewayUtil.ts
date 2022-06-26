@@ -646,6 +646,16 @@ export class AmitalGatewayUtil {
                     {
                         BackButtonLabel = "תיק יצוא"
                     }
+                    if(!AmitalGatewayUtil.Instance.AmitalBrowserInUse){
+                        
+                        const openDec= TextCodeTranslator.Translate("Customs.Declaration.Q.DeclarationWithoutReleaseQuery");
+                        if(!AppTool.IsNullOrEmpty(openDec) ) {
+                            BackButtonLabel = openDec;
+                        } else {
+                            BackButtonLabel = "הצהרות פתוחות";
+                        }
+                        
+                    }
                     let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
                     this.getEntity(unifreightMessage.LogitudeEntityNumber).subscribe((data:any) => {
                         cmpRef.instance.Run({
@@ -1006,7 +1016,27 @@ export class AmitalGatewayUtil {
             return unifreightEntity;//"CFIFILEM";
         }
 
+        public static get RaiseLookUpMessage() { return "RaiseLookUpMessage"; }
 
+        public static RaiseLookUp(
+            UnifreightEntityNumber: string,
+            LogitudeEntityNumber: string, ViewModelName: string,
+            LOV_FORM: string,
+            PRIMARY_KEY:string) {
+
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName,"");
+            unifreightMessageM.Requset.push(["LOV_FORM", LOV_FORM]);
+            unifreightMessageM.Requset.push(["PRIMARY_KEY", PRIMARY_KEY]);
+            
+            unifreightMessageM.Requset.push(["ExpectedCallBack", "Response.LOV_RETURN_VALUE"]);
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.RaiseLookUpMessage",
+                "CFIHMAIN.LogitudeTask",
+                AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseLookUpMessage,
+                unifreightMessageM,
+                "Task 161681: מסר שחרור רכבים מהנמל עבור מטרו");
+        }
 
         public static RaiseInstructionReturnCanIContinue(
             UnifreightEntityNumber: string,

@@ -25,6 +25,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConnectedToItem } from './ConnectedToItem';
 import { ICustomsDocumentsController } from './ICustomsDocumentsController';
+import { CustomDocumentNewVersionService } from '../services/CustomDocumentNewVersion.service';
 
 @Component({ 
     
@@ -173,6 +174,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     IsActionButtonsEnabled: boolean;
     WindowArgs: any;
+    private readonly customDocumentNewVersionService: CustomDocumentNewVersionService = new CustomDocumentNewVersionService();
+
     //***********************************************************************//
     constructor() {
         super();
@@ -461,7 +464,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.IsDocumentTypeEnabled = false;
                 this.IsSendDocumentEnabled = false;
                 this.ViewDisableMessageVisibility = true;
-                this.DisplayOnlyMessage = " לתצוגה בלבד - מסמך כבר אומת על ידי המכס ";//Document Was already Verified By Customs
+                this.DisplayOnlyMessage = " לתצוגה בלבד - מסמך כבר םומת על ידי המכס ";//Document Was already Verified By Customs
             }
 
             if (this.CustomsDocumentsTicket.VerificationStatusTypeCode == '8') {
@@ -471,7 +474,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.IsDocumentTypeEnabled = false;
                 this.IsSendDocumentEnabled = false;
                 this.ViewDisableMessageVisibility = true;
-                this.DisplayOnlyMessage = " לתצוגה בלבד - המסמך בתהליך אימות במכס ";//Document is in verfication prgress
+                this.DisplayOnlyMessage = " לתצוגה בלבד - המסמך בתהליך םימות במכס ";//Document is in verfication prgress
             }
 
             if (this.CustomsDocumentsTicket.VerificationStatusTypeCode == '6') {

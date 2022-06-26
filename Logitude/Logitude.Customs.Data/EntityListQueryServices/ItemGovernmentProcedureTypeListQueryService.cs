@@ -28,8 +28,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      EnglishName = a.EnglishName,
                                                      LocalName = a.LocalName,
                                                      SearchFields = a.SearchFields,
-                                                     Inactive = a.Inactive
-                                                 });
+                                                     Inactive = a.Inactive,
+                                                      LeadDocumentTypeID = a.LeadDocumentTypeID
+                                                                 });
             return query;
 		}
 

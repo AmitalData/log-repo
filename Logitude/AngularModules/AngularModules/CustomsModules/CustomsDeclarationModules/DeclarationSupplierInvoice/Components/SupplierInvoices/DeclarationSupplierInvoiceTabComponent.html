@@ -412,7 +412,7 @@
                                         </ng-template>
                                     </log-column>
 
-                                    <log-column [header]="'Customs.Declaration.O.FreightAmount' | TextCodeTranslationPipe" [binding]="'TotalFreightInFreightCurrency'" [width]="'90'" [Alignment]="'right'">
+                                    <log-column [header]="'Customs.Declaration.O.FreightActualAmount' | TextCodeTranslationPipe" [binding]="'TotalFreightInFreightCurrency'" [width]="'90'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right; direction:ltr;">
@@ -423,7 +423,7 @@
                                         </ng-template>
                                     </log-column>
 
-                                    <log-column [width]="'90'" [visibility]="'visibile'" [Alignment]="'right'" [header]="'Customs.Declaration.O.Insurance' | TextCodeTranslationPipe">
+                                    <log-column [width]="'90'" [visibility]="'visibile'" [Alignment]="'right'" [header]="'Customs.ExportDeclaration.O.Insurance' | TextCodeTranslationPipe">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right;direction:ltr;">

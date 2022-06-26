@@ -95,6 +95,7 @@
     <Compile Include="EntityPMs\Generated\CustomsShipPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationCasualDetailsPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeliveryTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DocumentRejectTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
@@ -105,8 +106,10 @@
     <Compile Include="EntityPMs\Generated\ExportReferencePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExportStoragePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExportStorgePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ExternalFieldMappingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FclLclCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FullnessCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GTBFUSTATUPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\HandingCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\IncotemrsFileValidationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
@@ -127,6 +130,7 @@
     <Compile Include="EntityPMs\Generated\ReferenceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReleaseMessageTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SecurityClearenceTypeCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\StatusFieldTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\StuffingSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SuppInvoiceItemsAbachStatementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsPricePM.Generated.cs" />
@@ -501,6 +505,7 @@
     <Compile Include="EntityPMs\SupplierInvoiceItemVehiclePM.cs" />
     <Compile Include="EntityPMs\SupplierInvoicePM.cs" />
     <Compile Include="EntityPMs\TapagConnectionTablePM.cs" />
+    <Compile Include="EntityPMs\ItemGovernmentProcedureTypePM.cs" />
     <Compile Include="EntityPMs\TradeAgreementPM.cs" />
     <Compile Include="EntityPMs\UIMessagePM.cs" />
     <Compile Include="EntityPMs\ValidCustomsItemPM.cs" />

@@ -40,5 +40,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             repo.SubmitChanges();
         }
+
     }
 }

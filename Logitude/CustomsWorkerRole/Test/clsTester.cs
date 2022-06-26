@@ -38,7 +38,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 
 namespace CustomsWorkerRole.Test
 {
-    public class clsTester
+    public partial class clsTester
     {
 
         public void TestAsDataSet(string closedTableId)

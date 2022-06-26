@@ -52,6 +52,17 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string IsMultiCustomers { get; set; }
         [Column("IsMultiExportFiles")]
 	    public bool? IsMultiExportFiles { get; set; }
+        [ForeignKey("CargoType")]
+        [Column("CargoTypeCode")]
+	    public string CargoTypeCode { get; set; }
+	      
+        public virtual CargoIdentifireType CargoType { get; set; }
+        [Column("ManifestNumber")]
+	    public string ManifestNumber { get; set; }
+        [Column("SecondCargoID")]
+	    public string SecondCargoID { get; set; }
+        [Column("ThirdCargoID")]
+	    public string ThirdCargoID { get; set; }
     }
 }
 	 

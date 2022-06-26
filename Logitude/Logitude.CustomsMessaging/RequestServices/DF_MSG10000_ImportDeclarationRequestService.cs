@@ -1173,15 +1173,12 @@ namespace Logitude.CustomsMessaging.RequestServices
             // moran 29.10.15 - call 254783 - change from InvoiceCurrencyTypeCode to FreightCurrencyTypeCode -->
             if (supplierInvoicePM.FreightCurrencyTypeCode != null && supplierInvoicePM.TotalFreightInFreightCurrency != null) // Insert Freight Details (WCO: 560 = FreightChargeAmount)
             {
-                supplierInvoicePM.SupplierInvoiceFreightAmounts.ForEach(sia =>
-                {
-                    var customsValuation = new DeclarationGoodsShipmentCustomsValuation();
-                    customsValuation.ChargesTypeCode = new CustomsValuationChargesTypeCodeType();
-                    customsValuation.ChargesTypeCode = SetCodeTypeValue<CustomsValuationChargesTypeCodeType>("144");
-                    customsValuation.FreightChargeAmount = new CustomsValuationFreightChargeAmountType();
-                    customsValuation.FreightChargeAmount = SetAmountTypeValue<CustomsValuationFreightChargeAmountType>(sia.CurrencyTypeCode, (decimal)sia.Amount);
-                    customsValuationlist.Add(customsValuation);
-                });
+                var customsValuation = new DeclarationGoodsShipmentCustomsValuation();
+                customsValuation.ChargesTypeCode = new CustomsValuationChargesTypeCodeType();
+                customsValuation.ChargesTypeCode = SetCodeTypeValue<CustomsValuationChargesTypeCodeType>("144");
+                customsValuation.FreightChargeAmount = new CustomsValuationFreightChargeAmountType();
+                customsValuation.FreightChargeAmount = SetAmountTypeValue<CustomsValuationFreightChargeAmountType>(supplierInvoicePM.FreightCurrencyTypeCode, (decimal)supplierInvoicePM.TotalFreightInFreightCurrency);
+                customsValuationlist.Add(customsValuation);
             }
 
             return customsValuationlist;

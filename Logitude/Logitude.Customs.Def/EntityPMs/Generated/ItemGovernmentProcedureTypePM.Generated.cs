@@ -135,6 +135,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string leadDocumentTypeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LeadDocumentTypeID  
+	   {
+	    
+	     get
+		{
+		   return leadDocumentTypeID;
+		 }
+		 set
+		 {
+		   if(leadDocumentTypeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LeadDocumentTypeID",OldValue=leadDocumentTypeID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   leadDocumentTypeID=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
