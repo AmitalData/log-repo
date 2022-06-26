@@ -488,30 +488,40 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 var MyTenantFields = MyQuery.GetScreenFieldPMsByTenant(authToken.Tenant).Where(a => a.Tenant != 0);
                 ScreenFieldService MyService = new ScreenFieldService(objectContext, authToken.Tenant);
                 ScreensRepository myRepo = new ScreensRepository(authToken.Tenant);
-                var ScreenModification = myRepo.GetScreenModificationByScreen(args.ScreenCode, authToken.Tenant);
-                if (ScreenModification == null)
+                var screen  = myRepo.GetByCode(args.ScreenCode, authToken.Tenant);
+                if(screen == null)
                 {
-                    ScreenModification = new ScreenModification()
+                    var ScreenModification = myRepo.GetScreenModificationByScreen(args.ScreenCode, authToken.Tenant);
+
+                    if (ScreenModification == null)
                     {
-                        Tenant = authToken.Tenant,
-                        ScreenId = args.ScreenId,
-                        ScreenCode = args.ScreenCode,
-                        NumberOfColumns = args.Columns,
-                        NumberOfRows = args.Rows,
-                        Id = IdCounter.GetNumber("ScreenModification", authToken.Tenant)
-                    };
-                    objectContext.ScreenModifications.Add(ScreenModification);
-                    objectContext.SaveChanges();
+                        ScreenModification = new ScreenModification()
+                        {
+                            Tenant = authToken.Tenant,
+                            ScreenId = args.ScreenId,
+                            ScreenCode = args.ScreenCode,
+                            NumberOfColumns = args.Columns,
+                            NumberOfRows = args.Rows,
+                            Id = IdCounter.GetNumber("ScreenModification", authToken.Tenant)
+                        };
+                        objectContext.ScreenModifications.Add(ScreenModification);
+                        objectContext.SaveChanges();
+                    }
+                    else
+                    {
+                        ScreenModification.NumberOfRows = args.Rows;
+                        ScreenModification.NumberOfColumns = args.Columns;
+
+                        myRepo.context.ScreenModifications.Attach(ScreenModification);
+                        myRepo.context.SetAsModified(ScreenModification);
+                        myRepo.context.SaveChanges();
+                    }
                 }
                 else
                 {
-                    ScreenModification.NumberOfRows = args.Rows;
-                    ScreenModification.NumberOfColumns = args.Columns;
-
-                    myRepo.context.ScreenModifications.Attach(ScreenModification);
-                    myRepo.context.SetAsModified(ScreenModification);
-                    myRepo.context.SaveChanges();
+                    SaveScreen(screen, myRepo , args);
                 }
+     
                 if (args.ScreenFields != null && args.ScreenFields.Count > 0)
                 {
                     foreach (var item in args.ScreenFields)
@@ -543,6 +553,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                 }
+
+                new ScreenSectionService(objectContext, authToken.Tenant).Update(args.ScreenSections);
+
                 return Request.CreateResponse(HttpStatusCode.OK, args);
             }
 
@@ -550,6 +563,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private void SaveScreen(Screen screen, ScreensRepository myRepo, ScreenLayoutArgs args)
+        {
+            screen.NumberOfRows = args.Rows;
+            screen.NumberOfColumns = args.Columns;
+            myRepo.context.Screens.Attach(screen);
+            myRepo.context.SetAsModified(screen);
+            myRepo.context.SaveChanges();
         }
 
         public HttpResponseMessage GetScreenModificationByScreenCode(string ScreenCode)

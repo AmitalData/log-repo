@@ -65,7 +65,14 @@
     <Constraints
       Nullable="true" />
   </Column>
-  
+
+  <Column
+    Name="Type"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />  
+    </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"

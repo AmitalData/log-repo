@@ -320,6 +320,9 @@
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWQueryBuilderBaseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogErrorComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddEditScreenComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefaultExternalAttachmentsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentType\Tab\DocumentTypeCopyDetailsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.html" />
@@ -358,7 +361,6 @@
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\PerVendorReportFilterComponent.html" />
     <Content Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.html" />
-    <Content Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\GeneralTabComponent.html" />
@@ -1883,7 +1885,11 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogErrorComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddEditScreenComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\ClassicScreenLayoutService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefaultExternalAttachmentsComponent.ts" />
@@ -2007,7 +2013,6 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportFolderPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportsTypePM.ts" />
-    <TypeScriptCompile Include="Infrastructure\EntityPMs\ChildEntitiesCustomFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectTablePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryColumnPM.ts" />
@@ -2025,6 +2030,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\RuleUpdateHistoryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SchedulerLogsPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\ScreenSectionPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedLogisticsSettingPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedUserQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TeamMemberBusinessRolePM.ts" />
@@ -2045,6 +2051,8 @@
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\EventTypeExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\FollowUpPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\PerformanceLogService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\ScreenExtendedService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\ScreenSectionExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ApiCredintialsListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionStatusListService.ts" />
@@ -2065,6 +2073,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ImageLibraryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\MultiEntityUpdateLogPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ScreenSectionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\PrivateLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
@@ -4715,7 +4724,6 @@
     <TypeScriptCompile Include="Report\Components\Workspaces\MainReportsWorkspace.ts" />
     <TypeScriptCompile Include="Report\DataContracts\SchedulerDetails.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.ts" />
-    <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\TenantAccessSettingsComponent.ts" />
@@ -7605,7 +7613,6 @@
     <TypeScriptCompile Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Helpers\ContainerHelperComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
-    <TypeScriptCompile Include="Shipment\Components\ListTemplates\AvailableForSchedulingCellDisplayListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\RemoveTasksButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\EditShipmentButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\ApprovePaymentButtonListTemplate.ts" />
@@ -7630,7 +7637,6 @@
     <TypeScriptCompile Include="Shipment\Components\UnassigedData\UpdateUnassigedDataComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\AMANACComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainersFUsComponent.ts" />
-    <TypeScriptCompile Include="Shipment\DataContract\GeneralContainerTrackingArgs.ts" />
     <TypeScriptCompile Include="Shipment\DataContract\LogboxShipmentExportExcelArgs.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerFollowUpList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerList.ts" />
@@ -8692,6 +8698,12 @@
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\MuiltSectionScreenLayoutService.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Interface\IScreenLayoutService.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

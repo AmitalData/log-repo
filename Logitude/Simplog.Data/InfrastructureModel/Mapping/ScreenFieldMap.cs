@@ -39,6 +39,12 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ObjectFieldCode)
                   .HasMaxLength(200)
                   .IsUnicode(false);
+
+
+
+            this.Property(t => t.SectionNumber);
+          
+
             //this.Property(t => t.ObjectFieldCode)
             //      .IsRequired()
             //      .HasMaxLength(200)
@@ -53,6 +59,12 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId");
             this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode");
+
+            this.Property(t => t.SectionNumber).HasColumnName("SectionNumber");
+
+
+
+
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

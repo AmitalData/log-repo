@@ -49,7 +49,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         }
 
-      
+        public Screen GetByCode(string code, int tenant)
+        {
+            return (from a in context.Screens
+                    where a.Code == code && a.Tenant == tenant
+                    select a).FirstOrDefault();
+
+        }
 
         public void Add(Screen entity)
         {

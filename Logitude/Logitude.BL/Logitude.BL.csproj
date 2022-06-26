@@ -598,16 +598,19 @@
     <Compile Include="InfrastructureModel\EntityLists\EntityStatusTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ImageLibraryList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\QuoteChargesGroupList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\ScreenSectionList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ChildEntitiesCustomFieldPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EntityStatusTypePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ImageLibraryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\MultiEntityUpdateLogPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\QuoteChargesGroupPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\ScreenSectionPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ChildEntitiesCustomFieldQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EntityStatusTypeQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ImageLibraryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\MultiEntityUpdateLogQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\ScreenSectionQuery.cs" />
     <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
@@ -640,6 +643,7 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\ImageLibraryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\MultiEntityUpdateLogMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\QuoteChargesGroupMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\ScreenSectionMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\WorkerRoleNameMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
@@ -647,6 +651,7 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\MultiEntityUpdateLogService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\PrivateLabelShipmentService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\QuoteChargesGroupService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\ScreenSectionService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TasksSchedulerValidator.cs" />

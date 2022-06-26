@@ -44,5 +44,10 @@ export class ScreenFieldPM {
     private objectFieldCode: string;
     public get ObjectFieldCode() { return this.objectFieldCode; }
     public set ObjectFieldCode(newValue: string) { this.objectFieldCode = newValue; }
-     
+
+    private sectionNumber: number;
+    public get SectionNumber() { return this.sectionNumber; }
+    public set SectionNumber(newValue: number) { this.sectionNumber = newValue; }
+    
+
 }

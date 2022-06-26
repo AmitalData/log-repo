@@ -55,6 +55,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    ObjectTableName = a.ObjectTable.Name,
                                    Tenant = a.Tenant,
                                    UserTenant = tenant,
+                                   Type = a.Type,
                                }).ToList();
 
 
@@ -101,32 +102,40 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       ObjectTableName = a.ObjectTable.Name,
                                       Tenant = a.Tenant,
                                       UserTenant = tenant,
+                                      Type = a.Type,
+
 
                                   }).ToList();
 
-
-
-
-                foreach (ScreenPM screen in currentscreens)
-                {
-                    ScreenModification mod = (from a in repository.context.ScreenModifications
-                                              where a.ScreenId == screen.Id && a.Tenant == tenant
-                                              select a).FirstOrDefault();
-                    if (mod != null)
-                    {
-                        screen.NumberOfRows = mod.NumberOfRows;
-                        screen.NumberOfColumns = mod.NumberOfColumns;
-
-                    }
-
-
-                }
             }
             screens = zeroscreens.Concat(currentscreens).ToList();
 
             return screens;
         }
 
+        public ScreenPM GetSinglePM( string id,int tenant)
+        {
+            WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+            ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(tenant);
+            return (from a in repository.context.Screens.Include("ObjectTable")
+                    where a.Tenant == tenant && a.Id == id
+                    select new ScreenPM()
+                    {
+                        Code = a.Code,
+                        Id = a.Id,
+                        IsReadOnly = a.IsReadOnly,
+                        NumberOfColumns = a.NumberOfColumns,
+                        NumberOfRows = a.NumberOfRows,
+                        ObjectTableId = a.ObjectTableId,
+                        Name = a.Name,
+                        ObjectTableName = a.ObjectTable.Name,
+                        Tenant = a.Tenant,
+                        UserTenant = tenant,
+                        Type = a.Type,
+
+                    }).FirstOrDefault();
+
+        }
 
     }
 }

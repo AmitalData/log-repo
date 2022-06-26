@@ -195,8 +195,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 				AutomaticExternalRconcilMthodListQueryService automaticExternalRconcilMthodQuery = new AutomaticExternalRconcilMthodListQueryService(MyContext);
 
                 List<AutomaticExternalRconcilMthodList> entityLists = automaticExternalRconcilMthodQuery.GetList(queryOperations, tenant);
-				
-				ServiceResponse response = new ServiceResponse();
+                ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
                     int count = automaticExternalRconcilMthodQuery.GetListCount(queryOperations);
