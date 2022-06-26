@@ -246,6 +246,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.TraceAccruals();
                 this.TraceBookingArrangement();
                 this.TraceFollowUpDates();
+                this.TracePODReceived();
             }
         }
 
@@ -352,9 +353,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.DeleteTraceEvent("BKAR");
             }
         }
-        public void TracePODReceived(bool isPODReceived, DateTime? podReceivedDate)
+        private void TracePODReceived()
         {
-            if (!isPODReceived && podReceivedDate == null)
+            if (!entityPM.IsPODReceived && entityPM.PODReceivedDate == null)
             {
                 this.DeleteTraceEvent("PIOD");
             }
