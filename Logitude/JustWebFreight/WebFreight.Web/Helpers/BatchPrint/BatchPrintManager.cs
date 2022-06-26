@@ -19,7 +19,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
         BatchTaskExecutionPM batchTaskExecution;
         public BatchPrintManager(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
-            this.batchTaskExecution = batchTaskExecution
+            this.batchTaskExecution = batchTaskExecution;
         }
 
         public override void RunCode()
