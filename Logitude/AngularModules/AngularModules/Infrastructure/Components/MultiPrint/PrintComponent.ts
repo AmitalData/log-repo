@@ -149,6 +149,8 @@ export class PrintComponent extends BaseComponent implements OnInit {
         if (this.documentTypeId != value) {
             this.documentTypeId = value;
 
+            this.SelectedDocumentTypeTemplate = null;
+            this.SelectedDocumentTypeCopy = null;
             this.LoadTemplates();
             this.LoadCopies();
         }
@@ -306,6 +308,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
         this.CurrentSession.CloseCurrentWindow();
     }
 
+    public IsMultiEntityPrintedSuccessfully: boolean = false;
     PrintClick() {
         if (!this.IsPrintValid()) {
             return;
@@ -338,4 +341,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
 
         return true;
     }
+
+    public BusyIndicatorText: string = null;
+    public ShowBusyIndicator: boolean = false;
 }

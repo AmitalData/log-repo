@@ -343,6 +343,8 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\OnUpdateDocumentResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\OnUpdateDocumentAutomationsSettingsComponent.html" />
+    <Content Include="Infrastructure\Components\MultiPrint\MultiPrintCheckBoxComponent.html" />
+    <Content Include="Infrastructure\Components\MultiPrint\MultiPrintCheckTemplate.html" />
     <Content Include="Infrastructure\Components\MultiPrint\MultiPrintErrorHandlerComponent.html" />
     <Content Include="Infrastructure\Components\MultiPrint\MultiPrintMainComponent.html" />
     <Content Include="Infrastructure\Components\MultiPrint\PrintComponent.html" />
@@ -1939,6 +1941,8 @@
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEParameterTabComponent\BTEParameterTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\CacheLogComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MenuButtons\AnalyzeQueueMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintCheckBoxComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintCheckTemplate.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintErrorHandlerComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintMainComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\PrintComponent.ts" />
