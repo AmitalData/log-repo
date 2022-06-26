@@ -411,6 +411,98 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cargoTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoTypeCode  
+	   {
+	    
+	     get
+		{
+		   return cargoTypeCode;
+		 }
+		 set
+		 {
+		   if(cargoTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTypeCode",OldValue=cargoTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cargoTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string manifestNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ManifestNumber  
+	   {
+	    
+	     get
+		{
+		   return manifestNumber;
+		 }
+		 set
+		 {
+		   if(manifestNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ManifestNumber",OldValue=manifestNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   manifestNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string secondCargoID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SecondCargoID  
+	   {
+	    
+	     get
+		{
+		   return secondCargoID;
+		 }
+		 set
+		 {
+		   if(secondCargoID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecondCargoID",OldValue=secondCargoID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   secondCargoID=value;
+		   }
+			
+		 }
+	   }
+	  private string thirdCargoID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ThirdCargoID  
+	   {
+	    
+	     get
+		{
+		   return thirdCargoID;
+		 }
+		 set
+		 {
+		   if(thirdCargoID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ThirdCargoID",OldValue=thirdCargoID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   thirdCargoID=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
