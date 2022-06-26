@@ -1105,7 +1105,6 @@ export class EditComponent implements OnDestroy {
                 if (selected == null) {
                     selected = this.TabsItemsSource[0];
                 }
-
                 this.SelectionChanged(selected);
             }
         }
@@ -1119,6 +1118,7 @@ export class EditComponent implements OnDestroy {
             if (this.LoadedTabsList == null) {
                 this.LoadedTabsList = [];
             }
+            this.entityArgs.SelectedTabCode = this.SelectedTab ? this.SelectedTab.Code : "";
 
             this.LoadedTabsList.forEach(item => {
                 if (item.EditTabComponent) {
