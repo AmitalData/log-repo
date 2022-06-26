@@ -250,8 +250,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.HasException = true;
                     this.MyResponseData.Succeeded = false;
                     this.MyResponseData.UserMessage = "לא נמצא סיווג עבור הדגם: " + invoiceItemFromFile.ClassificationCode + " והלקוח בתיק";
-                    return;
-                    //throw new Exception("classificationCode not exists");
+                    //return;
+                    throw new Exception("לא נמצא סיווג עבור הדגם: " + invoiceItemFromFile.ClassificationCode + " והלקוח בתיק");
                 }
                 invoiceItem.SupplierInvoiceItemVehicles = new List<SupplierInvoiceItemVehiclePM>
                         {
