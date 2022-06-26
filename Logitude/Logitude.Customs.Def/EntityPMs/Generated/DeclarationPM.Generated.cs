@@ -5561,6 +5561,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string exportContainerizationID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportContainerizationID  
+	   {
+	    
+	     get
+		{
+		   return exportContainerizationID;
+		 }
+		 set
+		 {
+		   if(exportContainerizationID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportContainerizationID",OldValue=exportContainerizationID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportContainerizationID=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

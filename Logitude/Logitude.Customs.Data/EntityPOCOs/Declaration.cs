@@ -445,6 +445,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsExportClosed { get; set; }
         [Column("ExportClosedErrorXML")]
 	    public string ExportClosedErrorXML { get; set; }
+        [Column("ExportContainerizationID")]
+	    public string ExportContainerizationID { get; set; }
     }
 }
 	 

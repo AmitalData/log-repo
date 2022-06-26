@@ -171,7 +171,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsSubmitDeclaration, 
 	         AmedmentType, 
 	         IsExportClosed, 
-	         ExportClosedErrorXML,
+	         ExportClosedErrorXML, 
+	         ExportContainerizationID,
 	      }
 
 
@@ -406,7 +407,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmedmentType, 
 	         AmendmentTypeName, 
 	         IsExportClosed, 
-	         ExportClosedErrorXML,
+	         ExportClosedErrorXML, 
+	         ExportContainerizationID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1158,6 +1160,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportClosedErrorXML))
             {
 				entityPOCO.ExportClosedErrorXML = entityPM.ExportClosedErrorXML;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
+            {
+				entityPOCO.ExportContainerizationID = entityPM.ExportContainerizationID;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1916,6 +1923,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportClosedErrorXML = entityPOCO.ExportClosedErrorXML;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportContainerizationID))
+            {
+					entityPM.ExportContainerizationID = entityPOCO.ExportContainerizationID;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2665,6 +2677,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportClosedErrorXML))
             {
                 oldEntityPM.ExportClosedErrorXML = entityPM.ExportClosedErrorXML;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
+            {
+                oldEntityPM.ExportContainerizationID = entityPM.ExportContainerizationID;
             }
 			
 		}

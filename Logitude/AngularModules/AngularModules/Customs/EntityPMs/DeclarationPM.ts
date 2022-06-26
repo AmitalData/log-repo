@@ -1389,6 +1389,11 @@ export class DeclarationPM {
     public set ExportClosedErrorXML(newValue: string) { if (this.exportClosedErrorXML != newValue) { this.exportClosedErrorXML = newValue; this.MarkAsDirty("ExportClosedErrorXML"); } }
        
 	 
+    private exportContainerizationID: string;
+    public get ExportContainerizationID() { return this.exportContainerizationID; }
+    public set ExportContainerizationID(newValue: string) { if (this.exportContainerizationID != newValue) { this.exportContainerizationID = newValue; this.MarkAsDirty("ExportContainerizationID"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
