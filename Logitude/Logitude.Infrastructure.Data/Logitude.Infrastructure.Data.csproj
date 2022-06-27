@@ -180,6 +180,7 @@
     <Compile Include="EntityPOCOs\Team.cs" />
     <Compile Include="EntityPOCOs\TeamMemberBusinessRole.cs" />
     <Compile Include="EntityPOCOs\Toggle.cs" />
+    <Compile Include="ExtendedServices\AvailableForSchedulingBIReportService.cs" />
     <Compile Include="IInfrastructureContext.cs" />
     <Compile Include="InfrastructureContext.cs" />
     <Compile Include="Models\BIReportsFilterArguments.cs" />

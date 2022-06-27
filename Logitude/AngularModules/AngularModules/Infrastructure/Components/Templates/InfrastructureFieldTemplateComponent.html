@@ -19,6 +19,10 @@
                     {{FieldValue | DateTimePipe:'DT'}}
                 </div>
 
+                <div *ngIf="ObjectTableName == 'BIReport' && FieldName == 'AvailableForScheduling'" class="MediaFillRelative">
+                    <img class="CenterCenter" *ngIf="FieldValue" title="Available For Scheduling" src="./Images/CheckBoxIcon.png" />
+                </div>
+
                 <div *ngIf="ObjectTableName == 'APILogs' && FieldName == 'Direction'">
                     <img *ngIf="FieldValue == 'O' || FieldValue == 'Out'" style="vertical-align:middle; margin: auto;margin-top:-2px" [attr.src]="'./Images/Icons/ArrowRight.png'" [title]="'Out'" />
 
