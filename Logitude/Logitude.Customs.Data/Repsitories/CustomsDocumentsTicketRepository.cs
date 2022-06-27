@@ -33,31 +33,19 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<CustomsDocumentsTicket> GetCustomsDocumentTickets(GetTicketsParams parameters, int tenant)
         {
+
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
             var q = context.CustomsDocumentPointers.Where(a => a.Tenant == tenant);
             q = q.Where(a => a.ParentEntityCode == parameters.ParentEntityCode && a.ParentEntityId == parameters.ParentEntityId);
-            //q = q.Where(a => a.Child1EntityCode == parameters.Child1EntityCode && a.Child1EntityId == parameters.Child1EntityId);
-            //q = q.Where(a => a.Child2EntityCode == parameters.Child2EntityCode && a.Child2EntityId == parameters.Child2EntityId);
-            //q = q.Where(a => a.Child3EntityCode == parameters.Child3EntityCode && a.Child3EntityId == parameters.Child3EntityId);
-
-            /*if (!string.IsNullOrWhiteSpace(parameters.Child1EntityCode) && !string.IsNullOrWhiteSpace(parameters.Child1EntityId))
-            {
-                q = q.Where(a => a.Child1EntityCode == parameters.Child1EntityCode && a.Child1EntityId == parameters.Child1EntityId);
-            }
-            if (!string.IsNullOrWhiteSpace(parameters.Child2EntityCode) && !string.IsNullOrWhiteSpace(parameters.Child2EntityId))
-            {
-                q = q.Where(a => a.Child2EntityCode == parameters.Child2EntityCode && a.Child2EntityId == parameters.Child2EntityId);
-            }
-            if (!string.IsNullOrWhiteSpace(parameters.Child3EntityCode) && !string.IsNullOrWhiteSpace(parameters.Child3EntityId))
-            {
-                q = q.Where(a => a.Child3EntityCode == parameters.Child3EntityCode && a.Child3EntityId == parameters.Child3EntityId);
-            }*/
+            var list = q.ToList();
+            q = list.AsQueryable<CustomsDocumentPointer>();
 
             q = q.Where(a => ((a.Child1EntityCode ?? "_IsNull") == (parameters.Child1EntityCode ?? "_IsNull")) && ((a.Child1EntityId ?? "_IsNull") == (parameters.Child1EntityId ?? "_IsNull")));
             q = q.Where(a => ((a.Child2EntityCode ?? "_IsNull") == (parameters.Child2EntityCode ?? "_IsNull")) && ((a.Child2EntityId ?? "_IsNull") == (parameters.Child2EntityId ?? "_IsNull")));
             q = q.Where(a => ((a.Child3EntityCode ?? "_IsNull") == (parameters.Child3EntityCode ?? "_IsNull")) && ((a.Child3EntityId ?? "_IsNull") == (parameters.Child3EntityId ?? "_IsNull")));
 
-
-            var ticketIds = (from a in q
+            list  = q.ToList();
+            var ticketIds = (from a in /*q*/ list
                              group a by a.CustomsDocumentsTicketId into gr
                              select new { CustomsDocumentsTicketId = gr.Key });
 
