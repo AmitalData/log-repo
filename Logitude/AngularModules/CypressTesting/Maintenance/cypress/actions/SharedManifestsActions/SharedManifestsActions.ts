@@ -161,12 +161,12 @@ export function ValidateShareManifestErrorMessage(ErrorMessage: string) {
     cy.get(SharedManifestsSelectors.Cancel).click()
 }
 
-export function UpdateShipment(mainCarriageLeg:MainCarriageLegDetails) {
-    AddMasterNumber(mainCarriageLeg.masterNumber,mainCarriageLeg.AgentCarrier)
+export function UpdateShipment(mainCarriageLeg: MainCarriageLegDetails) {
+    AddMasterNumber(mainCarriageLeg.masterNumber, mainCarriageLeg.AgentCarrier)
     DeleteConsignee()
 }
 
-function AddMasterNumber(masterNumber: string , MainCarriageCarrier:string) {
+function AddMasterNumber(masterNumber: string, MainCarriageCarrier: string) {
     cy.get(SharedManifestsSelectors.ShipmentRoutings).click()
     cy.get(SharedManifestsSelectors.MainCarriage).click()
     SelectFirstDropDownListItem(SharedManifestsSelectors.MainCarriageCarrier, MainCarriageCarrier)
@@ -241,7 +241,7 @@ export function AssertManifestExist(MAWB: string) {
     }).click()
 }
 
-export function CreateShipment(ShipmentNumber: string,MasterMainCarriageCarrier:string) {
+export function CreateShipment(ShipmentNumber: string, MasterMainCarriageCarrier: string) {
     cy.get(SharedManifestsSelectors.Create).click()
     //BaseAssertion.AssertElementHaveValue(SharedManifestsSelectors.AgentReference, ShipmentNumber)
     cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentRequest)
@@ -284,3 +284,53 @@ export function clearMasterNumber() {
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 
 }
+
+//#region Share Document
+export function OpenSharedLogistic() {
+    cy.get(SharedManifestsSelectors.GeneralMHSharedLogistics).click({ force: true })
+    cy.get(SharedManifestsSelectors.DocumentsPermissions).click({ force: true })
+}
+export function SearchForAgentDocument(DocumentName: string) {
+    cy.get(SharedManifestsSelectors.AgentView).click({ force: true })
+    cy.FillLogTextBox(SharedManifestsSelectors.AgentSearch, DocumentName)
+
+}
+
+export function EditPermissions() {
+    cy.get(SharedManifestsSelectors.CheckBox).click({ force: true })
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+export function OpenDocTab(DocumentName: string) {
+    cy.get(SharedManifestsSelectors.ShipmentTHDocsOut).click({ force: true })
+    cy.wait(1000)
+    cy.FillLogTextBox(SharedManifestsSelectors.SearchBox, DocumentName)
+    cy.wait(1000)
+}
+export function BuildDocument() {
+    cy.get(SharedManifestsSelectors.BuildDocsOut).click({ force: true })
+    cy.wait(8000)
+    cy.get(SharedManifestsSelectors.CloseDocument).click({ force: true })
+    cy.wait(7000)
+
+}
+export function ShareDocument() {
+    cy.get(SharedManifestsSelectors.SharingActions).click({ force: true })
+    cy.get(SharedManifestsSelectors.ShareDocuments).click({ force: true })
+
+}
+export function ClickShare() {
+    //cy.get(SharedManifestsSelectors.Share.).click({ force: true })
+    cy.Click(SharedManifestsSelectors.Share, "Share", true);
+    cy.get(SharedManifestsSelectors.MessageOK).click({ force: true })
+
+}
+
+export function OpenDocInTab(DocumentName: string) {
+    cy.get(SharedManifestsSelectors.ShipmentTHDocsIn).click({ force: true })
+    cy.FillLogTextBox(SharedManifestsSelectors.SearchBox, DocumentName)
+}
+
+export function UploadDoc() {
+    cy.get('div').contains("Air Manifest.pdf")
+}
+

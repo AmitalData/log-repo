@@ -42,4 +42,16 @@ export class SharedManifestsSelectors extends RegexSelectors {
     public static readonly AgentReference='[data-cy="AgentReference"]'
     public static readonly CancelManifest='[data-cy="Cancel Manifest"]'
     public static readonly MarkAsCompleted='[data-cy="Mark as Completed"]'
+    public static readonly GeneralMHSharedLogistics="#GeneralMHSharedLogistics"
+    public static readonly AgentView='[data-cy="Agent View"]'
+    public static readonly AgentSearch="#SearchFieldsId_0_0"
+    public static readonly CheckBox='[data-cy="Air Manifest_Master"]'
+    public static readonly ShipmentTHDocsOut="#ShipmentTHDocsOut"
+    public static readonly BuildDocsOut="#785A-P-DocsOut"
+    public static readonly SearchBox='[placeholder="Search"]'
+    public static readonly CloseDocument="#closeButtonId"
+    public static readonly Share=".RedButton"
+    public static readonly MessageOK="#MessageWindow_Ok_0"
+    public static readonly ShipmentTHDocsIn="#ShipmentTHDocsIn"
+    
 }

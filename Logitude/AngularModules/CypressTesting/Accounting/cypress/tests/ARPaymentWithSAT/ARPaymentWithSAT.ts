@@ -172,6 +172,7 @@ Then("the AR Payment should approve successfully", () => {
 
 //#region Send AR Payment To SAT
 When("Send AR Payment to SAT", () => {
+  cy.wait(3000)
     ARPaymentActions.SendARPaymentToSAT()
 });
 
