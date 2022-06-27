@@ -1,0 +1,15 @@
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+	INSERT INTO InterestTransactions (Id, Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, SearchFields, GLAccountId, EntityId, OriginalEntityLineNumber, LocalAmount, ForeignAmount, CurrencyId,InterestEntityTypeCode, InterestReportId, IsClosed, IsCancelled)
+	SELECT CONCAT('C', InterestTransactions.Id) as Id, InterestTransactions.Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, InterestTransactions.SearchFields, GLAccountCurrencies.MainGLAccountId, InterestTransactions.EntityId, InterestTransactions.OriginalEntityLineNumber + 80, InterestTransactions.LocalAmount , InterestTransactions.ForeignAmount, InterestTransactions.CurrencyId, InterestEntityTypeCode, Null, 0, InterestTransactions.IsCancelled
+	from InterestTransactions
+	inner join ARInvoiceLines on ARInvoiceLines.ARInvoiceId = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1' AND ARInvoiceLines.LineNumber = InterestTransactions.OriginalEntityLineNumber  AND ARInvoiceLines.Tenant = InterestTransactions.Tenant 
+	inner join ARInvoices on ARInvoices.Id = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1' AND ARInvoices.Tenant = InterestTransactions.Tenant  AND ARInvoiceLines.ARInvoiceId = ARInvoices.Id
+	inner join GLAccounts on ARInvoices.BillToGLAccountId = GLAccounts.Id AND GLAccounts.Tenant = ARInvoices.Tenant
+	inner join GLAccountCurrencies on ARInvoices.BillToGLAccountId = GLAccountCurrencies.MainGLAccountId AND ARInvoices.Tenant = GLAccountCurrencies.Tenant
+	where ARInvoices.IsMultiCurrency = 0 AND GLAccounts.IsMultiCurrency = 1 AND GLAccountCurrencies.MainGLAccountId != InterestTransactions.GLAccountId AND ARInvoiceLines.ForiegnCurrencyId = GLAccountCurrencies.CurrencyId  AND  InterestReportId is not null
+
+     ]]>
+ </Sql>
+</Script>

@@ -332,6 +332,10 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private void AccountingStreamingInNewSerializableTransaction(MyActions actions, List<LedgerTransactionPM> myLedgerTransactionsWithCounters, List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
+
+            const string TransferCardId= "1-717294";
+            const int TransferCardTenant = 10;
+
             /// orian 300000 trans in a month >> 1 journal 6 transaction no more then 6 GLAccountTotalByMonths >  in a secound 
 
             /*
@@ -392,7 +396,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     glAccountsToUpdate.ForEach(x =>
                     {
                         var glAccountMoreDataPM =  gLAccountMoreDataPMList.Where(acc => acc.AccountId == x.AccountId).First();
-                        if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
+                        //if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
+                        if (_Tenant == TransferCardTenant && x.AccountId == TransferCardId)//"Id":"1-1405813","Tenant":99,
                         {
                             stringBuilderWhyTransferCardBadBalance.AppendLine($"now:{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff tt")}");
                             stringBuilderWhyTransferCardBadBalance.AppendLine($"b4:{x.AccountId}:BalanceInLocalCurrency={glAccountMoreDataPM.BalanceInLocalCurrency}");
@@ -400,7 +405,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         glAccountMoreDataPM.BalanceInLocalCurrency = glAccountMoreDataPM.BalanceInLocalCurrency + x.LocalAmountDifference;
                         glAccountMoreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                         gLAccountMoreDataUpdateService.Update(glAccountMoreDataPM, true);
-                        if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
+                        //if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
+                        if (_Tenant == TransferCardTenant && x.AccountId == TransferCardId)//"Id":"1-1405813","Tenant":99,
                         {
                             stringBuilderWhyTransferCardBadBalance.AppendLine($"after:{x.AccountId}:BalanceInLocalCurrency={glAccountMoreDataPM.BalanceInLocalCurrency}");
                         }

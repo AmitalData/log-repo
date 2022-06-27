@@ -158,12 +158,14 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
 
         private void UpdateVizionContainerStatus()
         {
-            string requestId = null;// CheckIfExistRequest();
+            string requestId = CheckIfExistRequest(ContainerStatusSimulatorArgs.Tenant);
+            var isExist = true;
             if (requestId == null)
             {
                 requestId = CreateNewRequest();
+                isExist = false;
             }
-            if (CheckIfExistRequest(ContainerStatusSimulatorArgs.Tenant) == null)
+            if (!isExist)
                 AddContainerTrackingRequest(requestId);
             if (ContainerStatusSimulatorArgs.IsSimulator)
                 SimulateVizionUpdateContainerStatus();
@@ -233,6 +235,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
                 ShipmentId = Shipment.Id,
                 Status = ContainerTrackingRequestStatus.Active,
                 CarrierCode = ContainerStatusSimulatorArgs.CarrierCode,
+                ScacCode = ContainerStatusSimulatorArgs.ScacCode,
                 ContainerId = ContainerStatusSimulatorArgs.ContainerId,
                 IsSimulate = ContainerStatusSimulatorArgs.IsSimulator
             };

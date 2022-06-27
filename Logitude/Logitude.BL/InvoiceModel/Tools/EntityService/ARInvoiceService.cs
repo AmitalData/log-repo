@@ -3308,7 +3308,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             string interestTransactionGLAccount = null;
             GLAccountPM debitGLAcount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant, entityPM.BillToGLAccountId);
-            if (debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
+            if (entityPM.IsMultiCurrency && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
             {
                 var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, invoiceLine.ForiegnCurrencyId, invoiceLine.Tenant);
                 interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;
@@ -3887,7 +3887,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             foreach (var item in journalLines)
             {
-                if (debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
+                if (invoice.IsMultiCurrency && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
                 {
                     var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, item.CurrencyId, invoice.Tenant);
                     item.DebitAccountId = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;

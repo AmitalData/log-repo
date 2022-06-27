@@ -2324,7 +2324,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             CheckMultiToSingleCurrencyChanged(entityPM, entityPOCO);
             CheckSingleToSingleCurrencyChanged(entityPM, entityPOCO);
+            if (entityPM.ChangeSetOp != ChangeSetOperation.Insert) {
+                CheckIfGlaccountIsConnectedToBankGlAccount(entityPM, entityPOCO);
+            }
             CheckReconcileMethodChange(entityPM, entityPOCO);
+        }
+
+        private void CheckIfGlaccountIsConnectedToBankGlAccount(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+            BankAccountRepository repo = new BankAccountRepository(entityPM.Tenant);
+            var isGlaccountExistsInBankAccount = repo.CheckIfGlAccountExistsInBankAccount(entityPM.Id, entityPM.Tenant);
+            if (entityPM.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Banks.ToIntString() && isGlaccountExistsInBankAccount
+                && (entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency) || (entityPOCO.CurrencyId != entityPM.CurrencyId)) {
+                bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                throw new ApplicationException(TranslateTextsClass.Translate("BankAccounts.O.PreventChangingCurrency", 0, useLocal));
+            }
         }
 
         private static void CheckSplittedGLAccount(GLAccountPM entityPM)

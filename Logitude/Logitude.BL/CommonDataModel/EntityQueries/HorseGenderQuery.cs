@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
@@ -40,6 +41,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return (from a in repository.context.HorseGenders
                     where a.Code == code
                     select new HorseGenderList()
+                    {
+                        Code = a.Code,
+                        Name = a.Name,
+                        SearchFields = a.SearchFields,
+                    }).FirstOrDefault();
+        }
+
+        public HorseGenderPM GetSinglePM(string code)
+        {
+            return (from a in repository.context.HorseGenders
+                    where a.Code == code
+                    select new HorseGenderPM()
                     {
                         Code = a.Code,
                         Name = a.Name,

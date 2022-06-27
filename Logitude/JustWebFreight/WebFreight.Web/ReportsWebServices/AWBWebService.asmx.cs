@@ -2047,6 +2047,8 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 List<ShipmentCommodity> commodities = commoditiesRepository.GetCommoditiesbyShipmentId(shipmentPM.Id, tenant).ToList();
 
+                string commoditiesDescriptionOfGoods = "";
+                string commoditiesDimentions = "";
                 foreach (ShipmentCommodity shipmentCommodity in commodities)
                 {
                     CommodityLine commodityLine = new CommodityLine();
@@ -2154,10 +2156,81 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + Environment.NewLine + shipmentPM.ShipperReference1;
                         }
+
+                        if (!string.IsNullOrEmpty(dimentions))
+                        {
+                            if (string.IsNullOrEmpty(commoditiesDimentions)) commoditiesDimentions = dimentions;
+                            else commoditiesDimentions = commoditiesDimentions + Environment.NewLine + dimentions;
+                        }
+                    }
+
+                    if(!string.IsNullOrEmpty(shipmentCommodity.DescriptionOfGoods))
+                    {
+                        if (string.IsNullOrEmpty(commoditiesDescriptionOfGoods)) commoditiesDescriptionOfGoods = shipmentCommodity.DescriptionOfGoods;
+                        else commoditiesDescriptionOfGoods = commoditiesDescriptionOfGoods + Environment.NewLine + shipmentCommodity.DescriptionOfGoods;
                     }
 
                     awbDp.CommoditiesLinesList.Add(commodityLine);
                 }
+
+                string myDescriptionOfGoods = commoditiesDescriptionOfGoods;
+                awbDp.JustDescriptionofGoods = myDescriptionOfGoods;
+
+                if (!string.IsNullOrEmpty(shipmentPM.SLAC))
+                {
+                    if (!string.IsNullOrEmpty(myDescriptionOfGoods))
+                    {
+                        myDescriptionOfGoods += Environment.NewLine;
+                    }
+
+                    myDescriptionOfGoods += "SLAC: " + shipmentPM.SLAC;
+                }
+
+                if (!string.IsNullOrEmpty(commoditiesDimentions))
+                {
+                    if (!string.IsNullOrEmpty(myDescriptionOfGoods))
+                    {
+                        myDescriptionOfGoods += Environment.NewLine;
+                    }
+
+                    myDescriptionOfGoods += commoditiesDimentions;
+                }
+
+                if (shipmentPM.GrossWeightUnitCode != null)
+                {
+                    string volume = "AS VOL " + " " + shipmentPM.VolumetricWeight + " " + chargeableWeightUnitCode.ToUpper() + "S" + " " + shipmentPM.Volume + " " + volumeUnitCode.ToUpper();
+
+                    if (!string.IsNullOrEmpty(myDescriptionOfGoods))
+                    {
+                        myDescriptionOfGoods += Environment.NewLine;
+                    }
+
+                    myDescriptionOfGoods += volume;
+                }
+
+                if (!string.IsNullOrEmpty(shipmentPM.ShipperReference1))
+                {
+                    if (!string.IsNullOrEmpty(myDescriptionOfGoods))
+                    {
+                        myDescriptionOfGoods += Environment.NewLine;
+                    }
+
+                    myDescriptionOfGoods += shipmentPM.ShipperReference1;
+                }
+
+                if (!string.IsNullOrEmpty(shipmentPM.MainHarmonize))
+                {
+                    string myMainHarmonize = "HCC Code " + shipmentPM.MainHarmonize;
+
+                    if (!string.IsNullOrEmpty(myDescriptionOfGoods))
+                    {
+                        myDescriptionOfGoods += Environment.NewLine;
+                    }
+
+                    myDescriptionOfGoods += myMainHarmonize;
+                }
+
+                awbDp.DescriptionOfGoods = myDescriptionOfGoods;
             }
             #endregion
 
@@ -2325,6 +2398,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
             #endregion
         }
+        
         private bool HasValue(object value)
         {
             bool hasValue = false;

@@ -113,6 +113,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 entityPM.UpdatedByPartner = "Ocean Insights";
             }
+            else if (entityPM.IsUpdatedVizionAnalyzer)
+            {
+                entityPM.UpdatedByPartner = "Vizion";
+            }
 
             else
             {
