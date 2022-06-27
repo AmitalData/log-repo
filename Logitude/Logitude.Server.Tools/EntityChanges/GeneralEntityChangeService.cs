@@ -21,10 +21,10 @@ namespace Logitude.Server.Tools.EntityChanges
 
         }
 
-        public string GetLoggedContactId(int tenant)
+        public string GetLoggedContactId(int tenant, string loggedUserEmail)
         {
             string loggedContactId = string.Empty;
-            string email = ("system@tenant" + tenant.ToString() + ".com");
+            string email = !string.IsNullOrEmpty(loggedUserEmail) ? loggedUserEmail : ("system@tenant" + tenant.ToString() + ".com");
             ContactRepository contactRepository = new ContactRepository(tenant);
             if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
