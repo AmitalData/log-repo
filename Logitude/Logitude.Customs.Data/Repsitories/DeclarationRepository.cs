@@ -978,10 +978,24 @@ namespace Logitude.Customs.Data.Repsitories
             DeclarationId res = myQ.Take(1).ToList().FirstOrDefault();
             return res;
         }
+        public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
+        {
+            var query = (from a in context.Consignments
+                         where declarationList.Contains(a.DeclarationId)
+                         select a);
+            return query.GroupBy(cont => new { ManifestNumber = cont.ManifestNumber, CargoTypeCode = cont.CargoTypeCode, SecondCargoID = cont.CargoTypeCode, ThirdCargoID = cont.ThirdCargoID })
+                .ToList()
+                .SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
+                {
+                    DeclarationId = cont.DeclarationId,
+                    CargoTypeCode = cont.CargoTypeCode,
+                    ManifestNumber = cont.ManifestNumber,
+                    SecondCargoId = cont.SecondCargoID,
+                    ThirdCargoId = cont.ThirdCargoID,
+                })).ToList();
+        }
     }
-
-
-    public class DeclarationId
+public class DeclarationId
     {
         public string Id { get; set; }
     }
@@ -1064,6 +1078,14 @@ namespace Logitude.Customs.Data.Repsitories
     }
     //class TotM {
 
+    public class ContainerizationUniqueConsignment
+    {
+        public string CargoTypeCode { get; set; }
+        public string ManifestNumber { get; set; }
+        public string SecondCargoId { get; set; }
+        public string ThirdCargoId { get; set; }
+        public string DeclarationId { get; set; }
+    }
 }
 
 

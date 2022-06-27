@@ -33,10 +33,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     foreach (var declaration in pms)
                     {
-                        if (declaration.ExportContainerizationID != entityPM.Id)
+                        foreach(var cons in declaration.Consignments)
                         {
-                            declaration.ExportContainerizationID = entityPM.Id;
-                            declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            if(cons.CargoTypeCode==EntityPM.CargoTypeCode && cons.ManifestNumber == EntityPM.ManifestNumber && cons.SecondCargoID == EntityPM.SecondCargoID && cons.ThirdCargoID == EntityPM.ThirdCargoID)
+                            {
+                                if (cons.ExportContainerizationID != entityPM.Id)
+                                {
+                                    cons.ExportContainerizationID = entityPM.Id;
+                                    cons.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                                }
+
+                            }
                         }
                     }
                 }
