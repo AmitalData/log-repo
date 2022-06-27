@@ -1,87 +1,88 @@
 <style>
-	.Disabled {
-		opacity: 0.5;
-		pointer-events: none;
-	}
+    .Disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
 </style>
 <table>
-	<tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-		<td>
-			<ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
-		</td>
-	</tr>
-	<tr style="height:100%">
-		<td>
-			<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height:100%">
+        <td>
+            <table>
 
-				<tr style="height: 10px;">
-					<td>
-						<table>
-							<tr>
-								<td style="width:10px"></td>
-								<td style="height: 22px; width: 50px;">
-									<label style="padding-left:10px;color: rgb(110, 113, 114);">
-										Name
-									</label>
-								</td>
-								<td style="width:10px"></td>
-								<td style="height: 22px; width: 250px; ">
-									<div style="width: 250px;">
-										<LogTextBox [ObjectFieldName]="'Name'" [DataContext]="dataContext" [Text]="Name"></LogTextBox>
-									</div>
-								</td>
-								<td></td>
-							</tr>
+                <tr style="height: 10px;">
+                    <td>
+                        <table>
                             <tr>
-								<td style="width:10px"></td>
-								<td style="height: 22px; width: 50px;">
-									<label style="padding-left:10px;color: rgb(110, 113, 114);">
-										Screen
-									</label>
-								</td>
-								<td style="width:10px"></td>
-								<td style="height: 22px; width: 215px; ">
-									<div style="width: 215px;">
+                                <td style="width:10px"></td>
+                                <td style="height: 22px; width: 50px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Name
+                                    </label>
+                                </td>
+                                <td style="width:10px"></td>
+                                <td style="height: 22px; width: 250px; ">
+                                    <div style="width: 250px;">
+                                        <LogTextBox [ObjectFieldName]="'Name'" [DataContext]="dataContext"
+                                            [Text]="Name"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="width:10px"></td>
+                                <td style="height: 22px; width: 50px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Screen
+                                    </label>
+                                </td>
+                                <td style="width:10px"></td>
+                                <td style="height: 22px; width: 215px; ">
+                                    <div style="width: 215px;">
                                         <ComboBox [ItemsSource]="screens" (SelectedItemChanged)="ScreenChanged($event)"
-                                        style="display: block;" [SelectedItem]="SelectedScreen"
-                                        [Binding]="'Name'"></ComboBox>
-                                  </div>
-								</td>
-								<td></td>
-							</tr>
-						</table>
-					</td>
+                                            style="display: block;" [SelectedItem]="SelectedScreen" [Binding]="'Name'">
+                                        </ComboBox>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </td>
 
-				</tr>
+                </tr>
 
 
 
-				<tr style="height: 32px;">
-					<td style="vertical-align: bottom">
-						<table style="height: 22px;">
-							<tr>
-								<td>
-									<div></div>
-								</td>
+                <tr style="height: 32px;">
+                    <td style="vertical-align: bottom">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
 
-								<td style="width: 57px;">
-									<div>
-										<button class="Button" (click)="CancelButtonClicked()">Cancel</button>
-									</div>
-								</td>
+                                <td style="width: 57px;">
+                                    <div>
+                                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                                    </div>
+                                </td>
 
-								<td style="width: 5px;">
-									<div></div>
-								</td>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
 
-								<td style="width: 57px;">
-									<button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
+                                <td style="width: 57px;">
+                                    <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
 </table>

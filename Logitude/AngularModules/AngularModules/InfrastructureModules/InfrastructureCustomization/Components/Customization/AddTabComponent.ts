@@ -7,6 +7,8 @@ import { ScreenPM } from '../../../../Infrastructure/EntityPMs/ScreenPM';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
 
+const valdationMessageOfName = 'Please fill the tab name';
+const validationMessageOfScreen = 'Please select screen';
 @Component({
 
     templateUrl: './AddTabComponent.html',
@@ -41,8 +43,8 @@ export class AddTabComponent extends BaseComponent {
     GetEntityScreens(){
         this.CurrentSession.StartBusyIndicatorLoading();
         this.screensService.GetEntityScreens(this.objectTable.Id)
-            .subscribe(screens => {
-                this.screens = screens;
+            .subscribe((screens:ScreenPM[]) => {
+                this.screens = screens.filter(a=>a.Type=='LIGHTENING');
                 this.CurrentSession.StopBusyIndicator();
             });
 
@@ -76,6 +78,18 @@ export class AddTabComponent extends BaseComponent {
 
 
     SaveButtonClicked() {
+        let errors = [];
+
+        if (!this.TableTab.Name)
+            errors.push(valdationMessageOfName);
+
+        if(!this.TableTab.ScreenCode)
+            errors.push(validationMessageOfScreen);
+
+        if(errors.length > 0)
+            return this.ValidationErrorsList = errors;
+
+
         this.CurrentSession.CloseCurrentWindowData({entity: this.TableTab});
     }
 

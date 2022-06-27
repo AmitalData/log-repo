@@ -6,6 +6,9 @@ declare var window: any;
 import { ScreenPM } from '../../../../Infrastructure/EntityPMs/ScreenPM';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
+
+const valdationMessageOfName = 'Name is required';
+
 @Component({
 
     templateUrl: './AddEditScreenComponent.html',
@@ -19,7 +22,7 @@ export class AddEditScreenComponent extends BaseComponent {
     ValidationErrorsList: any[];
     public EntityPM: ScreenPM;
     IsNew: boolean = true;
-   
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -58,24 +61,32 @@ export class AddEditScreenComponent extends BaseComponent {
 
 
 
-    
+
     SaveButtonClicked() {
+
+        let errors = this.ValidateScreen();
+        if(errors.length > 0)
+            return this.ValidationErrorsList = errors;
+
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.screenExtendedService.insert(this.EntityPM).subscribe((myResult: ServiceResponse) => {
-            var myResponse: ServiceResponse = myResult;
+        this.screenExtendedService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
 
-            if (!myResponse.HasError) {
-                this.ViewModel.AddScreenItem(myResult.Result);
-            }
-
-            else {
-                this.HandleException();
-            }
             this.CurrentSession.StopBusyIndicator();
 
+            if (response.HasError)
+                return this.HandleException();
 
+            this.ViewModel.AddScreenItem(response.Result);
             this.CurrentSession.CloseCurrentWindow();
         });
+    }
+
+    private ValidateScreen()
+    {
+        let errors = [];
+        if (!this.Name)
+            errors.push(valdationMessageOfName);
+        return errors;
     }
 
     HandleException() {
