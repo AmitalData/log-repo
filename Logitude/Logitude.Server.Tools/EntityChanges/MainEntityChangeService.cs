@@ -34,11 +34,13 @@ namespace Logitude.Server.Tools.EntityChanges
         private GeneralEntityChangeService generalEntityChangeService { get; set; }
         private AutomationObjectFieldService automationObjectFieldService { get; set; }
         private EntityChangeRepository entityChangeRepository { get; set; }
+        private string loggedUserEmail { get; set; }
         public bool IsChild { get; set; }
 
         public MainEntityChangeService(EntityChangeArgs entityChangeArgs)
         {
             this.entityChangeArgs = entityChangeArgs;
+            loggedUserEmail = entityChangeArgs.LoggedUserEmail;
             startDate = entityChangeArgs.StartDate != null ? (DateTime)entityChangeArgs.StartDate : DateTime.Now;
 
             entityChangeRepository = new EntityChangeRepository(entityChangeArgs.Tenant);
@@ -219,7 +221,7 @@ namespace Logitude.Server.Tools.EntityChanges
                 Tenant = entityChangeArgs.Tenant,
                 EntityId = entityChangeArgs.EntityId,
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(entityChangeArgs.Tenant),
-                CreateByUserId = generalEntityChangeService.GetLoggedContactId(entityChangeArgs.Tenant),
+                CreateByUserId = generalEntityChangeService.GetLoggedContactId(entityChangeArgs.Tenant, loggedUserEmail),
                 ObjectTableId = objectTableId,
                 ChangesFieldsXml = entityChangeArgs.EntityChangeFieldXml,
                 CheckStartDate = TenantServerConfigration.GetCurrentDateTime(entityChangeArgs.Tenant),
@@ -271,6 +273,7 @@ namespace Logitude.Server.Tools.EntityChanges
         public bool DontExecuteAutomationThatDependencyOnLastEntityUpdate { get; set; }
         public object ExtraDetails { get; set; }
         public string EntityReference { get; set; }
+        public string LoggedUserEmail { get; set; }
     }
 
     public class OnUpdateDocumentDetails
