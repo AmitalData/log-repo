@@ -2040,6 +2040,7 @@
     <TypeScriptCompile Include="Infrastructure\Interface\IHeaderScreenService.ts" />
     <TypeScriptCompile Include="Infrastructure\material-module.ts" />
     <TypeScriptCompile Include="Infrastructure\Pipes\HighlightSearch.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\BatchPrintService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportFolderExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\CustomPickListPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\EventTypeExtendedPMService.ts" />
