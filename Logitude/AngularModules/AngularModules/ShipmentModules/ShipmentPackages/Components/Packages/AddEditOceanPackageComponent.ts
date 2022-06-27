@@ -12,6 +12,7 @@ import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/Sh
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { PickUpDeliveryPackageHarmonizePM } from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     
@@ -245,8 +246,7 @@ export class AddEditOceanPackageComponent {
 
     GetContainerEntityReferenceVisiblity() {
         this.IsContainerEntityReferenceVisible = false;
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-        if (featureToggle && !AppTool.IsNullOrEmpty(this.EntityPM?.ContainerEntityId)) {
+        if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated") && !AppTool.IsNullOrEmpty(this.EntityPM?.ContainerEntityId)) {
             if (this.DataContext.ShipmentPM.TransportModeId == "O" && (this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcl" || this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcld")) {
                 this.IsContainerEntityReferenceVisible = true;
             }

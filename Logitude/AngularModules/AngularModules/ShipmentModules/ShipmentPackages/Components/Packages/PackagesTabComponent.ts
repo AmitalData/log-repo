@@ -299,8 +299,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
     SetIsLastStatusVisible() {
         if (this.IsFCLEntity) {
-            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-            if (featureToggle)
+            if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated"))
                 this.IsLastStatusVisible = true;
 
             if (FeatureLocator.HasFeaturePermession("Shipment", "ShippingInstructions")) {
