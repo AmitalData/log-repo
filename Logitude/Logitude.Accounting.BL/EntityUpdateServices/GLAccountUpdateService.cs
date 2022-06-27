@@ -2324,7 +2324,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             CheckMultiToSingleCurrencyChanged(entityPM, entityPOCO);
             CheckSingleToSingleCurrencyChanged(entityPM, entityPOCO);
-            CheckIfGlaccountIsConnectedToBankGlAccount(entityPM, entityPOCO);
+            if (entityPM.ChangeSetOp != ChangeSetOperation.Insert) {
+                CheckIfGlaccountIsConnectedToBankGlAccount(entityPM, entityPOCO);
+            }
             CheckReconcileMethodChange(entityPM, entityPOCO);
         }
 
