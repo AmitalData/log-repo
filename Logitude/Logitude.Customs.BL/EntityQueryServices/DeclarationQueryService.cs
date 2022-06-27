@@ -444,7 +444,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration",bool IsAmendmentErrors=false)
+        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration",bool IsAmendmentErrors=false, bool IsExportCloseErrors = false)
         {
             ICustomContext context = MainContext as CustomContext;
             Declaration declaration = Repository.GetSingle(new DeclarationKeys() { Id = declarationId });
@@ -615,11 +615,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 }
 
             }
-            else if (IsAmendmentErrors )
+            else if (IsAmendmentErrors || IsExportCloseErrors)
             {
                 if (!string.IsNullOrEmpty(declaration.AmendmentErrorXml) || !string.IsNullOrEmpty(declaration.ExportClosedErrorXML))
                 {
-                    byte[] errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml ?? declaration.ExportClosedErrorXML);
+                    byte[] errorsByte;
+                    if (IsExportCloseErrors)
+                    {
+                        errorsByte = Encoding.UTF8.GetBytes(declaration.ExportClosedErrorXML);
+                    }
+                    else
+                    {
+                        errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml);
+                    }
                     MemoryStream memorystream = new MemoryStream(errorsByte);
                     XmlSerializer serializer = new XmlSerializer(typeof(DeclarationError));
                     DeclarationError declarationError = (DeclarationError)serializer.Deserialize(memorystream);
