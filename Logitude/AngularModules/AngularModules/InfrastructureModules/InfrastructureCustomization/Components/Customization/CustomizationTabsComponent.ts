@@ -63,18 +63,50 @@ export class CustomizationTabsComponent extends BaseComponent
     }
 
     CancelClicked = () => this.CurrentSession.CloseCurrentWindow();
+    IsCopied = (a: any) => this.tabs.map(t => t.OriginalTabCode).includes(a.Code);
+    PushTabs = (newTableTabs: any) => this.tabs = this.tabs.concat(newTableTabs)
 
-    private GetOriginalEntityTabs()
+    private GetTenantZeroNewTabs()
     {
         let newTableTabs = window.ObjectTableTabs
-        .filter(a => a.ObjectTableId == this.objectTableId
-            && !this.tabs.map(t=>t.OriginalTabCode).includes(a.Code)) || [];
+        .filter(a => a.ObjectTableId == this.objectTableId && !this.IsCopied(a)) || [];
+
         newTableTabs = newTableTabs.map(a => { return { ...a, Type: 'Predefined', Changeset: 'insert', Tenant: SessionLocator.Tenant  }; });
+
         this.SetTabsAdditionalFields(newTableTabs);
-        this.tabs = this.tabs.concat(newTableTabs);
 
-
+        this.PushTabs(newTableTabs);
     }
+    private GetTenantZeroUpdatedTabs()
+    {
+        let updatedTenantZeroTabs: ObjectTableTabPM[] = window.ObjectTableTabs
+        .filter(a => a.ObjectTableId == this.objectTableId && this.IsCopied(a)) || [];
+
+        const updatedTabs = this.tabs.filter(d=> updatedTenantZeroTabs.map(t => t.Code).includes(d.OriginalTabCode));
+
+        updatedTabs.forEach((tab: ObjectTableTabPM) => {
+            tab.Changeset = 'update';
+            const tenantZeroTab = updatedTenantZeroTabs.find(t=>t.Code == tab.OriginalTabCode);
+
+            this.MapTab(tab, tenantZeroTab);
+        });
+    }
+
+    private MapTab(destiniationTab: ObjectTableTabPM, targetTab: ObjectTableTabPM)
+    {
+        destiniationTab.ControlPath = targetTab.ControlPath;
+        destiniationTab.TabNameTextCodeId = targetTab.TabNameTextCodeId;
+        destiniationTab.TabNameTextCodeDefaultText = targetTab.TabNameTextCodeDefaultText;
+        destiniationTab.TabNameTextCodeCode = targetTab.TabNameTextCodeCode;
+        destiniationTab.FeatureId = targetTab.FeatureId;
+        destiniationTab.Type = targetTab.Type;
+        destiniationTab.IsHidden = targetTab.IsHidden;
+        destiniationTab.Disabled = targetTab.Disabled;
+        destiniationTab.HtmlComponentName = targetTab.HtmlComponentName;
+        destiniationTab.HtmlComponentUrl = targetTab.HtmlComponentUrl;
+        destiniationTab.FeatureUniqeCode = targetTab.FeatureUniqeCode;
+    }
+
     private GetTenantEntityTabs(){
         this.CurrentSession.StartBusyIndicatorSaving();
         this.tableTabsService.GetTenantTableTabsByTableId(this.objectTableId)
@@ -85,7 +117,9 @@ export class CustomizationTabsComponent extends BaseComponent
 
                 this.SetScreenNames();
 
-                this.GetOriginalEntityTabs();
+                this.GetTenantZeroNewTabs();
+                this.GetTenantZeroUpdatedTabs();
+
                 this.OrderTabs();
 
             }, error=>{
