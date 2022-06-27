@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -7,7 +7,11 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
- import { SendCollateralRequestParams } from '../../DataContract/RequestParams/SendCollateralRequestParams';
+ import { ContainerizationRequestParams } from '../../DataContract/RequestParams/ContainerizationRequestParams';
+import { ContainerizationPM } from 'Customs/EntityPMs/ContainerizationPM';
+import { PerformanceLogger } from 'Infrastructure/Utilities/PerformanceLogger';
+import { ClassLevelValidator } from 'Infrastructure/Validators/ClassLevelValidator';
+import { CustomFieldClass } from 'Infrastructure/DataContracts/CustomFieldClass';
   
 @Injectable()
 
@@ -26,6 +30,7 @@ export class ContainerizationExtendedListService {
     public SelectedDeclarations: boolean;
     public AllDeclarations: string;
     public IsDirectCharging: string;
+    public containerizationRequestParams:ContainerizationRequestParams;
 
     getPromiseByFilters(filters: ApiQueryFilters) {
 
@@ -34,6 +39,49 @@ export class ContainerizationExtendedListService {
             resolve(this.getByFilters(filters));
 
         });
+    }
+
+	CreateContainerizations(entityPM: ContainerizationPM) {
+      
+		var callTime = new Date();  
+		
+		return defer(() => {
+
+			var serviceResponse: ServiceResponse = new ServiceResponse();
+			var validator: ClassLevelValidator = new ClassLevelValidator();                
+			var errorsArray = validator.Validate("Customs.Containerization", entityPM);
+
+
+			if (errorsArray.length == 0) {
+
+				var mappedEntity: ContainerizationPM = this.MapJsonToEntityPM(entityPM, false);
+				
+				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
+
+							var pm = response.body;
+							if (pm) {
+								var mappedResult: ContainerizationPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								serviceResponse.Result = mappedResult;
+							}						
+
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Containerization", "SaveChanges", "");                    
+												                             
+							return serviceResponse;
+						}),
+
+						catchError(ServiceHelper.HandleServiceError));
+			}
+
+			else {
+				serviceResponse.HasError = true;
+				serviceResponse.ErrorsArray = errorsArray;
+				return of(serviceResponse);
+			}
+		});
+
     }
 
     getByFilters(filters: ApiQueryFilters) {
@@ -100,6 +148,74 @@ export class ContainerizationExtendedListService {
 
 
         return entityList;
+    }
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ContainerizationPM = null) {
+
+         
+        if (!entityPM) {
+            
+            entityPM = new ContainerizationPM();
+			entityPM.DisableMarkAsDirty = true;
+        }
+
+		var customFields: Array<string> = [];
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
+            var jsonPMKeys = Object.keys(jsonPM);
+
+            for (var key in jsonPMKeys) {
+			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+
+                continue;
+            }
+                var property = jsonPMKeys[key];
+				
+			  if(customFields.indexOf(property) > -1)
+                {
+                if (jsonPM[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+                    entityPM[property] = customFieldClass;
+                }
+            }
+            else {
+                entityPM[property] = jsonPM[property];
+            }
+                 
+            }
+			
+			 
+            
+
+		if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+
+		}
+        else {
+
+            entityPM.OldEntityPM = null;
+        }
+		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
+        return entityPM;
+    }
+    public clone(jsonPM: any) {
+        var entityPM: any;
+        entityPM = {};
+
+        var jsonPMKeys = Object.keys(jsonPM);
+        for (var key in jsonPMKeys) {
+            
+            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+                continue;
+            }
+
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+
+        }
+        return entityPM;
     }
 
 }

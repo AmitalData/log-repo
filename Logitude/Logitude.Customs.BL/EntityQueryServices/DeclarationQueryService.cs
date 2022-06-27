@@ -2203,6 +2203,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.GetHatraDateForDecId(decId, tenant);
         }
+        public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
+        {
+            return this.repository.GetContainerizationUniqueConsignment(declarationList);
+        }
 
     }
 }

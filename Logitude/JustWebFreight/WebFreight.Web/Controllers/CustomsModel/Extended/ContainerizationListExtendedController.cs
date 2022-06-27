@@ -38,11 +38,32 @@ using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
 using System.Transactions;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.BL;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public partial class ContainerizationListExtendedController : ApiController
     {
+        public HttpResponseMessage CreateContainerizations(ContainerizationPM entityPM)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                var CreateContainerizationBL = new CreateContainerization();
+                List<ContainerizationPM> ContainerizationList = CreateContainerizationBL.CreateContainerizations(entityPM);
+
+                return Request.CreateResponse(HttpStatusCode.OK, ContainerizationList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
         {
             try
