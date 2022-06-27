@@ -73,6 +73,7 @@ using WebFreight.Web.AccountingModel.DomainServices;
 using WebFreight.Web.BookingModel.DomainServices;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.Controllers.CommonDataModel.Extended;
+using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.CRMModel.DomainServices;
 using WebFreight.Web.CustomModel.DomainServices;
 using WebFreight.Web.DataContracts;
@@ -769,18 +770,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (!string.IsNullOrEmpty(ObjectTableName))
                 {
-                  /*  if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
-                    {
-                        Task<HttpResponseMessage> task = Task<HttpResponseMessage>.Factory.StartNew(() => {
-                            return ExecuteQuickSearchOnSeconderyDB(ObjectTableName, SearchFields, tenant);
-                        });
-
-                        return task.Result;
-                    }*/
-                   // else
-                   // {
-                        return GetQuickSearch(ObjectTableName, SearchFields, tenant);
-                   // }
+                    return GetQuickSearch(ObjectTableName, SearchFields, tenant);                   
                 }
                 else
                 {
@@ -834,12 +824,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         else
                         {
+                            ShipmentAPiHelper.AddFilters(myQueryOperations, tenant);
+                            QueryOperations nonListQueryOperation = new QueryOperations();
+                            nonListQueryOperation.QueryFilterItems = myQueryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+
                             IShipmentsContext iContext = ShipmentsContext.GetSecContext(tenant);
-                            //if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
-                            //{
-                            //    iContext = ShipmentsContext.GetSecContext(tenant);
-                            //}
                             IQueryable<Shipment> iQueryable = (from d in iContext.Shipments where d.Tenant == tenant select d);
+
+                            GenericFilter genericFilter = new GenericFilter();
+                            iQueryable = genericFilter.GetFilteredQuery<Shipment>(nonListQueryOperation, iQueryable);
 
                             if (!string.IsNullOrEmpty(SearchFields))
                             {
