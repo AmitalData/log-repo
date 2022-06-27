@@ -13,7 +13,7 @@ using Logitude.Infrastructure.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Infrastructure.BL.EntityQueryServices;
-using Logitude.Infrastructure.BL.ExtendedServices;
+using Logitude.Infrastructure.Data.ExtendedServices;
 
 namespace Logitude.Infrastructure.BL.EntityDataMappings
 {
@@ -61,8 +61,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 
         private void MapAvailableForScheduling(BIReportPM entityPM)
         {
-            AvailableForSchedulingBIReportService availableForSchedulingBIReportService = new AvailableForSchedulingBIReportService(entityPM.Tenant);
-            entityPM.AvailableForScheduling = availableForSchedulingBIReportService.IsAvailableForScheduling(entityPM.FactTableName);
+            AvailableForSchedulingBIReportService availableForSchedulingBIReportService = new AvailableForSchedulingBIReportService();
+            entityPM.AvailableForScheduling = availableForSchedulingBIReportService.IsAvailableForScheduling(entityPM.FactTableName, entityPM.Tenant);
         }
 
         private void BuildSearchFields(BIReportPM entityPM, BIReport entityPOCO)

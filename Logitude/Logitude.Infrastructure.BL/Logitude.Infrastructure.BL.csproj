@@ -168,7 +168,6 @@
     <Compile Include="EntityUpdateServices\PriceStepUpdateClass.cs" />
     <Compile Include="EntityUpdateServices\TeamMemberBusinessRoleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TeamUpdateService.cs" />
-    <Compile Include="ExtendedServices\AvailableForSchedulingBIReportService.cs" />
     <Compile Include="ExtendedServices\BatchTaskExecutionsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\BIReportClassLevelValidator.cs" />

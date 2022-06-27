@@ -771,7 +771,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     FillPartnersObslist(DWQueryDataFilter: any) {
         if (DWQueryDataFilter.DataTypeCode != "Dimension" || DWQueryDataFilter.DimensionTableCode != "DIM_Partners") return;
 
-        DWQueryDataFilter.MultiSelectedValueLists.forEach(MultiSelectedValueList => {
+        DWQueryDataFilter.MultiSelectedValueLists?.forEach(MultiSelectedValueList => {
             this.ProcessToAddPartner(MultiSelectedValueList, DWQueryDataFilter);
         });
     }
@@ -787,9 +787,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     }
 
     CompareContactList() {
-        let originalPartnersObslist = this.PartnersObslist.filter(p => p.PartnerType != 'All Users');
+        let originalPartnersObslist = this.PartnersObslist?.filter(p => p.PartnerType != 'All Users');
         this.PrepareContactList();
-        originalPartnersObslist.forEach(originalPartner => {
+        originalPartnersObslist?.forEach(originalPartner => {
             this.SetIsPartnersChanged(originalPartner);
         });
     }
@@ -819,7 +819,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     AddPartner(partnerType: string, partnerId: string) {
         var partnerExist: boolean = false;
-        this.PartnersObslist.forEach(partner => {
+        this.PartnersObslist?.forEach(partner => {
             partnerExist = !AppTool.IsNullOrEmpty(partner) && partner.PartnerType == partnerType;
             partner.PartnerId = !AppTool.IsNullOrEmpty(partner) && partner.PartnerType == partnerType ? partner.PartnerId += ',' + partnerId : partner.PartnerId;
         });

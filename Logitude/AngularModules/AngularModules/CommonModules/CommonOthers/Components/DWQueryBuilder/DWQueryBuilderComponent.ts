@@ -1353,10 +1353,10 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         BaseFilter.FilterItems.forEach((field) => {
             var view = new DWObjectFieldsDetails(field, this);
             view.DisplayName = field.DisplayName;
-            if (view.HasTree && view.DataTypeCode != "DateTime" && !this.IsScheduler) {
+            if (view.HasTree && view.DataTypeCode != "DateTime") {
                 var defaultItem: any = this.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
                 if (defaultItem) {
-                    view.Code = defaultItem.Code;
+                    view.Code = this.IsScheduler ? field.Code : defaultItem.Code;
                     view.LOVAdditionalColumns = defaultItem.LOVAdditionalColumns;
                 }
             }
