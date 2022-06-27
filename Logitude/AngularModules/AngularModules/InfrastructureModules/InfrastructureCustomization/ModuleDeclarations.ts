@@ -45,7 +45,7 @@ export const Components =
         SetWorkerRoleNameComponent,
         AddEditScreenComponent,
         CustomizationTabsComponent,
-        AddTabComponent
+        AddTabComponent,
         ClassicScreenComponent,
         LighteningScreenComponent,
 
