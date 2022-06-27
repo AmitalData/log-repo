@@ -2335,7 +2335,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             BankAccountRepository repo = new BankAccountRepository(entityPM.Tenant);
             var isGlaccountExistsInBankAccount = repo.CheckIfGlAccountExistsInBankAccount(entityPM.Id, entityPM.Tenant);
             if (entityPM.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Banks.ToIntString() && isGlaccountExistsInBankAccount
-                && (entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency) || (entityPOCO.CurrencyId != entityPM.CurrencyId)) {
+                && ((entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency) || (entityPOCO.CurrencyId != entityPM.CurrencyId))) {
                 bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
                 throw new ApplicationException(TranslateTextsClass.Translate("BankAccounts.O.PreventChangingCurrency", 0, useLocal));
             }
