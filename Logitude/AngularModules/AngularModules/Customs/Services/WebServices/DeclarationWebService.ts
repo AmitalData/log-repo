@@ -108,7 +108,7 @@ export class DeclarationWebService {
 
         );
     }
-    GetDeclarationErrors(declarationId: string, listVersionId: string, courierFilter: string, IsAmendmentErrors: boolean=false) {
+    GetDeclarationErrors(declarationId: string, listVersionId: string, courierFilter: string, IsAmendmentErrors: boolean = false, IsExportCloseErrors: boolean = false) {
 
         return defer(() => {
 
@@ -122,7 +122,7 @@ export class DeclarationWebService {
             serviceResponse = new ServiceResponse();
 
             return this._http.get(this._apiUrl + "/GetDeclarationErrors/?declarationId=" + declarationId
-                + "&listVersionId=" + listVersionId + "&courierFilter=" + courierFilter + "&IsAmendmentErrors=" + IsAmendmentErrors, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                + "&listVersionId=" + listVersionId + "&courierFilter=" + courierFilter + "&IsAmendmentErrors=" + IsAmendmentErrors + "&IsExportCloseErrors=" + IsExportCloseErrors, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 var _mappedListsArray: Array<DeclarationErrorView> = [];
