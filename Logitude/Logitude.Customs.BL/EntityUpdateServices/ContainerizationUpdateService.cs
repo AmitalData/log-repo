@@ -41,6 +41,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 {
                                     cons.ExportContainerizationID = entityPM.Id;
                                     cons.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                                    declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+
                                 }
 
                             }
