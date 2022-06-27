@@ -56,6 +56,20 @@ export class ScreenExtendedService {
         });
     }
 
+    GetEntityScreens(entityId: string) {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetEntityScreens?' + 'entityId=' + entityId, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var entities = response.body;
+
+
+                        return entities;
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     insert(entityPM: ScreenPM) {
 
         var callTime = new Date();
@@ -116,7 +130,7 @@ export class ScreenExtendedService {
                         }),
 
                         catchError(ServiceHelper.HandleServiceError));
-       
+
         });
     }
 

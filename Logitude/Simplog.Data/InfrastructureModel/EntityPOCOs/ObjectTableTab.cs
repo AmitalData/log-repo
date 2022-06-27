@@ -32,9 +32,15 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         //[Include]
         //[Association("ObjectTableTabTextCode", "TabNameTextCodeId", "Id", IsForeignKey = true)]
         [ForeignKey("TabNameTextCodeId")]
-        public virtual TextCode TabNameTextCode { get; set; }
+        public TextCode TabNameTextCode { get; set; }
 
         public string HtmlComponentName { get; set; }
         public string HtmlComponentUrl { get; set; }
+
+        public string Type { get; set; } = "Predefined";
+        public string ScreenCode { get; set; }
+        public string OriginalTabCode { get; set; }
+
+
     }
 }

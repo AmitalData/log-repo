@@ -652,6 +652,7 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\PrivateLabelShipmentService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\QuoteChargesGroupService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\ScreenSectionService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\TableTabService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TasksSchedulerValidator.cs" />

@@ -389,6 +389,11 @@ export class SessionComponent {
             this.CurrentWindow.Close(emit);
         }
     }
+    public CloseCurrentWindowData(data: any) {
+        if (this.CurrentWindow != null) {
+            this.CurrentWindow.Close(data);
+        }
+    }
     public DestroyWindows() {
         if (this.Windows == null) {
             this.Windows = new Array<LogitudeWindow>();

@@ -39,7 +39,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityRepository = new TextCodeRepository(objectContext);
         }
 
-        public void Create(TextCodePM theEntityPm)
+        public TextCodePM Create(TextCodePM theEntityPm)
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
@@ -57,6 +57,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
+            return theEntityPm;
         }
 
         public void Update(TextCodePM theEntityPm)

@@ -18,6 +18,8 @@ import {LanguageSettingsComponent} from './Components/LanguageSettings/LanguageS
 import { RuleUpdateHistoryComponent } from './Components/Customization/RulesComponents/RuleUpdateHistoryComponent';
 import { SetWorkerRoleNameComponent } from './Components/SetWorkerRoleName/SetWorkerRoleNameComponent';
 import { AddEditScreenComponent } from './Components/Customization/AddEditScreenComponent';
+import { AddTabComponent } from './Components/Customization/AddTabComponent';
+import { CustomizationTabsComponent } from './Components/Customization/CustomizationTabsComponent';
 import { LighteningScreenComponent } from './Components/Customization/Screen/LighteningScreenComponent';
 import { ClassicScreenComponent } from './Components/Customization/Screen/ClassicScreenComponent';
 
@@ -42,6 +44,8 @@ export const Components =
         RuleUpdateHistoryComponent,
         SetWorkerRoleNameComponent,
         AddEditScreenComponent,
+        CustomizationTabsComponent,
+        AddTabComponent,
         ClassicScreenComponent,
         LighteningScreenComponent,
 
@@ -80,6 +84,8 @@ export class ModuleDeclarations {
             case "RuleUpdateHistoryComponent": { myResult = RuleUpdateHistoryComponent; break; }
             case "SetWorkerRoleNameComponent": { myResult = SetWorkerRoleNameComponent; break; }
             case "AddEditScreenComponent": { myResult = AddEditScreenComponent; break; }
+            case "AddTabComponent": { myResult = AddTabComponent; break; }
+            case "CustomizationTabsComponent": { myResult = CustomizationTabsComponent; break; }
             case "ClassicScreenComponent": { myResult = ClassicScreenComponent; break; }
             case "LighteningScreenComponent": { myResult = LighteningScreenComponent; break; }
 

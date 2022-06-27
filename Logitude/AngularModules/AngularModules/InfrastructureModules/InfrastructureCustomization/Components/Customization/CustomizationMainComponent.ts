@@ -200,7 +200,19 @@ export class CustomizationMainComponent {
             });
         }
     }
+    OpenTabs() {
+        var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
 
+        if (table != null) {
+            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
+                var logWindow = new LogitudeWindow();
+                logWindow.Title = "Tabs: " + this.selectedRow.DefaultText;
+                logWindow.IsFillScreen = true;
+                logWindow.WindowArgs = { ObjectTableID: this.selectedRow.ObjectTableID };
+                logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationTabsComponent');
+            });
+        }
+    }
     CustomFieldsClicked() {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
 
