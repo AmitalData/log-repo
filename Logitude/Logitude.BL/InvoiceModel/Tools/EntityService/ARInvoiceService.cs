@@ -2615,10 +2615,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
                         sumOfVATsAmounts_Local += record.LocalVATAmount;
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
-                        if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS" && (entityPM.StatusCode == "AD" || entityPM.StatusCode == "AC") && record.LocalVATAmount != 0)
-                        {
-                            CreateInterestTransactionLine(null, record);
-                        }
                     }
 
                     Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
@@ -3136,10 +3132,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdateReceivable(item);
                     this.isUpdateTotalVats = true;
                     myLineNumber += 1;
-                    //if (IsFullAccountingActivated(entityPM.Tenant))
-                    //{
-                    //    CreateInterestTransactionLine(item, null);
-                    //}
                 }
             }
 
@@ -3210,12 +3202,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 invoiceLineRepository.SubmitChanges();
             }
-            if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS" && (entityPM.StatusCode == "AD" || entityPM.StatusCode =="AC"))
-            {
-                CreateInterestTransactionLine(item, null);
-            }
 
             this.CreateARInvoiceChargesConstraint(item);
+        }
+
+        public void CreateARInvoiceInterestTransactions(string  arinvoiceId, int tenant)
+        {
+            ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
+            entityPM = entityQuery.GetSinglePM(arinvoiceId, tenant);
+            var invoiceTotalVats = invoiceTotalVatRepository.GetInvoiceTotalVatsForInvoice(arinvoiceId, tenant).ToList();
+            if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS" && (entityPM.StatusCode == "AD" || entityPM.StatusCode == "AC"))
+            {
+                foreach (var invoiceLine in entityPM.InvoiceLines)
+                {
+                    CreateInterestTransactionLine(invoiceLine, null);
+                }
+
+                foreach (var invoiceTotalVat in invoiceTotalVats)
+                {
+                    if (invoiceTotalVat.LocalVATAmount != 0)
+                    {
+                        CreateInterestTransactionLine(null, invoiceTotalVat);
+                    }
+                }
+            }
         }
 
         int invoiceLineNumber = 0;

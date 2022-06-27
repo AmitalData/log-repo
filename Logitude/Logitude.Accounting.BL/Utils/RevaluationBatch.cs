@@ -169,7 +169,7 @@ namespace Logitude.Accounting.BL.Utils
                                 if (lineList.Count > 0)
                                 {
                                     var journal = WriteJournal(journalUpdateService, lineList, revaluation);
-                                    AddInterestTransactions(journal, context);
+                                    // AddInterestTransactions(journal, context);
                                     lineList.Clear();
                                 }
 
@@ -198,7 +198,7 @@ namespace Logitude.Accounting.BL.Utils
 
         }
 
-        private static void AddInterestTransactions(JournalPM journal, IAccountingContext context)
+        public void AddInterestTransactions(JournalPM journal, IAccountingContext context)
         {
             var interestTransactions = new List<InterestTransactionPM>();
             foreach (var line in journal.JournalLines)
@@ -206,18 +206,10 @@ namespace Logitude.Accounting.BL.Utils
                 interestTransactions.Add(CreateInterestTransaction(line));
             }
             InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
-
-            using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+            foreach (var item in interestTransactions)
             {
-                foreach (var item in interestTransactions)
-                {
-                    interestTransactionUpdateService.Update(item,true);
-                }
-                excScope.Complete();
+                interestTransactionUpdateService.Update(item,true);
             }
-                
-
-
         }
 
         private static InterestTransactionPM CreateInterestTransaction( JournalLinePM line)
@@ -373,7 +365,7 @@ namespace Logitude.Accounting.BL.Utils
                             if (lineList.Count >= 100)
                             {
                                 var journal = WriteJournal(journalUpdateService, lineList, revaluation, gLAccountPM);
-                                AddInterestTransactions(journal, context);
+                                // AddInterestTransactions(journal, context);
                                 lineList.Clear();
                                 //  scope.Complete();
                             }

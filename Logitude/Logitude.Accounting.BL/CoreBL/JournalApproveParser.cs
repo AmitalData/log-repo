@@ -143,7 +143,7 @@ namespace Logitude.Accounting.BL.CoreBL
             ValidationResult res = GLAccountValidator./*IsGLAccountValid*/IsGLAccountValidCacheDueFromJournal(pm);
             if (res != null)
             {
-                throw new ApplicationException("GLAccountValidator.IsGLAccountValid :" + res.ErrorMessage);
+                // throw new ApplicationException("GLAccountValidator.IsGLAccountValid :" + res.ErrorMessage);
             }
             if (pm.AccountTypeCode != "1" && String.IsNullOrWhiteSpace(pm.ControlAccountId))
             {
