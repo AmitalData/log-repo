@@ -266,6 +266,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         windowArgs.isReloaded = isReloaded;
         windowArgs.ClearRecepients = isPartnersChanged;
         windowArgs.ByCardCode = this.IsBIReport ? true : false;
+        this.PageChild_OPEMA.SelectedPartnerItem = isPartnersChanged ? null : this.PageChild_OPEMA.SelectedPartnerItem;
         this.PageChild_OPEMA.SetWindowArgs(windowArgs);
     }
 

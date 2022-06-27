@@ -820,8 +820,10 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     AddPartner(partnerType: string, partnerId: string) {
         var partnerExist: boolean = false;
         this.PartnersObslist?.forEach(partner => {
-            partnerExist = !AppTool.IsNullOrEmpty(partner) && partner.PartnerType == partnerType;
-            partner.PartnerId = !AppTool.IsNullOrEmpty(partner) && partner.PartnerType == partnerType ? partner.PartnerId += ',' + partnerId : partner.PartnerId;
+            if (!AppTool.IsNullOrEmpty(partner) && partner.PartnerType == partnerType) {
+                partnerExist = true;
+                partner.PartnerId += ',' + partnerId;
+            }
         });
 
         if (partnerExist) {
