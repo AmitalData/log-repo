@@ -475,6 +475,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return entityId;
         }
 
+        public List<string> GetActiveCardsIdsByCodes(List<string> codes, string typeId, int tenant)
+        {
+
+            List<string> entitiesIds = (from a in context.Cards
+                                        where a.Tenant == tenant && codes.Contains(a.Code) && a.PartnerTypeId == typeId && !a.InActive
+                                        select a.Id).ToList();
+
+            return entitiesIds;
+        }
+
 
 
         public Card GetCardWithPrimaryContactById(string id, int tenant)

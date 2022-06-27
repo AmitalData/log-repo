@@ -246,28 +246,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SetRecepientsDetails(isReloaded) {
-        if (this.IsBIReport) {
-            this.SetBIReportRecepientsDetails(isReloaded);
-        }
-        else {
-            this.SetReportRecepientsDetails(isReloaded);
-        }
-    }
-
-    SetBIReportRecepientsDetails(isReloaded) {
-        var windowArgs: any = {};
-        var recepients: ReportSchedulerRecepients = this.PageChild_RETASK.DataContext.SchedulerDetails.ReportDetails.Recepients;
-        windowArgs.ToEmail = this.SavedRecepients ? "" : recepients.To;
-        windowArgs.Cc = this.SavedRecepients ? "" : recepients.Cc;
-        windowArgs.Bcc = this.SavedRecepients ? "" : recepients.Bcc;
-        windowArgs.PartnersObslist = [];//Next
-        windowArgs.EntityId = this.IsBIReport ? this.BIReportEntity['Id'] : this.ReportList.Id;
-        windowArgs.OnCloseSendToContactsEvent = false;
-        windowArgs.IsUserFromReport = true;//Next
-        windowArgs.IsSchedulerReport = true;
-        windowArgs.isReloaded = isReloaded;
-        windowArgs.ClearRecepients = false;//Next
-        this.PageChild_OPEMA.SetWindowArgs(windowArgs);
+        this.SetReportRecepientsDetails(isReloaded);
     }
 
     SetReportRecepientsDetails(isReloaded) {
@@ -286,6 +265,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         windowArgs.IsSchedulerReport = true;
         windowArgs.isReloaded = isReloaded;
         windowArgs.ClearRecepients = isPartnersChanged;
+        windowArgs.ByCardCode = this.IsBIReport ? true : false;
         this.PageChild_OPEMA.SetWindowArgs(windowArgs);
     }
 
@@ -311,7 +291,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         }
         else if (this.SelectedTabLocation == 1) {
             if (this.IsBIReport) {
-                this.ChangeSelectedLocation("OPEMA");
+                this.SelectedEmailPageForBIReport();
             }
             else if (this.PageChild_PRREP.ValidateSelectedFilters()) {
                 if (this.PageChild_OPEMA != null) {
@@ -320,6 +300,13 @@ export class AddEditReportSchedulerComponent implements OnInit {
                 this.ChangeSelectedLocation("OPEMA");
             }
         }
+    }
+
+    SelectedEmailPageForBIReport() {
+        if (this.PageChild_OPEMA != null) {
+            this.SetRecepientsDetails(true);
+        }
+        this.ChangeSelectedLocation("OPEMA");
     }
 
     ChangeSelectedLocation(locationCode: string) {
@@ -339,7 +326,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         }
     }
 
-    
+
 
     ShowErrorWindow(error) {
         var messageWindow: MessageWindow = new MessageWindow();
@@ -445,9 +432,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     private reOpenReportPreviewTab() {
         this.SetSelectedItem("PRREP");
-        if (!this.IsBIReport) {
-            this.PageChild_PRREP.IsPartnersChanged("2");
-        }
+        this.PageChild_PRREP.IsPartnersChanged("2");
     }
 
     private reOpenReportTaskTab() {
