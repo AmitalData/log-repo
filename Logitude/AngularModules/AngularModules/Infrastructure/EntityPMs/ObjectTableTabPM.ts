@@ -57,11 +57,11 @@ export class ObjectTableTabPM {
 
     // Abdullah
     Changeset: 'insert' | 'update' | 'delete' | null;
-    CustomOrder: number;
     Type: 'Custom' | 'Predefined';
     Name: string;
-    ScreenId: string;
+    ScreenCode: string;
     ScreenName: string;
+    OriginalTabCode: string;
 
     public IsHidden: boolean;
     public Disabled: boolean;

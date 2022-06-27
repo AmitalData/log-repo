@@ -37,7 +37,7 @@
     Type="varchar"
     Size="30">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="IndexOrder"
@@ -64,7 +64,7 @@
     Type="varchar"
     Size="100">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="FeatureUniqeCode"
@@ -91,29 +91,23 @@
 
 
     <Column
-      Name="CustomOrder"
-      Type="int">
-        <Constraints
-          Nullable="true" />
-    </Column>
-    <Column
       Name="Type"
       Type="varchar"
-      DefaultValue="Predefined"
+      DefaultValue="'Predefined'"
       Size="50">
         <Constraints
           Nullable="true"
           />
     </Column>
     <Column
-      Name="Name"
+      Name="ScreenCode"
       Type="varchar"
-      Size="300">
+      Size="50">
         <Constraints
           Nullable="true" />
     </Column>
     <Column
-      Name="ScreenId"
+      Name="OriginalTabCode"
       Type="varchar"
       Size="50">
         <Constraints

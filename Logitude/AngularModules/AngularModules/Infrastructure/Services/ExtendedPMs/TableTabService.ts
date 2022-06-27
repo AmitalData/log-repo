@@ -1,10 +1,11 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer } from 'rxjs';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 
 @Injectable()
 export class TableTabService
@@ -32,4 +33,21 @@ export class TableTabService
 
         });
     }
+
+
+    GetTenantTableTabsByTableId(objectTableId: string) {
+        return defer(() => {
+            return this.http.get(this.apiUrl + '/GetTenantTableTabsByTableId?'
+            + 'tenant=' + SessionLocator.Tenant
+            + '&objectTableId=' + objectTableId, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        return response.body;
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+
+
 }

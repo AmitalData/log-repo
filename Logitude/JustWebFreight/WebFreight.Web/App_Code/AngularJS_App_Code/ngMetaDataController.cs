@@ -136,6 +136,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             return objectTableTabs;
         }
 
+       
+
         public List<ObjectTablePM> GetAllObjectTables(int tenant, string objecttables)
         {
             //SecurityUtility.AuthenticationOnTenant(tenant);

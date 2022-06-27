@@ -51,7 +51,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
 
+        [HttpGet]
+        public List<ObjectTableTabPM> GetTenantTableTabsByTableId(int tenant, string objectTableId)
+        {
+            ObjectTableTabQuery query = new ObjectTableTabQuery(new ObjectTableTabRepository(tenant));
+            return query.GetObjectTableTabsByTenantAndObjectTable(objectTableId, tenant).ToList();
         }
 
 

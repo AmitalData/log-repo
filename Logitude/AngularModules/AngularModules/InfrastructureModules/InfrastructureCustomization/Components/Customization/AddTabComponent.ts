@@ -39,16 +39,18 @@ export class AddTabComponent extends BaseComponent {
     }
 
     GetEntityScreens(){
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.screensService.GetEntityScreens(this.objectTable.Id)
             .subscribe(screens => {
                 this.screens = screens;
+                this.CurrentSession.StopBusyIndicator();
             });
 
     }
 
     SetWindowArgs(args: any) {
         this.args = args.ViewModel;
-        this.objectTable = window.ObjectTables.filter(x => x.Id === this.args.ObjecttableId)[0];
+        this.objectTable = window.ObjectTables.filter(x => x.Id === this.args.objectTableId)[0];
         this.InitializeTab();
         this.GetEntityScreens();
 
@@ -66,7 +68,7 @@ export class AddTabComponent extends BaseComponent {
     SelectedScreen;
     ScreenChanged(screen: ScreenPM){
         this.SelectedScreen = screen;
-        this.TableTab.ScreenId = screen?.Id;
+        this.TableTab.ScreenCode = screen?.Code;
         this.TableTab.ScreenName = screen?.Name;
 
     }
