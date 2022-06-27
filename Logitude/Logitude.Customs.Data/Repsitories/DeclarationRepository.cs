@@ -67,30 +67,49 @@ namespace Logitude.Customs.Data.Repsitories
             bool newBL = true;
             if (newBL)// TRING  FILENO=60255210
             {
-                var qCustomFileNo = context.Declarations
-    .Where(r => r.Id == id)
-    .Where(r => r.Tenant == tenant)
-    .Select(r => r.CustomFileNo);
-                var qAllCustomFileNo =
-                    (
-                from c in qCustomFileNo
-                join d in context.Declarations
-                on c equals d.CustomFileNo
-                select d
-                    );
+                List<Declaration> allDecSameFile = null;
+                bool ship2uSlow_KIS = true;
+                if (ship2uSlow_KIS)
+                {
+                    var qCustomFileNo = context.Declarations
+        .Where(r => r.Id == id)
+        .Where(r => r.Tenant == tenant)
+        .Select(r => r.CustomFileNo);
+                    string customFileNo= qCustomFileNo.FirstOrDefault();
+                    if (string.IsNullOrWhiteSpace( customFileNo ))
+                    {
+                        throw new Exception($"CustomFileNo is missing (Declaration  id ={id})");
+                    }
+                    var qAllCustomFileNo = context.Declarations.Where(r => r.CustomFileNo == customFileNo);
+                    allDecSameFile = qAllCustomFileNo.ToList();
+                }
+                else
+                {
+                    var qCustomFileNo = context.Declarations
+        .Where(r => r.Id == id)
+        .Where(r => r.Tenant == tenant)
+        .Select(r => r.CustomFileNo);
+                    var qAllCustomFileNo =
+                        (
+                    from c in qCustomFileNo
+                    join d in context.Declarations
+                    on c equals d.CustomFileNo
+                    select d
+                        );
 
-                //var qGetAcceptDeclarationAmendment =
-                //    (
-                //from dec in qAllCustomFileNo.Where(r => r.Tenant == tenant)
-                //where
-                //(
-                //(dec.Id == id && dec.AmendmentDontDisplayInList == false && dec.DeclarationNumber != null) ||
-                //(dec.AmendmentOriginalDeclartation == id && dec.DeclarationNumber != null && dec.AmendmentDontDisplayInList == false)
-                //)
-                //select dec
-                //);
+                    //var qGetAcceptDeclarationAmendment =
+                    //    (
+                    //from dec in qAllCustomFileNo.Where(r => r.Tenant == tenant)
+                    //where
+                    //(
+                    //(dec.Id == id && dec.AmendmentDontDisplayInList == false && dec.DeclarationNumber != null) ||
+                    //(dec.AmendmentOriginalDeclartation == id && dec.DeclarationNumber != null && dec.AmendmentDontDisplayInList == false)
+                    //)
+                    //select dec
+                    //);
 
-                var allDecSameFile = qAllCustomFileNo.ToList();
+                    allDecSameFile = qAllCustomFileNo.ToList();
+                }
                 var qGetAcceptDeclarationAmendment = (from a in allDecSameFile
                                                       where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) ||
                             (a.AmendmentOriginalDeclartation == id && a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
