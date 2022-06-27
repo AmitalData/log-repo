@@ -7,8 +7,10 @@ import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
 import { CodeNameClass } from '../../DataContracts/CodeNameClass';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
+import { BatchPrintService, BatchPrintManagerArgs, PrintEntityKeys} from '../../Services/BatchPrintService';
 import { EntityListService } from '../../Services/EntityListService';
 import { AppTool } from '../../Tools';
+import { SessionInfo } from '../../Utilities/SessionInfo';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { BaseComponent } from '../LogitudeComponents/BaseComponent';
 declare var window: any;
@@ -40,11 +42,18 @@ export class PrintComponent extends BaseComponent implements OnInit {
     public DocumentTypeCopiesList: CodeNameClass[];
     private documentTypeService: DocumentTypeTemplateListExtendedService;
     public ValidationErrorsList: string[];
+    public DocumentTypeQueryFilters: ApiQueryFilters;
     constructor(private _entityListService: EntityListService) {
         super();
         window.AllRecords = [];
         this.documentTypeService = new DocumentTypeTemplateListExtendedService();
+        this.BuildQueryFilters();
         this.Listen();
+    }
+
+    private BuildQueryFilters() {
+        this.DocumentTypeQueryFilters = new ApiQueryFilters();
+        this.DocumentTypeQueryFilters.addAdditionalFilter("TemplateFormatCode", "P", null, null, "Equals", false, false, false, "string");
     }
 
     ngOnInit() {
@@ -314,7 +323,30 @@ export class PrintComponent extends BaseComponent implements OnInit {
             return;
         }
 
-        
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        var args: BatchPrintManagerArgs = new BatchPrintManagerArgs();
+        args.DocumentId = this.DocumentTypeId;
+        args.TemplateId = this.SelectedDocumentTypeTemplate.Code;
+        args.CopyId = this.selectedDocumentTypeCopy.Code;
+        args.ObjectTableId = this.ObjectTableId;
+        args.Tenant = SessionInfo.LoggedUserTenant;
+        args.EntityIds = [];
+
+        this.SelectedRecords.forEach((item) => {
+            var key: PrintEntityKeys = new PrintEntityKeys();
+            key.EntityId = item.Id;
+            args.EntityIds.push(key);
+        });
+
+        var service: BatchPrintService = new BatchPrintService();
+        service.Print(args).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                //this.ParentComponent.UpdateButtonClicked(myResponse.Result, this.multiEntityUpdateLogPMService);
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
     IsPrintValid(): boolean {
         this.ValidationErrorsList = [];
