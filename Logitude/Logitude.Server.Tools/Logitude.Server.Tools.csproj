@@ -243,6 +243,10 @@
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
     <Compile Include="CustomFields\ChildEntitiesCustomFieldService.cs" />
+    <Compile Include="CToolWorkflows\CloneObjectService.cs" />
+    <Compile Include="CToolWorkflows\Models\CToolWorkflowMessage.cs" />
+    <Compile Include="CToolWorkflows\Models\PropertyChange.cs" />
+    <Compile Include="CToolWorkflows\WorkflowEntityChanges.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationOnUpdateDocumentService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationEventCreationService.cs" />
     <Compile Include="Helpers\UpdatePortSearchFieldService.cs" />

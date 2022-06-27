@@ -38,8 +38,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             EmailMessageParams emailMessageParams = GetEmailMessageParams();
             TenantManagmentPrivateLabelsPM privatelabel = null;
 
-            string LogitudeURL = LogitudeSettings.LogitudeURL;
-            string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);
+            string customerURL = tenantManagementPM?.CustomerURL;
+            string path = GetFogotPasswordPagePath(resetPasswordParameters, customerURL, reqNumber);
 
             EmailBodyArgs emailBodyArgs = new EmailBodyArgs
             {
@@ -164,12 +164,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         private string GetFogotPasswordPagePath(ResetPasswordParameters resetPasswordParameters, string siteUri, string reqNumber)
         {
-            string pageName = string.IsNullOrEmpty(resetPasswordParameters.PageName) ? "PasswordChangePage.aspx" : resetPasswordParameters.PageName;
-            string path = (string.IsNullOrEmpty(resetPasswordParameters.Domain) ? siteUri : resetPasswordParameters.Domain) + @"/" + pageName + "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber;
-
+            string path = siteUri + @"/resetForgotPassword?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber;
             if (!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
                 path += "&tenant=" + Int32.Parse(resetPasswordParameters.BrandingTenant);
-
             return path;
         }
 
@@ -177,7 +174,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             string path = pagePath;
             path += "&tenant=" + Int32.Parse(brandingTenant);
-
             return path;
         }
 

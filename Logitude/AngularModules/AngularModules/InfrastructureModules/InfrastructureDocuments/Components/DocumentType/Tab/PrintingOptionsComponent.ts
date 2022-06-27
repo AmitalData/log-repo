@@ -28,10 +28,15 @@ export class PrintingOptionsComponent extends BaseComponent implements OnInit {
     constructor(public entityArgs: EntityArgs) {
         super();
 
-        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+        this.SetIsShowPopulateAutomaticDate();
+
+    }
+
+    private SetIsShowPopulateAutomaticDate() {
+        let isCustomizationToggleActive = SessionLocator.FeatureToggles.some(d => d.ToggleCode == "CUS");
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || isCustomizationToggleActive) {
             this.IsShowPopulateAutomaticDate = true;
         }
-
     }
 
     ngOnInit() {

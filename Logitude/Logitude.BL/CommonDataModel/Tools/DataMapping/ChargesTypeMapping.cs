@@ -68,7 +68,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsDrop = entityPM.IsDrop;
             poco.IsImport = entityPM.IsImport;
             poco.IsExport = entityPM.IsExport;
-
+            poco.PayDebitGLAcountLocalName = entityPM.PayDebitGLAcountLocalName;
+            poco.RecCreditGLAcountLocalName = entityPM.RecCreditGLAcountLocalName;
             poco.ReceivablesDefaultCurrencyId = entityPM.ReceivablesDefaultCurrencyId;
             poco.PayablesDefaultCurrencyId = entityPM.PayablesDefaultCurrencyId;
             poco.ApplyRegionalTax = entityPM.ApplyRegionalTax;

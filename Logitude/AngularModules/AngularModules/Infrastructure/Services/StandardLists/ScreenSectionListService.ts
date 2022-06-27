@@ -32,12 +32,12 @@ export class ScreenSectionListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/screensectionviews';  
     }
 
-	getSingle(id: string) {
+	getSingle(screencode: string, number: number) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'screencode=' + screencode+'&'+'number=' + number, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class ScreenSectionListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ScreenSection", "GetSingleList", 'id=' + id); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ScreenSection", "GetSingleList", 'screencode=' + screencode+'&'+'number=' + number); 
 
 						return serviceResponse;
 					}),

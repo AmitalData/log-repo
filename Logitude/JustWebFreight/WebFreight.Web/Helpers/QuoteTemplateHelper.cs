@@ -468,7 +468,9 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("QUOTENUMBER", "Quote Number", "Quote Number", "QuoteHeader"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CUSTOMER", "Customer", "Customer", "QuoteHeader"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("ATTN", "ATTN", "ATTN", "QuoteHeader"));
-
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TRANSPORTMODE", "Transport Mode", "Transport Mode", "QuoteHeader"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("DIRECTION", "Direction", "Direction", "QuoteHeader"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("STARTDATE", "Start Date", "Start Date", "QuoteHeader"));
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("EXPIRATIONDATE", "Expiration Date", "Expiration Date", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("EXPIRATIONDAYS", "Expiration Days", "Expiration Days", "QuoteDetails"));
@@ -518,6 +520,11 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NOTIFYADDRESS", "Notify Address", "Notify Address", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NOTIFYCONTACT", "Notify Contact", "Notify Contact", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("DEPARTUREFREQUENCY", "Departure Frequency", "Departure Frequency", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TRANSPORTMODE", "Transport Mode", "Transport Mode", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("DIRECTION", "Direction", "Direction", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("STARTDATE", "Start Date", "Start Date", "QuoteDetails"));
+
+
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("INCLUDED", "Included", "Included", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("INCLUDED", "Included", "Included", "Containers"));

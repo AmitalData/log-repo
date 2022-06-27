@@ -47,7 +47,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void HandelContainers()
         {
-            if (this.ShouldUpdateContainers())
+            if (this.ShouldUpdateContainers() || this.initializer.EntityPM.IsPODUpdatedFromWR)
             {
                 this.HandelShipmentMasterDataFieldsChanges();
                 this.HandelShipmentPackagesChangeSets();

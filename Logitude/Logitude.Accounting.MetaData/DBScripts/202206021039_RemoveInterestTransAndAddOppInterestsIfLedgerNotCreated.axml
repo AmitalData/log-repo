@@ -11,7 +11,7 @@
 	Delete from InterestTransactions where Id in (
 			Select InterestTransactions.Id	from journals 
 			inner join InterestTransactions on InterestTransactions.EntityId = journals.AccountingEntityId AND InterestTransactions.AccountingEntityCode = journals.AccountingEntityCode AND InterestTransactions.tenant = journals.tenant
-			where journals.IsLedgerCreated = 0 and journals.AccountingEntityCode = '3' AND InterestTransactions.InterestReportId IS NULL
+			where journals.IsLedgerCreated = 0 and journals.AccountingEntityCode = '3' AND InterestTransactions.InterestReportId IS NULL AND InterestTransactions.Id not like '8-%'
 		)
     ]]>       
   </Sql>

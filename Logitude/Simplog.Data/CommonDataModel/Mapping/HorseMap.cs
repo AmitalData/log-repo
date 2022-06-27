@@ -16,7 +16,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Name).IsRequired().HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.Color).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.Gender).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Breed).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Discipline).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.TravelBehavior).HasMaxLength(100).IsUnicode(false);
@@ -37,7 +36,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.YearOfBirth).HasColumnName("YearOfBirth");
             this.Property(t => t.Color).HasColumnName("Color");
-            this.Property(t => t.Gender).HasColumnName("Gender");
             this.Property(t => t.Breed).HasColumnName("Breed");
             this.Property(t => t.Discipline).HasColumnName("Discipline");
             this.Property(t => t.TravelBehavior).HasColumnName("TravelBehavior");

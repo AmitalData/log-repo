@@ -5079,6 +5079,12 @@ User/Pass",
             {
             }
         }
+
+        private void UpdateEntity_Click(object sender, EventArgs e)
+        {
+            var updateEntityForm = new Logitude.Update.Update_Entity.Update_Entity();
+            updateEntityForm.Show();
+        }
     }
     public class TimeZoneExcelItem
     {

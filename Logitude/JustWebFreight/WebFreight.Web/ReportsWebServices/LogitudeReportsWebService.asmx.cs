@@ -3707,6 +3707,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             totalData.CustomerName = customer != null ? customer.EnglishName : "";
+            totalData.PartnerName = partner != null ? partner.EnglishName : "";
             totalData.CurrentDate = todayDate;
             #endregion
 

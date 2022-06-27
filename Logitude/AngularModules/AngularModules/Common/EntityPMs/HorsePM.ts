@@ -50,9 +50,9 @@ export class HorsePM {
     public set Color(newValue: string) { if (this.color != newValue) { this.color = newValue; this.MarkAsDirty("Color"); } }
        
 	 
-    private gender: string;
-    public get Gender() { return this.gender; }
-    public set Gender(newValue: string) { if (this.gender != newValue) { this.gender = newValue; this.MarkAsDirty("Gender"); } }
+    private genderName: string;
+    public get GenderName() { return this.genderName; }
+    public set GenderName(newValue: string) { if (this.genderName != newValue) { this.genderName = newValue; this.MarkAsDirty("GenderName"); } }
        
 	 
     private breed: string;

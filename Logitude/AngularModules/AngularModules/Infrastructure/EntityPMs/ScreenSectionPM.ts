@@ -25,11 +25,6 @@ export class ScreenSectionPM {
       }
  	 
     
-    private id: string;
-    public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
@@ -40,9 +35,9 @@ export class ScreenSectionPM {
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
-    private createByUserId: string;
-    public get CreateByUserId() { return this.createByUserId; }
-    public set CreateByUserId(newValue: string) { if (this.createByUserId != newValue) { this.createByUserId = newValue; this.MarkAsDirty("CreateByUserId"); } }
+    private createdByUserId: string;
+    public get CreatedByUserId() { return this.createdByUserId; }
+    public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
        
 	 
     private screenCode: string;
@@ -53,6 +48,21 @@ export class ScreenSectionPM {
     private objectTableName: string;
     public get ObjectTableName() { return this.objectTableName; }
     public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
+       
+	 
+    private numberOfRows: number;
+    public get NumberOfRows() { return this.numberOfRows; }
+    public set NumberOfRows(newValue: number) { if (this.numberOfRows != newValue) { this.numberOfRows = newValue; this.MarkAsDirty("NumberOfRows"); } }
+       
+	 
+    private number: number;
+    public get Number() { return this.number; }
+    public set Number(newValue: number) { if (this.number != newValue) { this.number = newValue; this.MarkAsDirty("Number"); } }
+       
+	 
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
 
@@ -82,4 +92,4 @@ export class ScreenSectionPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

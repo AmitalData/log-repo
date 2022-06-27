@@ -306,6 +306,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <Content Include="Images\Icons\multi-print.png" />
     <Content Include="Images\Icons\MultiUpdate.png" />
     <Content Include="Images\Icons\WhatsApp.png" />
     <Content Include="Images\LoginScreen\LogBoxLogo.png" />
@@ -320,6 +321,8 @@
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogErrorComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddEditScreenComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefaultExternalAttachmentsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentType\Tab\DocumentTypeCopyDetailsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.html" />
@@ -343,8 +346,15 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\OnUpdateDocumentResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\OnUpdateDocumentAutomationsSettingsComponent.html" />
+    <Content Include="Infrastructure\Components\MultiPrint\MultiPrintCheckBoxComponent.html" />
+    <Content Include="Infrastructure\Components\MultiPrint\MultiPrintCheckTemplate.html" />
+    <Content Include="Infrastructure\Components\MultiPrint\MultiPrintErrorHandlerComponent.html" />
+    <Content Include="Infrastructure\Components\MultiPrint\MultiPrintMainComponent.html" />
+    <Content Include="Infrastructure\Components\MultiPrint\PrintComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateBaseComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateErrorHandlerComponent.html" />
+    <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateCheckBoxComponent.html" />
+    <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateCheckTemplate.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateComponent.html" />
     <Content Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceGeneralTabComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiBankTransfersComponent.html" />
@@ -1877,6 +1887,9 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddEditScreenComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\ClassicScreenLayoutService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefaultExternalAttachmentsComponent.ts" />
@@ -1934,8 +1947,15 @@
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEParameterTabComponent\BTEParameterTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\CacheLogComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MenuButtons\AnalyzeQueueMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintCheckBoxComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintCheckTemplate.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintErrorHandlerComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintMainComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\PrintComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateBaseComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateErrorHandlerComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateCheckBoxComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateCheckTemplate.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\NewViewComponent\ChooseUserComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\btnUpdateComponent.ts" />
@@ -2010,6 +2030,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\RuleUpdateHistoryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SchedulerLogsPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\ScreenSectionPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedLogisticsSettingPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedUserQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TeamMemberBusinessRolePM.ts" />
@@ -2018,6 +2039,8 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
+    <TypeScriptCompile Include="Infrastructure\Helpers\MultiPrintHelper.ts" />
+    <TypeScriptCompile Include="Infrastructure\Helpers\MultiUpdateHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableMenuButtonsBuilder.ts" />
     <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableTabsService.ts" />
     <TypeScriptCompile Include="Infrastructure\Interface\IHeaderScreenService.ts" />
@@ -2029,6 +2052,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\FollowUpPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\PerformanceLogService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\ScreenExtendedService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\ScreenSectionExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ApiCredintialsListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionStatusListService.ts" />
@@ -2049,6 +2073,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ImageLibraryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\MultiEntityUpdateLogPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ScreenSectionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\PrivateLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
@@ -8664,6 +8689,21 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Accounting\DataContracts\TaxReportDDList.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\MuiltSectionScreenLayoutService.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Interface\IScreenLayoutService.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

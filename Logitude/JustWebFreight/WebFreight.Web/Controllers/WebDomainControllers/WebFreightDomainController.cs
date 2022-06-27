@@ -348,7 +348,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string ObjectTableName = "Shipment";
                 var exportBIReportService = new ExportBIReportService();
 
-                var data = exportBIReportService.Run(bIReportXMLData, tenant);
+                var data = exportBIReportService.Run(bIReportXMLData, tenant, true);
 
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {

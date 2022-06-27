@@ -41,13 +41,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     Column = a.Column,
                                                     Id = a.Id,
                                                     ObjectFieldId = a.ObjectFieldId,
-                                                    ObjectFieldName = a.ObjectField.FieldName,
+                                                    ObjectFieldName = a.ObjectField!=null ?  a.ObjectField.FieldName:null,
                                                     Row = a.Row,
                                                     ScreenId = a.ScreenId,
                                                     Tenant = a.Tenant,
                                                     ScreenCode = a.ScreenCode,
-                                                    ObjectFieldObjectTableName = a.ObjectField.ObjectTable.Name,
+                                                    ObjectFieldObjectTableName = a.ObjectField != null ? a.ObjectField.ObjectTable!=null ? a.ObjectField.ObjectTable.Name :"" :"",
                                                     ObjectFieldCode = a.ObjectFieldCode,
+                                                    SectionNumber = a.SectionNumber,
                                                 }).ToList();
 
 
@@ -91,6 +92,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          ScreenCode = a.ScreenCode,
                                                          ObjectFieldObjectTableName = a.ObjectField.ObjectTable.Name,
                                                          ObjectFieldCode = a.ObjectFieldCode,
+                                                         SectionNumber = a.SectionNumber,
+
                                                      };
             return screenfields;
         }

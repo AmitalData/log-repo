@@ -15,6 +15,7 @@ import { CardDetails } from "../../../models/CardDetails";
 import { Constants } from "../../../constants/Constants";
 import * as MaintenanceBaseActions from "../../../actions/BaseActions"
 import { ShipmentContext } from '../../../../../Shipment/cypress/models/ShipmentContext';
+import { MainCarriageLegDetails } from "cypress/models/SharedManifestsDetails/MainCarriageLegDetails";
 
 //#region variables
 let MasterShipmentDetails: ShipmentDetails;
@@ -91,9 +92,10 @@ Then("the following validation appears {string}", (ErrorMessage) => {
     SharedManifestsActions.ValidateShareManifestErrorMessage(ErrorMessage)
 });
 
-Given("the user fill {string} as master number for the shipment and remove the consignee", (masterNumber) => {
-    MAWB = masterNumber;
-    SharedManifestsActions.UpdateShipment(masterNumber);
+Given("the user fill master number for the shipment, MainCarriageCarrier,and remove the consignee", (dataTable) => {
+    let mainCarriageLeg = Assists.CreateInstance<MainCarriageLegDetails>(dataTable, true);
+    MAWB=mainCarriageLeg.masterNumber;
+    SharedManifestsActions.UpdateShipment(mainCarriageLeg);
 });
 When("the user save the shipment", () => {
     SharedManifestsActions.SaveMasterShipment()
@@ -202,8 +204,8 @@ Then("the shared shipment should exist with same details as we send from the fir
     SharedManifestsActions.AssertManifestExist(MAWB)
 });
 
-When("the user create the shipment", () => {
-    SharedManifestsActions.CreateShipment(ShipmentContext.MasterNumber)
+When("the user create the shipment with {string} as carrier", (MasterMainCarriageCarrier) => {
+    SharedManifestsActions.CreateShipment(ShipmentContext.MasterNumber,MasterMainCarriageCarrier)
 });
 Then("an import shipment should be created", () => {
     SharedManifestsActions.AssertCreateShipment()

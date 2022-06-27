@@ -977,6 +977,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             var logWindow = new LogitudeWindow();
             if (this.EntityPM.MainCarriageIsFromStack) {                
                 args.EnabledOkButton = false;
+                args.ValidationErrorsList.push(TextCodeTranslator.Translate("Shipment.M.MasterAWBNumberTakenFromStack"));
                 logWindow.Width = 700;
                 logWindow.Height = 400;
             }

@@ -626,5 +626,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string InlandDomesticFromFax { get; set; }
         public string InlandDomesticFromStateId { get; set; }
         public string InlandDomesticFromStateName { get; set; }
+        public string DigitalPortalSearchFields { get; set; }
     }
 }

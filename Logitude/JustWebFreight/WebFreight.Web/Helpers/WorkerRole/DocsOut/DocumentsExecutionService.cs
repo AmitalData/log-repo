@@ -56,20 +56,33 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                         UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
                         ExportStimulDocumentToPDF();
                     }
-                    else queueService.Complete();
+                    else
+                    {
+                        ExceptionHandler.HandleException(new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DateTime.Now, 0, null, "WorkerRole Monitor", null, null);
+                        UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {Exception= new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });                      
+                        queueService.Complete();
+                    }
                 }
             }
             catch (AggregateException aggregateException)
             {
+                var excep = new Exception("aggregateException exception");
                 foreach (var exception in aggregateException.Flatten().InnerExceptions)
                 {
+                    excep = exception;
                     ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
+                    ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Aggr Catch ExecuteDocumentsExecutionQueue", null, null);
                 }
+                UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception= excep, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                queueService.CompleteAsFailed();
                 Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
             catch (Exception exception)
             {
                 ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
+                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", null, null);
+                UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                queueService.CompleteAsFailed();
                 Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
         }
@@ -95,7 +108,6 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
 
                 DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
                 documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
-                
                 RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();

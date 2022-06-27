@@ -109,7 +109,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             }
 
             IQueryable<QuoteList> result = from f in iQueryable.Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard").Include("MoveType").Include("ShipmentSubType")
-                                                               .Include("ShipperCard").Include("CustomerCard")
+                                                               .Include("ShipperCard").Include("CustomerCard").Include("ValidByType")
                                            select new QuoteList()
                                            {
                                                IsClosed = f.IsClosed,
@@ -308,6 +308,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                IncludeImportDutyCharges = f.IncludeImportDutyCharges,
                                                InsuranceValue = f.InsuranceValue,
                                                ValidByTypeCode = f.ValidByTypeCode,
+                                               ValidByTypeName = f.ValidByType == null ? null : f.ValidByType.Name,
                                                ConnectedToOpportunity = f.ConnectedToOpportunity,
                                            };
             return result;
@@ -2566,10 +2567,27 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPM.TotalSaleIncludingVATAmountInLocalCurrency = mySaleAmountLocal + myTotalVATLocal;
 
             entityPM.TicketId = GetConnectedTicketId(entityPOCO, tenant);
-
+            entityPM.SummaryMarkup = this.GetSummaryMarkup(entityPM);
             return entityPM;
         }
 
+        private string GetSummaryMarkup(QuotePM quoteEntityPM)
+        {
+            double? summaryCostAmount = 0;
+            double? summarySaleAmount = 0;
+            string markupPercentage = "";
+            if (quoteEntityPM != null)
+            {
+                var myCostAmountLocal = MethodHelper.Round(quoteEntityPM.QuoteCharges.Sum(a => a.CostTotalAmountLocal), 2);
+                var mySaleAmountLocal = MethodHelper.Round(quoteEntityPM.QuoteCharges.Where(f => f.IsAllIN == false).Sum(a => a.SaleTotalAmountLocal), 2);
+                summaryCostAmount = MethodHelper.Round(myCostAmountLocal, 2);
+                summarySaleAmount = MethodHelper.Round(mySaleAmountLocal, 2);
+
+                markupPercentage = (summaryCostAmount == 0 ? summaryCostAmount : MethodHelper.Round((summarySaleAmount - summaryCostAmount) * 100 / summaryCostAmount, 2)) + "%";
+            }
+            return markupPercentage;
+        }
+   
         private string GetConnectedTicketId(Quote entityPOCO, int tenant)
         {
             #region Ticket

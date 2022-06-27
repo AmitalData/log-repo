@@ -2285,6 +2285,7 @@ namespace Logitude.BL.Helpers
         private string GetQuoteTemplateDetailsFieldValue(string fieldname, QuotePM quotePM)
         {
             string FieldValue = "";
+
             if (fieldname == "EXPIRATIONDAYS")
             {
                 FieldValue = quotePM.ExpirationDays != null ? quotePM.ExpirationDays.ToString() : "";
@@ -2292,6 +2293,18 @@ namespace Logitude.BL.Helpers
             else if (fieldname == "EXPIRATIONDATE")
             {
                 FieldValue = quotePM.ExpirationDate != null ? ConvertToShortDate((DateTime)quotePM.ExpirationDate, quotePM.Tenant) : "";
+            }
+            else if (fieldname == "TRANSPORTMODE")
+            {
+                FieldValue = quotePM.TransportModeName;
+            }
+            else if (fieldname == "DIRECTION")
+            {
+                FieldValue = quotePM.DirectionName;
+            }
+            else if (fieldname == "STARTDATE")
+            {
+                FieldValue = quotePM.StartDate != null ? ConvertToShortDate((DateTime)quotePM.StartDate, quotePM.Tenant) : "";
             }
             else if (fieldname == "SHIPPERNAME")
             {
@@ -2545,6 +2558,18 @@ namespace Logitude.BL.Helpers
             else if (fieldname == "EXPIRATIONDATE" && quotePM.ExpirationDate != null)
             {
                 FieldValue = ConvertToShortDate((DateTime)quotePM.ExpirationDate, quotePM.Tenant);
+            }
+            else if (fieldname == "TRANSPORTMODE")
+            {
+                FieldValue = quotePM.TransportModeName;
+            }
+            else if (fieldname == "DIRECTION")
+            {
+                FieldValue = quotePM.DirectionName;
+            }
+            else if (fieldname == "STARTDATE")
+            {
+                FieldValue = quotePM.StartDate != null ? ConvertToShortDate((DateTime)quotePM.StartDate, quotePM.Tenant) : "";
             }
             else
                 if (fieldname == "CUSTOMER")
@@ -3424,7 +3449,7 @@ namespace Logitude.BL.Helpers
                     if (setting.ShowSaleMaxMinAmountPackages)
                     {
                         string text = included ? translateInclueLable : GetSaleMaxMinAmountValue(chargePM);
-                        allTableRows.Add("SALEMINMAXPACKAGES", AddTableRows(new PricingTableRowDetailsArgs() { Value = text, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                        allTableRows.Add("SALEMINMAXPACKAGES", AddTableRows(new PricingTableRowDetailsArgs() { Value = text, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
 
                     }
                     if (setting.ShowRegionalTAXPackages)
@@ -3482,8 +3507,14 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowUnitsContainers)
                     {
-                        string saleUnitPriceValues = GetUnitPricePackagesValue(quoteTemplateBuildArges, chargePM, included);
-                        allTableRows.Add("UNITSCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleUnitPriceValues, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                        string saleUnitValue = " ";
+                        if (chargePM.SaleQuantity != null)
+                        {
+                            double value = (double)chargePM.SaleQuantity;
+                            saleUnitValue = value.ToString("N"); // 1,234.512
+                        }
+                        if (included) saleUnitValue = translateInclueLable;
+                        allTableRows.Add("UNITSCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleUnitValue, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
                         row += 1;
                     }
 
@@ -3670,7 +3701,7 @@ namespace Logitude.BL.Helpers
                     if (setting.ShowSaleMaxMinAmountContainers)
                     {
                         string saleMaxMinAmount = included ? translateInclueLable : GetSaleMaxMinAmountValue(chargePM);
-                        allTableRows.Add("SALEMINMAXCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleMaxMinAmount, RowDataType = "Field", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                        allTableRows.Add("SALEMINMAXCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleMaxMinAmount, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
                     }
 
                     if (setting.ShowRegionalTAXContainers)

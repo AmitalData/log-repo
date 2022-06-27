@@ -5,6 +5,7 @@ import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
 import {SessionInfo} from '../Utilities/SessionInfo';
 import { AppTool } from '../Tools';
 import { SessionLocator } from '../Utilities/SessionLocator';
+import { TextCodeTranslationPipe } from '../../Controls/Pipes/TextCodeTranslationPipe';
 
 declare var window: any;
 
@@ -22,7 +23,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     public ChildObjectTableName: string;
     public ScreenCode: string;
     public ScreenColumns: ScreenColumn[];
-    public LabelWidth: number = 160;
+    public LabelWidth: number = 190;
     public IsNewEntityCall: boolean;
     public ShowNoFieldsText: boolean = false;
     ShowTitle: boolean = false;
@@ -30,8 +31,10 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     public IsCustomerCareOrDistributor: boolean = false;
     public HideColumns: boolean = false;
     public HideLastColumn: boolean = false;
-
+    public ScreenSections: ScreenSection[];
+    private generalTextCode: string = "General.O.General";
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
+    private objectTableTab: any;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
@@ -47,6 +50,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         this.ShowTitle = showTitle;
         this.ChildObjectTableName = childObjectTableName;
         this.ChildObjectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ChildObjectTableName)[0]?.Id;
+        this.objectTableTab = window.ObjectTableTabs.filter((x: any) => x.Code === this.entityArgs.SelectedTabCode)[0];
+
         this.BuildScreen();
         this.Listen();
     }
@@ -84,10 +89,21 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         this.BuildScreen(true);       
     }
 
-    private BuildScreen(fireEmit: boolean = false) {
+
+    BuildScreen(fireEmit: boolean = false) {
+        if (!this.objectTableTab || !this.objectTableTab.ScreenCode) {
+            this.BuildClassicScreen(fireEmit);
+            return;
+        }
+
+        this.BuildLighteningScreen(fireEmit);
+    }
+
+
+    private BuildClassicScreen(fireEmit: boolean = false) {
         if (this.EntityPM != null) {
             if (this.isViewEnited == true) {
-
+                this.ScreenSections = [];
                 var myScreenColumns: ScreenColumn[] = [];
                 var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ChildObjectTableId : this.ObjectTableId) && x.Code.toLowerCase() == this.ScreenCode.toLowerCase())[0];
                 
@@ -133,13 +149,29 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 }
 
                 this.ScreenColumns = myScreenColumns.filter(c => c.ObjectFields?.length > 0);
-
+                this.ScreenSections.push(new ScreenSection(0, this.ShowTitle ? TextCodeTranslationPipe.apply(this.generalTextCode) : "", this.ScreenColumns))
                 if (fireEmit) {
                     this.LoadCompleted.emit(true);
                 }
             }
         }
     }
+
+
+    private BuildLighteningScreen(fireEmit: boolean = false) {
+
+        if (this.EntityPM == null || this.isViewEnited == false) return;
+        let screen = window.Screens.filter((x: any) => x.Code === this.objectTableTab.ScreenCode)[0];
+        if (screen == null) return;
+
+
+        this.ScreenSections = [];
+        if (fireEmit) this.LoadCompleted.emit(true);
+
+   
+    }
+
+
 
     private isScreenEnabled: boolean = true;
     SetEnabled(isEnabled: boolean) {
@@ -163,5 +195,16 @@ export class ScreenColumn {
     constructor(index: number) {
         this.Index = index;
         this.ObjectFields = [];
+    }
+}
+
+export class ScreenSection {
+    public SectionNumber: number;
+    public Title: string;
+    public ScreenColumns: ScreenColumn[];
+    constructor(sectionNumber: number, title: string,screenColumns:ScreenColumn[]) {
+        this.SectionNumber = sectionNumber;
+        this.Title = title;
+        this.ScreenColumns = screenColumns;
     }
 }

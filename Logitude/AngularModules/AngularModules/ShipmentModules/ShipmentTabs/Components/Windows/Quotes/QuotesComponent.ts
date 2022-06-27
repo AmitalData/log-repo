@@ -314,6 +314,13 @@ class QuoteItem {
     get ExpirationDate() { return this.Entity.ExpirationDate; }
     get StageName() { return this.Entity.StageName; }
     get StartDate() { return this.Entity.StartDate; }
+    get QuoteTypeName() { return this.Entity.QuoteTypeName; }
+    get CarrierName() { return this.Entity.CarrierName; }
+    get ChargeableWeight() { return this.Entity.ChargeableWeight; }
+    get GrossWeight() { return this.Entity.GrossWeight; }
+    get UsageCount() { return this.Entity.UsageCount == 0 ? null : this.Entity.UsageCount; }
+    get Notes() { return this.Entity.Notes; }
+    get ValidBy() { return !AppTool.IsNullOrEmpty(this.Entity.ValidByTypeName) ? this.Entity.ValidByTypeName : "Today"; }
 
     public ValidByDate: Date;
     private SetValidByDate() {
@@ -328,15 +335,7 @@ class QuoteItem {
         else {
             this.ValidByDate = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
         }
-    }
-
-    get QuoteTypeName() { return this.Entity.QuoteTypeName; }
-    get CarrierName() { return this.Entity.CarrierName; }
-    get ChargeableWeight() { return this.Entity.ChargeableWeight; }
-    get GrossWeight() { return this.Entity.GrossWeight; }
-    get UsageCount() { return this.Entity.UsageCount == 0 ? null : this.Entity.UsageCount; }
-
-    get Notes() { return this.Entity.Notes; }
+    }    
 
     public WeightDiffernece: number = 0;
     SetDiffernece() {

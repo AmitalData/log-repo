@@ -47,11 +47,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         private const string GeneralRequestUpdateContainerStatusQueueName = "GeneralRequestUpdateContainerStatus";
         ICommonDataContext CommonContext;
 
-        private GeneralContainerTrackingArgs simulatorArgs;
+        private GeneralContainerTrackingArgs generalContainerTrackingArgs;
+        private List<VizionCarrier> supportedCarriers;
         private int tenant;
         public GeneralContainerTrackingService(GeneralContainerTrackingArgs simulatorArgs)
         {
-            this.simulatorArgs = simulatorArgs;
+            this.generalContainerTrackingArgs = simulatorArgs;
             this.tenant = simulatorArgs.Tenant;
         }
 
@@ -60,83 +61,99 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         }
 
-        public void GeneralSimulateContainerStatus()
+        public void GeneralContainerStatus()
         {
             InitializeContext();
-            SetSimulatorArgsFields();
+            SetArgsFields();
+            if (!generalContainerTrackingArgs.IsSimulator)
+                supportedCarriers = GetSupportedCarriers();
             if (!CheckValidation())
                 return;
+            SetCarriarCode();
             using (TransactionScope scope = Simplog.Server.Infrastructure.Helpers.TransactionFactory.GetTransaction())
             {
                 var document = AddRequstDocument();
                 var commLog = AddRequstCommunicationLog(document);
-                SendCommunicationLogMessage(commLog, simulatorArgs.Tenant);
+                SendCommunicationLogMessage(commLog, generalContainerTrackingArgs.Tenant);
                 scope.Complete();
             }
         }
 
-        private void SetSimulatorArgsFields()
+        private void SetCarriarCode()
         {
-            var context = ShipmentsContext.GetContext(simulatorArgs.Tenant);
-            var shipment = context.Shipments.Where(e => e.Id == simulatorArgs.ShipmentId).FirstOrDefault();
-            var masterID = simulatorArgs.ShipmentId;
-            if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId) )
+            if (generalContainerTrackingArgs.IsSimulator)
+                return;
+            var carrier = supportedCarriers.Where(e => e.scac == generalContainerTrackingArgs.ScacCode).FirstOrDefault();
+            generalContainerTrackingArgs.CarrierCode = carrier.carrier_code;
+        }
+
+        private List<VizionCarrier> GetSupportedCarriers()
+        {
+            switch (generalContainerTrackingArgs.ContainerStatusSourceCode)
+            {
+                case ContainerStatusSourceValues.Vizion:
+                    return new VizionService().GetAllCarriers();
+                default:
+                    throw new Exception("Get Supported Carriers not implement in this Source");
+            }
+        }
+
+        private void SetArgsFields()
+        {
+            var context = ShipmentsContext.GetContext(generalContainerTrackingArgs.Tenant);
+            var shipment = context.Shipments.Where(e => e.Id == generalContainerTrackingArgs.ShipmentId).FirstOrDefault();
+            var masterID = generalContainerTrackingArgs.ShipmentId;
+            if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
             {
                 masterID = shipment.MasterShipmentDataId;
             }
-            var shipmentMasterData = context.ShipmentMasterDatas.Include(e=>e.MainCarriageCarrierCard).Where(e => e.Id == masterID && e.Tenant == simulatorArgs.Tenant).FirstOrDefault();
+            var shipmentMasterData = context.ShipmentMasterDatas.Include(e => e.MainCarriageCarrierCard)
+                .Include(e => e.MainCarriageCarrierCard.ShippingLine).Where(e => e.Id == masterID && e.Tenant == generalContainerTrackingArgs.Tenant).FirstOrDefault();
 
-            simulatorArgs.CarrierId = shipmentMasterData?.MainCarriageCarrierId;
-            simulatorArgs.CarrierCode = shipmentMasterData?.MainCarriageCarrierCard?.Code;
-            simulatorArgs.Master = shipmentMasterData?.Master;
+            generalContainerTrackingArgs.CarrierId = shipmentMasterData?.MainCarriageCarrierId;
+            generalContainerTrackingArgs.ScacCode = shipmentMasterData?.MainCarriageCarrierCard?.ShippingLine?.SCACCode;
+            generalContainerTrackingArgs.Master = shipmentMasterData?.Master;
         }
 
         private bool CheckValidation()
         {
-            if(string.IsNullOrEmpty( simulatorArgs.CarrierId ))
-                simulatorArgs.Errors.Add("Carrier is missing");
-            if(string.IsNullOrEmpty( simulatorArgs.Data ))
-                simulatorArgs.Errors.Add("Response is missing");
-            if(simulatorArgs.IsFromContainer && string.IsNullOrEmpty(simulatorArgs.ContainerNumber))
-                simulatorArgs.Errors.Add("Container Number is missing");
-            //CheckCarrierIsSupported(simulatorArgs);
-            if(!simulatorArgs.IsFromContainer && string.IsNullOrEmpty(simulatorArgs.Master))
-                simulatorArgs.Errors.Add("Master Number is missing");
-            if (simulatorArgs.Errors.Count > 0)
+            if (string.IsNullOrEmpty(generalContainerTrackingArgs.CarrierId))
+                generalContainerTrackingArgs.Errors.Add("Carrier is missing");
+            if (string.IsNullOrEmpty(generalContainerTrackingArgs.ScacCode))
+                generalContainerTrackingArgs.Errors.Add("Carrier Scac Code is missing");
+            if (string.IsNullOrEmpty(generalContainerTrackingArgs.Data) && generalContainerTrackingArgs.IsSimulator)
+                generalContainerTrackingArgs.Errors.Add("Response is missing");
+            if (generalContainerTrackingArgs.IsFromContainer && string.IsNullOrEmpty(generalContainerTrackingArgs.ContainerNumber))
+                generalContainerTrackingArgs.Errors.Add("Container Number is missing");
+            if (!generalContainerTrackingArgs.IsSimulator)
+                CheckCarrierIsSupported();
+            if (!generalContainerTrackingArgs.IsFromContainer && string.IsNullOrEmpty(generalContainerTrackingArgs.Master))
+                generalContainerTrackingArgs.Errors.Add("Master Number is missing");
+            if (generalContainerTrackingArgs.Errors.Count > 0)
             {
-                simulatorArgs.Success = false;
+                generalContainerTrackingArgs.Success = false;
             }
-            return simulatorArgs.Success;
+            return generalContainerTrackingArgs.Success;
         }
 
         private void CheckCarrierIsSupported()
         {
-            switch (simulatorArgs.ContainerStatusSourceCode)
+            var carrier = supportedCarriers.Where(e => e.scac == generalContainerTrackingArgs.ScacCode).FirstOrDefault();
+            if (carrier == null)
             {
-                case ContainerStatusSourceValues.Vizion:
-                    CheckCarrierIsSupportedInVizion();
-                    break;
-                default:
-                    break;
+                generalContainerTrackingArgs.Errors.Add("Carrier not supported");
             }
         }
 
-        private void CheckCarrierIsSupportedInVizion()
-        {
-            var vizionCarriers = new VizionService().GetAllCarriers();
-            if(!vizionCarriers.Where(e=>e.carrier_code == simulatorArgs.CarrierCode).Any())
-            {
-                 simulatorArgs.Errors.Add("Carrier not supported");
-            }
-        }
 
-        
+
+
 
         private Document AddRequstDocument()
         {
             DocumentRepository documentrepository = new DocumentRepository(CommonContext);
-            var byteArray = ConvertObjectToByteArray(simulatorArgs);
-            Document document = CreateDocument(simulatorArgs.Tenant, byteArray);
+            var byteArray = ConvertObjectToByteArray(generalContainerTrackingArgs);
+            Document document = CreateDocument(generalContainerTrackingArgs.Tenant, byteArray);
             documentrepository.Add(document);
             documentrepository.SubmitChanges();
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
@@ -169,10 +186,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                 Folder = "ContainerTrackingStatus",
             };
         }
-        
+
         private byte[] ConvertObjectToByteArray(object simulatorArgs)
         {
-            var objectText =  JsonConvert.SerializeObject(simulatorArgs);
+            var objectText = JsonConvert.SerializeObject(simulatorArgs);
             var jsonByteArray = Encoding.UTF8.GetBytes(objectText);
             return jsonByteArray;
         }
@@ -190,9 +207,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         private ObjectTable GetObjectTableForSimulate()
         {
-            ObjectTableRepository objecttableRep = new ObjectTableRepository(simulatorArgs.Tenant);
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(generalContainerTrackingArgs.Tenant);
 
-            if (simulatorArgs.IsFromContainer)
+            if (generalContainerTrackingArgs.IsFromContainer)
                 return objecttableRep.GetObjectTableByName("Container", 0, true);
             else
                 return objecttableRep.GetObjectTableByName("Shipment", 0, true);
@@ -202,21 +219,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         {
             return new CommunicationLog()
             {
-                Id = IdCounter.GetNumber("CommunicationLog", simulatorArgs.Tenant),
-                LastStatusDate = TenantServerConfigration.GetCurrentDateTime(simulatorArgs.Tenant),
+                Id = IdCounter.GetNumber("CommunicationLog", generalContainerTrackingArgs.Tenant),
+                LastStatusDate = TenantServerConfigration.GetCurrentDateTime(generalContainerTrackingArgs.Tenant),
                 InOut = "O",
                 ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
                 Subject = "Request Update Container Status",
-                Tenant = simulatorArgs.Tenant,
+                Tenant = generalContainerTrackingArgs.Tenant,
                 DocumentId = document.Id,
                 CommunicationLogTypeCode = "Q",
                 CommunicationStatusTypeCode = "W",
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(simulatorArgs.Tenant),
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(generalContainerTrackingArgs.Tenant),
                 CreateDateUTC = DateTime.UtcNow,
                 LastStatusDateUTC = DateTime.UtcNow,
                 QueueName = GeneralRequestUpdateContainerStatusQueueName,
                 Priority = 1,
-                EntityId = simulatorArgs.IsFromContainer ? simulatorArgs.ContainerId : simulatorArgs.ShipmentId
+                EntityId = generalContainerTrackingArgs.IsFromContainer ? generalContainerTrackingArgs.ContainerId : generalContainerTrackingArgs.ShipmentId
 
             };
         }
@@ -249,7 +266,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             analyzeQueueReposiory.SubmitChanges();
         }
 
-        
+
         private void SendCommunicationLogMessage(CommunicationLog commLog, int tenant)
         {
             if (!string.IsNullOrEmpty(commLog.QueueName))
@@ -299,7 +316,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             if (containerTrackingRequest == null)
                 throw new Exception("There is no active request to unsubscribe");
             var result = new UnsubscribeResult() { message = "Reference unsubscribed successfully" };
-            if (!simulatorArgs.IsSimulator)
+            if (!generalContainerTrackingArgs.IsSimulator)
                 result = new VizionService().Unsubscribe(containerTrackingRequest);
             InActiveContainerTrackingRequest(containerTrackingRequest);
             return result;
@@ -308,7 +325,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         private void InActiveContainerTrackingRequest(ContainerTrackingRequestPM containerTrackingRequest)
         {
             var shipmentContext = ShipmentsContext.GetContext(containerTrackingRequest.Tenant);
-            ContainerTrackingRequestService containerTrackingRequestService = new ContainerTrackingRequestService(shipmentContext,containerTrackingRequest.Tenant);
+            ContainerTrackingRequestService containerTrackingRequestService = new ContainerTrackingRequestService(shipmentContext, containerTrackingRequest.Tenant);
             containerTrackingRequest.Status = ContainerTrackingRequestStatus.InActive;
             containerTrackingRequestService.Update(containerTrackingRequest);
         }
@@ -316,7 +333,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         private ContainerTrackingRequestPM GetContainerTrackingRequest()
         {
             ContainerTrackingRequestQuery containerTrackingRequestQuery = new ContainerTrackingRequestQuery(tenant);
-            var containerTrackingRequest = containerTrackingRequestQuery.GetActiveRequest(this.simulatorArgs, tenant);
+            var containerTrackingRequest = containerTrackingRequestQuery.GetActiveRequest(this.generalContainerTrackingArgs, tenant);
             return containerTrackingRequest;
         }
     }

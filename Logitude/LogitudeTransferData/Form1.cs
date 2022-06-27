@@ -118,7 +118,24 @@ namespace LogitudeTransferData
         private void button11_Click(object sender, EventArgs e)
         {
             var tenant = int.Parse(textBox1.Text);
-            List<ObjectFieldPM> AllObjectFieldPMs = GetAllCustomObjectFields(tenant);
+            List<ObjectFieldPM> AllObjectFieldPMs = GetAllCustomObjectFields("Shipment", tenant);
+            // Here we get all CustomFields except PickList
+            List<ObjectFieldPM> notPickListObjectFieldPMs = AllObjectFieldPMs.FindAll(o => o.DataTypeCode != "PickList");
+            ProduceKafkaMessages<ObjectFieldPM>(notPickListObjectFieldPMs, KakaMessageTypes.CustomField);
+
+            // Here we want to get CustomPickList values
+            List<CustomPickListPM> customPickListPMs = GetAllCustomPickLists(tenant);
+            ProduceKafkaMessages<CustomPickListPM>(customPickListPMs, KakaMessageTypes.CustomPickList);
+
+            // Then send PickList object fields
+            List<ObjectFieldPM> pickListObjectFieldPMs = AllObjectFieldPMs.FindAll(o => o.DataTypeCode == "PickList");
+            ProduceKafkaMessages<ObjectFieldPM>(pickListObjectFieldPMs, KakaMessageTypes.CustomField);
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<ObjectFieldPM> AllObjectFieldPMs = GetAllCustomObjectFields("Container", tenant);
             // Here we get all CustomFields except PickList
             List<ObjectFieldPM> notPickListObjectFieldPMs = AllObjectFieldPMs.FindAll(o => o.DataTypeCode != "PickList");
             ProduceKafkaMessages<ObjectFieldPM>(notPickListObjectFieldPMs, KakaMessageTypes.CustomField);
@@ -140,6 +157,21 @@ namespace LogitudeTransferData
             ProduceKafkaMessages<DepartmentPM>(departmentPMs, KakaMessageTypes.Department);
         }
 
+        private void button13_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<CustomerTeamPM> customerTeamPMs = GetAllCustomerTeams(tenant);
+
+            ProduceKafkaMessages<CustomerTeamPM>(customerTeamPMs, KakaMessageTypes.CustomerTeam);
+        }
+
+        private List<CustomerTeamPM> GetAllCustomerTeams(int tenant)
+        {
+            CustomerTeamQuery customerTeamQuery = new CustomerTeamQuery(tenant);
+            List<CustomerTeamPM> customerTeamPMs = customerTeamQuery.GetCustomerTeamPMsByTenant(tenant).ToList();
+            return customerTeamPMs;
+        }
+
         private List<DepartmentPM> GetAllDepartments(int tenant)
         {
             DepartmentQuery departmentQuery = new DepartmentQuery(tenant);
@@ -154,9 +186,9 @@ namespace LogitudeTransferData
             return customPickListPMs;
         }
 
-        private List<ObjectFieldPM> GetAllCustomObjectFields(int tenant)
+        private List<ObjectFieldPM> GetAllCustomObjectFields(string objectTableName, int tenant)
         {
-            ObjectTablePM shipmentObject = ObjectTableQuery.GetObjectTableByCode("Shipment", tenant);
+            ObjectTablePM shipmentObject = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
             string shipmentObjectId = shipmentObject.Id;
 
             ObjectFieldRepository ObjectFieldsRepository = new ObjectFieldRepository(tenant);

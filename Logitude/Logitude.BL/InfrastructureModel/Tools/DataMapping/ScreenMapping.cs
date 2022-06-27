@@ -10,7 +10,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 
             if (isNewState)
             {
-                screen.Code = screenPM.ObjectTableName + "." + screenPM.Tenant + '.' + screenPM.Id;
+                screen.Code = screenPM.Code =  screenPM.ObjectTableName + "." + screenPM.Tenant + '.' + screenPM.Id;
                 screen.Type = !string.IsNullOrEmpty(screenPM.Type) ? screenPM.Type : "CLASSIC";
 
             }

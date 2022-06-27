@@ -541,7 +541,6 @@ namespace WebFreight.Web.ReportsWebServices
                     ManifestDetailsClass detail = new ManifestDetailsClass();
                     NewManifestDetailsClass newDetail = new NewManifestDetailsClass();
       
-
                     detail.FileNumber = newDetail.FileNumber = shipmentView.ShipmentNumber;
                     detail.Direction = newDetail.Direction = shipmentView.DirectionName;
                     detail.ENSNumber = newDetail.ENSNumber = shipmentView.ENSNumber;
@@ -549,7 +548,8 @@ namespace WebFreight.Web.ReportsWebServices
                     detail.DocumentsClosingDate = newDetail.DocumentsClosingDate = shipmentView.DocumentsClosingDate;
                     detail.AWBHandlingInformation = newDetail.AWBHandlingInformation = shipmentView.AWBHandlingInformation;
                     detail.ITNumber = shipmentView.ITNumber;
-                   
+                    detail.CustomerName = newDetail.CustomerName = shipmentView.CustomerName;
+
                     if (!string.IsNullOrEmpty(shipmentView.OBLTypeCode))
                     {
                         OBLType type = shipmentsContext.OBLTypes.Where(d => d.Code == shipmentView.OBLTypeCode).FirstOrDefault();
@@ -1619,7 +1619,6 @@ namespace WebFreight.Web.ReportsWebServices
                         packageDetail.HorseName = horse.Name;
                         packageDetail.HorseYearOfBirth = horse.YearOfBirth;
                         packageDetail.HorseColor = horse.Color;
-                        packageDetail.HorseGender = horse.Gender;
                         packageDetail.HorseBreed = horse.Breed;
                         packageDetail.HorseDiscipline = horse.Discipline;
                         packageDetail.HorseTravelBehavior = horse.TravelBehavior;
@@ -1638,6 +1637,18 @@ namespace WebFreight.Web.ReportsWebServices
                             if (country != null)
                             {
                                 packageDetail.HorseCountryOfBirthName = country.EnglishName;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(horse.GenderCode))
+                        {
+                            HorseGender horseGender = (from pa in commonContext.HorseGenders
+                                                       where pa.Code == horse.GenderCode
+                                                       select pa).FirstOrDefault();
+
+                            if (horseGender != null)
+                            {
+                                packageDetail.HorseGender = horseGender.Name;
                             }
                         }
                     }

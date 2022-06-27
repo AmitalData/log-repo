@@ -415,10 +415,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public bool IsQuotesRequestActivatedInShared { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsCargoTrackWebAccessActivated { get; set; }
-
-        public int? AutomaticallyCloseDays { get; set; }
+        public bool IsCargoTrackWebAccessActivated { get; set; }        
         public bool EnableDeliveryOptions { get; set; }
-        public string AutomaticallyClosingField { get; set; }
+        public int? EmptyReturnClosingDays { get; set; }
+        public int? ShipmentATAClosingDays { get; set; }
     }
 }

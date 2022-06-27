@@ -52,19 +52,23 @@ namespace CommunicationWorkerRole.Services
         {
             this.GetCurrentTenant(container.Tenant);
 
-            DateTime? closingField = null;
-            int? automaticallyCloseDays = null;
-            if (currentTenant != null && !string.IsNullOrEmpty(currentTenant.AutomaticallyClosingField))
+            double emptyReturnDays = Convert.ToDouble(this.currentTenant?.EmptyReturnClosingDays);
+            double shipmentATADays = Convert.ToDouble(this.currentTenant?.ShipmentATAClosingDays);
+
+            DateTime? emptyReturnDate = container.ActualEmptyReturn;
+            DateTime? ShipmentATADate = container.ShipmentMainCarriageATA;
+
+            if(container.ActualEmptyReturn != null)
             {
-                automaticallyCloseDays = this.currentTenant.AutomaticallyCloseDays;
-                if (currentTenant.AutomaticallyClosingField == "EMPTR") closingField = container.ActualEmptyReturn;
-                else if (currentTenant.AutomaticallyClosingField == "SHATA") closingField = container.ShipmentMainCarriageATA;
+                emptyReturnDate = container.ActualEmptyReturn.Value.AddDays(emptyReturnDays);
             }
 
-            if (closingField == null) return;
+            if (container.ShipmentMainCarriageATA != null)
+            {
+                ShipmentATADate = container.ShipmentMainCarriageATA.Value.AddDays(shipmentATADays);
+            }
 
-            var closingDate = automaticallyCloseDays == null ? closingField.Value : closingField.Value.AddDays(automaticallyCloseDays.Value);
-            if (closingDate.Date <= todayDate.Date)
+            if ((emptyReturnDate != null && emptyReturnDate.Value.Date <= todayDate.Date) || (ShipmentATADate != null && ShipmentATADate.Value.Date <= todayDate.Date))
             {
                 this.UpdateClosedContainer(container);
             }

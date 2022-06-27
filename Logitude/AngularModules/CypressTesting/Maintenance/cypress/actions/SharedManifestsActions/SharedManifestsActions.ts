@@ -14,6 +14,7 @@ import { ValidateSingleErrorMessage } from "../BaseActions";
 import { URLs } from './../../../../Shipment/cypress/constants/URLs';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
 import { ShipmentContext } from '../../../../Shipment/cypress/models/ShipmentContext';
+import { MainCarriageLegDetails } from "cypress/models/SharedManifestsDetails/MainCarriageLegDetails";
 
 let SharedKey: string
 
@@ -160,15 +161,15 @@ export function ValidateShareManifestErrorMessage(ErrorMessage: string) {
     cy.get(SharedManifestsSelectors.Cancel).click()
 }
 
-export function UpdateShipment(masterNumber: string) {
-    AddMasterNumber(masterNumber)
+export function UpdateShipment(mainCarriageLeg:MainCarriageLegDetails) {
+    AddMasterNumber(mainCarriageLeg.masterNumber,mainCarriageLeg.AgentCarrier)
     DeleteConsignee()
 }
 
-function AddMasterNumber(masterNumber: string) {
+function AddMasterNumber(masterNumber: string , MainCarriageCarrier:string) {
     cy.get(SharedManifestsSelectors.ShipmentRoutings).click()
     cy.get(SharedManifestsSelectors.MainCarriage).click()
-    SelectFirstDropDownListItem(SharedManifestsSelectors.MainCarriageCarrier, 'A')
+    SelectFirstDropDownListItem(SharedManifestsSelectors.MainCarriageCarrier, MainCarriageCarrier)
     cy.get(SharedManifestsSelectors.ShipmentMasterNo).type(masterNumber)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 
@@ -240,17 +241,18 @@ export function AssertManifestExist(MAWB: string) {
     }).click()
 }
 
-export function CreateShipment(ShipmentNumber: string) {
+export function CreateShipment(ShipmentNumber: string,MasterMainCarriageCarrier:string) {
     cy.get(SharedManifestsSelectors.Create).click()
     //BaseAssertion.AssertElementHaveValue(SharedManifestsSelectors.AgentReference, ShipmentNumber)
     cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.get(SharedManifestsSelectors.MasterMainCarriageCarrier).click()
+    SelectFirstDropDownListItem(SharedManifestsSelectors.MasterMainCarriageCarrier, MasterMainCarriageCarrier)
     cy.get(SharedManifestsSelectors.CreateMaster).click()
 }
 
 export function AssertCreateShipment() {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
-        ShipmentContext.MasterNumber = interception.response.body.ShipmentNumber;
-
+        //ShipmentContext.MasterNumber = interception.response.body.ShipmentNumber;
         assert.equal(interception.response.body.DirectionName, "Import", 'valus equal')
     })
     BaseAssertion.AssertMessageWindow("Your Shipment was successfully created.")

@@ -20,6 +20,8 @@ import { SetWorkerRoleNameComponent } from './Components/SetWorkerRoleName/SetWo
 import { AddEditScreenComponent } from './Components/Customization/AddEditScreenComponent';
 import { AddTabComponent } from './Components/Customization/AddTabComponent';
 import { CustomizationTabsComponent } from './Components/Customization/CustomizationTabsComponent';
+import { LighteningScreenComponent } from './Components/Customization/Screen/LighteningScreenComponent';
+import { ClassicScreenComponent } from './Components/Customization/Screen/ClassicScreenComponent';
 
 export const Components =
     [
@@ -44,12 +46,16 @@ export const Components =
         AddEditScreenComponent,
         CustomizationTabsComponent,
         AddTabComponent
-
+        ClassicScreenComponent,
+        LighteningScreenComponent,
 
     ];
 export const ControlsComponents =
     [
         ScreenLayoutComponent,
+        ClassicScreenComponent,
+        LighteningScreenComponent,
+
     ];
 
 export class ModuleDeclarations {
@@ -80,6 +86,8 @@ export class ModuleDeclarations {
             case "AddEditScreenComponent": { myResult = AddEditScreenComponent; break; }
             case "AddTabComponent": { myResult = AddTabComponent; break; }
             case "CustomizationTabsComponent": { myResult = CustomizationTabsComponent; break; }
+            case "ClassicScreenComponent": { myResult = ClassicScreenComponent; break; }
+            case "LighteningScreenComponent": { myResult = LighteningScreenComponent; break; }
 
 
         }

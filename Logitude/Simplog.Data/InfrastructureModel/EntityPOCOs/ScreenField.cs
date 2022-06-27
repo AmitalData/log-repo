@@ -21,7 +21,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         // public string FieldName { get; set; }
         public string ObjectFieldId { get; set; }
         public string ObjectFieldCode { get; set; }
-        public string SectionId { get; set; }
+        public int? SectionNumber { get; set; }
 
 
         
@@ -35,12 +35,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         [ForeignKey("ObjectFieldId")]
         public virtual ObjectField ObjectField { get; set; }
-
-
-
-        [ForeignKey("SectionId")]
-        public virtual ScreenSection ScreenSection { get; set; }
-
 
     }
 }

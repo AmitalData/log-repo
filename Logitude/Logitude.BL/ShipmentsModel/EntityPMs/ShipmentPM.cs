@@ -2112,6 +2112,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdatedOceanInsightsAnalyzer { get; set; }
         public bool IsUpdatedVizionAnalyzer { get; set; }
         public bool IsUpdatedOceanInsightsMainCarriageDates { get; set; }
+        public bool IsUpdatedVizionMainCarriageDates { get; set; }
 
         public bool IsCreatedFromCustomerOverview { get; set; }
 
@@ -2887,6 +2888,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string HouseMasterNewConcurrencyGUID { get; set; }
         public bool IsPODReceived { get; set; }
         public DateTime? PODReceivedDate { get; set; }
+        public bool IsPODUpdatedFromWR{ get; set; }
         public string UnassignedShipperAddressId { get; set; }
         public string UnassignedConsigneeAddressId { get; set; }
         public bool HasUnassignedData { get; set; }

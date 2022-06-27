@@ -263,7 +263,6 @@ namespace WebFreight.Web.ReportsWebServices
                                     shipmentPackageProvider.HorseName = horse.Name;
                                     shipmentPackageProvider.HorseYearOfBirth = horse.YearOfBirth;
                                     shipmentPackageProvider.HorseColor = horse.Color;
-                                    shipmentPackageProvider.HorseGender = horse.Gender;
                                     shipmentPackageProvider.HorseBreed = horse.Breed;
                                     shipmentPackageProvider.HorseDiscipline = horse.Discipline;
                                     shipmentPackageProvider.HorseTravelBehavior = horse.TravelBehavior;
@@ -282,6 +281,18 @@ namespace WebFreight.Web.ReportsWebServices
                                         if (country != null)
                                         {
                                             shipmentPackageProvider.HorseCountryOfBirthName = country.EnglishName;
+                                        }
+                                    }
+
+                                    if (!string.IsNullOrEmpty(horse.GenderCode))
+                                    {
+                                        HorseGender horseGender = (from pa in commonContext.HorseGenders
+                                                                   where pa.Code == horse.GenderCode
+                                                                   select pa).FirstOrDefault();
+
+                                        if (horseGender != null)
+                                        {
+                                            shipmentPackageProvider.HorseGender = horseGender.Name;
                                         }
                                     }
                                 }

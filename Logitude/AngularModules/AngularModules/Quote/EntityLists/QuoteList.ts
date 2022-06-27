@@ -209,6 +209,7 @@ export class QuoteList {
 		IncludeImportDutyCharges: boolean;
 		InsuranceValue: number;
 		ValidByTypeCode: string;
+		ValidByTypeName: string;
 		ConnectedToOpportunity: boolean;
 	
 }

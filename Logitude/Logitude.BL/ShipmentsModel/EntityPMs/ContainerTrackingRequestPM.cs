@@ -17,6 +17,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipmentId { get; set; }
         public string SearchFields { get; set; }
         public string CarrierCode { get; set; }
+        public string ScacCode { get; set; }
         public string Status { get; set; }
         public bool IsSimulate { get; set; }
     }

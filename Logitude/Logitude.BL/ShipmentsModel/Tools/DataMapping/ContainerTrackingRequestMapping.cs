@@ -31,6 +31,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             containerTrackingRequest.RequestId = containerTrackingRequestPM.RequestId;
             containerTrackingRequest.ShipmentId = containerTrackingRequestPM.ShipmentId;
             containerTrackingRequest.CarrierCode = containerTrackingRequestPM.CarrierCode;
+            containerTrackingRequest.ScacCode = containerTrackingRequestPM.ScacCode;
             containerTrackingRequest.Status = containerTrackingRequestPM.Status;
             containerTrackingRequest.IsSimulate = containerTrackingRequestPM.IsSimulate;
             containerTrackingRequest.ContainerId = containerTrackingRequestPM.ContainerId;

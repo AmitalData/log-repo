@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankAccountUpdateClass
    {  		
-		public const string HashString = "953e2f0c17c94f4ebd1733c181f7fa07";
+		public const string HashString = "320d6a6c26d8b432ce69db1ca47cddfe";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2822,6 +2822,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode BankAccountTextCode_BankAccountOBank_and_GL_Account_must_be_same_currency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.O.Bank_and_GL_Account_must_be_same_currency", DefaultText = "Bank currency and GL Account currency must be the same",LocalDefaultText = @"מטבע הבנק ומטבע הכרטיס חייב להיות זהים", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode BankAccountTextCode_BankAccountONewBankAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.O.NewBankAccount", DefaultText = "New Bank Account",LocalDefaultText = @"חשבון בנק חדש", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankAccountTextCode_BankAccountsOPreventChangingCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.PreventChangingCurrency", DefaultText = "The GLAccount is connected to a Bank Account, you can't change the currency",LocalDefaultText = @"לא ניתן לשנות את מטבע הכרטיס מכיוון שהוא כבר מחובר לחשבון בנק", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

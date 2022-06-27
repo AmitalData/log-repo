@@ -173,8 +173,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 FTLRatio = a.FTLRatio,
                                                 LTLRatio = a.LTLRatio,
                                                 IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-                                                AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-                                                AutomaticallyClosingField = a.AutomaticallyClosingField,
+                                                EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                                ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                                 EnableDeliveryOptions = a.EnableDeliveryOptions,
                                             });
 
@@ -356,8 +356,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         FTLRatio = tt.FTLRatio,
                         LTLRatio = tt.LTLRatio,
                         IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
-                        AutomaticallyCloseDays = tt.AutomaticallyCloseDays,
-                        AutomaticallyClosingField = tt.AutomaticallyClosingField,
+                        EmptyReturnClosingDays = tt.EmptyReturnClosingDays,
+                        ShipmentATAClosingDays = tt.ShipmentATAClosingDays,
                         EnableDeliveryOptions = tt.EnableDeliveryOptions,
                     }; 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -526,8 +526,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     FTLRatio = tt.FTLRatio,
                     LTLRatio = tt.LTLRatio,
                     IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
-                    AutomaticallyCloseDays = tt.AutomaticallyCloseDays,
-                    AutomaticallyClosingField = tt.AutomaticallyClosingField,
+                    EmptyReturnClosingDays = tt.EmptyReturnClosingDays,
+                    ShipmentATAClosingDays = tt.ShipmentATAClosingDays,
                     EnableDeliveryOptions = tt.EnableDeliveryOptions,
                 };
 
@@ -681,8 +681,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FTLRatio = a.FTLRatio,
                                            LTLRatio = a.LTLRatio,
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-                                           AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-                                           AutomaticallyClosingField = a.AutomaticallyClosingField,
+                                           EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                           ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                            EnableDeliveryOptions = a.EnableDeliveryOptions,
                                            AccountingActivated = a.AccountingActivated
                                        }).FirstOrDefault();
@@ -833,8 +833,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        FTLRatio = a.FTLRatio,
                                        LTLRatio = a.LTLRatio,
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-                                       AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-                                       AutomaticallyClosingField = a.AutomaticallyClosingField,
+                                       EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                       ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                        EnableDeliveryOptions = a.EnableDeliveryOptions,
                                        AccountingActivated = a.AccountingActivated,
 
@@ -998,8 +998,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                FTLRatio = a.FTLRatio,
                                                LTLRatio = a.LTLRatio,
                                                IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-                                               AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-                                               AutomaticallyClosingField = a.AutomaticallyClosingField,
+                                               EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                               ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                                EnableDeliveryOptions = a.EnableDeliveryOptions,
 
                                            }).FirstOrDefault();
@@ -1164,8 +1164,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FTLRatio = a.FTLRatio,
                                            LTLRatio = a.LTLRatio,
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-                                           AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-                                           AutomaticallyClosingField = a.AutomaticallyClosingField,
+                                           EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                           ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                            EnableDeliveryOptions = a.EnableDeliveryOptions,
 
                                        }).FirstOrDefault();
@@ -1318,8 +1318,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        FTLRatio = a.FTLRatio,
                                        LTLRatio = a.LTLRatio,
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-                                       AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-                                       AutomaticallyClosingField = a.AutomaticallyClosingField,
+                                       EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                       ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                        EnableDeliveryOptions = a.EnableDeliveryOptions,
 
                                    }).FirstOrDefault();
@@ -1491,8 +1491,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     FTLRatio = myPOCO.FTLRatio,
                     LTLRatio = myPOCO.LTLRatio,
                     IsQuotesRequestActivatedInShared = myPOCO.IsQuotesRequestActivatedInShared,
-                    AutomaticallyCloseDays = myPOCO.AutomaticallyCloseDays,
-                    AutomaticallyClosingField = myPOCO.AutomaticallyClosingField,
+                    EmptyReturnClosingDays = myPOCO.EmptyReturnClosingDays,
+                    ShipmentATAClosingDays = myPOCO.ShipmentATAClosingDays,
                     EnableDeliveryOptions = myPOCO.EnableDeliveryOptions,
 
                 };
@@ -1615,8 +1615,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 HideFCLAllIn = a.HideFCLAllIn,
                                                 SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                                 IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-                                                AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-                                                AutomaticallyClosingField = a.AutomaticallyClosingField,
+                                                EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                                ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                                 EnableDeliveryOptions = a.EnableDeliveryOptions,
                                             };
             return result;

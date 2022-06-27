@@ -44,9 +44,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
-            this.entityPM.Id = IdCounter.GetNumber("ScreenSection", tenant).ToString();
             this.Poco = new ScreenSection();
-            this.Poco.Id = this.entityPM.Id;
 
             ScreenSectionMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -58,12 +56,35 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
-            this.Poco = entityRepository.GetSingleScreenSection(theEntityPm.Id);
+            this.Poco = entityRepository.GetSingleScreenSection(theEntityPm.ScreenCode , theEntityPm.Number);
 
             ScreenSectionMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
 
+
+        public void Update(List<ScreenSectionPM> screenSections)
+        {
+            screenSections.ForEach((screenSection) =>
+            {
+                switch (screenSection.ChangeSetOp)
+                {
+                    case ChangeSetOperation.Insert:
+                        {
+                            Create(screenSection);
+                            break;
+                        }
+                    case ChangeSetOperation.Update:
+                        {
+                           Update(screenSection);
+                            break;
+                        }
+                    default: { break; }
+                }
+            });
+        }
+
+      
     }
 }

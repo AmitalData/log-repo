@@ -531,5 +531,6 @@ export class ShipmentList {
 		InlandDomesticFromFax: string;
 		InlandDomesticFromStateId: string;
 		InlandDomesticFromStateName: string;
+		DigitalPortalSearchFields: string;
 	
 }

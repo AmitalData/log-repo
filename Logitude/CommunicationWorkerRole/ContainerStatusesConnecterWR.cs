@@ -34,6 +34,7 @@ namespace CommunicationWorkerRole
                         {
                             //ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueRepository);
                             ContainerTrackingGeneralAnalyzer analyzer = new ContainerTrackingGeneralAnalyzer(ContainerStatusSourceValues.OceanInsights, analyzeQueue, analyzeQueueRepository);
+
                             analyzer.Run();
                             LogDoneItemInMemory();
                         }

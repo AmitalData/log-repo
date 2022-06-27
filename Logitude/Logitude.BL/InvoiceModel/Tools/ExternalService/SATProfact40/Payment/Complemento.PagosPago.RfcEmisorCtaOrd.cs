@@ -13,7 +13,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
         {
             string billToCountryCode = SATBaseProfact40Service.GetBillToCountryCode(arPaymentPM.BillToAddressId, arPaymentPM.Tenant, commonContext);
             List<string> paymentMethods = new List<string> { "02", "03", "04", "28", "29" };
-            bool isMexicoCountry = billToCountryCode == SATData.MexicanInvoiceCurrencyCode || billToCountryCode == SATData.MexicoCountryCode;
+            bool isMexicoCountry = billToCountryCode == SATData.TranslationMexicoCountryCode || billToCountryCode == SATData.MexicoCountryCode;
 
             if (!isMexicoCountry && paymentMethods.Contains(arPaymentPM.SATPaymentMethodCode))
             {

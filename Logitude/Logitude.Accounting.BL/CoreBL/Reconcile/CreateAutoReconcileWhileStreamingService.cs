@@ -149,7 +149,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (inMaynTheARPaymentCreateDebitCreditAgainstKUPA &&
                     currrentAccountJournalReconcileList.Count() == 1 &&
-                    _NewLedgerTransactionsWithCounters.Count == 2 &&
+                    //_NewLedgerTransactionsWithCounters.Count == 2 &&
                     _NewLedgerTransactionsWithCounters[0].AccountId == _NewLedgerTransactionsWithCounters[1].AccountId
                     )
                     {

@@ -5,9 +5,9 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 declare var window: any;
 import { ScreenPM } from '../../../../Infrastructure/EntityPMs/ScreenPM';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-
-
-const valdationMessageOfName = 'Name is required';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
 
@@ -17,40 +17,46 @@ const valdationMessageOfName = 'Name is required';
 export class AddEditScreenComponent extends BaseComponent {
 
     DataContext: AddEditScreenComponent = this;
-    ViewModel: any;
+    private screenLayoutComponent: any;
     private screenExtendedService: ScreenExtendedService;
     ValidationErrorsList: any[];
     public EntityPM: ScreenPM;
     IsNew: boolean = true;
-
+    private numberOfRows: number =1;
+    private numberOfColumns: number = 3;
+    private screenType: string = "LIGHTENING";
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.screenExtendedService = new ScreenExtendedService();
 
-        this.UIProperties.SetRequired("Code", "ObjectField", true);
     }
 
     SetWindowArgs(args: any) {
-        this.ViewModel = args.ViewModel;
-        this.EntityPM = this.GetNewScreenPM();
-    }
-
-
-    GetNewScreenPM() {
-        var screenPM = new ScreenPM();
-        screenPM.Type = "LIGHTENING";
-        screenPM.Tenant = SessionLocator.Tenant;
-        screenPM.NumberOfRows = 1;
-        screenPM.NumberOfColumns = 2;
-
-        var objectTable = window.ObjectTables.filter(x => x.Id === this.ViewModel.ObjecttableId)[0];
-        screenPM.ObjectTableId = objectTable.Id;
-        screenPM.ObjectTableName = objectTable.Name;
-        return screenPM;
+        this.screenLayoutComponent = args.ScreenLayoutComponent;
+        this.EntityPM = this.GetNewScreenInStance();
+        this.UIProperties.SetRequired("Name", "Screen", true);
 
     }
 
+
+    GetNewScreenInStance() {
+        var screen = new ScreenPM();
+        screen.Type = this.screenType;
+        screen.Tenant = SessionLocator.Tenant;
+        screen.NumberOfRows = this.numberOfRows;
+        screen.NumberOfColumns = this.numberOfColumns;
+        this.SetObjectTableFields(screen);
+        return screen;
+
+    }
+
+
+    private SetObjectTableFields(screen: ScreenPM) {
+        var objectTable = window.ObjectTables.filter(x => x.Id === this.screenLayoutComponent.ObjecttableId)[0];
+        screen.ObjectTableId = objectTable.Id;
+        screen.ObjectTableName = objectTable.Name;
+    }
 
     get Name() { return this.EntityPM ? this.EntityPM.Name:""; }
     set Name(newValue: string) {
@@ -61,39 +67,52 @@ export class AddEditScreenComponent extends BaseComponent {
 
 
 
-
+    
     SaveButtonClicked() {
 
-        let errors = this.ValidateScreen();
-        if(errors.length > 0)
-            return this.ValidationErrorsList = errors;
+        this.ValidationErrorsList = [];
+        if (AppTool.IsNullOrEmpty(this.Name)) {
+            this.ValidationErrorsList.push("Screen Name is Required");
+            return;
+        }
+
 
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.screenExtendedService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
-
+        this.screenExtendedService.insert(this.EntityPM).subscribe((myResult: ServiceResponse) => {
+            var myResponse: ServiceResponse = myResult;
             this.CurrentSession.StopBusyIndicator();
 
-            if (response.HasError)
-                return this.HandleException();
+            if (myResponse.HasError) {
+                this.HandleException(myResponse);
+                return;
+            }
 
-            this.ViewModel.AddScreenItem(response.Result);
+            this.screenLayoutComponent.AddScreenItem(myResult.Result);
             this.CurrentSession.CloseCurrentWindow();
+
         });
     }
 
-    private ValidateScreen()
-    {
-        let errors = [];
-        if (!this.Name)
-            errors.push(valdationMessageOfName);
-        return errors;
+
+    HandleException(serviceResponse: ServiceResponse) {
+        if (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) {
+            this.ShowMessageWindow(serviceResponse.ErrorsArray[0], "Logitude Message");
+        }
     }
 
-    HandleException() {
 
+    public ShowMessageWindow(message: string, title: string = "") {
+
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+        if (!title) return;
+        messageWindow.Title = title;
+
+        
     }
 
-    CancelButtonClicked() {
+
+    CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 

@@ -1,4 +1,5 @@
-﻿using Logitude.BL.Helpers;
+﻿using Logitude.BL.ExternalService;
+using Logitude.BL.Helpers;
 using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
@@ -7,6 +8,7 @@ using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.CToolWorkflows;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
@@ -45,7 +47,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.containerPm = entityPM;
             this.containerPm.Id = IdCounter.GetNumber("Container", tenant).ToString();
             this.containerPoco = new Container { Id = this.containerPm.Id, Tenant = this.containerPm.Tenant };
-            RunAutomation("OnCreate", entityPM);
+
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = containerPoco, EntityPM = entityPM, OldEntityPM = new ContainerPM(), AutomationType = "OnCreate", ObjectTableName = "Container", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.ContainerNumber });
+            entityAutomationService.RunAutomation();
+
             ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
@@ -53,13 +58,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
-            AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
+            EntityChangesMessageProducer.ProduceContainerCreateMessage(containerPoco, containerPm);
+            //AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
             MapShipmentConcurrencyFields();
+            entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
+
         }
         public void Update(ContainerPM entityPM, ContainersExternal containersExternal = null)
         {
             this.isNewEntity = false;
             this.containerPm = entityPM;
+
             containerPm.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             this.SetUpdatedByUser();
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
@@ -74,20 +83,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
-            
+
             if (!entityPM.IsUpdateByAutomation)
             {
-                RunAutomation("OnUpdate", entityPM);
+                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = containerPoco, EntityPM = entityPM, OldEntityPM = new ContainerPM(), AutomationType = "OnUpdate", ObjectTableName = "Container", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.ContainerNumber });
+                entityAutomationService.RunAutomation();
             }
 
+     
             this.HandleContainersExternalData(entityPM, containersExternal);
+
+            Container containerPocoCopy = CloneObjectService.Clone(containerPoco);
+            ContainerPM containerPMCopy = CloneObjectService.Clone(containerPm);
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
 
-            AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
+            EntityChangesMessageProducer.ProduceContainerUpdateMessage(containerPocoCopy, containerPMCopy);
+            //AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
             MapShipmentConcurrencyFields();
+
         }
         private void SetUpdatedByUser()
         {
@@ -182,11 +198,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.Remove(containerPoco);
             entityRepository.SubmitChanges();
         }
-        private void RunAutomation(string processType, ContainerPM entityPM)
-        {
-            var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, ProcessType = processType, ObjectTableName = "Container", EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now, EntityReference = entityPM.ContainerNumber });
-            mainEntityChangeService.AddEntityChange();
-        }
+
+
         private void MapShipmentConcurrencyFields()
         {
             if (string.IsNullOrEmpty(this.containerPm.ShipmentId))

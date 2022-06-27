@@ -1833,6 +1833,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     GlobalTaxCalculation = entityPOCO.GlobalTaxCalculation,
                     PaymentReferences = entityPOCO.PaymentReferences,
                     SATCancelReasonCode = entityPOCO.SATCancelReasonCode,
+                    BillToGLAccountId = entityPOCO.BillToGLAccountId
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;

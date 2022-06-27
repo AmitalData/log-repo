@@ -68,21 +68,31 @@ namespace CommunicationWorkerRole.Services
                 reportTask.CreatedBy = schedulerDetails.ReportDetails.CreatedByUserId;
                 byte[] biReportData = GetBIReportData(schedulerDetails, reportTask);
 
-                if (reportTask.ResultType == null || reportTask.ResultType == "Email" )
+                if(biReportData == null)
                 {
-                    SendPdfBIReportToReceipent(reportTask, schedulerDetails, biReportData);
+                    this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("BI Report Is Empty"));
                 }
-                else if(reportTask.ResultType == "FTP")
+                else
                 {
-                    SendBIReportToFTP(reportTask, schedulerDetails, biReportData);
+                    SendBIReport(reportTask, schedulerDetails, biReportData);
                 }
-
-
             }
             catch (Exception ex)
             {
                 HandleTaskFailure(ex);
                 return;
+            }
+        }
+
+        private void SendBIReport(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, byte[] biReportData)
+        {
+            if (reportTask.ResultType == null || reportTask.ResultType == "Email")
+            {
+                SendPdfBIReportToReceipent(reportTask, schedulerDetails, biReportData);
+            }
+            else if (reportTask.ResultType == "FTP")
+            {
+                SendBIReportToFTP(reportTask, schedulerDetails, biReportData);
             }
         }
 
@@ -102,7 +112,7 @@ namespace CommunicationWorkerRole.Services
             ExportBIReportService exportBIReportService = new ExportBIReportService();
             BIReportXMLData bIReportXMLData = GetBIReportXMLData(schedulerDetails, reportTask);
             bIReportXMLData.ExportDataType = reportTask.Format == "PDF" || string.IsNullOrEmpty(reportTask.Format) ? "Pdf" : "xlsx";
-            return exportBIReportService.Run(bIReportXMLData, reportTask.Tenant);
+            return exportBIReportService.Run(bIReportXMLData, reportTask.Tenant, schedulerDetails.SendIfEmpty);
         }
 
         private BIReportXMLData GetBIReportXMLData(SchedulerDetails schedulerDetails, TasksSchedulerPM reportTask)

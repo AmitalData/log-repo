@@ -213,8 +213,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     if (entityPM.IsUpdatedOceanInsightsAnalyzer && entityPM.IsUpdatedOceanInsightsMainCarriageDates)
                     {
-                        string notes = this.BuildOceanInsightsEventNotes();
+                        string notes = this.BuildContainerTrackingEventNotes();
                         this.CreateTraceEvent("OISU", notes);
+                    }
+                    if (entityPM.IsUpdatedVizionAnalyzer && entityPM.IsUpdatedVizionMainCarriageDates)
+                    {
+                        string notes = this.BuildContainerTrackingEventNotes();
+                        this.CreateTraceEvent("VZSU", notes);
                     }
 
                     if (entityPM.PlannedCargoReadyDate != entityPoco.PlannedCargoReadyDate)
@@ -241,6 +246,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.TraceAccruals();
                 this.TraceBookingArrangement();
                 this.TraceFollowUpDates();
+                this.TracePODReceived();
             }
         }
 
@@ -270,7 +276,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             return eventNotes;
         }
 
-        private string BuildOceanInsightsEventNotes()
+        private string BuildContainerTrackingEventNotes()
         {
             string notes = "";
 
@@ -347,9 +353,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.DeleteTraceEvent("BKAR");
             }
         }
-        public void TracePODReceived(bool isPODReceived, DateTime? podReceivedDate)
+        private void TracePODReceived()
         {
-            if (!isPODReceived && podReceivedDate == null)
+            if (!entityPM.IsPODReceived && entityPM.PODReceivedDate == null)
             {
                 this.DeleteTraceEvent("PIOD");
             }

@@ -44,7 +44,7 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
 
-import { AuthenticateService, LogitudeTokensService } from "collaboration-tool-core";
+import { AuthenticateService, LogitudeTokensService, AuthorizedUser } from "collaboration-tool-core";
 import { SessionInfo as CToolSessionInfo } from "collaboration-tool-core";
 
 @Component({
@@ -333,6 +333,7 @@ export class LoginComponent implements OnInit {
                         if (authenticateService.hasOwnProperty(logitudeAuthenticate)) {
                             authenticateService[logitudeAuthenticate]({ Tenant: userTenant, Token: userData.Token }).then((data: any) => {
                                 if (data !== null && data.User !== null && data.Token !== null) {
+                                    AuthorizedUser.setAuthorizedUser(data);
                                     CToolSessionInfo.IsUserAuthorized = true;
                                     CToolSessionInfo.AuthorizedUserToken = data.Token;
                                     CToolSessionInfo.IsLogitudeAuthentication = true;

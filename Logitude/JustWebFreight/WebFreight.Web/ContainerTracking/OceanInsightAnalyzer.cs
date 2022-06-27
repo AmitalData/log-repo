@@ -1212,7 +1212,7 @@ namespace WebFreight.Web.ContainerTracking
         {
             var pODLocation = this.GetTranslatedPortCode(pod_loc_locode);
             var podPortId = this.GetPortId(pODLocation);
-            if (shipmentPM.MainCarriageToPortId == podPortId)
+            if (shipmentPM.MainCarriageFinalDestinationPortId == podPortId)
             {
                 return true;
             }

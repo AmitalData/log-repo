@@ -578,8 +578,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private bool IsMetConditionsToSendCToolMessage(ObjectFieldPM theEntityPm)
         {
             return FeatureToggleHelper.HasFeatureToggle("CTL", theEntityPm.Tenant) &&
-                theEntityPm.ObjectTableId.Equals(ObjectTableQuery.GetObjectTableByCode("Shipment", theEntityPm.Tenant)?.Id) &&
+                IsTargetedObjectTableToSendCToolMessage() &&
                 theEntityPm.IsCustom.Equals(true);
+        }
+
+        private bool IsTargetedObjectTableToSendCToolMessage()
+        {
+            return this.entityPM.ObjectTableId.Equals(ObjectTableQuery.GetObjectTableByCode("Shipment", this.entityPM.Tenant)?.Id) ||
+                this.entityPM.ObjectTableId.Equals(ObjectTableQuery.GetObjectTableByCode("Container", this.entityPM.Tenant)?.Id);
         }
 
         private void AddKafkaQueueMessage()

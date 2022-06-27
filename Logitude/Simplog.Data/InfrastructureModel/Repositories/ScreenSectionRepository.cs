@@ -34,10 +34,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return ScreenSection;
         }
 
-        public ScreenSection GetSingleScreenSection(string id)
+        public ScreenSection GetSingleScreenSection(string screenCode, int sectionNumber)
         {
             return (from a in context.ScreenSections
-                    where a.Id == id
+                    where a.Number == sectionNumber && a.ScreenCode == screenCode
                     select a).FirstOrDefault();
         }
 

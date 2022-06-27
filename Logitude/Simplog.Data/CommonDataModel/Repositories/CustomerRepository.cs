@@ -421,5 +421,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where record.Card.EnglishName == name && record.Tenant == tenant
                     select record).FirstOrDefault();
         }
+
+        public bool IsCustomerExist(string Id, int tenant)
+        {
+            return (from record in context.Customers
+                    where record.Id == Id && record.Tenant == tenant
+                    select record).Any();
+        }
     }
 }

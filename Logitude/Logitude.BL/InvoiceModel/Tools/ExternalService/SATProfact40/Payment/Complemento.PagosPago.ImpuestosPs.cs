@@ -92,7 +92,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
                 AddRetencionDRWithTax(pRDR, invoiceTaxAmount, impuestosDRRetencionDRs);
             });
 
-            return pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.Concat(pagosPagoDoctoRelacionado.ImpuestosDR.RetencionesDR.ToArray()).ToList();
+            return pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.Concat(impuestosDRRetencionDRs.ToArray()).ToList();
         }
 
         private static void AddRetencionDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDR, decimal invoiceTaxAmount, List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> impuestosDRRetencionDRs)
@@ -116,15 +116,15 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
         private static void CalculateRetencionDRWithTax(PagosPagoDoctoRelacionadoImpuestosDRRetencionDR impuestosDRRetencionDR, decimal invoiceTaxAmount)
         {
-            impuestosDRRetencionDR.BaseDR *= invoiceTaxAmount;
-            impuestosDRRetencionDR.ImporteDR *= invoiceTaxAmount;
+            impuestosDRRetencionDR.BaseDR /= invoiceTaxAmount;
+            impuestosDRRetencionDR.ImporteDR /= invoiceTaxAmount;
             BuildRetencionPagosTotales(impuestosDRRetencionDR);
         }
 
         private static List<PagosPagoImpuestosPTrasladoP> GetPagosPagoImpuestosPTrasladoPs(List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs)
         {
             List<PagosPagoImpuestosPTrasladoP> trasladosP = new List<PagosPagoImpuestosPTrasladoP>();
-            var groups = pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.GroupBy(x => x.TasaOCuotaDR);
+            var groups = pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.GroupBy(x => x.TasaOCuotaDR.ToString());
             foreach (var group in groups)
             {
                 PagosPagoImpuestosPTrasladoP pagosPagoImpuestosPTrasladoP = GetNewPagosPagoImpuestosPTrasladoP(group);
@@ -210,7 +210,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             pagos.Totales.TotalTrasladosImpuestoIVA16Specified = true;
         }
 
-        private static PagosPagoImpuestosPTrasladoP GetNewPagosPagoImpuestosPTrasladoP(IGrouping<decimal, PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> group)
+        private static PagosPagoImpuestosPTrasladoP GetNewPagosPagoImpuestosPTrasladoP(IGrouping<string, PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> group)
         {
             decimal totalBaseDR = 0;
             decimal totalImporteDR = 0;
@@ -221,15 +221,15 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             }
             PagosPagoImpuestosPTrasladoP pagosPagoImpuestosPTrasladoP = new PagosPagoImpuestosPTrasladoP
             {
-                BaseP = totalBaseDR,
+                BaseP = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(totalBaseDR),
                 ImpuestoP = taxCode,
                 TipoFactorP = "Exento"
             };
 
             if (group.First().TipoFactorDR == "Exento") return pagosPagoImpuestosPTrasladoP;
 
-            pagosPagoImpuestosPTrasladoP.ImporteP = totalImporteDR;
-            pagosPagoImpuestosPTrasladoP.TasaOCuotaP = group.Key;
+            pagosPagoImpuestosPTrasladoP.ImporteP = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(totalImporteDR);
+            pagosPagoImpuestosPTrasladoP.TasaOCuotaP = Convert.ToDecimal(group.Key);
             pagosPagoImpuestosPTrasladoP.TipoFactorP = "Tasa";
             pagosPagoImpuestosPTrasladoP.ImportePSpecified = true;
             pagosPagoImpuestosPTrasladoP.TasaOCuotaPSpecified = true;
@@ -240,7 +240,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
         private static List<PagosPagoImpuestosPRetencionP> GetPagosPagoImpuestosPRetencionPs(List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs)
         {
             List<PagosPagoImpuestosPRetencionP> retencionesP = new List<PagosPagoImpuestosPRetencionP>();
-            var groups = pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.GroupBy(x => x.TasaOCuotaDR);
+            var groups = pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.GroupBy(x => x.TasaOCuotaDR.ToString());
             foreach (var group in groups)
             {
                 PagosPagoImpuestosPRetencionP pagoImpuestosPRetencionP = GetNewPagosPagoImpuestosPRetencionP(group);
@@ -251,7 +251,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             return retencionesP;
         }
 
-        private static PagosPagoImpuestosPRetencionP GetNewPagosPagoImpuestosPRetencionP(IGrouping<decimal, PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> group)
+        private static PagosPagoImpuestosPRetencionP GetNewPagosPagoImpuestosPRetencionP(IGrouping<string, PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> group)
         {
             decimal totalImporteDR = 0;
             foreach (var product in group)
@@ -261,7 +261,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
             return new PagosPagoImpuestosPRetencionP
             {
-                ImporteP = totalImporteDR,
+                ImporteP = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(totalImporteDR),
                 ImpuestoP = taxCode,
             };
         }

@@ -62,10 +62,9 @@
    </Column> 
 
   <Column
-    Name="SectionId"
-    ShortName="SectionId"
-    Type="varchar"
-   Size="15">
+    Name="SectionNumber"
+    ShortName="SectionNumber"
+    Type="int" >
   <Constraints
       Nullable="true" />
   </Column>
