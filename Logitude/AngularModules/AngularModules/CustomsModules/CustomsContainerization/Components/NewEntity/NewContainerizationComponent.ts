@@ -381,9 +381,10 @@ export class NewContainerizationComponent extends BaseComponent {
         });
 
     }
-
+ 
 
     OnAllBtnClicked() {
+        
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
         this.containerizationExtendedListService.SelectedDeclarations = true;
