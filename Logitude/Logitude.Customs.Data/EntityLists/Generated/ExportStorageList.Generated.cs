@@ -94,6 +94,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ActionCode  { get; set; }
        [DataMember]
        public string ProcedureCurrentName  { get; set; }
+       [DataMember]
+       public string ActionName  { get; set; }
    }
 
 }

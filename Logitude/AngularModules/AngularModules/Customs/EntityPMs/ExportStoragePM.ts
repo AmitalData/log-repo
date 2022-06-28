@@ -224,6 +224,11 @@ export class ExportStoragePM {
     public set ProcedureCurrentName(newValue: string) { if (this.procedureCurrentName != newValue) { this.procedureCurrentName = newValue; this.MarkAsDirty("ProcedureCurrentName"); } }
        
 	 
+    private actionName: string;
+    public get ActionName() { return this.actionName; }
+    public set ActionName(newValue: string) { if (this.actionName != newValue) { this.actionName = newValue; this.MarkAsDirty("ActionName"); } }
+       
+	 
 
     public OldEntityPM: ExportStoragePM;
 		
