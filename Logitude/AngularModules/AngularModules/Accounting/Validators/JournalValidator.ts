@@ -54,7 +54,7 @@ export class JournalValidator
                 }
 
                 // Amount
-                if (line.LocalAmount == null || line.ForeignAmount == null) {
+                if (!line.LocalAmount || !line.ForeignAmount) {
                     //Amount is missing
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.AmountIsMissing") + " " + line.Line  ); //Amount is missing for line
 
