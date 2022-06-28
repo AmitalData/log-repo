@@ -1893,6 +1893,9 @@ class MaintenanceMenuItem {
         if (AppTool.IsNullOrEmpty(this.TranslatedName)) {
             this.TranslatedName = this.Code;
         }
+        if (!AppTool.IsNullOrEmpty(this.item.TranslatedName)) {
+            this.TranslatedName = this.item.TranslatedName;
+        }
     }
     private SetDescriptionText() {
         var myResult = "";
@@ -2009,6 +2012,7 @@ class Menu {
 
 class MenusTablePM {
     public Id: string;
+    public TranslatedName: string;
     public Tenant: number;
     public MenuTypeCode: string;
     public CategoryTypeCode: string;
