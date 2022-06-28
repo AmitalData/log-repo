@@ -767,7 +767,16 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
-        public List<Declaration> GetDeclarationAmendmentsById(int tenant, string id)
+
+        public List<Declaration> GetDeclarationById(int tenant, string id)
+        {
+            var myQ = (from a in context.Declarations
+                       where a.Id == id && a.Tenant == tenant
+                       select a);
+            return myQ.ToList();
+
+        }
+            public List<Declaration> GetDeclarationAmendmentsById(int tenant, string id)
         {
 
             if (String.IsNullOrWhiteSpace(id)) return null;
