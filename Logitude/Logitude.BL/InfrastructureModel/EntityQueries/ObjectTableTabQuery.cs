@@ -73,11 +73,40 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     Name = a.TabNameTextCode.DefaultText,
                                                     Type = a.Type,
                                                     OriginalTabCode = a.OriginalTabCode,
-                                                    ScreenCode = a.ScreenCode
+                                                    ScreenCode = a.ScreenCode,
+                                                    HtmlComponentName = a.HtmlComponentName,
+                                                    HtmlComponentUrl = a.HtmlComponentUrl,
                                                 };
             return tabs;
         }
 
+        public IQueryable<ObjectTableTabPM> GetTenantTabs(int tenant)
+        {
+            IQueryable<ObjectTableTabPM> tabs = from a in repository.context.ObjectTableTabs.Include("TabNameTextCode").Include("ObjectTable")
+                                                where a.Tenant == tenant
+                                                select new ObjectTableTabPM()
+                                                {
+                                                    ControlPath = a.ControlPath,
+                                                    Id = a.Id,
+                                                    IndexOrder = a.IndexOrder,
+                                                    ObjectTableId = a.ObjectTableId,
+                                                    TabNameTextCodeDefaultText = a.TabNameTextCode.DefaultText,
+                                                    TabNameTextCodeId = a.TabNameTextCodeId,
+                                                    Tenant = a.Tenant,
+                                                    ObjectTableName = a.ObjectTable.Name,
+                                                    TabNameTextCodeCode = a.TabNameTextCodeCode,
+                                                    Code = a.Code,
+                                                    FeatureId = a.FeatureId,
+                                                    FeatureUniqeCode = a.FeatureUniqeCode,
+                                                    Name = a.TabNameTextCode.DefaultText,
+                                                    Type = a.Type,
+                                                    OriginalTabCode = a.OriginalTabCode,
+                                                    ScreenCode = a.ScreenCode,
+                                                    HtmlComponentName = a.HtmlComponentName,
+                                                    HtmlComponentUrl = a.HtmlComponentUrl,
+                                                };
+            return tabs;
+        }
 
 
     }

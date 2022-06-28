@@ -60,6 +60,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             return query.GetObjectTableTabsByTenantAndObjectTable(objectTableId, tenant).ToList();
         }
 
+        [HttpGet]
+        public List<ObjectTableTabPM> GetTenantTabs(int tenant)
+        {
+            ObjectTableTabQuery query = new ObjectTableTabQuery(new ObjectTableTabRepository(tenant));
+            return query.GetTenantTabs(tenant).ToList();
+        }
+
 
         private AuthenticationToken AuthinticateTenant()
         {

@@ -6,11 +6,15 @@ import {SessionInfo} from '../Utilities/SessionInfo';
 import { AppTool } from '../Tools';
 import { SessionLocator } from '../Utilities/SessionLocator';
 import { TextCodeTranslationPipe } from '../../Controls/Pipes/TextCodeTranslationPipe';
+import { ScreenSectionListService } from 'Infrastructure/Services/StandardLists/ScreenSectionListService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { ScreenPM } from 'Infrastructure/EntityPMs/ScreenPM';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 declare var window: any;
 
 @Component({
-    
+
     templateUrl: './GeneratedComponent.html',
 })
 
@@ -34,6 +38,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     public ScreenSections: ScreenSection[];
     private generalTextCode: string = "General.O.General";
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
+    screenSectionService = new ScreenSectionListService();
+
     private objectTableTab: any;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -65,7 +71,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                        this.BuildScreen();                        
+                        this.BuildScreen();
                     }
                 });
 
@@ -86,7 +92,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     private isViewEnited: boolean = false;
     ngAfterContentInit() {
         this.isViewEnited = true;
-        this.BuildScreen(true);       
+        this.BuildScreen(true);
     }
 
 
@@ -106,7 +112,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 this.ScreenSections = [];
                 var myScreenColumns: ScreenColumn[] = [];
                 var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ChildObjectTableId : this.ObjectTableId) && x.Code.toLowerCase() == this.ScreenCode.toLowerCase())[0];
-                
+
                 if (myScreen != null) {
 
                     var myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
@@ -161,19 +167,82 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     private BuildLighteningScreen(fireEmit: boolean = false) {
 
         if (this.EntityPM == null || this.isViewEnited == false) return;
-        let screen = window.Screens.filter((x: any) => x.Code === this.objectTableTab.ScreenCode)[0];
-        if (screen == null) return;
-
+        let myScreen:ScreenPM = window.Screens.filter((x: any) => x.Code === this.objectTableTab.ScreenCode)[0];
+        if (myScreen == null) return;
 
         this.ScreenSections = [];
-        if (fireEmit) this.LoadCompleted.emit(true);
 
-   
+       this.GetScreenSections(myScreen)
+        .subscribe(response => {
+           var sections :any[]= response.Result;
+
+            var myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
+
+            if (myScreenFields.length == 0) {
+                myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id);
+            }
+
+            if (myScreenFields.length == 0) {
+                this.ShowNoFieldsText = true;
+                return
+            }
+
+
+            var myObjectFields = window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ObjectTableId);
+            if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId))
+                myObjectFields = myObjectFields.concat(window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ChildObjectTableId));
+
+
+                sections.forEach((section) =>
+            {
+
+                var myScreenColumns: ScreenColumn[] = [];
+
+                for (var c = 0; c < myScreen.NumberOfColumns; c++) {
+                    var myScreenColumn = new ScreenColumn(c);
+
+                    for (var r = 0; r < section.NumberOfRows; r++) {
+                        var myScreenField = myScreenFields.filter((f: any) => f.Column == c && f.Row == r &&f.SectionNumber ==section.number  )[0];
+                        if (myScreenField != null) {
+                            var myObjectField = myObjectFields.filter((f: any) => f.FieldCode == myScreenField.ObjectFieldCode)[0];
+                            if (myObjectField != null) {
+
+                                if (this.ObjectTableName == "CommunicationLog") {
+                                    this.EntityPM.UIProperties.SetEnabled(myObjectField.FieldName, this.ObjectTableName, false);
+                                    this.EntityPM.UIProperties.SetRequired(myObjectField.FieldName, this.ObjectTableName, false);
+                                }
+
+                                myScreenColumn.ObjectFields.push(myObjectField);
+                            }
+                        }
+                    }
+
+                    myScreenColumns.push(myScreenColumn);
+                    this.ScreenSections.push(new ScreenSection(section.Number, section.Name, myScreenColumns))
+
+
+                }
+            });
+
+        });
+
+
+
+
+        if (fireEmit) this.LoadCompleted.emit(true);
     }
 
 
 
     private isScreenEnabled: boolean = true;
+    private GetScreenSections(screen: ScreenPM)
+    {
+        const filters = new ApiQueryFilters();
+        filters.GetAll = true;
+        filters.addAdditionalFilter("ScreenCode", screen.Code, null, null, "Equals", false, false, false, "string");
+        return this.screenSectionService.getByFilters(filters)
+    }
+
     SetEnabled(isEnabled: boolean) {
         this.isScreenEnabled = isEnabled;
 

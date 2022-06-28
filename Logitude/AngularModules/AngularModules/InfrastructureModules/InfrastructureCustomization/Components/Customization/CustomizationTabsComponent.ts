@@ -85,10 +85,14 @@ export class CustomizationTabsComponent extends BaseComponent
         const updatedTabs = this.tabs.filter(d=> updatedTenantZeroTabs.map(t => t.Code).includes(d.OriginalTabCode));
 
         updatedTabs.forEach((tab: ObjectTableTabPM) => {
-            tab.Changeset = 'update';
             const tenantZeroTab = updatedTenantZeroTabs.find(t=>t.Code == tab.OriginalTabCode);
 
-            this.MapTab(tab, tenantZeroTab);
+            // if(tenantZeroTab.HtmlComponentName != tab.HtmlComponentName){
+
+                tab.Changeset = tab.Changeset == 'insert' ? 'insert' : 'update';
+                this.MapTab(tab, tenantZeroTab);
+            // }
+
         });
     }
 
@@ -136,7 +140,7 @@ export class CustomizationTabsComponent extends BaseComponent
         }
     }
 
-    SetTabsAdditionalFields(newTableTabs: ObjectTableTabPM[])
+    SetTabsAdditionalFields(newTableTabs)
     {
         let maxOrder = Math.max(...this.tabs.map(t => t.IndexOrder));
         maxOrder = maxOrder == -Infinity ? -1 : maxOrder;

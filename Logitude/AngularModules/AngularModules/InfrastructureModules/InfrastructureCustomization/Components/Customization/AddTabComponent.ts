@@ -40,21 +40,13 @@ export class AddTabComponent extends BaseComponent {
         this.TableTab.Type = 'Custom';
     }
 
-    GetEntityScreens(){
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.screensService.GetEntityScreens(this.objectTable.Id)
-            .subscribe((screens:ScreenPM[]) => {
-                this.screens = screens.filter(a=>a.Type=='LIGHTENING');
-                this.CurrentSession.StopBusyIndicator();
-            });
 
-    }
 
     SetWindowArgs(args: any) {
         this.args = args.ViewModel;
         this.objectTable = window.ObjectTables.filter(x => x.Id === this.args.objectTableId)[0];
         this.InitializeTab();
-        this.GetEntityScreens();
+        this.screens = window.Screens.filter(d=>d.Type == "LIGHTENING" && d.ObjectTableId ==this.args.objectTableId );
 
     }
 

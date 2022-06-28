@@ -28,7 +28,7 @@ import { timeInterval } from 'rxjs/operators';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 
 @Component({
-    
+
     templateUrl: './HomeComponent.html',
 })
 
@@ -63,8 +63,8 @@ export class HomeComponent implements OnDestroy{
         if (!this.IsNewSignupTenant) {
             this.InitializeAppHeader();
             this.CheckAmitalBrowserInUse();
-        }  
-        
+        }
+
         if (!SessionInfo.KeepUserLoggedIn) {
             // sessionTimeout
             var sessionTimeout: DetectUserInActivity = new DetectUserInActivity();
@@ -151,7 +151,7 @@ export class HomeComponent implements OnDestroy{
     public IsBluesnapAccount: boolean = false;
     public IsCountryIsrael: boolean = false;
     public IsBlusnapOneTimeActivated: boolean = false;
-    public IsDailyCurrenciesRatesVisible: boolean = false; 
+    public IsDailyCurrenciesRatesVisible: boolean = false;
     public IsChargifyAccount: boolean = false;
 
     InitializeAppHeader() {
@@ -175,7 +175,7 @@ export class HomeComponent implements OnDestroy{
         }
 
         this.IsCustomizationSettingVisible = this.CustomizationSettingPermession();
-                
+
         if (!this.IsLogBox && FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsCurrenciesRatesVisible = true;
         }
@@ -197,7 +197,7 @@ export class HomeComponent implements OnDestroy{
         if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") {
             this.IsFillLocalStorageVisible = true;
         }
-        
+
         if (FeatureLocator.HasFeaturePermession("General", "NOTIFICATIONBELL")) {
             this.IsBellVisible = true;
             this.GetBadjCount();
@@ -219,6 +219,7 @@ export class HomeComponent implements OnDestroy{
     }
 
     CustomizationSettingPermession(): boolean {
+        return true;
         if (SessionLocator.Tenant == 261) {
             return true;
         }
@@ -245,11 +246,11 @@ export class HomeComponent implements OnDestroy{
     }
 
     // UserSettings
-    public authHeader;   
+    public authHeader;
     public TrialMessage: string = null;
     private trialTimer: any;
     private loginService: LoginService
-    private messageWindow: MessageWindow = new MessageWindow(); 
+    private messageWindow: MessageWindow = new MessageWindow();
 
     GetUserSetting() {
 
@@ -340,7 +341,7 @@ export class HomeComponent implements OnDestroy{
                     }
                 }
 
-             
+
 
 
             }
@@ -478,7 +479,7 @@ export class HomeComponent implements OnDestroy{
 
             }
 
-         
+
         }
 
         this.RunComponentTimerTrial();
@@ -576,18 +577,18 @@ export class HomeComponent implements OnDestroy{
             myMessageWindow.ShowErrorIcon = true;
             myMessageWindow.Title = "Please Call Amital";
             myMessageWindow.Show(ObjectsLocator.GlobalSetting.ProductMessage);
-            
+
 
         }
     }
     public get IsAmitalBackButtonDisable() {
 
         if (AppTool.IsNullOrEmpty(AmitalGatewayUtil))
-        { 
+        {
             return true;
         }
         if (AppTool.IsNullOrEmpty( AmitalGatewayUtil.Instance))
-        { 
+        {
             return true;
         }
         return AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable;
@@ -675,12 +676,12 @@ export class HomeComponent implements OnDestroy{
             }
         });
     }
-    StartApplicationTimers() {     
+    StartApplicationTimers() {
         var belltimer = this.initializeBadjCountTimer().subscribe((res:any) => {
 
             if (FeatureLocator.HasFeaturePermession("General", "NOTIFICATIONBELL")) {
                 this.GetBadjCount();
-            }       
+            }
         });
     }
   initializeBadjCountTimer() {
@@ -705,7 +706,7 @@ export class HomeComponent implements OnDestroy{
             }
         }
         this.BellClicked = false;
-    }   
+    }
     OnControlMouseOver() {
         this.MouseInArea = true;
 
@@ -793,13 +794,13 @@ export class HomeComponent implements OnDestroy{
         this.RunComponentTimer();
 
         if (this.Tabs.length > 4) this.IsShowUserDetailsArea = false;
-  
+
     }
     SelectionChanged(clickdTab: SessionTabItem) {
         if (clickdTab != null) {
             if (this.SelectedTabItem != clickdTab) {
                 this.SelectedTabItem = clickdTab;
-                
+
                     this.Tabs.forEach((item) => {
                         item.IsSelected = false;
 
@@ -813,11 +814,11 @@ export class HomeComponent implements OnDestroy{
                     if (this.SelectedTabItem.SessionComponent) {
                         this.SelectedTabItem.SessionComponent.StartChangeDetection();
                     }
-                
+
             }
 
             if (this.SelectedTabItem.IsSessionLoaded) {
-                SessionLocator.SelectedSession = this.SelectedTabItem.SessionComponent;    
+                SessionLocator.SelectedSession = this.SelectedTabItem.SessionComponent;
                 this.CurrentSession = SessionLocator.SelectedSession;
                 this.CurrentSession.SessionSeleced.emit(true);
             }
@@ -853,7 +854,7 @@ export class HomeComponent implements OnDestroy{
                     if (myLocation != null) {
                         SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Session/SessionComponent", myLocation.viewContainerRef).then(cmpRef => {
                             cmpRef.instance.SessionIndex = tabItem.Index;
-                            cmpRef.instance.SessionTabItem = tabItem;                            
+                            cmpRef.instance.SessionTabItem = tabItem;
                             cmpRef.instance.ComponentRef = cmpRef;
                             SessionLocator.AddSession(cmpRef.instance);
 
@@ -861,7 +862,7 @@ export class HomeComponent implements OnDestroy{
                             tabItem.SessionComponent = cmpRef.instance;
 
                             SessionLocator.SelectedSession = tabItem.SessionComponent;
-                            this.CurrentSession = SessionLocator.SelectedSession;                      
+                            this.CurrentSession = SessionLocator.SelectedSession;
                             cmpRef.instance.RunComponent();
 
                             if (tabItem.Index == 0) {
@@ -886,12 +887,12 @@ export class HomeComponent implements OnDestroy{
 
                                     this.AccountAndTenantExpiration();
                                 }
-                            }                            
+                            }
                         });
                     }
                 }
             }
-        }      
+        }
     }
 
 
@@ -1082,7 +1083,7 @@ export class HomeComponent implements OnDestroy{
 
 
     }
-    
+
 
     DocumentsBackupClicked() {
 
@@ -1344,7 +1345,7 @@ export class HomeComponent implements OnDestroy{
         }
         else if (EmptyOrError || AppTool.IsNullOrEmpty(contractId)) {
             temp = temp.Token;
-                contractId = "3542118";            
+                contractId = "3542118";
         }
         else {
             temp = temp.Token;
@@ -1412,7 +1413,7 @@ export class HomeComponent implements OnDestroy{
                                 this.CurrentSession.StopBusyIndicator();
                                 this.SubscribeToLogitude(EmptyOrError, contractId,temp);
                             }
-                         
+
                         });
                         break;
                     }
@@ -1450,7 +1451,7 @@ export class HomeComponent implements OnDestroy{
                                 this.SubscribeToAWB(EmptyOrError, contractId, temp);
                             }
                         });
-                        break;                        
+                        break;
                     }
 
                 case "BUY":
@@ -1489,7 +1490,7 @@ export class HomeComponent implements OnDestroy{
 
                             }
 
-                          
+
                         });
                         break;
                     }
@@ -1518,18 +1519,18 @@ export class HomeComponent implements OnDestroy{
                                             this.SubscribeToCRM(EmptyOrError, null, temp);
 
                                         }
-                                    }                                        
+                                    }
                                         else {
                                         this.SubscribeToCRM(EmptyOrError, null, temp);
                                         }
-                                    
+
                                 });
                             }
                             else {
                                 this.CurrentSession.StopBusyIndicator();
                                 this.SubscribeToCRM(EmptyOrError, contractId, temp);
 
-                            }                          
+                            }
                         });
                         break;
                     }
@@ -1548,13 +1549,13 @@ export class HomeComponent implements OnDestroy{
                             var contractId: string = SessionLocator.TenantManagementJS.BluesnapOneTimeContract;
                             if (!AppTool.IsNullOrEmpty(contractId)) {
                                 EmptyOrError = false;
-                                this.OneTimeBuy(EmptyOrError, contractId, temp);                                    
+                                this.OneTimeBuy(EmptyOrError, contractId, temp);
                             }
                             else {
                                 this.CurrentSession.StopBusyIndicator();
                                 this.OneTimeBuy(EmptyOrError, contractId, temp);
                             }
-                         
+
                         });
                         break;
                     }
@@ -1597,7 +1598,7 @@ export class HomeComponent implements OnDestroy{
                         });
                         break;
                     }
-            
+
         }
     }
     public ManageBluesnapAccountClicked() {
@@ -1609,12 +1610,12 @@ export class HomeComponent implements OnDestroy{
             temp = temp.Token;
             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
             var link = "https://checkout.bluesnap.com/jsp/account_login.jsp";
-            if (!AppTool.IsNullOrEmpty(temp)) {         
+            if (!AppTool.IsNullOrEmpty(temp)) {
                 link = "https://ws.bluesnap.com/jsp/entrance.jsp?target=cp&token=" + temp + "&pageToShow=my_account.jsp"
             }
             var win = window.open(link, '_blank');
             win.focus();
-        });        
+        });
     }
 
     public ManageChargifyAccountClicked() {
@@ -1663,12 +1664,12 @@ export class HomeComponent implements OnDestroy{
         this.SelectionChanged(this.Tabs[0]);
 
         this.Tabs[0].SessionComponent.MainMenuComponent.BlockScreenLoad();
-        
+
 
        // this.SignoutCompleted.emit('Block');
 
     }
-    
+
     Clos555e(tabItem: SessionTabItem) {
 
         var itemIndex = this.Tabs.indexOf(tabItem);
@@ -1825,18 +1826,18 @@ export class HomeComponent implements OnDestroy{
         let cpath: string = path ? `; path=${path}` : '';
         document.cookie = `${name}=${value}; ${expires}${cpath}`;
     }
-    
-    ViewReleaseNotes() {        
+
+    ViewReleaseNotes() {
         var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx';
         var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }, { name: "Code", value: ObjectsLocator.GlobalSetting.ReleaseNotesURL }]
         ServiceHelper.OpenWindowWithParams(url, params);
     }
 
-    HideReleaseMessageClicked() {        
+    HideReleaseMessageClicked() {
         this.ShowNewReleaseToolTip = false;
 
         var service: UserExtendedPMService = new UserExtendedPMService();
-        service.AddUserToReleaseNotesUsers(SessionLocator.LoggedUserId).subscribe((response: ServiceResponse) => {            
+        service.AddUserToReleaseNotesUsers(SessionLocator.LoggedUserId).subscribe((response: ServiceResponse) => {
             if (response) {
                 if (!response.HasError) {
 
@@ -1861,7 +1862,7 @@ export class SessionTabItem {
             var Text: string = args['Text'];
             var TextCode: string = args['TextCode'];
             var MenuTextCode: string = args['MenuTextCode'];
-            
+
             if (Text) {
                 this.SetSessionTabHeader(Text);
             }

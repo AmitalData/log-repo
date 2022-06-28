@@ -49,5 +49,18 @@ export class TableTabService
     }
 
 
+    GetTenantTabs() {
+        return defer(() => {
+            return this.http.get(this.apiUrl + '/GetTenantTabs?'
+            + 'tenant=' + SessionLocator.Tenant, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        return response.body;
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+
 
 }
