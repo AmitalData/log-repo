@@ -91,6 +91,7 @@ export class DeclarationReferantDataList {
 	ReferantName: string;
 	Mawb: string;
 	Hawb: string;
+	ImporterApproval: boolean;
 	
 }
  

@@ -98,6 +98,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Mawb).HasColumnName("Mawb").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.Hawb).HasColumnName("Hawb").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.ImporterApproval).HasColumnName("ImporterApproval");
         }
     }
 }
