@@ -403,6 +403,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.containerizationExtendedListService.connectedSelectAll = false;
         this.entityPM.ConnectedDeclarations = "";
         this.containerizationExtendedListService.ConnectedDeclarations = "";
+        this.containerizationExtendedListService.SelectedDeclarations = false;
         this.LoadConnectedItems();
     }
 
