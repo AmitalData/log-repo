@@ -194,12 +194,11 @@
 
             success: function (result) {
                 $.SendContactActivity($.CurrentEmail, "Invoice", "Invoices List", $.CurrentTenant, $.CurrentCardId);
-                $("#InvoicesQueryMaxCountMessage").html("");
+                $("#InvoicesQueryLimitMessage").html("");
 
                 if (result.length >= $.LoadingCount) {
                     $("#InvoicesQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
-                    $("#InvoicesQueryMaxCountMessage").html("Showing the first " + filters.PageSize + " rows, use the search field to find more results.");
-
+                    $("#InvoicesQueryLimitMessage").html($.GetQueryLimitMessage(filters.PageSize));
 
                 }
 
@@ -226,7 +225,7 @@
 
     });
 
-    jQuery.LoadShipments = (function () {
+    jQuery.LoadShipments = (function (pageSize) {
 
         $("#ShipmentsBusyIndicator").show();
 
@@ -267,12 +266,12 @@
             },
 
             success: function (result) {                
-                $("#ShipmentsQueryMaxCountMessage").html("");
+                $("#ShipmentsQueryLimitMessage").html("");
                 $.SendContactActivity($.CurrentEmail, "Shipment", "Shipments List", $.CurrentTenant, $.CurrentCardId);
 
                 if (result.length >= $.LoadingCount) {
                     $("#ShipmentsQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
-                    $("#ShipmentsQueryMaxCountMessage").html("Showing the first " + filters.PageSize+  " rows, use the search field to find more results.");
+                    $("#ShipmentsQueryLimitMessage").html($.GetQueryLimitMessage(filters.PageSize));
 
                 }
 
@@ -298,6 +297,9 @@
         });
     });
 
+    jQuery.GetQueryLimitMessage = (function (pageSize) {
+        return ("Showing the first " + pageSize + " rows, use the search field to find more results.");
+    });
 
     jQuery.SetQuotesRequestQueryCount = (function (result) {
         let quotesRequestQueryCount = (result.length >= $.LoadingCount) ? "(" + ($.LoadingCount - 1) + "+)" : "(" + result.length + ")";
