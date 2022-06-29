@@ -201,7 +201,7 @@
                     $("#InvoicesQueryLimitMessage").html($.GetQueryLimitMessage(filters.PageSize));
 
                 }
-
+                 
                 else {
                     $("#InvoicesQueryCount").html("(" + result.length + ")");
                 }
