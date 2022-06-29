@@ -3024,7 +3024,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private void CreateOpportunity(int tenant, string userId)
         {
             int crmTenant = 341;
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(crmTenant);
             ICRMContext crmContext = CRMContext.GetContext(crmTenant);
 
             string tenantString = tenant.ToString();
