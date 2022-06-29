@@ -32,7 +32,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
         private IConnection GetConnection()
         {
             
-            var factory = RabbitmqHelper.GetConnectionFactory();
+            var factory = RabbitmqHelper.GetConnectionFactory(true);
             return factory.CreateConnection();
         }
 

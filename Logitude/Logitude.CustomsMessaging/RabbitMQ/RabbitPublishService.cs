@@ -75,7 +75,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             }
             else
             {
-                var factory = RabbitmqHelper.GetConnectionFactory();
+                var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: true);
 
                 using (var connection = factory.CreateConnection())
                 using (var channel = connection.CreateModel())
@@ -136,7 +136,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             }
             var args = new Dictionary<string, object>();
 
-            
+
             var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: true);
 
             using (var connection = factory.CreateConnection())
@@ -144,10 +144,10 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             {
                 channel.BasicQos(0, 5, true);
 
-            
+
                 RabbitmqHelper.DeclareQueue(channel, rabbitMQCode, true);
 
-                    
+
                 var header = new Dictionary<string, object>();
                 header.Add("InterfaceTypeCode", InterfaceTypeCode);
                 var prop = channel.CreateBasicProperties();
@@ -156,14 +156,13 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                 prop.DeliveryMode = 2; //persistent
                 prop.Headers = header;
                 prop.Priority = (byte)messagePriority;
-                
+
 
                 channel.BasicPublish(exchange: "",
                                              routingKey: rabbitMQCode,
                                              basicProperties: prop,
                                              body: message);
                 Debug.WriteLine($"RABBITMQ.BasicPublish {  rabbitMQCode }");
-
             }
         }
 
