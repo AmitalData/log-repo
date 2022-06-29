@@ -167,11 +167,14 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
             this.DontApplyVirtualization = true;
         }
 
-
         if (!this.IsAddDisabled) {
             this.IsAddBtnVisible = true;
             if (this.ObjectTableName == "Warehouse") {
                 if (this.TenantPM.Id != 0 && this.TenantPM.CountryCode == "US") {
+                    this.IsAddUSWarehouseVisible = true;
+                }
+
+                else if (FeatureLocator.HasFeaturePermession("Warehouse", "AddWarehouses")) {
                     this.IsAddUSWarehouseVisible = true;
                 }
             }
