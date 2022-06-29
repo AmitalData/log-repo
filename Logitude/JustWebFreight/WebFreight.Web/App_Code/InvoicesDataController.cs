@@ -310,6 +310,7 @@ namespace WebFreight.Web.App_Code
             }
 
             query2 = query2.Skip(0);
+            query2 = query2.Take(filters.PageSize);
 
             List<ARInvoiceList> listQuery = query2.ToList();
 
