@@ -493,9 +493,9 @@ export class ShipmentDomainService extends BaseService  {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetSingleShipmentPMWithoutComposition(id: string) {
+    GetSingleShipmentPMWithoutComposition(id: string, includePackages: boolean = false) {
 
-        var url = this._apiUrl + '/GetSingleShipmentPMWithoutComposition?id=' + id;
+        var url = this._apiUrl + '/GetSingleShipmentPMWithoutComposition?id=' + id + '&includePackages=' + includePackages;
 
         return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
