@@ -4529,7 +4529,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
 
-        public ShipmentPM GetSinglePMWithoutComposition(string id, int tenant)
+        public ShipmentPM GetSinglePMWithoutComposition(string id, int tenant, bool includePackages = false)
         {
             Shipment shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("MoveType").Include("SalesmanUser").Include("SalesmanUser.Contact")
                                  where a.Id == id && a.Tenant == tenant
@@ -4545,6 +4545,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPM shipmentPM = new ShipmentPM();
 
             shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false);
+            
+            if (includePackages)
+            {
+                ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(tenant);
+                shipmentPM.ShipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipment.Id, shipment.ShipmentNumber, tenant);
+            }
 
             ShipmentPM securedPM = new ShipmentPM();
             SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
