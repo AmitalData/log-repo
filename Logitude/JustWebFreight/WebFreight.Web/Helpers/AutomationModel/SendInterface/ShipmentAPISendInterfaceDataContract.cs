@@ -48,11 +48,6 @@ namespace WebFreight.Web.Helpers.AutomationModel.SendInterface
             object instanceQueryService = Activator.CreateInstance(instanceAssemblyType, new object[] { sendInterfaceDataContractObjectArgs.Tenant });
             object sendInterfaceDataContractObject = GetMethodValue(instanceQueryService, (shipmentLevelName + "DataMapping"), new object[] { EntityPM, sendInterfaceDataContractObjectArgs.Tenant, computingPartnerCode });
             
-            if (shipmentLevelName == "Direct")
-            {
-                sendInterfaceDataContractObject = GetMethodValue(instanceQueryService, "MapInlandDomesticStates", new object[] { sendInterfaceDataContractObject, sendInterfaceDataContractObjectArgs.Tenant });
-            }
-
             return sendInterfaceDataContractObject;
         }
 
