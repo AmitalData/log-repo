@@ -29,4 +29,8 @@ export class NewChargifyAWBStockComponent {
                 
         });
     }
+
+    CloseButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
 }
