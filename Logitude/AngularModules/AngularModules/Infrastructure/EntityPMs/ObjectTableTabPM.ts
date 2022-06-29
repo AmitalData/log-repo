@@ -68,6 +68,4 @@ export class ObjectTableTabPM {
     public HtmlComponentName: string;
     public HtmlComponentUrl: string;
     public FeatureUniqeCode: string;
-
-
 }

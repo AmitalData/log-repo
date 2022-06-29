@@ -223,6 +223,8 @@
     <None Include="DBScripts\ShipmentModel\202205160324_UpdateContainerStatusWorkerRole.sxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="DBTables\InfrastructureModel\ChildEntitiesCustomField.dxml" />
+    <None Include="DBTables\InfrastructureModel\ScreenSection.dxml" />
+    <None Include="DBTables\InfrastructureModel\TabModification.dxml" />
     <None Include="DBTables\QuoteModel\ValidByType.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingProvider.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
@@ -233,6 +235,7 @@
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ChildEntitiesCustomField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\TabModification.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ScreenSection.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerTrackingResponse.lxml" />

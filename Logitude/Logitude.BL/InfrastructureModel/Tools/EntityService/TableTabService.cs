@@ -11,12 +11,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
     public class TableTabService
     {
         int tenant;
-        private ObjectTableTabRepository repository;
+        ObjectTableTabRepository repository;
 
         public TableTabService(int tenant)
         {
+            this.tenant = tenant;
             repository = new ObjectTableTabRepository(tenant);
         }
+
         public void UpdateTabs(List<ObjectTableTabPM> tabs)
         {
             try
@@ -34,7 +36,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         private void UpdateEntity(string changeset, ObjectTableTabPM tabPM)
         {
-            ObjectTableTab tab = MapPoco(tabPM);
+            TableTabMappingService mappingService = new TableTabMappingService(repository);
+            ObjectTableTab tab = mappingService.MapPoco(tabPM);
+
             switch (changeset)
             {
                 case Changeset.Insert:
@@ -45,35 +49,17 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     }
                 case Changeset.Update:
                     {
-                        OnTabUpdate(tab);
+                        OnTabUpdate(tab, tabPM);
                         repository.Update(tab);
                         break;
                     }
                 case Changeset.Delete:
-                    repository.Remove(tab);
-                    break;
+                    {
+                        OnTabDelete(tab, tabPM);
+                        repository.Remove(tab);
+                        break;
+                    }
             }
-        }
-        private ObjectTableTab MapPoco(ObjectTableTabPM entityPM)
-        {
-            return new ObjectTableTab()
-            {
-                Id = entityPM.Id,
-                Tenant = entityPM.Tenant,
-                ObjectTableId = entityPM.ObjectTableId,
-                ControlPath = entityPM.ControlPath,
-                TabNameTextCodeId = entityPM.TabNameTextCodeId,
-                IndexOrder = entityPM.IndexOrder,
-                Code = entityPM.Code,
-                FeatureId = entityPM.FeatureId,
-                TabNameTextCodeCode = entityPM.TabNameTextCodeCode,
-                FeatureUniqeCode = entityPM.FeatureUniqeCode,
-                HtmlComponentName = entityPM.HtmlComponentName,
-                HtmlComponentUrl = entityPM.HtmlComponentUrl,
-                ScreenCode = entityPM.ScreenCode,
-                Type = entityPM.Type,
-                OriginalTabCode = entityPM.OriginalTabCode,
-            };
         }
 
         private void OnTabCreate(ObjectTableTab tab, ObjectTableTabPM tabPM)
@@ -84,14 +70,24 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             tab.ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl";
 
             if(tabPM.TabNameTextCodeCode == null)
-            {
-                var nameTextCode = CreateTabNameTextCode(tabPM);
-                tab.TabNameTextCodeId = nameTextCode.Id;
-                tab.TabNameTextCodeCode = nameTextCode.Code;
-            }
+                AddNewTextCodeForTab(tab, tabPM);
         }
-        private void OnTabUpdate(ObjectTableTab tab)
+        private void OnTabUpdate(ObjectTableTab tab, ObjectTableTabPM tabPM)
         {
+            if (tab.Tenant == 0)
+                new TableTabModificationService(tenant).UpdateModification(tabPM);
+        }
+
+        
+        private void OnTabDelete(ObjectTableTab tab, ObjectTableTabPM tabPM)
+        {
+        }
+
+        private void AddNewTextCodeForTab(ObjectTableTab tab, ObjectTableTabPM tabPM)
+        {
+            var nameTextCode = CreateTabNameTextCode(tabPM);
+            tab.TabNameTextCodeId = nameTextCode.Id;
+            tab.TabNameTextCodeCode = nameTextCode.Code;
         }
 
         private TextCodePM CreateTabNameTextCode(ObjectTableTabPM tab)
@@ -101,7 +97,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             TextCodePM textCode = textCodeService.Create(new TextCodePM()
             {
-                Code = "user-tab." + tab.Code,
+                Code = "ObjectTableTab.O." + tab.Code,
                 DefaultText = tab.Name,
                 DefaultTextPlural = tab.Name,
                 ObjectTableId = tab.ObjectTableId,
@@ -112,8 +108,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             return textCode;
         }
-
-
     }
 
     struct Changeset

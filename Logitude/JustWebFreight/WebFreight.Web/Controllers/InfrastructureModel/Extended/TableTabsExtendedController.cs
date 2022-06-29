@@ -42,8 +42,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             {
                 AuthenticationToken authToken = AuthinticateTenant();
 
-                TableTabService service = new TableTabService(authToken.Tenant);
-                service.UpdateTabs(tabs);
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    TableTabService service = new TableTabService(authToken.Tenant);
+                    service.UpdateTabs(tabs);
+
+                    scope.Complete();
+                };
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }

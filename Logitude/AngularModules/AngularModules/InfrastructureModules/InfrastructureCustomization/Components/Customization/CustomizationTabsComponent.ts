@@ -48,9 +48,10 @@ export class CustomizationTabsComponent extends BaseComponent
         super();
     }
 
-    OrderTabs()
+    LoadTabs()
     {
-        this.orderedTabs = new ObservableCollection(this.tabs.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 }));
+        const filteredTabs = this.tabs.filter(t=>t.Changeset != 'delete');
+        this.orderedTabs = new ObservableCollection(filteredTabs.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 }));
     }
 
     SetWindowArgs(windowArgs: any)
@@ -58,102 +59,16 @@ export class CustomizationTabsComponent extends BaseComponent
         this.objectTableId = windowArgs.ObjectTableID;
         this.ObjectTable = window.ObjectTables.filter(x => x.Id === this.objectTableId)[0];
 
-        this.GetTenantEntityTabs();
-        this.OrderTabs();
+        this.GetTabs();
+        this.LoadTabs();
     }
 
+    GetTabs = () => this.tabs = window.ObjectTableTabs.filter(a => a.ObjectTableId == this.objectTableId) || [];
     CancelClicked = () => this.CurrentSession.CloseCurrentWindow();
     IsCopied = (a: any) => this.tabs.map(t => t.OriginalTabCode).includes(a.Code);
     PushTabs = (newTableTabs: any) => this.tabs = this.tabs.concat(newTableTabs)
 
-    private GetTenantZeroNewTabs()
-    {
-        let newTableTabs = window.ObjectTableTabs
-        .filter(a => a.ObjectTableId == this.objectTableId && !this.IsCopied(a)) || [];
-
-        newTableTabs = newTableTabs.map(a => { return { ...a, Type: 'Predefined', Changeset: 'insert', Tenant: SessionLocator.Tenant  }; });
-
-        this.SetTabsAdditionalFields(newTableTabs);
-
-        this.PushTabs(newTableTabs);
-    }
-    private GetTenantZeroUpdatedTabs()
-    {
-        let updatedTenantZeroTabs: ObjectTableTabPM[] = window.ObjectTableTabs
-        .filter(a => a.ObjectTableId == this.objectTableId && this.IsCopied(a)) || [];
-
-        const updatedTabs = this.tabs.filter(d=> updatedTenantZeroTabs.map(t => t.Code).includes(d.OriginalTabCode));
-
-        updatedTabs.forEach((tab: ObjectTableTabPM) => {
-            const tenantZeroTab = updatedTenantZeroTabs.find(t=>t.Code == tab.OriginalTabCode);
-
-            // if(tenantZeroTab.HtmlComponentName != tab.HtmlComponentName){
-
-                tab.Changeset = tab.Changeset == 'insert' ? 'insert' : 'update';
-                this.MapTab(tab, tenantZeroTab);
-            // }
-
-        });
-    }
-
-    private MapTab(destiniationTab: ObjectTableTabPM, targetTab: ObjectTableTabPM)
-    {
-        destiniationTab.ControlPath = targetTab.ControlPath;
-        destiniationTab.TabNameTextCodeId = targetTab.TabNameTextCodeId;
-        destiniationTab.TabNameTextCodeDefaultText = targetTab.TabNameTextCodeDefaultText;
-        destiniationTab.TabNameTextCodeCode = targetTab.TabNameTextCodeCode;
-        destiniationTab.FeatureId = targetTab.FeatureId;
-        destiniationTab.Type = targetTab.Type;
-        destiniationTab.IsHidden = targetTab.IsHidden;
-        destiniationTab.Disabled = targetTab.Disabled;
-        destiniationTab.HtmlComponentName = targetTab.HtmlComponentName;
-        destiniationTab.HtmlComponentUrl = targetTab.HtmlComponentUrl;
-        destiniationTab.FeatureUniqeCode = targetTab.FeatureUniqeCode;
-    }
-
-    private GetTenantEntityTabs(){
-        this.CurrentSession.StartBusyIndicatorSaving();
-        this.tableTabsService.GetTenantTableTabsByTableId(this.objectTableId)
-            .subscribe(tabs => {
-                this.CurrentSession.StopBusyIndicator();
-
-                this.tabs = tabs || [];
-
-                this.SetScreenNames();
-
-                this.GetTenantZeroNewTabs();
-                this.GetTenantZeroUpdatedTabs();
-
-                this.OrderTabs();
-
-            }, error=>{
-                alert("error happened while getting user tabs!");
-                console.error(error);
-            });
-    }
-    private SetScreenNames()
-    {
-        const screens: ScreenPM[] = window.Screens.filter(d => d.ObjectTableId == this.objectTableId) || [];
-        for (let i = 0; i < this.tabs.length; i++) {
-            let tab = this.tabs[i];
-            tab.ScreenName = screens.find(a => a.Code == tab.ScreenCode)?.Name;
-        }
-    }
-
-    SetTabsAdditionalFields(newTableTabs)
-    {
-        let maxOrder = Math.max(...this.tabs.map(t => t.IndexOrder));
-        maxOrder = maxOrder == -Infinity ? -1 : maxOrder;
-        const screens: ScreenPM[] = window.Screens.filter(d => d.ObjectTableId == this.objectTableId) || [];
-        for (let i = 0; i < newTableTabs.length; i++) {
-            let tab = newTableTabs[i];
-            tab.ScreenName = screens.find(a => a.Code == tab.ScreenCode)?.Name;
-            tab.OriginalTabCode = tab.Code;
-            tab.IndexOrder = ++maxOrder;
-        }
-    }
-
-    UpdateAllTabsAndCloseWindow()
+    GetAllTabsAndCloseWindow()
     {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.loginService.CurrentTenant = SessionLocator.Tenant;
@@ -168,14 +83,16 @@ export class CustomizationTabsComponent extends BaseComponent
 
     OkClicked()
     {
-        if(!this.isDirty)
+        if(!this.isDirty || this.tabs.length == 0)
             return this.CancelClicked();
 
+        const tabsToUpdate = this.tabs.filter(t=>t.Changeset);
+
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.tableTabsService.UpdateTabs(this.tabs)
+        this.tableTabsService.UpdateTabs(tabsToUpdate)
             .subscribe(arg => {
                 this.CurrentSession.StopBusyIndicator();
-                this.UpdateAllTabsAndCloseWindow();
+                this.GetAllTabsAndCloseWindow();
             }, error=>{
                 alert("error happened!");
             });
@@ -202,13 +119,14 @@ export class CustomizationTabsComponent extends BaseComponent
         newTab.IndexOrder = this.tabs.length;
         this.isDirty = true;
         this.tabs.push(newTab);
-        this.OrderTabs();
+        this.LoadTabs();
     }
 
     DeleteTab(tab: ObjectTableTabPM)
     {
         tab.Changeset = 'delete';
         this.isDirty = true;
+        this.LoadTabs();
     }
     DecOrder(currentTab)
     {
@@ -222,7 +140,7 @@ export class CustomizationTabsComponent extends BaseComponent
         prevTab.Changeset = prevTab.Changeset == 'insert' ? 'insert' : 'update';
         currentTab.Changeset = currentTab.Changeset == 'insert' ? 'insert' : 'update';
 
-        this.OrderTabs();
+        this.LoadTabs();
         this.isDirty = true;
     }
     IncOrder(currentTab)
@@ -238,7 +156,7 @@ export class CustomizationTabsComponent extends BaseComponent
         nextTab.Changeset = nextTab.Changeset == 'insert' ? 'insert' : 'update';
         currentTab.Changeset = currentTab.Changeset == 'insert' ? 'insert' : 'update';
 
-        this.OrderTabs();
+        this.LoadTabs();
         this.isDirty = true;
     }
 

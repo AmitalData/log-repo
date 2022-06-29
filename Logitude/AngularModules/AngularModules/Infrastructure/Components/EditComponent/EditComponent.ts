@@ -25,6 +25,8 @@ import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
+import { TableTabService } from 'Infrastructure/Services/ExtendedPMs/TableTabService';
+import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -87,6 +89,7 @@ export class EditComponent implements OnDestroy {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
+    tabsService = new TableTabService();
 
 
 
@@ -762,7 +765,18 @@ export class EditComponent implements OnDestroy {
         }
 
         else {
-            this.BuildTabsItemsSource();
+            if(!window.TenantTabs){
+                this.tabsService.GetTenantTabs()
+                .subscribe((tabs: ObjectTableTabPM[]) => {
+                    window.TenantTabs = tabs;
+                    this.BuildTabsItemsSource();
+
+                });
+            }else{
+                this.BuildTabsItemsSource();
+            }
+
+
         }
     }
     private BuildSingleEditTab() {

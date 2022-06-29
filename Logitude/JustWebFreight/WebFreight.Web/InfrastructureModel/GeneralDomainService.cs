@@ -4962,7 +4962,7 @@ namespace WebFreight.Web.InfrastructureModel
         #endregion 
 
         #region ObjectTableTabs
-        public IQueryable<ObjectTableTabPM> GetObjectTableTabsByTenant(int tenant)
+        public List<ObjectTableTabPM> GetObjectTableTabsByTenant(int tenant)
         {
             ObjectTableTabsRepository = new ObjectTableTabRepository(tenant);
             this.ChangeConnectionString(tenant);

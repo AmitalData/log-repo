@@ -77,20 +77,20 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
-   public class ScreenSectionUpdateClass
+   public class TabModificationUpdateClass
    {  		
-		public const string HashString = "1f06161d80ffc44b0920cff5a93508f1";
+		public const string HashString = "747375e41b2ad17df3a8d816638a6a6f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "ScreenSection",
+	             				    ObjectTableName =  "TabModification",
 			      				    IsNew =  true,
-			      				    DBTableName =  "ScreenSections",
-			      				    ObjectTableSingular =  "ScreenSection",
-			      				    ObjectTablePlural =  "ScreenSections",
+			      				    DBTableName =  "TabsModifications",
+			      				    ObjectTableSingular =  "Tab Modification",
+			      				    ObjectTablePlural =  "Tabs Modifications",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -116,8 +116,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Screen Section",
-			      				    Code =  "19f2",
+			      				    DefaultText =  "Tab Modification",
+			      				    Code =  "5db8",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  ScreenSectionUpdateClass.HashString,
+			      				    HashString =  TabModificationUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -140,12 +140,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CreatedByUserId",
-					  						ObjectTableName =  "ScreenSection",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "User",
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "TabModification",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -153,14 +152,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
+					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CreatedByUserId",
-					  						ListPropertyPath =  "CreatedByUserId",
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -177,8 +176,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Created By",
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -198,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Name",
-					  						ObjectTableName =  "ScreenSection",
+					  						ObjectTableName =  "TabModification",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -253,26 +252,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ScreenCode",
-					  						ObjectTableName =  "ScreenSection",
+					 						FieldName =  "TabCode",
+					  						ObjectTableName =  "TabModification",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ScreenCode",
-					  						ListPropertyPath =  "ScreenCode",
+					  						PMPropertyPath =  "TabCode",
+					  						ListPropertyPath =  "TabCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -289,8 +288,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ScreenCode",
-					  						DefaultText =  "Screen Code",
+					  						FullFieldLable =  "TabCode",
+					  						DefaultText =  "TabCode",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -309,8 +308,120 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "NumberOfRows",
-					  						ObjectTableName =  "ScreenSection",
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "TabModification",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TabId",
+					  						ObjectTableName =  "TabModification",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TabId",
+					  						ListPropertyPath =  "TabId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TabId",
+					  						DefaultText =  "Tab",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Order",
+					  						ObjectTableName =  "TabModification",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -327,8 +438,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "NumberOfRows",
-					  						ListPropertyPath =  "NumberOfRows",
+					  						PMPropertyPath =  "Order",
+					  						ListPropertyPath =  "Order",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -345,64 +456,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "NumberOfRows",
-					  						DefaultText =  "Number Of Rows",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Number",
-					  						ObjectTableName =  "ScreenSection",
-					  						FieldsDataType =  "Integer",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Number",
-					  						ListPropertyPath =  "Number",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Number",
-					  						DefaultText =  "Number",
+					  						FullFieldLable =  "Order",
+					  						DefaultText =  "Order",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -426,15 +481,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable ScreenSectionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ScreenSection" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> ScreenSectionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ScreenSection").ToList();
+		   ObjectTable TabModificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TabModification" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> TabModificationObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TabModification").ToList();
 		       
 	      
 
-	         Screen ScreenSectionScreenSectionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ScreenSection.HeaderScreen", Name = "ScreenSectionHeaderScreen", ObjectTableId = ScreenSectionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TabModificationScreenSectionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TabModification.HeaderScreen", Name = "ScreenSectionHeaderScreen", ObjectTableId = TabModificationObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    ScreenSectionObjectTable.HeaderScreenId = ScreenSectionScreenSectionHeaderScreenScreen0.Id;
-		    ScreenSectionObjectTable.HeaderScreenCode = ScreenSectionScreenSectionHeaderScreenScreen0.Code;
+		    TabModificationObjectTable.HeaderScreenId = TabModificationScreenSectionHeaderScreenScreen0.Id;
+		    TabModificationObjectTable.HeaderScreenCode = TabModificationScreenSectionHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -446,18 +501,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable ScreenSectionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ScreenSection" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable TabModificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TabModification" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature ScreenSectionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ScreenSectionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ScreenSection.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ScreenSectionObjectTable);
-		   Feature ScreenSectionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ScreenSectionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ScreenSection.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ScreenSectionObjectTable);
-		   Feature ScreenSectionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ScreenSectionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ScreenSection.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ScreenSectionObjectTable);
-		   Feature ScreenSectionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ScreenSectionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ScreenSection.Features.PackageFeature", NameTextCodeDefaultText = "ScreenSection Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ScreenSectionObjectTable);    
+		   Feature TabModificationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TabModificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TabModification.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TabModificationObjectTable);
+		   Feature TabModificationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TabModificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TabModification.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TabModificationObjectTable);
+		   Feature TabModificationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TabModificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TabModification.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TabModificationObjectTable);
+		   Feature TabModificationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TabModificationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TabModification.Features.PackageFeature", NameTextCodeDefaultText = "TabModification Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TabModificationObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable ScreenSectionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ScreenSection" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable TabModificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TabModification" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -471,7 +526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = ScreenSectionObjectTable.Id,
+                ObjectTableId = TabModificationObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -489,7 +544,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = ScreenSectionObjectTable.Id,
+                ObjectTableId = TabModificationObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

@@ -2102,8 +2102,14 @@ namespace Simplog.Data.InfrastructureModel
 
         public IDbSet<ScreenSection> ScreenSections => throw new NotImplementedException();
 
+        public IDbSet<TabModification> TabsModifications
+        {
+            get;
+            set;
+        }
 
-        
+
+
 
 
     }
