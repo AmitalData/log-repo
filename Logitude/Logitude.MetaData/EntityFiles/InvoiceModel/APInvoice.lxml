@@ -2320,7 +2320,7 @@
     EnableAutoFill="false"
     IncludeInSearchField="false"
     AllowedinAutomationConditions="true"
-    AutomationEmailRecipient="false"
+    AutomationEmailRecipient="true"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
