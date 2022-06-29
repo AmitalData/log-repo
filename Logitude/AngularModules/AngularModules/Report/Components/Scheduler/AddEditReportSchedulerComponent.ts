@@ -251,7 +251,6 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     SetReportRecepientsDetails(isReloaded) {
         const isPartnersChanged = this.PageChild_PRREP.IsPartnersChanged("3");
-        if (isPartnersChanged) this.PageChild_OPEMA.CleanRecepientsLists();
         this.PageChild_PRREP.PrepareContactList();
         var windowArgs: any = {};
         var recepients: ReportSchedulerRecepients = this.PageChild_RETASK.DataContext.SchedulerDetails.ReportDetails.Recepients;
@@ -268,6 +267,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         windowArgs.ByCardCode = this.IsBIReport ? true : false;
         this.PageChild_OPEMA.SelectedPartnerItem = isPartnersChanged ? null : this.PageChild_OPEMA.SelectedPartnerItem;
         this.PageChild_OPEMA.SetWindowArgs(windowArgs);
+        if (isPartnersChanged) this.PageChild_OPEMA.CleanRecepientsLists();
     }
 
     private Retrie = 0;
