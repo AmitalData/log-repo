@@ -859,6 +859,29 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        public HttpResponseMessage PutSupplierInvioceFromFileRequest(int tenant, string clientId, string partnerId, string declarationId, ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
+                {
+                    byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
+                    string decodedString = Encoding.UTF8.GetString(data);
+                    var messagingService = new DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService();
+                    partnerId = "METRO";
+                    var sts = messagingService.CreateCRS(tenant, clientId, partnerId, declarationId, decodedString);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, sts);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         //public HttpResponseMessage UpdateInvoiceVendorCommision(SupplierInvoicePM invoicePM)// string declarationId, int counterKey,string invoiceCurrency, decimal invoiceAmount, string vendorId, string customerId)
         //{
