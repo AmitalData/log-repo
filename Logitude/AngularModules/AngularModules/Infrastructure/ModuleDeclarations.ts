@@ -99,7 +99,8 @@ import {LoginComponent} from './Components/LoginComponent/LoginComponent';
 import {DSVLoginProcessComponent} from './Components/LoginComponent/PrivateLabelComponents/DSVLoginProcessComponent';
 import {DSVMobileLoginProcessComponent} from './Components/LoginComponent/PrivateLabelComponents/DSVMobileLoginProcessComponent';
 import {BlockScreenComponent} from './Components/LoginComponent/BlockScreenComponent';
-import {HomeComponent} from './Components/HomeComponent/HomeComponent';
+import { HomeComponent } from './Components/HomeComponent/HomeComponent';
+import { NewChargifyAWBStockComponent } from './Components/HomeComponent/NewChargifyAWBStockComponent';
 import {SessionComponent} from './Components/Session/SessionComponent';
 import {MainMenuComponent} from './Components/MainMenuComponent/MainMenuComponent';
 import {EditComponent} from './Components/EditComponent/EditComponent';
@@ -339,6 +340,7 @@ export const Components =
         DSVMobileLoginProcessComponent,
         BlockScreenComponent,
         HomeComponent,
+        NewChargifyAWBStockComponent,
         SessionComponent,
         MainMenuComponent,
         EditComponent,
@@ -436,6 +438,7 @@ export class ModuleDeclarations {
             case 'DSVMobileLoginProcessComponent': { myResult = DSVMobileLoginProcessComponent; break; }
             case 'BlockScreenComponent': { myResult = BlockScreenComponent; break; }
             case 'HomeComponent': { myResult = HomeComponent; break; }
+            case "NewChargifyAWBStockComponent": { myResult = NewChargifyAWBStockComponent; break; }
             case 'SessionComponent': { myResult = SessionComponent; break; }
             case 'MainMenuComponent': { myResult = MainMenuComponent; break; }
             case 'EditComponent': { myResult = EditComponent; break; }

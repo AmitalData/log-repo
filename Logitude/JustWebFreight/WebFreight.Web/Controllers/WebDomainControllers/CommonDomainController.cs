@@ -12,10 +12,13 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BookingLib.Data.EntityLists;
 using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.BL.EntityQueryServices;
+using Logitude.CRM.BL.EntityUpdateServices;
 using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
@@ -770,7 +773,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (!string.IsNullOrEmpty(ObjectTableName))
                 {
+                    /*  if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
+                      {
+                          Task<HttpResponseMessage> task = Task<HttpResponseMessage>.Factory.StartNew(() => {
+                              return ExecuteQuickSearchOnSeconderyDB(ObjectTableName, SearchFields, tenant);
+                          });
+
+                          return task.Result;
+                      }*/
+                    // else
+                    // {
+
                     return GetQuickSearch(ObjectTableName, SearchFields, tenant);                   
+
+                    // }
+
                 }
                 else
                 {
@@ -2591,7 +2608,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 if (!shipmentQuery.IsTenantHaveShipmentBySecurityKey(securityKey, tenant))
                     throw new AutenticationException("Sorry! this user is not authorized!");
-                
+
                 string result = GetTenantLogoUriBase64(tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -2635,7 +2652,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             try
             {
                 ShipmentQuery shipmentQuery = new ShipmentQuery(id);
-                if (!shipmentQuery.IsTenantHaveShipmentBySecurityKey(securityKey, id)) {
+                if (!shipmentQuery.IsTenantHaveShipmentBySecurityKey(securityKey, id))
+                {
                     throw new AutenticationException("Sorry! this user is not authorized!");
                 }
 
@@ -2951,6 +2969,104 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage GetChargifyAWBStock()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                string userId = GetSystemUserId(tenant);
+                this.CreateMessagingStock(tenant, userId);
+                this.CreateOpportunity(tenant, userId);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private string GetSystemUserId(int tenant)
+        {
+            var email = "system@tenant" + tenant + ".com";
+            string userId = null;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            ContactRepository contactRep = new ContactRepository(commonDataContext);
+            Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
+            if (contact != null)
+            {
+                userId = contact.Id;
+            }
+
+            return userId;
+        }
+        private void CreateMessagingStock(int tenant, string userId)
+        {
+            IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
+            var todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            MessagingStockPM messagingStock = new MessagingStockPM()
+            {
+                TenantNumber = tenant,
+                Amount = 100,
+                StartDate = todayDate,
+                EndDate = todayDate.AddMonths(12).AddDays(-1),
+                TotalPrice = 100,
+                StockType = "Chargify",
+                CreatedByUserId = userId,
+                UpdatedByUserId = userId
+            };
+            MessagingStockService service = new MessagingStockService(iContext, messagingStock);
+            service.Create();
+        }
+        private void CreateOpportunity(int tenant, string userId)
+        {
+            int crmTenant = 341;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            ICRMContext crmContext = CRMContext.GetContext(crmTenant);
+
+            string tenantString = tenant.ToString();
+
+            // Create Opportunity 
+            var customer = (from a in commonDataContext.Cards.Include("Customer")
+                            where tenant == crmTenant && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && a.ReceivablesAccountingCard == tenantString
+                            select new CustomerPM
+                            {
+                                Id = a.Id,
+                                EnglishName = a.EnglishName,
+                                Code = a.Code,
+                                ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                SalesmanUserId = a.SalesmanUserId,
+                                PrimaryContactId = a.PrimaryContactId,
+                            }).FirstOrDefault();
+
+            var type = (from a in crmContext.OpportunityTypes
+                        where tenant == crmTenant && a.Name == "AWB Stock"
+                        select a).FirstOrDefault();
+
+            var stage = (from a in crmContext.Stages
+                        where tenant == crmTenant && a.Code == "QUA"
+                        select a).FirstOrDefault();
+
+            OpportunityPM opportunityPM = new OpportunityPM()
+            {
+                Tenant = crmTenant,
+                CustomerId = customer?.Id,
+                ContactId = customer?.PrimaryContactId,
+                OwnerId = customer?.SalesmanUserId,
+                Subject = "AWB Stock",
+                ChangeSetOp = ChangeSetOperation.Insert,
+                CreatedByUserId = userId,
+                UpdatedByUserId = userId,
+                OpportunityTypeId = type?.Id,
+                StageId = stage?.Id
+            };
+
+            OpportunityUpdateService service = new OpportunityUpdateService(crmContext, new Dictionary<string, IContext>(), crmTenant);
+            opportunityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+            service.Update(opportunityPM, true);
         }
     }
 }

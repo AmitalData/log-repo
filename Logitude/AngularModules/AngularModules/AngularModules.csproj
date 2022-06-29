@@ -332,6 +332,7 @@
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelsTermsOfUseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\TenantManagementTermsofUseTabComponent.html" />
+    <Content Include="Infrastructure\Components\HomeComponent\NewChargifyAWBStockComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.css" />
     <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.css" />
@@ -1915,6 +1916,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\TenantManagementTermsofUseTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\CustomControls\RatioBoxComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\HomeComponent\NewChargifyAWBStockComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DropdownMenuComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWDateComponent.ts" />
