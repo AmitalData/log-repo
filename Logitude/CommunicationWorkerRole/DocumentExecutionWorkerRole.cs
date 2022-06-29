@@ -76,7 +76,7 @@ namespace CommunicationWorkerRole
             ConnectClient();
            
             new Thread(new ThreadStart(CleanUp)).Start();
-            ExceptionHandler.HandleException(new Exception("Document Worker role started"), DateTime.Now, 0, null, "Doc WorkerRole Monitor", null, null);
+            ExceptionHandler.HandleException(new Exception("Document Worker role started"), DateTime.Now, 0, null, "Doc WorkerRole Monitor"+"|"+ThreadedRoleEntryPoint.getWorkerRoleName(), null, null);
 
             return base.OnStart();
         }
@@ -96,7 +96,7 @@ namespace CommunicationWorkerRole
 
             if (!isUpdatedRequired) return;
             documentsExecutionLogRepository.SubmitChanges();
-            ExceptionHandler.HandleException(new Exception("Document Worker cleaned up all stuck queue messages("+ documentsExecutionLogs.Count()+") and convert them to Fail"), DateTime.Now, 0, null, "Doc WorkerRole Monitor", null, null);
+            ExceptionHandler.HandleException(new Exception("Document Worker cleaned up all stuck queue messages("+ documentsExecutionLogs.Count()+") and convert them to Fail"), DateTime.Now, 0, null, "Doc WorkerRole Monitor" + "|" + ThreadedRoleEntryPoint.getWorkerRoleName(), null, null);
         }
 
 
@@ -111,7 +111,7 @@ namespace CommunicationWorkerRole
         public override void Run()
         {
             startExecuteDate = DateTime.Now;
-            ExceptionHandler.HandleException(new Exception("Document Worker role thread start running"), DateTime.Now, 0, null, "Doc WorkerRole Monitor", null, null);
+            ExceptionHandler.HandleException(new Exception("Document Worker role thread start running"), DateTime.Now, 0, null, "Doc WorkerRole Monitor" + "|" + ThreadedRoleEntryPoint.getWorkerRoleName(), null, null);
             while (IsRunning)
             {
                 if (!General.IsUpdating())

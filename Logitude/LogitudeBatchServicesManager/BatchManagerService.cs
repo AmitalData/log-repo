@@ -32,6 +32,7 @@ namespace LogitudeBatchServicesManager
         {
             try
             {
+                EventLog.WriteEntry(LogitudeBatchServiceHelper.ServiceName  , "LogitudeBatchServiceManager started.....");
                 IsServiceStop = false;
                 ManagedProcessesIds = new List<int>();
                 ManagedProcessesInfos = new List<ProcessStartInfo>();
@@ -51,7 +52,7 @@ namespace LogitudeBatchServicesManager
             }
             catch (Exception e)
             {
-                EventLog.WriteEntry("ERROR On BatchManagerService : " + e.ToString());
+                EventLog.WriteEntry(LogitudeBatchServiceHelper.ServiceName, "ERROR On BatchManagerService  On start: " + e.ToString() ,EventLogEntryType.Error);
             }
             finally
             {
@@ -68,6 +69,7 @@ namespace LogitudeBatchServicesManager
             {
                 if (!CheckIsProcessRunning(processId))
                 {
+                    
                     RestartProcess(processId); 
                 }
             }
@@ -84,10 +86,11 @@ namespace LogitudeBatchServicesManager
                 ManagedProcessesInfos = ManagedProcessesInfos.Where(a => !a.Arguments.Contains(ProcessUniqueKey)).ToList();
                 using (Process exeProcess = Process.Start(ProcessToRestart))
                 {
-                    EventLog.WriteEntry("BatchManagerService Starting Process With Id : " + processId);
                     ManagedProcessesIds.Add(exeProcess.Id);
                     ProcessToRestart.Arguments = ProcessToRestart.Arguments + "*" + exeProcess.Id + "*";
                     ManagedProcessesInfos.Add(ProcessToRestart);
+                    EventLog.WriteEntry(LogitudeBatchServiceHelper.ServiceName, "BatchManagerService restarting  Process ID (" + exeProcess.Id + ") With arguments: " + ProcessToRestart.Arguments);
+
                 }
             }
         }
@@ -99,7 +102,7 @@ namespace LogitudeBatchServicesManager
 
         private void BatchManager_DoWork(object sender, DoWorkEventArgs e)
         {
-            EventLog.WriteEntry("BatchManager_DoWork");
+            //EventLog.WriteEntry("BatchManager_DoWork");
             StartBatchManagerService();
         }
 
@@ -120,7 +123,7 @@ namespace LogitudeBatchServicesManager
 
         private void StartBatchManagerService()
         {
-            EventLog.WriteEntry("StartBatchManagerService");
+           // EventLog.WriteEntry("StartBatchManagerService");
             BatchManagerConfigurations batchManagerConfigurations = GetBatchServiceArguments();
             LaunchLogitudeBatchServices(batchManagerConfigurations.Processes , batchManagerConfigurations.ProcessDelayStartInSeconds);
         }
@@ -149,12 +152,14 @@ namespace LogitudeBatchServicesManager
         private void LaunchLogitudeBatchServices(List<BatchProcess> Processes, int processDelayStartInSeconds)
         {
             if (IsServiceStop) return;
-            EventLog.WriteEntry("Start LaunchLogitudeBatchServices");
+            EventLog.WriteEntry(LogitudeBatchServiceHelper.ServiceName, "Start LaunchLogitudeBatchServices");
             foreach (var Process in Processes)
             {
                 if (IsServiceStop) return;
                 StartProcessWithArgs(Process);
+              
                 System.Threading.Thread.Sleep(new TimeSpan(0, 0, processDelayStartInSeconds));
+
             }
 
         }
@@ -168,6 +173,7 @@ namespace LogitudeBatchServicesManager
             startInfo.FileName = path + "\\LogitudeBatchServices.exe";
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.Arguments = GetArgumentFromBatchProcess(batchProcess);
+         
             //MainBatchServices.Main(new string[] { startInfo.Arguments });
             //EventLog.WriteEntry("Start Process With Arg " + Argument);
             try
@@ -177,11 +183,13 @@ namespace LogitudeBatchServicesManager
                     ManagedProcessesIds.Add(exeProcess.Id);
                     startInfo.Arguments = startInfo.Arguments + "*" + exeProcess.Id + "*";
                     ManagedProcessesInfos.Add(startInfo);
+                    EventLog.WriteEntry(LogitudeBatchServiceHelper.ServiceName, "service process " + batchProcess.Name + " and PID ("+ exeProcess.Id + ") started.With arguments: " + startInfo.Arguments);
                 }
+             
             }
             catch (Exception e)
             {
-                EventLog.WriteEntry("Exception : " + e.ToString(), EventLogEntryType.Error);
+                EventLog.WriteEntry(LogitudeBatchServiceHelper.ServiceName,"Exception while trying to start process: " + batchProcess.Name +"Exception details: " + e.ToString(), EventLogEntryType.Error);
             }
         }
 

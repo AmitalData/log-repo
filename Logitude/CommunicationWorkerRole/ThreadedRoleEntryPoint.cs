@@ -104,10 +104,10 @@ namespace CommunicationWorkerRole
                 foreach (Thread thread in threads)
                 {
                     thread.Start();
-                    threadsNames = threadsNames + thread.Name;
+                    threadsNames = threadsNames + " | " + thread.Name;
                 }
             
-                ExceptionHandler.HandleException(new Exception("Started Threads:" + threadsNames), DateTime.Now, 0, null, "WorkerRole Monitor", null, null);
+                ExceptionHandler.HandleException(new Exception("Started Threads:" + threadsNames), DateTime.Now, 0, null, "WorkerRole Monitor" + "|" + getWorkerRoleName(), null, null);
                 threadsNames = "";
                 string currnetInactiveThreadsNames = "";
                 int secondsTimer = 0;
@@ -129,12 +129,12 @@ namespace CommunicationWorkerRole
                     }
                     if(secondsTimer >= HalfHourInSeconds && threadsNames == currnetInactiveThreadsNames && !string.IsNullOrEmpty(currnetInactiveThreadsNames)) // if half hour elaspsed and still the in active threads the same we will write record in DB each half an hour to not fill the logs
                     {
-                        ExceptionHandler.HandleException(new Exception("InActive Threads:" + currnetInactiveThreadsNames), DateTime.Now, 0, null, "WorkerRole Monitor", null, null);
+                        ExceptionHandler.HandleException(new Exception("InActive Threads:" + currnetInactiveThreadsNames), DateTime.Now, 0, null, "WorkerRole Monitor" + "|" + getWorkerRoleName(), null, null);
                         secondsTimer = 0;
                     }
                     if (threadsNames != currnetInactiveThreadsNames &&  !string.IsNullOrEmpty(currnetInactiveThreadsNames) )
                     {
-                        ExceptionHandler.HandleException(new Exception("InActive Threads:" + currnetInactiveThreadsNames), DateTime.Now, 0, null, "WorkerRole Monitor", null, null);
+                        ExceptionHandler.HandleException(new Exception("InActive Threads:" + currnetInactiveThreadsNames), DateTime.Now, 0, null, "WorkerRole Monitor" + "|" + getWorkerRoleName(), null, null);
                         threadsNames = currnetInactiveThreadsNames;
                     }
                     EventWaitHandle.WaitOne(1000);
@@ -368,7 +368,10 @@ namespace CommunicationWorkerRole
                 throw new Exception("Production worker role should not be run in Debug mode! To debug the worker role in production please use a custom worker name");// 
             }
         }
-
+        public static string getWorkerRoleName()
+        {
+            return LogitudeSettings.WorkerRoleName;
+        }
         private void AddStimulsoftFonts()
         {
             try
