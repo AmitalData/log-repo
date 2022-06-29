@@ -367,7 +367,7 @@
                                                                                         <img style="width: 16px; height: 16px; cursor: pointer; margin-bottom: -3px;" src="HtmlHelpers/Images/refresh.png" /></span>
                                                                                     <span id="ShipmentsQueryTitle">All Shipments</span>
                                                                                     <span id="ShipmentsQueryCount">(0)</span>
-                                                                                    <span id="ShipmentQueryMaxCountMessage" style="color: #666666; font-size: 11px; width:1px;background-color:#FFFBDA;margin-left:5px"></span>
+                                                                                    <span id="ShipmentsQueryLimitMessage" style="color: #666666; font-size: 11px; width:1px;background-color:#FFFBDA;margin-left:5px"></span>
 
                                                                                 </div>
                                                                             </td>
@@ -528,7 +528,7 @@
                                                                                         <img style="width: 16px; height: 16px; cursor: pointer; margin-bottom: -3px;" src="HtmlHelpers/Images/refresh.png" /></span>
                                                                                     <span id="InvoicesQueryTitle">All Invoices</span>
                                                                                     <span id="InvoicesQueryCount">(0)</span>
-                                                                                    <span id="InvoicesQueryMaxCountMessage" style="color: #666666; font-size: 11px; width:1px;background-color:#FFFBDA;margin-left:5px"></span>
+                                                                                    <span id="InvoicesQueryLimitMessage" style="color: #666666; font-size: 11px; width:1px;background-color:#FFFBDA;margin-left:5px"></span>
                                                                                 </div>
                                                                             </td>
 
