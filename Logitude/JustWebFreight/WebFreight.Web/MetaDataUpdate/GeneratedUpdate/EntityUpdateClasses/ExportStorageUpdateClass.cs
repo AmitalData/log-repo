@@ -86,7 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class ExportStorageUpdateClass
    {  		
 
-		public const string HashString = "174b39cd289ca7655a7fe89f6645fb5b";
+		public const string HashString = "780191b9454ace0ca685bd2ff9acc29f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1308,10 +1308,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorErrorXML",
 					  						DefaultText =  "ErrorXML",
-					  						FullLocalDefaultText =  "שגיםות",
 					  						ListFieldLable =  "StorErrorXMLListLable",
 					  						ListLableDefaultText =  "ErrorXML",
-					  						ListLocalDefaultText =  "שגיםות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1545,6 +1543,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExportStorage",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1555,6 +1554,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationStatusTypeCode",
 					  						DefaultText =  "Declaration Status Type ",
+					  						ListFieldLable =  "DeclarationStatusTypeCodeListLable",
+					  						ListLableDefaultText =  "Declaration Status Type Code",
+					  						ListLocalDefaultText =  "סטטוס הצהרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
