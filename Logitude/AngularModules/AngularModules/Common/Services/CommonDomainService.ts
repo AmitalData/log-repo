@@ -29,6 +29,20 @@ export class CommonDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommonDomain';
     }
 
+    public GetChargifyAWBStock() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetChargifyAWBStock?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     DownloadUploadPartnersTemplate() {
         var url = this._apiUrl + '/GetDownloadUploadPartnersTemplate';
         return defer(() => {

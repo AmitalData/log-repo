@@ -1455,42 +1455,46 @@ export class HomeComponent implements OnDestroy{
 
                 case "BUY":
                     {
-                        this.CurrentSession.StartBusyIndicatorLoading();
+                        if (this.IsChargifyAccount) {
+                            this.BuyChargifyAWBStock();
+                        }
+                        else {
+                            this.CurrentSession.StartBusyIndicatorLoading();
+                            var myService: CommonDomainService = new CommonDomainService();
+                            myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult: any) => {
+                                var temp: BluesnapParameters = myResult.Result;
+                                this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+                                var contractId: string = SessionLocator.TenantManagementJS.BluesnapEAWBSContractId;
 
-                        var myService: CommonDomainService = new CommonDomainService();
-                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult:any) => {
-                            var temp: BluesnapParameters = myResult.Result;
-                            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
-                            var contractId: string = SessionLocator.TenantManagementJS.BluesnapEAWBSContractId;
+                                if (!AppTool.IsNullOrEmpty(contractId)) {
+                                    this.BluesnapContractService.get(contractId).subscribe((res: ServiceResponse) => {
+                                        this.CurrentSession.StopBusyIndicator();
+                                        if (res) {
+                                            if (!res.HasError) {
+                                                contractId = res.Result.ContractId;
+                                                EmptyOrError = false;
+                                                this.BuyToAWB(EmptyOrError, contractId, temp);
 
-                            if (!AppTool.IsNullOrEmpty(contractId)) {
-                                this.BluesnapContractService.get(contractId).subscribe((res: ServiceResponse) => {
-                                    this.CurrentSession.StopBusyIndicator();
-                                    if (res) {
-                                        if (!res.HasError) {
-                                            contractId = res.Result.ContractId;
-                                            EmptyOrError = false;
-                                            this.BuyToAWB(EmptyOrError, contractId, temp);
+                                            }
+                                            else {
+                                                this.BuyToAWB(EmptyOrError, null, temp);
 
+                                            }
                                         }
                                         else {
                                             this.BuyToAWB(EmptyOrError, null, temp);
-
                                         }
-                                    }
-                                    else {
-                                        this.BuyToAWB(EmptyOrError, null, temp);
-                                    }
-                                });
-                            }
-                            else {
-                                this.CurrentSession.StopBusyIndicator();
-                                this.BuyToAWB(EmptyOrError, contractId, temp);
+                                    });
+                                }
+                                else {
+                                    this.CurrentSession.StopBusyIndicator();
+                                    this.BuyToAWB(EmptyOrError, contractId, temp);
 
-                            }
+                                }
 
-                          
-                        });
+
+                            });
+                        }
                         break;
                     }
 
@@ -1600,6 +1604,15 @@ export class HomeComponent implements OnDestroy{
             
         }
     }
+
+    BuyChargifyAWBStock() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Height = 200;
+        logWindow.Width = 600;
+        logWindow.Title = "New e-AWB Stock";
+        logWindow.Show('./InfrastructureModules/Infrastructure/Components/HomeComponent/NewChargifyAWBStockComponent');
+    }
+
     public ManageBluesnapAccountClicked() {
 
 
