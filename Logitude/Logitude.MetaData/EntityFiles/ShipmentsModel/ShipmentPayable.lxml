@@ -30,13 +30,13 @@
   IsSaveButtonVisible="true"
   IsComposition="true"
   EnableSecurity="true"
-  AllowCustomFields="false"
+  AllowCustomFields="true"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Payable&quot;"
-  Code="&quot;179e&quot;"
+  Code="&quot;4947&quot;"
   Name="&quot;ShipmentPayable&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -6293,6 +6293,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsCustomsChargesTariff&quot;"
     ListPropertyPath="&quot;IsCustomsChargesTariff&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6375,7 +6376,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;Payable&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"

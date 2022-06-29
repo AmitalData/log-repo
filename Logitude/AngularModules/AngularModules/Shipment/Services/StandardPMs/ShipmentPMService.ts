@@ -1080,16 +1080,33 @@ export class ShipmentPMService {
 
 
             }
+
+
             var pmKeys = Object.keys(itemJson);
             for (var key in pmKeys) {
 
                 if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
                     continue;
                 }
+
+                var customFields: Array<string> = [];
+                for (var i = 1; i < 51; i++) {
+                    customFields.push("Field" + i);
+                }
+
                 var property = pmKeys[key];
-                itemPM[property] = itemJson[property];
+                if (customFields.indexOf(property) > -1) {
+                    if (itemJson[property]) {
+                        var customFieldClass: CustomFieldClass = new CustomFieldClass(itemJson[property].Value, itemJson[property].FieldName, itemJson[property].TableName);
+                        itemPM[property] = customFieldClass;
+                    }
+                }
+                else {
+                    itemPM[property] = itemJson[property];
+                }
             }
-            
+
+
             if (mapParent) {
                 itemPM.OldEntityPM = this.clone(itemPM);
                 itemPM.UniqueKey = Guid.newGuid();
@@ -1150,15 +1167,39 @@ export class ShipmentPMService {
 
 
             }
+
+
             var pmKeys = Object.keys(itemJson);
             for (var key in pmKeys) {
 
                 if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
                     continue;
                 }
+
+                var customFields: Array<string> = [];
+                for (var i = 1; i < 51; i++) {
+                    customFields.push("Field" + i);
+                }
+
                 var property = pmKeys[key];
-                itemPM[property] = itemJson[property];
+                if (customFields.indexOf(property) > -1) {
+                    if (itemJson[property]) {
+                        var customFieldClass: CustomFieldClass = new CustomFieldClass(itemJson[property].Value, itemJson[property].FieldName, itemJson[property].TableName);
+                        itemPM[property] = customFieldClass;
+                    }
+                }
+                else {
+                    itemPM[property] = itemJson[property];
+                }
             }
+
+
+
+
+
+
+
+
            
             if (mapParent) {
                 itemPM.OldEntityPM = this.clone(itemPM);
@@ -1784,10 +1825,10 @@ export class ShipmentPMService {
                 }
 
                 var property = pmKeys[key];
-                itemPM[property] = itemJson[property];
+                    itemPM[property] = itemJson[property];
             }
 
-             
+
             if (mapParent) {
                 itemPM.UniqueKey = Guid.newGuid();
                 itemPM.ChangeSetOp = "None";
@@ -1882,6 +1923,7 @@ export class ShipmentPMService {
                 itemPM = new ShipmentPickUpDeliveryPackagePM(null);
             }
 
+
             var pmKeys = Object.keys(itemJson);
             for (var key in pmKeys) {
 
@@ -1890,9 +1932,8 @@ export class ShipmentPMService {
                 }
 
                 var property = pmKeys[key];
-                itemPM[property] = itemJson[property];
+                    itemPM[property] = itemJson[property];    
             }
-
 
             if (mapParent) {
                 itemPM.UniqueKey = Guid.newGuid();
@@ -1987,6 +2028,7 @@ export class ShipmentPMService {
             else {// update mapping             
                 itemPM = new ShipmentPickUpDeliveryPackagePM(null);
             }
+
 
             var pmKeys = Object.keys(itemJson);
             for (var key in pmKeys) {

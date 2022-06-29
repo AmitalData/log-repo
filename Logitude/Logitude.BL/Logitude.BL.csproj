@@ -3097,6 +3097,7 @@
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsRequestService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentCarrierStatusService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentService.cs" />
+    <Compile Include="ShipmentsModel\Tools\ExternalService\ShipmentChildEntitiesCustomFieldServices.cs" />
     <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentServiceInitializer.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\ContainerTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\CustomsTransferHeaderTracing.cs" />

@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-
-		public const string HashString = "7991a9245e06ce3ff5a7c4f27f3d0420";
+		public const string HashString = "e238ec3df9d3f9a793da789128158be3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -52140,6 +52139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 		   Feature ShipmentFeature_VizionRequestStatus = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VizionRequestStatus", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.VisionRequestStatus", NameTextCodeDefaultText = @"Vizion Request Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
+		   Feature ShipmentFeature_VisionContainerStatusSimulator = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VisionContainerStatusSimulator", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.VisionContainerStatusSimulator", NameTextCodeDefaultText = @"Vision Container Status Simulator" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
    
 	    

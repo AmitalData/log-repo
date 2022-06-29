@@ -8,6 +8,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -41,6 +42,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 item.ChildShipmentReceivables = this.MapPocoToPM(iQueryableChilds);
             }
+
+
+            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = tenant,
+                EntityId = shipmentId,
+                ObjectTableName = "Shipment",
+                ChildObjectTableName = "ShipmentReceivable",
+                ChildEntities = shipmentReceivables.Cast<object>().ToList()
+            });
+
 
             return shipmentReceivables.OrderBy(d => d.ViewOrder).ThenBy(d => d.ChargesTypeCode).ToList();
         }
