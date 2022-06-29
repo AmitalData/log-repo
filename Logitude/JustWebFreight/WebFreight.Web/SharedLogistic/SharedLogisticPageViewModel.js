@@ -10,7 +10,7 @@
     jQuery.IsAgentShared = false;
     jQuery.IsShipperShared = false;
     jQuery.IsConsigneeShared = false;
-    jQuery.LoadingCount = 1001;
+    jQuery.LoadingCount = 100;
 
     jQuery.SearchText_SHI = null;
     jQuery.SearchText_INV = null;
@@ -194,10 +194,13 @@
 
             success: function (result) {
                 $.SendContactActivity($.CurrentEmail, "Invoice", "Invoices List", $.CurrentTenant, $.CurrentCardId);
-
+                $("#InvoicesQueryMaxCountMessage").html("");
 
                 if (result.length >= $.LoadingCount) {
                     $("#InvoicesQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
+                    $("#InvoicesQueryMaxCountMessage").html("Showing the first " + filters.PageSize + " rows, use the search field to find more results.");
+
+
                 }
 
                 else {
@@ -264,11 +267,13 @@
             },
 
             success: function (result) {                
-
+                $("#ShipmentsQueryMaxCountMessage").html("");
                 $.SendContactActivity($.CurrentEmail, "Shipment", "Shipments List", $.CurrentTenant, $.CurrentCardId);
 
                 if (result.length >= $.LoadingCount) {
                     $("#ShipmentsQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
+                    $("#ShipmentsQueryMaxCountMessage").html("Showing the first " + filters.PageSize+  " rows, use the search field to find more results.");
+
                 }
 
                 else {
