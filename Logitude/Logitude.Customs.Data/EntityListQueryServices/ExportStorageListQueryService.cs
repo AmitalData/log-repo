@@ -87,7 +87,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        CargoType = en.CargoType,
 
-                                                       CustomsStatus = en.CustomsCargoStatus.LocalName,
+                                                       CustomsStatus = en.CustomsStatus,
 
                                                        ExporterID = en.ExporterID,
 
@@ -137,7 +137,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
 
-                                                       ActionCode = en.ExportLogisticPermitAction.LocalName,
+                                                       ActionCode = en.ActionCode,
+                                                       ActionName = en.ExportLogisticPermitAction.LocalName,
                                                        ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName,
                                                        StorageSiteCode = en.StorageSiteCode,
                                                    });

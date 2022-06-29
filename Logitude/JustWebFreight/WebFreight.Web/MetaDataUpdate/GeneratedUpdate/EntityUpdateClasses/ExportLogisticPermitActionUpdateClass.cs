@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportLogisticPermitActionUpdateClass
    {  		
-		public const string HashString = "75a08582410bf0488e83bd7f8d28a306";
+		public const string HashString = "e16fff06fe388e5e44433af3e4aaafb2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -109,13 +109,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  false,
-			      				    IsAutoComplete =  true,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Code",
 			      				    InActive =  false,

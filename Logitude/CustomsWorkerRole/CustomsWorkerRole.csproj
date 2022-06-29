@@ -204,6 +204,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Test\clsTester.cs" />
+    <Compile Include="Test\clsTester.202205.cs" />
     <Compile Include="Test\ESBResponseXmlClass.cs" />
     <Compile Include="Test\LoadTestService.cs" />
     <Compile Include="Test\ReqSheetStatisticClass.cs" />

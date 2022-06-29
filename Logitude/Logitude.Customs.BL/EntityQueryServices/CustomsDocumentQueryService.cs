@@ -305,6 +305,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var dtoList = documentRepository.GetByEntity(objectTable.Id, declarationId, tenant);
             dtoList = dtoList.Where(a => a.DocumentTypeId == documentTypeId).ToList();
             var list = dtoList.Select(r => r.Id).ToList();
+            if (!LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight)
+            {
+                var dtoDF = dtoList.FirstOrDefault();
+                if (dtoDF == null)
+                {
+                    return null;
+                }
+                
+                return new ResultByDocumentType()
+                {
+                    DocumentId = dtoDF.DocumentId,
+                    DocumentsFilingId = dtoDF.Id
+                };
+
+            }
             var gDMFILINGRepository = new GDMFILINGRepository(tenant);
             var filingNotDeletedList = gDMFILINGRepository.GetNotDeleted(list);
             var filingNotDeleted=filingNotDeletedList.FirstOrDefault();

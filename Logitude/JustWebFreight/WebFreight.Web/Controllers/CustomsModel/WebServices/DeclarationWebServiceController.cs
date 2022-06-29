@@ -107,7 +107,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
         
-        public HttpResponseMessage GetDeclarationErrors(string declarationId, string listVersionId, string courierFilter,bool IsAmendmentErrors)
+        public HttpResponseMessage GetDeclarationErrors(string declarationId, string listVersionId, string courierFilter,bool IsAmendmentErrors,bool IsExportCloseErrors)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 DeclarationQueryService query = new DeclarationQueryService(customContext);
                 List<DeclarationErrorView> list
                     = query.GetDeclarationErrors(declarationId == "undefined" ? null : declarationId
-                                        , tenant, listVersionId == "undefined" ? null : listVersionId, courierFilter , IsAmendmentErrors);
+                                        , tenant, listVersionId == "undefined" ? null : listVersionId, courierFilter , IsAmendmentErrors, IsExportCloseErrors);
 
                 return Request.CreateResponse(HttpStatusCode.OK, list);
             }

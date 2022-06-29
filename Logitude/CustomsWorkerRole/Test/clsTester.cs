@@ -38,7 +38,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 
 namespace CustomsWorkerRole.Test
 {
-    public class clsTester
+    public partial class clsTester
     {
 
         public void TestAsDataSet(string closedTableId)
@@ -314,6 +314,41 @@ SELECT TOP 1000 [Id]
             {
                 Debug.WriteLine(ex.ToString());
             }
+        }
+
+        public static void GetPointer()
+        {
+            int tenant = 1;
+            
+            
+            var param= new GetTicketsParams()
+            {
+                ParentEntityId = "1-5594",
+                ParentEntityCode = "Declaration",
+                Child1EntityCode = "SupplierInvoice",
+                Child1EntityId = "1",
+                Child2EntityCode = "SupplierInvoiceItem",
+                Child2EntityId = "1"
+            };
+            param = new GetTicketsParams()
+            {
+                ParentEntityId = "1-5594",
+                ParentEntityCode = "Declaration",
+                Child1EntityCode = "SupplierInvoice",
+                Child1EntityId = "1",
+                //Child2EntityCode = "SupplierInvoiceItem",
+                //Child2EntityId = "1"
+            };
+            var customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
+            var customsDocumentPMList = customsDocumentQueryService
+                .GetCustomsDocumentPMListWithoutRequestedDoc(param, tenant);
+
+            customsDocumentPMList = customsDocumentQueryService
+                .GetCustomsDocumentPMListWithoutRequestedDocAndDeclarationAmendmentDocs(param, tenant);
+
+            var qs = new CustomsDocumentsTicketQueryService(tenant);
+            var tickets=qs.GetCustomsDocumentsTickets(param, tenant);
+
         }
 
         public static void FeatureToggle()
