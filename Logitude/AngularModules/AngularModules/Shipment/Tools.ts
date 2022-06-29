@@ -2854,6 +2854,8 @@ export class ShipmentGenerator {
                         newRecord.MeasurementCode = itemGrouped.MeasurementCode;
                         newRecord.MeasurementShortName = itemGrouped.MeasurementShortName;
                         newRecord.QuoteChargeId = item.Id;
+                        newRecord.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
+
                         this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -2879,7 +2881,6 @@ export class ShipmentGenerator {
                                     }
 
                                     this.GetCurrencyCode(newRecord);
-                                    //newRecord.ProfitCurrencyExchangeRate
                                     newRecord.Rate = this.GetCurrencyRate(newRecord.CurrencyId);
                                 }
                             }
