@@ -28,23 +28,17 @@ namespace WebFreight.Web.Helpers.AutomationModel.SendInterface
         }
 
         public object GetObject(SendInterfaceDataContractObjectArgs sendInterfaceDataContractObjectArgs)
-        {   
-            string selectedInterfaceCode = GetSelectedInterfaceCode(sendInterfaceDataContractObjectArgs.AutomationSendInterface);
+        {
+            const string genericInterfaceCode = "GI";
+            return GetDataContractObject(sendInterfaceDataContractObjectArgs, genericInterfaceCode);
+        }
+
+        public object GetDataContractObject(SendInterfaceDataContractObjectArgs sendInterfaceDataContractObjectArgs, string selectedInterfaceCode)
+        {
             ARInvoiceMessageHelper aRInvoiceMessageHelper = new ARInvoiceMessageHelper(entityPM, sendInterfaceDataContractObjectArgs.Tenant, selectedInterfaceCode);
             object sendInterfaceDataContractObject = aRInvoiceMessageHelper.Transfer();
 
             return sendInterfaceDataContractObject;
-        }
-
-        private string GetSelectedInterfaceCode(AutomationSendInterface automationSendInterface)
-        {
-            const string genericInterfaceCode = "GI";
-            const string advancedGenericInterfaceCode = "AI";
-                        
-            if (automationSendInterface.AdvancedAutomationSendInterfaceDetails?.ARInvoiceDetails?.IncludeShipmentDetails == true)
-                return advancedGenericInterfaceCode;
-            
-            return genericInterfaceCode;
         }
     }
 }
