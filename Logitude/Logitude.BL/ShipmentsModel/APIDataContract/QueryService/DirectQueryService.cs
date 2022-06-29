@@ -1,3 +1,4 @@
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -632,6 +633,36 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     item.PickUpDeliveryToTypeCode = "CASL";
                 }
             }
+        }
+
+        public Direct MapInlandDomesticStates(Direct result, int tenant)
+        {
+            CountryCityRepository countryCityRepository = new CountryCityRepository(tenant);
+            if (result.InlandDomesticFromTypeCode != null && result.InlandDomesticFromTypeCode.Code == "CASL")
+            {
+                CountryCity countryCity = countryCityRepository.GetSingleCountryCityByNameAndCountry(result.InlandDomesticFromCity, result.InlandDomesticFromCountry.Id, tenant);
+                result.InlandDomesticFromState = this.GetStateDataContract(countryCity);
+            }
+
+            if (result.InlandDomesticToTypeCode != null && result.InlandDomesticToTypeCode.Code == "CASL")
+            {
+                CountryCity countryCity = countryCityRepository.GetSingleCountryCityByNameAndCountry(result.InlandDomesticToCity, result.InlandDomesticToCountry.Id, tenant);
+                result.InlandDomesticToState = this.GetStateDataContract(countryCity);
+            }
+
+            return result;
+        }
+
+        private Logitude.BL.CommonDataModel.APIDataContract.ApiV1.State GetStateDataContract(CountryCity countryCity)
+        {
+            Logitude.BL.CommonDataModel.APIDataContract.ApiV1.State state = null;
+            if (countryCity != null)
+            {
+                StateQueryService stateQueryService = new StateQueryService(countryCity.Tenant);
+                state = stateQueryService.GetStateById(countryCity.StateId, countryCity.Tenant, "");
+            }
+
+            return state;
         }
     }
 }
