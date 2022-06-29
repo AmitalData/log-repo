@@ -447,7 +447,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         {
                             if (myParentItem != null)
                             {
-                                allRoleFeatures.Remove(myParentItem);
+                                //allRoleFeatures.Remove(myParentItem);
+                                myParentItem.FeatureAccessLevelCode = "NO";
                             }
                         }
 
