@@ -13,6 +13,16 @@
         -moz-box-shadow: 0px 0px 2px 2px #DADADA;
         -webkit-box-shadow: 0px 0px 2px 2px #DADADA;
     }
+
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+
 </style>
 
 
@@ -410,6 +420,27 @@
                         </td>
                     </tr>
 
+
+                    <tr>
+                        <td>
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td class="SectionTitle">Additional Fields</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <div class="LocationDirective" #Child></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px;"><td></td></tr>
+
+                            </table>
+                        </td>
+                    </tr>
+           
                     <!-- Summary -->
                     <tr style="height: 105px;" *ngIf="!DataContext.IsByContainerType">
                         <td>

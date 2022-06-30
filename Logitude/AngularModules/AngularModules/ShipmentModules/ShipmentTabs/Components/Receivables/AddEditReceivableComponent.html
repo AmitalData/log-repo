@@ -14,6 +14,16 @@
         -moz-box-shadow: 0px 0px 2px 2px #DADADA;
         -webkit-box-shadow: 0px 0px 2px 2px #DADADA;
     }
+
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+
 </style>
 
 
@@ -334,15 +344,15 @@
 
                     <!-- BYCT -->
                     <tr>
-                        <td>                           
+                        <td>
                             <div class="MediaFill" *ngIf="DataContext.IsByContainerType">
                                 <div class="SimpleGridView">
                                     <div class="SimpleGridViewHeader">
                                         <table>
-                                            <tr>                                                
+                                            <tr>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ShipmentReceivable.F.UnitPrice' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ShipmentReceivable.F.Quantity' | TextCodeTranslationPipe}}</td>                                                
-                                                <td class="LastChild">{{'ShipmentReceivable.F.MeasurementId.Short' | TextCodeTranslationPipe}}</td>                                                
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ShipmentReceivable.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                                <td class="LastChild">{{'ShipmentReceivable.F.MeasurementId.Short' | TextCodeTranslationPipe}}</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -350,7 +360,7 @@
                                     <div class="SimpleGridViewBody">
                                         <table>
                                             <tr class="SimpleGridViewRow" *ngFor="let item of DataContext.ByContainersItemsSource">
-                                                
+
                                                 <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
                                                     <LogTextBox [ObjectFieldName]="'UnitPrice'" [Text]="item.UnitPrice" [ObjectTableName]="ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
                                                 </td>
@@ -358,10 +368,10 @@
                                                 <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
                                                     <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [ObjectTableName]="ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
                                                 </td>
-                                              
+
                                                 <td class="CellDisabled">
                                                     {{item.MeasurementCode}}
-                                                </td>                                                
+                                                </td>
                                             </tr>
 
                                             <tr>
@@ -381,6 +391,29 @@
                             <div></div>
                         </td>
                     </tr>
+
+
+                    <tr>
+                        <td >
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td class="SectionTitle">Additional Fields</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <div class="LocationDirective" #Child></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px;"><td></td></tr>
+
+
+                            </table>
+                        </td>
+                    </tr>
+
 
                     <!-- Summary -->
                     <tr style="height: 105px;" *ngIf="!DataContext.IsByContainerType">

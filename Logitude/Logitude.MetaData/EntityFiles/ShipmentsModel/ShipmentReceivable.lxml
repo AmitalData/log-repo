@@ -38,7 +38,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Receivable&quot;"
-  Code="&quot;f1b6&quot;"
+  Code="&quot;adcb&quot;"
   Name="&quot;ShipmentReceivable&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -4437,6 +4437,16 @@
     ObjectTableName="&quot;ShipmentReceivable&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
+  <Screen
+    Name="&quot;Additional Fields&quot;"
+    ObjectTableName="&quot;ShipmentReceivable&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;ShipmentReceivable.AdditionalFields&quot;"
     NumberOfColumns="2"
     NumberOfRows="1">
     <ScreenFields />

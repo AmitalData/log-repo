@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Payable&quot;"
-  Code="&quot;4947&quot;"
+  Code="&quot;fab5&quot;"
   Name="&quot;ShipmentPayable&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -6340,6 +6340,16 @@
     ObjectTableName="&quot;ShipmentPayable&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
+  <Screen
+    Name="&quot;Additional Fields&quot;"
+    ObjectTableName="&quot;ShipmentPayable&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;ShipmentPayable.AdditionalFields&quot;"
     NumberOfColumns="2"
     NumberOfRows="1">
     <ScreenFields />

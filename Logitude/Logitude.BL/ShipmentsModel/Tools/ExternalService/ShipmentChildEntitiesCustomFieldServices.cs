@@ -21,39 +21,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.ExternalService
             this.shipmentServiceInitializer = shipmentServiceInitializer;
         }
 
-
-
         public void Save()
         {
-            this.SaveShipmentPackages();
-            this.SaveShipmentReceivables();
-            this.SaveShipmentPayables();
+            var tasks = BuildTasks();
+            foreach (Task task in tasks)
+            {
+                task.Start();
+            }
+            Task.WaitAll(tasks);
         }
 
-
-        private void SaveShipmentPackages()
+        public Task[] BuildTasks()
         {
-            var shipmentPackages = shipmentServiceInitializer.ShipmentPackagesChangeSet == null ? shipment.ShipmentPackages : shipmentServiceInitializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-            UpdateCustomFields("ShipmentPackage", shipmentPackages.Cast<object>().ToList());
+            List<Task> result = new List<Task>();
+            result.Add(new Task(() => Update("ShipmentPackage", ShipmentPackages.Cast<object>().ToList())));
+            result.Add(new Task(() => Update("ShipmentReceivable", ShipmentReceivables.Cast<object>().ToList())));
+            result.Add(new Task(() => Update("ShipmentPayable", ShipmentPayables.Cast<object>().ToList())));
+            return result.ToArray();
         }
 
-
-        private void SaveShipmentReceivables()
-        {
-            var shipmentReceivables = shipmentServiceInitializer.ShipmentReceivablesChangeSet == null ? shipment.ShipmentReceivables : shipmentServiceInitializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-            UpdateCustomFields("ShipmentReceivable", shipmentReceivables.Cast<object>().ToList());
-        }
-
-
-        private void SaveShipmentPayables()
-        {
-            var shipmentPayables = shipmentServiceInitializer.ShipmentPayablesChangeSet == null ? shipment.ShipmentPayables : shipmentServiceInitializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-            UpdateCustomFields("ShipmentPayable", shipmentPayables.Cast<object>().ToList());
-        }
-
-
-
-        private void UpdateCustomFields(string childObjectTableName ,List<object> childEntities)
+        private void Update(string childObjectTableName ,List<object> childEntities)
         {
             new ChildEntitiesCustomFieldService().Update(new ChildEntitiesCustomFieldArgs()
             {
@@ -64,5 +51,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.ExternalService
                 ChildEntities = childEntities
             }); ;
         }
+
+        public List<ShipmentPackagePM> ShipmentPackages
+        {
+            get
+            {
+                if (shipmentServiceInitializer.ShipmentPackagesChangeSet == null) return shipment.ShipmentPackages;
+                return shipmentServiceInitializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+        }
+        public List<ShipmentReceivablePM> ShipmentReceivables
+        {
+            get
+            {
+                if (shipmentServiceInitializer.ShipmentReceivablesChangeSet == null) return shipment.ShipmentReceivables;
+                return shipmentServiceInitializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+        }
+
+        public List<ShipmentPayablePM> ShipmentPayables
+        {
+            get
+            {
+                if (shipmentServiceInitializer.ShipmentPayablesChangeSet == null) return shipment.ShipmentPayables;
+                return shipmentServiceInitializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+        }
+
     }
 }
