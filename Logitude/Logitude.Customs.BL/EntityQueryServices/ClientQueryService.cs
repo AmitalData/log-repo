@@ -130,5 +130,31 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return clientsPMList;
         }
+
+        public List<ClientPM> GetAllLocalClientsIsConcurrencyGUID(int tenant)
+        {
+            List<ClientPM> clientsPMList = new List<ClientPM>();
+            List<Client> clientsList = repository.GetAllLocalClientsIsConcurrencyGUID(tenant);
+
+            if (clientsList != null && clientsList.Count > 0)
+            {
+                foreach (Client client in clientsList)
+                {
+                    ClientPM clientPM = new ClientPM()
+                    {
+                        Code = client.Code,
+                        PassportNumber = client.PassportNumber,
+                        PassportCountryCode = client.PassportCountryCode,
+                        PassportTypeCode = client.PassportTypeCode,
+                        Tenant = client.Tenant,
+                        ClientTypeSpecificCode = client.ClientTypeSpecificCode,
+                        Id = client.Id,
+                    };
+                    clientsPMList.Add(clientPM);
+                }
+            }
+
+            return clientsPMList;
+        }
     }
 }
