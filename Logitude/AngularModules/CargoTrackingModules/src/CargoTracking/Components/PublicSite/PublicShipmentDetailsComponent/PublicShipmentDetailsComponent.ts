@@ -355,13 +355,13 @@ export class PublicShipmentDetailsComponent implements OnInit
             });
         }
 
-        if (this.Shipment.CurrentMilestoneCode ==  CargoTrackingMilestones.Delivered) {
-            this.Date = this.CompletedMilestoneFields[0].Date;
-        }
-        else {
+        //if (this.Shipment.CurrentMilestoneCode ==  CargoTrackingMilestones.Delivered) {
+        //    this.Date = this.CompletedMilestoneFields[0].Date;
+        //}
+        //else {
             this.Date = this.CurrentMilestoneField.Date;
 
-        }
+       // }
         if (this.CompletedMilestoneFields.length > 0 || this.FuturesMilestoneFields.filter(d => d.EstimationDate).length > 0 || this.Shipment.CurrentMilestoneCode) {
             this.MilstonesExist = true;
         }
