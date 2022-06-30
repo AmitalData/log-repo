@@ -102,7 +102,7 @@ export class BatchPrintService {
 }
 
 export class BatchPrintManagerArgs {
-    public DocumentId: string;
+    public DocumentTypeId: string;
     public TemplateId: string;
     public CopyId: string;
     public ObjectTableId: string;

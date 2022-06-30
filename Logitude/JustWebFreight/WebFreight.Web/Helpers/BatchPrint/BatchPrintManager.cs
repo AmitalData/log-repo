@@ -25,7 +25,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
         public override void RunCode()
         {
             batchPrintManagerArgs = DeserilaizeParameters();
-            var batchPrinter = BatchPrinterFactory.GetBatchPrinter(batchPrintManagerArgs);
+            var batchPrinterArgs = new BatchPrinterArgs(batchPrintManagerArgs, batchTaskExecution);
+            var batchPrinter = BatchPrinterFactory.GetBatchPrinter(batchPrinterArgs);
             var result = batchPrinter.PrintDocuments();
             batchTaskExecution.PrametersXml = ParsParameters(result);
 

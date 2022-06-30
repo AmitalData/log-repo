@@ -326,7 +326,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         var args: BatchPrintManagerArgs = new BatchPrintManagerArgs();
-        args.DocumentId = this.DocumentTypeId;
+        args.DocumentTypeId = this.DocumentTypeId;
         args.TemplateId = this.SelectedDocumentTypeTemplate.Code;
         args.CopyId = this.selectedDocumentTypeCopy.Code;
         args.ObjectTableId = this.ObjectTableId;

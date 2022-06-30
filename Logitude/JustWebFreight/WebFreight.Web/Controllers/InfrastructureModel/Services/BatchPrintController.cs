@@ -26,9 +26,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Services
                 batchPrintManagerArgs.Tenant = authToken.Tenant;
                 batchPrintManagerArgs.Email = HttpContext.Current.User.Identity.Name;
                 BatchPrintService batchPrintService = new BatchPrintService();
-                batchPrintService.Print(batchPrintManagerArgs);
+                var batchTaskId = batchPrintService.Print(batchPrintManagerArgs);
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK, batchTaskId);
 
             }
             catch (Exception ex)

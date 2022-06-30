@@ -10,13 +10,13 @@ namespace WebFreight.Web.Helpers.BatchPrint
     public class BatchPrinterFactory
     {
         const string ARInvoiceObjectTableName = "ARInvoice";
-        public static BatchPrinter GetBatchPrinter(BatchPrintManagerArgs batchPrintManagerArgs)
+        public static BatchPrinter GetBatchPrinter(BatchPrinterArgs batchPrinterArgs)
         {
-            ObjectTable objectTable = ObjectTableRepository.GetSingleObjectTableById(batchPrintManagerArgs.ObjectTableId, 0);
+            ObjectTable objectTable = ObjectTableRepository.GetSingleObjectTableById(batchPrinterArgs.ObjectTableId, 0);
             switch (objectTable.Name)
             {
                 case ARInvoiceObjectTableName:
-                    return new ARInvoiceBatchPrinter(batchPrintManagerArgs);
+                    return new ARInvoiceBatchPrinter(batchPrinterArgs);
                 default:
                     throw new Exception("there is no BatchPrinter for this object table");
             }

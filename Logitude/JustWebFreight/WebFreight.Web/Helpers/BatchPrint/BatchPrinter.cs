@@ -13,48 +13,71 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.Counters;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Simplog.Data.Helpers;
+using WebFreight.Web.WebServices;
+using Simplog.Data.CommonDataModel;
 
 namespace WebFreight.Web.Helpers.BatchPrint
 {
     public abstract class BatchPrinter
     {
-        public BatchPrintManagerArgs _batchPrintManagerArgs;
+        public BatchPrinterArgs _batchPrinterArgs;
         public DocumentType documentType;
         public DocumentTypeCopy documentTypeCopy;
         public DocumentTypeTemplate template;
         public User printedBy;
-        public BatchPrinter(BatchPrintManagerArgs batchPrintManagerArgs)
+        public BatchTaskExecutionUpdateService batchTaskExecutionUpdateService;
+        public BatchPrinter(BatchPrinterArgs batchPrinterArgs)
         {
-            _batchPrintManagerArgs = batchPrintManagerArgs;
+            _batchPrinterArgs = batchPrinterArgs;
             documentType = GetDecumentType();
             documentTypeCopy = GetDocumentTypeCopy();
             template = GetDocumentTypeTemplate();
             printedBy = GetUser();
+            batchTaskExecutionUpdateService = GetBatchTaskExecutionUpdateService();
         }
 
-        public abstract void CustomeValidation();
+        private BatchTaskExecutionUpdateService GetBatchTaskExecutionUpdateService()
+        {
+            IInfrastructureContext context = Logitude.Infrastructure.Data.InfrastructureContext.GetContext(_batchPrinterArgs.Tenant);
+            var batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _batchPrinterArgs.Tenant);
+            return batchTaskExecutionUpdateService;
+        }
+
+        public abstract void CustomeValidation(PrintEntityKeys item);
+        public abstract void AfterPrint(PrintEntityKeys item);
 
         public PrintingResult PrintDocuments()
         {
             var itemPrintingResults = new List<ItemPrintingResult>();
-            foreach (var item in _batchPrintManagerArgs.EntityIds)
+            _batchPrinterArgs.BatchTaskExecution.ProgressPercentage = 0;
+            foreach (var item in _batchPrinterArgs.EntityIds)
             {
                 itemPrintingResults.Add(Print(item));
+                IncresePrograse();
             }
             PdfDocument pdfDoc = new PdfDocument();
             MargePdfs(pdfDoc, itemPrintingResults);
             MemoryStream memoryStream = GetMemoryStream(pdfDoc);
-            var documentId = UploadPDFToStorage(memoryStream, _batchPrintManagerArgs.Tenant);
+            var documentId = UploadPDFToStorage(memoryStream, _batchPrinterArgs.Tenant);
             var printingResults = CreatePrintResult(documentId, itemPrintingResults);
 
             return printingResults;
+        }
+
+        private void IncresePrograse()
+        {
+            _batchPrinterArgs.BatchTaskExecution.ProgressPercentage++;
+            batchTaskExecutionUpdateService.Update(_batchPrinterArgs.BatchTaskExecution, true);
         }
 
         private PrintingResult CreatePrintResult(string documentId, List<ItemPrintingResult> itemPrintingResults)
         {
             var result = new PrintingResult();
             result.DocumentId = documentId;
-            result.NotValidRows = itemPrintingResults.Select(e=> new PrintingRow() { EntityId = e.EntityId,Error = e.Error}).ToList();
+            result.NotValidRows = itemPrintingResults.Where(e=>!e.IsSuccessfullyPrinted).Select(e => new PrintingRow() { EntityId = e.EntityId, Error = e.Error }).ToList();
             return result;
         }
 
@@ -75,7 +98,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             }
         }
 
-        
+
 
         private string UploadPDFToStorage(MemoryStream memoryStream, int tenant)
         {
@@ -113,29 +136,89 @@ namespace WebFreight.Web.Helpers.BatchPrint
         }
         private ItemPrintingResult Print(PrintEntityKeys item)
         {
-            var result = new ItemPrintingResult();
+            var result = new ItemPrintingResult(item.EntityId);
 
-            if (!CheckValidation(item,result))
+            if (!CheckValidation(item, result))
                 return result;
-
-            ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-            StiReport report = exportDocumentHelper.GetReportDocument(documentType, item.EntityId, _batchPrintManagerArgs.ObjectTableId, item.ChildEntityId,
-                _batchPrintManagerArgs.ChildObjectTableId, documentTypeCopy, template.TemplateBody, template, _batchPrintManagerArgs.Tenant, new long(), new long(), new long(), new long(), printedBy.Id);
-            var stream = new MemoryStream();
-            report.ExportDocument(StiExportFormat.Pdf, stream);
-
-
-            result.DocumentStream = stream;
-            result.IsSuccessfullyPrinted = true;
-            return result;
+            try
+            {
+                var stream = GetReportStream(item);
+                result.DocumentStream = stream;
+                result.IsSuccessfullyPrinted = true;
+                AfterPrint(item);
+                return result;
+            }
+            catch (Exception e)
+            {
+                result.IsSuccessfullyPrinted = false;
+                result.Error = e.Message;
+                return result;
+            }
+           
         }
 
+        private MemoryStream GetReportStream(PrintEntityKeys item)
+        {
+            var printedCopy = GetPrintedCopy(item);
+            if (printedCopy != null)
+                return GetReportStreamFromCopy(printedCopy);
+
+            return CreateReportStream(item);
+
+        }
+
+        private MemoryStream CreateReportStream(PrintEntityKeys item)
+        {
+            ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+            try
+            {
+                StiReport report = exportDocumentHelper.GetReportDocument(documentType, item.EntityId, _batchPrinterArgs.ObjectTableId, item.ChildEntityId,
+                _batchPrinterArgs.ChildObjectTableId, documentTypeCopy, template.TemplateBody, template, _batchPrinterArgs.Tenant, new long(), new long(), new long(), new long(), printedBy.Id);
+                var stream = new MemoryStream();
+                report.ExportDocument(StiExportFormat.Pdf, stream);
+                return stream;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Stimulsoft Error: "+ e.Message);
+            }
+            
+            
+        }
+
+        private MemoryStream GetReportStreamFromCopy(DocumentOutCopy printedCopy)
+        {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(printedCopy.Tenant);
+
+            Document document = (from doc in commonContext.Documents
+                                 where doc.Id == printedCopy.DocumentId
+                                 select doc).FirstOrDefault();
+            if (document == null)
+                return null;
+
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                Tenant = document.Tenant,
+                FileSize = document.FileSize,
+            };
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            var datainByte = storageservice.Read(fileInfo);
+
+            if (datainByte == null)
+                return null;
+
+            MemoryStream stream = new MemoryStream(datainByte);
+            return stream;
+        }
         private bool CheckValidation(PrintEntityKeys item, ItemPrintingResult result)
         {
             try
             {
                 GeneralValidatoin(item);
-                CustomeValidation();
+                CustomeValidation(item);
                 return true;
             }
             catch (Exception e)
@@ -151,42 +234,60 @@ namespace WebFreight.Web.Helpers.BatchPrint
         {
             if (template.TemplateBody == null)
                 throw new Exception("Template Body is empty");
-            if(documentType.IsDocumentOneTimePrintLimited && IsAlreadyPrinted(item))
+            if (documentType.IsDocumentOneTimePrintLimited && IsAlreadyPrinted(item))
                 throw new Exception("This document is already printed");
 
         }
 
         private bool IsAlreadyPrinted(PrintEntityKeys item)
         {
-            DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(_batchPrintManagerArgs.Tenant);
-            return documentsFilingRepository.CheckIfDocumentTypeHasDocumentFilling(documentType.Id, _batchPrintManagerArgs.ObjectTableId, item.EntityId, _batchPrintManagerArgs.Tenant);
+            var printedCopy = GetPrintedCopy(item);
+            if (printedCopy == null)
+                return false;
+            if (printedCopy.DocumentTypeCopyId != documentType.LimitedPrintCopyId)
+                return false;
+            return true;
+        }
+
+        private DocumentOutCopy GetPrintedCopy(PrintEntityKeys item)
+        {
+            DocumentOutCopyRepository documentsFilingRepository = new DocumentOutCopyRepository(_batchPrinterArgs.Tenant);
+            var args = new DocumentOutCopyArgs()
+            {
+                Tenant = _batchPrinterArgs.Tenant,
+                EntityId = item.EntityId,
+                ObjectTableId = _batchPrinterArgs.ObjectTableId,
+                DocumentTypeCopyId = _batchPrinterArgs.CopyId,
+                DocumentTypeId = _batchPrinterArgs.DocumentTypeId,
+            };
+            return documentsFilingRepository.GetDocumentOutCopy(args);
         }
 
         private User GetUser()
         {
-            UserRepository userRep = new UserRepository(_batchPrintManagerArgs.Tenant);
-            User printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, _batchPrintManagerArgs.Email, _batchPrintManagerArgs.Tenant, false);
+            UserRepository userRep = new UserRepository(_batchPrinterArgs.Tenant);
+            User printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, _batchPrinterArgs.Email, _batchPrinterArgs.Tenant, false);
             return printedBy;
         }
 
         private DocumentTypeTemplate GetDocumentTypeTemplate()
         {
-            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(_batchPrintManagerArgs.Tenant);
-            DocumentTypeTemplate template = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(_batchPrintManagerArgs.TemplateId);
+            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(_batchPrinterArgs.Tenant);
+            DocumentTypeTemplate template = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(_batchPrinterArgs.TemplateId);
             return template;
         }
 
         private DocumentTypeCopy GetDocumentTypeCopy()
         {
-            DocumentTypeCopyRepository documentTypeCopyRep = new DocumentTypeCopyRepository(_batchPrintManagerArgs.Tenant);
-            DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(_batchPrintManagerArgs.CopyId);
+            DocumentTypeCopyRepository documentTypeCopyRep = new DocumentTypeCopyRepository(_batchPrinterArgs.Tenant);
+            DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(_batchPrinterArgs.CopyId);
             return documentTypeCopy;
         }
 
         private DocumentType GetDecumentType()
         {
-            DocumentTypeRepository repository = new DocumentTypeRepository(_batchPrintManagerArgs.Tenant);
-            return repository.GetSingleDocumentTypes(_batchPrintManagerArgs.DocumentId, _batchPrintManagerArgs.Tenant);
+            DocumentTypeRepository repository = new DocumentTypeRepository(_batchPrinterArgs.Tenant);
+            return repository.GetSingleDocumentTypes(_batchPrinterArgs.DocumentTypeId, _batchPrinterArgs.Tenant);
         }
     }
 }

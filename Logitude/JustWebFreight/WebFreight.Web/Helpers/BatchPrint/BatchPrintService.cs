@@ -14,7 +14,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
 {
     public class BatchPrintService
     {
-        public void Print(BatchPrintManagerArgs batchPrintManagerArgs)
+        public string Print(BatchPrintManagerArgs batchPrintManagerArgs)
         {
             string xmlParameters = ParsParameters(batchPrintManagerArgs);
             BatchTaskExecutionPM batchPrintTask = CreateBatchTask(batchPrintManagerArgs, xmlParameters);
@@ -29,6 +29,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
                     { "BatchTaskExecutionId", batchPrintTask.Id },
                     { "Tenant", batchPrintManagerArgs.Tenant.ToString() }
                 }, batchPrintManagerArgs.Tenant);
+            return batchPrintTask.Id;
         }
 
         private static string ParsParameters(BatchPrintManagerArgs batchPrintManagerArgs)
@@ -50,7 +51,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 ClassName = "WebFreight.Web.Helpers.BatchPrint.BatchPrintManager,WebFreight.Web",
                 CreateDate = DateTime.Now,
                 PrametersXml = xmlParameters,
-                StatusCode = "C"
+                StatusCode = "C",
+                ProgressPercentage = 0
             };
         }
     }

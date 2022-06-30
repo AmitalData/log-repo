@@ -15,6 +15,10 @@ namespace WebFreight.Web.Helpers.BatchPrint
     }
     public class ItemPrintingResult
     {
+        public ItemPrintingResult(string entityId)
+        {
+            EntityId = entityId;
+        }
         public bool IsSuccessfullyPrinted { get; set; }
         public MemoryStream DocumentStream { get; internal set; }
         public string Error { get; set; }
