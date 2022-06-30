@@ -11906,7 +11906,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region Fill Report Data
                 totalData.ForDate = toDate;
-
+                FilterChartOfAccountsAndTypes(totalData, list);
 
                 foreach (var item in list)
                 {
@@ -12008,6 +12008,37 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             return totalData;
+        }
+
+        private void FilterChartOfAccountsAndTypes(RevenueExpenseDataProvider totalData, List<TrailReportM> trailReportMs) {
+            // filter chart of account types
+            foreach (var item in totalData.ResultList.Where(x => x.Type == null).ToList())
+            {
+                if (!trailReportMs.Any(x => x.ChartOfAcountType == item.Id))
+                {
+                    totalData.ResultList.Remove(item);
+                }
+            }
+            // filter chart of accounts
+            foreach (var item in totalData.ResultList.Where(x => x.Type == "ChartOfAccount").ToList())
+            {
+                if (!trailReportMs.Any(x => x.ChartOfAccountId == item.Id))
+                {
+                    totalData.ResultList.Remove(item);
+                }
+            }
+            // Update chart of account types total amounts
+            foreach (var item in totalData.ResultList.Where(x => x.Type == null).ToList())
+            {
+                item.LocalCloseBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalCloseBalance);
+                item.LocalOpenBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalOpenBalance);
+                item.LocalCredit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalCredit);
+                item.LocalDebit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.LocalDebit);
+                item.ForeignCloseBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignCloseBalance);
+                item.ForeignCredit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignCredit);
+                item.ForeignDebit = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignDebit);
+                item.ForeignOpenBalance = totalData.ResultList.Where(x => x.Type == "ChartOfAccount" && x.ParentId == item.Id).Sum(d => d.ForeignOpenBalance);
+            }
         }
 
         private static List<string> GetChartoOfAccountsFilterValue(QueryOperations queryOperations)
