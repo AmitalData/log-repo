@@ -1389,7 +1389,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetSingleShipmentPMWithoutComposition(string id)
+        public HttpResponseMessage GetSingleShipmentPMWithoutComposition(string id, bool includePackages)
         {
             try
             {
@@ -1401,7 +1401,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM myResult = shipmentQuery.GetSinglePMWithoutComposition(id, tenant);
+                ShipmentPM myResult = shipmentQuery.GetSinglePMWithoutComposition(id, tenant, includePackages);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
