@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientUpdateClass
    {  		
-		public const string HashString = "a567168241d4c8c069277080fcdc5a01";
+		public const string HashString = "4a5c8a5c1824a746a381f49f3d49da14";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2538,6 +2538,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature ClientFeature_REQUESTSHEETS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEETS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Client.Features.RequestSheet", NameTextCodeDefaultText = @"RequestSheet" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClientObjectTable);
 
+		   Feature ClientFeature_AUTHORIZAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTHORIZAT", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Client.Features.AUTHORIZAT", NameTextCodeDefaultText = @"שליפת כתבי הרשאה" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClientObjectTable);
+
    
 	    
 		}
@@ -2625,6 +2627,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ClientTextCode_CustomsClientONewClientSucceeded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.NewClientSucceeded", DefaultText = "Create New Client Succeeded",LocalDefaultText = @"לקוח חדש הוקם בהצלחה", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClientTextCode_CustomsClientNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.NewButton", DefaultText = "New Client",LocalDefaultText = @"לקוח חדש", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientTextCode_CustomsClientAuthorizationLetters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.AuthorizationLetters", DefaultText = "Authorization Letters",LocalDefaultText = @"שליפת כתבי הרשאה", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientTextCode_CustomsClientIsSelectAuthorizationLetters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.IsSelectAuthorizationLetters", DefaultText = "Is it possible to retrieve authorization letters for all customers in the system?",LocalDefaultText = @"האם לבצע שליפת כתבי הרשאה לכל הלקוחות במערכת ?", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
