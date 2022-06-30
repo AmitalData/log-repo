@@ -202,6 +202,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage PutRecallClientsConcurrencyGUIDForCutomsRequest(ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string message = "";
+                if (fileUploadParamerter != null)
+                {
+                    ClientWebService clientWebService = new ClientWebService();
+                    message = clientWebService.RecallClientsConcurrencyGUIDForCutomsRequest(fileUploadParamerter.Key, fileUploadParamerter.Tenant);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, message);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         // GET api/<controller>
         public IEnumerable<string> Get()
         {

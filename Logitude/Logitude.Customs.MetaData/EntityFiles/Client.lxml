@@ -3206,6 +3206,18 @@
       LocalDefaultText="&quot;לקוח חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Client.AuthorizationLetters&quot;"
+      DefaultText="&quot;Authorization Letters&quot;"
+      LocalDefaultText="&quot;שליפת כתבי הרשאה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Client.IsSelectAuthorizationLetters&quot;"
+      DefaultText="&quot;Is it possible to retrieve authorization letters for all customers in the system?&quot;"
+      LocalDefaultText="&quot;האם לבצע שליפת כתבי הרשאה לכל הלקוחות במערכת ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -3240,6 +3252,15 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;Customs.Client.Features.RequestSheet&quot;"
       FeatureDefaultText="&quot;RequestSheet&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;AUTHORIZAT&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;Customs.Client.Features.AUTHORIZAT&quot;"
+      FeatureDefaultText="&quot;שליפת כתבי הרשאה&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

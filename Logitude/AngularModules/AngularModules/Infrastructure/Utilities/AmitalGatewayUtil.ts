@@ -646,6 +646,16 @@ export class AmitalGatewayUtil {
                     {
                         BackButtonLabel = "תיק יצוא"
                     }
+                    if(!AmitalGatewayUtil.Instance.AmitalBrowserInUse){
+                        
+                        const openDec= TextCodeTranslator.Translate("Customs.Declaration.Q.DeclarationWithoutReleaseQuery");
+                        if(!AppTool.IsNullOrEmpty(openDec) ) {
+                            BackButtonLabel = openDec;
+                        } else {
+                            BackButtonLabel = "הצהרות פתוחות";
+                        }
+                        
+                    }
                     let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
                     this.getEntity(unifreightMessage.LogitudeEntityNumber).subscribe((data:any) => {
                         cmpRef.instance.Run({
