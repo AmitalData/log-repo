@@ -151,6 +151,9 @@ export class SendToContactsComponent implements OnInit {
             }
         }
 
+        if (this.ByCardCode) {
+            this.SelectionChanged(this.SelectedPartnerItem, !args.ClearRecepients);
+        }
 
 
         ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "SendTo", this));
@@ -197,13 +200,15 @@ export class SendToContactsComponent implements OnInit {
 
     filterAgrs: ApiQueryFilters;
     SelectedPartnerItem: EntityPartner;
-    SelectionChanged(item: EntityPartner) {
+    SelectionChanged(item: EntityPartner, refresh: boolean = true) {
         this.SelectedPartnerItem = item;
         this.filterAgrs = new ApiQueryFilters();
         this.myPartnerId = this.SelectedPartnerItem.PartnerId;
+        this.myPartnerType = this.SelectedPartnerItem.PartnerType;
 
-
-        this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
+        if (refresh) {
+            this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
+        }
 
 
     }
