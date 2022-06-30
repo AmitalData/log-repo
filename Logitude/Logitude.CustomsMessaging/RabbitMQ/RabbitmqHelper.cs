@@ -138,7 +138,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             string UserName = ConfigurationManager.AppSettings["RabbitmqUsername"];
             string Password = ConfigurationManager.AppSettings["RabbitmqPassword"];
 
-            return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password }); ;
+            return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password, RequestedHeartbeat = TimeSpan.FromSeconds(60) });
         }
 
         public static string GetRabbitMQCode(int currTenant)
