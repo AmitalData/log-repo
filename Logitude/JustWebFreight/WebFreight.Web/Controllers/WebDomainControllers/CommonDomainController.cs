@@ -3005,7 +3005,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         private void CreateMessagingStock(int tenant, string userId)
         {
-            IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
+            IShipmentsContext iContext = ShipmentsContext.GetContext(0);
             var todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             MessagingStockPM messagingStock = new MessagingStockPM()
             {
@@ -3024,8 +3024,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private void CreateOpportunity(int tenant, string userId)
         {
             int crmTenant = 341;
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(crmTenant);
-            ICRMContext crmContext = CRMContext.GetContext(crmTenant);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            ICRMContext crmContext = CRMContext.GetContext(0);
 
             string tenantString = tenant.ToString();
 
