@@ -3005,7 +3005,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         private void CreateMessagingStock(int tenant, string userId)
         {
-            IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
+            IShipmentsContext iContext = ShipmentsContext.GetContext(0);
             var todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             MessagingStockPM messagingStock = new MessagingStockPM()
             {
@@ -3024,14 +3024,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private void CreateOpportunity(int tenant, string userId)
         {
             int crmTenant = 341;
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(crmTenant);
-            ICRMContext crmContext = CRMContext.GetContext(crmTenant);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            ICRMContext crmContext = CRMContext.GetContext(0);
 
             string tenantString = tenant.ToString();
 
             // Create Opportunity 
             var customer = (from a in commonDataContext.Cards.Include("Customer")
-                            where tenant == crmTenant && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && a.ReceivablesAccountingCard == tenantString
+                            where a.Tenant == crmTenant && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && a.ReceivablesAccountingCard == tenantString
                             select new CustomerPM
                             {
                                 Id = a.Id,
@@ -3043,11 +3043,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             }).FirstOrDefault();
 
             var type = (from a in crmContext.OpportunityTypes
-                        where tenant == crmTenant && a.Name == "AWB Stock"
+                        where a.Tenant == crmTenant && a.Name == "AWB Stock"
                         select a).FirstOrDefault();
 
             var stage = (from a in crmContext.Stages
-                        where tenant == crmTenant && a.Code == "QUA"
+                        where a.Tenant == crmTenant && a.Code == "QUA"
                         select a).FirstOrDefault();
 
             OpportunityPM opportunityPM = new OpportunityPM()
