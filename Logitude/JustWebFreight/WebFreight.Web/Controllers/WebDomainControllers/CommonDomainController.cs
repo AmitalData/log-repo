@@ -3012,7 +3012,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TenantNumber = tenant,
                 Amount = 100,
                 StartDate = todayDate,
-                EndDate = todayDate.AddMonths(12).AddDays(-1),
+                EndDate = todayDate.AddYears(1),
                 TotalPrice = 100,
                 StockType = "Chargify",
                 CreatedByUserId = userId,

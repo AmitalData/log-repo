@@ -1554,7 +1554,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
-                List<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).ToList();
+                List<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ").ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
