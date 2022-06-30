@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -16,6 +16,7 @@ import { CommonTool } from '../../../../Common/Tools';
 
 export class AddEditReceivableComponent {
     public EntityPM: ShipmentReceivablePM;
+
     public DataContext: ShipmentReceivableItem;
     public ObjectTableName: string = "ShipmentReceivable";
     public ShipmentLevelCode: string = null;    
@@ -23,9 +24,49 @@ export class AddEditReceivableComponent {
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public MeasurementsQueryFilters: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
+
+
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+
     constructor() {
-               
+        this.RunComponent();
     }
+
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+    LoadChildComponent() {
+        let screenCode: string = "ShipmentReceivable.AdditionalFields";
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.HideLastColumn = true;
+                cmpRef.instance.LabelWidth = 120;
+                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+            });
+    }
+
+
 
     SetDataContext(dataContext: ShipmentReceivableItem) {
         this.DataContext = dataContext;

@@ -55,6 +55,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web;
+using Logitude.BL.ShipmentsModel.Tools.ExternalService;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -7835,15 +7836,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void SaveChildEntitiesCustomFields()
         {
-            var shipmentPackages = initializer.ShipmentPackagesChangeSet == null ? entityPM.ShipmentPackages : initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-            new ChildEntitiesCustomFieldService().Update(new ChildEntitiesCustomFieldArgs()
-            {
-                Tenant = tenant,
-                EntityId = entityPM.Id,
-                ObjectTableName = "Shipment",
-                ChildObjectTableName = "ShipmentPackage",
-                ChildEntities = shipmentPackages.Cast<object>().ToList()
-            });
+            new ShipmentChildEntitiesCustomFieldServices(entityPM, initializer).Save();
         }
 
     }

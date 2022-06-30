@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPayableUpdateClass
    {  		
-		public const string HashString = "7e585af615c142c86cd5bb1cc9ef142f";
+		public const string HashString = "130a6290533414562feeb39bfef99ff6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,12 +113,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  true,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Payable",
-			      				    Code =  "179e",
+			      				    Code =  "fab5",
 			      				    Name =  "ShipmentPayable",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -2912,6 +2912,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsCustomsChargesTariff",
 					  						ListPropertyPath =  "IsCustomsChargesTariff",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2963,6 +2964,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		    ShipmentPayableObjectTable.HeaderScreenCode = ShipmentPayableShipmentPayableHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen ShipmentPayableAdditionalFieldsScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentPayable.AdditionalFields", Name = "Additional Fields", ObjectTableId = ShipmentPayableObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 

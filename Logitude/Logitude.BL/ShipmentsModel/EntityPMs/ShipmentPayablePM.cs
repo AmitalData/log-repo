@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Logitude.BL.Validators;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentPayableValidator), "IsShipmentPayableValid")]
-    public class ShipmentPayablePM
+    public class ShipmentPayablePM : ChildEntitiesCustomFieldPM
     {
         [Key]
         public string Id { get; set; }

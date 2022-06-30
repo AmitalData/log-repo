@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentReceivableUpdateClass
    {  		
-		public const string HashString = "f5e6bd2806cd6e591589219d438c6be3";
+		public const string HashString = "c51e8ec248c39b96ff3eaf12f75edf50";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -115,12 +115,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  true,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Receivable",
-			      				    Code =  "b87d",
+			      				    Code =  "adcb",
 			      				    Name =  "ShipmentReceivable",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -1999,6 +1999,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		    ShipmentReceivableObjectTable.HeaderScreenCode = ShipmentReceivableShipmentReceivableHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen ShipmentReceivableAdditionalFieldsScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentReceivable.AdditionalFields", Name = "Additional Fields", ObjectTableId = ShipmentReceivableObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 

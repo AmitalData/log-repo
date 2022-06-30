@@ -32,13 +32,13 @@
   IsSaveButtonVisible="true"
   IsComposition="true"
   EnableSecurity="true"
-  AllowCustomFields="false"
+  AllowCustomFields="true"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Receivable&quot;"
-  Code="&quot;b87d&quot;"
+  Code="&quot;adcb&quot;"
   Name="&quot;ShipmentReceivable&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -4441,6 +4441,16 @@
     NumberOfRows="1">
     <ScreenFields />
   </Screen>
+  <Screen
+    Name="&quot;Additional Fields&quot;"
+    ObjectTableName="&quot;ShipmentReceivable&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;ShipmentReceivable.AdditionalFields&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -4473,7 +4483,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;Receivable&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"
