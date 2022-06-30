@@ -3014,7 +3014,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 StartDate = todayDate,
                 EndDate = todayDate.AddYears(1),
                 TotalPrice = 100,
-                StockType = "Chargify",
+                StockType = "Champ",
                 CreatedByUserId = userId,
                 UpdatedByUserId = userId
             };
