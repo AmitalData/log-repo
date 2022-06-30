@@ -1385,10 +1385,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         var confirm = new ConfirmWindow();
 
-        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateAndOverride"));
+        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateAndOverride");
         confirm.NoButtonText =  TextCodeTranslator.Translate("Customs.Declaration.O.Update");
         confirm.ShowNoButton = true;
-        confirm.Show("Customs.Declaration.O.UpdateOrOverride")
+        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.UpdateOrOverride"));
         confirm.WindowClosed.subscribe((event: any) => {
             debugger
             if (confirm.Yes) {
