@@ -8,7 +8,7 @@
   <![CDATA[
 CREATE procedure [dbo].[Queue_Peek]
 (@MessageId  bigint output,
-@MessageBody  varchar(1000) output,
+@MessageBody  varchar(2000) output,
 @RetryNumber int output,
 @QueueDefinitionCode varchar(255),
 @WatingStatus int)

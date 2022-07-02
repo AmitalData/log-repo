@@ -25,7 +25,7 @@ namespace Logitude.Server.Tools.QueueService
         protected int Tenant { get; set; }
         protected string QueueCode { get; set; }
         protected string CurrentMessageId { get; set; }
- 
+        private const int messageBodyLength = 2000;
         public DbQueueService()
         {
 
@@ -227,7 +227,7 @@ namespace Logitude.Server.Tools.QueueService
                         SqlCommand cmd = new SqlCommand("[dbo].[Queue_Enqueue]", cn);
                         cmd.CommandType = CommandType.StoredProcedure;
                         SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.VarChar, 255);
-                        SqlParameter msgBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, 1000);
+                        SqlParameter msgBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, messageBodyLength);
                         SqlParameter tenantPar = new SqlParameter("@Tenant", SqlDbType.Int);
                         SqlParameter delayPar = new SqlParameter("@DelaySeconds", SqlDbType.Int);
                         SqlParameter customerId = new SqlParameter("@CustomerId", SqlDbType.VarChar, 15);
@@ -427,7 +427,7 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
                             SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);
-                            SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, 1000);
+                            SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, messageBodyLength);
                             SqlParameter retryNumberPar = new SqlParameter("@RetryNumber", SqlDbType.Int);
                             SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
 
@@ -601,7 +601,7 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
                             SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);
-                            SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, 1000);
+                            SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, messageBodyLength);
                             SqlParameter retryNumberPar = new SqlParameter("@RetryNumber", SqlDbType.Int);
                             SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
 
