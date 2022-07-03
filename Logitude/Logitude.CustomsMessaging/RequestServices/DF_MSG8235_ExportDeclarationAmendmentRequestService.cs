@@ -885,6 +885,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationDMExtensionsDeclarationClosingDetails GetDeclarationDMExtensionsDeclarationClosingDetails(DeclarationPM declarationPM)
         {
+            if (!declarationPM.IsExportClosed)
+                return null;
             var closingDetails = new DeclarationDMExtensionsDeclarationClosingDetails();
             var exportDeclarationClosingDataRepository = new ExportDeclarationClosingDataRepository(declarationPM.Tenant);
             var entityClosingDeclaration = exportDeclarationClosingDataRepository.getByDecId(declarationPM.Id, declarationPM.Tenant);
