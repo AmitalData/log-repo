@@ -97,6 +97,7 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     onCheckBoxChecked($event) {
+        
        
         this.IsSelected = false;
         if (!this.entityPM.ConnectedDeclarations) {
@@ -381,9 +382,10 @@ export class NewContainerizationComponent extends BaseComponent {
         });
 
     }
-
+ 
 
     OnAllBtnClicked() {
+        
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
         this.containerizationExtendedListService.SelectedDeclarations = true;
@@ -402,6 +404,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.containerizationExtendedListService.connectedSelectAll = false;
         this.entityPM.ConnectedDeclarations = "";
         this.containerizationExtendedListService.ConnectedDeclarations = "";
+        this.containerizationExtendedListService.SelectedDeclarations = false;
         this.LoadConnectedItems();
     }
 
@@ -509,8 +512,12 @@ export class NewContainerizationComponent extends BaseComponent {
                                         } else {
                                             this.entityPM.AgentDeclaration = false;
                                         }
+                                        debugger;
                                         this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-                                        this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+                                        this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
+                                        });
+
+                                       /* this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
                                             this.CurrentSession.CurrentWindow.Close("0");
                                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                                                 .then(cmpRef => {
@@ -531,7 +538,7 @@ export class NewContainerizationComponent extends BaseComponent {
                                                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                                     });
                                             }
-                                        });
+                                        }); */
                                     }
                                 });
                             });
@@ -566,7 +573,9 @@ export class NewContainerizationComponent extends BaseComponent {
                                     this.entityPM.AgentDeclaration = false;
                                 }
                                 this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-                                this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+                                this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
+                                });
+                             /*   this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
                                     this.CurrentSession.CurrentWindow.Close("0");
                                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                                         .then(cmpRef => {
@@ -588,7 +597,7 @@ export class NewContainerizationComponent extends BaseComponent {
                                                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                             });
                                     }
-                                });
+                                });*/
                             }
                         });
                     });

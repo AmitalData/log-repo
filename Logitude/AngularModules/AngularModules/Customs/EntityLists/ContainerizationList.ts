@@ -26,6 +26,10 @@ export class ContainerizationList {
 	OpenContainerization: boolean;
 	IsMultiCustomers: string;
 	IsMultiExportFiles: boolean;
+	CargoTypeCode: string;
+	ManifestNumber: string;
+	SecondCargoID: string;
+	ThirdCargoID: string;
 	
 }
  

@@ -136,7 +136,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
             customContext = CustomContext.GetContext(tenant);
             DeclarationCourierStatusListQueryService listService = new DeclarationCourierStatusListQueryService(customContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return listService.GetList(queryOperations, tenant);
+            return listService.GetDeclarationCourierStatusListPendingBulk(queryOperations, tenant);
 
 
         }
@@ -148,7 +148,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
             customContext = CustomContext.GetContext(tenant);
             DeclarationCourierStatusListQueryService queryService = new DeclarationCourierStatusListQueryService(customContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return queryService.GetListCount(queryOperations, tenant);
+            return queryService.GetDeclarationCourierStatusforPendingBulkFeedListCount(queryOperations, tenant);
         }
 
 

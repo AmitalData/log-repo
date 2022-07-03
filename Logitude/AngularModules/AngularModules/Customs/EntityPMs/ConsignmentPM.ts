@@ -272,6 +272,11 @@ export class ConsignmentPM {
     public set ExportStoragesId(newValue: string) { if (this.exportStoragesId != newValue) { this.exportStoragesId = newValue; this.MarkAsDirty("ExportStoragesId"); } }
        
 	 
+    private exportContainerizationID: string;
+    public get ExportContainerizationID() { return this.exportContainerizationID; }
+    public set ExportContainerizationID(newValue: string) { if (this.exportContainerizationID != newValue) { this.exportContainerizationID = newValue; this.MarkAsDirty("ExportContainerizationID"); } }
+       
+	 
 
     public OldEntityPM: ConsignmentPM;
 	
