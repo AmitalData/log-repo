@@ -27,18 +27,18 @@ export class CustomsContainerizationListTemplate {
     TableUpdateButtonOpacity: string = "1";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-
+    countDeclarationUi:number; 
+    
     IsConnectedDeclarationChecked: boolean = true;
-
     //, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService
     entityPM: ContainerizationPM;
-    constructor(private CD: ChangeDetectorRef, private _containerizationExtendedListService: ContainerizationExtendedListService) {
+    constructor(private CD: ChangeDetectorRef, private _containerizationExtendedListService: ContainerizationExtendedListService) {        
         if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
             this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as ContainerizationPM;
         } else {
             this.entityPM = new ContainerizationPM();
-        }
-    }
+        }    
+    } 
 
     setVariables(rowData: any, fieldName: string, additionalData: any) {
         this.fieldName = fieldName;
@@ -46,7 +46,7 @@ export class CustomsContainerizationListTemplate {
         this.BuildDeclarationsCheckBox();
         this.CD.detectChanges();
     }
-
+ 
     BuildDeclarationsCheckBox() {
         this.IsConnectedDeclarationChecked = false;
         if (this.entityPM.ConnectedDeclarations && this.entityPM.Id != null && !this._containerizationExtendedListService.connectedSelectAll) {
@@ -78,6 +78,9 @@ export class CustomsContainerizationListTemplate {
         if (this._containerizationExtendedListService.connectedSelectAll == true) {
             this.IsConnectedDeclarationChecked = true;
         }
+        
+        this.countDeclarationUi = this._containerizationExtendedListService?.ConnectedDeclarations?.split(',').length-1;
+        
     }
 
     OnConnectedCheckBoxChecked($event) {
@@ -102,8 +105,9 @@ export class CustomsContainerizationListTemplate {
             if (this._containerizationExtendedListService.IsDirectCharging.includes(this.rowData.Id)) {
                 this._containerizationExtendedListService.IsDirectCharging = this._containerizationExtendedListService.IsDirectCharging.replace(this.rowData.Id + ",", "");
             }
-        }
-        if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations)) {
+        }       
+        if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations) || (this._containerizationExtendedListService.ConnectedDeclarations.split(',').length -1 - this.countDeclarationUi ==0)) {
+        
             this._containerizationExtendedListService.SelectedDeclarations = false;
         } else {
             this._containerizationExtendedListService.SelectedDeclarations = true;
@@ -127,7 +131,7 @@ export class CustomsContainerizationListTemplate {
             containerizationDetails.DeclarationList = [];
             containerizationDetails.DeclarationList.push(decId);
             this._containerizationExtendedListService.containerizationRequestParams.ContainerizationList.push(containerizationDetails);
-        }
+        } 
     }
     RemoveUniqueConsignmentToRequestParams(cargoTypeCode: string, manifestNumber: string, secondCargoId: string, thirdCargoId: string, decId: string) {
         this._containerizationExtendedListService.containerizationRequestParams.ContainerizationList.forEach(containerization => {
