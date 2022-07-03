@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "6afe59bcf679a64749c5c2893a8f3d22";
+		public const string HashString = "cec26d5f7b8f1303a31daf89ab55014e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -896,10 +896,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProcedureCurrentCode",
 					  						DefaultText =  "Government Procedure Type",
-					  						FullLocalDefaultText =  "סוג תהליך",
+					  						FullLocalDefaultText =  "קוד סוג תהליך",
 					  						ListFieldLable =  "ProcedureCurrentCodeListLable",
 					  						ListLableDefaultText =  "Procedure Current ",
-					  						ListLocalDefaultText =  "סוג תהליך",
+					  						ListLocalDefaultText =  "קוד סוג תהליך",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
