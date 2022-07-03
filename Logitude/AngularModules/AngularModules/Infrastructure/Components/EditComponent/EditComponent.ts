@@ -765,17 +765,7 @@ export class EditComponent implements OnDestroy {
         }
 
         else {
-            if(!window.TenantTabs){
-                this.tabsService.GetTenantTabs()
-                .subscribe((tabs: ObjectTableTabPM[]) => {
-                    window.TenantTabs = tabs;
-                    this.BuildTabsItemsSource();
-
-                });
-            }else{
-                this.BuildTabsItemsSource();
-            }
-
+            this.BuildTabsItemsSource();
 
         }
     }
@@ -825,7 +815,7 @@ export class EditComponent implements OnDestroy {
             else {
 
 
-                if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+                if (tab.Tenant == 1 || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
 
                     if (this.ObjectTableName == "GLAccount") {
 

@@ -23,6 +23,7 @@ declare var window;
 const defaultWindowWidth = 450;
 const defaultWindowHeight = 200;
 const newTabWindowTitle = "New Tab";
+const editTabWindowTitle = "Edit Tab";
 @Component({
 
     templateUrl: './CustomizationTabsComponent.html',
@@ -77,6 +78,9 @@ export class CustomizationTabsComponent extends BaseComponent
             this.CurrentSession.StopBusyIndicator();
             this.CurrentSession.CloseCurrentWindow();
 
+            if(!tabs || tabs.length == 0)
+                return;
+
             window.ObjectTableTabs = tabs;
         });
     }
@@ -122,6 +126,25 @@ export class CustomizationTabsComponent extends BaseComponent
         this.LoadTabs();
     }
 
+    EditTab(tab: ObjectTableTabPM)
+    {
+
+        var window = new LogitudeWindow();
+        window.Width = defaultWindowWidth;
+        window.Height = defaultWindowHeight;
+        window.Title = editTabWindowTitle;
+        window.WindowArgs = {ViewModel: this, tab: tab};
+        window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddTabComponent');
+
+        window.WindowClosed.subscribe(data=>{
+            if(data){
+                this.isDirty = true;
+                let editedTab = this.tabs.find(d=>d.Code == tab.Code);
+                editedTab = data;
+                this.LoadTabs();
+            }
+        });
+    }
     DeleteTab(tab: ObjectTableTabPM)
     {
         tab.Changeset = 'delete';

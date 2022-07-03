@@ -57,7 +57,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         FeatureId = a.FeatureId,
                         HtmlComponentName = a.HtmlComponentName,
                         HtmlComponentUrl = a.HtmlComponentUrl,
-                        Type = a.Type,
+                        Type = "Predefined",
                         FeatureUniqeCode = a.FeatureUniqeCode,
 
                     }).ToList();
@@ -114,29 +114,32 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<ObjectTableTabPM> GetTenantTabs(int tenant)
         {
-            List<ObjectTableTabPM> tabs = (from a in repository.context.ObjectTableTabs.Include("TabNameTextCode").Include("ObjectTable")
-                                                where a.Tenant == tenant
-                                                select new ObjectTableTabPM()
-                                                {
-                                                    ControlPath = a.ControlPath,
-                                                    Id = a.Id,
-                                                    IndexOrder = a.IndexOrder,
-                                                    ObjectTableId = a.ObjectTableId,
-                                                    TabNameTextCodeDefaultText = a.TabNameTextCode.DefaultText,
-                                                    TabNameTextCodeId = a.TabNameTextCodeId,
-                                                    Tenant = a.Tenant,
-                                                    ObjectTableName = a.ObjectTable.Name,
-                                                    TabNameTextCodeCode = a.TabNameTextCodeCode,
-                                                    Code = a.Code,
-                                                    FeatureId = a.FeatureId,
-                                                    FeatureUniqeCode = a.FeatureUniqeCode,
-                                                    Name = a.TabNameTextCode.DefaultText,
-                                                    Type = a.Type,
-                                                    OriginalTabCode = a.OriginalTabCode,
-                                                    ScreenCode = a.ScreenCode,
-                                                    HtmlComponentName = a.HtmlComponentName,
-                                                    HtmlComponentUrl = a.HtmlComponentUrl,
-                                                }).ToList();
+            List<ObjectTableTabPM> tabs = (from tab in repository.context.ObjectTableTabs.Include("TabNameTextCode").Include("ObjectTable")
+                                           join screen in repository.context.Screens on tab.ScreenCode equals screen.Code into screenJoin
+                                           from screen in screenJoin.DefaultIfEmpty()
+                                            where tab.Tenant == tenant
+                                            select new ObjectTableTabPM()
+                                            {
+                                                ControlPath = tab.ControlPath,
+                                                Id = tab.Id,
+                                                IndexOrder = tab.IndexOrder,
+                                                ObjectTableId = tab.ObjectTableId,
+                                                TabNameTextCodeDefaultText = tab.TabNameTextCode.DefaultText,
+                                                TabNameTextCodeId = tab.TabNameTextCodeId,
+                                                Tenant = tab.Tenant,
+                                                ObjectTableName = tab.ObjectTable.Name,
+                                                TabNameTextCodeCode = tab.TabNameTextCodeCode,
+                                                Code = tab.Code,
+                                                FeatureId = tab.FeatureId,
+                                                FeatureUniqeCode = tab.FeatureUniqeCode,
+                                                Name = tab.TabNameTextCode.DefaultText,
+                                                Type = tab.Type,
+                                                OriginalTabCode = tab.OriginalTabCode,
+                                                ScreenCode = tab.ScreenCode,
+                                                HtmlComponentName = tab.HtmlComponentName,
+                                                HtmlComponentUrl = tab.HtmlComponentUrl,
+                                                ScreenName = screen == null ? null : screen.Name,
+                                            }).ToList();
             return tabs;
         }
 

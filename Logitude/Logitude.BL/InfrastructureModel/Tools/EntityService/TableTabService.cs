@@ -12,11 +12,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
     {
         int tenant;
         ObjectTableTabRepository repository;
+        IWebFreightContext context;
 
         public TableTabService(int tenant)
         {
             this.tenant = tenant;
-            repository = new ObjectTableTabRepository(tenant);
+            context = WebFreightContext.GetContext(tenant);
+            repository = new ObjectTableTabRepository(context);
         }
 
         public void UpdateTabs(List<ObjectTableTabPM> tabs)
@@ -50,6 +52,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 case Changeset.Update:
                     {
                         OnTabUpdate(tab, tabPM);
+                        
                         repository.Update(tab);
                         break;
                     }
@@ -75,10 +78,24 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private void OnTabUpdate(ObjectTableTab tab, ObjectTableTabPM tabPM)
         {
             if (tab.Tenant == 0)
-                new TableTabModificationService(tenant).UpdateModification(tabPM);
+                new TableTabModificationService(tenant, context).UpdateModification(tabPM);
+            else
+                CheckNameTextCodeChange(tab, tabPM);
+
         }
 
-        
+        private void CheckNameTextCodeChange(ObjectTableTab tab, ObjectTableTabPM tabPM)
+        {
+            var textCodeRepository = new TextCodeRepository(context);
+            var textCode = textCodeRepository.GetSingleTextCodeByCode(tab.TabNameTextCodeCode);
+            if (textCode.DefaultText != tabPM.Name)
+            {
+                textCode.DefaultText = tabPM.Name;
+                textCodeRepository.Update(textCode);
+                textCodeRepository.SubmitChanges();
+            }
+        }
+
         private void OnTabDelete(ObjectTableTab tab, ObjectTableTabPM tabPM)
         {
         }
