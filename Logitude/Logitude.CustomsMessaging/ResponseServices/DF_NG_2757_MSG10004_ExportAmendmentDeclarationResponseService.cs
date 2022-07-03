@@ -134,6 +134,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DeclarationTypeCode = GetValueCodeType(declaration.TypeCode),
                         Consignments = GetConsignments(declaration, tenant, null, context),
                     };
+                    declarationPM.IsExportClosed = declarationOrg.IsExportClosed;
                     declarationPM.ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID);
                     declarationPM.ExportFile = declarationOrg.ExportFile;
                     declarationPM.DeclarationTypeCode = GetValueCodeType(declaration.TypeCode);

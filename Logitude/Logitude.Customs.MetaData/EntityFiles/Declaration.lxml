@@ -25062,6 +25062,54 @@
       LocalDefaultText="&quot;תיק לא קיים ביצוא&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ExportsStatus&quot;"
+      DefaultText="&quot;Exports Status&quot;"
+      LocalDefaultText="&quot;סטטוס אחסנות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Total2&quot;"
+      DefaultText="&quot;Total&quot;"
+      LocalDefaultText="&quot;סה&quot;כ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Connect&quot;"
+      DefaultText="&quot;Connect&quot;"
+      LocalDefaultText="&quot;מקושרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.NotConnect&quot;"
+      DefaultText="&quot;Not Connect&quot;"
+      LocalDefaultText="&quot;לא מקושרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ChargedStatusReceivedCorrect&quot;"
+      DefaultText="&quot;Charged Status Received - Correct&quot;"
+      LocalDefaultText="&quot;סטטוס מטען נקלט - תקין&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CustomsLogisticalPermitHappiness&quot;"
+      DefaultText="&quot;Customs Logistical Permit - Happiness&quot;"
+      LocalDefaultText="&quot;היתר לוגיסטי מיכסי - אושר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ConnectedDelcaration&quot;"
+      DefaultText="&quot;Note a linked statement!&quot;"
+      LocalDefaultText="&quot;!שים לב הצהרה מקושרת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ChangeCargoId&quot;"
+      DefaultText="&quot;Changed carge ID on save will be disconnected&quot;"
+      LocalDefaultText="&quot;שונו מזהה המטען בשמירה יבוצע ניתוק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
