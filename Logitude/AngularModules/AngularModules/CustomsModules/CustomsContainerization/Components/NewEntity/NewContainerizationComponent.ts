@@ -97,6 +97,7 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     onCheckBoxChecked($event) {
+        
        
         this.IsSelected = false;
         if (!this.entityPM.ConnectedDeclarations) {
