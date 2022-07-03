@@ -403,12 +403,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             
             this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
-
             this.InitializeTransferComponents();  
 
             ARPaymentMapping.MapEntity(theEntityPm, paymentPoco, isNewEntity);
-             
-
             paymentRepository.Update(paymentPoco);
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
@@ -417,8 +414,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARPaymentReferencesService.UpdateConnectedARInvoicePaymentRefeneces(theEntityPm);
 
             if (!theEntityPm.IsFullAccounting)
+            {
                 UpdatePaymentOpenAmount();
-
+            }
 
             ARPaymentHelper service = new ARPaymentHelper();
             if (paymentPoco.ExternalAccountingEntityId != null || SetReSendQBO)
@@ -861,40 +859,42 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 foreach (ARPaymentInvoicePM item in changedList)
                 {
-                    UpdateInvoiceAmounts(item.ARInvoiceId);
+                    UpdateInvoiceAmounts(item, false);
                 }
             }
 
             else
             {
-                foreach (ARPaymentInvoicePM item in changedList.Where(d => d.ChangeSetOp != ChangeSetOperation.None))
+                foreach (ARPaymentInvoicePM item in changedList)
                 {
-                    UpdateInvoiceAmounts(item.ARInvoiceId);
+                    UpdateInvoiceAmounts(item, true);
                 }
             }
         }
-        private void UpdateInvoiceAmounts(string myInvoiceId)
+        private void UpdateInvoiceAmounts(ARPaymentInvoicePM paymentInvoice, bool checkChangeSet)
         {
-            if (!string.IsNullOrEmpty(myInvoiceId))
+            bool updateAmounts = true;
+            if (checkChangeSet && paymentInvoice.ChangeSetOp == ChangeSetOperation.None) updateAmounts = false;
+
+             ARInvoicePM invoice = null;
+            if (!string.IsNullOrEmpty(paymentInvoice.ARInvoiceId))
             {
                 ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(this.invoiceRepository);
-                ARInvoicePM invoice = aRInvoiceQuery.GetSinglePM(myInvoiceId, tenant);
+                invoice = aRInvoiceQuery.GetSinglePM(paymentInvoice.ARInvoiceId, tenant);
+            }
 
-                //ARInvoice invoice = this.GetInvoice(myInvoiceId, tenant);
-
-                if (invoice != null)
+            if (invoice != null)
+            {
+                if (invoice.StatusCode == "VD")
                 {
-                    if (invoice.StatusCode == "VD")
-                    {
-                        throw new Exception("Invoice (" + invoice.InvoiceNumber + ") is Voided");
-                    }
+                    throw new Exception("Invoice (" + invoice.InvoiceNumber + ") is Voided");
+                }
 
-                    else
+                else
+                {
+                    #region update Amounts
+                    if (updateAmounts)
                     {
-                        #region
-                        bool IsClosed = invoice.IsClosed;
-                        string StatusCode = invoice.StatusCode;
-                        double? Amount = MethodHelper.Roundd(invoice.AmountInInvoiceCurrency, 2);
                         double? PaidAmount = 0;
 
                         List<ARInvoicePayment> allConnectedItems = invoicePaymentRepository.GetARInvoicePaymentByInvoiceId(invoice.Id, invoice.Tenant).ToList();
@@ -976,17 +976,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             throw new Exception("The Amount due is not suitable to the total amount paid, for invoice: " + invoice.InvoiceNumber);
                         }
+                    }
+                    #endregion
 
+                    if (paymentPM.ValueDate != paymentPoco.ValueDate || updateAmounts)
+                    {
                         this.UpdateInvoicePaidDate(invoice);
-
-
-                        //invoiceRepository.Update(invoice);
                         ARInvoiceService aRInvoiceService = new ARInvoiceService(this.objectContext, this.tenant);
                         aRInvoiceService.Update(invoice);
-                        #endregion
                     }
                 }
             }
+
         }
         private void UpdateInvoicePaidDate(ARInvoicePM invoice)
         {
@@ -1294,12 +1295,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             get { return paymentPM.AccountingPaymentMethodCode == "CA"; }
         }
-
         public bool IsChequePayment
         {
             get { return paymentPM.AccountingPaymentMethodCode == "CH"; }
         }
-
         private GLAccountPM GetPaymentGLAccount()
         {
             GLAccountPM glAccount = null;
@@ -1310,8 +1309,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             return glAccount;
         }
-
-
         private GLAccountPM GetGLAccount(ARPaymentPM payment)
         {
             GLAccountPM glaAccount = null;
@@ -1332,9 +1329,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
             return glaAccount;
-        }
-
-       
+        }       
         private string getBankCode(int tenant)
         {
             string bankId = "";
@@ -2175,6 +2170,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             paymentPM.InvoiceNumbers = invoicePaymentNumbersBehaviour.CopmuteARPaymentInvoicesNumbers(paymentPM);
             paymentPoco.InvoiceNumbers = paymentPM.InvoiceNumbers;
+        }
+
+        private void UpdateConnnectedInvoicesPaidDate()
+        {
+            //foreach (ARPaymentInvoicePM item in changedList)
+            //{
+                
+            //}
         }
     }
 
