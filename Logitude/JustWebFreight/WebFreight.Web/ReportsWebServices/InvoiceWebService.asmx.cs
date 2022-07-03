@@ -2430,6 +2430,9 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
                 #endregion
+                #region Payments
+                AddPayments(invoiceCotnext, tenant,invoicedataprovider , currentInvoice.Id);
+                #endregion
             }
 
             //------------------------------------------------
@@ -4236,9 +4239,36 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
                 #endregion
+                #region Payments
+
+                AddPayments(invoiceCotnext, tenant, invoiceDataProvider, invoiceId);
+
+                #endregion
+
             }
 
             return invoiceDataProvider;
+        }
+
+        private void AddPayments(IInvoiceContext invoiceCotnext, int tenant, InvoiceDataProvider invoiceDataProvider, string invoiceId)
+        {
+            var payments = invoiceCotnext.ARInvoicePayments.Include("ARPayment").Include("ARPayment.AccountingPaymentMethod").Where(e => e.ARInvoiceId == invoiceId && e.Tenant == tenant).ToList();
+            invoiceDataProvider.Payments = new List<Payment>();
+            foreach (var payment in payments)
+            {
+                invoiceDataProvider.Payments.Add(CretePayment(payment));
+            }
+        }
+
+        private Payment CretePayment(ARInvoicePayment payment)
+        {
+            return new Payment()
+            {
+                PaymentDate = payment.ARPayment?.ValueDate,
+                PaymentMethod = payment.ARPayment?.AccountingPaymentMethod?.Name,
+                PaymentNumber = payment.ARPayment?.PaymentNo,
+                PaymentReferenceNumber = payment.ARPayment?.ChequeOrPaymentRef
+            };
         }
 
         private static string GetBillToSATName(Card billToCard)

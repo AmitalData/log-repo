@@ -615,6 +615,7 @@ namespace WebFreight.Web.DataProviders
         public int? StorageFreeDays { get; set; }
         public int? StorageDays { get; set; }
         public List<StoragePricing> ShipmentStoragePricings { get; set; }
+        public List<Payment> Payments { get; set; }
 
         public string Transshipment1FlightNumber { get; set; }
         public DateTime? Transshipment1ETD { get; set; }
@@ -628,7 +629,13 @@ namespace WebFreight.Web.DataProviders
         public string Transshipment3VesselName { get; set; }
         public string Transhipment3VoyageNo { get; set; }
     }
-
+    public class Payment
+    {
+        public string PaymentMethod { get; set; }
+        public string PaymentNumber { get; set; }
+        public string PaymentReferenceNumber { get; set; }
+        public DateTime? PaymentDate { get; set; }
+    }
     public class SAT
     {
         public string SelloSAT { get; set; }
