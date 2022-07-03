@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                     try
                     {
                         
-                        channel.Dispose();
+                        channel?.Dispose();
                         
                     }
                     catch (Exception)
