@@ -382,4 +382,7 @@
     Columns="CreateDate" />
   <Index
     Columns="UniqueNumber,Tenant" />
+
+    <Index
+    Columns="Tenant,CommunicationLogTypeCode,CreateDate" />
 </Table>
