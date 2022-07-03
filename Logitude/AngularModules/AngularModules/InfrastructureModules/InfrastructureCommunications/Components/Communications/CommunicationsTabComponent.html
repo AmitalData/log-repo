@@ -9,6 +9,14 @@
                             <div class="TabTitle" [hidden]="IsTitleHidden">{{TabHeaderTextCode | TextCodeTranslationPipe}}</div>
                         </td>
 
+                        <td *ngIf="IsShowWasAnalyzed" style="width: 50px;">
+                            <CheckBox [IsChecked]="IncludeNotAnalyzed" (Checked)="IncludeNotAnalyzed = $event" [Text]="'Show all Communications'"></CheckBox>
+                        </td>
+
+                        <td *ngIf="IsShowWasAnalyzed" style="width: 5px;">
+                            <div></div>
+                        </td>
+
                         <td style="width: 21px;">
                             <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                         </td>
@@ -39,7 +47,7 @@
                                     <div></div>
                                 </td>
 
-                                <td *ngIf="IsShowWasAnalyzed" style="width: 120px; min-width: 120px; max-width: 120px;">{{'CommunicationLog.F.WasAnalyzed' | TextCodeTranslationPipe}}</td>
+                                <td *ngIf="IsShowWasAnalyzed && IncludeNotAnalyzed" style="width: 120px; min-width: 120px; max-width: 120px;">{{'CommunicationLog.F.WasAnalyzed' | TextCodeTranslationPipe}}</td>
 
                                 <td class="LastChild" style="min-width: 20px;">
                                     <div></div>
@@ -127,7 +135,7 @@
                                     <button class="Button" (click)="EditItemClicked(item)">{{'CommunicationLog.B.Details' | TextCodeTranslationPipe}}</button>
                                 </td>
 
-                                <td *ngIf="IsShowWasAnalyzed" class="CellStretched" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                <td *ngIf="IsShowWasAnalyzed && IncludeNotAnalyzed" class="CellStretched" style="width: 120px; min-width: 120px; max-width: 120px;">
                                     <div style="width:120px">
                                         <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.WasAnalyzed" src="./Images/Icons/MiniGreenTick.png"/>
                                     </div>
