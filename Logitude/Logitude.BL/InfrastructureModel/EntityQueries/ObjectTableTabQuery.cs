@@ -71,17 +71,21 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                             .ToDictionary(dic => dic.TabCode, dic => dic);
 
             foreach (ObjectTableTabPM tab in tabs)
-            {
-                if (tabsModsDictionary.Keys.Contains(tab.Code))
-                {
-                    TabModification mod = tabsModsDictionary[tab.Code];
-                    if (mod != null)
-                    {
-                        tab.Name = mod.Name;
-                        tab.IndexOrder = mod.Order;
-                    }
-                }
-            }
+                MapTabFieldsFromModification(tabsModsDictionary, tab);
+        }
+
+        private static void MapTabFieldsFromModification(Dictionary<string, TabModification> tabsModsDictionary, ObjectTableTabPM tab)
+        {
+            if (!tabsModsDictionary.Keys.Contains(tab.Code))
+                return;
+
+            TabModification mod = tabsModsDictionary[tab.Code];
+
+            if (mod == null)
+                return;
+
+            tab.Name = mod.Name;
+            tab.IndexOrder = mod.Order;
         }
 
         public IQueryable<ObjectTableTabPM> GetObjectTableTabsByTenantAndObjectTable(string objectTableId, int tenant)

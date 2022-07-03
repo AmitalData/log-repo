@@ -789,8 +789,8 @@ export class EditComponent implements OnDestroy {
         allTabs = this.FilterTabs(allTabs);
         allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         for (var i = 0; i < allTabs.length; i++) {
-            var tab = allTabs[i];
 
+            var tab: ObjectTableTabPM = allTabs[i];
             if (tab.ControlPath != null) {
                 if (tab.ControlPath.indexOf("ExternalDocumentsControl") != -1) {
                     if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DOCSIN")) {
@@ -815,7 +815,7 @@ export class EditComponent implements OnDestroy {
             else {
 
 
-                if (tab.Tenant == 1 || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+                if (tab.Type == 'Custom' || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
 
                     if (this.ObjectTableName == "GLAccount") {
 
