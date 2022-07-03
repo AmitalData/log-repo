@@ -10,6 +10,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
 {
     public class PooledRabbitMQPolicy : IPooledObjectPolicy<IModel>
     {
+        private static readonly object _objLock = new object();
         //private readonly RabbitMQOptions _options;
         static int _Counter = 0;
         private IConnection _connection;
@@ -21,7 +22,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
         public PooledRabbitMQPolicy(/*IOptions<RabbitMQOptions>  options*/)
         {
             //_environmentSettingService = serviceProvider.GetRequiredService<IEnvironmentSettingService>();
-            _connection = GetConnection();
+            GetConnection();
 
 
         }
@@ -31,26 +32,47 @@ namespace Logitude.CustomsMessaging.RabbitMQ
         }
         private IConnection GetConnection()
         {
-            
-            var factory = RabbitmqHelper.GetConnectionFactory(true);
-            return factory.CreateConnection();
+            lock (_objLock)
+            {
+                if (_connection ==null || _connection?.IsOpen!=true)
+                {
+                    try
+                    {
+                        _connection?.Dispose();
+                    }
+                    catch 
+                    {
+
+                        
+                    }
+                    
+                    var factory = RabbitmqHelper.GetConnectionFactory();
+                    _connection = factory.CreateConnection();
+
+                }
+                return _connection;
+
+
+            }
         }
 
         public IModel Create()
         {
+            
+
             _Counter++;
-            return _connection.CreateModel();
+            return GetConnection().CreateModel();
         }
 
-        public bool Return(IModel obj)
+        public bool Return(IModel channel)
         {
-            if (obj.IsOpen)
+            if (channel !=null && channel.IsOpen)
             {
                 return true;
             }
             else
             {
-                obj?.Dispose();
+                channel?.Dispose();
                 return false;
             }
         }
@@ -59,13 +81,30 @@ namespace Logitude.CustomsMessaging.RabbitMQ
 
     public class PooledRabbitMQPublisher //: IRabbitMQPublisher
     {
+        ///https://csharpindepth.com/articles/singleton <summary>
+        /// 
+        
+        static PooledRabbitMQPublisher _Instance=null;
+        private static readonly object padlock = new object();
 
-        static PooledRabbitMQPublisher _Instance;
 
         public static PooledRabbitMQPublisher Instance
         {
-            get { return PooledRabbitMQPublisher._Instance = PooledRabbitMQPublisher._Instance ?? new PooledRabbitMQPublisher(); }
-
+            ///get { return PooledRabbitMQPublisher._Instance = PooledRabbitMQPublisher._Instance ?? new PooledRabbitMQPublisher(); }
+            get
+            {
+                if (_Instance == null)
+                {
+                    lock (padlock)
+                    {
+                        if (_Instance == null)
+                        {
+                            _Instance = new PooledRabbitMQPublisher();
+                        }
+                    }
+                }
+                return _Instance;
+            }
         }
 
 
