@@ -256,7 +256,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 if (additionalInformation.Content != null)
                                 {
-                                    _MyDeclarationPM.AmendmentStatus = additionalInformation.Content.Value;
+                                    if (!isExportClose)
+                                        _MyDeclarationPM.AmendmentStatus = additionalInformation.Content.Value;
                                     switch (additionalInformation.Content.Value)
                                     {
                                         case "1":
@@ -392,6 +393,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     FUStatusRemarks = "תיקון הצהרה אושר חלקית - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                 };
                                             }
+                                            else
+                                            {
+                                                MyResponseData.IsExportCloseApprove = true;
+                                            }
                                             break;
                                         case "6":
                                             //_MyDeclarationPM.AmendmentStatus = "1";
@@ -479,7 +484,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _MyDeclarationPM.AmendmentissueDate = DateTime.ParseExact(customResponse.Response.Declaration.IssueDateTime, "yyyy-MM-ddTHH:mm:ss", null);
                 }
 
-                if (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2")
+                if ((!isExportClose && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2")) || MyResponseData.IsExportCloseApprove)
                 {
                     _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
                     _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
