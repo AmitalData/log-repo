@@ -58,10 +58,14 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 itemPrintingResults.Add(Print(item));
                 IncresePrograse();
             }
-            PdfDocument pdfDoc = new PdfDocument();
-            MargePdfs(pdfDoc, itemPrintingResults);
-            MemoryStream memoryStream = GetMemoryStream(pdfDoc);
-            var documentId = UploadPDFToStorage(memoryStream, _batchPrinterArgs.Tenant);
+            string documentId = null;
+            if (itemPrintingResults.Any(e => e.IsSuccessfullyPrinted))
+            {
+                PdfDocument pdfDoc = new PdfDocument();
+                MargePdfs(pdfDoc, itemPrintingResults);
+                MemoryStream memoryStream = GetMemoryStream(pdfDoc);
+                documentId = UploadPDFToStorage(memoryStream, _batchPrinterArgs.Tenant);
+            }
             var printingResults = CreatePrintResult(documentId, itemPrintingResults);
 
             return printingResults;
