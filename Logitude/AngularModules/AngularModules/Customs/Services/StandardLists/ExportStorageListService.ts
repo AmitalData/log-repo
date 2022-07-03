@@ -32,12 +32,12 @@ export class ExportStorageListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/exportstorageviews';  
     }
 
-	getSingle(id: string) {
+	getSingle(id: string, declarationstatustypecode: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id+'&'+'declarationstatustypecode=' + declarationstatustypecode, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class ExportStorageListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ExportStorage", "GetSingleList", 'id=' + id); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ExportStorage", "GetSingleList", 'id=' + id+'&'+'declarationstatustypecode=' + declarationstatustypecode); 
 
 						return serviceResponse;
 					}),

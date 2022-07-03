@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  ExportStorage GetSingle(string id, int tenant)
+		public  ExportStorage GetSingle(string id, string declarationstatustypecode, int tenant)
         {
             return (from a in context.ExportStorages
-                    where a.Id == id && a.Tenant == tenant
+                    where a.Id == id && a.DeclarationStatusTypeCode == declarationstatustypecode && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             ExportStorageKeys keys = entityKeys as ExportStorageKeys;
             return (from a in context.ExportStorages
-                    where a.Id == keys.Id
+                    where a.Id == keys.Id && a.DeclarationStatusTypeCode == keys.DeclarationStatusTypeCode
                     select a).FirstOrDefault();
         }
 		         

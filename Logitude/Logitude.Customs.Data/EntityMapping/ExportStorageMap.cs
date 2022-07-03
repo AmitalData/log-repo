@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("ExportStorages", "Customs");
 		
-		    this.HasKey(t => new { t.Id });
+		    this.HasKey(t => new { t.Id, t.DeclarationStatusTypeCode });
 	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 

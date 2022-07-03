@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(ExportStoragePM entityPM)
         {
-            ExportStorageKeys entityKeys = new ExportStorageKeys() { Id = entityPM.Id };
+            ExportStorageKeys entityKeys = new ExportStorageKeys() { Id = entityPM.Id, DeclarationStatusTypeCode = entityPM.DeclarationStatusTypeCode };
             return entityKeys;
         }
 

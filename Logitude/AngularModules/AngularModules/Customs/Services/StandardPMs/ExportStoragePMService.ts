@@ -32,12 +32,12 @@ export class ExportStoragePMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/exportstorages';      
     }
 
-	get(id: string) {       
+	get(id: string, declarationstatustypecode: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id+'&'+'declarationstatustypecode=' + declarationstatustypecode, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class ExportStoragePMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ExportStorage", "GetSinglePM", 'id=' + id);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ExportStorage", "GetSinglePM", 'id=' + id+'&'+'declarationstatustypecode=' + declarationstatustypecode);
 				 
 						return serviceResponse;
 

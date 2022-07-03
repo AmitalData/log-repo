@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string id, string declarationstatustypecode)
         {
 		  try
             {
@@ -62,7 +62,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("Customs.ExportStorage", "READ", authToken.Tenant);
 	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 ExportStorageListQueryService exportStorageQuery = new ExportStorageListQueryService(MyContext);
-                ExportStorageList exportStorageList = exportStorageQuery.GetSingle(id);
+                ExportStorageList exportStorageList = exportStorageQuery.GetSingle(id, declarationstatustypecode);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  exportStorageList);
