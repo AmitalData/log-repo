@@ -142,7 +142,7 @@ namespace WarehouseData.Service
             {
                 string customFieldindex = "";
                 int i = 1;
-                while (i <= 40)
+                while (i <= table.MaxNumberOfCustomFields)
                 {
                     customFieldindex += "[Field" + i + "],";
                     i += 1;

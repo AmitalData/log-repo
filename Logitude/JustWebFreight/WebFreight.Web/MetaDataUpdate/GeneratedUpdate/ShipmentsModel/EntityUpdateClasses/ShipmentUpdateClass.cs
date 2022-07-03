@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "5b806d24371974b85cea93c371463f9e";
+		public const string HashString = "ec6bffa8874eb37c883b064bd10f2ab7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  true,
 			      				    ObjectTableTypeCode =  "BR",
-			      				    MaxNumberOfCustomFields =  40,
+			      				    MaxNumberOfCustomFields =  70,
 			      				    NewWizardControlName =  "Simplog.ShipmentLib.NewShipmentCommand",
 			      				    DefaultText =  "Shipment",
 			      				    Code =  "SHIP",

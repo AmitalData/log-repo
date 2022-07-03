@@ -467,7 +467,7 @@ export class ShipmentPMService {
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ShipmentPM = null) {
         var customFields: Array<string> = [];
-        for (var i = 1; i < 41; i++) {
+        for (var i = 1; i < 71; i++) {
             customFields.push("Field" + i);
         }
         if (!entityPM) {

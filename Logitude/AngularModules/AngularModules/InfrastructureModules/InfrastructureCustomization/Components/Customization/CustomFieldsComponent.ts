@@ -98,7 +98,7 @@ export class CustomFieldsComponent {
 
     GetCustomFieldsCount(): number {
         if (this.MaxNumberOfCustomFields && this.MaxNumberOfCustomFields != 0) return this.MaxNumberOfCustomFields;
-        if (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") return 40;
+        if (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") return 70;
         if (this.ObjectTableName == "Quote") return 20;
         return 10;
     }

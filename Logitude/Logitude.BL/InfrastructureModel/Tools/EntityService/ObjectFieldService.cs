@@ -101,11 +101,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     count = list.Count;
                 }
 
-                if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Master" || ObjectTable.Name == "Opportunity")
+                if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Quote" || ObjectTable.Name == "Opportunity")
                 {
-                    allowedCount = 40;
+                    allowedCount = ObjectTable.MaxNumberOfCustomFields;
                 }
-                else if (ObjectTable.Name == "Quote") allowedCount = 20;
+                else if (ObjectTable.Name == "Master") allowedCount = 70;
 
                 if (count < allowedCount)
                 {
