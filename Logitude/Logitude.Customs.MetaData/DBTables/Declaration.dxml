@@ -1003,6 +1003,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ExportContainerizationID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsSubmitDeclaration"
     Type="bit">
     <Constraints
@@ -1025,13 +1032,6 @@
     Name="ExportClosedErrorXML"
     Type="nvarchar"
     Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ExportContainerizationID"
-    Type="varchar"
-    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
