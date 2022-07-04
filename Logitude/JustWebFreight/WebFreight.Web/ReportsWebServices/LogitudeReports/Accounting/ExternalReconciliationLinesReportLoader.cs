@@ -547,7 +547,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 Tenant = tenant,
                 AccountsIds = AllBankAccounts.Select(a => a.GLAccountId).ToList(),
-                GetDueDatedTransactions = true
+                GetDueDatedTransactions = true,
+                IsExternalReconciled = IsExternalReconciled
             };
         }
         private LedgerTransactionsFilter BuildTransferTransactionsFilter(List<BankAccountPM> AllBankAccounts)
