@@ -12019,7 +12019,7 @@ namespace WebFreight.Web.ReportsWebServices
             // filter chart of account types
             foreach (var item in totalData.ResultList.Where(x => x.Type == null).ToList())
             {
-                if (!trailReportMs.Any(x => x.ChartOfAcountType == item.Id))
+                if (!trailReportMs.Any(x => x != null && x.ChartOfAcountType == item.Id))
                 {
                     totalData.ResultList.Remove(item);
                 }
@@ -12027,7 +12027,7 @@ namespace WebFreight.Web.ReportsWebServices
             // filter chart of accounts
             foreach (var item in totalData.ResultList.Where(x => x.Type == "ChartOfAccount").ToList())
             {
-                if (!trailReportMs.Any(x => x.ChartOfAccountId == item.Id))
+                if (!trailReportMs.Any(x => x != null && x.ChartOfAccountId == item.Id))
                 {
                     totalData.ResultList.Remove(item);
                 }
