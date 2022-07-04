@@ -139,6 +139,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         filters = this.Filters;
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
+        filters.PageIndex = 0;
         filters.PageSize = 100;
         return this._entityListService.getByFilters(this.ObjectTableName, filters, null);
     }
