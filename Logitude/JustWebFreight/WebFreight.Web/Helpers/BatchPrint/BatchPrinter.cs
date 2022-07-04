@@ -102,16 +102,15 @@ namespace WebFreight.Web.Helpers.BatchPrint
             }
         }
 
-
-
         private string UploadPDFToStorage(MemoryStream memoryStream, int tenant)
         {
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             byte[] ByteData = memoryStream.ToArray();
             DocumentRepository documentRepository = new DocumentRepository(tenant);
-            var document = new Document()
+            string fileName = "Documents_MultiPrint" + DateTime.Now.ToString("dd-MM-yyy");
+            Document document = new Document()
             {
-                FileName = "Documents" + DateTime.Now.ToString("dd-MM-yyy"),
+                FileName = fileName,
                 CreateDate = DateTime.Now,
                 Extension = "pdf",
                 FileSize = ByteData.Length,
@@ -134,9 +133,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             };
 
             storageservice.Write(ByteData, fileInfo);
-
-
-            return document.Id;
+            return fileName;
         }
         private ItemPrintingResult Print(PrintEntityKeys item)
         {
@@ -152,13 +149,13 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 AfterPrint(item);
                 return result;
             }
+
             catch (Exception e)
             {
                 result.IsSuccessfullyPrinted = false;
                 result.Error = e.Message;
                 return result;
-            }
-           
+            }           
         }
 
         private MemoryStream GetReportStream(PrintEntityKeys item)
@@ -184,10 +181,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
             }
             catch (Exception e)
             {
-                throw new Exception("Stimulsoft Error: "+ e.Message);
+                throw new Exception("Stimulsoft Error: " + e.Message);
             }
-            
-            
         }
 
         private MemoryStream GetReportStreamFromCopy(DocumentOutCopy printedCopy)
@@ -231,7 +226,6 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 return false;
 
             }
-
         }
 
         private void GeneralValidatoin(PrintEntityKeys item)
@@ -240,7 +234,6 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 throw new Exception("Template Body is empty");
             if (documentType.IsDocumentOneTimePrintLimited && IsAlreadyPrinted(item))
                 throw new Exception("This document is already printed");
-
         }
 
         private bool IsAlreadyPrinted(PrintEntityKeys item)

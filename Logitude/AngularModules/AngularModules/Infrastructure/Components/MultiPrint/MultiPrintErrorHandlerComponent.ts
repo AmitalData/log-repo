@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { PrintingRow } from '../../Services/BatchPrintService';
 import { AppTool } from '../../Tools';
+import { DownloadManager } from '../../Utilities/DownloadManager';
 
 @Component({
     selector: 'MultiPrintErrorHandlerComponent',
@@ -9,15 +10,17 @@ import { AppTool } from '../../Tools';
 })
 
 export class MultiPrintErrorHandlerComponent {
-    private CurrentSession = SessionLocator.SelectedSession;    
+    private CurrentSession = SessionLocator.SelectedSession;
     public ItemsSource: PrintingRow[];
     public PrintingRows: PrintingRow[];
+    public DocumentId: string;
     constructor() {
 
     }
 
     SetWindowArgs(windowArgs: any) {
         this.PrintingRows = windowArgs.PrintingRows;
+        this.DocumentId = windowArgs.DocumentId;
         this.FillItemsSource();
     }
 
@@ -27,5 +30,9 @@ export class MultiPrintErrorHandlerComponent {
 
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    DownloadClicked() {
+        DownloadManager.DownloadPage(this.DocumentId);
     }
 }

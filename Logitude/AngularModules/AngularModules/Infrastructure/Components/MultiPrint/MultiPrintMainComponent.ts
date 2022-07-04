@@ -14,6 +14,7 @@ export class MultiPrintMainComponent implements OnInit {
     private PageChild_MTUP: any = null;
     private PageChild_MTHE: any = null;
     public PrintingRows: PrintingRow[];
+    public DocumentId: string;
     WindowArgs: any;
 
     constructor() {
@@ -76,7 +77,7 @@ export class MultiPrintMainComponent implements OnInit {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/MultiPrint/MultiPrintErrorHandlerComponent', myLocation.viewContainerRef)
                         .then(cmpRef => {
                             this.PageChild_MTHE = cmpRef.instance;
-                            this.PageChild_MTHE.SetWindowArgs({ PrintingRows: this.PrintingRows });
+                            this.PageChild_MTHE.SetWindowArgs({ PrintingRows: this.PrintingRows, DocumentId: this.DocumentId });
                         });
                 }
                 break;

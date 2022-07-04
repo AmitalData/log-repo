@@ -46,9 +46,11 @@ export class PrintComponent extends BaseComponent implements OnInit {
     private documentTypeService: DocumentTypeTemplateListExtendedService;
     public ValidationErrorsList: string[];
     public DocumentTypeQueryFilters: ApiQueryFilters;
+    private selectedEntitiesIds: string[];
     constructor(private _entityListService: EntityListService) {
         super();
         window.AllRecords = [];
+        this.selectedEntitiesIds = [];
         this.documentTypeService = new DocumentTypeTemplateListExtendedService();
         this.BuildQueryFilters();
         this.Listen();
@@ -142,21 +144,28 @@ export class PrintComponent extends BaseComponent implements OnInit {
         this.columns.splice(1, 0, printSuccess);
     }
 
-    OnPrintFinish(entities: PrintingRow[]) {
+    OnPrintFinish(entities: PrintingRow[], documentId: string) {
         var results: PrintingRow[] = [];
 
-        this.AllRecords.forEach(function (record) {
+        this.AllRecords.forEach((record) => {
             var entity = entities.find(item => item.EntityId == record.Id);
             record.PrintSuccess = entity ? !entity.Error : undefined;
 
-            var row: PrintingRow = new PrintingRow();
-            row.EntityId = record.Id;
-            row.EntityNumber = record.InvoiceNumber;
-            row.Error = entity ? entity.Error : "";
-            results.push(row);
+            if (entity == null && this.selectedEntitiesIds.filter(d => d == record.Id)[0] != null) {
+                record.PrintSuccess = true;
+            }
+
+            if (entity && entity.Error) {
+                var row: PrintingRow = new PrintingRow();
+                row.EntityId = record.Id;
+                row.EntityNumber = record.InvoiceNumber;
+                row.Error = entity.Error;
+                results.push(row);
+            }
         });
 
         this.ParentComponent.PrintingRows = results;
+        this.ParentComponent.DocumentId = documentId;
         this.RefreshList();
     }
 
@@ -330,6 +339,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
     }
 
     public IsMultiEntityPrintedSuccessfully: boolean = false;
+    
     PrintClick() {
         if (!this.IsPrintValid()) {
             return;
@@ -339,7 +349,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
         var args: BatchPrintManagerArgs = new BatchPrintManagerArgs();
         args.DocumentTypeId = this.DocumentTypeId;
         args.TemplateId = this.SelectedDocumentTypeTemplate.Code;
-        args.CopyId = this.selectedDocumentTypeCopy.Code;
+        args.CopyId = this.SelectedDocumentTypeCopy.Code;
         args.ObjectTableId = this.ObjectTableId;
         args.Tenant = SessionInfo.LoggedUserTenant;
         args.EntityIds = [];
@@ -348,6 +358,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
             var key: PrintEntityKeys = new PrintEntityKeys();
             key.EntityId = item.Id;
             args.EntityIds.push(key);
+            this.selectedEntitiesIds.push(item.Id);
         });
 
         var service: BatchPrintService = new BatchPrintService();
@@ -411,7 +422,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
                     this.CurrentSession.StopBusyIndicator();
 
                     var printingResult: PrintingResult = JSON.parse(list.PrametersXml);
-                    this.OnPrintFinish(printingResult.NotValidRows);
+                    this.OnPrintFinish(printingResult.NotValidRows, printingResult.DocumentId);
                 }
 
                 else if (list.StatusCode == "F") {
