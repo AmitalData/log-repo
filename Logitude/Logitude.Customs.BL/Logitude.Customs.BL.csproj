@@ -2310,6 +2310,7 @@
     <Compile Include="EntityUpdateServices\CustomsVendorUpdateService.cs" />
     <Compile Include="Tasks\CloseCourierMasterService.cs" />
     <Compile Include="TraceEvents\UnifreightFUStatusTaskService.cs" />
+    <Compile Include="Utils\Serializer.cs" />
     <Compile Include="WCOResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
