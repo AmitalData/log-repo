@@ -1705,6 +1705,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string loggedContactId = null;
                 if (myShipment != null)
                 {
+                    #region Update Quote
                     IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
                     QuoteRepository quoteRepository = new QuoteRepository(quotesContext);
                     QuoteComputedFieldRepository quoteComputedFieldRepository = new QuoteComputedFieldRepository(quotesContext);
@@ -1750,13 +1751,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             Notes = "Disconnected from Shipment#: " + myShipment.ShipmentNumber,
                         });
                     }
+                    #endregion
 
                     ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(shipmentsContext);
                     ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(shipmentsContext);
 
                     List<ShipmentReceivable> receivables = receivableRepository.GetShipmentReceivablesByShipmentId(myShipment.Id, tenant);
-                    receivables = receivables.Where(a => !string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
+                    List<ShipmentReceivable> originalReceivables = receivables.Where(a => string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
+                    receivables = receivables.Where(a => !string.IsNullOrEmpty(a.QuoteChargeId)).ToList();                    
+
                     List<ShipmentPayable> payables = payableRepository.GetShipemntPayablesByShipmentId(myShipment.Id, tenant);
+                    List<ShipmentPayable> originalPayables = payables.Where(a => string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
                     payables = payables.Where(a => !string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
                     if (receivables.Count > 0)
                     {
@@ -1774,6 +1779,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
 
+                    myShipment.OpenReceivablesInLocalCurrency = originalReceivables.Sum(s => s.TotalAmountLocal);
+                    myShipment.OpenReceivablesInProfitCurrency = originalReceivables.Sum(s => s.AmountInProfitCurrency);
+                    myShipment.OpenPayablesInLocalCurrency = originalPayables.Sum(s => s.OpenAmountInLocalCurrency);
+                    myShipment.OpenPayablesInProfitCurrency = originalPayables.Sum(s => s.OpenAmountInProfitCurrency);
+                    myShipment.ProfitInLocalCurrency = (myShipment.OpenReceivablesInLocalCurrency - myShipment.OpenPayablesInLocalCurrency) == null ? 0 : (double)(myShipment.OpenReceivablesInLocalCurrency - myShipment.OpenPayablesInLocalCurrency);
+                    myShipment.ProfitInProfitCurrency = myShipment.OpenReceivablesInProfitCurrency - myShipment.OpenPayablesInProfitCurrency;
                     myShipment.QuoteId = null;
                     myShipment.QuoteNumber = null;
                     myShipment.QuoteFreightExpirationDate = null;
