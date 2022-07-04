@@ -12,7 +12,7 @@
 <div *ngIf="fieldName == 'ChangeAmendment'" style="text-align:right">
 
     <button class="Button"
-            style="padding-right:10px;" [disabled]="rowData.AmendmentStatus!='1'"
+            style="padding-right:10px;" [disabled]="(entityPM.Direction == 'E' && rowData.AmendmentStatus!='6') || (entityPM.Direction != 'E' && rowData.AmendmentStatus!='1')"
             (click)="ChangeAmendment(rowData.Id)">
 
         {{'Customs.Declaration.O.ChangeAmendment' | TextCodeTranslationPipe}}
