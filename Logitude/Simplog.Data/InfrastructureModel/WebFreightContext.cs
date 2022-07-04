@@ -370,6 +370,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new QueryExportExecutionLogMap());
             modelBuilder.Configurations.Add(new ChildEntitiesCustomFieldMap());
             modelBuilder.Configurations.Add(new ScreenSectionMap());
+            modelBuilder.Configurations.Add(new TabModificationMap());
 
 
 
@@ -1056,5 +1057,10 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
+        public IDbSet<TabModification> TabsModifications
+        {
+            get;
+            set;
+        }
     }
 }

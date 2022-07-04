@@ -628,6 +628,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\MultiEntityUpdateLog.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QueryExportExecutionLog.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\EntityStatusType.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\TabModification.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ScreenSection.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWSubQuery.cs" />
@@ -648,6 +649,7 @@
     <Compile Include="InfrastructureModel\Mapping\MultiEntityUpdateLogMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\QueryExportExecutionLogMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\QuoteChargesGroupMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\TabModificationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ScreenSectionMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\WokerRoleNameMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
@@ -667,6 +669,7 @@
     <Compile Include="InfrastructureModel\Repositories\QueryExportExecutionLogRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\QuoteChargesGroupRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ScreenSectionRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\TabModificationRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\WorkerRoleNameRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />

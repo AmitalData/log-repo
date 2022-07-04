@@ -17,7 +17,7 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
                                     <div class="TextTrimming" text-start>
-                                        <span>{{ item.TabNameTextCodeDefaultText || item.Name }}</span>
+                                        <span>{{ item.Name || item.TabNameTextCodeDefaultText }}</span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -39,7 +39,7 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
                                     <div class="TextTrimming" text-start>
-                                        <span>{{item.Type}}</span>
+                                        <span>{{item.Type||'Predefined'}}</span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -50,14 +50,23 @@
                             <ng-template let-item>
                                 <log-cell-template [IgnoreMods]="true">
 
-                                <IconButton float-start [Name]="'arrow-up'" [IsSmall]="true" (click)="DecOrder(item)" [disabled]="item.IndexOrder == 0"
-                                    style="display: block; margin-left:3px; margin-top:4px;"></IconButton>
+                                    <div class="ag-hover-buttons">
 
-                                <IconButton float-start [Name]="'arrow-down'" [IsSmall]="true" (click)="IncOrder(item)" [disabled]="item.IndexOrder == this.tabs.length-1"
-                                    style="display: block; margin-left:3px; margin-top:4px;"></IconButton>
+                                        <IconButton float-start [Name]="'arrow-up'" [IsSmall]="true" (click)="DecOrder(item)"
+                                            [disabled]="item.IndexOrder == 0" style="display: block; margin-left:3px; margin-top:4px;"></IconButton>
 
-                                <IconButton *ngIf="item.Type == 'Custom'" float-start [Name]="'delete'" [IsSmall]="true" (click)="DeleteTab(item)" [disabled]="true"
-                                    style="display: block; margin-left:3px; margin-top:4px;"></IconButton>
+                                        <IconButton float-start [Name]="'arrow-down'" [IsSmall]="true" (click)="IncOrder(item)"
+                                            [disabled]="item.IndexOrder == this.tabs.length-1" style="display: block; margin-left:3px; margin-top:4px;">
+                                        </IconButton>
+
+
+                                        <IconButton float-start [Name]="'edit'" [IsSmall]="true" (click)="EditTab(item)"
+                                            style="display: block; margin-left:3px; margin-top:4px;"></IconButton>
+
+
+                                        <IconButton *ngIf="item.Type == 'Custom'" float-start [Name]="'delete'" [IsSmall]="true" (click)="DeleteTab(item)"
+                                            style="display: block; margin-left:3px; margin-top:4px;"></IconButton>
+                                    </div>
 
                                 </log-cell-template>
                             </ng-template>

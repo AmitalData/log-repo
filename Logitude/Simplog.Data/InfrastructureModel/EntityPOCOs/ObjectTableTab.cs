@@ -34,6 +34,10 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [ForeignKey("TabNameTextCodeId")]
         public TextCode TabNameTextCode { get; set; }
 
+        [NotMapped]
+        public TabModification TabModification { get; set; }
+
+
         public string HtmlComponentName { get; set; }
         public string HtmlComponentUrl { get; set; }
 

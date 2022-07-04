@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class ChildEntitiesCustomFieldUpdateClass
    {  		
-		public const string HashString = "65395cb82d498543cf5be8aba64f489b";
+		public const string HashString = "19bbafa4204de27ee68304f08bc6b75d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,9 +119,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  50,
 			      				    DefaultText =  "Child Entities Custom Field",
-			      				    Code =  "75e7",
+			      				    Code =  "35d4",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Infrastructure",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -151,10 +152,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		       
 	      
 
-	         Screen ChildEntitiesCustomFieldCustomFieldsChildEntityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChildEntitiesCustomField.HeaderScreen", Name = "CustomFieldsChildEntityHeaderScreen", ObjectTableId = ChildEntitiesCustomFieldObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ChildEntitiesCustomFieldChildEntitiesCustomFieldHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChildEntitiesCustomField.HeaderScreen", Name = "ChildEntitiesCustomFieldHeaderScreen", ObjectTableId = ChildEntitiesCustomFieldObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    ChildEntitiesCustomFieldObjectTable.HeaderScreenId = ChildEntitiesCustomFieldCustomFieldsChildEntityHeaderScreenScreen0.Id;
-		    ChildEntitiesCustomFieldObjectTable.HeaderScreenCode = ChildEntitiesCustomFieldCustomFieldsChildEntityHeaderScreenScreen0.Code;
+		    ChildEntitiesCustomFieldObjectTable.HeaderScreenId = ChildEntitiesCustomFieldChildEntitiesCustomFieldHeaderScreenScreen0.Id;
+		    ChildEntitiesCustomFieldObjectTable.HeaderScreenCode = ChildEntitiesCustomFieldChildEntitiesCustomFieldHeaderScreenScreen0.Code;
 
 	   		  
 

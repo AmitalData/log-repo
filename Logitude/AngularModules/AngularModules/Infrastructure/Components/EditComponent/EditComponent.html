@@ -143,7 +143,7 @@
         font-family: sans-serif;
     }
 </style>
-<LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnSaveHotKeyPressed()" (RightArrowHotKey)="OnArrowRightHotKeyPressed()"  
+<LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnSaveHotKeyPressed()" (RightArrowHotKey)="OnArrowRightHotKeyPressed()"
  (LeftArrowHotKey) ="OnArrowLeftHotKeyPressed()" (ESCHotKey)="OnEscHotKeyPressed()" (CTRL_Shift_S_HotKey)="OnSaveAndCloseHotKey()"></LogitudeHotKeysComponent>
 
 <div class="MediaFillAbsolute LogitudeEditComponent" [ngStyle]="{background: ComponentBackground}">
@@ -388,7 +388,8 @@
                                                             <div class="MediaFillAbsolute" style="top: 5px;">
                                                                 <ul>
                                                                     <li class="DefaultMenuItem" id="{{ item.TextCode | IdGeneratorPipe  }}" *ngFor="let item of TabsItemsSource" (click)="SelectionChanged(item)" [class.SelectedMenuItem]="item === SelectedTab" [class.DisabledTabItem]="item.IsDisabled == true" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
-                                                                        <div class="TextTrimming">{{item.TextCode | TextCodeTranslationPipe}}</div>
+                                                                        <div class="TextTrimming" *ngIf="item.EntityPM.Name">{{item.EntityPM.Name}}</div>
+                                                                        <div class="TextTrimming" *ngIf="!item.EntityPM.Name">{{item.TextCode | TextCodeTranslationPipe}}</div>
                                                                         <img [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [class.FlipImgHoriz]="LayoutDirection == 'rtl'" [hidden]="item != SelectedTab" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
                                                                     </li>
                                                                 </ul>
@@ -412,7 +413,7 @@
                                                                 <div class="MarginAbsolute10">
                                                                     <div #TabControlBody></div>
                                                                 </div>
-                                                            </div>                                                            
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>

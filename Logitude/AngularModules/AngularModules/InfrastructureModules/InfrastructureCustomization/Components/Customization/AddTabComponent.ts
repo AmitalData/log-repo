@@ -21,7 +21,7 @@ export class AddTabComponent extends BaseComponent {
     ValidationErrorsList: any[];
     public TableTab: ObjectTableTabPM;
     objectTable;
-    screens: any[] = [];
+    screens: ScreenPM[] = [];
     IsNew: boolean = true;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -30,34 +30,35 @@ export class AddTabComponent extends BaseComponent {
         this.UIProperties.SetRequired("Code", "ObjectField", true);
     }
 
-    private InitializeTab()
+    private InitializeTab(tab: ObjectTableTabPM = null)
     {
-        this.TableTab = new ObjectTableTabPM();
+        this.TableTab = tab || new ObjectTableTabPM();
         this.TableTab.ObjectTableName = this.objectTable.Name;
-        this.TableTab.Tenant = SessionLocator.Tenant;
+        this.TableTab.Tenant = tab ? tab.Tenant : SessionLocator.Tenant;
         this.TableTab.ObjectTableId = this.objectTable.Id;
-        this.TableTab.Changeset = 'insert';
-        this.TableTab.Type = 'Custom';
+        this.TableTab.Changeset = tab ? 'update' : 'insert';
+        this.TableTab.Type = tab?.Type || 'Custom';
+        this.TableTab.Name = tab?.Name || tab?.TabNameTextCodeDefaultText;
     }
 
-    GetEntityScreens(){
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.screensService.GetEntityScreens(this.objectTable.Id)
-            .subscribe((screens:ScreenPM[]) => {
-                this.screens = screens.filter(a=>a.Type=='LIGHTENING');
-                this.CurrentSession.StopBusyIndicator();
-            });
 
-    }
 
     SetWindowArgs(args: any) {
         this.args = args.ViewModel;
         this.objectTable = window.ObjectTables.filter(x => x.Id === this.args.objectTableId)[0];
-        this.InitializeTab();
-        this.GetEntityScreens();
+        this.InitializeTab(args.tab);
+        this.screens = window.Screens.filter(d=>d.Type == "LIGHTENING" && d.ObjectTableId ==this.args.objectTableId );
+        this.SetSelectedScreen();
+
 
     }
 
+
+    private SetSelectedScreen()
+    {
+        if (this.TableTab.ScreenCode)
+            this.SelectedScreen = this.screens.find(s => s.Code == this.TableTab.ScreenCode);
+    }
 
     get Name() { return this.TableTab ? this.TableTab.Name:""; }
     set Name(newValue: string) {
@@ -83,7 +84,7 @@ export class AddTabComponent extends BaseComponent {
         if (!this.TableTab.Name)
             errors.push(valdationMessageOfName);
 
-        if(!this.TableTab.ScreenCode)
+        if(!this.TableTab.ScreenCode && this.TableTab.Type == 'Custom')
             errors.push(validationMessageOfScreen);
 
         if(errors.length > 0)

@@ -104,6 +104,7 @@ import { EntityStatusTypeListService } from './Services/StandardLists/EntityStat
 import { ImageLibraryListService } from './Services/StandardLists/ImageLibraryListService';
 import { ImageLibraryPMService } from './Services/StandardPMs/ImageLibraryPMService';
 import { TableTabService } from './Services/ExtendedPMs/TableTabService';
+import { ScreenSectionListService } from './Services/StandardLists/ScreenSectionListService';
 
 export class ModuleProviders {
 
@@ -213,6 +214,8 @@ export class ModuleProviders {
             case "ImageLibraryListService": { myResult = new ImageLibraryListService(); break; }
             case "ImageLibraryPMService": { myResult = new ImageLibraryPMService(); break; }
             case "TableTabService": { myResult = new TableTabService(); break; }
+            case "ScreenSectionListService": { myResult = new ScreenSectionListService(); break; }
+
         }
 
         return myResult;

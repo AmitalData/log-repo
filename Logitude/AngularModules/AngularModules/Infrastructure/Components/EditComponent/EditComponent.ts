@@ -25,6 +25,8 @@ import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
+import { TableTabService } from 'Infrastructure/Services/ExtendedPMs/TableTabService';
+import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -87,6 +89,7 @@ export class EditComponent implements OnDestroy {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
+    tabsService = new TableTabService();
 
 
 
@@ -763,6 +766,7 @@ export class EditComponent implements OnDestroy {
 
         else {
             this.BuildTabsItemsSource();
+
         }
     }
     private BuildSingleEditTab() {
@@ -785,8 +789,8 @@ export class EditComponent implements OnDestroy {
         allTabs = this.FilterTabs(allTabs);
         allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         for (var i = 0; i < allTabs.length; i++) {
-            var tab = allTabs[i];
 
+            var tab: ObjectTableTabPM = allTabs[i];
             if (tab.ControlPath != null) {
                 if (tab.ControlPath.indexOf("ExternalDocumentsControl") != -1) {
                     if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DOCSIN")) {
@@ -811,7 +815,7 @@ export class EditComponent implements OnDestroy {
             else {
 
 
-                if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+                if (tab.Type == 'Custom' || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
 
                     if (this.ObjectTableName == "GLAccount") {
 

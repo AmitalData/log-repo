@@ -92,4 +92,4 @@ export class ScreenSectionPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

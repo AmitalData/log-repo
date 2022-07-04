@@ -115,6 +115,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs { get; }
         IDbSet<ChildEntitiesCustomField> ChildEntitiesCustomFields { get; }
         IDbSet<ScreenSection> ScreenSections { get; }
+        IDbSet<TabModification> TabsModifications { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();
