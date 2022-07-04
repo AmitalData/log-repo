@@ -2615,9 +2615,23 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         awbDp.ShipmentField40 = value.ToString();
                     }
+                    else if (field.FieldName != null && field.FieldName.Contains("Field"))
+                    {
+                        SetPropertyValue(awbDp, "Shipment" + field.FieldName, value.ToString());
+                    }
                 }
             }
         }
+
+        private void SetPropertyValue(object obj, string property, object value)
+        {
+            var prop = obj.GetType().GetProperty(property);
+            if (prop != null)
+            {
+                prop.SetValue(obj, value, null);
+            }
+        }
+
         private void GetAWBPrintingFields()
         {
             if (isRegulatedAgentActivated)

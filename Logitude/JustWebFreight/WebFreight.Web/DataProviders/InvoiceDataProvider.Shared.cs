@@ -277,6 +277,36 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
+        public string ShipmentField41 { get; set; }
+        public string ShipmentField42 { get; set; }
+        public string ShipmentField43 { get; set; }
+        public string ShipmentField44 { get; set; }
+        public string ShipmentField45 { get; set; }
+        public string ShipmentField46 { get; set; }
+        public string ShipmentField47 { get; set; }
+        public string ShipmentField48 { get; set; }
+        public string ShipmentField49 { get; set; }
+        public string ShipmentField50 { get; set; }
+        public string ShipmentField51 { get; set; }
+        public string ShipmentField52 { get; set; }
+        public string ShipmentField53 { get; set; }
+        public string ShipmentField54 { get; set; }
+        public string ShipmentField55 { get; set; }
+        public string ShipmentField56 { get; set; }
+        public string ShipmentField57 { get; set; }
+        public string ShipmentField58 { get; set; }
+        public string ShipmentField59 { get; set; }
+        public string ShipmentField60 { get; set; }
+        public string ShipmentField61 { get; set; }
+        public string ShipmentField62 { get; set; }
+        public string ShipmentField63 { get; set; }
+        public string ShipmentField64 { get; set; }
+        public string ShipmentField65 { get; set; }
+        public string ShipmentField66 { get; set; }
+        public string ShipmentField67 { get; set; }
+        public string ShipmentField68 { get; set; }
+        public string ShipmentField69 { get; set; }
+        public string ShipmentField70 { get; set; }
 
         public string ARInvoiceField1 { get; set; }
         public string ARInvoiceField2 { get; set; }
@@ -496,6 +526,36 @@ namespace WebFreight.Web.DataProviders
             public string ShipmentField38 { get; set; }
             public string ShipmentField39 { get; set; }
             public string ShipmentField40 { get; set; }
+            public string ShipmentField41 { get; set; }
+            public string ShipmentField42 { get; set; }
+            public string ShipmentField43 { get; set; }
+            public string ShipmentField44 { get; set; }
+            public string ShipmentField45 { get; set; }
+            public string ShipmentField46 { get; set; }
+            public string ShipmentField47 { get; set; }
+            public string ShipmentField48 { get; set; }
+            public string ShipmentField49 { get; set; }
+            public string ShipmentField50 { get; set; }
+            public string ShipmentField51 { get; set; }
+            public string ShipmentField52 { get; set; }
+            public string ShipmentField53 { get; set; }
+            public string ShipmentField54 { get; set; }
+            public string ShipmentField55 { get; set; }
+            public string ShipmentField56 { get; set; }
+            public string ShipmentField57 { get; set; }
+            public string ShipmentField58 { get; set; }
+            public string ShipmentField59 { get; set; }
+            public string ShipmentField60 { get; set; }
+            public string ShipmentField61 { get; set; }
+            public string ShipmentField62 { get; set; }
+            public string ShipmentField63 { get; set; }
+            public string ShipmentField64 { get; set; }
+            public string ShipmentField65 { get; set; }
+            public string ShipmentField66 { get; set; }
+            public string ShipmentField67 { get; set; }
+            public string ShipmentField68 { get; set; }
+            public string ShipmentField69 { get; set; }
+            public string ShipmentField70 { get; set; }
             public string BillToVatNumber { get; set; }
             public string InvoiceType { get; set; }
             public string InvoiceNumber { get; set; }
@@ -758,6 +818,36 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
+        public string ShipmentField41 { get; set; }
+        public string ShipmentField42 { get; set; }
+        public string ShipmentField43 { get; set; }
+        public string ShipmentField44 { get; set; }
+        public string ShipmentField45 { get; set; }
+        public string ShipmentField46 { get; set; }
+        public string ShipmentField47 { get; set; }
+        public string ShipmentField48 { get; set; }
+        public string ShipmentField49 { get; set; }
+        public string ShipmentField50 { get; set; }
+        public string ShipmentField51 { get; set; }
+        public string ShipmentField52 { get; set; }
+        public string ShipmentField53 { get; set; }
+        public string ShipmentField54 { get; set; }
+        public string ShipmentField55 { get; set; }
+        public string ShipmentField56 { get; set; }
+        public string ShipmentField57 { get; set; }
+        public string ShipmentField58 { get; set; }
+        public string ShipmentField59 { get; set; }
+        public string ShipmentField60 { get; set; }
+        public string ShipmentField61 { get; set; }
+        public string ShipmentField62 { get; set; }
+        public string ShipmentField63 { get; set; }
+        public string ShipmentField64 { get; set; }
+        public string ShipmentField65 { get; set; }
+        public string ShipmentField66 { get; set; }
+        public string ShipmentField67 { get; set; }
+        public string ShipmentField68 { get; set; }
+        public string ShipmentField69 { get; set; }
+        public string ShipmentField70 { get; set; }
         public string ProjectNumber { get; set; }
     }
 
