@@ -252,7 +252,8 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
         switch (this.ObjectTableName) {
             case "ARInvoice":
-                this.SendInterfaceClassLists.push(new Operator("ARInvoice API", "ARInvoiceAPI"));
+                this.SendInterfaceClassLists.push(new Operator("Advanced Generic Interface", "AdvancedARInvoiceAPI"));
+                this.SendInterfaceClassLists.push(new Operator("Generic Interface", "ARInvoiceAPI"));
                 break;
             default:
                 this.SendInterfaceClassLists.push(new Operator("Shipment API", "ShipmentAPI"));

@@ -38,7 +38,7 @@
 
                         <td style="width:200px">
                             <div style="text-align:left;width:200px;">
-                                <ComboBox [IsDisabled]="true" style="width:200px;" (SelectedItemChanged)="SendInterfaceSelected = $event" [ItemsSource]="SendInterfaceClassLists" [SelectedItem]="SendInterfaceSelected" [Binding]="'Name'"> </ComboBox>
+                                <ComboBox [IsDisabled]="SendInterfaceSelected && SendInterfaceSelected.Code == 'ShipmentAPI'" style="width:200px;" (SelectedItemChanged)="SendInterfaceSelected = $event" [ItemsSource]="SendInterfaceClassLists" [SelectedItem]="SendInterfaceSelected" [Binding]="'Name'"> </ComboBox>
                             </div>
                         </td>
                         <td>
@@ -62,7 +62,7 @@
                                                                 <ComboBox [IsDisabled]="!IsCustomerCare" style="width:200px;" (SelectedItemChanged)="SendFormatSelected = $event" [ItemsSource]="SendFormatLists" [SelectedItem]="SendFormatSelected" [Binding]="'Name'"> </ComboBox>
                                                             </div>
                                                         </td>
-                                                        <td style="width:70px">
+                                                        <td style="width:70px" *ngIf="SendInterfaceSelected && SendInterfaceSelected.Code == 'ShipmentAPI'">
                                                             <a class="Link" [class.HyperlinkDisabled]="!IsCustomerCare" style="font-size:13px;" (click)="ShowAdvancedDetails()"> Advanced Details</a>
                                                         </td>
                                                         <td colspan="3"> </td>
