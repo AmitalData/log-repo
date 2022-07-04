@@ -86,7 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class DeclarationReferantDataUpdateClass
    {  		
 
-		public const string HashString = "dfea1fda4dd1b3c017653c1e5eb1b1fd";
+		public const string HashString = "dfe47262432bb6bbfdb582148301779a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5481,6 +5481,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ImporterApproval",
 					  						ListPropertyPath =  "ImporterApproval",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5499,10 +5500,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterApproval",
 					  						DefaultText =  "Importer Approval",
-					  						FullLocalDefaultText =  "יבוםן םישר הצהרה",
+					  						FullLocalDefaultText =  "םישור יבוםן",
 					  						ListFieldLable =  "ImporterApprovalListLable",
 					  						ListLableDefaultText =  "Importer Approval",
-					  						ListLocalDefaultText =  "יבוםן םישר הצהרה",
+					  						ListLocalDefaultText =  "םישור יבוםן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
