@@ -365,4 +365,9 @@
     Columns="CreateDate,CommunicationStatusTypeCode" />
   <Index
     Columns="CreateDate" />
+
+    <Index
+		Columns="CorrelationID,CreateDate" />
+
+	
 </Table>
