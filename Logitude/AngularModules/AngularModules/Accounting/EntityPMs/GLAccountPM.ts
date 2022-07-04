@@ -260,7 +260,10 @@ export class GLAccountPM {
     private parentAccountNumber: string;
     public get ParentAccountNumber() { return this.parentAccountNumber; }
     public set ParentAccountNumber(newValue: string) { if (this.parentAccountNumber != newValue) { this.parentAccountNumber = newValue; this.MarkAsDirty("ParentAccountNumber"); } }
-       
+    
+    private parentCurrencyGLAccountCardId: string;
+    public get ParentCurrencyGLAccountCardId() { return this.parentCurrencyGLAccountCardId; }
+    public set ParentCurrencyGLAccountCardId(newValue: string) { if (this.parentCurrencyGLAccountCardId != newValue) { this.parentCurrencyGLAccountCardId = newValue; this.MarkAsDirty("parentCurrencyGLAccountCardId"); } }
 	 
     private customerGLAccountInternalNumber: string;
     public get CustomerGLAccountInternalNumber() { return this.customerGLAccountInternalNumber; }
