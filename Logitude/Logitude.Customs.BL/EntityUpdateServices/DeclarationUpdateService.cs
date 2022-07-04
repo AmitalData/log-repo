@@ -2169,6 +2169,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         if (consignmentPM != null)
                         {
+                            if(toDeclaration.Direction == "E") 
+                            { 
+                                consignmentPM.ConsignmentType = Consignment.ConsignmentType; 
+                            }
+                           
+
                             if (string.IsNullOrEmpty(consignmentPM.CargoTypeCode))
                             {
                                 consignmentPM.CargoTypeCode = Consignment.CargoTypeCode;
