@@ -51,7 +51,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
 
         public PrintingResult PrintDocuments()
         {
-            var itemPrintingResults = new List<ItemPrintingResult>();
+            List<ItemPrintingResult> itemPrintingResults = new List<ItemPrintingResult>();
             _batchPrinterArgs.BatchTaskExecution.ProgressPercentage = 0;
             foreach (var item in _batchPrinterArgs.EntityIds)
             {
@@ -61,8 +61,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
             PdfDocument pdfDoc = new PdfDocument();
             MargePdfs(pdfDoc, itemPrintingResults);
             MemoryStream memoryStream = GetMemoryStream(pdfDoc);
-            var documentId = UploadPDFToStorage(memoryStream, _batchPrinterArgs.Tenant);
-            var printingResults = CreatePrintResult(documentId, itemPrintingResults);
+            string documentId = UploadPDFToStorage(memoryStream, _batchPrinterArgs.Tenant);
+            PrintingResult printingResults = CreatePrintResult(documentId, itemPrintingResults);
 
             return printingResults;
         }

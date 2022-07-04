@@ -18,11 +18,10 @@
         </td>
     </tr>
 
-    <tr style="height:10px;">
+    <tr style="height:5px;">
         <td></td>
     </tr>
 
-    <!--Set Value-->
     <tr>
         <td>
             <table>
@@ -72,32 +71,25 @@
         <td></td>
     </tr>
 
-    <tr style="height: 10px;" *ngIf="SelectedItemsCountText">
+    <tr style="height: 22px;" *ngIf="SelectedItemsCountText">
         <td>
             <table>
                 <tr>
-                    <td style="width:200px">
-                        <div style="width: 228px;text-align:center;  height:22px;" class="CountBox">
+                    <td style="width:100px">
+                        <div style="text-align:center;" class="CountBox">
                             <div style="margin-right:5px;margin-left:-2px;float:left;width:16px;">
-                                <CheckBox [IsChecked]="IsAllRecordSelected" (Checked)="IsAllRecordSelectedChange($event,true)">
-                                </CheckBox>
+                                <CheckBox [IsChecked]="IsAllRecordSelected" (Checked)="IsAllRecordSelectedChange($event,true)"></CheckBox>
                             </div>
-                            <div style="width:175px;margin-top:1px;">
+                            <div style="width:70px;margin-top:1px;">
                                 {{SelectedItemsCountText}}
                             </div>
                         </div>
                     </td>
-                    <td style="height: 10px;">
+                    <td>
                         <div></div>
                     </td>
                 </tr>
             </table>
-        </td>
-    </tr>
-
-    <tr style="height: 10px;">
-        <td style="height: 10px;">
-            <div></div>
         </td>
     </tr>
 
@@ -145,5 +137,3 @@
         </td>
     </tr>
 </table>
-
-<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>

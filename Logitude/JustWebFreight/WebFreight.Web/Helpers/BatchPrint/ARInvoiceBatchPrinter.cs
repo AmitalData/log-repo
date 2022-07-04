@@ -28,7 +28,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             if (aRInvoicePM.IsConsolidationInvoice && documentType.Code != DocumentTypeCodes.ConsolidationInvoice)
                 throw new Exception($"This invoice does not support the selected document type. Please print it with the 'Consolidation Invoice' document type");
 
-            if ((aRInvoicePM.ARInvoiceTypeCode == ARnvoiceTypeCode.CreditNote || aRInvoicePM.ARInvoiceTypeCode == ARnvoiceTypeCode.Invoice) && documentType.Code != DocumentTypeCodes.ShipmentInvoice )
+            if ((aRInvoicePM.ARInvoiceTypeCode == ARnvoiceTypeCode.CreditNote || aRInvoicePM.ARInvoiceTypeCode == ARnvoiceTypeCode.Invoice) && !aRInvoicePM.IsConsolidationInvoice && documentType.Code != DocumentTypeCodes.ShipmentInvoice )
                 throw new Exception($"This invoice does not support the selected document type. Please print it with the 'Shipment Invoice' document type");
             
             if ((aRInvoicePM.ARInvoiceTypeCode == ARnvoiceTypeCode.CustomsInvoice || aRInvoicePM.ARInvoiceTypeCode == ARnvoiceTypeCode.CustomsCreditNote) && documentType.Code != DocumentTypeCodes.CustomsInvoice)

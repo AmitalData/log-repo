@@ -29,13 +29,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Services
                 var batchTaskId = batchPrintService.Print(batchPrintManagerArgs);
 
                 return Request.CreateResponse(HttpStatusCode.OK, batchTaskId);
-
             }
+
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
     }
 }

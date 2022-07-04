@@ -1,5 +1,6 @@
 ﻿using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Stimulsoft.Report;
@@ -27,28 +28,18 @@ namespace WebFreight.Web.Helpers.BatchPrint
             batchPrintManagerArgs = DeserilaizeParameters();
             var batchPrinterArgs = new BatchPrinterArgs(batchPrintManagerArgs, batchTaskExecution);
             var batchPrinter = BatchPrinterFactory.GetBatchPrinter(batchPrinterArgs);
-            var result = batchPrinter.PrintDocuments();
+            PrintingResult result = batchPrinter.PrintDocuments();
             batchTaskExecution.PrametersXml = ParsParameters(result);
 
         }
 
-
-
-
-        private static string ParsParameters(object data)
+        private static string ParsParameters(PrintingResult data)
         {
-            var stringwriter = new System.IO.StringWriter();
-            var serializer = new XmlSerializer(typeof(BatchPrintManagerArgs));
-            serializer.Serialize(stringwriter, data);
-            string xmlParameters = stringwriter.ToString();
-            return xmlParameters;
+            return JsonConvert.SerializeObject(data);
         }
         private BatchPrintManagerArgs DeserilaizeParameters()
         {
-            string xmlParameters = BatchTaskExecution.PrametersXml;
-            System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
-            XmlSerializer serializer = new XmlSerializer(typeof(BatchPrintManagerArgs));
-            return serializer.Deserialize(stringReader) as BatchPrintManagerArgs;
+            return JsonConvert.DeserializeObject<BatchPrintManagerArgs>(BatchTaskExecution.PrametersXml);
         }
     }
 }

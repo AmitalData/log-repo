@@ -2,6 +2,7 @@
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools.QueueService;
+using Newtonsoft.Json;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -34,11 +35,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
 
         private static string ParsParameters(BatchPrintManagerArgs batchPrintManagerArgs)
         {
-            var stringwriter = new System.IO.StringWriter();
-            var serializer = new XmlSerializer(typeof(BatchPrintManagerArgs));
-            serializer.Serialize(stringwriter, batchPrintManagerArgs);
-            string xmlParameters = stringwriter.ToString();
-            return xmlParameters;
+            return JsonConvert.SerializeObject(batchPrintManagerArgs);
         }
 
         private static BatchTaskExecutionPM CreateBatchTask(BatchPrintManagerArgs batchPrintManagerArgs, string xmlParameters)

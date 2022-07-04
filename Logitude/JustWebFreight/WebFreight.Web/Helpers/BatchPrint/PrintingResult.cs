@@ -23,7 +23,6 @@ namespace WebFreight.Web.Helpers.BatchPrint
         public MemoryStream DocumentStream { get; internal set; }
         public string Error { get; set; }
         public string EntityId { get; set; }
-
     }
     public class PrintingRow
     {

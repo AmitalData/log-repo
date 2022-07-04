@@ -1,3 +1,4 @@
+import { XmlParser } from '@angular/compiler';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DocumentTypeCopyList } from '../../../Common/EntityLists/DocumentTypeCopyList';
 import { DocumentTypeTemplateList } from '../../../Common/EntityLists/DocumentTypeTemplateList';
@@ -6,9 +7,11 @@ import { DocumentTypeCopyPMExtendedService } from '../../../Common/Services/Exte
 import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
 import { CodeNameClass } from '../../DataContracts/CodeNameClass';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { BatchTaskExecutionList } from '../../EntityLists/BatchTaskExecutionList';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
-import { BatchPrintService, BatchPrintManagerArgs, PrintEntityKeys} from '../../Services/BatchPrintService';
+import { BatchPrintService, BatchPrintManagerArgs, PrintEntityKeys, PrintingResult, PrintingRow} from '../../Services/BatchPrintService';
 import { EntityListService } from '../../Services/EntityListService';
+import { BatchTaskExecutionListService } from '../../Services/StandardLists/BatchTaskExecutionListService';
 import { AppTool } from '../../Tools';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { SessionLocator } from '../../Utilities/SessionLocator';
@@ -126,7 +129,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
             HtmlListComponentUrl: './Infrastructure/Components/MultiPrint/MultiPrintCheckBoxComponent',
         };
 
-        var updateSuccess = {
+        var printSuccess = {
             FieldName: 'PrintSuccess',
             DataTypeCode: 'Boolean',
             Display: 'Print Status',
@@ -136,15 +139,24 @@ export class PrintComponent extends BaseComponent implements OnInit {
             HtmlListComponentUrl: './Infrastructure/Components/MultiPrint/MultiPrintCheckTemplate',
         };
         this.columns.splice(0, 0, checkBoxColumn);
-        this.columns.splice(1, 0, updateSuccess);
+        this.columns.splice(1, 0, printSuccess);
     }
 
-    OnUpdateFinish(entities) {
+    OnPrintFinish(entities: PrintingRow[]) {
+        var results: PrintingRow[] = [];
+
         this.AllRecords.forEach(function (record) {
             var entity = entities.find(item => item.EntityId == record.Id);
-            record.UpdateSuccess = entity ? !entity.HasException : undefined;
+            record.PrintSuccess = entity ? !entity.Error : undefined;
+
+            var row: PrintingRow = new PrintingRow();
+            row.EntityId = record.Id;
+            row.EntityNumber = record.InvoiceNumber;
+            row.Error = entity ? entity.Error : "";
+            results.push(row);
         });
 
+        this.ParentComponent.PrintingRows = results;
         this.RefreshList();
     }
 
@@ -306,7 +318,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
         this.SelectedRecordsCount = 0;
     }
     private ChangeSelectedItemsCountText(selectedCount) {
-        this.SelectedItemsCountText = selectedCount + " of " + this.AllRecordsCount + " " + this.ObjectTable.DBTableName + " selected";
+        this.SelectedItemsCountText = selectedCount + " of " + this.AllRecordsCount;
     }
 
     NextClicked() {
@@ -323,8 +335,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
             return;
         }
 
-        this.CurrentSession.StartBusyIndicatorLoading();
-
+        this.CurrentSession.StartBusyIndicator("Printing...");
         var args: BatchPrintManagerArgs = new BatchPrintManagerArgs();
         args.DocumentTypeId = this.DocumentTypeId;
         args.TemplateId = this.SelectedDocumentTypeTemplate.Code;
@@ -342,7 +353,13 @@ export class PrintComponent extends BaseComponent implements OnInit {
         var service: BatchPrintService = new BatchPrintService();
         service.Print(args).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                //this.ParentComponent.UpdateButtonClicked(myResponse.Result, this.multiEntityUpdateLogPMService);
+                var batchTaskExecutionId: string = myResponse.Result;               
+
+                this.StopTimer();
+
+                this.timer = setInterval(() => {
+                    this.CheckBatchTaskExecution(batchTaskExecutionId);
+                }, this.timerInterval);
             }
 
             this.CurrentSession.StopBusyIndicator();
@@ -374,6 +391,49 @@ export class PrintComponent extends BaseComponent implements OnInit {
         return true;
     }
 
-    public BusyIndicatorText: string = null;
-    public ShowBusyIndicator: boolean = false;
+    timer: any;
+    timerInterval: number = 1000;
+    StopTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    }
+
+    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: BatchTaskExecutionList = myResponse.Result;
+
+                if (list.StatusCode == "D") {
+                    this.StopTimer();
+                    this.IsMultiEntityPrintedSuccessfully = true;
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var printingResult: PrintingResult = JSON.parse(list.PrametersXml);
+                    this.OnPrintFinish(printingResult.NotValidRows);
+                }
+
+                else if (list.StatusCode == "F") {
+                    this.StopTimer();
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var errors: string[] = [];
+                    errors.push(list.ErrorLog);
+                    this.ValidationErrorsList = errors;
+                }
+
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StartBusyIndicator("Printing... " + list.ProgressPercentage + "/" + this.SelectedRecordsCount);
+                }
+            }
+
+            else {
+                this.StopTimer();
+                this.CurrentSession.StopBusyIndicator();
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+        });
+    }
 }

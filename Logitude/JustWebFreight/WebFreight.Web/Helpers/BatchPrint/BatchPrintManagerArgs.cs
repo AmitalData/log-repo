@@ -39,6 +39,5 @@ namespace WebFreight.Web.Helpers.BatchPrint
             this.Tenant = batchPrintManagerArgs.Tenant;
             this.BatchTaskExecution = BatchTaskExecution;
         }
-
     }
 }

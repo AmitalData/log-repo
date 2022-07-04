@@ -23,8 +23,7 @@ export class BatchPrintService {
 
             return this._httpClient.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
                 var result = response;
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
+                var pmresponse: ServiceResponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
             }), catchError(ServiceHelper.HandleServiceError));
@@ -114,4 +113,15 @@ export class BatchPrintManagerArgs {
 export class PrintEntityKeys {
     public EntityId: string;
     public ChildEntityId: string;
+}
+
+export class PrintingResult {
+    public DocumentId: string;
+    public NotValidRows: PrintingRow[];
+}
+
+export class PrintingRow {
+    public Error: string;
+    public EntityId: string;
+    public EntityNumber: string;
 }
