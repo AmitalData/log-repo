@@ -125,7 +125,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        CargoTypeCodeName = cargoIdentifireType.LocalName,
 
-                                                       DeclarationStatusTypeCode = declaration.DeclarationStatusTypeCode,
+                                                       DeclarationStatusTypeCode = status.Code,
 
                                                        Declaration_ID = en.DeclarationId,
 
