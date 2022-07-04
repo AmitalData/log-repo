@@ -124,7 +124,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.CheckIfDocumentPointerExistsForConstraint(child1EntityId, child1EntityCode, tenant);
         }
 
-        public IQueryable<CustomsDocumentPointer> GetCustomsDocumentPointerList(GetTicketsParams parameters, int tenant)
+        public List<CustomsDocumentPointer> GetCustomsDocumentPointerList(GetTicketsParams parameters, int tenant)
         {
             return repository.GetCustomsDocumentPointerList(parameters, tenant);         
             

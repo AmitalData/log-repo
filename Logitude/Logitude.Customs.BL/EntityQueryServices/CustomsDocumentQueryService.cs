@@ -184,10 +184,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ICustomContext context = MainContext as CustomContext;
             var customsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(context);
             var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(context);
-            var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant)
-                     join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
+            //var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant)
+            //         join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
+            //         select cdt
+            //            );
+            var cdp = customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant);
+            var customsDocumentsTicketIds = cdp.Select(r=>r.CustomsDocumentsTicketId).ToList();
+            var q = (from cdt in customsDocumentsTicketRepository.GetAll(tenant).Where(r=> customsDocumentsTicketIds.Contains(r.Id))
                      select cdt
                         );
+
             var q2 = (from cdt in q where cdt.RequestedCustomsDocId == null
                       join cd in repository.GetAll(tenant) on cdt.DocumentsFilingId equals cd.DocumentsFilingId
                       select cd
@@ -204,9 +210,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ICustomContext context = MainContext as CustomContext;
             var customsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(context);
             var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(context);
-            var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant)
-                     where  cdp.Child1EntityCode!= "DeclarationAmendment"
-                     join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
+            //var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant)
+            //         where  cdp.Child1EntityCode!= "DeclarationAmendment"
+            //         join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
+            //         select cdt
+            //            );
+
+            var cdp =customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant).Where(r=>r.Child1EntityCode != "DeclarationAmendment");
+            var customsDocumentsTicketIds = cdp.Select(r => r.CustomsDocumentsTicketId);
+            var q = (from cdt in customsDocumentsTicketRepository.GetAll(tenant).Where(r => customsDocumentsTicketIds.Contains(r.Id))
                      select cdt
                         );
             var q2 = (from cdt in q
