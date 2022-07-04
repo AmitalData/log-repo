@@ -93,6 +93,7 @@
             this.rabbitMQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recivedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uW2LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -105,7 +106,7 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.uW2LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testPooledPublishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -615,7 +616,8 @@
             this.rabbitMQToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sendToolStripMenuItem,
             this.recivedToolStripMenuItem,
-            this.uW2LToolStripMenuItem});
+            this.uW2LToolStripMenuItem,
+            this.testPooledPublishToolStripMenuItem});
             this.rabbitMQToolStripMenuItem.Name = "rabbitMQToolStripMenuItem";
             this.rabbitMQToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.rabbitMQToolStripMenuItem.Text = "RabbitMQ";
@@ -633,6 +635,13 @@
             this.recivedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.recivedToolStripMenuItem.Text = "Recived";
             this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
+            // 
+            // uW2LToolStripMenuItem
+            // 
+            this.uW2LToolStripMenuItem.Name = "uW2LToolStripMenuItem";
+            this.uW2LToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.uW2LToolStripMenuItem.Text = "UW2L";
+            this.uW2LToolStripMenuItem.Click += new System.EventHandler(this.uW2LToolStripMenuItem_Click);
             // 
             // textBoxLogger
             // 
@@ -766,12 +775,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
             // 
-            // uW2LToolStripMenuItem
+            // testPooledPublishToolStripMenuItem
             // 
-            this.uW2LToolStripMenuItem.Name = "uW2LToolStripMenuItem";
-            this.uW2LToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.uW2LToolStripMenuItem.Text = "UW2L";
-            this.uW2LToolStripMenuItem.Click += new System.EventHandler(this.uW2LToolStripMenuItem_Click);
+            this.testPooledPublishToolStripMenuItem.Name = "testPooledPublishToolStripMenuItem";
+            this.testPooledPublishToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testPooledPublishToolStripMenuItem.Text = "TestPooledPublish";
+            this.testPooledPublishToolStripMenuItem.Click += new System.EventHandler(this.testPooledPublishToolStripMenuItem_Click);
             // 
             // TesterForm
             // 
@@ -879,5 +888,6 @@
 
         private System.Windows.Forms.ToolStripMenuItem singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uW2LToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem testPooledPublishToolStripMenuItem;
     }
 }
