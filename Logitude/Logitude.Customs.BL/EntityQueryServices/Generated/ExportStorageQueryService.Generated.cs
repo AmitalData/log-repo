@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new ExportStorageDataMapping();
         }
 		 
-		public  ExportStoragePM GetSingle(string id, string declarationstatustypecode,bool getComposition, bool getFromCache)
+		public  ExportStoragePM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new ExportStorageKeys(){ Id = id, DeclarationStatusTypeCode = declarationstatustypecode };
+             EntityKeys = new ExportStorageKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(ExportStorage entityPOCO)
         {
-            ExportStorageKeys entityKeys = new ExportStorageKeys() { Id = entityPOCO.Id, DeclarationStatusTypeCode = entityPOCO.DeclarationStatusTypeCode,  };
+            ExportStorageKeys entityKeys = new ExportStorageKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      

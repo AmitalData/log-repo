@@ -16,15 +16,11 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
-	  public string DeclarationStatusTypeCode  { get; set; }
-	  
-				 
-	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-                 return Id+'_'+DeclarationStatusTypeCode ;
+                 return Id ;
                  
       }
 

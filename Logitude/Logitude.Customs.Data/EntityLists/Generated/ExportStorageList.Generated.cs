@@ -62,8 +62,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExportDealIdentification  { get; set; }
        [DataMember]
        public string CargoTypeCodeName  { get; set; }
-
-       [Key]
        [DataMember]
        public string DeclarationStatusTypeCode  { get; set; }
        [DataMember]

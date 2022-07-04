@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public ExportStorageList GetSingle(string id, string declarationstatustypecode)
+        public ExportStorageList GetSingle(string id)
         {
             IQueryable<ExportStorage> ExportStorageQuery = (from a in context.ExportStorages
-                                                       where a.Id == id && a.DeclarationStatusTypeCode == declarationstatustypecode
+                                                       where a.Id == id
                                                        select a);
 
              

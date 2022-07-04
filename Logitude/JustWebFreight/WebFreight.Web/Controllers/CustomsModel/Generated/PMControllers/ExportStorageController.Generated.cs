@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id, string declarationstatustypecode)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -64,7 +64,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 ExportStorageQueryService exportStorageQuery = new ExportStorageQueryService(MyContext);
 				exportStorageQuery.InitializeSettings();
-                ExportStoragePM exportStoragePM = exportStorageQuery.GetSingle(id, declarationstatustypecode,true,false);
+                ExportStoragePM exportStoragePM = exportStorageQuery.GetSingle(id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

@@ -573,9 +573,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string declarationStatusTypeCode ;
-	  
-       [Key]
-	  
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "b7b247c9cbef28db54b73f018d139056";
+		public const string HashString = "288e9e794158d0c011bf94c7a8dff94e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1551,11 +1551,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationStatusTypeCode",
-					  						DefaultText =  "Declaration Status Type ",
-					  						FullLocalDefaultText =  "סטטוס הצהרה",
+					  						DefaultText =  "Declaration Status Type Code",
+					  						FullLocalDefaultText =  "קוד סטטוס הצהרה",
 					  						ListFieldLable =  "DeclarationStatusTypeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Status Type Code",
-					  						ListLocalDefaultText =  "סטטוס הצהרה",
+					  						ListLocalDefaultText =  "קוד סטטוס הצהרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
