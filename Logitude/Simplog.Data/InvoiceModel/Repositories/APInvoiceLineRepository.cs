@@ -158,5 +158,13 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public IQueryable<APInvoiceLine> GetExpenseInvoiceLinesByInvoiceId(string invoiceid, int tenant)
+        {
+            return (from a in context.APInvoiceLines.Include("ChargesType")
+                    where a.APInvoiceId == invoiceid && a.Tenant == tenant
+                    && a.ChargesType != null && a.ChargesType.IsExpense
+                    select a);
+        }
     }
 }

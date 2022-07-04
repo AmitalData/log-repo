@@ -3275,7 +3275,8 @@ namespace WebFreight.Web.ReportsWebServices
             APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(tenant);
             AddressQuery addressQuery = new AddressQuery(tenant);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(tenant);
-            
+            APInvoiceLineRepository apInvoiceLineRepository = new APInvoiceLineRepository(tenant);
+
             IQueryable<APInvoiceList> iQueryable = aPInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
@@ -3425,6 +3426,7 @@ namespace WebFreight.Web.ReportsWebServices
                 InvoiceDataProvider.InvoicesReport invoicesRecored = new InvoiceDataProvider.InvoicesReport();
                 List<APInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.APInvoiceId == apInvoice.Id).ToList();
                 List<VATClass> myVATS = new List<VATClass>();
+                IQueryable<APInvoiceLine> expenseInvoiceLines = apInvoiceLineRepository.GetExpenseInvoiceLinesByInvoiceId(apInvoice.Id, tenant);
 
                 Shipment shipment = shipments.Where(d => d.Id == apInvoice.MainEntityId).FirstOrDefault();
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, invoicesRecored);
@@ -3541,6 +3543,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.BillToCode = apInvoice.VendorCode;
                 invoicesRecored.AmountDueInInvoiceCurrency = apInvoice.AmountDue;
                 invoicesRecored.AmountDueInLocalCurrency = apInvoice.AmountDueInLocalCurrency;
+                invoicesRecored.ExpenseChargesInLocalCurrency = expenseInvoiceLines.Sum(s => s.LocalCurrencyAmount);
 
                 Card vendorCard = CardRepository.GetSingleCard(apInvoice.VendorId, tenant, false);
                 if(vendorCard != null)
@@ -3560,6 +3563,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.VATlocal = myTotalVats.Sum(d => d.LocalVATAmount);
                     invoicesRecored.Currency = apInvoice.LocalCurrencyCode;
                     invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
+                    invoicesRecored.ExpenseCharges = expenseInvoiceLines.Sum(s => s.LocalCurrencyAmount);
                 }
                 else
                 {
@@ -3570,6 +3574,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.vatInLocal = myTotalVats.Sum(d => d.LocalVATAmount);
                     invoicesRecored.subInLocal = apInvoice.SubTotalInLocalCurrency;
                     invoicesRecored.LocalCurrency = apInvoice.LocalCurrencyCode;
+                    invoicesRecored.ExpenseCharges = expenseInvoiceLines.Sum(s => s.InvoiceCurrencyAmount);
                 }
 
                 dataProvider.InvoicesReportList.Add(invoicesRecored);
