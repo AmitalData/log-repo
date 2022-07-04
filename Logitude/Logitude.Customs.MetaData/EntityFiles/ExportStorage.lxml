@@ -1893,7 +1893,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="2"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
