@@ -101,6 +101,8 @@ using WebFreight.Web.Helpers.Analyzers;
 using Syncfusion.XlsIO;
 using System.Data;
 using System.ComponentModel;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 
 namespace Logitude.Update
 {
@@ -122,6 +124,10 @@ namespace Logitude.Update
                 MessageBox.Show("Exception eee =" + eee.ToString());
                 throw;
             }
+
+            Label.CheckForIllegalCrossThreadCalls = false;
+            Panel.CheckForIllegalCrossThreadCalls = false;
+            Button.CheckForIllegalCrossThreadCalls = false;
         }
 
         public static void LoadLogitudeSettings()
@@ -5059,7 +5065,7 @@ User/Pass",
 
                 var tenantRepo = new TenantRepository(0);
                 tenantsAccountingActivated = tenantRepo.All().Where(r => r.AccountingActivated).Select(r => r.Id).ToList();
-                
+
                 foreach (var tenant in tenantsAccountingActivated)
                 {
                     try
@@ -5084,6 +5090,112 @@ User/Pass",
         {
             var updateEntityForm = new Logitude.Update.Update_Entity.Update_Entity();
             updateEntityForm.Show();
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void RunCreateContainerBotton_Click(object sender, EventArgs e)
+        {
+            this.RunCreateContainerBotton.Visible = false;
+            this.StopCreateContainer.Visible = true;
+            int tenant = -1;
+            if (!int.TryParse(ShipmentTenantNumber.Text, out tenant))
+                return;
+            var fromDate = ShipmentFromDate.Value;
+            var ToDate = ShipmentToDate.Value;
+            if (fromDate == null || ToDate == null)
+                return;
+
+            this.PanelShipmentResults.Visible = true;
+            var thread = new Thread(a=> RunCreateContainer(tenant, fromDate, ToDate));
+            thread.Start();
+
+        }
+
+        private void RunCreateContainer(int tenant, DateTime fromDate, DateTime ToDate)
+        {
+            
+            var shipmentsContext = ShipmentsContext.GetContext(tenant);
+            var repository = new ShipmentRepository(shipmentsContext);
+            var shipmentQuery = new ShipmentQuery(repository);
+
+            var shipmentsIds = shipmentsContext.Shipments.Where(a => a.ShipmentTypeId == "FCLD" && a.IsOperationalClosed == false && a.NumberOfContainers > 0 && a.CreateDateTime >= fromDate && a.CreateDateTime <= ToDate && a.Tenant == tenant).Select(a => a.Id).ToList();
+           
+            CraeteContainerProgressBar.Maximum = shipmentsIds.Count;
+            CraeteContainerProgressBar.Minimum = 0;
+            CraeteContainerProgressBar.Value = 0;
+            CraeteContainerProgressBar.Step = 1;
+            CraeteContainerProgressBar.Style = ProgressBarStyle.Blocks;
+
+            NumberOfShipments.Text = shipmentsIds.Count + "";
+            NumberOfDoneShipments.Text = "0";
+            var numberOfShipmentsRemaining = shipmentsIds.Count;
+            var numberOfShipmentsFail = 0;
+            var numberOfShipmentsDone = 0;
+            foreach (var shipmentId in shipmentsIds)
+            {
+                if (StopCreateContainerBool)
+                    break;
+                var watch = new System.Diagnostics.Stopwatch();
+
+                watch.Start();
+                var shipmentPM = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
+                ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, $"system@tenant{tenant}.com");
+                try
+                {
+                    shipmentService.Update(true);
+                    numberOfShipmentsDone++;
+                }
+                catch (Exception)
+                {
+                    numberOfShipmentsFail++;
+                    
+                }
+                CraeteContainerProgressBar.Increment(1);
+                watch.Stop();
+                numberOfShipmentsRemaining--;
+                NumberOfDoneShipments.Text = numberOfShipmentsDone + "";
+                NumberOfShipmentsFail.Text = numberOfShipmentsFail + "";
+
+                var totalMinuts = watch.ElapsedMilliseconds / 1000.0 / 60.0 * numberOfShipmentsRemaining;
+                var minuts = Math.Floor(totalMinuts);
+                var sec = Convert.ToInt32(totalMinuts % 1 * 60);
+                this.EstimatedDoneTime.Text = $"{Convert.ToInt32(minuts)} M and {sec} S" ;
+
+
+            }
+            StopCreateContainerBool = false;
+            
+            this.StopCreateContainer.Visible = false;
+            this.RunCreateContainerBotton.Visible = true;
+            this.StopCreateContainer.Text = "stop";
+            this.EstimatedDoneTime.Text = "";
+            CraeteContainerProgressBar.Value = CraeteContainerProgressBar.Maximum;
+        }
+
+        bool StopCreateContainerBool = false;
+        private void StopCreateContainer_Click(object sender, EventArgs e)
+        {
+            this.StopCreateContainer.Text = "Stopping...";
+            StopCreateContainerBool = true;
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
         }
     }
     public class TimeZoneExcelItem
@@ -5161,7 +5273,7 @@ User/Pass",
         public string CityName { get; set; }
         public string CountryCode { get; set; }
         public string StateCode { get; set; }
-        
+
     }
 
     public class ExcelOceanInsightStatistics
