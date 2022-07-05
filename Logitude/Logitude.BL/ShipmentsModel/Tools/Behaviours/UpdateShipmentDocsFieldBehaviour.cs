@@ -34,16 +34,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         {
             if (isNewEntity)
             {
-                shipmentDocsField = new ShipmentDocsField()
-                {
-                    Id = shipmentPM.Id,
-                    Tenant = this.initializer.Tenant,
-                };
+                //shipmentDocsField = new ShipmentDocsField()
+                //{
+                //    Id = shipmentPM.Id,
+                //    Tenant = this.initializer.Tenant,
+                //};
             }
 
             else if (shipmentDocsField == null)
             {
-                shipmentDocsField = shipmentDocsFieldRepository.GetSingleShipmentDocsField(shipmentPM.Id, this.initializer.Tenant);
+                //shipmentDocsField = shipmentDocsFieldRepository.GetSingleShipmentDocsField(shipmentPM.Id, this.initializer.Tenant);
             }
         }
 
