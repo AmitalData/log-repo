@@ -5156,7 +5156,7 @@ User/Pass",
                 ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, $"system@tenant{tenant}.com");
                 try
                 {
-                    shipmentService.Update(true);
+                    shipmentService.Update(true,true);
                     numberOfShipmentsDone++;
                 }
                 catch (Exception)
