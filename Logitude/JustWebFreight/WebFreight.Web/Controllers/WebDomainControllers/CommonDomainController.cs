@@ -2970,8 +2970,44 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetCheckConnectaPanageaPartner()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                int crmTenant = 341;
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                ICRMContext crmContext = CRMContext.GetContext(0);
+                string tenantString = tenant.ToString();
 
-        public HttpResponseMessage GetChargifyAWBStock()
+                var customer = (from a in commonDataContext.Cards.Include("Customer")
+                                where a.Tenant == crmTenant && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && a.ReceivablesAccountingCard == tenantString
+                                select new 
+                                {
+                                    Id = a.Id,
+                                    Field2 = a.Customer != null ? a.Customer.Field2: null
+                                }).FirstOrDefault();
+
+                var customerPartner = (from a in commonDataContext.Cards
+                                         where a.Tenant == crmTenant && a.Id == customer.Field2
+                                         select new 
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code
+                                         }).FirstOrDefault();
+
+                var result = (customerPartner?.Code == "74158") ? customerPartner : null;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetChargifyAWBStock(bool isAWBStockChecked, int totalStocks, int totalPrice)
         {
             try
             {
@@ -2980,8 +3016,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 string userId = GetSystemUserId(tenant);
-                this.CreateMessagingStock(tenant, userId);
-                this.CreateOpportunity(tenant, userId);
+                ChargifyAWBStock chargifyAWBStock = new ChargifyAWBStock()
+                {
+                    IsAWBStockChecked = isAWBStockChecked,
+                    TotalPrice = totalStocks,
+                    TotalStocks = totalPrice,
+                    Tenant = tenant,
+                    UserId = userId
+                };
+                this.CreateMessagingStock(chargifyAWBStock);
+                this.CreateOpportunity(chargifyAWBStock);
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
             catch (Exception ex)
@@ -3003,34 +3047,36 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return userId;
         }
-        private void CreateMessagingStock(int tenant, string userId)
+
+        private void CreateMessagingStock(ChargifyAWBStock chargifyAWBStock)
         {
             IShipmentsContext iContext = ShipmentsContext.GetContext(0);
-            var todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            var todayDate = TenantServerConfigration.GetCurrentDateTime(chargifyAWBStock.Tenant);
             MessagingStockPM messagingStock = new MessagingStockPM()
             {
-                TenantNumber = tenant,
-                Amount = 100,
+                TenantNumber = chargifyAWBStock.Tenant,
+                Amount = chargifyAWBStock.TotalStocks,
                 StartDate = todayDate,
                 EndDate = todayDate.AddYears(1),
-                TotalPrice = 100,
-                StockType = "Champ",
-                CreatedByUserId = userId,
-                UpdatedByUserId = userId
+                TotalPrice = chargifyAWBStock.TotalPrice,
+                StockType = chargifyAWBStock.IsAWBStockChecked ? "Champ" : "INTTRA",
+                CreatedByUserId = chargifyAWBStock.UserId,
+                UpdatedByUserId = chargifyAWBStock.UserId
             };
             MessagingStockService service = new MessagingStockService(iContext, messagingStock);
             service.Create();
         }
-        private void CreateOpportunity(int tenant, string userId)
+        private void CreateOpportunity(ChargifyAWBStock chargifyAWBStock)
         {
             int crmTenant = 341;
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
             ICRMContext crmContext = CRMContext.GetContext(0);
-
+            int tenant = chargifyAWBStock.Tenant;
+            string userId = chargifyAWBStock.UserId;
             string tenantString = tenant.ToString();
 
             // Create Opportunity 
-            var customer = (from a in commonDataContext.Cards.Include("Customer")
+            var customer = (from a in commonDataContext.Cards
                             where a.Tenant == crmTenant && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && a.ReceivablesAccountingCard == tenantString
                             select new CustomerPM
                             {
@@ -3042,8 +3088,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 PrimaryContactId = a.PrimaryContactId,
                             }).FirstOrDefault();
 
+            var stockType = chargifyAWBStock.IsAWBStockChecked ? "AWB Stock" : "INTTRA Stock";
+
             var type = (from a in crmContext.OpportunityTypes
-                        where a.Tenant == crmTenant && a.Name == "AWB Stock"
+                        where a.Tenant == crmTenant && a.Name == stockType
                         select a).FirstOrDefault();
 
             var stage = (from a in crmContext.Stages
@@ -3056,7 +3104,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 CustomerId = customer?.Id,
                 ContactId = customer?.PrimaryContactId,
                 OwnerId = customer?.SalesmanUserId,
-                Subject = "AWB Stock",
+                Subject = stockType,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CreatedByUserId = userId,
                 UpdatedByUserId = userId,
@@ -3128,4 +3176,13 @@ public class PartnersUploadExcelParameter
     public string LoggedUserEmail { get; set; }
     public bool IsConfirmationByUser { get; set; }
     public string FileName { get; set; }
+}
+
+public class ChargifyAWBStock
+{
+    public int Tenant { get; set; }
+    public bool IsAWBStockChecked { get; set; }
+    public int TotalStocks { get; set; }
+    public int TotalPrice { get; set; }
+    public string UserId { get; set; }
 }

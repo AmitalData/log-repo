@@ -26,6 +26,9 @@ import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/User
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { PackageListService } from '../../../Common/Services/StandardLists/PackageListService';
+import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
+
 
 @Component({
 
@@ -48,6 +51,9 @@ export class HomeComponent implements OnDestroy{
     private BluesnapContractService: BluesnapContractPMService = new BluesnapContractPMService();
     public ShowNewReleaseToolTip: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public EAWBStockBuyingLable = "";
+    private IsINTTRAPackage = false;
+
     constructor() {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
@@ -96,8 +102,8 @@ export class HomeComponent implements OnDestroy{
         this.InitializeBluesnapComponents();
         this.InitializeChargifyComponents();
         this.IsCountryIsrael = SessionLocator.TenantManagementJS.CountryName == "Israel";
-
-
+        
+        this.SetIsINTTRAPackage();
         var isNewSignupTenant = false;
 
         if (AppTool.IsNullOrEmpty(SessionLocator.TenantPM.CurrencyId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.ProfitCurrencyId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.AddressId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.AgentId)) {
@@ -131,6 +137,27 @@ export class HomeComponent implements OnDestroy{
     InitializeChargifyComponents() {
         this.IsChargifyAccount = SessionLocator.TenantManagementJS.PaymentChannelCode == "CY";
     }
+
+    SetBuyEAWBStockLable() {
+        this.EAWBStockBuyingLable = "Buy e-AWB Stock";
+        if (this.IsINTTRAPackage && this.IsChargifyAccount)
+            this.EAWBStockBuyingLable = "Buy e-AWB/INTTRA Stock";
+
+        else if (this.IsINTTRAPackage && !this.IsChargifyAccount)
+            this.EAWBStockBuyingLable = "Buy INTTRA Stock";
+    }
+
+    SetIsINTTRAPackage() {
+        this.IsINTTRAPackage = false;
+        var service: GlobalDomainService = new GlobalDomainService();
+        service.CheckInttraAddsOn().subscribe((result: any) => {
+            var addOnPackage = result.Result;
+            if (addOnPackage != null)
+                this.IsINTTRAPackage = true;
+            this.SetBuyEAWBStockLable();
+        });
+    }
+
     // InitializeAppHeader
     public EnvironmentUrl: string = null;
     public EnvironmentSRC: string = null;
@@ -1607,9 +1634,13 @@ export class HomeComponent implements OnDestroy{
 
     BuyChargifyAWBStock() {
         var logWindow = new LogitudeWindow();
-        logWindow.Height = 200;
-        logWindow.Width = 600;
-        logWindow.Title = "New e-AWB Stock";
+        logWindow.Height = 350;
+        logWindow.Width = 750;
+        logWindow.Title = this.EAWBStockBuyingLable ;
+        var args: any = {};
+        args.IsINTTRAPackage = this.IsINTTRAPackage;
+        args.IsChargifyAccount = this.IsChargifyAccount;
+        logWindow.WindowArgs = args;
         logWindow.Show('./InfrastructureModules/Infrastructure/Components/HomeComponent/NewChargifyAWBStockComponent');
     }
 
