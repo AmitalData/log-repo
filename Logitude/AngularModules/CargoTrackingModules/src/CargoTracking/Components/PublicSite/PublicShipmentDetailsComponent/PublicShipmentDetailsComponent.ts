@@ -355,10 +355,11 @@ export class PublicShipmentDetailsComponent implements OnInit
             });
         }
 
-        //if (this.Shipment.CurrentMilestoneCode ==  CargoTrackingMilestones.Delivered) {
-        //    this.Date = this.CompletedMilestoneFields[0].Date;
-        //}
-        //else {
+
+        // if (this.Shipment.CurrentMilestoneCode ==  CargoTrackingMilestones.Delivered) {
+        //     this.Date = this.CompletedMilestoneFields[0].Date;
+        // }
+        // else {
             this.Date = this.CurrentMilestoneField.Date;
 
        // }

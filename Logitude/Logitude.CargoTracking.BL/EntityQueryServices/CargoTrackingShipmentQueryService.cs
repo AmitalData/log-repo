@@ -204,7 +204,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 Shipment.FutureMilstoneCode = futureMilstone.Code;
                 Shipment.FutureMilstoneName = futureMilstone.Name;
-                Shipment.FutureMilstoneDate = futureMilstone.EstimationDate;
+                Shipment.FutureMilstoneDate = futureMilstone.Date;
             }
         }
         private Milestone GetMostRecentNotEstimatedMilestone(List<Milestone> milestones)
