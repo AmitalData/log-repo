@@ -26,7 +26,7 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
       constructor(_entityParentPM: any) {
-          super();
+          super("ShipmentPackage");
           this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this);
           this.IsDirty = false;
