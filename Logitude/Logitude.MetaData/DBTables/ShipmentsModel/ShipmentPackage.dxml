@@ -698,4 +698,7 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CommodityId" />
+  
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>
