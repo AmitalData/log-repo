@@ -1,4 +1,5 @@
-﻿using Logitude.BL.Validators;
+﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.Validators;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentDeliveryValidator), "IsShipmentDeliveryValid")]
-    public class ShipmentDeliveryPM
+    public class ShipmentDeliveryPM: ChildEntitiesCustomFieldPM
     {
         [Key]
         public string Id { get; set; }

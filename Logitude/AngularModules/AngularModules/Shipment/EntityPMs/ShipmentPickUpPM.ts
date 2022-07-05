@@ -4,11 +4,14 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPickUpDeliveryPackagePM} from './ShipmentPickUpDeliveryPackagePM';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';
 
-export class ShipmentPickUpPM {
+export class ShipmentPickUpPM extends ChildEntitiesCustomFieldPM {
     public UIProperties: UIProperties;
     @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
     constructor(_entityParentPM: any) {
+        super("ShipmentPickUp");
+
         this.EntityParentPM = _entityParentPM;
         this.UIProperties = new UIProperties;
         this.IsDirty = false;

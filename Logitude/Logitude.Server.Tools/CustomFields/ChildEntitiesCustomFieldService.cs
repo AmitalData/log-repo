@@ -2,6 +2,7 @@
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,16 @@ namespace Logitude.Server.Tools.CustomFields
         private  List<ChildEntitiesCustomField> childEntitiesCustomFields = null;
         private  CustomFieldResolver customFieldResolver = null;
         private  List<ObjectField> customObjectFields = null;
-        private  List<object> childEntities = null;
         private  ChildEntitiesCustomFieldRepository childEntitiesCustomFieldRepository;
         private  string childObjectTableName = string.Empty;
-        private  List<string> childEntitiesIds = new List<string>();
-        private  void Initialize(ChildEntitiesCustomFieldArgs childEntitiesCustomFieldArgs)
+        private string deleteChangeSetOp = "Delete";
+        private string noneChangeSetOp = "None";
+        private List<object> deletedChildEntities = null;
+        private List<object> modificationChildEntities = null;
+        private List<object> childEntities = null;
+
+
+        private void Initialize(ChildEntitiesCustomFieldArgs childEntitiesCustomFieldArgs)
         {
             childEntities = childEntitiesCustomFieldArgs.ChildEntities;
             objectTableId = ObjectTableRepository.GetObjectTableByName(childEntitiesCustomFieldArgs.ObjectTableName);
@@ -34,35 +40,126 @@ namespace Logitude.Server.Tools.CustomFields
             entityId = childEntitiesCustomFieldArgs.EntityId;
             tenant = childEntitiesCustomFieldArgs.Tenant;
             childObjectTableName = childEntitiesCustomFieldArgs.ChildObjectTableName;
-
             customFieldResolver = new CustomFieldResolver();
             childEntitiesCustomFieldRepository = new ChildEntitiesCustomFieldRepository(tenant);
             customObjectFields = GetCustomObjectFields();
             childEntitiesCustomFields = GetChildEntitiesCustomFields();
-            childEntitiesIds = GetChildEntitiesIds();
+
+
         }
 
-        private List<string> GetChildEntitiesIds()
+        public void Set(ChildEntitiesCustomFieldArgs childEntitiesCustomFieldArgs)
         {
-            List<string> childEntitiesIds = new List<string>();
-            if (childEntities == null || childEntities.Count() == 0 ) return childEntitiesIds;
-            foreach(object childEntity in childEntities)
-            {
-                childEntitiesIds.Add(GetPropertyValue(childEntity, "Id").ToString());
-            }
-            return childEntitiesIds;
-        }
-
-        public  void Set(ChildEntitiesCustomFieldArgs childEntitiesCustomFieldArgs)
-        {
-           Initialize(childEntitiesCustomFieldArgs);
+            Initialize(childEntitiesCustomFieldArgs);
 
             if (childEntities == null || childEntities.Count() == 0 || customObjectFields.Count() == 0) return;
-           
+
             foreach (ObjectField customObjectField in customObjectFields)
             {
                 SetCustomFieldValues(customObjectField);
             }
+        }
+        public void Update(ChildEntitiesCustomFieldArgs childEntitiesCustomFieldArgs)
+        {
+            Initialize(childEntitiesCustomFieldArgs);
+            RemoveUnusedChildEntitiesCustomFields();
+            UpdateModificationChildEntitiesCustomField();
+            childEntitiesCustomFieldRepository.SubmitChanges();
+        }
+
+
+
+        private void RemoveUnusedChildEntitiesCustomFields()
+        {
+            deletedChildEntities = GetDeletedChildEntities();
+            if (deletedChildEntities == null || deletedChildEntities.Count() == 0) return;
+            foreach (object childEntity in deletedChildEntities)
+            {
+                RemoveChildEntitiesCustomField(childEntity);
+            }
+        }
+
+        private void RemoveChildEntitiesCustomField(object childEntity)
+        {
+           var childEntityId =   GetPropertyValue(childEntity, "Id").ToString();
+            var childEntitiesCustomField = childEntitiesCustomFields.Where(d => d.ChildEntityId == childEntityId).FirstOrDefault();
+            if (childEntitiesCustomField == null) return;
+            childEntitiesCustomFieldRepository.Remove(childEntitiesCustomField);
+
+
+        }
+
+        private List<object> GetDeletedChildEntities()
+        {
+            deletedChildEntities = new List<object>();
+            if (childEntities == null || childEntities.Count() == 0) return deletedChildEntities;
+            foreach (object childEntity in childEntities)
+            {
+                AddDeletedChildEntity(childEntity);
+            }
+            return deletedChildEntities;
+        }
+        private void AddDeletedChildEntity(object childEntity)
+        {
+            if (GetChangeSetOpValue(childEntity) != deleteChangeSetOp) return;
+            deletedChildEntities.Add(childEntity);
+        }
+
+
+
+        private void UpdateModificationChildEntitiesCustomField()
+        {
+            modificationChildEntities = GetModificationChildEntities();
+            if ((modificationChildEntities == null || modificationChildEntities.Count() == 0) || customObjectFields.Count() == 0) return;
+            foreach (object childEntity in modificationChildEntities)
+            {
+                UpdateCustomFieldsValue(childEntity);
+            }
+        }
+
+        private void UpdateCustomFieldsValue(object childEntity)
+        {
+            ChildEntitiesCustomField childEntitiesCustomField = GetChildEntitiesCustomField(childEntity);
+            foreach (ObjectField customObjectField in customObjectFields)
+            {
+                SetPropertyValue(childEntitiesCustomField, customObjectField.FieldName, (GetPropertyValue(childEntity, customObjectField.FieldName) as CustomFieldClass)?.Value);
+            }
+
+            if (IsNewEntity(childEntitiesCustomField))
+            {
+                childEntitiesCustomFieldRepository.Add(childEntitiesCustomField);
+            }
+            else childEntitiesCustomFieldRepository.Update(childEntitiesCustomField);
+
+        }
+
+
+        private List<object> GetModificationChildEntities()
+        {
+            modificationChildEntities = new List<object>();
+            if (childEntities == null || childEntities.Count() == 0) return modificationChildEntities;
+            foreach (object childEntity in childEntities)
+            {
+                AddModificationChildEntity(childEntity);
+            }
+            return modificationChildEntities;
+        }
+
+        private void AddModificationChildEntity(object childEntity)
+        {
+            var changeSetOpValue = GetChangeSetOpValue(childEntity);
+            if (changeSetOpValue == deleteChangeSetOp || changeSetOpValue == noneChangeSetOp) return;
+            modificationChildEntities.Add(childEntity);
+        }
+
+
+
+        private string GetChangeSetOpValue(object childEntity)
+        {
+            var changeSetOp = GetPropertyValue(childEntity, "ChangeSetOp");
+            if (changeSetOp == null) return null;
+         
+            return changeSetOp.ToString();
         }
 
 
@@ -84,50 +181,6 @@ namespace Logitude.Server.Tools.CustomFields
         }
 
 
-        public  void Update(ChildEntitiesCustomFieldArgs childEntitiesCustomFieldArgs)
-        {
-            Initialize(childEntitiesCustomFieldArgs);
-            RemoveUnusedChildEntitiesCustomFields(childEntitiesCustomFields);
-            if ((childEntities == null || childEntities.Count() == 0 ) || customObjectFields.Count() == 0) return;
-            
-            foreach (object childEntity in childEntities)
-            {
-                UpdateCustomFieldsValue(childEntity);
-            }
-            childEntitiesCustomFieldRepository.SubmitChanges();
-        }
-
-        private  void RemoveUnusedChildEntitiesCustomFields(List<ChildEntitiesCustomField> childEntitiesCustomFields)
-        {
-            var unUsedChildEntitiesCustomFields = childEntitiesCustomFields.Where(d => !childEntitiesIds.Contains(d.ChildEntityId)).ToList();
-            if (unUsedChildEntitiesCustomFields.Count() == 0) return;
-
-            foreach (ChildEntitiesCustomField childEntitiesCustomField in unUsedChildEntitiesCustomFields)
-            {
-                childEntitiesCustomFieldRepository.Remove(childEntitiesCustomField);
-            }
-
-            childEntitiesCustomFieldRepository.SubmitChanges();
-
-        }
-
-        private  void UpdateCustomFieldsValue(object childEntity)
-        {
-            ChildEntitiesCustomField childEntitiesCustomField = GetChildEntitiesCustomField(childEntity);
-            foreach (ObjectField customObjectField in customObjectFields)
-            {
-                SetPropertyValue(childEntitiesCustomField, customObjectField.FieldName, (GetPropertyValue(childEntity, customObjectField.FieldName) as CustomFieldClass)?.Value);
-            }
-
-            if (IsNewEntity(childEntitiesCustomField))
-            {
-                childEntitiesCustomFieldRepository.Add(childEntitiesCustomField);
-            }
-            else childEntitiesCustomFieldRepository.Update(childEntitiesCustomField);
-
-            childEntitiesIds.Add(GetPropertyValue(childEntity, "Id").ToString());
-
-        }
 
         private  bool IsNewEntity(ChildEntitiesCustomField childEntitiesCustomField)
         {

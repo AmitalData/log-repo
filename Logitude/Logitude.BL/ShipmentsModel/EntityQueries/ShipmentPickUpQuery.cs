@@ -10,6 +10,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -558,7 +559,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+
+            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = tenant,
+                EntityId = shipmentId,
+                ObjectTableName = "Shipment",
+                ChildObjectTableName = "ShipmentPickUpDelivery",
+                ChildEntities = dataList.Cast<object>().ToList()
+            });
+
             return dataList;
+
         }
 
         public ShipmentPickUpPM GetFistShipmentPickUpPMByTenantAndShipmentId(string shipmentId, string shipmentNumber, int tenant)

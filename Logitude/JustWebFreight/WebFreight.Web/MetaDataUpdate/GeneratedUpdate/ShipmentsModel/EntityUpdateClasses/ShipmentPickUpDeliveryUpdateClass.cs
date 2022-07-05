@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPickUpDeliveryUpdateClass
    {  		
-		public const string HashString = "6e684b717ed2970279ce78d536b32b9b";
+		public const string HashString = "a4b18b06be987822c7b18cf07cd0f136";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,12 +113,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  true,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Pickup Delivery",
-			      				    Code =  "59d1",
+			      				    Code =  "e813",
 			      				    Name =  "ShipmentPickUpDelivery",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -2997,6 +2997,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		    ShipmentPickUpDeliveryObjectTable.HeaderScreenCode = ShipmentPickUpDeliveryShipmentPickUpDeliveryHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen ShipmentPickUpDeliveryAdditionalFieldsScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentPickUpDelivery.AdditionalFields", Name = "Additional Fields", ObjectTableId = ShipmentPickUpDeliveryObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
