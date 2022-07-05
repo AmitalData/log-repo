@@ -338,11 +338,12 @@ export class SendDeclarationService implements OnDestroy {
                 //List < CustomsRequiredFieldsErrorItem > errorsList = requiredFieldsErrors.RequiredFields;
                 var errorsList = response.Result.RequiredFields;
                 var warningList = responseWarning.Result.RequiredFields;
+                var headerAlertRequier=this.EntityPM.Direction=='I'?"Customs.General.O.RequiredFields":"Customs.General.O.RequiredFieldsOrAlert"
                 if (errorsList.length == 0 || this.EntityPM.IsAmendment) {
                     if (AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) || true) { //|| !ScriptableGatewayUtil.AmitalBrowserInUse) { i put true temporarly--MM
                         if (warningList.length > 0) {
                             this.ValidationWarning = this.GetWarningList(warningList);
-                            this.FillValidationWarning(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"));
+                            this.FillValidationWarning(TextCodeTranslator.Translate(headerAlertRequier));
                         } else {
                             this.InstructionSendToMehes();//this.ConfirmB4TaxationDateTimeCheck();
                         }
@@ -352,7 +353,7 @@ export class SendDeclarationService implements OnDestroy {
                 else {
                     this.ValidationErrors = this.GetRequiredErrorsList(errorsList);
                     this.ValidationWarning = this.GetWarningList(warningList);
-                    this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"));
+                    this.FillValidationErrors(TextCodeTranslator.Translate(headerAlertRequier));
                 }
             });
         });
