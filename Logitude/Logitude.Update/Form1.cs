@@ -5132,7 +5132,7 @@ User/Pass",
             var repository = new ShipmentRepository(shipmentsContext);
             var shipmentQuery = new ShipmentQuery(repository);
 
-            var shipmentsIds = shipmentsContext.Shipments.Where(a => a.ShipmentTypeId == "FCLD" && a.IsOperationalClosed == false && a.NumberOfContainers > 0 && a.CreateDateTime >= fromDate && a.CreateDateTime <= ToDate && a.Tenant == tenant).Select(a => a.Id).ToList();
+            var shipmentsIds = shipmentsContext.Shipments.Where(a => a.ShipmentTypeId == "FCLD" && a.IsOperationalClosed == false && a.NumberOfContainers > 0 && a.CreateDateTime >= fromDate && a.CreateDateTime <= ToDate.AddDays(1) && a.Tenant == tenant).Select(a => a.Id).ToList();
            
             CraeteContainerProgressBar.Maximum = shipmentsIds.Count;
             CraeteContainerProgressBar.Minimum = 0;
