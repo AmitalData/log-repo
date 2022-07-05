@@ -545,7 +545,7 @@
                                                                     </td>
 
                                                                     <td style="width: 105px;">
-                                                                        <LogDatePicker  [ObjectFieldName]="'ETD'" [SelectedDateValue]="ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                        <LogDatePicker [ObjectFieldName]="'ETD'" [SelectedDateValue]="ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                                     </td>
 
                                                                     <td style="width: 2px;">
@@ -609,7 +609,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogDatePicker  [ObjectFieldName]="'ATD'" [SelectedDateValue]="ATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                                        <LogDatePicker [ObjectFieldName]="'ATD'" [SelectedDateValue]="ATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
                                                                     </td>
 
                                                                     <td>
@@ -695,6 +695,27 @@
                                                             </table>
                                                         </td>
                                                     </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <table>
+                                                    <tr style="height: 1px;">
+                                                        <td class="SectionTitle">Additional Fields</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div>
+                                                                <div class="LocationDirective" #Child></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="height:10px;"><td></td></tr>
+
+
                                                 </table>
                                             </td>
                                         </tr>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Server.Tools.CustomFields;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -571,6 +572,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+
+            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = tenant,
+                EntityId = shipmentId,
+                ObjectTableName = "Shipment",
+                ChildObjectTableName = "ShipmentPickUpDelivery",
+                ChildEntities = dataList.Cast<object>().ToList()
+            });
             return dataList;
         }
 
