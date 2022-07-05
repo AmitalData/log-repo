@@ -260,11 +260,11 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
         this.columns.push({
             FieldName: 'ShipperName',
             DataTypeCode: 'String',
-            Display: this.IsExportShipment ? 'Supplier / Consignee' : 'Supplier',
+            Display: 'Supplier / Consignee',
             Styles: { width: '175px' },
             IsCustomTemplate: true,
-            HtmlListComponentName: this.IsExportShipment ? 'SupplierConsigneeListTemplate' : null,
-            HtmlListComponentUrl: this.IsExportShipment ? './Shipment/Components/ListTemplates/SupplierConsigneeListTemplate' : null,
+            HtmlListComponentName: 'SupplierConsigneeListTemplate',
+            HtmlListComponentUrl: './Shipment/Components/ListTemplates/SupplierConsigneeListTemplate',
         });
         this.columns.push({
             FieldName: 'StatusName',
@@ -472,7 +472,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     }
     public set SelectedTransportationTypes(newValue: TransportationTypes) {
         this.selectedTransportationTypes = newValue;
-        this.TransportModeId = newValue.TransporationType;
+        this.TransportModeId = this.IsExportShipment ? this.TransportModeId : newValue.TransporationType;
         this.ToPortId = this.GetToPortId(newValue);
 
     }
@@ -592,19 +592,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
         }
         this.IsCreateButtonClicked = true;
         this.ValidationErrorsList = []; 
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-
-        if (!this.SelectedTransportationTypes && !this.IsExportShipment) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportationTypes"));
-        }
-
-        if (AppTool.IsNullOrEmpty(this.ToPortId) && this.ShipmentDirection == 'E') {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "Destination"));
-        }
-
-        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", !this.IsExportShipment ? "OrderNumber" : "Reference"));
-        } 
+        this.ValidateShipment(); 
         if (this.ValidationErrorsList.length == 0) {
             this._ShipmentPMService.GetSingleByCustomerReference1(this.CustomerReference1).subscribe((myResult:any) => {
                 if (myResult.Result) { 
@@ -642,6 +630,29 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
+    }
+
+    ValidateShipment() {
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+        if (!this.SelectedTransportationTypes && !this.IsExportShipment) {
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportationTypes"));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.FromPortId) && this.IsExportShipment) {
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Origin"));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.ToPortId) && this.IsExportShipment) {
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Destination"));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.CustomerReference1) && !this.IsExportShipment) {
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
+        }
+        if (AppTool.IsNullOrEmpty(this.CustomerReference3) && this.IsExportShipment) {
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Reference"));
+        }
     }
 
     ContinueCreateShipmentProcess() {
