@@ -56,9 +56,25 @@ export class NewChargifyAWBStockComponent extends BaseComponent {
     set IsAWBStockChecked(newValue: boolean) {
         if (this.isAWBStockChecked != newValue) {
             this.isAWBStockChecked = newValue;
+            this.ResetCheckBoxes();
         }
     }
 
+    ResetCheckBoxes() {
+        if (!this.IsAWBStockChecked) {
+            this.Is100AWBSPackage = false;
+            this.Is200AWBSPackage = false;
+            this.Is500AWBSPackage = false;
+            this.Is1000AWBSPackage = false;
+
+        }
+        else {
+            this.Is100INTTRAPackage = false;
+            this.Is200INTTRAPackage = false;
+            this.Is500INTTRAPackage = false;
+            this.Is1000INTTRAPackage = false;
+        }
+    }
     SetAWBStock(isChecked: boolean) {
         this.IsAWBStockChecked = isChecked;
     }
