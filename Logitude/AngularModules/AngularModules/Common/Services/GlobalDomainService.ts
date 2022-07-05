@@ -21,6 +21,20 @@ export class GlobalDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GlobalDomain';
     }
 
+    CheckInttraAddsOn() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetCheckInttraAddsOn?';
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var itemJason: Boolean = response.body;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = itemJason;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     GetMessagingStockTenantsList(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

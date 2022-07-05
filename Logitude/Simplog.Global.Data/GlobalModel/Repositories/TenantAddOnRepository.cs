@@ -44,6 +44,11 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         }
 
+        public TenantAddOn GetSingleTenantAddOnByPackageCode(string packageCode, int tenant)
+        {
+            return (from d in context.TenantAddOns where d.PackageCode == packageCode && d.Tenant == tenant select d).FirstOrDefault();
+        }
+
         public void Add(TenantAddOn entity)
         {
             this.context.TenantAddOns.Add(entity);

@@ -29,11 +29,25 @@ export class CommonDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommonDomain';
     }
 
-    public GetChargifyAWBStock() {
+    public GetCheckConnectaPanageaPartner() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetChargifyAWBStock?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetCheckConnectaPanageaPartner?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    public GetChargifyAWBStock(isAWBStockChecked, totalStocks, totalPrice) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetChargifyAWBStock?isAWBStockChecked=' + isAWBStockChecked + "&totalStocks=" + totalStocks + "&totalPrice=" + totalPrice , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

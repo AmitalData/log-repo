@@ -38,6 +38,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class GlobalDomainController : ApiController
     {
+        public HttpResponseMessage GetCheckInttraAddsOn()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                TenantAddOnRepository tenantAddOnRepository = new TenantAddOnRepository(tenant);
+                var inttraPackageCode = "INTTR";
+                var addOn = tenantAddOnRepository.GetSingleTenantAddOnByPackageCode(inttraPackageCode, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, addOn);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetMessagingStockTenantsList(int tenant)
         {
             try
