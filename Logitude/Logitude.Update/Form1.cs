@@ -5109,8 +5109,7 @@ User/Pass",
 
         private void RunCreateContainerBotton_Click(object sender, EventArgs e)
         {
-            this.RunCreateContainerBotton.Visible = false;
-            this.StopCreateContainer.Visible = true;
+            
             int tenant = -1;
             if (!int.TryParse(ShipmentTenantNumber.Text, out tenant))
                 return;
@@ -5118,7 +5117,8 @@ User/Pass",
             var ToDate = ShipmentToDate.Value;
             if (fromDate == null || ToDate == null)
                 return;
-
+            this.RunCreateContainerBotton.Visible = false;
+            this.StopCreateContainer.Visible = true;
             this.PanelShipmentResults.Visible = true;
             var thread = new Thread(a=> RunCreateContainer(tenant, fromDate, ToDate));
             thread.Start();
