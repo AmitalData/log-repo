@@ -354,6 +354,8 @@ export class PublicShipmentDetailsComponent implements OnInit
 
             });
         }
+
+
         // if (this.Shipment.CurrentMilestoneCode ==  CargoTrackingMilestones.Delivered) {
         //     this.Date = this.CompletedMilestoneFields[0].Date;
         // }
