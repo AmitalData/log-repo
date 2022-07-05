@@ -24,5 +24,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 
 
         public string Change2MultiCurrencyNotes { get; set; }
+        [DataMember]
+        public string ParentCurrencyGLAccountCardId { get; set; }
     }
 }
