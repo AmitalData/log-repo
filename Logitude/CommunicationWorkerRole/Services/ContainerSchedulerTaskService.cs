@@ -50,12 +50,13 @@ namespace CommunicationWorkerRole.Services
 
         private void ManageClosedContainer(Container container)
         {
-            if (container.ActualEmptyReturn == null) 
-                return;
+            if (container.ActualEmptyReturn == null) return;            
 
             this.GetCurrentTenant(container.Tenant);
-            int? automaticallyCloseDays = this.currentTenant?.AutomaticallyCloseDays;
-            var actualEmptyReturnDate = automaticallyCloseDays == null ? container.ActualEmptyReturn.Value : container.ActualEmptyReturn.Value.AddDays(automaticallyCloseDays.Value);
+            if (this.currentTenant == null) return;
+            else if (currentTenant.AutomaticallyCloseDays == null) return; 
+
+            var actualEmptyReturnDate = container.ActualEmptyReturn.Value.AddDays(currentTenant.AutomaticallyCloseDays.Value);
             if (actualEmptyReturnDate.Date <= todayDate.Date)
             {
                 this.UpdateClosedContainer(container);
