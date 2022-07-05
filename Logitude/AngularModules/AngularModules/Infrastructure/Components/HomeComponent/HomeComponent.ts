@@ -1482,7 +1482,7 @@ export class HomeComponent implements OnDestroy{
 
                 case "BUY":
                     {
-                        if (this.IsChargifyAccount) {
+                        if (this.IsChargifyAccount || this.IsINTTRAPackage) {
                             this.BuyChargifyAWBStock();
                         }
                         else {
