@@ -9,57 +9,57 @@ using Unifreight.Data.AmitalModel.EntityPOCOs;
 
 namespace Unifreight.Data.AmitalModel.Repsitories
 {
-    public class GAQTEAMUSRRepository : IRepository<GAQTEAMUSR>
+    public class LFIFILEMRepository : IRepository<LFIFILEM>
     {
         private AmitalContext currentContext;
-        public GAQTEAMUSRRepository(int tenant)
+        public LFIFILEMRepository(int tenant)
         {
             currentContext = AmitalContext.GetContext(tenant);
         }
 
-        public GAQTEAMUSRRepository(AmitalContext context)
+        public LFIFILEMRepository(AmitalContext context)
         {
             currentContext = context;
         }
 
-        public GAQTEAMUSR GetSingle(string TEAMID)
+        public LFIFILEM GetSingle(int DELIVERYNO)
         {
-            return (from a in context.GAQTEAMUSRs
-                    where a.TEAMID == TEAMID
+            return (from a in context.LFIFILEMs
+                    where a.DELIVERYNO == DELIVERYNO
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<GAQTEAMUSR> GetAll()
+        public IQueryable<LFIFILEM> GetAll()
         {
-            return from a in context.GAQTEAMUSRs
+            return from a in context.LFIFILEMs
                    select a;
         }
 
-        public void Add(GAQTEAMUSR entity)
+        public void Add(LFIFILEM entity)
         {
-            context.GAQTEAMUSRs.Add(entity);
+            context.LFIFILEMs.Add(entity);
         }
 
-        public void Remove(GAQTEAMUSR entity)
+        public void Remove(LFIFILEM entity)
         {
             //if (entity.EntityState == System.Data.EntityState.Unchanged)
             {
-                context.GAQTEAMUSRs.Attach(entity);
+                context.LFIFILEMs.Attach(entity);
             }
-            context.GAQTEAMUSRs.Remove(entity);
+            context.LFIFILEMs.Remove(entity);
         }
 
-        public void Update(GAQTEAMUSR entity)
+        public void Update(LFIFILEM entity)
         {
             //if (entity.EntityState == System.Data.EntityState.Unchanged)
             {
-                context.GAQTEAMUSRs.Attach(entity); context.SetAsModified(entity);
+                context.LFIFILEMs.Attach(entity); context.SetAsModified(entity);
             }
         }
 
-        public List<GAQTEAMUSR> All()
+        public List<LFIFILEM> All()
         {
-            return context.GAQTEAMUSRs.ToList();
+            return context.LFIFILEMs.ToList();
         }
 
         private AmitalContext context
@@ -72,15 +72,15 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             context.SaveChanges();
         }
 
-        public List<GAQTEAMUSR> GetMulti(EntityKeyFields entityKeys)
+        public List<LFIFILEM> GetMulti(EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
         }
 
-        public GAQTEAMUSR GetSingle(EntityKeyFields entityKeys)
+        public LFIFILEM GetSingle(EntityKeyFields entityKeys)
         {
-            var keys = entityKeys as GAQTEAMUSRKeys;
-            return this.GetSingle(keys.TEAMID);
+            var keys = entityKeys as LFIFILEMKeys;
+            return this.GetSingle(keys.DELIVERYNO);
         }
     }
 }

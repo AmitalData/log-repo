@@ -64,6 +64,8 @@ namespace Unifreight.BL.EntityPMs
         public string REMARKSPROTEST { get; set; }
         public string CLASSIFIER1ID { get; set; }
         public string CLASSIFIER2ID { get; set; }
+        public string ITEMNO2 { get; set; }
+
 
     }
 

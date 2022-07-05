@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Unifreight.Data.AmitalModel.EntityKeys
 {
-    public class GAQTEAMUSRKeys : EntityKeyFields
+    public class LFIFILEMKeys : EntityKeyFields
     {
-        public string TEAMID { get; set; }
+        public int DELIVERYNO { get; set; }
 
         public override string GetFullKey()
         {
-            return TEAMID;
+            return DELIVERYNO.ToString();
         }
 
         public override string GetEntityPMName()
         {
-            return "GAQTEAMUSR";
+            return "LFIFILEM";
         }
 
     }
