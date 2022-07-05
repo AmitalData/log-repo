@@ -60,7 +60,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "2754E",
                 //   NeedSignature = false,
                 SignatureTypeCode = "C"
-            });
+            });            
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "2754",
@@ -80,6 +80,37 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
                 //  NeedSignature = false
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2755T",
+                InOut = InOutEnum.O.ToString(),
+                Description = "מסר הגשה לשטעון",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "2757T",
+                //   NeedSignature = false,
+                SignatureTypeCode = "C"
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2757T",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר תשובה הגשה לשטעון",
+                DefaultSendOptionsCode = null,
+
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "SaveDF_MSG2755_SubmitDeclaration_Out.",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
             });
             all.Add(new InterfaceManagementDetails()
             {
@@ -3082,6 +3113,34 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
              });
+
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2751T",
+                InOut = InOutEnum.O.ToString(),
+                Description = "הצהרת שטעון",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "2757T2",
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2757T2",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר תשובה הצהרת שטעון",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "SaveDF_MSG2751_TransshipmentDeclarationRequest_Out.",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+            });
 
             all.Add(new InterfaceManagementDetails()
             {

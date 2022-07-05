@@ -178,6 +178,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCTZIP", // Unifreight Table Custom ZIP
 "UCB2750", // שידור הצהרות בלדר
 "DCAMU", // multi update 
+"2755T", // הגשת שטעון
+"2757T", // תשובה להגשת שטעון
+"2751T", // הצהרת שטעון
+"2751T2", // תשובה להצהרת שטעון
 "UCADPE", // הזנה גורפת PENDING
 
             };
@@ -323,6 +327,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8326", // שאילתא לתצהיר יבואן
 "DCAMU", // multi update 
 "DCAUAC", // multi update 
+"2755T", // הגשת שטעון
+"2757T", // תשובה להגשת שטעון
+"2751T", // הצהרת שטעון
+"2751T2", // תשובה להצהרת שטעון
 "UCADPE" // add multi pending
 
 
@@ -450,6 +458,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2757",
 "DCAMU", // multi update 
 "DCAUAC",
+"2755T", // הגשת שטעון
+"2757T", // תשובה להגשת שטעון
+"2751T", // הצהרת שטעון
+"2751T2", // תשובה להצהרת שטעון
 "UCADPE"
 //"8302" //בקשה לטופס הצהרה
 };

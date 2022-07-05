@@ -9,7 +9,7 @@ namespace Logitude.Customs.BL.Utils
 {
     public class Serializer
     {
-        public X CastXML<X,T>(T xml, string xmlUrl = "") where X : class
+        public static TO CastXML<TO,FROM>(FROM xml, string xmlUrl = "") where TO : class
         {
             string DeclarationString;
 
@@ -29,11 +29,11 @@ namespace Logitude.Customs.BL.Utils
 
             using (var stringReader = new System.IO.StringReader(DeclarationString))
             {
-                var serializer = new XmlSerializer(typeof(T));
+                var serializer = new XmlSerializer(typeof(FROM));
 
                 try
                 {
-                    return serializer.Deserialize(stringReader) as X;
+                    return serializer.Deserialize(stringReader) as TO;
                 }
                 catch (System.Exception ex)
                 {
