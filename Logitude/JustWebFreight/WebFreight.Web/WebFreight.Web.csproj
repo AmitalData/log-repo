@@ -2731,6 +2731,7 @@
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\AutomationModel\OnUpdateDocumentService.cs" />
+    <Compile Include="Helpers\AutomationModel\SendInterface\AdvancedARInvoiceAPISendInterfaceDataContract.cs" />
     <Compile Include="Helpers\AutomationModel\SendInterface\ARInvoiceAPISendInterfaceDataContract.cs" />
     <Compile Include="Helpers\AutomationModel\SendInterface\ISendInterfaceDataContract.cs" />
     <Compile Include="Helpers\AutomationModel\SendInterface\SendInterfaceDataContract.cs" />
