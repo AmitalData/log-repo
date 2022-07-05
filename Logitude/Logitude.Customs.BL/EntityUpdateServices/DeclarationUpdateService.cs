@@ -2028,6 +2028,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 DeclarationPM fromDeclaration = declarationPMs.Where(d => d.Id == fromDeclarationId).FirstOrDefault();
                 DeclarationPM toDeclaration = declarationPMs.Where(d => d.Id == toDeclarationId).FirstOrDefault();
 
+                if (toDeclaration.Direction == "E")
+                {
+                    toDeclaration.DeclarationTypeCode = fromDeclaration.DeclarationTypeCode;
+                }
+
                 if (string.IsNullOrEmpty(toDeclaration.ProcedureCurrentCode))
                 {
                     toDeclaration.ProcedureCurrentCode = fromDeclaration.ProcedureCurrentCode;
@@ -2164,6 +2169,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         if (consignmentPM != null)
                         {
+                            if(toDeclaration.Direction == "E") 
+                            { 
+                                consignmentPM.ConsignmentType = Consignment.ConsignmentType; 
+                            }
+                           
+
                             if (string.IsNullOrEmpty(consignmentPM.CargoTypeCode))
                             {
                                 consignmentPM.CargoTypeCode = Consignment.CargoTypeCode;
