@@ -26,6 +26,8 @@ export class AddEditScreenComponent extends BaseComponent {
     private numberOfColumns: number = 3;
     private screenType: string = "LIGHTENING";
     private CurrentSession = SessionLocator.SelectedSession;
+    private isEditMode: boolean = false;
+
     constructor() {
         super();
         this.screenExtendedService = new ScreenExtendedService();
@@ -34,21 +36,22 @@ export class AddEditScreenComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         this.screenLayoutComponent = args.ScreenLayoutComponent;
-        this.EntityPM = this.GetNewScreenInStance();
-        this.UIProperties.SetRequired("Name", "Screen", true);
 
+        this.EntityPM = args.Screen || this.GetNewScreenInstance();
+        this.SetObjectTableFields(this.EntityPM);
+        this.isEditMode = args.Screen != null;
+
+        this.UIProperties.SetRequired("Name", "Screen", true);
     }
 
 
-    GetNewScreenInStance() {
+    GetNewScreenInstance() {
         var screen = new ScreenPM();
         screen.Type = this.screenType;
         screen.Tenant = SessionLocator.Tenant;
         screen.NumberOfRows = this.numberOfRows;
         screen.NumberOfColumns = this.numberOfColumns;
-        this.SetObjectTableFields(screen);
         return screen;
-
     }
 
 
@@ -66,8 +69,18 @@ export class AddEditScreenComponent extends BaseComponent {
     }
 
 
+    get Inactive() { return this.EntityPM?.Inactive; }
+    set Inactive(newValue: boolean) {
+        if (this.EntityPM.Inactive != newValue) {
+            this.EntityPM.Inactive = newValue;
+        }
+    }
 
-    
+
+
+
+
+
     SaveButtonClicked() {
 
         this.ValidationErrorsList = [];
@@ -76,9 +89,15 @@ export class AddEditScreenComponent extends BaseComponent {
             return;
         }
 
+        this.isEditMode ? this.SubmitScreenChanges() : this.SubmitNewScreen();
+    }
 
+
+    private SubmitNewScreen()
+    {
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.screenExtendedService.insert(this.EntityPM).subscribe((myResult: ServiceResponse) => {
+        this.screenExtendedService.insert(this.EntityPM).subscribe((myResult: ServiceResponse) =>
+        {
             var myResponse: ServiceResponse = myResult;
             this.CurrentSession.StopBusyIndicator();
 
@@ -92,7 +111,19 @@ export class AddEditScreenComponent extends BaseComponent {
 
         });
     }
+    private SubmitScreenChanges()
+    {
+        this.CurrentSession.StartBusyIndicatorSaving();
+        this.screenExtendedService.update(this.EntityPM).subscribe((response: ServiceResponse) =>
+        {
+            this.CurrentSession.StopBusyIndicator();
 
+            if (response.HasError)
+                return this.HandleException(response);
+
+            this.CurrentSession.CloseCurrentWindow();
+        });
+    }
 
     HandleException(serviceResponse: ServiceResponse) {
         if (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) {
@@ -108,7 +139,7 @@ export class AddEditScreenComponent extends BaseComponent {
         if (!title) return;
         messageWindow.Title = title;
 
-        
+
     }
 
 

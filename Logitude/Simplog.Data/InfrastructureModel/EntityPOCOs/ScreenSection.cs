@@ -37,6 +37,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         //[ForeignKey("ScreenCode")]
         //public virtual Screen Screen { get; set; }
 
+        public bool Inactive { get; set; }
 
 
         [ForeignKey("CreatedByUserId")]

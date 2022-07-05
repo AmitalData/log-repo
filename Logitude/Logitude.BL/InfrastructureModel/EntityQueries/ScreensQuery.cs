@@ -48,6 +48,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    Code = a.Code,
                                    Id = a.Id,
                                    IsReadOnly = a.IsReadOnly,
+                                   Inactive = a.Inactive,
                                    NumberOfColumns = a.NumberOfColumns,
                                    NumberOfRows = a.NumberOfRows,
                                    ObjectTableId = a.ObjectTableId,
@@ -89,12 +90,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
                 ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(tenant);
                 currentscreens = (from a in repository.context.Screens.Include("ObjectTable")
-                                  where a.Tenant == tenant
+                                  where a.Tenant == tenant && a.Inactive == false
                                   select new ScreenPM()
                                   {
                                       Code = a.Code,
                                       Id = a.Id,
                                       IsReadOnly = a.IsReadOnly,
+                                      Inactive = a.Inactive,
                                       NumberOfColumns = a.NumberOfColumns,
                                       NumberOfRows = a.NumberOfRows,
                                       ObjectTableId = a.ObjectTableId,
@@ -124,6 +126,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Code = a.Code,
                         Id = a.Id,
                         IsReadOnly = a.IsReadOnly,
+                        Inactive = a.Inactive,
                         NumberOfColumns = a.NumberOfColumns,
                         NumberOfRows = a.NumberOfRows,
                         ObjectTableId = a.ObjectTableId,
@@ -148,6 +151,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Code = a.Code,
                         Id = a.Id,
                         IsReadOnly = a.IsReadOnly,
+                        Inactive = a.Inactive,
                         NumberOfColumns = a.NumberOfColumns,
                         NumberOfRows = a.NumberOfRows,
                         ObjectTableId = a.ObjectTableId,

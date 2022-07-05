@@ -1,11 +1,11 @@
- 
+
 export class ScreenPM {
-      
+
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { this.id = newValue;}
-       
-	 
+
+
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { this.tenant = newValue; }
@@ -25,16 +25,16 @@ export class ScreenPM {
     private name: string;
     public get Name() { return this.name; }
     public set Name(newValue: string) { this.name = newValue; }
-	 
+
     private code: string;
     public get Code() { return this.code; }
     public set Code(newValue: string) { this.code = newValue; }
-       
-	 
+
+
     private objectTableId: string;
     public get ObjectTableId() { return this.objectTableId; }
     public set ObjectTableId(newValue: string) { this.objectTableId = newValue; }
-       
+
 
     private objectTableName: string;
     public get ObjectTableName() { return this.objectTableName; }
@@ -45,10 +45,14 @@ export class ScreenPM {
     public get IsReadOnly() { return this.isReadOnly; }
     public set IsReadOnly(newValue: boolean) { this.isReadOnly = newValue; }
 
+    private inactive: boolean;
+    public get Inactive() { return this.inactive; }
+    public set Inactive(newValue: boolean) { this.inactive = newValue; }
+
 
     private type: string;
     public get Type() { return this.type; }
     public set Type(newValue: string) { this.type = newValue; }
 
-    
-}
+
+}

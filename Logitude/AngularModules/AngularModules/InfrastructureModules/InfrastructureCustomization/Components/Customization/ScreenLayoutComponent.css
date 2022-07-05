@@ -1,0 +1,27 @@
+.screen-designer-header{
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+}
+.screen-designer-header .title{
+    font-size: 16px;
+    color: #1B90CB;
+    padding-left: 15px;
+}
+.screen-designer-header .title span{
+    font-size: 16px;
+}
+.screen-designer-header button{
+    margin: 0 3px;
+    width: fit-content;
+}
+.screen-designer-header iconbutton{
+    display: inline-block;
+    margin-left: 10px;
+    position: relative;
+    top: 5px;
+}
+.component-wrapper{
+    position: relative;
+    height: calc(100% - 35px);
+}

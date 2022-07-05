@@ -33,8 +33,8 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
 
                 <img [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
                     [attr.src]="Source"
-                    [style.width]="Name=='return' ? '13px' : 'initial'"
-                    style="max-width: 12px;visibility:inherit; vertical-align: middle; position: absolute; top:0; bottom:0; right:0; margin: auto; transform:none;" />
+                    [style.width]="Name=='return'||Name=='arrow-up'||Name=='arrow-down' ? '13px' : 'initial'"
+                    style="visibility:inherit; vertical-align: middle; position: absolute; top:0; bottom:0; right:0; margin: auto; transform:none;" />
 
     </div>
 

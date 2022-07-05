@@ -19,6 +19,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectTableName { get; set; }
         public int NumberOfRows { get; set; }
         public int Number { get; set; }
+        public bool Inactive { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
 

@@ -39,6 +39,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         CreatedByUserId = a.CreatedByUserId,
                         Number = a.Number,
                         NumberOfRows = a.NumberOfRows,
+                        Inactive = a.Inactive,
 
                     }).FirstOrDefault();
         }
@@ -58,6 +59,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         CreatedByUserId = a.CreatedByUserId,
                         Number = a.Number,
                         NumberOfRows = a.NumberOfRows,
+                        Inactive = a.Inactive,
                     });
         }
 
@@ -66,6 +68,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public IQueryable<ScreenSectionList> GetIQueryableEntityList(IQueryable<ScreenSection> iQueryable)
         {
             IQueryable<ScreenSectionList> result = from a in iQueryable
+                                                   where a.Inactive == false
                                               select new ScreenSectionList()
                                               {
                                                   Tenant = a.Tenant,
@@ -74,6 +77,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CreatedByUserId = a.CreatedByUserId,
                                                   Number = a.Number,
                                                   NumberOfRows = a.NumberOfRows,
+                                                  Inactive = a.Inactive,
                                               };
 
             return result;

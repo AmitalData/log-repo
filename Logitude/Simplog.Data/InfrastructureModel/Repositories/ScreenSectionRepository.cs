@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -25,7 +26,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             return this.context.ScreenSections;
         }
-
+        public IQueryable<ScreenSection> GetScreenSections(int tenant)
+        {
+            IQueryable<ScreenSection> ScreenSection = from a in context.ScreenSections
+                                                      where a.Tenant == tenant
+                                                      select a;
+            return ScreenSection;
+        }
         public IQueryable<ScreenSection> GetScreenSectionsByScreenCode(string screenCode,int tenant)
         {
             IQueryable<ScreenSection> ScreenSection = from a in context.ScreenSections
@@ -72,6 +79,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public IWebFreightContext context
         {
             get { return webFreightContext; }
+        }
+
+        public ScreenSection GetSingleScreenSection(string screencode, int number, int tenant)
+        {
+            throw new NotImplementedException();
         }
 
         public void SubmitChanges()

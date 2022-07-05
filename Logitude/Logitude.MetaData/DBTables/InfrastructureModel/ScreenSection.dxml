@@ -10,7 +10,7 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column 
+  <Column
     Name="CreatedByUserId"
     Type="varchar"
     Size="15">
@@ -43,6 +43,12 @@
     Type="int">
     <Constraints
       PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Inactive"
+    Type="bit">
+    <Constraints
       Nullable="false" />
   </Column>
   <Relation
