@@ -49,33 +49,30 @@ namespace CommunicationWorkerRole.Services
         }
 
         private void ManageClosedContainer(Container container)
-        {
-            if (container.ActualEmptyReturn == null) return;            
+        {           
             this.GetCurrentTenant(container.Tenant);
+            if (currentTenant == null) return;
+            else if (this.currentTenant.EmptyReturnClosingDays == null && this.currentTenant.ShipmentATAClosingDays == null) return;
+           
+            bool isClosingByEmptyReturn = this.currentTenant.EmptyReturnClosingDays != null && container.ActualEmptyReturn != null;
+            bool isClosingByShipmentATA = this.currentTenant.ShipmentATAClosingDays != null && container.ShipmentMainCarriageATA != null;
+            bool isUpdatingContainer = false;
 
-            double emptyReturnDays = Convert.ToDouble(this.currentTenant?.EmptyReturnClosingDays);
-            double shipmentATADays = Convert.ToDouble(this.currentTenant?.ShipmentATAClosingDays);
-
-            DateTime? emptyReturnDate = container.ActualEmptyReturn;
-            DateTime? ShipmentATADate = container.ShipmentMainCarriageATA;
-
-            if(container.ActualEmptyReturn != null)
+            if (isClosingByEmptyReturn)
             {
-                emptyReturnDate = container.ActualEmptyReturn.Value.AddDays(emptyReturnDays);
+                double emptyReturnDays = Convert.ToDouble(this.currentTenant.EmptyReturnClosingDays);
+                DateTime? emptyReturnDate = container.ActualEmptyReturn.Value.AddDays(emptyReturnDays);
+                if (emptyReturnDate.Value.Date <= todayDate.Date) isUpdatingContainer = true;
             }
 
-            if (container.ShipmentMainCarriageATA != null)
+            if (isClosingByShipmentATA)
             {
-                ShipmentATADate = container.ShipmentMainCarriageATA.Value.AddDays(shipmentATADays);
+                double shipmentATADays = Convert.ToDouble(this.currentTenant.ShipmentATAClosingDays);
+                DateTime? ShipmentATADate = container.ShipmentMainCarriageATA.Value.AddDays(shipmentATADays);
+                if (ShipmentATADate.Value.Date <= todayDate.Date) isUpdatingContainer = true;
             }
 
-            if ((emptyReturnDate != null && emptyReturnDate.Value.Date <= todayDate.Date) || (ShipmentATADate != null && ShipmentATADate.Value.Date <= todayDate.Date))
-
-            if (this.currentTenant == null) return;
-            else if (currentTenant.AutomaticallyCloseDays == null) return; 
-
-            var actualEmptyReturnDate = container.ActualEmptyReturn.Value.AddDays(currentTenant.AutomaticallyCloseDays.Value);
-            if (actualEmptyReturnDate.Date <= todayDate.Date)
+            if (isUpdatingContainer)
             {
                 this.UpdateClosedContainer(container);
             }

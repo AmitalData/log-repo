@@ -413,7 +413,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     Tenant = containerPM.Tenant,
                     EventTypeCode = "ROCO",
-                    UserId = containerPM.CreatedByUserId,
+                    UserId = containerPM.UpdatedByUserId,
                     EntityId = containerPM.Id,
                     ObjectTableName = "Container",
                 });
@@ -425,7 +425,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     Tenant = containerPM.Tenant,
                     EventTypeCode = "CODC",
-                    UserId = containerPM.CreatedByUserId,
+                    UserId = containerPM.UpdatedByUserId,
                     EntityId = containerPM.Id,
                     ObjectTableName = "Container",
                 });
