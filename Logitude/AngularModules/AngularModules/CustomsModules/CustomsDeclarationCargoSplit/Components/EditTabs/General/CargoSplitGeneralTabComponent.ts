@@ -641,6 +641,7 @@ export class CargoSplitGeneralTabComponent
                 tab.Header = this.TabIndex;
                 tab.Parent = this.EntityPM;
                 tab.IsDisplayOnly = this.IsDisplayOnly;
+                tab.IsExportDeclaration = this.IsExportDeclaration;
                 tab.ComponentPath = "./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/DecCargoSplitConComponent";
                 this.Tabs.push(tab);
             }
@@ -793,7 +794,12 @@ export class CargoSplitGeneralTabComponent
                     if (myDeclarationResponse.Result == null || (myDeclarationResponse.Result != null && AppTool.IsNullOrEmpty(myDeclarationResponse.Result.Id))) {
                         this.CustomFileNo = "";
                         this.EntityPM.DeclarationId = null;
-                        errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
+                        if (this.IsExportDeclaration) {
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile"); 
+                        }
+                        if (this.IsImportDeclaration) { 
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile"); 
+                        }
                         //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
                         this.MessageCustomsFileWindow(errorMessage);
 
@@ -801,21 +807,25 @@ export class CargoSplitGeneralTabComponent
                     }
 
                     this._LastFetchDeclarationList = myDeclarationResponse.Result;
+                    //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
+
                     if (AppTool.IsNullOrEmpty(this._LastFetchDeclarationList)) {
                         this.NoConnectedConsignmentEnableField();
                     } else {
+                        if (this._LastFetchDeclarationList.Direction == "E" && this.IsImportDeclaration) {
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile"); 
+                            this.MessageCustomsFileWindow(errorMessage);
+                            return;
+                        }
+                        if (this._LastFetchDeclarationList.Direction == "I" && this.IsExportDeclaration) {
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile"); 
+                            this.MessageCustomsFileWindow(errorMessage);
+                            return;
+                        }
                         this.CurrentSession.StartBusyIndicator("")
                         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                             .subscribe((myResponse: ServiceResponse) => {
                                 this.CurrentSession.StopBusyIndicator();
-                                if (this._LastFetchDeclarationList.Direction == "E") {
-                                    this.isExportConsignmentFetched = true;
-                                    this.AddItem();
-                                } else {
-                                    this.isExportConsignmentFetched = false;
-                                }
-                                this.SwitchTabsForExportORImport(this._LastFetchDeclarationList.Direction);
-
                                 if (searchtext == "ImporterOnly") {
                                     this._LastFetchConsignmentPMList = myResponse.Result
                                     if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConsignmentUpdateClass
    {  		
-		public const string HashString = "653f436817d75720c56da7199c648fd8";
+		public const string HashString = "9d5fbc172bb3f0dc25cf8baf43b4485f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "משגור",
 			      				    DefaultText =  "Consignment",
-			      				    Code =  "0f3a",
+			      				    Code =  "2cae",
 			      				    Name =  "Customs.Consignment Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1815,10 +1815,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FinalDestinationPortCode",
 					  						DefaultText =  "Final Destination Port Code",
-					  						FullLocalDefaultText =  "נמל יעד",
+					  						FullLocalDefaultText =  "קוד נמל יעד",
 					  						ListFieldLable =  "FinalDestinationPortCodeListLable",
 					  						ListLableDefaultText =  "FinalDestinationPortCode",
-					  						ListLocalDefaultText =  "נמל יעד",
+					  						ListLocalDefaultText =  "קוד נמל יעד",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1940,10 +1940,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportRecieverWareHouseCode",
 					  						DefaultText =  "Reciever WareHouse",
-					  						FullLocalDefaultText =  "אתר המכלה",
+					  						FullLocalDefaultText =  "קוד אתר המכלה",
 					  						ListFieldLable =  "ExportRecieverWareHouseCodeListLable",
 					  						ListLableDefaultText =  "Reciever WareHouse",
-					  						ListLocalDefaultText =  "אתר המכלה",
+					  						ListLocalDefaultText =  "קוד אתר המכלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

@@ -140,10 +140,13 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             string HostName = ConfigurationManager.AppSettings["RabbitmqHost"] ?? throw new Exception("HostName is null set ConfigurationManager.AppSettings RabbitmqHost"); ;
             string UserName = ConfigurationManager.AppSettings["RabbitmqUsername"];
             string Password = ConfigurationManager.AppSettings["RabbitmqPassword"];
-
-            return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password }); ;
+            
+            return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password, 
+                RequestedHeartbeat = TimeSpan.FromSeconds(300),
+                
+            });
         }
-        public static ConnectionFactory GetConnectionFactory(bool tryFromAppSettings)
+        public static ConnectionFactory GetConnectionFactory(bool tryFromAppSettings=true)
         {
             //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);

@@ -2130,6 +2130,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return decPm;
         }
 
+        public List<Declaration> GetDeclarationById(int tenant, string id)
+        {
+            List<Declaration> declarations = repository.GetDeclarationById(tenant, id);
+            return declarations;
+        }
 
 
         public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)

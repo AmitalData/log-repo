@@ -256,7 +256,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 if (additionalInformation.Content != null)
                                 {
-                                    _MyDeclarationPM.AmendmentStatus = additionalInformation.Content.Value;
+                                    if (!isExportClose)
+                                        _MyDeclarationPM.AmendmentStatus = additionalInformation.Content.Value;
                                     switch (additionalInformation.Content.Value)
                                     {
                                         case "1":
@@ -341,13 +342,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     EventRemarks = "Declaration Amendment Denial",
                                                     FUStatusRemarks = "תיקון הצהרה נדחה - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                 };
-                                            }
 
-                                            List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
-                                            var customResponseResponseXml = XmlGenericUtil<Response>.SerializeObject(customResponse.Response);
-                                            var importDeclarationServiceReferenceResponse = XmlGenericUtil<Response>.DeSerializeObject(customResponseResponseXml);
-                                            List<error> systemMessagesList = new List<error>();
-                                            this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointerExport(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferencesListMsg);
+                                                List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
+                                                var customResponseResponseXml = XmlGenericUtil<Response>.SerializeObject(customResponse.Response);
+                                                var importDeclarationServiceReferenceResponse = XmlGenericUtil<Response>.DeSerializeObject(customResponseResponseXml);
+                                                List<error> systemMessagesList = new List<error>();
+                                                this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointerExport(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferencesListMsg);
+                                            }
                                             break;
                                         case "2":
                                             //_MyDeclarationPM.AmendmentStatus = "6";
@@ -391,6 +392,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     EventRemarks = "Declaration Amendment Partial Approval",
                                                     FUStatusRemarks = "תיקון הצהרה אושר חלקית - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                 };
+                                            }
+                                            else
+                                            {
+                                                MyResponseData.IsExportCloseApprove = true;
                                             }
                                             break;
                                         case "6":
@@ -479,7 +484,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _MyDeclarationPM.AmendmentissueDate = DateTime.ParseExact(customResponse.Response.Declaration.IssueDateTime, "yyyy-MM-ddTHH:mm:ss", null);
                 }
 
-                if (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2")
+                if ((!isExportClose && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2")) || MyResponseData.IsExportCloseApprove)
                 {
                     _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
                     _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
