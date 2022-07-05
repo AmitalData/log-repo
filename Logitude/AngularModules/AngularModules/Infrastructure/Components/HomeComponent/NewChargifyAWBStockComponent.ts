@@ -286,7 +286,19 @@ export class NewChargifyAWBStockComponent extends BaseComponent {
     CompleteSendStockPackagesProcess() {
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this.commonDomainService.GetChargifyAWBStock(this.IsAWBStockChecked, this.totalStocks, this.totalPrice).subscribe((myResult: any) => {
+        var isAWBStockChecked = false;
+        if (this.IsChargifyAccount == true && this.IsINTTRAPackage == true) {
+            isAWBStockChecked = this.IsAWBStockChecked;
+        }
+        else {
+            if (this.IsChargifyAccount == true) {
+                isAWBStockChecked = true;
+            }
+            else if (this.IsINTTRAPackage == true) {
+                isAWBStockChecked = false;
+            }
+        }
+        this.commonDomainService.GetChargifyAWBStock(isAWBStockChecked, this.totalStocks, this.totalPrice).subscribe((myResult: any) => {
             this.CurrentSession.StopBusyIndicator();
             if (myResult && !myResult.HasError) {
                 this.ShowSendingStockCompleteMessage();
