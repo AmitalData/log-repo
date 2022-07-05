@@ -73,17 +73,34 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                     ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
                     ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Aggr Catch ExecuteDocumentsExecutionQueue", null, null);
                 }
-                UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception= excep, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                queueService.CompleteAsFailed();
+                try
+                {
+                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = excep, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                    queueService.CompleteAsFailed();
+                }
+                catch (Exception ex)
+                {
+
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside Aggr catch exception while running UpdateDocumentsExecutionLog", null);
+                }
                 Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
             catch (Exception exception)
             {
                 ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
                 ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", null, null);
-                UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                queueService.CompleteAsFailed();
-                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
+                try
+                {
+                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                    queueService.CompleteAsFailed();
+                }
+                catch (Exception ex)
+                {
+                   
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside catch exception while running UpdateDocumentsExecutionLog", null);
+                }
+
+                    Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
         }
 
