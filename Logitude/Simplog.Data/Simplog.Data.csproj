@@ -750,6 +750,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerTrackingRequest.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerTrackingResponse.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentDocsField.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentProductItem.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentStoragePricing.cs" />
@@ -782,6 +783,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsMessageTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsTransmissionMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerTrackingProviderMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ShipmentDocsFieldMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentUnassignedFieldMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentProductItemMap.cs" />
@@ -1214,6 +1216,7 @@
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsTransmissionRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerTrackingProviderRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerTrackingRequestRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ShipmentDocsFieldRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentPackageHarmonizeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentProductItemRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentStoragePricingRepository.cs" />
