@@ -2387,6 +2387,9 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.NoExpenseSubTotalLocalCurr = invoicedataprovider.NoExpenseInvoiceLinesList.Sum(s => s.LocalAmount_Double);
                 invoicedataprovider.NoExpenseSubTotalInvoiceCurr = invoicedataprovider.NoExpenseInvoiceLinesList.Sum(s => s.InvoiceAmount_Double);
 
+                if (invoicedataprovider.NoExpenseSubTotalLocalCurr != null) invoicedataprovider.NoExpenseSubTotalLocalCurr = Math.Round(invoicedataprovider.NoExpenseSubTotalLocalCurr.Value, 2);
+                if (invoicedataprovider.NoExpenseSubTotalInvoiceCurr != null) invoicedataprovider.NoExpenseSubTotalInvoiceCurr = Math.Round(invoicedataprovider.NoExpenseSubTotalInvoiceCurr.Value, 2);
+
                 if (invoicedataprovider.NoExpenseTotalVatList != null)
                 {
                     invoicedataprovider.NoExpenseTotalLocalCurr = invoicedataprovider.NoExpenseSubTotalLocalCurr + invoicedataprovider.NoExpenseTotalVatList.Sum(s => s.TotalVatAmountInLocalCurrency_Double);
