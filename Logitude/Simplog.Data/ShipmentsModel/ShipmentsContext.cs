@@ -361,6 +361,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ContainerStatusMap());
             modelBuilder.Configurations.Add(new ContainerStatusSourceMap());
             modelBuilder.Configurations.Add(new ShipmentUnassignedFieldMap());
+            modelBuilder.Configurations.Add(new ShipmentDocsFieldMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -494,6 +495,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ContainerTrackingProvider> ContainerTrackingProviders { get; set; }
         public IDbSet<ContainerTrackingResponse> ContainerTrackingResponses { get; set; }
         public IDbSet<ContainerTrackingRequest> ContainerTrackingRequests { get; set; }
+        public IDbSet<ShipmentDocsField> ShipmentDocsFields { get; set; }
 
         public void SetAsModified(object entity)
         {

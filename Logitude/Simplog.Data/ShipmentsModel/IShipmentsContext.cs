@@ -13,6 +13,7 @@ namespace Simplog.Data.ShipmentsModel
     public interface IShipmentsContext : IContext
     {
         IDbSet<Shipment> Shipments { get; }
+        IDbSet<ShipmentDocsField> ShipmentDocsFields { get; }
         IDbSet<ShipmentType> ShipmentTypes { get; }
         IDbSet<ShipmentMasterData> ShipmentMasterDatas { get; }
         IDbSet<ShipmentReceivable> ShipmentReceivables { get; }
