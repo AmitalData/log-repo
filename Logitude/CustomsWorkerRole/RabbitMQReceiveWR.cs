@@ -316,7 +316,7 @@ namespace CustomsWorkerRole
                 Logger.LogMe(e.ToString(), false, RabbitMQLogFILE);
 
                 ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "CustomsAnalyzeQueueWR : Run() Method", null);
-                Thread.Sleep(5000);
+                Thread.Sleep(10000);
             }
 
 
