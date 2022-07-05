@@ -298,7 +298,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool ShouldUpdateContainers()
         {
-            if (!IsContainerFeatureActivated() || initializer.IsUpdateFromUpdateTool)
+            if (!initializer.IsUpdateFromUpdateTool && !IsContainerFeatureActivated()  )
                 return false;
 
             if (initializer.EntityPM.TransportModeId != "O")
