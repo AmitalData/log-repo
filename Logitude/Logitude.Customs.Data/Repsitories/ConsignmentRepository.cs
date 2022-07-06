@@ -33,12 +33,6 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower() & a.SecondCargoID.ToLower() == secondCargoID.ToLower()
                     select a).ToList().FirstOrDefault();
         }
-        public Consignment GetConsignmentByKeys(int tenant,string cargoTypeCode, string manifestNumber, string secondCargoID,string thirdCargoID)
-        {
-            return (from a in context.Consignments
-                    where a.Tenant== tenant && a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower() & a.SecondCargoID.ToLower() == secondCargoID.ToLower() && a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
-                    select a).ToList().FirstOrDefault();
-        }
         public int? GetMaxCounterKey(string declarationId, int tenant)
         {
             return (from a in context.Consignments

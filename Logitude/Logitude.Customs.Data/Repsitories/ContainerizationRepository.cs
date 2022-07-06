@@ -46,26 +46,6 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Tenant == tenant && importers.Contains(a.Id)
                     select a.CustomerCard).Distinct().ToList();
         }
-        public List<ContainerizationDetails> GetContainerizationByKeys(int tenant, List<string> Keys)
-        {
-             var query = (from a in context.Containerizations
-                    where a.Tenant == tenant && Keys.Contains((a.CargoTypeCode.ToLower() + a.ManifestNumber.ToLower() + a.SecondCargoID.ToLower() + a.ThirdCargoID.ToLower()).ToString())
-                    select a).ToList();
-            return query.Select(cont => new ContainerizationDetails
-                {
-                    Id = cont.Id,
-                    Tenant = cont.Tenant,
-                    ContainerizationNumber = cont.ContainerizationNumber
-                }).Distinct().OrderBy(c => c.ContainerizationNumber).ToList();
-        }
-        public class ContainerizationDetails
-        {
-            public  string Id { get; set; }
-            public int Tenant { get; set; }
-            public string ContainerizationNumber { get; set; }
-            
-        }
-
     }
 
 }

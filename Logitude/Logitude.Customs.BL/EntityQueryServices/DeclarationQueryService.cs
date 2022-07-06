@@ -2213,10 +2213,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return this.repository.GetContainerizationUniqueConsignment(declarationList);
         }
 
-        public ConDetails GetContainerizationByID(string Id)
-        {
-            return this.repository.GetContainerizationByID(Id);
-        }
-
     }
 }
