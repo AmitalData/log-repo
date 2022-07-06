@@ -23,6 +23,8 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Counters;
+using Logitude.Accounting.BL.CoreBL;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -38,6 +40,19 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
+                var journalNumber = CodeCounter.GetNumber(JournalUpdateOnCreating.GetCodeNumberJournal(), entityPM.Tenant).ToString();
+                entityPM.JournalNumber = journalNumber;
+                entityPOCO.JournalNumber = journalNumber;
+
+                if (entityPM.TypeCode == "0" && entityPM.AccountingEntityReference == null) // Manual
+                {
+                    var accEntityReconciliation10 = GetAccountingEntityDetails();
+                    if (accEntityReconciliation10.Code != entityPM.AccountingEntityCode)
+                    {
+                        entityPM.AccountingEntityReference = entityPM.JournalNumber;
+                        entityPOCO.AccountingEntityReference = entityPM.JournalNumber;
+                    }
+                }
             }
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.ExternalNo);
@@ -159,6 +174,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         }
 
+        private AccountingEntityDetails GetAccountingEntityDetails() {
+            var myAccountingEntityDetails = new AccountingEntityDetails();
+            return myAccountingEntityDetails
+                .GetAll()
+                .FirstOrDefault(r => r.EnglishName == "Adjustment");
+        }
 
         private Contact GetCreatedByUserContactPM(string id,int tenant)
         {
