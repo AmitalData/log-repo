@@ -11,7 +11,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
     {
         public string DocumentId { get; set; }
         public List<PrintingRow> NotValidRows { get; set; }
-
+        public string FileName { get; set; }
+        public string SecurityId { get; set; }
     }
     public class ItemPrintingResult
     {
