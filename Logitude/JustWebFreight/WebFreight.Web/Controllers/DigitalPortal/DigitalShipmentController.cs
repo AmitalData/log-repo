@@ -89,6 +89,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 };
 
 
+                string value = "";
+                string name = "";
+                if (filters.Filter2Value == "CS")
+                {
+                    value = "D,H,A"; 
+                    name = "CustomerId";
+                }
+                else if (filters.Filter2Value == "AG")
+                {
+                    value = "D,C";
+                    name = "AgentId";
+                }
+
+                queryOperations.SetFilter(name, filters.Filter1Value, false, "Equals", null, false);
+                queryOperations.SetFilter("ShipmentLevelCode", value, false, "InList", null, false);
+
                 List<ObjectField> ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
 
