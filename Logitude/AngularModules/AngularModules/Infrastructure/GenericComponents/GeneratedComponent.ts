@@ -239,6 +239,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     {
         const filters = new ApiQueryFilters();
         filters.GetAll = true;
+        filters.PageSize = 1000;
         filters.addAdditionalFilter("ScreenCode", screen.Code, null, null, "Equals", false, false, false, "string");
         return this.screenSectionService.getByFilters(filters)
     }

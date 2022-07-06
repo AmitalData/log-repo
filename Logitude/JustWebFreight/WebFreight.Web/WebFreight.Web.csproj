@@ -1132,6 +1132,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\EntityStatusTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ImageLibraryViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\QuoteChargesGroupViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ScreenSectionViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ImageLibraryController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\MultiEntityUpdateLogController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\QuoteChargesGroupController.Generated.cs" />

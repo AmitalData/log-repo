@@ -42,13 +42,32 @@
 
 								</td>
 
-							
+
 
 								<td style="height: 22px; width: 250px; ">
 
 									<div style="width: 250px;">
 
 										<LogTextBox [ObjectFieldName]="'Name'" [DataContext]="DataContext" [Text]="Name"></LogTextBox>
+									</div>
+								</td>
+								<td></td>
+							</tr>
+                            <tr style="height:15px">
+                                <td></td>
+                            </tr>
+							<tr>
+								<td style="width:10px"></td>
+								<td style="height: 22px; width: 100px;">
+                                    <label *ngIf="Name" class="Label" style="color:#6E7172;padding-left: 10px;">Inactive</label>
+								</td>
+
+
+
+								<td style="height: 22px; width: 250px; ">
+
+									<div style="width: 250px;">
+                                        <CheckBox [IsChecked]="Inactive" (Checked)="Inactive = $event"></CheckBox>
 									</div>
 								</td>
 								<td></td>

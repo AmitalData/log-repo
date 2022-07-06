@@ -1,4 +1,4 @@
-﻿<Script DBType="Main" Module="Shipment">
+<Script DBType="Main" Module="Shipment">
   <Sql Version="2">
     <![CDATA[
           

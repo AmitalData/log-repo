@@ -36,6 +36,7 @@ import {ObjectFieldPMService} from './Services/StandardPMs/ObjectFieldPMService'
 import {QueriesPMService} from './Services/StandardPMs/QueriesPMService';
 import {QueryColumnsPMService} from './Services/StandardPMs/QueryColumnsPMService';
 import {RatesTablePMService} from './Services/StandardPMs/RatesTablePMService';
+import {ScreenSectionPMService} from './Services/StandardPMs/ScreenSectionPMService';
 //import {SharedLogisticsInvitationStatusPMService} from './Services/StandardPMs/SharedLogisticsInvitationStatusPMService';
 import {TenantManagementPMService} from './Services/StandardPMs/TenantManagementPMService';
 import {TextCodePMService} from './Services/StandardPMs/TextCodePMService';
@@ -154,6 +155,7 @@ export class ModuleProviders {
             case "QueriesPMService": { myResult = new QueriesPMService(); break; }
             case "QueryColumnsPMService": { myResult = new QueryColumnsPMService(); break; }
             case "RatesTablePMService": { myResult = new RatesTablePMService(); break; }
+            case "ScreenSectionPMService": { myResult = new ScreenSectionPMService(); break; }
             //case "SharedLogisticsInvitationStatusPMService": { myResult = new SharedLogisticsInvitationStatusPMService(); break; }
             case "TenantManagementPMService": { myResult = new TenantManagementPMService(); break; }
             case "TextCodePMService": { myResult = new TextCodePMService(); break; }

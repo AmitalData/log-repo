@@ -20,6 +20,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public int Tenant { get; set; }
 
         public bool IsReadOnly { get; set; }
+        public bool Inactive { get; set; }
 
         public string ObjectTableName { get; set; }
         public string Name { get; set; }
