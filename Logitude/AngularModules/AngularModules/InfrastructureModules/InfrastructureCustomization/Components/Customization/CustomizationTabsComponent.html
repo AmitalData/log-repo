@@ -12,6 +12,18 @@
                                         [ItemSource]="orderedTabs"
                                         [IsReadOnly]="GridDisabled">
 
+
+                        <!-- Code -->
+                        <log-column [header]="'Code'" [width]="'100'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="TextTrimming" text-start>
+                                        <span>{{ item.Code }}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
                         <!-- Name -->
                         <log-column [header]="'Tab Name'" [width]="'200'">
                             <ng-template let-item>

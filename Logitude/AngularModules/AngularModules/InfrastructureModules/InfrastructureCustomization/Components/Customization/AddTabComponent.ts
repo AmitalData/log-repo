@@ -24,6 +24,10 @@ export class AddTabComponent extends BaseComponent {
     screens: ScreenPM[] = [];
     IsNew: boolean = true;
 
+    prevName: string;
+    prevScreenCode: string;
+    prevScreenName: string;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -39,6 +43,12 @@ export class AddTabComponent extends BaseComponent {
         this.TableTab.Changeset = tab ? 'update' : 'insert';
         this.TableTab.Type = tab?.Type || 'Custom';
         this.TableTab.Name = tab?.Name || tab?.TabNameTextCodeDefaultText;
+
+        if(tab){
+            this.prevName = tab.Name;
+            this.prevScreenCode = tab.ScreenCode;
+            this.prevScreenName = tab.ScreenName;
+        }
     }
 
 
@@ -99,8 +109,17 @@ export class AddTabComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
+        this.revertChanges();
+
         this.CurrentSession.CloseCurrentWindow();
     }
 
 
+
+    private revertChanges()
+    {
+        this.TableTab.ScreenCode = this.prevScreenCode;
+        this.TableTab.ScreenName = this.prevScreenName;
+        this.TableTab.Name = this.prevName;
+    }
 }
