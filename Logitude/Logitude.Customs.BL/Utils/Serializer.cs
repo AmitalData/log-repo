@@ -9,7 +9,7 @@ namespace Logitude.Customs.BL.Utils
 {
     public class Serializer
     {
-        public static TO CastXML<TO,FROM>(FROM xml, string xmlUrl = "") where TO : class
+        public static TO CastXML<TO, FROM>(FROM xml, string xmlUrl = "") where TO : class
         {
             string DeclarationString;
 
@@ -17,19 +17,19 @@ namespace Logitude.Customs.BL.Utils
             {
                 XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
 
-                ns.Add("q", xmlUrl);
+                //ns.Add("q", xmlUrl);
                 var serializer = new XmlSerializer(xml.GetType());
-                serializer.Serialize(stringwriter, xml, namespaces: ns);
+                serializer.Serialize(stringwriter, xml/*, namespaces: ns*/);
                 DeclarationString = stringwriter.ToString();
             }
-            
+
             DeclarationString = DeclarationString.Replace("xmlns:q", "xmlns");
             DeclarationString = DeclarationString.Replace("<q:", "<");
             DeclarationString = DeclarationString.Replace("</q:", "</");
 
             using (var stringReader = new System.IO.StringReader(DeclarationString))
             {
-                var serializer = new XmlSerializer(typeof(FROM));
+                var serializer = new XmlSerializer(typeof(TO));
 
                 try
                 {
