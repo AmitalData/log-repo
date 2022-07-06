@@ -593,6 +593,30 @@ export class DeclarationWebService {
         );
     }
 
+    PostSendTransshipmenDeclaration(genericRequestParams: GenericRequestParams) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var params = JSON.stringify(genericRequestParams);
+            return this._http.post(
+                this._apiUrl + '/PostSendTransshipmenDeclaration/',
+                JSON.stringify(genericRequestParams),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res:any) => {
+
+                    serviceResponse.Result = res;
+
+                    return serviceResponse;
+
+                }),catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+    }
 
     PostSendDeclarationAmendment(genericRequestParams: GenericRequestParams) {
         return defer(() => {
@@ -618,6 +642,7 @@ export class DeclarationWebService {
 
         );
     }
+
     PostSendDeclarationClosingAmendment(genericRequestParams: GenericRequestParams) {
         return defer(() => {
 

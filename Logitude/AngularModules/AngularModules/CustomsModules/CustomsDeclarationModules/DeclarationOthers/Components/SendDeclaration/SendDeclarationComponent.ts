@@ -391,7 +391,7 @@ export class SendDeclarationService implements OnDestroy {
                     if (UnifreightResponseStatus) {
                         //busyIndicatorStartEvent.Publish(new BusyIndicatorStartEventArgs() { Start = true, Message = TextCodeTranslator.Translate("Customs.General.O.Sending") });
                         //var IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
-                        if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ") || FeatureLocator.IsFeatureGrantedByCode("ICL")) {//    o        לאחר שמירה ובדיקת שדות לשליחה, יש לבדוק Feature כפי שבודקים במסך חשבון ספק
+                        if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ") || FeatureLocator.IsFeatureGrantedByCode("ICL")) {//    o        לםחר שמירה ובדיקת שדות לשליחה, יש לבדוק Feature כפי שבודקים במסך חשבון ספק
                             console.log("FritzFeatureIsON .. ");
                             this.UnifreightRequestExpenseFreight();
 
@@ -474,7 +474,7 @@ export class SendDeclarationService implements OnDestroy {
                         this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                             this.reloadEvent.unsubscribe();
                             console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 2.2.3 Continue to this.ConfirmB4TaxationDateTimeCheck();");
-                            //o	לאחר מכן להמשיך בתהליך השליחה למכס
+                            //o	לםחר מכן להמשיך בתהליך השליחה למכס
                             this.ConfirmB4TaxationDateTimeCheck();
                         });
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
@@ -489,7 +489,7 @@ export class SendDeclarationService implements OnDestroy {
                                 else {
                                     this.EntityPM = myResponse.Result;
                                     console.log("UpdateReloadAndConfirmB4TaxationDateTimeCheck 2.2.3 Continue to this.ConfirmB4TaxationDateTimeCheck();");
-                                    //o	לאחר מכן להמשיך בתהליך השליחה למכס
+                                    //o	לםחר מכן להמשיך בתהליך השליחה למכס
                                     this.ConfirmB4TaxationDateTimeCheck();
                                 }
                             });
@@ -516,7 +516,7 @@ export class SendDeclarationService implements OnDestroy {
             windowArgs.Errors = this.ValidationErrors;
             windowArgs.NoButtonVisibility = true;
             windowArgs.CancelButtonVisibility = true;
-            windowArgs.NoButtonText = "לא";
+            windowArgs.NoButtonText = "לם";
             windowArgs.SaveButtonText = "עדכן";
             windowArgs.CancelButtonText = "בטל";
             windowArgs.ComponentHeight = '328px';
@@ -582,7 +582,7 @@ export class SendDeclarationService implements OnDestroy {
             var items: any[] = myResponse.Result.RequiredFields;
             var warningsList: string[] = [];
             items.forEach((item) => {
-                warningsList.push("חשבון ספק " + item.EntityReference + " - שורה  " + item.EntityReference2 + " מסך אישורים - לא הוזנו שדות החובה שנדרשים לאישור הנ”ל ");
+                warningsList.push("חשבון ספק " + item.EntityReference + " - שורה  " + item.EntityReference2 + " מסך םישורים - לם הוזנו שדות החובה שנדרשים לםישור הנ”ל ");
             });
 
             if (warningsList.length > 0) {
@@ -643,9 +643,9 @@ export class SendDeclarationService implements OnDestroy {
                         var windowArgs: any = {};
                         windowArgs.Errors = this.ValidationErrors;
                         windowArgs.ComponentHeight = '328px'; // TextCodeTranslator.Translate("Customs.General.O.ValidationDocuments")
-                        var windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יבוא";
+                        var windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יבום";
                         if (this.EntityPM.Direction == "E") {
-                            windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יצוא";
+                            windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יצום";
                         }
 
                         var logWindow = new LogitudeWindow(this.CurrentSession);
@@ -771,7 +771,7 @@ export class SendDeclarationService implements OnDestroy {
             }
             else {
                 //var errorMessage = TextCodeTranslator.Translate("Customs.General.O.FreightIncotermMandatory");
-                var errorMessage = "קיימים נתוני ערך הובלה אך תנאי המכר בתיק אינם דורשים זאת , להמשיך ? ";
+                var errorMessage = "קיימים נתוני ערך הובלה םך תנםי המכר בתיק םינם דורשים זםת , להמשיך ? ";
                 if (AppTool.IsNullOrEmpty(errorMessage)) {
                     this.SendDeclaration();
                 }
@@ -899,9 +899,9 @@ export class SendDeclarationService implements OnDestroy {
                     }
                 };
         }
-        var windowTitle = "שליחת תיקון הצהרת יבוא";
+        var windowTitle = "שליחת תיקון הצהרת יבום";
         if (this.EntityPM.Direction == "E") {
-            windowTitle = "שליחת תיקון הצהרת יצוא";
+            windowTitle = "שליחת תיקון הצהרת יצום";
         }
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession, searchParams.PBId,
@@ -978,9 +978,9 @@ export class SendDeclarationService implements OnDestroy {
                     }
                 };
         }
-        var title = "שליחת הצהרת יבוא";
+        var title = "שליחת הצהרת יבום";
         if (this.EntityPM.Direction == "E") {
-            title = "שליחת הצהרת יצוא";
+            title = "שליחת הצהרת יצום";
         }
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession, searchParams.PBId,
@@ -1017,16 +1017,17 @@ export class SendDeclarationService implements OnDestroy {
                 this.ValidationErrors.push(err);
                 this.FillValidationErrors("Errors");
             });
-        if (this.EntityPM.Direction == "E") {
+
+        if (this.EntityPM.DeclarationTypeCode == '3')             
+            this.DeclarationService.PostSendTransshipmenDeclaration(searchParams).subscribe();
+        else if (this.EntityPM.Direction == "E") {            
             this.DeclarationService.PostSendExportDeclaration(searchParams).subscribe((response: ServiceResponse) => {
                 //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
-        }
-        else {
+        } else {
             this.DeclarationService.PostSendDeclaration(searchParams).subscribe((response: ServiceResponse) => {
                 //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            });
-
+            });        
         }
 
     }

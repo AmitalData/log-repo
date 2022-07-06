@@ -52,6 +52,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     public class DeclarationWebServiceController : ApiController
     {
         List<AmitalContext> _AmitalContextList = new List<AmitalContext>();
+        enum DeclarationTypeCode { EXPORT, TRANSSHIPMENT }
         AmitalContext GetAmitalContext(int tenant)
         {
             var tenantAmitalContext = _AmitalContextList.FirstOrDefault(rec => rec.TenantSeed == tenant);
@@ -466,8 +467,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-
-
         public HttpResponseMessage PostSendExportDeclaration(GenericRequestParams requestParamsData)
         {
             try
@@ -483,6 +482,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
 
         }
+ 
+        public HttpResponseMessage PostSendTransshipmenDeclaration(GenericRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData;
+                var messagingService = new SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesMessagingService();
+                responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+ 
         public HttpResponseMessage PostSendDeclaration(GenericRequestParams requestParamsData)
         {
             try
@@ -1956,40 +1972,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
-        public HttpResponseMessage PostSendExportPaymentOnly(CustomFileCreditRequestParams requestParamsCredit)
+        public HttpResponseMessage PostSendTransshipmentPaymentOnly(CustomFileCreditRequestParams requestParamsCredit) 
         {
             try
             {
-
-
-
-                CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
-                GenericRequestParams submitRequestParams = new GenericRequestParams();
-                submitRequestParams.AppicationId = requestParamsCredit.AppicationId;
-                submitRequestParams.InterfaceTypeCode = "2755E";
-                submitRequestParams.PBId = requestParamsCredit.PBId;
-                submitRequestParams.CustomsRequestsSheetId = requestParamsCredit.CustomsRequestsSheetId;
-                submitRequestParams.Tenant = requestParamsCredit.Tenant;
-                submitRequestParams.RequestVIA = requestParamsCredit.RequestVIA;
-                submitRequestParams.LoggingUserId = requestParamsCredit.LoggingUserId;
-                submitRequestParams.ForcePersonalSign = requestParamsCredit.ForcePersonalSign;
-
-                submitRequestParams.LoggingEntityId = requestParamsCredit.LoggingEntityId;
-                submitRequestParams.LoggingEntityId2 = requestParamsCredit.LoggingEntityId2;
-                submitRequestParams.LoggingObjectTableId = requestParamsCredit.LoggingObjectTableId;
-                submitRequestParams.LoggingObjectTableId2 = requestParamsCredit.LoggingObjectTableId2;
-
-                submitRequestParams.TestCase = requestParamsCredit.TestCase;
-
-                var messagingService = new
-                    DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService();
-                INF_MSG_GenericResponseData submitResponseData = messagingService.Send(submitRequestParams);
-                responseData.Succeeded = submitResponseData.Succeeded;
-                responseData.HasException = submitResponseData.HasException;
-                responseData.UserMessage = submitResponseData.UserMessage;
-                responseData.ContinueProcessInBackground = submitResponseData.ContinueProcessInBackground;
-
-
+                CustomFileCreditResponseData responseData = SubmitPayment(requestParamsCredit, DeclarationTypeCode.TRANSSHIPMENT);
 
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
@@ -1997,8 +1984,21 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
+        
+        public HttpResponseMessage PostSendExportPaymentOnly(CustomFileCreditRequestParams requestParamsCredit)
+        {
+            try
+            {
+                CustomFileCreditResponseData responseData = SubmitPayment(requestParamsCredit, DeclarationTypeCode.EXPORT);
+
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }        
 
         public HttpResponseMessage GetDeclarationCollateralsList(string declarationId, int tenant)
         {
@@ -2271,6 +2271,38 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        private static CustomFileCreditResponseData SubmitPayment(CustomFileCreditRequestParams requestParamsCredit, DeclarationTypeCode declarationTypeCode)
+        {
+            CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
+            GenericRequestParams submitRequestParams = new GenericRequestParams();
+            submitRequestParams.AppicationId = requestParamsCredit.AppicationId;
+            submitRequestParams.InterfaceTypeCode = "2755E";
+            submitRequestParams.PBId = requestParamsCredit.PBId;
+            submitRequestParams.CustomsRequestsSheetId = requestParamsCredit.CustomsRequestsSheetId;
+            submitRequestParams.Tenant = requestParamsCredit.Tenant;
+            submitRequestParams.RequestVIA = requestParamsCredit.RequestVIA;
+            submitRequestParams.LoggingUserId = requestParamsCredit.LoggingUserId;
+            submitRequestParams.ForcePersonalSign = requestParamsCredit.ForcePersonalSign;
+
+            submitRequestParams.LoggingEntityId = requestParamsCredit.LoggingEntityId;
+            submitRequestParams.LoggingEntityId2 = requestParamsCredit.LoggingEntityId2;
+            submitRequestParams.LoggingObjectTableId = requestParamsCredit.LoggingObjectTableId;
+            submitRequestParams.LoggingObjectTableId2 = requestParamsCredit.LoggingObjectTableId2;
+
+            submitRequestParams.TestCase = requestParamsCredit.TestCase;
+
+            INF_MSG_GenericResponseData submitResponseData =
+                declarationTypeCode == DeclarationTypeCode.EXPORT ?
+                new DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService().Send(submitRequestParams) :
+                new SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesMessagingService().Send(submitRequestParams);
+            responseData.Succeeded = submitResponseData.Succeeded;
+            responseData.HasException = submitResponseData.HasException;
+            responseData.UserMessage = submitResponseData.UserMessage;
+            responseData.ContinueProcessInBackground = submitResponseData.ContinueProcessInBackground;
+            return responseData;
+        }
+
     }
 
     internal class CustomsPartnersItemCRList

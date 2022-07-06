@@ -2407,7 +2407,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.declarationMessagesService.PostSendExportPaymentOnly(params)
                     .subscribe(res1 => {
                     });
-            } else {
+            } else if (this.DeclarationPM.DeclarationTypeCode == "3")
+                this.declarationMessagesService.PostSendTransshipmentPaymentOnly(params).subscribe();
+            else {
                 if (this.AutomaticPayment != 1)
                     this.declarationMessagesService.PostSendPaymentOnly(params)
                         .subscribe(res1 => {
