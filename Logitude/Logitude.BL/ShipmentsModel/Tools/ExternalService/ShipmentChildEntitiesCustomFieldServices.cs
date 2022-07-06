@@ -71,7 +71,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ExternalService
         {
             get
             {
-                if (shipmentServiceInitializer.ShipmentReceivablesChangeSet != null) return shipment.ShipmentReceivables;
+                if (shipmentServiceInitializer.ShipmentReceivablesChangeSet == null) return shipment.ShipmentReceivables;
                 return shipmentServiceInitializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).ToList();
             }
         }
