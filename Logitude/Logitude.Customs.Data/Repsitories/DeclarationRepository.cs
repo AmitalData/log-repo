@@ -67,49 +67,30 @@ namespace Logitude.Customs.Data.Repsitories
             bool newBL = true;
             if (newBL)// TRING  FILENO=60255210
             {
-                List<Declaration> allDecSameFile = null;
-                bool ship2uSlow_KIS = true;
-                if (ship2uSlow_KIS)
-                {
-                    var qCustomFileNo = context.Declarations
-        .Where(r => r.Id == id)
-        .Where(r => r.Tenant == tenant)
-        .Select(r => r.CustomFileNo);
-                    string customFileNo= qCustomFileNo.FirstOrDefault();
-                    if (string.IsNullOrWhiteSpace( customFileNo ))
-                    {
-                        throw new Exception($"CustomFileNo is missing (Declaration  id ={id})");
-                    }
-                    var qAllCustomFileNo = context.Declarations.Where(r => r.CustomFileNo == customFileNo);
-                    allDecSameFile = qAllCustomFileNo.ToList();
-                }
-                else
-                {
-                    var qCustomFileNo = context.Declarations
-        .Where(r => r.Id == id)
-        .Where(r => r.Tenant == tenant)
-        .Select(r => r.CustomFileNo);
-                    var qAllCustomFileNo =
-                        (
-                    from c in qCustomFileNo
-                    join d in context.Declarations
-                    on c equals d.CustomFileNo
-                    select d
-                        );
+                var qCustomFileNo = context.Declarations
+    .Where(r => r.Id == id)
+    .Where(r => r.Tenant == tenant)
+    .Select(r => r.CustomFileNo);
+                var qAllCustomFileNo =
+                    (
+                from c in qCustomFileNo
+                join d in context.Declarations
+                on c equals d.CustomFileNo
+                select d
+                    );
 
-                    //var qGetAcceptDeclarationAmendment =
-                    //    (
-                    //from dec in qAllCustomFileNo.Where(r => r.Tenant == tenant)
-                    //where
-                    //(
-                    //(dec.Id == id && dec.AmendmentDontDisplayInList == false && dec.DeclarationNumber != null) ||
-                    //(dec.AmendmentOriginalDeclartation == id && dec.DeclarationNumber != null && dec.AmendmentDontDisplayInList == false)
-                    //)
-                    //select dec
-                    //);
+                //var qGetAcceptDeclarationAmendment =
+                //    (
+                //from dec in qAllCustomFileNo.Where(r => r.Tenant == tenant)
+                //where
+                //(
+                //(dec.Id == id && dec.AmendmentDontDisplayInList == false && dec.DeclarationNumber != null) ||
+                //(dec.AmendmentOriginalDeclartation == id && dec.DeclarationNumber != null && dec.AmendmentDontDisplayInList == false)
+                //)
+                //select dec
+                //);
 
-                    allDecSameFile = qAllCustomFileNo.ToList();
-                }
+                var allDecSameFile = qAllCustomFileNo.ToList();
                 var qGetAcceptDeclarationAmendment = (from a in allDecSameFile
                                                       where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) ||
                             (a.AmendmentOriginalDeclartation == id && a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
@@ -179,8 +160,7 @@ namespace Logitude.Customs.Data.Repsitories
 
             int max = 0;
 
-            if (list.Count() != 0)
-            {
+            if (list.Count() != 0) {
                 var maxAmendmentRequestNumber = list.Select(r => (int.TryParse(r.AmendmentRequestNumber, out var a)) ? int.Parse(r.AmendmentRequestNumber) : 0).ToList().Max();
                 var maxCancelRequestNumber = list.Select(r => ((r.CancelRequestNumber).HasValue) ? r.CancelRequestNumber.Value : 0).ToList().Max();
                 max = (maxAmendmentRequestNumber > maxCancelRequestNumber) ? maxAmendmentRequestNumber : maxCancelRequestNumber;
@@ -452,19 +432,19 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
-        public (string id, string direction) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
+        public (string id ,string direction) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return (id: "", direction: "");// tuple literal
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
-            var res =
+            var res=
                   (
                   from rec in context.Declarations
                   where rec.DeclarationNumber == declarationNumber && rec.Tenant == tenant
                   select new { rec.Id, rec.Direction }
                   )
                   .FirstOrDefault();
-            return (id: res.Id, direction: res.Direction);// tuple literal
+            return (id: res.Id, direction:res.Direction);// tuple literal
         }
 
         public List<Declaration> GetDeclarationsById(List<string> declarationIds)
@@ -767,16 +747,7 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
-
-        public List<Declaration> GetDeclarationById(int tenant, string id)
-        {
-            var myQ = (from a in context.Declarations
-                       where a.Id == id && a.Tenant == tenant
-                       select a);
-            return myQ.ToList();
-
-        }
-            public List<Declaration> GetDeclarationAmendmentsById(int tenant, string id)
+        public List<Declaration> GetDeclarationAmendmentsById(int tenant, string id)
         {
 
             if (String.IsNullOrWhiteSpace(id)) return null;
@@ -982,10 +953,10 @@ namespace Logitude.Customs.Data.Repsitories
                         join c in context.ConsignmentPackages.Select(x => new ConsignmentPackagesShort { DeclarationId = x.DeclarationId, PackageTypeCode = x.PackageTypeCode, Quantity = x.PackageQuantity.Value }) on d.Id equals c.DeclarationId into cjoin
                         from cj in cjoin.DefaultIfEmpty()
 
-                        select new ConsignmentPackagesShort { DeclarationId = cj.DeclarationId, PackageTypeCode = cj.PackageTypeCode, Quantity = cj.Quantity }
+                        select new  ConsignmentPackagesShort { DeclarationId = cj.DeclarationId, PackageTypeCode = cj.PackageTypeCode, Quantity = cj.Quantity }
                     );
             List<ConsignmentPackagesShort> ConsignmentPackages = myQ2.ToList();
-
+      
             return new DeclarationConsignments { ConsignmentPackages = ConsignmentPackages, Consignment = Consignment };
         }
 
@@ -1007,55 +978,98 @@ namespace Logitude.Customs.Data.Repsitories
             DeclarationId res = myQ.Take(1).ToList().FirstOrDefault();
             return res;
         }
-
         public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
         {
-            var query = (from a in context.Consignments
-                         where declarationList.Contains(a.DeclarationId)
-                         select a);
-            return query.GroupBy(cont => new { ManifestNumber = cont.ManifestNumber, CargoTypeCode = cont.CargoTypeCode, SecondCargoID = cont.CargoTypeCode, ThirdCargoID = cont.ThirdCargoID })
-                .ToList()
-                .SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
-                {
-                    DeclarationId = cont.DeclarationId,
-                    CargoTypeCode = cont.CargoTypeCode,
-                    ManifestNumber = cont.ManifestNumber,
-                    SecondCargoId = cont.SecondCargoID,
-                    ThirdCargoId = cont.ThirdCargoID,
-                })).ToList();
-        }
+            try { 
+           
+               var query1 = (from a in context.Consignments
+                            where declarationList.Contains(a.DeclarationId) && a.ExportContainerizationID==null
+                            select a);
+               var query2 = (from b in context.Containerizations
+                          select b).Select(t=>new ContainerizationKey {
+                              Id =t.Id  ,
+                              Key = t.CargoTypeCode + t.ManifestNumber + t.SecondCargoID + t.ThirdCargoID,
+                          });
 
-        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId)
+               List<ContainerizationKey> ck1 = new List<ContainerizationKey>();
+               ck1 =query2.Where(t => t.Key != null).ToList();
+
+               var q1 = query1.GroupBy(cont => new { ManifestNumber = cont.ManifestNumber, CargoTypeCode = cont.CargoTypeCode, SecondCargoID = cont.SecondCargoID, ThirdCargoID = cont.ThirdCargoID }) 
+                .ToList();
+               //עדכון המכלה
+               var q2 = q1.Where(x => x.Count() >= 1 && x.Any(u => (ck1.Any(g=>g.Key.Contains(u.CargoTypeCode + u.ManifestNumber + u.SecondCargoID + u.ThirdCargoID)))));
+               
+               //הוספת המכלה חדשה
+               var q3 = q1.Where(x => x.Count() > 1 && !(x.Any(u => (ck1.Any(g => g.Key.Contains(u.CargoTypeCode + u.ManifestNumber + u.SecondCargoID + u.ThirdCargoID))))));
+               
+               var q4 = q2.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
+                 {
+                     DeclarationId = cont.DeclarationId,
+                     CargoTypeCode = cont.CargoTypeCode,
+                     ManifestNumber = cont.ManifestNumber,
+                     SecondCargoId = cont.SecondCargoID,
+                     ThirdCargoId = cont.ThirdCargoID,
+                     IsNew=false,
+                     Id= ck1.Where(f=>f.Key.Contains(cont.CargoTypeCode + cont.ManifestNumber + cont.SecondCargoID + cont.ThirdCargoID)).Select(y=>y.Id).FirstOrDefault().ToString(),
+               })).ToList();
+               
+               var q5 = q3.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
+               {
+                   DeclarationId = cont.DeclarationId,
+                   CargoTypeCode = cont.CargoTypeCode,
+                   ManifestNumber = cont.ManifestNumber,
+                   SecondCargoId = cont.SecondCargoID,
+                   ThirdCargoId = cont.ThirdCargoID,
+                   IsNew = true
+               })).ToList();
+               
+               return q4.Union(q5).ToList();
+            }
+            catch (Exception ex)
+            {
+                var mess= ex.Message.ToString();
+                return null;
+            }
+
+        }
+        public ConDetails GetContainerizationByID(string Id)
         {
-            var actionCodes = new List<string> { "4", "6", "8" };
+            var query2 = (from b in context.Containerizations
+                          where b.Id == Id
+                          select b).Select(t => new ConDetails
+                          {
+                            
+                              ContainerizationDate = t.ContainerizationDate,
+                              ContainerizationNumber = t.ContainerizationNumber,
+                              ContainerizationStatus = t.ContainerizationStatus,
+                              HataraStatus = t.HataraStatus,
+                              IsMultiCustomers = t.IsMultiCustomers
 
-            var q = (
-                from d in context.Declarations.Where(x => x.Id == declarationId)
+                          }).FirstOrDefault();
 
-                join e in context.ExportStorages on d.ExportFile equals e.ExportFileNo into ejoin
-                from ej in ejoin.DefaultIfEmpty()
-
-                select new
-                {
-                    DeclarationId = ej.DeclarationId,
-                    CustomsStatus = ej.CustomsStatus,
-                    ActionCode = ej.ActionCode
-                })
-                .GroupBy(x => true)
-                .Select(g => new ExportStorageConnectToDeclaration
-                {
-                    NotConnect = g.Sum(x => string.IsNullOrEmpty(x.DeclarationId) ? 1 : 0),
-                    Connect = g.Sum(x => x.DeclarationId == declarationId ? 1 : 0),
-                    CustomsStatus = g.Sum(x => x.CustomsStatus == "1" ? 1 : 0),
-                    ActionCode = g.Sum(x => actionCodes.Contains(x.ActionCode) ? 1 : 0)
-                });
-
-            ExportStorageConnectToDeclaration res = q.ToList().FirstOrDefault();
-            
-            return res;
+            return query2;
         }
+
+        }
+
+
+
+    public class ConDetails
+    {
+        public DateTime ContainerizationDate { get; set; }
+        public string ContainerizationNumber { get; set; }
+        public string ContainerizationStatus { get; set; }
+        public string HataraStatus { get; set; }
+        public string IsMultiCustomers { get; set; }
     }
-public class DeclarationId
+
+        public class ContainerizationKey
+    {
+        public string Id { get; set; }
+        public string Key { get; set; }
+       
+    }
+    public class DeclarationId
     {
         public string Id { get; set; }
     }
@@ -1083,7 +1097,7 @@ public class DeclarationId
         public string Importername { get; set; }
         public string Cargodescription { get; set; }
         public string Casualimporteraddress { get; set; }
-
+        
         public string Casualimportercity { get; set; }
         public decimal? TotalInvoiceAmountInUSD { get; set; }
         public int PackageMeasureQualifierCode { get; set; }
@@ -1098,7 +1112,7 @@ public class DeclarationId
             CourierHAWB = courierHAWB;
             Importername = importername;
             Cargodescription = cargodescription;
-            Casualimporteraddress = casualimporteraddress;
+            Casualimporteraddress = casualimporteraddress;            
             Casualimportercity = casualimportercity;
             TotalInvoiceAmountInUSD = totalInvoiceAmountInUSD;
             PackageMeasureQualifierCode = packageMeasureQualifierCode;
@@ -1136,15 +1150,7 @@ public class DeclarationId
             IncotermCode = incotermCode;
         }
     }
-    
-
-    public class ExportStorageConnectToDeclaration
-    {
-        public int NotConnect { get; set; }
-        public int Connect { get; set; }
-        public int CustomsStatus { get; set; }
-        public int ActionCode { get; set; }              
-    }
+    //class TotM {
 
     public class ContainerizationUniqueConsignment
     {
@@ -1153,6 +1159,10 @@ public class DeclarationId
         public string SecondCargoId { get; set; }
         public string ThirdCargoId { get; set; }
         public string DeclarationId { get; set; }
+        public bool IsNew { get; set; }
+        public string Id { get; set; }
+
+
     }
 }
 
