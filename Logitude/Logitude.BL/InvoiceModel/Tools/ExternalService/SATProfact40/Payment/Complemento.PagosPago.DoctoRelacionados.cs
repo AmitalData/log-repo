@@ -134,10 +134,13 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
         private static decimal GetEquivalenciaDR(ARInvoice invoice, string arInvoiceCode)
         {
-            return arPaymentPM.PaymentCurrencyCode == arInvoiceCode
-                ? 1
-                : invoice.InvoiceCurrencyExchangeRate != null ? Convert.ToDecimal(invoice.InvoiceCurrencyExchangeRate.Value) : 0;
-            //return invoice.InvoiceCurrencyExchangeRate != null ? Convert.ToDecimal(invoice.InvoiceCurrencyExchangeRate.Value) : 0;
+            if (arPaymentPM.PaymentCurrencyCode == arInvoiceCode)
+                return 1;
+
+            if (invoice.InvoiceCurrencyExchangeRate == null || arPaymentPM.PaymentCurrencyExchangeRate == null)
+                return 0;
+
+            return SATBaseProfact40Service.GetDecimalWith6DigitsAfterPoint(Convert.ToDecimal(arPaymentPM.PaymentCurrencyExchangeRate.Value) / Convert.ToDecimal(invoice.InvoiceCurrencyExchangeRate.Value));
         }
 
         private static string GetPagosPagoDoctoRelacionadoIdDocumento(XmlElement[] comprobanteComplementoAnyXmlElements)

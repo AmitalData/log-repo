@@ -74,7 +74,24 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 Pagos20Specified = true,
             };
 
+            comprobante.InformacionGlobal = GetInformacionGlobal(comprobante.Receptor);
+
             return comprobante;
+        }
+
+        private ComprobanteInformacionGlobal GetInformacionGlobal(ComprobanteReceptor comprobanteReceptor)
+        {
+            bool isPublicInGeneral = comprobanteReceptor.Nombre == SATData.PublicInGeneralNombre;
+            if (!isPublicInGeneral) return null;
+
+            DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(arPaymentPM.Tenant);
+            const string dailyPeriodCode = "01";
+            return new ComprobanteInformacionGlobal
+            {
+                Periodicidad = dailyPeriodCode,
+                Meses = currentDateTime.Month.ToString().PadLeft(2, '0'),
+                Año = Convert.ToInt16(currentDateTime.Year),
+            };
         }
     }
 }
