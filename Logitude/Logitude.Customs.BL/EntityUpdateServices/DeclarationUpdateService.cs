@@ -2330,6 +2330,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             number += 1;
                             consignmentPM = new ConsignmentPM()
                             {
+                                ConsignmentType = Consignment.ConsignmentType,
                                 CargoDescription = Consignment.CargoDescription,
                                 CargoTypeCode = Consignment.CargoTypeCode,
                                 CargoTypeName = Consignment.CargoTypeName,
