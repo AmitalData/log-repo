@@ -63,7 +63,7 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
             this.EntityPm = args.EntityPm;
         }
 
-        if (this.EntityPm) {
+        if (this.EntityPm && this.EntityPM.DirectionId != 'C') {
             this.IsShownCustomerReference3 = !AppTool.IsNullOrEmpty(this.EntityPm.CustomerReference3);
         }
     }
