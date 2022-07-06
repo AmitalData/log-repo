@@ -598,13 +598,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ICustomContext context = MainContext as CustomContext;
             SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
             supplierInvoiceItemQueryService.LoadComposition = true;
-            SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context);
             SupplierInvoiceKeys supplierInvoiceKeys = new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey };
 
-            entityPM.SupplierInvoiceModifications = supplierInvoiceModificationQueryService.GetMulti(supplierInvoiceKeys, true);
-              SupplierInvoiceFreightAmountQueryService supplierInvoiceFreightAmountQueryService = new SupplierInvoiceFreightAmountQueryService(context);
 
+            SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(context);
+            entityPM.SupplierInvoicePayments = supplierInvoicePaymentQueryService.GetMulti(supplierInvoiceKeys, true);
+
+            SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(context);
+            entityPM.SupplierInvoiceUCRs = supplierInvoiceUCRQueryService.GetMulti(supplierInvoiceKeys, true);
+
+            SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context);
+            entityPM.SupplierInvoiceModifications = supplierInvoiceModificationQueryService.GetMulti(supplierInvoiceKeys, true);
+
+            SupplierInvoiceFreightAmountQueryService supplierInvoiceFreightAmountQueryService = new SupplierInvoiceFreightAmountQueryService(context);
             entityPM.SupplierInvoiceFreightAmounts = supplierInvoiceFreightAmountQueryService.GetMulti(supplierInvoiceKeys, true);
+
+
             if (entityPM.SupplierInvoiceFreightAmounts == null)
             {
                 entityPM.SupplierInvoiceFreightAmounts = new List<SupplierInvoiceFreightAmountPM>();
