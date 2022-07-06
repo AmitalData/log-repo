@@ -988,17 +988,18 @@ export class SendDeclarationService implements OnDestroy {
                 this.ValidationErrors.push(err);
                 this.FillValidationErrors("Errors");
             });
-        if (this.EntityPM.Direction == "E") {
+
+        if (this.EntityPM.DeclarationTypeCode == '3')             
+            this.DeclarationService.PostSendTransshipmenDeclaration(searchParams).subscribe();
+        else if (this.EntityPM.Direction == "E") {            
             this.DeclarationService.PostSendExportDeclaration(searchParams).subscribe((response: ServiceResponse) => {
                 //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
-        }
-        else {
+        } else {
             this.DeclarationService.PostSendDeclaration(searchParams).subscribe((response: ServiceResponse) => {
                 //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            });
-        
-}
+            });        
+        }
       
     }
 
