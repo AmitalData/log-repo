@@ -3130,10 +3130,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ActionName&quot;"
     DefaultText="&quot;Action Name&quot;"
-    FullLocalDefaultText="&quot;סטטוס לוגיסטי מכסי&quot;"
+    FullLocalDefaultText="&quot;היתר לוגיסטי מכסי&quot;"
     ListFieldLable="&quot;ActionNameListLable&quot;"
     ListLableDefaultText="&quot;Action Name&quot;"
-    ListLocalDefaultText="&quot;סטטוס לוגיסטי מכסי&quot;"
+    ListLocalDefaultText="&quot;היתר לוגיסטי מכסי&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -3178,6 +3178,7 @@
         IndexOrder="0"
         ObjectFieldName="&quot;OpenDate&quot;"
         ColumnWidth="100" />
+     
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="1"
@@ -3221,14 +3222,14 @@
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="9"
-        ObjectFieldName="&quot;ActionCode&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;OpenStorages&quot;"
-        IndexOrder="10"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="175" />
     </QueryColumns>
+	  <QueryColumn
+	   QueryCode="&quot;OpenStorages&quot;"
+	   IndexOrder="10"
+	   ObjectFieldName="&quot;ActionName&quot;"
+	   ColumnWidth="120" />
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;OpenStorages&quot;"
