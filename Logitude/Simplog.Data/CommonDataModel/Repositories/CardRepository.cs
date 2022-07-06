@@ -171,9 +171,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return accountingCard;
         }
 
-        public Card GetCardByGLAccountId(string id, int tenant, bool fromCache = false)
+        public Card GetCardByGLAccountId(string id, int tenant, bool fromCache = false, string partnerType = null)
         {
-
+            if (partnerType != null) {
+                return  (from a in context.Cards
+                             where a.Tenant == tenant
+                             && a.GLAccountId == id && a.PartnerTypeId == partnerType
+                             select a).FirstOrDefault();
+            }
             string key = $"GetCardByGLAccountId({id},{tenant})";
             var cardFromCache = CacheManager.GetOrInsertNewObject<Card>(key, () =>
             {
