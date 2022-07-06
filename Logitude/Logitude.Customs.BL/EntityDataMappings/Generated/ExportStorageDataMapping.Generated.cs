@@ -528,10 +528,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.ExportFileNo = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExportFileNo));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.StorageStatus)) //T4 find type == nText 
-            {
-                entityPM.StorageStatus = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StorageStatus));
-            }
             if (!String.IsNullOrWhiteSpace(entityPM.StorErrorXML)) //T4 find type == nText 
             {
                 entityPM.StorErrorXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StorErrorXML));
