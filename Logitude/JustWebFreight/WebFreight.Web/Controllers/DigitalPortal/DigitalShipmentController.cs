@@ -89,21 +89,28 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 };
 
 
-                string value = "";
-                string name = "";
-                if (filters.Filter2Value == "CS")
+                string shipmentLevelCodeValue = "";
+                string partnerTypeName = "";
+                var partnerTypeValue = filters.Filter2Value;
+                var partnerTypeId = filters.Filter1Value;
+                if (partnerTypeValue == "null" || partnerTypeValue == "undefined") partnerTypeValue = null;
+                if (partnerTypeId == "null" || partnerTypeId == "undefined") partnerTypeId = null;
+
+                if (partnerTypeValue == "CS")
                 {
-                    value = "D,H,A"; 
-                    name = "CustomerId";
+                    shipmentLevelCodeValue = "D,H,A"; 
+                    partnerTypeName = "CustomerId";
                 }
-                else if (filters.Filter2Value == "AG")
+                else if (partnerTypeValue == "AG")
                 {
-                    value = "D,C";
-                    name = "AgentId";
+                    shipmentLevelCodeValue = "D,C";
+                    partnerTypeName = "AgentId";
                 }
 
-                queryOperations.SetFilter(name, filters.Filter1Value, false, "Equals", null, false);
-                queryOperations.SetFilter("ShipmentLevelCode", value, false, "InList", null, false);
+                if (!string.IsNullOrEmpty(partnerTypeId))
+                    queryOperations.SetFilter(partnerTypeName, partnerTypeId, false, "Equals", null, false);
+                if (!string.IsNullOrEmpty(shipmentLevelCodeValue))
+                    queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InList", null, false);
 
                 List<ObjectField> ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
