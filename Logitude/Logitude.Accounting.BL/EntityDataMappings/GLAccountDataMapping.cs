@@ -281,7 +281,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.IsSplitted = true;
                     entityPM.ParentCurrencyId = gLAccountCurrency.MainGLAccountId;
                     CardRepository repo = new CardRepository(entityPOCO.Tenant);
-                    Card card = repo.GetCardByGLAccountId(gLAccountCurrency.MainGLAccountId, entityPOCO.Tenant, true);
+                    Card card = repo.GetCardByGLAccountId(gLAccountCurrency.MainGLAccountId, entityPOCO.Tenant, false, "VD");
                     entityPM.ParentCurrencyGLAccountCardId = card?.Id;
                 }
 
