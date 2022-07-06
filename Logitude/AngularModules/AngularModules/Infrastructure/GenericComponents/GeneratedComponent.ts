@@ -10,6 +10,7 @@ import { ScreenSectionListService } from 'Infrastructure/Services/StandardLists/
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ScreenPM } from 'Infrastructure/EntityPMs/ScreenPM';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { ScreenSectionPM } from 'Infrastructure/EntityPMs/ScreenSectionPM';
 
 declare var window: any;
 
@@ -166,75 +167,90 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
     private BuildLighteningScreen(fireEmit: boolean = false) {
 
-        if (this.EntityPM == null || this.isViewEnited == false) return;
-        let myScreen:ScreenPM = window.Screens.filter((x: any) => x.Code === this.objectTableTab.ScreenCode)[0];
-        if (myScreen == null) return;
+        if (this.EntityPM == null || this.isViewEnited == false)
+            return;
 
-        this.ScreenSections = [];
+        let screen:ScreenPM = window.Screens.filter((x: any) => x.Code === this.objectTableTab.ScreenCode)[0];
+        if (screen == null)
+            return;
 
-       this.GetScreenSections(myScreen)
-        .subscribe(response => {
-           var sections :any[]= response.Result;
+        this.BuildScreenSections(screen);
 
-            var myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
-
-            if (myScreenFields.length == 0) {
-                myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id);
-            }
-
-            if (myScreenFields.length == 0) {
-                this.ShowNoFieldsText = true;
-                return
-            }
-
-
-            var myObjectFields = window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ObjectTableId);
-            if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId))
-                myObjectFields = myObjectFields.concat(window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ChildObjectTableId));
-
-
-                sections.forEach((section) =>
-            {
-
-                var myScreenColumns: ScreenColumn[] = [];
-
-                for (var c = 0; c < myScreen.NumberOfColumns; c++) {
-                    var myScreenColumn = new ScreenColumn(c);
-
-                    for (var r = 0; r < section.NumberOfRows; r++) {
-                        var myScreenField = myScreenFields.filter((f: any) => f.Column == c && f.Row == r &&f.SectionNumber ==section.number  )[0];
-                        if (myScreenField != null) {
-                            var myObjectField = myObjectFields.filter((f: any) => f.FieldCode == myScreenField.ObjectFieldCode)[0];
-                            if (myObjectField != null) {
-
-                                if (this.ObjectTableName == "CommunicationLog") {
-                                    this.EntityPM.UIProperties.SetEnabled(myObjectField.FieldName, this.ObjectTableName, false);
-                                    this.EntityPM.UIProperties.SetRequired(myObjectField.FieldName, this.ObjectTableName, false);
-                                }
-
-                                myScreenColumn.ObjectFields.push(myObjectField);
-                            }
-                        }
-                    }
-
-                    myScreenColumns.push(myScreenColumn);
-                    this.ScreenSections.push(new ScreenSection(section.Number, section.Name, myScreenColumns))
-
-
-                }
-            });
-
-        });
-
-
-
-
-        if (fireEmit) this.LoadCompleted.emit(true);
+        if (fireEmit)
+        this.LoadCompleted.emit(true);
     }
 
 
 
     private isScreenEnabled: boolean = true;
+    private BuildScreenSections(screen: ScreenPM)
+    {
+        this.GetScreenSections(screen)
+            .subscribe(response =>
+            {
+                this.ScreenSections = [];
+
+                const sections: any[] = response.Result;
+
+                const screenFields = GetScreenFields(screen);
+                if (screenFields.length == 0)
+                    return this.ShowNoFieldsText = true;
+
+                sections.forEach(section => this.BuildScreenSection(screen, section, screenFields, this.GetObjectFields()) );
+            });
+    }
+
+    private BuildScreenSection(screen: ScreenPM, section: ScreenSectionPM, screenFields: any, objectFields: any)
+    {
+        const columns: ScreenColumn[] = [];
+
+        for (let i = 0; i < screen.NumberOfColumns; i++){
+
+            const column = this.BuildScreenColumn(i, section, screenFields, objectFields);
+            if(column.ObjectFields.length == 0)
+                continue;
+            columns.push(column);
+        }
+
+        this.ScreenSections.push(new ScreenSection(section.Number, section.Name, columns));
+    }
+
+
+    BuildScreenColumn(columnIndex,section: ScreenSectionPM,screenFields, objectFields){
+        const column = new ScreenColumn(columnIndex);
+        for (let r = 0; r < section.NumberOfRows; r++) {
+            const screenField = screenFields.filter((f: any) => f.Column == columnIndex && f.Row == r && f.SectionNumber == section.Number)[0];
+            if(!screenField)
+                continue;
+
+                const objectField = objectFields.filter((f: any) => f.FieldCode == screenField.ObjectFieldCode)[0];
+                if (!objectField)
+                    continue;
+
+                this.SetValidityForCommunicationLog(objectField);
+
+                column.ObjectFields.push(objectField);
+        }
+        return column;
+    }
+
+    private SetValidityForCommunicationLog(objectField)
+    {
+        if (this.ObjectTableName != "CommunicationLog")
+            return;
+
+        this.EntityPM.UIProperties.SetEnabled(objectField.FieldName, this.ObjectTableName, false);
+        this.EntityPM.UIProperties.SetRequired(objectField.FieldName, this.ObjectTableName, false);
+    }
+
+    private GetObjectFields()
+    {
+        var objectFields = window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ObjectTableId);
+        if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId))
+            objectFields = objectFields.concat(window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ChildObjectTableId));
+        return objectFields;
+    }
+
     private GetScreenSections(screen: ScreenPM)
     {
         const filters = new ApiQueryFilters();
@@ -272,9 +288,22 @@ export class ScreenSection {
     public SectionNumber: number;
     public Title: string;
     public ScreenColumns: ScreenColumn[];
+    actualColumnsCount = 0;
     constructor(sectionNumber: number, title: string,screenColumns:ScreenColumn[]) {
         this.SectionNumber = sectionNumber;
         this.Title = title;
         this.ScreenColumns = screenColumns;
+        this.actualColumnsCount = screenColumns.filter(c=>c.ObjectFields.length > 0).length;
     }
+
 }
+function GetScreenFields(screen: ScreenPM)
+{
+    var screenFields = window.ScreenFields.filter((x: any) => x.ScreenId === screen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
+
+    if (screenFields.length == 0) {
+        screenFields = window.ScreenFields.filter((x: any) => x.ScreenId === screen.Id);
+    }
+    return screenFields;
+}
+
