@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "288e9e794158d0c011bf94c7a8dff94e";
+		public const string HashString = "4980e5bbbdbfa9cf633f145284d79cd1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1525,7 +1525,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -2544,10 +2544,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActionName",
 					  						DefaultText =  "Action Name",
-					  						FullLocalDefaultText =  "סטטוס לוגיסטי מכסי",
+					  						FullLocalDefaultText =  "היתר לוגיסטי מכסי",
 					  						ListFieldLable =  "ActionNameListLable",
 					  						ListLableDefaultText =  "Action Name",
-					  						ListLocalDefaultText =  "סטטוס לוגיסטי מכסי",
+					  						ListLocalDefaultText =  "היתר לוגיסטי מכסי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2618,9 +2618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenStoragesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.ExportStorage.StorageStatus" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn OpenStoragesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.ExportStorage.ActionCode" , ColumnWidth = 120 }, addedQueryColumns);
-
-			 QueryColumn OpenStoragesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.ExportStorage.DeclarationStatusTypeName" , ColumnWidth = 175 }, addedQueryColumns);
+			 QueryColumn OpenStoragesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.ExportStorage.DeclarationStatusTypeName" , ColumnWidth = 175 }, addedQueryColumns);
 
              AdvancedQueryFilter OpenStoragesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.ExportStorage.StorageStatusIsOpen", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
