@@ -985,11 +985,13 @@ namespace Logitude.Customs.Data.Repsitories
         {
             var actionCodes = new List<string> { "4", "6", "8" };
 
+            ExportStorageConnectToDeclaration res = new ExportStorageConnectToDeclaration();
+           
             var q = (
                 from d in context.Declarations.Where(x => x.Id == declarationId)
 
                 join e in context.ExportStorages on d.ExportFile equals e.ExportFileNo into ejoin
-                from ej in ejoin.DefaultIfEmpty()
+                from ej in ejoin
 
                 select new
                 {
@@ -1002,12 +1004,14 @@ namespace Logitude.Customs.Data.Repsitories
                 {
                     NotConnect = g.Sum(x => string.IsNullOrEmpty(x.DeclarationId) ? 1 : 0),
                     Connect = g.Sum(x => x.DeclarationId == declarationId ? 1 : 0),
-                    CustomsStatus = g.Sum(x => x.CustomsStatus == "1" ? 1 : 0),
+                    CustomsStatus = g.Sum(x => x.CustomsStatus == "1" || x.CustomsStatus == "6" ? 1 : 0),
                     ActionCode = g.Sum(x => actionCodes.Contains(x.ActionCode) ? 1 : 0)
                 });
+            if (q.ToList().FirstOrDefault() != null)
+            {
+                 res = q.ToList().FirstOrDefault();
+            }
 
-            ExportStorageConnectToDeclaration res = q.ToList().FirstOrDefault();
-            
             return res;
         }
     }
@@ -1101,8 +1105,20 @@ namespace Logitude.Customs.Data.Repsitories
         public int NotConnect { get; set; }
         public int Connect { get; set; }
         public int CustomsStatus { get; set; }
-        public int ActionCode { get; set; }              
+        public int ActionCode { get; set; }
+
+        public ExportStorageConnectToDeclaration()
+        {
+            NotConnect = 0;
+            Connect = 0;
+            CustomsStatus = 0;
+            ActionCode = 0;
+
+        }
+        
     }
+
+   
 }
 
 
