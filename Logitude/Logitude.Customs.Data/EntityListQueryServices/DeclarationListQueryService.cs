@@ -526,7 +526,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
             if (queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsContainerization") != null)
             {
-                iQueryable = iQueryable.Where(x => string.IsNullOrEmpty(x.ExportContainerizationID) == true);
+                var query1 = (from a in context.Consignments
+                              where  a.ExportContainerizationID == null
+                              select a);
+                iQueryable = iQueryable.Where(x => query1.Any(c=>c.DeclarationId==x.Id) );
             }
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "CustomerName");
 

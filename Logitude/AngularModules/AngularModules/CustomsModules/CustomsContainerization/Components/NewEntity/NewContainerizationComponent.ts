@@ -216,7 +216,7 @@ export class NewContainerizationComponent extends BaseComponent {
         var filters = new ApiQueryFilters;
         var ExportFilter = new FilterItem("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
         filters.AdditionalFilters.push(ExportFilter);
-        var ProcFilter = new FilterItem("ProcedureCurrentName", 'המכלה', null, null, "Contains", false, false, false, "string", false);
+        var ProcFilter = new FilterItem("ProcedureCurrentName", 'אסמבלי', null, null, "Contains", false, false, false, "string", false);
         filters.AdditionalFilters.push(ProcFilter);
         filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
         if (this.selectedValue != 'All') {
