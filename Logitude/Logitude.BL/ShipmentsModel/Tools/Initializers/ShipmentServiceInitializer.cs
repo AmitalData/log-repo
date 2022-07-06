@@ -30,6 +30,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public bool IsNewEntity { get; private set; }
         public Shipment EntityPOCO { get; private set; }
         public ShipmentPM EntityPM { get; private set; }
+        public bool IsUpdateFromUpdateTool { get; set; }
         public ShipmentMasterData EntityMasterData { get; set; } //private set;
         public IShipmentsContext ShipmentContext { get; private set; }
         public ICommonDataContext CommonContext { get; private set; }
