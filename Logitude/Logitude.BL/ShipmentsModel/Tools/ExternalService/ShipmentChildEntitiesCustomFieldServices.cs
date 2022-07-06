@@ -23,12 +23,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.ExternalService
 
         public void Save()
         {
-            var tasks = BuildTasks();
-            foreach (Task task in tasks)
-            {
-                task.Start();
-            }
-            Task.WaitAll(tasks);
+            Update("ShipmentPackage", ShipmentPackages.Cast<object>().ToList());
+            Update("ShipmentReceivable", ShipmentReceivables.Cast<object>().ToList());
+            Update("ShipmentPayable", ShipmentPayables.Cast<object>().ToList());
+            Update("ShipmentPickUpDelivery", ShipmentPickUps.Cast<object>().ToList());
+            Update("ShipmentPickUpDelivery", ShipmentDeliveries.Cast<object>().ToList());
+            //var tasks = BuildTasks();
+            //foreach (Task task in tasks)
+            //{
+            //    task.Start();
+            //}
+            //Task.WaitAll(tasks);
         }
 
         public Task[] BuildTasks()
@@ -66,7 +71,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ExternalService
         {
             get
             {
-                if (shipmentServiceInitializer.ShipmentReceivablesChangeSet != null) return shipment.ShipmentReceivables;
+                if (shipmentServiceInitializer.ShipmentReceivablesChangeSet == null) return shipment.ShipmentReceivables;
                 return shipmentServiceInitializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).ToList();
             }
         }
