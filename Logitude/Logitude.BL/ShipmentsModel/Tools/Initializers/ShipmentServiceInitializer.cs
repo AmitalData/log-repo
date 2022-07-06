@@ -45,7 +45,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public ShipmentPackageItemRepository ShipmentPackageItemRepository { get; private set; }
         public ShipmentPackageHarmonizeRepository ShipmentPackageHarmonizeRepository { get; private set; }
         public ShipmentOrderPackageRepository ShipmentOrderPackageRepository { get; private set; }
-
         public PortRepository PortRepository { get; private set; }
         public Tenant LoggedTenant { get; private set; }
         public ContactPM LoggedContact { get; private set; }
@@ -70,6 +69,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public ShipmentPackagePM StandalonePackage { get; set; }
         public List<string> DeletedHousesIds { get; set; }
         public List<string> ConnectedHousesIds { get; set; }
+        public ShipmentDocsField ShipmentDocsFieldFromWorkerRole { get; set; }
 
         public List<ShipmentPackagePM> ShipmentPackagesChangeSet { get; set; }
         public List<ShipmentOrderPackagePM> ShipmentOrderPackagesChangeSet;
@@ -194,7 +194,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             serviceBehaviours.Add(new ShipmentConversionBehaviour());
             serviceBehaviours.Add(new ShipmentOperationalDateBehaviour());
             serviceBehaviours.Add(new UpdateDocumentFilingBehaviour());
-            serviceBehaviours.Add(new UpdateShipmentDocsFieldBehaviour());
             foreach (IServiceBehaviour behaviour in serviceBehaviours)
             {
                 behaviour.Handle(this);

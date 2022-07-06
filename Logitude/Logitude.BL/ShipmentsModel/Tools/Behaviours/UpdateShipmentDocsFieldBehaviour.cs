@@ -7,49 +7,70 @@ using Logitude.BL.ShipmentsModel.Tools.Initializers;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 {
-    public class UpdateShipmentDocsFieldBehaviour : IServiceBehaviour
+    public class UpdateShipmentDocsFieldBehaviour
     {
-        private ShipmentServiceInitializer initializer;
-        private ShipmentDocsField shipmentDocsField;
-        private ShipmentPM shipmentPM;
+        private ShipmentServiceInitializer shipmentServiceInitializer;
         private ShipmentDocsFieldRepository shipmentDocsFieldRepository;
-        private bool isNewEntity;
-
-        public void Handle(IServiceInitializer initializer)
+        private ShipmentDocsField myShipmentDocsField;
+        private bool isNew;
+        public UpdateShipmentDocsFieldBehaviour(ShipmentServiceInitializer initializer)
         {
-            this.initializer = (ShipmentServiceInitializer)initializer;
-            this.shipmentPM = this.initializer.EntityPM;
-            this.shipmentDocsFieldRepository = new ShipmentDocsFieldRepository(this.initializer.ShipmentContext);
-
-            this.HandleBehaviour();
+            this.shipmentServiceInitializer = initializer;
+            this.shipmentDocsFieldRepository = new ShipmentDocsFieldRepository(initializer.ShipmentContext);
+            this.isNew = false;
         }
 
-        public void HandleBehaviour()
+        public void Handle()
         {
             GetEntity();
             MapEntity();
+            Save();
         }
 
         private void GetEntity()
         {
-            if (isNewEntity)
+            if (string.IsNullOrEmpty(shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.Id))
             {
-                shipmentDocsField = new ShipmentDocsField()
+                isNew = true;
+                myShipmentDocsField = new ShipmentDocsField()
                 {
-                    Id = shipmentPM.Id,
-                    Tenant = this.initializer.Tenant,
+                    Id = shipmentServiceInitializer.EntityPM.Id,
+                    Tenant = shipmentServiceInitializer.EntityPM.Tenant,
                 };
             }
 
-            else if (shipmentDocsField == null)
+            else
             {
-                shipmentDocsField = shipmentDocsFieldRepository.GetSingleShipmentDocsField(shipmentPM.Id, this.initializer.Tenant);
+                myShipmentDocsField = shipmentDocsFieldRepository.GetSingleShipmentDocsField(shipmentServiceInitializer.EntityPM.Id, shipmentServiceInitializer.EntityPM.Tenant);
             }
         }
 
         private void MapEntity()
         {
+            myShipmentDocsField.IsPODReceived = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.IsPODReceived;
+            myShipmentDocsField.PODReceivedDate = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.PODReceivedDate;
+            myShipmentDocsField.IsCommercialInvoiceReceived = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.IsCommercialInvoiceReceived;
+            myShipmentDocsField.CommercialInvoiceReceivedDate = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.CommercialInvoiceReceivedDate;
+            myShipmentDocsField.IsPackingListReceived = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.IsPackingListReceived;
+            myShipmentDocsField.PackingListReceivedDate = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.PackingListReceivedDate;
+            myShipmentDocsField.IsBOLReceived = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.IsBOLReceived;
+            myShipmentDocsField.BOLReceivedDate = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.BOLReceivedDate;
+            myShipmentDocsField.IsMasterBOLReceived = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.IsMasterBOLReceived;
+            myShipmentDocsField.MasterBOLReceivedDate = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.MasterBOLReceivedDate;
+            myShipmentDocsField.IsArrivalNoticeReceived = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.IsArrivalNoticeReceived;
+            myShipmentDocsField.ArrivalNoticeReceivedDate = shipmentServiceInitializer.ShipmentDocsFieldFromWorkerRole.ArrivalNoticeReceivedDate;
+        }
+        private void Save()
+        {
+            if (isNew)
+            {
+                shipmentDocsFieldRepository.Add(myShipmentDocsField);
+            }
 
+            else
+            {
+                shipmentDocsFieldRepository.Update(myShipmentDocsField);
+            }
         }
     }
 }

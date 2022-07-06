@@ -538,7 +538,7 @@ namespace WebFreight.Web.WebServices
 
 
                     UpdateDocument(commonContext, document);
-                    OpenPODDocumentUploderQueue(extDocPM, commonContext);
+                    OpenKPIDocumentUploderQueue(extDocPM, commonContext);
                     //else // In Azure
                     //{
                     //string filename = document.Id + "." + document.Extension;
@@ -582,18 +582,67 @@ namespace WebFreight.Web.WebServices
             }
         }
 
-        private void OpenPODDocumentUploderQueue(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
+        private void OpenKPIDocumentUploderQueue(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
         {
-            if (documentsFiling.DocumentTypeCode == "POD")
+            //if (documentsFiling.DocumentTypeCode == "POD")
+            //{
+            //    IQueueService queueservice = new DbQueueService();
+            //    queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentsFiling.Tenant);
+            //    queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentsFiling.Id }, { "Tenant", documentsFiling.Tenant.ToString() },
+            //                                                         { "IsPODDocumentUploaded", false.ToString() }, { "IsPODDocumentDeleted", true.ToString() }, { "PODRecived", documentsFiling.ReceivedDate.ToString() } },
+            //                                                          documentsFiling.Tenant, null, null, null, null);
+            //}
+
+            if (IsStartingUploadShipmentDocs(documentsFiling.DocumentTypeCode))
             {
                 IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentsFiling.Tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentsFiling.Id }, { "Tenant", documentsFiling.Tenant.ToString() },
-                                                                     { "IsPODDocumentUploaded", false.ToString() }, { "IsPODDocumentDeleted", true.ToString() }, { "PODRecived", documentsFiling.ReceivedDate.ToString() } },
-                                                                      documentsFiling.Tenant, null, null, null, null);
+                queueservice.InitializeQueue("ShipmentDocsInUploaderQueue", documentsFiling.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { 
+                    { "EntityId", documentsFiling.Id }, 
+                    { "Tenant", documentsFiling.Tenant.ToString() },
+                    { "DocumentCode",  documentsFiling.DocumentTypeCode },
+                    { "IsDocumentUploaded", false.ToString() }, 
+                    { "IsDocumentDeleted", true.ToString() }, 
+                    { "RecivedDate", documentsFiling.ReceivedDate.ToString() } },
+                    documentsFiling.Tenant, null, null, null, null);
             }
         }
-       
+
+        private bool IsStartingUploadShipmentDocs(string documentTypeCode)
+        {
+            if (documentTypeCode == "POD")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "380")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "721")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "706")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "704")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "ARNT")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public byte[] GetPageTiffAsB64FromTarByTenantComIdPage(
            string documentId, int tenant, int currPage, out string TiffPageLines,
             out string ErrorMessage
