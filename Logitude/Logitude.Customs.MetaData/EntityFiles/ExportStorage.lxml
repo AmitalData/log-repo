@@ -3175,7 +3175,11 @@
         IndexOrder="0"
         ObjectFieldName="&quot;OpenDate&quot;"
         ColumnWidth="100" />
-     
+      <QueryColumn
+        QueryCode="&quot;OpenStorages&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;ActionName&quot;"
+        ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="1"
@@ -3222,11 +3226,6 @@
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="175" />
     </QueryColumns>
-	  <QueryColumn
-	   QueryCode="&quot;OpenStorages&quot;"
-	   IndexOrder="10"
-	   ObjectFieldName="&quot;ActionName&quot;"
-	   ColumnWidth="120" />
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;OpenStorages&quot;"
@@ -3257,6 +3256,11 @@
         IndexOrder="0"
         ObjectFieldName="&quot;OpenDate&quot;"
         ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;ActionName&quot;"
+        ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
         IndexOrder="1"
@@ -3300,11 +3304,6 @@
       <QueryColumn
         QueryCode="&quot;AllStorages&quot;"
         IndexOrder="9"
-        ObjectFieldName="&quot;ActionCode&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;AllStorages&quot;"
-        IndexOrder="10"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="175" />
     </QueryColumns>
