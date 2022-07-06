@@ -1007,8 +1007,37 @@ namespace Logitude.Customs.Data.Repsitories
             DeclarationId res = myQ.Take(1).ToList().FirstOrDefault();
             return res;
         }
+        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId)
+        {
+            var actionCodes = new List<string> { "4", "6", "8" };
 
-        public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
+            var q = (
+                from d in context.Declarations.Where(x => x.Id == declarationId)
+
+                join e in context.ExportStorages on d.ExportFile equals e.ExportFileNo into ejoin
+                from ej in ejoin.DefaultIfEmpty()
+
+                select new
+                {
+                    DeclarationId = ej.DeclarationId,
+                    CustomsStatus = ej.CustomsStatus,
+                    ActionCode = ej.ActionCode
+                })
+                .GroupBy(x => true)
+                .Select(g => new ExportStorageConnectToDeclaration
+                {
+                    NotConnect = g.Sum(x => string.IsNullOrEmpty(x.DeclarationId) ? 1 : 0),
+                    Connect = g.Sum(x => x.DeclarationId == declarationId ? 1 : 0),
+                    CustomsStatus = g.Sum(x => x.CustomsStatus == "1" ? 1 : 0),
+                    ActionCode = g.Sum(x => actionCodes.Contains(x.ActionCode) ? 1 : 0)
+                });
+
+            ExportStorageConnectToDeclaration res = q.ToList().FirstOrDefault();
+
+            return res;
+        }
+  
+      public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
         {
             try { 
            
@@ -1079,6 +1108,7 @@ namespace Logitude.Customs.Data.Repsitories
 
             return query2;
         }
+
 
         }
 
