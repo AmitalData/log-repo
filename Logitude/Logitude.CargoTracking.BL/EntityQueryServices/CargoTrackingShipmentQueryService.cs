@@ -58,7 +58,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         public void AddSearchsToShipments(List<CargoTrackingShipmentPM> shipments, int tenant)
         {
             CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
-            List<CargoTrackingShipmentSearch> shipmentSearchs = repo.GetConnectedShipmentNumbersByShipmentIds(shipments.Where(e=>e.EntityType != Codes.OrderType).Select(e => e.EntityId).ToList());
+            List<CargoTrackingShipmentSearch> shipmentSearchs = repo.GetConnectedShipmentNumbersByShipmentIds(shipments.Where(e => e.EntityType != Codes.OrderType).Select(e => e.EntityId).ToList());
             var searchesGroupDictionary = shipmentSearchs.GroupBy(e => e.ShipmentId).ToDictionary(e => e.Key, e => e);
             foreach (var item in shipments)
             {
@@ -172,11 +172,20 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         public void SetMilestonesStatus(CargoTrackingShipmentList shipment, List<Milestone> shipmentMilestones)
         {
-
             SetCurrentMilestone(shipmentMilestones);
             SetDoneMilstones(shipmentMilestones);
             SetFutureMilstoneForShipment(shipment, shipmentMilestones);
+            Milestone currentMilestone = shipmentMilestones.Where(x => x.IsCurrent == true).FirstOrDefault();
+            SetCurrentMilestoenFields(shipment, currentMilestone);
         }
+
+        private void SetCurrentMilestoenFields(CargoTrackingShipmentList shipment, Milestone currentMilestone)
+        {
+            shipment.CurrentMilestoneCode = currentMilestone.Code;
+            shipment.CurrentMilestoneName = currentMilestone.Name;
+            shipment.CurrentMilestoneDate = currentMilestone.Date;
+        }
+
         private void SetCurrentMilestone(List<Milestone> milestones)
         {
             Milestone currentMilstone = GetMostRecentNotEstimatedMilestone(milestones);
@@ -209,7 +218,13 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         }
         private Milestone GetMostRecentNotEstimatedMilestone(List<Milestone> milestones)
         {
-            return milestones.Where(s => s.IsEstimation != true && s.Date != null).OrderByDescending(s => s.Weight).FirstOrDefault();
+            var currentMilestone = milestones.Where(s => s.IsEstimation != true && s.Date != null && s.Date.Value.Date <= DateTime.Now.Date).OrderByDescending(s => s.Weight).FirstOrDefault();
+            // get first milestone
+            if (currentMilestone == null)
+            {
+                currentMilestone = milestones.Where(s => s.IsEstimation != true && s.Date != null).OrderByDescending(s => s.Weight).LastOrDefault();
+            }
+            return currentMilestone;
         }
         private static Milestone GetMostRecentEstimatedMilestone(List<Milestone> milestones)
         {

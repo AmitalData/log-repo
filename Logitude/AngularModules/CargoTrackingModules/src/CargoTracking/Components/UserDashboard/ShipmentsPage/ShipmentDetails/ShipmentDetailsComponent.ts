@@ -574,6 +574,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     NoMilstonesFound: boolean = false;
     BuildSliderCards()
     {
+        let currentDate = new Date();
         if (!this.cargoTrackingShipmentPM.Milestones)
             return;
         this.SliderCards = this.cargoTrackingShipmentPM.Milestones
@@ -599,7 +600,11 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 newCard.Code = 'No. ' + milstone.Code;
                 newCard.Title = milstone.Name;
                 newCard.Description = milstone.Notes;
-                newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
+
+                let cardDateTime = new Date(newCard.Date ? newCard.Date : newCard.ExpectedDate);
+                var cardDate = new Date(cardDateTime.getFullYear(), cardDateTime.getMonth(), cardDateTime.getDate());
+
+                newCard.IsDimmed = (milstone.IsEstimation && !milstone.Done) || cardDate.getTime() > currentDate.getTime();
                 newCard.IsActive = milstone.Code + '' == this.cargoTrackingShipmentPM.CurrentMilestoneCode;
                 newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions != null;
                 newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions.substring(CurrentMilestoneExceptions.indexOf(',')+1,) : null;

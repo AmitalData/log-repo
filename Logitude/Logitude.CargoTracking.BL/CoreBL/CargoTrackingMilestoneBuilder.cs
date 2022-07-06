@@ -425,7 +425,18 @@ namespace Logitude.CargoTracking.BL.CoreBL
             milestones = milestones.OrderByDescending(d => d.Weight).ToList();
 
 
+            milestones = SetMilsetoneIsEstimation(milestones);
+            return milestones;
+        }
 
+        private List<Milestone> SetMilsetoneIsEstimation(List<Milestone> milestones) {
+            foreach (var milestone in milestones)
+            {
+                if (milestone.Date != null)
+                {
+                    milestone.IsEstimation = milestone.Date.Value.Date > DateTime.Now.Date;
+                }
+            }
             return milestones;
         }
     }

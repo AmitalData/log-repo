@@ -128,7 +128,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(searchRequest.Tenant);
             CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
             List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchRequest.SearchKey, searchRequest.Tenant).OrderByDescending(s => s.CreateDate).ToList();
-
+            CargoTrackingShipmentQueryService cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(searchRequest.Tenant);
+            cargoTrackingShipmentQueryService.SetFutureMilstone(shipments);
             CreateSearchEventForMixPanel(searchRequest.SearchKey, searchRequest.Tenant, shipments, true);
 
             return shipments;
