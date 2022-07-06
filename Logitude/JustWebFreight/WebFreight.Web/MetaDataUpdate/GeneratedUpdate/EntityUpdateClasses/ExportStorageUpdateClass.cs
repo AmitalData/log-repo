@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "d31c4f04ea5a12c64d2c6449a92517b1";
+		public const string HashString = "322eeb6490be447be9fae8b030b9bca6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2386,10 +2386,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActionCode",
 					  						DefaultText =  "Action Code",
-					  						FullLocalDefaultText =  "סטאטוס לוגיסטי מכסי",
+					  						FullLocalDefaultText =  "היתר לוגיסטי מכסי",
 					  						ListFieldLable =  "ActionCodeListLable",
 					  						ListLableDefaultText =  "Action Code",
-					  						ListLocalDefaultText =  "סטאטוס לוגיסטי מכסי",
+					  						ListLocalDefaultText =  "היתר לוגיסטי מכסי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
