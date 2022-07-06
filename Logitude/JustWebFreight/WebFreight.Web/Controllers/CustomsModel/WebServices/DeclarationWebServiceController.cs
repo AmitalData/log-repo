@@ -487,7 +487,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             try
             {
                 INF_MSG_GenericResponseData responseData;
-                var messagingService = new SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesMessagingService();
+                var messagingService = new SaveDF_MSG2751_2757_TransshipmentDeclarationRequestMessagingService();
                 responseData = messagingService.Send(requestParamsData);
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
