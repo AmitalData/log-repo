@@ -643,6 +643,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AmitalSSOAngular2.html" />
     <Content Include="css\asp.css" />
     <Content Include="css\fonts\DejaVu\LICENSE.txt" />
     <Content Include="css\fonts\glyphs\KendoUIGlyphs.svg" />
@@ -655,6 +656,7 @@
     <Content Include="css\kendo.default.min.css" />
     <Content Include="css\kendo.mobile.all.min.css" />
     <Content Include="AmitalBrowserTester.html" />
+    <Content Include="CustomWebServices\Testers\IzikTester.aspx" />
     <Content Include="FileNotFound.aspx" />
     <Content Include="Errors\404.aspx" />
     <Content Include="AccountingWebServices\TestersNoInUSE\AccountingBalanceTester.aspx" />
@@ -1026,8 +1028,10 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingWatermarkController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\QuoteGroupSectionViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ProductTypeModificationsController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\ExportStorageExtendedListController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierDeclarationPendingListExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ContainerizationListExtendedController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\LogisticActionRequestController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsRequestsSheetViewsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
@@ -1149,10 +1153,18 @@
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteOPDomainController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\LogisticActionRequestTypeDomainService.Generated.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\LastMileReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReportTypes\SlaDetailedReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReportTypes\SlaConcentratedReport.cs" />
+    <Compile Include="CustomWebServices\Testers\IzikTester.aspx.cs">
+      <DependentUpon>IzikTester.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomWebServices\Testers\IzikTester.aspx.designer.cs">
+      <DependentUpon>IzikTester.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\UserCredentials.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />
@@ -7264,6 +7276,10 @@
     <ProjectReference Include="..\..\Logitude.CustomsMessaging\Logitude.CustomsMessaging.csproj">
       <Project>{7994d6f2-00a7-4c0d-a7d3-fd7d5304b665}</Project>
       <Name>Logitude.CustomsMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.DatabaseMigration\Logitude.DatabaseMigration.csproj">
+      <Project>{160CFF77-92DB-4578-BD3D-BF78A9258B00}</Project>
+      <Name>Logitude.DatabaseMigration</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
       <Project>{bd959ab6-4476-48b3-aa4d-cfd7ed120e55}</Project>

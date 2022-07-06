@@ -410,6 +410,26 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                         );
                     }
                     break;
+                case "1422":
+                case "ItemGovernmentProcedureType":
+                    {
+
+                        closedTableService = new Update1422ItemGovernmentProcedureType(customContext, entitySystemTables,
+                         (mycustomContext) =>
+                         {
+                             return new
+                                 ItemGovernmentProcedureTypeUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                         },
+                         (mycustomContext) =>
+                         {
+                             var qs = new ItemGovernmentProcedureTypeQueryService(mycustomContext);
+                             return qs as ICanGetAllClosedTable<ItemGovernmentProcedureTypePM>;
+                         }
+                         , tenant
+                         , false
+                         );
+                    }
+                    break;
                 default:
 
                     break;

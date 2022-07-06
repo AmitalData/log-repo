@@ -1,39 +1,39 @@
 declare var window: any;
-import {Component, AfterViewInit, ChangeDetectorRef, Output, Input, EventEmitter}  from '@angular/core';
-import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {AppTool, ArrayTool} from '../../../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
-import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
-import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
+import { Component, AfterViewInit, ChangeDetectorRef, Output, Input, EventEmitter } from '@angular/core';
+import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
-import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelper';
-import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
-import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceHelper } from '../../../../../Infrastructure/Utilities/ServiceHelper';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationValidator } from '../../../../../Customs/Validators/DeclarationValidator';
-import {CustomsRequiredFieldListService} from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
+import { CustomsRequiredFieldListService } from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 
-import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
-import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
+import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
-import {CustomsExchangeRateExtendedPMService} from '../../../../../Customs/Services/ExtendedPMs/CustomsExchangeRateExtendedPMService'
+import { CustomsExchangeRateExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsExchangeRateExtendedPMService'
 
-import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 
 import { SupplierInvoiceItemPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
 import { SupplierInvoiceModificationPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceModificationPM';
-import {AddEditSupplierInvoiceComponent} from './AddEditSupplierInvoiceComponent';
+import { AddEditSupplierInvoiceComponent } from './AddEditSupplierInvoiceComponent';
 import { SupplierInvoiceUCRPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceUCRPM';
 import { SupplierInvoicePaymentPM } from '../../../../../Customs/EntityPMs/SupplierInvoicePaymentPM';
 
 
 @Component({
-    
+
     templateUrl: './SupplierInvoiceMoreTabComponent.html',
 })
 
@@ -55,13 +55,13 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
     constructor() {
         super();
         this.ModificationsList = new ObservableCollection([]);
-       
+
     }
 
     SetTabArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.InvoicePM = args.InvoicePM;
-            this.declarationPM = args.DeclarationPM; 
+            this.declarationPM = args.DeclarationPM;
             this.IsDisplayOnly = args.IsDisplayOnly;
             this.Parent = args.Parent;
 
@@ -74,28 +74,31 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
     }
 
     FillGridData() {
-       
-        
+
+
         this.TypeCodeFilterItems = new ApiQueryFilters();
         this.TypeCodeFilterItems.addAdditionalFilter("Code", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
         this.ModificationsList = new ObservableCollection([]);
-       
+
         for (let item of this.InvoicePM.SupplierInvoiceModifications) {
-            if (item.TypeCode != "I02" && item.TypeCode != "67" && item.TypeCode != "144" ) {
+            if (item.TypeCode != "I02" && item.TypeCode != "67" && item.TypeCode != "104") {
                 if (this.declarationPM.Direction == "E" && item.TypeCode != "160") {
                     this.ModificationsList.Insert(new ModificationItemModel(item, this));
                 }
-                
+                else if (this.declarationPM.Direction != "E") {
+                    this.ModificationsList.Insert(new ModificationItemModel(item, this));
+                }
             }
         }
 
         if (this.declarationPM.Direction == "E") {
             this.TypeCodeFilterItems = new ApiQueryFilters();
-            this.TypeCodeFilterItems.addAdditionalFilter("Code", "160", null, null, "NotContains", false, false, false, "string", false, true);
+            this.TypeCodeFilterItems.addAdditionalFilter("Code", "160,104", null, null, "Exclude", false, false, false, "string", false, true);
+
 
             this.UCRList = new ObservableCollection([]);
             for (let item of this.InvoicePM.SupplierInvoiceUCRs) {
-                     this.UCRList.Insert(new UCRItemModel(item));
+                this.UCRList.Insert(new UCRItemModel(item));
             }
 
 
@@ -104,10 +107,10 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
                 this.PaymentsList.Insert(new PaymentItemModel(item));
             }
         }
-        if(this.declarationPM.Direction == "E"){
-            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoiceExport", true, null, null, "Equals", false, false, false, "boolean",false,true);
-        }else{
-            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoice", true, null, null, "Equals", false, false, false, "boolean",false,true);
+        if (this.declarationPM.Direction == "E") {
+            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoiceExport", true, null, null, "Equals", false, false, false, "boolean", false, true);
+        } else {
+            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoice", true, null, null, "Equals", false, false, false, "boolean", false, true);
         }
 
     }
@@ -188,7 +191,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         //        return;
         //    }
         //}
-         // 2- get counter
+        // 2- get counter
         var ucrCounter = 0;
         if (this.PaymentsList.Length > 0) {
             ucrCounter = this.getMax(this.UCRList.Collection, "SequenceNumeric");
@@ -248,14 +251,14 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
 
     }
     RemoveModification(item: ModificationItemModel) {
-       
+
         console.log("... Removing ", item);
         this.ModificationsList.Remove(item);
         this.InvoicePM.RemoveSupplierInvoiceModification(item.ModificationPM); // remove from entity
     }
 
     RemovePayment(item: PaymentItemModel) {
-         console.log("... Removing ", item);
+        console.log("... Removing ", item);
         this.PaymentsList.Remove(item);
         this.InvoicePM.RemoveSupplierInvoicePayment(item.SupplierInvoicePayment); // remove from entity
     }
@@ -281,7 +284,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
 
     getMax(list: any[], propertyName: string) {
         var max = -99999;
-        var maxObj = list && list.length>0 ? list.reduce(function (prev, current) { return (prev[propertyName] > current[propertyName]) ? prev : current }) : null;
+        var maxObj = list && list.length > 0 ? list.reduce(function (prev, current) { return (prev[propertyName] > current[propertyName]) ? prev : current }) : null;
         if (maxObj != null)
             if (max <= maxObj[propertyName])
                 max = maxObj[propertyName];
@@ -445,7 +448,7 @@ export class ModificationItemModel extends BaseComponent {
         super();
         this.ModificationPM = modificationPM;
         this.isValid = true;
-        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.parent.InvoicePM.InvoiceCurrencyTypeCode, this.parent.declarationPM.TaxationDateTime).subscribe((response:any) => {
+        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.parent.InvoicePM.InvoiceCurrencyTypeCode, this.parent.declarationPM.TaxationDateTime).subscribe((response: any) => {
             if (response) {
                 if (response.Result) {
                     var rate = response.Result[0];
@@ -532,17 +535,17 @@ export class ModificationItemModel extends BaseComponent {
     set Amount(value: number) {
         if (this.ModificationPM.Amount != value) {
             this.ModificationPM.Amount = value;
-        //    this.doCalculate = true;
+            //    this.doCalculate = true;
         }
-           
+
     }
     doCalculate: boolean = false;
 
     OriginalText: string;
     AmountOriginalText(originalText: string) {
         this.OriginalText = originalText;
-        if (this.OriginalText ) {
-            if ((this.OriginalText + "").indexOf('%')> -1) {
+        if (this.OriginalText) {
+            if ((this.OriginalText + "").indexOf('%') > -1) {
                 this.doCalculate = true;
             }
         }
@@ -567,12 +570,12 @@ export class ModificationItemModel extends BaseComponent {
     OnAmountLostFocus() {
         if (this.doCalculate) {
             var value = this.Amount;
-           
-        
-            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.CurrencyTypeCode, this.parent.declarationPM.TaxationDateTime).subscribe((response:any) => {
+
+
+            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.CurrencyTypeCode, this.parent.declarationPM.TaxationDateTime).subscribe((response: any) => {
                 if (this.parent.InvoicePM.InvoiceAmount) {
                     this.DiscountInNIS = this.parent.InvoicePM.InvoiceAmount * this.InvoiceCurrencyExchangeRtae * value;
-                  //  value = value * this.parent.InvoicePM.InvoiceAmount;
+                    //  value = value * this.parent.InvoicePM.InvoiceAmount;
                     if (response) {
                         if (response.Result) {
                             var result = response.Result[0];

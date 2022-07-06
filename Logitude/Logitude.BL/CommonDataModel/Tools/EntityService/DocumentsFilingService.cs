@@ -181,7 +181,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if ((!FromService || _OnCreateUnifreightFillingMode) && documentId == null)
             {
-                if (entityPM.DirectionCode == "I")
+                if (
+                    (entityPM.DirectionCode == "I")
+                    //|| 
+                    //(entityPM.DirectionCode == "E")
+                    )
+                    
                 {
                     entityPM.DocumentId = BuildDocument(fileData, true, entityPM.Id);
 
@@ -1361,6 +1366,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         public void Send2UServer(DocumentsFilingPM myDocumentsFilingPM, string loggingUserId, string extDocPMId)
         {
+            var ExternalEntityName = myDocumentsFilingPM.ExternalEntityName;
             var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
                Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
                "GGGHQHYBRID", "LogitudeTaskByUrouter")

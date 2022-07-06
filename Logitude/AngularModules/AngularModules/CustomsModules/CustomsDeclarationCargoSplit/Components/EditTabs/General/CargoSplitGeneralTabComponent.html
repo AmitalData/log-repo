@@ -138,7 +138,7 @@
                                         <div style="margin-top:8px">
                                             <div style="position: relative;">
                                                 <div class="RadioButton">
-                                                    <input type="radio" id="Import" value="Import" name="Direction"
+                                                    <input [checked]="isDirection" type="radio" id="Import" value="Import" name="Direction"
                                                         (click)="DirectionModeClicked('Import')" checked/>
                                                     <label for="Import" style="font-size:12px;"> יבוא </label>
                                                     <img style="left:30px " class="CenterCenter" src="./Images/Directions/I.png" />
@@ -152,8 +152,8 @@
                                         <div style="margin-top:8px">
                                             <div style="position: relative;">
                                                 <div class="RadioButton">
-                                                    <input type="radio" id="Export" value="Export" name="Direction"
-                                                    (click)="DirectionModeClicked('Export')"/>
+                                                    <input [checked]="!isDirection"  type="radio" id="Export" value="Export" name="Direction"
+                                                    (click)="DirectionModeClicked('Export')" />
                                                     <label for="Export" style="font-size:12px;"> יצוא </label>
                                                     <img style="left:30px " class="CenterCenter"
                                                         src="./Images/Directions/E.png" />
@@ -174,7 +174,7 @@
                                             <div style="position: relative;">
                                                 <div class="RadioButton">
                                                     <input [(ngModel)]="air" type="radio" id="air" value="air" name="TransportMode"
-                                                        (click)="TransportModeClicked('A')" [disabled]="IsImportDeclaration"/>
+                                                        (click)="TransportModeClicked('A')" [disabled]="IsImportDeclaration" [checked]="isTransportA"/>
                                                     <label for="air" style="font-size:12px;"> אויר </label>
                                                     <img style="left:30px " class="CenterCenter"
                                                         src="./Images/TransportModes/A.png" />
@@ -189,7 +189,7 @@
                                             <div style="position: relative;">
                                                 <div class="RadioButton">
                                                     <input [(ngModel)]="ocean" id="ocean" type="radio" value="ocean"
-                                                        (click)="TransportModeClicked('O')" name="TransportMode" [disabled]="IsImportDeclaration" />
+                                                        (click)="TransportModeClicked('O')" name="TransportMode" [disabled]="IsImportDeclaration" [checked]="isTransportO"/>
                                                     <label for="ocean" style="font-size:12px;"> ים </label>
                                                     <img style="left:30px" class="CenterCenter"
                                                         src="./Images/TransportModes/O.png" />
@@ -204,7 +204,7 @@
                                             <div style="position: relative;">
                                                 <div class="RadioButton">
                                                     <input [(ngModel)]="land" type="radio" id="land" value="land"
-                                                        (click)="TransportModeClicked('L')" name="TransportMode" [disabled]="IsImportDeclaration" />
+                                                        (click)="TransportModeClicked('L')" name="TransportMode" [disabled]="IsImportDeclaration" [checked]="isTransportL"/>
                                                     <label for="land" style="font-size:12px;"> יבשה </label>
                                                     <img style="left:30px " class="CenterCenter"
                                                         src="./Images/TransportModes/I.png" />
@@ -491,7 +491,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate>
                                                 <div class="RightCenter">
-                                                    <span>{{item.CargoIdentifierKey3}}</span>
+                                                    <span>123123</span>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

@@ -550,7 +550,7 @@
                 <div *ngIf="FieldName == 'LimitDate'" style="position:relative;width:100%; height: 100%;">
                     {{Entity[FieldName] | DateTimePipe:'DT'}}
                 </div>
-                <div *ngIf="FieldName == 'MyCloseCheckBox'" style="text-align:right" (click)="EditMyCloseCheckBox($event)">
+                <div *ngIf="FieldName == 'MyCloseCheckBox'" style="text-align:right" (click)="EditMyCloseCheckBox('PhysicalCheck')">
                     <input class="CenterCenter" style="box-shadow:none ;width: 16px; height:16px; text-align:center"
                            type="checkbox"  />
                 </div>
@@ -736,6 +736,10 @@
                             <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Directions/I.png" />
                         </div> 
                     </div>
+                </div>
+                <div *ngIf="FieldName == 'MyCloseCheckBox'" style="text-align:right" (click)="EditMyCloseCheckBox('LogisticActionRequest')">
+                    <input class="CenterCenter" style="box-shadow:none ;width: 16px; height:16px; text-align:center"
+                           type="checkbox"  />
                 </div>
             </div>
 

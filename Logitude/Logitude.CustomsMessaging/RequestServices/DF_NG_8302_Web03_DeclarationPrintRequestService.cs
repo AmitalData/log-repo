@@ -28,25 +28,30 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DF_NG_8302_Web03_DeclarationPrint_RequestQueryDetails[] QueryDetails(DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams)
         {
+            const string DeclarationTypeExport = "2";
             ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
             var declarationStatus_RequestQueryDetailsList = new List<DF_NG_8302_Web03_DeclarationPrint_RequestQueryDetails>();
             string declarationId = "";
             string declarationNumber = "";
-
+            string direction = "";
             //Query by Declaration
             int count = 0;
             if (requestParams.DeclarationNumber.Count() > 0)
             {
                 declarationNumber = requestParams.DeclarationNumber.FirstOrDefault();
-                declarationId = declarationQueryService.GetIdByDeclarationNumber(declarationNumber, requestParams.Tenant);
+
+
+                //declarationId = declarationQueryService.GetIdByDeclarationNumber(declarationNumber, requestParams.Tenant);
+                (declarationId,direction) = declarationQueryService.GetMinDeclarationByDeclarationNumber(declarationNumber, requestParams.Tenant);
+                
                 foreach (var declarationNumberItem in requestParams.DeclarationNumber)
                 {
                     var declarationStatus_RequestQueryDetails = new DF_NG_8302_Web03_DeclarationPrint_RequestQueryDetails();
                     declarationStatus_RequestQueryDetails.QueryByDeclaration = new DF_NG_8302_Web03_DeclarationPrint_RequestQueryDetailsQueryByDeclaration()
                     {
                         DeclarationID = declarationNumberItem,
-                        DeclarationType = "1"
+                        DeclarationType = direction != "E" ? "1" : DeclarationTypeExport
                     };
                     declarationStatus_RequestQueryDetails.SequenceNumber = ++count;
                     declarationStatus_RequestQueryDetailsList.Add(declarationStatus_RequestQueryDetails);

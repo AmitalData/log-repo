@@ -1083,6 +1083,7 @@
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\ItemGovernmentProcedureTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\LogisticPermitQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsDocumentUploadQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportLogisticPermitActionQueryService.Generated.cs" />
@@ -1591,6 +1592,7 @@
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ExportDeclarationClosingDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExportLogisticPermitActionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionResponseReqSUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticPermitUpdateService.Generated.cs" />
@@ -2013,6 +2015,7 @@
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeficitDecisionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ExportStorageUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ItemGovernmentProcedureTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\UIMessageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ValidCustomsItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ValidCustomsItemUpdateService.Generated.cs" />
@@ -2241,6 +2244,7 @@
     <Compile Include="Messaging\U2L\FritzDeclaration\FritzDeclarationService.cs" />
     <Compile Include="Messaging\U2L\FritzDeclaration\Mapping\FritzDeclarationMapping.cs" />
     <Compile Include="Messaging\U2L\Courier\CourierService.cs" />
+    <Compile Include="Messaging\U2L\ImportDeclaration\ForiegnKeyCheck.cs" />
     <Compile Include="Messaging\U2L\Reshimon\ReshimonService.cs" />
     <Compile Include="Messaging\U2L\Scheduler\SchedulerService.cs" />
     <Compile Include="Messaging\U2L\Entry\EntryService.cs" />

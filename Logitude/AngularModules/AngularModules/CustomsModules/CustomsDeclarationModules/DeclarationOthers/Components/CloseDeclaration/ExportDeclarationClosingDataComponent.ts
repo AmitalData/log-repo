@@ -44,7 +44,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     SetUIProperty() {
 
         this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, true);
-                
+
         if (this.DecPM.TransportModeId != "O") {
             this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("Smp", this.ObjectTableName, false);
@@ -68,7 +68,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     setInputsReadOnly() {
-        
+
         this.UIProperties.SetEnabled("FinalCargoTypeCode", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalSecondCargoId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalThirdCargoId", this.ObjectTableName, false);
@@ -179,6 +179,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         }
     }
 
+    get ChargingSite() { return this.EntityPM ? this.EntityPM.ChargingSite : null; }
+    set ChargingSite(value: string) {
+        if (this.EntityPM.ChargingSite != value) {
+            this.EntityPM.ChargingSite = value;
+        }
+    }
+
     get FinalCargoTypeCode() { return this.EntityPM ? this.EntityPM.FinalCargoTypeCode : null; }
     set FinalCargoTypeCode(value: string) {
         if (this.EntityPM.FinalCargoTypeCode != value) {
@@ -244,7 +251,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
-
+        debugger;
         this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שליחת מסר סגירת הצהרה");
         var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
@@ -265,6 +272,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
             .then((res) => {
 
+                
 
 
             }
@@ -272,14 +280,14 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 this.ValidationErrors.push(err);
-                this.FillValidationErrors("Errors");
+               this.FillValidationErrors("Errors");
             });
 
         this.DeclarationService.PostSendDeclarationClosingAmendment(searchParams).subscribe((response: ServiceResponse) => {
 
             if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && !AppTool.IsNullOrEmpty(response.Result.UserMessage) && response.Result.HasException) {
-                this.ValidationErrors.push(response.Result.UserMessage);
-                this.FillValidationErrors("Errors");
+               //this.ValidationErrors.push(response.Result.UserMessage);
+                //this.FillValidationErrors("Errors");
             }
 
             if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && (response.Result.IsExportCloseApprove || response.Result.HasException)) {

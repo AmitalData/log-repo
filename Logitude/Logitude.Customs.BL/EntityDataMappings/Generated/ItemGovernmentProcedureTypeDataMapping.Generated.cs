@@ -26,7 +26,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         LeadDocumentTypeID,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         LeadDocumentTypeID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +66,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LeadDocumentTypeID))
+            {
+				entityPOCO.LeadDocumentTypeID = entityPM.LeadDocumentTypeID;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -97,6 +104,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LeadDocumentTypeID))
+            {
+					entityPM.LeadDocumentTypeID = entityPOCO.LeadDocumentTypeID;
+            }
+
 		}
 
 		public void PMToOldPM(ItemGovernmentProcedureTypePM entityPM, ItemGovernmentProcedureTypePM oldEntityPM)
@@ -121,6 +133,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LeadDocumentTypeID))
+            {
+                oldEntityPM.LeadDocumentTypeID = entityPM.LeadDocumentTypeID;
             }
 			
 		}

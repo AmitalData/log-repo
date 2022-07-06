@@ -376,7 +376,7 @@ code review : by mohammad+ ihab
 
 if (window.location.href.includes("AmitalSSOAngular") && undefined ==
     window.AngularRecivedRequestFromUnifaceMethod) {
-    alert("sarya >>localhost!!!");
+    console.error("sarya >>localhost!!!");
     window.AngularRecivedRequestFromUnifaceMethod = function (SenderID, ReceiverID, MessageID, CompressItBase64, MessageJSON, MoreParams) {
         //alert('**************Recived event from Uniface !!!**********');
         //alert(SenderID);
@@ -405,7 +405,11 @@ if (window.location.href.includes("AmitalSSOAngular") && undefined ==
 
         _JavascriptGateway.LastRequestFromAngular = JSON.parse(myRequestWrapperJSON);
         //---RefreshResponseDiv(_JavascriptGateway.LastRequestFromAngular);
-        if (JSBridge) {
+        //if (JSBridge) {
+        if (window.JSBridge == null || window.JSBridge === undefined) {
+            console.error("window.JSBridge == null")
+        }
+        else if (window.JSBridge) {
 
             if (JSBridge.AngularSendEvent2Uniface) {
                 if (!_JavascriptGateway.LastRequestFromAngular) {

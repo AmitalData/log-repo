@@ -515,7 +515,8 @@ export class HomeComponent implements OnDestroy{
 
                         let locs = this.AllLocations.toArray().filter(f => f.Code == 'SessionLocation');
                         let myLocation: LocationDirective = locs.filter(f => f.Index == myCA23EditTab.Index)[0];
-
+                        
+                        //alert(exportDecId);
                         //let viewContainerRef = myCA23EditTab.SessionComponent.viewContainerRef
                         if (myLocation != null) {
                             SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Session/SessionComponent", myLocation.viewContainerRef).then(cmpRef => {
@@ -529,17 +530,66 @@ export class HomeComponent implements OnDestroy{
                                 myCA23EditTab.SessionComponent = cmpRef.instance;
                                 this.CurrentSession = myCA23EditTab.SessionComponent;
                                 cmpRef.instance.RunComponent();
+
+                                this.ShowExportDeclaration();
+
                                 AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
                                 this.ProductMessage();
                             });
                         }
                     }
                     else {
+                        this.ShowExportDeclaration();
+
                         AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
                         this.ProductMessage();
                     }
                 }, 500);
         }
+    }
+    ShowBackButton:Boolean=true; 
+    ShowExportDeclaration() {
+        if (AppTool.IsNullOrEmpty(SessionLocator.ExternalParams)) {
+            console.log("ShowExportDeclaration is null");
+            return;
+        }
+        //alert(SessionLocator.ExternalParams);
+        //const amitalSSOAngularURL = window.sessionStorage.getItem("AmitalSSOAngularURL");
+        //http://localhost:4200/AmitalSSOAngular.html?token=3F860255-DA0E-4612-99B6-E857FC531A56&tenant=1&AmitalSSOAngular=1&xxxx=132967399749219211&ExportDecId=1-7381
+        //EXPDIST//http://localhost:4200/INDEX.html?token=O8k24YE5FkJP9mu4xNQ1zm8e9WzDUNwdAIM=&tenant=1&AmitalSSOAngular=1&xxxx=132967399749219211&ExportDecId=1-7085
+        //https://exportpilot.amital.co.il/CUSTOMSDEBUG/AmitalSSOAngular2.html?T=dG9rZW49TGdNR09oZXVQcHJ5dHhyWVdqU0JLSlBVYm9vTUdVTGhScFU9JnRlbmFudD0xJkFtaXRhbFNTT0FuZ3VsYXI9MSZ4eHh4PTEzMjk2NzM5OTc0OTIxOTIxMSZFeHBvcnREZWNJZD0xLTcwODU=
+
+        const exportDecId = //this.getParameterByName("ExportDecId", amitalSSOAngularURL);
+            SessionLocator.ExternalParams["ExportDecId"];
+        if (!AppTool.IsNullOrEmpty(exportDecId)) {
+            this.ShowBackButton = false;
+            AmitalGatewayUtil.Instance.AmitalBrowserInUse = false;
+            console.log("161487-AmitalBrowserInUse = false + UnifreightEntity : BFIFILE"); 
+            setTimeout(() => {
+                const objParams = {
+                    LogitudeCommandId: "ShowDeclarationByIdReturnCloseSave",
+                    LogitudeEntity: "Customs.Declaration",
+                    LogitudeEntityNumber: exportDecId,
+                    LogitudeViewModel: "UnifreightMassageHandler",
+                    UnifreightEntity : "BFIFILE",
+                    Response: [],
+                //    UnifreightEntity: "CFIFILEM",
+                //    UnifreightEntityNumber: "91340690",
+                };
+
+                const event = new CustomEvent('UnifaceRequestEvent', { 'detail': objParams, });
+                this.UnifaceRequest(event);
+            }, 100);
+        }
+    }
+    getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
     ProductMessage() {
         if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductMessage)) {

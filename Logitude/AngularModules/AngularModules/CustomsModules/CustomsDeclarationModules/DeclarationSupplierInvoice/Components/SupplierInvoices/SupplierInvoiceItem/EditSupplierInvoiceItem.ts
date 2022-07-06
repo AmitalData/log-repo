@@ -44,7 +44,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     public OriginalItemPM: SupplierInvoiceItemPM;
     public ClonedItemPM: SupplierInvoiceItemPM;
     public TypeCodeFilterItems: ApiQueryFilters;
-
+    public ProcessTypeCodeFilterItems: ApiQueryFilters;
     //public OriginalItemPM: SupplierInvoiceItemPM; // screen bindingObjectsLocator 
 
     public CustomsBookTypeFilterItems: ApiQueryFilters;
@@ -64,6 +64,10 @@ export class EditSupplierInvoiceItem extends BaseComponent {
             this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItemExport", true, null, null, "Equals", false, false, false, "boolean",false,true);
         } else {
             this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItem", true, null, null, "Equals", false, false, false, "boolean",false,true);
+        }
+        this.ProcessTypeCodeFilterItems = new ApiQueryFilters();
+        if (this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E") {
+            this.ProcessTypeCodeFilterItems.addAdditionalFilter("LeadDocumentTypeID", this.CurrentSession.CurrentEditComponent.EntityPM.DeclarationTypeCode, null, null, "Equals", false, false, false, "string",false,true);
         }
         this.BuildTabs();
 

@@ -1370,7 +1370,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     DeleteConsigment(tab: LogTab) {
         if (!AppTool.IsNullOrEmpty(tab)) {
 
-            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteConsignment");
+            let msg: string = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteConsignment");
+            if(this.EntityPM.Direction === 'E' && this.EntityPM.TransportModeId === 'O' && tab.EntityPM.ExportStoragesId)
+                msg = TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '!\n' + msg;
+
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 300;
             confirmWindow.Height = 150;
@@ -1426,7 +1429,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
     ChangeTransportMode() {
-        if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode)) {
+        if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode) && this.EntityPM.Direction!="E") {
             this.customsHouseTypeExtendedPMService.GetHouseTypewithAdditional(this.DeclarationOfficeCode).subscribe((result: ServiceResponse) => {
                 if (!AppTool.IsNullOrEmpty(result.Result)) {
 

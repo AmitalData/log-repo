@@ -99,7 +99,7 @@
                                     </td>
                                     <td style="left:260px;">
                                         <LogTextBox [ObjectFieldName]="'ExportFile'" [InputType]="'text'" [DataContext]="DataContext"
-                                                    [ObjectTableName]="objectTableNameDec" [HideColumns]="true" [Text]="ExportFile"></LogTextBox>
+                                                    [ObjectTableName]="objectTableNameDec" [HideColumns]="true" [Text]="ExportFile" (ValueChanged)="OnValueChange($event)"></LogTextBox>
                                     </td>
 
 

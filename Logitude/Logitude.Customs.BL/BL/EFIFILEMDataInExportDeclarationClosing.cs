@@ -26,17 +26,16 @@ namespace Logitude.Customs.BL.BL
                 entityPM.DeclarationId = dec.Id;
                 entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                 entityPM.Tenant = tenant;
-                foreach (var con in dec.Consignments)
+                var list = dec.Consignments.Where(con => con.ConsignmentType == "E").ToList();
+                if (list.Count == 1)
                 {
-                    if (con.ConsignmentType == "E")
-                    {
-                        entityPM.FinalCargoTypeCode = con.CargoTypeCode;
-                        entityPM.FinalSecondCargoId = con.SecondCargoID;
-                        entityPM.FinalThirdCargoId = con.ThirdCargoID;
-                        entityPM.FinalManifestNumber = con.ManifestNumber;
-                        entityPM.FinalShipCode = con.ShipCode;
-                        entityPM.FinalLoadingSite = con.ExportLoadingPortCode;
-                    }
+                    var con = list.FirstOrDefault();
+                    entityPM.FinalCargoTypeCode = con.CargoTypeCode;
+                    entityPM.FinalSecondCargoId = con.SecondCargoID;
+                    entityPM.FinalThirdCargoId = con.ThirdCargoID;
+                    entityPM.FinalManifestNumber = con.ManifestNumber;
+                    entityPM.FinalShipCode = con.ShipCode;
+                    entityPM.FinalLoadingSite = con.ExportLoadingPortCode;
                 }
                 entityPM = SetEFIFILEMData(declarationid, tenant, entityPM, dec);
             }
@@ -51,11 +50,21 @@ namespace Logitude.Customs.BL.BL
 
             if (setting.IsConnectedToUniFreight)
             {
+                var isFromNewEntity = true;
                 if (dec == null)
+                {
+                    isFromNewEntity = false;
                     dec = new DeclarationQueryService(tenant).GetSingle(declarationid, true, false);
-
+                }
                 if (dec != null && dec.ExportFile != null && dec.Direction == "E" && dec.TransportModeId == "A")
                 {
+                    if (isFromNewEntity)
+                    {
+                        entityPM.FinalCargoTypeCode = "36";
+                        entityPM.FinalSecondCargoId = "";
+                        entityPM.FinalThirdCargoId = "";
+                    }
+
                     List<AmitalContext> _AmitalContextList = new List<AmitalContext>();
                     var tenantAmitalContext = _AmitalContextList.FirstOrDefault(rec => rec.TenantSeed == tenant);
                     if (tenantAmitalContext == null)
@@ -63,8 +72,22 @@ namespace Logitude.Customs.BL.BL
                         tenantAmitalContext = AmitalContext.GetContext(tenant);
                         _AmitalContextList.Add(tenantAmitalContext);
                     }
-                    int.TryParse(dec.ExportFile, out int exportFile);
+                    int exportFile = 0;
+                    int.TryParse(dec.ExportFile, out exportFile);
                     var EFIFILEMData = new EFIFILEMQueryService(tenantAmitalContext).GetSingle(exportFile, false);
+                    var EFIMMNData = new EFIMMNQueryService(tenantAmitalContext).GetByFileNo(tenant, Convert.ToInt64(exportFile));
+                    if (EFIMMNData != null && EFIMMNData.Count > 0)
+                    {
+                        var Warehouse = EFIMMNData[EFIMMNData.Count - 1].WAREHOUSE;
+                        if (Warehouse != null)
+                        {
+                            var ETBVENDData = new ETBVENDQueryService(tenantAmitalContext).GetSingle(Warehouse, false);
+                            if (ETBVENDData != null)
+                            {
+                                entityPM.ChargingSite = ETBVENDData.NAMEENG;
+                            }
+                        }
+                    }
                     if (EFIFILEMData != null)
                     {
                         entityPM.SMP = EFIFILEMData.SMP;
@@ -72,9 +95,20 @@ namespace Logitude.Customs.BL.BL
                         if (EFIFILEMData.SPEDNO != null)
                         {
                             var ESPSPEDdata = new ESPSPEDQueryService(tenantAmitalContext).GetSingle(EFIFILEMData.SPEDNO.GetValueOrDefault(), false);
-                            if (ESPSPEDdata != null)
+                            if (ESPSPEDdata != null && ESPSPEDdata.MAIN_AWB != null)
                             {
-                                entityPM.MAIN_AWB = ESPSPEDdata.MAINCARRIER + "-" + ESPSPEDdata.MAIN_AWB;
+                                var AIRLINE_NUM = "";
+                                var ETBAIRLINEData = new ETBAIRLINEQueryService(tenantAmitalContext).GetSingle(ESPSPEDdata.MAINCARRIER, false);
+                                if (ETBAIRLINEData != null && ETBAIRLINEData.AIRLINENUM != null)
+                                {
+                                    AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
+                                }
+                                if (isFromNewEntity)
+                                {
+                                    entityPM.FinalManifestNumber = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
+                                }
+                                AIRLINE_NUM = ETBAIRLINEData.AIRLINENUM + "-";
+                                entityPM.MAIN_AWB = AIRLINE_NUM + ESPSPEDdata.MAIN_AWB;
                             }
                         }
                     }

@@ -93,7 +93,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FinalDestinationPortCode, 
 	         IsDangerousGoods, 
 	         StorageStatusIsOpen, 
-	         ActionCode,
+	         ActionCode, 
+	         ProcedureCurrentName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

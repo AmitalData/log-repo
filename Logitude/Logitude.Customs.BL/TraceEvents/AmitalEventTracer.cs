@@ -25,7 +25,11 @@ namespace Logitude.Customs.BL.TraceEvents
         {
             try
             {
-
+                if (myAmitalEventTracer?.MyFUStatus!= null)
+                {
+                    LogMessagingUtil.Instance.AppendLine($"CreateFUStatus:{myAmitalEventTracer.MyFUStatus.status_id}:{myAmitalEventTracer?.MyFUStatus.entname}={myAmitalEventTracer?.MyFUStatus.primary_number}");
+                }
+                
                 if (myAmitalEventTracer.notes == "DO_NOT_RAISE_EVENT")
                 {
                     suppress_RAISE_EVENT = true;

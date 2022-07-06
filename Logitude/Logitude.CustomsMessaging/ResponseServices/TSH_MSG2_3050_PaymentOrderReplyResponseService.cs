@@ -616,11 +616,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string objectTableId = "";
             string entityId = "";
             string childEntityId = "";
+            string dir = "I";
             if (_DeclarationPM != null) // If the Payment order is connected to Declaration
             {
                 objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 entityId = _DeclarationPM.Id;
                 childEntityId = _PaymentOrderPM.Id;
+                dir = _DeclarationPM.Direction;
             }
             else
             {
@@ -822,11 +824,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string objectTableId = "";
             string entityId = "";
             string childEntityId = "";
+            string dir = "I";
             if (_DeclarationPM != null) // If the Payment order is connected to Declaration
             {
                 objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 entityId = _DeclarationPM.Id;
                 childEntityId = _PaymentOrderPM.Id;
+                dir = _DeclarationPM.Direction;
             }
             else
             {

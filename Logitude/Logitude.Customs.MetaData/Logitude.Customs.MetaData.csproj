@@ -131,7 +131,6 @@
     <None Include="DBScripts\Post\202111101341_InterfaceManagementDefaultPriority89.sxml" />
     <None Include="DBScripts\Post\20220131_UpdateTerminalReleaseDate.sxml" />
     <None Include="DBScripts\Post\20220309_RenameAcceptenceCode.sxml" />
-    <None Include="DBScripts\Post\20220221_AddIdColumnPost2.sxml" />
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
@@ -167,7 +166,6 @@
     <None Include="DBScripts\Pre\20210726_CustomPartnerFTPSDropIndex.sxml" />
     <None Include="DBScripts\Pre\20210929_AddMoveTypes.sxml" />
     <None Include="DBScripts\Pre\20211125_UpdateIsMultiCustomer.sxml" />
-    <None Include="DBScripts\Pre\20220221_AddIdColumn2.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
@@ -358,6 +356,7 @@
     <None Include="DBTables\ExportDeclarationClosingData.dxml" />
     <None Include="DBTables\ExportDeliveryDocumentMessage.dxml" />
     <None Include="DBTables\ExporterRoleType.dxml" />
+    <None Include="DBTables\ExportLogisticPermitAction.dxml" />
     <None Include="DBTables\ExportReference.dxml" />
     <None Include="DBTables\ExportStorage.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
@@ -393,6 +392,7 @@
     <None Include="DBTables\LeadDocumentType.dxml" />
     <None Include="DBTables\LoadingSiteType.dxml" />
     <None Include="DBTables\LogisticActionRequest.dxml" />
+    <None Include="DBTables\LogisticActionRequestType.dxml" />
     <None Include="DBTables\LogisticActionResponseReqS.dxml" />
     <None Include="DBTables\LogisticsReferenceType.dxml" />
     <None Include="DBTables\MamanSpecialAction.dxml" />

@@ -29,6 +29,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("LeadDocumentTypeID")]
+	    public string LeadDocumentTypeID { get; set; }
     }
 }
 	 
