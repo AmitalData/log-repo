@@ -20,9 +20,11 @@ using Logitude.Customs.BL.Utils;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
-    public class SaveDF_MSG2751_2757_TransshipmentDeclarationRequestRequestService : 
+    public class SaveDF_MSG2751_2757_TransshipmentDeclarationRequestRequestService :
         RequestServiceBase<DF_NG_2751_MSG10000_ExportDeclaration, GenericRequestParams>
     {
+        private DF_NG_2751_MSG10000_ExportDeclarationRequestService exportDeclarationRequestService = new DF_NG_2751_MSG10000_ExportDeclarationRequestService();
+
         public override void OnRequestFail(GenericRequestParams requestParams)
         {
             if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -159,15 +161,15 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override void PostGetRequest(DF_NG_2751_MSG10000_ExportDeclaration customRequest, GenericRequestParams requestParams)
         {
-            UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2751_MSG10000_ExportDeclaration castCustomRequest=
+            UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2751_MSG10000_ExportDeclaration castCustomRequest =
              Serializer.CastXML<UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2751_MSG10000_ExportDeclaration, DF_NG_2751_MSG10000_ExportDeclaration>(customRequest);
 
-            new DF_NG_2751_MSG10000_ExportDeclarationRequestService().PostGetRequest(castCustomRequest, requestParams);
+            exportDeclarationRequestService.PostGetRequest(castCustomRequest, requestParams);
         }
 
         public override DF_NG_2751_MSG10000_ExportDeclaration GetRequest(GenericRequestParams requestParams)
         {
-            UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2751_MSG10000_ExportDeclaration req = new DF_NG_2751_MSG10000_ExportDeclarationRequestService().GetRequest(requestParams);
+            UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2751_MSG10000_ExportDeclaration req = exportDeclarationRequestService.GetRequest(requestParams);
 
             DF_NG_2751_MSG10000_ExportDeclaration castReq =
              Serializer.CastXML<DF_NG_2751_MSG10000_ExportDeclaration, UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2751_MSG10000_ExportDeclaration>(req);
