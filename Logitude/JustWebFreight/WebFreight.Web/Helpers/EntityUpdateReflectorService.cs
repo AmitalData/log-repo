@@ -150,7 +150,7 @@ namespace WebFreight.Web.Helpers
      
                     break;
                 case 2:
-                    parameters = new object[] { entityPM, true };
+                    parameters = entityName == "Shipment" ? new object[] { true, false } : new object[] { entityPM, true };
                     break;
                 case 3:
                     parameters = new object[] { entityPM, true, null };
