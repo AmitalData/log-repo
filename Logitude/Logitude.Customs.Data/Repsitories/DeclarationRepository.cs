@@ -980,22 +980,96 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
         {
-            var query = (from a in context.Consignments
-                         where declarationList.Contains(a.DeclarationId)
-                         select a);
-            return query.GroupBy(cont => new { ManifestNumber = cont.ManifestNumber, CargoTypeCode = cont.CargoTypeCode, SecondCargoID = cont.CargoTypeCode, ThirdCargoID = cont.ThirdCargoID })
-                .ToList()
-                .SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
-                {
-                    DeclarationId = cont.DeclarationId,
-                    CargoTypeCode = cont.CargoTypeCode,
-                    ManifestNumber = cont.ManifestNumber,
-                    SecondCargoId = cont.SecondCargoID,
-                    ThirdCargoId = cont.ThirdCargoID,
-                })).ToList();
+            try { 
+           
+               var query1 = (from a in context.Consignments
+                            where declarationList.Contains(a.DeclarationId) && a.ExportContainerizationID==null
+                            select a);
+               var query2 = (from b in context.Containerizations
+                          select b).Select(t=>new ContainerizationKey {
+                              Id =t.Id  ,
+                              Key = t.CargoTypeCode + t.ManifestNumber + t.SecondCargoID + t.ThirdCargoID,
+                          });
+
+               List<ContainerizationKey> ck1 = new List<ContainerizationKey>();
+               ck1 =query2.Where(t => t.Key != null).ToList();
+
+               var q1 = query1.GroupBy(cont => new { ManifestNumber = cont.ManifestNumber, CargoTypeCode = cont.CargoTypeCode, SecondCargoID = cont.SecondCargoID, ThirdCargoID = cont.ThirdCargoID }) 
+                .ToList();
+               //עדכון המכלה
+               var q2 = q1.Where(x => x.Count() >= 1 && x.Any(u => (ck1.Any(g=>g.Key.Contains(u.CargoTypeCode + u.ManifestNumber + u.SecondCargoID + u.ThirdCargoID)))));
+               
+               //הוספת המכלה חדשה
+               var q3 = q1.Where(x => x.Count() > 1 && !(x.Any(u => (ck1.Any(g => g.Key.Contains(u.CargoTypeCode + u.ManifestNumber + u.SecondCargoID + u.ThirdCargoID))))));
+               
+               var q4 = q2.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
+                 {
+                     DeclarationId = cont.DeclarationId,
+                     CargoTypeCode = cont.CargoTypeCode,
+                     ManifestNumber = cont.ManifestNumber,
+                     SecondCargoId = cont.SecondCargoID,
+                     ThirdCargoId = cont.ThirdCargoID,
+                     IsNew=false,
+                     Id= ck1.Where(f=>f.Key.Contains(cont.CargoTypeCode + cont.ManifestNumber + cont.SecondCargoID + cont.ThirdCargoID)).Select(y=>y.Id).FirstOrDefault().ToString(),
+               })).ToList();
+               
+               var q5 = q3.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
+               {
+                   DeclarationId = cont.DeclarationId,
+                   CargoTypeCode = cont.CargoTypeCode,
+                   ManifestNumber = cont.ManifestNumber,
+                   SecondCargoId = cont.SecondCargoID,
+                   ThirdCargoId = cont.ThirdCargoID,
+                   IsNew = true
+               })).ToList();
+               
+               return q4.Union(q5).ToList();
+            }
+            catch (Exception ex)
+            {
+                var mess= ex.Message.ToString();
+                return null;
+            }
+
         }
+        public ConDetails GetContainerizationByID(string Id)
+        {
+            var query2 = (from b in context.Containerizations
+                          where b.Id == Id
+                          select b).Select(t => new ConDetails
+                          {
+                            
+                              ContainerizationDate = t.ContainerizationDate,
+                              ContainerizationNumber = t.ContainerizationNumber,
+                              ContainerizationStatus = t.ContainerizationStatus,
+                              HataraStatus = t.HataraStatus,
+                              IsMultiCustomers = t.IsMultiCustomers
+
+                          }).FirstOrDefault();
+
+            return query2;
+        }
+
+        }
+
+
+
+    public class ConDetails
+    {
+        public DateTime ContainerizationDate { get; set; }
+        public string ContainerizationNumber { get; set; }
+        public string ContainerizationStatus { get; set; }
+        public string HataraStatus { get; set; }
+        public string IsMultiCustomers { get; set; }
     }
-public class DeclarationId
+
+        public class ContainerizationKey
+    {
+        public string Id { get; set; }
+        public string Key { get; set; }
+       
+    }
+    public class DeclarationId
     {
         public string Id { get; set; }
     }
@@ -1085,6 +1159,10 @@ public class DeclarationId
         public string SecondCargoId { get; set; }
         public string ThirdCargoId { get; set; }
         public string DeclarationId { get; set; }
+        public bool IsNew { get; set; }
+        public string Id { get; set; }
+
+
     }
 }
 

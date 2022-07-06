@@ -84,7 +84,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public HasCustomsFilterMenu: boolean = false;
     public IsPhysicalCheckObjectTable: boolean = false;
     public IsLogisticActionRequestObjectTable: boolean = false;
-
+    
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
@@ -2954,9 +2954,14 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         logWindow.Title = ("המכלה חדשה");
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnContainerizationWindowClosed($event));
     }
-
+    private OnContainerizationWindowClosed($event: any) {
+        if($event!=null){
+            this.CurrentQueryFilters.addAdditionalFilter("Id", $event, null, null, "InListExact", false, false, false, "string",false,true);
+        }
+        this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, Reload: true });
+    }
     private RunNewEntityWizard(wizardControlName: string) {
 
         var componentPath: string = this.ObjectTable.NewWizardComponentPath;
