@@ -43,8 +43,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 var journalNumber = CodeCounter.GetNumber(JournalUpdateOnCreating.GetCodeNumberJournal(), entityPM.Tenant).ToString();
                 entityPM.JournalNumber = journalNumber;
                 entityPOCO.JournalNumber = journalNumber;
-
-                if (entityPM.TypeCode == "0" && entityPM.AccountingEntityReference == null) // Manual
+                string RegularJournal = "0";
+                if (entityPM.TypeCode == RegularJournal && entityPM.AccountingEntityReference == null) // Manual
                 {
                     var accEntityReconciliation10 = GetAccountingEntityDetails();
                     if (accEntityReconciliation10.Code != entityPM.AccountingEntityCode)
