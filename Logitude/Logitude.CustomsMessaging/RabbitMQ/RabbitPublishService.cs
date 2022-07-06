@@ -75,7 +75,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             }
             else
             {
-                var factory = RabbitmqHelper.GetConnectionFactory();
+                var factory = RabbitmqHelper.GetConnectionFactory(true);
 
                 using (var connection = factory.CreateConnection())
                 using (var channel = connection.CreateModel())
