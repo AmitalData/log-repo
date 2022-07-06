@@ -53,7 +53,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     {
                         OnTabUpdate(tab, tabPM);
                         
-                        repository.Update(tab);
+                        if(tab.Tenant != 0)
+                            repository.Update(tab);
                         break;
                     }
                 case Changeset.Delete:
