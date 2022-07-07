@@ -213,7 +213,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 Shipment.FutureMilstoneCode = futureMilstone.Code;
                 Shipment.FutureMilstoneName = futureMilstone.Name;
-                Shipment.FutureMilstoneDate = futureMilstone.Date;
+                Shipment.FutureMilstoneDate = futureMilstone.Date != null ? futureMilstone.Date : futureMilstone.EstimationDate;
             }
         }
         private Milestone GetMostRecentNotEstimatedMilestone(List<Milestone> milestones)
@@ -229,7 +229,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private static Milestone GetMostRecentEstimatedMilestone(List<Milestone> milestones)
         {
             Milestone currentMilstone = milestones.Find(m => m.IsCurrent == true);
-            return milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null && s.Weight > currentMilstone?.Weight)
+            return milestones.Where(s => s.IsEstimation == true && (s.EstimationDate != null || s.Date != null)  && s.Weight > currentMilstone?.Weight)
                                                         .OrderBy(s => s.Weight)
                                                         .FirstOrDefault();
         }
