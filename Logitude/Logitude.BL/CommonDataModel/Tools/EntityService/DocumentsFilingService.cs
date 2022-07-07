@@ -365,7 +365,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            this.OpenPODDocumentUploderQueue(theEntityPm);
+            this.OpenKPIDocumentUploderQueue(theEntityPm);
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
             RunAutomation(theEntityPm, "OnDocumentUpdate");
             ///move after adding (was Devart.Data.Oracle.OracleException: ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_N1103284768) הופר - מפתח אב לא נמצא )
@@ -683,7 +683,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
 
-            this.OpenPODDocumentUploderQueue(theEntityPm);
+            this.OpenKPIDocumentUploderQueue(theEntityPm);
             if (!tenantPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
@@ -886,7 +886,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
 
-            this.OpenPODDocumentUploderQueue(theEntityPm);
+            this.OpenKPIDocumentUploderQueue(theEntityPm);
             this.SendQueueOfEntityDocumnetsToQuickbooks(theEntityPm);
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
@@ -917,14 +917,28 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             AddShipmentUpdateKafkaQueueMessage(theEntityPm);
         }
 
-        private void OpenPODDocumentUploderQueue(DocumentsFilingPM documentFiling)
+        private void OpenKPIDocumentUploderQueue(DocumentsFilingPM documentFiling)
         {
-            if (IsSendingPODDocumentQueue(documentFiling)) {
+            //if (IsSendingPODDocumentQueue(documentFiling)) {
+            //    IQueueService queueservice = new DbQueueService();
+            //    queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentFiling.Tenant);
+            //    queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentFiling.Id }, { "Tenant", documentFiling.Tenant.ToString() },
+            //                                                     { "IsPODDocumentUploaded", true.ToString() }, { "IsPODDocumentDeleted", false.ToString() }, { "PODRecived", documentFiling.ReceivedDate.ToString() } },
+            //                                                          documentFiling.Tenant, null, null, null, null);
+            //}
+
+            if (IsStartingUploadShipmentDocs(documentFiling))
+            {
                 IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentFiling.Tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentFiling.Id }, { "Tenant", documentFiling.Tenant.ToString() },
-                                                                 { "IsPODDocumentUploaded", true.ToString() }, { "IsPODDocumentDeleted", false.ToString() }, { "PODRecived", documentFiling.ReceivedDate.ToString() } },
-                                                                      documentFiling.Tenant, null, null, null, null);
+                queueservice.InitializeQueue("ShipmentDocsInUploaderQueue", documentFiling.Tenant);
+                queueservice.Send(new Dictionary<string, string>() {
+                    { "EntityId", documentFiling.Id },
+                    { "Tenant", documentFiling.Tenant.ToString() },
+                    { "DocumentCode",  documentFiling.DocumentTypeCode },
+                    { "IsDocumentUploaded", true.ToString() },
+                    { "IsDocumentDeleted", false.ToString() },
+                    { "RecivedDate", documentFiling.ReceivedDate.ToString() } },
+                    documentFiling.Tenant, null, null, null, null);
             }
         }
 
@@ -947,6 +961,61 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             return true;
+        }
+        private bool IsStartingUploadShipmentDocs(DocumentsFilingPM documentFiling)
+        {
+            string documentTypeCode = string.IsNullOrEmpty(documentFiling.DocumentTypeCode) ? this.GetDocumentTypeCodeById(documentFiling.DocumentTypeId) : documentFiling.DocumentTypeCode;
+            var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
+            if (shipmentObjectTable?.Name != "Shipment")
+            {
+                return false;
+            }
+
+            if (!(documentFiling.HasFile && documentFiling.Received))
+            {
+                return false;
+            }
+
+            if (!IsDocumentWillUpdateShipment(documentTypeCode))
+            {
+                return false;
+            }
+
+            return true;            
+        }
+        private bool IsDocumentWillUpdateShipment(string documentTypeCode)
+        {
+            if (documentTypeCode == "POD")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "380")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "721")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "706")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "704")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "ARNT")
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private string GetDocumentTypeCodeById(string documentFilingId)

@@ -33,11 +33,12 @@ namespace CommunicationWorkerRole
         private ShipmentRepository shipmentRepository;
         private ShipmentDocsFieldRepository shipmentDocsFieldRepository;
         private IShipmentsContext shipmentContext;
+        private ShipmentPM shipmentPM;
 
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "ShipmentDocsInUploaderWorkerRole";
+            BatchServiceCode = "ShipmentDocsInUploaderWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
             return base.OnStart();
         }
@@ -201,15 +202,19 @@ namespace CommunicationWorkerRole
 
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact receivedBy = contactRepository.GetSingleContact(receivedByUserId, tenant);
-            ShipmentDocsField shipmentDocsField = this.GetEntity(shipmentId);
-
 
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
-            //shipmentPM.IsPODReceived = isReceived;
-            //shipmentPM.PODReceivedDate = receivedDate;
-            //shipmentPM.IsPODUpdatedFromWR = true;
+            shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            if (shipmentPM == null) return;
+
+            ShipmentDocsField shipmentDocsField = this.GetEntity(shipmentId);
+            if(shipmentDocsField != null)
+            {
+                this.HandleShipmentFields(shipmentDocsField, isReceived, receivedDate);
+            }
+
             ShipmentService shipmentService = new ShipmentService(shipmentContext, shipmentPM, receivedBy.Email);
+            shipmentService.ShipmentDocsFieldFromWorkerRole = shipmentDocsField;
             shipmentService.Update(true);
         }
 
@@ -219,14 +224,52 @@ namespace CommunicationWorkerRole
 
             if (shipmentDocsField == null)
             {
-                shipmentDocsField = new ShipmentDocsField()
-                {
-                    Id = id,
-                    Tenant = tenant,
-                };
+                shipmentDocsField = new ShipmentDocsField();
             }
 
             return shipmentDocsField;
+        }
+        private void HandleShipmentFields(ShipmentDocsField shipmentDocsField, bool isReceived, DateTime? receivedDate)
+        {
+            if(documentCode == DocumentsCodes.POD)
+            {
+                //shipmentPM.IsPODUpdatedFromWR = receivedDate != shipmentDocsField.PODReceivedDate;
+                shipmentDocsField.IsPODReceived = isReceived;
+                shipmentDocsField.PODReceivedDate = receivedDate;
+                shipmentPM.IsPODReceived = isReceived; // to be removed when Phoenix finish 
+                shipmentPM.PODReceivedDate = receivedDate; // to be removed when Phoenix finish
+                shipmentPM.IsPODUpdatedFromWR = true;
+            }
+
+            else if (documentCode == DocumentsCodes.CommercialInvoice)
+            {
+                shipmentDocsField.IsCommercialInvoiceReceived = isReceived;
+                shipmentDocsField.CommercialInvoiceReceivedDate = receivedDate;
+            }
+
+            else if (documentCode == DocumentsCodes.PackingList)
+            {
+                shipmentDocsField.IsPackingListReceived = isReceived;
+                shipmentDocsField.PackingListReceivedDate = receivedDate;
+            }
+
+            else if (documentCode == DocumentsCodes.BOL)
+            {
+                shipmentDocsField.IsBOLReceived = isReceived;
+                shipmentDocsField.BOLReceivedDate = receivedDate;
+            }
+
+            else if (documentCode == DocumentsCodes.MasterBOL)
+            {
+                shipmentDocsField.IsMasterBOLReceived = isReceived;
+                shipmentDocsField.MasterBOLReceivedDate = receivedDate;
+            }
+
+            else if (documentCode == DocumentsCodes.ArrivalNotice)
+            {
+                shipmentDocsField.IsArrivalNoticeReceived = isReceived;
+                shipmentDocsField.ArrivalNoticeReceivedDate = receivedDate;
+            }
         }
     }
 

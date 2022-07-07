@@ -14,17 +14,17 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int Tenant { get; set; }
         public bool IsPODReceived { get; set; }
         public DateTime? PODReceivedDate { get; set; }
-        public bool IsCommercialInvoiceReceived { get; set; } //(Document Code: 380)
+        public bool IsCommercialInvoiceReceived { get; set; }
         public DateTime? CommercialInvoiceReceivedDate { get; set; }
-        public bool IsPackingListReceived { get; set; } //(Document Code: 721)
+        public bool IsPackingListReceived { get; set; }
         public DateTime? PackingListReceivedDate { get; set; }
-        public bool IsBOLReceived { get; set; } //(Document Code: 706)
+        public bool IsBOLReceived { get; set; }
         public DateTime? BOLReceivedDate { get; set; }
-        public bool IsMasterBOLReceived { get; set; } //(Document Code: 704)
+        public bool IsMasterBOLReceived { get; set; }
         public DateTime? MasterBOLReceivedDate { get; set; }
-        public bool IsArrivalNoticeReceived { get; set; } //(Document Code: ARNT)
+        public bool IsArrivalNoticeReceived { get; set; }
         public DateTime? ArrivalNoticeReceivedDate { get; set; }
 
-        public Shipment Shipment { get; set; }
+        //public Shipment Shipment { get; set; }
     }
 }

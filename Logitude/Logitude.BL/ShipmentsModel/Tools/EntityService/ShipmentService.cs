@@ -113,6 +113,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ComputingPartnerRepository computingPartnerRepository;
         private ComputingPartnerTableRepository computingPartnerTableRepository;
         private ComputingPartnerTranslationRepository computingPartnerTranslationRepository;
+        public ShipmentDocsField ShipmentDocsFieldFromWorkerRole;
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
             UpdateByEmail = serviceContextUser;
@@ -432,6 +433,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if (entityPM.ShipmentDirectionConverted && entityPM.ShipmentConvertedNewNumber)
                     {
                         this.ChangePickupDliveryNumbersOnShipmentDirectionConverted();
+                    }
+
+                    if (ShipmentDocsFieldFromWorkerRole != null)
+                    {
+                        initializer.ShipmentDocsFieldFromWorkerRole = ShipmentDocsFieldFromWorkerRole;
+                        UpdateShipmentDocsFieldBehaviour updateShipmentDocsFieldBehaviour = new UpdateShipmentDocsFieldBehaviour(initializer);
+                        updateShipmentDocsFieldBehaviour.Handle();
                     }
 
                     this.UpdateShipmentProductItems();

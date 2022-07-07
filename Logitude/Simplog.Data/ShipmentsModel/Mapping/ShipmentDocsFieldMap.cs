@@ -32,8 +32,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MasterBOLReceivedDate).HasColumnName("MasterBOLReceivedDate");
             this.Property(t => t.IsArrivalNoticeReceived).HasColumnName("IsArrivalNoticeReceived");
             this.Property(t => t.ArrivalNoticeReceivedDate).HasColumnName("ArrivalNoticeReceivedDate");
-
-            this.HasRequired(t => t.Shipment);
         }
     }
 }
