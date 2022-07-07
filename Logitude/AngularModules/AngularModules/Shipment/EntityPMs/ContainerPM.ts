@@ -1356,6 +1356,56 @@ export class ContainerPM {
     public set IsUpdatedFromAPI(newValue: boolean) { if (this.isUpdatedFromAPI != newValue) { this.isUpdatedFromAPI = newValue; this.MarkAsDirty("IsUpdatedFromAPI"); } }
        
 	 
+    private containerTypeId: string;
+    public get ContainerTypeId() { return this.containerTypeId; }
+    public set ContainerTypeId(newValue: string) { if (this.containerTypeId != newValue) { this.containerTypeId = newValue; this.MarkAsDirty("ContainerTypeId"); } }
+       
+	 
+    private containerTypeEnglishName: string;
+    public get ContainerTypeEnglishName() { return this.containerTypeEnglishName; }
+    public set ContainerTypeEnglishName(newValue: string) { if (this.containerTypeEnglishName != newValue) { this.containerTypeEnglishName = newValue; this.MarkAsDirty("ContainerTypeEnglishName"); } }
+       
+	 
+    private grossWeight: number;
+    public get GrossWeight() { return this.grossWeight; }
+    public set GrossWeight(newValue: number) { if (this.grossWeight != newValue) { this.grossWeight = newValue; this.MarkAsDirty("GrossWeight"); } }
+       
+	 
+    private volume: number;
+    public get Volume() { return this.volume; }
+    public set Volume(newValue: number) { if (this.volume != newValue) { this.volume = newValue; this.MarkAsDirty("Volume"); } }
+       
+	 
+    private volumeUnitCode: string;
+    public get VolumeUnitCode() { return this.volumeUnitCode; }
+    public set VolumeUnitCode(newValue: string) { if (this.volumeUnitCode != newValue) { this.volumeUnitCode = newValue; this.MarkAsDirty("VolumeUnitCode"); } }
+       
+	 
+    private grossWeightUnitCode: string;
+    public get GrossWeightUnitCode() { return this.grossWeightUnitCode; }
+    public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
+       
+	 
+    private additionalReference1: string;
+    public get AdditionalReference1() { return this.additionalReference1; }
+    public set AdditionalReference1(newValue: string) { if (this.additionalReference1 != newValue) { this.additionalReference1 = newValue; this.MarkAsDirty("AdditionalReference1"); } }
+       
+	 
+    private additionalReference2: string;
+    public get AdditionalReference2() { return this.additionalReference2; }
+    public set AdditionalReference2(newValue: string) { if (this.additionalReference2 != newValue) { this.additionalReference2 = newValue; this.MarkAsDirty("AdditionalReference2"); } }
+       
+	 
+    private additionalReference3: string;
+    public get AdditionalReference3() { return this.additionalReference3; }
+    public set AdditionalReference3(newValue: string) { if (this.additionalReference3 != newValue) { this.additionalReference3 = newValue; this.MarkAsDirty("AdditionalReference3"); } }
+       
+	 
+    private additionalReference4: string;
+    public get AdditionalReference4() { return this.additionalReference4; }
+    public set AdditionalReference4(newValue: string) { if (this.additionalReference4 != newValue) { this.additionalReference4 = newValue; this.MarkAsDirty("AdditionalReference4"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

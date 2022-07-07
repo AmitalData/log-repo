@@ -445,6 +445,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.ShipmentTypeId = this.initializer.EntityPM?.ShipmentTypeId;
             container.PODReceivedOnDate = this.initializer.EntityPM?.PODReceivedDate;
             container.TerminalId = this.initializer.EntityPM?.DestinationWarehouseId;
+
+            container.ContainerTypeId  = shipmentPackage.PackageTypeId;
+            container.Volume = shipmentPackage.Volume;
+            container.VolumeUnitCode = this.initializer.EntityPM?.VolumeUnitCode;
+            container.GrossWeight = shipmentPackage.Weight;
+            container.GrossWeightUnitCode = this.initializer.EntityPM?.GrossWeightUnitCode;
+            container.AdditionalReference1 = shipmentPackage.Reference1;
+            container.AdditionalReference2 = shipmentPackage.Reference2;
+            container.AdditionalReference3 = shipmentPackage.Reference3;
+            container.AdditionalReference4 = shipmentPackage.Reference4;
+
+
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
             this.HandleContainerFieldsFromEmptyContainerReturn(container);

@@ -348,5 +348,24 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public ContainersExternalData ContainersExternalData { get; set; }
         public string ConcurrencyGUID { get; set; }
         public string UpdatedByPartner { get; set; }
+
+        public string ContainerTypeId { get; set; }
+        [ForeignKey("ContainerTypeId")]
+        public virtual PackageType ContainerType { get; set; }
+        public double? GrossWeight { get; set; }
+        public double? Volume { get; set; }
+        public string VolumeUnitCode { get; set; }
+        [ForeignKey("VolumeUnitCode")]
+        public VolumeUnit VolumeUnit { get; set; }
+        public string GrossWeightUnitCode { get; set; }
+        [ForeignKey("GrossWeightUnitCode")]
+        public VolumeUnit GrossWeightUnit { get; set; }
+        public string AdditionalReference1 { get; set; }
+        public string AdditionalReference2 { get; set; }
+        public string AdditionalReference3 { get; set; }
+        public string AdditionalReference4 { get; set; }
+
+
+
     }
 }

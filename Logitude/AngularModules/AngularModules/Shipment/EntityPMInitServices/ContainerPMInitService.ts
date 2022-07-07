@@ -113,6 +113,17 @@ export class ContainerPMInitService {
             entityPM.UIProperties.SetEnabled("EmptyContainerReturnETD", "Container", false);
             entityPM.UIProperties.SetEnabled("EmptyContainerReturnATD", "Container", false);
             entityPM.UIProperties.SetEnabled("EmptyContainerReturnATA", "Container", false);
+
+            entityPM.UIProperties.SetEnabled("ContainerTypeId", "Container", false);
+            entityPM.UIProperties.SetEnabled("GrossWeight", "Container", false);
+            entityPM.UIProperties.SetEnabled("Volume", "Container", false);
+            entityPM.UIProperties.SetEnabled("VolumeUnitCode", "Container", false);
+            entityPM.UIProperties.SetEnabled("GrossWeightUnitCode", "Container", false);
+            entityPM.UIProperties.SetEnabled("GrossWeightUnit", "Container", false);
+            entityPM.UIProperties.SetEnabled("AdditionalReference1", "Container", false);
+            entityPM.UIProperties.SetEnabled("AdditionalReference2", "Container", false);
+            entityPM.UIProperties.SetEnabled("AdditionalReference3", "Container", false);
+            entityPM.UIProperties.SetEnabled("AdditionalReference4", "Container", false);
         }
     }
 }

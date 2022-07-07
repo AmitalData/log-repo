@@ -258,5 +258,15 @@ export class ContainerList {
 		OnCarriageGateOut: Date;
 		PreCarriageGateIn: Date;
 		UpdatedByPartner: string;
+		ContainerTypeId: string;
+		ContainerTypeName: string;
+		GrossWeight: number;
+		Volume: number;
+		VolumeUnitCode: string;
+		GrossWeightUnitCode: string;
+		AdditionalReference1: string;
+		AdditionalReference2: string;
+		AdditionalReference3: string;
+		AdditionalReference4: string;
 	
 }
