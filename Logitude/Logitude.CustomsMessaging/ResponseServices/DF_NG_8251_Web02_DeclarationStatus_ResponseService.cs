@@ -24,6 +24,8 @@ using Logitude.AmitalMessaging.Customs.CustomFile;
 using System.Globalization;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.Messaging.Customs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -469,6 +471,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     //    SendPayment(declarationPM, dbContext, requestParams);
                                 }
                                 var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
+
+                                ICommonDataContext commondbContext = CommonDataContext.GetContext(requestParams.Tenant);
+                                UserRepository userRepository = new UserRepository(commondbContext);
+                                var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
                                 if (setting.IsConnectedToUniFreight)
                                 {
                                     if (declarationPM.Direction == "E")
@@ -479,11 +485,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" ||
                                                declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "3")
                                             {
-                                                RaiseEvent(declarationPM, "1-5975", status_id: "RDH", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                                RaiseEvent(declarationPM,user.Id, status_id: "RDH", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
                                             }
                                             if (statusList.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
                                             {
-                                                RaiseEvent(declarationPM, "1-5975", status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                                RaiseEvent(declarationPM, user.Id, status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
                                             }
                                         }
 

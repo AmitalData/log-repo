@@ -29,6 +29,8 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using UnifreightIIG.Common.ExportDeclarationServiceReference;
 using Exception = System.Exception;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -404,16 +406,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
 
+            ICommonDataContext commondbContext = CommonDataContext.GetContext(_MyDeclarationPM.Tenant);
+            UserRepository userRepository = new UserRepository(commondbContext);
+            var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
+
             if (setting.IsConnectedToUniFreight)
             {
 
-                if (this._MyDeclarationPM.Direction == "E")
+                if (this._MyDeclarationPM.Direction == "E" )
                 {
                     if (customResponse.Response.Declaration.DMExtensions.VersionID.Value == "1.0")
                     {
                         _DateTime = new DateTime();
                         _DateTime = DateTime.Parse(customResponse.Response.Declaration.IssueDateTime);
-                        RaiseEvent(this._MyDeclarationPM, "1-5975", status_id: "MRN", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                        RaiseEvent(this._MyDeclarationPM, user.Id, status_id: "MRN", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
                     }
 
 
@@ -428,13 +434,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _DateTime = new DateTime();
                             _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
 
-                            RaiseEvent(this._MyDeclarationPM, "1-5975", status_id: "WAT", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                            RaiseEvent(this._MyDeclarationPM, user.Id, status_id: "WAT", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
                         }
                         if (customResponse.Response.Status[0].NameCode.Value == "3" || customResponse.Response.Status[0].NameCode.Value == "6")
                         {
                             _DateTime = new DateTime();
                             _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
-                            RaiseEvent(this._MyDeclarationPM, "1-5975", status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                            RaiseEvent(this._MyDeclarationPM, user.Id, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
                         }
 
                     }
