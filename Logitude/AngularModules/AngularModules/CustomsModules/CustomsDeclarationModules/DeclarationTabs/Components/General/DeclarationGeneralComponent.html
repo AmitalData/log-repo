@@ -440,12 +440,15 @@
                                         <LogDatePicker [RefreshMe]="RefreshDatePicker" [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"
                                                        [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="TaxationDateTime"></LogDatePicker>
                                     </td>
-                                    <td *ngIf="EntityPM.TransportModeId =='O'" class="StatisticsTable-td">
+
+                                    <td><div></div></td>
+                                    
+                                    <td *ngIf="EntityPM.TransportModeId =='O'" class="StatisticsTable-td" rowspan="3">
                                         <div style="width:100%;">                                       
                                           <table class="StatisticsTable">
                                             <thead style="width: 180px; display:table;">
                                             <tr>
-                                                <th style="width:90px" class="Statistics">{{'Customs.Declaration.O.ExportsStatus' | TextCodeTranslationPipe}}</th>
+                                                <th style="width:90px;" class="Statistics">{{'Customs.Declaration.O.ExportsStatus' | TextCodeTranslationPipe}}</th>
                                                 <th style="width:35px" class="Statistics">{{'Customs.Declaration.O.Total2' | TextCodeTranslationPipe}}</th>
                                             </tr>
                                             </thead>
@@ -471,7 +474,7 @@
                                     </div> 
                                     </td>
             
-
+                                
                                 </tr>
                                 <tr style="height: 28px;">
                                     <!-- DeclarationDocumentTypeCode -->
@@ -591,11 +594,11 @@
                                                         style="position: absolute;top: 3px;"></IconButton>
                                         </div>
                                     </td>
-                                    <td *ngIf="!item.LineNumber || item.LineNumber==1">
+                                    <!-- <td *ngIf="!item.LineNumber || item.LineNumber==1">
                                         <div style="vertical-align:top;float: right;">
                                             <IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'" (click)="AddRecipientButtonClicked()" [IsEnabled]="AddRecipientEnabled"></IconButton>
                                         </div>
-                                    </td>
+                                    </td> -->
                                 </tr>
 
                                                    <!--</table>-->
