@@ -357,7 +357,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdatedFromAPI { get; set; }
 
         public string ContainerTypeId { get; set; }
-        public string ContainerTypeEnglishName { get; set; }
         public double? GrossWeight { get; set; }
         public double? Volume { get; set; }
         public string VolumeUnitCode { get; set; }
