@@ -209,6 +209,7 @@
     <Compile Include="CommonDataModel\Repositories\HorseGenderRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MentionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
+    <Compile Include="Helpers\DocumentOutCopyArgs.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />

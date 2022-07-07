@@ -1,11 +1,7 @@
 import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../Utilities/LocationDirective';
-import { interval } from 'rxjs';
-import { timeInterval } from 'rxjs/operators';
-import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-//import { MultiUpdateComponent } from './MultiUpdateComponent';
+import { PrintingRow } from '../../Services/BatchPrintService';
 
 @Component({
     selector: 'MultiPrintMainComponent',
@@ -17,10 +13,12 @@ export class MultiPrintMainComponent implements OnInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private PageChild_MTUP: any = null;
     private PageChild_MTHE: any = null;
-
+    public PrintingRows: PrintingRow[];
+    public DocumentId: string;
     WindowArgs: any;
 
     constructor() {
+        this.PrintingRows = [];
     }
 
     ngOnInit() {
@@ -79,7 +77,7 @@ export class MultiPrintMainComponent implements OnInit {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/MultiPrint/MultiPrintErrorHandlerComponent', myLocation.viewContainerRef)
                         .then(cmpRef => {
                             this.PageChild_MTHE = cmpRef.instance;
-                            //this.PageChild_MTHE.SetWindowArgs({ multiEntityUpdateLogPM: this.MultiEntityUpdatedLogPM });
+                            this.PageChild_MTHE.SetWindowArgs({ PrintingRows: this.PrintingRows, DocumentId: this.DocumentId });
                         });
                 }
                 break;

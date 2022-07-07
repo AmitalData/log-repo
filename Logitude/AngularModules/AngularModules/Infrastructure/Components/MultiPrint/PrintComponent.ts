@@ -1,3 +1,4 @@
+import { XmlParser } from '@angular/compiler';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DocumentTypeCopyList } from '../../../Common/EntityLists/DocumentTypeCopyList';
 import { DocumentTypeTemplateList } from '../../../Common/EntityLists/DocumentTypeTemplateList';
@@ -6,9 +7,13 @@ import { DocumentTypeCopyPMExtendedService } from '../../../Common/Services/Exte
 import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
 import { CodeNameClass } from '../../DataContracts/CodeNameClass';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { BatchTaskExecutionList } from '../../EntityLists/BatchTaskExecutionList';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
+import { BatchPrintService, BatchPrintManagerArgs, PrintEntityKeys, PrintingResult, PrintingRow} from '../../Services/BatchPrintService';
 import { EntityListService } from '../../Services/EntityListService';
+import { BatchTaskExecutionListService } from '../../Services/StandardLists/BatchTaskExecutionListService';
 import { AppTool } from '../../Tools';
+import { SessionInfo } from '../../Utilities/SessionInfo';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { BaseComponent } from '../LogitudeComponents/BaseComponent';
 declare var window: any;
@@ -40,11 +45,20 @@ export class PrintComponent extends BaseComponent implements OnInit {
     public DocumentTypeCopiesList: CodeNameClass[];
     private documentTypeService: DocumentTypeTemplateListExtendedService;
     public ValidationErrorsList: string[];
+    public DocumentTypeQueryFilters: ApiQueryFilters;
+    private selectedEntitiesIds: string[];
     constructor(private _entityListService: EntityListService) {
         super();
         window.AllRecords = [];
+        this.selectedEntitiesIds = [];
         this.documentTypeService = new DocumentTypeTemplateListExtendedService();
+        this.BuildQueryFilters();
         this.Listen();
+    }
+
+    private BuildQueryFilters() {
+        this.DocumentTypeQueryFilters = new ApiQueryFilters();
+        this.DocumentTypeQueryFilters.addAdditionalFilter("TemplateFormatCode", "P", null, null, "Equals", false, false, false, "string");
     }
 
     ngOnInit() {
@@ -117,7 +131,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
             HtmlListComponentUrl: './Infrastructure/Components/MultiPrint/MultiPrintCheckBoxComponent',
         };
 
-        var updateSuccess = {
+        var printSuccess = {
             FieldName: 'PrintSuccess',
             DataTypeCode: 'Boolean',
             Display: 'Print Status',
@@ -127,15 +141,34 @@ export class PrintComponent extends BaseComponent implements OnInit {
             HtmlListComponentUrl: './Infrastructure/Components/MultiPrint/MultiPrintCheckTemplate',
         };
         this.columns.splice(0, 0, checkBoxColumn);
-        this.columns.splice(1, 0, updateSuccess);
+        this.columns.splice(1, 0, printSuccess);
     }
 
-    OnUpdateFinish(entities) {
-        this.AllRecords.forEach(function (record) {
+    OnPrintFinish(printingResult: PrintingResult) {
+        var entities: PrintingRow[] = printingResult.NotValidRows;
+        var results: PrintingRow[] = [];
+
+        this.AllRecords.forEach((record) => {
             var entity = entities.find(item => item.EntityId == record.Id);
-            record.UpdateSuccess = entity ? !entity.HasException : undefined;
+            record.PrintSuccess = entity ? !entity.Error : undefined;
+
+            if (entity == null && this.selectedEntitiesIds.filter(d => d == record.Id)[0] != null) {
+                record.PrintSuccess = true;
+            }
+
+            if (entity && entity.Error) {
+                var row: PrintingRow = new PrintingRow();
+                row.EntityId = record.Id;
+                row.EntityNumber = record.InvoiceNumber;
+                row.Error = entity.Error;
+                results.push(row);
+            }
         });
 
+        this.ParentComponent.PrintingRows = results;
+        this.ParentComponent.DocumentId = printingResult.DocumentId;
+        this.ParentComponent.FileName = printingResult.FileName;
+        this.ParentComponent.SecurityId = printingResult.SecurityId;
         this.RefreshList();
     }
 
@@ -297,7 +330,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
         this.SelectedRecordsCount = 0;
     }
     private ChangeSelectedItemsCountText(selectedCount) {
-        this.SelectedItemsCountText = selectedCount + " of " + this.AllRecordsCount + " " + this.ObjectTable.DBTableName + " selected";
+        this.SelectedItemsCountText = selectedCount + " of " + this.AllRecordsCount;
     }
 
     NextClicked() {
@@ -309,12 +342,42 @@ export class PrintComponent extends BaseComponent implements OnInit {
     }
 
     public IsMultiEntityPrintedSuccessfully: boolean = false;
+    
     PrintClick() {
         if (!this.IsPrintValid()) {
             return;
         }
 
-        
+        this.CurrentSession.StartBusyIndicator("Printing...");
+        var args: BatchPrintManagerArgs = new BatchPrintManagerArgs();
+        args.DocumentTypeId = this.DocumentTypeId;
+        args.TemplateId = this.SelectedDocumentTypeTemplate.Code;
+        args.CopyId = this.SelectedDocumentTypeCopy.Code;
+        args.ObjectTableId = this.ObjectTableId;
+        args.Tenant = SessionInfo.LoggedUserTenant;
+        args.EntityIds = [];
+
+        this.SelectedRecords.forEach((item) => {
+            var key: PrintEntityKeys = new PrintEntityKeys();
+            key.EntityId = item.Id;
+            args.EntityIds.push(key);
+            this.selectedEntitiesIds.push(item.Id);
+        });
+
+        var service: BatchPrintService = new BatchPrintService();
+        service.Print(args).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var batchTaskExecutionId: string = myResponse.Result;               
+
+                this.StopTimer();
+
+                this.timer = setInterval(() => {
+                    this.CheckBatchTaskExecution(batchTaskExecutionId);
+                }, this.timerInterval);
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
     IsPrintValid(): boolean {
         this.ValidationErrorsList = [];
@@ -342,6 +405,49 @@ export class PrintComponent extends BaseComponent implements OnInit {
         return true;
     }
 
-    public BusyIndicatorText: string = null;
-    public ShowBusyIndicator: boolean = false;
+    timer: any;
+    timerInterval: number = 1000;
+    StopTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    }
+
+    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: BatchTaskExecutionList = myResponse.Result;
+
+                if (list.StatusCode == "D") {
+                    this.StopTimer();
+                    this.IsMultiEntityPrintedSuccessfully = true;
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var printingResult: PrintingResult = JSON.parse(list.PrametersXml);
+                    this.OnPrintFinish(printingResult);
+                }
+
+                else if (list.StatusCode == "F") {
+                    this.StopTimer();
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var errors: string[] = [];
+                    errors.push(list.ErrorLog);
+                    this.ValidationErrorsList = errors;
+                }
+
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StartBusyIndicator("Printing... " + list.ProgressPercentage + "/" + this.SelectedRecordsCount);
+                }
+            }
+
+            else {
+                this.StopTimer();
+                this.CurrentSession.StopBusyIndicator();
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+        });
+    }
 }
