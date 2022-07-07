@@ -440,13 +440,16 @@
                                         <LogDatePicker [RefreshMe]="RefreshDatePicker" [ObjectFieldName]="'ExportTaxationDateTime'" [ObjectTableName]="ObjectTableName"
                                                        [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="ExportTaxationDateTime"></LogDatePicker>
                                     </td>
-                                    <td *ngIf="EntityPM.TransportModeId =='O'" class="StatisticsTable-td">
+
+                                    <td><div></div></td>
+                                    
+                                    <td *ngIf="EntityPM.TransportModeId =='O'" class="StatisticsTable-td" rowspan="3">
                                         <div style="width:100%;">                                       
                                           <table class="StatisticsTable">
                                             <thead style="width: 180px; display:table;">
                                             <tr>
 
-                                                <th style="width:90px" class="Statistics">{{'Customs.Declaration.O.ExportsStatus' | TextCodeTranslationPipe}}</th>
+                                                <th style="width:90px;" class="Statistics">{{'Customs.Declaration.O.ExportsStatus' | TextCodeTranslationPipe}}</th>
                                                 <th style="width:35px" class="Statistics">{{'Customs.Declaration.O.Total2' | TextCodeTranslationPipe}}</th>
                                             </tr>
 
@@ -477,7 +480,7 @@
                                     </div> 
                                     </td>
             
-
+                                
                                 </tr>
                                 <tr style="height: 28px;">
                                     <!-- DeclarationDocumentTypeCode -->
