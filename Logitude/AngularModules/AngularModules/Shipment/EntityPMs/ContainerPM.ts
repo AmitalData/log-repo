@@ -1361,11 +1361,6 @@ export class ContainerPM {
     public set ContainerTypeId(newValue: string) { if (this.containerTypeId != newValue) { this.containerTypeId = newValue; this.MarkAsDirty("ContainerTypeId"); } }
        
 	 
-    private containerTypeEnglishName: string;
-    public get ContainerTypeEnglishName() { return this.containerTypeEnglishName; }
-    public set ContainerTypeEnglishName(newValue: string) { if (this.containerTypeEnglishName != newValue) { this.containerTypeEnglishName = newValue; this.MarkAsDirty("ContainerTypeEnglishName"); } }
-       
-	 
     private grossWeight: number;
     public get GrossWeight() { return this.grossWeight; }
     public set GrossWeight(newValue: number) { if (this.grossWeight != newValue) { this.grossWeight = newValue; this.MarkAsDirty("GrossWeight"); } }
