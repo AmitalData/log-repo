@@ -279,6 +279,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PreCarriageGateIn = container.PreCarriageGateIn,
                     ConcurrencyGUID = container.ConcurrencyGUID,
                     UpdatedByPartner = container.UpdatedByPartner,
+                    ContainerTypeId = container.ContainerTypeId,
+                    GrossWeight = container.GrossWeight,
+                    Volume = container.Volume,
+                    VolumeUnitCode = container.VolumeUnitCode,
+                    GrossWeightUnitCode = container.GrossWeightUnitCode,
+                    AdditionalReference1 = container.AdditionalReference1,
+                    AdditionalReference2 = container.AdditionalReference2,
+                    AdditionalReference3 = container.AdditionalReference3,
+                    AdditionalReference4 = container.AdditionalReference4,
                 };
 
                 if (container.EntityStatus != null)
@@ -578,6 +587,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
                     .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler").Include("EntityStatus").Include("TruckerCard")
+                    .Include("ContainerType")
                                                select new ContainerList()
                                                {
                                                    Id = container.Id,
@@ -829,6 +839,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    OnCarriageGateOut = container.OnCarriageGateOut,
                                                    PreCarriageGateIn = container.PreCarriageGateIn,
                                                    UpdatedByPartner = container.UpdatedByPartner,
+                                                   ContainerTypeId = container.ContainerTypeId,
+                                                   ContainerTypeName = container.ContainerType == null ? null : container.ContainerType.EnglishName,
+                                                   GrossWeight = container.GrossWeight,
+                                                   Volume = container.Volume,
+                                                   VolumeUnitCode = container.VolumeUnitCode,
+                                                   GrossWeightUnitCode = container.GrossWeightUnitCode,
+                                                   AdditionalReference1 = container.AdditionalReference1,
+                                                   AdditionalReference2 = container.AdditionalReference2,
+                                                   AdditionalReference3 = container.AdditionalReference3,
+                                                   AdditionalReference4 = container.AdditionalReference4,
                                                };
             return result;
         }
@@ -1076,6 +1096,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OnCarriageGateOut = container.OnCarriageGateOut,
                     PreCarriageGateIn = container.PreCarriageGateIn,
                     UpdatedByPartner = container.UpdatedByPartner,
+                    ContainerTypeId = container.ContainerTypeId,
+                    GrossWeight = container.GrossWeight,
+                    Volume = container.Volume,
+                    VolumeUnitCode = container.VolumeUnitCode,
+                    GrossWeightUnitCode = container.GrossWeightUnitCode,
+                    AdditionalReference1 = container.AdditionalReference1,
+                    AdditionalReference2 = container.AdditionalReference2,
+                    AdditionalReference3 = container.AdditionalReference3,
+                    AdditionalReference4 = container.AdditionalReference4,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1337,6 +1366,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OnCarriageGateOut = container.OnCarriageGateOut,
                     PreCarriageGateIn = container.PreCarriageGateIn,
                     UpdatedByPartner = container.UpdatedByPartner,
+                    ContainerTypeId = container.ContainerTypeId,
+                    GrossWeight = container.GrossWeight,
+                    Volume = container.Volume,
+                    VolumeUnitCode = container.VolumeUnitCode,
+                    GrossWeightUnitCode = container.GrossWeightUnitCode,
+                    AdditionalReference1 = container.AdditionalReference1,
+                    AdditionalReference2 = container.AdditionalReference2,
+                    AdditionalReference3 = container.AdditionalReference3,
+                    AdditionalReference4 = container.AdditionalReference4,
                 };
             }
 
@@ -1586,6 +1624,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OnCarriageGateOut = container.OnCarriageGateOut,
                     PreCarriageGateIn = container.PreCarriageGateIn,
                     UpdatedByPartner = container.UpdatedByPartner,
+                    ContainerTypeId = container.ContainerTypeId,
+                    GrossWeight = container.GrossWeight,
+                    Volume = container.Volume,
+                    VolumeUnitCode = container.VolumeUnitCode,
+                    GrossWeightUnitCode = container.GrossWeightUnitCode,
+                    AdditionalReference1 = container.AdditionalReference1,
+                    AdditionalReference2 = container.AdditionalReference2,
+                    AdditionalReference3 = container.AdditionalReference3,
+                    AdditionalReference4 = container.AdditionalReference4,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1847,6 +1894,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OnCarriageGateOut = container.OnCarriageGateOut,
                     PreCarriageGateIn = container.PreCarriageGateIn,
                     UpdatedByPartner = container.UpdatedByPartner,
+                    ContainerTypeId = container.ContainerTypeId,
+                    GrossWeight = container.GrossWeight,
+                    Volume = container.Volume,
+                    VolumeUnitCode = container.VolumeUnitCode,
+                    GrossWeightUnitCode = container.GrossWeightUnitCode,
+                    AdditionalReference1 = container.AdditionalReference1,
+                    AdditionalReference2 = container.AdditionalReference2,
+                    AdditionalReference3 = container.AdditionalReference3,
+                    AdditionalReference4 = container.AdditionalReference4,
                 };
             }
 

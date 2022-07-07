@@ -355,5 +355,15 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string UpdatedByPartner { get; set; }
         public bool IsUpdatedFromAPI { get; set; }
+
+        public string ContainerTypeId { get; set; }
+        public double? GrossWeight { get; set; }
+        public double? Volume { get; set; }
+        public string VolumeUnitCode { get; set; }
+        public string GrossWeightUnitCode { get; set; }
+        public string AdditionalReference1 { get; set; }
+        public string AdditionalReference2 { get; set; }
+        public string AdditionalReference3 { get; set; }
+        public string AdditionalReference4 { get; set; }
     }
 }

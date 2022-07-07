@@ -264,5 +264,15 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? OnCarriageGateOut { get; set; }
         public DateTime? PreCarriageGateIn { get; set; }
         public string UpdatedByPartner { get; set; }
+        public string ContainerTypeId { get; set; }
+        public string ContainerTypeName { get; set; }
+        public double? GrossWeight { get; set; }
+        public double? Volume { get; set; }
+        public string VolumeUnitCode { get; set; }
+        public string GrossWeightUnitCode { get; set; }
+        public string AdditionalReference1 { get; set; }
+        public string AdditionalReference2 { get; set; }
+        public string AdditionalReference3 { get; set; }
+        public string AdditionalReference4 { get; set; }
     }
 }
