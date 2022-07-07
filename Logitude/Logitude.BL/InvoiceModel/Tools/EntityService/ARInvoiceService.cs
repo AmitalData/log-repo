@@ -3251,7 +3251,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private InterestTransactionPM CreateInterestTransactionLineForVatLine(ARInvoiceTotalVAT invoiceTotalVat,GLAccountPM account)
         {
             ARInvoiceLinePM invoiceLine = GetInvoiceLineForTotalVat(invoiceTotalVat);
-
+            string interestTransactionGLAccount = null;
+            GLAccountPM debitGLAcount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant, entityPM.BillToGLAccountId);
+            if (!(entityPM.BillToGLAccountId != null && debitGLAcount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode) && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
+            {
+                var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, invoiceLine.ForiegnCurrencyId, invoiceLine.Tenant);
+                interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;
+            }
+            else
+            {
+                interestTransactionGLAccount = debitGLAcount?.Id;
+            }
             InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
             {
 
@@ -3263,7 +3273,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ForeignAmount = (decimal?)invoiceTotalVat.InvoiceCurrencyVATAmount,
                 InterestValueDate = GetIntrestValueDate(invoiceLine),
                 Tenant = entityPM.Tenant,
-                GLAccountId = account != null ? account.Id : null,
+                GLAccountId = interestTransactionGLAccount,
                 CurrencyId = entityPM.InvoiceCurrencyId,
                 ChangeSetOp = ChangeSetOperation.Insert,
             };
@@ -3855,11 +3865,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                                 Reference2 = theEntityPm.MainEntityReference,
                                 Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                DebitAccountId = glAccount == null ? "" : glAccount.Id,
-                                //     DebitControlAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.ControlAccountId,
 
                             };
-
+                            GLAccountPM debitGLAcount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant, entityPM.BillToGLAccountId);
+                            if (!(entityPM.BillToGLAccountId != null && debitGLAcount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode) && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
+                            {
+                                var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, journalLine.CurrencyId, invoice.Tenant);
+                                journalLine.DebitAccountId = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;
+                            }
+                            else
+                            {
+                                journalLine.DebitAccountId = debitGLAcount?.Id;
+                            }
                             journal.JournalLines.Add(journalLine);
                         }
 
@@ -4053,10 +4070,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ExchangeRate = (decimal)invoice.InvoiceCurrencyExchangeRate,
                 Reference1 = invoice.CustomerRef != null ? invoice.CustomerRef : invoice.InvoiceNumber,
                 Reference2 = invoice.MainEntityReference,
-                Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,
-                DebitAccountId = glAccount == null ? "" : glAccount.Id,
+                Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber
             };
-
+            GLAccountPM debitGLAcount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant, entityPM.BillToGLAccountId);
+            if (!(entityPM.BillToGLAccountId != null && debitGLAcount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode) && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
+            {
+                var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, journaLine.CurrencyId, invoice.Tenant);
+                journaLine.DebitAccountId = splittedGlAccount != null ? splittedGlAccount.Id : debitGLAcount?.Id;
+            }
+            else
+            {
+                journaLine.DebitAccountId = debitGLAcount?.Id;
+            }
             return journaLine;
         }
         private FullAccountingSettingPM getFullAccountingSettings(int tenant)
