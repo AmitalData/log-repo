@@ -250,6 +250,8 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                     this.ConfirmationTypesFilterItems = new ApiQueryFilters();
                     if (this.DeclarationPM.Direction == 'E')
                         this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", false, null, null, "Equals", false, false, false, "Boolean");
+                    else
+                        this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "Boolean");
 
                     var reqConfirmationCodes: string = "";
                     var res = response.Result;

@@ -81,8 +81,9 @@ export class CreateEditTicketComponent extends BaseComponent {
             var list: CustomsSettingList[] = response.Result;
             this.ConfirmationTypesFilterItems = new ApiQueryFilters();
             if ( this.Parent.DeclarationPM.Direction == 'E')
-               this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", false, null, null, "Equals", false, false, false, "boolean");
-
+                this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", false, null, null, "Equals", false, false, false, "boolean");
+            else
+                this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
 
             if (!AppTool.IsNullOrEmpty(list)) {
                 var customsSetting =
