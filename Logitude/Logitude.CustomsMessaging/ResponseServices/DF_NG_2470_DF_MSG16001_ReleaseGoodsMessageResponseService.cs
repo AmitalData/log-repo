@@ -29,6 +29,7 @@ using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.TraceEvents;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -111,12 +112,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
+                           
+                            ICommonDataContext commonDbContext = CommonDataContext.GetContext(declarationPM.Tenant);
+                            UserRepository userRepository = new UserRepository(commonDbContext);
+                            var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
+
                             var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
+                            
                             if (setting.IsConnectedToUniFreight)
                             {
                                 if (declarationPM.Direction == "E")
                                 {
-                                    RaiseEvent(declarationPM, "1-5975", status_id: "HTR", status_DateTime: statusDateTime);
+                                    RaiseEvent(declarationPM, user.Id, status_id: "HTR", status_DateTime: statusDateTime);
                                 }
                             }
 
