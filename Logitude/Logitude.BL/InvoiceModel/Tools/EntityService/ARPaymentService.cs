@@ -423,7 +423,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 service.ARPaymentQuickbooksValidating(theEntityPm, true, false, paymentPoco, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }
-            else if(!isDraftPayment)
+            else if(!isDraftPayment || paymentPoco.StatusCode != "VD")
             {
                 service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, paymentPoco, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }
