@@ -19,17 +19,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {StorageStatusList} from '../../EntityLists/StorageStatusList';
+import {StorageStatusTableList} from '../../EntityLists/StorageStatusTableList';
 
 @Injectable()
 
-export class StorageStatusListService {
+export class StorageStatusTableListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<StorageStatusList> = [];
+	public static CachedData: Array<StorageStatusTableList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/storagestatusviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/storagestatustableviews';  
     }
 
 	getSingle(code: string) {
@@ -42,7 +42,7 @@ export class StorageStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                    
-						var entity: StorageStatusList;
+						var entity: StorageStatusTableList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}
@@ -52,7 +52,7 @@ export class StorageStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StorageStatus", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StorageStatusTable", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class StorageStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<StorageStatusList> = [];
+						var _mappedListsArray: Array<StorageStatusTableList> = [];
 						if (allLists) {
 							for (var key in allLists) {			
-								var entity: StorageStatusList = this.MapJsonToEntityList(allLists[key]);
+								var entity: StorageStatusTableList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class StorageStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StorageStatus", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StorageStatusTable", "GetAll", ""); 
 
 						return serviceResponse;
 					}),
@@ -131,11 +131,11 @@ export class StorageStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<StorageStatusList> = [];
+						var _mappedListsArray: Array<StorageStatusTableList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: StorageStatusList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: StorageStatusTableList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -144,7 +144,7 @@ export class StorageStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StorageStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StorageStatusTable", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  								            
 						return serviceResponse;
 					}),
@@ -163,9 +163,9 @@ export class StorageStatusListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-		if (StorageStatusListService.CachedData.length > 0) {
+		if (StorageStatusTableListService.CachedData.length > 0) {
 			return defer(() => {
-				var filteredData = StorageStatusListService.CachedData.filter(a => a.Code === code)[0];
+				var filteredData = StorageStatusTableListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return of(serviceResponse);
@@ -173,25 +173,25 @@ export class StorageStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("Customs.StorageStatus").pipe(
+            return CachedDataManager.GetClosedTableData("Customs.StorageStatusTable").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<StorageStatusList> = [];
+					var _mappedListsArray: Array<StorageStatusTableList> = [];
 
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: StorageStatusList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: StorageStatusTableList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					StorageStatusListService.CachedData = _mappedListsArray;
+					StorageStatusTableListService.CachedData = _mappedListsArray;
 
-					var filteredData = StorageStatusListService.CachedData.filter(a => a.Code === code)[0];
+					var filteredData = StorageStatusTableListService.CachedData.filter(a => a.Code === code)[0];
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "StorageStatus", "GetSingleListFromCache", 'code=' + code); 
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "StorageStatusTable", "GetSingleListFromCache", 'code=' + code); 
 
 					return serviceResponse;
 				}),
@@ -222,14 +222,14 @@ export class StorageStatusListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-        if (StorageStatusListService.CachedData.length > 0) {
+        if (StorageStatusTableListService.CachedData.length > 0) {
             return defer(() => {
                 if (filters.GetAll) {
-					serviceResponse.Result = StorageStatusListService.CachedData; 
+					serviceResponse.Result = StorageStatusTableListService.CachedData; 
 				}
 
 				else {
-					var filteredData = InfraGenericFilter.GetFilteredArray(StorageStatusListService.CachedData, filters);
+					var filteredData = InfraGenericFilter.GetFilteredArray(StorageStatusTableListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 				}
@@ -239,18 +239,18 @@ export class StorageStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("Customs.StorageStatus").pipe(
+            return CachedDataManager.GetClosedTableData("Customs.StorageStatusTable").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<StorageStatusList> = [];
+					var _mappedListsArray: Array<StorageStatusTableList> = [];
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: StorageStatusList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: StorageStatusTableList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					StorageStatusListService.CachedData = _mappedListsArray;
+					StorageStatusTableListService.CachedData = _mappedListsArray;
 
 					if (filters.GetAll) {
 						serviceResponse.Result = _mappedListsArray; 
@@ -260,7 +260,7 @@ export class StorageStatusListService {
 
 						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "StorageStatus", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "StorageStatusTable", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 						serviceResponse.Result = _mappedListsArray; 
 						serviceResponse.CallTime = callTime;
@@ -275,8 +275,8 @@ export class StorageStatusListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: StorageStatusList;
-            entityList = new StorageStatusList();
+            var entityList: StorageStatusTableList;
+            entityList = new StorageStatusTableList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

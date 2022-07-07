@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Storage Status Table&quot;"
-  Code="&quot;d43b&quot;"
+  Code="&quot;cce6&quot;"
   Name="&quot;Customs.CustomsDocumentUpload Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"

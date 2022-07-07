@@ -12,67 +12,67 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class StorageStatusRepository:IRepository<StorageStatus>
+   public partial class StorageStatusTableRepository:IRepository<StorageStatusTable>
    {
    
         private ICustomContext currentContext;
-        public StorageStatusRepository(int tenant)
+        public StorageStatusTableRepository(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public StorageStatusRepository(ICustomContext context)
+        public StorageStatusTableRepository(ICustomContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  StorageStatus GetSingle(string code)
+		public  StorageStatusTable GetSingle(string code)
         {
-            return (from a in context.StorageStatuses
+            return (from a in context.StorageStatusTables
                     where a.Code == code 
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<StorageStatus> GetAll()
+        public IQueryable<StorageStatusTable> GetAll()
         {
-            return from a in context.StorageStatuses  
+            return from a in context.StorageStatusTables  
                    select a;
         }
 				 
-        public StorageStatus GetSingle(EntityKeyFields entityKeys)
+        public StorageStatusTable GetSingle(EntityKeyFields entityKeys)
         {
-            StorageStatusKeys keys = entityKeys as StorageStatusKeys;
-            return (from a in context.StorageStatuses
+            StorageStatusTableKeys keys = entityKeys as StorageStatusTableKeys;
+            return (from a in context.StorageStatusTables
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
 		         
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(StorageStatus entity)
+        public void Add(StorageStatusTable entity)
         {
             onAdd();
-            context.StorageStatuses.Add(entity);
+            context.StorageStatusTables.Add(entity);
         }
 
-        public void Remove(StorageStatus entity)
+        public void Remove(StorageStatusTable entity)
         {
-            context.StorageStatuses.Attach(entity);
-            context.StorageStatuses.Remove(entity);
+            context.StorageStatusTables.Attach(entity);
+            context.StorageStatusTables.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(StorageStatus entity)
+        public void Update(StorageStatusTable entity)
         {
             onUpdate();
-            context.StorageStatuses.Attach(entity);
+            context.StorageStatusTables.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<StorageStatus> All()
+        public List<StorageStatusTable> All()
         {
-            return context.StorageStatuses.ToList();
+            return context.StorageStatusTables.ToList();
         }
 
         private ICustomContext context

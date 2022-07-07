@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class StorageStatusViewsController : ApiController
+    public partial class StorageStatusTableViewsController : ApiController
     {
 	  
        
@@ -60,11 +60,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                StorageStatusListQueryService storageStatusQuery = new StorageStatusListQueryService(MyContext);
-                StorageStatusList storageStatusList = storageStatusQuery.GetSingle(code);
+                StorageStatusTableListQueryService storageStatusTableQuery = new StorageStatusTableListQueryService(MyContext);
+                StorageStatusTableList storageStatusTableList = storageStatusTableQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  storageStatusList);
+                return Request.CreateResponse(HttpStatusCode.OK,  storageStatusTableList);
             }
             catch (Exception ex)
             {
@@ -82,8 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                StorageStatusListQueryService storageStatusQuery = new StorageStatusListQueryService(MyContext);
-                List<StorageStatusList> result = storageStatusQuery.GetList(authToken.Tenant);
+                StorageStatusTableListQueryService storageStatusTableQuery = new StorageStatusTableListQueryService(MyContext);
+                List<StorageStatusTableList> result = storageStatusTableQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.StorageStatus",
+                    ObjectTableName = "Customs.StorageStatusTable",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.StorageStatuss",
+                    QuerySection = "Customs.StorageStatusTables",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> StorageStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.StorageStatus",tenant);
+				List<ObjectField> StorageStatusTableObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.StorageStatusTable",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -141,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = StorageStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = StorageStatusTableObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = StorageStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = StorageStatusTableObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -192,14 +192,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
-				StorageStatusListQueryService storageStatusQuery = new StorageStatusListQueryService(MyContext);
+				StorageStatusTableListQueryService storageStatusTableQuery = new StorageStatusTableListQueryService(MyContext);
 
-                List<StorageStatusList> entityLists = storageStatusQuery.GetList(queryOperations, tenant);
+                List<StorageStatusTableList> entityLists = storageStatusTableQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = storageStatusQuery.GetListCount(queryOperations);
+                    int count = storageStatusTableQuery.GetListCount(queryOperations);
                     response.Count = count;
                 }
 
