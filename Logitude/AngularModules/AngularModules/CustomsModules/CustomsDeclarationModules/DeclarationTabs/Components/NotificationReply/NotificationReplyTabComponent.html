@@ -1,4 +1,4 @@
-﻿<!-- Notification Reply Tab view  -->
+<!-- Notification Reply Tab view  -->
 <style>
     .BorderBox {
         border-top: 1px solid #838889; 
@@ -199,7 +199,7 @@
                                                                                         <td style="width: 10px;"><div></div></td>
 
                                                                                         <td style="width:90px;  vertical-align: central;">
-                                                                                            <custom-send-options *ngIf="notificationsItem.entityPM.ResponseToMessage" #NotificationReplyTabComponent (SendButtonClicked)="notificationsItem.OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+                                                                                            <custom-send-options *ngIf="declarationPM.Direction!='E' || notificationsItem.entityPM.ResponseToMessage" #NotificationReplyTabComponent (SendButtonClicked)="notificationsItem.OnCustomSendOptionsButtonClick($event)"></custom-send-options>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>

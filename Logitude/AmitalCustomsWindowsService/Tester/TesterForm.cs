@@ -1205,5 +1205,15 @@ namespace AmitalCustomsWindowsService.Tester
         {
 
         }
+
+        private void _CBInterfaceID_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _TBID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

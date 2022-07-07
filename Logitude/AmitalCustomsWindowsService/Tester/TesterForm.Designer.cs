@@ -635,6 +635,7 @@
             this.recivedToolStripMenuItem.Text = "Recived";
             this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
             // 
+
             // uW2LToolStripMenuItem
             // 
             this.uW2LToolStripMenuItem.Name = "uW2LToolStripMenuItem";
@@ -794,6 +795,7 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
             // 
+
             // TesterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
