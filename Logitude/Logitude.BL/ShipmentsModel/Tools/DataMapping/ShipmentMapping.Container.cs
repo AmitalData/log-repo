@@ -176,7 +176,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.GrossWeight = containerPM.GrossWeight;
             container.GrossWeightUnitCode = containerPM.GrossWeightUnitCode;
             container.AdditionalReference1 = containerPM.AdditionalReference1;
-            container.AdditionalReference3 = containerPM.AdditionalReference2;
+            container.AdditionalReference2 = containerPM.AdditionalReference2;
             container.AdditionalReference3 = containerPM.AdditionalReference3;
             container.AdditionalReference4 = containerPM.AdditionalReference4;
         }
