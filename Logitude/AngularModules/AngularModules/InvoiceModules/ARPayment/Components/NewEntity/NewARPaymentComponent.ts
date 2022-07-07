@@ -84,11 +84,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
 
-        if (this.invoicePm == null) {
-            this.invoicePm = new ARInvoicePM();
-        }
+       
 
-
+        this.InitializeInvoice();
         if(SessionLocator.TenantPM.AccountingActivated)
             this.invoicePm.IsFullAccounting = true;
 
@@ -104,7 +102,11 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.IsEditExchangeRateVisible = true;
         }
     }
-
+    InitializeInvoice() {
+        if (this.invoicePm == null) {
+            this.invoicePm = new ARInvoicePM();
+        }
+    }
     private InitializeBillToLov() {
         if (this.accountingActivated) {
             this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
@@ -321,6 +323,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     public IsVisible: boolean = false;
     Initialize() {
+        this.InitializeInvoice();
         this.FillTipoCadenaPagoList();
         this.CreateARPayment();
 
@@ -860,10 +863,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             if (this.newARPaymentPM.PaymentCurrencyId != newValue) {
                 this.newARPaymentPM.PaymentCurrencyId = newValue;
                 this.SetUIProperties();
-                this.SetCurrencyCode();
-                this.SetCurrencyRateData();
+                this.SetCurrencyCode();             
                 this.ComputeTotals();
             }
+            this.SetCurrencyRateData();
         }
     }
 
