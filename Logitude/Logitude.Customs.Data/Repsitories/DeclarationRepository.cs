@@ -1,4 +1,4 @@
-
+ï»¿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -503,7 +503,17 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.ExportContainerizationID == exportContainerizationID && a.Tenant == tenant
                     select a);
         }
+        public IQueryable<Declaration> GetByConsigmentExportContainerizationID(string exportContainerizationID, int tenant)
+        {
+            var query = (from b in context.Consignments
+                         where b.ExportContainerizationID == exportContainerizationID && b.Tenant == tenant
+                        select b).Select(c=>c.DeclarationId).ToList();
 
+            return (from a in context.Declarations
+                    where query.Contains(a.Id) && a.Tenant == tenant
+                    select a);
+        }
+        
 
 
         public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant)
@@ -1046,8 +1056,8 @@ namespace Logitude.Customs.Data.Repsitories
             try { 
            
                var query1 = (from a in context.Consignments
-                            where declarationList.Contains(a.DeclarationId) && a.ExportContainerizationID==null
-                            select a);
+                            where declarationList.Contains(a.DeclarationId) && a.ExportContainerizationID==null && !string.IsNullOrEmpty(a.CargoTypeCode) && !string.IsNullOrEmpty(a.ManifestNumber)
+                             select a);
                var query2 = (from b in context.Containerizations
                           select b).Select(t=>new ContainerizationKey {
                               Id =t.Id  ,
@@ -1059,11 +1069,11 @@ namespace Logitude.Customs.Data.Repsitories
 
                var q1 = query1.GroupBy(cont => new { ManifestNumber = cont.ManifestNumber, CargoTypeCode = cont.CargoTypeCode, SecondCargoID = cont.SecondCargoID, ThirdCargoID = cont.ThirdCargoID }) 
                 .ToList();
-               //òãëåï äîëìä
-               var q2 = q1.Where(x => x.Count() >= 1 && x.Any(u => (ck1.Any(g=>g.Key.Contains(u.CargoTypeCode + u.ManifestNumber + u.SecondCargoID + u.ThirdCargoID)))));
+               //Ã²Ã£Ã«Ã¥Ã¯ Ã¤Ã®Ã«Ã¬Ã¤
+               var q2 = q1.Where(x => x.Count() >= 1 && x.Any(u => (ck1.Any(g=>g.Key.Contains(u.CargoTypeCode?.ToLower() + u.ManifestNumber?.ToLower() + u.SecondCargoID?.ToLower() + u.ThirdCargoID?.ToLower())))));
                
-               //äåñôú äîëìä çãùä
-               var q3 = q1.Where(x => x.Count() > 1 && !(x.Any(u => (ck1.Any(g => g.Key.Contains(u.CargoTypeCode + u.ManifestNumber + u.SecondCargoID + u.ThirdCargoID))))));
+               //Ã¤Ã¥Ã±Ã´Ãº Ã¤Ã®Ã«Ã¬Ã¤ Ã§Ã£Ã¹Ã¤
+               var q3 = q1.Where(x => x.Count() > 1 && !(x.Any(u => (ck1.Any(g => g.Key.Contains(u.CargoTypeCode?.ToLower() + u.ManifestNumber?.ToLower() + u.SecondCargoID?.ToLower() + u.ThirdCargoID?.ToLower()))))));
                
                var q4 = q2.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
                  {
@@ -1073,7 +1083,7 @@ namespace Logitude.Customs.Data.Repsitories
                      SecondCargoId = cont.SecondCargoID,
                      ThirdCargoId = cont.ThirdCargoID,
                      IsNew=false,
-                     Id= ck1.Where(f=>f.Key.Contains(cont.CargoTypeCode + cont.ManifestNumber + cont.SecondCargoID + cont.ThirdCargoID)).Select(y=>y.Id).FirstOrDefault().ToString(),
+                     Id= ck1.Where(f=>f.Key.Contains(cont.CargoTypeCode?.ToLower() + cont.ManifestNumber?.ToLower() + cont.SecondCargoID?.ToLower() + cont.ThirdCargoID?.ToLower())).Select(y=>y.Id).FirstOrDefault().ToString(),
                })).ToList();
                
                var q5 = q3.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
@@ -1095,37 +1105,12 @@ namespace Logitude.Customs.Data.Repsitories
             }
 
         }
-        public ConDetails GetContainerizationByID(string Id)
-        {
-            var query2 = (from b in context.Containerizations
-                          where b.Id == Id
-                          select b).Select(t => new ConDetails
-                          {
-                            
-                              ContainerizationDate = t.ContainerizationDate,
-                              ContainerizationNumber = t.ContainerizationNumber,
-                              ContainerizationStatus = t.ContainerizationStatus,
-                              HataraStatus = t.HataraStatus,
-                              IsMultiCustomers = t.IsMultiCustomers
 
-                          }).FirstOrDefault();
+        
 
-            return query2;
-        }
-
-
-        }
-
-
-
-    public class ConDetails
-    {
-        public DateTime ContainerizationDate { get; set; }
-        public string ContainerizationNumber { get; set; }
-        public string ContainerizationStatus { get; set; }
-        public string HataraStatus { get; set; }
-        public string IsMultiCustomers { get; set; }
     }
+
+
 
         public class ContainerizationKey
     {
