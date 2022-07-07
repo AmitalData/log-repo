@@ -46,10 +46,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 IdCounterWrapperGetNumber(entityPM.Tenant);
 
 
-            entityPM.JournalNumber =
-                //(new CodeCounterWrapper()).GetNumber(GetCodeNumberJournal(), 
-                CodeCounterWrapperGetNumber(
-                entityPM.Tenant).ToString();
+            //entityPM.JournalNumber =
+            //    //(new CodeCounterWrapper()).GetNumber(GetCodeNumberJournal(), 
+            //    CodeCounterWrapperGetNumber(
+            //    entityPM.Tenant).ToString();
 
 
             string loggedContactId = GetLogContactId(entityPM);
@@ -68,18 +68,18 @@ namespace Logitude.Accounting.BL.CoreBL
                 .FirstOrDefault(r => r.EnglishName =="Adjustment");
 
 
-            if (entityPM.TypeCode == "0" && entityPM.AccountingEntityReference == null) // Manual
-            {
-                if (myAccEntityReconciliation10.Code == entityPM.AccountingEntityCode)
-                {
-                    //entityPM.AccountingEntityReference = will be enter WhileStreaming ;
+            //if (entityPM.TypeCode == "0" && entityPM.AccountingEntityReference == null) // Manual
+            //{
+            //    if (myAccEntityReconciliation10.Code == entityPM.AccountingEntityCode)
+            //    {
+            //        //entityPM.AccountingEntityReference = will be enter WhileStreaming ;
  
-                }
-                else
-                {
-                    entityPM.AccountingEntityReference = entityPM.JournalNumber;
-                }
-            }
+            //    }
+            //    else
+            //    {
+            //        entityPM.AccountingEntityReference = entityPM.JournalNumber;
+            //    }
+            //}
             var DateTimeNow = GetDateTimeNow();
 
             if (entityPM.CreateDate == null)
@@ -267,11 +267,10 @@ namespace Logitude.Accounting.BL.CoreBL
             return (new IdCounterWrapper()).GetNumber(
                     GetNumberJournal(), Tenant);
         }
-        public virtual int CodeCounterWrapperGetNumber(int Tenant)
-        {
-            return (new CodeCounterWrapper(true)).GetNumber(
-                    GetCodeNumberJournal(), Tenant);
-        }
+        //public virtual int CodeCounterWrapperGetNumber(int Tenant)
+        //{
+        //    return CodeCounter.GetNumber(GetCodeNumberJournal(), Tenant, false);
+        //}
         public virtual void OnCreateLine(JournalPM entityPM, JournalLinePM journalLinePM)
         {
             var journalLineUpdateInsert = new JournalLineOnUpdate(this._MainContext);
