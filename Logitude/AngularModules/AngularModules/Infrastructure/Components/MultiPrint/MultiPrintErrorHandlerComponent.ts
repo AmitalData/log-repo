@@ -14,6 +14,8 @@ export class MultiPrintErrorHandlerComponent {
     public ItemsSource: PrintingRow[];
     public PrintingRows: PrintingRow[];
     public DocumentId: string;
+    public FileName: string;
+    public SecurityId: string;
     constructor() {
 
     }
@@ -33,6 +35,6 @@ export class MultiPrintErrorHandlerComponent {
     }
 
     DownloadClicked() {
-        DownloadManager.DownloadPage(this.DocumentId);
+        DownloadManager.DownloadPage(this.DocumentId, this.SecurityId);
     }
 }

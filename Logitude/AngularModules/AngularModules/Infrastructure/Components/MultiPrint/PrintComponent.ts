@@ -144,7 +144,8 @@ export class PrintComponent extends BaseComponent implements OnInit {
         this.columns.splice(1, 0, printSuccess);
     }
 
-    OnPrintFinish(entities: PrintingRow[], documentId: string) {
+    OnPrintFinish(printingResult: PrintingResult) {
+        var entities: PrintingRow[] = printingResult.NotValidRows;
         var results: PrintingRow[] = [];
 
         this.AllRecords.forEach((record) => {
@@ -165,7 +166,9 @@ export class PrintComponent extends BaseComponent implements OnInit {
         });
 
         this.ParentComponent.PrintingRows = results;
-        this.ParentComponent.DocumentId = documentId;
+        this.ParentComponent.DocumentId = printingResult.DocumentId;
+        this.ParentComponent.FileName = printingResult.FileName;
+        this.ParentComponent.SecurityId = printingResult.SecurityId;
         this.RefreshList();
     }
 
@@ -422,7 +425,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
                     this.CurrentSession.StopBusyIndicator();
 
                     var printingResult: PrintingResult = JSON.parse(list.PrametersXml);
-                    this.OnPrintFinish(printingResult.NotValidRows, printingResult.DocumentId);
+                    this.OnPrintFinish(printingResult);
                 }
 
                 else if (list.StatusCode == "F") {

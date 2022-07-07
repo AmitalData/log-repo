@@ -268,18 +268,21 @@ namespace WebFreight.Web.Helpers.BatchPrint
         private void AddDocumentOutCopy(Document document, PrintEntityKeys item, DocumentOutPM documentOut)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(_batchPrinterArgs.Tenant);
-            DocumentOutCopyService documentOutCopyService = new DocumentOutCopyService(commonContext, _batchPrinterArgs.Tenant);
-            var documentOutCopyPM = new DocumentOutCopyPM()
+            DocumentOutCopyRepository documentOutCopyRepository = new DocumentOutCopyRepository(commonContext);
+
+            DocumentOutCopy documentOutCopy = new DocumentOutCopy()
             {
+                Id = document.Id,
                 DocumentId = document.Id,
                 DocumentOutId = documentOut.Id,
                 DocumentTypeCopyId = documentTypeCopy.Id,
+                Tenant = _batchPrinterArgs.Tenant,               
                 LastPrintDate = DateTime.Now,
                 LastPrintedByUserId = printedBy.Id,
-                Tenant = _batchPrinterArgs.Tenant
-
             };
-            documentOutCopyService.Create(documentOutCopyPM);
+
+            documentOutCopyRepository.Add(documentOutCopy);
+            documentOutCopyRepository.SubmitChanges();
         }
 
         private MemoryStream CreateReportStream(PrintEntityKeys item)
@@ -287,8 +290,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
             ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
             try
             {
-                StiReport report = exportDocumentHelper.GetReportDocument(documentType, item.EntityId, _batchPrinterArgs.ObjectTableId, item.ChildEntityId,
-                _batchPrinterArgs.ChildObjectTableId, documentTypeCopy, template.TemplateBody, template, _batchPrinterArgs.Tenant, new long(), new long(), new long(), new long(), printedBy.Id);
+                StiReport report = exportDocumentHelper.GetReportDocument(documentType, item.EntityId, _batchPrinterArgs.ObjectTableId, item.EntityId,
+                _batchPrinterArgs.ObjectTableId, documentTypeCopy, template.TemplateBody, template, _batchPrinterArgs.Tenant, new long(), new long(), new long(), new long(), printedBy.Id);
                 var stream = new MemoryStream();
                 report.ExportDocument(StiExportFormat.Pdf, stream);
                 return stream;

@@ -117,6 +117,8 @@ export class PrintEntityKeys {
 
 export class PrintingResult {
     public DocumentId: string;
+    public FileName: string;
+    public SecurityId: string;
     public NotValidRows: PrintingRow[];
 }
 
