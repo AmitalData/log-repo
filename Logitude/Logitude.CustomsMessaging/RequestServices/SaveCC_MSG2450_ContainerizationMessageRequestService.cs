@@ -25,12 +25,12 @@ namespace Logitude.CustomsMessaging.RequestServices
             CustomsSettingQueryService customsSettingQueryService = new CustomsSettingQueryService(customContext);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
             var settings = customsSettingQueryService.GetSingleByTenant(requestParams.Tenant);
-                        var containerization = containerizationQueryService.GetSingle(requestParams.LoggingEntityId, true, false);
+                        var containerization = containerizationQueryService.GetSingle(requestParams.LoggingEntityId, true, false); 
 
             var declarationRepository = new DeclarationRepository(requestParams.Tenant);
-            var declarations = declarationRepository.GetByExportContainerizationID(requestParams.LoggingEntityId, requestParams.Tenant);
+            //var declarations1 = declarationRepository.GetByExportContainerizationID(requestParams.LoggingEntityId, requestParams.Tenant);
+            var declarations = declarationRepository.GetByConsigmentExportContainerizationID(requestParams.LoggingEntityId, requestParams.Tenant);
 
-          
 
             req.ContainerizationDetails = new AV_MSG2_ContainerizationMessageContainerizationDetails();
             req.ContainerizationDetails.operationCode = Convert.ToInt32(containerization.OperationMode);
@@ -50,12 +50,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.ContainerCargo = new AV_MSG2_ContainerizationMessageContainerCargo();
             req.ContainerCargo.cargoIdentifier = new cargoIdentifier();
 
-            var cons = declarationQueryService.GetConsignmentListPMByDeclarationId(declarations.ToList()[0].Id, requestParams.Tenant);
-
-            req.ContainerCargo.cargoIdentifier.cargoIdentifierType = Convert.ToInt32(cons[0].CargoTypeCode);
-            req.ContainerCargo.cargoIdentifier.cargoIdentifierKey1 =  cons[0].ManifestNumber;
-            req.ContainerCargo.cargoIdentifier.cargoIdentifierKey2 = cons[0].SecondCargoID;
-            req.ContainerCargo.cargoIdentifier.cargoIdentifierKey3 = cons[0].ThirdCargoID;
+           
+            //var cons = declarationQueryService.GetConsignmentListPMByDeclarationId(declarations.ToList()[0].Id, requestParams.Tenant);
+            var cont = containerizationQueryService.GetcontainerizationById(requestParams.LoggingEntityId, requestParams.Tenant);
+            req.ContainerCargo.cargoIdentifier.cargoIdentifierType = Convert.ToInt32(cont.CargoTypeCode);
+            req.ContainerCargo.cargoIdentifier.cargoIdentifierKey1 = cont.ManifestNumber; 
+            req.ContainerCargo.cargoIdentifier.cargoIdentifierKey2 = cont.SecondCargoID;
+            req.ContainerCargo.cargoIdentifier.cargoIdentifierKey3 = cont.ThirdCargoID;
 
 
             foreach (var dec in declarations)

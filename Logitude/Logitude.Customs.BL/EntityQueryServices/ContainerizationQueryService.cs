@@ -30,5 +30,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return this.repository.GetContainerizationByKeys(tenent,declarationList);
         }
+        public ConKeys GetcontainerizationById(string exportContainerizationID, int tenant)
+        {
+            return this.repository.GetcontainerizationById(exportContainerizationID, tenant);
+        }
+
+
+
     }
 }

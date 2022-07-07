@@ -57,6 +57,31 @@ namespace Logitude.Customs.Data.Repsitories
                     Tenant = cont.Tenant,
                     ContainerizationNumber = cont.ContainerizationNumber
                 }).Distinct().OrderBy(c => c.ContainerizationNumber).ToList();
+        }      
+
+        public ConKeys GetcontainerizationById(string exportContainerizationID, int tenant)
+        {
+            var query = (from a in context.Containerizations
+                         where a.Id == exportContainerizationID && a.Tenant == tenant
+                         select a).Select(y => new ConKeys
+                         {
+                             Id=y.Id,
+                             CargoTypeCode = y.CargoTypeCode,
+                             ManifestNumber = y.ManifestNumber,
+                             SecondCargoID = y.SecondCargoID,
+                             ThirdCargoID = y.ThirdCargoID
+
+                         }).FirstOrDefault(); 
+            return query;
+        }
+        public class ConKeys
+        {
+            public string Id { get; set; }
+            public string CargoTypeCode { get; set; }
+            public string ManifestNumber { get; set; }
+            public string SecondCargoID { get; set; }
+            public string ThirdCargoID { get; set; }
+
         }
         public class ContainerizationDetails
         {
