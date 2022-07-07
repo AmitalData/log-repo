@@ -78,12 +78,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         string clientCode = "";
                         for (int i = 0; i < ContainerizationList.Count; i++)
                         {
-                            // string mess = string.Format(
-                            //"בניית תקשורת שליחת מסר המכלה  {2} ( {0}/{1} ) "
-                            //, (i + 1), (ContainerizationList.Count), clientCode);
-                            // ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage("", mess);
-                            // SendContainerization(ContainerizationList[i].Tenant, SendRequestVIA.WebServiceBatch, ContainerizationList[i].Id, loggedUserId);
-
                             SendContainerization(ContainerizationList[i].Tenant, SendRequestVIA.WebServiceBatch, ContainerizationList[i].Id, loggedUserId);
                         }
                     }

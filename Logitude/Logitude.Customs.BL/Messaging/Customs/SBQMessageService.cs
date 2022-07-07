@@ -84,6 +84,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 }
                 customsRequestsSheetId = customsRequestsSheetService.MyCustomsRequestsSheetPM.Id;
             }
+            catch (Exception ex)
+            {
+
+            }
             finally
             {
                 if (customsRequestsSheetService != null)
@@ -93,7 +97,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 RequestSheetContext.Current.Dispose();
                 LogMessagingUtil.Instance.Clear();
             }
-
+           
             return customsRequestsSheetId;
 
         }
