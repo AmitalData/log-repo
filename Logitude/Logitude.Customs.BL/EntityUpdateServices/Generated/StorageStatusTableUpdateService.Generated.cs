@@ -22,44 +22,44 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class StorageStatusUpdateService:EntityUpdateService<StorageStatus,StorageStatusPM,EntityPM>
+   public partial class StorageStatusTableUpdateService:EntityUpdateService<StorageStatusTable,StorageStatusTablePM,EntityPM>
    {
    
-        StorageStatusRepository entityRepository;
-        public StorageStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        StorageStatusTableRepository entityRepository;
+        public StorageStatusTableUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             ICustomContext  context = mainContext as CustomContext;
             context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new StorageStatusDataMapping();
-            Repository = new StorageStatusRepository(context);
+            Mapping = new StorageStatusTableDataMapping();
+            Repository = new StorageStatusTableRepository(context);
         }
 
        
         private ICustomContext currentContext;
-        public StorageStatusUpdateService(int tenant)
+        public StorageStatusTableUpdateService(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public StorageStatusUpdateService(ICustomContext context)
+        public StorageStatusTableUpdateService(ICustomContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(StorageStatusPM entityPM)
+		protected override EntityKeyFields GetKeys(StorageStatusTablePM entityPM)
         {
-            StorageStatusKeys entityKeys = new StorageStatusKeys() { Code = entityPM.Code };
+            StorageStatusTableKeys entityKeys = new StorageStatusTableKeys() { Code = entityPM.Code };
             return entityKeys;
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(StorageStatusPM entityPM)
+	    protected override void FillDefaultValuesOnCreate(StorageStatusTablePM entityPM)
         {
  
 		}
-		protected override void FillDefaultValuesOnUpdate(StorageStatusPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(StorageStatusTablePM entityPM)
 		{
  
 		}

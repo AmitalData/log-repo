@@ -14,12 +14,12 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.Data.EntityMapping
 {
  
-    public class StorageStatusMap : EntityTypeConfiguration<StorageStatus>
+    public class StorageStatusTableMap : EntityTypeConfiguration<StorageStatusTable>
     {
 	    string dbms;
-        public StorageStatusMap()
+        public StorageStatusTableMap()
         { 
-			  this.ToTable("StorageStatuses", "Customs");
+			  this.ToTable("StorageStatusTables", "Customs");
 		
 		    this.HasKey(t => new { t.Code });
 	 

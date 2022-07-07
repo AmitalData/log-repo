@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class StorageStatusList {
+export class StorageStatusTableList {
    
 	Code: string;
 	Name: string;

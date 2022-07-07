@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class StorageStatusUpdateClass
+   public class StorageStatusTableUpdateClass
    {  		
-		public const string HashString = "5396dee0dfc9ccaf6802db76d56dae8c";
+		public const string HashString = "e6abf5a474f6640927fd0b9827713cdd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.StorageStatus",
+	             				    ObjectTableName =  "Customs.StorageStatusTable",
 			      				    IsNew =  false,
-			      				    DBTableName =  "Customs.StorageStatuses",
-			      				    ObjectTableSingular =  "StorageStatus",
-			      				    ObjectTablePlural =  "StorageStatuses",
+			      				    DBTableName =  "Customs.StorageStatusTables",
+			      				    ObjectTableSingular =  "StorageStatusTable",
+			      				    ObjectTablePlural =  "StorageStatusTables",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -126,8 +126,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Storage Status",
-			      				    Code =  "a4de",
+			      				    DefaultText =  "Storage Status Table",
+			      				    Code =  "d43b",
 			      				    Name =  "Customs.CustomsDocumentUpload Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -142,7 +142,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  StorageStatusUpdateClass.HashString,
+			      				    HashString =  StorageStatusTableUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -154,7 +154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "Customs.StorageStatus",
+					  						ObjectTableName =  "Customs.StorageStatusTable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  1,
@@ -182,7 +182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.StorageStatus",
+					  						ValidForQuerySection1 =  "Customs.StorageStatusTable",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -216,7 +216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Name",
-					  						ObjectTableName =  "Customs.StorageStatus",
+					  						ObjectTableName =  "Customs.StorageStatusTable",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
@@ -244,7 +244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.StorageStatus",
+					  						ValidForQuerySection1 =  "Customs.StorageStatusTable",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -282,15 +282,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable StorageStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.StorageStatus" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> StorageStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.StorageStatus").ToList();
+		   ObjectTable StorageStatusTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.StorageStatusTable" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> StorageStatusTableObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.StorageStatusTable").ToList();
 		       
 	      
 
-	         Screen StorageStatusCustomsCustomsDocumentUploadHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "StorageStatus.HeaderScreen", Name = "Customs.CustomsDocumentUploadHeaderScreen", ObjectTableId = StorageStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen StorageStatusTableCustomsCustomsDocumentUploadHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "StorageStatusTable.HeaderScreen", Name = "Customs.CustomsDocumentUploadHeaderScreen", ObjectTableId = StorageStatusTableObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    StorageStatusObjectTable.HeaderScreenId = StorageStatusCustomsCustomsDocumentUploadHeaderScreenScreen0.Id;
-		    StorageStatusObjectTable.HeaderScreenCode = StorageStatusCustomsCustomsDocumentUploadHeaderScreenScreen0.Code;
+		    StorageStatusTableObjectTable.HeaderScreenId = StorageStatusTableCustomsCustomsDocumentUploadHeaderScreenScreen0.Id;
+		    StorageStatusTableObjectTable.HeaderScreenCode = StorageStatusTableCustomsCustomsDocumentUploadHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -307,7 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable StorageStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.StorageStatus" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable StorageStatusTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.StorageStatusTable" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -322,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = StorageStatusObjectTable.Id,
+                ObjectTableId = StorageStatusTableObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -341,7 +341,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = StorageStatusObjectTable.Id,
+                ObjectTableId = StorageStatusTableObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
