@@ -712,6 +712,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new StorageStatusMap());
 	
+            modelBuilder.Configurations.Add(new StorageStatusMap());
+	
             modelBuilder.Configurations.Add(new StuffingSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new SubCountryMap());
@@ -3260,6 +3262,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<StorageMessageType> StorageMessageTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<StorageStatus> StorageStatuses 
 	 {
 	      get; set;
 	 

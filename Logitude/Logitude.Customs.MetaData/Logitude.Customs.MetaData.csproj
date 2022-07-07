@@ -480,6 +480,7 @@
     <None Include="DBTables\StatusFieldType.dxml" />
     <None Include="DBTables\StorageMessageType.dxml" />
     <None Include="DBTables\StorageStatus.dxml" />
+    <None Include="DBTables\StorageStatusTable.dxml" />
     <None Include="DBTables\SubCountry.dxml" />
     <None Include="DBTables\SuppInvoiceItemsAbachStatement.dxml" />
     <None Include="DBTables\SupplierInvioceItemCertificat.dxml" />
@@ -538,6 +539,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\StorageStatusTable.lxml" />
     <None Include="EntityFiles\LogisticPermit.lxml" />
     <None Include="EntityFiles\ExportLogisticPermitAction.lxml" />
     <None Include="EntityFiles\LogisticActionRequest.lxml" />
