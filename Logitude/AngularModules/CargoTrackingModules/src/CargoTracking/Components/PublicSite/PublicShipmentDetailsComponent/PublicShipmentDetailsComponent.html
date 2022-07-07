@@ -197,10 +197,10 @@
                     <div class="tag"  *ngIf="isPlannedMilestonesExist">Planned Milestones</div>
                     <ul *ngIf="isPlannedMilestonesExist" class="steps-list">
                         <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
-                            <ng-container *ngIf="item.Date">
+                            <ng-container *ngIf="item.Date || item.EstimationDate">
                                 <div class="tick"> </div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
-                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</div>
+                                <div class="date" style="width: 130px;">{{item.Date || item.EstimationDate | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">
                                     <custom-label *ngIf="item.Notes">{{item.Notes}}</custom-label>
                                 </div>

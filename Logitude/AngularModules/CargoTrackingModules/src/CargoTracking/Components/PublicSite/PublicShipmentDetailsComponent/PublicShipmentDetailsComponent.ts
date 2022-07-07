@@ -334,7 +334,7 @@ export class PublicShipmentDetailsComponent implements OnInit
                 if (S.IsEstimation) {
 
                     this.FuturesMilestoneFields.push(S);
-                    if (S.IsEstimation && S.EstimationDate != null) {
+                    if (S.IsEstimation && (S.EstimationDate != null || S.Date != null)) {
 
                         this.isPlannedMilestonesExist = true;
                     }
