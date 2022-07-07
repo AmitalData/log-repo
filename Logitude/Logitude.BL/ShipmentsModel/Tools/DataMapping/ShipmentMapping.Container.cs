@@ -170,6 +170,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.PreCarriageGateIn = containerPM.PreCarriageGateIn;
             container.OnCarriageGateOut = containerPM.OnCarriageGateOut;
             container.UpdatedByPartner = SetUpdatedByPartner(containerPM);
+            container.ContainerTypeId = containerPM.ContainerTypeId;
+            container.Volume = containerPM.Volume;
+            container.VolumeUnitCode = containerPM.VolumeUnitCode;
+            container.GrossWeight = containerPM.GrossWeight;
+            container.GrossWeightUnitCode = containerPM.GrossWeightUnitCode;
+            container.AdditionalReference1 = containerPM.AdditionalReference1;
+            container.AdditionalReference3 = containerPM.AdditionalReference2;
+            container.AdditionalReference3 = containerPM.AdditionalReference3;
+            container.AdditionalReference4 = containerPM.AdditionalReference4;
         }
         private static string SetUpdatedByPartner(ContainerPM entityPM)
         {
