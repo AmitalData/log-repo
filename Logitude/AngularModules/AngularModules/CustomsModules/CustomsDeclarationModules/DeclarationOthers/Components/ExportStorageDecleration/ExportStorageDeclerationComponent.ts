@@ -261,7 +261,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CustomsStatus',
             DataTypeCode: 'String',
-            Display: 'קוד סטטוס מטען',
+            Display: 'שם סטטוס מטען',
             Styles: { width: '110px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -271,7 +271,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ActionCode',
             DataTypeCode: 'String',
-            Display: 'היתר לוגיסטי מכסי',
+            Display: 'שם סטטוס היתר לוגיסטי',
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
