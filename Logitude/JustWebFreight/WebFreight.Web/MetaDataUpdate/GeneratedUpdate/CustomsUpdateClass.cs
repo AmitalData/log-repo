@@ -398,7 +398,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		StatusFieldTypeUpdateClass  StatusFieldTypeUpdateClass = new StatusFieldTypeUpdateClass();
 		StorageMessageTypeUpdateClass  StorageMessageTypeUpdateClass = new StorageMessageTypeUpdateClass();
 		StorageStatusUpdateClass  StorageStatusUpdateClass = new StorageStatusUpdateClass();
-		StorageStatusUpdateClass  StorageStatusUpdateClass = new StorageStatusUpdateClass();
 		StuffingSiteTypeUpdateClass  StuffingSiteTypeUpdateClass = new StuffingSiteTypeUpdateClass();
 		SubCountryUpdateClass  SubCountryUpdateClass = new SubCountryUpdateClass();
 		SuppInvoiceItemsAbachStatementUpdateClass  SuppInvoiceItemsAbachStatementUpdateClass = new SuppInvoiceItemsAbachStatementUpdateClass();
