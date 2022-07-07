@@ -221,14 +221,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             }
             PagosPagoImpuestosPTrasladoP pagosPagoImpuestosPTrasladoP = new PagosPagoImpuestosPTrasladoP
             {
-                BaseP = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(totalBaseDR),
+                BaseP = SATBaseProfact40Service.TruncateDecimalWithNDigitsAfterPoint(totalBaseDR, 6),
                 ImpuestoP = taxCode,
                 TipoFactorP = "Exento"
             };
 
             if (group.First().TipoFactorDR == "Exento") return pagosPagoImpuestosPTrasladoP;
 
-            pagosPagoImpuestosPTrasladoP.ImporteP = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(totalImporteDR);
+            pagosPagoImpuestosPTrasladoP.ImporteP = SATBaseProfact40Service.TruncateDecimalWithNDigitsAfterPoint(totalImporteDR, 6);
             pagosPagoImpuestosPTrasladoP.TasaOCuotaP = Convert.ToDecimal(group.Key);
             pagosPagoImpuestosPTrasladoP.TipoFactorP = "Tasa";
             pagosPagoImpuestosPTrasladoP.ImportePSpecified = true;

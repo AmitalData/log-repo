@@ -124,6 +124,12 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return decimal.Parse(dNumber.ToString("0.000000"));
         }
 
+        public static decimal TruncateDecimalWithNDigitsAfterPoint(decimal dNumber, double numberOfDigits)
+        {
+            decimal multiplier = (decimal)Math.Pow(10, numberOfDigits);
+            return Math.Truncate(dNumber * multiplier) / multiplier;
+        }
+
         public static string GetBillToAddressZipCode(Address billToAddress, int tenant)
         {
             PostalCodeQuery postalCodeQuery = new PostalCodeQuery(tenant);

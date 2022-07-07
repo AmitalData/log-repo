@@ -62,6 +62,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             const string regimenFiscalReceptor616Code = "616";
             MexicoReceptor.RegimenFiscalReceptor = regimenFiscalReceptor616Code;
             MexicoReceptor.DomicilioFiscalReceptor = LugarExpedicion.Get(new LugarExpedicionArgs { CommonContext = commonContext, BranchId = arPaymentPM.BranchId, CurrentTenantZipCode = currentTenant.Address.ZipCode, Tenant = arPaymentPM.Tenant });
+            MexicoReceptor.Nombre = IsPublicInGeneral ? SATData.PublicInGeneralNombre : MexicoReceptor.Nombre;
             return MexicoReceptor;
         }
 
