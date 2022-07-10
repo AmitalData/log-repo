@@ -189,7 +189,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'OpenDate',
             DataTypeCode: 'DateTime',
-            Display: "תאריך פתיחה",
+            Display: "תםריך פתיחה",
             Styles: { width: '110px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -201,7 +201,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExporterName',
             DataTypeCode: 'String',
-            Display: 'יצואן',
+            Display: 'יצוםן',
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -211,7 +211,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFileNo',
             DataTypeCode: 'String',
-            Display: "מס' תיק יצוא",
+            Display: "מס' תיק יצום",
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -222,7 +222,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
             FieldName: 'StorageNo',
             DataTypeCode: 'String',//'Number',
-            Display: 'מספר אחסנה',
+            Display: 'מספר םחסנה',
             Styles: { width: '90px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -231,7 +231,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ShipName',
             DataTypeCode: 'String',
-            Display: 'אוניה',
+            Display: 'םוניה',
             Styles: { width: '140px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -251,7 +251,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'StorageStatus',
             DataTypeCode: 'String',
-            Display: 'סטטוס אחסנה',
+            Display: 'סטטוס םחסנה',
             Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -259,23 +259,23 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
         });
         this.columns.push({
-            FieldName: 'CustomsStatus',
+            FieldName: 'CustomStatusName',
             DataTypeCode: 'String',
-            Display: 'קוד סטטוס מטען',
+            Display: 'שם סטטוס מטען',
             Styles: { width: '110px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'CustomsStatus'
+            SortByName: 'CustomStatusName'
 
         });
         this.columns.push({
-            FieldName: 'ActionCode',
+            FieldName: 'ActionName',
             DataTypeCode: 'String',
-            Display: 'היתר לוגיסטי מכסי',
+            Display: 'שם סטטוס היתר לוגיסטי',
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'ActionCode',
+            SortByName: 'ActionName',
         });
     }
 
@@ -330,7 +330,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                 var emptyConsignment = this.declarationPM.Consignments.find(y => y.ManifestNumber == null && y.SecondCargoID == null);
                                 if (isConsignment != undefined) {
 
-                                    this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
+                                    this.exportStorage.Result.DeclarationId = AppTool.IsNullOrEmpty(this.exportStorage.Result.DeclarationId ) ?  this.declarationPM.Id:this.exportStorage.Result.DeclarationId ;
                                     this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
                                         var index1 = this.declarationPM.Consignments.findIndex(u => u == isConsignment)
                                         this.declarationPM.Consignments[index1].ExportStoragesId = ExportStorageId;
@@ -387,9 +387,11 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                         this.declarationPM.Consignments[index2] = consignment;
 
                                     }
-
-                                    this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
-                                    this.exportStoragePMService.update(this.exportStorage.Result).subscribe();
+                                    if (AppTool.IsNullOrEmpty(this.exportStorage.Result.DeclarationId)) {
+                                        this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
+                                        this.exportStoragePMService.update(this.exportStorage.Result).subscribe();
+                                    }
+                                  
                                 }
                             }
 
@@ -419,7 +421,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
     async checkStorageSiteCode(StorageSiteCode: any) {
 
-      await  this.DeliverySiteTypeService.getSingle(StorageSiteCode).subscribe(res => {
+        await this.DeliverySiteTypeService.getSingle(StorageSiteCode).subscribe(res => {
             if (!AppTool.IsNullOrEmpty(res.Result))
                 return true;
             return false;
@@ -428,7 +430,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     }
     async checkloadingPortCodAndUn(PortCode: any) {
 
-      await  this.InternationalSiteService.getSingle(PortCode).subscribe(res => {
+        await this.InternationalSiteService.getSingle(PortCode).subscribe(res => {
             if (!AppTool.IsNullOrEmpty(res.Result))
                 return true;
             return false;
