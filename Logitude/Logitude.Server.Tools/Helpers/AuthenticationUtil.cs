@@ -192,7 +192,7 @@ namespace Logitude.Server.Tools.Helpers
             string resolveUserIdentityName = AuthenticationUtil.ResolveUserIdentityName(Tenant);
 
 
-            var contact = contactRep.GetSingleContactByEmail(resolveUserIdentityName, Tenant, false);
+            var contact = contactRep.GetSingleContactByEmail(resolveUserIdentityName, Tenant, true);
             if (contact == null && fromSign)
             {
                 string systemEmail = SystemIdentityName(Tenant);
