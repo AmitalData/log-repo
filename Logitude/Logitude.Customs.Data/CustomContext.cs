@@ -3273,11 +3273,11 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<StorageStatusTable> StorageStatusTables
+	 public IDbSet<StorageStatusTable> StorageStatusTables 
 	 {
-			get; set;
-	 }
+	      get; set;
 	 
+	 }
 	
 	 public IDbSet<StuffingSiteType> StuffingSiteTypes 
 	 {
