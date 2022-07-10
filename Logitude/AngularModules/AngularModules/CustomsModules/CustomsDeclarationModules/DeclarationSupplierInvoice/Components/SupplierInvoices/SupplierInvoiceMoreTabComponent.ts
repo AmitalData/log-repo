@@ -74,10 +74,9 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
     }
 
     FillGridData() {
-
-
+        let FilterCodes = this.declarationPM.Direction == "I" ? "I02,144" : "I02"
         this.TypeCodeFilterItems = new ApiQueryFilters();
-        this.TypeCodeFilterItems.addAdditionalFilter("Code", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
+        this.TypeCodeFilterItems.addAdditionalFilter("Code", FilterCodes, null, null, "Exclude", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
         this.ModificationsList = new ObservableCollection([]);
 
         for (let item of this.InvoicePM.SupplierInvoiceModifications) {
@@ -107,6 +106,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
                 this.PaymentsList.Insert(new PaymentItemModel(item));
             }
         }
+       
         if (this.declarationPM.Direction == "E") {
             this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoiceExport", true, null, null, "Equals", false, false, false, "boolean", false, true);
         } else {
