@@ -33,14 +33,16 @@ import { EntityResourceService } from '../../../../../Infrastructure/Services/En
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationExportRecipientPM } from '../../../../../Customs/EntityPMs/DeclarationExportRecipientPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { DeclarationWebService, ExportStorageConnectToDeclaration } from 'Customs/Services/WebServices/DeclarationWebService';
 
 @Component({
 
     templateUrl: './DeclarationGeneralComponent.html',
+    styleUrls: ['./DeclarationGeneralComponent.scss'],
     providers: [DeclarationExtendedListService],
 })
 
-export class DeclarationGeneralComponent extends BaseComponent implements AfterViewInit, OnDestroy {
+export class DeclarationGeneralComponent extends BaseComponent implements OnDestroy {
     public EntityPM: DeclarationPM;
     public ObjectTableName: string = "Customs.Declaration";
     public DataContext: any = this;
@@ -66,6 +68,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     AddRecipientEnabled: boolean;
     public DeclarationExportRecipientTableName: string = "Customs.DeclarationExportRecipient";
     private CurrentSession = SessionLocator.SelectedSession;
+    exportStorageConnectToDeclaration: ExportStorageConnectToDeclaration = null as any;
+
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
@@ -102,6 +106,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                                     this.BuildRecipientsList();
 
                                                     this.CheckRequrierdFieldsForSend();
+                                                    this.getExportStorageData();
 
                                                     this.PreceduralFilterItems = new ApiQueryFilters();
                                                     if (this.EntityPM.Direction != "E") {
@@ -237,6 +242,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                     //}
                     this.checkImportersVisibility();
                     this.DisplayOnlyCheck();
+                    this.getExportStorageData();
+                    
                 }
 
                 this.ShowXMLErrors(args.DeclarationError);
@@ -265,6 +272,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                     //}
                     this.checkImportersVisibility();
                     this.DisplayOnlyCheck();
+                    this.getExportStorageData();
                 }
 
                 this.ShowXMLCorrections(args.AmendmentView);
@@ -352,8 +360,6 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
     //#endregion
 
-    ngAfterViewInit() {
-    }
 
     checkImportersVisibility() {
         if (this.IsDisplayOnly) return;
@@ -417,6 +423,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildConsignments();
                         this.BuildRecipientsList()
+                        this.getExportStorageData();
 
                     }
                 })
@@ -436,6 +443,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                         this.BuildConsignments();
                         this.DisplayOnlyCheck();
                         this.BuildRecipientsList()
+                        this.getExportStorageData();
 
                     }
                 })
@@ -1533,13 +1541,21 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
-                this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Declaration', true);
+                if(objectField)
+                    this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Declaration', true);
             });
         });
 
 
 
     }
+
+    
+    async getExportStorageData() {
+        this.exportStorageConnectToDeclaration =  await new DeclarationWebService().getExportStorageConnectToDeclaration(this.EntityPM.Id);
+        console.log(this.exportStorageConnectToDeclaration)
+    }
+
 }
 
 

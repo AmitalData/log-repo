@@ -1930,6 +1930,20 @@ export class DeclarationWebService {
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
         return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
+
+
+    public getExportStorageConnectToDeclaration(id: string) : Promise<ExportStorageConnectToDeclaration>{
+        const ajax: Observable<any> = this._http.get(
+            this._apiUrl + "/ExportStorageConnectToDeclaration",
+            {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+                params: { id: id }
+            }
+        );
+
+        // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+    }
 }
 
 
@@ -1944,4 +1958,11 @@ export interface ConsignmentDeclartions {
     $id: string;
     ConsignmentPackages: ConsignmentPackage[];
     Consignment: ConsignmentPM;
+}
+
+export interface ExportStorageConnectToDeclaration {
+    NotConnect: number;
+    Connect: number;
+    CustomsStatus: number;
+    ActionCode: number;
 }

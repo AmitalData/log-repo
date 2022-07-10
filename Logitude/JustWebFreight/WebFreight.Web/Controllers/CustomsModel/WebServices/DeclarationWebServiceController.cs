@@ -2233,6 +2233,25 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+        [HttpGet]
+        public HttpResponseMessage ExportStorageConnectToDeclaration(string id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                ExportStorageConnectToDeclaration res = new DeclarationQueryService(authToken.Tenant).GetExportStorageConnectToDeclaration(id);
+                    
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     internal class CustomsPartnersItemCRList
