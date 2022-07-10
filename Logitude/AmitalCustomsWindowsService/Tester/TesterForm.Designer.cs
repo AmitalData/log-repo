@@ -1,4 +1,6 @@
-﻿namespace AmitalCustomsWindowsService.Tester
+﻿using System.Windows.Forms;
+
+namespace AmitalCustomsWindowsService.Tester
 {
     partial class TesterForm
     {
@@ -870,6 +872,8 @@
         private System.Windows.Forms.ToolStripComboBox IIGGatewayServiceURLStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testSpeedTestToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private TextBox textBoxOverrideRMQ;
+        private Label label4;
         private System.Windows.Forms.ComboBox _CBWorkerRole;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox _CBInterfaceID;
@@ -912,7 +916,7 @@
         private System.Windows.Forms.ToolStripMenuItem uW2LToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem uW2LToolStripMenuItem;
+        //private System.Windows.Forms.ToolStripMenuItem uW2LToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testPooledPublishToolStripMenuItem;
     }
 }
