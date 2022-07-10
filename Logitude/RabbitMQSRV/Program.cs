@@ -38,7 +38,7 @@ namespace RabbitMQSRV
         {
             ThreadStartStaticIsMustB4UsingTheDB();
             //(new PooledPublish()).Test();
-            EcomTesterService.Test();
+            //EcomTesterService.Test();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
