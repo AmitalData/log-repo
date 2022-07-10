@@ -146,6 +146,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        ActionCode = en.ExportLogisticPermitAction.LocalName,
                                                        ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName,
                                                        StorageSiteCode = en.StorageSiteCode,
+
+
                                                    });
             return query;
         }
