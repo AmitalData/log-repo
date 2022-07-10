@@ -14,15 +14,15 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class StorageStatusDataMapping: IMapping<StorageStatusPM, StorageStatus>
+   public partial class StorageStatusTableDataMapping: IMapping<StorageStatusTablePM, StorageStatusTable>
    {
 
-        public void CustomPMToPOCO(StorageStatusPM entityPM, StorageStatus entityPOCO)
+        public void CustomPMToPOCO(StorageStatusTablePM entityPM, StorageStatusTable entityPOCO)
         {
             //throw new NotImplementedException();
         }
 
-        public void CustomPOCOToPM(StorageStatusPM entityPM, StorageStatus entityPOCO)
+        public void CustomPOCOToPM(StorageStatusTablePM entityPM, StorageStatusTable entityPOCO)
         {
             //throw new NotImplementedException();
         }

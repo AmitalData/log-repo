@@ -17,20 +17,20 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class StorageStatusListQueryService
+    public partial class StorageStatusTableListQueryService
     {
          private ICustomContext context;
-        public StorageStatusListQueryService(ICustomContext context)
+        public StorageStatusTableListQueryService(ICustomContext context)
         {
             this.context = context;
         }
 
-        public List<StorageStatusList> GetList(QueryOperations queryOperations, int tenant)
+        public List<StorageStatusTableList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<StorageStatus> iQueryable = (from a in context.StorageStatuses
+            IQueryable<StorageStatusTable> iQueryable = (from a in context.StorageStatusTables
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -39,20 +39,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            iQueryable = filter.GetFilteredQuery<StorageStatus>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<StorageStatusTable>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<StorageStatusList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<StorageStatusTableList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<StorageStatusList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<StorageStatusTableList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(StorageStatusList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> StorageStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.StorageStatus",tenant).ToList();
+                PropertyInfo propInfo = typeof(StorageStatusTableList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> StorageStatusTableObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.StorageStatusTable",tenant).ToList();
 
-                ObjectField objectField = (from a in StorageStatusObjectFields
+                ObjectField objectField = (from a in StorageStatusTableObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -60,7 +60,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<StorageStatusList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<StorageStatusTableList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -69,36 +69,36 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<StorageStatusList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StorageStatusTableList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<StorageStatusList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StorageStatusTableList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<StorageStatusList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StorageStatusTableList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<StorageStatusList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StorageStatusTableList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<StorageStatusList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StorageStatusTableList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<StorageStatusList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StorageStatusTableList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -124,21 +124,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     
         }
 
-         public List<StorageStatusList> GetList(int tenant)
+         public List<StorageStatusTableList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public StorageStatusList GetSingle(string code)
+        public StorageStatusTableList GetSingle(string code)
         {
-            IQueryable<StorageStatus> StorageStatusQuery = (from a in context.StorageStatuses
+            IQueryable<StorageStatusTable> StorageStatusTableQuery = (from a in context.StorageStatusTables
                                                        where a.Code == code
                                                        select a);
 
              
-            IQueryable<StorageStatusList> StorageStatusListQuery = GetIqueryableList( StorageStatusQuery);
-            StorageStatusList StorageStatusList = StorageStatusListQuery.FirstOrDefault();
-            return StorageStatusList;
+            IQueryable<StorageStatusTableList> StorageStatusTableListQuery = GetIqueryableList( StorageStatusTableQuery);
+            StorageStatusTableList StorageStatusTableList = StorageStatusTableListQuery.FirstOrDefault();
+            return StorageStatusTableList;
            
         }
 
@@ -147,7 +147,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<StorageStatus> iQueryable = (from a in context.StorageStatuses  select a);
+            IQueryable<StorageStatusTable> iQueryable = (from a in context.StorageStatusTables  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -156,11 +156,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
-			iQueryable = filter.GetFilteredQuery<StorageStatus>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<StorageStatusTable>(nonListQueryOperation, iQueryable);
 
-            IQueryable<StorageStatusList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<StorageStatusTableList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<StorageStatusList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<StorageStatusTableList>(listQueryOperation, query2);
             int count = query2.Count();
             return count;
         }

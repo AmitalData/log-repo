@@ -17,12 +17,12 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class StorageStatusListQueryService
+    public partial class StorageStatusTableListQueryService
     {
-	    private IQueryable<StorageStatusList> GetIqueryableList(IQueryable<StorageStatus> iQueryable)
+	    private IQueryable<StorageStatusTableList> GetIqueryableList(IQueryable<StorageStatusTable> iQueryable)
         {
-		IQueryable<StorageStatusList> query = (from a in iQueryable
-                                            select new StorageStatusList()
+		IQueryable<StorageStatusTableList> query = (from a in iQueryable
+                                            select new StorageStatusTableList()
 											{
                      
 					                          Code = a.Code,
@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<StorageStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<StorageStatus> iQueryable)
+		private IQueryable<StorageStatusTable> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<StorageStatusTable> iQueryable)
         {
 			throw new NotImplementedException();
 		}

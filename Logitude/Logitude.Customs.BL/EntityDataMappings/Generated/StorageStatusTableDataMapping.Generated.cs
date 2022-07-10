@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class StorageStatusDataMapping: IMapping<StorageStatusPM, StorageStatus>,IMappingEncodeBase64NVARCHARFields<StorageStatusPM>
+   public partial class StorageStatusTableDataMapping: IMapping<StorageStatusTablePM, StorageStatusTable>,IMappingEncodeBase64NVARCHARFields<StorageStatusTablePM>
    {
           public enum POCOPropertyNames
           { 
@@ -37,7 +37,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(StorageStatusPM entityPM, StorageStatus entityPOCO)
+	    public void PMToPOCO(StorageStatusTablePM entityPM, StorageStatusTable entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			}
 			}
 
-		public void POCOToPM(StorageStatusPM entityPM, StorageStatus entityPOCO)
+		public void POCOToPM(StorageStatusTablePM entityPM, StorageStatusTable entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
@@ -61,7 +61,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(StorageStatusPM entityPM, StorageStatusPM oldEntityPM)
+		public void PMToOldPM(StorageStatusTablePM entityPM, StorageStatusTablePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -72,7 +72,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(StorageStatusPM entityPM)
+	    public void EncodeBase64NVARCHARFields(StorageStatusTablePM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {

@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class StorageStatusPM {
+export class StorageStatusTablePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -35,7 +35,7 @@ export class StorageStatusPM {
        
 	 
 
-    public OldEntityPM: StorageStatusPM;
+    public OldEntityPM: StorageStatusTablePM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -46,13 +46,13 @@ export class StorageStatusPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.StorageStatus");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.StorageStatusTable");
            
         }
        }
     }
 
-    private MyClone: StorageStatusPM;
+    private MyClone: StorageStatusTablePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

@@ -17,48 +17,48 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class StorageStatusQueryService: EntityQueryService<StorageStatus,StorageStatusKeys,StorageStatusPM,object,StorageStatusKeys>
+   public partial class StorageStatusTableQueryService: EntityQueryService<StorageStatusTable,StorageStatusTableKeys,StorageStatusTablePM,object,StorageStatusTableKeys>
    {
    
-        StorageStatusRepository repository;
+        StorageStatusTableRepository repository;
 		ICustomContext  context;
-        public StorageStatusQueryService(int tenant)
+        public StorageStatusTableQueryService(int tenant)
         {
 		    context = CustomContext.GetContext(tenant);
             MainContext = context;
-            repository = new StorageStatusRepository(context);
+            repository = new StorageStatusTableRepository(context);
             Repository = repository;
-            mapping = new StorageStatusDataMapping();
+            mapping = new StorageStatusTableDataMapping();
         }
 
-        public StorageStatusQueryService(StorageStatusRepository repository)
+        public StorageStatusTableQueryService(StorageStatusTableRepository repository)
         {
             this.repository = repository;
             Repository = repository;
-            mapping = new StorageStatusDataMapping();
+            mapping = new StorageStatusTableDataMapping();
         }
 
-        public StorageStatusQueryService(ICustomContext context)
+        public StorageStatusTableQueryService(ICustomContext context)
         {
-            this.repository = new StorageStatusRepository(context);
+            this.repository = new StorageStatusTableRepository(context);
             this.context = context;
 
             MainContext = context;
             Repository = repository;
-            mapping = new StorageStatusDataMapping();
+            mapping = new StorageStatusTableDataMapping();
         }
 		 
-		public  StorageStatusPM GetSingle(string code,bool getComposition, bool getFromCache)
+		public  StorageStatusTablePM GetSingle(string code,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new StorageStatusKeys(){ Code = code };
+             EntityKeys = new StorageStatusTableKeys(){ Code = code };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
        
-	    protected override EntityKeyFields GetKeys(StorageStatus entityPOCO)
+	    protected override EntityKeyFields GetKeys(StorageStatusTable entityPOCO)
         {
-            StorageStatusKeys entityKeys = new StorageStatusKeys() { Code = entityPOCO.Code,  };
+            StorageStatusTableKeys entityKeys = new StorageStatusTableKeys() { Code = entityPOCO.Code,  };
             return entityKeys;
         }
      
