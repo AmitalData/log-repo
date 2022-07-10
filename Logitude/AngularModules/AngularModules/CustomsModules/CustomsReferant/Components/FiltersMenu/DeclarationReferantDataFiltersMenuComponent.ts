@@ -583,7 +583,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                 "CFIHMAIN.LogitudeTask",
                 "ShowOCRQuery",
                 unifreightMessageM,
-                " הצגת מסך : שםילתם ל - OCR");
+                " הצגת מסך : שאילתא ל - OCR");
         }
         else {
             alert("ShowOCRQuery");

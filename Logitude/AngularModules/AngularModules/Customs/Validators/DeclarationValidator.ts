@@ -296,7 +296,7 @@ export class DeclarationValidator {
                             }
                             else {
                                 //errorMessage = "Customs.General.O.NoImporterId";
-                                errorMessage = "מספר יבואן " + importerField + " הום שדה חובה";
+                                errorMessage = "מספר יבואן " + importerField + " הוא שדה חובה";
                             }
                         }
                         break;

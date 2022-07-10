@@ -1607,7 +1607,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
-                    msg.Show("1000 התרםות שנבחרות סומנו כנקרםו");
+                    msg.Show("1000 התראות שנבחרות סומנו כנקראו");
                 }
             });
         }
@@ -1780,7 +1780,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
-                    msg.Show("1000 התרםות שנבחרו סומנו כסגורות");
+                    msg.Show("1000 התראות שנבחרו סומנו כסגורות");
                 }
             });
         }
@@ -1866,7 +1866,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
-                    msg.Show("1000 התרםות שנבחרו סומנו כפתוחות");
+                    msg.Show("1000 התראות שנבחרו סומנו כפתוחות");
                 }
 
             });
