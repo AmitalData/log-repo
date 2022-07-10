@@ -136,7 +136,9 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                 var res = qRes.Count();
                 totalSplitedDocsLastMonth = res;
             }
-            
+
+#if notInUse
+
 
             var openReaderSingleResult = new OpenReaderSingleResult(this.currentContext);
             string UserId = openReaderSingleResult.GetSchemaUserId();
@@ -151,9 +153,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
                 });
             logBoxDocuments = res1.GetValueOrDefault();
+#endif
         }
 
-        
+
     }
 }
 	 

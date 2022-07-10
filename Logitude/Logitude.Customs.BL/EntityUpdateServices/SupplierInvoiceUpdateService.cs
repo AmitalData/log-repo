@@ -453,18 +453,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void SetDeclarationChanged(SupplierInvoicePM entityPM)
         {
+
+
+
             if (this.UpdateFromDeclaration) return;
+            RealSetDeclarationChanged(entityPM.Tenant, entityPM.DeclarationId);
+        }
+
+        public static void RealSetDeclarationChanged(int tenant, string declarationId)
+        {
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            string strConnString = GetConnection(entityPM.Tenant);
+            string strConnString = GetConnection(tenant);
             if (dbms == "oracle")
             {
+
                 using (OracleConnection con = new OracleConnection(strConnString))
                 {
                     string cmd = "Update Declarations set IsChanged = 1";
-                    cmd = cmd + " where Id=" + "'" + entityPM.DeclarationId + "'";
+                    //cmd = cmd + " where Id=" + "'" + entityPM.DeclarationId + "'";
+                    cmd = cmd + " where Id=:p1 ";
 
                     OracleCommand sqlCommand = new OracleCommand(cmd, con);
-
+                    sqlCommand.Parameters.Add(new OracleParameter("p1", declarationId));
                     con.Open();
                     sqlCommand.ExecuteNonQuery();
                     con.Close();
@@ -476,7 +486,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
                     string cmd = "Update Customs.Declarations set IsChanged = 1";
-                    cmd = cmd + " where Id=" + "'" + entityPM.DeclarationId + "'";
+                    cmd = cmd + " where Id=" + "'" + declarationId + "'";
 
                     SqlCommand sqlCommand = new SqlCommand(cmd, cn);
 

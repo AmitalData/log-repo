@@ -4,6 +4,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.Testers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
@@ -36,7 +37,8 @@ namespace RabbitMQSRV
         static void Main()
         {
             ThreadStartStaticIsMustB4UsingTheDB();
-            (new PooledPublish()).Test();
+            //(new PooledPublish()).Test();
+            ///EcomTesterService.Test();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

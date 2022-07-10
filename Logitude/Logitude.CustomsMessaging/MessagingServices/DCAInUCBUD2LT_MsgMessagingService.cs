@@ -668,7 +668,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             ////
         }
-
+#if notinuse
         private string GetCustomsFileImportType(DeclarationPM entityPM)
         {
             if (entityPM == null || string.IsNullOrWhiteSpace(entityPM.CustomFileNo)) return null;
@@ -689,6 +689,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return theResult;
         }
 
+
+#endif
 
 
         private bool TicketalreadyExistforthisDocument(DeclarationPM declarationPM)
