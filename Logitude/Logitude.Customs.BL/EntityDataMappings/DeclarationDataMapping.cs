@@ -118,15 +118,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
                 }
             }
-          
 
-            CancellationRequestStatusRepository cancellationRequestStatusRepository = new CancellationRequestStatusRepository(entityPOCO.Tenant);
-            CancellationRequestStatus cancellationRequestStatus = cancellationRequestStatusRepository.GetSingle(entityPOCO.CancelRequestStatusCode);
-            if (cancellationRequestStatus != null)
-            {
-                entityPM.CancelRequestStatusName = cancellationRequestStatus.LocalName;
 
-            }
+            
+            //CancellationRequestStatusRepository cancellationRequestStatusRepository = new CancellationRequestStatusRepository(entityPOCO.Tenant);
+            //CancellationRequestStatus cancellationRequestStatus = cancellationRequestStatusRepository.GetSingle(entityPOCO.CancelRequestStatusCode);
+            //if (cancellationRequestStatus != null)
+            //{
+            //    entityPM.CancelRequestStatusName = cancellationRequestStatus.LocalName;
+
+            //}
+            var cancellationRequestStatusQueryService = new CancellationRequestStatusQueryService(entityPOCO.Tenant);
+            var pm=cancellationRequestStatusQueryService.GetSingle(entityPOCO.CancelRequestStatusCode,false, true);
+            entityPM.CancelRequestStatusName = pm?.LocalName;
 
             DeclarationQueryService declarationQuery = new DeclarationQueryService(entityPOCO.Tenant);
 

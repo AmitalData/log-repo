@@ -199,7 +199,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (string.IsNullOrEmpty(entityPM.EntityId) && tenantPM.IsDocumentsArchive == false)
             {
                 DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(theEntityPm.Tenant);
-                var LBC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("LBC", theEntityPm.Tenant);
+                var LBC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("LBC", theEntityPm.Tenant,true);
                 CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(theEntityPm.Tenant);
                 if (theEntityPm.CustomerTenantNumber != null && LBC != null)
                 {
@@ -358,8 +358,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
             DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository(theEntityPm.Tenant);
-            DocumentsMetaDataType Dreltype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("DREL", theEntityPm.Tenant);
-            DocumentsMetaDataType LBFtype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("LBF", theEntityPm.Tenant);
+            DocumentsMetaDataType Dreltype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("DREL", theEntityPm.Tenant,true);
+            DocumentsMetaDataType LBFtype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("LBF", theEntityPm.Tenant, true);
             if (Dreltype != null && LBFtype != null)
             {
                 var DRELMetaData = entityPM.DocumentsFilingMetaDataValues.Where(a => (a.DocumentsMetaDataTypeId == Dreltype.Id || a.DocumentsMetaDataTypeId == LBFtype.Id));
@@ -468,7 +468,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
         {
             DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(extDocPM.Tenant);
-            var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", extDocPM.Tenant);
+            var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", extDocPM.Tenant,true);
+            
             if (ENDOC != null)
             {
                 if (extDocPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeCode == "ENDOC")
@@ -672,8 +673,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
             DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository(theEntityPm.Tenant);
-            DocumentsMetaDataType Dreltype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("DREL", theEntityPm.Tenant);
-            DocumentsMetaDataType LBFtype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("LBF", theEntityPm.Tenant);
+            DocumentsMetaDataType Dreltype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("DREL", theEntityPm.Tenant, true);
+            DocumentsMetaDataType LBFtype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("LBF", theEntityPm.Tenant, true);
             if (Dreltype != null && LBFtype != null)
             {
                 var DRELMetaData = entityPM.DocumentsFilingMetaDataValues.Where(a => (a.DocumentsMetaDataTypeId == Dreltype.Id || a.DocumentsMetaDataTypeId == LBFtype.Id));
@@ -848,8 +849,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository(theEntityPm.Tenant);
-            DocumentsMetaDataType Dreltype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("DREL", theEntityPm.Tenant);
-            DocumentsMetaDataType LBFtype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("LBF", theEntityPm.Tenant);
+            DocumentsMetaDataType Dreltype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("DREL", theEntityPm.Tenant,true);
+            DocumentsMetaDataType LBFtype = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataTypeByCode("LBF", theEntityPm.Tenant,true);
             if (Dreltype != null && LBFtype != null)
             {
                 var DRELMetaData = entityPM.DocumentsFilingMetaDataValues.Where(a => (a.DocumentsMetaDataTypeId == Dreltype.Id || a.DocumentsMetaDataTypeId == LBFtype.Id));
