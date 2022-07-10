@@ -2150,7 +2150,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     SendDelayForm() {
 
         var titleText = "הפקת תעודת עיכוב";
-        var questionText = "םשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+        var questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
         var confirm = new ConfirmWindow();
         confirm.Width = 350;
         confirm.Height = 200;

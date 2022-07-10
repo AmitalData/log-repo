@@ -239,7 +239,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     SendButtonClicked(event: CustomSendOptionsArgs) {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-            var msg = " שדה תםריך טעינה שדה חובה";
+            var msg = " שדה תאריך טעינה שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }

@@ -448,7 +448,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
                 if (!mm.HasError) {
                     if (mm.Result) {
                         var errorMsg: string = TextCodeTranslator.Translate("Customs.General.O.LogisticActionRequestAlreadyExist");
-                        if (AppTool.IsNullOrEmpty(errorMsg)) errorMsg = "קיימת בקשה לביטול יצום עם םותם מזהי מטען";
+                        if (AppTool.IsNullOrEmpty(errorMsg)) errorMsg = "קיימת בקשה לביטול יצוא עם אותם מזהי מטען";
                         resolve(errorMsg);
                     }
                 }

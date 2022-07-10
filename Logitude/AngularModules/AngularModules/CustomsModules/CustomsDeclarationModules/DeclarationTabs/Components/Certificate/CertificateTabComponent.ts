@@ -482,7 +482,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         }
         else if (this.DeclarationPM.StorageStatusCode) {
             this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+            this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
         }
 
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
@@ -501,7 +501,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             }
             else if (this.DeclarationPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
-                this.DisplayOnlyMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+                this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             }
 
             this.timerToken = setTimeout(() => {
@@ -886,7 +886,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         windowArgs.ConnectedItems = this.connectedItems.Collection;
         windowArgs.ExcludedItems = this.ExcludedItems.Collection;
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "העבר לםישור";
+        logWindow.Title = "העבר לאישור";
 
 
         logWindow.Width = 900;

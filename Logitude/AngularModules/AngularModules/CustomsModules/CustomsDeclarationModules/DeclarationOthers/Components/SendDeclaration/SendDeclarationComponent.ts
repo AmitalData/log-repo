@@ -516,7 +516,7 @@ export class SendDeclarationService implements OnDestroy {
             windowArgs.Errors = this.ValidationErrors;
             windowArgs.NoButtonVisibility = true;
             windowArgs.CancelButtonVisibility = true;
-            windowArgs.NoButtonText = "לם";
+            windowArgs.NoButtonText = "לא";
             windowArgs.SaveButtonText = "עדכן";
             windowArgs.CancelButtonText = "בטל";
             windowArgs.ComponentHeight = '328px';
@@ -582,7 +582,7 @@ export class SendDeclarationService implements OnDestroy {
             var items: any[] = myResponse.Result.RequiredFields;
             var warningsList: string[] = [];
             items.forEach((item) => {
-                warningsList.push("חשבון ספק " + item.EntityReference + " - שורה  " + item.EntityReference2 + " מסך םישורים - לם הוזנו שדות החובה שנדרשים לםישור הנ”ל ");
+                warningsList.push("חשבון ספק " + item.EntityReference + " - שורה  " + item.EntityReference2 + " מסך אישורים - לא הוזנו שדות החובה שנדרשים לאישור הנ”ל ");
             });
 
             if (warningsList.length > 0) {
@@ -643,9 +643,9 @@ export class SendDeclarationService implements OnDestroy {
                         var windowArgs: any = {};
                         windowArgs.Errors = this.ValidationErrors;
                         windowArgs.ComponentHeight = '328px'; // TextCodeTranslator.Translate("Customs.General.O.ValidationDocuments")
-                        var windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יבום";
+                        var windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יבוא";
                         if (this.EntityPM.Direction == "E") {
-                            windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יצום";
+                            windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יצוא";
                         }
 
                         var logWindow = new LogitudeWindow(this.CurrentSession);
@@ -771,7 +771,7 @@ export class SendDeclarationService implements OnDestroy {
             }
             else {
                 //var errorMessage = TextCodeTranslator.Translate("Customs.General.O.FreightIncotermMandatory");
-                var errorMessage = "קיימים נתוני ערך הובלה םך תנםי המכר בתיק םינם דורשים זםת , להמשיך ? ";
+                var errorMessage = "קיימים נתוני ערך הובלה אך תנאי המכר בתיק אינם דורשים זאת , להמשיך ? ";
                 if (AppTool.IsNullOrEmpty(errorMessage)) {
                     this.SendDeclaration();
                 }
@@ -899,9 +899,9 @@ export class SendDeclarationService implements OnDestroy {
                     }
                 };
         }
-        var windowTitle = "שליחת תיקון הצהרת יבום";
+        var windowTitle = "שליחת תיקון הצהרת יבוא";
         if (this.EntityPM.Direction == "E") {
-            windowTitle = "שליחת תיקון הצהרת יצום";
+            windowTitle = "שליחת תיקון הצהרת יצוא";
         }
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession, searchParams.PBId,
@@ -978,9 +978,9 @@ export class SendDeclarationService implements OnDestroy {
                     }
                 };
         }
-        var title = "שליחת הצהרת יבום";
+        var title = "שליחת הצהרת יבוא";
         if (this.EntityPM.Direction == "E") {
-            title = "שליחת הצהרת יצום";
+            title = "שליחת הצהרת יצוא";
         }
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession, searchParams.PBId,
