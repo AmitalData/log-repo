@@ -79,6 +79,9 @@ export class ConsigmentTabContentComponent
     private CurrentSession = SessionLocator.SelectedSession;
 
     public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
+    CargoIdKeyOrigin: { a: string, b: string, c: string } = { a: '', b: '', c: '' };
+
+
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this.ConsimentPackages = new ObservableCollection([]);
@@ -226,6 +229,7 @@ export class ConsigmentTabContentComponent
         this.Tab = args.Tab;
         this.IsDisplayOnly = args.Disabled;
         this.ParentIsDisplayOnly = args.Disabled;
+        this.updateCargoIdKeyOrigin();
 
 
         if (this.EntityPM.CargoTypeCode == "17")
@@ -289,6 +293,14 @@ export class ConsigmentTabContentComponent
         this.GetDeclarationCourierStatusData();
         
         console.log("Tabs Args: ", args);
+    }
+
+    private updateCargoIdKeyOrigin() {
+        this.CargoIdKeyOrigin = {
+            a: this.EntityPM.ManifestNumber,
+            b: this.EntityPM.SecondCargoID,
+            c: this.EntityPM.ThirdCargoID,
+        };
     }
 
     GetDeclarationCourierStatusData() {
@@ -418,8 +430,7 @@ export class ConsigmentTabContentComponent
         this.SetDateVisibilty();
         this.SetTipsInsideCargoIdentifires(newValue);
         if (newValue == "17")
-            this.LoadCouriersVat();
-
+            this.LoadCouriersVat();        
     }
 
     public get CargoDescription() { return this.EntityPM ? this.EntityPM.CargoDescription : null; }
@@ -434,11 +445,11 @@ export class ConsigmentTabContentComponent
 
 
     public get ThirdCargoID() { return this.EntityPM ? this.EntityPM.ThirdCargoID : null; }
-    public set ThirdCargoID(newValue: string) {
+    public set ThirdCargoID (newValue: string) {
         this.EntityPM.ThirdCargoID = newValue;
         if (this._CargoIdentifireTypePM != null) {
             this.setRequired();
-        }
+        }        
     }
 
     public get UnloadDate() { return this.EntityPM ? this.EntityPM.UnloadDate : null; }
@@ -456,12 +467,12 @@ export class ConsigmentTabContentComponent
     private timerToken: any;
 
     public get SecondCargoID() { return this.EntityPM ? this.EntityPM.SecondCargoID : null; }
-    public set SecondCargoID(newValue: string) {
+    public set SecondCargoID(newValue: string) {                
         this.EntityPM.SecondCargoID = newValue;
 
         if (this._CargoIdentifireTypePM != null) {
             this.setRequired();
-        }
+        }        
     }
 
 
@@ -1066,6 +1077,39 @@ export class ConsigmentTabContentComponent
         });
     }
 
+    
+    async onBlurCargoId(cargoNumber: 'a' | 'b' | 'c', newVlue: string) {
+        if(
+            this.declarationPM.Direction !== 'E' || 
+            this.declarationPM.TransportModeId !== 'O' || 
+            !this.EntityPM.ExportStoragesId ||
+            this.CargoIdKeyOrigin[cargoNumber] == newVlue) return;
+
+        if (await this.ConfirmDisconnectExportStorage()) {
+            this.updateCargoIdKeyOrigin();
+            this.EntityPM.ExportStoragesId = null;
+        } else
+            switch (cargoNumber) {
+                case 'a':
+                    this.ManifestNumber = this.CargoIdKeyOrigin[cargoNumber]
+                    break;
+                case 'b':
+                    this.SecondCargoID = this.CargoIdKeyOrigin[cargoNumber]
+                    break;
+                case 'c':
+                    this.ThirdCargoID = this.CargoIdKeyOrigin[cargoNumber]
+                    break;            
+        }
+    }
+    
+    async ConfirmDisconnectExportStorage() {                
+        const confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '!\n' + TextCodeTranslator.Translate("Customs.Declaration.O.ChangeCargoId"));
+        
+        return new Promise<boolean>((resolve, reject) => {            
+            confirmWindow.WindowClosed.subscribe((event: any) => resolve(confirmWindow.Yes));
+        });
+    }
 }
 
 export class ConsignmentType {
@@ -1199,13 +1243,5 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
                 this.Parent.BuildSitesList();
             }
         });
-
-
     }
-
-   
-
 }
-
-
-

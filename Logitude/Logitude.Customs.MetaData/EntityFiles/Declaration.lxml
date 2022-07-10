@@ -19181,6 +19181,79 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;92537848-f014-4ce5-b539-ce22fc81fa0a&quot;"
+    FieldName="&quot;IsExportDeclarationAmendments&quot;"
+    OldNames="IsExportDeclarationAmendments"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;IsExportDeclarationAmendments&quot;"
+    ListPropertyPath="&quot;IsExportDeclarationAmendments&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.ExportDeclaration&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;IsExportDeclarationAmendments&quot;"
+    DefaultText="&quot;Is Export Declaration Amendments&quot;"
+    ListFieldLable="&quot;IsExportDeclarationAmendmentsListLable&quot;"
+    ListLableDefaultText="&quot;Is Export Declaration Amendments&quot;"
+    ListLocalDefaultText="&quot;האם תיקון הצהרה ממתין&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
@@ -20865,8 +20938,8 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;ExportDeclarationAmendments&quot;"
-        PredefinedValue="&quot;1&quot;"
-        ObjectFieldName="&quot;AmendmentStatus&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsExportDeclarationAmendments&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
@@ -24755,6 +24828,61 @@
       LocalDefaultText="&quot;הובלה בפועל&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DidntFindExportCustomFile&quot;"
+      DefaultText="&quot;Didn't find export custom file&quot;"
+      LocalDefaultText="&quot;תיק לא קיים ביצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ExportsStatus&quot;"
+      DefaultText="&quot;Exports Status&quot;"
+      LocalDefaultText="&quot;סטטוס אחסנות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Total2&quot;"
+      DefaultText="&quot;Total&quot;"
+      LocalDefaultText="&quot;סה&quot;כ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Connect&quot;"
+      DefaultText="&quot;Connect&quot;"
+      LocalDefaultText="&quot;מקושרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.NotConnect&quot;"
+      DefaultText="&quot;Not Connect&quot;"
+      LocalDefaultText="&quot;לא מקושרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ChargedStatusReceivedCorrect&quot;"
+      DefaultText="&quot;Charged Status Received - Correct&quot;"
+      LocalDefaultText="&quot;סטטוס מטען נקלט - תקין&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CustomsLogisticalPermitHappiness&quot;"
+      DefaultText="&quot;Customs Logistical Permit - Happiness&quot;"
+      LocalDefaultText="&quot;היתר לוגיסטי מיכסי - אושר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ConnectedDelcaration&quot;"
+      DefaultText="&quot;Note a linked statement!&quot;"
+      LocalDefaultText="&quot;!שים לב הצהרה מקושרת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ChangeCargoId&quot;"
+      DefaultText="&quot;Changed carge ID on save will be disconnected&quot;"
+      LocalDefaultText="&quot;שונו מזהה המטען בשמירה יבוצע ניתוק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

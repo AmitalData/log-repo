@@ -1115,7 +1115,8 @@
                                                 <LogTextBox [ObjectFieldName]="'ManifestNumber'"
                                                     [Placeholder]="ManifestNumberPlaceholder"
                                                     [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                    [DataContext]="DataContext"></LogTextBox>
+                                                    [DataContext]="DataContext" [Text]="ManifestNumber"
+                                                    (LostFocus)="onBlurCargoId('a', $event)" ></LogTextBox>
                                             </td>
 
                                             <td style="width: 40px;">
@@ -1140,7 +1141,7 @@
                                                     [Placeholder]="SecondCargoIDPlaceholder"
                                                     [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
                                                     [DataContext]="DataContext" [Text]="SecondCargoID"
-                                                    (LostFocus)="OnSecondCargoLostFocus()"></LogTextBoxV2>
+                                                    (LostFocus)="OnSecondCargoLostFocus();onBlurCargoId('b', $event)"></LogTextBoxV2>
 
                                                 <SearchBox *ngIf="CargoTypeCode == '17'"
                                                     [ObjectTableName]="'Customs.CouriersVat'" [IsQuickSearch]="true"
@@ -1186,7 +1187,8 @@
                                                     <LogTextBox [ObjectFieldName]="'ThirdCargoID'"
                                                         [Placeholder]="ThirdCargoIdPlaceholder"
                                                         [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                        [Text]="ThirdCargoID" [DataContext]="DataContext"></LogTextBox>
+                                                        [Text]="ThirdCargoID" [DataContext]="DataContext"
+                                                        (LostFocus)="onBlurCargoId('c', $event)"></LogTextBox>
                                                 </div>
                                                 <div [hidden]="CargoTypeCode!='17'">
                                                     <LogDatePicker [ObjectFieldName]="'CargoDate'"

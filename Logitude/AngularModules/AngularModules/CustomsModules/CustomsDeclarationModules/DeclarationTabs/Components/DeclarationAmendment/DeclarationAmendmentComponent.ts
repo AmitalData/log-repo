@@ -309,9 +309,21 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
           
                 item.LineNumber = i;
                 i++;
-                if ((item.AmendmentStatus == "1" || item.AmendmentStatus == "2" || item.AmendmentStatus == null) && item.IsAmendment) {
-                     this.declarationAmendmentSharedDataService.CanOpenNewAmendment = false;
+                if (this.EntityPM.Direction == "E")
+                {
+                    if ((item.AmendmentStatus == "6" || item.AmendmentStatus == null) && item.IsAmendment)
+                    {
+                        this.declarationAmendmentSharedDataService.CanOpenNewAmendment = false;
+                    }
                 }
+                else
+                {
+                    if ((item.AmendmentStatus == "1" || item.AmendmentStatus == "2" || item.AmendmentStatus == null) && item.IsAmendment)
+                    {
+                        this.declarationAmendmentSharedDataService.CanOpenNewAmendment = false;
+                    }
+                }
+                
                  this.amendmentObslist.Insert(item);
             });
              

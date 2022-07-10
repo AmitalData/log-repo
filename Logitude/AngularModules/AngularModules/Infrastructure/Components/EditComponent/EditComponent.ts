@@ -25,6 +25,7 @@ import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
+import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 
 
 @Component({    
@@ -833,7 +834,12 @@ export class EditComponent implements OnDestroy {
                         continue;
                     }
                 }
-
+                
+                if (
+                    AmitalGatewayUtil.Instance.AmitalBrowserInUse && 
+                    this.QuerySection === "Customs.ExportDeclaration" && 
+                    tab.ControlPath.includes(".DeclarationDocsInControl"))
+                    continue;                    
             }
 
             if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {

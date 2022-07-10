@@ -202,6 +202,24 @@ export class ClientMessagesService {
         );
 
     }
+    PutRecallClientsConcurrencyGuidForCutomsRequest(fileUploadParamerter: any) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return defer(() => {
+            return this._http.put(this._apiUrl + '/PutRecallClientsConcurrencyGUIDForCutomsRequest', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+
+                pmresponse.Result = result;
+                return pmresponse;
+
+            }),catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+
+    }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ClientPM = null) {
 

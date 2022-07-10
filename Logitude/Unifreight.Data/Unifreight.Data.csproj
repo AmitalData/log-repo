@@ -142,6 +142,7 @@
     <Compile Include="AmitalModel\EntityKeys\CTBTRANSPKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBTSRUFTYPEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\EFIFILEMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\EFIMMNKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ESPSPEDKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ETBAIRLINEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ETBPAYTRKeys.cs" />
@@ -177,6 +178,8 @@
     <Compile Include="AmitalModel\EntityKeys\CTBUNLOADKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ITBPCKTYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ITBPORTKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\MFIFILEMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\MSPSPEDKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\MTBCARRKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\MTBPORTKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\RTBPORTKeys.cs" />
@@ -236,6 +239,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBUNLOAD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.DWGNDCARD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.EFIFILEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.EFIMMN.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ESPSPED.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ETBAIRLINE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ETBPAYTR.cs" />
@@ -286,6 +290,8 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTRTRAN.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPCKTY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPORT.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MFIFILEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MSPSPED.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MTBCARR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MTBPORT.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.RTBPORT.cs" />
@@ -352,6 +358,7 @@
     <Compile Include="AmitalModel\Repsitories\CTBUNLOADRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\DualRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\EFIFILEMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\EFIMMNRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ESPSPEDRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ETBAIRLINERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ETBPAYTRRepository.cs" />
@@ -386,6 +393,8 @@
     <Compile Include="AmitalModel\Repsitories\GTRTRANRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ITBPCKTYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ITBPORTRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\MFIFILEMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\MSPSPEDRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\MTBCARRRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\MTBPORTRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\RTBPORTRepository.cs" />
