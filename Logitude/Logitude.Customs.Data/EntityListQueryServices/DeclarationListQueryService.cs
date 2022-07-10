@@ -360,7 +360,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      TransferImporterCountryCode = a.TransferImporterCountryCode,
                                                      SearchFields = a.SearchFields,
                                                      DeclarationOfficeName = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
-                                                     DeclarationNumberandVersionId = "1234",//a.DeclarationNumber + (string.IsNullOrEmpty(a.VersionId) ? "" : " " + a.VersionId),
+                                                     DeclarationNumberandVersionId = a.DeclarationNumber + (string.IsNullOrEmpty(a.VersionId) ? "" : " " + a.VersionId),
                                                      //ErrosXml = a.ErrosXml,
                                                      //   TransportModeId = a.TransportModeId,
                                                      AutonomyRegionTypeCode = a.AutonomyRegionTypeCode,
