@@ -1461,9 +1461,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
                 AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
                 try
-                {                    
-                    if (_MyDeclarationPM.HatraDate.HasValue)
-                        myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);                    
+                {
+                    if (!_MyDeclarationPM.HatraDate.HasValue)// ELISHIVA  + MORAN Task 156294: חסימת מעבר משלוחים בין טיסות בלדרות
+                    {
+                        myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
+                    }
+
                 }
                 catch (DbEntityValidationException ex)
                 {
