@@ -259,23 +259,23 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
         });
         this.columns.push({
-            FieldName: 'CustomsStatus',
+            FieldName: 'CustomStatusName',
             DataTypeCode: 'String',
             Display: 'שם סטטוס מטען',
             Styles: { width: '110px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'CustomsStatus'
+            SortByName: 'CustomStatusName'
 
         });
         this.columns.push({
-            FieldName: 'ActionCode',
+            FieldName: 'ActionName',
             DataTypeCode: 'String',
             Display: 'שם סטטוס היתר לוגיסטי',
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'ActionCode',
+            SortByName: 'ActionName',
         });
     }
 
