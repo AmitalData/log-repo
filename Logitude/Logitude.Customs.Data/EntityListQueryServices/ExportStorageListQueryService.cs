@@ -44,6 +44,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    from cargoStatus in ssj.DefaultIfEmpty()
 
 
+                                                   join el in context.ExportLogisticPermitActions.Select(r => new { r.Code, r.LocalName })
+                                                   on en.ActionCode equals el.Code
+                                                   into elpa
+                                                   from exportLogisticPermitActions in elpa.DefaultIfEmpty()
+
+
 
 
 
