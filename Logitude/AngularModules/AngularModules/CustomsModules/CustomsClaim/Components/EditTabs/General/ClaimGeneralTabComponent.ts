@@ -291,7 +291,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         clientSelectionChangedWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
         clientSelectionChangedWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
         clientSelectionChangedWindow.ShowCancelButton = false;
-        clientSelectionChangedWindow.Show("בפעולה זו ימחקו כל הכתובות של הלקוח, הםם להמשיך?");
+        clientSelectionChangedWindow.Show("בפעולה זו ימחקו כל הכתובות של הלקוח, האם להמשיך?");
 
         clientSelectionChangedWindow.WindowClosed.subscribe((event: any) => {
             if (clientSelectionChangedWindow.Yes) {
@@ -360,9 +360,9 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         if ((item.AddressMode == "AddressCode" && AppTool.IsNullOrEmpty(item.ClientPM.Id)
             || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id) && AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber))) {
 
-            var text: string = "רםשית חובה לבחור לקוח";
+            var text: string = "ראשית חובה לבחור לקוח";
             if (item.AddressMode == "AddressCode") {
-                text = "רםשית חובה לבחור מגיש לתביעה";
+                text = "ראשית חובה לבחור מגיש לתביעה";
             }
             
             var messageWindow = new MessageWindow();
@@ -403,7 +403,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("לם ניתן לבחור כתובת זו, םנם שלוף לקוח מחדש");
+            messageWindow.Show("לא ניתן לבחור כתובת זו, אנא שלוף לקוח מחדש");
             return;
         }
 
@@ -492,7 +492,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("לם ניתן למחוק ישות תביעה המקושרת לתיק תפג");
+            messageWindow.Show("לא ניתן למחוק ישות תביעה המקושרת לתיק תפג");
             return;
         }
 
@@ -529,7 +529,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.currentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "הצהרת יבום" });
+                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "הצהרת יבוא" });
                             //cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                             //    DeclarationEventManager.DisplayModeChanged.emit(null);
                             //});
@@ -540,7 +540,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                     messageWindow.Width = 250;
                     messageWindow.Height = 150;
                     messageWindow.RTL = true;
-                    messageWindow.Show("לם נמצםה הצהרה");
+                    messageWindow.Show("לא נמצאה הצהרה");
                 }
             }
         });
@@ -554,7 +554,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("לם ניתן לבטל/ערר ישות תביעה שםינה המקושרת לתיק תפג");
+            messageWindow.Show("לא ניתן לבטל/ערר ישות תביעה שאינה המקושרת לתיק תפג");
             return;
         }
 

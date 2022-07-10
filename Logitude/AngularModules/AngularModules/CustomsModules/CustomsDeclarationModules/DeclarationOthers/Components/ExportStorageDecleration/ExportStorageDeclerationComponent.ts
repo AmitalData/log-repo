@@ -189,7 +189,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'OpenDate',
             DataTypeCode: 'DateTime',
-            Display: "תםריך פתיחה",
+            Display: "תאריך פתיחה",
             Styles: { width: '110px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -201,7 +201,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExporterName',
             DataTypeCode: 'String',
-            Display: 'יצוםן',
+            Display: 'יצואן',
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -211,7 +211,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFileNo',
             DataTypeCode: 'String',
-            Display: "מס' תיק יצום",
+            Display: "מס' תיק יצוא",
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -222,7 +222,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
             FieldName: 'StorageNo',
             DataTypeCode: 'String',//'Number',
-            Display: 'מספר םחסנה',
+            Display: 'מספר אחסנה',
             Styles: { width: '90px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -231,7 +231,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ShipName',
             DataTypeCode: 'String',
-            Display: 'םוניה',
+            Display: 'אוניה',
             Styles: { width: '140px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -251,7 +251,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'StorageStatus',
             DataTypeCode: 'String',
-            Display: 'סטטוס םחסנה',
+            Display: 'סטטוס אחסנה',
             Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
