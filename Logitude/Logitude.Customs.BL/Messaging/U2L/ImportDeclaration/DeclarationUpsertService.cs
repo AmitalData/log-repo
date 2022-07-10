@@ -315,7 +315,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.AgentId = _AmitalCustomsFile.AgentId;//translate?
                 string DBcustomer = this._MyDeclarationPM.CustomerId; // moran 12.7.15 - Task 14510
                 this._MyDeclarationPM.CustomerId = TranslateCustomer(_AmitalCustomsFile.CustomerId);//check translate
-                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
+                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId) && _AmitalCustomsFile.Direction != "E")
                 {
                         MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                         MyGenericResponseObj.Message += "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
@@ -380,7 +380,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.DepartmentId = TranslateDepartment(_AmitalCustomsFile.DepartmentId);
                 this._MyDeclarationPM.WeightValue = _AmitalCustomsFile.COUWTVAL;
 
-                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
+                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId) && _AmitalCustomsFile.Direction != "E")
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                     MyGenericResponseObj.Message = "CustomerId is missing " + _AmitalCustomsFile.CustomerId + "Not found";
