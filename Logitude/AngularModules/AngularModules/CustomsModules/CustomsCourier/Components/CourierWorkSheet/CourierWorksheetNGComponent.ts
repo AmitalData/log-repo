@@ -1978,7 +1978,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
 
         if (this.entityPM.IsReadyForInvoice) {
-            let text = "הםם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
+            let text = "האם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Show(text);
             confirmWindow.WindowClosed.subscribe((event: any) => {

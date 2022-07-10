@@ -265,7 +265,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CreateDateTime',
             DataTypeCode: 'String',
-            Display: "תםריך פתיחת הצהרה",
+            Display: "תאריך פתיחת הצהרה",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -287,7 +287,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFile',
             DataTypeCode: 'String',
-            Display: "מס' תיק יצום",
+            Display: "מס' תיק יצוא",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
