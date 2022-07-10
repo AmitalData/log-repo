@@ -130,7 +130,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             UpdateLogisticPermit(customResponse, requestParams);
-            RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams);
+            if (_MyDeclarationPM != null && _MyDeclarationPM.Direction == "E")
+                RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams);
             MyResponseData.Succeeded = true;
 
         }
