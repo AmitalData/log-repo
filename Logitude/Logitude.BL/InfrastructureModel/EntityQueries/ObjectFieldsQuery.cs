@@ -2766,5 +2766,34 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   }).ToList();
             return objectfields;
         }
+
+        public List<ForiegnKeyDetails> GetForgienKeys(int tenant, string objecttableName)
+        {
+            var b = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable")
+                     where a.Tenant == tenant
+                     && (a.ObjectTable.Name == objecttableName || a.ObjectTable.Name == "Customs." + objecttableName)
+                     && a.ObjectTableId != null
+                     && a.DataTypeCode == "LookUp"
+
+                     select a).ToList();
+
+            return (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable")
+             where a.Tenant == tenant
+             && (a.ObjectTable.Name == objecttableName || a.ObjectTable.Name == "Customs." + objecttableName)
+             && a.LookUpTableId != null
+             && a.DataTypeCode == "LookUp"
+
+                    select new ForiegnKeyDetails
+             {
+                 propName = a.FieldName,
+                 tableName = a.ObjectTable_LookUpTable.Name
+             }).ToList();           
+        }       
+
+        public class ForiegnKeyDetails
+        {
+            public string tableName { get; set; }
+            public string propName { get; set; }
+        }
     }
 }

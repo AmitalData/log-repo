@@ -587,6 +587,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 if (!string.IsNullOrEmpty(entityPM.CalculatedImporterName) && entityPM.CalculatedImporterName.Length > 35) entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, 35);
                 if (!string.IsNullOrEmpty(entityPM.ImporterName) && entityPM.ImporterName.Length > 35) entityPM.ImporterName = entityPM.ImporterName.Substring(0, 35);
+
+                if(entityPM.Direction == "E" && entityPM.TransportModeId == "O")
+                {
+                    DeclarationPM oldDeclaration = new DeclarationQueryService(entityPM.Tenant).GetSingle(entityPM.Id, true, false);
+
+                    oldDeclaration?.Consignments.ForEach(oldCon =>
+                    {
+                        bool isDisconnect = oldCon.ExportStoragesId != null && !entityPM.Consignments.Any(con => oldCon.DeclarationId == con.DeclarationId && oldCon.ManifestNumber == con.ManifestNumber && oldCon.SecondCargoID == con.SecondCargoID && oldCon.ThirdCargoID == con.ThirdCargoID);
+                        if (isDisconnect)
+                            DeleteExportStorage(entityPM.Tenant, oldCon.ExportStoragesId);
+                    });
+
+                    entityPM.Consignments.FindAll(con => con.ExportStoragesId != null && con.ChangeSetOp == ChangeSetOperation.Delete)
+                        .ForEach(x => DeleteExportStorage(x.Tenant, x.ExportStoragesId));
+                }
             }
             finally
             {
@@ -606,6 +621,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged,GetDBEntity(entityPM.Id, entityPM.Tenant));
 
             }
+        }
+
+        private void DeleteExportStorage(int tenant, string id)
+        {
+            ExportStoragePM exportStoragePM = new ExportStorageQueryService(tenant).GetSingle(id, true, false);
+            exportStoragePM.DeclarationId = null;
+            exportStoragePM.ChangeSetOp = ChangeSetOperation.Update;
+            new ExportStorageUpdateService(MainContext as CustomContext, new Dictionary<string, IContext>(), tenant).Update(exportStoragePM, true);
         }
 
         private bool DeclarationIsSigned(DeclarationPM entityPM)

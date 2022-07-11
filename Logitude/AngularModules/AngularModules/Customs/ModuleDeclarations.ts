@@ -10,6 +10,7 @@ import {EndDateComponent} from './Components/ListTemplates/EndDateComponent';
 
 
 //Short Titles
+import {ContainerizationShortTitleComponent} from './Components/ShortTitles/ContainerizationShortTitleComponent';
 import {DeclarationShortTitleComponent} from './Components/ShortTitles/DeclarationShortTitleComponent';
 import { ExportStorgeShortTitleComponent } from './Components/ShortTitles/ExportStorgeShortTitleComponent';
 
@@ -52,8 +53,8 @@ export const Components =
        
 
         //short titles
+        ContainerizationShortTitleComponent,        
         DeclarationShortTitleComponent,
-     
         ExportStorgeShortTitleComponent,
         ExportStorageShortTitleComponent,
      
@@ -94,6 +95,7 @@ export class ModuleDeclarations {
             case "DocumentsFilingTemplateComponent": { myResult = DocumentsFilingTemplateComponent; break; }
             case "EndDateComponent": { myResult = EndDateComponent; break; }
                         //short titles
+            case "ContainerizationShortTitleComponent": {myResult = ContainerizationShortTitleComponent; break;}            
             case "DeclarationShortTitleComponent": {myResult = DeclarationShortTitleComponent; break;}
             case "ExportStorgeShortTitleComponent": { myResult = ExportStorgeShortTitleComponent; break; }
             case "ExportStorageShortTitleComponent": { myResult = ExportStorageShortTitleComponent; break; }

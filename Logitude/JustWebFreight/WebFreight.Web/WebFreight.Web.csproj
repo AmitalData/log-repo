@@ -656,6 +656,7 @@
     <Content Include="css\kendo.default.min.css" />
     <Content Include="css\kendo.mobile.all.min.css" />
     <Content Include="AmitalBrowserTester.html" />
+    <Content Include="CustomWebServices\Testers\IzikTester.aspx" />
     <Content Include="FileNotFound.aspx" />
     <Content Include="Errors\404.aspx" />
     <Content Include="AccountingWebServices\TestersNoInUSE\AccountingBalanceTester.aspx" />
@@ -1160,6 +1161,13 @@
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReportTypes\SlaDetailedReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReportTypes\SlaConcentratedReport.cs" />
+    <Compile Include="CustomWebServices\Testers\IzikTester.aspx.cs">
+      <DependentUpon>IzikTester.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomWebServices\Testers\IzikTester.aspx.designer.cs">
+      <DependentUpon>IzikTester.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\UserCredentials.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />
@@ -7276,6 +7284,10 @@
     <ProjectReference Include="..\..\Logitude.CustomsMessaging\Logitude.CustomsMessaging.csproj">
       <Project>{7994d6f2-00a7-4c0d-a7d3-fd7d5304b665}</Project>
       <Name>Logitude.CustomsMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.DatabaseMigration\Logitude.DatabaseMigration.csproj">
+      <Project>{160CFF77-92DB-4578-BD3D-BF78A9258B00}</Project>
+      <Name>Logitude.DatabaseMigration</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
       <Project>{bd959ab6-4476-48b3-aa4d-cfd7ed120e55}</Project>

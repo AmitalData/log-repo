@@ -175,6 +175,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (!string.IsNullOrEmpty(entityPOCO.ExportClosedErrorXML) && !entityPOCO.IsExportClosed)
                 {
                     entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
+                    entityPM.IsAmendmentDisplayOnly = true;
                 }
                 else
                 {
@@ -192,6 +193,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         {
                             entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
                         }
+                        entityPM.IsAmendmentDisplayOnly = true;
                     }
                     else
                     {
@@ -207,6 +209,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                             {
                                 entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName; ;
                             }
+                            entityPM.IsAmendmentDisplayOnly = true;
                         }
                     }
                     //else
