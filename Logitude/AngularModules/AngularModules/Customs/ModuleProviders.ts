@@ -251,6 +251,7 @@ import { ContainerizationListService } from './Services/StandardLists/Containeri
 import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
 import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
 import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
+import { StorageStatusTableListService } from './Services/StandardLists/StorageStatusTableListService';
 
 
 //#endregion
@@ -698,7 +699,7 @@ export class ModuleProviders {
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
             case "ExporterRoleTypeListService": { myResult = new ExporterRoleTypeListService(); break; }
             case "AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
-
+            case "StorageStatusTableListService": { myResult = new StorageStatusTableListService(); break; }
             case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
             case "AmendmentStatusListService": { myResult = new AmendmentStatusListService(); break; }
