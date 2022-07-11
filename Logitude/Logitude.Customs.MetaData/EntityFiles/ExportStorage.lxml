@@ -446,7 +446,7 @@
     IsDeleted="false"
     ObjectTableName="&quot;Customs.ExportStorage&quot;"
     FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;Customs.CargoStatus&quot;"
+    LookUpTableName="&quot;Customs.StorageStatusTable&quot;"
     MinLength="0"
     MaxLength="10"
     IsRequired="false"

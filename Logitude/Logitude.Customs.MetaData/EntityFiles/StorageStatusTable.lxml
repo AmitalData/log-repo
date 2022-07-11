@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <entity
-  Id="&quot;97c2324d-2ac5-4668-a5d2-24e3a1c6585c&quot;"
+  Id="&quot;97c2324d-2ac5-4868-a5d2-24e3a1c6586c&quot;"
   ObjectTableName="&quot;Customs.StorageStatusTable&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.StorageStatusTables&quot;"
-  DBTableOldNames="Customs.CustomsDocumentUploads,Customs.StorageStatuses,Customs.StorageStatusTables"
+  DBTableOldNames="Customs.StorageStatusTables"
   ObjectTableSingular="&quot;StorageStatusTable&quot;"
   ObjectTablePlural="&quot;StorageStatusTables&quot;"
   HasCustomFilter="false"
@@ -38,8 +38,8 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Storage Status Table&quot;"
-  Code="&quot;cce6&quot;"
-  Name="&quot;Customs.CustomsDocumentUpload Query Group&quot;"
+  Code="&quot;b861&quot;"
+  Name="&quot;Customs.StorageStatusTable Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
@@ -66,16 +66,16 @@
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="Customs">
   <field
-    Id="&quot;0e8ce4f7-f8de-4784-9902-2bc6ecf61c2b&quot;"
+    Id="&quot;0e8ce4f7-f8de-4784-9102-2bc6ecf61c23&quot;"
     FieldName="&quot;Code&quot;"
     OldNames="Code"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.StorageStatusTable&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="40"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -84,7 +84,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="1"
+    SystemMaxLength="40"
     DisplayInList="false"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
@@ -141,9 +141,9 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;2bbe0a54-c877-4792-922e-21f96d0b97bf&quot;"
+    Id="&quot;2bbe0a54-c877-4792-922e-21f11d0b97bf&quot;"
     FieldName="&quot;Name&quot;"
-    OldNames="LocalName,Name"
+    OldNames="Name"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -216,7 +216,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Screen
-    Name="&quot;Customs.CustomsDocumentUploadHeaderScreen&quot;"
+    Name="&quot;Customs.StorageStatusTableHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.StorageStatusTable&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
