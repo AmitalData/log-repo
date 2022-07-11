@@ -240,7 +240,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             string integratorIndexTranslatedCode = null;
 
             CardQuery cardQuery = new CardQuery(tenant);
-            CardPM cardPM = cardQuery.GetSinglePM(integratorIndex, tenant);
+            CardPM cardPM = cardQuery.GetSinglePMFromCache(integratorIndex, tenant);
             if (cardPM != null)
             {
                 integratorIndexCode = cardPM.Code;
