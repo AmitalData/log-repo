@@ -99,12 +99,14 @@ export class AddEditExternalFieldMappingComponent
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         if (this.isNewRecord) {
             this._ExternalFieldMappingPMService.insert(this.EntityPM).subscribe(myResult => {
+                debugger;
                 if (myResult.HasError) {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
                     return;
                 } else {
                     this.CancelButtonClicked();
+
                 }
             });
         }
