@@ -86,7 +86,7 @@ namespace Logitude.Customs.BL.BL
             {
 
                 var defValue = GDFDATAQueryService.GetDefault(tenant, "ISRAEL", "CGO_IMDOC", "NON", "NON");
-                _stringBuilder.Append("|").Append("Send2715ImmediateDueArrivalDateB4Today CGO_IMDOC = {defValue} ");
+                _stringBuilder.Append("|").Append($"Send2715ImmediateDueArrivalDateB4Today CGO_IMDOC = {defValue} ");
                 if (defValue == "Y")
                 {
 
@@ -126,7 +126,7 @@ namespace Logitude.Customs.BL.BL
             ///CGO_TIMDOC - שליחה מידית בטווח שעות
 
             string defValue = GDFDATAQueryService.GetDefault(tenant, "ISRAEL", "CGO_TIMDOC", "NON", "NON");
-            _stringBuilder.Append("|").Append("Send2715ImmediateDueTimeRange.CGO_TIMDOC = {defValue} ");
+            _stringBuilder.Append("|").Append($"Send2715ImmediateDueTimeRange.CGO_TIMDOC = {defValue} ");
             if (String.IsNullOrEmpty(defValue))
             {
                 return false;
