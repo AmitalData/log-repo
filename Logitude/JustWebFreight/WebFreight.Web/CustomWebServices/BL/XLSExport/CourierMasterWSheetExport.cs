@@ -61,15 +61,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 });
             ;
 
-            Boolean isExtendedReport = false;
-            FeatureQuery featureQuery = new FeatureQuery();
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
-            var feature = features.Features.FirstOrDefault(x => x.Code == "ExportMasterExtended");
-            if (feature != null)
-            {
-                isExtendedReport = true;
-            }
-
+            Boolean isExtendedReport = true;
+ 
             var group2 = (from d in MyContext.DeclarationPendings
                           join c in q
                           on d.DeclarationID equals c.DeclarationId
@@ -109,6 +102,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
                                                     });
 
+
                 var group3 = (from d in MyContext.Declarations
 
                               join dec in q on d.Id equals dec.DeclarationId into qjoinDeclarations
@@ -134,7 +128,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                                   CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
                                   InvoiceCurrencyTypeCode = myJoinqSupplierInvoice != null ? myJoinqSupplierInvoice.InvoiceCurrencyTypeCode : null,
                                   InvoiceQuantity = myJoinqSupplierInvoiceItem != null ? myJoinqSupplierInvoiceItem.InvoiceQuantity : null,
-                              });
+                              }); ;
+
                 foreach (var item in group3)
                 {
                     Group3Var.Add(item.declaration, new Group3Variables
@@ -153,7 +148,31 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             foreach (var item in group2)
             {
                 pendings.Add(item.declaration, string.Join(",", item.pending));
-            }    
+            }
+
+          
+            var qConsignmentPackages = (from a in MyContext.ConsignmentPackages
+                                        where (a.PackageMeasureQualifierCode == "2")
+                                        join cp in q
+                                        on a.DeclarationId equals cp.DeclarationId
+                                        
+                                        group a by a.DeclarationId into qConsPackages
+                                        select
+                                      new
+                                      {
+                                          DeclarationId = qConsPackages.Key,
+                                          GrossMassMeasure = qConsPackages.Where(t => t.GrossMassMeasure.HasValue).Sum(x => x.GrossMassMeasure),
+                                          PackageQuantity = qConsPackages.Sum(x => x.PackageQuantity)
+                                      });
+
+            var dicConPackages = new Dictionary<string, conPackagesValues>();
+           
+            foreach (var item in qConsignmentPackages)
+            {
+                dicConPackages.Add(item.DeclarationId, new conPackagesValues()
+                { GrossMassMeasure = item.GrossMassMeasure.ToString(),
+                    PackageQuantity = item.PackageQuantity.ToString() });
+            }
 
             DataTable dt = null;
             var settingCol = new BITabularViewSettings()
@@ -176,14 +195,13 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 dt.Columns.Add(new DataColumn() { Caption = /*"Master HAWB"*/"שטר מטען פנימ", ColumnName = "MasterHAWB", DataType = System.Type.GetType("System.String") });
                 settingCol.Columns.Add(new Column() { Index = 2, Code = "MasterHAWB", Name = "MasterHAWB", DataTypeCode = "String", Width = 100, });
 
+                settingCol.Columns.Add(new Column() { Index = 3, Code = "ConsignmentPackageGrossMassMeasure", Name = "ConsignmentPackageGrossMassMeasure", DataTypeCode = "Decimal", Width = 100, });
+                dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.ConsignmentPackage.F.GrossMassMeasure", tenant, true), ColumnName = "ConsignmentPackageGrossMassMeasure", DataType = System.Type.GetType("System.Decimal") });
 
 
-                settingCol.Columns.Add(new Column() { Index = 3, Code = "MasterGrossMassMeasure", Name = "MasterGrossMassMeasure", DataTypeCode = "Decimal", Width = 100, });
-                dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.CourierMaster.F.GrossMassMeasure", tenant, true), ColumnName = "MasterGrossMassMeasure", DataType = System.Type.GetType("System.Decimal") });
+                settingCol.Columns.Add(new Column() { Index = 4, Code = "ConsignmentPackagePackageQuantity", Name = "ConsignmentPackagePackageQuantity", DataTypeCode = "Decimal", Width = 100, });
+                dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.ConsignmentPackage.F.PackageQuantity", tenant, true), ColumnName = "ConsignmentPackagePackageQuantity", DataType = System.Type.GetType("System.Decimal") });
 
-
-                settingCol.Columns.Add(new Column() { Index = 4, Code = "MasterPackageQuantity", Name = "MasterPackageQuantity", DataTypeCode = "Decimal", Width = 100, });
-                dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.CourierMaster.F.PackageQuantity", tenant, true), ColumnName = "MasterPackageQuantity", DataType = System.Type.GetType("System.Decimal") });
 
                 settingCol.Columns.Add(new Column() { Index = 5, Code = "MasterCreateDateTime", Name = "MasterCreateDateTime", DataTypeCode = "DateTime", Width = 100, });
                 dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.CourierMaster.F.CreateDateTime", tenant, true), ColumnName = "MasterCreateDateTime", DataType = DateTime.Now.GetType() });
@@ -298,8 +316,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     newrow[0] = $"{r.AirlineId}-{r.MAWB}";
                     //newrow[1] = r.CourierHawb;
                     newrow[1] = r.MasterHAWB;
-                    newrow[2] = r.MasterGrossMassMeasure;
-                    newrow[3] = r.MasterPackageQuantity;
+                    newrow[2] = dicConPackages[r.DeclarationId].GrossMassMeasure;  //r.MasterGrossMassMeasure;
+                    newrow[3] = dicConPackages[r.DeclarationId].PackageQuantity; //r.MasterPackageQuantity;
                     newrow[4] = ((object)r.MasterCreateDateTime) ?? DBNull.Value;
                     newrow[5] = r.MasterGatewayPortCode;
                     newrow[6] = ((object)r.MasterEstimatedArrivalDate) ?? DBNull.Value;
@@ -525,7 +543,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
         public string CargoDescription { get; set; }
         public string InvoiceQuantity { get; set; }
         public string InvoiceCurrencyTypeCode { get; set; }
-
+       
 
     }
     public class PendingReport
@@ -537,5 +555,12 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
         }
         public string pendings;
         public string pendingRemark;
+    }
+
+    public class conPackagesValues
+    {
+        public string GrossMassMeasure { get; set; }
+        public string PackageQuantity { get; set; }
+
     }
 }
