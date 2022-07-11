@@ -1,21 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="StorageStatusTables"
-  OldNames="StorageStatuses,CustomsDocumentUploads"
   Schema="Customs"
   DBType="Main" 
   Module="Customs">
   <Column
     Name="Code"
     Type="varchar"
-    Size="1">
+    Size="40">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
     Name="Name"
-    OldNames="LocalName"
     Type="nvarchar"
     Size="40">
     <Constraints
