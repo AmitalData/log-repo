@@ -46,6 +46,8 @@ using Logitude.Customs.BL.TraceEvents;
 using Unifreight.BL.EntityPMs;
 using SupplierInvoicePM = Logitude.Customs.Def.EntityPMs.SupplierInvoicePM;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.AmitalMessaging.Utils;
+using Newtonsoft.Json;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -500,7 +502,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         }
 
 
-        public HttpResponseMessage PostSendDeclarationAmendment(AmendmentRequestParams requestParamsData)
+        public HttpResponseMessage PostSendDeclarationAmendment(GenericRequestParams requestParamsData)
         {
             try
             {
@@ -508,8 +510,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 if (requestParamsData.RequestName.StartsWith("Export"))
                 {
                     //var messagingService = new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService();
+                    var serializedParent = JsonConvert.SerializeObject(requestParamsData);
+                    AmendmentRequestParams requestParams = JsonConvert.DeserializeObject<AmendmentRequestParams>(serializedParent);
+
                     var messagingService = new DF_MSG8235_ExportDeclarationAmendmentMessagingService();
-                    responseData = messagingService.Send(requestParamsData);
+                    responseData = messagingService.Send(requestParams);
                 }
                 else
                 {
