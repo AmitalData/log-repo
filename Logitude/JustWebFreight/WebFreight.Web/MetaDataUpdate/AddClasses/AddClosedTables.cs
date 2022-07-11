@@ -3324,5 +3324,28 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
+        public static void AddStorageStatusTable(StorageStatusTable StorageStatusTableDetails, StorageStatusTableRepository StorageStatusTableRepository)
+        {
+            Dictionary<string, StorageStatusTable> tenant = StorageStatusTableRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(StorageStatusTableDetails.Code))
+            {
+                StorageStatusTable storageStatusTable = StorageStatusTableRepository.GetSingle(StorageStatusTableDetails.Code);
+                storageStatusTable.Name = StorageStatusTableDetails.Name;
+
+
+                StorageStatusTableRepository.Update(storageStatusTable);
+            }
+            else
+            {
+                StorageStatusTable storageStatusTable = new StorageStatusTable()
+                {
+                    Code = StorageStatusTableDetails.Code,
+                    Name = StorageStatusTableDetails.Name,
+                    
+                };
+                StorageStatusTableRepository.Add(StorageStatusTableDetails);
+            }
+        }
     }
 }
