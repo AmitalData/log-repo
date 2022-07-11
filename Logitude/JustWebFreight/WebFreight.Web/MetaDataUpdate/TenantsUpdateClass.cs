@@ -776,7 +776,7 @@ namespace WebFreight.Web.MetaDataUpdate
            
             updateClass.FillPointerLevel();
 
-            updateClass.FillStorageStatusTable();
+           
         }
 
         private static void UpdateTenantData(int tenant)
