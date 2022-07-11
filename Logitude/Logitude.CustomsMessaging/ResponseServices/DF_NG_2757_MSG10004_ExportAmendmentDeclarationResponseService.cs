@@ -134,6 +134,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DeclarationTypeCode = GetValueCodeType(declaration.TypeCode),
                         Consignments = GetConsignments(declaration, tenant, null, context),
                     };
+                    declarationPM.IsExportClosed = declarationOrg.IsExportClosed;
                     declarationPM.ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID);
                     declarationPM.ExportFile = declarationOrg.ExportFile;
                     declarationPM.DeclarationTypeCode = GetValueCodeType(declaration.TypeCode);
@@ -1009,26 +1010,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
-                    //if (governmentAgencyGoodsItem.Commodity.GovernmentProcedure != null && governmentAgencyGoodsItem.Commodity.GovernmentProcedure.Count() > 0)
-                    //{
-                    //    supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes = new List<SupplierInvoiceItemProcesTypePM>();
-
-
-                    //    foreach (var governmentProcedure in governmentAgencyGoodsItem.Commodity.GovernmentProcedure)
-                    //    {
-                    //        SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesTypePM = new SupplierInvoiceItemProcesTypePM();
-                    //        supplierInvoiceItemProcesTypePM.ChangeSetOp = ChangeSetOperation.Insert;
-                    //        supplierInvoiceItemProcesTypePM.DeclarationId = declarationId;
-                    //        supplierInvoiceItemProcesTypePM.Tenant = tenant;
-                    //        supplierInvoiceItemProcesTypePM.ProcessTypeCode = GetValueCodeType(governmentProcedure.CurrentCode);
-
-                    //        supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesTypePM);
-                    //    }
-
-
-
-
-                    //}
+                    if (governmentAgencyGoodsItem.GovernmentProcedure != null && governmentAgencyGoodsItem.GovernmentProcedure.Count() > 0)
+                    {
+                        supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes = new List<SupplierInvoiceItemProcesTypePM>();
+                        foreach (var governmentProcedure in governmentAgencyGoodsItem.GovernmentProcedure)
+                        {
+                            SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesTypePM = new SupplierInvoiceItemProcesTypePM();
+                            supplierInvoiceItemProcesTypePM.ChangeSetOp = ChangeSetOperation.Insert;
+                            supplierInvoiceItemProcesTypePM.DeclarationId = declarationId;
+                            supplierInvoiceItemProcesTypePM.Tenant = tenant;
+                            supplierInvoiceItemProcesTypePM.ProcessTypeCode = GetValueCodeType(governmentProcedure.CurrentCode);
+                            supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesTypePM);
+                        }
+                    }
+                    
                     foreach (var goodsMeasure in governmentAgencyGoodsItem.GoodsMeasure)
                     {
                         if (goodsMeasure.DMExtensions != null && goodsMeasure.TariffQuantity != null)
@@ -1134,6 +1129,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     }
                             }
                         }
+
+
+                        supplierInvoiceItemPM.TransactionNatureCode = GetValueCodeType(governmentAgencyGoodsItem.DMExtensions.TransactionNatureCode);
                         //supplierInvoiceItemPM.CustomsBookTypeCode = GetValueCodeType(governmentAgencyGoodsItem.DMExtensions..CustomsBookType);
                         //supplierInvoiceItemPM.TaxExemptCode = GetValueCodeType(governmentAgencyGoodsItem.DMExtensions.TaxExemptCode);
                         //if (governmentAgencyGoodsItem.DMExtensions.OptionalTama != null) supplierInvoiceItemPM.OptionalTamaPercentage = governmentAgencyGoodsItem.DMExtensions.OptionalTama.Value;
