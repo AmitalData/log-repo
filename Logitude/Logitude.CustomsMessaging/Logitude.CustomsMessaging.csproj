@@ -552,6 +552,7 @@
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
     <Compile Include="Tasks\SendDeclarationStatus.cs" />
     <Compile Include="Tasks\SendManifestService.cs" />
+    <Compile Include="Testers\CourierTester.cs" />
     <Compile Include="Testers\LoadTest\CreateCustomFileService.cs" />
     <Compile Include="Testers\Messages\UniDebug01_Msg.cs" />
     <Compile Include="Testers\Mirit\MiritStartUp.cs" />

@@ -1,7 +1,10 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,23 +12,24 @@ using Unifreight.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.BL
 {
-    internal class CourierSchedulerService
+    public class CourierSchedulerService
     {
         private StringBuilder _stringBuilder;
 
-        public DateTime? SendImmediate(int tenant, string declarationId, DateTime? date)
+        public DateTime? Send2715Immediate(int tenant, string declarationId, DateTime? date)
         {
+
             _stringBuilder = new StringBuilder();
             // if date === null  => SendImmediate
-            if (date == null )
+            if (date == null)
             {
-                _stringBuilder.AppendLine("CourierSchedulerService: already send imm");
+                _stringBuilder.AppendLine("Send2715Immediate: already send imm");
             }
             else
             {
 
 
-                if (SendImmediateDueTimeRange(tenant))//Task 164013: בלדרות- תזמון העלאת מסמכים
+                if (Send2715ImmediateDueTimeRange(tenant))//Task 164013: בלדרות- תזמון העלאת מסמכים
                 {
                     date = null;
                 }
@@ -34,7 +38,7 @@ namespace Logitude.Customs.BL.BL
                     if (!String.IsNullOrWhiteSpace(declarationId))
                     {
 
-                        if (SendImmediateDueArrivalDateB4Today(declarationId, tenant))
+                        if (Send2715ImmediateDueArrivalDateB4Today(declarationId, tenant))
                         {
                             date = null;
                         }
@@ -42,12 +46,39 @@ namespace Logitude.Customs.BL.BL
                 }
 
             }
-            
+
+            LogitudeSettings.HandleLogMe(_stringBuilder.ToString(), false, "Send2715Immediate", GetStopLogAt());
             LogMessagingUtil.Instance.AppendLine(_stringBuilder.ToString());
             return date;
         }
+        DateTime GetStopLogAt()
+        {
 
-        private bool SendImmediateDueArrivalDateB4Today(string declarationId, int tenant)
+            DateTime stopLogAt = new DateTime(2022, 10, 01);
+            try
+            {
+                
+
+                string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220711T164013.LogUntilDateyyyyMMdd"];
+                if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                {
+                    stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                        "yyyyMMdd",
+                                                        CultureInfo.InvariantCulture,
+                                                        style: DateTimeStyles.None);
+                }
+                
+
+            }
+            catch (Exception)
+            {
+
+                
+            }
+            return stopLogAt;
+
+        }
+        private bool Send2715ImmediateDueArrivalDateB4Today(string declarationId, int tenant)
         {
             
             bool sendImmediate = false;
@@ -55,7 +86,7 @@ namespace Logitude.Customs.BL.BL
             {
 
                 var defValue = GDFDATAQueryService.GetDefault(tenant, "ISRAEL", "CGO_IMDOC", "NON", "NON");
-                _stringBuilder.Append("|").Append("SendImmediateDueArrivalDateB4Today CGO_IMDOC = {defValue} ");
+                _stringBuilder.Append("|").Append("Send2715ImmediateDueArrivalDateB4Today CGO_IMDOC = {defValue} ");
                 if (defValue == "Y")
                 {
 
@@ -88,14 +119,14 @@ namespace Logitude.Customs.BL.BL
 
         }
 
-        private bool SendImmediateDueTimeRange(int tenant)
+        private bool Send2715ImmediateDueTimeRange(int tenant)
         {
 
 
             ///CGO_TIMDOC - שליחה מידית בטווח שעות
 
             string defValue = GDFDATAQueryService.GetDefault(tenant, "ISRAEL", "CGO_TIMDOC", "NON", "NON");
-            _stringBuilder.Append("|").Append("SendImmediateDueTimeRange.CGO_TIMDOC = {defValue} ");
+            _stringBuilder.Append("|").Append("Send2715ImmediateDueTimeRange.CGO_TIMDOC = {defValue} ");
             if (String.IsNullOrEmpty(defValue))
             {
                 return false;
@@ -104,20 +135,20 @@ namespace Logitude.Customs.BL.BL
             var fromTo = defValue.Split('-');
             if (fromTo.Length != 2)
             {
-                _stringBuilder.Append("|").Append("SendImmediateDueTimeRange CGO_TIMDOC BAD Pattren!!! should be  '03:00-08:00' ");
+                _stringBuilder.Append("|").Append("Send2715ImmediateDueTimeRange CGO_TIMDOC BAD Pattren!!! should be  '03:00-08:00' ");
                 return false;
             }
             DateTime dateTimeStart;
-            if (DateTime.TryParseExact(fromTo[0], "t", null, System.Globalization.DateTimeStyles.None, out dateTimeStart))
+            if (!DateTime.TryParseExact(fromTo[0], "t", null, System.Globalization.DateTimeStyles.None, out dateTimeStart))
             {
-                _stringBuilder.Append("|").Append("SendImmediateDueTimeRange CGO_TIMDOC bad pattren  !!! should be  '03:00-08:00' ");
+                _stringBuilder.Append("|").Append("Send2715ImmediateDueTimeRange CGO_TIMDOC bad pattren  !!! should be  '03:00-08:00' ");
                 return false;
 
             }
             DateTime dateTimeEnd;
-            if (DateTime.TryParseExact(fromTo[1], "t", null, System.Globalization.DateTimeStyles.None, out dateTimeEnd))
+            if (!DateTime.TryParseExact(fromTo[1], "t", null, System.Globalization.DateTimeStyles.None, out dateTimeEnd))
             {
-                _stringBuilder.Append("|").Append("SendImmediateDueTimeRange CGO_TIMDOC bad pattren  !!! should be  '03:00-08:00' ");
+                _stringBuilder.Append("|").Append("Send2715ImmediateDueTimeRange CGO_TIMDOC bad pattren  !!! should be  '03:00-08:00' ");
                 return false;
 
             }

@@ -705,7 +705,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var time = interfaceManagementQueryService.GetSingle("2715", false, true)?.SendTime;
                 var date = entityPM.IsCustomSendTime && !string.IsNullOrEmpty(time) ? DateTime.Today.Add(TimeSpan.Parse(time)) : (DateTime?)null;
                 var courierSchedulerService = new CourierSchedulerService();
-                date = courierSchedulerService.SendImmediate(entityPM.Tenant, declarationId, date);// if date === null  => SendImmediate
+                date = courierSchedulerService.Send2715Immediate(entityPM.Tenant, declarationId, date);// if date === null  => SendImmediate
 
                 var requestParams = new Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam()
                 {
