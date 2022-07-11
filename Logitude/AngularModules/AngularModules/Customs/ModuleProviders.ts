@@ -253,6 +253,7 @@ import { ContainerizationStatusCodeListService } from './Services/StandardLists/
 import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
 import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
 import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
+import { StorageStatusTableListService } from './Services/StandardLists/StorageStatusTableListService';
 
 
 //#endregion
@@ -707,6 +708,7 @@ export class ModuleProviders {
             case "AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
             case "GTBFUSTATUListService": { myResult = new GTBFUSTATUListService(); break; }
 
+            case "StorageStatusTableListService": { myResult = new StorageStatusTableListService(); break; }
             case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
             case "AmendmentStatusListService": { myResult = new AmendmentStatusListService(); break; }
