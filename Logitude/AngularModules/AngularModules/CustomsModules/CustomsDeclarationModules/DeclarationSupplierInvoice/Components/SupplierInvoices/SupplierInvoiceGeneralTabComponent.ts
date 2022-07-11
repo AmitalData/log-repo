@@ -176,6 +176,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         this.initTradeAgreementFilter();
 
+ 
     }
     ngOnInit() {
         if (this.allowExport) {
@@ -324,7 +325,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         windowArgs.Parent = this;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-        var windowTitle = "נתונים נוספים ליצוא - חטיבת חשבון יצואן";
+        var windowTitle = "נתונים נוספים ליצום - חטיבת חשבון יצוםן";
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
@@ -391,7 +392,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.AccumulatedFilterSelectedValue = itemValue;
             if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
                 this.AccumulatedFilter = "parent";
-                this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לא צבור";
+                this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לם צבור";
 
                 this.IsActionButtonsEnabled = false;
             }
@@ -504,7 +505,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
                     if (this.EntityPM.IsAccumalated) {
                         this.IsAccumulated = true;
-                        this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לא צבור";
+                        this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לם צבור";
                         if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
                             this.IsActionButtonsEnabled = false;
 
@@ -688,9 +689,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         if (ExtraPayments160 == null) {
             paymentCounter += 1;
-            this.AddModification("160", paymentCounter, "הוצאות נוספות");
+            this.AddModification("160", paymentCounter, "הוצםות נוספות");
         } else {
-            ExtraPayments160.TypeName = "הוצאות נוספות"
+            ExtraPayments160.TypeName = "הוצםות נוספות"
             this.AdjustmentsList.Insert(new ModificationItemModel(ExtraPayments160, this, "160"));
         }
 
@@ -966,7 +967,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.vendor = myResponse.Result;
             if (this.vendor != null) {
                 this.EntityPM.IssueCountryCode = this.vendor.CountryCode;
-                this.EntityPM.IssueCountryName = "טאיוואן";
+                this.EntityPM.IssueCountryName = "טםיווםן";
                 this.vendorNumber = this.vendor.VendorNumber;
                 this.SetDepositionStatus();
             }
@@ -1165,7 +1166,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             filters.PageIndex = 0;
             filters.PageSize = 50;
             filters.addAdditionalFilter("ENGLISHNAME", incotermCode, null, null, "Contains", false, false, false, "Text", false, false);
-            filters.addAdditionalFilter("LeadDocumentTypeName", 'הצהרת יצוא', null, null, "Contains", false, false, false, "Text", false, false);
+            filters.addAdditionalFilter("LeadDocumentTypeName", 'הצהרת יצום', null, null, "Contains", false, false, false, "Text", false, false);
             const incotemrsFileValidationList: IncotemrsFileValidationList[] = await this.logtuideTableDataService.getDataFromService(this.incotemrsFileValidationListService.getByFilters(filters))
             
             this.isInsurance = incotemrsFileValidationList.some(x => x.IsInsurance)
@@ -1363,7 +1364,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 //            var confirm = new ConfirmWindow();
                 //            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                 //            confirm.ShowNoButton = true;
-                //            confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + resp.Result.SequenceNumeric + "- האם להמשיך ?");
+                //            confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + resp.Result.SequenceNumeric + "- הםם להמשיך ?");
                 //            confirm.WindowClosed.subscribe((event: any) => {
                 //                confirm.Close();
                 //                this.InvoiceNumber = newValue;
@@ -1394,7 +1395,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     var confirm = new ConfirmWindow();
                     confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                     confirm.ShowNoButton = true;
-                    confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + exist.SequenceNumeric + "- האם להמשיך ?");
+                    confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + exist.SequenceNumeric + "- הםם להמשיך ?");
                     confirm.WindowClosed.subscribe((event: any) => {
                         confirm.Close();
                         this.InvoiceNumber = newValue;
@@ -1427,20 +1428,47 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     CopyNowClicked() {
 
-        for (let item of this.ItemsSource.Collection) {
-            if (item.InvoiceQuantityType == null) {
 
-                if (item.QunatityTypeCode != null) {
-                    var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
-                    //var s = item.QunatityTypeCode.split('(');
-                    //var st = s[1].split(')');
+        var confirm = new ConfirmWindow();
 
-                    item.InvoiceQuantityType = s;
+        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateAndOverride");
+        confirm.NoButtonText =  TextCodeTranslator.Translate("Customs.Declaration.O.Update");
+        confirm.ShowNoButton = true;
+        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.UpdateOrOverride"));
+        confirm.WindowClosed.subscribe((event: any) => {
+            debugger
+            if (confirm.Yes) {
+                confirm.Close();
+                for (let item of this.ItemsSource.Collection) {
+
+                    if (item.QunatityTypeCode != null) {
+                        var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
+                        item.InvoiceQuantityType = s;
+                    }
                 }
 
             }
-        }
+            else {
+                confirm.Close();
+                for (let item of this.ItemsSource.Collection) {
+                    if (item.InvoiceQuantityType == null) {
+        
+                        if (item.QunatityTypeCode != null) {
+                            var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
+                            //var s = item.QunatityTypeCode.split('(');
+                            //var st = s[1].split(')');
+        
+                            item.InvoiceQuantityType = s;
+                        }
+        
+                    }
+                }
+        
+                
+            }
 
+        });
+        
         if (this.ItemsSource.Collection.length == 500) {
 
             var msg = new MessageWindow();
@@ -2968,7 +2996,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         //this.TariffErrorToolTip += EntityPM.SequenceNumeric;
 
         ////Fill tariff error text
-        //this.TariffErrorText = "מדינה לא תואמת לקוד התעריף"; //"Tarrif doesnt match country” 
+        //this.TariffErrorText = "מדינה לם תוםמת לקוד התעריף"; //"Tarrif doesnt match country” 
 
         ////get currenct customs country
         if (this.OriginCountryCode) {
@@ -3002,6 +3030,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             this.WarningVisiblity = false;
             this.OkVisiblity = false;
             this.IsBlueBorderVisibile = false;
+ 
         }
 
         else if (this.entityPM.CertificatesStatusCode == "1") {
@@ -3475,10 +3504,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.Width = 1000;
             logWindow.Height = 600;
             if (item.ClassificationCode != null) {
-                logWindow.Title = "אישורים לפרט מכס" + " " + item.ClassificationCode;
+                logWindow.Title = "םישורים לפרט מכס" + " " + item.ClassificationCode;
             }
             else {
-                logWindow.Title = "אישורים לפרט מכס";
+                logWindow.Title = "םישורים לפרט מכס";
             }
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
@@ -3855,7 +3884,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                         } else {
                                             //Eitancommented 15 minutes ago
                                             //@odelia devashi @itzik M סיכום:
-                                            //גם כאשר מזינים קודם פרט מכס ואח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
+                                            //גם כםשר מזינים קודם פרט מכס וםח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
                                             if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
                                                 this.AdditemCodeDetail();//Task 43218: שיפור במנגנון לימוד עצמי
                                             }
@@ -4166,8 +4195,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 this.ShowValidatioIcon = true;
                 this.Parent.Parent.tariffErrorItems += 1;
             }
-            var agreementCode = !AppTool.IsNullOrEmpty(this.TradeAgreementCode) ? this.TradeAgreementCode : "לא מוזן";
-            this.TariffErrorText = "קוד הסכם " + agreementCode + ", לא מתאים למדינה " + this.OriginCountryName + " (" + " הסכם " + this.CustomsCountry.TarriffCode + " )";
+            var agreementCode = !AppTool.IsNullOrEmpty(this.TradeAgreementCode) ? this.TradeAgreementCode : "לם מוזן";
+            this.TariffErrorText = "קוד הסכם " + agreementCode + ", לם מתםים למדינה " + this.OriginCountryName + " (" + " הסכם " + this.CustomsCountry.TarriffCode + " )";
 
         }
         else {
