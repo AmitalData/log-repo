@@ -134,7 +134,7 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
         this.haveInternetAccess = haveInternetAccess;
         this.sharedLogisticContact = item;
 
-        if (this.IsDigitalPortal == true) {
+        if (this.IsDigitalPortal == true &&  haveInternetAccess) {
             this.SendDigitaPortalDocument();
         }
         else {
