@@ -732,6 +732,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 ExportDeclarationInsert();
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
+                    if (this._MyDeclarationPM.Direction == "E") 
+                    {
+                        ForiegnKeyCheck.CheckClosedTable(_MyDeclarationPM, ResolvedTenant());
+                        ForiegnKeyCheck.Check<Declaration>(_MyDeclarationPM, ResolvedTenant());
+                        _MyDeclarationPM.Consignments.ForEach(x =>
+                        {
+                            ForiegnKeyCheck.CheckClosedTable(x, ResolvedTenant());
+                            ForiegnKeyCheck.Check<Consignment>(x, ResolvedTenant());
+                        });
+                    }
+
                     _MyDeclarationPM.IsCourierDeclaration = false;
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                 }

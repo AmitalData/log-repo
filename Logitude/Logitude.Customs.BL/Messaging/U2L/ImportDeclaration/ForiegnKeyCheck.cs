@@ -57,7 +57,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             bool forgienKeyValidate = true;
             ICustomContext objectContext = CustomContext.GetContext(tenant);
 
-            Dictionary<string, string> forgienKeys = GetForgienKeyAttribute<X>();
+            Dictionary<string, ForiegnKeyData> forgienKeys = GetForgienKeyAttribute<X>();
 
             var DuplicateKeys = forgienKeys.ToLookup(x => x.Value, x => x.Key).Where(x => x.Count() > 1);
             foreach (IGrouping<string, string> entry in DuplicateKeys)
@@ -76,33 +76,40 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             }
 
 
-            foreach (KeyValuePair<string, string> entry in forgienKeys)
+            foreach (KeyValuePair<string, ForiegnKeyData> entry in forgienKeys)
             {
-                string entityName = entry.Value;
-                string prop = entry.Key;
+                string propKey = entry.Key;
+                string entityName = entry.Value.entityName;
 
-                object value = getValueOfForgienKey(tenant, pm, entityName, prop);
+                object value = getValueOfForgienKey(tenant, pm, entityName, propKey);
 
                 forgienKeyValidate &= value != null;
 
                 if (update && value == null)
-                    SetPmProp(pm, prop, null);
+                    SetPmProp(pm, propKey, null);
             }
 
             return forgienKeyValidate;
         }
 
-        private static object getValueOfForgienKey(int tenant, object pm, string entityName, string prop) =>
-            getValueOfForgienKey(tenant, pm, entityName, new List<string>() { prop });
+        private static object getValueOfForgienKey(int tenant, object pm, string entityName, string propKey) =>
+            getValueOfForgienKey(tenant, pm, entityName, new List<string>() { propKey });
 
-        private static object getValueOfForgienKey(int tenant, object pm, string entityName, List<string> props)
+        private static object getValueOfForgienKey(int tenant, object pm, string entityName, List<string> propsKey)
         {
             if (pm.GetType().Name == "DeclarationPM")
             {
+                //if (entityName == "CustomerId")
+                //{
+                //    object[] _metohdArgs = new object[] { new List<string>() { GetValueFormPm(pm, "CustomerId") as string } };
+                //    var _value = GetValueOfForgienKeySimplogData(tenant, pm, entityName, "GetCustomerNamesById", _metohdArgs) as Dictionary<string, string>;
+                //    return _value.Count > 0 ? _value : null;
+                //}
+                //else 
                 if (entityName == "Card")
                 {
                     object[] _metohdArgs = new object[] { new List<string>() { GetValueFormPm(pm, "CustomerId") as string } };
-                    var _value = GetValueOfForgienKeySimplogData(tenant, pm, entityName, "GetCustomerNamesById", _metohdArgs) as Dictionary<string, string>;
+                    var _value = GetValueOfForgienKeySimplogData(tenant, pm, "Card", "GetCustomerNamesById", _metohdArgs) as Dictionary<string, string>;
                     return _value.Count > 0 ? _value : null;
                 }
                 else if (entityName == "Department" )
@@ -115,6 +122,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     object[] _metohdArgs = new object[] { GetValueFormPm(pm, "ReferentUserId"), tenant };
                     return GetValueOfForgienKeySimplogData(tenant, pm, entityName, "GetSingleUser", _metohdArgs, 2);
                 }
+                //else if (entityName == "Importer")
+                //{
+                //    object[] _metohdArgs = new object[] { GetValueFormPm(pm, "ImporterId"), tenant };
+                //    return GetValueOfForgienKeySimplogData(tenant, pm, entityName, "GetSingle", _metohdArgs, 2);
+                //}
             }
 
 
@@ -123,7 +135,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             var repoArgs = new object[] { tenant };
             object repositoryInstance = Activator.CreateInstance(repositoryType, repoArgs);
-            var keys = CreateRepositoryKey(entityName, props, pm);
+            var keys = CreateRepositoryKey(entityName, propsKey, pm);
             object[] metohdArgs = new object[] { keys };
 
             var value = methodInfos.Invoke(repositoryInstance, metohdArgs);
@@ -166,9 +178,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             return instance;
         }
 
-        private static Dictionary<string, string> GetForgienKeyAttribute<T>()
+        private static Dictionary<string, ForiegnKeyData> GetForgienKeyAttribute<T>()
         {
-            Dictionary<string, string> _dict = new Dictionary<string, string>();
+            var _dict = new Dictionary<string, ForiegnKeyData> ();
 
             typeof(T).GetProperties().ToList().ForEach(prop =>
                 prop.GetCustomAttributes(true).ToList().ForEach(attr =>
@@ -177,9 +189,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     if (foreignKeyAttribute != null)
                     {
                         string fieldName = prop.Name;
-                        string forgienTable = foreignKeyAttribute.Name;
+                        var foriegnKeyData = new ForiegnKeyData()
+                        {
+                            forgienfield = foreignKeyAttribute.Name,
+                            entityName = typeof(T).GetProperty(foreignKeyAttribute.Name).PropertyType.Name
+                        };
 
-                        _dict.Add(fieldName, forgienTable);
+                        _dict.Add(fieldName, foriegnKeyData);
                     }
                 })
             );
@@ -236,6 +252,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 });
 
             return res;
+        }
+
+        private class ForiegnKeyData
+        {
+            public string forgienfield { get; set; }
+            public string entityName { get; set; }
         }
     }
 }
