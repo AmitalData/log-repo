@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <entity
-  Id="&quot;97c2324d-2ac5-4668-a5d2-24e3a1c6585c&quot;"
+  Id="&quot;97c2324d-2ac5-4468-a5d2-24e3a1c6585c&quot;"
   ObjectTableName="&quot;Customs.StorageStatusTable&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.StorageStatusTables&quot;"
-  DBTableOldNames="Customs.CustomsDocumentUploads,Customs.StorageStatuses,Customs.StorageStatusTables"
+  DBTableOldNames="Customs.StorageStatusTables"
   ObjectTableSingular="&quot;StorageStatusTable&quot;"
   ObjectTablePlural="&quot;StorageStatusTables&quot;"
   HasCustomFilter="false"
@@ -38,8 +38,8 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Storage Status Table&quot;"
-  Code="&quot;cce6&quot;"
-  Name="&quot;Customs.CustomsDocumentUpload Query Group&quot;"
+  Code="&quot;4cdd&quot;"
+  Name="&quot;Customs.StorageStatusTable Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
@@ -216,7 +216,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Screen
-    Name="&quot;Customs.CustomsDocumentUploadHeaderScreen&quot;"
+    Name="&quot;Customs.StorageStatusTableHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.StorageStatusTable&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"

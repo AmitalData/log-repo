@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class StorageStatusTableUpdateClass
    {  		
-		public const string HashString = "cab592bc837bf34fe24f0061e9b93399";
+		public const string HashString = "f93227c1724a49e93db1475663393190";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,8 +127,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Storage Status Table",
-			      				    Code =  "cce6",
-			      				    Name =  "Customs.CustomsDocumentUpload Query Group",
+			      				    Code =  "4cdd",
+			      				    Name =  "Customs.StorageStatusTable Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -287,10 +287,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen StorageStatusTableCustomsCustomsDocumentUploadHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "StorageStatusTable.HeaderScreen", Name = "Customs.CustomsDocumentUploadHeaderScreen", ObjectTableId = StorageStatusTableObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen StorageStatusTableCustomsStorageStatusTableHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "StorageStatusTable.HeaderScreen", Name = "Customs.StorageStatusTableHeaderScreen", ObjectTableId = StorageStatusTableObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    StorageStatusTableObjectTable.HeaderScreenId = StorageStatusTableCustomsCustomsDocumentUploadHeaderScreenScreen0.Id;
-		    StorageStatusTableObjectTable.HeaderScreenCode = StorageStatusTableCustomsCustomsDocumentUploadHeaderScreenScreen0.Code;
+		    StorageStatusTableObjectTable.HeaderScreenId = StorageStatusTableCustomsStorageStatusTableHeaderScreenScreen0.Id;
+		    StorageStatusTableObjectTable.HeaderScreenCode = StorageStatusTableCustomsStorageStatusTableHeaderScreenScreen0.Code;
 
 	   		  
 
