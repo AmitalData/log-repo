@@ -63,6 +63,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         super();
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -72,6 +73,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.setYellowMessage();
                 this.getRows();
             });
+        });
         });
 
     }
@@ -111,7 +113,11 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         //filters.SortBy = sortingCol;
         //filters.SortDirection = sortingDir;
         //Customs.Declaration.F.ExportContainerizationID
-        filters.addAdditionalFilter("ExportContainerizationID", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+
+        
+        filters.addAdditionalFilter("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
+        filters.addAdditionalFilter("IsConsOfDecEquelsCont", this.EntityPM.Id, null, null, "Contains", true, false, false, "string");
+
         return this.containerizationExtendedListService.getByFilters(filters)
             .subscribe(r => {
                 this.ContainerizationDeclarationList = new ObservableCollection([]);
@@ -127,7 +133,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.EntityPM.DisableMarkAsDirty = false;
                 SessionLocator.SelectedSession.StopBusyIndicator();
             });
-
+       
     }
 
     getRowsWithNewAddedDeclarations() {

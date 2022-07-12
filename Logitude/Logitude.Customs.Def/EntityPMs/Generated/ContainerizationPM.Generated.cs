@@ -503,6 +503,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string containerizationCargoID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerizationCargoID  
+	   {
+	    
+	     get
+		{
+		   return containerizationCargoID;
+		 }
+		 set
+		 {
+		   if(containerizationCargoID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerizationCargoID",OldValue=containerizationCargoID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerizationCargoID=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

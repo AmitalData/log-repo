@@ -38,6 +38,7 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+import { ContainerizationPM } from 'Customs/EntityPMs/ContainerizationPM';
 
 @Injectable()
 
@@ -97,6 +98,33 @@ export class DeclarationWebService {
             serviceResponse = new ServiceResponse();
             debugger;
             return this._http.post(this._apiUrl + "/GetDeclarationByConsignmentParames/",{ArrayDeclartiosId:ArrayDeclartiosId}, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                //serviceResponse = response;
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+
+        }
+
+        );
+    }
+    GetIsConsignmentConectContainerization(Tenant:number,ArrayDeclartiosId: string[],Id:string,CargoTypeCode:string,ManifestNumber:string,SecondCargoID:string,ThirdCargoID:string) {
+        debugger;
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            debugger;
+            return this._http.post(this._apiUrl + "/GetIsConsignmentConectContainerization/",{
+                Tenant,ArrayDeclartiosId:ArrayDeclartiosId,ContainerizationID:Id,CargoTypeCode:CargoTypeCode,ManifestNumber:ManifestNumber,SecondCargoID:SecondCargoID,ThirdCargoID:ThirdCargoID
+            }, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;

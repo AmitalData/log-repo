@@ -91,28 +91,38 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId && a.Tenant == tenant
                     select a.ManifestNumber).FirstOrDefault();
         }
-        //partial void onRemove(Consignment entity)
-        //{
-        //    //entity.DeclarationId
-
-        //    LogitudeSettings.HandleLogMe("DeclarationId:" + entity.DeclarationId + Environment.NewLine + Environment.StackTrace.ToString(), false, "ConsignmentRepositoryonRemove", new DateTime(2017, 11, 1));
-        //    return;
 
 
-        //    this.SubmitChanges();
-        //    var q = (from a in context.Consignments
-        //             where
-        //             a.DeclarationId == entity.DeclarationId &&
-        //             a.ConsignmentNumber != entity.ConsignmentNumber
+        public List<Consignment> GetConsigmentByContainerizationID(string containerizationID, int tenant, List<string> disConnectedDeclarations)
+        {
+            var query = (from a in context.Consignments
+                         where a.ExportContainerizationID == containerizationID && a.Tenant == tenant && !disConnectedDeclarations.Contains(a.DeclarationId)
+                         select a).ToList();
 
-        //             select a);
-        //    if (q.Any())
-        //    {
-        //        return;
-        //    }
-        //    throw new Exception("preventing Clear Consignments - Validation (CALL#291407)");
-        //}
-   }
+            return query;
+        }
+            //partial void onRemove(Consignment entity)
+            //{
+            //    //entity.DeclarationId
+
+            //    LogitudeSettings.HandleLogMe("DeclarationId:" + entity.DeclarationId + Environment.NewLine + Environment.StackTrace.ToString(), false, "ConsignmentRepositoryonRemove", new DateTime(2017, 11, 1));
+            //    return;
+
+
+            //    this.SubmitChanges();
+            //    var q = (from a in context.Consignments
+            //             where
+            //             a.DeclarationId == entity.DeclarationId &&
+            //             a.ConsignmentNumber != entity.ConsignmentNumber
+
+            //             select a);
+            //    if (q.Any())
+            //    {
+            //        return;
+            //    }
+            //    throw new Exception("preventing Clear Consignments - Validation (CALL#291407)");
+            //}
+        }
 
 }
    

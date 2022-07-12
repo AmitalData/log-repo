@@ -215,7 +215,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                }
                ICustomContext MyContext = CustomContext.GetContext(tenant);
                DeclarationListQueryService declarationListQueryService = new DeclarationListQueryService(MyContext);
-               List<DeclarationList> entityLists = declarationListQueryService.GetListForContainerization(queryOperations, tenant);
+                var filter1 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsConsOfDecEquelsCont");
+                var containerizationID = "";
+                if (filter1 != null)
+                {
+                    containerizationID = filter1.FieldValue.ToString();
+                }
+                List<DeclarationList> entityLists = declarationListQueryService.GetListForContainerization(queryOperations, tenant, containerizationID);
        
                ServiceResponse response = new ServiceResponse();
                if (filters.GetCount)

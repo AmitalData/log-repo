@@ -277,7 +277,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
 
     AddDeclarationMethod() {
         var args: any = {
-            EntityPM: this.EntityPM,
+            EntityPM: this.EntityPM
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1220;
