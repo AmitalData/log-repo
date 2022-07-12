@@ -34,5 +34,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         // public List<Quote> Quotes { get; set; }
         // public List<ShipmentMasterData> ShipmentMasterDatas { get; set; }
         public bool AllowPartial { get; set; }
+        public bool IsDigitalPortal { get; set; }
     }
 }

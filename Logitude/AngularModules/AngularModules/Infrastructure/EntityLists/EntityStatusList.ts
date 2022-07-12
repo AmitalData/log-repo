@@ -20,5 +20,6 @@ export class EntityStatusList {
 		StatusLocalWeight: number;
 		EntityStatusTypeCode: string;
 		AllowPartial: boolean;
+		IsDigitalPortal: boolean;
 	
 }

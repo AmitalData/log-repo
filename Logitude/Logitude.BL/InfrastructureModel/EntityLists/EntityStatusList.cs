@@ -19,5 +19,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public int? StatusLocalWeight { get; set; }
         public string EntityStatusTypeCode { get; set; }
         public bool AllowPartial { get; set; }
+        public bool IsDigitalPortal { get; set; }
     }
 }
