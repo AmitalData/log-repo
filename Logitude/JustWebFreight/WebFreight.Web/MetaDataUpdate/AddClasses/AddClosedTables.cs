@@ -3307,6 +3307,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 StorageStatusTable storageStatusTable = StorageStatusTableRepository.GetSingle(StorageStatusTableDetails.Code);
                 storageStatusTable.Name = StorageStatusTableDetails.Name;
+                storageStatusTable.SearchFields = StorageStatusTableDetails.Code.ToLower();
 
 
                 StorageStatusTableRepository.Update(storageStatusTable);
@@ -3317,7 +3318,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     Code = StorageStatusTableDetails.Code,
                     Name = StorageStatusTableDetails.Name,
-                    
+                    SearchFields = StorageStatusTableDetails.Code.ToLower()
+
                 };
                 StorageStatusTableRepository.Add(StorageStatusTableDetails);
             }

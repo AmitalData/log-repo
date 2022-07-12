@@ -23,6 +23,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Code { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 
