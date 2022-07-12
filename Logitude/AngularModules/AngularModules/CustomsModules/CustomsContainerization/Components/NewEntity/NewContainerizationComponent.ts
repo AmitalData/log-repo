@@ -622,6 +622,35 @@ export class NewContainerizationComponent extends BaseComponent {
         myConfirmWindow.NoButtonText = "חזור"
         myConfirmWindow.Width = 400;
         
+     if (this.entityPM.Id != null) {
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            this.declarationWebService.GetIsConsignmentConectContainerization(
+               this.entityPM.Tenant, ArrayDeclartiosId,this.entityPM.Id,this.entityPM.CargoTypeCode,this.entityPM.ManifestNumber,this.entityPM.SecondCargoID,this.entityPM.ThirdCargoID
+                ).subscribe(res => {
+                if (res.Result.length==0) {
+                    myConfirmWindow.Show(`שם לב , אין מזהה מטען משותף שמאפשר את ההמכלה של ההצהרה/ות שנבחרה/ו`);
+                    myConfirmWindow.IsYesEnabled=false;
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    return;
+
+                }
+                else{
+                            
+                            this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+                            this.entityPM.OperationMode = "2";
+                            this.entityPM.IsChange = true;
+                            SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
+                            DeclarationEventManager.AddDeclarationToContainerization.emit(null);
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            this.CurrentSession.CurrentWindow.Close("0");
+                        
+                }
+            });
+
+
+        }
+        else{
+
         if(ArrayDeclartiosId.length-1==1){
             myConfirmWindow.Show(`שים לב , תהליך המכלה מצריך יותר מהצהרה אחת`);
             myConfirmWindow.IsYesEnabled=false;
@@ -666,7 +695,7 @@ export class NewContainerizationComponent extends BaseComponent {
                     
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         if(response.Result.list.length==1){
-                            console.log(response.Result.list[0].Id);
+
                             this.CurrentSession.CurrentWindow.Close("0");
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                                 .then(cmpRef => {
@@ -713,7 +742,7 @@ export class NewContainerizationComponent extends BaseComponent {
            });
            logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
         }
-
+    }
     }
 
 

@@ -30,6 +30,7 @@ export class ContainerizationList {
 	ManifestNumber: string;
 	SecondCargoID: string;
 	ThirdCargoID: string;
+	ContainerizationCargoID: string;
 	
 }
  

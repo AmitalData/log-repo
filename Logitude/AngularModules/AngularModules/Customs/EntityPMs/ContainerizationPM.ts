@@ -129,6 +129,11 @@ export class ContainerizationPM {
     public set ThirdCargoID(newValue: string) { if (this.thirdCargoID != newValue) { this.thirdCargoID = newValue; this.MarkAsDirty("ThirdCargoID"); } }
        
 	 
+    private containerizationCargoID: string;
+    public get ContainerizationCargoID() { return this.containerizationCargoID; }
+    public set ContainerizationCargoID(newValue: string) { if (this.containerizationCargoID != newValue) { this.containerizationCargoID = newValue; this.MarkAsDirty("ContainerizationCargoID"); } }
+       
+	 
 
     public OldEntityPM: ContainerizationPM;
 		

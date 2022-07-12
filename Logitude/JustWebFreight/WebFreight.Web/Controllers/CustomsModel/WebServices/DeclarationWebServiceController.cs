@@ -109,7 +109,30 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
+        [HttpPost]
+        public HttpResponseMessage GetIsConsignmentConectContainerization(ReqConectContainerization requestParam)
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                DeclarationConstraintQueryService query = new DeclarationConstraintQueryService(customContext);
+                List<string> countDeclartions = query.GetIsConsignmentConectContainerization(requestParam.Tenant ,requestParam.ArrayDeclartiosId, requestParam.ContainerizationID, requestParam.CargoTypeCode, requestParam.ManifestNumber, requestParam.SecondCargoID, requestParam.ThirdCargoID);
+
+                return Request.CreateResponse(HttpStatusCode.OK, countDeclartions);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         public HttpResponseMessage GetDeclarationErrors(string declarationId, string listVersionId, string courierFilter,bool IsAmendmentErrors,bool IsExportCloseErrors)
         {
             try
@@ -2323,5 +2346,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     public class Request
     {
         public string[] ArrayDeclartiosId { get; set; }
+
     }
+   public class ReqConectContainerization
+   {
+        public string[] ArrayDeclartiosId { get; set; }
+        public string ContainerizationID { get; set; }
+        public string CargoTypeCode { get; set; }
+        public string ManifestNumber { get; set; }
+        public string SecondCargoID { get; set; }
+        public string ThirdCargoID { get; set; }
+        public int  Tenant { get; set; }
+   }
+
 }

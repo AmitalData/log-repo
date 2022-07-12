@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "d2f0a2b7eee91262d8a5212a7535d064";
+		public const string HashString = "dc05b8b863a385d458bd6ad2b2e9b68c";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -191,12 +192,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultText =  "מספר המכלה/תיק יצוא/מזהה מטען/לקוח",
+					  						FullLocalDefaultText =  "מספר המכלה/תיק יצום/מזהה מטען/לקוח",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
 					  						ShortFieldLable =  "SearchFields",
-					  						ShortFieldLableDefaultText =  "מספר המכלה/תיק יצוא/מזהה מטען/לקוח",
-					  						ShortLocalDefaultText =  "מספר המכלה/תיק יצוא/מזהה מטען/לקוח",
+					  						ShortFieldLableDefaultText =  "מספר המכלה/תיק יצום/מזהה מטען/לקוח",
+					  						ShortLocalDefaultText =  "מספר המכלה/תיק יצום/מזהה מטען/לקוח",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -315,10 +316,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerizationDate",
 					  						DefaultText =  "Containerization Date",
-					  						FullLocalDefaultText =  "תאריך פתיחת המכלה",
+					  						FullLocalDefaultText =  "תםריך פתיחת המכלה",
 					  						ListFieldLable =  "ContainerizationDateListLable",
 					  						ListLableDefaultText =  "Containerization Date",
-					  						ListLocalDefaultText =  "תאריך פתיחת המכלה",
+					  						ListLocalDefaultText =  "תםריך פתיחת המכלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -629,10 +630,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportFile",
 					  						DefaultText =  "Export File",
-					  						FullLocalDefaultText =  "תיק יצוא",
+					  						FullLocalDefaultText =  "תיק יצום",
 					  						ListFieldLable =  "ExportFileListLable",
 					  						ListLableDefaultText =  "Export File",
-					  						ListLocalDefaultText =  "תיק יצוא",
+					  						ListLocalDefaultText =  "תיק יצום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1112,10 +1113,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsChange",
 					  						DefaultText =  "Is Change",
-					  						FullLocalDefaultText =  "האם יש שינוי בהמכלה",
+					  						FullLocalDefaultText =  "הםם יש שינוי בהמכלה",
 					  						ListFieldLable =  "IsChangeListLable",
 					  						ListLableDefaultText =  "Is Change",
-					  						ListLocalDefaultText =  "האם יש שינוי בהמכלה",
+					  						ListLocalDefaultText =  "הםם יש שינוי בהמכלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1313,12 +1314,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  4,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1386,6 +1388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ManifestNumber",
 					  						ListPropertyPath =  "ManifestNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1404,10 +1407,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestNumber",
 					  						DefaultText =  "Manifest Number",
-					  						FullLocalDefaultText =  "מזהה מטען ראשון",
+					  						FullLocalDefaultText =  "מזהה מטען רםשון",
 					  						ListFieldLable =  "ManifestNumberListLable",
 					  						ListLableDefaultText =  "Manifest Number",
-					  						ListLocalDefaultText =  "מזהה מטען ראשון",
+					  						ListLocalDefaultText =  "מזהה מטען רםשון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1447,6 +1450,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SecondCargoID",
 					  						ListPropertyPath =  "SecondCargoID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1508,6 +1512,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ThirdCargoID",
 					  						ListPropertyPath =  "ThirdCargoID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1530,6 +1535,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ThirdCargoIDListLable",
 					  						ListLableDefaultText =  "ThirdCargoID",
 					  						ListLocalDefaultText =  "מזהה מטען שלישי",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ContainerizationCargoID",
+					  						ObjectTableName =  "Customs.Containerization",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  50,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  50,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ContainerizationCargoID",
+					  						ListPropertyPath =  "ContainerizationCargoID",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Containerization",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ContainerizationCargoID",
+					  						DefaultText =  "Containerization Cargo ID",
+					  						FullLocalDefaultText =  "מזהה מטען המכלה",
+					  						ListFieldLable =  "ContainerizationCargoIDListLable",
+					  						ListLableDefaultText =  "Containerization Cargo ID",
+					  						ListLocalDefaultText =  "מזהה מטען המכלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1592,17 +1658,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn OpenContainerizationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Containerization.ContainerizationDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ExportFile" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.TransportModeForExport" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.ExportFile" , ColumnWidth = 80 }, addedQueryColumns);
+
+			 QueryColumn OpenContainerizationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Containerization.TransportModeForExport" , ColumnWidth = 50 }, addedQueryColumns);
+
+			 QueryColumn OpenContainerizationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn OpenContainerizationQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn OpenContainerizationQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter OpenContainerizationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Containerization.HataraStatusIsNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
@@ -1616,17 +1690,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn ContainerizationWithReleaseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Containerization.ContainerizationDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ExportFile" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.TransportModeForExport" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.ExportFile" , ColumnWidth = 80 }, addedQueryColumns);
+
+			 QueryColumn ContainerizationWithReleaseQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Containerization.TransportModeForExport" , ColumnWidth = 50 }, addedQueryColumns);
+
+			 QueryColumn ContainerizationWithReleaseQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ContainerizationWithReleaseQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn ContainerizationWithReleaseQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter ContainerizationWithReleaseQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Containerization.HataraStatus", PredefinedValue = "1",PredefinedValue2 = null, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
@@ -1637,17 +1719,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn CancelledContainerizationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Containerization.ContainerizationDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ExportFile" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.TransportModeForExport" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.ExportFile" , ColumnWidth = 80 }, addedQueryColumns);
+
+			 QueryColumn CancelledContainerizationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Containerization.TransportModeForExport" , ColumnWidth = 50 }, addedQueryColumns);
+
+			 QueryColumn CancelledContainerizationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn CancelledContainerizationQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn CancelledContainerizationQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter CancelledContainerizationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Containerization.ContainerizationStatus", PredefinedValue = "3",PredefinedValue2 = null, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
@@ -1658,17 +1748,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllContainerizationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Containerization.ContainerizationDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ExportFile" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.TransportModeForExport" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.ExportFile" , ColumnWidth = 80 }, addedQueryColumns);
+
+			 QueryColumn AllContainerizationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Containerization.TransportModeForExport" , ColumnWidth = 50 }, addedQueryColumns);
+
+			 QueryColumn AllContainerizationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllContainerizationQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllContainerizationQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -1696,6 +1794,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.HataraStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ContainerizationCargoID", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
 		    ContainerizationObjectTable.HeaderScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id;
 		    ContainerizationObjectTable.HeaderScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code;
@@ -1915,7 +2015,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ContainerizationTextCode_CustomsContainerizationORowNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.RowNumber", DefaultText = "RowNumber",LocalDefaultText = @"מס'", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationOExportFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ExportFile", DefaultText = "ExportFile",LocalDefaultText = @"תיק יצוא", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOExportFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ExportFile", DefaultText = "ExportFile",LocalDefaultText = @"תיק יצום", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ContainerizationTextCode_CustomsContainerizationOImporterName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ImporterName", DefaultText = "ImporterName",LocalDefaultText = @"לקוח", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -1923,11 +2023,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ContainerizationTextCode_CustomsContainerizationOCargoTypeName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CargoTypeName", DefaultText = "CargoTypeName",LocalDefaultText = @"מזהה מטען", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationOManifestNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ManifestNumber", DefaultText = "ManifestNumber",LocalDefaultText = @"מזהה מטען ראשון ", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOManifestNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ManifestNumber", DefaultText = "ManifestNumber",LocalDefaultText = @"מזהה מטען רםשון ", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ContainerizationTextCode_CustomsContainerizationOContainerizationChanged = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainerizationChanged", DefaultText = "Containerization Changed",LocalDefaultText = @"בוצעו שינויים בהמכלה, יש לשדר פעם נוספת", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationOContainerizationChangedRemainsOneDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainerizationChangedRemainsOneDec", DefaultText = "Containerization Changed Remains One Declaration",LocalDefaultText = @"לא ניתן להמכיל הצהרה אחת , יש לבצע תיקונים בהצהרה במצב זה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOContainerizationChangedRemainsOneDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainerizationChangedRemainsOneDec", DefaultText = "Containerization Changed Remains One Declaration",LocalDefaultText = @"לם ניתן להמכיל הצהרה םחת , יש לבצע תיקונים בהצהרה במצב זה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

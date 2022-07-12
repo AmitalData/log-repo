@@ -67,8 +67,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 														  HataraStatusName = a.ContainerizationHataraStatus != null? a.ContainerizationHataraStatus.Name:null,
 														  ImporterName = a.IsMultiCustomers,
 														  TransportModeForExport = ed.dec.FirstOrDefault().TransportModeId ,
-														  HataraStatusIsNull = a.HataraStatus != null ? false :true
-													  }); ;
+														  HataraStatusIsNull = a.HataraStatus != null ? false :true,
+														  ContainerizationCargoID = (string.IsNullOrEmpty(a.CargoTypeCode)?(a.CargoTypeCode + "-"):"") + (string.IsNullOrEmpty(a.ManifestNumber) ? (a.ManifestNumber + "-") : "")+ (string.IsNullOrEmpty(a.SecondCargoID) ? (a.SecondCargoID + "-") : "")+ (string.IsNullOrEmpty(a.ThirdCargoID) ? (a.ThirdCargoID + "-") : "")
+													  });
             return query;
 		}
 

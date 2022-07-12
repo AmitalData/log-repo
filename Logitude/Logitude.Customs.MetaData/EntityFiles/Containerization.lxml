@@ -1631,13 +1631,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="4"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1720,6 +1721,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ManifestNumber&quot;"
     ListPropertyPath="&quot;ManifestNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1794,6 +1796,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SecondCargoID&quot;"
     ListPropertyPath="&quot;SecondCargoID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1868,6 +1871,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ThirdCargoID&quot;"
     ListPropertyPath="&quot;ThirdCargoID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1914,6 +1918,80 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;4305fce6-b48e-4837-8dbf-a485bab74d19&quot;"
+    FieldName="&quot;ContainerizationCargoID&quot;"
+    OldNames="ContainerizationCargoID"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.Containerization&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="50"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="50"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ContainerizationCargoID&quot;"
+    ListPropertyPath="&quot;ContainerizationCargoID&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.Containerization&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ContainerizationCargoID&quot;"
+    DefaultText="&quot;Containerization Cargo ID&quot;"
+    FullLocalDefaultText="&quot;מזהה מטען המכלה&quot;"
+    ListFieldLable="&quot;ContainerizationCargoIDListLable&quot;"
+    ListLableDefaultText="&quot;Containerization Cargo ID&quot;"
+    ListLocalDefaultText="&quot;מזהה מטען המכלה&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;OpenContainerization&quot;"
     TextCode="&quot;Open Containerization&quot;"
@@ -1937,31 +2015,51 @@
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;CargoTypeCode&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;OpenContainerization&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;ManifestNumber&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;OpenContainerization&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;SecondCargoID&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;OpenContainerization&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;ThirdCargoID&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;OpenContainerization&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;ContainerizationNumber&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
-        IndexOrder="2"
+        IndexOrder="6"
         ObjectFieldName="&quot;ExportFile&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
-        IndexOrder="3"
+        IndexOrder="7"
         ObjectFieldName="&quot;TransportModeForExport&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
-        IndexOrder="4"
+        IndexOrder="8"
         ObjectFieldName="&quot;ImporterName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
-        IndexOrder="5"
+        IndexOrder="9"
         ObjectFieldName="&quot;ContainerizationStatusName&quot;"
         ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
-        IndexOrder="6"
+        IndexOrder="10"
         ObjectFieldName="&quot;HataraStatusName&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -2005,31 +2103,51 @@
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;CargoTypeCode&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;ContainerizationWithRelease&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;ManifestNumber&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;ContainerizationWithRelease&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;SecondCargoID&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;ContainerizationWithRelease&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;ThirdCargoID&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;ContainerizationWithRelease&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;ContainerizationNumber&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
-        IndexOrder="2"
+        IndexOrder="6"
         ObjectFieldName="&quot;ExportFile&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
-        IndexOrder="3"
+        IndexOrder="7"
         ObjectFieldName="&quot;TransportModeForExport&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
-        IndexOrder="4"
+        IndexOrder="8"
         ObjectFieldName="&quot;ImporterName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
-        IndexOrder="5"
+        IndexOrder="9"
         ObjectFieldName="&quot;ContainerizationStatusName&quot;"
         ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
-        IndexOrder="6"
+        IndexOrder="10"
         ObjectFieldName="&quot;HataraStatusName&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -2066,31 +2184,51 @@
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;CargoTypeCode&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;CancelledContainerization&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;ManifestNumber&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;CancelledContainerization&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;SecondCargoID&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;CancelledContainerization&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;ThirdCargoID&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;CancelledContainerization&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;ContainerizationNumber&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
-        IndexOrder="2"
+        IndexOrder="6"
         ObjectFieldName="&quot;ExportFile&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
-        IndexOrder="3"
+        IndexOrder="7"
         ObjectFieldName="&quot;TransportModeForExport&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
-        IndexOrder="4"
+        IndexOrder="8"
         ObjectFieldName="&quot;ImporterName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
-        IndexOrder="5"
+        IndexOrder="9"
         ObjectFieldName="&quot;ContainerizationStatusName&quot;"
         ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
-        IndexOrder="6"
+        IndexOrder="10"
         ObjectFieldName="&quot;HataraStatusName&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -2127,31 +2265,51 @@
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;CargoTypeCode&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;AllContainerization&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;ManifestNumber&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;AllContainerization&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;SecondCargoID&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;AllContainerization&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;ThirdCargoID&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;AllContainerization&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;ContainerizationNumber&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
-        IndexOrder="2"
+        IndexOrder="6"
         ObjectFieldName="&quot;ExportFile&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
-        IndexOrder="3"
+        IndexOrder="7"
         ObjectFieldName="&quot;TransportModeForExport&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
-        IndexOrder="4"
+        IndexOrder="8"
         ObjectFieldName="&quot;ImporterName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
-        IndexOrder="5"
+        IndexOrder="9"
         ObjectFieldName="&quot;ContainerizationStatusName&quot;"
         ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
-        IndexOrder="6"
+        IndexOrder="10"
         ObjectFieldName="&quot;HataraStatusName&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -2190,6 +2348,11 @@
         Column="2"
         Row="0"
         ObjectFieldName="&quot;HataraStatusName&quot;"
+        ScreenName="Customs.ContainerizationHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="1"
+        ObjectFieldName="&quot;ContainerizationCargoID&quot;"
         ScreenName="Customs.ContainerizationHeaderScreen" />
     </ScreenFields>
   </Screen>
