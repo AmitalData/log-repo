@@ -30,6 +30,7 @@ using System.Text.RegularExpressions;
 using System.Data.SqlClient;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -362,6 +363,27 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
 
         }
+
+        [HttpGet]
+        public HttpResponseMessage GetShipmentActiveStatuses()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                EntityStatusQuery entityStatusQuery = new EntityStatusQuery(tenant);
+                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalActiveStatuses);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
     }
 }
 

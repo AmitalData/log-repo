@@ -35,5 +35,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string EntityStatusTypeCode { get; set; }
         [DataMember]
         public bool  AllowPartial { get; set; }
+        [DataMember]
+        public bool IsDigitalPortal { get; set; }
     }
 }

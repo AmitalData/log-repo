@@ -95,6 +95,11 @@ export class EntityStatusPM {
     public set AllowPartial(newValue: boolean) { if (this.allowPartial != newValue) { this.allowPartial = newValue; this.MarkAsDirty("AllowPartial"); } }
        
 	 
+    private isDigitalPortal: boolean;
+    public get IsDigitalPortal() { return this.isDigitalPortal; }
+    public set IsDigitalPortal(newValue: boolean) { if (this.isDigitalPortal != newValue) { this.isDigitalPortal = newValue; this.MarkAsDirty("IsDigitalPortal"); } }
+       
+	 
 
     public OldEntityPM: EntityStatusPM;
 		

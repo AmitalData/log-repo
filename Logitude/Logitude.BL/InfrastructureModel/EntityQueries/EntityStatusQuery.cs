@@ -17,7 +17,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         EntityStatusRepository repository;
         public EntityStatusQuery()
         {
-            repository = new EntityStatusRepository(); 
+            repository = new EntityStatusRepository();
         }
 
         public EntityStatusQuery(int tenant)
@@ -29,7 +29,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             repository = entityStatusRepository;
         }
-           public EntityStatusPM GetSinglePM(string id, int tenant)
+        public EntityStatusPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -57,7 +57,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   EntityStatusTypeCode = a.EntityStatusTypeCode,
                                                   StatusLocalWeight = a.StatusLocalWeight,
                                                   AllowPartial = a.AllowPartial,
-                                              });;
+                                                  IsDigitalPortal = a.IsDigitalPortal,
+                                              }); ;
                         foreach (var s in entitystatuses)
                         {
                             string name = "EntityStatusPM" + s.Id + tenant;
@@ -113,6 +114,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  EntityStatusTypeCode = a.EntityStatusTypeCode,
                                                  StatusLocalWeight = a.StatusLocalWeight,
                                                  AllowPartial = a.AllowPartial,
+                                                 IsDigitalPortal = a.IsDigitalPortal,
                                              }).FirstOrDefault();
 
                     entity = status;
@@ -152,6 +154,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   EntityStatusTypeCode = a.EntityStatusTypeCode,
                                                   StatusLocalWeight = a.StatusLocalWeight,
                                                   AllowPartial = a.AllowPartial,
+                                                  IsDigitalPortal = a.IsDigitalPortal,
                                               });
                         foreach (var s in entitystatuses)
                         {
@@ -208,6 +211,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  EntityStatusTypeCode = a.EntityStatusTypeCode,
                                                  StatusLocalWeight = a.StatusLocalWeight,
                                                  AllowPartial = a.AllowPartial,
+                                                 IsDigitalPortal = a.IsDigitalPortal,
                                              }).FirstOrDefault();
 
                     entity = status;
@@ -240,6 +244,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         EntityStatusTypeCode = a.EntityStatusTypeCode,
                         StatusLocalWeight = a.StatusLocalWeight,
                         AllowPartial = a.AllowPartial,
+                        IsDigitalPortal = a.IsDigitalPortal,
                     });
         }
 
@@ -261,9 +266,35 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       EntityStatusTypeCode = entity.EntityStatusTypeCode,
                                                       StatusLocalWeight = entity.StatusLocalWeight,
                                                       AllowPartial = entity.AllowPartial,
+                                                      IsDigitalPortal = entity.IsDigitalPortal,
                                                   };
             return result;
         }
 
+        public List<EntityStatusList> GetDigitalPortalActiveStatuses(int tenant)
+        {
+            
+            var result = (from a in repository.context.EntityStatus.Include("ObjectTable")
+                          where a.Tenant == tenant && a.InActive == false && a.IsDigitalPortal == true && a.ObjectTable.Name ==  "Shipment"
+                          select new EntityStatusList()
+                          {
+                              Id = a.Id,
+                              Name = a.Name,
+                              ObjectTableId = a.ObjectTableId,
+                              StatusWeight = a.StatusWeight,
+                              Tenant = a.Tenant,
+                              ObjectTableName = a.ObjectTable.Name,
+                              Code = a.Code,
+                              SearchFields = a.SearchFields,
+                              InActive = a.InActive,
+                              DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
+                              EntityStatusTypeCode = a.EntityStatusTypeCode,
+                              StatusLocalWeight = a.StatusLocalWeight,
+                              AllowPartial = a.AllowPartial,
+                              IsDigitalPortal = a.IsDigitalPortal,
+                          }).ToList();
+
+            return result;
+        }
     }
 }

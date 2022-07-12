@@ -31,6 +31,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityStatus.EntityStatusTypeCode = entityStatusPM.EntityStatusTypeCode;
             entityStatus.StatusLocalWeight = entityStatusPM.StatusLocalWeight;
             entityStatus.AllowPartial = entityStatusPM.AllowPartial;
+            entityStatus.IsDigitalPortal = entityStatusPM.IsDigitalPortal;
         }
     }
 }
