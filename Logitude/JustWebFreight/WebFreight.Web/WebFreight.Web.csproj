@@ -1055,6 +1055,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportReferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportStorageViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FclLclCodeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GTBFUSTATUViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\IncotemrsFileValidationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticActionRequestTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticActionRequestViewsController.Generated.cs" />
@@ -1063,6 +1064,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaAuthorizationTypeLookupViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckSearchResultTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaStatusTypeLookUpViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StatusFieldTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StorageStatusTableViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\TradeAgreementProtocolViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CancelRequestRejectReasonTypeController.Generated.cs" />
@@ -1079,6 +1081,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\LogisticsReferenceTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceInputTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceStatusController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\GTBFUSTATUWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\LogisticActionRequestWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ContainerizationWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\NewQuoteOPWebService.cs" />
@@ -2874,6 +2877,7 @@
     <Compile Include="MetaDataUpdate\DetailClasses\SATInvoiceStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\SATTransferStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\SharedManifestsStatusDetails.cs" />
+    <Compile Include="MetaDataUpdate\DetailClasses\StatusFieldTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\StorageStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\LoginPolicyDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\TaxWithholdingAssessOfficeDetails.cs" />
@@ -3205,6 +3209,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountRecocileDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountTotalDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountWithholdingTaxUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GTBFUSTATUUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\HandingCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\HazardousSubstanceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\IncotemrsFileValidationUpdateClass.cs" />
