@@ -2016,22 +2016,22 @@
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CargoTypeCode&quot;"
-        ColumnWidth="50" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ManifestNumber&quot;"
-        ColumnWidth="70" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;SecondCargoID&quot;"
-        ColumnWidth="70" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;ThirdCargoID&quot;"
-        ColumnWidth="50" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="5"
@@ -2104,22 +2104,22 @@
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CargoTypeCode&quot;"
-        ColumnWidth="50" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ManifestNumber&quot;"
-        ColumnWidth="70" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;SecondCargoID&quot;"
-        ColumnWidth="70" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;ThirdCargoID&quot;"
-        ColumnWidth="50" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="5"
@@ -2185,22 +2185,22 @@
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CargoTypeCode&quot;"
-        ColumnWidth="50" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ManifestNumber&quot;"
-        ColumnWidth="70" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;SecondCargoID&quot;"
-        ColumnWidth="70" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;ThirdCargoID&quot;"
-        ColumnWidth="50" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="5"
@@ -2266,22 +2266,22 @@
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CargoTypeCode&quot;"
-        ColumnWidth="50" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ManifestNumber&quot;"
-        ColumnWidth="70" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;SecondCargoID&quot;"
-        ColumnWidth="70" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;ThirdCargoID&quot;"
-        ColumnWidth="50" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="5"

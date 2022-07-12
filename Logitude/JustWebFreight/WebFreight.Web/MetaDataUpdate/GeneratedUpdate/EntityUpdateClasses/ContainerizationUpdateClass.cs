@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "dc05b8b863a385d458bd6ad2b2e9b68c";
+		public const string HashString = "578aa1b5dc85900bb35e69536882999a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1657,13 +1657,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn OpenContainerizationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Containerization.ContainerizationDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn OpenContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
 
@@ -1689,13 +1689,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn ContainerizationWithReleaseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Containerization.ContainerizationDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn ContainerizationWithReleaseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
 
@@ -1718,13 +1718,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn CancelledContainerizationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Containerization.ContainerizationDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn CancelledContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
 
@@ -1747,13 +1747,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllContainerizationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Containerization.ContainerizationDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Containerization.CargoTypeCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Containerization.ManifestNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Containerization.SecondCargoID" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ThirdCargoID" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn AllContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber" , ColumnWidth = 80 }, addedQueryColumns);
 
