@@ -18544,9 +18544,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             StorageStatusTableRepository storageStatusTableRepository = new StorageStatusTableRepository(0);
             Dictionary<string, StorageStatusTable> TenantStorageStatusTable = storageStatusTableRepository.GetAll().ToDictionary(d => d.Code, a => a);
 
-            AddClosedTables.AddStorageStatusTable(new StorageStatusTable() { Code = "Open", Name = "Open" }, storageStatusTableRepository);
-            AddClosedTables.AddStorageStatusTable(new StorageStatusTable() { Code = "Close", Name = "Close" }, storageStatusTableRepository);
-            AddClosedTables.AddStorageStatusTable(new StorageStatusTable() { Code = "Cancel", Name = "Cancel" }, storageStatusTableRepository);
+            AddClosedTables.AddStorageStatusTable(new StorageStatusTable() { Code = "Open", Name = "Open", SearchFields = "Open" }, storageStatusTableRepository);
+            AddClosedTables.AddStorageStatusTable(new StorageStatusTable() { Code = "Close", Name = "Close", SearchFields = "Close" }, storageStatusTableRepository);
+            AddClosedTables.AddStorageStatusTable(new StorageStatusTable() { Code = "Cancel", Name = "Cancel", SearchFields = "Cancel" }, storageStatusTableRepository);
 
             storageStatusTableRepository.SubmitChanges();
 

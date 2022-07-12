@@ -10,6 +10,7 @@ export class StorageStatusTableList {
    
 	Code: string;
 	Name: string;
+	SearchFields: string;
 	
 }
  

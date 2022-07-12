@@ -34,6 +34,11 @@ export class StorageStatusTablePM {
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
 
     public OldEntityPM: StorageStatusTablePM;
 		

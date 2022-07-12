@@ -2,7 +2,7 @@
 <Table
   Name="StorageStatusTables"
   Schema="Customs"
-  DBType="Main" 
+  DBType="Main"
   Module="Customs">
   <Column
     Name="Code"
@@ -16,6 +16,13 @@
     Name="Name"
     Type="nvarchar"
     Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
