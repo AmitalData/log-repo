@@ -146,7 +146,7 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
-        public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
+        public int GetDeclarationMaxCancelRequestNumber(int tenant)
         {
             // && a.Id==id
 
@@ -162,7 +162,7 @@ namespace Logitude.Customs.Data.Repsitories
             return Convert.ToInt32(max);
         }
 
-        public int GetDeclarationMaxAmendmentRequestNumber(int tenant)
+        public int GetDeclarationMaxAmendmentAndCancelRequestNumber(int tenant)
         {
             //var x=  (from a in context.Declarations
             //         where a.Tenant == tenant
@@ -188,7 +188,28 @@ namespace Logitude.Customs.Data.Repsitories
 
             return max;
         }
+        public int GetDeclarationMaxAmendmentRequestNumber(int tenant)
+        {
+            //var x=  (from a in context.Declarations
+            //         where a.Tenant == tenant
+            //         select Convert.ToInt32(a.AmendmentRequestNumber)).Max();
 
+
+            //  return (from a in context.Declarations
+            //          where  a.Tenant == tenant
+            //          select a).Max(rec => Convert.ToInt32( rec.AmendmentRequestNumber));
+
+            var list = (from a in context.Declarations
+                        where a.Tenant == tenant && a.AmendmentRequestNumber != null
+                        select a.AmendmentRequestNumber).ToList();
+
+            int max = 0;
+
+            if (list.Count() != 0)
+                max = list.Select(int.Parse).ToList().Max();
+
+            return max;
+        }
 
         public void GetDailyStatistic(int tenant,
             out int TotDec,
