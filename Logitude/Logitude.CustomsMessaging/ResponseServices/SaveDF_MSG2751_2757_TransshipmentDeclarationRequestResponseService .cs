@@ -34,6 +34,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                Serializer.CastXML<UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2757_MSG10004_ExportDeclarationResponse, DF_NG_2757_MSG10004_ExportDeclarationResponse>(customResponse);
 
             new DF_NG_2757_MSG10004_ExportDeclarationResponseService().Update(castCustomResponse, requestParams);
+
+            MyResponseData = new INF_MSG_GenericResponseData();
+            MyResponseData.UserMessage = "בקשה נשלחה בהצלחה";
+            MyResponseData.ApplicationID = requestParams.AppicationId;
+            MyResponseData.Succeeded = true;
+            MyResponseData.HasException = false;
         }
     }
 }
