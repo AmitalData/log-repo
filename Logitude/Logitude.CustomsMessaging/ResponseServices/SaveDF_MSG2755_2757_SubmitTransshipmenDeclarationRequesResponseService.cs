@@ -26,7 +26,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2757_MSG10004_ExportDeclarationResponse, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
-        private DF_NG_2757_MSG10004_ExportDeclarationResponseService _DF_NG_2757_MSG10004_ExportDeclarationResponseService;
+        private DF_NG_2757_MSG10004_ExportDeclarationResponseService _DF_NG_2757_MSG10004_ExportDeclarationResponseService = new DF_NG_2757_MSG10004_ExportDeclarationResponseService();
         private INF_MSG_GenericResponseData _MyDefaultResponseData;
         //ITZIK+MIRT public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption { get; set; }
 
@@ -101,6 +101,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 Serializer.CastXML<UnifreightIIG.Common.SubmitExportDeclarationRequestServiceReference.DF_NG_2757_MSG10004_ExportDeclarationResponse, DF_NG_2757_MSG10004_ExportDeclarationResponse>(customResponse);
 
             new DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService().Update(castCustomResponse, requestParams);
+
+            MyResponseData = new INF_MSG_GenericResponseData();
+            MyResponseData.UserMessage = "בקשה נשלחה בהצלחה";
+            MyResponseData.ApplicationID = requestParams.AppicationId;
+            MyResponseData.Succeeded = true;
+            MyResponseData.HasException = false;
         }
 
         public override INF_MSG_GenericResponseData GetResponse(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, GenericRequestParams requestParams)
@@ -115,7 +121,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             else
             {
                 //Send interactive declaration Status request
-                if (!_MyDeclarationPM.IsCourierDeclaration)
+                if (_MyDeclarationPM != null && !_MyDeclarationPM.IsCourierDeclaration)
                 {
                     SendDeclarationStatus();
                 }
