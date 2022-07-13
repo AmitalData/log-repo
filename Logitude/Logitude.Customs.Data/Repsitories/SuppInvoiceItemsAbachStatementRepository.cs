@@ -18,8 +18,12 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<SuppInvoiceItemsAbachStatement> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            SupplierInvoiceItemKeys supplierInvoiceItemKeys = entityKeys as SupplierInvoiceItemKeys;
+
+            return (from a in context.SuppInvoiceItemsAbachStatement
+                    where a.DeclarationId == supplierInvoiceItemKeys.DeclarationId && a.InvoiceCounterKey == supplierInvoiceItemKeys.CounterKey && a.InvoiceItemLineNumber == supplierInvoiceItemKeys.LineNumber
+                    select a).ToList();
         }
 
         public List<SuppInvoiceItemsAbachStatement> GetSuppInvoiceItemsAbachStatementsForDeclarationId(string declarationId, int invoiceCounterKey, List<int> itemsLineNumbers, int tenant)
