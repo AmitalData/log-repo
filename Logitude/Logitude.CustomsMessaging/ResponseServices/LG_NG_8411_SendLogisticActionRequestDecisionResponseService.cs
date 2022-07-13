@@ -60,9 +60,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declaration.Consignments[0].SecondCargoID == larPM.CargoIdentifierKey2 &&
                     declaration.Consignments[0].ManifestNumber == larPM.CargoIdentifierKey1)
                 {
-
+                    
                     DF_NG_5002_MSG14001_DeclarationCancellationRequestMsg req = new DF_NG_5002_MSG14001_DeclarationCancellationRequestMsg();
-                    req.GeneralData = new DF_NG_5002_MSG14001_DeclarationCancellationRequestMsgGeneralData();
                     req.GeneralData.CancellationReasonTypeId = '8';
                     var service = new SaveDF_MSG5002_DeclarationCancellationRequestMsgService().Send(requestParams, req);
 
