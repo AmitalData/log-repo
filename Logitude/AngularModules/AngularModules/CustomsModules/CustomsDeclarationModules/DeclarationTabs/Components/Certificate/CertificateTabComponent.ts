@@ -317,6 +317,34 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         }
     }
 
+    CreateCertificateForCustomsItems() {
+        var windowArgs: any = {};
+        windowArgs.Ticket = new CertificateTicket();
+        windowArgs.IsNewCertificate = true;
+        windowArgs.IsAllSelected = false;
+        windowArgs.IsNew = true;
+        windowArgs.DeclarationId = this.DeclarationPM.Id;
+        windowArgs.ConnectedItems = null;
+        windowArgs.ExcludedItems = null;
+        windowArgs.Parent = this;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 550;
+        logWindow.Height = 300;
+        logWindow.ShowCloseButton = false;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.RequestedCerticate");
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event == "ok") {
+                this.GetCertificates($event);
+                this.CD.reattach();
+                this.RefreshEntity();
+            }
+        });
+        this.CD.detach();
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CreateEditTicketComponent');
+    }
+
 
     UpdateAllCertificateWithoutResponse() {
 

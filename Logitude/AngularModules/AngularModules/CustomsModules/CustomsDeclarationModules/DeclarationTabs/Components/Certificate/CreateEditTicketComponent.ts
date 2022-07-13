@@ -47,6 +47,7 @@ export class CreateEditTicketComponent extends BaseComponent {
     oldCertificateExempt: string;
     Parent: CertificateTabComponent;
     isNew: boolean;
+    IsNewCertificate: boolean;
     ResConfirmationFilterVisibility: boolean;
     _CardListService: CardListService = new CardListService();
     _ConfirmationTypeListService: ConfirmationTypeListService = new ConfirmationTypeListService();
@@ -101,6 +102,7 @@ export class CreateEditTicketComponent extends BaseComponent {
         });
         this.ticket = args.Ticket;
         this.isNew = args.IsNew;
+        this.IsNewCertificate = args.IsNewCertificate;
         this.connectedItems = args.ConnectedItems;
         this.ExcludedItems = args.ExcludedItems;
         this.IsAllSelected = args.IsAllSelected;
@@ -140,6 +142,32 @@ export class CreateEditTicketComponent extends BaseComponent {
         this.SetFieldsDisabled(this.isNew);
 
     }
+
+    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean) {
+        /*var selectInvoicesOnly = customParam;
+        var windowArgs: any = {};
+        var certificates: any[] = [];
+        windowArgs.DeclarationPM = entityPM;
+        windowArgs.selectInvoicesOnly = selectInvoicesOnly;
+        windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
+        windowArgs.IsEntityDisplayOnly = isEntityDisplayOnly;
+        var logWindow = new LogitudeWindow();
+        logWindow.Height = 700;
+        logWindow.Width = 1000;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.SelectionInvoicesCompleted(comp, customsDocumentsTicket);
+                }
+            });
+        });
+
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');*/
+    }
+
     SetFieldsDisabled(isNew: boolean) {
         if (isNew || this.AttachmentTypeCode == "3" || this.AttachmentTypeCode == null) {
             this.UIProperties.SetEnabled("CertificateNumber", "Customs.SupplierInvioceItemCertificat", false);
@@ -614,6 +642,11 @@ export class CreateEditTicketComponent extends BaseComponent {
     
     public certificateTicke: CertificateTicket
     UpdateTicket() {
+
+        if (this.IsNewCertificate) {
+            //this.ShowSelectionComponent();
+        }
+
 
         SessionLocator.SelectedSession.StartBusyIndicator("");
         this.certificateTicke  = new CertificateTicket();

@@ -103,6 +103,24 @@
         <td></td>
     </tr>
 
+    <tr style="height:30px" *ngIf="IsNewCertificate">
+        <td>
+            <LogLabel [ObjectFieldName]="'ReqConfirmationTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td>
+            <LogLov [ObjectFieldName]="'ReqConfirmationTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.ConfirmationType'"
+                    [SelectedValue]="ReqConfirmationTypeCode"
+                    [HideColumns]="true">
+            </LogLov>
+        </td>
+
+        <td></td>
+    </tr>
+
     <tr [style.height.px]="ExemptRowHeight" *ngIf="IsExemptVisibile">
         <td>
             <LogLabel [ObjectFieldName]="'CertificateExemptionTypeCode'" [ObjectTableName]="ObjectTableName"
@@ -212,6 +230,7 @@
         </td>
         <td></td>
     </tr>
+
     <tr></tr>
 
 
