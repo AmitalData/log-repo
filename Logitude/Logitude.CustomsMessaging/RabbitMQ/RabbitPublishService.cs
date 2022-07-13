@@ -79,7 +79,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                 try
                 {
                     //var factory = RabbitmqHelper.GetConnectionFactory();
-                    var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: true);
+                    //var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: true);
 
 
                     using (var connection = factory.CreateConnection())

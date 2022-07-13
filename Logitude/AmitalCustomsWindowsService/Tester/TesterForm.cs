@@ -1204,15 +1204,15 @@ namespace AmitalCustomsWindowsService.Tester
 
 
 
-            var message = Encoding.UTF8.GetBytes(Get("CorrelationId", "ExternalId", "body"));
+            //var message = Encoding.UTF8.GetBytes(Get("CorrelationId", "ExternalId", "body"));
 
 
-            string InterfaceTypeCode = "ucbud2lt";
-            String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(1);
-            rabbitMQCode = "itziktest_" + rabbitMQCode;
+            //string InterfaceTypeCode = "ucbud2lt";
+            //String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(1);
+            //rabbitMQCode = "itziktest_" + rabbitMQCode;
 
-            //var rabbitPublishService = new RabbitPublishService();
-            RabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
+            ////var rabbitPublishService = new RabbitPublishService();
+            //RabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
 
 
         }
