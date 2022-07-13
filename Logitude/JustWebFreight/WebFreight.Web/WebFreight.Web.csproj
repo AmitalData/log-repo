@@ -1114,6 +1114,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\AutonomyRegionTypeController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalBrandingController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalAuthenticationController.cs" />
+    <Compile Include="Controllers\DigitalPortal\DigitalDocumentsController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalInvoiceController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalPortalResetUserPasswordService.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalShipmentController.cs" />
