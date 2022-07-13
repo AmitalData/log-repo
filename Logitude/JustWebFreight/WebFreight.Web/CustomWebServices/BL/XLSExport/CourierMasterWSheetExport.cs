@@ -150,12 +150,12 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 pendings.Add(item.declaration, string.Join(",", item.pending));
             }
 
-          
+
             var qConsignmentPackages = (from a in MyContext.ConsignmentPackages
                                         where (a.PackageMeasureQualifierCode == "2")
                                         join cp in q
                                         on a.DeclarationId equals cp.DeclarationId
-                                        
+
                                         group a by a.DeclarationId into qConsPackages
                                         select
                                       new
@@ -316,8 +316,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     newrow[0] = $"{r.AirlineId}-{r.MAWB}";
                     //newrow[1] = r.CourierHawb;
                     newrow[1] = r.MasterHAWB;
-                    newrow[2] = dicConPackages[r.DeclarationId].GrossMassMeasure;  //r.MasterGrossMassMeasure;
-                    newrow[3] = dicConPackages[r.DeclarationId].PackageQuantity; //r.MasterPackageQuantity;
+                    newrow[2] = dicConPackages.ContainsKey(r.DeclarationId)?  dicConPackages[r.DeclarationId].GrossMassMeasure: "0";//r.MasterGrossMassMeasure;
+                    newrow[3] = dicConPackages.ContainsKey(r.DeclarationId) ? dicConPackages[r.DeclarationId].PackageQuantity : "0"; //r.MasterPackageQuantity;
                     newrow[4] = ((object)r.MasterCreateDateTime) ?? DBNull.Value;
                     newrow[5] = r.MasterGatewayPortCode;
                     newrow[6] = ((object)r.MasterEstimatedArrivalDate) ?? DBNull.Value;
