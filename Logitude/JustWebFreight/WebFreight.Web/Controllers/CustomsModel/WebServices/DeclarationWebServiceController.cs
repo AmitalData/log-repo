@@ -85,27 +85,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        [HttpPost]
-        public HttpResponseMessage GetDeclarationByConsignmentParames(Request ArrayDeclartiosId)
-        {
-            try
-            {
-                
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
 
-                ICustomContext customContext = CustomContext.GetContext(tenant);
-                DeclarationConstraintQueryService query = new DeclarationConstraintQueryService(customContext);
-                List<string> countDeclartions = query.GetDeclarationByConsignmentParames(ArrayDeclartiosId.ArrayDeclartiosId);
-
-                return Request.CreateResponse(HttpStatusCode.OK, countDeclartions);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
         [HttpPost]
         public HttpResponseMessage GetIsConsignmentConectContainerization(ReqConectContainerization requestParam)
         {

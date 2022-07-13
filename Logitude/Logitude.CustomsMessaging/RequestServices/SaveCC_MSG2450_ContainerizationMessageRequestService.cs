@@ -27,8 +27,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var settings = customsSettingQueryService.GetSingleByTenant(requestParams.Tenant);
                         var containerization = containerizationQueryService.GetSingle(requestParams.LoggingEntityId, true, false); 
 
-            var declarationRepository = new DeclarationRepository(requestParams.Tenant);
-            //var declarations1 = declarationRepository.GetByExportContainerizationID(requestParams.LoggingEntityId, requestParams.Tenant);
+            var declarationRepository = new DeclarationRepository(requestParams.Tenant); 
             var declarations = declarationRepository.GetByConsigmentExportContainerizationID(requestParams.LoggingEntityId, requestParams.Tenant);
 
 
@@ -51,7 +50,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.ContainerCargo.cargoIdentifier = new cargoIdentifier();
 
            
-            //var cons = declarationQueryService.GetConsignmentListPMByDeclarationId(declarations.ToList()[0].Id, requestParams.Tenant);
             var cont = containerizationQueryService.GetcontainerizationById(requestParams.LoggingEntityId, requestParams.Tenant);
             req.ContainerCargo.cargoIdentifier.cargoIdentifierType = Convert.ToInt32(cont.CargoTypeCode);
             req.ContainerCargo.cargoIdentifier.cargoIdentifierKey1 = cont.ManifestNumber; 

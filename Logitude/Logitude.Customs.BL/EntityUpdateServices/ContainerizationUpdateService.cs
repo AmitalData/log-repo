@@ -90,13 +90,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!String.IsNullOrWhiteSpace(entityPM.NotConnectedDeclarations) || !String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations)) {
                 declarationUpdateService.UpdateMulti(AllPms, new List<DeclarationPM>(), entityPM, false); 
             }
-            // var listCons = consignmentQueryService.GetConsigmentByContainerizationID(entityPM.Id, entityPM.Tenant, disConnectedDeclarations);
-            // if (listCons != null)
-            //{
-            // if (listCons.Count() == 0)
-            // {
-            // }
-            //}
+           
             if (String.IsNullOrEmpty(entityPM.ConnectedDeclarations)&& entityPM.ContainerizationStatus != "3")
                 {
                     entityPM.CargoTypeCode = null;
