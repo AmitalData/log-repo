@@ -4,21 +4,15 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.CustomsMessaging.MessagingServices;
 using Simplog.Server.Infrastructure;
-using System;
 using System.Collections.Generic;
 using UnifreightIIG.Common.MessageLib.LogisticActionRequestDecision;
-using Logitude.CustomsMessaging.RequestServices;
-using UnifreightIIG.Common.DeclarationCancellationRequestMsgServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class LG_NG_8411_SendLogisticActionRequestDecisionResponseService
         : ResponseServiceBase<INF_MSG_GenericResponseData, LG_NG_8411_SendLogisticActionRequestDecision, GenericRequestParams>
     {
-
-
         public override INF_MSG_GenericResponseData GetResponse(LG_NG_8411_SendLogisticActionRequestDecision customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
@@ -50,30 +44,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             larPM.IsClosed = CheckIsClosed(resData);
 
             UpdateLARPM(requestParams, larPM);
-            if (larPM.IsClosed)
-            {
-                DeclarationQueryService declarationQs = new DeclarationQueryService(requestParams.Tenant);
-                DeclarationPM declaration = declarationQs.GetSingle(larPM.DeclarationId, true, false);
-                if (larPM.DeclarationId != null && declaration.Consignments.Count == 1 &&
-                    declaration.Consignments[0].CargoTypeName == larPM.CargoIdentifierType &&
-                    declaration.Consignments[0].ThirdCargoID == larPM.CargoIdentifierKey3 &&
-                    declaration.Consignments[0].SecondCargoID == larPM.CargoIdentifierKey2 &&
-                    declaration.Consignments[0].ManifestNumber == larPM.CargoIdentifierKey1)
-                {
-                    
-                    DF_NG_5002_MSG14001_DeclarationCancellationRequestMsg req = new DF_NG_5002_MSG14001_DeclarationCancellationRequestMsg();
-                    req.GeneralData.CancellationReasonTypeId = '8';
-                    var service = new SaveDF_MSG5002_DeclarationCancellationRequestMsgService().Send(requestParams, req);
-
-                }
-            }
-
         }
 
-
-
         private static bool CheckIsClosed(LG_NG_8411_SendLogisticActionRequestDecisionLogisticActionRequestDecision resData) =>
-            (new List<int> { 1, 2, 5, 6, 7 }.Contains(resData.ResponseStatus));
+            (new List<int> { 1, 2, 5, 6, 7 }.Contains(resData.ResponseStatus));        
 
         private static void UpdateLARPM(GenericRequestParams requestParams, LogisticActionRequestPM larPM)
         {
