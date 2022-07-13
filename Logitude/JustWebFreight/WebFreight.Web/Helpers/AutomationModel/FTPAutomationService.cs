@@ -74,7 +74,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
                 To = fTPDetails.Host,
                 From = companyName,
-                Subject = string.IsNullOrEmpty(documentFileName) ? string.IsNullOrEmpty(computingPartnerName)? entityInterfaceName + " Interface" : (entityInterfaceName + " Interface for " + computingPartnerName):documentFileName,
+                Subject = string.IsNullOrEmpty(documentFileName) ? string.IsNullOrEmpty(computingPartnerName)? entityInterfaceName + " Automation Interface" : (entityInterfaceName + " Automation Interface for " + computingPartnerName):documentFileName,
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 LastStatusDateUTC = System.DateTime.UtcNow,
                 InOut = "O",
