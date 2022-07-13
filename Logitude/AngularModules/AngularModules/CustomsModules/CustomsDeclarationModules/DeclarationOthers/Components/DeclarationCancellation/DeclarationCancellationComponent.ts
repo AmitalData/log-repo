@@ -16,7 +16,7 @@ import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { CustomsCollateralPM } from '../../../../../Customs/EntityPMs/CustomsCollateralPM';
 
 declare var window: any;
-
+ 
 @Component({
     selector: 'DeclarationCancellationComponent',
 
@@ -132,7 +132,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
 
-        debugger;
+
 
         this.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         this.RequestVIA = customSendOptionsArgs.RequestVIA;
@@ -155,7 +155,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         currRequestParams.RequestName = "Declaration Cancellation Request";
         currRequestParams.ResponseName = "Declaration Cancellation Response";
         currRequestParams.RequestVIA = this.RequestVIA;
-           
+
 
 
         this._DeclarationWebService.GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
