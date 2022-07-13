@@ -83,45 +83,7 @@ namespace Logitude.Customs.Data.Repsitories
 
             return query;
         }
-        public List<string> GetDeclarationByConsignmentParames(string[] ArrayDeclartiosId)
-        {
-
-            List<Consignment> declarationConstraintConsignments;
-                List<string> consignmentParames;   
-            try
-            {    
-                string a= ArrayDeclartiosId[0];
-                Consignment consignment = (from c in context.Consignments where c.DeclarationId == a select c).FirstOrDefault();
-                if (consignment != null)
-                {
-                    declarationConstraintConsignments = (from c in context.Consignments.Include("Declaration")
-                                                         where c.CargoTypeCode == consignment.CargoTypeCode && c.ManifestNumber == consignment.ManifestNumber &&
-                                                         c.SecondCargoID == consignment.SecondCargoID && c.ThirdCargoID == consignment.ThirdCargoID && c.Declaration.ExportContainerizationID == null
-                                                         select c).ToList();
-                    consignmentParames = declarationConstraintConsignments.FindAll(x => !ArrayDeclartiosId.Contains(x.DeclarationId)).Select(s => s.Declaration.CustomFileNo).Distinct().ToList();
-                    return consignmentParames;
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-
-
-
-
-
-
-
-
-            //if (declarationConstraintConsignments.Count == 0 )
-            //{
-            //    return 0;
-            //}
-
-            //return declarationConstraintConsignments.Count;
-        }
+       
 
 
         public void FastDeleteMulti(DeclarationKeys entityKeyFields)

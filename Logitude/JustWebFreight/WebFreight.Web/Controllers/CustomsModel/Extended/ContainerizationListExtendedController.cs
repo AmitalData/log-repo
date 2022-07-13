@@ -70,12 +70,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     }
                     else
                     {
-                        if (ContainerizationList.Count == 0)
-                        {
-                            // return "Client List Is Empty (Count==0)";
-                        }
-
-                        string clientCode = "";
+                       
                         for (int i = 0; i < ContainerizationList.Count; i++)
                         {
                             SendContainerization(ContainerizationList[i].Tenant, SendRequestVIA.WebServiceBatch, ContainerizationList[i].Id, loggedUserId);
@@ -105,8 +100,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 GenericRequestParams requestParams = new GenericRequestParams();
                 requestParams.Tenant = tenent;
-                requestParams.RequestVIA = sendRequestVIA;// event.RequestVIA;
-                requestParams.ForcePersonalSign = false;//event.ForcePersonalSign;
+                requestParams.RequestVIA = sendRequestVIA;
+                requestParams.ForcePersonalSign = false;
                 requestParams.LoggingEnabled = true;
                 requestParams.LoggingEntityId = id;
                 requestParams.LoggingUserId = LoggedUserId;

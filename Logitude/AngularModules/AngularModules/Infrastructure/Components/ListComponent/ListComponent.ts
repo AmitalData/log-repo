@@ -2964,7 +2964,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         logWindow.WindowClosed.subscribe(($event: any) => this.OnContainerizationWindowClosed($event));
     }
     private OnContainerizationWindowClosed($event: any) {
-        if($event!=null){
+
+         if($event!=null && $event!="0"){
             this.CurrentQueryFilters.addAdditionalFilter("Id", $event, null, null, "InListExact", false, false, false, "string",false,true);
         }
         this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, Reload: true });

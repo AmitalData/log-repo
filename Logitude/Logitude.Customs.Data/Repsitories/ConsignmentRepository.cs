@@ -106,14 +106,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 
 
-        public List<Consignment> GetConsigmentByContainerizationID(string containerizationID, int tenant, List<string> disConnectedDeclarations)
-        {
-            var query = (from a in context.Consignments
-                         where a.ExportContainerizationID == containerizationID && a.Tenant == tenant && !disConnectedDeclarations.Contains(a.DeclarationId)
-                         select a).ToList();
-
-            return query;
-        }
+  
             //partial void onRemove(Consignment entity)
             //{
             //    //entity.DeclarationId
