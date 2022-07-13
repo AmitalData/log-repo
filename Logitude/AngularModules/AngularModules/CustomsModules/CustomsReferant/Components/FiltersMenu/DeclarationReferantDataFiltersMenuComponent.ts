@@ -77,7 +77,6 @@ export class DeclarationReferantDataFiltersMenuComponent
 
 
     async SetFiltersMenu(args: any) {
-        debugger;
         this.OpenQueryThruWorkSpace = true;
         this.TransportFilters = new ApiQueryFilters();
         this.UserFilters = new ApiQueryFilters();
