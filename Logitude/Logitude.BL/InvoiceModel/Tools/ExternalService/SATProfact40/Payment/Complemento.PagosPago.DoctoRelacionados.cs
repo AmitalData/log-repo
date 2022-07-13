@@ -84,7 +84,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
                 ObjetoImpDR = SATData.IncludeTaxObjetoImp,
                 ImpPagado = invoiceAmountToPay,
                 ImpPagadoSpecified = true,
-                EquivalenciaDR = GetEquivalenciaDR(arInvoiceCode, allInvoicePayments),
+                EquivalenciaDR = GetEquivalenciaDR(invoice, arInvoiceCode, allInvoicePayments),
                 EquivalenciaDRSpecified = true,
                 IdDocumento = GetPagosPagoDoctoRelacionadoIdDocumento(comprobanteComplementoAnyXmlElements),
                 ImpSaldoAnt = GetPagosPagoDoctoRelacionadoImpSaldoAnt(new PagosPagoDoctoRelacionadoImpSaldo { ARPaymentPM = arPaymentPM, ARInvoice = invoice, AllInvoicePayments = allInvoicePayments, InvoiceAmount = totalInvoiceComprobante }),
@@ -132,15 +132,20 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             return invoiceComprobante != null ? invoiceComprobante.Folio : invoiceComprobanteV33.Folio;
         }
 
-        private static decimal GetEquivalenciaDR(string arInvoiceCode, List<ARInvoicePayment>  allInvoicePayments)
+        private static decimal GetEquivalenciaDR(ARInvoice invoice, string arInvoiceCode, List<ARInvoicePayment>  allInvoicePayments)
         {
-            double? invoiceCurrencyExchangeRate = allInvoicePayments.FirstOrDefault(p => p.ARPaymentId == arPaymentPM.Id).ExchangeRate;
-            
-            if (arPaymentPM.PaymentCurrencyCode == arInvoiceCode)
-                return 1;
+            if (arPaymentPM.PaymentCurrencyCode == arInvoiceCode) return 1;
 
-            if (invoiceCurrencyExchangeRate == null || arPaymentPM.PaymentCurrencyExchangeRate == null)
-                return 0;
+            if (arPaymentPM.PaymentCurrencyExchangeRate == null) return 0;
+
+            if (currentTenant?.Currency?.Code == arInvoiceCode && invoice.InvoiceCurrencyExchangeRate != null)
+            {
+                return SATBaseProfact40Service.GetDecimalWith6DigitsAfterPoint(Convert.ToDecimal(arPaymentPM.PaymentCurrencyExchangeRate.Value) / Convert.ToDecimal(invoice.InvoiceCurrencyExchangeRate.Value));
+            }
+
+            double? invoiceCurrencyExchangeRate = allInvoicePayments.FirstOrDefault(p => p.ARPaymentId == arPaymentPM.Id).ExchangeRate;
+
+            if (invoiceCurrencyExchangeRate == null) return 0;
 
             return SATBaseProfact40Service.GetDecimalWith6DigitsAfterPoint(Convert.ToDecimal(arPaymentPM.PaymentCurrencyExchangeRate.Value) / Convert.ToDecimal(invoiceCurrencyExchangeRate));
         }
