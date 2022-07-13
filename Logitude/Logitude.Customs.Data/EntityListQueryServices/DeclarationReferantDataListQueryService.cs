@@ -24,7 +24,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
-
+            
 
 
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
@@ -35,8 +35,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              .Include("Importer")
                                                              .Include("PackageType")
                                                              on a.DeclarationId equals d.Id
-                                                             join s in context.DeclarationStatuses
-                                                             on a.DeclarationId equals s.DeclarationId
+
+                                                             join declarationStatus in context.DeclarationStatuses
+                                                             on a.DeclarationId equals declarationStatus.DeclarationId into qjoinDeclarationStatuses
+                                                             from s in qjoinDeclarationStatuses.DefaultIfEmpty()
+
                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant = a.Tenant,
