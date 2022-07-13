@@ -168,6 +168,9 @@ InterfaceTypeCode: rabbitQueue.InterfaceTypeCode,
                     $"_TotalBasicPublish:{_TotalBasicPublish},_TimeoutHalfSEC:{_TimeoutHalfSEC},_TimeoutMoreHalfSEC{_TimeoutMoreHalfSEC},_TimeoutMore1SEC:{_TimeoutMore1SEC},_TimeoutMore5SEC:{_TimeoutMore5SEC},_TimeoutFail:{_TimeoutFail},_TimeoutX2:{_TimeoutX2}"
                     , false, "RabbitPublishWorker");
 
+                _TotalBasicPublish = _TimeoutHalfSEC =
+                    _TimeoutMoreHalfSEC = _TimeoutMore1SEC = 
+                    _TimeoutMore5SEC = _TimeoutFail =_TimeoutX2 = 0;
             }
             
         }
