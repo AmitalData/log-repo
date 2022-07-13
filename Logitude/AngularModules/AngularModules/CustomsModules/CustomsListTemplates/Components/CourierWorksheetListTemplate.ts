@@ -574,7 +574,7 @@ export class CourierWorksheetListTemplate {
         if (this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show(
-                //"לם ניתן לבצע הגשת תשלום כםשר יש השהייה מסוג עצירת תשלום. "
+                //"לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. "
                 TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold")
             );
             return;

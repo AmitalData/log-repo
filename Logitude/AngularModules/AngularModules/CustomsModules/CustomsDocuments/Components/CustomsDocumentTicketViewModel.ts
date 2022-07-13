@@ -996,7 +996,7 @@ export class CustomsDocumentTicketViewModel {
 
             if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {//Requested Doc that wasn't send to customs for verification allow disconnect according to design.
                 applyDisconnect = true;
-                //message = "לם ניתן לנתק מסמך נדרש – קיימת בקשה בתהליך";
+                //message = "לא ניתן לנתק מסמך נדרש – קיימת בקשה בתהליך";
             }
             if (this.customsDocumentsTicketPM.DocumentStatusCode == '7') {
                 applyDisconnect = false;

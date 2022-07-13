@@ -981,7 +981,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                         this.ValidationErrorsList = docRes.ErrorsArray;
                     }
                     //let jDoit = false;
-                    //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לם נמצם כרטיס חתימה חברתי (מסר 2715)
+                    //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לא נמצא כרטיס חתימה חברתי (מסר 2715)
                     //    this.CurrentSession.StopBusyIndicator();
                     //    var messageWindow = new MessageWindow();
                     //    messageWindow.Width = 400;
