@@ -86,6 +86,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
         
         static PooledRabbitMQPublisher _Instance=null;
         private static readonly object padlock = new object();
+        private static readonly object getlock = new object();
 
 
         public static PooledRabbitMQPublisher Instance
@@ -113,15 +114,19 @@ namespace Logitude.CustomsMessaging.RabbitMQ
         PooledRabbitMQPublisher(/*IPooledObjectPolicy<IModel> objectPolicy*/)
         {
             _objectPool = new DefaultObjectPool<IModel>(new PooledRabbitMQPolicy(),
-                Environment.ProcessorCount * 2
+                100//Environment.ProcessorCount * 2
                 );
         }
          
 
         public IModel Get()
         {
-            var channel = _objectPool.Get();
-            return channel;
+            lock (getlock)
+            {
+                var channel = _objectPool.Get();
+                return channel;
+
+            }
         }
 
         public void Return(IModel channel)
