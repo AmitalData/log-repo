@@ -373,6 +373,7 @@ namespace CommunicationWorkerRole
 
         private void UpdateEntity(CommunicationLog commLog)
         {
+            if (commLog.Subject.Contains("Automation Interface")) return;
             string transferStatus = "TR";
             if(commLog.CommunicationStatusTypeCode == "F")
             {
