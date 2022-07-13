@@ -182,11 +182,14 @@ namespace LogitudeBatchServices
 
         private void StopProcess(Process currentProcess)
         {
-           
-            
-            currentProcess.WaitForExit((int)new TimeSpan(0, 1, 0).TotalMilliseconds);
+
+            BatchServiceTimer.Stop();
+            EventLog.WriteEntry(LogitudeBatchServiceHelper.getWorkerRoleName() + "|" + " Max memeory exceeded for Process WIth PID : " + currentProcess.Id + " Stopped before kill, the Process Argumants are : " + LogitudeBatchServiceHelper.GetCommandLineArgs(currentProcess));
             currentProcess.Kill();
-        
+            ///EventLog.WriteEntry(LogitudeBatchServiceHelper.getWorkerRoleName() + "|" + " Max memeory exceeded for Process WIth PID : " + currentProcess.Id + " Stopped after kill, the Process Argumants are : " + LogitudeBatchServiceHelper.GetCommandLineArgs(currentProcess));
+          //  currentProcess.WaitForExit();
+            //EventLog.WriteEntry(LogitudeBatchServiceHelper.getWorkerRoleName() + "|" + " Max memeory exceeded for Process WIth PID : " + currentProcess.Id + " Stopped after wait, the Process Argumants are : " + LogitudeBatchServiceHelper.GetCommandLineArgs(currentProcess));
+
         }
 
         protected override void OnStop()
