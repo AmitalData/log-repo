@@ -316,7 +316,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     newrow[0] = $"{r.AirlineId}-{r.MAWB}";
                     //newrow[1] = r.CourierHawb;
                     newrow[1] = r.MasterHAWB;
-                    newrow[2] = dicConPackages.ContainsKey(r.DeclarationId)?  dicConPackages[r.DeclarationId].GrossMassMeasure: "0";  //r.MasterGrossMassMeasure;
+                    newrow[2] = dicConPackages.ContainsKey(r.DeclarationId)?  dicConPackages[r.DeclarationId].GrossMassMeasure: "0";//r.MasterGrossMassMeasure;
                     newrow[3] = dicConPackages.ContainsKey(r.DeclarationId) ? dicConPackages[r.DeclarationId].PackageQuantity : "0"; //r.MasterPackageQuantity;
                     newrow[4] = ((object)r.MasterCreateDateTime) ?? DBNull.Value;
                     newrow[5] = r.MasterGatewayPortCode;
