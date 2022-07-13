@@ -16336,7 +16336,7 @@
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
+        ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
