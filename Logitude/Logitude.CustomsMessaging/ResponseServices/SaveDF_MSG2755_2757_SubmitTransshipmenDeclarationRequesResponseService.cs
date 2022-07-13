@@ -100,13 +100,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             UnifreightIIG.Common.SubmitExportDeclarationRequestServiceReference.DF_NG_2757_MSG10004_ExportDeclarationResponse castCustomResponse =
                 Serializer.CastXML<UnifreightIIG.Common.SubmitExportDeclarationRequestServiceReference.DF_NG_2757_MSG10004_ExportDeclarationResponse, DF_NG_2757_MSG10004_ExportDeclarationResponse>(customResponse);
 
-            new DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService().Update(castCustomResponse, requestParams);
+            var service = new DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService();
+            service.Update(castCustomResponse, requestParams);
 
-            MyResponseData = new INF_MSG_GenericResponseData();
-            MyResponseData.UserMessage = "בקשה נשלחה בהצלחה";
-            MyResponseData.ApplicationID = requestParams.AppicationId;
-            MyResponseData.Succeeded = true;
-            MyResponseData.HasException = false;
+            MyResponseData = service.MyResponseData;
         }
 
         public override INF_MSG_GenericResponseData GetResponse(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, GenericRequestParams requestParams)
