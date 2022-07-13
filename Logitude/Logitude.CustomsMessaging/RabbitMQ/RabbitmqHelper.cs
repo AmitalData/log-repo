@@ -143,7 +143,8 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             
             return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password, 
                 RequestedHeartbeat = TimeSpan.FromSeconds(300),
-                
+                RequestedConnectionTimeout = new TimeSpan(0, 0, 60)
+
             });
         }
         public static ConnectionFactory GetConnectionFactory(bool tryFromAppSettings=true)

@@ -1,14 +1,23 @@
 ﻿using Logitude.CustomsMessaging.RabbitMQ;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RabbitMQSRV.Testers
 {
     public class PooledPublish
     {
+        private byte[] message;
+        private RabbitPublishService rabbitPublishService;
+
+        public string InterfaceTypeCode { get; private set; }
+
+        private string rabbitMQCode;
+
         public void Test()
         {
 
@@ -17,35 +26,56 @@ namespace RabbitMQSRV.Testers
 
 
 
-            var message = Encoding.UTF8.GetBytes(Get("CorrelationId", "ExternalId", "body"));
+            message = Encoding.UTF8.GetBytes(Get("CorrelationId", "ExternalId", "body"));
 
 
-            string InterfaceTypeCode = "ucbud2lt";
-            String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(1);
+            InterfaceTypeCode = "ucbud2lt";
+            rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(1);
             rabbitMQCode = "itziktest_" + rabbitMQCode;
 
-            var rabbitPublishService = new RabbitPublishService();
+            rabbitPublishService = new RabbitPublishService();
             rabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
-            var tasks = new List<Task>();
-            for (int i = 0; i < 80; i++)
+            rabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
+            int tCount=0;
+            if (true)
             {
-                int index = i;
-                tasks.Add(Task.Run(
-                    ()=> {
+                var worker = new List<Thread>();
+                for (int i = 0; i < 80; i++)
+                {
+                    string threadParam = null;
+                    var thread = new Thread(new ParameterizedThreadStart(MainThreadMethod));
+                    thread.Name = "My:" + i;
+                    thread.Start(i);
+                    worker.Add(thread);
+                }
+                foreach (var item in worker)
+                {
+                    item.Join();
+                }
 
-                        while (true)
+
+            }
+            else
+            {
+                var tasks = new List<Task>();
+                for (int i = 0; i < 80; i++)
+                {
+                    int index = i;
+                    tasks.Add(Task.Run(
+                        () =>
                         {
-                            rabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
-                        }
-                        
-                        
-                    }));
+                            MainThreadMethod(null);
+
+                        }));
+                }
+                // Wait for all the tasks to finish.
+                Task.WaitAll(tasks.ToArray());
+
             }
 
             try
             {
-                // Wait for all the tasks to finish.
-                Task.WaitAll(tasks.ToArray());
+                
 
                 // We should never get to this point
                 Console.WriteLine("WaitAll() has not thrown exceptions. THIS WAS NOT EXPECTED.");
@@ -63,6 +93,32 @@ namespace RabbitMQSRV.Testers
 
 
         }
+        static bool delay = false;
+        private void MainThreadMethod(object threadParam)
+        {
+            
+            for (int x = 0; x < 50; x++)
+            {
+                try
+                {
+                    if (delay)
+                    {
+                        Thread.Sleep(10000);
+                    }
+                    rabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
+                    Debug.WriteLine($"{Thread.CurrentThread.Name}:{x}:success=true");
+                }
+                catch (Exception)
+                {
+
+                    Debug.WriteLine($"{Thread.CurrentThread.Name}:{x}:success=true");
+                }
+             
+                
+                
+            }
+        }
+
         public string Get(string CorrelationId, string ExternalId, string body)
         {
             var xml =
