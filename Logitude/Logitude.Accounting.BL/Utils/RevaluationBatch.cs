@@ -206,10 +206,15 @@ namespace Logitude.Accounting.BL.Utils
                 interestTransactions.Add(CreateInterestTransaction(line));
             }
             InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+
+
+            using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(4)))
+            {
             foreach (var item in interestTransactions)
             {
                 interestTransactionUpdateService.Update(item,true);
             }
+        }
         }
 
         private static InterestTransactionPM CreateInterestTransaction( JournalLinePM line)
