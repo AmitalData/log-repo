@@ -18,11 +18,9 @@ export class DeclarationFiltersMenuComponent
     TransportFilter_A: string;
     TransportFilter_O: string;
     TransportFilter_I: string;
-    header: string;
 
     constructor() {
         super();
-        this.header = this.CurrentSession.getSessionHeader();
         this.TransportFilter_A = "TransportFilter_A";
         this.TransportFilter_O = "TransportFilter_O";
         this.TransportFilter_I = "TransportFilter_I";
@@ -84,7 +82,7 @@ export class DeclarationFiltersMenuComponent
     itemClicked(itemValue: string) {
         this.transportmodeId = itemValue;
         var RemoveFilter = false;
-        if (this.SelectedValue != itemValue) {
+        if (this.SelectedValue != itemValue) { 
             this.SelectedValue = itemValue;
         }
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
