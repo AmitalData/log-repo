@@ -207,7 +207,7 @@ namespace Logitude.Accounting.BL.Utils
             }
             InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
 
-            using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+            using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(4)))
             {
                 foreach (var item in interestTransactions)
                 {
