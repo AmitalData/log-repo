@@ -50,6 +50,11 @@ export class ShipmentPM {
     public set IsHybrid(newValue: boolean) { if (this.isHybrid != newValue) { this.isHybrid = newValue; this.MarkAsDirty("IsHybrid"); } }
 
 
+    private ismultiUpdate: boolean;
+    public get IsMultiUpdate() { return this.ismultiUpdate; }
+    public set IsMultiUpdate(newValue: boolean) { if (this.ismultiUpdate != newValue) { this.ismultiUpdate = newValue; this.MarkAsDirty("IsMultiUpdate"); } }
+
+
     private baseShipmentNumber: string;
     public get BaseShipmentNumber() { return this.baseShipmentNumber; }
     public set BaseShipmentNumber(newValue: string) { if (this.baseShipmentNumber != newValue) { this.baseShipmentNumber = newValue; this.MarkAsDirty("BaseShipmentNumber"); } }
