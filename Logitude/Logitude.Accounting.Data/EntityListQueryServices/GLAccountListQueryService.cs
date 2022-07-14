@@ -57,6 +57,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                     
                                                       InternalNumber = a.InternalNumber,
                                                       InterestCreditLimit = a.InterestCreditLimit,
+                                                      InterestOpenBalance = a.InterestOpenBalance,
                                                       AccountTypeCode = a.AccountTypeCode,
                                                       DisplayNumber = a.DisplayNumber,
                                                       EnglishName = a.EnglishName,
@@ -334,6 +335,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            Tenant = glaccount.Tenant,
                            InternalNumber = glaccount.InternalNumber,
                            InterestCreditLimit = glaccount.InterestCreditLimit,
+                           InterestOpenBalance = glaccount.InterestOpenBalance,
                            AccountTypeCode = glaccount.AccountTypeCode,
                            DisplayNumber = glaccount.DisplayNumber,
                            EnglishName = glaccount.EnglishName,
