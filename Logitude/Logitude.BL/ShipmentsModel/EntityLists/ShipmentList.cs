@@ -78,6 +78,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string AMSBL { get; set; }
         public string House { get; set; }
         public string ShipmentType { get; set; }
+        public string ShipmentTypeName { get; set; }
         public string ShipmentTypeId { get; set; }
         public string FollowUpType { get; set; }
         public string FollowUpTypeId { get; set; }

@@ -12488,6 +12488,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CreateDateTime = f.CreateDateTime,
                                ShipmentNumber = f.ShipmentNumber,
                                ShipmentType = f.ShipmentType,
+                               ShipmentTypeName = f.ShipmentTypeName,
                                ShipmentTypeId = f.ShipmentTypeId,
                                TransportModeId = f.TransportModeId,
                                Field1 = f.Field1,

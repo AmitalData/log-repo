@@ -1801,4 +1801,6 @@
     ReferencedTable="WeightUnits"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <Index
+   Columns="ShipmentPackagesId" />
 </Table>
