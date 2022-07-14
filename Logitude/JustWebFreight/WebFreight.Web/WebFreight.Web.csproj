@@ -1012,6 +1012,7 @@
     <Content Include="App_Code\DocumentFileController.cs" />
     <Content Include="App_Code\AuthnController.cs" />
     <Compile Include="AccountingModel\DomainServices\CargoTrackingDomainService.Shipment.cs" />
+    <Content Include="App_Code\ElasticIndexerWaterMarks.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustoemrTeam.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.PortTimeZone.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelArguments.cs" />

@@ -146,6 +146,7 @@
     <Compile Include="EntityLists\Generated\TeamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ToggleList.Generated.cs" />
+    <Compile Include="EntityMapping\IndexerWaterMarkMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionStatusMap.cs" />
     <Compile Include="EntityMapping\BIFoldersPermissionMap.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="EntityPOCOs\BusinessProcessQueue.cs" />
     <Compile Include="EntityPOCOs\BusinessRole.cs" />
     <Compile Include="EntityPOCOs\FeatureToggle.cs" />
+    <Compile Include="EntityPOCOs\IndexerWaterMark.cs" />
     <Compile Include="EntityPOCOs\LastRunDetail.cs" />
     <Compile Include="EntityPOCOs\LBPTeamMember.cs" />
     <Compile Include="EntityPOCOs\PriceStep.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Repsitories\BIReportsExecutionLogRepository.cs" />
     <Compile Include="Repsitories\BIReportsTypeRepository.cs" />
     <Compile Include="Repsitories\BusinessProcessQueueRepository.cs" />
+    <Compile Include="Repsitories\ElasticIndexerWaterMarkRepository.cs" />
     <Compile Include="Repsitories\BusinessRoleRepository.cs" />
     <Compile Include="Repsitories\FeatureToggleRepository.cs" />
     <Compile Include="Repsitories\Generated\BatchTaskExecutionRepository.Generated.cs" />
