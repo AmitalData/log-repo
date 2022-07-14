@@ -210,6 +210,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool ActiveForInterestCreditInvoice  { get; set; }
        [DataMember]
        public decimal? InterestCreditLimit  { get; set; }
+        [DataMember]
+        public decimal? InterestOpenBalance { get; set; }
        [DataMember]
        public string NameForPrintingCheques  { get; set; }
        [DataMember]

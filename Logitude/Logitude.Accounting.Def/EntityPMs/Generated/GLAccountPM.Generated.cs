@@ -2505,7 +2505,28 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string nameForPrintingCheques ;
+		private decimal? interestOpenBalance;
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public decimal? InterestOpenBalance
+		{
+
+			get
+			{
+				return interestOpenBalance;
+			}
+			set
+			{
+				if (interestOpenBalance != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "InterestOpenBalance", OldValue = interestOpenBalance, NewValue = value, PropertyType = "decimal?" };
+					NotifyPropertyChanged(values);
+					interestOpenBalance = value;
+				}
+
+			}
+		}
+		private string nameForPrintingCheques ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]

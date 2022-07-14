@@ -71,6 +71,7 @@ export class GLAccountInterestComponent extends BaseComponent {
                 this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);
                 this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", true);
                 this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", true);
+                this.UIProperties.SetEnabled("InterestOpenBalance", "GLAccount", true);
                 this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", true);
             }
             else if(this.EntityPM.IsSplitted){
@@ -78,6 +79,7 @@ export class GLAccountInterestComponent extends BaseComponent {
                 this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
                 this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
                 this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
+                this.UIProperties.SetEnabled("InterestOpenBalance", "GLAccount", false);
             }
         }
         else {
@@ -85,6 +87,7 @@ export class GLAccountInterestComponent extends BaseComponent {
                this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
                this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
                this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
+               this.UIProperties.SetEnabled("InterestOpenBalance", "false", true);
         }
     }
     SetWindowArgs(args) {
@@ -259,6 +262,12 @@ export class GLAccountInterestComponent extends BaseComponent {
     }
     set InterestCreditLimit(newValue: number) {
         this.EntityPM.InterestCreditLimit = newValue;
+    }
+    get InterestOpenBalance() {
+        return this.EntityPM.InterestOpenBalance;
+    }
+    set InterestOpenBalance(newValue: number) {
+        this.EntityPM.InterestOpenBalance = newValue;
     }
 
     get CreditAllotmentPercentage() { return this.EntityPM.CreditAllotmentPercentage; }
