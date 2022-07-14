@@ -850,8 +850,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                 case 'sigdouble':
                     {
                         if (decimalSigdoubleKeys.indexOf(key) > -1 || keyChar == this.decimalSeparator) {
-
-                            if (key == SUBTRACT || key == DASH || key == 173) {
+                            
+                            if (key == SUBTRACT || key == DASH || key == 173 || this.IsFranchDash(key, keyChar)) { 
 
                                 if (!AppTool.IsNullOrEmpty(this.TextValue) && this.TextValue.toString().indexOf('-') > -1) {
                                     var selection = window.getSelection().toString();
@@ -921,7 +921,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                 case 'integer':
                     {
                         if (integerKeys.indexOf(key) > -1) {
-                            if (key == SUBTRACT || key == DASH || key == 173) {
+                            if (key == SUBTRACT || key == DASH || key == 173 || this.IsFranchDash(key, keyChar)) {
 
                                 if (!AppTool.IsNullOrEmpty(this.TextValue) && this.TextValue.toString().indexOf('-') > -1) {
                                     var selection = window.getSelection().toString();
@@ -1155,7 +1155,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     {
                         if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == BACKSPACE || key == TAB || key == DELETE || key == END
                             || key == HOME || key == SHIFT || key == PAGEUP || key == PAGEDOWN || key == LEFT || key == UP || key == RIGHT || key == DOWN || key == SUBTRACT || key == DASH) {
-                            if (key == SUBTRACT || key == DASH) {
+                            if (key == SUBTRACT || key == DASH || this.IsFranchDash(key, keyChar)) {
 
                                 if (!AppTool.IsNullOrEmpty(this.TextValue) && this.TextValue.toString().indexOf('-') > -1) {
                                     var selection = window.getSelection().toString();
@@ -1193,6 +1193,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         else {
             return key;
         }
+    }
+
+    IsFranchDash(key: number, keyChar: string): boolean {
+        return (key == 54 && keyChar == '-');
     }
 
     onchange(event) {
