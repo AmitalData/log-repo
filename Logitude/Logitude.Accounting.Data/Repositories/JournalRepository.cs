@@ -209,6 +209,15 @@ namespace Logitude.Accounting.Data.Repositories
             return q;
         }
 
+        public IQueryable<Journal> GetQueryableFailedJournals()
+        {
+            string failedJournalStatus = "4";
+            var q = (from a in context.Journals
+                     where (a.StatusCode == failedJournalStatus)
+                     select a);
+            return q;
+        }
+
         public IQueryable<Journal> GetQueryablePending2ApproveOrdered(int tenant)
         {
             var q = (from a in context.Journals

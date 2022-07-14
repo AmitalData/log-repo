@@ -144,6 +144,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return haveQ.Any();
         }
 
+        public bool GetFailedJournlsForToday()
+        {
+            DateTime startDateTime = DateTime.Today; //Today at 00:00:00
+            DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1); //Today at 23:59:59
+            var failedJournals = repository.GetQueryableFailedJournals();
+            return (from j in failedJournals
+                    where (j.CreateDate >= startDateTime && j.CreateDate <= endDateTime)
+                    select j).Any();
+        }
+
         public bool GetAnyPendingApproved(IQueryable<string> GLAccountIDList, int tenant)
         {
             

@@ -3588,6 +3588,7 @@
     <Content Include="Monitoring\AutoSignUpMonitoring.aspx" />
     <Content Include="Monitoring\AzureDevOpsQueue.aspx" />
     <Content Include="Monitoring\BIReportsExecutionLogMonitoring.aspx" />
+    <Content Include="Monitoring\CheckFailedJournals.aspx" />
     <Content Include="Monitoring\CargoBuild.aspx" />
     <Content Include="Monitoring\CargoShipmentsWaiting.aspx" />
     <Content Include="Monitoring\CustomerTenantAccessMonitoring.aspx" />
@@ -5736,6 +5737,13 @@
     </Compile>
     <Compile Include="Monitoring\BIReportsExecutionLogMonitoring.aspx.designer.cs">
       <DependentUpon>BIReportsExecutionLogMonitoring.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\CheckFailedJournals.aspx.cs">
+      <DependentUpon>CheckFailedJournals.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CheckFailedJournals.aspx.designer.cs">
+      <DependentUpon>CheckFailedJournals.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\CargoBuild.aspx.cs">
       <DependentUpon>CargoBuild.aspx</DependentUpon>
