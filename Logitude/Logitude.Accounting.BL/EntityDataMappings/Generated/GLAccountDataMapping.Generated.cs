@@ -73,7 +73,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActiveForInterest, 
 	         InterestCalculationStartDate, 
 	         ActiveForInterestCreditInvoice, 
-	         InterestCreditLimit, 
+	         InterestCreditLimit,
+			 InterestOpenBalance, 
 	         NameForPrintingCheques, 
 	         Smallcashbook, 
 	         MinimumInterestInvoiceBilling, 
@@ -191,8 +192,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActiveForInterest, 
 	         InterestCalculationStartDate, 
 	         ActiveForInterestCreditInvoice, 
-	         InterestCreditLimit, 
-	         NameForPrintingCheques, 
+	         InterestCreditLimit,
+			 InterestOpenBalance,
+			 NameForPrintingCheques, 
 	         Smallcashbook, 
 	         MinimumInterestInvoiceBilling, 
 	         IsSplitted, 
@@ -497,7 +499,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.InterestCreditLimit = entityPM.InterestCreditLimit;
 			}
-			
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestOpenBalance))
+			{
+				entityPOCO.InterestOpenBalance = entityPM.InterestOpenBalance;
+			}
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
             {
 				entityPOCO.NameForPrintingCheques = entityPM.NameForPrintingCheques;
@@ -799,6 +806,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.InterestCreditLimit = entityPOCO.InterestCreditLimit;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InterestOpenBalance))
+			{
+				entityPM.InterestOpenBalance = entityPOCO.InterestOpenBalance;
+			}
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NameForPrintingCheques))
             {
 					entityPM.NameForPrintingCheques = entityPOCO.NameForPrintingCheques;
@@ -1094,7 +1106,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.InterestCreditLimit = entityPM.InterestCreditLimit;
             }
-			
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestOpenBalance))
+			{
+				oldEntityPM.InterestOpenBalance = entityPM.InterestOpenBalance;
+			}
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
             {
                 oldEntityPM.NameForPrintingCheques = entityPM.NameForPrintingCheques;

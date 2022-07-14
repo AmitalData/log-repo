@@ -622,7 +622,10 @@ export class GLAccountPM {
     public get InterestCreditLimit() { return this.interestCreditLimit; }
     public set InterestCreditLimit(newValue: number) { if (this.interestCreditLimit != newValue) { this.interestCreditLimit = newValue; this.MarkAsDirty("InterestCreditLimit"); } }
        
-	 
+    private interestOpenBalance: number;
+    public get InterestOpenBalance() { return this.interestOpenBalance; }
+    public set InterestOpenBalance(newValue: number) { if (this.interestOpenBalance != newValue) { this.interestOpenBalance = newValue; this.MarkAsDirty("InterestOpenBalance"); } }
+
     private nameForPrintingCheques: string;
     public get NameForPrintingCheques() { return this.nameForPrintingCheques; }
     public set NameForPrintingCheques(newValue: string) { if (this.nameForPrintingCheques != newValue) { this.nameForPrintingCheques = newValue; this.MarkAsDirty("NameForPrintingCheques"); } }
