@@ -4763,38 +4763,63 @@ User/Pass",
 
         }
 
-        List<ExcelOceanInsightStatistics> oceanInsightStatisticsSheet;
+        List<dynamic> oceanInsightStatisticsSheet;
+        List<ExcelOI> oceanInsightStatisticsSheet2;
+        int count = 0;
+        IBlobService storageservice;
         private void OIStatisticsButton_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => this.RunOIStatisticsStatistics());
-            thread.IsBackground = true;
-            thread.Start();
+            try
+            {
+                Thread thread = new Thread(() => this.RunOIStatisticsStatistics2());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception eee =" + ex.ToString() + " count" + this.count.ToString());
+            }
+
         }
 
-        private void RunOIStatisticsStatistics()
+        private void RunOIStatisticsStatistics2()
         {
             SetControlPropertyValue(OIStatisticslabel, "Text", "Reading...");
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
+            storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+            int tenant = 106;
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
-            IWorksheet sheet1 = workbook.Worksheets[0];
-            oceanInsightStatisticsSheet = new List<ExcelOceanInsightStatistics>();
-            ICommonDataContext context = CommonDataContext.GetContext(0);
 
+            oceanInsightStatisticsSheet2 = new List<ExcelOI>();
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
             var communications = (from a in context.CommunicationLogs
-                                  where a.Subject == "Ocean Insights Status"
-                                  select a).ToList();
+                                  where a.Subject == "Ocean Insights Status" && a.Tenant == tenant
+                                  select a);
 
-
+            DocumentRepository documentRepository = new DocumentRepository(tenant);
             foreach (var communicationLog in communications)
             {
-                DeserializeDocumentBody(communicationLog.DocumentId, communicationLog.Tenant);
+                DeserializeDocumentBody(communicationLog.DocumentId, communicationLog.Tenant, documentRepository);
             }
 
-            CreateWorkSheetHeaders_OceanInsightStatistics(sheet1);
-            workbook.SaveAs(@"C:\Users\DELL\OneDrive\Desktop\OIStatistics.xls");
+
+            IWorksheet sheet1 = workbook.Worksheets[0];
+            var range = "A1:DX1";
+            sheet1.Name = "Ocean Insight Statistics";
+            sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            sheet1.Range[range].ColumnWidth = 25;
+            count = 0;
+            DataTable dataTable = new DataTable();
+            dataTable = this.ConvertToDataTable(oceanInsightStatisticsSheet2.ToList());
+
+            sheet1.ImportDataTable(dataTable, true, 1, 1);
+            workbook.SaveAs(@"C:\Users\DELL\OneDrive\Desktop\OIStatistics\Tenant" + tenant.ToString() + "OIStatistics.xls");
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
