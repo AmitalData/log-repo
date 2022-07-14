@@ -1,7 +1,6 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Containers">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
-
     
 
 		DECLARE @Id as varchar(15)	

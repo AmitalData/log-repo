@@ -697,8 +697,9 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="Tenant,CommodityId" />
-  
+    Columns="Tenant,CommodityId" />  
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+   Columns="ContainerEntityId" />
 </Table>
