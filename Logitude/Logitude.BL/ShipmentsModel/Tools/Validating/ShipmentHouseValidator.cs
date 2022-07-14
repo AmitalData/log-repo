@@ -60,7 +60,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             ShipmentPM oldShipmentPM = (ShipmentPM)entityPM;
 
-            if (oldShipmentPM.IsOperationalClosed && !IsCustomField(item, oldShipmentPM.Tenant))
+            const string isOperationalClosedShipmentObjectFieldCode = "Shipment.IsOperationalClosed";
+
+            if (oldShipmentPM.IsOperationalClosed && !IsCustomField(item, oldShipmentPM.Tenant) && item.ObjectFieldCode != isOperationalClosedShipmentObjectFieldCode)
             {
                 throw new ApplicationException("Can't update operationally closed shipments");
             }

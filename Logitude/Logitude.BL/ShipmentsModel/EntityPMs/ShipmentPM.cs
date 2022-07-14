@@ -20,6 +20,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Id { get; set; }
 
         public bool IsHybrid { get; set; }
+        public bool IsMultiUpdate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BaseShipmentNumber { get; set; }

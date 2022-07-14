@@ -127,6 +127,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
                 SetNewValueToEntityPM(multiEntityUpdateData, entityPM, item);
             }
 
+            SetIsMultiUpdateValueToEntity(entityPM);
             ShipmentBaseValidator.ValidateUpdate(entityPM, oldEntityPM); //For now, untill move this to shipment service
             UpdateEntityArgs updateEntityArgs = GetUpdateEntityArgs(entityPM);
             InjectionUtil.Instance.UpdateEntity(updateEntityArgs);
@@ -171,10 +172,17 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
             if (propInfo != null) propInfo.SetValue(entity, fieldValue, null);
         }
 
+        private void SetIsMultiUpdateValueToEntity(object entity)
+        {
+            const string isMultiUpdateObjectFieldName = "IsMultiUpdate";
+            PropertyInfo propInfo = entity.GetType().GetProperty(isMultiUpdateObjectFieldName);
+            if (propInfo != null) propInfo.SetValue(entity, true, null);
+        }
+
         private void UpdateMultiEntityDataEntity(MultiEntityUpdateDataEntity multiEntityUpdateDataEntity, Exception exception)
         {
             multiEntityUpdateDataEntity.HasException = exception == null ? false : true;
-            multiEntityUpdateDataEntity.Exception = exception == null ? "" : exception.Message.ToString();
+            multiEntityUpdateDataEntity.Exception = exception == null ? "" : exception.InnerException == null ? exception.Message?.ToString() : exception.InnerException.Message?.ToString();
             multiEntityUpdateDataEntity.StatusCode = exception == null ? "D" : "F";
         }
     }
