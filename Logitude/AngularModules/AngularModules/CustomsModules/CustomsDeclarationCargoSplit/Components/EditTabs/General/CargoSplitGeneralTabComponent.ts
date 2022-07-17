@@ -189,7 +189,7 @@ export class CargoSplitGeneralTabComponent
                             this.FetchConsignment(myResponse, false);
                         });
                 }
-            });
+            }); 
     }
 
     Init() {
