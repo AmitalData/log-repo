@@ -21,7 +21,6 @@ import { TreatmentWayListService } from '../../../../Customs/Services/StandardLi
 import { DeclarationPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DecCargoSplitConExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/DecCargoSplitConExtendedPMService';
-import { Args } from 'Accounting/Components/Maintenance/AccountingPeriodsComponent';
 
 @Component({
 

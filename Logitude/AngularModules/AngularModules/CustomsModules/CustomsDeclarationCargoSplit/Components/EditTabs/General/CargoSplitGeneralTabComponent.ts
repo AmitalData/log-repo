@@ -42,7 +42,6 @@ import { CargoIdentifireTypeListService } from '../../../../../Customs/Services/
 import { DateTimeFormat } from 'Infrastructure/Utilities/DateTimeZone';
 import { stringify } from 'querystring';
 import { DecCargoSplitConComponent } from '../DecCargoSplitConComponent';
-import { Args } from 'Accounting/Components/Maintenance/AccountingPeriodsComponent';
 
 //import {DecCargoSplitConComponent} from '../DecCargoSplitConComponent';
 
