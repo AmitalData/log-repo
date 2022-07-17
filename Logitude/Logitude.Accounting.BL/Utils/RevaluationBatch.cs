@@ -119,7 +119,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     IAccountingContext context = AccountingContext.GetContext(tenant);
                     if (!String.IsNullOrEmpty(id))
