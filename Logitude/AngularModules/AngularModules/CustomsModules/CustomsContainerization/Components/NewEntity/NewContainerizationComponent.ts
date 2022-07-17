@@ -466,7 +466,7 @@ export class NewContainerizationComponent extends BaseComponent {
             this.declarationWebService.GetIsConsignmentConectContainerization(
                this.entityPM.Tenant, ArrayDeclartiosId,this.entityPM.Id,this.entityPM.CargoTypeCode,this.entityPM.ManifestNumber,this.entityPM.SecondCargoID,this.entityPM.ThirdCargoID
                 ).subscribe(res => {
-                    debugger;
+                  
                 if (res.Result.length==0) {
                     myConfirmWindow.Show(`שם לב , אין מזהה מטען משותף שמאפשר את ההמכלה של ההצהרה/ות שנבחרה/ו`);
                     myConfirmWindow.IsYesEnabled=false;
@@ -518,7 +518,7 @@ export class NewContainerizationComponent extends BaseComponent {
                         }
                         this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
                       this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
-                        debugger;
+                        
                      if(response.Result.list==null){
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         myConfirmWindow.Show(`שם לב , תהליך המכלה דורש מזהה מטען זהה לפחות בין 2 ההצהרות`);
@@ -533,7 +533,7 @@ export class NewContainerizationComponent extends BaseComponent {
                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                         confirmWindow.ShowNoButton=false;
                         SessionLocator.SelectedSession.StopBusyIndicator();
-                        debugger;
+                
                         if(response.Result.list.length==1){
 
                             var ContainerizationNumber=response.Result.list[0].ContainerizationNumber;
@@ -551,9 +551,6 @@ export class NewContainerizationComponent extends BaseComponent {
 
                                         EntityId: response.Result.list[0].Id,
                                         ObjectTableName: "Customs.Containerization"
-                                    });
-                                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                     });
                                 });       
                             }
