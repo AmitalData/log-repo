@@ -23,6 +23,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.CToolWorkflows;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
@@ -362,7 +363,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 SendAutomaticallyOceanOnsightsRequest();
                 if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
                 {
-                    AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
+                    EntityChangesMessageProducer.ProduceShipmentCreateMessage(entityPoco, entityPM);
+                    //AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
                 }
                 RunAutomationThatDependencyOnLastEntityUpdate();
 
@@ -396,6 +398,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.calculateProfit = false;
                 this.calculatePayables = false;
                 this.calculateReceivables = false;
+                Shipment shipmentPocoCopy = null;
+                ShipmentPM shipmentPMCopy = null;
 
                 if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                 {
@@ -537,7 +541,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                     this.UpdateShipmentFollowUpsCollection();
                     UpdateStandaloneShipments();
-                    
+
+                    shipmentPocoCopy = CloneObjectService.Clone(entityPoco);
+                    shipmentPMCopy = CloneObjectService.Clone(entityPM);
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
                     this.ComputeAgentComputed(entityPM, entityPoco);
                     entityRepository.Update(entityPoco);
@@ -602,8 +608,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 // Produce shipment update msg
                 //if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
                 //{
-                AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
+                //AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
                 //}
+                EntityChangesMessageProducer.ProduceShipmentUpdateMessage(shipmentPocoCopy, shipmentPMCopy);
 
                 scope.Complete();
                 #endregion

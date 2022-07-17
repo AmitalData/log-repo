@@ -6,6 +6,7 @@ using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.CToolWorkflows;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
@@ -54,7 +55,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
-            AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
+            EntityChangesMessageProducer.ProduceContainerCreateMessage(containerPoco, containerPm);
+            //AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
             MapShipmentConcurrencyFields();
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
 
@@ -63,6 +65,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.containerPm = entityPM;
+
             containerPm.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             this.SetUpdatedByUser();
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
@@ -79,11 +82,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
      
             this.HandleContainersExternalData(entityPM, containersExternal);
+
+            Container containerPocoCopy = CloneObjectService.Clone(containerPoco);
+            ContainerPM containerPMCopy = CloneObjectService.Clone(containerPm);
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
-            AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
+            EntityChangesMessageProducer.ProduceContainerUpdateMessage(containerPocoCopy, containerPMCopy);
+            //AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
             MapShipmentConcurrencyFields();
 
         }
