@@ -90,7 +90,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void HandelShipmentMasterDataFieldsChanges()
         {
-            if (CheckIfShipmentMasterDataFieldsUpdated()) {
+            if (CheckIfShipmentMasterDataFieldsUpdated())
+            {
                 this.UpdateShipmentPackagesChangeSetOperation();
             }
         }
@@ -298,7 +299,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool ShouldUpdateContainers()
         {
-            if (!initializer.IsUpdateFromUpdateTool && !IsContainerFeatureActivated()  )
+            if (!initializer.IsUpdateFromUpdateTool && !IsContainerFeatureActivated())
                 return false;
 
             if (initializer.EntityPM.TransportModeId != "O")
@@ -327,6 +328,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private bool IsContainerFeatureActivated()
         {
             return SecurityUtility.CheckFeature("Container", "ContainersActivated", this.initializer.Tenant);
+        }
+        public int CreatesShipmentContainers(IServiceInitializer serviceInitializer)
+        {
+            var numberOfCreated = 0;
+            initializer = (ShipmentServiceInitializer)serviceInitializer;
+            this.shipmentsContext = this.initializer.ShipmentContext;
+            this.containerService = new ContainerService(this.shipmentsContext, this.initializer.Tenant);
+            this.containerRepository = new ContainerRepository(this.shipmentsContext);
+            this.containerQuery = new ContainerQuery(containerRepository);
+
+            if (this.initializer.ShipmentPackagesChangeSet == null)
+                return 0;
+            this.initializer.Initialize();
+            foreach (ShipmentPackagePM itemPM in initializer.ShipmentPackagesChangeSet)
+            {
+                if (string.IsNullOrEmpty(itemPM.ContainerEntityId) && !string.IsNullOrEmpty(itemPM.ContainerNumber))
+                {
+                    this.CreateContainer(itemPM);
+                    numberOfCreated++;
+                }
+
+            }
+            return numberOfCreated;
         }
 
         private void CreateContainer(ShipmentPackagePM shipmentPackage)
@@ -475,7 +499,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     return true;
                 }
 
-                if(!string.IsNullOrEmpty(this.initializer.EntityPM.Master) && !this.initializer.IsFirstFourDigitsOfMasterNumberAreLetters())
+                if (!string.IsNullOrEmpty(this.initializer.EntityPM.Master) && !this.initializer.IsFirstFourDigitsOfMasterNumberAreLetters())
                 {
                     return true;
                 }
@@ -491,14 +515,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private bool IsShippingLineSendingByContainer()
         {
             var shipmentShippingLine = this.GetShipmentShippingLine();
- 
+
             if (shipmentShippingLine == null)
                 return false;
             if (shipmentShippingLine.IsSendingByBillOfLading)
                 return false;
             if (!shipmentShippingLine.IsSendingByContainer)
                 return false;
-            return true; 
+            return true;
         }
 
         private ShippingLinePM GetShipmentShippingLine()
@@ -511,7 +535,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void SendAutomaticallyOceanOnsightsRequestByContainer(string containerId)
         {
             if (FeatureToggleHelper.HasFeatureToggle("AOI", this.initializer.Tenant))
-            { 
+            {
                 // Container 
                 ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, containerId, true, this.initializer.Tenant, this.initializer.ShipmentContext);
                 if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForConatiner())
@@ -545,28 +569,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(this.initializer.ShipmentContext);
                 ShipmentPackage shipmentPackage = shipmentPackageRepository.GetSingleShipmentPackage(shipmentPackageId, this.initializer.Tenant);
-                
+
                 if (shipmentPackage != null)
                 {
                     this.UpdateStandaloneShipmentPackage(containerId);
                     this.UpdatePickupDeliveryPackage(shipmentPackage, containerId);
                     shipmentPackage.ContainerEntityId = containerId;
-                    initializer.ShipmentPackagesChangeSet.Where(a=>a.Id == shipmentPackage.Id).FirstOrDefault().ContainerEntityId = containerId;
+                    initializer.ShipmentPackagesChangeSet.Where(a => a.Id == shipmentPackage.Id).FirstOrDefault().ContainerEntityId = containerId;
                     shipmentPackageRepository.Update(shipmentPackage);
                     shipmentPackageRepository.SubmitChanges();
-                }                
+                }
             }
         }
         private void UpdateStandaloneShipmentPackage(string containerEntityId)
         {
             Shipment standaloneShipment = initializer.Repository.GetSingleShipment(initializer.EntityPM.StandaloneShipmentId, initializer.Tenant);
-            if(standaloneShipment != null)
+            if (standaloneShipment != null)
             {
                 List<ShipmentPackage> shipmentPackages = initializer.ShipmentPackageRepository.GetShipmentPackagesForShipmentTenant(standaloneShipment.Id, initializer.Tenant).ToList();
-                if(shipmentPackages != null)
+                if (shipmentPackages != null)
                 {
                     ShipmentPackage shipmentPackage = shipmentPackages.FirstOrDefault();
-                    if(shipmentPackage != null)
+                    if (shipmentPackage != null)
                     {
                         shipmentPackage.ContainerEntityId = containerEntityId;
                         initializer.ShipmentPackageRepository.Update(shipmentPackage);
@@ -585,7 +609,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 pickUpDeliveryPackage.ContainerEntityId = containerId;
                 shipmentPickUpDeliveryPackageRepository.Update(pickUpDeliveryPackage);
-            }            
+            }
         }
         private IQueryable<ShipmentPickUpDeliveryPackage> GetPickupDeliveryPackagesForThisShipment(string shipmentId, ShipmentPickUpDeliveryPackageRepository shipmentPickUpDeliveryPackageRepository)
         {
@@ -648,7 +672,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ShipmentDeliveryTruckerId = null;
                 return;
             }
-            
+
             if (shipmentDeliveryPM == null)
             {
                 return;
@@ -704,7 +728,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (!string.IsNullOrEmpty(shipmentPackage.EmptyContainerReturnId))
                 return false;
 
- 
+
 
             return true;
         }
@@ -784,7 +808,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             return null;
         }
 
-        private bool IsDeliveryHaveContainerEntityId(ShipmentDeliveryPM shipmentDeliveryPM,string containerId)
+        private bool IsDeliveryHaveContainerEntityId(ShipmentDeliveryPM shipmentDeliveryPM, string containerId)
         {
             if (shipmentDeliveryPM.ShipmentPickUpDeliveryPackages != null)
             {
@@ -795,14 +819,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             }
             return false;
         }
-        
+
 
         private string GetFirstPickupFromAddress(ShipmentPickUpPM shipmentPickUpPM)
         {
             if (shipmentPickUpPM == null)
                 return "";
 
-            if(shipmentPickUpPM.PickUpDeliveryFromTypeCode == "PART")
+            if (shipmentPickUpPM.PickUpDeliveryFromTypeCode == "PART")
             {
                 return GetPartnerCardAddress(shipmentPickUpPM.FromPartnerCardId);
             }
@@ -883,7 +907,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (partner == null)
                 return "";
 
-            return partner.EnglishName + ", " + partner.CityName + ", "+partner.CountryName;
+            return partner.EnglishName + ", " + partner.CityName + ", " + partner.CountryName;
         }
 
         private string GetPortCombinedCode(string portId)
@@ -913,8 +937,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
 
         private List<ContainerPM> GetDeliveryContainersToBeUpdatedByContainerEntityId(ShipmentDeliveryPM shipmentDeliveryPM)
-        {         
-            List<ContainerPM> containerPMs = new List<ContainerPM>(); 
+        {
+            List<ContainerPM> containerPMs = new List<ContainerPM>();
             if (shipmentDeliveryPM == null)
             {
                 return containerPMs;
@@ -966,7 +990,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private List<ContainerPM> GetPickUpContainersToBeUpdatedByContainerEntityId(ShipmentPickUpPM shipmentPickUpPM)
         {
             List<ContainerPM> containerPMs = new List<ContainerPM>();
-            if(shipmentPickUpPM == null)
+            if (shipmentPickUpPM == null)
             {
                 return containerPMs;
             }
@@ -984,11 +1008,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             foreach (ContainerPM containerPM in containerPMs)
             {
-                this.UpdateContainerFieldsFromPickUpFields(containerPM,updatedShipmentPickUp, isPackageDeleted);
+                this.UpdateContainerFieldsFromPickUpFields(containerPM, updatedShipmentPickUp, isPackageDeleted);
             }
         }
 
-        private void UpdateContainerFieldsFromDelivery(ShipmentDeliveryPM updatedShipmentDeliveryPM, List<ContainerPM> containerPMs ,bool isPackageDeleted)
+        private void UpdateContainerFieldsFromDelivery(ShipmentDeliveryPM updatedShipmentDeliveryPM, List<ContainerPM> containerPMs, bool isPackageDeleted)
         {
             foreach (ContainerPM containerPM in containerPMs)
             {
@@ -1017,9 +1041,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 containerPM.ShipmentDeliveryFrom = isPackageDeleted ? null : GetLastDeliveryFromAddress(updatedShipmentDeliveryPM);
                 containerPM.ShipmentDeliveryTo = isPackageDeleted ? null : GetLastDeliveryToAddress(updatedShipmentDeliveryPM);
-                containerPM.ShipmentDeliveryETA  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ETA;
-                containerPM.ShipmentDeliveryETD  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ETD;
-                containerPM.ShipmentDeliveryATA  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ATA;
+                containerPM.ShipmentDeliveryETA = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ETA;
+                containerPM.ShipmentDeliveryETD = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ETD;
+                containerPM.ShipmentDeliveryATA = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ATA;
                 containerPM.ShipmentDeliveryATD = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ATD;
                 containerPM.ShipmentDeliveryTruckerId = isPackageDeleted ? null : updatedShipmentDeliveryPM?.CarrierId;
                 containerService.Update(containerPM);
@@ -1058,8 +1082,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (containers == null)
                 return;
-            
-            foreach(ContainerPM containerPM in containers)
+
+            foreach (ContainerPM containerPM in containers)
             {
                 containerPM.ShipmentPickupFrom = null;
                 containerPM.ShipmentPickupTo = null;
@@ -1111,7 +1135,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             }
         }
 
-        public static void UpdateConatinarStatus(ShipmentPM shipmentPM,bool isEntityStatusUpdated ,IShipmentsContext shipmentContext)
+        public static void UpdateConatinarStatus(ShipmentPM shipmentPM, bool isEntityStatusUpdated, IShipmentsContext shipmentContext)
         {
             if (shipmentPM == null)
                 return;
