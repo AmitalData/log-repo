@@ -40,7 +40,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (CheckIfsAutonomyByType(customsAutonomyKeywords[2].Code, palestinianPrefix, tenant)) return true;
 
             if (SecurityUtility.CheckFeature("Customs.CourierMaster", "PendingByAddress", tenant)
-                && CheckIfsAutonomyByAddress(customsAutonomyKeywords[2].Code, importerAddress, tenant)) return true;
+                && CheckIfsAutonomyByAddress(customsAutonomyKeywords[0].Code, importerAddress, tenant)) return true;
 
             return false;
         }
