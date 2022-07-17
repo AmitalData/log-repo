@@ -31,11 +31,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //return null;
         }
 
+
+
+       
+
+
+
         public override void Update(LP_NG_8400_MSG01_LogisticPermitMessage customResponse, GenericRequestParams requestParams)
         {
 
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myQueryService = new DeclarationQueryService(context);
+
+            var cargoIdentifireTypeQuery = new CargoIdentifireTypeQueryService(context);
+            CargoIdentifireTypePM CargoIdentifireType = cargoIdentifireTypeQuery.GetSingle(customResponse.CargoIdentifier.cargoIdentifierType.ToString(), false, true);
+
             LogMessagingUtil.Instance.AppendLine("Analyze Logistic Permit Message (Declaration Id:" + customResponse.GeneralDetails.declarationID + ")");
             if (string.IsNullOrWhiteSpace(customResponse.GeneralDetails.declarationID))
             {
@@ -91,6 +101,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.RequestDescription = remarks + " מספר " + customResponse.CargoIdentifier.LogisticPermitDetails[0].logisticPermitId;
                 notificationRemarks = notificationRemarks + _MyDeclarationPM.CustomFileNo;
             }
+            else if (CargoIdentifireType.IsForDeclarationExport)
+            {
+                RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams, true);
+                                              
+                this.MyRequestSheetParam.RequestDescription = remarks + " מספר " + customResponse.CargoIdentifier.LogisticPermitDetails[0].logisticPermitId;
+            }
             else
             {
                 string logMess = "Couldn't find Declaration for Logistic Permit Message by ID(" + requestParams.AppicationId + ")";
@@ -100,65 +116,78 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 LogMessagingUtil.Instance.AppendLine(logMess);
             }
-
-            string notificationDeclaration = customResponse.GeneralDetails.declarationID;
-            string notificationCode = "";
-            if (customResponse.GeneralDetails.actionCode == 1)
+            if (this._MyDeclarationPM != null)
             {
-                notificationCode = "8400A";
-            }
-            else if (customResponse.GeneralDetails.actionCode == 2)
-            {
-                notificationCode = "8400C";
-            }
-
-            if (notificationCode != "")
-            {
-                string logisticPermitId = "";
-
-                if (customResponse.CargoIdentifier.LogisticPermitDetails.Count() > 0)
+                string notificationDeclaration = customResponse.GeneralDetails.declarationID;
+                string notificationCode = "";
+                if (customResponse.GeneralDetails.actionCode == 1)
                 {
-                    string containersNumber = "";
-                    logisticPermitId = customResponse.CargoIdentifier.LogisticPermitDetails[0].logisticPermitId;
-                    foreach (var logisticItem in customResponse.CargoIdentifier.LogisticPermitDetails)
-                    {
-                        containersNumber = logisticItem.containerNumber + "  " + containersNumber;
-                    }
-                    notificationRemarks = notificationRemarks + "\n" + "עבור מכולה " + containersNumber;
+                    notificationCode = "8400A";
                 }
-                UpdateNotification(this._MyDeclarationPM, notificationCode, notificationDeclaration, requestParams.Tenant, notificationRemarks, logisticPermitId);
-            }
+                else if (customResponse.GeneralDetails.actionCode == 2)
+                {
+                    notificationCode = "8400C";
+                }
 
+                if (notificationCode != "")
+                {
+                    string logisticPermitId = "";
+
+                    if (customResponse.CargoIdentifier.LogisticPermitDetails.Count() > 0)
+                    {
+                        string containersNumber = "";
+                        logisticPermitId = customResponse.CargoIdentifier.LogisticPermitDetails[0].logisticPermitId;
+                        foreach (var logisticItem in customResponse.CargoIdentifier.LogisticPermitDetails)
+                        {
+                            containersNumber = logisticItem.containerNumber + "  " + containersNumber;
+                        }
+                        notificationRemarks = notificationRemarks + "\n" + "עבור מכולה " + containersNumber;
+                    }
+                    UpdateNotification(this._MyDeclarationPM, notificationCode, notificationDeclaration, requestParams.Tenant, notificationRemarks, logisticPermitId);
+                }
+            }
+            
             UpdateLogisticPermit(customResponse, requestParams);
             if (_MyDeclarationPM != null && _MyDeclarationPM.Direction == "E")
-                RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams);
+            RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams, false);
             MyResponseData.Succeeded = true;
 
         }
 
-        private void RegisterStatusLogisticPermitInExportStorage(LP_NG_8400_MSG01_LogisticPermitMessage customResponse, GenericRequestParams requestParams)
+        private void RegisterStatusLogisticPermitInExportStorage(LP_NG_8400_MSG01_LogisticPermitMessage customResponse, GenericRequestParams requestParams, bool IsExportStorageAlone)
         {
+
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
             var logisticPermitQueryService = new ExportStorageQueryService(dbContext);
             Logitude.Customs.BL.EntityQueryServices.ExportStorageQueryService query;
             query = new Logitude.Customs.BL.EntityQueryServices.ExportStorageQueryService(requestParams.Tenant);
-            ExportStoragePM exportstorage = query.GetByCargoKeys( customResponse.CargoIdentifier.cargoIdentifierKey1, customResponse.CargoIdentifier.cargoIdentifierKey2, customResponse.CargoIdentifier.cargoIdentifierKey3, customResponse.CargoIdentifier.cargoIdentifierType, requestParams.Tenant);
+            ExportStoragePM exportstorage = query.GetByCargoKeys(customResponse.CargoIdentifier.cargoIdentifierKey1, customResponse.CargoIdentifier.cargoIdentifierKey2, customResponse.CargoIdentifier.cargoIdentifierKey3, customResponse.CargoIdentifier.cargoIdentifierType, requestParams.Tenant);
 
             var exportStorageUpdateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-            if (exportstorage!=null)
+            if (IsExportStorageAlone)
+            {
+                requestParams.AppicationId = exportstorage.Id;
+                LogMessagingUtil.Instance.AppendLine("ExportStorage No. " + exportstorage.Id);
+                var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                MyResponseData.ApplicationID = exportstorage.Id;
+                this.MyRequestSheetParam.EntityId1 = exportstorage.Id;
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
+
+            }
+            if (exportstorage != null)
             {
                 exportstorage.ChangeSetOp = ChangeSetOperation.Update;
                 exportstorage.ActionCode = customResponse?.GeneralDetails?.actionCode.ToString();
-                exportStorageUpdateService.Update(exportstorage, true);        
+                exportStorageUpdateService.Update(exportstorage, true);
 
                 var ER1TaskStatus = new int?[] { 4, 6, 8 };
                 if (ER1TaskStatus.Contains(customResponse?.GeneralDetails?.actionCode))
                 {
                     DateTime date = customResponse.ResponseContentHeader.TransmitionDateTime;
-                   MN_MSG2791_ExportDeliveryAnswerMessageResponseService.RaiseExportStorageStatus("HTR", "HTR", exportstorage, "", date);
+                    MN_MSG2791_ExportDeliveryAnswerMessageResponseService.RaiseExportStorageStatus("HTR", "HTR", exportstorage, "", date);
                 }
             }
-          
+
         }
         private void UpdateLogisticPermit(LP_NG_8400_MSG01_LogisticPermitMessage customResponse, GenericRequestParams requestParams)
         {
@@ -169,7 +198,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             Logitude.Customs.BL.EntityQueryServices.LogisticPermitQueryService query;
             query = new Logitude.Customs.BL.EntityQueryServices.LogisticPermitQueryService(requestParams.Tenant);
 
-            LogisticPermitPM logisticpermit = query.GetSinglePM(customResponse.CargoIdentifier.cargoIdentifierType, customResponse.CargoIdentifier.cargoIdentifierKey1, customResponse.CargoIdentifier.cargoIdentifierKey2, customResponse.CargoIdentifier.cargoIdentifierKey3 ,requestParams.Tenant);
+            LogisticPermitPM logisticpermit = query.GetSinglePM(customResponse.CargoIdentifier.cargoIdentifierType, customResponse.CargoIdentifier.cargoIdentifierKey1, customResponse.CargoIdentifier.cargoIdentifierKey2, customResponse.CargoIdentifier.cargoIdentifierKey3, requestParams.Tenant);
 
             var logisticPermitUpdateService = new LogisticPermitUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             if (logisticpermit != null)
@@ -178,7 +207,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 logisticpermit.ChangeSetOp = ChangeSetOperation.Update;
                 logisticpermit.TransmitDate = customResponse?.ResponseContentHeader?.TransmitionDateTime;
                 logisticpermit.ActionCode = customResponse?.GeneralDetails?.actionCode.ToString();
-               
+
                 logisticPermitUpdateService.Update(logisticpermit, true);
 
             }
