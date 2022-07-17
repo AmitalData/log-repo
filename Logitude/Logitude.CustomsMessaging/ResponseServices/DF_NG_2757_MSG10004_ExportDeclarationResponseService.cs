@@ -2432,7 +2432,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private string GetExceptionMsg(UnifreightIIG.Common.ExportDeclarationServiceReference.Exception ex)
         {
             List<string> fieldNames = new List<string>();
-            var fieldList = WCO.Instance.CreateDB().GetCopyList();
+            var fieldList = WCO.Instance.CreateDB(WCOTypeEnum.WCO_EX).GetCopyList();
             WCOErrorPointerModel res;
 
             if (ex.ExceptionParms != null)
