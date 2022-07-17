@@ -2972,7 +2972,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //InterfaceType = "C",
-            });            
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "DCACCFII",
+                InOut = InOutEnum.I.ToString(),
+                Description = "יצירת אישור לפרטי מכס שסומנו",
+                DcaPrefixName = "DCACCFII_OUT",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //InterfaceType = "C",
+            });
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "UCADPE",

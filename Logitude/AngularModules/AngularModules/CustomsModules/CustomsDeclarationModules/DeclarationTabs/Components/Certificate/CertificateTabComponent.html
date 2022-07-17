@@ -264,10 +264,17 @@
                                         </td>
                                         <td style="width:5px"></td>
 
-                                        <td>
+
+                                        <td style="width:80px">
                                             <button *ngIf="TaxExemptCode92" (click)="UpdateAllCertificateWithoutResponse()" [disabled]="DeclarationPM.Direction == 'E'?isDisableBtn92:IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">פטור 92 גורף</button>
                                         </td>
 
+                                        <td style="width:5px"></td>
+
+                                        <td  style="width:80px">
+                                            <button (click)="CreateCertificateForCustomsItems()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">הוספת םישור</button>
+                                        </td>
+                                        <td></td>
                                         <td style="width: 30px;">
                                             <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton>
                                         </td>
@@ -277,7 +284,7 @@
                                         <td colspan="2">
                                             <table>
                                                 <tr>
-                                                    <td style="width: 70px;">סוג אישור</td>
+                                                    <td style="width: 70px;">סוג םישור</td>
 
                                                     <td style="width:75px;left:79px">
                                                         <LogLov [ObjectFieldName]="'ConfirmationTypeCode'"

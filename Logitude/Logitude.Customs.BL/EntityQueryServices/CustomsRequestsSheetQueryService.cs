@@ -330,6 +330,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8326", // שאילתא לתצהיר יבואן
 "DCAMU", // multi update 
 "DCAUAC", // multi update 
+"DCACCFII",//יצירת אישור לפרטי מכס
 "DCACSIFF", // יצירת חשבון ספק מאקסל
 "2755T", // הגשת שטעון
 "2757T", // תשובה להגשת שטעון
@@ -461,6 +462,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2757",
 "DCAMU", // multi update 
 "DCAUAC",
+"DCACCFII",
 "DCACSIFF", // יצירת חשבון ספק מאקסל
 "2755T", // הגשת שטעון
 "2757T", // תשובה להגשת שטעון
