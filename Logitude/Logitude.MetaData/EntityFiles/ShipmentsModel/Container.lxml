@@ -22915,5 +22915,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TABSCUSTOMIZATION&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Container.Features.TABSCUSTOMIZATION&quot;"
+      FeatureDefaultText="&quot;Tabs Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

@@ -127,7 +127,7 @@ export class CustomizationMainComponent {
         if (this.IsCustomFieldsMenue) return true;
         if (!this.IsObjectTableFilterEnabled) return true;
         if (!this.IsCustomizationToggleActive) return false;
-        return this.HaveFieldsCustomization(table.Name) || this.HaveRulesCustomization(table.Name);
+        return this.HaveFieldsCustomization(table.Name) || this.HaveRulesCustomization(table.Name) || this.HaveTabsCustomization(table.Name);
     }
 
     HaveFieldsCustomization(objectTableName: string): boolean {
@@ -138,14 +138,20 @@ export class CustomizationMainComponent {
         return FeatureLocator.HasFeaturePermession(objectTableName, "RULESCUSTOMIZATION");
     }
 
+    HaveTabsCustomization(objectTableName: string): boolean {
+        return FeatureLocator.HasFeaturePermession(objectTableName, "TABSCUSTOMIZATION");
+    }
+
     public selectedRow: FieldsTranslations;
     public IsFieldsCustomizationEnabled: boolean = false;
     public IsRulesCustomizationEnabled: boolean = false;
+    public IsTabsCustomizationEnabled: boolean = false;
 
     Selecting(fieldsTranslations: FieldsTranslations) {
         this.selectedRow = fieldsTranslations;
         this.IsFieldsCustomizationEnabled = false;
         this.IsRulesCustomizationEnabled = false;
+        this.IsTabsCustomizationEnabled = false;
 
         if (fieldsTranslations == null) {
             this.IsButtonEnabled = false;
@@ -154,6 +160,7 @@ export class CustomizationMainComponent {
         this.IsButtonEnabled = true;
         this.IsFieldsCustomizationEnabled = this.HaveFieldsCustomization(fieldsTranslations.ObjectTableName);
         this.IsRulesCustomizationEnabled = this.HaveRulesCustomization(fieldsTranslations.ObjectTableName);
+        this.IsTabsCustomizationEnabled = this.HaveTabsCustomization(fieldsTranslations.ObjectTableName);
     }
 
     StandardFieldsClicked() {
@@ -195,7 +202,7 @@ export class CustomizationMainComponent {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "Screens Layout: " + this.selectedRow.DefaultText;
                 logWindow.IsFillScreen = true;
-                logWindow.WindowArgs = { ObjectTableID: this.selectedRow.ObjectTableID };
+                logWindow.WindowArgs = { ObjectTableID: this.selectedRow.ObjectTableID, IsObjectTableFilterEnabled: this.IsObjectTableFilterEnabled, IsTabsCustomizationEnabled: this.IsTabsCustomizationEnabled };
                 logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/ScreenLayoutComponent');
             });
         }
