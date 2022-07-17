@@ -932,7 +932,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     ItemsSource: ObservableCollection = new ObservableCollection([]);
     SearchText: string = "";
     Search(SearchText: string) {
-        this.SearchText = SearchText;
+        this.SearchText = !AppTool.IsNullOrEmpty(SearchText)? SearchText.toLowerCase():SearchText;
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
     public SearchFilterChangedEvent: any;
