@@ -41,6 +41,7 @@ import { CargoIdentifireTypePM } from '../../../../../Customs/EntityPMs/CargoIde
 import { CargoIdentifireTypeListService } from '../../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { DateTimeFormat } from 'Infrastructure/Utilities/DateTimeZone';
 import { stringify } from 'querystring';
+import { DeclarationListService } from 'Customs/Services/StandardLists/DeclarationListService';
 
 //import {DecCargoSplitConComponent} from '../DecCargoSplitConComponent';
 
@@ -118,8 +119,11 @@ export class CargoSplitGeneralTabComponent
     //    this.entityArgs = this._InputParam = val;
     //    this.Init();
     //}
-    _EntityResourceFinished: boolean = false
+    _EntityResourceFinished: boolean = false;
+    isNewFromMainMenu: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    direction: string = '';
+
     constructor(private EntityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new DeclarationCargoSplitPM();
@@ -352,7 +356,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     SetNewWizardArgs(args: any) {
-        this.IsNewEntity = args['IsNewEntity'];
+        this.isNewFromMainMenu = this.IsNewEntity = args['IsNewEntity'];
         if (this.IsDisplayOnly != true && args.IsDisplayOnly == true) {
             this.IsDisplayOnly = args.IsDisplayOnly;
         }
@@ -391,7 +395,20 @@ export class CargoSplitGeneralTabComponent
                 //this.ItemsList.Insert(item);
             }
         }
-        //this.EntityPM = winArg.declarationPM;
+        
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.DeclarationId))
+            this.getDirction();
+
+            //this.EntityPM = winArg.declarationPM;
+    }
+
+    async getDirction() {
+        const res: ServiceResponse = await new Promise<ServiceResponse>(resolve => 
+            new DeclarationListService()
+            .getSingle(this.EntityPM.DeclarationId)
+            .subscribe((res: ServiceResponse) => resolve(res)));
+
+        this.direction = (res.Result as DeclarationList).Direction;
     }
 
     AddItem() {

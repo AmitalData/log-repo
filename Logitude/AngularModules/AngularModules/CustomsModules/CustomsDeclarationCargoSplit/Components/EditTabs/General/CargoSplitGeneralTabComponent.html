@@ -122,7 +122,7 @@
 <div *ngIf="_EntityResourceFinished && EntityPM" style="margin:10px;" class="MediaFill">
     <table>
         <tr>
-            <td *ngIf="IsNewEntity && false" class="AppLeftMenuBackgroundRTL" style="width:150px;">
+            <td *ngIf="IsNewEntity && (isNewFromMainMenu || direction === 'E')" class="AppLeftMenuBackgroundRTL" style="width:150px;">
                 <table>
                     <tr> 
                         <td>
