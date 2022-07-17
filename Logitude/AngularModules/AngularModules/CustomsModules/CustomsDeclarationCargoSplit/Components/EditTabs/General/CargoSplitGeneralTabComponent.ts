@@ -41,6 +41,8 @@ import { CargoIdentifireTypePM } from '../../../../../Customs/EntityPMs/CargoIde
 import { CargoIdentifireTypeListService } from '../../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { DateTimeFormat } from 'Infrastructure/Utilities/DateTimeZone';
 import { stringify } from 'querystring';
+import { DecCargoSplitConComponent } from '../DecCargoSplitConComponent';
+import { Args } from 'Accounting/Components/Maintenance/AccountingPeriodsComponent';
 
 //import {DecCargoSplitConComponent} from '../DecCargoSplitConComponent';
 
@@ -158,7 +160,6 @@ export class CargoSplitGeneralTabComponent
         if (this.IsDisplayOnly) {
             this.SetDisplayFields(this.ResponseStatusCode);
         }
-
     }
 
 
@@ -550,6 +551,9 @@ export class CargoSplitGeneralTabComponent
             this.SetDisable(value);
         }
 
+        this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent).RefreshTabs(this.IsExportDeclaration ? 'E' : 'I'))
+
+
     }
     SetDisable(value) {
         value == "Import" ? this.IsImportDeclaration = true : this.IsImportDeclaration = false;
@@ -624,7 +628,8 @@ export class CargoSplitGeneralTabComponent
 
     BuildTabs() {
 
-        var tab;
+
+        var tab: any;
         this.Tabs = [];
 
         if (this.EntityPM.DecCargoSplitCons != null && this.EntityPM.DecCargoSplitCons.length > 0) {
@@ -689,6 +694,9 @@ export class CargoSplitGeneralTabComponent
                 this.CustomFileNoTextChanged("ImporterOnly");
             }
         }
+
+
+
         var tab = new LogTab();
         Tab.ImporterCode = this.ImporterCode;
         tab.EntityPM = Tab;
@@ -775,7 +783,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     CustomFileNoTextChanged(searchtext) {
-
+        this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent).RefreshTabs(this.IsExportDeclaration ? 'E' : 'I'))
         var errorMessage = "";
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             this.IsCustomsFileRetrieved = false;
@@ -795,10 +803,10 @@ export class CargoSplitGeneralTabComponent
                         this.CustomFileNo = "";
                         this.EntityPM.DeclarationId = null;
                         if (this.IsExportDeclaration) {
-                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile"); 
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile");
                         }
-                        if (this.IsImportDeclaration) { 
-                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile"); 
+                        if (this.IsImportDeclaration) {
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
                         }
                         //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
                         this.MessageCustomsFileWindow(errorMessage);
@@ -813,12 +821,12 @@ export class CargoSplitGeneralTabComponent
                         this.NoConnectedConsignmentEnableField();
                     } else {
                         if (this._LastFetchDeclarationList.Direction == "E" && this.IsImportDeclaration) {
-                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile"); 
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
                             this.MessageCustomsFileWindow(errorMessage);
                             return;
                         }
                         if (this._LastFetchDeclarationList.Direction == "I" && this.IsExportDeclaration) {
-                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile"); 
+                            errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile");
                             this.MessageCustomsFileWindow(errorMessage);
                             return;
                         }
