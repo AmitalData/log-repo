@@ -377,6 +377,27 @@ export class MultiCertificatesService {
 
     }
 
+    CreateCertificateForInvoiceItems(declarationId: string, customFileNo: string, attachmentTypeCode: string, reqConfirmationTypeCode: string, resConfirmationTypeCode: string, certificateNumber: string, selectedInvoiceItemsKeys: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return defer(() => {
+            var callURL = this._apiUrl + '/GetCreateCertificateForInvoiceItems?' + 'declarationId=' + declarationId + '&customFileNo=' + customFileNo
+                + '&attachmentTypeCode=' + attachmentTypeCode + '&reqConfirmationTypeCode=' + reqConfirmationTypeCode + '&resConfirmationTypeCode='
+                + resConfirmationTypeCode + '&certificateNumber=' + certificateNumber + '&selectedInvoiceItemsKeys=' + selectedInvoiceItemsKeys;
+
+            return this._http.get(callURL, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+
+
+        });
+
+
+    }
 
 
 

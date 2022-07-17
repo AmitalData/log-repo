@@ -16,6 +16,7 @@ import { DeclarationTapagTabComponent } from './Components/Tapag/DeclarationTapa
 import { DeclarationCollateralsComponent } from './Components/Collateral/DeclarationCollateralsComponent';
 import { DeclarationPhysicalCheckTabComponent } from './Components/PhysicalCheck/DeclarationPhysicalCheckTabComponent';
 import { CreateEditTicketComponent } from './Components/Certificate/CreateEditTicketComponent';
+import { NewCertificateGoodsItemsSelectionComponent } from './Components/Certificate/NewCertificateGoodsItemsSelectionComponent';
 import { CertificateSelectionComponent } from './Components/Certificate/CertificateSelectionComponent';
 import { DeclarationCargoSplitTabComponent } from './Components/CargoSplit/DeclarationCargoSplitTabComponent';
 import { ImporterDetailsComponent } from './Components/General/ImporterDetails/ImporterDetailsComponent';
@@ -47,6 +48,7 @@ export const Components =
         ItemTaxesMoreFieldsComponent,
         DeclarationPhysicalCheckTabComponent,
         CreateEditTicketComponent,
+        NewCertificateGoodsItemsSelectionComponent,
         CertificateSelectionComponent,
         DeclarationTapagTabComponent,
         DeclarationCollateralsComponent,
@@ -77,6 +79,7 @@ export class ModuleDeclarations {
             case "DeclarationCorrectionsComponent": { myResult = DeclarationCorrectionsComponent; break; }
             case "CertificateTabComponent": { myResult = CertificateTabComponent; break; }
             case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
+            case "NewCertificateGoodsItemsSelectionComponent": { myResult = NewCertificateGoodsItemsSelectionComponent; break; }
 
             case "ConstraintsDetailsComponent": { myResult = ConstraintsDetailsComponent; break; }
             case "AgentObjectionComponent": { myResult = AgentObjectionComponent; break; }

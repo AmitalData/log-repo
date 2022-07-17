@@ -462,6 +462,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                            DCAInUCBMultiUpdate_MsgMessagingService>
                            ((new DCAInUCBMultiUpdate_MsgMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                         DCAInUCBCreateCertificateForInvoiceItems_MsgMessagingService>
+                         ((new DCAInUCBCreateCertificateForInvoiceItems_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             MN_MSG8370_CargoSplitMessagingService>

@@ -26,6 +26,7 @@ import { CustomsDocumentsTicketsExtendedService } from '../../../../../Customs/S
 import { CustomsDocumentsTicketPMService } from '../../../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
 import { DocumentsFilingPMService } from '../../../../../Common/Services/StandardPMs/DocumentsFilingPMService';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 @Component({
     
     templateUrl: './CreateEditTicketComponent.html',
@@ -143,14 +144,13 @@ export class CreateEditTicketComponent extends BaseComponent {
 
     }
 
-    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean) {
-        /*var selectInvoicesOnly = customParam;
+    ShowSelectionComponent() {
         var windowArgs: any = {};
-        var certificates: any[] = [];
-        windowArgs.DeclarationPM = entityPM;
-        windowArgs.selectInvoicesOnly = selectInvoicesOnly;
-        windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
-        windowArgs.IsEntityDisplayOnly = isEntityDisplayOnly;
+        windowArgs.DeclarationPM = this.Parent.DeclarationPM;
+        windowArgs.AttachmentTypeCode = this.AttachmentTypeCode;
+        windowArgs.ReqConfirmationTypeCode = this.ReqConfirmationTypeCode;
+        windowArgs.ResConfirmationTypeCode = this.ResConfirmationTypeCode;
+        windowArgs.CertificateNumber = this.CertificateNumber;
         var logWindow = new LogitudeWindow();
         logWindow.Height = 700;
         logWindow.Width = 1000;
@@ -158,14 +158,15 @@ export class CreateEditTicketComponent extends BaseComponent {
         logWindow.WindowArgs = windowArgs;
 
         logWindow.ComponentLoaded.subscribe(comp => {
-            logWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    this.SelectionInvoicesCompleted(comp, customsDocumentsTicket);
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                if ($event == "ok") {
+                    //this.SelectionInvoicesCompleted(comp);
+                    SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
                 }
             });
         });
 
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');*/
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/NewCertificateGoodsItemsSelectionComponent');
     }
 
     SetFieldsDisabled(isNew: boolean) {
@@ -644,7 +645,8 @@ export class CreateEditTicketComponent extends BaseComponent {
     UpdateTicket() {
 
         if (this.IsNewCertificate) {
-            //this.ShowSelectionComponent();
+            this.ShowSelectionComponent();
+            return;
         }
 
 
