@@ -627,8 +627,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         ExportStoragePM exportStoragePM = new ExportStorageQueryService(entityPM.Tenant).GetSingle(exportStorageKey.Key, true, false);
                         if (entityPM.Id != exportStoragePM.DeclarationId) continue;
 
-                        ConsignmentRepository consignmentRepository1 = new ConsignmentRepository(entityPM.Tenant);
-                        List<Consignment> consignmentsByExportStorage = consignmentRepository1.GetAllByExportStorageID(entityPM.Tenant, exportStorageKey.Key);
+                        ConsignmentRepository consignmentRepository = new ConsignmentRepository(entityPM.Tenant);
+                        List<Consignment> consignmentsByExportStorage = consignmentRepository.GetAllByExportStorageID(entityPM.Tenant, exportStorageKey.Key);
 
 
                         if (consignmentsByExportStorage.Any(cons => cons.DeclarationId != entityPM.Id ||
