@@ -146,6 +146,10 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ShipmentSubTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.RegionalTaxId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SpecialServicesTypeId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConsigneeNotImporterId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConsigneeNotImporterAddressId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConsigneeNotImporterContactId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Quotes");
@@ -346,6 +350,10 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.IncludeImportDutyCharges).HasColumnName("IncludeImportDutyCharges");
             this.Property(t => t.InsuranceValue).HasColumnName("InsuranceValue");
             this.Property(t => t.ConnectedToOpportunity).HasColumnName("ConnectedToOpportunity");
+            this.Property(t => t.ConsigneeNotImporterId).HasColumnName("ConsigneeNotImporterId");
+            this.Property(t => t.ConsigneeNotImporterAddressId).HasColumnName("ConsigneeNotImporterAddressId");
+            this.Property(t => t.ConsigneeNotImporterContactId).HasColumnName("ConsigneeNotImporterContactId");
+            this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
@@ -405,6 +413,10 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.RegionalTax).WithMany().HasForeignKey(d => d.RegionalTaxId);
             this.HasOptional(d => d.SpecialServicesType).WithMany().HasForeignKey(d => d.SpecialServicesTypeId);
             this.HasOptional(t => t.ValidByType).WithMany().HasForeignKey(d => d.ValidByTypeCode);
+            this.HasOptional(t => t.ConsigneeNotImporterAddress).WithMany().HasForeignKey(d => d.ConsigneeNotImporterAddressId);
+            this.HasOptional(t => t.ConsigneeNotImporterCard).WithMany().HasForeignKey(d => d.ConsigneeNotImporterId);
+            this.HasOptional(t => t.ConsigneeNotImporterContact).WithMany().HasForeignKey(d => d.ConsigneeNotImporterContactId);
+
         }
     }
 }

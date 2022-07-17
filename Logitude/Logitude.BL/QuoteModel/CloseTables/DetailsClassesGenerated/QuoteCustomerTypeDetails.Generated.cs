@@ -60,6 +60,14 @@ namespace Logitude.BL.QuoteModel
                 SearchFields = "shi,shipper", 
                 ShowInLOV = true, 
 			});
+			 
+            all.Add(new QuoteCustomerTypeDetails()
+            {    
+                SearchFields = "CNI", 
+                Code = "Consignee Not Importer", 
+                Name = "CNI,Consignee Not Importer,True,", 
+                ShowInLOV = true, 
+			});
 			
             return all;
        }

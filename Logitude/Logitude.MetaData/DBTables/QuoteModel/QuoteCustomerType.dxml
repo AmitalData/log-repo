@@ -5,6 +5,13 @@
   DBType="Main"
   Module="Quote">
   <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="Code"
     Type="varchar"
     Size="4">
@@ -18,13 +25,6 @@
     Size="40">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="ShowInLOV"

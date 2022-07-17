@@ -378,6 +378,25 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsMultiCurrency { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConsigneeNotImporterId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConsigneeNotImporterAddressId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConsigneeNotImporterContactId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConsigneeNotImporterName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConsigneeNotImporterNote { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConsigneeNotImporterReference { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string NotifyId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

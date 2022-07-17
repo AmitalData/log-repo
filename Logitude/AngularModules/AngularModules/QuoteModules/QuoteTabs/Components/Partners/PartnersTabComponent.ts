@@ -124,17 +124,25 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
         if (this.EntityPM.NotifyId != null) {
             this.ItemsCollection.push(new PartnerItem(this, "NOTFY"));
         }
+
+        if (this.EntityPM.ConsigneeNotImporterId != null) {
+            this.ItemsCollection.push(new PartnerItem(this, "CONNT"));
+        }
+
     }
 
     public IsAddDisabled_SHIPR: boolean = false;
     public IsAddDisabled_CONSI: boolean = false;
     public IsAddDisabled_AGENT: boolean = false;
     public IsAddDisabled_NOTFY: boolean = false;
+    public IsAddDisabled_CONNT: boolean = false;
+
     SetAddButtonsIsDisabled() {
         this.IsAddDisabled_SHIPR = this.EntityPM.ShipperId == null ? false : true;
         this.IsAddDisabled_CONSI = this.EntityPM.ConsigneeId == null ? false : true;
         this.IsAddDisabled_AGENT = this.EntityPM.AgentId == null ? false : true;
         this.IsAddDisabled_NOTFY = this.EntityPM.NotifyId == null ? false : true;
+        this.IsAddDisabled_CONNT = this.EntityPM.ConsigneeNotImporterId == null ? false : true;
     }
 
     AddPartner(myCode: string) {
@@ -354,6 +362,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { this.PartnerIndex = 1; this.FullCode = "Consignee"; break }
             case "AGENT": { this.PartnerIndex = 2; this.FullCode = "Agent"; break }
             case "NOTFY": { this.PartnerIndex = 3; this.FullCode = "Notify"; break }
+            case "CONNT": { this.PartnerIndex = 10; this.FullCode = "ConsigneeNotImporter"; break }
         }
 
         this.PartnerTypeName = TextCodeTranslator.Translate("Quote.F." + this.FullCode + "Id");
@@ -365,6 +374,8 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { return this.EntityPM.ConsigneeName; }
             case "AGENT": { return this.EntityPM.AgentName; }
             case "NOTFY": { return this.EntityPM.NotifyName; }
+            case "CONNT": { return this.EntityPM.ConsigneeNotImporterName; }
+
             default: { return null; }
         }
     }
@@ -408,6 +419,13 @@ export class PartnerItem extends BaseComponent {
                     break;
                 }
             }
+            case "CONNT": {
+                if (this.EntityPM.ConsigneeNotImporterName != newValue) {
+                    this.EntityPM.ConsigneeNotImporterName = newValue
+                }
+
+                break;
+            }
         }
     }
        
@@ -446,7 +464,11 @@ export class PartnerItem extends BaseComponent {
                     myResult = "AG,AL,CG,CS,SG,SL,TR,VD,WH";
                     break;
                 }
-
+            case "CONNT":
+                {
+                    myResult = "AG,CS";
+                    break;
+                }
             default: {
                 myResult = "CS";
                 break;
@@ -463,6 +485,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI":
             case "CSTMR":
             case "NOTFY":
+            case "CONNT":
                 {
                     myResult = true;
                     break
@@ -492,6 +515,8 @@ export class PartnerItem extends BaseComponent {
             //case "AGENT": { return this.EntityPM.AgentNote; }
             case "CSTMR": { return this.EntityPM.CustomerNote; }
             case "NOTFY": { return this.EntityPM.NotifyNote; }
+            case "CONNT": { return this.EntityPM.ConsigneeNotImporterNote; }
+
             default: { return null; }
         }
     }
@@ -535,6 +560,14 @@ export class PartnerItem extends BaseComponent {
 
                 break;
             }
+            case "CONNT": {
+                if (this.EntityPM.ConsigneeNotImporterNote != newValue) {
+                    this.EntityPM.ConsigneeNotImporterNote = newValue
+                }
+
+                break;
+            }
+
         }
     }
 
@@ -574,6 +607,10 @@ export class PartnerItem extends BaseComponent {
                 {
                     this.EntityPM.QuoteCustomerTypeCode = "NOT";
                     break;
+                }
+            case "CONNT":
+                {
+                    this.EntityPM.QuoteCustomerTypeCode = "CNI"; break;
                 }
 
             default:
@@ -629,6 +666,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { return "AgentId"; }
             case "CSTMR": { return "CustomerId"; }
             case "NOTFY": { return "NotifyId"; }
+            case "CONNT": { return "ConsigneeNotImporterId"; }
             default: { return null; }
         }
     }
@@ -640,6 +678,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { return this.AgentId; }
             case "CSTMR": { return this.CustomerId; }
             case "NOTFY": { return this.NotifyId; }
+            case "CONNT": { return this.ConsigneeNotImporterId; }
             default: { return null; }
         }
     }
@@ -650,6 +689,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { this.AgentId = newValue; break; }
             case "CSTMR": { this.CustomerId = newValue; break; }
             case "NOTFY": { this.NotifyId = newValue; break; }
+            case "CONNT": { this.ConsigneeNotImporterId = newValue; break; }
         }
     }
 
@@ -730,6 +770,16 @@ export class PartnerItem extends BaseComponent {
         }
     }
 
+    get ConsigneeNotImporterId() {
+        return this.EntityPM.ConsigneeNotImporterId;
+    }
+    set ConsigneeNotImporterId(newValue: string) {
+        if (this.EntityPM.ConsigneeNotImporterId != newValue) {
+            this.EntityPM.ConsigneeNotImporterId = newValue;
+            this.GetPartnerCard();
+        }
+    }
+
     // AddressId
     get PartnerAddressIdProperty() {
         switch (this.Code) {
@@ -737,6 +787,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { return "ConsigneeAddressId"; }
             case "AGENT": { return "AgentAddressId"; }
             case "NOTFY": { return "NotifyAddressId"; }
+            case "CONNT": { return "ConsigneeNotImporterAddressId"; }
             default: { return null; }
         }
     }
@@ -747,6 +798,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { return this.ConsigneeAddressId; }
             case "AGENT": { return this.AgentAddressId; }
             case "NOTFY": { return this.NotifyAddressId; }
+            case "CONNT": { return this.ConsigneeNotImporterAddressId; }
             default: { return null; }
         }
     }
@@ -756,6 +808,17 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { this.ConsigneeAddressId = newValue; break; }
             case "AGENT": { this.AgentAddressId = newValue; break; }
             case "NOTFY": { this.NotifyAddressId = newValue; break; }
+            case "CONNT": { this.ConsigneeNotImporterAddressId = newValue; break; }
+        }
+    }
+
+    get ConsigneeNotImporterAddressId() {
+        return this.EntityPM.ConsigneeNotImporterAddressId;
+    }
+    set ConsigneeNotImporterAddressId(newValue: string) {
+        if (this.EntityPM.ConsigneeNotImporterAddressId != newValue) {
+            this.EntityPM.ConsigneeNotImporterAddressId = newValue;
+            this.GetPartnerAddress();
         }
     }
 
@@ -807,6 +870,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { return "AgentContactId"; }
             case "CSTMR": { return "CustomerContactId"; }
             case "NOTFY": { return "NotifyContactId"; }
+            case "CONNT": { return "ConsigneeNotImporterContactId"; }
             default: { return null; }
         }
     }
@@ -818,6 +882,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { return this.AgentContactId; }
             case "CSTMR": { return this.CustomerContactId; }
             case "NOTFY": { return this.NotifyContactId; }
+            case "CONNT": { return this.ConsigneeNotImporterContactId; }
             default: { return null; }
         }
     }
@@ -828,9 +893,18 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { this.AgentContactId = newValue; break; }
             case "CSTMR": { this.CustomerContactId = newValue; break; }
             case "NOTFY": { this.NotifyContactId = newValue; break; }
+            case "CONNT": { this.ConsigneeNotImporterContactId = newValue; break; }
         }
     }
-
+    get ConsigneeNotImporterContactId() {
+        return this.EntityPM.ConsigneeNotImporterContactId;
+    }
+    set ConsigneeNotImporterContactId(newValue: string) {
+        if (this.EntityPM.ConsigneeNotImporterContactId != newValue) {
+            this.EntityPM.ConsigneeNotImporterContactId = newValue;
+            this.GetPartnerContact();
+        }
+    }
     get ShipperContactId() {
         return this.EntityPM.ShipperContactId;
     }
@@ -891,6 +965,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT":
             case "CSTMR":
             case "NOTFY":
+            case "CONNT":
                 {
                     myResult = true;
                 }
@@ -905,6 +980,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { return "AgentReference1"; }
             case "CSTMR": { return "CustomerReference1"; }
             case "NOTFY": { return "NotifyReference1"; }
+            case "CONNT": { return "ConsigneeNotImporterReference"; }
             default: { return null; }
         }
     }
@@ -915,6 +991,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { return this.AgentReference1; }
             case "CSTMR": { return this.CustomerReference1; }
             case "NOTFY": { return this.NotifyReference1; }
+            case "CONNT": { return this.ConsigneeNotImporterReference; }
             default: { return null; }
         }
     }
@@ -925,9 +1002,15 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { this.AgentReference1 = newValue; break; }
             case "CSTMR": { this.CustomerReference1 = newValue; break; }
             case "NOTFY": { this.NotifyReference1 = newValue; break; }
+            case "CONNT": { this.ConsigneeNotImporterReference = newValue; break; }
         }
     }
-
+    get ConsigneeNotImporterReference() { return this.EntityPM.ConsigneeNotImporterReference; }
+    set ConsigneeNotImporterReference(value: string) {
+        if (this.EntityPM.ConsigneeNotImporterReference != value) {
+            this.EntityPM.ConsigneeNotImporterReference = value;
+        }
+    }
     get NotifyReference1() {
         return this.EntityPM.NotifyReference1;
     }

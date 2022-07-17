@@ -15,6 +15,7 @@ namespace Logitude.BL.QuoteModel.CloseTables
        public const string Notify = "NOT";  
        public const string Other = "OTH";  
        public const string Shipper = "SHI";  
+       public const string CNIConsigneeNotImporterTrue = "Consignee Not Importer";  
     }
 }
 
