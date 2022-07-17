@@ -1,108 +1,89 @@
-﻿using Logitude.Customs.Def.EntityPMs;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Utils;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.Resolvers;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.CargoTracking.Data;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
+using Logitude.Customs.BL.StimulReport;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Helpers;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.StorageService;
+using Logitude.Update.Helper;
+using Logitude.Update.PatchDistribution;
+using Logitude.Update.SandBox;
+using Microsoft.Practices.Unity;
+using Microsoft.ServiceBus.Messaging;
+using Microsoft.VisualBasic.FileIO;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure.Helpers;
+using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using System.Data;
+using System.Data.Common;
+using System.Data.Entity.Validation;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows.Forms;
 using System.Xml;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using WebFreight.Web.MetaDataUpdate;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Simplog.Server.Infrastructure.Azure;
-using Microsoft.ServiceBus.Messaging;
-using Logitude.BL.CommonDataModel.EntityLists;
-using System.Data.Entity.Validation;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Customs.BL.StimulReport;
-using Logitude.Server.Tools;
-using WebFreight.Web.MetaDataUpdate.SendBox;
-using System.Runtime.Serialization;
 using System.Xml.Schema;
-using WebFreight.Web.CommonDataModel.DomainServices;
-using Microsoft.Practices.Unity;
-using Logitude.BL.Helpers;
-using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
-using WebFreight.Web.Helpers;
-using System.Diagnostics;
-using System.Threading;
-using System.Reflection;
-using System.Threading.Tasks;
-using WebFreight.Web.InfrastructureModel;
-using System.Drawing;
-using Simplog.Data.InfrastructureModel.Repositories;
-using System.Text;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Logitude.Customs.Data.Repsitories;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.EntityKeys;
-using Microsoft.VisualBasic.FileIO;
-using System.Configuration;
-using System.Data.SqlClient;
-using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.BL.Utils;
-using System.Data.Common;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Data.InfrastructureModel;
-using System.Text.RegularExpressions;
-using Logitude.Server.Tools.QueueService;
-using Simplog.Global.Data.GlobalModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using Logitude.BL.InvoiceModel.Tools.EntityService;
-using Simplog.Data.InvoiceModel;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.Customs.BL.PatchDistribution;
-using Logitude.Update.PatchDistribution;
-using System.Collections;
-using WebFreight.Web.WebServices;
-using Logitude.Server.Tools.StorageService;
-using System.Web;
-using Logitude.Server.Tools.Resolvers;
-using Logitude.BL.Resolvers;
-using WebFreight.Web.AccountingModel;
-using Logitude.CRM.Data.EntityPOCOs;
-using Logitude.CRM.Data.Repsitories;
-using Simplog.Data.Helpers;
-using Logitude.BL.CommonDataModel.EntityOtherServices;
-using Logitude.CargoTracking.Data;
-using Logitude.CargoTracking.Data.EntityPOCOs;
-using Logitude.BL.DataContracts;
-using Logitude.Update.Helper;
-using Simplog.Server.Infrastructure.Interfaces;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Update.SandBox;
-using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
-using WebFreight.Web.Security;
-using Logitude.Accounting.Data.DataContract;
 using System.Xml.Serialization;
+using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.Helpers.Analyzers;
-using Syncfusion.XlsIO;
-using System.Data;
-using System.ComponentModel;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using WebFreight.Web.MetaDataUpdate;
+using WebFreight.Web.MetaDataUpdate.SendBox;
+using WebFreight.Web.WebServices;
 
 namespace Logitude.Update
 {
@@ -124,6 +105,10 @@ namespace Logitude.Update
                 MessageBox.Show("Exception eee =" + eee.ToString());
                 throw;
             }
+
+            label24.Text = "for Output box, please fill with the path you want to \n save the file to."
+                + "\n"
+            + "ex.: C:\\Users\\Dell\\Desktop\\OIStatistics";
 
             Label.CheckForIllegalCrossThreadCalls = false;
             Panel.CheckForIllegalCrossThreadCalls = false;
@@ -4766,58 +4751,62 @@ User/Pass",
         private List<ExcelOI> oceanInsightStatisticsSheet2;
         private int count = 0;
         private IBlobService storageservice;
+        private Stopwatch OIStopWatch;
         private void OIStatisticsButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(OI_textBox.Text))
+            try
             {
-                MessageBox.Show("Please enter tenant to start");
+                Thread thread = new Thread(() => this.RunOIStatistics());
+                thread.IsBackground = true;
+                thread.Start();
             }
-
-            else
+            catch (Exception ex)
             {
-                try
-                {
-                    Thread thread = new Thread(() => this.RunOIStatistics());
-                    thread.IsBackground = true;
-                    thread.Start();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Exception eee =" + ex.ToString() + " count" + this.count.ToString());
-                }
+                MessageBox.Show("Exception eee =" + ex.ToString() + " count" + this.count.ToString());
             }
         }
 
         private void RunOIStatistics()
         {
-            SetControlPropertyValue(OIStatisticslabel, "Text", "Generating...");
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
+            OITimer.Start();
+            OIStopWatch = new Stopwatch();
+            OIStopWatch.Start();
+
+            SetControlPropertyValue(OIStatisticslabel, "Text", "Generating...");            
 
             storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
 
-            //int tenant = 106;
             DateTime date_2021 = new DateTime(2021, 1, 1);
-            int tenant = Convert.ToInt32(OI_textBox.Text);
+            int tenant = 0;
+            int.TryParse(OI_textBox.Text, out tenant);
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
 
             oceanInsightStatisticsSheet2 = new List<ExcelOI>();
-            ICommonDataContext context = CommonDataContext.GetContext(tenant);
-            var communications = (from a in context.CommunicationLogs
-                                  where a.Subject == "Ocean Insights Status" && a.Tenant == tenant
-                                  && a.CreateDate >= date_2021 && a.CreateDate <= DateTime.Now
-                                  select a);
+            ICommonDataContext context = CommonDataContext.GetContext(0);
 
-            DocumentRepository documentRepository = new DocumentRepository(tenant);
+            List<CommunicationLog> communications = context.CommunicationLogs.Where(a => a.Subject == "Ocean Insights Status"
+                                                            && !string.IsNullOrEmpty(a.AWBNumber)
+                                                            && a.CreateDate >= date_2021 && a.CreateDate <= DateTime.Now)
+                                                            .GroupBy(x => new { x.Tenant, x.AWBNumber })
+                                                            .Select(x => x.OrderByDescending(y => y.CreateDate)
+                                                            .FirstOrDefault())
+                                                            .OrderByDescending(x => x.CreateDate).ToList();
+
+            if(tenant > 0)
+            {
+                communications = communications.Where(d => d.Tenant == tenant).ToList();
+            }
+
+            DocumentRepository documentRepository = new DocumentRepository(0);
             foreach (var communicationLog in communications)
             {
                 DeserializeDocumentBody(communicationLog.DocumentId, communicationLog.Tenant, documentRepository);
             }
 
             IWorksheet sheet1 = workbook.Worksheets[0];
-            var range = "A1:EC1";
+            var range = "A1:ED1";
             sheet1.Name = "Ocean Insight Statistics";
             sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
@@ -4828,11 +4817,11 @@ User/Pass",
             dataTable = this.ConvertToDataTable(oceanInsightStatisticsSheet2.ToList());
 
             sheet1.ImportDataTable(dataTable, true, 1, 1);
-            //workbook.SaveAs(@"C:\Users\DELL\OneDrive\Desktop\OIStatistics\Tenant" + tenant.ToString() + "OIStatistics.xls");
-            workbook.SaveAs(@"C:\Users\Dell\Desktop\OIStatistics\Tenant" + tenant.ToString() + "OIStatistics.xls");
+            workbook.SaveAs(textBox4.Text + @"\OIStatistics.xls");
 
-            stopWatch.Stop();
-            TimeSpan ts = stopWatch.Elapsed;
+            OITimer.Stop();
+            OIStopWatch.Stop();
+            TimeSpan ts = OIStopWatch.Elapsed;
             SetControlPropertyValue(OIStatisticslabel, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
             SetControlPropertyValue(OIStatisticslabel, "ForeColor", Color.Green); // timer
             SetControlPropertyValue(OIStatisticslabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
@@ -4856,11 +4845,11 @@ User/Pass",
                     MemoryStream memorystream = new MemoryStream(fileData);
                     XmlSerializer serializer = new XmlSerializer(typeof(ArrayOfQueueTask));
                     var externalTasksQueues = (ArrayOfQueueTask)serializer.Deserialize(memorystream);
-                    AnalyzeOceanInsightsParametersXML(externalTasksQueues);
+                    AnalyzeOceanInsightsParametersXML(externalTasksQueues, tenant);
                 }
             }
         }
-        private void AnalyzeOceanInsightsParametersXML(ArrayOfQueueTask externalTasksQueues)
+        private void AnalyzeOceanInsightsParametersXML(ArrayOfQueueTask externalTasksQueues, int tenant)
         {
             var oceanInsightsQueueTask = externalTasksQueues.QueueTask.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
             if (oceanInsightsQueueTask != null)
@@ -4869,11 +4858,11 @@ User/Pass",
                 if (oceanInsightsParameters != null)
                 {
                     var value = oceanInsightsParameters.Value;
-                    this.ReadOceanInsightsParametersXMLFields2(value);
+                    this.ReadOceanInsightsParametersXMLFields2(value, tenant);
                 }
             }
         }
-        private void ReadOceanInsightsParametersXMLFields2(string value)
+        private void ReadOceanInsightsParametersXMLFields2(string value, int tenant)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(value);
@@ -5257,6 +5246,7 @@ User/Pass",
 
                 oceanInsightStatisticsSheet2.Add(new ExcelOI()
                 {
+                    tenant = tenant,
                     container_number = container_number,
                     createdDate = ConvertStringToDateTime(createdDate),
                     carrier_scac = carrier_scac,
@@ -5452,7 +5442,14 @@ User/Pass",
 
             return dateTimeString;
         }
-
+        private void OITimer_Tick(object sender, EventArgs e)
+        {
+            if (OIStopWatch != null)
+            {
+                TimeSpan ts = OIStopWatch.Elapsed;
+                SetControlPropertyValue(OIStatisticslabel, "Text", "Generating... " + ts.ToString(@"hh\:mm\:ss"));
+            }
+        }
 
         private void UpdateShipmentOrderButton_Click(object sender, EventArgs e)
         {
@@ -5808,6 +5805,7 @@ User/Pass",
     } 
     public class ExcelOI
     {
+        public int? tenant { get; set; }
         public string container_number { get; set; }
         public DateTime? createdDate { get; set; }
         public string carrier_scac { get; set; }

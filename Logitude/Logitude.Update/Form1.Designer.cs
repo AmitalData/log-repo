@@ -262,6 +262,10 @@
             this.label15 = new System.Windows.Forms.Label();
             this.StopCreateContainer = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.OITimer = new System.Windows.Forms.Timer(this.components);
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1836,6 +1840,9 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.label24);
+            this.tabPage2.Controls.Add(this.label22);
+            this.tabPage2.Controls.Add(this.textBox4);
             this.tabPage2.Controls.Add(this.label19);
             this.tabPage2.Controls.Add(this.OI_textBox);
             this.tabPage2.Controls.Add(this.UpdateEntity);
@@ -1999,7 +2006,7 @@
             // OIStatisticslabel
             // 
             this.OIStatisticslabel.AutoSize = true;
-            this.OIStatisticslabel.Location = new System.Drawing.Point(744, 264);
+            this.OIStatisticslabel.Location = new System.Drawing.Point(744, 289);
             this.OIStatisticslabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.OIStatisticslabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.OIStatisticslabel.Name = "OIStatisticslabel";
@@ -2857,6 +2864,37 @@
             this.StopCreateContainer.UseVisualStyleBackColor = true;
             this.StopCreateContainer.Click += new System.EventHandler(this.StopCreateContainer_Click);
             // 
+            // OITimer
+            // 
+            this.OITimer.Enabled = true;
+            this.OITimer.Interval = 1000;
+            this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(794, 266);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(137, 20);
+            this.textBox4.TabIndex = 114;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(746, 269);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(42, 13);
+            this.label22.TabIndex = 115;
+            this.label22.Text = "Output:";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(747, 321);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(41, 13);
+            this.label24.TabIndex = 116;
+            this.label24.Text = "label24";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3153,6 +3191,10 @@
         private System.Windows.Forms.ProgressBar CraeteContainerProgressBar;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox OI_textBox;
+        private System.Windows.Forms.Timer OITimer;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox textBox4;
     }
 }
 
