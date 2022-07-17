@@ -506,7 +506,7 @@ namespace Logitude.Accounting.BL.DataContract
             }
             foreach (TaxDeductionReportLine item in groupeddeductionLines)
             {
-                var deductionPercentage = Math.Round((double)((item.TaxDeductionLocalAmount == 0 ? 0 : item.TaxDeductionLocalAmount / (decimal)item.AmountInLocalCurrency) * 100), 2);
+                var deductionPercentage = Math.Round((double)((item.TaxDeductionLocalAmount == 0 ? 0 : item.TaxDeductionLocalAmount / (decimal)item.AmountInLocalCurrency) * 100), MidpointRounding.AwayFromZero);
                 ByVendorList groupedbyVendor = new ByVendorList()
                 {
                     Month = item.MonthOfRegisterDate,
