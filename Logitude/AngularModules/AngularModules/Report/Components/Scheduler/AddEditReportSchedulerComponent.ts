@@ -12,6 +12,7 @@ import { AppTool } from 'Infrastructure/Tools';
 import { BIReportPMService } from '../../../Infrastructure/Services/StandardPMs/BIReportPMService';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { DWSubQueryPMService } from '../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 @Component({
     
     templateUrl: './AddEditReportSchedulerComponent.html',
@@ -32,6 +33,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     public BIReportEntity: any;
     public IsBIReport: boolean;
     public IsNew: boolean = true;
+    public OldReportSchedulerDetails;
     private CurrentSession = SessionLocator.SelectedSession;
     schedulerExtendedPMService: SchedulerExtendedPMService;
     TemplateType: any;
@@ -96,7 +98,10 @@ export class AddEditReportSchedulerComponent implements OnInit {
             });
     }
 
+
     LoadData(myResponse) {
+        this.OldReportSchedulerDetails = myResponse?.Result?.ReportDetails;
+
         if (this.IsBIReport && !this.IsNew) {
             this.LoadBIReport(myResponse?.Result?.ReportDetails?.BIReportEntityId);
         }
@@ -316,6 +321,20 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SaveButtonClicked() {
+        if (this.PageChild_RETASK && !this.PageChild_RETASK.NextButtonClicked()) {
+            this.ChangeSelectedLocation("RETASK");
+            return;
+        }
+        if (!this.IsBIReport && this.PageChild_PRREP && !this.PageChild_PRREP.ValidateSelectedFilters()) {
+            this.ChangeSelectedLocation("PRREP");
+            return;
+        }
+
+        if (!this.DataContext.IsFTP && !this.IsNew && AppTool.IsNullOrEmpty(this.OldReportSchedulerDetails?.Recepients?.To) && !this.PageChild_OPEMA) {
+            this.PageChild_RETASK?.parentComponent?.ValidationErrorsList?.push("Please add at least one contact");
+            return;
+        }
+
         if (this.IsBIReport && this.IsNew) {
             this.SaveNewDWQueryData();
         }
@@ -367,16 +386,45 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     private SaveReportSchedulerDetails() {
         const reportSchedulerDetails: ReportSchedulerDetails = {
-            ReportFilterItems: this.PageChild_PRREP.GetReportFilterItems(),
-            ReportTemplateId: this.PageChild_PRREP.GetReportTemplateId(),
-            ReportTemplateType: this.PageChild_PRREP.GetReportTemplateType(),
+            ReportFilterItems: this.GetReportFilterItems(),
+            ReportTemplateId: this.PageChild_PRREP ? this.PageChild_PRREP.GetReportTemplateId() : this.OldReportSchedulerDetails?.ReportTemplateId,
+            ReportTemplateType: this.PageChild_PRREP ? this.PageChild_PRREP.GetReportTemplateType() : this.OldReportSchedulerDetails?.ReportTemplateType,
             Recepients: this.GetAllRecepients(),
-            MainCustomerFieldName: this.PageChild_PRREP.GetReportFilterMainCustomerFieldName(),
+            MainCustomerFieldName: this.PageChild_PRREP ? this.PageChild_PRREP.GetReportFilterMainCustomerFieldName() : this.OldReportSchedulerDetails?.MainCustomerFieldName,
             CreatedByUserId: SessionLocator.LoggedUserId,
             BIReportEntityId: null,
             DWQueryId: null
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
+    }
+
+    private GetReportFilterItems() {
+        if (this.PageChild_PRREP) {
+            return this.PageChild_PRREP.GetReportFilterItems()
+        }
+
+        if (!this.OldReportSchedulerDetails) {
+            return [];
+        }
+
+        return this.GetOldReportFilterItems();
+    }
+
+    private GetOldReportFilterItems() {
+        this.OldReportSchedulerDetails.ReportFilterItems.forEach(reportFilterItem => {
+            this.SetNullObjectFieldToNullValue(reportFilterItem);
+        });
+
+        return this.OldReportSchedulerDetails.ReportFilterItems;
+    }
+
+    private SetNullObjectFieldToNullValue(reportFilterItem) {
+        if (reportFilterItem.FieldValue[0]['@nil'] == 'true')
+            reportFilterItem.FieldValue = null;
+        if (reportFilterItem.FieldValue2[0]['@nil'] == 'true')
+            reportFilterItem.FieldValue2 = null;
+        if (reportFilterItem.FieldValue3[0]['@nil'] == 'true')
+            reportFilterItem.FieldValue3 = null;
     }
 
     private SaveBIReportSchedulerDetails(bIReportEntityId, dWQueryId, isUpdate) {
@@ -392,16 +440,16 @@ export class AddEditReportSchedulerComponent implements OnInit {
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
 
-        if (isUpdate) {
+        if (isUpdate && this.PageChild_PRREP) {
             this.PageChild_PRREP.SaveBIReportScheduler();
         }
     }
 
     GetAllRecepients() {
         var recepients: ReportSchedulerRecepients = new ReportSchedulerRecepients();
-        recepients.To = this.PageChild_OPEMA?.ToEmailLists?.toString();
-        recepients.Cc = this.PageChild_OPEMA?.CcEmailLists?.toString();
-        recepients.Bcc = this.PageChild_OPEMA?.BccEmailLists?.toString();
+        recepients.To = this.PageChild_OPEMA ? this.PageChild_OPEMA?.ToEmailLists?.toString() : this.OldReportSchedulerDetails?.Recepients?.To;
+        recepients.Cc = this.PageChild_OPEMA ? this.PageChild_OPEMA?.CcEmailLists?.toString() : this.OldReportSchedulerDetails?.Recepients?.Cc;
+        recepients.Bcc = this.PageChild_OPEMA ? this.PageChild_OPEMA?.BccEmailLists?.toString() : this.OldReportSchedulerDetails?.Recepients?.Bcc;
         return recepients;
     }
 
@@ -441,15 +489,26 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.SetSelectedItem("RETASK");
     }
 
-    DisableFinishButton() {
-        if ((this.PageChild_OPEMA && this.PageChild_OPEMA.ToEmailLists.length != 0)
-            || this.DataContext.IsFTP)
-            return false;
-        return true;
+    DisableFinishButton() { 
+        if (this.PageChild_OPEMA && this.PageChild_OPEMA.ToEmailLists.length == 0) return true;
+        if (!this.IsBIReport && this.PageChild_PRREP && !this.IsNew && !this.PageChild_PRREP.ValidateSelectedFilters()) return true;
+        if (this.IsNew && this.PageChild_PRREP && this.DataContext.IsFTP) return false;
+        if (this.IsNew && (!this.PageChild_PRREP || !this.PageChild_OPEMA)) return true;
+
+        return false;
     }
 
     CloseButtonClicked() {
-        this.PageChild_RETASK.RejectChanges();
-        this.CurrentSession.CloseCurrentWindow();
+        var confirmMsg = "Are you sure you want to leave this page without saving the report?";
+
+        var confirmWindow = new ConfirmWindow();
+
+        confirmWindow.Show(confirmMsg);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (!confirmWindow.Yes) return;
+
+            this.PageChild_RETASK.RejectChanges();
+            this.CurrentSession.CloseCurrentWindow();
+        });
     }
 }
