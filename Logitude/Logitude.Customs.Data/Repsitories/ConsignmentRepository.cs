@@ -106,6 +106,17 @@ namespace Logitude.Customs.Data.Repsitories
 
 
 
+
+        public List<Consignment> GetAllByExportStorageID(int tenant,string ExportStorageID)
+        {
+            return (from a in context.Consignments
+                   where a.Tenant == tenant && a.ExportStoragesId == ExportStorageID
+                   select a).ToList();
+        }
+
+
+
+
   
             //partial void onRemove(Consignment entity)
             //{
@@ -129,7 +140,11 @@ namespace Logitude.Customs.Data.Repsitories
             //    throw new Exception("preventing Clear Consignments - Validation (CALL#291407)");
             //}
 
-        }
+
+
+    }
+
+
 
 
 }

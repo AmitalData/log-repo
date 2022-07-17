@@ -49,6 +49,7 @@ using Logitude.Customs.BL.CloseTables;
 using System.Text.RegularExpressions;
 using Logitude.Customs.BL.BL;
 
+
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class DeclarationUpdateService
@@ -590,17 +591,54 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if(entityPM.Direction == "E" && entityPM.TransportModeId == "O")
                 {
-                    DeclarationPM oldDeclaration = new DeclarationQueryService(entityPM.Tenant).GetSingle(entityPM.Id, true, false);
 
-                    oldDeclaration?.Consignments.ForEach(oldCon =>
+                    Dictionary<string, List<string>> dicExp = new Dictionary<string, List<string>>();
+                    // check if tabs delete
+                    var deleteConsignment = entityPM.Consignments.Where(x => x.ChangeSetOp == ChangeSetOperation.Delete && x.ExportStoragesId != null).ToList();
+                   
+                    if (deleteConsignment.Any())
                     {
-                        bool isDisconnect = oldCon.ExportStoragesId != null && !entityPM.Consignments.Any(con => oldCon.DeclarationId == con.DeclarationId && oldCon.ManifestNumber == con.ManifestNumber && oldCon.SecondCargoID == con.SecondCargoID && oldCon.ThirdCargoID == con.ThirdCargoID);
-                        if (isDisconnect)
-                            DeleteExportStorage(entityPM.Tenant, oldCon.ExportStoragesId);
-                    });
 
-                    entityPM.Consignments.FindAll(con => con.ExportStoragesId != null && con.ChangeSetOp == ChangeSetOperation.Delete)
-                        .ForEach(x => DeleteExportStorage(x.Tenant, x.ExportStoragesId));
+                        foreach (var item in deleteConsignment)
+                        {
+                            if (!(dicExp.ContainsKey(item.ExportStoragesId)))
+                                dicExp.Add(item.ExportStoragesId, new List<string>());
+                            dicExp[item.ExportStoragesId].Add(item.ConsignmentNumber.ToString());
+                        }
+                    }
+                    // check if comsignment update
+                    DeclarationPM oldDeclaration = new DeclarationQueryService(entityPM.Tenant).GetSingle(entityPM.Id, true, false);
+                  
+                     var updateConsignment = oldDeclaration?.Consignments.Where(oldCon => oldCon.ExportStoragesId != null && !entityPM.Consignments.Any(con => oldCon.DeclarationId == con.DeclarationId && oldCon.ManifestNumber == con.ManifestNumber && oldCon.SecondCargoID == con.SecondCargoID && oldCon.ThirdCargoID == con.ThirdCargoID)).ToList();
+
+                    if (updateConsignment.Any())
+                    {
+
+                        foreach (var item in updateConsignment)
+                        {
+                            if (!(dicExp.ContainsKey(item.ExportStoragesId)))
+                                dicExp.Add(item.ExportStoragesId, new List<string>());
+                            dicExp[item.ExportStoragesId].Add(item.ConsignmentNumber.ToString());
+                        }
+                    }
+
+                    foreach (var exportStorageKey in dicExp)
+                    {
+                        ExportStoragePM exportStoragePM = new ExportStorageQueryService(entityPM.Tenant).GetSingle(exportStorageKey.Key, true, false);
+                        if (entityPM.Id != exportStoragePM.DeclarationId) continue;
+
+                        ConsignmentRepository consignmentRepository1 = new ConsignmentRepository(entityPM.Tenant);
+                        List<Consignment> consignmentsByExportStorage = consignmentRepository1.GetAllByExportStorageID(entityPM.Tenant, exportStorageKey.Key);
+
+
+                        if (consignmentsByExportStorage.Any(cons => cons.DeclarationId != entityPM.Id ||
+                         !exportStorageKey.Value.Contains(cons.ConsignmentNumber.ToString()))) continue;
+
+                            DeleteExportStorage(entityPM.Tenant, exportStorageKey.Key);
+
+
+                    }
+
                 }
             }
             finally
