@@ -54,6 +54,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     public IsPriceStepsAreaVisible: boolean = false;
     public IsCustomerGroupVisible: boolean = false;
     public SellerToolTip: string;
+    public ContainerTypeDependencyFilter: string;
     constructor() {
         super();
         this.myService = new TariffPMService();
@@ -120,6 +121,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
             this.VisibleContainerTypeAreaInOFS = true;
             this.HasAContainerTypeUOM = false;
+            this.ContainerTypeDependencyFilter = this.EntityPM.TypeCode == "OFS" ? "O" : null;
         }
 
         this.SetPriceStepsVisibility();
