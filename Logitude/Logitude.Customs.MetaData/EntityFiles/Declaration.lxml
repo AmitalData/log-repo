@@ -25058,6 +25058,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
 
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DocumentAndDocumentWithDifferentCustomsReference&quot;"
+      DefaultText="&quot;A document and a document with a different customs reference&quot;"
+      LocalDefaultText="&quot;לא ניתן לקשר מסמך עם סימוכין מכס שונה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
