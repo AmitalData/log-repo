@@ -56,7 +56,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             var containerizationStatusCodeQueryService = new ContainerizationStatusCodeQueryService(entityPOCO.Tenant);
             entityPM.ContainerizationStatusName = containerizationStatusCodeQueryService.GetSingle(entityPOCO.ContainerizationStatus,false,true)?.Name;
-            var containerizationCargoID = (!string.IsNullOrEmpty(entityPOCO.CargoTypeCode) ? (entityPOCO.CargoTypeCode + "-") : "") + (!string.IsNullOrEmpty(entityPOCO.ManifestNumber) ? (entityPOCO.ManifestNumber + "-") : "") + (!string.IsNullOrEmpty(entityPOCO.SecondCargoID) ? (entityPOCO.SecondCargoID + "-") : "") + (!string.IsNullOrEmpty(entityPOCO.ThirdCargoID) ? (entityPOCO.ThirdCargoID + "-") : "");
+            
+            var containerizationCargoID = (!string.IsNullOrEmpty(entityPOCO.ManifestNumber) ? (entityPOCO.ManifestNumber + "-") : "") + (!string.IsNullOrEmpty(entityPOCO.SecondCargoID) ? (entityPOCO.SecondCargoID + "-") : "") + (!string.IsNullOrEmpty(entityPOCO.ThirdCargoID) ? (entityPOCO.ThirdCargoID + "-") : "");
             if (!string.IsNullOrEmpty(containerizationCargoID)) {
             containerizationCargoID = containerizationCargoID.Substring(0, (containerizationCargoID.Length - 1));
             }

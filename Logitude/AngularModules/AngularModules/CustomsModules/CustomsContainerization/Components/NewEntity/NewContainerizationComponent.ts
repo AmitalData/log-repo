@@ -526,10 +526,23 @@ export class NewContainerizationComponent extends BaseComponent {
                          
                      }
                      else{
-                    
+                        let confirmWindow = new ConfirmWindow();
+                        confirmWindow.Title = "המכלות שנוצרו";
+                        confirmWindow.Width = 350;
+                        confirmWindow.Height = 200;
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                        confirmWindow.ShowNoButton=false;
                         SessionLocator.SelectedSession.StopBusyIndicator();
+                        debugger;
                         if(response.Result.list.length==1){
 
+                            var ContainerizationNumber=response.Result.list[0].ContainerizationNumber;
+                            var msg = 'נוצרה סה"כ '+ response.Result.list.length +" המכלה: "+ ContainerizationNumber;
+                            
+                            confirmWindow.Show(msg);
+
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
+                                 if(confirmWindow.Yes == true){
                             this.CurrentSession.CurrentWindow.Close("0");
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                                 .then(cmpRef => {
@@ -543,7 +556,8 @@ export class NewContainerizationComponent extends BaseComponent {
                                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                     });
                                 });       
-                           
+                            }
+                        });
                         }
                         else{
                              response.Result.list.forEach(element => {
@@ -553,19 +567,14 @@ export class NewContainerizationComponent extends BaseComponent {
                              containerizationNumberList = containerizationNumberList.substring(0, containerizationNumberList.length - 1);
                              containerizationIdList = containerizationIdList.substring(0, containerizationIdList.length - 1);
                              var msg='נוצרו סה"כ '+ response.Result.list.length +" המכלות: "+containerizationNumberList;
-                             let confirmWindow = new ConfirmWindow();
-                             confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.SelectAuthorizationLetters");
-                             confirmWindow.Width = 350;
-                             confirmWindow.Height = 200;
-                             confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                             confirmWindow.ShowNoButton=false;
+                            
                              confirmWindow.Show(msg);
 
                              confirmWindow.WindowClosed.subscribe((event: any) => {
-                               if(confirmWindow.Yes == true){
+                                  if(confirmWindow.Yes == true){
                                    this.CurrentSession.CurrentWindow.Close(containerizationIdList);
-                               }
-                            });
+                                 }
+                               });
 
                         } 
                     }
