@@ -4763,34 +4763,42 @@ User/Pass",
 
         }
 
-        List<dynamic> oceanInsightStatisticsSheet;
-        List<ExcelOI> oceanInsightStatisticsSheet2;
-        
-        IBlobService storageservice;
+        private List<ExcelOI> oceanInsightStatisticsSheet2;
+        private int count = 0;
+        private IBlobService storageservice;
         private void OIStatisticsButton_Click(object sender, EventArgs e)
         {
-            try
+            if (string.IsNullOrEmpty(OI_textBox.Text))
             {
-                //Thread thread = new Thread(() => this.RunOIStatisticsStatistics());
-                Thread thread = new Thread(() => this.RunOIStatisticsStatistics2());
-                thread.IsBackground = true;
-                thread.Start();
+                MessageBox.Show("Please enter tenant to start");
             }
-            catch(Exception ex)
+
+            else
             {
-                MessageBox.Show("Exception eee =" + ex.ToString() + " count" + this.count.ToString());
+                try
+                {
+                    Thread thread = new Thread(() => this.RunOIStatistics());
+                    thread.IsBackground = true;
+                    thread.Start();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Exception eee =" + ex.ToString() + " count" + this.count.ToString());
+                }
             }
-          
         }
 
-        private void RunOIStatisticsStatistics2()
+        private void RunOIStatistics()
         {
-            SetControlPropertyValue(OIStatisticslabel, "Text", "Reading...");
+            SetControlPropertyValue(OIStatisticslabel, "Text", "Generating...");
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
+
             storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
 
-            int tenant = 106;
+            //int tenant = 106;
+            DateTime date_2021 = new DateTime(2021, 1, 1);
+            int tenant = Convert.ToInt32(OI_textBox.Text);
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
@@ -4799,6 +4807,7 @@ User/Pass",
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             var communications = (from a in context.CommunicationLogs
                                   where a.Subject == "Ocean Insights Status" && a.Tenant == tenant
+                                  && a.CreateDate >= date_2021 && a.CreateDate <= DateTime.Now
                                   select a);
 
             DocumentRepository documentRepository = new DocumentRepository(tenant);
@@ -4807,9 +4816,8 @@ User/Pass",
                 DeserializeDocumentBody(communicationLog.DocumentId, communicationLog.Tenant, documentRepository);
             }
 
-
             IWorksheet sheet1 = workbook.Worksheets[0];
-            var range = "A1:DX1";
+            var range = "A1:EC1";
             sheet1.Name = "Ocean Insight Statistics";
             sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
@@ -4820,7 +4828,8 @@ User/Pass",
             dataTable = this.ConvertToDataTable(oceanInsightStatisticsSheet2.ToList());
 
             sheet1.ImportDataTable(dataTable, true, 1, 1);
-            workbook.SaveAs(@"C:\Users\DELL\OneDrive\Desktop\OIStatistics\Tenant" + tenant.ToString() + "OIStatistics.xls");
+            //workbook.SaveAs(@"C:\Users\DELL\OneDrive\Desktop\OIStatistics\Tenant" + tenant.ToString() + "OIStatistics.xls");
+            workbook.SaveAs(@"C:\Users\Dell\Desktop\OIStatistics\Tenant" + tenant.ToString() + "OIStatistics.xls");
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
@@ -4828,113 +4837,8 @@ User/Pass",
             SetControlPropertyValue(OIStatisticslabel, "ForeColor", Color.Green); // timer
             SetControlPropertyValue(OIStatisticslabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
-
-        private void RunOIStatisticsStatistics()
+        public void DeserializeDocumentBody(string documentId, int tenant, DocumentRepository documentRepository)
         {
-            SetControlPropertyValue(OIStatisticslabel, "Text", "Reading...");
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-            storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-
-            List<GlobalTenant> tenants;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
-                GlobalTenantRepository globalTenantRepository = new Simplog.Global.Data.GlobalModel.Repositories.GlobalTenantRepository();
-                tenants = globalTenantRepository.GetActiveTenants();
-                scope.Complete();
-            }
-
-            tenants = tenants.Where(a => a.Id == 20
-                                       || a.Id == 47
-                                       || a.Id == 26
-                                       || a.Id == 15
-                                       || a.Id == 51
-                                       || a.Id == 14
-                                       || a.Id == 18
-                                       || a.Id == 30
-                                       || a.Id == 25
-            ).ToList();
-            foreach (GlobalTenant tenant in tenants)
-            {
-                ExcelEngine excelEngine = new ExcelEngine();
-                IApplication application = excelEngine.Excel;
-                IWorkbook workbook = excelEngine.Excel.Workbooks.Create(5);
-              
-                oceanInsightStatisticsSheet = new List<dynamic>();
-                ICommonDataContext context = CommonDataContext.GetContext(tenant.Id);
-
-                DateTime myStartDate = DateTime.ParseExact("2021-06-01", "yyyy-MM-dd",
-                                            System.Globalization.CultureInfo.InvariantCulture);
-
-            var communications = (from a in context.CommunicationLogs
-                                  where a.Subject == "Ocean Insights Status"
-                                  select a).ToList();
-
-
-            foreach (var communicationLog in communications)
-            {
-                DeserializeDocumentBody(communicationLog.DocumentId, communicationLog.Tenant);
-            }
-
-            CreateWorkSheetHeaders_OceanInsightStatistics(sheet1);
-            workbook.SaveAs(@"C:\Users\DELL\OneDrive\Desktop\OIStatistics.xls");
-
-                CreateWorkSheetHeaders_OceanInsightStatistics(workbook);
-                workbook.SaveAs(@"C:\Users\admin1423\Desktop\OIStatistics\Tenant" + tenant.Id.ToString() + "OIStatistics.xlsx");
-            }
-
-            stopWatch.Stop();
-            TimeSpan ts = stopWatch.Elapsed;
-            SetControlPropertyValue(OIStatisticslabel, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
-            SetControlPropertyValue(OIStatisticslabel, "ForeColor", Color.Green); // timer
-            SetControlPropertyValue(OIStatisticslabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
-        }
-
-        private void CreateWorkSheetHeaders_OceanInsightStatistics(IWorksheet workSheet)
-        {
-            var range = "A1:F1";
-            workSheet.Name = "Ocean Insight Statistics";
-            workSheet.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
-            workSheet.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
-            workSheet.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-            workSheet.Range[range].ColumnWidth = 25;
-            DataTable dataTable2 = this.ConvertToDataTable(oceanInsightStatisticsSheet);
-            workSheet.ImportDataTable(dataTable2, true, 1, 1);
-        }
-
-        private DataTable ConvertToDataTable<T>(IList<T> data)
-        {
-            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
-            DataTable table = new DataTable();
-
-            foreach (PropertyDescriptor prop in properties)
-            {
-                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-            }
-
-            foreach (T item in data)
-            {
-                DataRow row = table.NewRow();
-                foreach (PropertyDescriptor prop in properties)
-                {
-                    if (table.Columns.Contains(prop.Name))
-                    {
-                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
-                    }
-                }
-
-                table.Rows.Add(row);
-            }
-
-            return table;
-        }
-
-
-        public void DeserializeDocumentBody(string documentId, int tenant)
-        {
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            DocumentRepository documentRepository = new DocumentRepository(tenant);
             Document document = documentRepository.GetSingleDocument(tenant, documentId);
             if (document != null)
             {
@@ -4946,7 +4850,6 @@ User/Pass",
                     Tenant = tenant,
                     FileSize = document.FileSize,
                 };
-
                 byte[] fileData = storageservice.Read(fileInfo);
                 if (fileData != null)
                 {
@@ -4957,7 +4860,6 @@ User/Pass",
                 }
             }
         }
-
         private void AnalyzeOceanInsightsParametersXML(ArrayOfQueueTask externalTasksQueues)
         {
             var oceanInsightsQueueTask = externalTasksQueues.QueueTask.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
@@ -4971,7 +4873,6 @@ User/Pass",
                 }
             }
         }
-
         private void ReadOceanInsightsParametersXMLFields2(string value)
         {
             XmlDocument xmlDoc = new XmlDocument();
@@ -4983,8 +4884,6 @@ User/Pass",
                 string createdDate = null;
                 string container_number = null;
                 string carrier_scac = null;
-                string departureLocation = null;
-                string destinationLocation = null;
                 string code = null;
                 string message = null;
                 string status = null;
@@ -5116,7 +5015,11 @@ User/Pass",
                 string empty_return_customer = null;
                 string customs_release_date = null;
                 string carrier_release_date = null;
-
+                string customs_release_state = null;
+                string carrier_release_state = null;
+                string availability_date = null;
+                string availability_locode = null;
+                string availability_timezone = null;
 
                 foreach (XmlNode node in xn.ChildNodes)
                 {
@@ -5192,7 +5095,6 @@ User/Pass",
                         }
                         leg5_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg5_voyage").FirstOrDefault()?.InnerText;
 
-
                         XmlElement tsp1_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loc").FirstOrDefault();
                         if (tsp1_locElement != null)
                         {
@@ -5213,12 +5115,12 @@ User/Pass",
                         tsp1_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_actual").FirstOrDefault()?.InnerText;
                         tsp1_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_detected").FirstOrDefault()?.InnerText;
 
-
                         XmlElement tsp2_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loc").FirstOrDefault();
                         if (tsp2_locElement != null)
                         {
                             tsp2_loc_locode = tsp2_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
                         }
+
                         tsp2_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
                         tsp2_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_last").FirstOrDefault()?.InnerText;
                         tsp2_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_actual").FirstOrDefault()?.InnerText;
@@ -5274,14 +5176,11 @@ User/Pass",
                         tsp4_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_actual").FirstOrDefault()?.InnerText;
                         tsp4_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_detected").FirstOrDefault()?.InnerText;
 
-
                         XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
                         if (emptyPickupLocationElement != null)
                         {
                             empty_pickup_loc_locode = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
                         }
-
-                       
 
                         XmlElement origin_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_loc").FirstOrDefault();
                         if (origin_locElement != null)
@@ -5289,7 +5188,6 @@ User/Pass",
                             origin_loc_name = origin_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
                         }
 
-                        
                         XmlElement departureLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loc").FirstOrDefault();
                         if (departureLocationElement != null)
                         {
@@ -5312,7 +5210,6 @@ User/Pass",
                         pod_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_actual").FirstOrDefault()?.InnerText;
                         pod_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_planned_initial").FirstOrDefault()?.InnerText;
 
-
                         XmlElement dlv_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_loc").FirstOrDefault();
                         if (dlv_locElement != null)
                         {
@@ -5321,7 +5218,6 @@ User/Pass",
                         dlv_delivery_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_initial").FirstOrDefault()?.InnerText;
                         dlv_delivery_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_last").FirstOrDefault()?.InnerText;
                         dlv_delivery_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_actual").FirstOrDefault()?.InnerText;
-
 
                         XmlElement lif_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_loc").FirstOrDefault();
                         if (lif_locElement != null)
@@ -5335,7 +5231,6 @@ User/Pass",
                         lif_departure_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_planned_last").FirstOrDefault()?.InnerText;
                         lif_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_actual").FirstOrDefault()?.InnerText;
 
-
                         XmlElement empty_return_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_loc").FirstOrDefault();
                         if (empty_return_locElement != null)
                         {
@@ -5347,6 +5242,16 @@ User/Pass",
                         empty_return_customer = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_customer").FirstOrDefault()?.InnerText;
                         customs_release_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "customs_release_date").FirstOrDefault()?.InnerText;
                         carrier_release_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_date").FirstOrDefault()?.InnerText;
+                        customs_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "customs_release_state").FirstOrDefault()?.InnerText;
+                        carrier_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_state").FirstOrDefault()?.InnerText;
+                        availability_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_date").FirstOrDefault()?.InnerText;
+
+                        XmlElement availabilityemptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_loc").FirstOrDefault();
+                        if (availabilityemptyPickupLocationElement != null)
+                        {
+                            availability_locode = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                            availability_timezone = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+                        }
                     }
                 }
 
@@ -5480,62 +5385,74 @@ User/Pass",
                     empty_return_customer = empty_return_customer,
                     customs_release_date = ConvertStringToDateTime(customs_release_date),
                     carrier_release_date = ConvertStringToDateTime(carrier_release_date),
+                    customs_release_state = customs_release_state,
+                    carrier_release_state = carrier_release_state,
+                    availability_date = ConvertStringToDateTime(availability_date),
+                    availability_locode = availability_locode,
+                    availability_timezone = availability_timezone,
                 });
             }
         }
-        
-        private void ReadOceanInsightsParametersXMLFields(string value)
+        private DataTable ConvertToDataTable<T>(IList<T> data)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(value);
-            XmlNodeList xnList = xmlDoc.SelectNodes("//container");
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
 
-
-            foreach (XmlNode xn in xnList)
+            foreach (PropertyDescriptor prop in properties)
             {
-                string createdDate = null;
-                string container_number = null;
-                string carrier_scac = null;
-                string departureLocation = null;
-                string destinationLocation = null;
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            }
 
-                foreach (XmlNode node in xn.ChildNodes)
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
                 {
-
-                    if (node.ChildNodes != null && node.Name == "event")
+                    if (table.Columns.Contains(prop.Name))
                     {
-                        createdDate = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "created").FirstOrDefault()?.InnerText;
+                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
                     }
-
-                    if (node.ChildNodes != null && node.Name == "shipment")
-                    {
-                        container_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
-                        carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
-                        XmlElement departureLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loc").FirstOrDefault();
-                        XmlElement destinationLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_loc").FirstOrDefault();
-                        if (departureLocationElement != null)
-                        {
-                            departureLocation = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                        }
-
-                        if (destinationLocationElement != null)
-                        {
-                            destinationLocation = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                        }
-                    }
-
                 }
 
-                oceanInsightStatisticsSheet.Add(new ExcelOceanInsightStatistics()
-                {
-                    ContainerNumber = container_number,
-                    CarrierScac = carrier_scac,
-                    CreateDate = createdDate,
-                    DepartureLocation = departureLocation,
-                    DestinationLocation = destinationLocation
-                });
+                table.Rows.Add(row);
+            }
+
+            return table;
+        }
+        public DateTime? ConvertStringToDateTime(string XMLValue)
+        {
+            string dateTimeString = this.GetCorrectDateTimeString(XMLValue);
+
+            if (!string.IsNullOrEmpty(dateTimeString))
+            {
+                return Convert.ToDateTime(dateTimeString);
+            }
+
+            else
+            {
+                return null;
             }
         }
+        private string GetCorrectDateTimeString(string XMLValue)
+        {
+            string dateTimeString = "";
+
+            if (!string.IsNullOrEmpty(XMLValue))
+            {
+                if (XMLValue.Length > 16)
+                {
+                    dateTimeString = XMLValue.Substring(0, 16);
+                }
+
+                else
+                {
+                    dateTimeString = XMLValue;
+                }
+            }
+
+            return dateTimeString;
+        }
+
 
         private void UpdateShipmentOrderButton_Click(object sender, EventArgs e)
         {
@@ -6026,5 +5943,10 @@ User/Pass",
 
         public DateTime? customs_release_date { get; set; }
         public DateTime? carrier_release_date { get; set; }
+        public string customs_release_state { get; set; }
+        public string carrier_release_state { get; set; }
+        public DateTime? availability_date { get; set; }
+        public string availability_locode { get; set; }
+        public string availability_timezone { get; set; }
     }
 }
