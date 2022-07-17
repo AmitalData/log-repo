@@ -280,9 +280,9 @@
                         <button [attr.data-cy]="'Rules'" class="Button" [disabled]="!IsButtonEnabled" (click)="RulesClicked()">Rules</button>
                     </td>
 
-                    <td style="width: 5px;"><div></div></td>
+                    <td *ngIf="(!IsObjectTableFilterEnabled || IsTabsCustomizationEnabled) && !IsCustomFieldsMenue" style="width: 5px;"><div></div></td>
 
-                    <td style="width: 57px;">
+                    <td *ngIf="(!IsObjectTableFilterEnabled || IsTabsCustomizationEnabled) && !IsCustomFieldsMenue" style="width: 57px;">
                         <button class="Button" [disabled]="!IsButtonEnabled" (click)="OpenTabs()">Tabs</button>
                     </td>
 

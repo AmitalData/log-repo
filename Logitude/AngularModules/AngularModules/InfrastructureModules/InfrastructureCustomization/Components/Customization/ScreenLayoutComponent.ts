@@ -56,6 +56,8 @@ export class ScreenLayoutComponent extends BaseComponent {
     private ObjectTable: ObjectTablePM;
     private CurrentSession = SessionLocator.SelectedSession;
     Modified: boolean = false;
+    public IsObjectTableFilterEnabled: boolean = false;
+    public IsTabsCustomizationEnabled: boolean = false;
     private screenLayoutService: IScreenLayoutService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 
@@ -99,6 +101,8 @@ export class ScreenLayoutComponent extends BaseComponent {
 
     SetWindowArgs(windowArgs: any) {
         this.ObjecttableId = windowArgs.ObjectTableID;
+        this.IsObjectTableFilterEnabled = windowArgs.IsObjectTableFilterEnabled;
+        this.IsTabsCustomizationEnabled = windowArgs.IsTabsCustomizationEnabled;
         this.ObjectTable = window.ObjectTables.filter(x => x.Id === this.ObjecttableId)[0];
         this.FillTableScreensCollection();
     }
