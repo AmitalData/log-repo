@@ -43,6 +43,7 @@ import { DateTimeFormat } from 'Infrastructure/Utilities/DateTimeZone';
 import { stringify } from 'querystring';
 import { DecCargoSplitConComponent } from '../DecCargoSplitConComponent';
 import { Args } from 'Accounting/Components/Maintenance/AccountingPeriodsComponent';
+import { DeclarationListService } from 'Customs/Services/StandardLists/DeclarationListService';
 
 //import {DecCargoSplitConComponent} from '../DecCargoSplitConComponent';
 
@@ -120,8 +121,11 @@ export class CargoSplitGeneralTabComponent
     //    this.entityArgs = this._InputParam = val;
     //    this.Init();
     //}
-    _EntityResourceFinished: boolean = false
+    _EntityResourceFinished: boolean = false;
+    isNewFromMainMenu: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    direction: string = '';
+
     constructor(private EntityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new DeclarationCargoSplitPM();
@@ -353,7 +357,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     SetNewWizardArgs(args: any) {
-        this.IsNewEntity = args['IsNewEntity'];
+        this.isNewFromMainMenu = this.IsNewEntity = args['IsNewEntity'];
         if (this.IsDisplayOnly != true && args.IsDisplayOnly == true) {
             this.IsDisplayOnly = args.IsDisplayOnly;
         }
@@ -392,7 +396,20 @@ export class CargoSplitGeneralTabComponent
                 //this.ItemsList.Insert(item);
             }
         }
-        //this.EntityPM = winArg.declarationPM;
+        
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.DeclarationId))
+            this.getDirction();
+
+            //this.EntityPM = winArg.declarationPM;
+    }
+
+    async getDirction() {
+        const res: ServiceResponse = await new Promise<ServiceResponse>(resolve => 
+            new DeclarationListService()
+            .getSingle(this.EntityPM.DeclarationId)
+            .subscribe((res: ServiceResponse) => resolve(res)));
+
+        this.direction = (res.Result as DeclarationList).Direction;
     }
 
     AddItem() {
@@ -1157,7 +1174,7 @@ export class CargoSplitGeneralTabComponent
         Validator.TryValidateObject(this.EntityPM, "Customs.DeclarationCargoSplit", errors);
 
         if (this.EntityPM.DecCargoSplitCons == null || this.EntityPM.DecCargoSplitCons.length < 1) {
-            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבואן אחד"));
+            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבוםן םחד"));
         } else {
             this.Tabs.forEach((consignment) => {
                 Validator.TryValidateObject(consignment.EntityPM, "Customs.DecCargoSplitCon", errors);
@@ -1192,7 +1209,7 @@ export class CargoSplitGeneralTabComponent
                 errors.push("מזהה מטען מפוצל- חובה להזין סוג מזהה מטען");
             }
             if (AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey1)) {
-                errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען ראשון");
+                errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען רםשון");
             }
             errors.push.apply(errors, this.decCargoSplitCargoIdentifierModel.CheckRequired());
 
@@ -1367,7 +1384,7 @@ export class CargoSplitGeneralTabComponent
         }
 
         if (this.Tabs == null || this.Tabs.length < 1) {
-            errors.push("חובה להזין נתונים לפחות ליבואן אחד");
+            errors.push("חובה להזין נתונים לפחות ליבוםן םחד");
         }
         for (let tab of this.Tabs) {
             if (AppTool.IsNullOrEmpty(tab.EntityPM.ImporterCode)) {
@@ -1458,11 +1475,11 @@ export class CargoSplitGeneralTabComponent
 
         for (let tab of this.Tabs) {
             if (tab.EntityPM.DecCargoSplitConsItems == null || tab.EntityPM.DecCargoSplitConsItems.length < 1) {
-                errors.push("חובה להזין נתוני אריזות");
+                errors.push("חובה להזין נתוני םריזות");
             }
             for (let item of tab.EntityPM.DecCargoSplitConsItems) {
                 if (item.DecCargoSplitConsPackDets == null || item.DecCargoSplitConsPackDets.length < 1) {
-                    errors.push("קיימות אריזות ללא פירוט");
+                    errors.push("קיימות םריזות ללם פירוט");
                     break;
                 }
                 for (let pack of item.DecCargoSplitConsPackDets) {
