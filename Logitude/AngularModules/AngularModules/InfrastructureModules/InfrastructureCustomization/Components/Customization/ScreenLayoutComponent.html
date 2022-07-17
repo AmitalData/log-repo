@@ -58,7 +58,7 @@
         <td>
             <table>
 
-                <tr style="height: 40px;">
+                <tr *ngIf="(!IsObjectTableFilterEnabled || IsTabsCustomizationEnabled)" style="height: 40px;">
                     <td colspan="5" style="text-align: right; height: 40px;">
                         <button class="Button" style="width: 100px;float:right;margin-right:5px" (click)="NewScreenButtonClicked()">New Screen</button>
                     </td>
@@ -100,7 +100,7 @@
                     </td>
                     <td *ngIf="IsMuiltSectionScreen" style=" border: 1px solid silver;border-right:0px">
 
-                        <div class="screen-designer-header">
+                        <div *ngIf="(!IsObjectTableFilterEnabled || IsTabsCustomizationEnabled)" class="screen-designer-header">
                             <div class="title">
                                 <span>{{SelectedItem.Name || 'Screen'}}</span>
                                 <IconButton [Name]="'edit'" (click)="EditSelectedScreen()"></IconButton>
