@@ -119,7 +119,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     IAccountingContext context = AccountingContext.GetContext(tenant);
                     if (!String.IsNullOrEmpty(id))
@@ -206,6 +206,7 @@ namespace Logitude.Accounting.BL.Utils
                 interestTransactions.Add(CreateInterestTransaction(line));
             }
             InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+
 
             using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(4)))
             {
