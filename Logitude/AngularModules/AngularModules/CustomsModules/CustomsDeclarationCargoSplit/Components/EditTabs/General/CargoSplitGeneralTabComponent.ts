@@ -121,9 +121,7 @@ export class CargoSplitGeneralTabComponent
     //    this.Init();
     //}
     _EntityResourceFinished: boolean = false;
-    isNewFromMainMenu: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    direction: string = '';
 
     constructor(private EntityResourceService: EntityResourceService) {
         super();
@@ -196,7 +194,6 @@ export class CargoSplitGeneralTabComponent
     }
 
     Init() {
-
         this.SetDisplayFields(this.ResponseStatusCode);
         this.GetFileData();
         this.InitCargoIdentifiers();
@@ -356,7 +353,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     SetNewWizardArgs(args: any) {
-        this.isNewFromMainMenu = this.IsNewEntity = args['IsNewEntity'];
+        this.IsNewEntity = args['IsNewEntity'];
         if (this.IsDisplayOnly != true && args.IsDisplayOnly == true) {
             this.IsDisplayOnly = args.IsDisplayOnly;
         }
@@ -371,6 +368,7 @@ export class CargoSplitGeneralTabComponent
             this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
             this.RequestDate = DateTool.GetDateByDay(+0);
+            this.Direction = winArg.Direction;
             //this.CustomFileNoTextChanged(winArg.CustomFileNo);
         }
         this.Init();
@@ -395,20 +393,8 @@ export class CargoSplitGeneralTabComponent
                 //this.ItemsList.Insert(item);
             }
         }
-        
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DeclarationId))
-            this.getDirction();
 
-            //this.EntityPM = winArg.declarationPM;
-    }
-
-    async getDirction() {
-        const res: ServiceResponse = await new Promise<ServiceResponse>(resolve => 
-            new DeclarationListService()
-            .getSingle(this.EntityPM.DeclarationId)
-            .subscribe((res: ServiceResponse) => resolve(res)));
-
-        this.direction = (res.Result as DeclarationList).Direction;
+        //this.EntityPM = winArg.declarationPM;
     }
 
     AddItem() {
@@ -945,6 +931,8 @@ export class CargoSplitGeneralTabComponent
     //public get CustomFileNo() { return this.EntityPM.CustomFileNo; }
     get CustomFileNo() { return this.EntityPM != null ? this.EntityPM.CustomFileNo : null; }
     set CustomFileNo(value: string) { this.EntityPM.CustomFileNo = value; }
+    get Direction() { return this.EntityPM != null ? this.EntityPM.Direction : null; }
+    set Direction(value: string) { this.EntityPM.Direction = value; }
     //public get ManifestNumber() { return this.EntityPM.ManifestNumber; }
     get ManifestNumber() { return this.EntityPM != null ? this.EntityPM.ManifestNumber : null; }
     set ManifestNumber(value: string) { this.EntityPM.ManifestNumber = value; }
