@@ -271,7 +271,7 @@
                                         <td style="width:5px"></td>
 
                                         <td  style="width:80px">
-                                            <button (click)="CreateCertificateForCustomsItems()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">הוספת אישור</button>
+                                            <button *ngIf="DeclarationPM.Direction != 'E'" (click)="CreateCertificateForCustomsItems()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">הוספת אישור</button>
                                         </td>
                                         <td></td>
                                         <td style="width: 30px;">
