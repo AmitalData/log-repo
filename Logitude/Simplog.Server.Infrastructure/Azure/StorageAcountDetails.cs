@@ -378,7 +378,12 @@ namespace Simplog.Server.Infrastructure.Azure
                         //blobName = blobname;
                         break;
                     }
-
+                case "multiprint":
+                    {
+                        blobName = "multiprint/" + blobname;
+                        //blobName = blobname;
+                        break;
+                    }
                 case "termsOfUse":
                     {
                         blobName = "termsOfUse/" + blobname; 
