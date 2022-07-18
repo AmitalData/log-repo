@@ -71,7 +71,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 if (entity.IsAllSelected)
                 {
-                    connectedItems = queryService.GetCertificateConnectedItemsList(entity.DeclarationId, entity.oldAttachment, entity.ReqConfirmationTypeCode, entity.oldCertificateExempt, entity.oldCertificateNumber, entity.oldResConfirmation, tenant);
+                    connectedItems = queryService.GetCertificateConnectedItemsList(entity.DeclarationId, entity.oldAttachment, entity.ReqConfirmationTypeCode, entity.oldCertificateExempt, entity.oldCertificateNumber, entity.oldResConfirmation, tenant, entity.SearchFields);
 
                     if (!string.IsNullOrEmpty( entity.ExcludedItemsKeys))
                     {

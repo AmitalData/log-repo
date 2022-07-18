@@ -243,9 +243,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public List<CertificateConnectedItems> GetCertificateConnectedItemsList(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant)
+        public List<CertificateConnectedItems> GetCertificateConnectedItemsList(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant, string SearchFields=null)
         {
-            List<CertificateConnectedItems> conntectedItems = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, null, null, null, 0, 0, true).ToList();
+            List<CertificateConnectedItems> conntectedItems = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, null, null, SearchFields, 0, 0, true).ToList();
             return conntectedItems;
         }
 
