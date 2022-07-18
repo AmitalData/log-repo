@@ -939,7 +939,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
         public void CreateCertificateForInvoiceItems(string declarationId, int tenant, string attachmentTypeCode,
-            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber, List<SupplierInvoiceItemPM> invoiceItems)
+            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber, string certificateExemptionTypeCode, List<SupplierInvoiceItemPM> invoiceItems)
         {
             SupplierInvioceItemCertificatRepository supplierInvioceItemCertificatRepository = new SupplierInvioceItemCertificatRepository(tenant);
             ICustomContext customContext = CustomContext.GetContext(tenant);
@@ -948,19 +948,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             foreach (var invoiceItem in invoiceItems)
             {
-                //var entity = supplierInvioceItemCertificatQueryService.GetSupplierInvioceItemCertificatWithExternalRequestTypeCode("0402", decId, invoiceItem.LineNumber);
-                //if (entity == null)
-                //{
                 var entity = new SupplierInvioceItemCertificatPM();
                 entity.ChangeSetOp = ChangeSetOperation.Insert;
-                //}
-                //else
-                //{
-                //    entity.ChangeSetOp = ChangeSetOperation.Update;
-                //}
                 entity.InvoiceCounterKey = invoiceItem.CounterKey;
                 entity.Tenant = tenant;
                 entity.CertificateNumber = certificateNumber;
+                entity.CertificateExemptionTypeCode = certificateExemptionTypeCode;
                 entity.ResConfirmationTypeCode = resConfirmationTypeCode;
                 entity.ReqConfirmationTypeCode = reqConfirmationTypeCode;
                 entity.AttachmentTypeCode = attachmentTypeCode;
@@ -968,7 +961,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     entity.SequenceNumeric = supplierInvioceItemCertificatRepository.getNextSequenceNumber(declarationId, tenant, invoiceItem.LineNumber);
                 }
-                //entity.ApprovalRequestNumber = requestNumber;
                 invoiceItem.SupplierInvioceItemCertificats.Add(entity);
                 invoiceItem.ChangeSetOp = ChangeSetOperation.Update;
                 updateService.Update(invoiceItem, true);

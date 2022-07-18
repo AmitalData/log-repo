@@ -61,7 +61,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
         public string CreateCRS(int tenant, string LoggingUserId, string Declarationid, string customFileNo, string attachmentTypeCode,
-            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber, string selectedInvoiceItemsKeys)
+            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber,string certificateExemptionTypeCode, string selectedInvoiceItemsKeys)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -85,6 +85,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ReqConfirmationTypeCode = reqConfirmationTypeCode,
                 ResConfirmationTypeCode = resConfirmationTypeCode,
                 CertificateNumber = certificateNumber,
+                CertificateExemptionTypeCode = certificateExemptionTypeCode,
                 SelectedInvoiceItemsKeys = selectedInvoiceItemsKeys,
                 LoggingUserId = LoggingUserId,
                 tenant = tenant,
@@ -159,6 +160,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string ReqConfirmationTypeCode { get; set; }
         public string ResConfirmationTypeCode { get; set; }
         public string CertificateNumber { get; set; }
+        public string CertificateExemptionTypeCode { get; set; }
         public string SelectedInvoiceItemsKeys { get; set; }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;

@@ -157,6 +157,7 @@ export class CreateEditTicketComponent extends BaseComponent {
         windowArgs.ReqConfirmationTypeCode = this.ReqConfirmationTypeCode;
         windowArgs.ResConfirmationTypeCode = this.ResConfirmationTypeCode;
         windowArgs.CertificateNumber = this.CertificateNumber;
+        windowArgs.CertificateExemptionTypeCode = this.CertificateExemptionTypeCode;
         var logWindow = new LogitudeWindow();
         logWindow.Height = 700;
         logWindow.Width = 1000;
@@ -208,6 +209,8 @@ export class CreateEditTicketComponent extends BaseComponent {
     public get ReqConfirmationTypeCode() { return this.reqConfirmationTypeCode; }
     public set ReqConfirmationTypeCode(newValue: string) {
         this.reqConfirmationTypeCode = newValue;
+        if (this.IsNewCertificate && this.ResConfirmationFilterSelectedValue == "request" && this.AttachmentTypeCode == "2")
+            this.ResConfirmationTypeCode = this.ReqConfirmationTypeCode;
     }
     private attachmentTypeCode: string;
     public get AttachmentTypeCode() { return this.attachmentTypeCode; }
@@ -475,6 +478,9 @@ export class CreateEditTicketComponent extends BaseComponent {
 
         }
         else {
+            if (this.IsNewCertificate) {
+                this.ticket.ReqConfirmationTypeCode = this.ReqConfirmationTypeCode;
+            }
             if (this.AttachmentTypeCode == "1" || this.AttachmentTypeCode == "2") {
                 if (AppTool.IsNullOrEmpty(this.CertificateNumber) || AppTool.IsNullOrEmpty(this.ticket.ReqConfirmationTypeCode) || AppTool.IsNullOrEmpty(this.ResConfirmationTypeCode)) {
                     this.isValid = false;

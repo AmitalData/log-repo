@@ -25,6 +25,7 @@ export class NewCertificateGoodsItemsSelectionComponent {
     public ReqConfirmationTypeCode: string;
     public ResConfirmationTypeCode: string;
     public CertificateNumber: string;
+    public CertificateExemptionTypeCode: string;
     SupplierInvoicesList: ObservableCollection;
     public Invoices: SupplierInvoicePM[];
     InvoiceItemsList: ObservableCollection;
@@ -59,6 +60,7 @@ export class NewCertificateGoodsItemsSelectionComponent {
         this.ReqConfirmationTypeCode = args.ReqConfirmationTypeCode;
         this.ResConfirmationTypeCode = args.ResConfirmationTypeCode;
         this.CertificateNumber = args.CertificateNumber;
+        this.CertificateExemptionTypeCode = args.CertificateExemptionTypeCode;
         this.BuildInvoicesList();
     }
 
@@ -163,7 +165,7 @@ export class NewCertificateGoodsItemsSelectionComponent {
         this.ConnectedInvoices = this.ConnectedInvoices.substr(1, this.ConnectedInvoices.length - 1);
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
-        this.multiCertificatesService.CreateCertificateForInvoiceItems(this.DeclarationPM.Id, this.DeclarationPM.CustomFileNo, this.AttachmentTypeCode, this.ReqConfirmationTypeCode, this.ResConfirmationTypeCode, this.CertificateNumber, this.ConnectedInvoiceItems).subscribe((response: ServiceResponse) => {
+        this.multiCertificatesService.CreateCertificateForInvoiceItems(this.DeclarationPM.Id, this.DeclarationPM.CustomFileNo, this.AttachmentTypeCode, this.ReqConfirmationTypeCode, this.ResConfirmationTypeCode, this.CertificateNumber, this.CertificateExemptionTypeCode, this.ConnectedInvoiceItems).subscribe((response: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             if (response.HasError) {
                 let messageWindow = new MessageWindow();

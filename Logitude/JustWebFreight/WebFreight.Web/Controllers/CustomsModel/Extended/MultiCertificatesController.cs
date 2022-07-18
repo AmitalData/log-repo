@@ -430,7 +430,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
 
         public HttpResponseMessage GetCreateCertificateForInvoiceItems(string declarationId, string customFileNo, string attachmentTypeCode,
-            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber, string selectedInvoiceItemsKeys)
+            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber, string certificateExemptionTypeCode, string selectedInvoiceItemsKeys)
         {
             try
             {
@@ -444,7 +444,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 
                 var messagingService = new DCAInUCBCreateCertificateForInvoiceItems_MsgMessagingService();
                 var sts = messagingService.CreateCRS(
-                    tenant, null, declarationId, customFileNo, attachmentTypeCode, reqConfirmationTypeCode, resConfirmationTypeCode, certificateNumber, selectedInvoiceItemsKeys);
+                    tenant, null, declarationId, customFileNo, attachmentTypeCode, reqConfirmationTypeCode, resConfirmationTypeCode, certificateNumber, certificateExemptionTypeCode, selectedInvoiceItemsKeys);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
