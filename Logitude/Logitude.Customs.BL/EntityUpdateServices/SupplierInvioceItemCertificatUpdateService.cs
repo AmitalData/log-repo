@@ -938,7 +938,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return count;
         }
 
-        
+        public void CreateCertificateForInvoiceItems(string declarationId, int tenant, string attachmentTypeCode,
+            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber, string certificateExemptionTypeCode, List<SupplierInvoiceItemPM> invoiceItems)
+        {
+            SupplierInvioceItemCertificatRepository supplierInvioceItemCertificatRepository = new SupplierInvioceItemCertificatRepository(tenant);
+            ICustomContext customContext = CustomContext.GetContext(tenant);
+            //SupplierInvioceItemCertificatQueryService supplierInvioceItemCertificatQueryService = new SupplierInvioceItemCertificatQueryService(customContext);
+            SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+
+            foreach (var invoiceItem in invoiceItems)
+            {
+                var entity = new SupplierInvioceItemCertificatPM();
+                entity.ChangeSetOp = ChangeSetOperation.Insert;
+                entity.InvoiceCounterKey = invoiceItem.CounterKey;
+                entity.Tenant = tenant;
+                entity.CertificateNumber = certificateNumber;
+                entity.CertificateExemptionTypeCode = certificateExemptionTypeCode;
+                entity.ResConfirmationTypeCode = resConfirmationTypeCode;
+                entity.ReqConfirmationTypeCode = reqConfirmationTypeCode;
+                entity.AttachmentTypeCode = attachmentTypeCode;
+                if (entity.SequenceNumeric == 0)
+                {
+                    entity.SequenceNumeric = supplierInvioceItemCertificatRepository.getNextSequenceNumber(declarationId, tenant, invoiceItem.LineNumber);
+                }
+                invoiceItem.SupplierInvioceItemCertificats.Add(entity);
+                invoiceItem.ChangeSetOp = ChangeSetOperation.Update;
+                updateService.Update(invoiceItem, true);
+            }
+        }
 
         protected override void OnUpdating(SupplierInvioceItemCertificatPM entityPM, SupplierInvioceItemCertificat entityPOCO)
         {

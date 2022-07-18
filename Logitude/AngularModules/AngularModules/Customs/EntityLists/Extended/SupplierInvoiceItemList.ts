@@ -92,4 +92,5 @@ export class SupplierInvoiceItemList {
     IsParent: boolean;
     ItemFOBAmountForeign: number;
     ItemFOBAmountNIS: number;
+    InvoiceNumber: string;
 }
