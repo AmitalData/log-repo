@@ -69,7 +69,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 PdfDocument pdfDoc = new PdfDocument();
                 MargePdfs(pdfDoc, itemPrintingResults);
                 MemoryStream memoryStream = GetMemoryStream(pdfDoc);
-                document = UploadPDFToStorage(memoryStream, _batchPrinterArgs.Tenant);
+                document = UploadPDFToStorage(memoryStream, _batchPrinterArgs.Tenant, "multiprint");
                 documentFiling = BuildDcoumentFiling();
             }
 
@@ -161,7 +161,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
-        private Document UploadPDFToStorage(MemoryStream memoryStream, int tenant)
+        private Document UploadPDFToStorage(MemoryStream memoryStream, int tenant,string folderName)
         {
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             byte[] ByteData = memoryStream.ToArray();
@@ -176,7 +176,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 Tenant = tenant,
                 Id = IdCounter.GetNumber("Document", tenant),
                 HasFile = true,
-                Folder = "multiprint",
+                Folder = folderName,
             };
 
             documentRepository.Add(document);
@@ -185,7 +185,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
                 FileName = document.Id,
-                FolderName = "multiprint",
+                FolderName = folderName,
                 Extension = document.Extension,
                 Tenant = tenant,
                 FileSize = document.FileSize,
@@ -264,7 +264,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
 
             var documentOut = BuildDocumentOut(item);
             var reportStream = CreateReportStream(item);
-            var document = UploadPDFToStorage(reportStream, _batchPrinterArgs.Tenant);
+            var document = UploadPDFToStorage(reportStream, _batchPrinterArgs.Tenant, "docsout");
             AddDocumentOutCopy(document, item, documentOut);
             UpdateDocumentOut(documentOut);
             return reportStream;
