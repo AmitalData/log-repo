@@ -230,10 +230,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
             {
-                this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
-                this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                this.MyResponseData.Succeeded = true;
-                this.MyResponseData.HasException = false;
                 if (!string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 {
                     _MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
@@ -243,6 +239,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                     }
                 }
+
+                this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = false;
+
                 return;
 
             }
@@ -2432,7 +2434,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private string GetExceptionMsg(UnifreightIIG.Common.ExportDeclarationServiceReference.Exception ex)
         {
             List<string> fieldNames = new List<string>();
-            var fieldList = WCO.Instance.CreateDB(WCOTypeEnum.WCO_EX).GetCopyList();
+            WCOTypeEnum wCOTypeEnum = _MyDeclarationPM?.Direction == "E" ? WCOTypeEnum.WCO_EX : WCOTypeEnum.WCO;
+            var fieldList = WCO.Instance.CreateDB(wCOTypeEnum).GetCopyList();
             WCOErrorPointerModel res;
 
             if (ex.ExceptionParms != null)
