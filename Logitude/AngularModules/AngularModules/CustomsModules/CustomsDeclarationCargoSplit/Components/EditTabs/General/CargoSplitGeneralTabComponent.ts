@@ -192,7 +192,6 @@ export class CargoSplitGeneralTabComponent
     }
 
     Init() {
-
         this.SetDisplayFields(this.ResponseStatusCode);
         this.GetFileData();
         this.InitCargoIdentifiers();
@@ -366,6 +365,7 @@ export class CargoSplitGeneralTabComponent
         if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
             this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
+            this.Direction = winArg.Direction;
             this.RequestDate = DateTool.GetDateByDay(+0);
             //this.CustomFileNoTextChanged(winArg.CustomFileNo);
         }
@@ -911,6 +911,8 @@ export class CargoSplitGeneralTabComponent
     //public get CustomFileNo() { return this.EntityPM.CustomFileNo; }
     get CustomFileNo() { return this.EntityPM != null ? this.EntityPM.CustomFileNo : null; }
     set CustomFileNo(value: string) { this.EntityPM.CustomFileNo = value; }
+    get Direction() { return this.EntityPM != null ? this.EntityPM.Direction : null; }
+    set Direction(value: string) { this.EntityPM.Direction = value; }
     //public get ManifestNumber() { return this.EntityPM.ManifestNumber; }
     get ManifestNumber() { return this.EntityPM != null ? this.EntityPM.ManifestNumber : null; }
     set ManifestNumber(value: string) { this.EntityPM.ManifestNumber = value; }
