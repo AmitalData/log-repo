@@ -1257,7 +1257,7 @@
 
                                 </log-column>
 
-                                <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemPrice' | TextCodeTranslationPipe" [binding]="'ItemPrice'" [width]="'90'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemPrice' | TextCodeTranslationPipe" [binding]="'ItemPrice'" [width]="'80'" [Editable]="true" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
@@ -1275,7 +1275,7 @@
 
                                 </log-column>
 
-                                <log-column [header]="'Customs.SupplierInvoiceItem.F.OriginCountryCode' | TextCodeTranslationPipe" [binding]="'OriginCountryCode'" [width]="'100'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'Customs.SupplierInvoiceItem.F.OriginCountryCode' | TextCodeTranslationPipe" [binding]="'OriginCountryCode'" [width]="'70'" [Editable]="true" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
@@ -1298,7 +1298,7 @@
                                 </log-column>
 
 
-                                <log-column [width]="'170'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'" [IgnoreColumn]="true">
+                                <log-column [width]="'140'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'" [IgnoreColumn]="true">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                                             <div style="width: 20px; float: right; height:20px;padding-top:3px">
