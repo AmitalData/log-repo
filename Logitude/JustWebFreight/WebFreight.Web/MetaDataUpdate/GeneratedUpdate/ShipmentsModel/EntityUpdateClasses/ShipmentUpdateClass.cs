@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "392fe779b4a44b7973e2439c18709836";
+		public const string HashString = "23703f7b76bb5ed06dd4bedac1a0179a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -56250,7 +56250,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentMThereAreNoPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ThereAreNoPackages", DefaultText = "There are no Packages! Process Generating?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentMGenerateIsAvailableAfterQuoteApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.GenerateIsAvailableAfterQuoteApproval", DefaultText = "Generate is available after Quote Approval?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentMGenerateIsAvailableAfterQuoteApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.GenerateIsAvailableAfterQuoteApproval", DefaultText = "Generate is available after Quote Approval",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentMReceivablesShowProfitDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ShowProfitDetails", DefaultText = "Show Profit Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
