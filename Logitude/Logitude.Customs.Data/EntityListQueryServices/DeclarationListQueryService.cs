@@ -295,8 +295,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  join recJoin in qMyJoin
                                                               on a.Id equals recJoin.DeclarationId
                                                               into qrecJoin
-                                                 from myJoin in qrecJoin.DefaultIfEmpty()
-
+                                                 from myJoin in qrecJoin.DefaultIfEmpty()                                                
 
                                                  join recConsignment in q1stConsignments
                                                  on a.Id equals recConsignment.DeclarationId into qjoinConsignments
@@ -307,6 +306,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
                                                  into originalDeclarations
                                                  from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
+
+                                                 join AmendmentRequestStatus in context.AmendmentRequestStatuses
+                                                            on a.AmendmentStatus equals AmendmentRequestStatus.Code
+                                                            into qStatusAmendJoin
+                                                 from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
 
                                                      /*
                                                      join pr in qCourierPendingReasonLocalName
@@ -495,7 +499,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DeclarationTypeCode = a.DeclarationTypeCode,
                                                     
                                                       DeclarationTypeName=a.DeclarationType.LocalName,
-                                                     IsExportDeclarationAmendments = arrAmentmentStatus.Contains(a.AmendmentStatus)
+                                                     IsExportDeclarationAmendments = arrAmentmentStatus.Contains(a.AmendmentStatus),
+                                                     AmendmentStatusName=myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName: null
+
                                                  });
 
 

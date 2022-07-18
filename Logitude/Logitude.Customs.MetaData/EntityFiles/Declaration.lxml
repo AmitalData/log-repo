@@ -13002,12 +13002,12 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="true"
+    CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="2"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -13023,7 +13023,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Customs.ExportDeclaration&quot;"
+    ValidForQuerySection1="&quot;&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -13035,9 +13035,6 @@
     FullFieldLable="&quot;AmendmentStatus&quot;"
     DefaultText="&quot;Amendment Status&quot;"
     FullLocalDefaultText="&quot;סטטוס תיקון הצהרה&quot;"
-    ListFieldLable="&quot;AmendmentStatusListLable&quot;"
-    ListLableDefaultText="&quot;Amendment Status&quot;"
-    ListLocalDefaultText="&quot;סטטוס תיקון הצהרה&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -13720,13 +13717,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="50"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -20894,46 +20892,51 @@
       <QueryColumn
         QueryCode="&quot;ExportDeclarationAmendments&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;AmendmentStatusName&quot;"
+        ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;ExportFile&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ExportDeclarationAmendments&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;TransportModeForExport&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ExportDeclarationAmendments&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomFileForExport&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ExportDeclarationAmendments&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ExportDeclarationAmendments&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;ExportDeclarationAmendments&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeNameForExport&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ExportDeclarationAmendments&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;ProcedureCurrentName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ExportDeclarationAmendments&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;ExportDeclarationAmendments&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;PhysicalCheck&quot;"
         ColumnWidth="100" />
     </QueryColumns>
