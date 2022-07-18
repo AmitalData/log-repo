@@ -106,8 +106,9 @@ namespace WebFreight.Web.ExternalAPIs
             this.computingPartnerCode = query.ComputingPartnerCode;
             SecurityUtility.AuthenticateAPICall(tenant);
 
-            this.ValidateNotSupportedReference2(query);
-            this.ValidateEmptyCodeOrPartnerCode(query);            
+            this.ValidateEmptyCodeOrPartnerCode(query);
+            this.ValidateEmptyReferences(query);
+            this.ValidateNotSupportedReference2(query);                        
 
             this.cardRepository = new CardRepository(tenant);
             this.computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(tenant);
@@ -121,18 +122,6 @@ namespace WebFreight.Web.ExternalAPIs
             return shipments;
         }
 
-        private void ValidateNotSupportedReference2(Query query)
-        {
-            if (query.Forwarder != null && !string.IsNullOrEmpty(query.Forwarder.Reference2))
-            {
-                throw new ApplicationException("Forwarder Reference 2 is not supported");
-            }
-
-            if (query.ConsigneeNotImporter != null && !string.IsNullOrEmpty(query.ConsigneeNotImporter.Reference2))
-            {
-                throw new ApplicationException("Consignee Not Importer Reference 2 is not supported");
-            }
-        }
         private void ValidateEmptyCodeOrPartnerCode(Query query)
         {
             this.ValidatePartnerMissingCodes(query.Agent, "Agent:");
@@ -144,12 +133,40 @@ namespace WebFreight.Web.ExternalAPIs
         }
         private void ValidatePartnerMissingCodes(QueryCard queryCard, string partnerType)
         {
-            if (queryCard != null && (!string.IsNullOrEmpty(queryCard.Reference1) || !string.IsNullOrEmpty(queryCard.Reference2)))
+            if (queryCard != null && string.IsNullOrEmpty(queryCard.Code) && string.IsNullOrEmpty(queryCard.PartnerCode))
             {
-                if (string.IsNullOrEmpty(queryCard.Code) && string.IsNullOrEmpty(queryCard.PartnerCode))
-                    throw new ApplicationException(partnerType + " Missing Code or Partner Code");
+                throw new ApplicationException(partnerType + " Missing Code or Partner Code");
             }
-        }       
+        }
+        private void ValidateEmptyReferences(Query query)
+        {
+            this.ValidatePartnerEmptyReferences(query.Agent, "Agent:");
+            this.ValidatePartnerEmptyReferences(query.Shipper, "Shipper:");
+            this.ValidatePartnerEmptyReferences(query.ShipperNotExporter, "ShipperNotExporter:");
+            this.ValidatePartnerEmptyReferences(query.Consignee, "Consignee:");
+            this.ValidatePartnerEmptyReferences(query.ConsigneeNotImporter, "ConsigneeNotImporter:");
+            this.ValidatePartnerEmptyReferences(query.Forwarder, "Forwarder:");
+        }
+        private void ValidatePartnerEmptyReferences(QueryCard queryCard, string partnerType)
+        {
+            if (queryCard != null && string.IsNullOrEmpty(queryCard.Reference1) && string.IsNullOrEmpty(queryCard.Reference2))
+            {
+                throw new ApplicationException(partnerType + " Missing References");
+            }
+        }
+        private void ValidateNotSupportedReference2(Query query)
+        {
+            if (query.Forwarder != null && !string.IsNullOrEmpty(query.Forwarder.Reference2))
+            {
+                throw new ApplicationException("Forwarder Reference 2 is not supported");
+            }
+
+            if (query.ConsigneeNotImporter != null && !string.IsNullOrEmpty(query.ConsigneeNotImporter.Reference2))
+            {
+                throw new ApplicationException("Consignee Not Importer Reference 2 is not supported");
+            }
+        }        
+        
         private List<QueryFilterItem> CreateQueryFilterItems(Query query, string shipmentLevel)
         {
             string agentId = this.GetPartnerId(query.Agent);
