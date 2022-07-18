@@ -112,6 +112,8 @@ namespace CommunicationWorkerRole.Services
             ExportBIReportService exportBIReportService = new ExportBIReportService();
             BIReportXMLData bIReportXMLData = GetBIReportXMLData(schedulerDetails, reportTask);
             bIReportXMLData.ExportDataType = reportTask.Format == "PDF" || string.IsNullOrEmpty(reportTask.Format) ? "Pdf" : "xlsx";
+            const string includeTotalFormatCode = "IT";
+            bIReportXMLData.IncludeTotals = reportTask.AdvancedFormat == includeTotalFormatCode;
             return exportBIReportService.Run(bIReportXMLData, reportTask.Tenant, schedulerDetails.SendIfEmpty);
         }
 

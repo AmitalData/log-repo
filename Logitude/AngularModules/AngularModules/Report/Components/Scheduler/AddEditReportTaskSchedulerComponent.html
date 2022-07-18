@@ -90,7 +90,7 @@
                                                                             <td></td>
                                                                         </tr>
 
-                                                                        <tr class="FormFieldRow" *ngIf="IsFTP">
+                                                                        <tr class="FormFieldRow" *ngIf="IsFTP || IsBIReport">
                                                                             <td style="width:90px;vertical-align:central">
                                                                                 <LogLabel [ObjectFieldName]="'Format'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                             </td>
@@ -110,7 +110,7 @@
                                                                             <td></td>
                                                                         </tr>
 
-                                                                        <tr class="FormFieldRow" *ngIf="IsFTP && SelectedFormat && SelectedFormat.Code == 'EXCLA'">
+                                                                        <tr class="FormFieldRow" *ngIf="(IsFTP && !IsBIReport) && SelectedFormat && SelectedFormat.Code == 'EXCLA'">
                                                                             <td style="width:90px;vertical-align:central">
                                                                             </td>
 
@@ -123,6 +123,20 @@
                                                                                         </td>
                                                                                         <td>
                                                                                             <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="SelectedFormatAdvanced == 'OP'" (Checked)="SetFormatAdvanced('OP')" [Text]="'One Page Header and Footer'" [Top]="5"></RadioButton>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                            <td></td>
+                                                                        </tr>
+
+                                                                        <tr class="FormFieldRow" *ngIf="IsBIReport && SelectedFormat && SelectedFormat.Code == 'EXCLA'">
+                                                                            <td style="width:90px;vertical-align:central"></td>
+                                                                            <td style="width:250px;height:5px">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="SelectedFormatAdvanced == 'IT'" (Checked)="SetFormatAdvanced('IT')" [Text]="'Include Total'" [Top]="5"></RadioButton>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>

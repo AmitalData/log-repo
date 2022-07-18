@@ -64,14 +64,14 @@ export class AddEditReportTaskSchedulerComponent {
     private FillSchedulerFormats() {
         this.SchedulerFormats.push(new CodeNameClass("PDF", "PDF"));
         this.SchedulerFormats.push(new CodeNameClass("EXCL", "Excel File"));
-        if (!this.IsBIReport) {
-            this.SchedulerFormats.push(new CodeNameClass("EXCLA", "Excel File (Advanced)"));
-        }
+        this.SchedulerFormats.push(new CodeNameClass("EXCLA", "Excel File (Advanced)"));
     }
 
     private SetSchedulerFormat() {
         this.SelectedFormat = this.SchedulerFormats.filter(format => format.Code == this.EntityPM.Format)[0];
         this.SelectedFormatAdvanced = this.EntityPM.AdvancedFormat;
+        let pdfFormatCode = 'PDF';
+        if (AppTool.IsNullOrEmpty(this.SelectedFormat)) this.FormatSelectionChanged(this.SchedulerFormats.filter(format => format.Code == pdfFormatCode)[0]);
     }
 
     private SetSchedulerResultType() {
@@ -326,15 +326,16 @@ export class AddEditReportTaskSchedulerComponent {
     }
 
     FormatSelectionChanged(selectControl: any) {
-        if (selectControl) {
-            this.SelectedFormat = selectControl;
-            this.EntityPM.Format = selectControl.Code;
-            if (AppTool.IsNullOrEmpty(this.SelectedFormatAdvanced) && selectControl.Code == 'EXCLA') {
-                this.SetFormatAdvanced('DO');
-            }
-            else if (selectControl.Code != 'EXCLA') {
-                this.SetFormatAdvanced('');
-            }
+        if (!selectControl) return;
+        this.SelectedFormat = selectControl;
+        this.EntityPM.Format = selectControl.Code;
+        let includeTotalFormatCode = 'IT';
+        let dataOnlyFormatCode = 'DO';
+        if (AppTool.IsNullOrEmpty(this.SelectedFormatAdvanced) && selectControl.Code == 'EXCLA') {
+            this.SetFormatAdvanced(this.IsBIReport ? includeTotalFormatCode : dataOnlyFormatCode);
+        }
+        else if (selectControl.Code != 'EXCLA') {
+            this.SetFormatAdvanced('');
         }
     }
 
