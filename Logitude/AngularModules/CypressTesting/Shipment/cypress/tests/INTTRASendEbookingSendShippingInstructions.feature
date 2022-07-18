@@ -1,4 +1,4 @@
-@devrelease @stable
+@devrelease @stable @INTTRA
 Feature: INTTRA Sending E-Booking and Shipping Instructions
     The Customer Care user configures INTTRA for the tenant,
     second regular user creates an Ocean Export FCL shipment,
