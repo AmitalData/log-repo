@@ -341,6 +341,14 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
 
+            // For Testing the ElasticSearch Indexer
+            // Temporary Code, need to be removed
+            if (tenant == 0)
+            {
+                return (from f in dataViewEntities.ShipmentDataViews select f);
+            }
+            // end of Temporary Code
+
             IQueryable<ShipmentDataView> result = (from f in dataViewEntities.ShipmentDataViews where f.Tenant == tenant select f);
 
             return result;
