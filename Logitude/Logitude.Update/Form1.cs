@@ -103,6 +103,8 @@ using System.Data;
 using System.ComponentModel;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 
 namespace Logitude.Update
 {
@@ -5106,10 +5108,10 @@ User/Pass",
         {
 
         }
-
+        List<string> logs = new List<string>();
         private void RunCreateContainerBotton_Click(object sender, EventArgs e)
         {
-            
+
             int tenant = -1;
             if (!int.TryParse(ShipmentTenantNumber.Text, out tenant))
                 return;
@@ -5120,23 +5122,34 @@ User/Pass",
             this.RunCreateContainerBotton.Visible = false;
             this.StopCreateContainer.Visible = true;
             this.PanelShipmentResults.Visible = true;
-            var thread = new Thread(a=> RunCreateContainer(tenant, fromDate, ToDate));
+            logs = new List<string>();
+            logs.Add("Shipemtn Number,Number Of container Created,Has Error,Error Message,Error Details");
+            var thread = new Thread(a => RunCreateContainer(tenant, fromDate, ToDate));
             thread.Start();
 
         }
 
         private void RunCreateContainer(int tenant, DateTime fromDate, DateTime ToDate)
         {
-            
+            OpenContainerLogFile.Visible = false;
+            QueueLogs = new Queue<string>();
+            this.ShipmentContainerLog.Text = SetLogs("Start...");
             var shipmentsContext = ShipmentsContext.GetContext(tenant);
             var repository = new ShipmentRepository(shipmentsContext);
             var shipmentQuery = new ShipmentQuery(repository);
             ToDate = ToDate.AddDays(1);
-            var shipmentsIds = shipmentsContext.Shipments
-                .Where(a => a.ShipmentTypeId == "FCLD" && a.IsOperationalClosed == false && a.NumberOfContainers > 0 
-                && a.CreateDateTime >= fromDate && a.CreateDateTime <= ToDate && a.Tenant == tenant).Select(a => a.Id).ToList();
-           
-            CraeteContainerProgressBar.Maximum = shipmentsIds.Count;
+
+            var ContainerCount = shipmentsContext.ShipmentPackages
+                .Where(a => a.Shipment.ShipmentTypeId == "FCLD" && a.Shipment.IsOperationalClosed == false && a.Shipment.NumberOfContainers > 0
+                && a.Shipment.CreateDateTime >= fromDate && a.Shipment.CreateDateTime <= ToDate && a.Tenant == tenant
+                && a.ContainerEntityId == null && a.ContainerNumber != null).Count();
+            var shipmentsIds = shipmentsContext.ShipmentPackages
+                .Where(a => a.Shipment.ShipmentTypeId == "FCLD" && a.Shipment.IsOperationalClosed == false && a.Shipment.NumberOfContainers > 0
+                && a.Shipment.CreateDateTime >= fromDate && a.Shipment.CreateDateTime <= ToDate && a.Tenant == tenant
+                && a.ContainerEntityId == null && a.ContainerNumber != null).GroupBy(a => a.Shipment.Id).Select(e => e.Key).ToList();
+
+
+            CraeteContainerProgressBar.Maximum = ContainerCount > 0 ? ContainerCount : 1;
             CraeteContainerProgressBar.Minimum = 0;
             CraeteContainerProgressBar.Value = 0;
             CraeteContainerProgressBar.Step = 1;
@@ -5147,45 +5160,90 @@ User/Pass",
             var numberOfShipmentsRemaining = shipmentsIds.Count;
             var numberOfShipmentsFail = 0;
             var numberOfShipmentsDone = 0;
+            var numberOfContainerCreated = 0;
             foreach (var shipmentId in shipmentsIds)
             {
                 if (StopCreateContainerBool)
+                {
+                    this.ShipmentContainerLog.Text = SetLogs("stop...");
                     break;
+                }
+                    
                 var watch = new System.Diagnostics.Stopwatch();
 
                 watch.Start();
-                var shipmentPM = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant,true);
+                var shipmentPM = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant, true);
                 ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, $"system@tenant{tenant}.com");
+                var numberOfContainer = 0;
                 try
                 {
-                    shipmentService.Update(true,true);
+                    numberOfContainer = AddContainers(shipmentsContext, shipmentPM);
                     numberOfShipmentsDone++;
+                    numberOfContainerCreated += numberOfContainer;
+                    logs.Add($"{shipmentPM.ShipmentNumber},{numberOfContainer},False,,");
+                    this.ShipmentContainerLog.Text = SetLogs($"Shipment: {shipmentPM.ShipmentNumber} , Container Created : {numberOfContainer}");
                 }
                 catch (Exception e)
                 {
                     numberOfShipmentsFail++;
-                    
+                    logs.Add($"{shipmentPM.ShipmentNumber},{numberOfContainer},True,{e.Message},{e}");
+                    this.ShipmentContainerLog.Text = SetLogs($"Shipment: {shipmentPM.ShipmentNumber} , Container Created : {numberOfContainer} , Error: {e.Message}");
+                    numberOfContainerCreated += shipmentPM.ShipmentPackages.Count;
                 }
-                CraeteContainerProgressBar.Increment(1);
+                CraeteContainerProgressBar.Increment(numberOfContainer);
                 watch.Stop();
                 numberOfShipmentsRemaining--;
                 NumberOfDoneShipments.Text = numberOfShipmentsDone + "";
                 NumberOfShipmentsFail.Text = numberOfShipmentsFail + "";
 
-                var totalMinuts = watch.ElapsedMilliseconds / 1000.0 / 60.0 * numberOfShipmentsRemaining;
+                var totalMinuts = watch.ElapsedMilliseconds/ numberOfContainer / 1000.0 / 60.0 * (ContainerCount - numberOfContainerCreated);
                 var minuts = Math.Floor(totalMinuts);
                 var sec = Convert.ToInt32(totalMinuts % 1 * 60);
-                this.EstimatedDoneTime.Text = $"{Convert.ToInt32(minuts)} M and {sec} S" ;
-
-
+                this.EstimatedDoneTime.Text = $"{Convert.ToInt32(minuts)} M and {sec} S";
+                
+               
             }
             StopCreateContainerBool = false;
-            
+
             this.StopCreateContainer.Visible = false;
             this.RunCreateContainerBotton.Visible = true;
             this.StopCreateContainer.Text = "stop";
             this.EstimatedDoneTime.Text = "";
             CraeteContainerProgressBar.Value = CraeteContainerProgressBar.Maximum;
+            this.ShipmentContainerLog.Text = SetLogs("Done");
+            if (shipmentsIds.Count > 0)
+            {
+                CreateContainerLogFile();
+            }
+        }
+
+        private void CreateContainerLogFile()
+        {
+            WriteShipmentContainerLogErrorToFile();
+            OpenContainerLogFile.Visible = true;
+        }
+
+        Queue<string> QueueLogs = new Queue<string>();
+        private string SetLogs(string message)
+        {
+
+            QueueLogs.Enqueue(message);
+            if (QueueLogs.Count > 100)
+                QueueLogs.Dequeue();
+            return string.Join("\n", QueueLogs.ToList());
+
+
+        }
+
+
+        private int AddContainers(IShipmentsContext shipmentsContext, BL.ShipmentsModel.EntityPMs.ShipmentPM shipmentPM)
+        {
+            ShipmentServiceInitializer shipmentServiceInitializer = new ShipmentServiceInitializer(shipmentsContext, shipmentPM, $"system@tenant{shipmentPM.Tenant}.com");
+            shipmentServiceInitializer.ShipmentPackagesChangeSet = shipmentPM.ShipmentPackages;
+
+            ShipmentContainersEntityBehaviour shipmentContainersEntityBehaviour = new ShipmentContainersEntityBehaviour();
+            return shipmentContainersEntityBehaviour.CreatesShipmentContainers(shipmentServiceInitializer);
+
         }
 
         bool StopCreateContainerBool = false;
@@ -5194,10 +5252,36 @@ User/Pass",
             this.StopCreateContainer.Text = "Stopping...";
             StopCreateContainerBool = true;
         }
+        private void WriteShipmentContainerLogErrorToFile()
+        {
+            
+            string path = @"ShipmentContainerLog.csv";
+            if (!File.Exists(path))
+            {
+                // Create a file to write to.
+                using (StreamWriter sw = File.CreateText(path))
+                {
+                    sw.Close();
+                }
+            }
+            File.WriteAllLines(path, logs);
+            
+            
+        }
 
         private void label20_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OpenContainerLogFile_Click(object sender, EventArgs e)
+        {
+            Process.Start("ShipmentContainerLog.csv");
         }
     }
     public class TimeZoneExcelItem
