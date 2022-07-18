@@ -72,9 +72,9 @@
             this.batchTaskExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.executeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.conStrLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.button12 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
@@ -241,7 +241,12 @@
             this.button51 = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.loglable = new System.Windows.Forms.Label();
+            this.ShipmentContainerLog = new System.Windows.Forms.RichTextBox();
             this.PanelShipmentResults = new System.Windows.Forms.Panel();
+            this.CraeteContainerProgressBar = new System.Windows.Forms.ProgressBar();
+            this.NumberOfShipmentsFail = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.EstimatedDoneTime = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.NumberOfDoneShipments = new System.Windows.Forms.Label();
@@ -255,11 +260,10 @@
             this.label16 = new System.Windows.Forms.Label();
             this.ShipmentTenantNumber = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.StopCreateContainer = new System.Windows.Forms.Button();
-            this.NumberOfShipmentsFail = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.CraeteContainerProgressBar = new System.Windows.Forms.ProgressBar();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.OpenContainerLogFile = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -480,6 +484,7 @@
             // 
             // toolStripTextBoxFilePath
             // 
+            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -615,6 +620,7 @@
             // 
             // tenantTxtBox
             // 
+            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -653,10 +659,10 @@
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1,
             this.toolStripStatusLabel1,
-            this.conStrLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 829);
+            this.conStrLabel,
+            this.toolStripProgressBar1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 672);
 
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
@@ -681,6 +687,11 @@
             this.conStrLabel.Name = "conStrLabel";
             this.conStrLabel.Size = new System.Drawing.Size(0, 19);
 
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
             // 
             // button12
             // 
@@ -2640,6 +2651,9 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.OpenContainerLogFile);
+            this.groupBox4.Controls.Add(this.loglable);
+            this.groupBox4.Controls.Add(this.ShipmentContainerLog);
             this.groupBox4.Controls.Add(this.PanelShipmentResults);
             this.groupBox4.Controls.Add(this.RunCreateContainerBotton);
             this.groupBox4.Controls.Add(this.ShipmentToDate);
@@ -2651,11 +2665,29 @@
             this.groupBox4.Controls.Add(this.StopCreateContainer);
             this.groupBox4.Location = new System.Drawing.Point(8, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(1008, 170);
+            this.groupBox4.Size = new System.Drawing.Size(1008, 544);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Craete Contaners for old shipments";
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
+            // 
+            // loglable
+            // 
+            this.loglable.AutoSize = true;
+            this.loglable.Location = new System.Drawing.Point(9, 186);
+            this.loglable.Name = "loglable";
+            this.loglable.Size = new System.Drawing.Size(31, 13);
+            this.loglable.TabIndex = 11;
+            this.loglable.Text = "Log :";
+            // 
+            // ShipmentContainerLog
+            // 
+            this.ShipmentContainerLog.Location = new System.Drawing.Point(9, 205);
+            this.ShipmentContainerLog.Name = "ShipmentContainerLog";
+            this.ShipmentContainerLog.Size = new System.Drawing.Size(988, 326);
+            this.ShipmentContainerLog.TabIndex = 10;
+            this.ShipmentContainerLog.Text = "";
+            this.ShipmentContainerLog.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // PanelShipmentResults
             // 
@@ -2674,6 +2706,32 @@
             this.PanelShipmentResults.TabIndex = 8;
             this.PanelShipmentResults.Visible = false;
             this.PanelShipmentResults.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // CraeteContainerProgressBar
+            // 
+            this.CraeteContainerProgressBar.Location = new System.Drawing.Point(15, 129);
+            this.CraeteContainerProgressBar.Name = "CraeteContainerProgressBar";
+            this.CraeteContainerProgressBar.Size = new System.Drawing.Size(596, 23);
+            this.CraeteContainerProgressBar.TabIndex = 8;
+            // 
+            // NumberOfShipmentsFail
+            // 
+            this.NumberOfShipmentsFail.AutoSize = true;
+            this.NumberOfShipmentsFail.Location = new System.Drawing.Point(151, 67);
+            this.NumberOfShipmentsFail.Name = "NumberOfShipmentsFail";
+            this.NumberOfShipmentsFail.Size = new System.Drawing.Size(13, 13);
+            this.NumberOfShipmentsFail.TabIndex = 7;
+            this.NumberOfShipmentsFail.Text = "0";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(12, 67);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(82, 13);
+            this.label20.TabIndex = 6;
+            this.label20.Text = "Fail Shipments :";
+            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // EstimatedDoneTime
             // 
@@ -2798,26 +2856,12 @@
             this.StopCreateContainer.UseVisualStyleBackColor = true;
             this.StopCreateContainer.Click += new System.EventHandler(this.StopCreateContainer_Click);
             // 
-            // NumberOfShipmentsFail
+            // contextMenuStrip1
             // 
-            this.NumberOfShipmentsFail.AutoSize = true;
-            this.NumberOfShipmentsFail.Location = new System.Drawing.Point(151, 67);
-            this.NumberOfShipmentsFail.Name = "NumberOfShipmentsFail";
-            this.NumberOfShipmentsFail.Size = new System.Drawing.Size(13, 13);
-            this.NumberOfShipmentsFail.TabIndex = 7;
-            this.NumberOfShipmentsFail.Text = "0";
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(12, 67);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(82, 13);
-            this.label20.TabIndex = 6;
-            this.label20.Text = "Fail Shipments :";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
-            // 
-            // CraeteContainerProgressBar
+            // OpenContainerLogFile
             // 
             this.UpdateEntity.Location = new System.Drawing.Point(996, 157);
             this.UpdateEntity.Name = "UpdateEntity";
@@ -2830,6 +2874,13 @@
             this.CraeteContainerProgressBar.Name = "CraeteContainerProgressBar";
             this.CraeteContainerProgressBar.Size = new System.Drawing.Size(596, 23);
             this.CraeteContainerProgressBar.TabIndex = 8;
+            this.OpenContainerLogFile.Location = new System.Drawing.Point(912, 499);
+            this.OpenContainerLogFile.Name = "OpenContainerLogFile";
+            this.OpenContainerLogFile.Size = new System.Drawing.Size(75, 23);
+            this.OpenContainerLogFile.TabIndex = 1;
+            this.OpenContainerLogFile.Text = "Open log";
+            this.OpenContainerLogFile.UseVisualStyleBackColor = true;
+            this.OpenContainerLogFile.Click += new System.EventHandler(this.OpenContainerLogFile_Click);
             // 
             // Form1
             // 
@@ -3125,6 +3176,10 @@
         private System.Windows.Forms.Label NumberOfShipmentsFail;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ProgressBar CraeteContainerProgressBar;
+        private System.Windows.Forms.Label loglable;
+        private System.Windows.Forms.RichTextBox ShipmentContainerLog;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Button OpenContainerLogFile;
     }
 }
 
