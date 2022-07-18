@@ -562,7 +562,7 @@ namespace WebFreight.Web.Helpers
             {
                 this.XMLRequestTexts.Add("GetShipmentsByReferences", @"<Query xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
                                             <ComputingPartnerCode>AMS</ComputingPartnerCode>
-                                            <Agent Code='0000' PartnerCode='jjj' Referene1='' Reference2=''></Agent>
+                                            <Agent Code='0000' PartnerCode='jjj' Reference1='' Reference2=''></Agent>
                                             <Shipper></Shipper>
                                             <Consignee></Consignee>
                                             <ShipperNotExporter></ShipperNotExporter>

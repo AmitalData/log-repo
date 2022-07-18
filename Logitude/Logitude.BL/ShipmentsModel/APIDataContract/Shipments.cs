@@ -75,16 +75,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public QueryCard ShipperNotExporter { get; set; }
         public QueryCard ConsigneeNotImporter { get; set; }
         public QueryCard Forwarder { get; set; }
-
-        public Query()
-        {
-            this.Agent = new QueryCard();
-            this.Shipper = new QueryCard();
-            this.Consignee = new QueryCard();
-            this.ShipperNotExporter = new QueryCard();
-            this.ConsigneeNotImporter = new QueryCard();
-            this.Forwarder = new QueryCard();
-        }
     }
 
     public class QueryCard
