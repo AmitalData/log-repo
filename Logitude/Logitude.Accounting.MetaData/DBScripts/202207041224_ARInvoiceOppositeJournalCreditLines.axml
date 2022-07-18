@@ -151,7 +151,7 @@ SELECT CONCAT('OP', InterestTransactions.Id) as Id, InterestTransactions.Tenant,
     left join GLAccounts as GLA1 on ARInvoices.BillToGLAccountId = GLA1.Id AND ARInvoices.Tenant = GLA1.Tenant 
     left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND Cards.Tenant = GLAccountCurrencies.Tenant 
     where  AccountingEntityCode = 2  and ActionCode = '1' AND journallines.DebitAccountId != Cards.GLAccountId
-	AND NOT (CardGLA.IsMultiCurrency = 1 and GLAccountCurrencies.CurrencyId = journallines.CurrencyId )
+	AND NOT (CardGLA.IsMultiCurrency = 1 )
 	AND NOT (ARInvoices.BillToGLAccountId is NOT null AND GLA1.ChartOfAccountsTypeCode = '6')
 	) as JournlaLinesGlAccountCurrencies
     on JournlaLinesGlAccountCurrencies.JournalId = JournalLines.JournalId AND JournlaLinesGlAccountCurrencies.Line = JournalLines.Line
@@ -170,7 +170,7 @@ SELECT CONCAT('OP', InterestTransactions.Id) as Id, InterestTransactions.Tenant,
     left join GLAccounts as GLA1 on ARInvoices.BillToGLAccountId = GLA1.Id AND ARInvoices.Tenant = GLA1.Tenant 
     left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND Cards.Tenant = GLAccountCurrencies.Tenant 
     where  AccountingEntityCode = 2  and ActionCode = '1' AND journallines.DebitAccountId != Cards.GLAccountId
-	AND NOT (CardGLA.IsMultiCurrency = 1 and GLAccountCurrencies.CurrencyId = journallines.CurrencyId )
+	AND NOT (CardGLA.IsMultiCurrency = 1 )
 	AND NOT (ARInvoices.BillToGLAccountId is NOT null AND GLA1.ChartOfAccountsTypeCode = '6')
 	) as JournlaLinesGlAccountCurrencies
     on JournlaLinesGlAccountCurrencies.JournalId = LedgerTransactions.JournalId AND JournlaLinesGlAccountCurrencies.Line = LedgerTransactions.JournalLineNumber
@@ -188,7 +188,7 @@ SELECT CONCAT('OP', InterestTransactions.Id) as Id, InterestTransactions.Tenant,
 	  left  join GLAccounts as BillToGLAccount on ARInvoices.BillToGLAccountId = BillToGLAccount.Id AND BillToGLAccount.Tenant = ARInvoices.Tenant
 	  left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND CardGLA.Tenant = GLAccountCurrencies.Tenant
 	  where Cards.GLAccountId != InterestTransactions.GLAccountId AND InterestReportId is null
-	  AND NOT (CardGLA.IsMultiCurrency = 1 and ARInvoiceLines.ForiegnCurrencyId = GLAccountCurrencies.CurrencyId )
+	  AND NOT (CardGLA.IsMultiCurrency = 1  )
 	  AND NOT (ARInvoices.BillToGLAccountId is NOT null AND BillToGLAccount.ChartOfAccountsTypeCode = '6')
   ) as InterestTransactionsGlAccountCurrencies
   on InterestTransactions.EntityId = InterestTransactionsGlAccountCurrencies.EntityId AND InterestTransactions.OriginalEntityLineNumber = InterestTransactionsGlAccountCurrencies.OriginalEntityLineNumber  AND InterestTransactions.InterestEntityTypeCode = InterestTransactionsGlAccountCurrencies.InterestEntityTypeCode
@@ -204,7 +204,7 @@ SELECT DISTINCT CONCAT('OC', InterestTransactions.Id) as Id, InterestTransaction
 	left  join GLAccounts as BillToGLAccount on ARInvoices.BillToGLAccountId = BillToGLAccount.Id AND BillToGLAccount.Tenant = ARInvoices.Tenant
 	left  join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND CardGLA.Tenant = GLAccountCurrencies.Tenant
 	where Cards.GLAccountId != InterestTransactions.GLAccountId  AND InterestReportId is NOT null
-	AND NOT (ARInvoiceLines.ForiegnCurrencyId = GLAccountCurrencies.CurrencyId )
+	AND NOT (CardGLA.IsMultiCurrency = 1 )
 	AND NOT (ARInvoices.BillToGLAccountId is NOT null AND BillToGLAccount.ChartOfAccountsTypeCode = '6')
 
 
@@ -218,7 +218,7 @@ SELECT DISTINCT CONCAT('OC', InterestTransactions.Id) as Id, InterestTransaction
 	left join GLAccounts as BillToGLAccount on ARInvoices.BillToGLAccountId = BillToGLAccount.Id AND BillToGLAccount.Tenant = ARInvoices.Tenant
 	left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND CardGLA.Tenant = GLAccountCurrencies.Tenant
 	where Cards.GLAccountId != InterestTransactions.GLAccountId AND InterestReportId is NOT null
-	AND NOT (ARInvoiceLines.ForiegnCurrencyId = GLAccountCurrencies.CurrencyId )
+	AND NOT (CardGLA.IsMultiCurrency = 1 )
 	AND NOT (ARInvoices.BillToGLAccountId is NOT null AND BillToGLAccount.ChartOfAccountsTypeCode = '6')
   
      ]]>
