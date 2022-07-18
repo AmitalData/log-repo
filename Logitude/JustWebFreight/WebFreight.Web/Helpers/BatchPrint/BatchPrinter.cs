@@ -176,7 +176,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 Tenant = tenant,
                 Id = IdCounter.GetNumber("Document", tenant),
                 HasFile = true,
-                Folder = "MultiPrint",
+                Folder = "multiprint",
             };
 
             documentRepository.Add(document);
@@ -185,7 +185,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
                 FileName = document.Id,
-                FolderName = "tariff",
+                FolderName = "multiprint",
                 Extension = document.Extension,
                 Tenant = tenant,
                 FileSize = document.FileSize,
@@ -204,6 +204,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             {
 
                 var stream = BuildReportStream(item);
+                
                 result.DocumentStream = stream;
                 result.IsSuccessfullyPrinted = true;
 
@@ -254,7 +255,12 @@ namespace WebFreight.Web.Helpers.BatchPrint
         {
             var printedCopy = GetPrintedCopy(item);
             if (printedCopy != null)
-                return GetReportStreamFromCopy(printedCopy);
+            {
+                var stream = GetReportStreamFromCopy(printedCopy);
+                if(stream != null) return stream;
+
+            }
+                
 
             var documentOut = BuildDocumentOut(item);
             var reportStream = CreateReportStream(item);
@@ -327,6 +333,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 return null;
 
             MemoryStream stream = new MemoryStream(datainByte);
+            
             return stream;
         }
         private bool CheckValidation(PrintEntityKeys item, ItemPrintingResult result)
@@ -381,7 +388,14 @@ namespace WebFreight.Web.Helpers.BatchPrint
         {
             UserRepository userRep = new UserRepository(_batchPrinterArgs.Tenant);
             User printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, _batchPrinterArgs.Email, _batchPrinterArgs.Tenant, false);
-            return printedBy;
+            if(printedBy != null)
+                return printedBy;
+            printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, _batchPrinterArgs.Email, 0, false);
+            if (printedBy == null)
+                throw new Exception($"the user {_batchPrinterArgs.Email} not found");
+            if(!printedBy.IsDistributor)
+                return printedBy;
+            throw new Exception($"the user {_batchPrinterArgs.Email} not found");
         }
 
         private DocumentTypeTemplate GetDocumentTypeTemplate()
