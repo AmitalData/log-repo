@@ -151,7 +151,7 @@ namespace WebFreight.Web.ContainerTracking
 
             else if (trackingSource == ContainerStatusSourceValues.Vizion)
             {
-                var allContainerTrackingRequests = containerUpdatedFields.ShipmentContext.ContainerTrackingRequests.Where(e => e.RequestId == visionContainerStatus.reference_id && e.Status == ContainerTrackingRequestStatus.Active).ToList();
+                var allContainerTrackingRequests = containerUpdatedFields.ShipmentContext.ContainerTrackingRequests.Where(e => (e.RequestId == visionContainerStatus.reference_id || e.RequestId == visionContainerStatus.parent_reference_id) && e.Status == ContainerTrackingRequestStatus.Active).ToList();
                 foreach (var containerTrackingRequest in allContainerTrackingRequests)
                 {
                     HandelUpdateManager(manager, containerTrackingRequest);
