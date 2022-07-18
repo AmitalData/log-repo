@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var list = customResponse.SelectedInvoiceItemsKeys.Split(',').ToList();
             List<SupplierInvoiceItemPM> items = queryService.GetSupplierInvoiceItemsByCounterKeysFullPM(customResponse.Declarationid, list, requestParams.Tenant);
             updateService.CreateCertificateForInvoiceItems(customResponse.Declarationid, requestParams.Tenant, customResponse.AttachmentTypeCode,
-                customResponse.ReqConfirmationTypeCode, customResponse.ResConfirmationTypeCode, customResponse.CertificateNumber, items);
+                customResponse.ReqConfirmationTypeCode, customResponse.ResConfirmationTypeCode, customResponse.CertificateNumber,customResponse.CertificateExemptionTypeCode, items);
             this.MyResponseData.UserMessage = "נוצר אישור "+ customResponse.CertificateNumber;
         }
 
