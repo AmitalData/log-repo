@@ -1359,7 +1359,7 @@ namespace MeatadataGeneratorTool
                 }
                 if (!string.IsNullOrEmpty(f.DisplayInRequiredFields))
                 {
-                    SetAttribute("DisplayInRequiredFields", GetStringValue(f.AdditionalQuerySections), fieldElement, null);
+                    SetAttribute("DisplayInRequiredFields", GetStringValue(f.DisplayInRequiredFields), fieldElement, null);
                 }
 
 
