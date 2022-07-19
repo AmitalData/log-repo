@@ -2959,6 +2959,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     private OnContainerizationWindowClosed($event: any) {
 
          if($event!=null && $event!="0"){
+            var item = this.CurrentQueryFilters.AdditionalFilters.filter(d=> d.FieldName == "Id")[0];
+            if (item) {
+                var index = this.CurrentQueryFilters.AdditionalFilters.indexOf(item);
+                this.CurrentQueryFilters.AdditionalFilters.splice(index, 1);
+            }
             this.CurrentQueryFilters.addAdditionalFilter("Id", $event, null, null, "InListExact", false, false, false, "string",false,true);
         }
         this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, Reload: true });
