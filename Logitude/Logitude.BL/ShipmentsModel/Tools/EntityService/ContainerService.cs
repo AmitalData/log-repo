@@ -410,6 +410,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 containerPm.TransshipmentCount = 1;
             }
+
+            else
+            {
+                containerPm.TransshipmentCount = null;
+            }
         }
 
         private void ComputeHasTransShipments()

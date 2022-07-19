@@ -509,6 +509,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.CheckUpdatingMasterHouses();
                     this.ComputeIsHTSMissingField();
                     this.ComputeHasUnassignedField();
+                    this.ComputeNumberOfTransshipments();
 
                     entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
@@ -7842,12 +7843,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             return myResult;
         }
-
         private void SaveChildEntitiesCustomFields()
         {
             new ShipmentChildEntitiesCustomFieldServices(entityPM, initializer).Save();
         }
+        private void ComputeNumberOfTransshipments()
+        {
+            if (!string.IsNullOrEmpty(entityPM.Transshipment3FromPortId))
+            {
+                entityPM.NumberOfTransshipments = 3;
+            }
 
+            else if (!string.IsNullOrEmpty(entityPM.Transshipment2FromPortId))
+            {
+                entityPM.NumberOfTransshipments = 2;
+            }
+
+            else if (!string.IsNullOrEmpty(entityPM.Transshipment1FromPortId))
+            {
+                entityPM.NumberOfTransshipments = 1;
+            }
+
+            else
+            {
+                entityPM.NumberOfTransshipments = null;
+            }
+        }
     }
 
     public class NumberOfInsidePackagesHelper
