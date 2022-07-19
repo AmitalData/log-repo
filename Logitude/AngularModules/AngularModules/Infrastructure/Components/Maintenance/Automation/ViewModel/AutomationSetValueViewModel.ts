@@ -51,11 +51,13 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
     ObjectTableId: string;
     ObjectTableName: string;
     DisplayName: string;
+    IsMultiUpdateComponent: boolean;
 
     constructor(entityPM: AutomationSetValue, addEditAutomationsViewModel: any) {
         super();
         this.CurrentEntityPM = entityPM;
         this.AddEditAutomationsViewModel = addEditAutomationsViewModel;
+        this.IsMultiUpdateComponent = addEditAutomationsViewModel.IsMultiUpdateComponent;
         this.AutomationHelper = new AutomationHelper(this.CurrentEntityPM, this.AddEditAutomationsViewModel, this, "SetValue");
         this.AutomationSetValuebjectFieldLists = addEditAutomationsViewModel.AutomationSetValuebjectFieldLists;
         var objectField: ObjectFieldPM = this.AutomationSetValuebjectFieldLists.filter(d => d.FieldCode == this.CurrentEntityPM.ObjectFieldCode)[0];
@@ -154,12 +156,18 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
         this.AutomationCondationFieldListFilterItems = new ApiQueryFilters();
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", this.AddEditAutomationsViewModel.ObjectTableId, null, null, "Equals", false, false, false, "string");
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("CanAutomateSetValue", true, null, null, "Equals", true, false, false, "boolean");
+        this.ExcludeObjectFields();
         this.AddRecordTypeFilter();
 
     }
 
 
+    ExcludeObjectFields() {
+        if (this.IsMultiUpdateComponent) return;
 
+        let excludeFieldsCodes = "Shipment.IsAccountingClosed,Shipment.IsOperationalClosed";
+        this.AutomationCondationFieldListFilterItems.addAdditionalFilter("FieldCode", excludeFieldsCodes, null, null, "Exclude", false, false, false, "string");
+    }
 
 
 

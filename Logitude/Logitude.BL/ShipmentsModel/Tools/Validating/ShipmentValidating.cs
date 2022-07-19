@@ -79,7 +79,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidatePartnerTypes(entityPM);
                 ValidateShipmentSubType(entityPM);
 
-                if (FeatureToggleHelper.HasFeatureToggle("TSV", entityPM.Tenant))
+                if (FeatureToggleHelper.HasFeatureToggle("TSV", entityPM.Tenant) || entityPM.IsMultiUpdate)
                 {
                     ValidateShipmentOperationalClose(entityPM, entityPoco);
                     ValidateShipmentAccountingClose(entityPM, entityPoco);
