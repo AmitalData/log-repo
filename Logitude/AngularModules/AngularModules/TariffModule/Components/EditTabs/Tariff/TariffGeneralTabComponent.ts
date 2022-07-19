@@ -42,7 +42,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public IsTariffHasContainers: boolean = false;
     public IsLocalCustomsTariff: boolean = false;
     public SellerToolTip: string;
-
+    public ContainerTypeDependencyFilter: string;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -66,6 +66,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         if (this.IsTariffHasContainers) {
             this.FillContainersIDs();
             this.IsContainersAreaVisible = true;
+            this.ContainerTypeDependencyFilter = this.EntityPM.TypeCode == "IFT" ? null : "O";
         }
 
         if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
