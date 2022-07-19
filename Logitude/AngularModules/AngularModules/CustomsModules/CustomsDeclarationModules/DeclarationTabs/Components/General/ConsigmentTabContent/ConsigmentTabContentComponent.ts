@@ -438,7 +438,7 @@ export class ConsigmentTabContentComponent
 
 
     public get ConsignmentType() { return this.EntityPM ? this.EntityPM.ConsignmentType : null; }
-    public set ConsignmentType(newValue: string) { this.EntityPM.ConsignmentType = newValue; }
+    public set ConsignmentType(newValue: string) { this.EntityPM.ConsignmentType = newValue; this.SetCargoTypeTranssshipment() }
 
     public get ShipCode() { return this.EntityPM ? this.EntityPM.ShipCode : null; }
     public set ShipCode(newValue: string) { this.EntityPM.ShipCode = newValue; }
@@ -751,6 +751,21 @@ export class ConsigmentTabContentComponent
             }
         }
     }
+    SetCargoTypeTranssshipment(){
+        if (this.declarationPM.DeclarationTypeCode == "3" && this.ConsignmentType == 'I') {
+            if (this.declarationPM.TransportModeId == 'A' || this.declarationPM.TransportModeId == 'O') {
+                this.CargoTypeCode = ""
+                this.ManifestNumber = ""
+                this.SecondCargoID = ""
+                this.ThirdCargoID = ""
+                if (this.declarationPM.TransportModeId == 'A')
+                    this.CargoTypeCode = "1"
+                else
+                    this.CargoTypeCode = "11"
+
+            }
+        }
+    }
     AddPackageButtonClicked() {
         var line = new ConsignmentPackagePM(this.EntityPM);
         this.EntityPM.AddConsignmentPackage(line);
@@ -761,6 +776,7 @@ export class ConsigmentTabContentComponent
 
     OpenEditDangerWindow(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
+            
             var windowArgs: any = {};
             windowArgs.ConsignmentPackagesDangerPM = item.EntityPM;
             windowArgs.Declaration = this.declarationPM;
