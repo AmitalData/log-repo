@@ -154,7 +154,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             string crateNumber = "";
             var context = CustomContext.GetContext(myDeclarationPM.Tenant);
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false) ?? myDeclarationPM?.MyEcomInsert?.MyDeclarationCourierStatusPM;
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
+            currentDeclarationCourierStatusPM= currentDeclarationCourierStatusPM?? myDeclarationPM?.MyEcomInsert?.MyDeclarationCourierStatusPM;
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
             if (string.IsNullOrWhiteSpace(crateNumber))
             {
