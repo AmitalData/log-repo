@@ -188,6 +188,7 @@ export class CargoSplitGeneralTabComponent
                         .subscribe((myResponse: ServiceResponse) => {
                             this.CurrentSession.StopBusyIndicator();
                             this.FetchConsignment(myResponse, false);
+                            this.EntityPM.IsDirty = false
                         });
                 }
             }); 
@@ -360,6 +361,7 @@ export class CargoSplitGeneralTabComponent
         this.Init();
         this.BuildTabs();
         this.RequestDate = DateTool.GetDateByDay(+0);
+        this.EntityPM.IsDirty = false
     }
 
     SetWindowArgs(winArg: any) {
@@ -526,7 +528,7 @@ export class CargoSplitGeneralTabComponent
 
     air; ocean; land;
     DirectionModeClicked(value: string) {
-        if (this.EntityPM.IsDirty) {
+        if (this.EntityPM.IsDirty) {            
             let confirmWindow = new ConfirmWindow();
             confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.RecallClientsForCutoms");
             confirmWindow.Width = 300;
@@ -600,7 +602,7 @@ export class CargoSplitGeneralTabComponent
         this.EntityPM.IsDirty = false;
     }
     DeleteTabs(tab: LogTab) {
-
+        
         if (!AppTool.IsNullOrEmpty(tab)) {
             var t = tab;
             tab = t;

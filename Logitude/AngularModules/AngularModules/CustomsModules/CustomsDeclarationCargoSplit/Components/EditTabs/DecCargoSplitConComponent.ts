@@ -98,7 +98,6 @@ export class DecCargoSplitConComponent extends BaseComponent {
             this.PreceduralFilterItems.addAdditionalFilter("Code", "1000000,8000000,4000000", null, null, "InListExact", false, false, false, "string", false, true);
         }
         this.SetDisplayFields();
-        //this.SetTabArgs(Args);
         this.setParentCargoConsinmentItemList()
     }
 
