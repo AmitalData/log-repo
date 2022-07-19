@@ -38,7 +38,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public bool CheckRecentCustomerReports(int tenant, DateTime interestDate, string customerId)
         {
             return (from a in context.InterestReports
-                    where a.Tenant == tenant && a.InterestCalculationDate > interestDate && a.InterestReportStatusCode != "3" && a.CustomerId == customerId
+                    where a.Tenant == tenant && a.InterestCalculationDate > interestDate && a.InterestReportStatusCode != CancelledType && a.InterestReportStatusCode != FailedType && a.CustomerId == customerId
                     select a).Any();
         }
 
