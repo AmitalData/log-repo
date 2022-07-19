@@ -51,6 +51,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = containerPoco, EntityPM = entityPM, OldEntityPM = new ContainerPM(), AutomationType = "OnCreate", ObjectTableName = "Container", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.ContainerNumber });
             entityAutomationService.RunAutomation();
 
+            this.ComputeTransshipmentCount();
+            this.ComputeHasTransShipments();
             ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
@@ -80,6 +82,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.containerPm.ConcurrencyGUID = entityRepository.GetConcurrencyGUIDByContainerId(this.containerPm.Id, tenant);
             }
 
+            this.ComputeTransshipmentCount();
+            this.ComputeHasTransShipments();
             ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
@@ -94,7 +98,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.HandleContainersExternalData(entityPM, containersExternal);
 
             Container containerPocoCopy = CloneObjectService.Clone(containerPoco);
-            ContainerPM containerPMCopy = CloneObjectService.Clone(containerPm);
+            ContainerPM containerPMCopy = CloneObjectService.Clone(containerPm);            
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Update(containerPoco);
@@ -198,7 +202,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.Remove(containerPoco);
             entityRepository.SubmitChanges();
         }
-
 
         private void MapShipmentConcurrencyFields()
         {
@@ -389,6 +392,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentService service = new ShipmentService(shipmentsContext, shipmentPM, systemEmail);
             service.SetChangeSet(shipmentPM.ShipmentPackages, shipmentPM.ShipmentOrderPackages, shipmentPM.ShipmentPickUps, shipmentPM.ShipmentDeliveries, shipmentPM.ShipmentReceivables, shipmentPM.ShipmentPayables, shipmentPM.FollowUps, shipmentPM.ShipmentAWBPrintOnlies, shipmentPM.ShipmentConsoleShipments, shipmentPM.ShipmentCarrierStatuses, shipmentPM.AWBOCIPMs, shipmentPM.ShipmentCommodities, shipmentPM.ShipmentAssemblies, shipmentPM.ShipmentStoragePricings, shipmentPM.ShipmentProductItems, shipmentPM.ShipmentUnassignedFields);
             service.Update();
+        }
+
+        private void ComputeTransshipmentCount()
+        {
+            if (!string.IsNullOrEmpty(containerPm.Transshipment3LocationPortId))
+            {
+                containerPm.TransshipmentCount = 3;
+            }
+
+            else if (!string.IsNullOrEmpty(containerPm.Transshipment2LocationPortId))
+            {
+                containerPm.TransshipmentCount = 2;
+            }
+
+            else if (!string.IsNullOrEmpty(containerPm.Transshipment1LocationPortId))
+            {
+                containerPm.TransshipmentCount = 1;
+            }
+        }
+
+        private void ComputeHasTransShipments()
+        {
+            if (containerPm.TransshipmentCount > 0)
+            {
+                containerPm.HasTransshipments = true;
+            }
+
+            else if (!string.IsNullOrEmpty(containerPm.ShipmentTransshipment1FromId))
+            {
+                containerPm.HasTransshipments = true;
+            }
+
+            else
+            {
+                containerPm.HasTransshipments = false;
+            }
         }
     }
 }

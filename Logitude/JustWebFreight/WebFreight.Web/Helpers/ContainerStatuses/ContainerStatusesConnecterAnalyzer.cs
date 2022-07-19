@@ -1403,7 +1403,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.Leg5Voyage = leg5_voyage;
             containerUpdatedFields.CustomsReleaseState = customs_release_state;
             containerUpdatedFields.CarrierReleaseState = carrier_release_state;
-            containerUpdatedFields.TransshipmentCount = ts_count;
+            //containerUpdatedFields.TransshipmentCount = ts_count;
 
             containerUpdatedFields.MainCarriageETD = this.ComputeMainCarriageETD();
             containerUpdatedFields.MainCarriageETA = this.ComputeMainCarriageETA();

@@ -268,5 +268,6 @@ export class ContainerList {
 		AdditionalReference2: string;
 		AdditionalReference3: string;
 		AdditionalReference4: string;
+		HasTransshipments: boolean;
 	
 }

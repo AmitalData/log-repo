@@ -1401,6 +1401,11 @@ export class ContainerPM {
     public set AdditionalReference4(newValue: string) { if (this.additionalReference4 != newValue) { this.additionalReference4 = newValue; this.MarkAsDirty("AdditionalReference4"); } }
        
 	 
+    private hasTransshipments: boolean;
+    public get HasTransshipments() { return this.hasTransshipments; }
+    public set HasTransshipments(newValue: boolean) { if (this.hasTransshipments != newValue) { this.hasTransshipments = newValue; this.MarkAsDirty("HasTransshipments"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

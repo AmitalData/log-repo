@@ -364,8 +364,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string AdditionalReference2 { get; set; }
         public string AdditionalReference3 { get; set; }
         public string AdditionalReference4 { get; set; }
-
-
-
+        public bool HasTransshipments { get; set; }
     }
 }

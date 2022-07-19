@@ -114,8 +114,12 @@ namespace WebFreight.Web.ContainerTracking
                     containerUpdatedFields = vizionAnalyzer.Run();
                 }
 
-                containerUpdatedFields.TrackingSource = trackingSource;
-                this.StartUpdating();
+                if (containerUpdatedFields != null)
+                {
+                    containerUpdatedFields.TrackingSource = trackingSource;
+                    this.StartUpdating();
+                }
+
                 this.DoneAnalyzeQueue();
             }
 
