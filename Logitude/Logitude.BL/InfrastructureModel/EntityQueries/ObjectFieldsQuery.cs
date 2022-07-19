@@ -140,8 +140,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              RecordType =a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              AdditionalQuerySections = a.AdditionalQuerySections,
+                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
 
-                                             
+
 
                                          }).FirstOrDefault();
 
@@ -241,6 +242,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      ShortNameTextCodeCode = a.ShortNameTextCodeCode,
                                                      HelpTextCodeCode = a.HelpTextCodeCode,
                                                      AdditionalQuerySections = a.AdditionalQuerySections,
+                                                     DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                  };
@@ -349,6 +351,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     HelpTextCodeCode = a.HelpTextCodeCode,
                                                     ListTextCodeCode = a.ListTextCodeCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                 }).ToList();
@@ -465,6 +468,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              FieldCode = a.FieldCode,
                                              AdditionalQuerySections = a.AdditionalQuerySections,
+                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                          }).FirstOrDefault();
@@ -582,6 +586,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                 }).OrderBy(o => o.FieldName).ToList();
@@ -701,6 +706,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              FieldCode = a.FieldCode,
                                              AdditionalQuerySections = a.AdditionalQuerySections,
+                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                          }).FirstOrDefault();
@@ -824,6 +830,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                 }).ToList();
@@ -939,6 +946,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                 }).ToList();
@@ -1052,6 +1060,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                         FieldCode = a.FieldCode,
                         AdditionalQuerySections = a.AdditionalQuerySections,
+                        DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                     }).ToList();
@@ -1165,6 +1174,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                 }).ToList();
@@ -1275,6 +1285,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.ObjectField.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.ObjectField.FieldCode,
                                                     AdditionalQuerySections = a.ObjectField.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.ObjectField.DisplayInRequiredFields,
 
                                                 }).ToList();
 
@@ -1389,6 +1400,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                               FieldCode = a.FieldCode,
                               AdditionalQuerySections = a.AdditionalQuerySections,
+                              DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                           });
@@ -1502,6 +1514,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                 });
@@ -1616,6 +1629,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                 }).ToList();
@@ -1844,6 +1858,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                 }).ToList();
@@ -1980,6 +1995,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              HelpTextCodeCode = a.HelpTextCodeCode,
                                                              ListTextCodeCode = a.ListTextCodeCode,
                                                              AdditionalQuerySections = a.AdditionalQuerySections,
+                                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                          }).ToList();
@@ -2097,6 +2113,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          HelpTextCodeCode = a.HelpTextCodeCode,
                                                          ListTextCodeCode = a.ListTextCodeCode,
                                                          AdditionalQuerySections = a.AdditionalQuerySections,
+                                                         DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                      }).ToList();
@@ -2214,6 +2231,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       ListTextCodeCode = a.ListTextCodeCode,
 
                                                       AdditionalQuerySections = a.AdditionalQuerySections,
+                                                      DisplayInRequiredFields = a.DisplayInRequiredFields,
 
                                                   }).ToList();
 
@@ -2331,6 +2349,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   HelpTextCodeCode = a.HelpTextCodeCode,
                                                   ListTextCodeCode = a.ListTextCodeCode,
                                                   AdditionalQuerySections = a.AdditionalQuerySections,
+                                                  DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                               }).ToList();
@@ -2431,6 +2450,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              FieldCode = a.FieldCode,
                                              AdditionalQuerySections = a.AdditionalQuerySections,
+                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
 
                                          }).FirstOrDefault();
 
@@ -2473,6 +2493,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     FieldCode = a.FieldCode,
                                                     CustomPickListCode =a.CustomPickListCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                 }).ToList();
@@ -2589,6 +2610,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                                 }).ToList();
@@ -2705,6 +2727,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
 
                                              AdditionalQuerySections = a.AdditionalQuerySections,
+                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
 
 
                                          }).FirstOrDefault();
