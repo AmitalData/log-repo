@@ -367,6 +367,7 @@ export class CargoSplitGeneralTabComponent
         if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
             this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
+            this.Direction = winArg.Direction;
             this.RequestDate = DateTool.GetDateByDay(+0);
             this.Direction = winArg.Direction;
             //this.CustomFileNoTextChanged(winArg.CustomFileNo);

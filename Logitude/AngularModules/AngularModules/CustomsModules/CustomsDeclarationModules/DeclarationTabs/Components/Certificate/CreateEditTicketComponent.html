@@ -134,7 +134,7 @@
                     [class.SelectedFilter]="ExemptionFilterSelectedValue == '92'" (click)="ExemptionFilterClicked('92')" class="noselect">
                     92
                 </li>
-                <li *ngIf="this.Parent.DeclarationPM.Direction == 'I'" id="Errors" style="width: 50px; height: 22px;"
+                <li id="Errors" style="width: 50px; height: 22px;" *ngIf="Parent.DeclarationPM.Direction != 'E'"
                     [class.SelectedFilter]="ExemptionFilterSelectedValue == '96'" (click)="ExemptionFilterClicked('96')" class="noselect">
                     96
                 </li>
