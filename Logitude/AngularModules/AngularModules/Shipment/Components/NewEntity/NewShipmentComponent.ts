@@ -4243,7 +4243,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.EntityPM.MainCarriageFinalDestinationPortId = this.EntityPM.MainCarriageToPortId;
         this.SetPartnersOnFinish();
         this.SetCountryECOnFinish();
-        //this.SetInlandDomesticOnFinish();
+        this.SetInlandDomesticOnFinish();
 
         var validator = new ShipmentValidator();
         this.ValidationErrorsList = validator.Validate(this.EntityPM);
@@ -4322,12 +4322,15 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             }
         }
     }
+    
     SetInlandDomesticOnFinish() {
-        if (this.IsInlandDomestic) {
-            this.IncludePickUp = false;
-            this.IncludeDelivery = false;
-        }
+        if (!this.IsInlandDomestic) return;
+        this.IncludePickUp = false;
+        this.IncludeDelivery = false;
+        this.EntityPM.ShipmentPickUps = [];
+        this.EntityPM.ShipmentDeliveries = [];
     }
+
     SetOrderPackagesOnFinish() {
         if (this.IsFCLEntity) {
             var numberOfPackages = 0;
