@@ -149,6 +149,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool EnableFullscreenTextBox { get; set; }
 
         public string AdditionalQuerySections { get; set; }
+        public bool DisplayInRequiredFields { get; set; }
 
 
 

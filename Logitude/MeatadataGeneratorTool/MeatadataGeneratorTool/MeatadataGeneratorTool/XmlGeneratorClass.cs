@@ -1199,7 +1199,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("MaxLength", f.MaxLength.ToString(), fieldElement, null);
                 SetAttribute("IsRequired", f.IsRequired.ToString().ToLower(), fieldElement, null);
                 SetAttribute("CopyToDW", f.CopyToDW.ToString().ToLower(), fieldElement, null);
-
+                
                 SetAttribute("DisplayOnLookUp", f.DisplayOnLookUp.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayOnLookUpLocal", f.DisplayOnLookUpLocal.ToString().ToLower(), fieldElement, null);
                 SetAttribute("CanFilter", f.CanFilter.ToString().ToLower(), fieldElement, null);
@@ -1357,7 +1357,10 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("AdditionalQuerySections", GetStringValue(f.AdditionalQuerySections), fieldElement, null);
                 }
-
+                if (!string.IsNullOrEmpty(f.DisplayInRequiredFields))
+                {
+                    SetAttribute("DisplayInRequiredFields", GetStringValue(f.AdditionalQuerySections), fieldElement, null);
+                }
 
 
                 if (!string.IsNullOrEmpty(f.HtmlListComponentUrl))
