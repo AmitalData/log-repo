@@ -85,6 +85,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          AirWeightRoundingCode = a.AirWeightRoundingCode,
                                          OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                                          InlandWeightRoundingCode = a.InlandWeightRoundingCode,
+                                         GLAccountId = a.Card.GLAccountId,
                                          GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                          StorageFreeDays = a.Card.StorageFreeDays,
                                          RegimenFiscalCode = a.Card.RegimenFiscalCode,
