@@ -90,7 +90,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
                 ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(tenant);
                 currentscreens = (from a in repository.context.Screens.Include("ObjectTable")
-                                  where a.Tenant == tenant && a.Inactive == false
+                                  where a.Tenant == tenant
                                   select new ScreenPM()
                                   {
                                       Code = a.Code,
