@@ -41,7 +41,7 @@ namespace CommunicationWorkerRole.Services
 {
     public class ReportSchedulerTaskService
     {
-        
+
         int trackerCounter = 0;
         string[,] trackerLogs = new string[,] //tracker(Step, DateTime)
         {
@@ -58,7 +58,7 @@ namespace CommunicationWorkerRole.Services
         {
             this.currentTask = task;
         }
-        
+
         public void RunTask(TasksSchedulerPM reportTask)
         {
             try
@@ -67,11 +67,11 @@ namespace CommunicationWorkerRole.Services
                 reportTask.CreatedBy = schedulerDetails.ReportDetails.CreatedByUserId;
                 ReportFliter reportFilter = GetReportFilters(reportTask, schedulerDetails);
 
-                if (reportTask.ResultType == null || reportTask.ResultType == "Email" )
+                if (reportTask.ResultType == null || reportTask.ResultType == "Email")
                 {
                     SendPdfReportToReceipent(reportTask, schedulerDetails, reportFilter);
                 }
-                else if(reportTask.ResultType == "FTP")
+                else if (reportTask.ResultType == "FTP")
                 {
                     SendReportToFTP(reportTask, schedulerDetails, reportFilter);
                 }
@@ -131,7 +131,7 @@ namespace CommunicationWorkerRole.Services
             {
                 StiExcel2007ExportSettings stiExcelSettings = new StiExcel2007ExportSettings();
                 bool useOnePageHeaderAndFooter = reportTask.Format == "EXCL" || reportTask.AdvancedFormat == "OP";
-                bool exportDataOnly =  reportTask.AdvancedFormat == "DO";
+                bool exportDataOnly = reportTask.AdvancedFormat == "DO";
                 stiExcelSettings.ExportObjectFormatting = false;
                 stiExcelSettings.UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter;
                 stiExcelSettings.ExportDataOnly = exportDataOnly;
@@ -178,7 +178,7 @@ namespace CommunicationWorkerRole.Services
             string gLAccountId = GetFilterFieldValueByName(schedulerDetails.ReportDetails.ReportFilterItems, mainCustomerFieldName);
             List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, gLAccountId);
             allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
-            ReportSchedulerRecepients recepients =  RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
+            ReportSchedulerRecepients recepients = RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
             return recepients;
         }
 
@@ -290,7 +290,7 @@ namespace CommunicationWorkerRole.Services
             string[] recepientsEmails = inActiveRecipientsEmails.Split(',');
             string[] recepients = recepientsEmails.Distinct().ToArray();
             string emails = string.Join(",", recepients);
-            
+
             return emails;
         }
 
@@ -310,7 +310,7 @@ namespace CommunicationWorkerRole.Services
             }
             return activatedEmails;
         }
-        
+
         private string FillOnlyActiveRecepients(List<ActivatedEmail> emails)
         {
             string recepients = "";
@@ -318,7 +318,7 @@ namespace CommunicationWorkerRole.Services
                 if (to.IsActive)
                     recepients += to.To + ";";
             });
-            if(recepients.Length > 0)
+            if (recepients.Length > 0)
                 recepients = recepients.Substring(0, recepients.Length - 1);
             return recepients;
         }
@@ -426,29 +426,29 @@ namespace CommunicationWorkerRole.Services
 
             if (memoryStream != null)
             {
-                documentId = CreateDocument(reportName, tenant, memoryStream.ToArray());
+                documentId = CreateDocument(new ReportScedulerDocumentArgs { Name = reportName, Format = "pdf", Tenant = tenant, ByteData = memoryStream.ToArray() });
             }
             return documentId;
         }
 
-        public string CreateDocument(string reportName, int tenant, byte[] ByteData)
+        public string CreateDocument(ReportScedulerDocumentArgs reportScedulerDocumentArgs)
         {
-            DocumentRepository documentRepository = new DocumentRepository(tenant);
+            DocumentRepository documentRepository = new DocumentRepository(reportScedulerDocumentArgs.Tenant);
             Document document = new Document()
             {
-                FileName = reportName,
+                FileName = reportScedulerDocumentArgs.Name,
                 CreateDate = DateTime.Now,
-                Extension = "pdf",
-                FileSize = ByteData.Length,
-                Tenant = tenant,
-                Id = IdCounter.GetNumber("Document", tenant),
+                Extension = reportScedulerDocumentArgs.Format,
+                FileSize = reportScedulerDocumentArgs.ByteData.Length,
+                Tenant = reportScedulerDocumentArgs.Tenant,
+                Id = IdCounter.GetNumber("Document", reportScedulerDocumentArgs.Tenant),
                 HasFile = true,
                 Folder = "reports",
             };
 
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
-            StoredDocumentInBlob(document, tenant, ByteData);
+            StoredDocumentInBlob(document, reportScedulerDocumentArgs.Tenant, reportScedulerDocumentArgs.ByteData);
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
 
@@ -563,7 +563,7 @@ namespace CommunicationWorkerRole.Services
             {
                 if (partner.InActive) inactivePartnerCounts += 1;
             });
-            
+
             return inactivePartnerCounts;
         }
         private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
@@ -614,6 +614,14 @@ namespace CommunicationWorkerRole.Services
     {
         public string To;
         public bool IsActive;
+    }
+
+    public class ReportScedulerDocumentArgs
+    {
+        public string Name;
+        public string Format;
+        public int Tenant;
+        public byte[] ByteData;
     }
 }
 

@@ -1,7 +1,7 @@
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ScreenSectionExtendedService } from '../../../Infrastructure/Services/ExtendedPMs/ScreenSectionExtendedService';
-import { SectionScreenItem } from '../Components/Customization/ScreenLayoutComponent';
+import { ScreenRowDetails, SectionScreenItem } from '../Components/Customization/ScreenLayoutComponent';
 import { IScreenLayoutService } from '../Interface/IScreenLayoutService';
 
 export class MuiltSectionScreenLayoutService implements IScreenLayoutService {
@@ -78,8 +78,23 @@ export class MuiltSectionScreenLayoutService implements IScreenLayoutService {
 
     private AddScreenSectionFields(sectionScreen: SectionScreenItem) {
         sectionScreen.ScreenRows.forEach(screenRowDetails => {
-            this.screenComponent.AddScreenField(screenRowDetails, sectionScreen);
+            this.AddScreenFields(screenRowDetails, sectionScreen);
         });
+    }
+
+
+    private AddScreenFields(screenRowDetails: ScreenRowDetails, sectionScreen: SectionScreenItem) {
+        let screenFieldRow = 0;
+        screenRowDetails.ScreenFieldPMs.forEach(screenField => {
+            this.AddScreenField(screenField, sectionScreen, screenFieldRow++  );
+        });
+    }
+
+    private AddScreenField(screenField, sectionScreen, screenFieldRow ) {
+        screenField.Row = screenFieldRow;
+        this.screenComponent.MyArgs.ScreenFields.push(screenField);
+        this.screenComponent.MyArgs.Rows += 1;
+        sectionScreen.Section.NumberOfRows += 1;
     }
 
 

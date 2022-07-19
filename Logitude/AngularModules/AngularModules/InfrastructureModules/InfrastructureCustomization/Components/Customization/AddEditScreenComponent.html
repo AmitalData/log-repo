@@ -59,7 +59,7 @@
 							<tr>
 								<td style="width:10px"></td>
 								<td style="height: 22px; width: 100px;">
-                                    <label *ngIf="Name" class="Label" style="color:#6E7172;padding-left: 10px;">Inactive</label>
+                                    <label *ngIf="IsEditMode" class="Label" style="color:#6E7172;padding-left: 10px;">Inactive</label>
 								</td>
 
 
@@ -67,7 +67,7 @@
 								<td style="height: 22px; width: 250px; ">
 
 									<div style="width: 250px;">
-                                        <CheckBox [IsChecked]="Inactive" (Checked)="Inactive = $event"></CheckBox>
+                                        <CheckBox  *ngIf="IsEditMode" [IsChecked]="Inactive" (Checked)="Inactive = $event"></CheckBox>
 									</div>
 								</td>
 								<td></td>

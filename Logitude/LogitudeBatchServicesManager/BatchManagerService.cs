@@ -196,6 +196,10 @@ namespace LogitudeBatchServicesManager
         private string GetArgumentFromBatchProcess(BatchProcess batchProcess)
         {
             var Arguments = " -MMMB:" + batchProcess.MaxMemoryMB + " -MPWTIM:" + batchProcess.MaxWorkingTimeInMinutes;
+            if (!string.IsNullOrEmpty(batchProcess.RestartTime))
+            {
+                Arguments += " -RestartTime:" + batchProcess.RestartTime;
+            }
             if (batchProcess.AllServices && !string.IsNullOrEmpty(batchProcess.Ignore))
             {
                 Arguments += " -Ignore:" + batchProcess.Ignore;
