@@ -19,11 +19,12 @@ const deleteSectionMessage = "Are you sure you want delete this section?";
 export class LighteningScreenComponent extends BaseComponent implements OnInit
 {
     public ScreenLayoutComponent: ScreenLayoutComponent;
-    public layoutWidth: string;
+    public lighteningScreenWidth: string;
+    private screenLayoutwidth = 500;
     constructor()
     {
         super();
-        this.layoutWidth = (window.innerWidth - 500) + "px";
+        this.lighteningScreenWidth = (window.innerWidth - this.screenLayoutwidth) + "px";
 
     }
 
