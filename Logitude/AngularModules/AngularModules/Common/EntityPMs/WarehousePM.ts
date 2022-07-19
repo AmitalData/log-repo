@@ -459,6 +459,9 @@ export class WarehousePM {
             }
         }
     }
+    private gLAccountId: string;
+    public get GLAccountId() { return this.gLAccountId; }
+    public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
 	    //public WarehouseStoragePricings: Array<WarehouseStoragePricingPMPM>= [];
      private gLAccountNumber: string;
     public get GLAccountNumber() { return this.gLAccountNumber; }
@@ -572,4 +575,4 @@ export class WarehousePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
