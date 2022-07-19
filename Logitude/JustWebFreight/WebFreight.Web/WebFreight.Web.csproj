@@ -1067,14 +1067,12 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticActionRequestViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticActionResponseReqSViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticPermitViewsController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GTBFUSTATUViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaAuthorizationTypeLookupViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckSearchResultTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaStatusTypeLookUpViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StatusFieldTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StorageStatusTableViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\TradeAgreementProtocolViewsController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StatusFieldTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CancelRequestRejectReasonTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticsReferenceTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferenceInputTypeViewsController.Generated.cs" />
@@ -2899,7 +2897,6 @@
     <Compile Include="MetaDataUpdate\DetailClasses\SATInvoiceStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\SATTransferStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\SharedManifestsStatusDetails.cs" />
-    <Compile Include="MetaDataUpdate\DetailClasses\StatusFieldTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\StorageStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\LoginPolicyDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\TaxWithholdingAssessOfficeDetails.cs" />
