@@ -283,7 +283,7 @@
                                                 <div></div>
                                             </td>
 
-                                            <td style="float:right;width:240px; ">
+                                            <td style="float:right;width:260px; ">
                                                 <table>
                                                     <tr>
                                                         <td [hidden]="!IsScheduler" style="width: 100px;">
@@ -323,12 +323,12 @@
                                                         </td>
 
                                                         <td *ngIf="!IsScheduler" style="width: 55px;">
-                                                            <button *ngIf="!HasChanges" class="Button" (click)="SaveBIReport()">
-                                                                <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="'CenterCenter'" />
+                                                            <button *ngIf="!HasChanges" class="Button" style="width:60px" (click)="SaveBIReport()">
+                                                                <img [ngStyle]="{'margin-left': '2px'}" style="width:13px" src="./Images/Buttons/Save.png" [className]="'CenterCenter'" />
                                                                 <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                                             </button>
-                                                            <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveBIReport()">
-                                                                <img src="./Images/Buttons/Save.Red.png" [className]="'CenterCenter'" [ngStyle]="{'margin-left': '2px'}" />
+                                                            <button *ngIf="HasChanges" class="EntityChangesButton" style="width:60px" (click)="SaveBIReport()">
+                                                                <img src="./Images/Buttons/Save.Red.png" style="width:13px" [className]="'CenterCenter'" [ngStyle]="{'margin-left': '2px'}" />
                                                                 <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                                             </button>
                                                         </td>
