@@ -2743,7 +2743,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? ActualPOLLoaded { get; set; }
         public DateTime? EstimatedPOLVesselDeparture { get; set; }
         public DateTime? ActualPOLVesselDeparture { get; set; }
-        public string TransshipmentCount { get; set; }
+        public int? TransshipmentCount { get; set; }
         public string Transshipment1Location { get; set; }
         public DateTime? EstimatedTrans1VesselArrival { get; set; }
         public DateTime? ActualTransshipment1VesselArrival { get; set; }

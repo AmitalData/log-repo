@@ -391,8 +391,7 @@
   </Column>
   <Column
     Name="TransshipmentCount"
-    Type="varchar"
-    Size="10">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1802,5 +1801,5 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
-   Columns="ShipmentPackagesId" />
+    Columns="ShipmentPackagesId" />
 </Table>

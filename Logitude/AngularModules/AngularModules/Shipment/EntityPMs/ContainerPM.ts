@@ -351,9 +351,9 @@ export class ContainerPM {
     public set ActualPOLVesselDeparture(newValue: Date) { if (this.actualPOLVesselDeparture != newValue) { this.actualPOLVesselDeparture = newValue; this.MarkAsDirty("ActualPOLVesselDeparture"); } }
        
 	 
-    private transshipmentCount: string;
+    private transshipmentCount: number;
     public get TransshipmentCount() { return this.transshipmentCount; }
-    public set TransshipmentCount(newValue: string) { if (this.transshipmentCount != newValue) { this.transshipmentCount = newValue; this.MarkAsDirty("TransshipmentCount"); } }
+    public set TransshipmentCount(newValue: number) { if (this.transshipmentCount != newValue) { this.transshipmentCount = newValue; this.MarkAsDirty("TransshipmentCount"); } }
        
 	 
     private estimatedTrans1VesselArrival: Date;
