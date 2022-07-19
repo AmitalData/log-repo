@@ -257,6 +257,8 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                     var res = response.Result;
 
                     if (res) {
+
+
                         if (res.length > 0) {
                             if (!AppTool.IsNullOrEmpty(res)) {
 
@@ -378,6 +380,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     }
 
     LoadConnectedItems(message: string) {
+        
         this.preventSelect = false;
         if (message == "ok" || message == null) {
 
@@ -657,7 +660,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                 this.selecteCertificate.IsAllSelected = true;
             }
         }
-        else {
+        else {            
             this.SelectedItemsCount = 0;
             this.IsVisible = false;
             if (this.selecteCertificate != null) {
@@ -685,7 +688,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     }
 
     onCheckBoxChecked($event) {
-
+        
         if ($event.IsChecked) {
             if (!this.connectedItems.Collection.includes($event.rowData))
                 this.connectedItems.Insert($event.rowData);
@@ -865,6 +868,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     dataCount: number;
 
     CreateMethod() {
+        
         var windowArgs: any = {};
         windowArgs.Ticket = this.selecteCertificate;
         windowArgs.IsAllSelected = this.IsSelected;
@@ -960,7 +964,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     ItemsSource: ObservableCollection = new ObservableCollection([]);
     SearchText: string = "";
     Search(SearchText: string) {
-        this.SearchText = !AppTool.IsNullOrEmpty(SearchText)? SearchText.toLowerCase():SearchText;
+        this.SearchText = !AppTool.IsNullOrEmpty(SearchText) ? SearchText.toLowerCase() : SearchText;
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
     public SearchFilterChangedEvent: any;
@@ -1026,6 +1030,7 @@ export class CertificateTicketListItem extends BaseComponent {
 
     FilterSelectedValue: string;
     CertificateItemClicked(item: CertificateTicketListItem) {
+        
         this.parent.SelectedItem = this;
         this.parent.IsVisible = false;
         this.parent.selecteCertificate = this.ticket;
