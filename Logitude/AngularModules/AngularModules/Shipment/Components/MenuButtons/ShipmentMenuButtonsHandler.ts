@@ -148,7 +148,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     }
                     if (button.EventCode == "ReactivateShipment") {
                         if (buttonEnabled) {
-                            if (!this.EntityPM.IsCancelled) {
+                            if (!this.EntityPM.IsCancelled || (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.MasterShipmentDataId != null)) {
                                 button.IsDisabled = true;
                             }
                             else {
