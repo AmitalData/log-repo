@@ -211,7 +211,7 @@
                                                         <button *ngIf="isAllowAccounting" style="text-align:right"
                                                             (click)="IsReadyForInvoiceClick()"
                                                             [disabled]="IsDisplayOnly">{{'מוכן להכנת חשבונית' }}<img
-                                                                *ngIf="entityPM.IsReadyForInvoice" class="certOkImg"
+                                                                *ngIf="entityPM.IsReadyForInvoice" class="certOkImg" 
                                                                 style="position:relative;width:10px;margin-top:10px;opacity: 0.8;"
                                                                 src="./Images/Buttons/EditWithGreenTick.png" /></button>
                                                         <button style="text-align:right"
@@ -245,7 +245,7 @@
                                                                 class="certOkImg"
                                                                 style="position: relative; margin-bottom: 8px; width: 10px; opacity: 0.8; "
                                                                 src="./Images/Buttons/excelicon.png" /></button>
-                                                        <button *ngIf='isAllowBulkPendind' style="text-align:right" (click)="openBulkFeedPending()">הזנה גורפת PENDING</button>
+                                                        <button *ngIf='isAllowBulkPendind' style="text-align:right" (click)="openBulkFeedPending()">עדכון גורף</button>
                                                     </div>
 
                                                 </div>

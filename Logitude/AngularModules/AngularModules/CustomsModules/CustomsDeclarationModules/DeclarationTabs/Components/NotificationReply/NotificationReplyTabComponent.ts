@@ -23,6 +23,7 @@ import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { GroupByPipe } from '../../../../../Infrastructure/Pipes/GroupByPipe';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { DeclarationMenuButtonsHandler } from 'Customs/Components/MenuButtons/DeclarationMenuButtonsHandler';
 declare var window: any;
 
 @Component({
@@ -94,6 +95,13 @@ export class NotificationReplyTabComponent extends BaseComponent {
                     }
                 })
             );
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((tabCode: string) => {
+                            this.LoadNotificationReplies();
+                      
+                })
+            );
+  
         }
     }
 

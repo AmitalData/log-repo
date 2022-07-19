@@ -32,6 +32,14 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
+        public DeclarationMamanSpecialAction GetDeclarationMamanSpecialActionByDeclarationIdAction(string declarationId, int tenant, string action)
+        {
+            return (from a in context.DeclarationMamanSpecialActions
+                    where a.DeclarationId == declarationId && a.Tenant == tenant && a.MamanSpecialActionCode == action
+                    select a).FirstOrDefault();
+        }
+
+
     }
 
 }

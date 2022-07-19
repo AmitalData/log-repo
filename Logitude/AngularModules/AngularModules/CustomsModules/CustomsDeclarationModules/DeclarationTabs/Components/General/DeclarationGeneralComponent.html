@@ -282,16 +282,16 @@
                                 <tr style="height: 28px;">
                                     <!-- DeclarationOfficeCode -->
                                     <td style="width: 130px;">
-                                        <LogLabel [ObjectFieldName]="'DeclarationOfficeCode'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext" [Text]="'בית מכס מטפל'"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'DeclarationOfficeHandlerCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width: 105px;">
-                                        <LogLov tabindex="1" [ObjectFieldName]="'DeclarationOfficeCode'"
+                                        <LogLov tabindex="1" [ObjectFieldName]="'DeclarationOfficeHandlerCode'"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Customs.CustomsHouseType'"
                                                 [HideColumns]="true"
-                                                [SelectedValue]="DeclarationOfficeCode">
+                                                [SelectedValue]="DeclarationOfficeHandlerCode">
                                         </LogLov>
                                     </td>
 
@@ -315,15 +315,15 @@
 
                                     <!-- ImporterCode -->
                                     <td style="width: 115px;">
-                                        <LogLabel [TextCode]="'Customs.Declaration.F.ExporterCode'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'ExporterImporterCode'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"  ></LogLabel>
                                     </td>
                                     <td style="width: 100px;">
                                         <SearchBox #ImporterSearchBox [ObjectTableName]="'Customs.Client'"
                                                    [IsQuickSearch]="true"
                                                    [DropDownWidth]="143"
-                                                   [DisplayText]="ImporterCode"
-                                                   [SearchText]="ImporterCode"
+                                                   [DisplayText]="ExporterImporterCode"
+                                                   [SearchText]="ExporterImporterCode"
                                                    [DisplayMember]="'Code'"
                                                    [ItemHeight]="36"
                                                    [HideIcons]="true"
@@ -376,7 +376,7 @@
 
                                     <!-- TransferImporterCode -->
                                     <td>
-                                        <LogLabel [TextCode]="'Customs.Declaration.F.TransferExporterCode'" [ObjectTableName]="ObjectTableName"
+                                        <LogLabel [ObjectFieldName]="'TransferExporterCode'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
@@ -385,7 +385,7 @@
                                                    [IsQuickSearch]="true"
                                                    [DropDownWidth]="143"
                                                    [IsDisabled]="!IsTransferImporterEnabled"
-                                                   [DisplayText]="TransferImporterCode"
+                                                   [DisplayText]="TransferExporterCode"
                                                    [DisplayMember]="'Code'"
                                                    (LostFocus)="ImporterLostFocus('Transfer', $event, ImporterSearchBox)"
                                                    [ItemHeight]="36"
@@ -433,12 +433,12 @@
 
                                      <!-- TaxationDateTime -->
                                     <td style="width: 130px;">
-                                        <LogLabel [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext" [TextCode]="'Customs.Declaration.F.CalculateDateTime'"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'ExportTaxationDateTime'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width: 105px;" tabindex="2">
-                                        <LogDatePicker [RefreshMe]="RefreshDatePicker" [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"
-                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="TaxationDateTime"></LogDatePicker>
+                                        <LogDatePicker [RefreshMe]="RefreshDatePicker" [ObjectFieldName]="'ExportTaxationDateTime'" [ObjectTableName]="ObjectTableName"
+                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="ExportTaxationDateTime"></LogDatePicker>
                                     </td>
 
                                     <td><div></div></td>
@@ -448,21 +448,27 @@
                                           <table class="StatisticsTable">
                                             <thead style="width: 180px; display:table;">
                                             <tr>
+
                                                 <th style="width:90px;" class="Statistics">{{'Customs.Declaration.O.ExportsStatus' | TextCodeTranslationPipe}}</th>
                                                 <th style="width:35px" class="Statistics">{{'Customs.Declaration.O.Total2' | TextCodeTranslationPipe}}</th>
                                             </tr>
+
                                             </thead>
                                             <tbody>
                                             <tr >
                                                 <td style="width:90px" class="Statistics">{{'Customs.Declaration.O.NotConnect' | TextCodeTranslationPipe}} / {{'Customs.Declaration.O.Connect' | TextCodeTranslationPipe}}</td>
                                                 <td style="width:35px" class="Statistics">{{exportStorageConnectToDeclaration?.NotConnect}} / {{exportStorageConnectToDeclaration?.Connect}}</td>
+
                                             </tr>
+
                                            </tbody>
                                            <tbody>
                                             <tr >
                                                 <td style="width:90px" class="Statistics">{{'Customs.Declaration.O.ChargedStatusReceivedCorrect' | TextCodeTranslationPipe}}</td>
                                                 <td style="width:35px" class="Statistics">{{exportStorageConnectToDeclaration?.CustomsStatus}}</td>
+
                                             </tr>
+
                                           </tbody>
                                           <tbody>
                                             <tr >

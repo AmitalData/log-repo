@@ -53,6 +53,13 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
+        public List<SupplierInvoiceItem> GetSupplierInvoiceItemsByCounterKeysAndLineNumbers(string declarationId, List<string> counterKeysLineNumbers, int tenant)
+        {
+            return (from a in context.SupplierInvoiceItems
+                    where a.DeclarationId == declarationId && a.Tenant == tenant && counterKeysLineNumbers.Contains(a.CounterKey + " " + a.LineNumber)
+                    select a).ToList();
+        }
+
         public List<SupplierInvoiceItem> GetSupplierInvoiceItemsByParent(string declarationId, int counterKey, int lineNumber, int tenant)
         {
             return (from a in context.SupplierInvoiceItems.Include("OriginCountry").Include("TradeAgreement").Include("AdditionalMeasurmentUnit").Include("InvoiceMeasurmentUnit").Include("StatisticMeasurmentUnit")

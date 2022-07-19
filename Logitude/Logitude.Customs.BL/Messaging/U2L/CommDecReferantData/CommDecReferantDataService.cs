@@ -165,14 +165,25 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.ClassifiedUserId)) _DeclarationReferantDataPM.ClassifiedUserId = TranslateUser(_LogitudeDeclarationReferantData.ClassifiedUserId);
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.ControllerUserId)) _DeclarationReferantDataPM.ControllerUserId = TranslateUser(_LogitudeDeclarationReferantData.ControllerUserId);
                 if (_LogitudeDeclarationReferantData.FileStatus == "OPT") _DeclarationReferantDataPM.NewFile = false;
-                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.LastStatusName)) _DeclarationReferantDataPM.LastStatusName = _LogitudeDeclarationReferantData.LastStatusName;
-                var tempDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeDeclarationReferantData.LastStatusDate, "_LogitudeDeclarationReferantData.LastStatusDate");
-                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.LastStatusDate) && tempDate.HasValue) _DeclarationReferantDataPM.LastStatusDate = tempDate.Value;
+                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.LastStatusName))
+                {
+                    _DeclarationReferantDataPM.LastStatusName = _LogitudeDeclarationReferantData.LastStatusName;
+                    var tempDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeDeclarationReferantData.LastStatusDate, "_LogitudeDeclarationReferantData.LastStatusDate");
+                    if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.LastStatusDate) && tempDate.HasValue)
+                    {
+                        _DeclarationReferantDataPM.LastStatusDate = tempDate.Value;
+                    }
+                    else
+                    {
+                        _DeclarationReferantDataPM.LastStatusDate = null;
+                    }
+                    _DeclarationReferantDataPM.LastStatusRemarks = _LogitudeDeclarationReferantData.LastStatusRemarks;
+                }
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.OrderMoney) && _LogitudeDeclarationReferantData.OrderMoney.ToLower().Substring(0,1) == "t")
                 {
                     _DeclarationReferantDataPM.OrderMoney = true;
                 }
-                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.LastStatusRemarks)) _DeclarationReferantDataPM.LastStatusRemarks = _LogitudeDeclarationReferantData.LastStatusRemarks;
+                if (_LogitudeDeclarationReferantData.FileStatus == "VDA") _DeclarationReferantDataPM.ImporterApproval = true;
 
                 myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
 

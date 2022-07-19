@@ -19,6 +19,5 @@ namespace Unifreight.BL.EntityPMs
             }
         }
 
-        
     }
 }

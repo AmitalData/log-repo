@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -19,7 +20,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(LogisticActionResponseReqSPM entityPM, LogisticActionResponseReqS entityPOCO)
         {
-            //throw new NotImplementedException();
+
         }
 
         public void CustomPOCOToPM(LogisticActionResponseReqSPM entityPM, LogisticActionResponseReqS entityPOCO)

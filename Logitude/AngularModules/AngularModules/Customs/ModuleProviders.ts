@@ -246,11 +246,14 @@ import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListSe
 import { CancelRequestRejectReasonTypeListService } from './Services/StandardLists/CancelRequestRejectReasonTypeListService';
 import { SecurityClearenceTypeCodeListService } from './Services/StandardLists/SecurityClearenceTypeCodeListService';
 import { CargoTypeListService } from './Services/StandardLists/CargoTypeListService';
+import { CustomsDocumentUploadListService } from './Services/StandardLists/CustomsDocumentUploadListService';
 
 import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
 import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
 import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
 import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
+import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
+import { StorageStatusTableListService } from './Services/StandardLists/StorageStatusTableListService';
 
 
 //#endregion
@@ -434,8 +437,13 @@ import { LogisticActionRequestListService } from './Services/StandardLists/Logis
 import { LogisticActionRequestTypeListService } from './Services/StandardLists/LogisticActionRequestTypeListService';
 import { LogisticActionResponseReqSListService } from './Services/StandardLists/LogisticActionResponseReqSListService';
 import { LogisticActionRequestPMService } from './Services/StandardPMs/LogisticActionRequestPMService';
+import { LogisticPermitListService } from './Services/StandardLists/LogisticPermitListService';
 import { ExportLogisticPermitActionListService } from './Services/StandardLists/ExportLogisticPermitActionListService';
 import { ExportStorageExtendedListService } from './Services/ExtendedLists/ExportStorageExtendedListService';
+import { ExternalFieldMappingListService } from './Services/StandardLists/ExternalFieldMappingListService';
+import { ExternalFieldMappingPMService } from './Services/StandardPMs/ExternalFieldMappingPMService';
+import { StatusFieldTypeListService } from './Services/StandardLists/StatusFieldTypeListService';
+import { GTBFUSTATUWebService } from './Services/WebServices/GTBFUSTATUWebService';
 
 
 export class ModuleProviders {
@@ -691,14 +699,16 @@ export class ModuleProviders {
             case "LogisticActionRequestListService": { myResult = new LogisticActionRequestListService(); break; }
             case "LogisticActionRequestTypeListService": { myResult = new LogisticActionRequestTypeListService(); break; }
             case "LogisticActionResponseReqSListService": { myResult = new LogisticActionResponseReqSListService(); break; }
+            case "CustomsDocumentUploadListService": { myResult = new CustomsDocumentUploadListService(); break; }
             case "ExportLogisticPermitActionListService": { myResult = new ExportLogisticPermitActionListService(); break; }
-
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
             case "ExporterRoleTypeListService": { myResult = new ExporterRoleTypeListService(); break; }
             case "AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
+            case "GTBFUSTATUListService": { myResult = new GTBFUSTATUListService(); break; }
 
+            case "StorageStatusTableListService": { myResult = new StorageStatusTableListService(); break; }
             case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
             case "AmendmentStatusListService": { myResult = new AmendmentStatusListService(); break; }
@@ -719,7 +729,9 @@ export class ModuleProviders {
             case "CoolingReportingMethodListService": { myResult = new CoolingReportingMethodListService(); break; } 
             case "NDMessageActionCodeListService": { myResult = new NDMessageActionCodeListService(); break; } 
             case "HandingCodeListService": { myResult = new HandingCodeListService(); break; } 
-            case "ExportStorageListService": { myResult = new ExportStorageListService(); break; } 
+            case "ExportStorageListService": { myResult = new ExportStorageListService(); break; }
+            case "LogisticPermitListService": { myResult = new LogisticPermitListService(); break; }
+
 
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
             case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
@@ -733,6 +745,7 @@ export class ModuleProviders {
             case "BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
             case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
             case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
+            case "ExternalFieldMappingListService": { myResult = new ExternalFieldMappingListService(); break; }
 
                 
              //#endregion                
@@ -797,6 +810,8 @@ export class ModuleProviders {
             case "ContainerizationPMService": { myResult = new ContainerizationPMService(); break; }
             case "TradeAgreementProtocolListService": { myResult = new TradeAgreementProtocolListService(); break; }
             case "LogisticActionRequestPMService": { myResult = new LogisticActionRequestPMService(); break; }
+            case "ExternalFieldMappingPMService": { myResult = new ExternalFieldMappingPMService(); break; }
+            case "StatusFieldTypeListService": { myResult = new StatusFieldTypeListService(); break; }
 
             //#endregion
 
@@ -858,6 +873,7 @@ export class ModuleProviders {
             case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
             case "NewQuoteOPWebService": { myResult = new NewQuoteOPWebService(); break; }
             case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
+            case "GTBFUSTATUWebService": { myResult = new GTBFUSTATUWebService(); break; }
 
 
             //#endregion

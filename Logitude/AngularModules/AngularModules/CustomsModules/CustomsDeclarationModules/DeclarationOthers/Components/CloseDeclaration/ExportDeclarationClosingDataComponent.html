@@ -12,7 +12,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <LogLabel [Text]="'שטר מטען ראשי'" [ObjectFieldName]="'MainAWB'"
+                                    <LogLabel [Text]="'שטר מטען רםשי'" [ObjectFieldName]="'MainAWB'"
                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -46,7 +46,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <LogLabel [Text]="'אתר טעינה'" [ObjectFieldName]="'LoadingSite'"
+                                    <LogLabel [Text]="'םתר טעינה'" [ObjectFieldName]="'LoadingSite'"
                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -62,7 +62,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <LogLabel [Text]="'תאריך המראה בפועל'" [ObjectFieldName]="'FlightDate'"
+                                    <LogLabel [Text]="'תםריך המרםה בפועל'" [ObjectFieldName]="'FlightDate'"
                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -116,8 +116,8 @@
                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'FinalManifestNumber'" [InputType]="'text'"
-                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [Placeholder]="'XXX-XXXXXXXX'"
+                                    <LogTextBox [ObjectFieldName]="DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'A'  && this.EntityPM.MAIN_AWB === null? '' :'FinalManifestNumber'" [InputType]="'text'"
+                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [Placeholder]="DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O' ? '' : 'XXX-XXXXXXXX'"
                                         [HideColumns]="true" [Text]="FinalManifestNumber"></LogTextBox>
                                 </td>
                             </tr>

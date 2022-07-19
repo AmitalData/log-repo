@@ -29,6 +29,11 @@ using Logitude.Customs.BL.BL;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Exception = System.Exception;
+using System.Globalization;
+using Logitude.AmitalMessaging.Customs.CustomFile;
+using Logitude.Customs.BL.Messaging.L2U.CustomFile;
+using Logitude.Customs.BL.Messaging.Customs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -149,6 +154,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.UserMessage = "Can not find declaration" + requestParams.AppicationId;
                 return;
+            }
+
+            if (_MyDeclarationPM.IsCourierDeclaration && customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
+            {
+                // update payment status code
+                DeclarationCourierStatusPM dcapm = new DeclarationCourierStatusQueryService(context)
+                    .GetByDeclarationIdList(requestParams.Tenant, new List<string>() { _MyDeclarationPM.Id }).FirstOrDefault();
+                dcapm.CourierPaymentStatusCode = "R";
+
+                new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant)
+                    .Update(dcapm, true);
             }
 
             if (_MyDeclarationPM.IsCourierDeclaration && this._MyDeclarationPM.PaymentDate.HasValue)
@@ -1182,8 +1198,187 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string xml_status = "new";
                 RaiseStatus(_MyDeclarationPM, "", "VPE", xml_status);
             }
+
+            if (declarationPaymentsPM != null && declarationPaymentsPM.AutomaticPayment == 1)
+            {
+                if (customResponse.DeclarationPaymentDetails == null)
+                {
+                    if (customResponse.Response != null && customResponse.Response.Error != null && customResponse.Response.Error.Count() > 0)
+                    {
+                        foreach (var item in customResponse.Response.Error)
+                        {
+                            if (item.ValidationCode.listVersionID == "4" && item.ValidationCode.Value == "12160")
+                            {
+                                if (declarationPaymentsPM.DeclarationPaymentMethods != null && declarationPaymentsPM.DeclarationPaymentMethods.Count == 1)
+                                {
+                                    if (this._MyDeclarationPM.TotalTax != declarationPaymentsPM.DeclarationPaymentMethods[0].Amount)
+                                    {
+                                        declarationPaymentsPM.DeclarationPaymentMethods[0].Amount = this._MyDeclarationPM.TotalTax;
+                                        declarationPaymentsPM.DeclarationPaymentMethods[0].ChangeSetOp = ChangeSetOperation.Update;
+                                        declarationPaymentsPM.ChangeSetOp = ChangeSetOperation.Update;
+                                        DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(context, new Dictionary<string, IContext>(), this._MyDeclarationPM.Tenant);
+                                        declarationPaymentUpdateService.Update(declarationPaymentsPM, true);
+
+                                        SendPayment(_MyDeclarationPM, context, requestParams);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
+        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, GenericRequestParams requestParams)
+        {
+            var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+            var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
+            var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
+
+            if (declarationPaymentPM != null)
+            {
+                if (declarationPaymentPM.AutomaticPayment == 1)
+                {
+                    if (CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId))
+                    {
+                        try
+                        {
+                            DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
+                            declarationPaymentPM.PaymentDate = DateTime.Now;
+                            declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                            using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                            {
+                                var requestParams2755 = new GenericRequestParams()
+                                {
+                                    Tenant = requestParams.Tenant,
+                                    LoggingEnabled = true,
+                                    LoggingObjectTableId = requestParams.LoggingObjectTableId,
+                                    LoggingEntityId = declarationPM.Id,
+                                    AppicationId = declarationPM.Id,
+                                    InterfaceTypeCode = "2755",
+                                    LoggingUserId = requestParams.LoggingUserId,
+                                    RequestVIA = SendRequestVIA.WebServiceBatch,
+                                    LoggingEntityReference = "AutoPayment",
+                                };
+                                if (requestDate != DateTime.MinValue)
+                                {
+                                    requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
+                                    declarationPaymentPM.PaymentDate = requestDate;
+
+                                    requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
+                                    requestParams2755.FutureSendDateTime = requestDate;
+                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+                                }
+                                else
+                                {
+                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                }
+
+                                scopeNewCRS.Complete();
+                            }
+
+                            myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                        }
+                        catch (System.Exception)
+                        {
+                            throw;
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user)
+        {
+            CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
+            {
+                Tenant = declarationPM.Tenant,
+                AppicationId = declarationPaymentPM.DeclarationId,
+                LoggingEnabled = true,
+                LoggingEntityId = declarationPM.Id,
+                InterfaceTypeCode = "2755",
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingEntityReference = declarationPM.DeclarationNumber,
+                LoggingUserId = user,
+                RequestName = "Send to check credit request",
+                ResponseName = "Get check credit Response",
+                Mode = "Check",
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+            };
+            var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
+            CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
+            if (!string.IsNullOrEmpty(creditResponseData.CustomFileCredit[0].ErrorMessage))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private DateTime CheckIfBlockTime(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM)
+        {
+            var declarationQS = new DeclarationQueryService(declarationPaymentPM.Tenant);
+            string timesCompany = declarationQS.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", declarationPaymentPM.Tenant);
+            TimeSpan toTimeCurrent = new TimeSpan();
+            TimeSpan toTime2Current = new TimeSpan();
+            TimeSpan toTime = new TimeSpan();
+            if (timesCompany != null && timesCompany != "")
+            {
+                List<string> times = GetTimesFromDefault(timesCompany);
+
+                TimeSpan fromTime = DateTime.ParseExact(times[0], "HH:mm",
+                                        CultureInfo.InvariantCulture).TimeOfDay;
+
+                toTime = DateTime.ParseExact(times[1], "HH:mm",
+                                  CultureInfo.InvariantCulture).TimeOfDay;
+
+                if (DateTime.Now.TimeOfDay > fromTime && DateTime.Now.TimeOfDay < toTime)
+                {
+                    toTimeCurrent = toTime;
+                }
+
+            }
+            string timesCustomer = declarationQS.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", declarationPM.CustomerCode, declarationPaymentPM.Tenant);
+
+            if (timesCustomer != null && timesCustomer != "")
+            {
+                List<string> times = GetTimesFromDefault(timesCustomer);
+
+                TimeSpan fromTime = DateTime.ParseExact(times[0], "HH:mm",
+                                        CultureInfo.InvariantCulture).TimeOfDay;
+
+                toTime = DateTime.ParseExact(times[1], "HH:mm",
+                                  CultureInfo.InvariantCulture).TimeOfDay;
+
+                if (DateTime.Now.TimeOfDay > fromTime && DateTime.Now.TimeOfDay < toTime)
+                {
+                    toTime2Current = toTime;
+                }
+            }
+
+            if (toTimeCurrent > toTime2Current)
+            {
+                return new DateTime(toTimeCurrent.Ticks).AddMinutes(5);
+            }
+            else if (toTime2Current > toTimeCurrent)
+            {
+                return new DateTime(toTime2Current.Ticks).AddMinutes(5);
+
+            }
+
+            return DateTime.MinValue;
+
+        }
+
+        private List<string> GetTimesFromDefault(string times)
+        {
+            var arr = times.Split('-');
+            return new List<string>()
+            {
+                 arr[0].TrimEnd() ,  arr[1].TrimStart()
+            };
+        }
 
         private void UpdateDepositionStatusCode(IContext context)
         {

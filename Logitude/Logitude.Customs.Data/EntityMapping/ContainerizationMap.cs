@@ -46,6 +46,14 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsMultiCustomers).HasColumnName("IsMultiCustomers").HasMaxLength(100).IsUnicode(true);
 
             this.Property(t => t.IsMultiExportFiles).HasColumnName("IsMultiExportFiles");
+
+            this.Property(t => t.CargoTypeCode).HasColumnName("CargoTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.ManifestNumber).HasColumnName("ManifestNumber").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.SecondCargoID).HasColumnName("SecondCargoID").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.ThirdCargoID).HasColumnName("ThirdCargoID").HasMaxLength(35).IsUnicode(false);
         }
     }
 }

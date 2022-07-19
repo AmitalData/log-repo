@@ -3298,5 +3298,58 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 customsDocumentUploadRepository.Add(customsDocumentUploadDetails);
             }
         }
+
+        public static void AddPointerLevel(PointerLevel PointerLevelDetails, PointerLevelRepository pointerLevelRepository)
+        {
+            Dictionary<string, PointerLevel> tenant = pointerLevelRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(PointerLevelDetails.Code))
+            {
+                PointerLevel pointerLevel = pointerLevelRepository.GetSingle(PointerLevelDetails.Code);
+                pointerLevel.LocalName = PointerLevelDetails.LocalName;
+                pointerLevel.EnglishName = PointerLevelDetails.EnglishName;
+                pointerLevel.SearchFields = (PointerLevelDetails.Code + "," + PointerLevelDetails.LocalName).ToLower();
+                pointerLevelRepository.Update(pointerLevel);
+            }
+            else
+            {
+                PointerLevel pointerLevel = new PointerLevel()
+                {
+                    Code = PointerLevelDetails.Code,
+                    LocalName = PointerLevelDetails.LocalName,
+                    EnglishName = PointerLevelDetails.EnglishName,
+                    SearchFields = (PointerLevelDetails.Code + "," + PointerLevelDetails.LocalName).ToLower()
+                };
+                pointerLevelRepository.Add(PointerLevelDetails);
+            }
+        }
+
+      
+
+        public static void AddStorageStatusTable(StorageStatusTable StorageStatusTableDetails, StorageStatusTableRepository StorageStatusTableRepository)
+        {
+            Dictionary<string, StorageStatusTable> tenant = StorageStatusTableRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(StorageStatusTableDetails.Code))
+            {
+                StorageStatusTable storageStatusTable = StorageStatusTableRepository.GetSingle(StorageStatusTableDetails.Code);
+                storageStatusTable.Name = StorageStatusTableDetails.Name;
+                storageStatusTable.SearchFields = StorageStatusTableDetails.Code.ToLower();
+
+
+                StorageStatusTableRepository.Update(storageStatusTable);
+            }
+            else
+            {
+                StorageStatusTable storageStatusTable = new StorageStatusTable()
+                {
+                    Code = StorageStatusTableDetails.Code,
+                    Name = StorageStatusTableDetails.Name,
+                    SearchFields = StorageStatusTableDetails.Code.ToLower()
+
+                };
+                StorageStatusTableRepository.Add(StorageStatusTableDetails);
+            }
+        }
     }
 }

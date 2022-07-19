@@ -113,6 +113,20 @@ export class CustomsRequestSheetExtendedPMService {
         );
 
     }
+
+    GetGeneralRequestInProgress(interfaceTypeCode: string, objectTableId2: string, entityId2: string, tenant: number) {
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetGeneralRequestInProgressByEntity2/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + objectTableId2 + '&entityId2=' + entityId2 + '&customFileNo=' + "", ServiceHelper.GetHttpHeaders())
+                .pipe(map(response => {
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    var requestSheets = response;
+                    serviceResponse.Result = requestSheets;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     MapJsonToEntityPM(jsonPM: any) {
 
         var entityPM: CustomsRequestsSheetPM;

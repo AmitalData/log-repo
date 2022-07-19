@@ -64,5 +64,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.GetDeclarationIdBythirdCargoID(thirdCargoID, tenant, idList);
         }
+
+
+        public List<Consignment> GetConsgnmentByDeclarationIdForDataMapping( string declarationId, int tenant)
+        {
+            return repository.GetConsgnmentByDeclarationIdForDataMapping(declarationId, tenant);
+        }
+   
+
+
     }
 }

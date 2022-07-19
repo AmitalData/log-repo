@@ -369,13 +369,13 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                             this.CurrentSession.StopBusyIndicator();
                             
                             this.openNewDeclaration(entity.Id);
-
-                             }
-
+                        }
                     }
+                    
+                    this.CurrentSession.StopBusyIndicator();
+                    new MessageWindow().Show(response?.Result || TextCodeTranslator.Translate('General.O.ErrorwhileCreating'));   
                 }
-            });
-
+        });
     }
 
  

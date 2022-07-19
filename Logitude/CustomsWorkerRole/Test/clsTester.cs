@@ -29,15 +29,16 @@ using Simplog.Server.Infrastructure.Helpers;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging.ILSWS;
+using Logitude.Customs.BL.TraceEvents;
+using Logitude.Server.Tools.Helpers;
 
 using Logitude.Customs.BL.TraceEvents;
 
 using Logitude.CustomsMessaging.Common.RequestParams;
 
-
 namespace CustomsWorkerRole.Test
 {
-    public class clsTester
+    public partial class clsTester
     {
 
         public void TestAsDataSet(string closedTableId)
@@ -315,6 +316,54 @@ SELECT TOP 1000 [Id]
             }
         }
 
+        public static void GetPointer()
+        {
+            int tenant = 1;
+            
+            
+            var param= new GetTicketsParams()
+            {
+                ParentEntityId = "1-5594",
+                ParentEntityCode = "Declaration",
+                Child1EntityCode = "SupplierInvoice",
+                Child1EntityId = "1",
+                Child2EntityCode = "SupplierInvoiceItem",
+                Child2EntityId = "1"
+            };
+            param = new GetTicketsParams()
+            {
+                ParentEntityId = "1-5594",
+                ParentEntityCode = "Declaration",
+                Child1EntityCode = "SupplierInvoice",
+                Child1EntityId = "1",
+                //Child2EntityCode = "SupplierInvoiceItem",
+                //Child2EntityId = "1"
+            };
+            var customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
+            var customsDocumentPMList = customsDocumentQueryService
+                .GetCustomsDocumentPMListWithoutRequestedDoc(param, tenant);
+
+            customsDocumentPMList = customsDocumentQueryService
+                .GetCustomsDocumentPMListWithoutRequestedDocAndDeclarationAmendmentDocs(param, tenant);
+
+            var qs = new CustomsDocumentsTicketQueryService(tenant);
+            var tickets=qs.GetCustomsDocumentsTickets(param, tenant);
+
+        }
+
+        public static void FeatureToggle()
+        {
+
+            var hcd = FeatureToggleHelper.HasFeatureToggle("HCD", 3);
+            var hcdCache = FeatureToggleHelper.HasFeatureToggle("HCD", 3);
+
+            var hcdNotInCache = FeatureToggleHelper.HasFeatureToggle("HCD", 2);
+
+
+            var notexist = FeatureToggleHelper.HasFeatureToggle("notexist", 1);
+            var notexist_cache = FeatureToggleHelper.HasFeatureToggle("notexist", 1);
+        }
+
         public static string CheckWSCourierStatistic(int tenant, bool multiThreard)
         {
             var declarationCourierStatusQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationCourierStatusQueryService(tenant);
@@ -325,16 +374,16 @@ SELECT TOP 1000 [Id]
 
         public static void TestUnifreightFUStatusTaskService()
         {
-            var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
-            unifreightFUStatusTaskService.UpsertFUStatusLE2U(3, "1-10", new UnifreightFUStatusParam()
-            {
-                Entname = "CFIFILEM",
-                PrimaryNum = "60515808",
-                Mode = UnifreightEventMode.@new,
-                StatusCode = "SMG",
-                EventDateTime = new DateTime(2021,03,09),
-                OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.SWISS
-            });
+            //var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
+            //unifreightFUStatusTaskService.UpsertFUStatusLE2U(3, "1-10", new UnifreightFUStatusParam()
+            //{
+            //    Entname = "CFIFILEM",
+            //    PrimaryNum = "60515808",
+            //    Mode = UnifreightEventMode.@new,
+            //    StatusCode = "SMG",
+            //    EventDateTime = new DateTime(2021,03,09),
+            //    OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.SWISS
+            //});
         }
        
 
@@ -634,10 +683,10 @@ PaymentDate  מלפני 3  ימים ");
                 //http://192.116.221.103:584/Courier58/api/couriermasters/getsingle?id=1-106
 
                 var myFTPMamanService = new FTPOutMamanSubManifestService();
-                myFTPMamanService.BuildCommunicationLog(bytearray, tenant, "1-1255463");//02004004
+                myFTPMamanService.BuildCommunicationLog(bytearray, tenant, "1-1651726");//02004004
 
                 var myFTPOutMaman2470ReleaseGoodService = new FTPOutMaman2470ReleaseGoodService();
-                myFTPOutMaman2470ReleaseGoodService.BuildCommunicationLog(bytearray, tenant, "1-1255463", $"maman{Guid.NewGuid().ToString()}", false);
+                myFTPOutMaman2470ReleaseGoodService.BuildCommunicationLog(bytearray, tenant, "1-1651726", $"maman{Guid.NewGuid().ToString()}", false);
 
 
 

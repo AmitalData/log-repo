@@ -1,6 +1,6 @@
 declare var System: any;
 declare var window: any;
-import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -48,6 +48,8 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
     IsCollateralChecked: boolean;
     IsDisplayButtonSend: boolean;
+    IsSelectedNot: boolean;
+
     constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService) {
         super();
         this.collateralObslist = new ObservableCollection([]);
@@ -401,10 +403,12 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
     }
 
     OpenEditCollateralAnswerWindow() {
-        //   if (!AppTool.IsNullOrEmpty(item)) {
         var windowArgs: any = {};
+        
         windowArgs.DeclarationId = this.EntityPM.Id;
         windowArgs.collateralToSendlist = this._customsCollateralAnswerSharedDataService._SelectedItems.Collection;
+        windowArgs.collateralToNotSendlist = this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection;
+        windowArgs.selectAll = this.IsSelectedNot;
         var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.CollateralAnswer");
 
         var logWindow = new LogitudeWindow();
@@ -414,51 +418,31 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {
-            this._customsCollateralAnswerSharedDataService._SelectedItems.Collection = [];
-            this._customsCollateralAnswerSharedDataService.IsDisplayButtonSend = (this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 1);
+            this._customsCollateralAnswerSharedDataService.resetValue();
             this.RefreshList();
         });
         logWindow.Show('./CustomsModules/CustomsCollateral/Components/CustomsCollateralAnswerComponent');
-
-
-        // }
     }
 
     RefreshList() {
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-        //setTimeout(() => {
-
-        //}, 10);
     }
 
-    IsSelectedNot;
-
-    OnAllBtnClickedNot() {
+    OnAllBtnClicked() {
         this.IsSelectedNot = true;
-
         this._customsCollateralAnswerSharedDataService.connectedSelectAll = true;
-        this._customsCollateralAnswerSharedDataService._SelectedItems.Clear()
-            ;
-
-        this.RefreshList();
+        this._customsCollateralAnswerSharedDataService._SelectedItems.Clear();
+        this._customsCollateralAnswerSharedDataService._UnSelectedItems.Clear();
         this._customsCollateralAnswerSharedDataService.disconnectedSelectAll = true;
-        //this.CourierMasterPM.ConnectedDeclarations = "ALL";
-
-        //this.LoadNotConnectedDeclarationGrid();
-        //this._CourierMasterService.isNotDirty = false;
+        this._customsCollateralAnswerSharedDataService.allCheckboxStateChange$.next(true);
     }
-
-    OnNoneBtnClickedNot() {
-
+    
+    OnNoneBtnClicked() {
+        this.IsSelectedNot = false;
         this._customsCollateralAnswerSharedDataService.connectedSelectAll = false;
         this._customsCollateralAnswerSharedDataService._UnSelectedItems.Clear();
-        this.RefreshList();
-
-        this.IsSelectedNot = false;
+        this._customsCollateralAnswerSharedDataService._SelectedItems.Clear();
         this._customsCollateralAnswerSharedDataService.disconnectedSelectAll = false;
-        //this.CourierMasterPM.ConnectedDeclarations = "";
-        //this._CourierMasterService.isNotDirty = false;
-
-        //this.LoadNotConnectedDeclarationGrid();
+        this._customsCollateralAnswerSharedDataService.allCheckboxStateChange$.next(false);
     }
 }

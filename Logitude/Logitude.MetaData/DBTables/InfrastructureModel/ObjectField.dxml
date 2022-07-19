@@ -603,6 +603,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DisplayInRequiredFields"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="FullNameTextCodeId"
     ReferencedTable="TextCodes"

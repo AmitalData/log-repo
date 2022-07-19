@@ -85,10 +85,17 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId) && !_IsSendAnywayWithoutAttachment)
             {
-                ToCancelSheetAfterGetRequest = true;
-                LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs").AppendLine("_ToCancelSheetAfterGetRequest = true;");
-                return new D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntity();
-                //throw  new BusinessErrorException("Customs Document already sent to Customs");
+                if (false)//unable to cancel the CRS  - cause crash !!!
+                {
+                    ToCancelSheetAfterGetRequest = true;
+                    LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs").AppendLine("_ToCancelSheetAfterGetRequest = true;");
+                    return new D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntity();
+                }
+                else
+                {
+                    //use that !!!
+                    throw new BusinessErrorException("Customs Document already sent to Customs");
+                }
             }
 
             this.MyRequestSheetParam = new RequestSheetParam();

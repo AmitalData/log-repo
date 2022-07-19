@@ -340,7 +340,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
         {
             DeclarationRepository declarationRepository = new DeclarationRepository(context);
-            return declarationRepository.GetDeclarationMaxAmendmentRequestNumber(tenant);
+            return declarationRepository.GetDeclarationMaxCancelRequestNumber(tenant);
+        }
+        public int GetDeclarationMaxAmendmentAndCancelRequestNumber(int tenant, string id)
+        {
+            DeclarationRepository declarationRepository = new DeclarationRepository(context);
+            return declarationRepository.GetDeclarationMaxAmendmentAndCancelRequestNumber(tenant);
         }
 
 
@@ -444,7 +449,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration",bool IsAmendmentErrors=false)
+        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration",bool IsAmendmentErrors=false, bool IsExportCloseErrors = false)
         {
             ICustomContext context = MainContext as CustomContext;
             Declaration declaration = Repository.GetSingle(new DeclarationKeys() { Id = declarationId });
@@ -615,11 +620,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 }
 
             }
-            else if (IsAmendmentErrors )
+            else if (IsAmendmentErrors || IsExportCloseErrors)
             {
                 if (!string.IsNullOrEmpty(declaration.AmendmentErrorXml) || !string.IsNullOrEmpty(declaration.ExportClosedErrorXML))
                 {
-                    byte[] errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml ?? declaration.ExportClosedErrorXML);
+                    byte[] errorsByte;
+                    if (IsExportCloseErrors)
+                    {
+                        errorsByte = Encoding.UTF8.GetBytes(declaration.ExportClosedErrorXML);
+                    }
+                    else
+                    {
+                        errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml);
+                    }
                     MemoryStream memorystream = new MemoryStream(errorsByte);
                     XmlSerializer serializer = new XmlSerializer(typeof(DeclarationError));
                     DeclarationError declarationError = (DeclarationError)serializer.Deserialize(memorystream);
@@ -2122,6 +2135,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return decPm;
         }
 
+        public List<Declaration> GetDeclarationById(int tenant, string id)
+        {
+            List<Declaration> declarations = repository.GetDeclarationById(tenant, id);
+            return declarations;
+        }
 
 
         public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
@@ -2195,6 +2213,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.GetHatraDateForDecId(decId, tenant);
         }
+        public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
+        {
+            return this.repository.GetContainerizationUniqueConsignment(declarationList);
+        }
+
+        
 
     }
 }

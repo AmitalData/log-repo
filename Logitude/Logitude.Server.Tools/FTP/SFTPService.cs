@@ -1,6 +1,8 @@
-﻿using nsoftware.IPWorksSSH;
+﻿using Logitude.Server.Tools.Utils;
+using nsoftware.IPWorksSSH;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -17,9 +19,11 @@ namespace Logitude.Server.Tools.FTP
         private string _start_path = "";
         private string _pattern = "";
         private List<FileParam> _files;
-       
-        public SFTPService()
+        private readonly SFTPDeleteTempFilesService _SFTPDeleteTempFiles;
+
+        public SFTPService(SFTPDeleteTempFilesService sFTPDeleteTempFilesService=null)
         {
+            _SFTPDeleteTempFiles = sFTPDeleteTempFilesService;
             Initialize();
         }
         private void Initialize()
@@ -29,6 +33,7 @@ namespace Logitude.Server.Tools.FTP
         }
         public void Logon(string p_host, string p_user, string p_password, string p_port, string p_directory, out string p_status, out string p_message)
         {
+       
             MyStart();
             if (string.IsNullOrEmpty(p_port))
                 p_port = "22";
@@ -408,13 +413,47 @@ namespace Logitude.Server.Tools.FTP
             {
                 if (File.Exists(v_temp_filename_full))
                     File.Delete(v_temp_filename_full);
+
+                try
+                {
+                    if (_SFTPDeleteTempFiles?.DeleteIfNeeded(uploadAsTemp, (Action)(this.DeleteTempFiles)) == true)
+                    {
+                        p_message += Environment.NewLine + $" SFTPDeleteTempFilesService - delete temp file  ";
+                    }
+                    
+                }
+                catch (Exception e)
+                {
+
+                    Logger.LogMe(e.ToString(), true, "SFTP");
+                }
+
                 MyFinally();
             }
 
             
         }
 
+        private void DeleteTempFiles()
+        {
 
+            string p_status_1;
+            string p_message_1;
+
+            Debug.WriteLine($"DirList('tmp_ *.tmp') ..");
+            var directoryFiles = DirList("tmp_*.tmp", true, false, out p_status_1, out p_message_1).ToList();
+            Debug.WriteLine($"Temp file {directoryFiles.Count()}");
+
+
+            foreach (var fileName in directoryFiles)
+            {
+                Debug.WriteLine($"delete Temp file {fileName}");
+                DeleteFile(fileName, out p_status_1, out p_message_1);
+            }
+
+        }
+
+        
 
         public void Rename(string p_curr_name, string p_new_name, string p_del_new_name, ref string p_more, out string p_status, out string p_message)
         {

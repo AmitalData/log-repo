@@ -221,7 +221,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.Response != null && customResponse.Response.Error != null  && customResponse.Response.Error.Count()>0)
                         {
                         foreach (var item in customResponse.Response.Error) {
-                            if (item.ValidationCode.listVersionID == "1") // שגאיה
+                            if (item.ValidationCode.listVersionID == "1"|| item.ValidationCode.listVersionID == "4") // שגאיה
                             {
                                     error += item.ValidationCode.name + " " ;
 

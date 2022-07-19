@@ -52,7 +52,7 @@ namespace Logitude.Server.Tools.Helpers
                                 if (!string.IsNullOrEmpty(email))
                                 {
                                     UserRepository userRepository = new UserRepository(0);
-                                    User user = userRepository.GetSingleUserByEmail(email, 0, false);
+                                    User user = userRepository.GetSingleUserByEmail(email, 0, true);
                                     if (user != null)
                                     {
                                         User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);

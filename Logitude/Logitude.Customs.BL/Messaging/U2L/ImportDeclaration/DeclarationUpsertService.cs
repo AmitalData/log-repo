@@ -315,7 +315,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.AgentId = _AmitalCustomsFile.AgentId;//translate?
                 string DBcustomer = this._MyDeclarationPM.CustomerId; // moran 12.7.15 - Task 14510
                 this._MyDeclarationPM.CustomerId = TranslateCustomer(_AmitalCustomsFile.CustomerId);//check translate
-                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
+                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId) && _AmitalCustomsFile.Direction != "E")
                 {
                         MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                         MyGenericResponseObj.Message += "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
@@ -380,7 +380,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.DepartmentId = TranslateDepartment(_AmitalCustomsFile.DepartmentId);
                 this._MyDeclarationPM.WeightValue = _AmitalCustomsFile.COUWTVAL;
 
-                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
+                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId) && _AmitalCustomsFile.Direction != "E")
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                     MyGenericResponseObj.Message = "CustomerId is missing " + _AmitalCustomsFile.CustomerId + "Not found";
@@ -577,6 +577,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     // moran 2.4.14 - add handle in case of empty value <--
                     this._MyDeclarationPM.Consignments[0].CargoDescription = _AmitalCustomsFile.CargoDescription;
+                    AppendLogLine("_AmitalCustomsFile.OriginCountryCode " + _AmitalCustomsFile.OriginCountryCode + ",  _MyDeclarationPM.Consignments[0].OriginCountryCode " + this._MyDeclarationPM.Consignments[0].OriginCountryCode +
+                        ", _AmitalCustomsFile.CargoDescription " + _AmitalCustomsFile.CargoDescription + ",  _MyDeclarationPM.Consignments[0].CargoDescription " + this._MyDeclarationPM.Consignments[0].CargoDescription);
+
                     //moran wi 1829 + 1855 14.11.13 -->
                     // moran 20.5.15 - Task 13527 - change handle for formatting dates -->
                     //DateTime dat;
@@ -707,7 +710,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                 }
                 _MyDeclarationPM.Tenant = ResolvedTenant();
-                _MyDeclarationPM.IsConnectedToUnifreight = true; //Yuval Chalup 19.10.2016 TASK-22516
+                if(string.IsNullOrWhiteSpace(this._MyDeclarationPM.Direction) || this._MyDeclarationPM.Direction == "I")_MyDeclarationPM.IsConnectedToUnifreight = true; //Yuval Chalup 19.10.2016 TASK-22516
                 //_MyDeclarationPM.ProcedureCurrentCode = ResolveProcedureCurrentCode();//remarked by eitan h 24/9/15 16527
                 if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ProcedureCurrentCode)) _MyDeclarationPM.ProcedureCurrentCode = _AmitalCustomsFile.ProcedureCurrentCode;
                 
@@ -732,6 +735,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 ExportDeclarationInsert();
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
+                    if (this._MyDeclarationPM.Direction == "E") 
+                    {
+                        ForiegnKeyCheck.CheckClosedTable(_MyDeclarationPM, ResolvedTenant());
+                        ForiegnKeyCheck.Check<Declaration>(_MyDeclarationPM, ResolvedTenant());
+                        _MyDeclarationPM.Consignments.ForEach(x =>
+                        {
+                            ForiegnKeyCheck.CheckClosedTable(x, ResolvedTenant());
+                            ForiegnKeyCheck.Check<Consignment>(x, ResolvedTenant());
+                        });
+                    }
+
                     _MyDeclarationPM.IsCourierDeclaration = false;
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                 }
@@ -808,7 +822,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
 
                     if (this._MyDeclarationPM.Direction == "E")
+                    {
                         ForiegnKeyCheck.CheckClosedTable(_MyDeclarationPM, ResolvedTenant());
+                        //ForiegnKeyCheck.Check<Declaration>(_MyDeclarationPM, ResolvedTenant());
+                    }
 
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
@@ -1120,6 +1137,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._DeclarationReferantDataPM.PackageQuantity = packageQuantity;
             }
             this._DeclarationReferantDataPM.Commodity = _AmitalCustomsFile.Commodity;
+            this._DeclarationReferantDataPM.Hawb = _AmitalCustomsFile.HAWB;
+            this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.MAWB;
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
 

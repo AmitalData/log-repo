@@ -47,7 +47,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportLoadingPortCode, 
 	         ShipCode, 
 	         ConsignmentType, 
-	         ExportStoragesId,
+	         ExportStoragesId, 
+	         ExportContainerizationID,
 	      }
 
 
@@ -88,7 +89,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ShipCode, 
 	         ConsignmentType, 
 	         DeliverySiteCode, 
-	         ExportStoragesId,
+	         ExportStoragesId, 
+	         ExportContainerizationID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -215,6 +217,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportStoragesId))
             {
 				entityPOCO.ExportStoragesId = entityPM.ExportStoragesId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
+            {
+				entityPOCO.ExportContainerizationID = entityPM.ExportContainerizationID;
 			}
 			}
 
@@ -351,6 +358,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportStoragesId = entityPOCO.ExportStoragesId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportContainerizationID))
+            {
+					entityPM.ExportContainerizationID = entityPOCO.ExportContainerizationID;
+            }
+
 		}
 
 		public void PMToOldPM(ConsignmentPM entityPM, ConsignmentPM oldEntityPM)
@@ -475,6 +487,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportStoragesId))
             {
                 oldEntityPM.ExportStoragesId = entityPM.ExportStoragesId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
+            {
+                oldEntityPM.ExportContainerizationID = entityPM.ExportContainerizationID;
             }
 			
 		}

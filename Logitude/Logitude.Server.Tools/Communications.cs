@@ -192,7 +192,7 @@ namespace Logitude.Server.Tools
                 if (loggedUser == null)
                 {
                     string systenEmail = "system@tenant" + tenant + ".com";
-                    User systemUser = userRepository.GetSingleUserByEmail(systenEmail, tenant, false);
+                    User systemUser = userRepository.GetSingleUserByEmail(systenEmail, tenant, true);
                     if (systemUser != null)
                         communicationParams.LoggingUserId = systemUser.Id;
                 }
@@ -349,14 +349,26 @@ namespace Logitude.Server.Tools
                 }
                 else
                 {
+
+                    
+                    
+
+                    var UseRabbitMQ = CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && CustomDbQueueService.SupportedRabbitMQList.Contains(queueName);
+
                     var queueService = new CustomDbQueueService//();
                                                                //queueService.InitializeQueue
                     (queueName, 0);
                     var messageProperties = new Dictionary<string, string>();
                     messageProperties["CommunicationLogId"] = communicationLogId;
                     messageProperties["Tenant"] = tenant.ToString();
-                    var queueId = queueService.Send(messageProperties, tenant, delayTime, new QueueSendModel() { TenantPriority = 7 });
-
+                    var queueId = queueService.Send(messageProperties, tenant, delayTime, new QueueSendModel()
+                    {
+                        TenantPriority = 7,
+                        UseRabbitMQ = UseRabbitMQ,
+                        EntityCode = "CommunicationLog".ToLower(),
+                        EntityId = communicationLogId,
+                    });
+                    
                     LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue({queueName}, {communicationLogId})=>QID={queueId} ");
                     ///throw new Exception("Queue is DbMode "); 
                 }

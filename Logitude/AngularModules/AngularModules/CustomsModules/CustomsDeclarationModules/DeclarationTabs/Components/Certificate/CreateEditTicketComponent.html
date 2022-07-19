@@ -103,6 +103,24 @@
         <td></td>
     </tr>
 
+    <tr style="height:30px" *ngIf="IsNewCertificate">
+        <td>
+            <LogLabel [ObjectFieldName]="'ReqConfirmationTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td>
+            <LogLov [ObjectFieldName]="'ReqConfirmationTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.ConfirmationType'"
+                    [SelectedValue]="ReqConfirmationTypeCode"
+                    [HideColumns]="true">
+            </LogLov>
+        </td>
+
+        <td></td>
+    </tr>
+
     <tr [style.height.px]="ExemptRowHeight" *ngIf="IsExemptVisibile">
         <td>
             <LogLabel [ObjectFieldName]="'CertificateExemptionTypeCode'" [ObjectTableName]="ObjectTableName"
@@ -115,6 +133,10 @@
                 <li id="All" style="width: 50px; height: 22px;"
                     [class.SelectedFilter]="ExemptionFilterSelectedValue == '92'" (click)="ExemptionFilterClicked('92')" class="noselect">
                     92
+                </li>
+                <li id="Errors" style="width: 50px; height: 22px;" *ngIf="Parent.DeclarationPM.Direction != 'E'"
+                    [class.SelectedFilter]="ExemptionFilterSelectedValue == '96'" (click)="ExemptionFilterClicked('96')" class="noselect">
+                    96
                 </li>
                 <li id="Constraints" style="width: 50px; height: 22px;"
                     [class.SelectedFilter]="ExemptionFilterSelectedValue == 'other'" (click)="ExemptionFilterClicked('other')" class="noselect">
@@ -209,6 +231,7 @@
         </td>
         <td></td>
     </tr>
+
     <tr></tr>
 
 

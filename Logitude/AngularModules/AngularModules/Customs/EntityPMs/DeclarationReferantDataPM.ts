@@ -239,6 +239,21 @@ export class DeclarationReferantDataPM {
     public set LastStatusRemarks(newValue: string) { if (this.lastStatusRemarks != newValue) { this.lastStatusRemarks = newValue; this.MarkAsDirty("LastStatusRemarks"); } }
        
 	 
+    private mawb: string;
+    public get Mawb() { return this.mawb; }
+    public set Mawb(newValue: string) { if (this.mawb != newValue) { this.mawb = newValue; this.MarkAsDirty("Mawb"); } }
+       
+	 
+    private hawb: string;
+    public get Hawb() { return this.hawb; }
+    public set Hawb(newValue: string) { if (this.hawb != newValue) { this.hawb = newValue; this.MarkAsDirty("Hawb"); } }
+       
+	 
+    private importerApproval: boolean;
+    public get ImporterApproval() { return this.importerApproval; }
+    public set ImporterApproval(newValue: boolean) { if (this.importerApproval != newValue) { this.importerApproval = newValue; this.MarkAsDirty("ImporterApproval"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

@@ -170,6 +170,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 ///"8302" //בקשה לטופס הצהרה
 
 "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
+"UCBSEDF",// שידור תעודות עיכוב ראשי - מפצל
 "UCBCTML", // שידור הגשה בלדר
 "UCBCMSS", //שינוי אתר איחסון לבלדר
 "ClosePending",//סגירה גורפת ל-Pending
@@ -178,7 +179,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCTZIP", // Unifreight Table Custom ZIP
 "UCB2750", // שידור הצהרות בלדר
 "DCAMU", // multi update 
+"2755T", // הגשת שטעון
+"2757T", // תשובה להגשת שטעון
+"2751T", // הצהרת שטעון
+"2751T2", // תשובה להצהרת שטעון
 "UCADPE", // הזנה גורפת PENDING
+"DCACSIFF", // יצירת חשבון ספק מאקסל
 
             };
 
@@ -315,6 +321,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 ///"8302" //בקשה לטופס הצהרה
 
 "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
+"UCBSEDF",// שידור תעודות עיכוב ראשי - מפצל
 "UCB2715SendNow", // שידור מסמכים שגויים ראשי - מפצל
 "UCBCTML", // שידור הגשה בלדר
 "UCBCMSS", //שינוי אתר איחסון לבלדר
@@ -323,8 +330,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8326", // שאילתא לתצהיר יבואן
 "DCAMU", // multi update 
 "DCAUAC", // multi update 
+"DCACCFII",//יצירת אישור לפרטי מכס
+"DCACSIFF", // יצירת חשבון ספק מאקסל
+"2755T", // הגשת שטעון
+"2757T", // תשובה להגשת שטעון
+"2751T", // הצהרת שטעון
+"2751T2", // תשובה להצהרת שטעון
 "UCADPE" // add multi pending
-
 
             };
 
@@ -450,6 +462,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2757",
 "DCAMU", // multi update 
 "DCAUAC",
+"DCACCFII",
+"DCACSIFF", // יצירת חשבון ספק מאקסל
+"2755T", // הגשת שטעון
+"2757T", // תשובה להגשת שטעון
+"2751T", // הצהרת שטעון
+"2751T2", // תשובה להצהרת שטעון
 "UCADPE"
 //"8302" //בקשה לטופס הצהרה
 };
@@ -468,6 +486,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
             return pmList;
         }
+
+
 
         public List<CustomsRequestsSheetPM> GetRequestByInterfaceTypeCode(
             int Tenant,
@@ -693,6 +713,63 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pm = this.GetEntityPM(poco);
             return pm;
         }
+
+        public List<CustomsRequestsSheetPM> GetGeneralRequestInProgressByEntity2(
+           int Tenant,
+           string InterfaceTypeCode,
+           string ObjectTableId1, string EntityId1,
+           string ObjectTableId2, string EntityId2,
+           string CustomFileNo)
+        {
+            if (string.IsNullOrWhiteSpace(InterfaceTypeCode))
+            {
+                throw new Exception("GetGeneralRequestInProgress string.IsNullOrWhiteSpace(InterfaceTypeCode) ");
+            }
+
+            var listSheetStatusInProcess = new List<string>();
+            foreach (var item in Enum.GetValues(typeof(SheetStatusInProcessEnum)))
+            {
+                listSheetStatusInProcess.Add(((int)item).ToString());
+            }
+
+            var q = //context.CustomsRequestsSheets
+                this.repository.GetAll(Tenant)
+                .Where(rec => rec.Tenant == Tenant)
+                .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode)
+                    //rec.RequestStatusCode == "1" /*EnglishName	LocalName Created	בקשה נרשמה */
+                    //||
+                    //rec.RequestStatusCode == "2" /*EnglishName	LocalName In Process	באמצע טיפול*/
+                    ////||
+                    ////rec.RequestStatusCode == "5" /* Waiting For Signing	ממתין לחתימה */ //Yuval Chalup 06.08.2015 TASK-15156 (Remarked)
+                    //||
+                    //rec.RequestStatusCode == "20" /* Sent	נשלח */ //Yuval Chalup 06.08.2015 TASK-15156
+                    //||
+                    //rec.RequestStatusCode == "21" /* Received	התקבלה תשובה */ //Yuval Chalup 06.08.2015 TASK-15156
+                    );
+
+            q = q.Where(rec => rec.InterfaceTypeCode == InterfaceTypeCode);
+
+            var haveFilter = false;
+            if (!string.IsNullOrWhiteSpace(CustomFileNo))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.CustomFileNo == CustomFileNo);
+            }
+
+            if (!string.IsNullOrWhiteSpace(EntityId2) && !string.IsNullOrWhiteSpace(ObjectTableId2))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.EntityId2 == EntityId2 && rec.ObjectTableId2 == ObjectTableId2);
+            }
+            if (!haveFilter)
+            {
+                return new List<CustomsRequestsSheetPM>();
+            }
+
+            var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
+            return pmList;
+        }
+
 
         public List<CustomsRequestsSheetPM> GetGeneralRequestInProgress(
             int Tenant,

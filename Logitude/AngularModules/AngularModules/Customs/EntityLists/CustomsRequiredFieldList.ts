@@ -16,6 +16,7 @@ export class CustomsRequiredFieldList {
 	ObjectfieldCode: string;
 	IsImport: boolean;
 	IsExport: boolean;
+	WarningExport: boolean;
 	
 }
  

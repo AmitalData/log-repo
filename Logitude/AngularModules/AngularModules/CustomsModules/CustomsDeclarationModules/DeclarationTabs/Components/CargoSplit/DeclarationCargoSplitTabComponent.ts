@@ -245,7 +245,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
         windowArgs.CurrentEntity = item;
         windowArgs.IsNewEntity = true;
         windowArgs.CustomFileNo = this.EntityPM.CustomFileNo;
-
+        windowArgs.Direction = this.EntityPM.Direction;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 770;
         logWindow.Height = 750;

@@ -17,16 +17,20 @@ import { AddEditCustomsAirlineComponent } from './Components/AddEditCustomsAirli
 import { CustomsPartnerFtpListComponent } from './Components/CustomsPartnerFtpListComponent';
 import { DeclarationRemarksComponent } from './Components/DeclarationRemarksComponent'
 import { InterfaceTenantPriorityComponent } from './Components/InterfaceTenantPriorityComponent';
+import { ExportRequiredFieldsComponent } from './Components/RequiredFields/ExportRequiredFieldsComponent';
+import { AddEditExportRequiredFieldsComponent } from './Components/RequiredFields/AddEditExportRequiredFieldsComponent';
 //import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
  
 
 export const Components =
     [
         AddEditRequiredFieldsComponent,
+        AddEditExportRequiredFieldsComponent,
         CustomsClosedTablesComponent,
         ClosedTableNotExistedComponent,
         CustomsSettingsComponent,
         RequiredFieldsComponent,
+        ExportRequiredFieldsComponent,
         InterfaceManagementComponent,
         AddEditInterfaceManagementComponent,
         InterfaceTenantPriorityComponent,
@@ -49,10 +53,12 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "AddEditRequiredFieldsComponent": { myResult = AddEditRequiredFieldsComponent; break; }
+            case "AddEditExportRequiredFieldsComponent": { myResult = AddEditExportRequiredFieldsComponent; break; }
             case "CustomsClosedTablesComponent": { myResult = CustomsClosedTablesComponent; break; }
             case "ClosedTableNotExistedComponent": { myResult = ClosedTableNotExistedComponent; break; }
             case "CustomsSettingsComponent": { myResult = CustomsSettingsComponent; break; }
             case "RequiredFieldsComponent": { myResult = RequiredFieldsComponent; break; }
+            case "ExportRequiredFieldsComponent": { myResult = ExportRequiredFieldsComponent; break; }
             case "InterfaceManagementComponent": { myResult = InterfaceManagementComponent; break; }
             case "AddEditInterfaceManagementComponent": { myResult = AddEditInterfaceManagementComponent; break; }
             case "InterfaceTenantPriorityComponent": { myResult = InterfaceTenantPriorityComponent; break; }

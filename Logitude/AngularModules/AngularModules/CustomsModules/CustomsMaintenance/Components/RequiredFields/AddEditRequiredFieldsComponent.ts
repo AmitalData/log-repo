@@ -64,6 +64,10 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
     GetObjectFields() {
         var objectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         var objectFields: any[] = window.ObjectFields.filter(x => x.ObjectTableId == objectTable.Id && (!x.IsMulti && x.FieldName != "ImporterId" && x.FieldName != "TransferImporterId" && x.FieldName != "EntitleImporterId"));
+        if (objectTable.Name == "Customs.Declaration") {
+            objectFields = objectFields.filter(x => x.ValidForQuerySection1 != "Customs.ExportDeclaration");
+            objectFields = objectFields.filter(x => x.FieldName != "DeclarationNumber");
+        }
 
         this.FieldsList.Clear();
         var items = [];
@@ -282,5 +286,6 @@ export class RequierdFieldObject {
     ObjectFieldName: string;
     IsExport: boolean;
     IsImport: boolean;
+    WarningExport: boolean;
     Active: boolean;
 }

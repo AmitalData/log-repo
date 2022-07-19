@@ -17,6 +17,7 @@ namespace Unifreight.BL.EntityPMs
 
         public string BLOCKRECORD { get; set; }
         public string ADDRESS { get; set; }
+        public string SEARCHENG { get; set; }
         public string ISHANDAGNT { get; set; }
         public string CITY { get; set; }
         public string ADDRESS2 { get; set; }
@@ -34,6 +35,9 @@ namespace Unifreight.BL.EntityPMs
         public string FAX { get; set; }
         public string CONTACT { get; set; }
         public string EMAIL { get; set; }
+        public string BILLTO { get; set; }
+        public string FILLERB1 { get; set; }
+        public string FILLERB2 { get; set; }
 
 
     }

@@ -50,6 +50,16 @@ namespace Logitude.Customs.Data.EntityLists
        public string IsMultiCustomers  { get; set; }
        [DataMember]
        public bool? IsMultiExportFiles  { get; set; }
+       [DataMember]
+       public string CargoTypeCode  { get; set; }
+       [DataMember]
+       public string ManifestNumber  { get; set; }
+       [DataMember]
+       public string SecondCargoID  { get; set; }
+       [DataMember]
+       public string ThirdCargoID  { get; set; }
+       [DataMember]
+       public string ContainerizationCargoID  { get; set; }
    }
 
 }

@@ -72,9 +72,13 @@
         p_InterfaceTypeCode IN VARCHAR2 ,
         p_UseRabbitMQ IN NUMBER ,
         p_QueueCodeRabbit IN VARCHAR2 ,
+		
+		p_EntityCode IN VARCHAR2,
+		p_EntityId IN VARCHAR2,
 
-        v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE
         
+        v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE
+		
         )
 		---20211108 IM TenantPriority
 		---20220127 IM Rabbit
@@ -106,6 +110,7 @@
 		  TenantPriority
 		  
 		  ,InterfaceTypeCode ,UseRabbitMQ ,QueueCodeRabbit 
+		  ,EntityCode ,EntityId 
         )
         VALUES
         (
@@ -120,6 +125,7 @@
 		  v_TenantPriority
 		  
 		  ,p_InterfaceTypeCode ,p_UseRabbitMQ ,p_QueueCodeRabbit 
+		  ,p_EntityCode ,p_EntityId 
         );
       IF v_CustomerId = ' ' THEN
         v_CId        := NULL ;

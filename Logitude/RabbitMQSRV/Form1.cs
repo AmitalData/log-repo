@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools;
+﻿using CustomsWorkerRole;
+using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

@@ -67,17 +67,17 @@
                                     <tr>
                                         <td>
                                             <div class="ActionButton" style="width: 35px;height:23px; ">
-                                                <CheckBox [IsChecked]="_customsCollateralAnswerSharedDataService.disconnectedSelectAll" (Checked)="$event ? OnAllBtnClickedNot() : OnNoneBtnClickedNot()"></CheckBox>
+                                                <CheckBox [IsChecked]="_customsCollateralAnswerSharedDataService.disconnectedSelectAll" (Checked)="$event ? OnAllBtnClicked() : OnNoneBtnClicked()"></CheckBox>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
                                                 <img src="./Images/ToggleIcon.png" style="float:left;" />
                                                 <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
-                                                    <button style="text-align:right" (click)="OnAllBtnClickedNot()">
+                                                    <button style="text-align:right" (click)="OnAllBtnClicked()">
                                                         {{'Customs.General.O.SelectAll' | TextCodeTranslationPipe}}
                                                     </button>
-                                                    <button style="text-align:right" (click)="OnNoneBtnClickedNot()">
+                                                    <button style="text-align:right" (click)="OnNoneBtnClicked()">
                                                         {{ 'Customs.General.O.CancelSelect' | TextCodeTranslationPipe }}
                                                     </button>
                                                 </div>
@@ -97,9 +97,14 @@
                         <td></td>
                     
                         <td style="left:0px;float:left">
-                            <button style="width:100px" class="Button" *ngIf="_customsCollateralAnswerSharedDataService.IsDisplayButtonSend"
-                                (click)="OpenEditCollateralAnswerWindow()"> {{'Customs.Declaration.O.MultiCollateralsAnswer'|
-                                TextCodeTranslationPipe}}</button>
+                            
+                            <button style="width:100px" class="Button" *ngIf="_customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 0 || _customsCollateralAnswerSharedDataService.connectedSelectAll"
+                                    (click)="OpenEditCollateralAnswerWindow()">
+                                {{
+'Customs.Declaration.O.MultiCollateralsAnswer'|
+                                TextCodeTranslationPipe
+                                }}
+                            </button>
                         </td>
                     </tr>
 

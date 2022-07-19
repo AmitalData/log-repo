@@ -53,26 +53,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.DeclarationPrintAnswer == null) return;
             foreach (var item in customResponse.DeclarationPrintAnswer)
             {
-                if (item.DeclarationPrintDetails!=null)
+                if (item.DeclarationPrintDetails != null)
                 {
-                    if (item.DeclarationPrintDetails.DeclarationPrint!=null)
+                    if (item.DeclarationPrintDetails.DeclarationPrint != null)
                     {
-                        
+
                         var MD5Hash = MD5HashUtil.GetMD5Hash(item.DeclarationPrintDetails.DeclarationPrint.content);
                         item.DeclarationPrintDetails.DeclarationPrint.content = System.Text.UTF8Encoding.UTF8.GetBytes(MD5Hash);
 
                     }
                 }
             }
-             
-                
+
+
         }
 
 
 
         public override void Update(DF_NG_8303_Web04_DeclarationPrint_Response customResponse, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams)
         {
-            _TransmitionDateTime=customResponse.ResponseContentHeader.TransmitionDateTime;
+            _TransmitionDateTime = customResponse.ResponseContentHeader.TransmitionDateTime;
             //Analayze 8303- Declaration Print
             var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
             this.MyResponseData = new DeclarationPrintResponseData();
@@ -107,7 +107,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             foreach (var declarationPrintAnswerItem in customResponse.DeclarationPrintAnswer)
             {
-                
+
                 if (!string.IsNullOrWhiteSpace(declarationPrintAnswerItem.ExceptionPerQuery))
                 {
                     var declarationPrintDetails = new DeclarationPrintM();
@@ -164,7 +164,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
-                    catch(System.Exception eeee)
+                    catch (System.Exception eeee)
                     {
                         throw;//20180222 -HOPE TILL NEXT PATCH - I WILL ABLE TO RESTORE THE PROBLEM (- AS EITAN ADVISE)
                         var declarationPrintDetails = new DeclarationPrintM();
@@ -188,7 +188,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.RequestDescription = "בקשה לטופס הצהרה " + _MyDeclarationPM.DeclarationNumber;
             }
         }
-        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id,DateTime? status_DateTime)
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, DateTime? status_DateTime)
         {
             //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
             string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
@@ -224,11 +224,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
         }
-        private void AnalyzePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams,string MyDeclarationNumVersionId)
+        private void AnalyzePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams, string MyDeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
             var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant,
-                new CustomDocumentsFilingParams() { MainInterfaceCode = "8302" , IsCourier = IsCourier(requestParams.Tenant) }, MyDeclarationNumVersionId);
+                new CustomDocumentsFilingParams() { MainInterfaceCode = "8302", IsCourier = IsCourier(requestParams.Tenant) }, MyDeclarationNumVersionId);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             DocumentsFilingPM documentsFilingPM = null;
@@ -247,7 +247,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 if (documentItem.DocumentTypeId == documentType?.Id)
                 {
-                    
+
                     var gdmfiling = uniGDMFILINGQueryService.GetSingle(documentItem.Id, true);
                     if (gdmfiling?.DELETED == "T")
                     {
@@ -259,22 +259,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-            
+
             //DocumentsMetaDataTypePM verPm= 
             if (documentsFilingPM == null)
             {
-              documentsFilingPM =CreatePaymentDocument(attachment, requestParams, this._MyDeclarationPM.DeclarationNumberandVersionId);
-                
+                documentsFilingPM = CreatePaymentDocument(attachment, requestParams, this._MyDeclarationPM.DeclarationNumberandVersionId);
+
             }
             else
             {
-                
+
                 UpdatePaymentDocument(documentsFilingPM, attachment, requestParams, this._MyDeclarationPM.DeclarationNumberandVersionId);
             }
-
-            if (this._MyDeclarationPM.Direction == "E")
+            var setting = CustomsSettingQueryService.GetSettingByTenant(this._MyDeclarationPM.Tenant);
+            if (setting.IsConnectedToUniFreight)
             {
-                RaiseEvent(this._MyDeclarationPM, "MEHES", status_id: "MRS", status_DateTime: _TransmitionDateTime);
+                if (this._MyDeclarationPM.Direction == "E")
+                {
+                    RaiseEvent(this._MyDeclarationPM, null, status_id: "MRS", status_DateTime: _TransmitionDateTime);
+                }
             }
             //DocumentsFilingMetaDataValueQuery.UpSert(documentsFilingPM, "VER", this._MyDeclarationPM.VersionId);
 
@@ -282,7 +285,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        private void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams,string DeclarationNumVersionId)
+        private void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams, string DeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
             var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "8302", IsCourier = IsCourier(requestParams.Tenant) }, DeclarationNumVersionId);
@@ -294,15 +297,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingService.Update(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
             LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + " Updated For declaration " + _MyDeclarationPM.DeclarationNumber);
 
-           
+
 
         }
 
-  
+
         private DocumentsFilingPM CreatePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams, string DeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "8302" , IsCourier = IsCourier(requestParams.Tenant) }, DeclarationNumVersionId);
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "8302", IsCourier = IsCourier(requestParams.Tenant) }, DeclarationNumVersionId);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
 
             var documentsFilingPM = new DocumentsFilingPM();
@@ -323,12 +326,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.ExternalEntityReference = this._MyDeclarationPM.CustomFileNo;
             documentsFilingPM.FileExtension = "PDF";
 
-            
-            
-            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
-            LogMessagingUtil.Instance.AppendLine("Filed document " + documentsFilingPM.Code + "Created For declaration " + _MyDeclarationPM.DeclarationNumber + " documentsFilingPM.ID= "+ documentsFilingPM.Id);
 
-            
+
+            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+            LogMessagingUtil.Instance.AppendLine("Filed document " + documentsFilingPM.Code + "Created For declaration " + _MyDeclarationPM.DeclarationNumber + " documentsFilingPM.ID= " + documentsFilingPM.Id);
+
+
 
             return documentsFilingPM;
 

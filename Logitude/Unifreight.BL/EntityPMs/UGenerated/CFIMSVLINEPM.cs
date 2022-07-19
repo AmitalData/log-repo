@@ -70,5 +70,7 @@ namespace Unifreight.BL.EntityPMs
         public string PROTESTREMARK { get; set; }
 
         public string MAKATREMARK { get; set; }
+        public string PRATMEHES2 { get; set; }
+
     }
 }
