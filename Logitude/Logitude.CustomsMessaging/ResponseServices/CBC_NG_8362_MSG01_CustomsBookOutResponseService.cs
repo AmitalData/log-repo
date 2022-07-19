@@ -308,7 +308,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     foreach (var mehesPropertiesDetailsHistoryRow_CustomsItemNOTExists in mehesPropertiesDetailsHistoryRows_CustomsItemNOTExists)
                     {
                         CustomsItemPM currentDBListCustomsItemRow = new CustomsItemPM();
-                        currentDBListCustomsItemRow = _DBListCustomsItemRows.FirstOrDefault(rec => rec.ID == mehesPropertiesDetailsHistoryRow_CustomsItemNOTExists.CustomsItemID.ToString() && rec.CustomsBookTypeID == 1);
+                        currentDBListCustomsItemRow = _DBListCustomsItemRows.FirstOrDefault(rec => rec.ID == mehesPropertiesDetailsHistoryRow_CustomsItemNOTExists.CustomsItemID.ToString() && (rec.CustomsBookTypeID >= 1 && rec.CustomsBookTypeID <= 3));
                         if (currentDBListCustomsItemRow != null && !string.IsNullOrWhiteSpace(currentDBListCustomsItemRow.ID))
                         {
                             mehesPropertiesDetailsHistoryRows.Add(mehesPropertiesDetailsHistoryRow_CustomsItemNOTExists);
@@ -345,7 +345,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     foreach (var mehesCustomsItemDetailsHistoryRow_CustomsItemNOTExists in mehesCustomsItemDetailsHistoryRows_CustomsItemNOTExists)
                     {
                         CustomsItemPM currentDBListCustomsItemRow = new CustomsItemPM();
-                        currentDBListCustomsItemRow = _DBListCustomsItemRows.FirstOrDefault(rec => rec.ID == mehesCustomsItemDetailsHistoryRow_CustomsItemNOTExists.CustomsItemID.ToString() && rec.CustomsBookTypeID == 1);
+                        currentDBListCustomsItemRow = _DBListCustomsItemRows.FirstOrDefault(rec => rec.ID == mehesCustomsItemDetailsHistoryRow_CustomsItemNOTExists.CustomsItemID.ToString() && (rec.CustomsBookTypeID >= 1 && rec.CustomsBookTypeID <= 3));
                         if (currentDBListCustomsItemRow != null && !string.IsNullOrWhiteSpace(currentDBListCustomsItemRow.ID))
                         {
                             mehesCustomsItemDetailsHistoryRows.Add(mehesCustomsItemDetailsHistoryRow_CustomsItemNOTExists);
@@ -363,7 +363,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 return null;
             }
-            return cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItem.Where(rec => rec.CustomsBookTypeID == 1).ToList();
+            return cBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItem.Where(rec => (rec.CustomsBookTypeID >= 1 && rec.CustomsBookTypeID <= 3)).ToList();
         }
 
         private static bool CompareMehesToDBCustomsItem(CBC_NG_8362_MSG01_CustomsBookOutCustomsBookGeneralTablesCustomsItem mehesCustomsItemRow, CustomsItemPM currentDBListCustomsItemRow)
