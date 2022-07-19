@@ -51,6 +51,15 @@
             background-color: gray;
             margin: 3px;
         }
+    .text-with-dots {
+        display: inline-block;
+        max-width: 145px;
+        min-width: 145px;
+        width: 145px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }
 </style>
 <table style="padding:10px">
 
@@ -80,12 +89,22 @@
                             <div class="SimpleGridViewBody">
                                 <table>
                                     <tr class="SimpleGridViewRow" *ngFor="let item of TableScreensCollection" (click)="SelectionChanged(item)" [class.Selected]="item == SelectedItem">
-                                        <td [attr.data-cy]="item.Name" class="GridViewCell" style="width: 198px; min-width: 198px; max-width: 198px;">
-                                            {{item.Name}}
+                                        <td [attr.data-cy]="item.Name">
+
+                                            <div [attr.title]="item.Name" *ngIf="!item.Inactive" class="GridViewCell" style="width: 198px; min-width: 198px; max-width: 198px;">
+                                                {{item.Name}}
+                                            </div>
+
+                                            <div [attr.title]="item.Name" class="text-with-dots GridViewCell" *ngIf="item.Inactive">
+                                                {{item.Name}}
+                                            </div>
+
+                                            <div *ngIf="item.Inactive" style="display:inline-block;font-size:11px;font-style:italic;color:gray;text-align:left;vertical-align:central;display:inline">
+                                                (inactive)
+                                            </div>
+
                                         </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
+                                  
                                     </tr>
                                 </table>
                             </div>
@@ -98,6 +117,7 @@
                     <td *ngIf="!IsMuiltSectionScreen">
                         <div class="LocationDirective" LocationDirective Code="ClASSIC"> </div>
                     </td>
+
                     <td *ngIf="IsMuiltSectionScreen" style=" border: 1px solid silver;border-right:0px">
 
                         <div *ngIf="(!IsObjectTableFilterEnabled || IsTabsCustomizationEnabled)" class="screen-designer-header">

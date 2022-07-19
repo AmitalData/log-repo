@@ -1,3 +1,5 @@
+declare var System: any;
+declare var window: any;
 import { Component, OnInit } from '@angular/core';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
@@ -17,9 +19,13 @@ const deleteSectionMessage = "Are you sure you want delete this section?";
 export class LighteningScreenComponent extends BaseComponent implements OnInit
 {
     public ScreenLayoutComponent: ScreenLayoutComponent;
+    public lighteningScreenWidth: string;
+    private screenLayoutwidth = 500;
     constructor()
     {
         super();
+        this.lighteningScreenWidth = (window.innerWidth - this.screenLayoutwidth) + "px";
+
     }
 
     ngOnInit(): void
@@ -36,6 +42,7 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
     Run(screenLayoutComponent: ScreenLayoutComponent)
     {
         this.ScreenLayoutComponent = screenLayoutComponent;
+
     }
 
     RemoveSection(section)

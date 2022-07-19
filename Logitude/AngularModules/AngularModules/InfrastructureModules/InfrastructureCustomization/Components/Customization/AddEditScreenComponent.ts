@@ -38,10 +38,11 @@ export class AddEditScreenComponent extends BaseComponent {
         this.screenLayoutComponent = args.ScreenLayoutComponent;
 
         this.EntityPM = args.Screen || this.GetNewScreenInstance();
+        this.Name = this.EntityPM ? this.EntityPM.Name : "";
+        this.Inactive = this.EntityPM?.Inactive;
+
         this.SetObjectTableFields(this.EntityPM);
         this.isEditMode = args.Screen != null;
-
-        this.UIProperties.SetRequired("Name", "Screen", true);
     }
 
 
@@ -61,18 +62,19 @@ export class AddEditScreenComponent extends BaseComponent {
         screen.ObjectTableName = objectTable.Name;
     }
 
-    get Name() { return this.EntityPM ? this.EntityPM.Name:""; }
+    private name: string;
+    get Name() { return this.name; }
     set Name(newValue: string) {
-        if (this.EntityPM.Name != newValue) {
-            this.EntityPM.Name = newValue;
+        if (this.name!= newValue) {
+            this.name = newValue;
         }
     }
 
-
-    get Inactive() { return this.EntityPM?.Inactive; }
+    private inactive: boolean;
+    get Inactive() { return this.inactive; }
     set Inactive(newValue: boolean) {
-        if (this.EntityPM.Inactive != newValue) {
-            this.EntityPM.Inactive = newValue;
+        if (this.inactive != newValue) {
+            this.inactive = newValue;
         }
     }
 
@@ -82,6 +84,7 @@ export class AddEditScreenComponent extends BaseComponent {
 
 
     SaveButtonClicked() {
+        this.MapScreenFields();
 
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.Name)) {
@@ -92,6 +95,12 @@ export class AddEditScreenComponent extends BaseComponent {
         this.isEditMode ? this.SubmitScreenChanges() : this.SubmitNewScreen();
     }
 
+
+   private MapScreenFields() {
+       this.EntityPM.Name = this.Name;
+       this.EntityPM.Inactive = this.Inactive;
+
+    }
 
     private SubmitNewScreen()
     {
@@ -107,7 +116,7 @@ export class AddEditScreenComponent extends BaseComponent {
             }
 
             this.screenLayoutComponent.AddScreenItem(myResult.Result);
-            this.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CurrentWindow.Close(myResult.Result.Id);
 
         });
     }
@@ -121,7 +130,7 @@ export class AddEditScreenComponent extends BaseComponent {
             if (response.HasError)
                 return this.HandleException(response);
 
-            this.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CurrentWindow.Close(this.EntityPM.Id);
         });
     }
 

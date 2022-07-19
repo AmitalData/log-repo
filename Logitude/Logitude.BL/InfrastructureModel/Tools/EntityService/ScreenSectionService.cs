@@ -57,7 +57,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleScreenSection(theEntityPm.ScreenCode , theEntityPm.Number);
-
+            if (this.Poco == null) return;
             ScreenSectionMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();

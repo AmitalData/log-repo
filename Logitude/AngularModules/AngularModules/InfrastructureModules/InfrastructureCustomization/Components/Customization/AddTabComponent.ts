@@ -57,7 +57,7 @@ export class AddTabComponent extends BaseComponent {
         this.args = args.ViewModel;
         this.objectTable = window.ObjectTables.filter(x => x.Id === this.args.objectTableId)[0];
         this.InitializeTab(args.tab);
-        this.screens = window.Screens.filter(d=>d.Type == "LIGHTENING" && d.ObjectTableId ==this.args.objectTableId );
+        this.screens = window.Screens.filter(d => d.Type == "LIGHTENING" && d.ObjectTableId == this.args.objectTableId && !d.Inactive );
         this.SetSelectedScreen();
 
 
