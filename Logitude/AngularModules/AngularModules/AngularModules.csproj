@@ -362,6 +362,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\PerVendorReportFilterComponent.html" />
     <Content Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.html" />
+    <Content Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\GeneralTabComponent.html" />
@@ -4727,6 +4728,7 @@
     <TypeScriptCompile Include="Report\Components\Workspaces\MainReportsWorkspace.ts" />
     <TypeScriptCompile Include="Report\DataContracts\SchedulerDetails.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\TenantAccessSettingsComponent.ts" />

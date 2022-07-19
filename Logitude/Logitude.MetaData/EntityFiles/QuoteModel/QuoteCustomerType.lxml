@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Quote Customer Type&quot;"
-  Code="&quot;e843&quot;"
+  Code="&quot;8d80&quot;"
   Name="&quot;QuoteCustomerType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -427,9 +427,9 @@
       SearchFields="&quot;shi,shipper&quot;"
       ShowInLOV="true" />
     <Record
-      SearchFields="&quot;CNI&quot;"
-      Code="&quot;Consignee Not Importer&quot;"
-      Name="&quot;CNI,Consignee Not Importer,True,&quot;"
+      SearchFields="&quot;CNI,Consignee Not Importer,True,&quot;"
+      Code="&quot;CNI&quot;"
+      Name="&quot;Consignee Not Importer&quot;"
       ShowInLOV="true" />
   </Records>
   <DataContracts>

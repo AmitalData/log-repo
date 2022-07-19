@@ -63,9 +63,9 @@ namespace Logitude.BL.QuoteModel
 			 
             all.Add(new QuoteCustomerTypeDetails()
             {    
-                SearchFields = "CNI", 
-                Code = "Consignee Not Importer", 
-                Name = "CNI,Consignee Not Importer,True,", 
+                SearchFields = "CNI,Consignee Not Importer,True,", 
+                Code = "CNI", 
+                Name = "Consignee Not Importer", 
                 ShowInLOV = true, 
 			});
 			

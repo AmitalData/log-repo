@@ -1171,7 +1171,12 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                     this.CustomerDependencyProperty1IsList = true;
                     break;
                 }
-
+            case "CNI":
+                {
+                    this.CustomerDependencyProperty1 = "AG,CS";
+                    this.CustomerDependencyProperty1IsList = true;
+                    break;
+                }
             case "OTH": {
                 this.CustomerDependencyProperty1 = "CS";
                 this.CustomerDependencyProperty1IsList = false;
@@ -1270,7 +1275,12 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 this.EntityPM.NotifyContactId = this.CustomerContactId;
                 break;
             }
-
+            case "CNI": {
+                this.EntityPM.ConsigneeNotImporterId = this.CustomerId;
+                this.EntityPM.ConsigneeNotImporterAddressId = this.CustomerAddressId;
+                this.EntityPM.ConsigneeNotImporterContactId = this.CustomerContactId;
+                break;
+            }
             case "OTH": {
 
                 break;
@@ -2892,6 +2902,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                     myResult = "Shipper";
                     break
                 }
+            case "CNI":
+                {
+                    myResult = "Consignee Not Importer";
+                    break
+                }
         }
 
         return myResult;
@@ -3273,6 +3288,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     ConsigneeCopyIsEnabled: boolean = false;
     AgentCopyIsEnabled: boolean = false;
     NotifyCopyIsEnabled: boolean = false;
+    ConsigneeNotImporterCopyIsEnabled: boolean = false;
     MainCarriageCopyIsEnabled: boolean = false;
     ChargesTypesCopyIsEnabled: boolean = false;
     CopyCostIsChecked: boolean = false;
@@ -3395,6 +3411,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             }
         }
 
+        if (!AppTool.IsNullOrEmpty(this.sourceEntityPM.ConsigneeNotImporterId)) {
+            this.ConsigneeNotImporterCopyIsEnabled = true;
+            this.ConsigneeNotImporterCopyIsChecked = true;
+        }
+
         // Routing
         if (this.QuoteSetting) {
             this.MainCarriageCopyIsEnabled = true;
@@ -3507,7 +3528,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 this.CustomerAddressId = myQuote.NotifyAddressId;
                 break;
             }
-
+            case "CNI":
+                {
+                    this.CustomerAddressId = myQuote.ConsigneeNotImporterAddressId;
+                    break;
+                }
             case "OTH": {
 
                 break;
@@ -3607,6 +3632,24 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
 
             if (this.EntityPM.QuoteCustomerTypeCode == "NOT") {
                 this.EntityPM.CustomerId = this.sourceEntityPM.NotifyId;
+            }
+        }
+    }
+
+    private consigneeNotImporterCopyIsChecked: boolean = false;
+    get ConsigneeNotImporterCopyIsChecked() { return this.consigneeNotImporterCopyIsChecked; }
+    set ConsigneeNotImporterCopyIsChecked(newValue: boolean) {
+        if (this.consigneeNotImporterCopyIsChecked != newValue) {
+            this.consigneeNotImporterCopyIsChecked = newValue;
+
+            this.EntityPM.ConsigneeNotImporterId = !newValue ? null : this.sourceEntityPM.ConsigneeNotImporterId;
+            this.EntityPM.ConsigneeNotImporterName = !newValue ? null : this.sourceEntityPM.ConsigneeNotImporterName;
+            this.EntityPM.ConsigneeNotImporterNote = !newValue ? null : this.sourceEntityPM.ConsigneeNotImporterNote;
+            this.EntityPM.ConsigneeNotImporterAddressId = !newValue ? null : this.sourceEntityPM.ConsigneeNotImporterAddressId;
+            this.EntityPM.ConsigneeNotImporterContactId = !newValue ? null : this.sourceEntityPM.ConsigneeNotImporterContactId;
+
+            if (this.EntityPM.QuoteCustomerTypeCode == "CNI") {
+                this.EntityPM.CustomerId = this.sourceEntityPM.ConsigneeNotImporterId;
             }
         }
     }
