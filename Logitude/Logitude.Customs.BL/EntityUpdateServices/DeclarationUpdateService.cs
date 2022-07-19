@@ -2852,7 +2852,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 InvoiceItemLineNumber = ItemsConDeclar.InvoiceItemLineNumber,
                                 LineNumber = ItemsConDeclar.LineNumber,
                                 Tenant = toDeclaration.Tenant,
-                                DeclarationNumber = toDeclaration.DeclarationNumber,
+                                DeclarationNumber = ItemsConDeclar.DeclarationNumber,
                                 ItemSequence = ItemsConDeclar.ItemSequence,
                                 DeclarationTypeCode = ItemsConDeclar.DeclarationTypeCode,
                                 InvoiceNumber = ItemsConDeclar.InvoiceNumber,
