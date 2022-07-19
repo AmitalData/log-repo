@@ -38,13 +38,7 @@ namespace Logitude.Customs.BL.Validators
 
             // no one use it  !!  --List<SupplierInvoicePM> invoicePMs = invoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant);//mohammad fix wi 20751
             ///List<SupplierInvoiceItemPM> invoiceItemPMs = invoiceItemQuery.GetSupplierInvoiceItemsForDeclaration(declarationId, tenant);//mohammad fix wi 20751
-            var fromCache = true;
-            if (fromCache)
-            {
-                var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
-                declaration = CacheManager.CacheWrapper.Remove(cacheKey) as DeclarationPM;
-
-            }
+            
             declaration = declaration ?? declarationPM;//courier.CalcAll()
             if (declaration == null)
             {
@@ -58,6 +52,13 @@ namespace Logitude.Customs.BL.Validators
             }
 
             string isExport = declaration.Direction == "E" ? "E" : "I";
+            var fromCache = declaration.Direction == "E" ? false : true;
+            if (fromCache)
+            {
+                var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
+                declaration = CacheManager.CacheWrapper.Remove(cacheKey) as DeclarationPM;
+
+            }
 
             DeclarationPaymentQueryService DeclarationPaymentQuery = new DeclarationPaymentQueryService(context);
             DeclarationPaymentPM payment = DeclarationPaymentQuery.GetSingle(declarationId, true, fromCache);
