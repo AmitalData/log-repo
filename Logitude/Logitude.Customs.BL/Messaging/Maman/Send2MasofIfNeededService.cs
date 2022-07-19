@@ -125,6 +125,12 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         {
                             dataHaveChangeSendIt = true;
                         }
+                        bool forceDueEcomUpsert = !string.IsNullOrWhiteSpace(drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.CrateNumber);
+                        if (forceSend || forceDueEcomUpsert )
+                        {
+                            dataHaveChangeSendIt = true;
+
+                        }
                     }
                     if (dataHaveChangeSendIt)
                     {
