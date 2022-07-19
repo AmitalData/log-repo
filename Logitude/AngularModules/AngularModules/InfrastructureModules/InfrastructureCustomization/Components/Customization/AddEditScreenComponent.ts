@@ -26,7 +26,7 @@ export class AddEditScreenComponent extends BaseComponent {
     private numberOfColumns: number = 3;
     private screenType: string = "LIGHTENING";
     private CurrentSession = SessionLocator.SelectedSession;
-    private isEditMode: boolean = false;
+    public IsEditMode: boolean = false;
 
     constructor() {
         super();
@@ -42,7 +42,7 @@ export class AddEditScreenComponent extends BaseComponent {
         this.Inactive = this.EntityPM?.Inactive;
 
         this.SetObjectTableFields(this.EntityPM);
-        this.isEditMode = args.Screen != null;
+        this.IsEditMode = args.Screen != null;
     }
 
 
@@ -92,7 +92,7 @@ export class AddEditScreenComponent extends BaseComponent {
             return;
         }
 
-        this.isEditMode ? this.SubmitScreenChanges() : this.SubmitNewScreen();
+        this.IsEditMode ? this.SubmitScreenChanges() : this.SubmitNewScreen();
     }
 
 
