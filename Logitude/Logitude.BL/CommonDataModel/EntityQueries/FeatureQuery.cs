@@ -393,6 +393,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return myResult;
         }
 
+        public List<FeaturePM> GetAllowedFeaturesForRole(string roleId, int tenant, string email)
+        {
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            ContactPM contact = contactQuery.GetContactByEmailOnly(email, tenant);
+            if (contact == null)
+                throw new Exception("User not found");
+            var allowedPackages = GetAllPackagesCodes(contact.Id, tenant, false);
+            var features = GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
+            return features;
+        }
+
         public List<FeaturePM> GetAllowedFeaturesForRole(string myRoleId, List<string> allowedPackages, int tenant)
         {
             List<FeaturePM> myResult = new List<FeaturePM>();
@@ -432,7 +443,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     (from a in repository.context.RoleFeatures
                      where a.Tenant == tenant || a.Tenant == 0
                      select a);
-
                 if (myRole.IsCustomRole)
                 {
                     allRoleFeatures = (from a in iQueryable where a.RoleId == myRole.ParentRoleId select a).ToList();
@@ -448,7 +458,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             if (myParentItem != null)
                             {
                                 allRoleFeatures.Remove(myParentItem);
-                                //myParentItem.FeatureAccessLevelCode = "NO";
                             }
                         }
 

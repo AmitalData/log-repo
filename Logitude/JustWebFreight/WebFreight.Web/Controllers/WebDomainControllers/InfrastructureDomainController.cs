@@ -373,6 +373,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetAllowedFeaturesForRole(string roleId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                FeatureQuery featureQuery = new FeatureQuery(tenant);
+                var result = featureQuery.GetAllowedFeaturesForRole(roleId, tenant, authToken.Email);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetAllowedFeaturesForLoggedUser()
         {
             try
