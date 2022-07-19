@@ -34,7 +34,7 @@ using Logitude.Server.Tools.Helpers;
 
 namespace CustomsWorkerRole.Test
 {
-    public class clsTester
+    public partial class clsTester
     {
 
         public void TestAsDataSet(string closedTableId)
