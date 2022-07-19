@@ -73,24 +73,21 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-                    <td style="width: 57px;" [hidden]="SelectedTabLocation == 0">
-                        <button style="cursor:pointer" class="Button" (click)="BackButtonClicked()">{{'General.B.Back' | TextCodeTranslationPipe}}</button>
+                    <td><div></div></td>
+                    <td style="width: 57px;">
+                        <button [disabled]="SelectedTabLocation == 0" style="cursor:pointer" class="Button" (click)="BackButtonClicked()">{{'General.B.Previous' | TextCodeTranslationPipe}}</button>
                     </td>
-                    <td>
-                        <div></div>
+                    <td style="width: 5px;"><div></div></td>
+                    <td style="width: 57px;">
+                        <button [disabled]="SelectedTabLocation == 2 || (DataContext.IsFTP && SelectedTabLocation == 1)" style="cursor:pointer" class="Button" (click)="NextButtonClicked()">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
                     </td>
-
-                    <td style="width: 57px;" [hidden]="SelectedTabLocation != 0">
-                        <button style="cursor:pointer" class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
-                    </td>
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-                    <td style="width: 57px;" [hidden]="SelectedTabLocation == 2 || (DataContext.IsFTP && SelectedTabLocation == 1)">
-                        <button style="cursor:pointer" class="RedButton" (click)="NextButtonClicked()">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
-                    </td>
-                    <td style="width: 57px;" [hidden]="SelectedTabLocation != 2 && !(DataContext.IsFTP && SelectedTabLocation == 1)">
+                    <td style="width: 5px;"><div></div></td>
+                    <td style="width: 57px;">
                         <button style="cursor:pointer" class="RedButton" [disabled]="DisableFinishButton()" (click)="SaveButtonClicked()">{{'General.B.Finish' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width: 5px;"><div></div></td>
+                    <td style="width: 57px;">
+                        <button style="cursor:pointer" class="Button" (click)="CloseButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
