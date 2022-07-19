@@ -242,9 +242,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void UpdateShipmentPackagesChangeSetOperation()
         {
-            if (initializer.ShipmentPackagesChangeSet != null)
+            if (this.initializer.ShipmentPackagesChangeSet != null)
             {
-                foreach (ShipmentPackagePM itemPM in initializer.ShipmentPackagesChangeSet)
+                foreach (ShipmentPackagePM itemPM in this.initializer.ShipmentPackagesChangeSet)
                 {
                     if (itemPM.ChangeSetOp == ChangeSetOperation.None)
                     {
@@ -256,9 +256,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void HandelShipmentPackagesChangeSets()
         {
-            if (initializer.ShipmentPackagesChangeSet != null)
+            if (this.initializer.ShipmentPackagesChangeSet != null)
             {
-                foreach (ShipmentPackagePM itemPM in initializer.ShipmentPackagesChangeSet)
+                foreach (ShipmentPackagePM itemPM in this.initializer.ShipmentPackagesChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -327,7 +327,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         }
         private bool IsContainerFeatureActivated()
         {
-            return SecurityUtility.CheckFeature("Container", "ContainersActivated", this.initializer.Tenant);
+            if (initializer.EntityPM.IsExternalAPI)
+            {
+                return SecurityUtility.CheckPackageFeature("Container", "ContainersActivated", this.initializer.Tenant);
+            }
+
+            else
+            {
+                return SecurityUtility.CheckFeature("Container", "ContainersActivated", this.initializer.Tenant);
+            }
         }
         public int CreatesShipmentContainers(IServiceInitializer serviceInitializer)
         {
@@ -490,7 +498,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (IsSendAutomaticallyOceanOnsightsRequestByContainer() && IsOceanInsightFeatureToggleExistInTenant(this.initializer.Tenant))
             {
-                var allUpdatedContainers = initializer.ShipmentPackagesChangeSet.Where(a => a.ContainerNumber != null);
+                var allUpdatedContainers = this.initializer.ShipmentPackagesChangeSet.Where(a => a.ContainerNumber != null);
                 foreach (var container in allUpdatedContainers)
                 {
                     this.SendAutomaticallyOceanOnsightsRequestByContainer(container.ContainerEntityId);
@@ -500,9 +508,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool IsSendAutomaticallyOceanOnsightsRequestByContainer()
         {
-            if (initializer.ShipmentPackagesChangeSet != null)
+            if (this.initializer.ShipmentPackagesChangeSet != null)
             {
-                var isContainerUpdated = initializer.ShipmentPackagesChangeSet
+                var isContainerUpdated = this.initializer.ShipmentPackagesChangeSet
                       .Where(a => a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert)
                       .Any(a => a.ContainerNumber != null);
 
@@ -587,7 +595,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     this.UpdateStandaloneShipmentPackage(containerId);
                     this.UpdatePickupDeliveryPackage(shipmentPackage, containerId);
                     shipmentPackage.ContainerEntityId = containerId;
-                    initializer.ShipmentPackagesChangeSet.Where(a => a.Id == shipmentPackage.Id).FirstOrDefault().ContainerEntityId = containerId;
+                    this.initializer.ShipmentPackagesChangeSet.Where(a=>a.Id == shipmentPackage.Id).FirstOrDefault().ContainerEntityId = containerId;
                     shipmentPackageRepository.Update(shipmentPackage);
                     shipmentPackageRepository.SubmitChanges();
                 }
@@ -705,7 +713,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return;
 
             ShipmentPackage shipmentPackage = initializer.ShipmentPackageRepository.GetSingleShipmentPackage(containerPM.ShipmentPackagesId, initializer.Tenant);
-            ShipmentPackagePM shipmentPackagePM = initializer.ShipmentPackagesChangeSet.FirstOrDefault(package => package.Id == containerPM.ShipmentPackagesId);
+            ShipmentPackagePM shipmentPackagePM = this.initializer.ShipmentPackagesChangeSet.FirstOrDefault(package => package.Id == containerPM.ShipmentPackagesId);
 
             if (IsShipmentPackageDisconnectingToEmptyContainerReturn(shipmentPackage, shipmentPackagePM))
             {
@@ -1064,7 +1072,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool IsContainerUpdatedBefore(ContainerPM containerPM)
         {
-            return initializer.EntityPM.ShipmentPackages != null && initializer.EntityPM.ShipmentPackages.Any(d =>
+            return this.initializer.ShipmentPackagesChangeSet != null && this.initializer.ShipmentPackagesChangeSet.Any(d =>
                  d.ChangeSetOp == ChangeSetOperation.Update && d.ContainerEntityId == containerPM.Id);
         }
 
