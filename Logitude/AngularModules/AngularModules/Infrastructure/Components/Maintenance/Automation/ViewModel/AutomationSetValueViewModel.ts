@@ -165,7 +165,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
     ExcludeObjectFields() {
         if (this.IsMultiUpdateComponent) return;
 
-        let excludeFieldsCodes = "Shipment.AccountManagerUserId,Shipment.IsAccrualsApproved";
+        let excludeFieldsCodes = "Shipment.IsAccountingClosed,Shipment.IsOperationalClosed";
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("FieldCode", excludeFieldsCodes, null, null, "Exclude", false, false, false, "string");
     }
 
