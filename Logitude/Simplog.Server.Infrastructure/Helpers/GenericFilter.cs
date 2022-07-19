@@ -602,7 +602,7 @@ namespace Simplog.Server.Infrastructure.Helpers
 
                                 case "Exclude":
                                     {
-                                         string[] listOfValus = item.FieldValue.ToString().Split(',');
+                                        string[] listOfValus = item.FieldValue.ToString().Split(new string[] { ",", "%2C" }, StringSplitOptions.None);
                                         Expression notInListExpression = null;
                                         foreach (string v in listOfValus)
                                         {

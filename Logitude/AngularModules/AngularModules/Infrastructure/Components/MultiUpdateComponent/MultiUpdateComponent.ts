@@ -27,6 +27,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     ObjectTableName: string;
     ObjectTableId: string;
     IsMultiEntityUpdatedSuccessfully: boolean = false;
+    IsMultiUpdateComponent: boolean = true;
     ParentComponent: any;
     ValidationErrorsList: any[];
 
