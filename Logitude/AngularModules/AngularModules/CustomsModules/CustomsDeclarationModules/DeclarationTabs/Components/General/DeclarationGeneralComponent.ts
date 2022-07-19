@@ -107,7 +107,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
                                                     this.CheckRequrierdFieldsForSend();
                                                     this.getExportStorageData();
-
+                                                    this.setRequiredTranssshipment();
                                                     this.PreceduralFilterItems = new ApiQueryFilters();
                                                     if (this.EntityPM.Direction != "E") {
                                                         this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
@@ -519,6 +519,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     public get ExportDeclarationOfficeCode() { return this.EntityPM.ExportDeclarationOfficeCode; }
     public set ExportDeclarationOfficeCode(newValue: string) {
         this.EntityPM.ExportDeclarationOfficeCode = newValue;
+        this.setRequiredTranssshipment();
     }
 
     public get ProcedureCurrentCode() { return this.EntityPM.ProcedureCurrentCode; }
@@ -737,6 +738,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     public get DeclarationTypeCode() { return this.EntityPM.DeclarationTypeCode }
     public set DeclarationTypeCode(newValue: string) {
         this.EntityPM.DeclarationTypeCode = newValue;
+        this.setRequiredTranssshipment();
     }
 
     public get IsExporterConfirmation() { return this.EntityPM.IsExporterConfirmation; }
@@ -762,6 +764,22 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     private timerToken: any;
     private isImporterClicked: boolean = false;
 
+    setRequiredTranssshipment() {
+
+        if (this.EntityPM.Direction == 'E' && this.EntityPM.DeclarationTypeCode == '3' && this.ExportDeclarationOfficeCode == null) {
+           
+                this.UIProperties.SetWarning('ExportDeclarationOfficeCode', 'Customs.Declaration', true);
+                
+           
+
+        }
+        else{
+            this.UIProperties.SetWarning('ExportDeclarationOfficeCode', 'Customs.Declaration', false);
+        }
+        
+
+
+    }
     ImporterClicked(type, client: ClientList) {
         if (client) {
             this.isImporterClicked = true;
