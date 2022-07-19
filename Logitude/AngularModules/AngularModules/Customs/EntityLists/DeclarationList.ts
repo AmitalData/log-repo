@@ -216,6 +216,7 @@ export class DeclarationList {
 	IsExportClosed: boolean;
 	DeclarationTypeName: string;
 	IsExportDeclarationAmendments: boolean;
+	ExportAmendmentStatus: string;
 	
 }
  
