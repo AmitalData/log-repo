@@ -1774,10 +1774,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                         break;
                     case "Customs.DeclarationReferantData":
                         selectedEntityId = $event.rowData.DeclarationId;
+                        break;
                     case "Customs.ExternalFieldMapping":
                         selectedEntityId = $event.rowData.Id;
+                        break;
                     case "Customs.ExternalFieldMapping":
                         selectedEntityId = $event.rowData.Id;
+                        break;
 
 
                     default:
