@@ -68,8 +68,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
+                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                //SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
                 int tenant = authToken.Tenant;
                 bool isFullTextSearch = false;
                 TenantRepository myTenantRepository = new TenantRepository(tenant);
@@ -219,7 +219,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 ShipmentQuery myShipmentQuery = new ShipmentQuery(shipmentRepository);
                 var sss = IQueryableExtensions.ToTraceString(shipments);
-                var entityLists = myShipmentQuery.GetIQueryableShipmentList(shipments, tenant);
+                var entityLists = myShipmentQuery.GetIQueryableShipmentListDigitalPortal(shipments, tenant);
 
                 entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);
                 //if (ShipmentIds != null && ShipmentIds.Count > 0)

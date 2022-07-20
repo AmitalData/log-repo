@@ -29,8 +29,15 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool TotalPerContainer { get; set; }
 
         #region Partners
-        public string QuoteCustomerTypeCode { get; set; }
+        public string ConsigneeNotImporterId { get; set; }
+        public string ConsigneeNotImporterAddressId { get; set; }
+        public string ConsigneeNotImporterContactId { get; set; }
+        public string ConsigneeNotImporterReference { get; set; }
+        public virtual Address ConsigneeNotImporterAddress { get; set; }
+        public virtual Contact ConsigneeNotImporterContact { get; set; }
+        public virtual Card ConsigneeNotImporterCard { get; set; }
 
+        public string QuoteCustomerTypeCode { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerContactId { get; set; }

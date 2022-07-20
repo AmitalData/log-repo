@@ -190,7 +190,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public bool IsQuoteDataExternal { get; set; }
         public bool IsQuoteDocumentExternal { get; set; }
         public string QuotationSections { get; set; }
-
+        public string ConsigneeNotImporterReference { get; set; }
         public string NotifyId { get; set; }
         public string NotifyAddressId { get; set; }
         public string NotifyContactId { get; set; }
@@ -198,6 +198,13 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string NotifyNote { get; set; }
         public string NotifyReference1 { get; set; }
         public string NotifyReference2 { get; set; }
+
+        public string ConsigneeNotImporterId { get; set; }
+        public string ConsigneeNotImporterAddressId { get; set; }
+        public string ConsigneeNotImporterContactId { get; set; }
+        public string ConsigneeNotImporterName { get; set; }
+        public string ConsigneeNotImporterNote { get; set; }
+
         public int? NumberOfFollowUps { get; set; }
         public bool IsDangerous { get; set; }
 

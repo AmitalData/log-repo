@@ -171,6 +171,7 @@ export class QuoteList {
 		IsQuoteDataExternal: boolean;
 		IsQuoteDocumentExternal: boolean;
 		QuotationSections: string;
+		ConsigneeNotImporterReference: string;
 		NotifyId: string;
 		NotifyAddressId: string;
 		NotifyContactId: string;
@@ -178,6 +179,11 @@ export class QuoteList {
 		NotifyNote: string;
 		NotifyReference1: string;
 		NotifyReference2: string;
+		ConsigneeNotImporterId: string;
+		ConsigneeNotImporterAddressId: string;
+		ConsigneeNotImporterContactId: string;
+		ConsigneeNotImporterName: string;
+		ConsigneeNotImporterNote: string;
 		NumberOfFollowUps: number;
 		IsDangerous: boolean;
 		QuoteHTMLDocumentId: string;
