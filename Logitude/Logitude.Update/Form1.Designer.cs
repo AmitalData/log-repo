@@ -262,6 +262,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.ShipmentTenantNumber = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
+            this.StopCreateContainer = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.OpenContainerLogFile = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
