@@ -44,6 +44,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.BL.CommonDataModel.Helpers;
+using Logitude.Server.Tools.CToolWorkflows;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -710,7 +711,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 theEntityPm.HasFile.Equals(true) &&
                 theEntityPm.DirectionCode == "I")
             {
-                AddKafkaQueueMessage(theEntityPm, "CToolShipmentsUpdate");
+                //AddKafkaQueueMessage(theEntityPm, "CToolShipmentsUpdate");
+                EntityChangesMessageProducer.ProduceShipmentDocumentUpload(theEntityPm.EntityId, theEntityPm.Tenant);
             }
         }
 
