@@ -39,6 +39,7 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
+using Simplog.Server.Infrastructure;
 
 namespace CommunicationWorkerRole
 {
@@ -51,7 +52,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
-                if (!General.IsUpdating())
+                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
                 {
                     try
                     {
