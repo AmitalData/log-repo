@@ -591,7 +591,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
                 }
-                if (customResponse.Response.Declaration != null && !isExportClose)
+                if (customResponse.Response.Declaration != null && !isExportClose && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2"))
                 {
                     DF_NG_2757_MSG10004_ExportDeclarationResponseService dF_NG_2757_MSG10004_ExportDeclarationResponseService = new DF_NG_2757_MSG10004_ExportDeclarationResponseService();
 
@@ -615,7 +615,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 //}
 
-                if (customResponse.AmendmentDocumentDetails != null) // Create Document 
+                if (customResponse.AmendmentDocumentDetails != null && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2")) // Create Document 
                 {
                     LogMessagingUtil.Instance.AppendLine("ConstraintApprovalDecision: Create Document");
 
@@ -655,6 +655,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (_MyDeclarationPM.IsCourierDeclaration && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2") && _MyDeclarationPM.HatraDate == null)
             {
+                if (_MyDeclarationPM.Consignments == null || _MyDeclarationPM.Consignments.Count() == 0)
+                {
+                    _MyDeclarationPM = declarationQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                }
+
                 var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
                 mySend2MasofIfNeededService.Send2Masof(_MyDeclarationPM, false, _MyDeclarationPM, true);
 
