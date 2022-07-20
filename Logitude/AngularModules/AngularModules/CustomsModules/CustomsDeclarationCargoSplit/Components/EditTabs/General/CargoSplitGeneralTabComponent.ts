@@ -186,7 +186,6 @@ export class CargoSplitGeneralTabComponent
                         .subscribe((myResponse: ServiceResponse) => {
                             this.CurrentSession.StopBusyIndicator();
                             this.FetchConsignment(myResponse, false);
-                            this.EntityPM.IsDirty = false
                         });
                 }
             }); 
