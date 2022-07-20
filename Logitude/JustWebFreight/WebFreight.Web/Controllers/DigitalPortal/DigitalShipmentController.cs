@@ -226,7 +226,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 //{
                 //    entityLists = entityLists.Where(a => ShipmentIds.Contains(a.Id));
                 //}
-
                 // var MySql = ((System.Data.Objects.ObjectQuery)entityLists).ToTraceString();
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
