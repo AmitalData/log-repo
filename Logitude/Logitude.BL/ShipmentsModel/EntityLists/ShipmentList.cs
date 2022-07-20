@@ -291,6 +291,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipperReference1 { get; set; }
         public string ShipperReference2 { get; set; }
         public string ShipperReference3 { get; set; }
+        public string ShipperCountryCode { get; set; }
+        public string ConsigneeCountryCode { get; set; }
 
         public string Consignee { get; set; }
         public string ConsigneeReference1 { get; set; }

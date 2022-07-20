@@ -2583,7 +2583,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
         private void SetConsigneeNotImporterDetails(QuotePM entityPM, Quote entityPOCO, AddressRepository addressRepository)
         {
-            if (entityPM.ConsigneeNotImporterId == null)
+            if (entityPOCO.ConsigneeNotImporterId == null)
             {
                 return;
             }
