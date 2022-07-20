@@ -219,13 +219,13 @@ export class NewChargifyAWBStockComponent extends BaseComponent {
         var expirationDate = DateTimeToDatePipe.Pipe(todayDate);
         var title = "";
         if (this.IsChargifyAccount && this.IsINTTRAPackage) {
-            title = this.IsAWBStockChecked ? " AWBs" : " INTTRA";
+            title = this.IsAWBStockChecked ? " AWBs" : " INTTRA packages";
         }
         else {
-            title = this.IsChargifyAccount ? " AWBs" : " INTTRA";
+            title = this.IsChargifyAccount ? " AWBs" : " INTTRA packages";
         }
 
-        var warninig = "You have selected " + this.totalStocks +  title + " for a total price of $" + this.totalPrice + ". The expiration date of your stock is " + expirationDate + " . Please confirm your selection by clicking on Confirm button.";
+        var warninig = "You have selected " + this.totalStocks +  title + " for a total price of $" + this.totalPrice + ". The expiration date of your stock is " + expirationDate + ". Please confirm your selection by clicking on Confirm button.";
         this.ValidationWarningsMessage = warninig;
     }
 
