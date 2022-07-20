@@ -242,10 +242,10 @@
                                             </div>
                                             <div id="noteDetilsid" class="noteDetils" style="display:none" >
                                                 <div style="line-height: 25px;color: #1B90CB;font-size: 14px; padding: 6px 0px 0px 6px;">Notes</div>
-                                                <div style="min-height:150px;    padding: 0px 7px;">
-                                                    <div data-bind="text: NotesSharedWithCustomer">
+                                                <div style="padding: 0px 1px;">
+                                                    <pre style="background:none !important;min-height:150px;" data-bind="text: NotesSharedWithCustomer">
                                                     
-                                                </div>
+                                                </pre>
                                                 </div>
                                                 
                                             </div>
