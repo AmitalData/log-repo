@@ -288,6 +288,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     AdditionalReference2 = container.AdditionalReference2,
                     AdditionalReference3 = container.AdditionalReference3,
                     AdditionalReference4 = container.AdditionalReference4,
+                    HasTransshipments = container.HasTransshipments,
                 };
 
                 if (container.EntityStatus != null)
@@ -849,6 +850,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    AdditionalReference2 = container.AdditionalReference2,
                                                    AdditionalReference3 = container.AdditionalReference3,
                                                    AdditionalReference4 = container.AdditionalReference4,
+                                                   HasTransshipments = container.HasTransshipments,
                                                };
             return result;
         }

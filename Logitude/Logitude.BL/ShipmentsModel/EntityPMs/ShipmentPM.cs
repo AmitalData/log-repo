@@ -2979,6 +2979,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string InlandDomesticFromAddress2 { get; set; }
         public string InlandDomesticFromPhone { get; set; }
         public string InlandDomesticFromFax { get; set; }
+        public int? NumberOfTransshipments { get; set; }
+
     }
 
     public class TransshipmentLeg

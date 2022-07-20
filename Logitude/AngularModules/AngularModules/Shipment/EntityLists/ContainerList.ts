@@ -72,7 +72,7 @@ export class ContainerList {
 		ActualPOLLoaded: Date;
 		EstimatedPOLVesselDeparture: Date;
 		ActualPOLVesselDeparture: Date;
-		TransshipmentCount: string;
+		TransshipmentCount: number;
 		EstimatedTrans1VesselArrival: Date;
 		ActualTransshipment1VesselArrival: Date;
 		EstimatedTransshipment1Discharge: Date;
@@ -268,5 +268,6 @@ export class ContainerList {
 		AdditionalReference2: string;
 		AdditionalReference3: string;
 		AdditionalReference4: string;
+		HasTransshipments: boolean;
 	
 }

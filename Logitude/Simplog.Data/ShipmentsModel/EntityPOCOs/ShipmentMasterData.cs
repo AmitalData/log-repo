@@ -284,5 +284,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         [ForeignKey("InlandDomesticFromStateId")]
         public virtual State InlandDomesticFromState { get; set; }
+        public int? NumberOfTransshipments { get; set; }
     }
 }

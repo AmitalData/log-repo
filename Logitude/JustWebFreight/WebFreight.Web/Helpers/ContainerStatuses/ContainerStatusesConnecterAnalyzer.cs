@@ -1403,7 +1403,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.Leg5Voyage = leg5_voyage;
             containerUpdatedFields.CustomsReleaseState = customs_release_state;
             containerUpdatedFields.CarrierReleaseState = carrier_release_state;
-            containerUpdatedFields.TransshipmentCount = ts_count;
+            //containerUpdatedFields.TransshipmentCount = ts_count;
 
             containerUpdatedFields.MainCarriageETD = this.ComputeMainCarriageETD();
             containerUpdatedFields.MainCarriageETA = this.ComputeMainCarriageETA();
@@ -2743,7 +2743,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? ActualPOLLoaded { get; set; }
         public DateTime? EstimatedPOLVesselDeparture { get; set; }
         public DateTime? ActualPOLVesselDeparture { get; set; }
-        public string TransshipmentCount { get; set; }
+        public int? TransshipmentCount { get; set; }
         public string Transshipment1Location { get; set; }
         public DateTime? EstimatedTrans1VesselArrival { get; set; }
         public DateTime? ActualTransshipment1VesselArrival { get; set; }

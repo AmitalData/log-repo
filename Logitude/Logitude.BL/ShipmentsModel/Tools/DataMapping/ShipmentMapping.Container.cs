@@ -179,6 +179,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.AdditionalReference2 = containerPM.AdditionalReference2;
             container.AdditionalReference3 = containerPM.AdditionalReference3;
             container.AdditionalReference4 = containerPM.AdditionalReference4;
+            container.HasTransshipments = containerPM.HasTransshipments;
         }
         private static string SetUpdatedByPartner(ContainerPM entityPM)
         {
