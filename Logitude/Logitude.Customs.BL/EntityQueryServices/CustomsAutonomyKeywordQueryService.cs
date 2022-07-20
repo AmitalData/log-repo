@@ -14,9 +14,9 @@ using Logitude.Customs.BL.EntityDataMappings;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data;
-using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.CloseTables;
 using System.Text.RegularExpressions;
+using Logitude.BL.Security;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -30,56 +30,42 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public bool CheckIfsAutonomy(string city, string phone , string palestinianPrefix, string address, int tenant)
+        public bool CheckIfsAutonomy(string city, string phone, string palestinianPrefix, string importerAddress, int tenant)
         {
-
             CustomsAutonomyKeywordDetails customsAutonomyKeywordDetails = new CustomsAutonomyKeywordDetails();
             var customsAutonomyKeywords = customsAutonomyKeywordDetails.GetAllCustomsAutonomyKeywords();
 
             if (CheckIfsAutonomyByType(customsAutonomyKeywords[0].Code, city, tenant)) return true;
             if (CheckIfsAutonomyByType(customsAutonomyKeywords[1].Code, phone, tenant)) return true;
             if (CheckIfsAutonomyByType(customsAutonomyKeywords[2].Code, palestinianPrefix, tenant)) return true;
-            if (CheckIfsAutonomyByType(customsAutonomyKeywords[3].Code, address, tenant)) return true;
+
+            if (SecurityUtility.CheckFeature("Customs.CourierMaster", "PendingByAddress", tenant)
+                && CheckIfsAutonomyByAddress(customsAutonomyKeywords[0].Code, importerAddress, tenant)) return true;
 
             return false;
-
-
-
         }
 
         public bool CheckIfsAutonomyByType(string type ,string  valueToSearch , int tenant)
         {
-            if (String.IsNullOrWhiteSpace(valueToSearch)) return false;
+            if (string.IsNullOrWhiteSpace(valueToSearch)) return false;
 
-            valueToSearch = valueToSearch.TrimEnd();
-            valueToSearch = valueToSearch.TrimStart();
-            valueToSearch = valueToSearch.ToLower();
+            valueToSearch = CleanString(valueToSearch);
+            List<string> myCustomsAutonomyKeyword = GetCustomsAutonomyKeyword(type, tenant);
 
-
-            var myCustomsAutonomyKeyword = this.repository.GetByKeywordtypeCodeStringList(type, tenant);
-            myCustomsAutonomyKeyword = myCustomsAutonomyKeyword.ConvertAll(d => d.ToLower());
-
-
-            if (myCustomsAutonomyKeyword == null ) return false;
             //string[] list = myCustomsAutonomyKeyword.KeywordsList.Split(',');
 
             //for (int i = 0; i < list.Count(); i++)
             //{
             //    list[i]= list[i].TrimEnd();
             //    list[i] = list[i].TrimStart();
-            
+
             //}
-             
+
             if (myCustomsAutonomyKeyword != null && myCustomsAutonomyKeyword.Count() > 0)
             {
                 if (type == "3" || type == "2")
                 {
                     if (myCustomsAutonomyKeyword.FirstOrDefault(x => valueToSearch.StartsWith(x)) != null)
-                        return true;
-                }
-                else if(type == "4")
-                {
-                    if (myCustomsAutonomyKeyword.FirstOrDefault(x => valueToSearch.Contains(x)) != null)
                         return true;
                 }
                 else
@@ -93,5 +79,31 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
+        public bool CheckIfsAutonomyByAddress(string type, string valueToSearch, int tenant)
+        {
+            if (string.IsNullOrWhiteSpace(valueToSearch)) return false;
+
+            valueToSearch = CleanString(valueToSearch);
+            List<string> myCustomsAutonomyKeyword = GetCustomsAutonomyKeyword(type, tenant);
+
+            return myCustomsAutonomyKeyword != null
+                && myCustomsAutonomyKeyword.Count() > 0
+                && myCustomsAutonomyKeyword.FirstOrDefault(x => valueToSearch.Contains(x)) != null;
+        }
+
+        private List<string> GetCustomsAutonomyKeyword(string type, int tenant)
+        {
+            var myCustomsAutonomyKeyword = this.repository.GetByKeywordtypeCodeStringList(type, tenant);
+            myCustomsAutonomyKeyword = myCustomsAutonomyKeyword.ConvertAll(d => d.ToLower());
+            return myCustomsAutonomyKeyword;
+        }
+
+        private static string CleanString(string valueToSearch)
+        {
+            valueToSearch = valueToSearch.TrimEnd();
+            valueToSearch = valueToSearch.TrimStart();
+            valueToSearch = valueToSearch.ToLower();
+            return valueToSearch;
+        }
     }
 }
