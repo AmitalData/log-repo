@@ -32,6 +32,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsSimulatorVisible: boolean = false; 
     public IsVisionRequestStatus: boolean = false;
+    public IsSharedLogisticsActivated: boolean = false;
 
     ShareDocumentsViaEmailDocumentTypeCode = "SDVE"; 
     public documentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
@@ -60,6 +61,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator") && this.EntityPM.ShipmentTypeId == "FCLD";
 
         }
+        this.IsSharedLogisticsActivated = SessionLocator.TenantPM.IsSharedLogisticsActivated;
     }
 
     private SaveCompletedEvent: any = null;
@@ -561,7 +563,12 @@ export class ShipmentHelperComponent implements OnDestroy {
             ServiceLocator.SendTotangoUserActivity("Shipment", "Notes update");
         }
     }
-
+    get NotesSharedWithCustomer() { return this.EntityPM.NotesSharedWithCustomer; }
+    set NotesSharedWithCustomer(value: string) {
+        if (this.EntityPM.NotesSharedWithCustomer != value) {
+            this.EntityPM.NotesSharedWithCustomer = value;
+        }
+    }
 
     ShareDocumentsViaEmailClicked() {
         this.ShareDocumentsViaEmailInSendControl = true;

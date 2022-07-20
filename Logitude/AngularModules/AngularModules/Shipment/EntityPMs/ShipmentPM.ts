@@ -466,6 +466,10 @@ export class ShipmentPM {
     private notes: string;
     public get Notes() { return this.notes; }
     public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
+      
+    private notesSharedWithCustomer: string;
+    public get NotesSharedWithCustomer() { return this.notesSharedWithCustomer; }
+    public set NotesSharedWithCustomer(newValue: string) { if (this.notesSharedWithCustomer != newValue) { this.notesSharedWithCustomer = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
     private descriptionOfGoods: string;

@@ -778,6 +778,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string OnForwardingVesselName { get; set; }
 
         public string ShippingAgent { get; set; }
+        public string NotesSharedWithCustomer { get; set; }
 
         public string PrivateLabelAgentName { get; set; }
         public string PartialStatusAmount { get; set; }

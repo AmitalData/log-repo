@@ -1487,6 +1487,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.GrossWeight = shipment.GrossWeight;
             shipmentPM.ChargeableWeight = shipment.ChargeableWeight;
             shipmentPM.Notes = shipment.Notes;
+            shipmentPM.NotesSharedWithCustomer = shipment.NotesSharedWithCustomer;
             shipmentPM.CreateDateTime = shipment.CreateDateTime;
             shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
             shipmentPM.OperationalClosedByUserId = shipment.OperationalClosedByUserId;
@@ -4806,6 +4807,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         NextLegCode = s.NextLegCode,
                                                         NextLegName = s.NextLeg != null ? s.NextLeg.Name : null,
                                                         Notes = s.Notes,
+                                                        NotesSharedWithCustomer = s.NotesSharedWithCustomer,
                                                         Notify1AddressId = s.Notify1AddressId,
                                                         Notify1ContactId = s.Notify1ContactId,
                                                         Notify1Id = s.Notify1Id,
@@ -5526,6 +5528,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         MAWBOBLDate = m.MAWBOBLDate,
 
                                                         Notes = s.Notes,
+                                                        NotesSharedWithCustomer = s.NotesSharedWithCustomer,
                                                         Notify1AddressId = s.Notify1AddressId,
                                                         Notify1ContactId = s.Notify1ContactId,
                                                         Notify1Id = s.Notify1Id,

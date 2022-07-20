@@ -346,6 +346,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.Field70 = entityPM.Field70 != null ? entityPM.Field70.Value : null;
             entityPoco.SpecialServicesTypeId = entityPM.SpecialServicesTypeId;
             entityPoco.Notes = entityPM.Notes;
+            entityPoco.NotesSharedWithCustomer = entityPM.NotesSharedWithCustomer;
             entityPoco.House = entityPM.House;
             entityPoco.HAWBDate = entityPM.HAWBDate;
             entityPoco.MainHarmonize = entityPM.MainHarmonize;

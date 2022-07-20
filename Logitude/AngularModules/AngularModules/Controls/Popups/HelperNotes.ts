@@ -82,6 +82,12 @@ export class HelperNotes implements OnInit, OnDestroy {
                 break;
             }
 
+            case "R": {
+                file = AppTool.IsNullOrEmpty(this.Text) ? "Rosie.png" : "Or.png";
+                this.IconOpacity = 1;
+                break;
+            }
+
             default: {
                 file = AppTool.IsNullOrEmpty(this.Text) ? "Gray.png" : "Orange.png";
                 this.IconOpacity = 1;
