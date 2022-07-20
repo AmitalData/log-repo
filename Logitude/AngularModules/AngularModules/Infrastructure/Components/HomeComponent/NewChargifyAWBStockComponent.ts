@@ -275,10 +275,10 @@ export class NewChargifyAWBStockComponent extends BaseComponent {
         var confirmWindow = new ConfirmWindow();
         var title = "";
         if (this.IsChargifyAccount && this.IsINTTRAPackage) {
-            title = this.IsAWBStockChecked ? "Are you sure you want to purchase " + this.totalStocks + " AWBs stock" : "Are you sure you want to buy " + this.totalStocks +" INTTRA messages stock?";
+            title = this.IsAWBStockChecked ? "Are you sure you want to purchase " + this.totalStocks + " AWBs stock?" : "Are you sure you want to buy " + this.totalStocks +" INTTRA messages stock?";
         }
         else {
-            title = this.IsChargifyAccount ? "Are you sure you want to purchase " + this.totalStocks + " AWBs stock" : "Are you sure you want to buy " + this.totalStocks +" INTTRA messages stock?";
+            title = this.IsChargifyAccount ? "Are you sure you want to purchase " + this.totalStocks + " AWBs stock?" : "Are you sure you want to buy " + this.totalStocks +" INTTRA messages stock?";
         }
         confirmWindow.Show(title);
         confirmWindow.WindowClosed.subscribe((event: any) => {

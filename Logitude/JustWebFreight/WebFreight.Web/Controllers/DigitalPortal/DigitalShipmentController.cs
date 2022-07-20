@@ -219,7 +219,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 ShipmentQuery myShipmentQuery = new ShipmentQuery(shipmentRepository);
                 var sss = IQueryableExtensions.ToTraceString(shipments);
-                var entityLists = myShipmentQuery.GetIQueryableShipmentListDigitalPortal(shipments, tenant);
+                var entityLists = myShipmentQuery.GetIQueryableShipmentList(shipments, tenant);
 
                 entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);
                 //if (ShipmentIds != null && ShipmentIds.Count > 0)
