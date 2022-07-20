@@ -150,6 +150,8 @@ export class ScreenLayoutComponent extends BaseComponent {
                 item.ScreenPM = screen;
                 item.Name = name;
                 item.Type = screen.Type;
+                item.Inactive = screen.Inactive;
+
                 this.TableScreensCollection.push(item);
             });
 
@@ -549,6 +551,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         };
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditScreenComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if (!$event) return;
             this.GetScreensFromDB();
         });
     }
@@ -647,7 +650,7 @@ export class ScreenItem extends BaseComponent {
     constructor() { super(); }
     public Name: string;
     public Type: string;
-
+    public Inactive: boolean;
     public ScreenPM: ScreenPM;
 
 }

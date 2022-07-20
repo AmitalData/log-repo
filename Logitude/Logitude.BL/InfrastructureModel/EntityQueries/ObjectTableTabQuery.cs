@@ -12,6 +12,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
     public class ObjectTableTabQuery
     {
         ObjectTableTabRepository repository;
+        private int tenantZero = 0;
         public ObjectTableTabQuery()
         {
             repository = new ObjectTableTabRepository(); 
@@ -30,8 +31,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public List<ObjectTableTabPM> GetObjectTableTabPMsByTenant(int tenant)
         {
             List<ObjectTableTabPM> tenantZeroTabs = GetTenantZeroTabs();
-            GetEntityChangesFromModification(tenant, tenantZeroTabs);
+            if (tenant == tenantZero) return tenantZeroTabs;
 
+            GetEntityChangesFromModification(tenant, tenantZeroTabs);
             var tenantTabs = GetTenantTabs(tenant);
             
 
