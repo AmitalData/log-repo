@@ -18,7 +18,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
             PagosPago pagoItem = new PagosPago
             {
-                Monto = GetAmountInPaymentCurrency(arPaymentPM),
                 MonedaP = paymentCurrency.Code,
                 FormaDePagoP = arPaymentPM.SATPaymentMethodCode,
                 FechaPago = ComplementoPagosPagoFechaPago.Get(arPaymentPM),
@@ -36,14 +35,21 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
             };
 
+            pagoItem.Monto = GetMonto(pagoItem, arPaymentPM);
             pagoItem.ImpuestosP = ComplementoPagosPagoImpuestosPs.Get(pagoItem).ToArray();
 
             return pagoItem;
         }
 
-        private static decimal GetAmountInPaymentCurrency(ARPaymentPM arPaymentPM)
+        private static decimal GetMonto(PagosPago pagoItem, ARPaymentPM arPaymentPM)
         {
-            return SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(arPaymentPM.AmountInPaymentCurrency != null ? (decimal)arPaymentPM.AmountInPaymentCurrency.Value : 0);
+            decimal computedTotalAmountInPaymentCurrency = 0;
+            pagoItem.DoctoRelacionado.ToList().ForEach(docto => {
+                computedTotalAmountInPaymentCurrency += docto.ImpPagado / docto.EquivalenciaDR;
+            });
+            decimal totalAmountInPaymentCurrency = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(arPaymentPM.AmountInPaymentCurrency != null ? (decimal)arPaymentPM.AmountInPaymentCurrency.Value : 0);
+            computedTotalAmountInPaymentCurrency = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(computedTotalAmountInPaymentCurrency);
+            return computedTotalAmountInPaymentCurrency > totalAmountInPaymentCurrency ? computedTotalAmountInPaymentCurrency : totalAmountInPaymentCurrency;
         }
 
         private static bool GetPagosPagoTipoCadPagoSpecified(ARPaymentPM arPaymentPM)
