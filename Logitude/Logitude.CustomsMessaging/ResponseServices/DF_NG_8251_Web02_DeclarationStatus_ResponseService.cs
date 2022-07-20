@@ -479,7 +479,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 ICommonDataContext commondbContext = CommonDataContext.GetContext(requestParams.Tenant);
                                 UserRepository userRepository = new UserRepository(commondbContext);
                                 var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
-                                if (setting.IsConnectedToUniFreight)
+                                if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
                                 {
                                     if (declarationPM.Direction == "E")
                                     {
