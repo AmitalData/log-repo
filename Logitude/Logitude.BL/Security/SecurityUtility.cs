@@ -56,7 +56,7 @@ namespace Logitude.BL.Security
             throw new AutenticationException("Sorry! this user is not authorized!");
         }
 
-       static   ContactInformation contactinfo;
+        static ContactInformation contactinfo;
         public static void CheckContactFeature(string objectTableName, string featureCode, int tenant, string overrideEmail = null)
         {
             if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
@@ -77,7 +77,7 @@ namespace Logitude.BL.Security
             if (!string.IsNullOrEmpty(overrideEmail))
             {
                 string email = overrideEmail;//HttpContext.Current.User.Identity.Name;
-                 contactinfo = GetContactInfo(email, tenant);
+                contactinfo = GetContactInfo(email, tenant);
 
                 if (contactinfo != null)
                 {
@@ -159,7 +159,7 @@ namespace Logitude.BL.Security
         {
             bool exists = false;
 
-   
+
 
             string email = null;
             if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
@@ -179,28 +179,28 @@ namespace Logitude.BL.Security
             {
                 email = AuthenticationUtil.ResolveLoggingUserId(tenant);
             }
-              contactinfo = GetContactInfo(email, tenant);
+            contactinfo = GetContactInfo(email, tenant);
 
             if (contactinfo != null)
             {
-                
-                    ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
-                    if (objectTable != null)
+
+                ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
+                if (objectTable != null)
+                {
+                    foreach (string myRoleId in contactinfo.RolesIds)
                     {
-                        foreach (string myRoleId in contactinfo.RolesIds)
+                        Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant);
+                        if (features.Keys.Contains(featureCode + objectTable.Id))
                         {
-                            Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant);
-                            if (features.Keys.Contains(featureCode + objectTable.Id))
+                            FeaturePM feature = features[featureCode + objectTable.Id];
+                            if (feature != null)
                             {
-                                FeaturePM feature = features[featureCode + objectTable.Id];
-                                if (feature != null)
-                                {
-                                    exists = true;
-                                }
+                                exists = true;
                             }
                         }
                     }
-                
+                }
+
             }
             //}
 
@@ -218,9 +218,9 @@ namespace Logitude.BL.Security
             int loggedTenant = tenant;
 
             ContactInformation myContactInfo = null;
-           
+
             string key = email + "_" + tenant + "_info";
-          
+
 
             //if (CacheManager.CacheWrapper.Get(key) != null && !forceAPIFeaturesCheck)
             //{
@@ -229,133 +229,133 @@ namespace Logitude.BL.Security
             //else
             //{
 
-                if (tenant == 0)
+            if (tenant == 0)
+            {
+                List<string> allPackages = GetAllPackagesCodes(email, loggedTenant, false);
+
+                myContactInfo = new ContactInformation()
                 {
-                    List<string> allPackages = GetAllPackagesCodes(email, loggedTenant, false);
+                    ContactEmail = email,
+                    IsLogitudeAdmin = true,
+                    PackagesCodes = allPackages,
+                };
 
-                    myContactInfo = new ContactInformation()
+                //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+            }
+
+            else
+            {
+                string token = null;
+                ICommonDataContext context = CommonDataContext.GetContext(0);
+                AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
+                AuthenticationToken authToken = null;
+                if (HttpContext.Current != null)
+                {
+                    token = HttpContext.Current.Request.Headers["Token"];
+                }
+                if (!string.IsNullOrEmpty(token))
+                {
+                    authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                }
+
+                if (authToken == null || !authToken.APIToken || forceAPIFeaturesCheck)
+                {
+                    ContactRepository contactrep = new ContactRepository(tenant);
+                    Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+
+                    if (contact != null)
                     {
-                        ContactEmail = email,
-                        IsLogitudeAdmin = true,
-                        PackagesCodes = allPackages,
-                    };
+                        bool isCustomerCare = false;
 
-                    //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        if (contact.Tenant == 0 && tenant != 0)
+                        {
+                            UserRepository userRep = new UserRepository(0);
+                            User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
+                            if (zeroUser != null)
+                            {
+                                isCustomerCare = true;
+
+                                if (zeroUser.IsDistributor)
+                                {
+                                    using (TransactionScope scope2 = TransactionFactory.GetNewTransaction())
+                                    {
+                                        TenantManagementRepository tenantManagementRep = new TenantManagementRepository();
+                                        bool isDistributorToCurrentTenant = tenantManagementRep.CheckDistributor(zeroUser.DistributorCode, tenant);
+                                        if (!isDistributorToCurrentTenant)
+                                        {
+                                            return null;
+                                        }
+
+                                        scope2.Complete();
+                                    }
+                                }
+                            }
+                        }
+
+                        bool isLogitudeAdmin = false;
+                        if (tenant != 0)
+                        {
+                            UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
+                            User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
+                            if (user != null)
+                            {
+                                tenant = LogitudeSettings.LogitudeCRMTenantNumber;
+                                isLogitudeAdmin = true;
+                            }
+                        }
+
+                        RoleQuery roleQuery = new RoleQuery(tenant);
+                        List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.Tenant).ToList();
+
+                        List<string> allRolesIds = allRoles.Select(s => s.Id).ToList();
+                        List<RolePM> allCustomRoles = allRoles.Where(d => d.IsCustomRole == true).ToList();
+
+                        foreach (RolePM item in allCustomRoles)
+                        {
+                            if (allRolesIds.Contains(item.ParentRoleId))
+                            {
+                                allRolesIds.Remove(item.ParentRoleId);
+                            }
+                        }
+
+                        List<string> allPackages = GetAllPackagesCodes(email, loggedTenant, isCustomerCare);
+
+                        myContactInfo = new ContactInformation()
+                        {
+                            Tenant = contact.Tenant,
+                            ContactEmail = contact.Email,
+                            IsLogitudeAdmin = isLogitudeAdmin,
+                            RolesIds = allRolesIds,
+                            PackagesCodes = allPackages,
+                            DontShowLocalLabels = contact.DontShowLocalLabels
+                        };
+                        //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
+
+
+                        //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    }
                 }
 
                 else
                 {
-                    string token = null;
-                    ICommonDataContext context = CommonDataContext.GetContext(0);
-                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
-                    AuthenticationToken authToken = null;
-                    if (HttpContext.Current != null)
+                    if (authToken != null)
                     {
-                        token = HttpContext.Current.Request.Headers["Token"];
-                    }
-                    if (!string.IsNullOrEmpty(token))
-                    {
-                        authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    }
-
-                    if (authToken == null || !authToken.APIToken || forceAPIFeaturesCheck)
-                    {
-                        ContactRepository contactrep = new ContactRepository(tenant);
-                        Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
-
-                        if (contact != null)
+                        myContactInfo = new ContactInformation()
                         {
-                            bool isCustomerCare = false;
+                            Tenant = authToken.Tenant,
+                            ContactEmail = authToken.Email,
+                            IsApi = authToken.APIToken,
 
-                            if (contact.Tenant == 0 && tenant != 0)
-                            {
-                                UserRepository userRep = new UserRepository(0);
-                                User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
-                                if (zeroUser != null)
-                                {
-                                    isCustomerCare = true;
+                        };
 
-                                    if (zeroUser.IsDistributor)
-                                    {
-                                        using (TransactionScope scope2 = TransactionFactory.GetNewTransaction())
-                                        {
-                                            TenantManagementRepository tenantManagementRep = new TenantManagementRepository();
-                                            bool isDistributorToCurrentTenant = tenantManagementRep.CheckDistributor(zeroUser.DistributorCode, tenant);
-                                            if (!isDistributorToCurrentTenant)
-                                            {
-                                                return null;
-                                            }
-
-                                            scope2.Complete();
-                                        }
-                                    }
-                                }
-                            }
-
-                            bool isLogitudeAdmin = false;
-                            if (tenant != 0)
-                            {
-                                UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
-                                User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
-                                if (user != null)
-                                {
-                                    tenant = LogitudeSettings.LogitudeCRMTenantNumber;
-                                    isLogitudeAdmin = true;
-                                }
-                            }
-
-                            RoleQuery roleQuery = new RoleQuery(tenant);
-                            List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.Tenant).ToList();
-
-                            List<string> allRolesIds = allRoles.Select(s => s.Id).ToList();
-                            List<RolePM> allCustomRoles = allRoles.Where(d => d.IsCustomRole == true).ToList();
-
-                            foreach (RolePM item in allCustomRoles)
-                            {
-                                if (allRolesIds.Contains(item.ParentRoleId))
-                                {
-                                    allRolesIds.Remove(item.ParentRoleId);
-                                }
-                            }
-
-                            List<string> allPackages = GetAllPackagesCodes(email, loggedTenant, isCustomerCare);
-
-                            myContactInfo = new ContactInformation()
-                            {
-                                Tenant = contact.Tenant,
-                                ContactEmail = contact.Email,
-                                IsLogitudeAdmin = isLogitudeAdmin,
-                                RolesIds = allRolesIds,
-                                PackagesCodes = allPackages,
-                                DontShowLocalLabels = contact.DontShowLocalLabels
-                            };
-                            //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
+                        //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
 
 
-                            //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                        }
+                        //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     }
-
-                    else
-                    {
-                        if (authToken != null)
-                        {
-                            myContactInfo = new ContactInformation()
-                            {
-                                Tenant = authToken.Tenant,
-                                ContactEmail = authToken.Email,
-                                IsApi = authToken.APIToken,
-
-                            };
-
-                            //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
-
-
-                            //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                        }
-                    }
-
                 }
+
+            }
 
             //}
             return myContactInfo;
@@ -529,7 +529,7 @@ namespace Logitude.BL.Security
         }
 
 
-        public static string  GetAuthenticatedUser(int tenant)
+        public static string GetAuthenticatedUser(int tenant)
         {
             string email = "";
             if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
@@ -566,7 +566,7 @@ namespace Logitude.BL.Security
 
             throw new AutenticationException("Sorry! this user is not authorized!");
         }
- 
+
 
         public static bool CheckSharedContactAuthentication(int tenant, string partnerId)
         {
@@ -606,6 +606,39 @@ namespace Logitude.BL.Security
         public static void AuthenticationOnTenant(int tenant)
         {
             throw new NotImplementedException();
+        }
+
+        public static bool CheckPackageFeature(string objectTableName, string featureCode, int tenant)
+        {
+            bool exists = false;
+
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            PackagesCodesManager iManager = new PackagesCodesManager(tenant, null, false);
+            List<string> allowedPackages = iManager.BasePackagesCodes;
+
+            ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
+
+            if (objectTable != null)
+            {
+                FeatureQuery featuresQuery = new FeatureQuery(tenant);
+                FeaturePM myFeature = featuresQuery.GetSingleFeaturePMByCodeAndObjectTable(featureCode, objectTable.Id, tenant);
+
+                if (myFeature != null)
+                {
+                    List<PackageFeature> packageFeatures = (from a in context.PackageFeatures
+                                                            where allowedPackages.Contains(a.PackageCode)
+                                                            && (a.Tenant == tenant || a.Tenant == 0)
+                                                            && a.FeatureUniqeCode == myFeature.FeatureUniqeCode
+                                                            select a).ToList();
+
+                    if (packageFeatures.Count > 0)
+                    {
+                        exists = true;
+                    }
+                }
+            }
+
+            return exists;
         }
     }
 }

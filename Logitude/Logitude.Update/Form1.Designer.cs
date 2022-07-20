@@ -669,9 +669,6 @@
             this.conStrLabel,
             this.toolStripProgressBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 829);
-            
-            this.statusStrip1.Location = new System.Drawing.Point(0, 672);
-
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1024, 22);
             this.statusStrip1.TabIndex = 14;
@@ -2730,7 +2727,35 @@
             this.PanelShipmentResults.Size = new System.Drawing.Size(460, 126);
             this.PanelShipmentResults.TabIndex = 8;
             this.PanelShipmentResults.Visible = false;
-            this.PanelShipmentResults.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            this.PanelShipmentResults.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint); 
+            // CraeteContainerProgressBar
+            // 
+            this.CraeteContainerProgressBar.Location = new System.Drawing.Point(11, 105);
+            this.CraeteContainerProgressBar.Margin = new System.Windows.Forms.Padding(2);
+            this.CraeteContainerProgressBar.Name = "CraeteContainerProgressBar";
+            this.CraeteContainerProgressBar.Size = new System.Drawing.Size(447, 19);
+            this.CraeteContainerProgressBar.TabIndex = 8;
+            // 
+            // NumberOfShipmentsFail
+            // 
+            this.NumberOfShipmentsFail.AutoSize = true;
+            this.NumberOfShipmentsFail.Location = new System.Drawing.Point(113, 54);
+            this.NumberOfShipmentsFail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.NumberOfShipmentsFail.Name = "NumberOfShipmentsFail";
+            this.NumberOfShipmentsFail.Size = new System.Drawing.Size(13, 13);
+            this.NumberOfShipmentsFail.TabIndex = 7;
+            this.NumberOfShipmentsFail.Text = "0";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(9, 54);
+            this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(81, 13);
+            this.label20.TabIndex = 6;
+            this.label20.Text = "Fail Shipments :";
+            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // CraeteContainerProgressBar
             // 
@@ -2923,6 +2948,24 @@
             this.StopCreateContainer.Text = "Stop";
             this.StopCreateContainer.UseVisualStyleBackColor = true;
             this.StopCreateContainer.Click += new System.EventHandler(this.StopCreateContainer_Click);
+            //
+            // OITimer
+            // 
+            this.OITimer.Enabled = true;
+            this.OITimer.Interval = 1000;
+            this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
+            //
+            // contextMenuStrip1
+            //
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // textBox4
+            //
+            this.textBox4.Location = new System.Drawing.Point(794, 266);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(137, 20);
+            this.textBox4.TabIndex = 114;
             // 
             // contextMenuStrip1
             //
@@ -2935,22 +2978,32 @@
             this.OITimer.Interval = 1000;
             this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
             // 
-            // textBox4
+            // textBox4           
             //             
             this.textBox4.Location = new System.Drawing.Point(794, 266);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(137, 20);
             this.textBox4.TabIndex = 114;
-            // 
-            // label22
-            // 
+            //
+             // label22
+            //
             this.label22.AutoSize = true;
             this.label22.Location = new System.Drawing.Point(746, 269);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(42, 13);
             this.label22.TabIndex = 115;
             this.label22.Text = "Output:";
-            // 
+            //
+            // OpenContainerLogFile
+            //            
+            this.OpenContainerLogFile.Location = new System.Drawing.Point(912, 499);
+            this.OpenContainerLogFile.Name = "OpenContainerLogFile";
+            this.OpenContainerLogFile.Size = new System.Drawing.Size(75, 23);
+            this.OpenContainerLogFile.TabIndex = 1;
+            this.OpenContainerLogFile.Text = "Open log";
+            this.OpenContainerLogFile.UseVisualStyleBackColor = true;
+            this.OpenContainerLogFile.Click += new System.EventHandler(this.OpenContainerLogFile_Click);
+            //
             // UpdateEntity            
             // 
             this.UpdateEntity.Location = new System.Drawing.Point(996, 157);
@@ -2967,6 +3020,15 @@
             this.CraeteContainerProgressBar.Name = "CraeteContainerProgressBar";
             this.CraeteContainerProgressBar.Size = new System.Drawing.Size(596, 23);
             this.CraeteContainerProgressBar.TabIndex = 8;
+            //
+            // label24
+            //
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(747, 321);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(41, 13);
+            this.label24.TabIndex = 116;
+            this.label24.Text = "label24";
             // 
             // OpenContainerLogFile            
             // 
