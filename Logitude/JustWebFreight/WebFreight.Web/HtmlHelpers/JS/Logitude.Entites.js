@@ -122,6 +122,7 @@ var ShipmentListClass = function () {
     this.LastLogDateLong = "";
 
     this.DeliveryDate = "";
+    this.NotesSharedWithCustomer = "";
     this.DeliveryDateVisibility = "collapse";
     this.MyPartnerVisibility = "collapse";
 };
@@ -533,6 +534,8 @@ function BuildShipmentBackAreaViewModel(shipment, PathPrefix) {
         {
             ShipmentNumber: ko.observable(shipment.ShipmentNumber),
             DirectionSRC: ko.observable(""),
+            noteSRC: ko.observable(""),
+        NotesSharedWithCustomer: ko.observable(shipment.NotesSharedWithCustomer),
             TransportSRC: ko.observable(""),
         };
 
@@ -574,6 +577,10 @@ function BuildShipmentBackAreaViewModel(shipment, PathPrefix) {
             break;
         }
     }
+    if (shipment.NotesSharedWithCustomer && shipment.NotesSharedWithCustomer.length > 0)
+        viewModel.noteSRC = '../HtmlHelpers/Images/Notes/Or.png';
+    else
+        viewModel.noteSRC = '../HtmlHelpers/Images/Notes/Rosie.png';
 
     return viewModel;
 }
@@ -603,6 +610,7 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
         ToCountySRC: ko.observable(""),        
 
         DeliveryDate: ko.observable(""),
+        //NotesSharedWithCustomer = ko.observable(""),
     };
 
     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I") {

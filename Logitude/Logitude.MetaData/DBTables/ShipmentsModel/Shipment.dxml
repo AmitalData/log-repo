@@ -3698,6 +3698,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="NotesSharedWithCustomer"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

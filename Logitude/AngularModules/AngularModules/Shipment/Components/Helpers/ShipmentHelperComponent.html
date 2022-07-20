@@ -53,11 +53,13 @@
         <td style="padding-right: 5px;" *ngIf="IsVisionRequestStatus" >
             <button class="Button" (click)="VizionStatusClicked()">Vizion Container Statuses</button>
         </td>
-
+        <td *ngIf="IsSharedLogisticsActivated" style="padding-left: 5px; padding-right: 0px;">
+            <HelperNotes [IconCode]="'R'" [Title]="'Notes Shared with Customer'" [EntityTitle]="EntityTitle" [Text]="NotesSharedWithCustomer" (TextChanged)="NotesSharedWithCustomer = $event" [ShipmentPM]="EntityPM"></HelperNotes>
+        </td>
         <td style="padding-left: 10px; padding-right: 5px;">
             <HelperNotes [Title]="'Notes'" [EntityTitle]="EntityTitle" [Text]="Notes" (TextChanged)="Notes = $event" [ShipmentPM]="EntityPM"></HelperNotes>
         </td>
-
+        
         <td *ngIf="IsFollowupsVisible">
             <HelperFollowups [ShipmentPM]="EntityPM"></HelperFollowups>
         </td>
