@@ -75,7 +75,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? ActualPOLLoaded { get; set; }
         public DateTime? EstimatedPOLVesselDeparture { get; set; }
         public DateTime? ActualPOLVesselDeparture { get; set; }
-        public string TransshipmentCount { get; set; }
+        public int? TransshipmentCount { get; set; }
         public DateTime? EstimatedTrans1VesselArrival { get; set; }
         public DateTime? ActualTransshipment1VesselArrival { get; set; }
         public DateTime? EstimatedTransshipment1Discharge { get; set; }
@@ -274,5 +274,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string AdditionalReference2 { get; set; }
         public string AdditionalReference3 { get; set; }
         public string AdditionalReference4 { get; set; }
+        public bool HasTransshipments { get; set; }
     }
 }

@@ -391,8 +391,7 @@
   </Column>
   <Column
     Name="TransshipmentCount"
-    Type="varchar"
-    Size="10">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1570,6 +1569,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="HasTransshipments"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -1802,5 +1807,5 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
-   Columns="ShipmentPackagesId" />
+    Columns="ShipmentPackagesId" />
 </Table>

@@ -321,6 +321,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.DocumentsClosingDate = masterData.DocumentsClosingDate;
                 shipmentPM.FWBStatusCode = masterData.FWBStatusCode;
                 shipmentPM.FWBStatusDate = masterData.FWBStatusDate;
+                shipmentPM.NumberOfTransshipments = masterData.NumberOfTransshipments;
 
                 if (!string.IsNullOrEmpty(masterData.FWBStatusCode))
                 {
@@ -12901,7 +12902,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromFax = f.InlandDomesticFromFax,
                                InlandDomesticFromStateName = f.InlandDomesticFromStateName,
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
-
+                               NumberOfTransshipments = f.NumberOfTransshipments,
                            };
             return myResult;
         }
@@ -13348,6 +13349,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     InlandDomesticFromFax = f.InlandDomesticFromFax,
                     InlandDomesticFromStateName = f.InlandDomesticFromStateName,
                     InlandDomesticFromStateId = f.InlandDomesticFromStateId,
+                    NumberOfTransshipments = f.NumberOfTransshipments,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

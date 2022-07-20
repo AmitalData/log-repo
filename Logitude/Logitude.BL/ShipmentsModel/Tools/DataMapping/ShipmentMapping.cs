@@ -1799,6 +1799,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.OnCarriageAdditionalTransportModeCode = entityPM.OnCarriageAdditionalTransportModeCode;
                     entityMasterData.SplitOnCarriage = entityPM.SplitOnCarriage;
                     entityMasterData.CarrierServiceLineId = entityPM.CarrierServiceLineId;
+                    entityMasterData.NumberOfTransshipments = entityPM.NumberOfTransshipments;
 
                     if (entityPM.TransportModeId == "I")
                     {
@@ -1869,7 +1870,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityPM.OriginMainCarriageFromPortId = entityMasterData.MainCarriageFromPortId;
                     entityPM.OriginFinalDestinationPortId = entityMasterData.MainCarriageFinalDestinationPortId;
                     entityPM.OriginPreCarriageFromPortId = entityMasterData.PreCarriageFromPortId;
-                    entityPM.OriginOnCarriageToPortId = entityMasterData.OnCarriageToPortId;
+                    entityPM.OriginOnCarriageToPortId = entityMasterData.OnCarriageToPortId;                    
                 }
             }
         }

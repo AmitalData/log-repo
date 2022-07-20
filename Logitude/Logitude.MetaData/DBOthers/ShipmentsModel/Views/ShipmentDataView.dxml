@@ -17,6 +17,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
                          dbo.ShipmentMasterDatas.InlandDomesticToStateId,
                          InlandDomesticToState.EnglishName AS InlandDomesticToStateName,
                          dbo.ShipmentMasterDatas.InlandDomesticFromAddress1,
+                         dbo.ShipmentMasterDatas.NumberOfTransshipments,
                          dbo.ShipmentMasterDatas.InlandDomesticFromAddress2,
                          dbo.ShipmentMasterDatas.InlandDomesticFromPhone,
                          dbo.ShipmentMasterDatas.InlandDomesticFromFax,

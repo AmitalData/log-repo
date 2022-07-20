@@ -562,5 +562,6 @@ export class ShipmentList {
 		InlandDomesticFromStateId: string;
 		InlandDomesticFromStateName: string;
 		DigitalPortalSearchFields: string;
+		NumberOfTransshipments: number;
 	
 }

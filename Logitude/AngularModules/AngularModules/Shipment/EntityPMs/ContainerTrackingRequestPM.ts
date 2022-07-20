@@ -80,6 +80,11 @@ export class ContainerTrackingRequestPM {
     public set CarrierCode(newValue: string) { if (this.carrierCode != newValue) { this.carrierCode = newValue; this.MarkAsDirty("CarrierCode"); } }
        
 	 
+    private scacCode: string;
+    public get ScacCode() { return this.scacCode; }
+    public set ScacCode(newValue: string) { if (this.scacCode != newValue) { this.scacCode = newValue; this.MarkAsDirty("ScacCode"); } }
+       
+	 
     private status: string;
     public get Status() { return this.status; }
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
