@@ -94,6 +94,7 @@ namespace Logitude.Update.Sivug
                         FullClassification = item.FullClassification,
                         CustomsItemHierarchicLocationID = item.CustomsItemHierarchicLocationID,
                         ComputedCheckDigit = item.ComputedCheckDigit,
+                        CustomsBookTypeID = item.CustomsBookTypeID.Value,
                     };
                     if (item.CustomsItemCategoryID != null)
                     {
