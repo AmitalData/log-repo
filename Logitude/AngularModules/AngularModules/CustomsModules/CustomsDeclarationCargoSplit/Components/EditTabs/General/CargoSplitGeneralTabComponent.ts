@@ -578,6 +578,12 @@ export class CargoSplitGeneralTabComponent
         this.EntityPM.SecondCargoID = '';
         this.EntityPM.ThirdCargoID = '';
         this.EntityPM.RequestRemarks = '';
+        this.ImporterCode = '';
+        for (let i = this.Tabs.length - 1; i >= 0; i--) {
+            this.DeleteTabs(this.Tabs[i]);
+        }
+        this.AddTab(null);
+        this.ImporterCode = '';
         if (this.decCargoSplitCargoIdentifierModel != null) {
             this.decCargoSplitCargoIdentifierModel.CargoTypeCode = '';
             this.decCargoSplitCargoIdentifierModel.CargoIdentifierKey1 = '';
