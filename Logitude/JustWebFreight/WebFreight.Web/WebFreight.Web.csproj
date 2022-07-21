@@ -723,6 +723,12 @@
     <Content Include="HtmlHelpers\Images\Filter_Images\Drop.S.png" />
     <Content Include="HtmlHelpers\Images\Icons\CustomsImport.png" />
     <Content Include="HtmlHelpers\Images\Icons\Drop.png" />
+    <Content Include="HtmlHelpers\Images\Notes\Or.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HtmlHelpers\Images\Notes\Rosie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="js\jquery-3.5.1.min.js" />
     <Content Include="HtmlHelpers\JS\jquery-1.7.1.js" />
     <Content Include="HtmlHelpers\JS\LogitudeTools.js" />
