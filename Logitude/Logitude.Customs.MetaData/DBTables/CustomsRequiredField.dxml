@@ -51,6 +51,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="WarningExport"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"

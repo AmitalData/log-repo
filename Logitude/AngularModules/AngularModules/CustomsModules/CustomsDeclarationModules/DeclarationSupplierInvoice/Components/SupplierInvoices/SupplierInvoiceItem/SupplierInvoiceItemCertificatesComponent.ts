@@ -138,7 +138,13 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
 
     initConfirmationTypeFilter() {
         this.confirmationTypeFilter = new ApiQueryFilters();
-        this.confirmationTypeFilter.addAdditionalFilter("IsImport", false, null, null, "Equals", false, false, false, "Boolean");
+        var decPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+        if (decPM.direction == "E") {
+            this.confirmationTypeFilter.addAdditionalFilter("IsImport", false, null, null, "Equals", false, false, false, "Boolean");
+        }
+        else {
+            this.confirmationTypeFilter.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "Boolean");
+        }
     }
 
 

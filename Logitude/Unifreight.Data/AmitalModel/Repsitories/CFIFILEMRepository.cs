@@ -25,11 +25,18 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public int UpdateLOGITUDE_FILE(int tenant, long fileNo ,string myLOGITUDE_FILE)
         {
+
+
+        //https://www.devart.com/dotconnect/oracle/docs/Parameters.html
             var openReaderSingleResult = new OpenReaderSingleResult(this.currentContext);
             string UserId = openReaderSingleResult.GetSchemaUserId(tenant);
             var res1 = openReaderSingleResult.ExecuteReaderSingleResult<int>(
-                $"update  {UserId}.CFIFILEM set  LOGITUDE_FILE ='{myLOGITUDE_FILE}' where FILE_NO={fileNo}" 
-                ,
+                //$"update  {UserId}.CFIFILEM set  LOGITUDE_FILE ='{myLOGITUDE_FILE}' where FILE_NO={fileNo}"
+                $"update  {UserId}.CFIFILEM set  LOGITUDE_FILE =:p1 where FILE_NO=:p2",
+                 new List<Devart.Data.Oracle.OracleParameter>() { 
+                     new Devart.Data.Oracle.OracleParameter("p1", myLOGITUDE_FILE),  
+                     new Devart.Data.Oracle.OracleParameter("p2",fileNo)    
+                 }, //new List<object> {myLOGITUDE_FILE,fileNo },
                 (dataReader) =>
                 {
                     Int32? val = null;

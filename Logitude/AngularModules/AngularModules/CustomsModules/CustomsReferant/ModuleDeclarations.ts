@@ -4,6 +4,7 @@ import { AddExceptionReasonToUnifreightStatusComponent } from './Components/Refe
 import { ReferantWorkspaceComponent } from './Components/ReferantWorkspaces/ReferantWorkspaceComponent';
 import { DeclarationReferantDataFiltersMenuComponent } from './Components/FiltersMenu/DeclarationReferantDataFiltersMenuComponent';
 import { AddEditExceptionReasonComponent } from './Components/ReferantExceptionReason/AddEditExceptionReasonComponent';
+import { AddEditExternalFieldMappingComponent } from "./Components/ExternalFieldMapping/AddEditExternalFieldMappingComponent";
  
 export const Components =
     [
@@ -12,6 +13,7 @@ export const Components =
         AddEditExceptionReasonComponent,
         ReferantWorkspaceComponent,
         DeclarationReferantDataFiltersMenuComponent,
+        AddEditExternalFieldMappingComponent,
     ];
  
 export class ModuleDeclarations {
@@ -25,7 +27,8 @@ export class ModuleDeclarations {
             case "AddEditExceptionReasonComponent": { myResult = AddEditExceptionReasonComponent; break; }
             case "ReferantWorkspaceComponent": { myResult = ReferantWorkspaceComponent; break; }
             case "DeclarationReferantDataFiltersMenuComponent": { myResult = DeclarationReferantDataFiltersMenuComponent; break; }
- 
+            case "AddEditExternalFieldMappingComponent": { myResult = AddEditExternalFieldMappingComponent; break; }
+
         }
         return myResult;
     }

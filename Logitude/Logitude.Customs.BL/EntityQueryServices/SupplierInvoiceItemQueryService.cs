@@ -178,7 +178,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     }).ToList();
         }
 
-
+        public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemsByCounterKeysFullPM(string declarationId, List<string> counterKeysLineNumbers, int tenant)
+        {
+            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemsByCounterKeysAndLineNumbers(declarationId, counterKeysLineNumbers, tenant);
+            return supplierInvoiceItems.Select(rec => this.GetEntityPM(rec)).ToList();
+        }
         public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemsByParent(string declarationId, int counterKey, int parentLineNumber, int tenant)
         {
             List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemsByParent(declarationId, counterKey, parentLineNumber, tenant);

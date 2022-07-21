@@ -124,6 +124,18 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
 
                 var myClass = this.GetType().Name;
 
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+
+                if (CustomDbQueueService.SupportedRabbitMQList.Contains(SBQueueNames.AnalyzeQueueMQ.ToString()) && CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
+                {
+                    base.WorkerQueueType = WorkerQueueType.RabbitMQ;
+                }
+                else
+                {
+                    base.WorkerQueueType = WorkerQueueType.DB;
+                }
+
 
 
             }
@@ -153,15 +165,30 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
             try
             {
                 OnStart();
-                bool useMessageQueue = true;
-                if (useMessageQueue)
+
+                switch (base.WorkerQueueType)
                 {
-                    WorkUntil_MessageQueue_Empty_Db();
+
+                    case WorkerQueueType.RabbitMQ:
+                        WorkUntilPrcossesStop_RabbitMQ();
+                        break;
+                    case WorkerQueueType.DB:
+                    default:
+                        {
+                            bool useMessageQueue = true;
+                            if (useMessageQueue)
+                            {
+                                WorkUntil_MessageQueue_Empty_Db();
+                            }
+                            else
+                            {
+                                WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
+                            }
+
+                        }
+                        break;
                 }
-                else
-                {
-                    WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
-                }
+
                 
                 
 
@@ -177,6 +204,29 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
 
         }
 
+        private void WorkUntilPrcossesStop_RabbitMQ()
+        {
+            var myClass = this.GetType().Name;
+            var rabbitMQConsumerService = new RabbitMQConsumerService(myClass, SBQueueNames.AnalyzeQueueMQ.ToString());
+            rabbitMQConsumerService.WorkUntilPrcossesStop_RabbitMQ(
+                (CustomDBQueueMessage customDBQueueMessage) =>
+                {
+                    _ReceivedBrokeredMessage = customDBQueueMessage.MyQueueResponse;
+                    string analyzeQueueID = _ReceivedBrokeredMessage.MessageValues["AnalyzeQueueID"].ToString();
+                    string InterfaceCode = _ReceivedBrokeredMessage.MessageValues["InterfaceCode"].ToString();
+                    string InterfacePartner = _ReceivedBrokeredMessage.MessageValues["InterfacePartner"].ToString();
+
+                    int Tenant;
+                    int.TryParse(_ReceivedBrokeredMessage.MessageValues["Tenant"].ToString(), out Tenant);
+
+
+                    CheckParamsAndExec(analyzeQueueID, InterfaceCode, InterfacePartner, Tenant);
+
+                    return true;
+                },
+                base.LogDoneItemInMemory
+                );
+        }
         private void WorkUntil_MessageQueue_Empty_Db()
         {
             while (true)

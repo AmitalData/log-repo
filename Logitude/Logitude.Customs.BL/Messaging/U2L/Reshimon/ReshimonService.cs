@@ -71,6 +71,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
                     throw new BusinessErrorException("Id is " + this._LogitudeTsrufa.Id + " but not found");
                 }
             }
+            else
+            {
+                this._MyDeclarationPM = myQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
+            }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
             ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
             MyGenericResponseObj.Stage = "GetXml for file " + this._MyDeclarationPM.CustomFileNo;

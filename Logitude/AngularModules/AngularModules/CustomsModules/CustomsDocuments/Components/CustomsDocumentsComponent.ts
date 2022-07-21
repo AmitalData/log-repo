@@ -29,6 +29,10 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
+import { CustomsDocumentsTicketPMService } from 'Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
+import { CustomDocumentTypeMetaDataList } from 'Customs/EntityLists/CustomDocumentTypeMetaDataList';
 
 @Component({
 
@@ -55,6 +59,8 @@ export class CustomsDocumentsComponent
     public MetadataValues: CustomsDocumentMetaDataValuePM[];
     public CustomsDocumentsTickets: CustomsDocumentsTicketPM[];
     private customsDocumentsDataProvider: CustomsDocumentsDataProvider;
+    private customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
+    private customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
     public BuildHeader: boolean = false;
     public FilterSelectedValue: string;
     public DocTypesFilterItems: ApiQueryFilters;
@@ -86,6 +92,7 @@ export class CustomsDocumentsComponent
     DocumentRequestCodeText: string = "";
     ParentEntityCode_args: string = "";
     DontClear: boolean = false;
+    bulkUploadDocumentsPermission: boolean = true;
 
     public customs:string = "עמילות";
     public forwarding: string = "שילוח";
@@ -101,6 +108,8 @@ export class CustomsDocumentsComponent
         if (entityArgs.EntityPM && !entityArgs.SkipCtor) {
             this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName, entityArgs.EntityParentPM, entityArgs.IsFromStandAloneScreen);
         }
+
+        this.bulkUploadDocumentsPermission = FeatureLocator.HasFeaturePermession("Customs.Declaration", "BULKUPLOADDOCUMENTS");
     }
     ngOnDestroy() {
         console.log("CustomsDocumentsComponent:ngOnDestroy");
@@ -855,6 +864,139 @@ export class CustomsDocumentsComponent
             });
     }
 
+
+    confirmCheckOrginalDocWindow() {
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CheckOrginalDoc") || 'האם לסמן מסמך מקורי');
+
+        return new Promise<boolean>((resolve, reject) => 
+            myConfirmWindow.WindowClosed.subscribe(event => 
+                resolve(myConfirmWindow.Yes)))                    
+    }
+
+    
+    async BulkUploadDocuments() {        
+        const documnetUpload: CustomsDocumentTicketViewModel[] = this.getDocumentReadyToUpload();
+
+        if(documnetUpload.length === 0) return;        
+
+        const orginalDocIsCheck: boolean = await this.checkOrginalDoc(documnetUpload);
+        if(!orginalDocIsCheck) return;        
+
+        if(documnetUpload.length !== this.CustomsDocumentsTicketViewModels.length) {
+            const msg: MessageWindow = new MessageWindow();
+            msg.Show(TextCodeTranslator.Translate("Customs.Declaration.O.HaveMandatory") || 'יש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים אילו לא יעלו למכס');
+            await new Promise<void>(resolve =>  msg.WindowClosed.subscribe(()=> resolve()));
+        }
+                
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        await Promise.all(documnetUpload.map(async (docTicket: CustomsDocumentTicketViewModel) => {
+            const doc: CustomsDocumentPM =  await this.getCustomDocument(docTicket.DocumentsFilingId);
+            doc.DeclarationId = this.EntityPM.Id;
+            doc.CurrentCustomsDocumentsTicketId = docTicket.customsDocumentsTicketPM.Id; 
+            doc.IsSendToQueue = true;
+            doc.CloneMe();
+            await this.SendCustomsDocumentMethod(doc);
+            this.SubmitTicketChanges(docTicket.customsDocumentsTicketPM)
+        }));
+
+        this.RefreshEntity();
+
+        this.CurrentSession.StopBusyIndicator();
+
+    }
+
+    private getDocumentReadyToUpload(): CustomsDocumentTicketViewModel[] {
+        return this.CustomsDocumentsTicketViewModels.filter((customDocument: CustomsDocumentTicketViewModel) => {
+            // const res =  customDocument.CustomsDocumentMetaDataValuePMs?.filter((value :CustomsDocumentMetaDataValuePM) => {
+            //     const metaDataType: CustomDocumentTypeMetaDataList = customDocument.CustomDocumentTypeMetaDataLists.find(metaDataType => value.MetaDataTypeCode == metaDataType.MetaDataTypeCode);
+            //     return !(!metaDataType?.Mandatory || 
+            //         metaDataType.MetaDataTypeCode === '87' ||
+            //         (value.MetaDataValue || value.MetaDataValue == ''));
+            // });
+
+           return customDocument.DocumentsFilingId &&
+           customDocument.CustomsDocumentMetaDataValuePMs &&
+            customDocument.CustomsDocumentMetaDataValuePMs.every((value :CustomsDocumentMetaDataValuePM) => {
+                const metaDataType: CustomDocumentTypeMetaDataList = customDocument.CustomDocumentTypeMetaDataLists.find(metaDataType => value.MetaDataTypeCode == metaDataType.MetaDataTypeCode);
+                return !metaDataType?.Mandatory || 
+                    metaDataType.MetaDataTypeCode === '87' ||
+                    (value.MetaDataValue || value.MetaDataValue == '');
+            });
+        });
+    }
+
+    private async checkOrginalDoc(documnetUpload: CustomsDocumentTicketViewModel[]) {
+        let documentsFilingIds: string[] = documnetUpload.reduce((res: string[], customDocument: CustomsDocumentTicketViewModel) => {
+            const haveIsOrginalDoc: boolean = customDocument.CustomDocumentTypeMetaDataLists.some(type => type.MetaDataTypeCode === '87');
+            const value: CustomsDocumentMetaDataValuePM = customDocument.CustomsDocumentMetaDataValuePMs.find(d => d?.MetaDataTypeCode === '87');
+            if(haveIsOrginalDoc && !value?.MetaDataValue)
+                res.push(customDocument.DocumentsFilingId)
+
+            return res;
+        },[]);
+
+        if (documentsFilingIds.length === 0) return true;
+
+        const isApprove: boolean = await this.confirmCheckOrginalDocWindow();
+
+        if(isApprove)
+            await this.updateCustomsDocuments(documentsFilingIds);
+        
+        return isApprove;
+    }
+    
+    
+    private async updateCustomsDocuments(documentsFilingIds: string[]): Promise<void> {
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+        
+        await Promise.all(
+            documentsFilingIds.map(async documentsFilingId => {
+                const doc: CustomsDocumentPM = await this.getCustomDocument(documentsFilingId);
+                let value: CustomsDocumentMetaDataValuePM = doc.CustomsDocumentMetaDataValues.find(x => x.MetaDataTypeCode === '87');
+                if(!value) {
+                    value = new CustomsDocumentMetaDataValuePM(null);
+                    value.ChangeSetOp = 'Insert';
+                    value.MetaDataTypeCode = '87';
+                    value.Tenant = this.EntityPM.Tenant;
+                    value.CustomsDocumentId = documentsFilingId;
+                    
+                    doc.AddCustomsDocumentMetaDataValue(value);
+                }
+                value.MetaDataValue = 'True'
+
+                return new Promise<void>((resolve, reject) =>
+                    new CustomsDocumentPMService().update(doc).subscribe(() => resolve()));
+            })
+        )
+        
+        SessionLocator.SelectedSession.StopBusyIndicator();
+    }
+
+
+    private getCustomDocument(_documentsFilingId: string): Promise<CustomsDocumentPM> {      
+        const documentsFilingId: string = encodeURIComponent(_documentsFilingId);
+  
+        return new Promise<CustomsDocumentPM>((resolve, reject) =>
+            this.iCustomsDocumentsController.CheckRequestsInProgress(documentsFilingId).subscribe((response: ServiceResponse) =>
+                this.customsDocumentPMService.get(documentsFilingId).subscribe((resp: ServiceResponse) => 
+                    resolve(resp.Result)
+        )));
+    }
+
+
+    private SendCustomsDocumentMethod(customsDocument: CustomsDocumentPM): Promise<void> {     
+        return new Promise<void>((resolve, reject) =>
+            this.customsDocumentPMService.update(customsDocument).subscribe((docRes: ServiceResponse) =>
+                resolve()
+        ));
+    }
+
+    SubmitTicketChanges(CustomsDocumentsTicket: CustomsDocumentsTicketPM) {
+        this.customsDocumentsTicketPMService.update(CustomsDocumentsTicket).subscribe((ticketRes: ServiceResponse) => {});
+    }
 }
 
 export class RelatedEntityParams {

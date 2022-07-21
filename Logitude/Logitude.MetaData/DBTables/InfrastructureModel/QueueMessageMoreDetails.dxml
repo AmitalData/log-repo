@@ -106,4 +106,8 @@
     Columns="Field2" />
   <Index
     Columns="CreateDateTime" />
+
+	<Index
+  Columns="CompleteDateTime" />
+
 </Table>

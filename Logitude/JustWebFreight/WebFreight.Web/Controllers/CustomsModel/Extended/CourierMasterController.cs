@@ -460,6 +460,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        public HttpResponseMessage PostSendDelayFormForDeclarations(SendALLDelayFormParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                
+                var messagingService = new DCAInUCBSendDelayForm_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetSendDocumentsFromQueue(string courierMasterId, string MAWB)
         {
             try

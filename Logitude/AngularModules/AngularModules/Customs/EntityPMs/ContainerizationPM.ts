@@ -109,6 +109,31 @@ export class ContainerizationPM {
     public set IsMultiCustomers(newValue: string) { if (this.isMultiCustomers != newValue) { this.isMultiCustomers = newValue; this.MarkAsDirty("IsMultiCustomers"); } }
        
 	 
+    private cargoTypeCode: string;
+    public get CargoTypeCode() { return this.cargoTypeCode; }
+    public set CargoTypeCode(newValue: string) { if (this.cargoTypeCode != newValue) { this.cargoTypeCode = newValue; this.MarkAsDirty("CargoTypeCode"); } }
+       
+	 
+    private manifestNumber: string;
+    public get ManifestNumber() { return this.manifestNumber; }
+    public set ManifestNumber(newValue: string) { if (this.manifestNumber != newValue) { this.manifestNumber = newValue; this.MarkAsDirty("ManifestNumber"); } }
+       
+	 
+    private secondCargoID: string;
+    public get SecondCargoID() { return this.secondCargoID; }
+    public set SecondCargoID(newValue: string) { if (this.secondCargoID != newValue) { this.secondCargoID = newValue; this.MarkAsDirty("SecondCargoID"); } }
+       
+	 
+    private thirdCargoID: string;
+    public get ThirdCargoID() { return this.thirdCargoID; }
+    public set ThirdCargoID(newValue: string) { if (this.thirdCargoID != newValue) { this.thirdCargoID = newValue; this.MarkAsDirty("ThirdCargoID"); } }
+       
+	 
+    private containerizationCargoID: string;
+    public get ContainerizationCargoID() { return this.containerizationCargoID; }
+    public set ContainerizationCargoID(newValue: string) { if (this.containerizationCargoID != newValue) { this.containerizationCargoID = newValue; this.MarkAsDirty("ContainerizationCargoID"); } }
+       
+	 
 
     public OldEntityPM: ContainerizationPM;
 		

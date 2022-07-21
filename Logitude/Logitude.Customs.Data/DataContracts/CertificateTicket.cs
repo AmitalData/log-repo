@@ -49,6 +49,9 @@ namespace Logitude.Customs.Data.DataContracts
         [DataMember]
         public string oldCertificateExempt { get; set; }
 
+        [DataMember]
+        public string SearchFields { get; set; }
+
         private List<CertificateConnectedItems> selectedItems;
 
         [Include]

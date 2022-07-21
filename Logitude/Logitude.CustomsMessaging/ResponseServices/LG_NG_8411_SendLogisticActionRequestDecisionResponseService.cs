@@ -25,9 +25,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
+
         }
 
-        private static void UpdateLogisticActionRequesrTable(LG_NG_8411_SendLogisticActionRequestDecision customResponse, GenericRequestParams requestParams)
+        public void UpdateLogisticActionRequesrTable(LG_NG_8411_SendLogisticActionRequestDecision customResponse, GenericRequestParams requestParams)
         {
             LogisticActionRequestQueryService larQs = new LogisticActionRequestQueryService(requestParams.Tenant);
             var cargoIdentifier = customResponse.LogisticActionRequestDecision.CargoIdentifier;
@@ -42,6 +43,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             larPM.CustomsUserName = resData.UserName;
             larPM.DecisionRmarks = resData.DecisionRmarks;
             larPM.IsClosed = CheckIsClosed(resData);
+
+
+            if (this.MyRequestSheetParam == null)
+                this.MyRequestSheetParam = new RequestSheetParam();
+            
+            DeclarationQueryService declarationQuery = new DeclarationQueryService(requestParams.Tenant);
+
+            this.MyRequestSheetParam.CustomFileNo = larPM.DeclarationId == null ? larPM.ExportFileNo : declarationQuery.GetSingle(larPM.DeclarationId, false, false)?.CustomFileNo;
 
             UpdateLARPM(requestParams, larPM);
         }

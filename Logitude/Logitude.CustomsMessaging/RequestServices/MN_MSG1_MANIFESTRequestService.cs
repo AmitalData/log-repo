@@ -457,7 +457,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 };
             }
 
-            if (!string.IsNullOrEmpty(declarationConsignmentConsigneeAddress.Line.Value) && declarationConsignmentConsigneeAddress.Line.Value.Length > 70)
+            if (!string.IsNullOrEmpty(declarationConsignmentConsigneeAddress?.Line?.Value) && declarationConsignmentConsigneeAddress.Line.Value.Length > 70)
             {
                 declarationConsignmentConsigneeAddress.Line.Value = declarationConsignmentConsigneeAddress.Line.Value.Substring(0, 70);
             }

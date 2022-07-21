@@ -45,6 +45,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.SIVUGINSTRUCTION = entityPM.SIVUGINSTRUCTION;
             entityPOCO.REMARKSMAKAT = entityPM.REMARKSMAKAT;
             entityPOCO.REMARKSPROTEST = entityPM.REMARKSPROTEST;
+            entityPOCO.CLASSIFIER1ID = entityPM.CLASSIFIER1ID;
+            entityPOCO.CLASSIFIER2ID = entityPM.CLASSIFIER2ID;
+            entityPOCO.ITEMNO2= entityPM.ITEMNO2;
+
         }
 
         public void POCOToPM(GITITEMPM entityPM, GITITEM entityPOCO)
@@ -76,6 +80,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.SIVUGINSTRUCTION = entityPOCO.SIVUGINSTRUCTION;
             entityPM.REMARKSMAKAT = entityPOCO.REMARKSMAKAT;
             entityPM.REMARKSPROTEST = entityPOCO.REMARKSPROTEST;
+            entityPM.CLASSIFIER1ID = entityPOCO.CLASSIFIER1ID;
+            entityPM.CLASSIFIER2ID = entityPOCO.CLASSIFIER2ID;
+            entityPM.ITEMNO2 = entityPOCO.ITEMNO2;
+
         }
 
         public void CustomPMToPOCO(GITITEMPM entityPM, GITITEM entityPOCO)

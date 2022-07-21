@@ -22,6 +22,15 @@ export class UnifreightController {
             this._ViewModelName, PrintParamsXml);
         
     }
+    public RaiseLookUpAsync(LOV_FORM: string,PRIMARY_KEY:string) {
+        var declarationId = this._DeclarationPM.Id;
+        var declarationNumber = this._DeclarationPM.DeclarationNumber;
+        var customFileNo = this._DeclarationPM.CustomFileNo;
+
+        AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseLookUp
+            (customFileNo, declarationId, this._ViewModelName, LOV_FORM,PRIMARY_KEY);
+
+    }
     public SendRequestInstructionToUnifreightAsync(ViewPlace: string) {
         var declarationId = this._DeclarationPM.Id;
         var declarationNumber = this._DeclarationPM.DeclarationNumber;
@@ -32,6 +41,7 @@ export class UnifreightController {
 
     }
 
+    
     public GetPromise(): Promise<UnifreightResponseEventArgs> {
         return new Promise((resolve, reject) => {
 

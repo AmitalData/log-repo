@@ -176,6 +176,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         this.initTradeAgreementFilter();
 
+
+ 
     }
     ngOnInit() {
         if (this.allowExport) {
@@ -1363,7 +1365,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 //            var confirm = new ConfirmWindow();
                 //            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                 //            confirm.ShowNoButton = true;
-                //            confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + resp.Result.SequenceNumeric + "- האם להמשיך ?");
+                //            confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + resp.Result.SequenceNumeric + "- הםם להמשיך ?");
                 //            confirm.WindowClosed.subscribe((event: any) => {
                 //                confirm.Close();
                 //                this.InvoiceNumber = newValue;
@@ -1427,20 +1429,47 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     CopyNowClicked() {
 
-        for (let item of this.ItemsSource.Collection) {
-            if (item.InvoiceQuantityType == null) {
 
-                if (item.QunatityTypeCode != null) {
-                    var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
-                    //var s = item.QunatityTypeCode.split('(');
-                    //var st = s[1].split(')');
+        var confirm = new ConfirmWindow();
 
-                    item.InvoiceQuantityType = s;
+        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateAndOverride");
+        confirm.NoButtonText =  TextCodeTranslator.Translate("Customs.Declaration.O.Update");
+        confirm.ShowNoButton = true;
+        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.UpdateOrOverride"));
+        confirm.WindowClosed.subscribe((event: any) => {
+            debugger
+            if (confirm.Yes) {
+                confirm.Close();
+                for (let item of this.ItemsSource.Collection) {
+
+                    if (item.QunatityTypeCode != null) {
+                        var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
+                        item.InvoiceQuantityType = s;
+                    }
                 }
 
             }
-        }
+            else {
+                confirm.Close();
+                for (let item of this.ItemsSource.Collection) {
+                    if (item.InvoiceQuantityType == null) {
+        
+                        if (item.QunatityTypeCode != null) {
+                            var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
+                            //var s = item.QunatityTypeCode.split('(');
+                            //var st = s[1].split(')');
+        
+                            item.InvoiceQuantityType = s;
+                        }
+        
+                    }
+                }
+        
+                
+            }
 
+        });
+        
         if (this.ItemsSource.Collection.length == 500) {
 
             var msg = new MessageWindow();
@@ -2890,6 +2919,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {
         console.log("OnSelectedItemChanged > ", selectedRow);
         selectedRow.entityPM.DocumentFilingId = this.DocumentFilingId;
+
         if (selectedRow.entityPM.OcrHeight != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrHeight) && selectedRow.entityPM.OcrPageNumber != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrPageNumber) && selectedRow.entityPM.OcrTop != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrTop)) {
             DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
 
@@ -2968,7 +2998,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         //this.TariffErrorToolTip += EntityPM.SequenceNumeric;
 
         ////Fill tariff error text
-        //this.TariffErrorText = "מדינה לא תואמת לקוד התעריף"; //"Tarrif doesnt match country” 
+        //this.TariffErrorText = "מדינה לם תוםמת לקוד התעריף"; //"Tarrif doesnt match country” 
 
         ////get currenct customs country
         if (this.OriginCountryCode) {
@@ -3002,6 +3032,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             this.WarningVisiblity = false;
             this.OkVisiblity = false;
             this.IsBlueBorderVisibile = false;
+
+
         }
 
         else if (this.entityPM.CertificatesStatusCode == "1") {
@@ -3855,7 +3887,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                         } else {
                                             //Eitancommented 15 minutes ago
                                             //@odelia devashi @itzik M סיכום:
-                                            //גם כאשר מזינים קודם פרט מכס ואח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
+                                            //גם כםשר מזינים קודם פרט מכס וםח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
                                             if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
                                                 this.AdditemCodeDetail();//Task 43218: שיפור במנגנון לימוד עצמי
                                             }
@@ -4489,48 +4521,63 @@ export class SupplierInvoiceFreightAmountLine extends BaseComponent {
     public set CurrencyTypeCode(newValue: string) {
         if (this.Parent.AmountList.Length > 0) {
             if (newValue != null) {
-                // var exist = this.Parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.CurrencyTypeCode === newValue);
+                var exist = this.Parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.CurrencyTypeCode === newValue);
                 this.entityPM.CurrencyTypeCode = newValue
-                // if (exist) {
+                if (exist) {
 
 
-                //     var confirmWindow = new ConfirmWindow();
+                    var confirmWindow = new ConfirmWindow();
 
 
-                //     confirmWindow.Width = 400;
+                    confirmWindow.Width = 400;
 
-                //     confirmWindow.Height = 200;
-                //     confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                //     confirmWindow.ShowNoButton = false;
-                //     confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
-                //     this.entityPM.CurrencyTypeCode = newValue;
-                //     this.entityPM.CurrencyTypeCode = null;
-                //     // this.entityPM.CurrencyTypeName = null;
-                //     confirmWindow.WindowClosed.subscribe((event: any) => {
-                //         if (confirmWindow.Yes) {
-                //             //this.entityPM.CurrencyTypeCode = newValue;
-                //             this.entityPM.CurrencyTypeCode = null;
-                //             this.CurrencyTypeName = null;
-                //             confirmWindow.Close();
-                //         }
+                    confirmWindow.Height = 200;
+                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                    confirmWindow.ShowNoButton = false;
+                    confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
+                    this.entityPM.CurrencyTypeCode = newValue;
+                    this.entityPM.CurrencyTypeCode = null;
+                    // this.entityPM.CurrencyTypeName = null;
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+                            //this.entityPM.CurrencyTypeCode = newValue;
+                            this.entityPM.CurrencyTypeCode = null;
+                            this.CurrencyTypeName = null;
+                            confirmWindow.Close();
+                        }
 
-                //     });
-                // }
-                // else {
-                this.entityPM.CurrencyTypeCode = newValue;
-                if (this.Parent.AmountList.Length == 1)
-                    this.Parent.EntityPM.AddSupplierInvoiceFreightAmount(this.entityPM);
-                // }
+                    });
+                }
+                else {
+                    this.entityPM.CurrencyTypeCode = newValue;
+                    if (this.Parent.AmountList.Length == 1) {
+                        this.Parent.EntityPM.AddSupplierInvoiceFreightAmount(this.entityPM);
+                    }
+
+
+                }
             }
-            else
+            else {
                 this.entityPM.CurrencyTypeCode = newValue
+
+            }
+
         }
 
-        if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length == 1)
+        if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length == 1) {
+
             this.Parent.FreightCurrencyTypeCode = newValue;
 
-        if (this.Amount != null)
+        }
+
+        if (this.Amount != null) {
             this.Parent.LoadCurrenciesExchangeRates(true);
+        }
+
+
+
+
+
     }
 
     public get CurrencyTypeName() { return this.entityPM.CurrencyTypeName; }

@@ -94,7 +94,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsDangerousGoods, 
 	         StorageStatusIsOpen, 
 	         ActionCode, 
-	         ProcedureCurrentName,
+	         ProcedureCurrentName, 
+	         ActionName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -526,10 +527,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ExportFileNo)) //T4 find type == nText 
             {
                 entityPM.ExportFileNo = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExportFileNo));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.StorageStatus)) //T4 find type == nText 
-            {
-                entityPM.StorageStatus = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StorageStatus));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.StorErrorXML)) //T4 find type == nText 
             {

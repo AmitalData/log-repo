@@ -5,4 +5,8 @@ export class SendMultiUpdateRequestParams extends GenericRequestParams {
     ProcessTypeCode: string;
     TaxExemptCode: string;
     ClassificationCode: string;
+    DeclarationIds: string[];
+    CourierMasterId: string;
+    allWithoutdeclarationIdsList: string[];
+    checkboxAll: boolean;
 }

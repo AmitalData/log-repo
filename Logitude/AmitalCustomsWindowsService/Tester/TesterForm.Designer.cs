@@ -93,6 +93,7 @@
             this.rabbitMQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recivedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uW2LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.textBoxOverrideRMQ = new System.Windows.Forms.TextBox();
@@ -148,21 +149,21 @@
             // bolbToolStripMenuItem
             // 
             this.bolbToolStripMenuItem.Name = "bolbToolStripMenuItem";
-            this.bolbToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.bolbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bolbToolStripMenuItem.Text = "Bolb";
             this.bolbToolStripMenuItem.Click += new System.EventHandler(this.BlobToolStripMenuItem_Click);
             // 
             // multiBolbToolStripMenuItem
             // 
             this.multiBolbToolStripMenuItem.Name = "multiBolbToolStripMenuItem";
-            this.multiBolbToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.multiBolbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.multiBolbToolStripMenuItem.Text = "MultiBolb";
             this.multiBolbToolStripMenuItem.Click += new System.EventHandler(this.multiBlobToolStripMenuItem_Click);
             // 
             // clearCacheToolStripMenuItem
             // 
             this.clearCacheToolStripMenuItem.Name = "clearCacheToolStripMenuItem";
-            this.clearCacheToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.clearCacheToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clearCacheToolStripMenuItem.Text = "ClearCache";
             this.clearCacheToolStripMenuItem.Click += new System.EventHandler(this.clearCacheToolStripMenuItem_Click);
             // 
@@ -379,6 +380,7 @@
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Name = "singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem";
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Size = new System.Drawing.Size(349, 22);
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Text = "SingletonFTPCommunicationWorkerRoleWinService";
+            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Click += new System.EventHandler(this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click);
             // 
             // adHockToolStripMenuItem
             // 
@@ -633,6 +635,14 @@
             this.recivedToolStripMenuItem.Text = "Recived";
             this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
             // 
+
+            // uW2LToolStripMenuItem
+            // 
+            this.uW2LToolStripMenuItem.Name = "uW2LToolStripMenuItem";
+            this.uW2LToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.uW2LToolStripMenuItem.Text = "UW2L";
+            this.uW2LToolStripMenuItem.Click += new System.EventHandler(this.uW2LToolStripMenuItem_Click);
+            // 
             // textBoxLogger
             // 
             this.textBoxLogger.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -717,6 +727,7 @@
             this._TBID.Name = "_TBID";
             this._TBID.Size = new System.Drawing.Size(281, 20);
             this._TBID.TabIndex = 6;
+            this._TBID.TextChanged += new System.EventHandler(this._TBID_TextChanged);
             // 
             // label3
             // 
@@ -756,6 +767,7 @@
             this._CBInterfaceID.Name = "_CBInterfaceID";
             this._CBInterfaceID.Size = new System.Drawing.Size(125, 21);
             this._CBInterfaceID.TabIndex = 3;
+            this._CBInterfaceID.SelectedIndexChanged += new System.EventHandler(this._CBInterfaceID_SelectedIndexChanged);
             // 
             // Interface
             // 
@@ -783,6 +795,7 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
             // 
+
             // TesterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -886,6 +899,7 @@
         private System.Windows.Forms.ToolStripMenuItem rabbitMQToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sendToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recivedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uW2LToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem;
         private System.Windows.Forms.TextBox textBoxOverrideRMQ;

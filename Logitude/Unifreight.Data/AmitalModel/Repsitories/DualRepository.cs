@@ -49,7 +49,9 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
 
             var OpenReaderSingleResult = new OpenReaderSingleResult(_CurrentContext);
-            serverTime = OpenReaderSingleResult.ExecuteReaderSingleResult<DateTime>(SELECT_SYSDATE_FROM_DUAL,
+            serverTime = OpenReaderSingleResult.ExecuteReaderSingleResult<DateTime>(
+                SELECT_SYSDATE_FROM_DUAL,
+                new List<OracleParameter>(),
                 (dataReader) =>
             {
                 return dataReader.GetDateTime(0);
@@ -93,7 +95,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             _CurrentContext = context as DbContextBase;
         }
-        public Nullable<returnType> ExecuteReaderSingleResult<returnType>(string sqlReturn1Row, Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader)
+        private Nullable<returnType> ExecuteReaderSingleResult<returnType>(string sqlReturn1Row, Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader)
             where returnType : struct
         {
             {
@@ -140,6 +142,75 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
 
             }
+
+
+        }
+
+
+
+        public Nullable<returnType> ExecuteReaderSingleResult<returnType>(
+            string sqlReturn1Row,
+             List<OracleParameter> dbParameters,//https://www.devart.com/dotconnect/oracle/docs/Parameters.html
+            Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader
+
+            )
+            where returnType : struct
+        {
+
+
+
+
+
+
+            using (var command = _CurrentContext.Database.Connection.CreateCommand())
+            {
+
+
+                if (_CurrentContext.Database.Connection.State != System.Data.ConnectionState.Open)
+                {
+                    _CurrentContext.Database.Connection.Open();
+                }
+                command.CommandText = sqlReturn1Row;
+                int c = 0;
+                command.Prepare();
+                foreach (var paramValue in dbParameters)
+                {
+
+                    command.Parameters.Add(paramValue);
+                    //command.Parameters.Add(new OracleParameter($":p{c++}", paramValue));
+                    //command.Parameters[c++].Value = item;
+                }
+
+
+
+
+                using (var dataReader = command.ExecuteReader(CommandBehavior.CloseConnection | CommandBehavior.SingleResult))
+                {
+
+                    if (dataReader.FieldCount < 1)
+                    {
+                        return null;
+                    }
+
+                    if (!dataReader.Read())
+                    {
+                        return null;
+                    }
+                    if (dataReader.IsDBNull(0))
+                    {
+                        return null;
+                    }
+
+
+
+                    var ReturnValue = GetReturnTypeFromReader(dataReader);
+
+                    return ReturnValue;
+                }
+            }
+
+
+
 
 
         }

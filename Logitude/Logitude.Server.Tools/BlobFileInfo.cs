@@ -93,6 +93,10 @@ namespace Logitude.Server.Tools
             {
                 return false;
             }
+            if (!LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight)
+            {
+                return false;
+            }
             if (FolderName != "docsin")
             {
                 return false;

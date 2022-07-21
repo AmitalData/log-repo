@@ -191,5 +191,151 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
             LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
         }
+
+
+        public void OpenUnifreighTaskGen(DeclarationPM dirtyDeclarationPM, string entname, string primary, string taskType, string status, bool raiseStatus, string xmlStatus, bool toLock)
+        {
+            var sw = Stopwatch.StartNew();
+            TransactionScope scope = null;
+            if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+            {
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+            }
+            try
+            {
+                using (var myAmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant))
+                {
+                    
+                    var myGGGQUpdateService = new GGGQUpdateService(myAmitalContext);
+                    myGGGQUpdateService.DontAddTransaction = true;
+                    var myYCULTASKUpdateService = new YCULTASKUpdateService(myAmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;
+                    var requestData = "";
+                    var addStatus = ""; 
+                    var comment = ""; 
+                    var addComment = "";
+
+                    if (toLock)
+                    {
+                        var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(myAmitalContext);
+                        var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(myAmitalContext);
+                        myCCUQUELOCKUpdateService.DontAddTransaction = true;
+                        CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
+                        if (myCCUQUELOCK == null)
+                        {
+                            var myCCUQUELOCKPM = new CCUQUELOCKPM()
+                            {
+                                ChangeSetOp = ChangeSetOperation.Insert,
+                                ENTNAME = "CFIFILEM",
+                                FILENO = dirtyDeclarationPM.CustomFileNo,
+                            };
+                            myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
+                        }
+                    }
+                    if (taskType == "LD2U" && dirtyDeclarationPM.IsSignedVersion) 
+                    {
+                        if (raiseStatus != true)
+                        {
+                            raiseStatus = true;
+                            status = "INP";
+                            comment = RequestSheetContext.Current.GetContextOrDefault().SignByX509SubjectName;
+                        }
+                        else
+                        {
+                            addStatus = "INP";
+                            addComment = RequestSheetContext.Current.GetContextOrDefault().SignByX509SubjectName;
+                        }
+                    }
+
+                    string unifreightUser = null;
+                    if (RequestSheetContext.Current != null)
+                    {
+                        var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                        if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
+                        {
+                            UserRepository userRep = new UserRepository(dirtyDeclarationPM.Tenant);
+                            User user = userRep.GetSingleUser(loggingUserIdFromRS, dirtyDeclarationPM.Tenant, true);
+                            if (user != null)
+                            {
+                                if (!String.IsNullOrWhiteSpace(user.Code))
+                                {
+                                    unifreightUser = user.Code;
+                                }
+                            }
+                        }
+                    }
+                    if (String.IsNullOrWhiteSpace(unifreightUser))
+                    {
+                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
+                    }
+
+                    if (raiseStatus == true)
+                    {
+                        string loggingUserId = null;
+                        {
+                            ICommonDataContext dbContext = CommonDataContext.GetContext(dirtyDeclarationPM.Tenant);
+                            UserRepository userRepository = new UserRepository(dbContext);
+                            var user = userRepository.GetSingleUserByCode("MEHES", dirtyDeclarationPM.Tenant, true);
+                            if (user != null)
+                            {
+                                loggingUserId = user.Id;
+                            }
+                        }
+                        var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, loggingUserId);
+                        requestData = myDeclarationUpdateService.GetMyFUStatusXML(status, status, comment, xmlStatus, DateTime.Now, true);
+                        if (!String.IsNullOrWhiteSpace(addStatus))
+                        {
+                            var requestData2 = myDeclarationUpdateService.GetMyFUStatusXML(addStatus, addStatus, addComment, xmlStatus, DateTime.Now, true);
+                            requestData = string.Concat(requestData, requestData2);
+                        }
+                    }
+                    
+                    var myYCULTASKPM = new YCULTASKPM()
+                    {
+                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        STATUS = "W",
+                        REQUESTDATA = requestData,
+                        ENTNAME = entname,
+                        PRIMARYNUM = primary,
+                        PRIORITY = YCULTASKPM.calcPriority(taskType),
+                        TYPE = taskType,
+                        USRCODE = unifreightUser,
+                        ARCHIVE = "F", 
+                    };
+                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                    var myGGGQPM = new GGGQPM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ORIGINQUE = "LGT", //LugitudeRequest
+                        STATUS = "1",
+                        EXPTASKTIME = 5,
+                        EXECDATE = (new DualQueryService(myAmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
+                        TRY = 9,
+                        PRIORITY = 8,
+                        ENTNAME = entname,
+                        PRIMARYNUM = primary,
+                        FORMID = "LGT_UPDATE_FCI",
+                        DEBUG = "F",
+                        DONEOPERATION = "D",
+                    };
+                    myGGGQUpdateService.Update(myGGGQPM, true);
+
+                    if (scope != null)
+                    {
+                        scope.Complete();
+                    }
+                }
+            }
+            finally
+            {
+                if (scope != null)
+                {
+                    scope.Dispose();
+                }
+            }
+
+            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
+        }
     }
 }

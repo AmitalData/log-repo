@@ -333,7 +333,18 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return currentObjectTables.Concat(zeroObjectTables).AsQueryable<ObjectTablePM>();
         }
+
         public static List<ObjectTablePM> GetObjectTablesWithTenantZero(int tenant)
+        {
+            string entityKeyString = $"GetObjectTablesWithTenantZero({tenant})";
+            List<ObjectTablePM> myres = CacheManager.GetOrInsertNewObject<List<ObjectTablePM>>(entityKeyString, () => {
+
+                
+                return GetObjectTablesWithTenantZeroBadCache(tenant);
+            });
+            return myres;
+        }
+        static List<ObjectTablePM> GetObjectTablesWithTenantZeroBadCache(int tenant)
         {
             
             string listName = "tenantzerotextobjecttablepms";
@@ -752,6 +763,22 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  t.Name == "Customs.SupplierInvoicePayment" ||
                    t.Name == "Customs.DeclarationExportRecipient"
                 ).ToList();           
+
+
+            return tables;
+        }
+
+        public List<ObjectTablePM> GetSomeExportObjectTables(int tenant)
+        {
+            List<ObjectTablePM> tables = null;
+
+
+            tables = GetObjectTablesWithTenantZero(tenant).Where(t => t.Name == "Customs.Declaration" ||
+                t.Name == "Customs.Consignment" ||
+                t.Name == "Customs.ConsignmentPackage" ||
+                t.Name == "Customs.SupplierInvoice" ||
+                   t.Name == "Customs.DeclarationExportRecipient"
+                ).ToList();
 
 
             return tables;

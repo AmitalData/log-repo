@@ -1,5 +1,4 @@
-﻿using Logitude.BL.Security;
-using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
@@ -10,6 +9,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
+using WebFreight.Web.Security;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -61,6 +61,31 @@ namespace WebFreight.Web.Controllers.WebServices
                 //string res = "aa";
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage PostSendMultiUpdate(MultiUpdateRequestParams requestParamsData, [FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                QueryOperations queryOperations = CourierDeclarationPendingListExtendedController.CreateQueryOperationsPendingBulk(filters, authToken.Tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var messagingService = new DCAInUCBMultiUpdate_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData, queryOperations);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
 
             catch (Exception ex)

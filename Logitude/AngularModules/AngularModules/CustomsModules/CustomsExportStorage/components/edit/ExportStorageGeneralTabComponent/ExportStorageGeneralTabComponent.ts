@@ -37,6 +37,7 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
     [
       'ShipType',
       'CargoTypeCodeName',
+      'CargoTypeName',
       'SecondCargoID',
       'ExporterCode',
       'FirstCargoID',
@@ -56,6 +57,7 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
 
   public get ShipType() { return this.EntityPM.DeclarationId ? 'יצוא' : ''; }
   public get CargoTypeCodeName() { return this.EntityPM.CargoTypeCodeName; }
+  public get CargoTypeName() { return this.EntityPM.CargoTypeName; }
   public get SecondCargoID() { return this.EntityPM.SecondCargoID; }
   public get ExporterID() { return this.EntityPM.ExporterID; }
   public get FirstCargoID() { return this.EntityPM.FirstCargoID; }

@@ -36,6 +36,7 @@ using System.Xml;
 using Logitude.CustomsMessaging.RabbitMQ;
 using Logitude.Customs.BL.CloseTables;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.Server.Tools;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -270,6 +271,7 @@ namespace AmitalCustomsWindowsService.Tester
                     return;
             }
 
+
             //d.WorkerQueueType = checkBoxMQ.Checked ? Logitude.Server.Tools.WorkerQueueType.RabbitMQ : Logitude.Server.Tools.WorkerQueueType.DB;
             if (!String.IsNullOrWhiteSpace(textBoxOverrideRMQ.Text))
             {
@@ -291,6 +293,7 @@ namespace AmitalCustomsWindowsService.Tester
 
                 });
             }
+
             d.ExecuteTask(); 
 
         }
@@ -313,6 +316,21 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+
+            Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
+            return;
+
+
+            ///clsTester.RequeByID(GetTenant(), _TBID.Text);
+            int maxTry = int.Parse(_CBInterfaceID.Text);
+            clsTester.ReAnalyze2470_CustomsWithheld(GetTenant(), maxTry);
+            return;
+
+
+
+            clsTester.FeatureToggle();
+
             var sw = Stopwatch.StartNew();
             int tenant =GetTenant();
             _MultiThreard = !_MultiThreard;
@@ -321,22 +339,9 @@ namespace AmitalCustomsWindowsService.Tester
             Debug.WriteLine(sw.ElapsedMilliseconds);
             
             return;
-            var rabbitMQReceiveWR = new RabbitMQReceiveWR();
-            var customRabbitMQQueue = new CustomRabbitMQQueue();
-            var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
-             .Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none)
-            .ToList();
-            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-            string log = "";
-            bool success = false;
-            var c=allQueueDetails.FirstOrDefault(r => r.Code == "uw2l");
-            rabbitMQReceiveWR.Exec(
-                customRabbitMQQueue, c,
-                analyzeQueueRepository,
-                "NYC1MMYLAEOS6QWZ44GZPA00000000",3,"", out log, out success);
-            ;
             return;
             clsTester.TestUpdateLOGITUDE_FILE();
+
             //clsTester.GetListByCourierHAWB();
 
             return;
@@ -811,6 +816,7 @@ namespace AmitalCustomsWindowsService.Tester
                 var tst = new CustomsWorkerRole.Test.clsTester();
                 tst.FtpTester(Tenant);
             }
+            
             var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
             d.ExecuteTask();
         }
@@ -1146,5 +1152,84 @@ namespace AmitalCustomsWindowsService.Tester
         {
 
         }
+
+       
+
+        private void singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CommunicationWorkerRole.SingletonFTPCommunicationWorkerRoleWinService>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
+            d.ExecuteTask();
+        }
+
+        private void uW2LToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ///פתיחת הצהרה מאינטגרטור
+            
+            var rabbitMQReceiveWR = new RabbitMQReceiveWR();
+            var customRabbitMQQueue = new CustomRabbitMQQueue();
+            var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
+             .Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none)
+            .ToList();
+            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+            string log = "";
+            bool success = false;
+
+            string communicationLogId = _TBID.Text;//1-5898221
+            int tenant = GetTenant();
+            var _CommunicationLog = Communications.GetCommunicationLog(tenant, communicationLogId);
+            if (_CommunicationLog == null)
+            {
+                throw new Exception("Cannnot GetCommunicationLog");
+            }
+            string communicationsData = Communications.GetData(_CommunicationLog); ;
+
+
+            var c = allQueueDetails.FirstOrDefault(r => r.Code == "uw2l");
+            rabbitMQReceiveWR.Exec(
+                customRabbitMQQueue, c,
+                analyzeQueueRepository,
+                /*"1-5898221"*/
+                communicationLogId, tenant, communicationsData, out log, out success);
+            ;
+
+
+        }
+
+        private void _CBInterfaceID_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+
+
+
+
+
+            //var message = Encoding.UTF8.GetBytes(Get("CorrelationId", "ExternalId", "body"));
+
+
+            //string InterfaceTypeCode = "ucbud2lt";
+            //String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(1);
+            //rabbitMQCode = "itziktest_" + rabbitMQCode;
+
+            ////var rabbitPublishService = new RabbitPublishService();
+            //RabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
+
+
+        }
+
+        private void _TBID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        //private void _CBInterfaceID_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+
+        //}
+
+        //private void _TBID_TextChanged(object sender, EventArgs e)
+        //{
+
+        //}
     }
 }

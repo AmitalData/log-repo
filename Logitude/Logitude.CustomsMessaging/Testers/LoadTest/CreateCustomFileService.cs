@@ -135,7 +135,7 @@ namespace Logitude.CustomsMessaging.Testers.LoadTest
                 ICustomContext dbContext = CustomContext.GetContext(tenant);
                 var myCustomsDocumentQueryService = new CustomsDocumentQueryService(dbContext);
                 var documentFilingRep = new DocumentsFilingRepository(tenant);
-                var documentsFilingList= documentFilingRep.GetDocumentsFilingsByEntityId(declarationId, tenant);
+                var documentsFilingList= documentFilingRep.GetDocumentsFilingsByEntityId_noInclude(declarationId, tenant);
                 if (documentsFilingList.Count<1)
                 {
                     throw new Exception("No documentsFilingList  for dec id  =" +declarationId);

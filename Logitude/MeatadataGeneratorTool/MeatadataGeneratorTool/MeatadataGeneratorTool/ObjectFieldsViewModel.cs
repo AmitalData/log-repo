@@ -1104,6 +1104,20 @@ namespace MeatadataGeneratorTool
             }
         }
 
+        private string displayInRequiredFields;
+        public string DisplayInRequiredFields
+        {
+            get
+            {
+                return displayInRequiredFields;
+            }
+            set
+            {
+                displayInRequiredFields = value;
+                FirePropertyChanged("DisplayInRequiredFields");
+            }
+        }
+
 
         string hTMLListComponentURL;
         public string HtmlListComponentUrl

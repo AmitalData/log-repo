@@ -595,10 +595,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 string currvValCourierDeclarationStatusCode = null;
                 string prevValCourierDocumentStatusCode = null;
                 string currvValCourierDocumentStatusCode = null;
+                string prevValMissingDocumentStatusCode = null;
+                string currvValMissingDocumentStatusCode = null;
 
                 prevValCourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
                 prevValCourierDocumentStatusCode = currentDeclarationCourierStatusPM.DocumentStatusCode;
+                prevValMissingDocumentStatusCode = currentDeclarationCourierStatusPM.MissedDocumentStatusCode;
+
                 calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
+                calculateDeclarationCourierStatus.CalcMissingDocumentStatusCode(currentDeclarationCourierStatusPM);
 
                 if (!inProgress && !DocumentStatusCodeIsX)
                 {
@@ -606,8 +611,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 currvValCourierDocumentStatusCode = currentDeclarationCourierStatusPM.DocumentStatusCode;
                 currvValCourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                currvValMissingDocumentStatusCode = currentDeclarationCourierStatusPM.MissedDocumentStatusCode;
 
-                if (prevValCourierDeclarationStatusCode != currvValCourierDeclarationStatusCode || prevValCourierDocumentStatusCode != currvValCourierDocumentStatusCode)
+                if (prevValCourierDeclarationStatusCode != currvValCourierDeclarationStatusCode 
+                    || prevValCourierDocumentStatusCode != currvValCourierDocumentStatusCode 
+                    || prevValMissingDocumentStatusCode != currvValMissingDocumentStatusCode)
                 {
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;

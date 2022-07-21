@@ -92,4 +92,13 @@ namespace Simplog.Server.Infrastructure.Helpers
         }
 
     }
+    /// <summary>
+    /// Dummy Entity for Cache Use
+    /// </summary>
+    public class MyDummyClass
+    {
+        public int MyInt { get; set; }
+        public bool MyBool { get; set; }
+
+    }
 }

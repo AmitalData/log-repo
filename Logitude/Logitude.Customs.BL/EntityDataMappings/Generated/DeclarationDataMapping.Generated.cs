@@ -405,10 +405,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CancelRejectionReasonName, 
 	         ExportContainerizationID, 
 	         IsSubmitDeclaration, 
+	         ExportTaxationDateTime, 
+	         ExporterImporterCode, 
 	         AmedmentType, 
 	         AmendmentTypeName, 
 	         IsExportClosed, 
 	         ExportClosedErrorXML, 
+	         DeclarationOfficeHandlerCode, 
+	         TransferExporterCode, 
 	         IsExportDeclarationAmendments,
 	      }
 

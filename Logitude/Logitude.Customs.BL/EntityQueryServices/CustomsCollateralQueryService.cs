@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -68,6 +71,39 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 }
             }
             return customsCollateralList;
+        }
+
+        public List<CustomsCollateral> UpdateMulti(string[] ids, string declarationId, bool selectAll, CustomsCollateralsAnswerPM customsCollateralsAnswerPM, int tenant)
+        {
+            CustomsCollateralUpdateService updateService = new CustomsCollateralUpdateService(context, new Dictionary<string, IContext>(), tenant);
+            var ccaRepo = new CustomsCollateralsAnswerRepository(context);
+            List<CustomsCollateral> customsCollateralList =
+                selectAll ?
+                    repository.GetDeclarationCollateralsForSendToCustoms(declarationId, tenant, ids) :
+                    repository.GetDeclarationCollateralsList(ids);
+
+            AddCustomsCollateralsAnswerToCustomsCollaterals(customsCollateralsAnswerPM, tenant, updateService, ccaRepo, customsCollateralList);
+
+            return customsCollateralList;
+        }
+
+        private void AddCustomsCollateralsAnswerToCustomsCollaterals(CustomsCollateralsAnswerPM customsCollateralsAnswerPM, int tenant, CustomsCollateralUpdateService updateService, CustomsCollateralsAnswerRepository ccaRepo, List<CustomsCollateral> customsCollateralList)
+        {
+            customsCollateralList.ForEach(customsCollateralItem =>
+            {
+                CustomsCollateralPM customsCollateralPM = GetEntityPM(customsCollateralItem, true, new CustomsCollateralKeys() { Id = customsCollateralItem.Id });
+                customsCollateralsAnswerPM.CustomsCollateralId = customsCollateralPM.Id;
+                customsCollateralsAnswerPM.AllocatedAmount = customsCollateralPM.CustomsCollateralsConditions.Sum(x=> x.RequestedAmount);
+                customsCollateralsAnswerPM.AllocatedAmount = customsCollateralsAnswerPM.AllocatedAmount;
+                var ccaList = customsCollateralPM.CustomsCollateralsAnswers;
+                customsCollateralsAnswerPM.LineNumber = ccaList.Count == 0 ? 1 : ccaList.Max(m => m.LineNumber) + 1; 
+
+                customsCollateralsAnswerPM.ChangeSetOp = ChangeSetOperation.Insert;
+                customsCollateralPM.CustomsCollateralsAnswers.Add(customsCollateralsAnswerPM);
+
+                customsCollateralPM.ChangeSetOp = ChangeSetOperation.Update;
+                updateService.Update(customsCollateralPM, true);
+            });
         }
     }
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "5bc83d91ea6933f011a10016f745b5bb";
+		public const string HashString = "4c8d2e472a6d6e9200bf54aa0bd5d96c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2953,10 +2953,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalcPendingCustoms",
 					  						DefaultText =  "Calc Pending Customs",
-					  						FullLocalDefaultText =  "כמות הצהרות מעוכב מכס",
+					  						FullLocalDefaultText =  "הצהרות מעוכב מכס",
 					  						ListFieldLable =  "CalcPendingCustomsListLable",
 					  						ListLableDefaultText =  "Calc Pending Customs",
-					  						ListLocalDefaultText =  "כמות הצהרות מעוכב מכס",
+					  						ListLocalDefaultText =  "הצהרות מעוכב מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4118,6 +4118,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CourierMasterFeature_AllowBulkPendind = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowBulkPendind", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.AllowBulkPendind", NameTextCodeDefaultText = @"AllowBulkPendind" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
 		   Feature CourierMasterFeature_CourierWSPendingTab = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierWSPendingTab", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.CourierWSPendingTab", NameTextCodeDefaultText = @"Courier Declaration Workspace Pending Tab" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+
+		   Feature CourierMasterFeature_PendingByAddress = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingByAddress", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.Pending By Address", NameTextCodeDefaultText = @"Pending By Address" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
    
 	    

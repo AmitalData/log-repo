@@ -1725,14 +1725,16 @@ Exception:" + ee.Message
                 var queueSendModel = new QueueSendModel()
                 {
                     Tenant = tenant,
-                    InterfaceTypeCode = this.MainInterfaceCode 
+                    InterfaceTypeCode = this.MainInterfaceCode,
                 };
                 if (futureSendDateTime.HasValue)
                 {
                     TimeSpan timeSpan = futureSendDateTime.Value.Subtract(DateTime.Now);
                     queueSendModel.Delay = timeSpan;
                 }
-                
+                queueSendModel.EntityCode = "CustomsRequestsSheet".ToLower();//"CustomsRequestsSheet";
+                queueSendModel.EntityId = _CustomsRequestsSheetService?.MyCustomsRequestsSheetPM?.Id;
+
                 //_CustomsRequestsSheetService = customsRequestsSheetService;
                 bool explictStop = false;
                 if (_CustomsRequestsSheetService.StartCustomsRequestStepEnum == CustomsStepEnum.DCAInProgressUploaded)

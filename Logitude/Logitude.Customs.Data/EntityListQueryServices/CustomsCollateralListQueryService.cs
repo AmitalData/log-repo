@@ -77,18 +77,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<CustomsCollateral> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CustomsCollateral> iQueryable, int tenant)
         {
             var filterDeclaration = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "DeclarationId");
-            if(filterDeclaration!=null)
+            if (filterDeclaration != null)
             {
-             string declarationId = filterDeclaration.FieldValue.ToString();
-                var declaration = context.Declarations.FirstOrDefault(x => x.Id == declarationId);
-            var declarations = context.Declarations.Where(x => x.AmendmentOriginalDeclartation == declarationId || x.Id== declaration.AmendmentOriginalDeclartation).ToList();
+                string declarationId = filterDeclaration.FieldValue.ToString();
 
- 
-                List<string> DeclarationsIds = new List<string>();
-            declarations.ForEach(x => DeclarationsIds.Add(x.Id));
-            DeclarationsIds.Add(declarationId);
+                iQueryable = (
+                    from collateral in iQueryable.Include("Declaration")
+                    let d = context.Declarations.Where(x => x.Id == declarationId).Select(x => x.AmendmentOriginalDeclartation).FirstOrDefault()
 
-            iQueryable = iQueryable.Where(x => DeclarationsIds.Contains( x.DeclarationId));
+                    where (collateral.DeclarationId == declarationId || collateral.Declaration.Id == d ||  (d != null && collateral.Declaration.AmendmentOriginalDeclartation == d)) && collateral.DeclarationId != null
+
+                    select collateral
+                 );
             }
         
 

@@ -165,6 +165,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllWorkerEntryPointTypeService.cs" />
     <Compile Include="BL\SerialAnalyzeDcaResponseByAggregateKey.cs" />
     <Compile Include="CustomsAnalyzeQueueWR.cs" />
     <Compile Include="CustomsCommandAnalyzeResponseWR.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="DCA\DCATester.cs" />
     <Compile Include="DCA\LastAccessFileInDCADirM.cs" />
     <Compile Include="DownloadDcaMessageSheetWR.cs" />
+    <Compile Include="RabbitMQConsumerService.cs" />
     <Compile Include="RabbitMQReceiveWR.cs" />
     <Compile Include="FTPToAnalyzeQueueWR.cs" />
     <Compile Include="General.cs" />
@@ -202,6 +204,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Test\clsTester.cs" />
+    <Compile Include="Test\clsTester.202205.cs" />
     <Compile Include="Test\ESBResponseXmlClass.cs" />
     <Compile Include="Test\LoadTestService.cs" />
     <Compile Include="Test\ReqSheetStatisticClass.cs" />

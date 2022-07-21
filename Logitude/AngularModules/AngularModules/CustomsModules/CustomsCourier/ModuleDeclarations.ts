@@ -24,6 +24,7 @@ import { CourierWorksheetNGComponent } from './Components/CourierWorkSheet/Couri
 import { CourierWorksheetNGListTemplate } from '../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
 import { BulkFeedPendingComponent } from './Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent';
 import { DeclarationPendingsBulkFeedingComponent } from './Components/CourierPendingReason/DeclarationPendingsBulkFeedingComponent';
+import { MultiUpdateDecComponent } from './Components/CourierPendingReason/MultiUpdateDecComponent';
 import { CourierDeclarationFiltersMenuComponent } from './Components/CourierWorkspaces/FiltersMenu/CourierDeclarationFiltersMenuComponent';
 
 export const Components =
@@ -45,6 +46,7 @@ export const Components =
         AddEditPendingByKeywordComponent,
         DeclarationPendingsGeneralComponent,
         DeclarationPendingsBulkFeedingComponent,
+        MultiUpdateDecComponent,
         CourierDeclarationWorkspaceComponent,
         AutonomyKeywordComponent,
         GetUnloadPortCodeComponent,
@@ -81,6 +83,8 @@ export class ModuleDeclarations {
             case "AddEditPendingByKeywordComponent": { myResult = AddEditPendingByKeywordComponent; break; }
             case "DeclarationPendingsGeneralComponent": { myResult = DeclarationPendingsGeneralComponent; break; }
             case "DeclarationPendingsBulkFeedingComponent": { myResult = DeclarationPendingsBulkFeedingComponent; break; }
+            case "MultiUpdateDecComponent": { myResult = MultiUpdateDecComponent; break; }
+                
             case "CourierDeclarationWorkspaceComponent": { myResult = CourierDeclarationWorkspaceComponent; break; }
             case "BulkFeedPendingComponent": { myResult = BulkFeedPendingComponent; break; }
                 

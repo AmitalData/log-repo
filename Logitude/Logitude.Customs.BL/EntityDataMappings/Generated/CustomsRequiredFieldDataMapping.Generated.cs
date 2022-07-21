@@ -28,7 +28,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ObjectfieldId, 
 	         ObjectfieldCode, 
 	         IsImport, 
-	         IsExport,
+	         IsExport, 
+	         WarningExport,
 	      }
 
 
@@ -42,7 +43,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ObjectFieldName, 
 	         ObjectfieldCode, 
 	         IsImport, 
-	         IsExport,
+	         IsExport, 
+	         WarningExport,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -79,6 +81,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExport))
             {
 				entityPOCO.IsExport = entityPM.IsExport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WarningExport))
+            {
+				entityPOCO.WarningExport = entityPM.WarningExport;
 			}
 			}
 
@@ -120,6 +127,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsExport = entityPOCO.IsExport;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WarningExport))
+            {
+					entityPM.WarningExport = entityPOCO.WarningExport;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsRequiredFieldPM entityPM, CustomsRequiredFieldPM oldEntityPM)
@@ -154,6 +166,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExport))
             {
                 oldEntityPM.IsExport = entityPM.IsExport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WarningExport))
+            {
+                oldEntityPM.WarningExport = entityPM.WarningExport;
             }
 			
 		}

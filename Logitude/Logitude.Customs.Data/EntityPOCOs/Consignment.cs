@@ -111,6 +111,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ConsignmentType { get; set; }
         [Column("ExportStoragesId")]
 	    public string ExportStoragesId { get; set; }
+        [Column("ExportContainerizationID")]
+	    public string ExportContainerizationID { get; set; }
     }
 }
 	 

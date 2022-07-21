@@ -73,7 +73,7 @@ import { CourierPendingReasonListService } from '../../Customs/Services/Standard
 import { InterfaceTenantDefinitionListService } from '../../Customs/Services/StandardLists/InterfaceTenantDefinitionListService';
 import { CustomsItemListService } from '../../Customs/Services/StandardLists/CustomsItemListService';
 import { CurrencyTypeListService } from '../../Customs/Services/StandardLists/CurrencyTypeListService';
-
+import { StorageStatusTableListService } from '../../Customs/Services/StandardLists/StorageStatusTableListService';
 import { NbcDeclarationTypeListService } from '../../Customs/Services/StandardLists/NbcDeclarationTypeListService';
 import { PartyRelationshipTypeListService } from '../../Customs/Services/StandardLists/PartyRelationshipTypeListService';
 import { AmountTypeListService } from '../../Customs/Services/StandardLists/AmountTypeListService';
@@ -212,6 +212,7 @@ export class CachedDataManagerServices {
             case "Customs.CustomBankListService": { myResult = new CustomBankListService(); break; }
             case "Customs.CustomsHouseTypeListService": { myResult = new CustomsHouseTypeListService(); break; }
             case "Customs.CurrencyTypeListService": { myResult = new CurrencyTypeListService(); break; }
+            case "Customs.StorageStatusTableListService": { myResult = new StorageStatusTableListService(); break; }
             case "Customs.CustomsSettingListService": { myResult = new CustomsSettingListService(); break; }
             case "Customs.CustomsHouseTypeAdditionalListService": { myResult = new CustomsHouseTypeAdditionalListService(); break; }
             case "Customs.GovernmentProcedureTypeListService": { myResult = new GovernmentProcedureTypeListService(); break; }

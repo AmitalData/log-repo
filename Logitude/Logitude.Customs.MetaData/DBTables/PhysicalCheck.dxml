@@ -204,6 +204,7 @@
   </Column>
   <Column
     Name="SearchResult"
+    OldNames="SearchResultCode"
     Type="varchar"
     Size="3">
     <Constraints

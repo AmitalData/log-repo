@@ -24,6 +24,8 @@ using Logitude.AmitalMessaging.Customs.CustomFile;
 using System.Globalization;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.Messaging.Customs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -92,7 +94,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (customResponse.DeclarationStatusAnswer.Count() > 1
                         && requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster"))
                         {
-                            throw new System.Exception();
+                            //throw new System.Exception();
+                            var mess = "SequenceNumber: " + declarationStatus_ResponseDeclarationStatusAnswer.SequenceNumber + " " + declarationStatus_ResponseDeclarationStatusAnswer.ExceptionPerQuery;
+                            var errMess = XmlGenericUtil<DF_NG_8251_Web02_DeclarationStatus_ResponseDeclarationStatusAnswer>.SerializeObject(declarationStatus_ResponseDeclarationStatusAnswer);
+                            MyResponseData.ResponseStatusXML = errMess;
+                            //MyResponseData.Succeeded = true;
+                            MyResponseData.HasException = true;
+                            MyResponseData.UserMessage = mess;
+                            LogMessagingUtil.Instance.AppendLine(mess);
+
+                            continue;
                         }
                         else
                         {
@@ -408,9 +419,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                         LogMessagingUtil.Instance.AppendLine("Canceled");
                                         myEventContextTagModel.EventCode = "DCN";
-                                        declarationPM.CurrentContextTag = myEventContextTagModel;
-                                        declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                                        declarationUpdateService.Update(declarationPM, true);
+                                        UpdateDeclaration(declarationUpdateService, declarationPM);
                                         //if (isAutoPayment)
                                         //    SendPayment(declarationPM, dbContext, requestParams);
                                     }
@@ -433,8 +442,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : ""));
                                             declarationPM.CurrentContextTag = myEventContextTagModel;
                                         }
-                                        declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                                        declarationUpdateService.Update(declarationPM, true);
+                                        UpdateDeclaration(declarationUpdateService, declarationPM);
                                         //if (isAutoPayment)
                                         //    SendPayment(declarationPM, dbContext, requestParams);
                                     }
@@ -448,8 +456,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion == declarationPM.VersionId)
                                     {
                                         declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
-                                        declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                                        declarationUpdateService.Update(declarationPM, true);
+                                        UpdateDeclaration(declarationUpdateService, declarationPM);
                                         //if (isAutoPayment)
                                         //    SendPayment(declarationPM, dbContext, requestParams);
                                     }
@@ -463,12 +470,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                                 if ((paymentDateUpdated || courierStatusUpdated) && declarationPM.ChangeSetOp != ChangeSetOperation.Update)
                                 {
-                                    declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationUpdateService.Update(declarationPM, true);
+                                    UpdateDeclaration(declarationUpdateService, declarationPM);
                                     //if (isAutoPayment)
                                     //    SendPayment(declarationPM, dbContext, requestParams);
                                 }
                                 var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
+
+                                ICommonDataContext commondbContext = CommonDataContext.GetContext(requestParams.Tenant);
+                                UserRepository userRepository = new UserRepository(commondbContext);
+                                var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
                                 if (setting.IsConnectedToUniFreight)
                                 {
                                     if (declarationPM.Direction == "E")
@@ -479,11 +489,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "6" ||
                                                declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "3")
                                             {
-                                                RaiseEvent(declarationPM, "1-5975", status_id: "RDH", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                                RaiseEvent(declarationPM,user.Id, status_id: "RDH", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
                                             }
                                             if (statusList.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
                                             {
-                                                RaiseEvent(declarationPM, "1-5975", status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
+                                                RaiseEvent(declarationPM, user.Id, status_id: "WAT", versionId: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, status_DateTime: declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime);
                                             }
                                         }
 
@@ -716,6 +726,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
             }
+        }
+
             //if (customResponse.)
             //{
 
@@ -726,7 +738,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //    _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
             //    RaiseEvent(this._MyDeclarationPM, requestParams.LoggingUserId, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
             //}
+        private static void UpdateDeclaration(DeclarationUpdateService declarationUpdateService, DeclarationPM declarationPM)
+        {
+            declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            LogMessagingUtil.Instance.AppendLine("CourierCustomStatusCode=" + declarationPM.CourierCustomStatusCode);
+            LogMessagingUtil.Instance.AppendLine("Time before update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
+            declarationUpdateService.Update(declarationPM, true);
+            LogMessagingUtil.Instance.AppendLine("Time after update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
         }
+
         private void UpdateManualPayment(DeclarationStatusRequestParams requestParams, ICustomContext customContext, DeclarationPM declarationPM)
         {
             if (requestParams.LoggingEntityReference == "AutoPayment")

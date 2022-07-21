@@ -48,6 +48,7 @@ export class ExportStorageList {
 	StorageStatusIsOpen: boolean;
 	ActionCode: string;
 	ProcedureCurrentName: string;
+	ActionName: string;
 	
 }
  

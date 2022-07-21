@@ -29,6 +29,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             });
             return res;
         }
+
+        public List<CustomsRequiredFieldPM> GetCustomWarningFieldsByObjectTable(string ObjectTableId, int Tenant, string type = "A")
+
+        {
+            return this.GetCustomWarningFieldsByObjectTableNoCache(ObjectTableId, Tenant, type);
+        }
         /*
         private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant,string type="A")
 
@@ -43,10 +49,41 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
         */
         public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableNoCache(string ObjectTableId, int Tenant, string type = "A")
-
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
             List<CustomsRequiredField> requiredFields = rep.GetCustomRequiredFieldsByObjectTable(ObjectTableId, Tenant, type);
+            List<CustomsRequiredFieldPM> requiredFieldsPms = new List<CustomsRequiredFieldPM>();
+            foreach (CustomsRequiredField field in requiredFields)
+            {
+                CustomsRequiredFieldPM requiredFieldpm = new CustomsRequiredFieldPM();
+                mapping.CustomPOCOToPM(requiredFieldpm, field);
+                mapping.POCOToPM(requiredFieldpm, field);
+                requiredFieldsPms.Add(requiredFieldpm);
+            }
+
+            return requiredFieldsPms;
+        }
+        public List<CustomsRequiredFieldPM> GetCustomWarningFieldsByObjectTableNoCache(string ObjectTableId, int Tenant, string type = "A")
+
+        {
+            CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
+            List<CustomsRequiredField> requiredFields = rep.GetCustomWarningFieldsByObjectTable(ObjectTableId, Tenant, type);
+            List<CustomsRequiredFieldPM> requiredFieldsPms = new List<CustomsRequiredFieldPM>();
+            foreach (CustomsRequiredField field in requiredFields)
+            {
+                CustomsRequiredFieldPM requiredFieldpm = new CustomsRequiredFieldPM();
+                mapping.CustomPOCOToPM(requiredFieldpm, field);
+                mapping.POCOToPM(requiredFieldpm, field);
+                requiredFieldsPms.Add(requiredFieldpm);
+            }
+
+            return requiredFieldsPms;
+        }
+        public List<CustomsRequiredFieldPM> GetExportCustomRequiredFieldsByObjectTableNoCache(string ObjectTableId, int Tenant, string type = "A")
+
+        {
+            CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
+            List<CustomsRequiredField> requiredFields = rep.GetExportCustomRequiredFieldsByObjectTable(ObjectTableId, Tenant, type);
             List<CustomsRequiredFieldPM> requiredFieldsPms = new List<CustomsRequiredFieldPM>();
             foreach (CustomsRequiredField field in requiredFields)
             {

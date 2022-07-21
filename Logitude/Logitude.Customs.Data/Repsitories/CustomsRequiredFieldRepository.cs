@@ -31,6 +31,24 @@ namespace Logitude.Customs.Data.Repsitories
                               select a).ToList();
             return requiredFields;
         }
+        public List<CustomsRequiredField> GetCustomWarningFieldsByObjectTable(string ObjectTableId, int Tenant, string type = "A")
+        {
+            List<CustomsRequiredField> requiredFields;
+
+            requiredFields = (from a in context.CustomsRequiredFields
+                              where a.ObjectTableId == ObjectTableId && a.Tenant == Tenant && a.WarningExport == true
+                              select a).ToList();
+            return requiredFields;
+        }
+        public List<CustomsRequiredField> GetExportCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant, string type = "A")
+        {
+            List<CustomsRequiredField> requiredFields;
+
+            requiredFields = (from a in context.CustomsRequiredFields
+                              where a.ObjectTableId == ObjectTableId && a.Tenant == Tenant && ((a.IsExport == true) || (a.WarningExport==true))
+                              select a).ToList();
+            return requiredFields;
+        }
 
         public CustomsRequiredField GetCustomRequiredFieldsByObjectFieldCode(string ObjectFieldCode, int Tenant)
         {

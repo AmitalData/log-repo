@@ -36,6 +36,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsImport).HasColumnName("IsImport");
 
             this.Property(t => t.IsExport).HasColumnName("IsExport");
+
+            this.Property(t => t.WarningExport).HasColumnName("WarningExport");
         }
     }
 }

@@ -19,7 +19,7 @@ import { CustomsSettingListService } from '../../../../../Customs/Services/Stand
 
 @Component({
     selector: 'NewExportDeclarationComponent',
-    
+
     templateUrl: './NewExportDeclarationComponent.html',
 })
 
@@ -30,7 +30,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
     public ObjectTableName: string = "Customs.Declaration";
     public ValidationErrorsList: string[] = [];
     QueryNameText: string = "";
-     
+
     IsTransportModeMatch: boolean = true;
 
     private declarationPMService: DeclarationPMService = new DeclarationPMService();
@@ -63,7 +63,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
         this.EntityPM.AgentRoleCode = "A";
     }
     SetWindowArgs(args: any) {
-        
+
     }
 
     ngOnInit() {
@@ -84,7 +84,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
         }
     }
     get TransportMode() { return this.EntityPM.TransportModeId }
-    
+
     TransportModeClicked(value: string) {
         if (this.EntityPM.TransportModeId != value) {
             this.EntityPM.TransportModeId = value;
@@ -95,7 +95,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
     OkButtonClicked() {
         this.CurrentSession.StartBusyIndicator("");
         this.isOkButtonClicked = true;
-          var idIndex = this.CurrentSession.GetNewId("RadioButton");
+        var idIndex = this.CurrentSession.GetNewId("RadioButton");
         var errors: string[] = [];
         this.ValidationErrorsList = [];
         if (!this.ExportFile) {
@@ -108,17 +108,17 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
 
         if (!this.TransportMode) {
             errors.push("סוג הובלה - שדה חובה ");
-        } 
-       
+        }
+
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;
-            this.isOkButtonClicked=false;
+            this.isOkButtonClicked = false;
             this.CurrentSession.StopBusyIndicator();
-             return;
+            return;
         }
 
         this.SubmitChanges();
-        
+
     }
 
     CancelButtonClicked() {
@@ -128,13 +128,13 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
     SubmitChanges() {
         this.CurrentSession.CloseCurrentWindowEmit("ok");
         this.CurrentSession.StopBusyIndicator();
-        var Consignment  = new ConsignmentPM(this.EntityPM);
+        var Consignment = new ConsignmentPM(this.EntityPM);
 
         Consignment.ConsignmentType = 'E';
 
         if (this.TransportMode == 'A') Consignment.CargoTypeCode = "16";
         if (this.TransportMode == 'O') Consignment.CargoTypeCode = "13";
-        this.EntityPM.AddConsignment(Consignment); 
+        this.EntityPM.AddConsignment(Consignment);
 
         this.declarationPMService.insert(this.EntityPM).subscribe(myResult => {
 

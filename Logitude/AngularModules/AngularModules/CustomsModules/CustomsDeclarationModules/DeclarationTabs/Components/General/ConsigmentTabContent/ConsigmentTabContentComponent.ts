@@ -1104,7 +1104,7 @@ export class ConsigmentTabContentComponent
     
     async ConfirmDisconnectExportStorage() {                
         const confirmWindow = new ConfirmWindow();
-        confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '!\n' + TextCodeTranslator.Translate("Customs.Declaration.O.ChangeCargoId"));
+        confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '\n' + TextCodeTranslator.Translate("Customs.Declaration.O.ChangeCargoId"));
         
         return new Promise<boolean>((resolve, reject) => {            
             confirmWindow.WindowClosed.subscribe((event: any) => resolve(confirmWindow.Yes));

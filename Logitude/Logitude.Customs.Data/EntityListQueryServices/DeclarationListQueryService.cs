@@ -295,18 +295,22 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  join recJoin in qMyJoin
                                                               on a.Id equals recJoin.DeclarationId
                                                               into qrecJoin
-                                                 from myJoin in qrecJoin.DefaultIfEmpty()
-
+                                                 from myJoin in qrecJoin.DefaultIfEmpty()                                                
 
                                                  join recConsignment in q1stConsignments
                                                  on a.Id equals recConsignment.DeclarationId into qjoinConsignments
-                                                 from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
+                                                 from myJoinConsignment  in qjoinConsignments.DefaultIfEmpty()
 
 
                                                  join recOriginalDeclarations in qOriginalDeclarations
                                                  on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
                                                  into originalDeclarations
                                                  from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
+
+                                                 join AmendmentRequestStatus in context.AmendmentRequestStatuses
+                                                            on a.AmendmentStatus equals AmendmentRequestStatus.Code
+                                                            into qStatusAmendJoin
+                                                 from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
 
                                                      /*
                                                      join pr in qCourierPendingReasonLocalName
@@ -490,12 +494,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
                                                      ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
                                                      ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
-                                                      TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : null,
+                                                     TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : null,
                                                      PhysicalCheck = a.PhysicalCheck,
+
                                                      DeclarationTypeCode = a.DeclarationTypeCode,
                                                     
-                                                      DeclarationTypeName=a.DeclarationType.LocalName,
-                                                     IsExportDeclarationAmendments = arrAmentmentStatus.Contains(a.AmendmentStatus)
+                                                      DeclarationTypeName=a.DeclarationType.LocalName,                                                     
+                                                     IsExportDeclarationAmendments = arrAmentmentStatus.Contains(a.AmendmentStatus),
+
+
+                                                     FOBValueNIS = a.FOBValueNIS,
+                                                     FOBValueDollar = a.FOBValueDollar,
+
+                                                     AmendmentStatusName=myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName: null
+
                                                  });
 
 
@@ -519,7 +531,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
             if (queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsContainerization") != null)
             {
-                iQueryable = iQueryable.Where(x => string.IsNullOrEmpty(x.ExportContainerizationID) == true);
+                var query1 = (from a in context.Consignments
+                              where  a.ExportContainerizationID == null
+                              select a);
+                iQueryable = iQueryable.Where(x => query1.Any(c=>c.DeclarationId==x.Id) );
             }
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "CustomerName");
 
@@ -528,6 +543,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                  iQueryable = iQueryable.Where(x => (x.CustomerCard.LocalName != null ? x.CustomerCard.LocalName : x.CustomerCard.EnglishName).ToLower().StartsWith(filter.FieldValue.ToString().ToLower()));
             }
 
+            var filter1 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsConsOfDecEquelsCont");
+            if (filter1 != null)
+            {
+                var query1 = (from a in context.Consignments
+                              where a.ExportContainerizationID == filter1.FieldValue.ToString()
+                              select a).Select(x=>x.DeclarationId).ToList();
+
+                iQueryable = iQueryable.Where(x => query1.Contains(x.Id));
+            }
 
             return iQueryable;
         }
@@ -568,10 +592,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
             return fastIndividualProcessCode;
         }
-        private IQueryable<DeclarationList> GetIqueryableListForContainerization(IQueryable<Declaration> iQueryable)
+        private IQueryable<DeclarationList> GetIqueryableListForContainerization(IQueryable<Declaration> iQueryable,string containerID)
         {
 
             var qConsignmentNumber = (from a in context.Consignments
+                                      where string.IsNullOrEmpty(containerID) || a.ExportContainerizationID==containerID
                                       group a by a.DeclarationId into gConsignments
                                       select
                                       new
@@ -641,7 +666,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             return query;
         }
-        public List<DeclarationList> GetListForContainerization(QueryOperations queryOperations, int tenant)
+        public List<DeclarationList> GetListForContainerization(QueryOperations queryOperations, int tenant,string containerID)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -661,7 +686,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable);
+            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, containerID);
 
             query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
 

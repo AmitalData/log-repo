@@ -39,6 +39,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool? IsImport { get; set; }
         [Column("IsExport")]
 	    public bool? IsExport { get; set; }
+        [Column("WarningExport")]
+	    public bool? WarningExport { get; set; }
     }
 }
 	 

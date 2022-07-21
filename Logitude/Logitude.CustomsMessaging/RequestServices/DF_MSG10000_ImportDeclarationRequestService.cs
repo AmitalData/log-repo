@@ -55,6 +55,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationPM _DeclarationPM;
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
+        public bool IsFromOpenNewAmendment = false;
         public override void OnRequestFail(GenericRequestParams requestParams)
         {
             if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -476,7 +477,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var sIModificationByCustomerCommissionService = new SIModificationByCustomerCommissionService();
             foreach (var currSupplierInvoices in _DeclarationPM.SupplierInvoices)
             {
-                sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(_DeclarationPM, currSupplierInvoices, true);
+                sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(_DeclarationPM, currSupplierInvoices, true && !IsFromOpenNewAmendment);
 
             }
 
@@ -1043,6 +1044,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //var supplierInvoicePM =declarationPM.SupplierInvoices[supplierInvoiceSeq];
             //declarationGoodsShipment.SequenceNumeric = supplierInvoiceSeq + 1;
 
+            bool IsSendConsignment = true;
             foreach (var supplierInvoicePM in declarationPM.SupplierInvoices
                 ///.Where( rec => rec.SequenceNumeric !=null)
                 .OrderBy(rec => rec.SequenceNumeric).ToList())
@@ -1084,9 +1086,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 };
 
                 declarationGoodsShipment.CustomsValuation = GetcustomsValuation(supplierInvoicePM).ToArray();
-                if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
+                if (IsSendConsignment && !declarationPM.ExcludeConsignment)
                 {
                     declarationGoodsShipment.Consignment = GetDeclarationConsignment(declarationPM).ToArray();
+                    IsSendConsignment = false;
                 }
                 declarationGoodsShipment.AdditionalDocument = GetDeclarationGoodsShipmentAdditionalDocument(supplierInvoicePM);
                 declarationGoodsShipment.GovernmentAgencyGoodsItem = GetDeclarationGoodsItems(supplierInvoicePM).ToArray();
@@ -2389,6 +2392,19 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                         }
                 }
+            }
+            if (_DeclarationPM.IsCourierDeclaration && IsFromOpenNewAmendment)
+            {
+                errorMessage = "";
+                //var courierMasterPM = courierMasterQueryService.GetByDeclarationId(_DeclarationPM.Id, tenant);
+                //var repository = new CardRepository(tenant);
+                //var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, tenant);
+                //if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
+                //{
+                //    string defValue = GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, tenant);
+                //    if (defValue == "Y")
+                //    { }
+                //}
             }
             if (!string.IsNullOrWhiteSpace(errorMessage))
             {

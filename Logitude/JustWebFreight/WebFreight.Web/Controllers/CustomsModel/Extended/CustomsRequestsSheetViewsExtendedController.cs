@@ -89,7 +89,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         {
             try
             {
-                var factory = RabbitmqHelper.GetConnectionFactory();
+                var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: false);
                 using (IConnection connection = factory.CreateConnection())
                 using (IModel channel = connection.CreateModel())
                 {

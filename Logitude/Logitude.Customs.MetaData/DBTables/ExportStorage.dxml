@@ -41,7 +41,7 @@
   </Column>
   <Column
     Name="StorageStatus"
-    Type="nvarchar"
+    Type="varchar"
     Size="10">
     <Constraints
       Nullable="true" />

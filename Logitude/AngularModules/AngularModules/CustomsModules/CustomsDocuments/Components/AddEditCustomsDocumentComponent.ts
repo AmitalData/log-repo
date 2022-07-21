@@ -13,6 +13,7 @@ import { CustomDocumentTypeListService } from '../../../Customs/Services/Standar
 import { CustomsClosedTableListService } from '../../../Customs/Services/StandardLists/CustomsClosedTableListService';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomsDocumentPMService } from '../../../Customs/Services/StandardPMs/CustomsDocumentPMService';
+import { CustomsRequestSheetExtendedPMService } from '../../../Customs/Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
 import { CustomsDocumentsTicketPMService } from '../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
 import { CustDocTypeMetaDataWebService } from '../../../Customs/Services/WebServices/CustDocTypeMetaDataWebService';
 import { CustomDocumentViewerService } from '../../../Customs/Services/WebServices/CustomDocumentViewerService';
@@ -24,6 +25,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConnectedToItem } from './ConnectedToItem';
 import { ICustomsDocumentsController } from './ICustomsDocumentsController';
+import { CustomDocumentNewVersionService } from '../services/CustomDocumentNewVersion.service';
 
 @Component({ 
     
@@ -172,6 +174,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     IsActionButtonsEnabled: boolean;
     WindowArgs: any;
+    private readonly customDocumentNewVersionService: CustomDocumentNewVersionService = new CustomDocumentNewVersionService();
+
     //***********************************************************************//
     constructor() {
         super();
@@ -545,7 +549,6 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
         if (this.CustomsDocument) {
 
-
             var statusCodes = ['1', '7'];
             if (statusCodes.indexOf(this.CustomsDocument.DocumentStatusCode) > -1 && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)
                 && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId)
@@ -555,8 +558,29 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             else {
                 if (this.CustomsDocument.DocumentStatusCode == '2') {
                     this.IsActionButtonsEnabled = true;
-                } else {
-                    this.IsActionButtonsEnabled = false;
+                }
+                else {
+                    if (this.CustomsDocument.DocumentStatusCode == '7')
+                    {
+                        let objecttable: any = window.ObjectTables.filter(d => d.Name == "Customs.CustomsDocument")[0];
+                        var ser = new CustomsRequestSheetExtendedPMService();
+                        ser.GetGeneralRequestInProgress("2715", objecttable.Id, this.CustomsDocument.DocumentsFilingId, SessionLocator.Tenant)
+                            .subscribe((rsp: any) => {
+                                var myCustomsRequestsSheet = rsp.Result;
+                                this.CurrentSession.StopBusyIndicator();
+                                if (myCustomsRequestsSheet == null || myCustomsRequestsSheet.length == 0)
+                                {
+                                    this.IsActionButtonsEnabled = true;
+                                }
+                                else
+                                {
+                                    this.IsActionButtonsEnabled = false;
+                                }
+                            });
+                    }
+                    else {
+                        this.IsActionButtonsEnabled = false;
+                    }
                 }
             }
         }
@@ -957,7 +981,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                         this.ValidationErrorsList = docRes.ErrorsArray;
                     }
                     //let jDoit = false;
-                    //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לם נמצם כרטיס חתימה חברתי (מסר 2715)
+                    //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לא נמצא כרטיס חתימה חברתי (מסר 2715)
                     //    this.CurrentSession.StopBusyIndicator();
                     //    var messageWindow = new MessageWindow();
                     //    messageWindow.Width = 400;

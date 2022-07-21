@@ -17,8 +17,8 @@ namespace CustomsWorkerRole.L2U
     {
         
 
-        public SendDbQueueMessage2Unifreight(CustomDBQueueMessage receivedCustomDBQueueResponse)
-            : base(receivedCustomDBQueueResponse) 
+        public SendDbQueueMessage2Unifreight(CustomDBQueueMessage receivedCustomDBQueueResponse, bool fromRabitHandler)
+            : base(receivedCustomDBQueueResponse, fromRabitHandler) 
         {
 
                 }

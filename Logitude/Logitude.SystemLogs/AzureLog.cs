@@ -226,13 +226,14 @@ namespace Logitude.SystemLogs
             {
                 stackTrace = myStackTrace;
             }
-            if (stackTrace.Length > 7000)
+            if (stackTrace?.Length > 7000)
             {
                 stackTrace = stackTrace.Substring(0, 6999);
             }
             var better1st7000ThenNothing = true;//itzik 
             if (better1st7000ThenNothing)
             {
+                
                 exception = exception ?? "";
                 if (cachedException != null && cachedException.Source == "EntityFramework" && exception.Length > 7000)//Islam: take the start and the end if it is a db exception.
                 {
@@ -242,6 +243,10 @@ namespace Logitude.SystemLogs
                 else
                 {
                     exception = exception.Substring(0, Math.Min(7000, exception.Length));
+                }
+                if (LogitudeSettings.IsCostomsDeploy)
+                {
+                    exception = exception.Substring(0, Math.Min(2000, exception.Length));
                 }
             }
             

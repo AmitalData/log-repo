@@ -55,15 +55,6 @@
                         </ng-template>
                     </log-column>
 
-                    <log-column [header]="'חובה ליצוא'" [width]="'65'" [Alignment]="'right'">
-                        <ng-template let-item>
-                            <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
-                                <!--{{ item.Active }}-->
-                                <CheckBox (Checked)="item.IsExport=$event; CheckBoxChanged($event, item)" [IsChecked]="item.isExport"></CheckBox>
-                            </log-cell-template>
-                        </ng-template>
-                    </log-column>
-                    <!-- Active -->
                     <!--<log-column [header]="'פעיל'" [width]="'45'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">

@@ -93,7 +93,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        CargoType = en.CargoType,
 
-                                                       CustomsStatus = en.CustomsCargoStatus.LocalName,
+                                                       CustomsStatus = en.CustomsStatus,
 
                                                        ExporterID = en.ExporterID,
 
@@ -106,6 +106,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        ThirdCargoID = en.ThirdCargoID,
 
                                                        DeclarationStatusTypeName = status.LocalName,
+                                                      
                                                        //DeclarationStatusTypeName = 
                                                        //(
                                                        // from status in context.DeclarationStatusTypes
@@ -130,7 +131,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        CargoTypeCodeName = cargoIdentifireType.LocalName,
 
-                                                       DeclarationStatusTypeCode = status.Code,
+                                                       DeclarationStatusTypeCode = declaration.DeclarationStatusTypeCode,
 
                                                        Declaration_ID = en.DeclarationId,
 
@@ -143,7 +144,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
 
-                                                       ActionCode = en.ExportLogisticPermitAction.LocalName,
+                                                       ActionCode = en.ActionCode,
+                                                       ActionName = en.ExportLogisticPermitAction.LocalName,
                                                        ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName,
                                                        StorageSiteCode = en.StorageSiteCode,
 

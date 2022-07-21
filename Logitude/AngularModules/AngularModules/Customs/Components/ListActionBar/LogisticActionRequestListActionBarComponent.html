@@ -120,7 +120,7 @@
 
         <td style="width: 115px; float:left">
             <button [disabled]="!_LogisticActionRequestsCloseSharedDataService.IsDisplayButtonClose" class="Button"
-                style="text-align:center" (click)="CloseMarkChecks()">{{'סגירת ביטולים (' + count + ')'}}</button>
+                style="text-align:center" (click)="CloseMarkChecks()">{{' (' + ('Customs.General.O.ClosingCancellations' | TextCodeTranslationPipe) + count + ')'}}</button>
         </td>
     </tr>
 </table>

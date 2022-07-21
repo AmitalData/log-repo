@@ -250,15 +250,19 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                     this.ConfirmationTypesFilterItems = new ApiQueryFilters();
                     if (this.DeclarationPM.Direction == 'E')
                         this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", false, null, null, "Equals", false, false, false, "Boolean");
+                    else
+                        this.ConfirmationTypesFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "Boolean");
 
                     var reqConfirmationCodes: string = "";
                     var res = response.Result;
 
                     if (res) {
+
+
                         if (res.length > 0) {
                             if (!AppTool.IsNullOrEmpty(res)) {
 
-                                this.IsCheckBoxVisible = true;
+                                this.IsCheckBoxVisible = true;                               
                                 for (var i = 0; i < res.length; i++) {
 
 
@@ -326,6 +330,34 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         }
     }
 
+    CreateCertificateForCustomsItems() {
+        var windowArgs: any = {};
+        windowArgs.Ticket = new CertificateTicket();
+        windowArgs.IsNewCertificate = true;
+        windowArgs.IsAllSelected = false;
+        windowArgs.IsNew = true;
+        windowArgs.DeclarationId = this.DeclarationPM.Id;
+        windowArgs.ConnectedItems = null;
+        windowArgs.ExcludedItems = null;
+        windowArgs.Parent = this;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 550;
+        logWindow.Height = 300;
+        logWindow.ShowCloseButton = false;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.RequestedCerticate");
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event == "ok") {
+                this.GetCertificates($event);
+                this.CD.reattach();
+                this.RefreshEntity();
+            }
+        });
+        this.CD.detach();
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CreateEditTicketComponent');
+    }
+
     UpdateAllCertificateWithoutResponse() {
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
@@ -348,6 +380,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     }
 
     LoadConnectedItems(message: string) {
+        
         this.preventSelect = false;
         if (message == "ok" || message == null) {
 
@@ -480,7 +513,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         }
         else if (this.DeclarationPM.StorageStatusCode) {
             this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+            this.DisplayOnlyMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
         }
 
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
@@ -499,7 +532,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             }
             else if (this.DeclarationPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
-                this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+                this.DisplayOnlyMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             }
 
             this.timerToken = setTimeout(() => {
@@ -627,7 +660,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                 this.selecteCertificate.IsAllSelected = true;
             }
         }
-        else {
+        else {            
             this.SelectedItemsCount = 0;
             this.IsVisible = false;
             if (this.selecteCertificate != null) {
@@ -655,7 +688,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     }
 
     onCheckBoxChecked($event) {
-
+        
         if ($event.IsChecked) {
             if (!this.connectedItems.Collection.includes($event.rowData))
                 this.connectedItems.Insert($event.rowData);
@@ -835,6 +868,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     dataCount: number;
 
     CreateMethod() {
+        
         var windowArgs: any = {};
         windowArgs.Ticket = this.selecteCertificate;
         windowArgs.IsAllSelected = this.IsSelected;
@@ -884,7 +918,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         windowArgs.ConnectedItems = this.connectedItems.Collection;
         windowArgs.ExcludedItems = this.ExcludedItems.Collection;
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "העבר לאישור";
+        logWindow.Title = "העבר לםישור";
 
 
         logWindow.Width = 900;
@@ -930,7 +964,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     ItemsSource: ObservableCollection = new ObservableCollection([]);
     SearchText: string = "";
     Search(SearchText: string) {
-        this.SearchText = SearchText;
+        this.SearchText = !AppTool.IsNullOrEmpty(SearchText) ? SearchText.toLowerCase() : SearchText;
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
     public SearchFilterChangedEvent: any;
@@ -996,6 +1030,7 @@ export class CertificateTicketListItem extends BaseComponent {
 
     FilterSelectedValue: string;
     CertificateItemClicked(item: CertificateTicketListItem) {
+        
         this.parent.SelectedItem = this;
         this.parent.IsVisible = false;
         this.parent.selecteCertificate = this.ticket;

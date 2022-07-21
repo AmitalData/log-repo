@@ -35,9 +35,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             //throw new NotImplementedException();
             this.CustomMappedPMProperties.Add(PMPropertyNames.ImporterName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ContainerizationStatusName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.ContainerizationCargoID);
             this.CustomMappedPMProperties.Add(PMPropertyNames.HataraStatusName);
             var declarationRepository = new DeclarationRepository(entityPOCO.Tenant);
-            var declarations=declarationRepository.GetByExportContainerizationID(entityPOCO.Id, entityPOCO.Tenant);
+            var declarations=declarationRepository.GetByConsigmentExportContainerizationID(entityPOCO.Id, entityPOCO.Tenant);
             var items = declarations.ToList();
             foreach(Declaration dec in items)
             {
@@ -54,7 +55,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 
             }
             var containerizationStatusCodeQueryService = new ContainerizationStatusCodeQueryService(entityPOCO.Tenant);
-            entityPM.ContainerizationStatusName= containerizationStatusCodeQueryService.GetSingle(entityPOCO.ContainerizationStatus,false,true)?.Name;
+            entityPM.ContainerizationStatusName = containerizationStatusCodeQueryService.GetSingle(entityPOCO.ContainerizationStatus,false,true)?.Name;
+            
+            var containerizationCargoID = (!string.IsNullOrEmpty(entityPOCO.ManifestNumber) ? (entityPOCO.ManifestNumber + "-") : "") + (!string.IsNullOrEmpty(entityPOCO.SecondCargoID) ? (entityPOCO.SecondCargoID + "-") : "") + (!string.IsNullOrEmpty(entityPOCO.ThirdCargoID) ? (entityPOCO.ThirdCargoID + "-") : "");
+            if (!string.IsNullOrEmpty(containerizationCargoID)) {
+            containerizationCargoID = containerizationCargoID.Substring(0, (containerizationCargoID.Length - 1));
+            }
+            entityPM.ContainerizationCargoID = containerizationCargoID;
             var ContainerizationStatusQueryService = new ContainerizationHataraStatusQueryService(entityPOCO.Tenant);
             entityPM.HataraStatusName = ContainerizationStatusQueryService.GetSingle(entityPOCO.HataraStatus,false,true)?.Name;
 
