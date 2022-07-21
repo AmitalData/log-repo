@@ -115,34 +115,34 @@ export class NewChargifyAWBStockComponent extends BaseComponent {
         }
     }
 
-    public AWBSPackage100Label = "100 AWBs package (100$ for use within 12 months)";
-    public AWBSPackage200Label = "200 AWBs package (200$ for use within 12 months)";
-    public AWBSPackage500Label = "500 AWBs package (390$ for use within 12 months)";
-    public AWBSPackage1000Label = "1000 AWBs package (560$ for use within 12 months)";
+    public AWBSPackage100Label = "100 AWBs package ($100 for use within 12 months)";
+    public AWBSPackage200Label = "200 AWBs package ($180 for use within 12 months)";
+    public AWBSPackage500Label = "500 AWBs package ($390 for use within 12 months)";
+    public AWBSPackage1000Label = "1000 AWBs package ($650 for use within 12 months)";
 
-    public INTTRAPackage100Label = "100 INTTRA package (100$ for use within 12 months)";
-    public INTTRAPackage200Label = "200 INTTRA package (200$ for use within 12 months)";
-    public INTTRAPackage500Label = "500 INTTRA package (390$ for use within 12 months)";
-    public INTTRAPackage1000Label = "1000 INTTRA package (560$ for use within 12 months)";
+    public INTTRAPackage100Label = "100 INTTRA package ($100 for use within 12 months)";
+    public INTTRAPackage200Label = "200 INTTRA package ($180 for use within 12 months)";
+    public INTTRAPackage500Label = "500 INTTRA package ($390 for use within 12 months)";
+    public INTTRAPackage1000Label = "1000 INTTRA package ($650 for use within 12 months)";
 
     SetAWBSINTTRALables() {
-        this.AWBSPackage100Label = "100 AWBs package (100$ for use within 12 months)";
-        this.AWBSPackage200Label = "200 AWBs package (200$ for use within 12 months)";
-        this.AWBSPackage500Label = "500 AWBs package (390$ for use within 12 months)";
-        this.AWBSPackage1000Label = "1000 AWBs package (560$ for use within 12 months)";
-        this.INTTRAPackage100Label = "100 INTTRA package (100$ for use within 12 months)";
-        this.INTTRAPackage200Label = "200 INTTRA package (200$ for use within 12 months)";
-        this.INTTRAPackage500Label = "500 INTTRA package (390$ for use within 12 months)";
-        this.INTTRAPackage1000Label = "1000 INTTRA package (560$ for use within 12 months)";
+        this.AWBSPackage100Label = "100 AWBs package ($100 for use within 12 months)";
+        this.AWBSPackage200Label = "200 AWBs package ($180 for use within 12 months)";
+        this.AWBSPackage500Label = "500 AWBs package ($390 for use within 12 months)";
+        this.AWBSPackage1000Label = "1000 AWBs package ($650 for use within 12 months)";
+        this.INTTRAPackage100Label = "100 INTTRA package ($100 for use within 12 months)";
+        this.INTTRAPackage200Label = "200 INTTRA package ($180 for use within 12 months)";
+        this.INTTRAPackage500Label = "500 INTTRA package ($390 for use within 12 months)";
+        this.INTTRAPackage1000Label = "1000 INTTRA package ($650 for use within 12 months)";
         if (this.IsConnectaPanageaPartner) {
-            this.AWBSPackage100Label = "100 AWBs package (55$ for use within 12 months)";
-            this.AWBSPackage200Label = "200 AWBs package (110$ for use within 12 months)";
-            this.AWBSPackage500Label = "500 AWBs package (275$ for use within 12 months)";
-            this.AWBSPackage1000Label = "1000 AWBs package (550$ for use within 12 months)";
-            this.INTTRAPackage100Label = "100 INTTRA package (55$ for use within 12 months)";
-            this.INTTRAPackage200Label = "200 INTTRA package (110$ for use within 12 months)";
-            this.INTTRAPackage500Label = "500 INTTRA package (275$ for use within 12 months)";
-            this.INTTRAPackage1000Label = "1000 INTTRA package (550$ for use within 12 months)";
+            this.AWBSPackage100Label = "100 AWBs package ($55 for use within 12 months)";
+            this.AWBSPackage200Label = "200 AWBs package ($110 for use within 12 months)";
+            this.AWBSPackage500Label = "500 AWBs package ($275 for use within 12 months)";
+            this.AWBSPackage1000Label = "1000 AWBs package ($550 for use within 12 months)";
+            this.INTTRAPackage100Label = "100 INTTRA package ($55 for use within 12 months)";
+            this.INTTRAPackage200Label = "200 INTTRA package ($110 for use within 12 months)";
+            this.INTTRAPackage500Label = "500 INTTRA package ($275 for use within 12 months)";
+            this.INTTRAPackage1000Label = "1000 INTTRA package ($550 for use within 12 months)";
         }
     }
 
@@ -217,7 +217,15 @@ export class NewChargifyAWBStockComponent extends BaseComponent {
         var todayDate = DateTool.GetCurrentDateAsUtc();
         todayDate.setMonth(todayDate.getMonth() + 12);
         var expirationDate = DateTimeToDatePipe.Pipe(todayDate);
-        var warninig = "You have selected " + this.totalStocks + " AWBs packages for a total price of " + this.totalPrice + "$. The expiration date of your stock is " + expirationDate + " . Please confirm your selection by clicking on Confirm button.";
+        var title = "";
+        if (this.IsChargifyAccount && this.IsINTTRAPackage) {
+            title = this.IsAWBStockChecked ? " AWBs" : " INTTRA";
+        }
+        else {
+            title = this.IsChargifyAccount ? " AWBs" : " INTTRA";
+        }
+
+        var warninig = "You have selected " + this.totalStocks +  title + " for a total price of $" + this.totalPrice + ". The expiration date of your stock is " + expirationDate + " . Please confirm your selection by clicking on Confirm button.";
         this.ValidationWarningsMessage = warninig;
     }
 
@@ -230,7 +238,7 @@ export class NewChargifyAWBStockComponent extends BaseComponent {
         if (this.Is500AWBSPackage)
             total = this.IsConnectaPanageaPartner ? total + 275 : total + 390;
         if (this.Is1000AWBSPackage)
-            total = this.IsConnectaPanageaPartner ? total + 550 :total + 560;
+            total = this.IsConnectaPanageaPartner ? total + 550 : total + 650;
         if (this.Is100INTTRAPackage)
             total = this.IsConnectaPanageaPartner ? total + 55 : total + 100;
         if (this.Is200INTTRAPackage)
@@ -238,7 +246,7 @@ export class NewChargifyAWBStockComponent extends BaseComponent {
         if (this.Is500INTTRAPackage)
             total = this.IsConnectaPanageaPartner ? total + 275 :total + 390;
         if (this.Is1000INTTRAPackage)
-            total = this.IsConnectaPanageaPartner ? total + 550 :total + 560;
+            total = this.IsConnectaPanageaPartner ? total + 550 : total + 650;
         return total;
     }
 
@@ -267,10 +275,10 @@ export class NewChargifyAWBStockComponent extends BaseComponent {
         var confirmWindow = new ConfirmWindow();
         var title = "";
         if (this.IsChargifyAccount && this.IsINTTRAPackage) {
-            title = this.IsAWBStockChecked ? "Are you sure you want to purchase " + this.totalStocks + " AWBs stock" : "Are you sure you want to buy " + this.totalStocks +" INTTRA messages stock";
+            title = this.IsAWBStockChecked ? "Are you sure you want to purchase " + this.totalStocks + " AWBs stock?" : "Are you sure you want to buy " + this.totalStocks +" INTTRA messages stock?";
         }
         else {
-            title = this.IsChargifyAccount ? "Are you sure you want to purchase " + this.totalStocks + " AWBs stock" : "Are you sure you want to buy " + this.totalStocks +" INTTRA messages stock";
+            title = this.IsChargifyAccount ? "Are you sure you want to purchase " + this.totalStocks + " AWBs stock?" : "Are you sure you want to buy " + this.totalStocks +" INTTRA messages stock?";
         }
         confirmWindow.Show(title);
         confirmWindow.WindowClosed.subscribe((event: any) => {

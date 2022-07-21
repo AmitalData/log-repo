@@ -140,11 +140,12 @@ export class HomeComponent implements OnDestroy{
 
     SetBuyEAWBStockLable() {
         this.EAWBStockBuyingLable = "Buy e-AWB Stock";
-        if (this.IsINTTRAPackage && this.IsChargifyAccount)
-            this.EAWBStockBuyingLable = "Buy e-AWB/INTTRA Stock";
 
-        else if (this.IsINTTRAPackage && !this.IsChargifyAccount)
-            this.EAWBStockBuyingLable = "Buy INTTRA Stock";
+        if (this.IsChargifyAccount && this.IsINTTRAPackage) {
+            this.EAWBStockBuyingLable = "Buy e-AWB/INTTRA Stock";
+            //else if (this.IsINTTRAPackage && !this.IsChargifyAccount)
+            //    this.EAWBStockBuyingLable = "Buy INTTRA Stock";
+        }
     }
 
     SetIsINTTRAPackage() {
@@ -1482,7 +1483,7 @@ export class HomeComponent implements OnDestroy{
 
                 case "BUY":
                     {
-                        if (this.IsChargifyAccount || this.IsINTTRAPackage) {
+                        if (this.IsChargifyAccount) {
                             this.BuyChargifyAWBStock();
                         }
                         else {
