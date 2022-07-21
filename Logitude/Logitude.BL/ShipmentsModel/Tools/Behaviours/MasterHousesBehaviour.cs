@@ -48,16 +48,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                     item.NextETD = initializer.EntityPOCO.NextETD;
                     item.NextLeg = initializer.EntityPOCO.NextLeg;
                     item.NextLegCode = initializer.EntityPOCO.NextLegCode;
-
+                    
                     if (string.IsNullOrEmpty(item.AgentId))
                     {
                         item.AgentComputed = initializer.EntityPM.AgentId;
                     }
 
+                    this.UpdateHouseTransshipmentsField(item);
                     initializer.Repository.Update(item);
                 }
                 initializer.Repository.SubmitChanges();
             }
+        }
+        private void UpdateHouseTransshipmentsField(Shipment house)
+        {
+            ShipmentComputedFields houseComputedFields = initializer.ShipmentContext.ShipmentComputedFields.Where(d => d.Id == house.Id).FirstOrDefault();
+            if (houseComputedFields == null) return;
+
+            houseComputedFields.Transshipments = initializer.EntityPM.Transshipments;
+            initializer.ShipmentComputedFieldsRepository.Update(houseComputedFields);
         }
         private void UpdateMasterHousesWithConcurrencyGuid()
         {

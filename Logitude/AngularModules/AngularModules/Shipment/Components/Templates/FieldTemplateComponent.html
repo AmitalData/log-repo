@@ -26,6 +26,10 @@
                                     <div class="TemplateTrimmingChild">{{FieldValue | ReplacePipe:',':'>'}}</div>
                                 </div>
 
+                                <div *ngIf="FieldName == 'Transshipments'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">{{FieldValue | ReplacePipe:',':'>'}}</div>
+                                </div>
+
                                 <div *ngIf="FieldName == 'IsOperationalClosed'">
                                     <img style="vertical-align:middle;" *ngIf="!FieldValue" src="./Images/Icons/IsOpened.png" />
                                     <img style="vertical-align:middle;" *ngIf="FieldValue" src="./Images/Icons/IsClosed.png" />
@@ -128,7 +132,7 @@
                                 </div>
 
                                 <div *ngIf="FieldName == 'MainCarriageETDTime'" class="TemplateTrimming">
-                                    <div class="TemplateTrimmingChild" >{{Entity[FieldName] | DateTimeToTimePipe}}</div>                                    
+                                    <div class="TemplateTrimmingChild">{{Entity[FieldName] | DateTimeToTimePipe}}</div>
                                 </div>
 
                                 <div *ngIf="FieldName == 'MainCarriageETATime'" class="TemplateTrimming">

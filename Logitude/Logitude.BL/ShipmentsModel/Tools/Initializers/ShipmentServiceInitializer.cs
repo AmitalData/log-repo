@@ -47,6 +47,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public ShipmentPackageHarmonizeRepository ShipmentPackageHarmonizeRepository { get; private set; }
         public ShipmentOrderPackageRepository ShipmentOrderPackageRepository { get; private set; }
         public PortRepository PortRepository { get; private set; }
+        public ShipmentComputedFieldsRepository ShipmentComputedFieldsRepository { get; private set; }
         public Tenant LoggedTenant { get; private set; }
         public ContactPM LoggedContact { get; private set; }
         public string LoggedContactId { get; private set; }
@@ -112,6 +113,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.ShipmentPackageItemRepository = new ShipmentPackageItemRepository(ShipmentContext);
             this.ShipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(ShipmentContext);
             this.ShipmentOrderPackageRepository = new ShipmentOrderPackageRepository(ShipmentContext);
+            this.ShipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(ShipmentContext);
             this.IInfrastructureContext = InfrastructureContext.GetContext(0);
             this.CardRepository = new CardRepository(this.CommonContext);
             this.AddressRepository = new AddressRepository(this.CommonContext);
