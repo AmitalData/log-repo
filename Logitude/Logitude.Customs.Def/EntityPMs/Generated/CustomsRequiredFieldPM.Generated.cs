@@ -204,6 +204,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? warningExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? WarningExport  
+	   {
+	    
+	     get
+		{
+		   return warningExport;
+		 }
+		 set
+		 {
+		   if(warningExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WarningExport",OldValue=warningExport,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   warningExport=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

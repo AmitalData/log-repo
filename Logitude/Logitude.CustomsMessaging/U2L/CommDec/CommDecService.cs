@@ -129,6 +129,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         //    return _tenant;
         //}
         public string _PBId;
+        private DeclarationCourierStatusPM _currentDeclarationCourierStatusPM;
 
         public void ProccessGenericRequestReal(
               string xmlLOGICOMMDEC, int tenant, string Curruser, string PBId,
@@ -289,6 +290,43 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
                 _LogitudeCommDecFile.Id = existId;
             }
+
+            //Delete Supplier Invoice
+
+            if (mode == "1" || mode == "2")
+            {
+                //Delete Supplier Invoice
+                MyGenericResponseObj.Stage = "GetSingle - To delete";
+                _context = CustomContext.GetContext(ResolvedTenant());
+                var myQueryService2 = new DeclarationQueryService(_context);
+                this._MyDeclarationPM = myQueryService2.GetSingle(this._LogitudeCommDecFile.Id, true, false);
+                if (this._MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("LOGITUDEFILE is " + this._LogitudeCommDecFile.Id + " but not found");
+                }
+                AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                ICustomContext dbContext2 = CustomContext.GetContext(ResolvedTenant());
+                DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
+                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                this._MyDeclarationPM.MarkAsChanged = true;
+
+                DeclarationUpdateService.DeclarationSupplierInvoicesFastDelete(_MyDeclarationPM, dbContext2);
+                dbContext2 = CustomContext.GetContext(ResolvedTenant());
+                DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
+
+                AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
+
+                this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
+                {
+                    MyCourierMasterPM = _CourierMasterPM,
+                    MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
+                };
+                DeclarationUpdateService.Update(this._MyDeclarationPM, true);
+                AppendLogLine("Update:MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+            }
+
 
             /////////////////////////////////////////////////////////////
             _context = CustomContext.GetContext(_tenant);
@@ -606,6 +644,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                        _currentDeclarationCourierStatusPM = currentDeclarationCourierStatusPM;
                     }
                 }
             }
@@ -619,6 +658,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
             declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
             if (this.IsProcedureCurrentCodeChanged) declarationUpdateService.IsProcedureCurrentCodeChanged = true;
+
+            this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
+            {
+                MyCourierMasterPM = _CourierMasterPM,
+                MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
+            };
             declarationUpdateService.Update(this._MyDeclarationPM, true);
 
 
@@ -1040,7 +1085,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 casualImportelTel = "0" + casualImportelTel;//Task 139114: בדיקת חוקיות של הזנת מספר טלפון והעלאת PENDING 903- טלפון לא חוקי + טיפול נוסף
             }
 
-            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, palestinianCode, _MyDeclarationPM.Tenant))
+            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, palestinianCode, _AmitalCustomsFile.CasualImporterAddress1 + " " + _AmitalCustomsFile.CasualImporterAddress2, _MyDeclarationPM.Tenant))
             {
                 this.IsAutonomy = true;
                 return;
@@ -1307,6 +1352,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                     calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
                                     currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
                                 }
+
+                                if(_MyDeclarationPM.PaymentDate.HasValue)
+                                    currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
+
                                 if (prevVal != currvVal)
                                 {
                                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
@@ -1413,7 +1462,11 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
                 try
                 {
-                    myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
+                    if (!_MyDeclarationPM.HatraDate.HasValue)// ELISHIVA  + MORAN Task 156294: חסימת מעבר משלוחים בין טיסות בלדרות
+                    {
+                        myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
+                    }
+
                 }
                 catch (DbEntityValidationException ex)
                 {

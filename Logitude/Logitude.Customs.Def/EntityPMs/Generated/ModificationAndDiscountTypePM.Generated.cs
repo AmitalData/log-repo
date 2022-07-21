@@ -227,6 +227,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string extraNumericData ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExtraNumericData  
+	   {
+	    
+	     get
+		{
+		   return extraNumericData;
+		 }
+		 set
+		 {
+		   if(extraNumericData != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExtraNumericData",OldValue=extraNumericData,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   extraNumericData=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

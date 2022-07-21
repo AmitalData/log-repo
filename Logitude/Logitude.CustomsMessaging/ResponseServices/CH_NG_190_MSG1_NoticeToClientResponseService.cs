@@ -169,7 +169,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 eventContextTagModelList.Add(myUpdateEventContextTagModel2);
                             }
 
-                            LogMessagingUtil.Instance.AppendLine("NoticeToClient.QueueType = " + NoticeToClient.QueueType.ToString());
+                            LogMessagingUtil.Instance.AppendLine("NoticeToClient.QueueType = " + NoticeToClient.QueueType?.ToString());
                             if (NoticeToClient.QueueType == 1 || NoticeToClient.QueueType == 3)
                             {
                                 LogMessagingUtil.Instance.AppendLine("raise Event SFC , תיק זומן לבדיקה באתר משקף");
@@ -243,7 +243,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 declarationUpdateService.Update(myDeclarationPM, true);
 
                             }
-                            LogMessagingUtil.Instance.AppendLine("NoticeToClient.QueueType = " + NoticeToClient.QueueType.ToString());
+                            LogMessagingUtil.Instance.AppendLine("NoticeToClient.QueueType = " + NoticeToClient.QueueType?.ToString());
 
                             if (NoticeToClient.QueueType == 1 || NoticeToClient.QueueType == 3)
                             {

@@ -23,6 +23,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new DF_MSG10000_ImportDeclarationMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                SaveDF_MSG2751_2757_TransshipmentDeclarationRequestMessagingService>
+                ((new SaveDF_MSG2751_2757_TransshipmentDeclarationRequestMessagingService()).MainInterfaceCode);
+            
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesMessagingService>
+                ((new SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService>
                 ((new DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService()).MainInterfaceCode);
 
@@ -458,6 +466,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB2715_MsgMessagingService>
                             ((new DCAInUCB2715_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                        DCAInUCBSendDelayForm_MsgMessagingService>
+                        ((new DCAInUCBSendDelayForm_MsgMessagingService()).MainInterfaceCode);
+
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                            DCAInUCB2715SendNow_MsgMessagingService>
                            ((new DCAInUCB2715SendNow_MsgMessagingService()).MainInterfaceCode);
@@ -471,6 +484,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                            DCAInUCBMultiUpdate_MsgMessagingService>
                            ((new DCAInUCBMultiUpdate_MsgMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                         DCAInUCBCreateCertificateForInvoiceItems_MsgMessagingService>
+                         ((new DCAInUCBCreateCertificateForInvoiceItems_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             MN_MSG8370_CargoSplitMessagingService>
@@ -502,6 +518,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInUCBCTML_MsgMessagingService>
                 ((new DCAInUCBCTML_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService>
+                ((new DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInDE_NG_5108_DecisionMessageMessagingService>
@@ -573,6 +593,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                  DCAInUCBUCADPE_MsgMessagingService>
                  ((new DCAInUCBUCADPE_MsgMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+             DCAInUCBUCADPE_MsgMessagingService>
+             ((new DCAInUCBUCADPE_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 NG_9100_MSG_OutgoingMessageRequestMessagingService>

@@ -94,6 +94,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual Card Card { get; set; }
         [Column("LastMileServiceType")]
 	    public string LastMileServiceType { get; set; }
+        [Column("MissedDocumentStatusCode")]
+	    public string MissedDocumentStatusCode { get; set; }
     }
 }
 	 

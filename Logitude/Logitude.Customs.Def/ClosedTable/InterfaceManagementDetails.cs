@@ -60,7 +60,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "2754E",
                 //   NeedSignature = false,
                 SignatureTypeCode = "C"
-            });
+            });            
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "2754",
@@ -80,6 +80,37 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
                 //  NeedSignature = false
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2755T",
+                InOut = InOutEnum.O.ToString(),
+                Description = "מסר הגשה לשטעון",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "2757T",
+                //   NeedSignature = false,
+                SignatureTypeCode = "C"
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2757T",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר תשובה הגשה לשטעון",
+                DefaultSendOptionsCode = null,
+
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "SaveDF_MSG2755_SubmitDeclaration_Out.",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
             });
             all.Add(new InterfaceManagementDetails()
             {
@@ -2807,6 +2838,21 @@ namespace Logitude.Customs.Def.ClosedTable
             });
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "UCBSEDF",
+                InOut = InOutEnum.I.ToString(),
+                Description = "שידור תעודות עיכוב",
+                DcaPrefixName = "UnifreightCourier_UCBSendDelayForm_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+                //  NeedSignature = false
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
                 Code = "UCB2715SendNow",
 
                 ///DCAInUniCourierBatchSend_MsgMessagingService
@@ -2897,7 +2943,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
-                InterfaceType = "C",
+                //InterfaceType = "C",
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "DCACSIFF",
+                InOut = InOutEnum.I.ToString(),
+                Description = "קליטת חשבון ספק מאקסל",
+                DcaPrefixName = "DCACSIFF_OUT",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //InterfaceType = "C",
             });
             all.Add(new InterfaceManagementDetails()
             {
@@ -2911,8 +2971,22 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
-                InterfaceType = "C",
-            });            
+                //InterfaceType = "C",
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "DCACCFII",
+                InOut = InOutEnum.I.ToString(),
+                Description = "יצירת אישור לפרטי מכס שסומנו",
+                DcaPrefixName = "DCACCFII_OUT",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //InterfaceType = "C",
+            });
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "UCADPE",
@@ -3082,6 +3156,34 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
              });
+
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2751T",
+                InOut = InOutEnum.O.ToString(),
+                Description = "הצהרת שטעון",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "2757T2",
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2757T2",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר תשובה הצהרת שטעון",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "SaveDF_MSG2751_TransshipmentDeclarationRequest_Out.",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+            });
 
             all.Add(new InterfaceManagementDetails()
             {

@@ -27,7 +27,24 @@ namespace Logitude.CustomsMessaging.RequestServices
                   },
             };
 
-           
+
+            //customReq = new NG_9100_MSG_OutgoingMessageRequest()
+            //{
+            //    GetOptions = new NG_9100_MSG_OutgoingMessageRequestGetOptions()
+            //    {
+            //        //fromDate = requestParams.FromDate.Value,
+            //        //toDate = requestParams.ToDate.Value,
+            //        //ServiceName = requestParams.InterfaceManagementsCode,
+            //         CorrelationId= "caf3f024-f14a-4738-8c38-9ee57ac0f420"
+
+            //    },
+            //    PeekWay = new NG_9100_MSG_OutgoingMessageRequestPeekWay()
+            //    {
+            //        Peek_Way = 3,
+            //        Take = 100,
+            //    },
+            //};
+
             return customReq;
         }
     }

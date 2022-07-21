@@ -286,6 +286,7 @@
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsBulkFeedingComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\MultiUpdateDecComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetNGComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWSData.html" />
@@ -303,6 +304,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationPayment\DeclarationPaymentExportComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\FiltersMenu\DeclarationFiltersMenuComponent.html" />
+    <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\LoadExcelSupplierInvoice\LoadExcelSupplierInvoicesComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\SendDeclaration\SendManifestComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\ExporterInvoiceComponent.html" />
@@ -311,6 +313,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateProcessCodeComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\VendorExtendedSearchComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\CargoSeal\DeclarationCargoSealTabComponent.html" />
+    <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Certificate\NewCertificateGoodsItemsSelectionComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
@@ -324,7 +327,7 @@
     <Content Include="CustomsModules\CustomsPhysicalCheck\Components\EditTabs\SearchReasult\PhysicalCheckSearchReasultTabComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\InterfaceTenantPriorityComponent.html" />
     <Content Include="CustomsModules\CustomsPhysicalCheck\Components\FiltersMenu\PhysicalCheckFiltersMenuComponent.html" />
-    <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.html" />
+    <Content Include="CustomsModules\CustomsReferant\Components\ExternalFieldMapping\AddEditExternalFieldMappingComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.html" />
     <Content Include="Customs\Components\ListActionBar\PhysicalCheckListActionBarComponent.html" />
@@ -457,6 +460,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\ProductTypeModificationPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\QuoteGroupSectionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ReportExecutionLogPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\SharedLogisticsPM.ts" />
     <TypeScriptCompile Include="Common\Services\DocumentServices\DocumentFileService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CarrierAreaExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
@@ -474,6 +478,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Common\Validators\CustomerValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsBulkFeedingComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\MultiUpdateDecComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.spec.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
@@ -487,8 +492,10 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationPayment\DeclarationPaymentExportComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\FiltersMenu\DeclarationFiltersMenuComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\LoadExcelSupplierInvoice\LoadExcelSupplierInvoicesComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleProviders.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Certificate\NewCertificateGoodsItemsSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.ts" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ExportDeclarationComponent.html" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.ts" />
@@ -596,6 +603,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\Components\FiltersMenu\PhysicalCheckFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ExternalFieldMapping\AddEditExternalFieldMappingComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.ts" />
@@ -1519,9 +1527,11 @@
     <TypeScriptCompile Include="Customs\EntityLists\CustomerIndicationTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAirlineList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAutonomyKeywordList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CustomsDocumentUploadList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsPartnerFtpList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsShipList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DecisionTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\DeclarationCasualDetailsList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationMamanSpecialActionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationPendingList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationRefernatDataList.ts" />
@@ -1607,6 +1617,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\CustomerIndicationTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAirlinePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAutonomyKeywordPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CustomsDocumentUploadPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsPartnerFtpPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsShipPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConPM.ts" />
@@ -1614,6 +1625,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsPackDetPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecDangersContactPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecisionTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\DeclarationCasualDetailsPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationMamanSpecialActionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationPendingPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationRefernatDataPM.ts" />
@@ -1735,11 +1747,13 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomerIndicationTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAirlineListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAutonomyKeywordListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsDocumentUploadListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPartnerFtpListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsShipListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPaymentTermsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DBMigrationListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DecisionTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationCasualDetailsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationConsAcceptanceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationMamanSpecialActionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationPendingListService.ts" />
@@ -1821,6 +1835,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsCountryPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsPartnerFtpPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DBMigrationPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationCasualDetailsPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationPendingPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationReferantDataPMService.ts" />

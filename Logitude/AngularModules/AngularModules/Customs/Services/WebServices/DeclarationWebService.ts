@@ -38,6 +38,7 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+import { ContainerizationPM } from 'Customs/EntityPMs/ContainerizationPM';
 
 @Injectable()
 
@@ -84,8 +85,8 @@ export class DeclarationWebService {
 
         );
     }
-    GetDeclarationByConsignmentParames(ArrayDeclartiosId: string[]) {
-        debugger;
+  
+    GetIsConsignmentConectContainerization(Tenant:number,ArrayDeclartiosId: string[],Id:string,CargoTypeCode:string,ManifestNumber:string,SecondCargoID:string,ThirdCargoID:string) {
         return defer(() => {
 
             var authHeader = new Headers();
@@ -96,8 +97,9 @@ export class DeclarationWebService {
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-            debugger;
-            return this._http.post(this._apiUrl + "/GetDeclarationByConsignmentParames/",{ArrayDeclartiosId:ArrayDeclartiosId}, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.post(this._apiUrl + "/GetIsConsignmentConectContainerization/",{
+                Tenant,ArrayDeclartiosId:ArrayDeclartiosId,ContainerizationID:Id,CargoTypeCode:CargoTypeCode,ManifestNumber:ManifestNumber,SecondCargoID:SecondCargoID,ThirdCargoID:ThirdCargoID
+            }, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
@@ -109,7 +111,7 @@ export class DeclarationWebService {
 
         );
     }
-    GetDeclarationErrors(declarationId: string, listVersionId: string, courierFilter: string, IsAmendmentErrors: boolean=false) {
+    GetDeclarationErrors(declarationId: string, listVersionId: string, courierFilter: string, IsAmendmentErrors: boolean = false, IsExportCloseErrors: boolean = false) {
 
         return defer(() => {
 
@@ -123,7 +125,7 @@ export class DeclarationWebService {
             serviceResponse = new ServiceResponse();
 
             return this._http.get(this._apiUrl + "/GetDeclarationErrors/?declarationId=" + declarationId
-                + "&listVersionId=" + listVersionId + "&courierFilter=" + courierFilter + "&IsAmendmentErrors=" + IsAmendmentErrors, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                + "&listVersionId=" + listVersionId + "&courierFilter=" + courierFilter + "&IsAmendmentErrors=" + IsAmendmentErrors + "&IsExportCloseErrors=" + IsExportCloseErrors, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 var _mappedListsArray: Array<DeclarationErrorView> = [];
@@ -593,6 +595,30 @@ export class DeclarationWebService {
         );
     }
 
+    PostSendTransshipmenDeclaration(genericRequestParams: GenericRequestParams) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var params = JSON.stringify(genericRequestParams);
+            return this._http.post(
+                this._apiUrl + '/PostSendTransshipmenDeclaration/',
+                JSON.stringify(genericRequestParams),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res:any) => {
+
+                    serviceResponse.Result = res;
+
+                    return serviceResponse;
+
+                }),catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+    }
 
     PostSendDeclarationAmendment(genericRequestParams: GenericRequestParams) {
         return defer(() => {
@@ -618,6 +644,7 @@ export class DeclarationWebService {
 
         );
     }
+
     PostSendDeclarationClosingAmendment(genericRequestParams: GenericRequestParams) {
         return defer(() => {
 
@@ -738,6 +765,32 @@ export class DeclarationWebService {
                 serviceResponse.Result = response;
                 return serviceResponse;
             }),catchError(ServiceHelper.HandleServiceError));
+
+
+        }
+
+        );
+    }
+
+    GetWarningFieldsForExportDeclaration(declarationId: string) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetWarningFieldsForExportDeclaration/?declarationId=" + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                //serviceResponse = response;
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
 
 
         }

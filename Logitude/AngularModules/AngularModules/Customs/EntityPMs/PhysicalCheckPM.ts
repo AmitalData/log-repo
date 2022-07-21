@@ -269,6 +269,11 @@ export class PhysicalCheckPM {
     public set CheckAnwserStatus(newValue: number) { if (this.checkAnwserStatus != newValue) { this.checkAnwserStatus = newValue; this.MarkAsDirty("CheckAnwserStatus"); } }
        
 	 
+    private searchResultName: string;
+    public get SearchResultName() { return this.searchResultName; }
+    public set SearchResultName(newValue: string) { if (this.searchResultName != newValue) { this.searchResultName = newValue; this.MarkAsDirty("SearchResultName"); } }
+       
+	 
 
     public OldEntityPM: PhysicalCheckPM;
 		

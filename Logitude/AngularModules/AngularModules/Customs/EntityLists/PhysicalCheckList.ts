@@ -60,6 +60,7 @@ export class PhysicalCheckList {
 	IntegratorCode: string;
 	AvailabilityDate: Date;
 	IntegratorName: string;
+	SearchResultName: string;
 	
 }
  

@@ -118,6 +118,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? AvailabilityDate  { get; set; }
        [DataMember]
        public string IntegratorName  { get; set; }
+       [DataMember]
+       public string SearchResultName  { get; set; }
    }
 
 }

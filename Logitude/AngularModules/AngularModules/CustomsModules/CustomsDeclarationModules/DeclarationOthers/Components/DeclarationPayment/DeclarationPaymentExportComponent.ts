@@ -1700,7 +1700,9 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.declarationMessagesService.PostSendExportPaymentOnly(params)
                 .subscribe(res1 => {
                 });
-        } else {
+        } else if (this.DeclarationPM.DeclarationTypeCode == "3")
+            this.declarationMessagesService.PostSendTransshipmentPaymentOnly(params).subscribe();
+        else {
             this.declarationMessagesService.PostSendPaymentOnly(params)
                 .subscribe(res1 => {
                 });

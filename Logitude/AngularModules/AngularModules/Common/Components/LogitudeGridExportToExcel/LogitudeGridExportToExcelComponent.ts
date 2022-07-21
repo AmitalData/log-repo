@@ -19,12 +19,12 @@ export class LogitudeGridExportToExcelComponent {
 
         var windowArgs: any = {};
         windowArgs.ExportExcelArgs = this.GetExportToExcelArgs();
-        windowArgs.tenant = SessionLocator.Tenant;
+        windowArgs.tenant = SessionLocator.Tenant; 
         windowArgs.ObjectTableName = this.ObjectTableName;
         windowArgs.QueryName = this.ObjectTableName;
         windowArgs.QueryType = "LogitudeGrid";
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 500;
+        var logitudeWindow = new LogitudeWindow(); 
+        logitudeWindow.Width = 500; 
         logitudeWindow.Height = 200;
         logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");//"Exporting View Data List To Excel File";
         logitudeWindow.WindowArgs = windowArgs;

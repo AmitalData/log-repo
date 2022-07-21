@@ -61,7 +61,11 @@ namespace Unifreight.BL.EntityUpdateServices
             logData = $"entityPM.PRIMARYNUM={entityPM.PRIMARYNUM}, ConfigurationManager.AppSettings[20220216.CheckIfGGGQExist]={val}, before check";
             LogitudeSettings.HandleLogMe("Check IsGGGQExist " + logData, false, "IsGGGQExist", stopLogAt);
             if (val != "1") return false;
-            var myGGGQQueryService = new GGGQQueryService(this.MainContext as AmitalContext);
+
+            var context = this.MainContext as AmitalContext;
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+            var myGGGQQueryService = new GGGQQueryService(context);
             GGGQPM ExistGGGQPM = myGGGQQueryService.GetByPrimary(entityPM.PRIMARYNUM, entityPM.ENTNAME, entityPM.ORIGINQUE, entityPM.FORMID, entityPM.STATUS);
             if (ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID))
             {

@@ -110,7 +110,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SealNumber, 
 	         CheckAuthorityAttenderTypeID, 
 	         CheckAuthorityAttenderTypeName, 
-	         CheckAnwserStatus,
+	         CheckAnwserStatus, 
+	         SearchResultName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

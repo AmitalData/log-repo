@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? IsImport  { get; set; }
        [DataMember]
        public bool? IsExport  { get; set; }
+       [DataMember]
+       public bool? WarningExport  { get; set; }
    }
 
 }

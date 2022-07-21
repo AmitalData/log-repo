@@ -36,6 +36,8 @@ using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.TraceEvents;
 using Unifreight.Data.AmitalModel.Repsitories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 {
@@ -145,7 +147,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 else
                 {
                     var responseXML = new IsDeclarationDisplayOnlyResponseXML();
-                    
+
                     CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
                     List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_MyDeclarationPM.Tenant, "2750", "", "", null, null, _MyDeclarationPM.CustomFileNo, true);
                     if (customsRequestsSheetPMList != null)
@@ -265,7 +267,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                         var feature = features.Features.FirstOrDefault(x => x.Code == "SendDeclaration902");
                         if (feature != null)
                         {
-                            _LogitudeScheduler.Request_Code= "2750";
+                            _LogitudeScheduler.Request_Code = "2750";
                             SendGenericRequest();
                         }
                     }
@@ -285,14 +287,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             var UnifreightListOnServerOnly = UnifreightListsUtil.Serialize(dic);
             return UnifreightListOnServerOnly;
         }
- 
+
         public void DelSertPayment(
         DeclarationPM myDeclarationPM,
         string bankId)
         {
-            var user = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant);
             ICustomContext dbContext = CustomContext.GetContext(myDeclarationPM.Tenant);
-
+            ICommonDataContext MyContext = CommonDataContext.GetContext(myDeclarationPM.Tenant);
+            UserRepository userRepository = new UserRepository(MyContext);
+            var myUser = userRepository.GetSingleUser(myDeclarationPM.SignedByUserId, myDeclarationPM.Tenant);
+            var user = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant);
             var myQueryService = new DeclarationQueryService(dbContext);
 
 
@@ -330,12 +334,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
 
             declarationPaymentPM.PaymentDate = DateTime.Now;
-            declarationPaymentPM.CreatedByUserId = user;
+            if (myUser != null)
+                declarationPaymentPM.CreatedByUserId = myDeclarationPM.SignerPersonalId == myUser.PersonalId ? myDeclarationPM.SignedByUserId : user;
+            else
+            {
+                declarationPaymentPM.CreatedByUserId = user;              
+            }
             declarationPaymentPM.AutomaticPayment = 1;
             CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(dbContext);
             CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(myDeclarationPM.Tenant);
-            declarationPaymentPM.SignatoryIdentification =
-                 CustomsSetting.CustomsAgentId;
+            declarationPaymentPM.SignatoryIdentification = myDeclarationPM.IsCourierDeclaration ? CustomsSetting.CustomsAgentId : myDeclarationPM.SignerPersonalId;
+
             {
 
 
@@ -357,7 +366,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     MethodTypeCode = "1",
                     Amount = myDeclarationPM.TotalTax,
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                    
+
                     BankCode = customBank.BankCode,
                     BranchCode = customBank.BranchCode,
                     PayerActivityTypeCode = "0",// customBank.PayerTypeCode,
@@ -754,14 +763,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             var customsBookQueryService = new CustomsBookQueryService(logContext);
             CustomsBookPM dbCustomsBookPM = customsBookQueryService.GetCustomsBookData();
             DateTime fromDate = DateTime.Now.AddDays(-7);
-            DateTime toDate= DateTime.Now;
+            DateTime toDate = DateTime.Now;
             if (dbCustomsBookPM != null)
             {
                 fromDate = (DateTime)dbCustomsBookPM.LastUpdateDate == null ? DateTime.Now.AddDays(-7) : (DateTime)dbCustomsBookPM.LastUpdateDate;
-                toDate = (DateTime)dbCustomsBookPM.LastUpdateDate == null ? DateTime.Now : fromDate.AddDays(7);  
+                toDate = (DateTime)dbCustomsBookPM.LastUpdateDate == null ? DateTime.Now : fromDate.AddDays(7);
 
             }
-             string fromDateString = fromDate.ToString("yyyyMMdd");
+            string fromDateString = fromDate.ToString("yyyyMMdd");
             string toDateString = toDate.ToString("yyyyMMdd");
 
             CustomsBookInRequestParams requestParams = new CustomsBookInRequestParams()
@@ -1048,7 +1057,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             bool mandatoryDoc = IsDocumentMissing(_MyDeclarationPM);
 
             var responseXML = new diamonsResponseXML();
-            if(!ticketValidStatus)
+            if (!ticketValidStatus)
             {
                 responseXML.MISS_REFERENCE = "T";
             }
@@ -1091,7 +1100,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
                 var feature = features.Features.FirstOrDefault(x => x.Code == "UniReferantData");
 
-                if(feature != null)
+                if (feature != null)
                 {
                     var responseXML = new isReferantAddOnResponseXML();
                     responseXML.isReferantAddOn = "T";
@@ -1099,16 +1108,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     {
                         var xml = XmlGenericUtil<isReferantAddOnResponseXML>.SerializeObject(responseXML);
                         MyGenericResponseObj.ResponseXml = xml;
+                        AppendLogLine("Check for UniReferantData was Successful, Referant Data will be transfered from unifreight (user:" + AuthenticationUtil.ResolveUserId(tenant) + ")");
                     }
                 }
                 else
                 {
-                    AppendLogLine("Check for UniReferantData Feature Failed, Referant Data will not be transfered from unifreight");
+                    AppendLogLine("Check for UniReferantData Feature Failed, Referant Data will not be transfered from unifreight (user:" + AuthenticationUtil.ResolveUserId(tenant) + ")");
                 }
             }
             catch (SecurityException ex)
             {
-                AppendLogLine("Check for UniReferantData Feature Failed,  Referant Data will not be transfered from unifreight, Message: " + ex.Message);
+                AppendLogLine("Check for UniReferantData Feature Failed,  Referant Data will not be transfered from unifreight (user:" + AuthenticationUtil.ResolveUserId(ResolvedTenant()) + "), Message: " + ex.Message);
             }
         }
 
@@ -1116,7 +1126,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
         {
             var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-       //     List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentStatusCode == "1").ToList();
+            //     List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentStatusCode == "1").ToList();
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
 
             List<CustomDocumentTypePM> documentTypePMs = docTypeQuery.GetMandatoryCustomDocumentTypes(myDeclarationPM.Tenant);
@@ -1124,19 +1134,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             foreach (var doc in documentTypePMs)
             {
                 List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code).ToList();
-            if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
-            return true;
+                if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+                    return true;
             }
- 
-            
-                //foreach (CustomsDocumentsTicketPM customsDocumentsTicketPMItem in customsDocumentsTicketPMList)
-                //{
-                //    CustomDocumentTypePM docType = docTypeQuery.GetSingle(customsDocumentsTicketPMItem.DocumentTypeCode, false, false);
-                //    if (docType.IsManadatory)
-                //    {
-                       
-                //}
-         
+
+
+            //foreach (CustomsDocumentsTicketPM customsDocumentsTicketPMItem in customsDocumentsTicketPMList)
+            //{
+            //    CustomDocumentTypePM docType = docTypeQuery.GetSingle(customsDocumentsTicketPMItem.DocumentTypeCode, false, false);
+            //    if (docType.IsManadatory)
+            //    {
+
+            //}
+
 
             return false;
 
@@ -1287,7 +1297,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
     public class diamonsResponseXML
     {
-        
+
         public string MISS_REFERENCE;
 
         public string MAND_FIELDS;

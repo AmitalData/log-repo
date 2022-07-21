@@ -46,12 +46,15 @@ using Logitude.Customs.BL.TraceEvents;
 using Unifreight.BL.EntityPMs;
 using SupplierInvoicePM = Logitude.Customs.Def.EntityPMs.SupplierInvoicePM;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.AmitalMessaging.Utils;
+using Newtonsoft.Json;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class DeclarationWebServiceController : ApiController
     {
         List<AmitalContext> _AmitalContextList = new List<AmitalContext>();
+        enum DeclarationTypeCode { EXPORT, TRANSSHIPMENT }
         AmitalContext GetAmitalContext(int tenant)
         {
             var tenantAmitalContext = _AmitalContextList.FirstOrDefault(rec => rec.TenantSeed == tenant);
@@ -85,19 +88,21 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         [HttpPost]
-        public HttpResponseMessage GetDeclarationByConsignmentParames(Request ArrayDeclartiosId)
+
+        public HttpResponseMessage GetIsConsignmentConectContainerization(ReqConectContainerization requestParam)
         {
             try
             {
-                
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 DeclarationConstraintQueryService query = new DeclarationConstraintQueryService(customContext);
-                List<string> countDeclartions = query.GetDeclarationByConsignmentParames(ArrayDeclartiosId.ArrayDeclartiosId);
+                List<string> countDeclartions = query.GetIsConsignmentConectContainerization(requestParam.Tenant ,requestParam.ArrayDeclartiosId, requestParam.ContainerizationID, requestParam.CargoTypeCode, requestParam.ManifestNumber, requestParam.SecondCargoID, requestParam.ThirdCargoID);
 
                 return Request.CreateResponse(HttpStatusCode.OK, countDeclartions);
             }
@@ -106,8 +111,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
-        public HttpResponseMessage GetDeclarationErrors(string declarationId, string listVersionId, string courierFilter,bool IsAmendmentErrors)
+
+
+        public HttpResponseMessage GetDeclarationErrors(string declarationId, string listVersionId, string courierFilter,bool IsAmendmentErrors,bool IsExportCloseErrors)
         {
             try
             {
@@ -119,7 +125,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 DeclarationQueryService query = new DeclarationQueryService(customContext);
                 List<DeclarationErrorView> list
                     = query.GetDeclarationErrors(declarationId == "undefined" ? null : declarationId
-                                        , tenant, listVersionId == "undefined" ? null : listVersionId, courierFilter , IsAmendmentErrors);
+                                        , tenant, listVersionId == "undefined" ? null : listVersionId, courierFilter , IsAmendmentErrors, IsExportCloseErrors);
 
                 return Request.CreateResponse(HttpStatusCode.OK, list);
             }
@@ -442,6 +448,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
 
                     DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
+                    _dF_MSG10000_ImportDeclarationRequestService.IsFromOpenNewAmendment = true;
                     var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
                     string error = "";
                     DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
@@ -465,8 +472,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-
-
         public HttpResponseMessage PostSendExportDeclaration(GenericRequestParams requestParamsData)
         {
             try
@@ -482,6 +487,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
 
         }
+ 
+        public HttpResponseMessage PostSendTransshipmenDeclaration(GenericRequestParams requestParamsData)
+        {
+            try
+            {
+                INF_MSG_GenericResponseData responseData;
+                var messagingService = new SaveDF_MSG2751_2757_TransshipmentDeclarationRequestMessagingService();
+                responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+ 
         public HttpResponseMessage PostSendDeclaration(GenericRequestParams requestParamsData)
         {
             try
@@ -499,7 +521,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         }
 
 
-        public HttpResponseMessage PostSendDeclarationAmendment(AmendmentRequestParams requestParamsData)
+        public HttpResponseMessage PostSendDeclarationAmendment(GenericRequestParams requestParamsData)
         {
             try
             {
@@ -507,8 +529,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 if (requestParamsData.RequestName.StartsWith("Export"))
                 {
                     //var messagingService = new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService();
+                    var serializedParent = JsonConvert.SerializeObject(requestParamsData);
+                    AmendmentRequestParams requestParams = JsonConvert.DeserializeObject<AmendmentRequestParams>(serializedParent);
+
                     var messagingService = new DF_MSG8235_ExportDeclarationAmendmentMessagingService();
-                    responseData = messagingService.Send(requestParamsData);
+                    responseData = messagingService.Send(requestParams);
                 }
                 else
                 {
@@ -602,6 +627,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
             
+        }
+
+        public HttpResponseMessage GetWarningFieldsForExportDeclaration(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                CustomsRequiredFieldErrors errors = CustomsRequiredFieldsValidator.GetWarningFieldsForExportDeclaration(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, errors);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
         }
 
         public HttpResponseMessage GetRequiredFieldsForCourierDeclaration(string declarationId)
@@ -1937,40 +1980,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
-        public HttpResponseMessage PostSendExportPaymentOnly(CustomFileCreditRequestParams requestParamsCredit)
+        public HttpResponseMessage PostSendTransshipmentPaymentOnly(CustomFileCreditRequestParams requestParamsCredit) 
         {
             try
             {
-
-
-
-                CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
-                GenericRequestParams submitRequestParams = new GenericRequestParams();
-                submitRequestParams.AppicationId = requestParamsCredit.AppicationId;
-                submitRequestParams.InterfaceTypeCode = "2755E";
-                submitRequestParams.PBId = requestParamsCredit.PBId;
-                submitRequestParams.CustomsRequestsSheetId = requestParamsCredit.CustomsRequestsSheetId;
-                submitRequestParams.Tenant = requestParamsCredit.Tenant;
-                submitRequestParams.RequestVIA = requestParamsCredit.RequestVIA;
-                submitRequestParams.LoggingUserId = requestParamsCredit.LoggingUserId;
-                submitRequestParams.ForcePersonalSign = requestParamsCredit.ForcePersonalSign;
-
-                submitRequestParams.LoggingEntityId = requestParamsCredit.LoggingEntityId;
-                submitRequestParams.LoggingEntityId2 = requestParamsCredit.LoggingEntityId2;
-                submitRequestParams.LoggingObjectTableId = requestParamsCredit.LoggingObjectTableId;
-                submitRequestParams.LoggingObjectTableId2 = requestParamsCredit.LoggingObjectTableId2;
-
-                submitRequestParams.TestCase = requestParamsCredit.TestCase;
-
-                var messagingService = new
-                    DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService();
-                INF_MSG_GenericResponseData submitResponseData = messagingService.Send(submitRequestParams);
-                responseData.Succeeded = submitResponseData.Succeeded;
-                responseData.HasException = submitResponseData.HasException;
-                responseData.UserMessage = submitResponseData.UserMessage;
-                responseData.ContinueProcessInBackground = submitResponseData.ContinueProcessInBackground;
-
-
+                CustomFileCreditResponseData responseData = SubmitPayment(requestParamsCredit, DeclarationTypeCode.TRANSSHIPMENT);
 
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
@@ -1978,8 +1992,21 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
+        
+        public HttpResponseMessage PostSendExportPaymentOnly(CustomFileCreditRequestParams requestParamsCredit)
+        {
+            try
+            {
+                CustomFileCreditResponseData responseData = SubmitPayment(requestParamsCredit, DeclarationTypeCode.EXPORT);
+
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }        
 
         public HttpResponseMessage GetDeclarationCollateralsList(string declarationId, int tenant)
         {
@@ -2252,6 +2279,38 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        private static CustomFileCreditResponseData SubmitPayment(CustomFileCreditRequestParams requestParamsCredit, DeclarationTypeCode declarationTypeCode)
+        {
+            CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
+            GenericRequestParams submitRequestParams = new GenericRequestParams();
+            submitRequestParams.AppicationId = requestParamsCredit.AppicationId;
+            submitRequestParams.InterfaceTypeCode = "2755E";
+            submitRequestParams.PBId = requestParamsCredit.PBId;
+            submitRequestParams.CustomsRequestsSheetId = requestParamsCredit.CustomsRequestsSheetId;
+            submitRequestParams.Tenant = requestParamsCredit.Tenant;
+            submitRequestParams.RequestVIA = requestParamsCredit.RequestVIA;
+            submitRequestParams.LoggingUserId = requestParamsCredit.LoggingUserId;
+            submitRequestParams.ForcePersonalSign = requestParamsCredit.ForcePersonalSign;
+
+            submitRequestParams.LoggingEntityId = requestParamsCredit.LoggingEntityId;
+            submitRequestParams.LoggingEntityId2 = requestParamsCredit.LoggingEntityId2;
+            submitRequestParams.LoggingObjectTableId = requestParamsCredit.LoggingObjectTableId;
+            submitRequestParams.LoggingObjectTableId2 = requestParamsCredit.LoggingObjectTableId2;
+
+            submitRequestParams.TestCase = requestParamsCredit.TestCase;
+
+            INF_MSG_GenericResponseData submitResponseData =
+                declarationTypeCode == DeclarationTypeCode.EXPORT ?
+                new DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService().Send(submitRequestParams) :
+                new SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesMessagingService().Send(submitRequestParams);
+            responseData.Succeeded = submitResponseData.Succeeded;
+            responseData.HasException = submitResponseData.HasException;
+            responseData.UserMessage = submitResponseData.UserMessage;
+            responseData.ContinueProcessInBackground = submitResponseData.ContinueProcessInBackground;
+            return responseData;
+        }
+
     }
 
     internal class CustomsPartnersItemCRList
@@ -2267,5 +2326,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     public class Request
     {
         public string[] ArrayDeclartiosId { get; set; }
+
     }
+   public class ReqConectContainerization
+   {
+        public string[] ArrayDeclartiosId { get; set; }
+        public string ContainerizationID { get; set; }
+        public string CargoTypeCode { get; set; }
+        public string ManifestNumber { get; set; }
+        public string SecondCargoID { get; set; }
+        public string ThirdCargoID { get; set; }
+        public int  Tenant { get; set; }
+   }
+
 }

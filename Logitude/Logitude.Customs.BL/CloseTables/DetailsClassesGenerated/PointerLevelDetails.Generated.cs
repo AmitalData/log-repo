@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<PointerLevelDetails> GetAll()
        {
-		    var all = new List<PointerLevelDetails>(); 
+		    var all = new List<PointerLevelDetails>();  
+            all.Add(new PointerLevelDetails()
+            {    
+                Code = "I", 
+                LocalName = "חשבון ספק", 
+                SearchFields = "I, חשבון ספק", 
+                EnglishName = "null", 
+			});
+			 
+            all.Add(new PointerLevelDetails()
+            {    
+                Code = "P", 
+                LocalName = "פרט מכס", 
+                SearchFields = "P, פרט מכס", 
+                EnglishName = "null", 
+			});
+			 
+            all.Add(new PointerLevelDetails()
+            {    
+                Code = "D", 
+                LocalName = "הצהרה", 
+                SearchFields = "D,הצהרה", 
+                EnglishName = "Declaration, הצהרה ", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PointerLevel newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.LocalName = this.LocalName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.EnglishName = this.EnglishName;   
         }
 
 		public string GetSearchFields(PointerLevel rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.LocalName,",",rec.EnglishName,",");
         }
    }
 }

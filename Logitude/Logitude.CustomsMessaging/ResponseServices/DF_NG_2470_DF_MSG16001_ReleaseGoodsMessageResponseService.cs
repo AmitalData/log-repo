@@ -29,6 +29,7 @@ using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.TraceEvents;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -102,6 +103,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                     CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
+                    if (declarationPM.IsAmendment == true && declarationPM.AmendmentOriginalDeclartation != null)
+                    {
+                        _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                    }
                     switch (customResponse.GeneralData.ReleaseMessageCode)
                     {
                         case 1: // released
@@ -111,12 +116,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
+                           
+                            ICommonDataContext commonDbContext = CommonDataContext.GetContext(declarationPM.Tenant);
+                            UserRepository userRepository = new UserRepository(commonDbContext);
+                            var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
+
                             var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
+                            
                             if (setting.IsConnectedToUniFreight)
                             {
                                 if (declarationPM.Direction == "E")
                                 {
-                                    RaiseEvent(declarationPM, "1-5975", status_id: "HTR", status_DateTime: statusDateTime);
+                                    RaiseEvent(declarationPM, user.Id, status_id: "HTR", status_DateTime: statusDateTime);
                                 }
                             }
 
@@ -191,13 +202,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             return;
                     }
                     //declarationPM.HatraDate = hataraDate; - Yuval Chalup 17.01.2018 Remarked (Init in each case above)
-                    LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : ""));
+                    LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : "") + ",Time: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
 
                     declarationPM.CurrentContextTag = myEventContextTagModel;
 
                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     declarationUpdateService.Update(declarationPM, true);
-                    LogMessagingUtil.Instance.AppendLine($"declarationUpdateService.Update(IsClose={declarationPM.IsClose},CourierCustomStatusCode ={declarationPM.CourierCustomStatusCode})");
+                    LogMessagingUtil.Instance.AppendLine($"declarationUpdateService.Update(IsClose={declarationPM.IsClose},CourierCustomStatusCode ={declarationPM.CourierCustomStatusCode}),Time: "+ DateTime.Now.ToString("hh:mm:ss.fff tt"));
 
                     MyRequestSheetParam.EntityId1 = declarationPM.Id;
                     if (declarationPM.IsConvertedDeclaration)

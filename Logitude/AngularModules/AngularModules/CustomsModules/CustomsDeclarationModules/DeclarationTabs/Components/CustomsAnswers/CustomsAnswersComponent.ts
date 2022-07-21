@@ -59,6 +59,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     IsCourierDeclaration: boolean = false;
     IsDisplayMessage: boolean;
     @Input() IsAmendmentErrors: boolean;
+    @Input() IsExportCloseErrors: boolean;
     public get DepositionStatusCode(): string {
         if (this.EntityPM == null) return null; 
         return this.EntityPM.DepositionStatusCode;
@@ -88,7 +89,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
-
+        
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe((response:any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
@@ -454,7 +456,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     LoadDeclarationErrors() {
          //[2] GetDeclarationErrors();
         this.CurrentSession.StartBusyIndicatorLoading();//Avoiding ReSend !!
-        this.declarationWebService.GetDeclarationErrors(this.EntityPM.Id, this.ListVersionId, this.CourierFilterSelectedValue, this.IsAmendmentErrors)
+        this.declarationWebService.GetDeclarationErrors(this.EntityPM.Id, this.ListVersionId, this.CourierFilterSelectedValue, this.IsAmendmentErrors, this.IsExportCloseErrors)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 console.log("[Response] GetDeclarationErrors : ", myServiceResponse.Result);
                 var res: any[] = myServiceResponse.Result;

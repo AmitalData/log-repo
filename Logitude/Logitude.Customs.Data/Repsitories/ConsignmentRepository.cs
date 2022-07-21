@@ -33,6 +33,12 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower() & a.SecondCargoID.ToLower() == secondCargoID.ToLower()
                     select a).ToList().FirstOrDefault();
         }
+        public Consignment GetConsignmentByKeys(int tenant,string cargoTypeCode, string manifestNumber, string secondCargoID,string thirdCargoID)
+        {
+            return (from a in context.Consignments
+                    where a.Tenant== tenant && a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower() & a.SecondCargoID.ToLower() == secondCargoID.ToLower() && a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
+                    select a).ToList().FirstOrDefault();
+        }
         public int? GetMaxCounterKey(string declarationId, int tenant)
         {
             return (from a in context.Consignments
@@ -85,28 +91,62 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId && a.Tenant == tenant
                     select a.ManifestNumber).FirstOrDefault();
         }
-        //partial void onRemove(Consignment entity)
-        //{
-        //    //entity.DeclarationId
 
-        //    LogitudeSettings.HandleLogMe("DeclarationId:" + entity.DeclarationId + Environment.NewLine + Environment.StackTrace.ToString(), false, "ConsignmentRepositoryonRemove", new DateTime(2017, 11, 1));
-        //    return;
+        public List<Consignment> GetConsgnmentByDeclarationIdForDataMapping(string declarationId, int tenant)
+        {
+            return (from a in context.Consignments
+                    where a.DeclarationId == declarationId && a.Tenant == tenant
+                    select new                    
+                    {
+                        ManifestNumber = a.ManifestNumber,
+                        SecondCargoID=a.SecondCargoID,
+                        ThirdCargoID=a.ThirdCargoID,
+                    }).ToList().Select(x=>new Consignment { ManifestNumber = x.ManifestNumber, SecondCargoID = x.SecondCargoID, ThirdCargoID = x.ThirdCargoID }).ToList();
+        }
 
 
-        //    this.SubmitChanges();
-        //    var q = (from a in context.Consignments
-        //             where
-        //             a.DeclarationId == entity.DeclarationId &&
-        //             a.ConsignmentNumber != entity.ConsignmentNumber
 
-        //             select a);
-        //    if (q.Any())
-        //    {
-        //        return;
-        //    }
-        //    throw new Exception("preventing Clear Consignments - Validation (CALL#291407)");
-        //}
-   }
+
+        public List<Consignment> GetAllByExportStorageID(int tenant,string ExportStorageID)
+        {
+            return (from a in context.Consignments
+                   where a.Tenant == tenant && a.ExportStoragesId == ExportStorageID
+                   select a).ToList();
+
+        }
+
+
+
+
+  
+            //partial void onRemove(Consignment entity)
+            //{
+            //    //entity.DeclarationId
+
+            //    LogitudeSettings.HandleLogMe("DeclarationId:" + entity.DeclarationId + Environment.NewLine + Environment.StackTrace.ToString(), false, "ConsignmentRepositoryonRemove", new DateTime(2017, 11, 1));
+            //    return;
+
+
+            //    this.SubmitChanges();
+            //    var q = (from a in context.Consignments
+            //             where
+            //             a.DeclarationId == entity.DeclarationId &&
+            //             a.ConsignmentNumber != entity.ConsignmentNumber
+
+            //             select a);
+            //    if (q.Any())
+            //    {
+            //        return;
+            //    }
+            //    throw new Exception("preventing Clear Consignments - Validation (CALL#291407)");
+            //}
+
+
+
+    }
+
+
+
 
 }
    

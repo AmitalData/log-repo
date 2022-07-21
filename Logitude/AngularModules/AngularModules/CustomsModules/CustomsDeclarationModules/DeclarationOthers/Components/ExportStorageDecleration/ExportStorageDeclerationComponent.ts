@@ -284,7 +284,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.IsSelected = true;
         this.exportStorageExtendedListService.connectedSelectAll = true;
         this.exportStorageExtendedListService.SelectedExportStorage = true;
-        this.exportStorageExtendedListService.ConnectedExportStorage = this.exportStorageExtendedListService.AllExportStorage + this.entityPM.DeclarationId;
+        this.exportStorageExtendedListService.ConnectedExportStorage = this.exportStorageExtendedListService.AllExportStorage;
         this.LoadConnectedItems();
 
     }

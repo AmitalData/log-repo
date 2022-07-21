@@ -36,6 +36,7 @@ using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
+using Newtonsoft.Json;
 
 namespace CustomsWorkerRole
 {
@@ -262,7 +263,7 @@ namespace CustomsWorkerRole
             EventHandler<BasicDeliverEventArgs> consumerEventArgs = null;
             try
             {
-                var factory = RabbitmqHelper.GetConnectionFactory();
+                var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: false);
                 //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123"  };
                 factory.RequestedHeartbeat = TimeSpan.FromMinutes(10);
                 using (var connection = factory.CreateConnection())
@@ -511,11 +512,11 @@ namespace CustomsWorkerRole
 
                             if (response == null || (response != null && response.MessageId == null))
                             {
-                                //Thread.Sleep(TimeSpan.FromSeconds(5));
-                                Thread.Sleep(TimeSpan.FromMilliseconds(300));
+                                QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
+                                Thread.Sleep(TimeSpan.FromSeconds(5));
+                                //Thread.Sleep(TimeSpan.FromMilliseconds(300));
                                 break;
                             }
-
                             PerformanceM.EnqueueLastInstance();
                             PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
                             PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
@@ -547,11 +548,20 @@ namespace CustomsWorkerRole
                                 {
                                     //throw;
                                 }
-                                Queue_scope.Dispose();//remove lock !!
+                                try
+                                {
+                                    Queue_scope.Dispose();//remove lock !!
+                                }
+                                catch (Exception)
+                                {
+
+                                    
+                                }
+                                
                                 using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
                                 {
 
-                                    _CustomDbQueueService.SafeAbandon();
+                                    _CustomDbQueueService.SafeAbandon();//if (CurrentCustomQueueResponse.Retries > 10)
                                     Abandon_Queue_scope.Complete();
                                 }
 
@@ -593,7 +603,7 @@ namespace CustomsWorkerRole
                 int tenant = -1;
                 string analyzeClass = msgResponse.Properties["InterfaceTypeCode"].ToString();
 
-                
+
 
 
                 if (String.IsNullOrWhiteSpace(analyzeClass))
@@ -640,6 +650,20 @@ namespace CustomsWorkerRole
                 PerformanceM.LastInstance.RequestSheetID = correlationId;
                 PerformanceM.LastInstance.QueueDefinitionCode = myCustomsCommandEnum.ToString();
                 LogMessagingUtilWR.Instance.AppendLine("ResolveAndExecute");
+                try
+                {
+                    QueueThreadStateService.Upsert(
+        QueueThreadStateService.GetWRKey(this.GetType().Name),
+        $"Interface:{analyzeClass},RequestSheetID:{correlationId},QId:{msgResponse?.MessageId},QDefinition:{PerformanceM.LastInstance?.QueueDefinitionCode}"
+        );
+
+                }
+                catch //(Exception)
+                {
+
+                    
+                }
+
                 MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
 
 
@@ -679,6 +703,7 @@ namespace CustomsWorkerRole
             }
         }
 
+        
         public string _QueueNameOverride { get; set; }
     }
 }

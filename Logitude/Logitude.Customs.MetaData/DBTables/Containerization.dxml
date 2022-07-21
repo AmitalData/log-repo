@@ -84,6 +84,34 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CargoTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ManifestNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SecondCargoID"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ThirdCargoID"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ContainerizationStatus"
     ReferencedTable="ContainerizationStatusCodes"
@@ -97,6 +125,11 @@
   <Relation
     ForeignKeyColumn="OperationMode"
     ReferencedTable="NDMessageActionCodes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CargoTypeCode"
+    ReferencedTable="CargoIdentifireTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

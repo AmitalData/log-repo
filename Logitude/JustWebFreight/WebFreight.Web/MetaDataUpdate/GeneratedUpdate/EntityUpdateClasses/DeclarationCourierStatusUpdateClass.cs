@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "7d798de0025c2998a1df515daa69ae73";
+		public const string HashString = "2126592c1a15263cf1bddd3519103bed";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Courier Status",
-			      				    Code =  "c666",
+			      				    Code =  "9f91",
 			      				    Name =  "Customs.DeclarationCourierStatus Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -5546,10 +5546,127 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MissedDocumentStatusCode",
+					  						ObjectTableName =  "Customs.DeclarationCourierStatus",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MissedDocumentStatusCode",
+					  						ListPropertyPath =  "MissedDocumentStatusCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationCourierStatus",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MissedDocumentStatusCode",
+					  						DefaultText =  "Missed Document Status",
+					  						FullLocalDefaultText =  "חוסר במסמכים",
+					  						ListFieldLable =  "MissedDocumentStatusCodeListLable",
+					  						ListLableDefaultText =  "Missed Document Status Code",
+					  						ListLocalDefaultText =  "חוסר במסמכים",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup DeclarationCourierStatusQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9f91", Name = "Customs.DeclarationCourierStatus Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup DeclarationCourierStatusQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0d84", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable DeclarationCourierStatusObjectTable = objectTables.ContainsKey("Customs.DeclarationCourierStatus") ? objectTables["Customs.DeclarationCourierStatus"] : null;
+            if (DeclarationCourierStatusObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                DeclarationCourierStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationCourierStatus" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode DeclarationCourierStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationCourierStatus.Q.BulkFeedPending", DefaultText = @"BulkFeedPending",LocalDefaultText = "עדכון גורף", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationCourierStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCourierStatus.Q.BulkFeedPending", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationCourierStatusFeatures.BulkFeedPending", NameTextCodeDefaultText = "BulkFeedPending", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationCourierStatusObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query BulkFeedPendingQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationCourierStatusTextCode_0.Id, NameTextCodeCode = DeclarationCourierStatusTextCode_0.Code, ObjectTableName = "Customs.DeclarationCourierStatus", Code = "BulkFeedPending",  QueryGroupCode = "9f91", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationCourierStatusObjectTable.Id, QuerySection = "Customs.DeclarationCourierStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationCourierStatusFeature_0.Id,FeatureUniqeCode= DeclarationCourierStatusFeature_0.FeatureUniqeCode, DefaultSortName = "CourierHawb", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn BulkFeedPendingQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierHawb" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn BulkFeedPendingQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationCourierStatus.ImporterName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn BulkFeedPendingQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationCourierStatus.ImporterCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn BulkFeedPendingQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationCourierStatus.CargoDescription" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn BulkFeedPendingQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationCourierStatus.IncoTermCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn BulkFeedPendingQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationCourierStatus.TotalInvoiceAmountInUSD" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn BulkFeedPendingQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationCourierStatus.GrossMassMeasure" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn BulkFeedPendingQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationCourierStatus.CasualSupplierAddress" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn BulkFeedPendingQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationCourierStatus.CasualImporterCity" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn BulkFeedPendingQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierPendingReasonName" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

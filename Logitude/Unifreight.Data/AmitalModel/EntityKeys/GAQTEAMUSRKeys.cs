@@ -1,4 +1,4 @@
-﻿using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +22,6 @@ namespace Unifreight.Data.AmitalModel.EntityKeys
         }
 
     }
-
 }
+
+

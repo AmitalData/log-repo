@@ -48,6 +48,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage GetSomeExportObjectTables()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ObjectTableRepository ObjectTableRepository = new ObjectTableRepository(0);
+                ObjectTableQuery objectTableQuery = new ObjectTableQuery(ObjectTableRepository);
+                List<ObjectTablePM> result = objectTableQuery.GetSomeExportObjectTables(0);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetCustomsRequiredFieldListsByObjectTable(string objectTableId)
         {
             try
@@ -59,6 +79,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 CustomsRequiredFieldQueryService customsRequiredFieldQuery = new CustomsRequiredFieldQueryService(customContext);
                 List<CustomsRequiredFieldPM> result = customsRequiredFieldQuery.GetCustomRequiredFieldsByObjectTableNoCache(objectTableId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetExportCustomsRequiredFieldListsByObjectTable(string objectTableId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                CustomsRequiredFieldQueryService customsRequiredFieldQuery = new CustomsRequiredFieldQueryService(customContext);
+                List<CustomsRequiredFieldPM> result = customsRequiredFieldQuery.GetExportCustomRequiredFieldsByObjectTableNoCache(objectTableId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -102,6 +142,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                                 Tenant = tenant,
                                 IsImport=item.IsImport,
                                 IsExport= item.IsExport,
+                                WarningExport=item.WarningExport,
                                 ObjectFieldName = item.ObjectFieldName,
                             };
                             field.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -134,6 +175,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             reqField.Tenant = tenant;
                             reqField.IsImport = item.IsImport;
                             reqField.IsExport = item.IsExport;
+                            reqField.WarningExport = item.WarningExport;
                             reqField.ObjectFieldName = item.ObjectFieldName;
 
                             reqField.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
@@ -161,6 +203,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public string ObjectFieldName { get; set; }
         public bool IsImport { get; set; }
         public bool IsExport { get; set; }
+        public bool WarningExport { get; set; }
         public bool Active { get; set; }
     }
 }

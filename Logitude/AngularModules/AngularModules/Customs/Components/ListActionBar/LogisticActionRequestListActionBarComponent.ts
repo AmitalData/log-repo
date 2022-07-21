@@ -6,6 +6,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
 import { LogisticActionRequestWebService } from 'Customs/Services/WebServices/LogisticActionRequestWebService';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 
 @Component({
@@ -54,11 +55,11 @@ export class LogisticActionRequestListActionBarComponent
                 messageWindow.Height = 180;
 
                 if (!myResponse.HasError) {
-                    messageWindow.Show(ids.length + " בקשות נסגרו בהצלחה");
+                    messageWindow.Show(ids.length + " " + TextCodeTranslator.Translate('Customs.General.O.RequestClosed'));
                     this.CurrentSession.CurrentListComponent.RefreshBtnClick();
                 }
                 else
-                    messageWindow.Show("נכשל");
+                    messageWindow.Show(TextCodeTranslator.Translate('Customs.General.O.Fail'));
             });
     }
 }

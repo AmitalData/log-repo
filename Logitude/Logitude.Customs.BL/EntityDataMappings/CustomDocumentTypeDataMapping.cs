@@ -48,6 +48,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                             entityPM.PointerLevelName = pointerLevelPM.LocalName;
                         }
                     }
+
+                    if (entityPOCO.CustomsDocumentUpload != null)
+                    {
+                        CustomsDocumentUploadQueryService customsDocumentUploadQueryService = new CustomsDocumentUploadQueryService(tenant);
+                        CustomsDocumentUploadPM customsDocumentUploadPM = customsDocumentUploadQueryService.GetSingle(entityPOCO.CustomsDocumentUpload, false, true);
+                        if (customsDocumentUploadPM != null)
+                        {
+                            entityPM.CustomsDocumentUploadName = customsDocumentUploadPM.LocalName;
+                        }
+                    }
                 }
             }
         }

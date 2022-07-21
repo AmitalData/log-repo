@@ -5492,6 +5492,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? exportTaxationDateTime ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ExportTaxationDateTime  
+	   {
+	    
+	     get
+		{
+		   return exportTaxationDateTime;
+		 }
+		 set
+		 {
+		   if(exportTaxationDateTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportTaxationDateTime",OldValue=exportTaxationDateTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   exportTaxationDateTime=value;
+		   }
+			
+		 }
+	   }
+	  private string exporterImporterCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExporterImporterCode  
+	   {
+	    
+	     get
+		{
+		   return exporterImporterCode;
+		 }
+		 set
+		 {
+		   if(exporterImporterCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExporterImporterCode",OldValue=exporterImporterCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exporterImporterCode=value;
+		   }
+			
+		 }
+	   }
 	  private string amedmentType ;
 	  	  
        
@@ -5580,6 +5626,52 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportClosedErrorXML",OldValue=exportClosedErrorXML,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   exportClosedErrorXML=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationOfficeHandlerCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationOfficeHandlerCode  
+	   {
+	    
+	     get
+		{
+		   return declarationOfficeHandlerCode;
+		 }
+		 set
+		 {
+		   if(declarationOfficeHandlerCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationOfficeHandlerCode",OldValue=declarationOfficeHandlerCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationOfficeHandlerCode=value;
+		   }
+			
+		 }
+	   }
+	  private string transferExporterCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransferExporterCode  
+	   {
+	    
+	     get
+		{
+		   return transferExporterCode;
+		 }
+		 set
+		 {
+		   if(transferExporterCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransferExporterCode",OldValue=transferExporterCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transferExporterCode=value;
 		   }
 			
 		 }

@@ -4777,6 +4777,12 @@ namespace Unifreight.Data.AmitalModel
             .HasColumnName(@"MAKAT_REMARK")
             .HasMaxLength(255)
             .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVLINE>()
+    .Property(p => p.PRATMEHES2)
+        .HasColumnName(@"PRAT_MEHES2")
+        .HasMaxLength(11)
+        .HasColumnType("varchar2");
+
             #endregion
 
             #region CFIMSVDOC
@@ -5325,6 +5331,21 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.REMARKSPROTEST)
                     .HasColumnName(@"REMARKS_PROTEST")
                     .HasMaxLength(255)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GITITEM>()
+                .Property(p => p.CLASSIFIER1ID)
+                    .HasColumnName(@"CLASSIFIER1_ID")
+                    .HasMaxLength(16)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GITITEM>()
+                .Property(p => p.CLASSIFIER2ID)
+                    .HasColumnName(@"CLASSIFIER2_ID")
+                    .HasMaxLength(16)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GITITEM>()
+                .Property(p => p.ITEMNO2)
+                    .HasColumnName(@"ITEM_NO2")
+                    .HasMaxLength(30)
                     .HasColumnType("varchar2");
 
             #endregion
@@ -10153,8 +10174,105 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region CFIMSVSTATL
 
-  #region EFIMMN
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .HasKey(p => p.GUID)
+                .ToTable("CFIMSVSTATL", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.GUID)
+                    .IsRequired()
+                    .HasMaxLength(36)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasColumnType("int64");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.COMID)
+                    .HasColumnName(@"COM_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.CREATEDATE)
+                    .HasColumnName(@"CREATE_DATE")
+                    .IsRequired()
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.PAGENUM)
+                    .HasColumnName(@"PAGE_NUM")
+                    .IsRequired()
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.LINENUM)
+                    .HasColumnName(@"LINE_NUM")
+                    .IsRequired()
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.LINECOUNTER)
+                    .HasColumnName(@"LINE_COUNTER")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.PRATMEHES)
+                    .HasColumnName(@"PRAT_MEHES")
+                    .HasMaxLength(11)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.TARIFFCODE)
+                    .HasColumnName(@"TARIFF_CODE")
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.CUSTOMSSUPPLIERID)
+                    .HasColumnName(@"CUSTOMS_SUPPLIER_ID")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.CUSTOMERID)
+                    .HasColumnName(@"CUSTOMER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                 .Property(p => p.CATALOGID)
+                     .HasColumnName(@"CATALOG_ID")
+                     .HasMaxLength(128)
+                     .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.CATALOGNAME)
+                    .HasColumnName(@"CATALOG_NAME")
+                    .HasMaxLength(128)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.ITEMPRICE)
+                    .HasColumnName(@"ITEM_PRICE")
+                    .HasColumnType("decimal")
+                    .HasPrecision(19, 4);
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.OCRQUANTITY)
+                    .HasColumnName(@"OCR_QUANTITY")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.OCRQUANTITYTYPE)
+                    .HasColumnName(@"OCR_QUANTITY_TYPE")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.AMOUNT)
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.ORIGINID)
+                    .HasColumnName(@"ORIGIN_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region EFIMMN
+
 
             modelBuilder.Entity<EFIMMN>()
                 .HasKey(p => new { p.FILENO, p.STORGENO })
@@ -10288,6 +10406,491 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region CTBCARMOD
+
+            modelBuilder.Entity<CTBCARMOD>()
+                .HasKey(p => new { p.CUSTOMERID, p.CARMODEL })
+                .ToTable("CTBCARMOD", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.CUSTOMERID)
+                    .HasColumnName(@"CUSTOMER_ID")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.CARMODEL)
+                    .HasColumnName(@"CAR_MODEL")
+                    .IsRequired()
+                    .HasMaxLength(25)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.NAME)
+                    .HasMaxLength(70)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(70)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(70)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(70)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.FOB)
+                    .HasColumnType("double");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.FREIGHTAMOUNT)
+                    .HasColumnName(@"FREIGHT_AMOUNT")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.FREIGHTCURR)
+                    .HasColumnName(@"FREIGHT_CURR")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.INSPERC)
+                    .HasColumnName(@"INS_PERC")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.PRAT)
+                    .HasMaxLength(11)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.WEIGHT)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.ENGINEVOL)
+                    .HasColumnName(@"ENGINE_VOL")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.EXPAMOUNT)
+                    .HasColumnName(@"EXP_AMOUNT")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.EXPCURR)
+                    .HasColumnName(@"EXP_CURR")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.COMMERCIAL)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.TARIFF)
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.ABS)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.ABG)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.EPS)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.PORTFEENIS)
+                    .HasColumnName(@"PORT_FEE_NIS")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CTBCARMOD>()
+                .Property(p => p.MOTORCYCLE)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region LFIFILEM
+
+            modelBuilder.Entity<LFIFILEM>()
+                .HasKey(p => p.DELIVERYNO)
+                .ToTable("LFIFILEM", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DELIVERYNO)
+                    .HasColumnName(@"DELIVERY_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.ENTNAME)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.PRIMARYNUM)
+                    .HasColumnName(@"PRIMARY_NUM")
+                    .HasMaxLength(30)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DELIVERYTYPE)
+                    .HasColumnName(@"DELIVERY_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CLIENTID)
+                    .HasColumnName(@"CLIENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CARRIERID)
+                    .HasColumnName(@"CARRIER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CONTACTNAME)
+                    .HasColumnName(@"CONTACT_NAME")
+                    .HasMaxLength(150)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.PHONENO)
+                    .HasColumnName(@"PHONE_NO")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.EMAIL)
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CLIENTDEBIT)
+                    .HasColumnName(@"CLIENT_DEBIT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.WAREHOUSEFROM)
+                    .HasColumnName(@"WAREHOUSE_FROM")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.WAREHOUSETO)
+                    .HasColumnName(@"WAREHOUSE_TO")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.ZONEFROM)
+                    .HasColumnName(@"ZONE_FROM")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.ZONETO)
+                    .HasColumnName(@"ZONE_TO")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.ADDRESSFROM)
+                    .HasColumnName(@"ADDRESS_FROM")
+                    .HasMaxLength(250)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.ADDRESSTO)
+                    .HasColumnName(@"ADDRESS_TO")
+                    .HasMaxLength(250)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.LASTDATE)
+                    .HasColumnName(@"LAST_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.PACKTYPEID)
+                    .HasColumnName(@"PACKTYPE_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.QUANTITY)
+                    .HasColumnType("int64");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.WEIGHT)
+                    .HasColumnType("double");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.VOLUME)
+                    .HasColumnType("double");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CHARGWT)
+                    .HasColumnName(@"CHARG_WT")
+                    .HasColumnType("double");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.RATIO)
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DRIVERID)
+                    .HasColumnName(@"DRIVER_ID")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.TRUCKID)
+                    .HasColumnName(@"TRUCK_ID")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.TRUCKTYPE)
+                    .HasColumnName(@"TRUCK_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.FILECLOSE)
+                    .HasColumnName(@"FILE_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.FUCLOSE)
+                    .HasColumnName(@"FU_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.ACCOUNTINGCLOSE)
+                    .HasColumnName(@"ACCOUNTING_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.STATUSID)
+                    .HasColumnName(@"STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.STATUSDATE)
+                    .HasColumnName(@"STATUS_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.LSTSTATUSID)
+                    .HasColumnName(@"LST_STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.LSTSTATUSDATE)
+                    .HasColumnName(@"LST_STATUS_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.FOLUPDATE)
+                    .HasColumnName(@"FOL_UP_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.OPENBYUSER)
+                    .HasColumnName(@"OPEN_BY_USER")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.BRANCHID)
+                    .HasColumnName(@"BRANCH_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.OPENDATE)
+                    .HasColumnName(@"OPEN_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DEPARTID)
+                    .HasColumnName(@"DEPART_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.LASTTIME)
+                    .HasColumnName(@"LAST_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.LOADDATEFROM)
+                    .HasColumnName(@"LOAD_DATE_FROM")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.LOADDATETO)
+                    .HasColumnName(@"LOAD_DATE_TO")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.LOADTIMEFROM)
+                    .HasColumnName(@"LOAD_TIME_FROM")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.LOADTIMETO)
+                    .HasColumnName(@"LOAD_TIME_TO")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DESTDATEFROM)
+                    .HasColumnName(@"DEST_DATE_FROM")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DESTDATETO)
+                    .HasColumnName(@"DEST_DATE_TO")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DESTTIMEFROM)
+                    .HasColumnName(@"DEST_TIME_FROM")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DESTTIMETO)
+                    .HasColumnName(@"DEST_TIME_TO")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CITYFROM)
+                    .HasColumnName(@"CITY_FROM")
+                    .HasMaxLength(7)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CITYTO)
+                    .HasColumnName(@"CITY_TO")
+                    .HasMaxLength(7)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CHARACTERS)
+                    .HasMaxLength(200)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CHARGWTCAR)
+                    .HasColumnName(@"CHARG_WT_CAR")
+                    .HasColumnType("double");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.RATIOCAR)
+                    .HasColumnName(@"RATIO_CAR")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.PODDATE)
+                    .HasColumnName(@"POD_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.PODTIME)
+                    .HasColumnName(@"POD_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.REMARKS)
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.RECEIVERNAME)
+                    .HasColumnName(@"RECEIVER_NAME")
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CARGOTYPE)
+                    .HasColumnName(@"CARGO_TYPE")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.COMMODITYID)
+                    .HasColumnName(@"COMMODITY_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CLASSNO)
+                    .HasColumnName(@"CLASS_NO")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.UNNO)
+                    .HasColumnName(@"UN_NO")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.PCKGROUP)
+                    .HasColumnName(@"PCK_GROUP")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DELIVERYREF)
+                    .HasColumnName(@"DELIVERY_REF")
+                    .HasMaxLength(6)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CUSTOMSREF)
+                    .HasColumnName(@"CUSTOMS_REF")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.TRASNPORTBY)
+                    .HasColumnName(@"TRASNPORT_BY")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.FROMAREA)
+                    .HasColumnName(@"FROM_AREA")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.FROMITUR)
+                    .HasColumnName(@"FROM_ITUR")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.FORWARDREF)
+                    .HasColumnName(@"FORWARD_REF")
+                    .HasMaxLength(16)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DLVRYINPRGRS)
+                    .HasColumnName(@"DLVRY_IN_PRGRS")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.CUSTOMSAGNTCODE)
+                    .HasColumnName(@"CUSTOMS_AGNT_CODE")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.GATEPASSNO)
+                    .HasColumnName(@"GATEPASS_NO")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.ORIGINALMODEOFTRANSP)
+                    .HasColumnName(@"ORIGINAL_MODE_OF_TRANSP")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.DRIVERDOC)
+                    .HasColumnName(@"DRIVER_DOC")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.TRACKNO)
+                    .HasColumnName(@"TRACK_NO")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.TRACKADDNO)
+                    .HasColumnName(@"TRACK_ADD_NO")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.ARRDATE)
+                    .HasColumnName(@"ARR_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.ARRTIME)
+                    .HasColumnName(@"ARR_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.INCTRANSPDET)
+                    .HasColumnName(@"INC_TRANSP_DET")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.WTVALCODE)
+                    .HasColumnName(@"WTVAL_CODE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.SENDPORT)
+                    .HasColumnName(@"SEND_PORT")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<LFIFILEM>()
+                .Property(p => p.QUOTE)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
             #region Disabled conventions
 
 
@@ -10413,10 +11016,12 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<EFIFILEM> EFIFILEMs { get; set; }
         public virtual DbSet<ESPSPED> ESPSPEDs { get; set; }
         public virtual DbSet<GITITEMAP> GITITEMAPs { get; set; }
+        public virtual DbSet<CFIMSVSTATL> CFIMSVSTATLs { get; set; }
+        public virtual DbSet<CTBCARMOD> CTBCARMODs { get; set; }
         public virtual DbSet<MSPSPED> MSPSPEDs { get; set; }
         public virtual DbSet<MFIFILEM> MFIFILEMs { get; set; }
         public virtual DbSet<EFIMMN> EFIMMNs { get; set; }
-
+        public virtual DbSet<LFIFILEM> LFIFILEMs { get; set; }
 
     }
 }

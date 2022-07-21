@@ -1,4 +1,4 @@
-﻿using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,13 +46,15 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.GAQTEAMUSRs.Attach(entity);
             }
-            //context.AddToGAQTEAMUSRs 
             context.GAQTEAMUSRs.Remove(entity);
         }
 
         public void Update(GAQTEAMUSR entity)
         {
-            context.GAQTEAMUSRs.Attach(entity); context.SetAsModified(entity);
+            //if (entity.EntityState == System.Data.EntityState.Unchanged)
+            {
+                context.GAQTEAMUSRs.Attach(entity); context.SetAsModified(entity);
+            }
         }
 
         public List<GAQTEAMUSR> All()

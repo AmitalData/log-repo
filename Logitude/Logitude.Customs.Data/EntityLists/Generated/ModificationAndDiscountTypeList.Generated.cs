@@ -32,6 +32,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsRelevantInvoiceExport  { get; set; }
        [DataMember]
        public bool IsRelevantGoodsItemExport  { get; set; }
+       [DataMember]
+       public string ExtraNumericData  { get; set; }
    }
 
 }

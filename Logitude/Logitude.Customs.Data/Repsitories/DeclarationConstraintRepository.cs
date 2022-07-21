@@ -73,45 +73,17 @@ namespace Logitude.Customs.Data.Repsitories
 
             return constraints.FirstOrDefault().DeclarationID;
         }
-        public List<string> GetDeclarationByConsignmentParames(string[] ArrayDeclartiosId)
+
+        public List<string> GetIsConsignmentConectContainerization( int tenant ,string[] ArrayDeclartiosId, string ContainerizationID, string CargoTypeCode, string ManifestNumber, string SecondCargoID, string ThirdCargoID)
         {
-
-            List<Consignment> declarationConstraintConsignments;
-                List<string> consignmentParames;   
-            try
-            {    
-                string a= ArrayDeclartiosId[0];
-                Consignment consignment = (from c in context.Consignments where c.DeclarationId == a select c).FirstOrDefault();
-                if (consignment != null)
-                {
-                    declarationConstraintConsignments = (from c in context.Consignments.Include("Declaration")
-                                                         where c.CargoTypeCode == consignment.CargoTypeCode && c.ManifestNumber == consignment.ManifestNumber &&
-                                                         c.SecondCargoID == consignment.SecondCargoID && c.ThirdCargoID == consignment.ThirdCargoID && c.Declaration.ExportContainerizationID == null
-                                                         select c).ToList();
-                    consignmentParames = declarationConstraintConsignments.FindAll(x => !ArrayDeclartiosId.Contains(x.DeclarationId)).Select(s => s.Declaration.CustomFileNo).Distinct().ToList();
-                    return consignmentParames;
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            var query = (from c in context.Consignments
+                         where c.Tenant== tenant && c.ExportContainerizationID==null && ArrayDeclartiosId.Contains(c.DeclarationId)&&c.CargoTypeCode==CargoTypeCode&&c.ManifestNumber == ManifestNumber&&c.SecondCargoID==SecondCargoID&&c.ThirdCargoID==ThirdCargoID
+                         select c).Select(x=>x.DeclarationId) .ToList();
 
 
-
-
-
-
-
-
-            //if (declarationConstraintConsignments.Count == 0 )
-            //{
-            //    return 0;
-            //}
-
-            //return declarationConstraintConsignments.Count;
+            return query;
         }
+       
 
 
         public void FastDeleteMulti(DeclarationKeys entityKeyFields)

@@ -394,6 +394,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationCargoSplitMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationCasualDetailsMap());
+	
             modelBuilder.Configurations.Add(new DeclarationConsAcceptanceMap());
 	
             modelBuilder.Configurations.Add(new DeclarationConstraintMap());
@@ -417,6 +419,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new DeclarationReferantDataMap());
 	
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
+	
+            modelBuilder.Configurations.Add(new DeclarationStatusMap());
 	
             modelBuilder.Configurations.Add(new DeclarationStatusTypeMap());
 	
@@ -465,6 +469,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ExportReferenceMap());
 	
             modelBuilder.Configurations.Add(new ExportStorageMap());
+	
+            modelBuilder.Configurations.Add(new ExternalFieldMappingMap());
 	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
 	
@@ -700,9 +706,13 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SplitOrMergeReasonMap());
 	
+            modelBuilder.Configurations.Add(new StatusFieldTypeMap());
+	
             modelBuilder.Configurations.Add(new StorageMessageTypeMap());
 	
             modelBuilder.Configurations.Add(new StorageStatusMap());
+	
+            modelBuilder.Configurations.Add(new StorageStatusTableMap());
 	
             modelBuilder.Configurations.Add(new StuffingSiteTypeMap());
 	
@@ -2309,6 +2319,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<DeclarationCasualDetails> DeclarationCasualDetailses 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<DeclarationConsAcceptance> DeclarationConsAcceptances 
 	 {
 	      get; set;
@@ -2376,6 +2392,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationStatementType> DeclarationStatementTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationStatus> DeclarationStatuses 
 	 {
 	      get; set;
 	 
@@ -2520,6 +2542,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ExportStorage> ExportStorages 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExternalFieldMapping> ExternalFieldMappings 
 	 {
 	      get; set;
 	 
@@ -3227,6 +3255,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<StatusFieldType> StatusFieldTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<StorageMessageType> StorageMessageTypes 
 	 {
 	      get; set;
@@ -3234,6 +3268,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<StorageStatus> StorageStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<StorageStatusTable> StorageStatusTables 
 	 {
 	      get; set;
 	 

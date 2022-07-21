@@ -240,6 +240,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                          DeclarationId = a.DeclarationId,
                                          Tenant = a.Tenant,
                                          CounterKey = a.CounterKey,
+                                         InvoiceNumber = a.SupplierInvoice.InvoiceNumber,
                                          ItemCode = a.ItemCode,
                                          ItemPrice = a.ItemPrice,
                                          ManufactureIdentifier = a.ManufactureIdentifier,

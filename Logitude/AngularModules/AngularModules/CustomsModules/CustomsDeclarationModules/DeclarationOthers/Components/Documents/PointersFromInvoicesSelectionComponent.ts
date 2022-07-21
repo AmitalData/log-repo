@@ -388,6 +388,13 @@ export class PointersFromInvoicesSelectionComponent {
     BuildColumns() {
         this.columns = [];
         this.columns.push({
+            FieldName: 'InvoiceNumber',
+            DataTypeCode: 'Number',
+            Display: TextCodeTranslator.Translate("Customs.SupplierInvoice.F.InvoiceNumber"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+        });
+        this.columns.push({
             FieldName: 'SequenceNumeric',
             DataTypeCode: 'Number',
             Display: TextCodeTranslator.Translate("Customs.SupplierInvoiceItem.F.SequenceNumeric"),

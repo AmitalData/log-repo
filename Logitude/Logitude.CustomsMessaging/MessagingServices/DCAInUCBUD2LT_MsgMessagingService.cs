@@ -251,8 +251,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(tenant);
 
 
-                            var rabbitPublishService = new RabbitPublishService();
-                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode,8);
+
+
+
+                            //var rabbitPublishService = new RabbitPublishService();
+                            RabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode,8);
+
                         }
                         catch (Exception)
                         {
@@ -334,7 +338,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             JustDoIt(object documentsFilingPM)
         {
             DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
-            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220412HD367591.LogUntilDateyyyyMMdd"];
+            //string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220412HD367591.LogUntilDateyyyyMMdd"];
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
             {
                 stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
@@ -379,6 +384,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
 
                 int tenant = _DocumentsFilingPM.Tenant;
+
                 if (!IsConnected2Declaration())
                 {
                     LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()" + logData, false, "CreateUD2LTService", stopLogAt);
@@ -414,6 +420,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     Debug.WriteLine("Declaration has already been payed");
                     return;
                 }
+                
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
@@ -450,6 +457,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }
                     else
                     {
+                        if(!shouldCreateDCAComm) shouldCreateDCAComm = CheckIsTicketByDocType(logData);
                         LogitudeSettings.HandleLogMe("Not Diamond Declaration " + logData, false, "CreateUD2LTService", stopLogAt);
                     }
 
@@ -526,6 +534,41 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         }
 
+        private bool CheckIsTicketByDocType(string logData)
+        {
+            bool IsTicketByDocType = false;
+            string CustomsDocumentUpload = "";
+            try
+            {
+                DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
+                DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(_DocumentsFilingPM.DocumentTypeId, false, true);
+
+                if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
+                {
+                    CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                    CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, true);
+
+                    if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
+                    {
+                        CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
+                        if (customDocumentTypePM.CustomsDocumentUpload == "C")
+                        {
+                            IsTicketByDocType = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ee)
+            {
+                logData += $"CheckIsTicketByDocType:error:{ee.Message}";
+            }
+            finally
+            {
+                logData += $"CheckIsTicketByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
+            }
+            return IsTicketByDocType;
+        }
+
         private void FixDocumentTypeCodeEmpty(string logData)
         {
             var codeStart = _DocumentsFilingPM.DocumentTypeCode;
@@ -569,7 +612,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             ////
         }
-
+#if notinuse
         private string GetCustomsFileImportType(DeclarationPM entityPM)
         {
             if (entityPM == null || string.IsNullOrWhiteSpace(entityPM.CustomFileNo)) return null;
@@ -590,6 +633,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return theResult;
         }
 
+
+#endif
 
 
         private bool TicketalreadyExistforthisDocument(DeclarationPM declarationPM)

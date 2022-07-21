@@ -46,6 +46,51 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Tenant == tenant && importers.Contains(a.Id)
                     select a.CustomerCard).Distinct().ToList();
         }
+        public List<ContainerizationDetails> GetContainerizationByKeys(int tenant, List<string> Keys)
+        {
+             var query = (from a in context.Containerizations
+                    where a.Tenant == tenant && Keys.Contains((a.CargoTypeCode.ToLower() + a.ManifestNumber.ToLower() + a.SecondCargoID.ToLower() + a.ThirdCargoID.ToLower()).ToString())
+                    select a).ToList();
+            return query.Select(cont => new ContainerizationDetails
+                {
+                    Id = cont.Id,
+                    Tenant = cont.Tenant,
+                    ContainerizationNumber = cont.ContainerizationNumber
+                }).Distinct().OrderBy(c => c.ContainerizationNumber).ToList();
+        }      
+
+        public ConKeys GetcontainerizationById(string exportContainerizationID, int tenant)
+        {
+            var query = (from a in context.Containerizations
+                         where a.Id == exportContainerizationID && a.Tenant == tenant
+                         select a).Select(y => new ConKeys
+                         {
+                             Id=y.Id,
+                             CargoTypeCode = y.CargoTypeCode,
+                             ManifestNumber = y.ManifestNumber,
+                             SecondCargoID = y.SecondCargoID,
+                             ThirdCargoID = y.ThirdCargoID
+
+                         }).FirstOrDefault(); 
+            return query;
+        }
+        public class ConKeys
+        {
+            public string Id { get; set; }
+            public string CargoTypeCode { get; set; }
+            public string ManifestNumber { get; set; }
+            public string SecondCargoID { get; set; }
+            public string ThirdCargoID { get; set; }
+
+        }
+        public class ContainerizationDetails
+        {
+            public  string Id { get; set; }
+            public int Tenant { get; set; }
+            public string ContainerizationNumber { get; set; }
+            
+        }
+
     }
 
 }

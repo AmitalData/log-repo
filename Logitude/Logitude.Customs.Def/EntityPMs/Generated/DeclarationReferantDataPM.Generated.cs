@@ -1009,6 +1009,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string mawb ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Mawb  
+	   {
+	    
+	     get
+		{
+		   return mawb;
+		 }
+		 set
+		 {
+		   if(mawb != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Mawb",OldValue=mawb,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mawb=value;
+		   }
+			
+		 }
+	   }
+	  private string hawb ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Hawb  
+	   {
+	    
+	     get
+		{
+		   return hawb;
+		 }
+		 set
+		 {
+		   if(hawb != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Hawb",OldValue=hawb,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hawb=value;
+		   }
+			
+		 }
+	   }
+	  private bool importerApproval ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ImporterApproval  
+	   {
+	    
+	     get
+		{
+		   return importerApproval;
+		 }
+		 set
+		 {
+		   if(importerApproval != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterApproval",OldValue=importerApproval,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   importerApproval=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

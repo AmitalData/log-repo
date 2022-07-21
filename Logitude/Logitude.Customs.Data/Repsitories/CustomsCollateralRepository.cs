@@ -34,7 +34,22 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
-        public List<CustomsCollateral> GetDeclarationCollateralsList(string declarationId, int tenant)
+        public List<CustomsCollateral> GetDeclarationCollateralsForSendToCustoms(string declarationId, int tenant, string[] collateralIds)
+        {
+            return (from a in context.CustomsCollaterals
+                    join ccaj in context.CustomsCollateralsAnswers
+                     on a.Id equals ccaj.CustomsCollateralId
+                     into cca                    
+
+                    where a.DeclarationId == declarationId 
+                        && a.Tenant == tenant
+                        && a.IsClosed == false
+                        && !collateralIds.Contains(a.Id)
+                        && cca.Count() == 0
+                    select  a).ToList();
+        }
+
+         public List<CustomsCollateral> GetDeclarationCollateralsList(string declarationId, int tenant)
         {
             return (from a in context.CustomsCollaterals
                     where a.DeclarationId == declarationId && a.Tenant == tenant
@@ -48,6 +63,11 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.EntityIdKey1 == entityIdKey1 && a.EntityIdKey2 == entityIdKey2
                     select a).OrderByDescending(d => d.CollateralRequestNumber).ToList();
         }
+        
+        public List<CustomsCollateral> GetDeclarationCollateralsList(string[] ids) =>
+            (from a in context.CustomsCollaterals
+            where ids.Contains(a.Id)
+            select a).ToList();        
     }
 
 }

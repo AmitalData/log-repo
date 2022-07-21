@@ -1,27 +1,27 @@
 declare var window: any;
-import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ValidationSummary} from '../../../../Controls/All/ValidationSummary';
-import {Validator} from '../../../../Infrastructure/Validators/Validator';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ValidationSummary } from '../../../../Controls/All/ValidationSummary';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
-import {CustomsRequiredFieldList} from '../../../../Customs/EntityLists/CustomsRequiredFieldList';
+import { CustomsRequiredFieldList } from '../../../../Customs/EntityLists/CustomsRequiredFieldList';
 import { CustomsRequierdFieldsWebService } from '../../../../Customs/Services/WebServices/CustomsRequierdFieldsWebService';
 
 
 
 @Component({
-    
+
     selector: 'RequiredFieldsComponent',
     templateUrl: 'RequiredFieldsComponent.html',
 })
@@ -72,8 +72,8 @@ export class RequiredFieldsComponent extends BaseComponent {
         //this.TablesList.push({ Name: "table number 7" });
         this.TablesList.forEach((el) => {
             if (el.Name == "Customs.Declaration") {
-                el["TranslatedName"] =   TextCodeTranslator.Translate("Customs.Declaration.O.Declarations");
-}
+                el["TranslatedName"] = TextCodeTranslator.Translate("Customs.Declaration.O.Declarations");
+            }
             else {
                 el["TranslatedName"] = TextCodeTranslator.TranslateTable(el.Name);
 
@@ -122,10 +122,8 @@ export class RequiredFieldsComponent extends BaseComponent {
             this.SelectedTable = table;
 
             this._EntityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((res: any) => {
-                debugger;
                 this.customsRequierdFieldsWebService.GetCustomsRequiredFieldListsByObjectTable(table.Id)
                     .subscribe((response: ServiceResponse) => {
-                        debugger;
                         var res = response.Result;
                         this.IsNoFields = false;
 
@@ -141,7 +139,7 @@ export class RequiredFieldsComponent extends BaseComponent {
                             }
 
                         }
-                });
+                    });
             });
 
 
@@ -157,20 +155,12 @@ export class RequiredFieldsComponent extends BaseComponent {
         this.FieldsList.forEach((field) => {
             var objectField = window.ObjectFields.find(x => x.FieldCode == field.ObjectfieldCode);
             field.ObjectFieldName = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode);
-             if (field.IsExport && field.IsImport) {
-                field.ObjectFieldName=  field.ObjectFieldName + " (יבוא, יצוא)";
+            if (field.IsImport) {
+                field.ObjectFieldName = field.ObjectFieldName + "(יבוא)";
             }
-            else {
-                if (field.IsExport) {
-                    field.ObjectFieldName=  field.ObjectFieldName + " (יצוא)";
-
-                }
-                else if (field.IsImport) {
-                    field.ObjectFieldName=  field.ObjectFieldName + " (יבוא)";
-
-                }
+            if(field.IsExport){
+                this.FieldsList.splice(this.FieldsList.indexOf(field),1);
             }
-            
         });
     }
 
