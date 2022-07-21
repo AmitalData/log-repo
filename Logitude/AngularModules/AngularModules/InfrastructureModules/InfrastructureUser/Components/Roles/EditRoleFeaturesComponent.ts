@@ -125,11 +125,12 @@ export class EditRoleFeaturesComponent {
         });
     }
     Build() {
-        this.BuildCollections();
+        
         this.CurrentSession.StopBusyIndicator();
         this.allFeatures.forEach(itemFeature => {
             this.allFeaturesItems.push(new RoleFeatureClass(itemFeature, this));
         });
+        this.BuildCollections();
     }
 
     GetRoleFeaturesDectionary(roleFeatures: Array<FeaturePM>) {
