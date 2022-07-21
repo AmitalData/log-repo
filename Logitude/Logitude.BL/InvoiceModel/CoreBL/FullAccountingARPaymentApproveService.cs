@@ -259,7 +259,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             else
             {
                 ARPaymentBankTranferPM aRPaymentBankTranferPM = CreateFirstARPaymentBankTransfer(paymentPM);
-                SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
+              if(aRPaymentBankTranferPM != null)  SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
             }
         }
         private void SaveARPaymentBankTranfer(ARPaymentBankTranferPM aRPaymentBankTranfer)
@@ -314,23 +314,27 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private ARPaymentBankTranferPM CreateFirstARPaymentBankTransfer(ARPaymentPM arpaymentPM)
         {
-            ARPaymentBankTranferPM aRPaymentBankTranfer = new ARPaymentBankTranferPM
+            if (paymentPM.ARPaymentBankTranfers != null)
             {
-                Id = IdCounter.GetNumber("ARPaymentBankTranfer", arpaymentPM.Tenant).ToString(),
-                LineNumber = 1,
-                PaymentId = arpaymentPM.Id,
-                Tenant = arpaymentPM.Tenant,
-                PaymentRef = arpaymentPM.ChequeOrPaymentRef,
-                ValueDate = arpaymentPM.ValueDate.Value,
-                BankAccountId = arpaymentPM.BankAccountId,
-                ExchageRate = (decimal)arpaymentPM.PaymentCurrencyExchangeRate,
-                CurrencyId = arpaymentPM.PaymentCurrencyId,
-                LocalAmount = (decimal)arpaymentPM.AmountInLocalCurrency.Value,
-                ForeignAmount = (decimal)arpaymentPM.AmountInPaymentCurrency.Value,
-                ChangeSetOp = ChangeSetOperation.Insert
-            };
-            paymentPM.ARPaymentBankTranfers.Add(aRPaymentBankTranfer);
-            return aRPaymentBankTranfer;
+                ARPaymentBankTranferPM aRPaymentBankTranfer = new ARPaymentBankTranferPM
+                {
+                    Id = IdCounter.GetNumber("ARPaymentBankTranfer", arpaymentPM.Tenant).ToString(),
+                    LineNumber = 1,
+                    PaymentId = arpaymentPM.Id,
+                    Tenant = arpaymentPM.Tenant,
+                    PaymentRef = arpaymentPM.ChequeOrPaymentRef,
+                    ValueDate = arpaymentPM.ValueDate.Value,
+                    BankAccountId = arpaymentPM.BankAccountId,
+                    ExchageRate = (decimal)arpaymentPM.PaymentCurrencyExchangeRate,
+                    CurrencyId = arpaymentPM.PaymentCurrencyId,
+                    LocalAmount = (decimal)arpaymentPM.AmountInLocalCurrency.Value,
+                    ForeignAmount = (decimal)arpaymentPM.AmountInPaymentCurrency.Value,
+                    ChangeSetOp = ChangeSetOperation.Insert
+                };
+                paymentPM.ARPaymentBankTranfers.Add(aRPaymentBankTranfer);
+                return aRPaymentBankTranfer;
+            }
+            return null;
         }
 
 
@@ -766,7 +770,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             if (paymentPM.AccountingPaymentMethodCode == "CH")
             {
                 CreateCreditLinesForEachCheque(ref counter);
-            } else if (paymentPM.AccountingPaymentMethodCode == "BT")
+            } else if (paymentPM.AccountingPaymentMethodCode == "BT" && paymentPM.ARPaymentBankTranfers != null)
             {
                 CreateCreditLinesForEachBankTransfer(ref counter);
             }
@@ -808,7 +812,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         {
             if (paymentPM.AccountingPaymentMethodCode == "CH")
                 counter = CreateDebitLinesForEachCheque(journal, counter);
-            else if (paymentPM.AccountingPaymentMethodCode == "BT")
+            else if (paymentPM.AccountingPaymentMethodCode == "BT" && paymentPM.ARPaymentBankTranfers != null)
                 counter = CreateDebitLinesForEachBankTransfer(journal, counter);
             else
                 counter = CreateDebitLineForNonChequePayment(journal, counter);
