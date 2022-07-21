@@ -27,6 +27,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data.Entity.Validation;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -34,15 +35,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
         //<TResponseData, TCustomResponse, TRequestParams>
         <INF_MSG_GenericResponseData, DCAInUCBUpdateDeclarationCourierStatusMasterChangedResponse, GenericRequestParams>
     {
+
+        private ICustomContext _context;
+
         public override void Update(DCAInUCBUpdateDeclarationCourierStatusMasterChangedResponse customResponse, GenericRequestParams requestParams)
         {
             var mess = new StringBuilder();
-            var context = CustomContext.GetContext(requestParams.Tenant);
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+            _context = CustomContext.GetContext(requestParams.Tenant);
+            var myDeclarationQueryService = new DeclarationQueryService(_context);
+            var myDeclarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
-            var repo = new DeclarationCourierStatusRepository(context);
+            var repo = new DeclarationCourierStatusRepository(_context);
             List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
@@ -95,9 +99,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string currvVal = null;
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
                 DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(decId, true, false);
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(_context);
+                DeclarationPM currentDeclarationPM = declarationQueryService.GetSingle(decId, true, false);
+                
                 if (currentDeclarationCourierStatusPM != null)
                 {
-                    CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(_MyDeclarationPM, decId, _MyDeclarationPM.Tenant);
+                    CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(currentDeclarationPM, decId, currentDeclarationPM.Tenant);
                     prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
                     if (prevVal == "V")
                     {
@@ -110,7 +117,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (prevVal != currvVal)
                     {
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), currentDeclarationPM.Tenant);
                         currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         AppendLogLine("try to update declarationCourierStatus for DeclarationPM.Id: " + decId);
                         try
@@ -123,7 +130,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
                             return;
                         }
-                        catch (Exception e)
+                        catch (System.Exception e)
                         {
                             AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
                             return;
@@ -131,6 +138,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
             }
+        }
+
+        private void AppendLogLine(string mess)
+        {
+            LogMessagingUtil.Instance.AppendLine(mess);
         }
     }
 }
