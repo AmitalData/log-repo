@@ -2022,7 +2022,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
                 WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
-                IQueryable<WarehouseEntry> warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant);
+                const string cancelledEntityStatusCode = "CAEA";
+                IQueryable<WarehouseEntry> warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant).Where(entry => entry.StatusCode != cancelledEntityStatusCode);
 
                 bool myResult = false;
                 if (warehouseEntries.Count() > 0)
@@ -2033,7 +2034,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (!myResult)
                 {
                     WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(warehouseContext);
-                    IQueryable<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentId, tenant);
+                    const string cancelledReleaseStatusCode = "CARE";
+                    IQueryable<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentId, tenant).Where(release => release.StatusCode != cancelledReleaseStatusCode);
 
                     if (warehouseReleases.Count() > 0)
                     {
