@@ -70,7 +70,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             return new ReferenceViaCarrierCodeRequest()
             {
                 callback_url = Source.CallbackURL,
-                carrier_code = shipment.ShipmentMasterData.MainCarriageCarrierCard.Code,
+                carrier_code = containerStatusSimulatorArgs.CarrierCode,
                 bill_of_lading = shipment?.ShipmentMasterData?.Master,
                 container_id = containerStatusSimulatorArgs.ContainerNumber
             };
