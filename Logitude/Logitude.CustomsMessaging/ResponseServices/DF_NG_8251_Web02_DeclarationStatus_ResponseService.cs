@@ -226,7 +226,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             }
                                         }
                                     }
-                                    if (declarationQuantity == cargoQuantity)
+                                    if (declarationQuantity == cargoQuantity &&  declarationQuantity!=0)
                                     {
                                         availableStatus = "SMG";
                                     }
