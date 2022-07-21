@@ -428,6 +428,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             ((new DCAInUCB1170_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                        DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService>
+                        ((new DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB2750_MsgMessagingService>
                             ((new DCAInUCB2750_MsgMessagingService()).MainInterfaceCode);
 

@@ -2611,6 +2611,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
             });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCBUDCSMC",
+                InOut = InOutEnum.I.ToString(),
+                Description = "עדכון שטרי מטען בלדר בקישור לטיסה",
+                DcaPrefixName = "UCBUDCSMC_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+            });
+
 
             all.Add(new InterfaceManagementDetails()
             {
