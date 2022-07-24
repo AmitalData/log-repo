@@ -233,8 +233,11 @@ export class MainMenuComponent {
         }
     }
 
-    ChangeMenu() {
-        if (!this.isChangingSelected) {
+    ChangeMenu(mySelectedItem:MainMenuItem=null) {
+        
+
+        if (mySelectedItem!=null)this.ClickedMenuItem=mySelectedItem;
+         if (!this.isChangingSelected) {
 
             this.isChangingSelected = true;
 
@@ -714,10 +717,10 @@ export class MainMenuComponent {
                                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                             .then(cmpRef => {
                                                 cmpRef.instance.ComponentRef = cmpRef;
-                                                cmpRef.instance.Run(listArgs);
+                                                cmpRef.instance.Run(listArgs);                                                           
                                                 this.CurrentSession.AddMenuReference(cmpRef);
                                                 this.ChangeSessionHeader(this.SelectedMenu);
-                                                this.isChangingSelected = false;
+                                                this.isChangingSelected = false;                                
                                                 //this.pointerEvents = 'all';
                                             });
                                     });
@@ -756,14 +759,14 @@ export class MainMenuComponent {
             else if (!isListComponent) {
                 this.isChangingSelected = false;
                 //this.pointerEvents = 'all';
-            }
+            }        
         }
 
         else {
             this.isChangingSelected = false;
            // this.pointerEvents = 'all';
 
-        }
+        }   
     }
     ChangeSessionHeader(menu: MainMenuItem) {
         this.CurrentSession.ChangeSessionHeader({ MenuTextCode: menu.TextCode });
