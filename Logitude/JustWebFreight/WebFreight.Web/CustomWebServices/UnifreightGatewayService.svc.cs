@@ -194,6 +194,11 @@ namespace WebFreight.Web.CustomWebServices
             _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.ExportStorage.ExportStorageUpsertService>(curr);
 
 
+
+            curr = "Logitude.CustomsMessaging.UnifreightGateway.ExportCloudSSOService";
+            _AllIUnifreightGenericService.Add(curr);
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.CustomsMessaging.UnifreightGateway.ExportCloudSSOService>(curr);
+
         }
 
         private static void AddSendDirectMessageService()
