@@ -25,6 +25,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2757_MSG10004_ExportDeclarationResponse, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
+        public DF_NG_2757_MSG10004_ExportDeclarationResponseService _DF_NG_2757_MSG10004_ExportDeclarationResponseService_GetOnly { get => _DF_NG_2757_MSG10004_ExportDeclarationResponseService; }
         private DF_NG_2757_MSG10004_ExportDeclarationResponseService _DF_NG_2757_MSG10004_ExportDeclarationResponseService;
         private INF_MSG_GenericResponseData _MyDefaultResponseData;
         //ITZIK+MIRT public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption { get; set; }
