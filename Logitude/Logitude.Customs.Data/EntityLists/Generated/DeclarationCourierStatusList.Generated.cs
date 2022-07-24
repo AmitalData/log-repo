@@ -190,6 +190,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string IncoTermCode  { get; set; }
        [DataMember]
        public string MissedDocumentStatusCode  { get; set; }
+       [DataMember]
+       public string CasualSupplierName  { get; set; }
    }
 
 }

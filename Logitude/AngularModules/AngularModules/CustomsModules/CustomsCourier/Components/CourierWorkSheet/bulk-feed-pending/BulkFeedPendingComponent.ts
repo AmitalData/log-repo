@@ -52,7 +52,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   public PendingFilterItems: ApiQueryFilters;
   PendingList: string = '';
   columns: any[] = []
-  query:any;
+  query: any;
   private _entityListService: EntityListService = new EntityListService();
 
   private _RowsItems: any;
@@ -97,11 +97,11 @@ export class BulkFeedPendingComponent extends BaseComponent {
   ) {
     super();
     var objectFieldPMExtendedService: ObjectFieldPMExtendedService = new ObjectFieldPMExtendedService();
-                objectFieldPMExtendedService.getSingleFromQueries("Customs.DeclarationCourierStatus.BulkFeedPending").subscribe((result: any) => {
-                    if (result) {
-                        this.query = result;
-                    }
-                });
+    objectFieldPMExtendedService.getSingleFromQueries("Customs.DeclarationCourierStatus.BulkFeedPending").subscribe((result: any) => {
+      if (result) {
+        this.query = result;
+      }
+    });
   }
 
 
@@ -187,7 +187,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     if (!AppTool.IsNullOrEmpty(this.GoodsDescription))
       filters.addAdditionalFilter("CargoDescription", this.GoodsDescription, null, null, "Contains", true, false, false, "string");
-
+    if (!AppTool.IsNullOrEmpty(this.CasualSupplierName))
+      filters.addAdditionalFilter("CasualSupplierName", this.CasualSupplierName, null, null, "Contains", true, false, false, "string");
 
     switch (this._SelectedFastIndividualProcessValue) {
       case "F": {
@@ -583,6 +584,12 @@ export class BulkFeedPendingComponent extends BaseComponent {
   public get GoodsDescription() { return this.goodsDescription; }
   public set GoodsDescription(newValue: string) {
     this.goodsDescription = newValue;
+  }
+
+  private casualSupplierName: string;
+  public get CasualSupplierName() { return this.casualSupplierName; }
+  public set CasualSupplierName(newValue: string) {
+    this.casualSupplierName = newValue;
   }
 
   private weightFrom: number;

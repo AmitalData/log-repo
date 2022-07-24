@@ -5439,6 +5439,12 @@
       LocalDefaultText="&quot;שדות חובה/התראה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+       <TextCode
+      Code="&quot;Customs.ReleaseGoods.O.CasualSupplierName&quot;"
+      DefaultText="&quot;CasualSupplierName&quot;"
+      LocalDefaultText="&quot;ספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
