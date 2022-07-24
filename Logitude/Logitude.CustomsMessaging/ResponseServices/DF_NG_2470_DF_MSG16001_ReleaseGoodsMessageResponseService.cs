@@ -123,7 +123,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
                             
-                            if (setting.IsConnectedToUniFreight)
+                            if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
                             {
                                 if (declarationPM.Direction == "E")
                                 {

@@ -1696,7 +1696,7 @@
                                                                     <ng-template let-item>
                                                                         <log-cell-template #logcelltemplate>
                                                                             <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                                <span>{{item.Quantity | NumbersPipe:'N3'}}</span>
+                                                                                <span>{{item.Quantity}}</span>
                                                                             </div>
                                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                                 <LogTextBox [ObjectFieldName]="'Quantity'" [InputType]="'double'" [DataContext]="item"
@@ -1707,11 +1707,11 @@
                                                                 </log-column>
 
                                                                 <!-- QuantityTypeCode -->
-                                                                <!--<log-column [header]="'Customs.SupplierInvoiceItemsConDeclar.F.QuantityTypeName' | TextCodeTranslationPipe" [width]="'65'" [Alignment]="'right'" [binding]="'QuantityTypeName'">
+                                                               <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantityType' | TextCodeTranslationPipe" [width]="'65'" [Alignment]="'right'" [binding]="'QuantityTypeCode'">
                                                                     <ng-template let-item>
                                                                         <log-cell-template #logcelltemplate>
                                                                             <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                                <span>{{item.QuantityTypeName}}</span>
+                                                                                <span>{{item.QuantityTypeCode}}</span>
                                                                             </div>
                                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                                 <LogLov [ObjectFieldName]="'QuantityTypeCode'"
@@ -1727,7 +1727,7 @@
                                                                             </div>
                                                                         </log-cell-template>
                                                                     </ng-template>
-                                                                </log-column>-->
+                                                                </log-column>
                                                                 <!-- Buttons -->
                                                                 <log-column [width]="'40'" [Alignment]="'right'">
                                                                     <ng-template let-item>

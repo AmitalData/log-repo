@@ -189,8 +189,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.ReferentUserId = entityPM.CreatedByUserId;
             }
             
-            if (entityPM.Direction == "I" && string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode)) entityPM.DeclarationTypeCode = "1";
-            if (entityPM.Direction == "E" && string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode)) entityPM.DeclarationTypeCode = "2";
+            if (entityPM.Direction == "E" && string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode)) { entityPM.DeclarationTypeCode = "2"; } else { entityPM.DeclarationTypeCode = "1"; }
 
             OnCreatingExportDeclaration(entityPM);
 
@@ -2852,7 +2851,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 InvoiceItemLineNumber = ItemsConDeclar.InvoiceItemLineNumber,
                                 LineNumber = ItemsConDeclar.LineNumber,
                                 Tenant = toDeclaration.Tenant,
-                                DeclarationNumber = toDeclaration.DeclarationNumber,
+                                DeclarationNumber = ItemsConDeclar.DeclarationNumber,
                                 ItemSequence = ItemsConDeclar.ItemSequence,
                                 DeclarationTypeCode = ItemsConDeclar.DeclarationTypeCode,
                                 InvoiceNumber = ItemsConDeclar.InvoiceNumber,

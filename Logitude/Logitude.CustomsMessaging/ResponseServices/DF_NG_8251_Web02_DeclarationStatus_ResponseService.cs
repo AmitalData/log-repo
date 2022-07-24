@@ -226,7 +226,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             }
                                         }
                                     }
-                                    if (declarationQuantity == cargoQuantity)
+                                    if (declarationQuantity == cargoQuantity &&  declarationQuantity!=0)
                                     {
                                         availableStatus = "SMG";
                                     }
@@ -479,7 +479,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 ICommonDataContext commondbContext = CommonDataContext.GetContext(requestParams.Tenant);
                                 UserRepository userRepository = new UserRepository(commondbContext);
                                 var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
-                                if (setting.IsConnectedToUniFreight)
+                                if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
                                 {
                                     if (declarationPM.Direction == "E")
                                     {

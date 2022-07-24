@@ -91,7 +91,15 @@ namespace Logitude.Customs.BL.Validators
                 requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "שורת פרטי מקבל", TableName = "Customs.Declaration" });
 
             }
+            if (declaration.Direction == "E" && declaration.DeclarationTypeCode == "3")
+            {
+                if (declaration.ExportDeclarationOfficeCode == null)
+                    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "בית מכס מייצא", TableName = "Customs.Declaration" });
+                bool isImport = declaration.Consignments.Any(c => c.ConsignmentType == "I");
+                if (!isImport)
+                    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "בהצהרת שטעון יש לציין לפחות משגור יבוא אחד" });
 
+            }
 
             #endregion
 

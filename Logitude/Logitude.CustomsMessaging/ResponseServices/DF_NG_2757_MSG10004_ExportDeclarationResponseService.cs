@@ -409,7 +409,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             UserRepository userRepository = new UserRepository(commondbContext);
             var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
 
-            if (setting.IsConnectedToUniFreight)
+            if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
             {
 
                 if (this._MyDeclarationPM.Direction == "E" )
