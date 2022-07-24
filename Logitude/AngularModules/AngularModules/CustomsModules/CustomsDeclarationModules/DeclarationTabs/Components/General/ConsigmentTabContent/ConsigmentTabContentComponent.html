@@ -1650,10 +1650,10 @@
                                             <log-cell-template #logcelltemplate>
                                                 <div style="text-align: right;width:100%;height:100%;">
                                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                        <span>{{item.MarksNumbers}}</span>
+                                                         <span>{{item.MarksNumbers}}</span> 
                                                     </div>
                                                     <div *ngIf="logcelltemplate.IsEditMode"
-                                                        style="height: 90%; width: 90%;">
+                                                        style="height: 90%; width: 100%;">
                                                         <LogTextBox [ObjectFieldName]="'MarksNumbers'"
                                                             [InputType]="'ntext'" [DataContext]="item"
                                                             [ObjectTableName]="'Customs.ConsignmentPackage'"
