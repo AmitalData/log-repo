@@ -44,8 +44,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    TableTabService service = new TableTabService(authToken.Tenant);
-                    service.UpdateTabs(tabs);
+                    ObjectTableTabService objectTableTabService = new ObjectTableTabService(WebFreightContext.GetContext(authToken.Tenant),authToken.Tenant);
+                    objectTableTabService.Updates(tabs);
 
                     scope.Complete();
                 };
@@ -61,14 +61,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
         [HttpGet]
         public List<ObjectTableTabPM> GetTenantTableTabsByTableId(int tenant, string objectTableId)
         {
+            AuthenticationToken authToken = AuthinticateTenant();
             ObjectTableTabQuery query = new ObjectTableTabQuery(new ObjectTableTabRepository(tenant));
-            return query.GetObjectTableTabsByTenantAndObjectTable(objectTableId, tenant).ToList();
+            return query.GetObjectTableTabsByTenantAndObjectTable(objectTableId, authToken.Tenant).ToList();
         }
 
         [HttpGet]
         public List<ObjectTableTabPM> GetTenantTabs(int tenant)
         {
-            ObjectTableTabQuery query = new ObjectTableTabQuery(new ObjectTableTabRepository(tenant));
+            AuthenticationToken authToken = AuthinticateTenant();
+            ObjectTableTabQuery query = new ObjectTableTabQuery(new ObjectTableTabRepository(authToken.Tenant));
             return query.GetTenantTabs(tenant).ToList();
         }
 

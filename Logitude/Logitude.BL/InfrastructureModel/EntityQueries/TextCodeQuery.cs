@@ -29,6 +29,29 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
 
 
+
+        public TextCodePM GetByCode(string code , int tenant)
+        {
+            return (from a in repository.context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser.Contact")
+                   where a.Code == code && a.Tenant == tenant
+                    select new TextCodePM()
+                   {
+                       Code = a.Code,
+                       DefaultText = a.DefaultText,
+                       DefaultTextPlural = a.DefaultTextPlural,
+                       Id = a.Id,
+                       ObjectTableId = a.ObjectTableId,
+                       ObjectTableName = a.ObjectTable.Name,
+                       Tenant = a.Tenant,
+                       TextCodeTypeCode = a.TextCodeTypeCode,
+                       IsSpellChecked = a.IsSpellChecked,
+                       SpellCheckDate = a.SpellCheckDate,
+                       SpellCheckedByUserId = a.SpellCheckedByUserId,
+                       InActive = a.InActive,
+                       LocalDefaultText = a.LocalDefaultText,
+                       SpellCheckedByUserName = a.SpellCheckedByUser == null ? null : a.SpellCheckedByUser.Contact.EnglishName,
+                   }).FirstOrDefault();
+        }
         public IQueryable<TextCodePM> GetTextCodePMsByTenant(int tenant)
         {
             IQueryable<TextCodePM> textcodes = from a in repository.context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser.Contact")

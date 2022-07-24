@@ -8,69 +8,49 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
     public class TableTabModificationService
     {
-        int tenant;
-        IWebFreightContext context;
-        public TableTabModificationService(int tenant, IWebFreightContext context)
+        private int tenant;
+        private IWebFreightContext webFreightContext;
+        private TabModificationRepository tabModificationRepository;
+        private TabModification tabModification;
+        private int tenantZero = 0;
+
+        public TableTabModificationService(int tenant, IWebFreightContext webFreightContext)
         {
             this.tenant = tenant;
-            this.context = context;
-        }
-        public void UpdateModification(ObjectTableTabPM tabPM)
-        {
-            TabModification mod = GetModification(tabPM);
+            this.webFreightContext = webFreightContext;
+            this.tabModificationRepository = new TabModificationRepository(webFreightContext);
 
-            if (mod == null)
+
+        }
+
+        public void Update(ObjectTableTabPM objectTableTab)
+        {
+            if (objectTableTab.Tenant != tenantZero) return;
+            objectTableTab.HasTabModification = true;
+
+            tabModification = tabModificationRepository.GetByTabCode(objectTableTab.Code, tenant);
+            if (tabModification == null)
             {
-                var newMod = CreateTabModification(tabPM);
-                SubmitNewModification(newMod);
+                 CreateTabModification(objectTableTab);
+                return;
             }
-            else
+            tabModification.Order = objectTableTab.IndexOrder;
+            tabModification.Name = objectTableTab.Name;
+            tabModificationRepository.Update(tabModification);
+        }
+
+        private void CreateTabModification(ObjectTableTabPM objectTableTab)
+        {
+            TabModification tabModification = new TabModification()
             {
-                MapModification(tabPM, mod);
-                SubmitModification(mod);
-            }
-        }
-
-        private TabModification MapModification(ObjectTableTabPM tabPM, TabModification mod)
-        {
-            mod.Name = tabPM.Name;
-            mod.Order = tabPM.IndexOrder;
-            mod.TabId = tabPM.Id;
-            return mod;
-        }
-
-        private TabModification GetModification(ObjectTableTabPM tabPM)
-        {
-            TabModificationRepository modsRepository = new TabModificationRepository(context);
-            var mod = modsRepository.GetByTabCode(tabPM.Code, tenant);
-            return mod;
-        }
-
-        private TabModification CreateTabModification(ObjectTableTabPM tabPM)
-        {
-            var mod = new TabModification()
-            {
-                Id = IdCounter.GetNumber("TabModification", tabPM.Tenant),
+                Id = IdCounter.GetNumber("TabModification", tenant),
                 Tenant = tenant,
-                TabCode = tabPM.Code,
+                TabCode = objectTableTab.Code,
+                Order = objectTableTab.IndexOrder,
+                Name = objectTableTab.Name,
             };
-
-            return MapModification(tabPM, mod);
+           tabModificationRepository.Add(tabModification);
         }
 
-        private void SubmitModification(TabModification newMod)
-        {
-            var repository = new TabModificationRepository(context);
-            repository.Update(newMod);
-            repository.SubmitChanges();
-        }
-
-        private void SubmitNewModification(TabModification newMod)
-        {
-            var repository = new TabModificationRepository(context);
-            repository.Add(newMod);
-            repository.SubmitChanges();
-        }
-        
     }
 }

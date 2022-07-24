@@ -31,5 +31,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ScreenName { get; set; }
         public string OriginalTabCode { get; set; }
 
+        public bool HasTabModification { get; set; }
+
+
+
     }
 }
