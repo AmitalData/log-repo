@@ -325,11 +325,13 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     SaveButtonClicked() {
         if (this.PageChild_RETASK && !this.PageChild_RETASK.NextButtonClicked()) {
-            this.ChangeSelectedLocation("RETASK");
+            this.SetSelectedItem("RETASK");
+            this.SelectedTabLocation = 0;
             return;
         }
         if (!this.IsBIReport && this.PageChild_PRREP && !this.PageChild_PRREP.ValidateSelectedFilters()) {
-            this.ChangeSelectedLocation("PRREP");
+            this.SetSelectedItem("PRREP");
+            this.SelectedTabLocation = 1;
             return;
         }
 

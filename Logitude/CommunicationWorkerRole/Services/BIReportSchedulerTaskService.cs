@@ -88,7 +88,7 @@ namespace CommunicationWorkerRole.Services
         {
             if (reportTask.ResultType == null || reportTask.ResultType == "Email")
             {
-                SendPdfBIReportToReceipent(reportTask, schedulerDetails, biReportData);
+                SendBIReportToReceipent(reportTask, schedulerDetails, biReportData);
             }
             else if (reportTask.ResultType == "FTP")
             {
@@ -123,7 +123,7 @@ namespace CommunicationWorkerRole.Services
             return bIReportXMLDataService.GetByBIReportId(new BIReportXMLDataServiceArgs { BIReportId = schedulerDetails.ReportDetails.BIReportEntityId, DWQueryId = schedulerDetails.ReportDetails.DWQueryId, Tenant = reportTask.Tenant, FiltersData = schedulerDetails.ReportDetails.DWQueryFilterData });
         }
 
-        private void SendPdfBIReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, byte[] biReportData)
+        private void SendBIReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, byte[] biReportData)
         {
             schedulerDetails.ReportDetails.Recepients = GetBIReportPermittedContacts(reportTask, schedulerDetails);
             if (schedulerDetails.ReportDetails.Recepients != null)
@@ -141,8 +141,9 @@ namespace CommunicationWorkerRole.Services
 
         private void TryToSendBIReport(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, byte[] biReportData)
         {
-            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting bi report to pdf file"));
-            string documentId = reportSchedulerTaskService.CreateDocument(reportTask.Name, reportTask.Tenant, biReportData);//GetDocumentId
+            string format = reportTask.Format == "PDF" ? "pdf" : "xlsx";
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting bi report to " + format + " file"));
+            string documentId = reportSchedulerTaskService.CreateDocument(new ReportScedulerDocumentArgs { Name = reportTask.Name, Format = format, Tenant = reportTask.Tenant, ByteData = biReportData });//GetDocumentId
 
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
             ReportSchedulerRecepients reportRecepients = schedulerDetails.ReportDetails.Recepients;
