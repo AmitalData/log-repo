@@ -11,6 +11,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;

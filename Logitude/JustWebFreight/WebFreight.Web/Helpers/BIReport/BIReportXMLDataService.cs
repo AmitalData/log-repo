@@ -5,6 +5,7 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,8 +18,12 @@ namespace WebFreight.Web.Helpers.BIReport
 {
     public class BIReportXMLDataService
     {
-        public BIReportXMLData GetByBIReportId(string Id, string dWQueryId, int tenant)
+        public BIReportXMLData GetByBIReportId(BIReportXMLDataServiceArgs bIReportXMLDataServiceArgs)
         {
+            string Id = bIReportXMLDataServiceArgs.BIReportId;
+            string dWQueryId = bIReportXMLDataServiceArgs.DWQueryId;
+            int tenant = bIReportXMLDataServiceArgs.Tenant;
+
             BIReportQueryService query = new BIReportQueryService(tenant);
             BIReportPM entityPM = query.GetSingle(Id, false, false);
             BIReportXMLData QueryData = new BIReportXMLData();
@@ -38,7 +43,7 @@ namespace WebFreight.Web.Helpers.BIReport
                 var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(dWSubQueryPM.FiltersXML);
                 DWQueryData.SubQueryData = dWSubQueryPM;
                 DWQueryData.Columns = Columns;
-                DWQueryData.Filters = Filters;
+                DWQueryData.Filters = bIReportXMLDataServiceArgs.FiltersData != null ? bIReportXMLDataServiceArgs.FiltersData : Filters;
             }
             QueryData.DWQueryData = DWQueryData;
 
@@ -193,5 +198,13 @@ namespace WebFreight.Web.Helpers.BIReport
             return columWidth;
 
         }
+    }
+
+    public class BIReportXMLDataServiceArgs
+    {
+        public string BIReportId { get; set; }
+        public string DWQueryId { get; set; }
+        public int Tenant { get; set; }
+        public DWObjectFieldsDetails FiltersData { get; set; }
     }
 }

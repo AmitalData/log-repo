@@ -120,7 +120,7 @@ namespace CommunicationWorkerRole.Services
         private BIReportXMLData GetBIReportXMLData(SchedulerDetails schedulerDetails, TasksSchedulerPM reportTask)
         {
             BIReportXMLDataService bIReportXMLDataService = new BIReportXMLDataService();
-            return bIReportXMLDataService.GetByBIReportId(schedulerDetails.ReportDetails.BIReportEntityId, schedulerDetails.ReportDetails.DWQueryId, reportTask.Tenant);
+            return bIReportXMLDataService.GetByBIReportId(new BIReportXMLDataServiceArgs { BIReportId = schedulerDetails.ReportDetails.BIReportEntityId, DWQueryId = schedulerDetails.ReportDetails.DWQueryId, Tenant = reportTask.Tenant, FiltersData = schedulerDetails.ReportDetails.DWQueryFilterData });
         }
 
         private void SendPdfBIReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, byte[] biReportData)

@@ -503,29 +503,6 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private bool isScheduler ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsScheduler  
-	   {
-	    
-	     get
-		{
-		   return isScheduler;
-		 }
-		 set
-		 {
-		   if(isScheduler != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsScheduler",OldValue=isScheduler,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isScheduler=value;
-		   }
-			
-		 }
-	   }
    }
    
 }

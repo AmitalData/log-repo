@@ -69,8 +69,6 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string LastRunId { get; set; }
 	      
         public virtual LastRunDetail LastRunDetail { get; set; }
-        [Column("IsScheduler")]
-	    public bool IsScheduler { get; set; }
     }
 }
 	 

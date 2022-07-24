@@ -2404,7 +2404,6 @@
       <DependentUpon>OpenAccessWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
     <Compile Include="DataContracts\DWQueryData.cs" />
     <Compile Include="DataContracts\ShipmentTestData.cs" />
     <Compile Include="AccountingModel\Reports\Interest\InterestDataProvider.cs" />

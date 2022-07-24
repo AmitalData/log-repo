@@ -29,7 +29,6 @@ export class BIReportList {
 	FactTableName: string;
 	LastRunId: string;
 	AvailableForScheduling: boolean;
-	IsScheduler: boolean;
 	
 }
  
