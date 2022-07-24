@@ -40,6 +40,10 @@ import { TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
 import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
 import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
 import { ExportStoragePMService } from 'Customs/Services/StandardPMs/ExportStoragePMService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { ListComponentArgs } from 'Infrastructure/Args';
+import { MainMenuItem } from 'Infrastructure/Components/MainMenuComponent/MainMenuComponent';
+
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
@@ -60,12 +64,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     IsDisplayOnlyCheckDone: boolean;
     MenuButtonsStateChangedEvent: any;
     private EntityResourceService: EntityResourceService;
+    containerizationIdList:string;
     //------------------------------------------------------//
 
     //Services
     private declarationPMService: DeclarationPMService = new DeclarationPMService();
     private declarationWebService: DeclarationWebService = new DeclarationWebService();
     private declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -210,21 +216,27 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "OpenNewContainerization") {
+                        this.containerizationIdList="";
+             
                         button.Width = 100;
                         button.DisplayText = "המכלה";
                         if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentCode && this.EntityPM.ProcedureCurrentName && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
                             button.IsHidden = false;
-
-                                if(!AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)){
-                                    button.DisplayText  = "הומכל";
-                                    button.LabelTextCodeCode=""
-                                    
-                                    
-                                   
-                                }
-                        } else {
+                            this.EntityPM?.Consignments.forEach(c=>{
+                                this.containerizationIdList+=(!AppTool.IsNullOrEmpty(c.ExportContainerizationID)?(c.ExportContainerizationID +","):"")
+                                
+                            });
+                            if(this.containerizationIdList!=""){
+                                button.DisplayText  = "הומכל";
+                                button.LabelTextCodeCode="" 
+                            }
+                        }
+                        else {
                             button.IsHidden = true;
                         }
+                        
+
+
                     }
                     if (button.EventCode == "SendDeclaration") {
                         if (this.IsDisplayOnly) {
@@ -1305,8 +1317,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         });
     }
 
+
+ 
     private OpenNewContainerizationMethod() {
-        if (AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)) {
+
+        if(this.containerizationIdList=="") {
             var args: any = {
                 EntityPM: this.EntityPM,
                 EntityIsDeclarationPM: "true",
@@ -1319,24 +1334,60 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.ShowCloseButton = true;
             logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
-                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                if($event!="0") {
+                   this.OpenScreenContainerizationByFilter($event);
+                }
             });
-        } else {
-            //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({
-                        EntityId: this.EntityPM.ExportContainerizationID,
-                        ObjectTableName: "Customs.Containerization"
-                    });
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    });
-                });
+
+        }
+        else {
+            
+          var contIdList=  this.containerizationIdList.split(',')
+          if(contIdList.length-1==1){
+
+               SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+               .then(cmpRef => {
+                   cmpRef.instance.ComponentRef = cmpRef;
+                   cmpRef.instance.Run({
+                       EntityId: contIdList[0],
+                       ObjectTableName: "Customs.Containerization"
+                   });
+               });       
+          }
+          else {
+             
+            this.OpenScreenContainerizationByFilter(this.containerizationIdList);
+          }
+            
         }
     }
+  
+    private OpenScreenContainerizationByFilter(Ids) {
+        this.CurrentSession.CloseCurrentEditComponent();        
+        var mySelectedItem: MainMenuItem =  this.CurrentSession.MainMenuComponent.MainMenuItems.filter(m => m.TextCode == "General.MH.Containerization")[0];
+        this.CurrentSession.MainMenuComponent.ChangeMenu( mySelectedItem);
+       
+       
+            var filters = new ApiQueryFilters();
+            filters.addAdditionalFilter("Id",Ids , null, null, "InListExact", false, false, false, "string",false,true);
+        
+            var listArgs = new ListComponentArgs();
+            listArgs.QueryCode = "Customs.Containerization.OpenContainerization";
+            listArgs.Filters = filters;
+            listArgs.ObjectTableName = "Customs.Containerization";
+            listArgs.HideBackButton=true;
+           
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run(listArgs);
+    
+                        this.CurrentSession.AddMenuReference(cmpRef);                    
+                    });
+               });
+    }
+
     ///new shoshana
     private OpenExportStorageDeclarationMethod() {
 
