@@ -38,7 +38,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class CourierMasterUpdateService
     {
-        private Boolean toSendTask = false;
+        public Boolean toSendTask = false;
         private Boolean toSetDeclarationChanged = false;
         private AmitalContext _AmitalContext;
 
