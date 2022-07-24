@@ -93,19 +93,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.EntityId1 = _MyDeclarationPM.Id;
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
 
-
+             
                 if (eventCode != "")
                 {
                     RaiseEvent(_MyDeclarationPM, requestParams.LoggingUserId, eventCode, remarks);
                 }
-                this.MyRequestSheetParam.RequestDescription = remarks + " מספר " + customResponse.CargoIdentifier.LogisticPermitDetails[0].logisticPermitId;
+                this.MyRequestSheetParam.RequestDescription = remarks + " היתר לוגיסטי מספר: " + customResponse.CargoIdentifier.LogisticPermitDetails[0].logisticPermitId;
                 notificationRemarks = notificationRemarks + _MyDeclarationPM.CustomFileNo;
             }
             else if (CargoIdentifireType.IsForDeclarationExport)
             {
                 RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams, true);
-                                              
-                this.MyRequestSheetParam.RequestDescription = remarks + " מספר " + customResponse.CargoIdentifier.LogisticPermitDetails[0].logisticPermitId;
+                UpdateLogisticPermit(customResponse, requestParams);
+
+                this.MyRequestSheetParam.RequestDescription = remarks + " היתר לוגיסטי מספר : " + customResponse.CargoIdentifier.LogisticPermitDetails[0].logisticPermitId;
             }
             else
             {
@@ -147,9 +148,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
             
-            UpdateLogisticPermit(customResponse, requestParams);
             if (_MyDeclarationPM != null && _MyDeclarationPM.Direction == "E")
-            RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams, false);
+            {
+                RegisterStatusLogisticPermitInExportStorage(customResponse, requestParams, false);
+                UpdateLogisticPermit(customResponse, requestParams);
+
+            }
+
             MyResponseData.Succeeded = true;
 
         }
@@ -174,6 +179,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
             }
+                this.MyRequestSheetParam.EntityId2 = exportstorage.Id;
+                this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
+
+           
             if (exportstorage != null)
             {
                 exportstorage.ChangeSetOp = ChangeSetOperation.Update;

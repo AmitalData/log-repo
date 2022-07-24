@@ -394,6 +394,12 @@ export class CustomsRequestsSheetsComponent
             //////never tested !!!!!!!- copy from silverlight
             filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         }
+       else if (objectTableName === "Customs.ExportStorage") {
+          
+            filters.addAdditionalFilter("ObjectTableId2", objectTableId1, null, null, "Equals", false, false, false, "string");
+            let EntityId2 = this.entityArgs.EntityPM.Id;
+            filters.addAdditionalFilter("EntityId2", EntityId2, null, null, "Equals", false, false, false, "string");
+        }
         else {
             if (!AppTool.IsNullOrEmpty(objectTableName) && objectTableName != "Customs.Declaration") {
                 //////never tested !!!!!!!- copy from silverlight
@@ -660,6 +666,12 @@ export class CustomsRequestsSheetsComponent
         if (objectTableName === "Customs.Notification") {
             //////never tested !!!!!!!- copy from silverlight
             filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        }
+        else if (objectTableName === "Customs.ExportStorage") {
+            
+            filters.addAdditionalFilter("ObjectTableId2", objectTableId1, null, null, "Equals", false, false, false, "string");
+            let EntityId2 = this.entityArgs.EntityPM.Id;
+            filters.addAddit ionalFilter("EntityId2", EntityId2, null, null, "Equals", false, false, false, "string");
         }
         else {
             if (!AppTool.IsNullOrEmpty(objectTableName) && objectTableName != "Customs.Declaration") {
