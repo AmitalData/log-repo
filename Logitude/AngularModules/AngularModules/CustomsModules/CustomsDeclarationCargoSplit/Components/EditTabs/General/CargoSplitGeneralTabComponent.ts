@@ -109,6 +109,7 @@ export class CargoSplitGeneralTabComponent
     requestParams: CargoSplitRequestParams = new CargoSplitRequestParams();
     responseData: INF_MSG_GenericResponseData = new INF_MSG_GenericResponseData();
     isExportConsignmentFetched = false;
+    isDeleteImporterCode = false;
     public XrayItems: XRayAvailableItem[] = [];
 
     SelectedDateTime: Date;
@@ -125,7 +126,7 @@ export class CargoSplitGeneralTabComponent
     private CurrentSession = SessionLocator.SelectedSession;
 
     constructor(private EntityResourceService: EntityResourceService) {
-        super();
+        super();        
         this.EntityPM = new DeclarationCargoSplitPM();
         //this.ItemsList = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -195,6 +196,11 @@ export class CargoSplitGeneralTabComponent
     }
 
     Init() {
+        if(this.EntityPM.Direction == "E") 
+        {
+            this.IsImportDeclaration = false;
+            this.isDirection = false;
+        }
         this.SetDisplayFields(this.ResponseStatusCode);
         this.GetFileData();
         this.InitCargoIdentifiers();
@@ -573,7 +579,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     DeleteValueScreen() {
-
+        
         this.EntityPM.CustomFileNo = '';
         this.EntityPM.ActionTypeCode = '';
         this.EntityPM.RequestDate = new Date();
@@ -587,8 +593,10 @@ export class CargoSplitGeneralTabComponent
         for (let i = this.Tabs.length - 1; i >= 0; i--) {
             this.DeleteTabs(this.Tabs[i]);
         }
+        this.isDeleteImporterCode = true
         this.AddTab(null);
         this.ImporterCode = '';
+        this.isDeleteImporterCode = false
         if (this.decCargoSplitCargoIdentifierModel != null) {
             this.decCargoSplitCargoIdentifierModel.CargoTypeCode = '';
             this.decCargoSplitCargoIdentifierModel.CargoIdentifierKey1 = '';
@@ -696,9 +704,10 @@ export class CargoSplitGeneralTabComponent
         Tab.LineNumber = (ArrayTool.Max(this.EntityPM.DecCargoSplitCons, "LineNumber") + 1);
         this.EntityPM.AddDecCargoSplitCon(Tab);
 
-        // new tab
+        // new tab        
         if (AppTool.IsNullOrEmpty(this.ImporterCode)) {
             if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {
+                this._LastFetchDeclarationList.ImporterCode = this.isDeleteImporterCode?'' : this._LastFetchDeclarationList.ImporterCode
                 this.ImporterCode = this._LastFetchDeclarationList.ImporterCode;
             }
             else if (this.IsCustomsFileRetrieved != true) {
@@ -709,7 +718,7 @@ export class CargoSplitGeneralTabComponent
 
 
         var tab = new LogTab();
-        Tab.ImporterCode = this.ImporterCode;
+        Tab.ImporterCode = this.isDeleteImporterCode? '' : this.ImporterCode;
         tab.EntityPM = Tab;
         //tab.Code = Tab.LineNumber.toString();
         //tab.Header = Tab.LineNumber.toString();
@@ -794,7 +803,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     CustomFileNoTextChanged(searchtext) {
-        this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent).RefreshTabs(this.IsExportDeclaration ? 'E' : 'I'))
+        this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent)?.RefreshTabs(this.IsExportDeclaration ? 'E' : 'I'))
         var errorMessage = "";
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             this.IsCustomsFileRetrieved = false;
