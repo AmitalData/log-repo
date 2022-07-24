@@ -967,33 +967,14 @@ export class QuoteMenuButtonsHandler {
 
     private IsRunQuotation: boolean = false;
     private RunQuotationScreen() {
-        if (this.EntityPM.QuoteTypeCode == "A") {
-            this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
-            this.CheckUpdateQuantities();
-        }
-
-        if (this.IsUpdateQuantitiesVisible) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Width = 400;
-            messageWindow.Height = 150;
-            messageWindow.Title = "Message";
-            messageWindow.ShowErrorIcon = true;
-            messageWindow.Show(this.UpdateQuantitiesMessage);
-            messageWindow.WindowClosed.subscribe(s => {
-                this.isButtonClicked = false;
-            });
-        }
-
-        else {
-            if (this.EntityPM && this.EntityPM.IsDirty) {
-                this.Validate();
-                if (this.isValid) {
-                    this.IsRunQuotation = true;
-                    this.entityArgs.EditComponent.SaveChanges();
-                }
-            } else {
-                this.OpenQuotationWindow();
+        if (this.EntityPM && this.EntityPM.IsDirty) {
+            this.Validate();
+            if (this.isValid) {
+                this.IsRunQuotation = true;
+                this.entityArgs.EditComponent.SaveChanges();
             }
+        } else {
+            this.OpenQuotationWindow();
         }
     }
 
