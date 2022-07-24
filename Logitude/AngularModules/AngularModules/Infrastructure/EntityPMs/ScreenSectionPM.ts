@@ -20,74 +20,70 @@ export class ScreenSectionPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this);
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
-
-
+ 	 
+    
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-
-
+       
+	 
     private name: string;
     public get Name() { return this.name; }
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
-
-
+       
+	 
     private createdByUserId: string;
     public get CreatedByUserId() { return this.createdByUserId; }
     public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
-
-
+       
+	 
     private screenCode: string;
     public get ScreenCode() { return this.screenCode; }
     public set ScreenCode(newValue: string) { if (this.screenCode != newValue) { this.screenCode = newValue; this.MarkAsDirty("ScreenCode"); } }
-
-
+       
+	 
     private objectTableName: string;
     public get ObjectTableName() { return this.objectTableName; }
     public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
-
-
+       
+	 
     private numberOfRows: number;
     public get NumberOfRows() { return this.numberOfRows; }
     public set NumberOfRows(newValue: number) { if (this.numberOfRows != newValue) { this.numberOfRows = newValue; this.MarkAsDirty("NumberOfRows"); } }
-
-
+       
+	 
     private number: number;
     public get Number() { return this.number; }
     public set Number(newValue: number) { if (this.number != newValue) { this.number = newValue; this.MarkAsDirty("Number"); } }
-
-
+       
+	 
+    private inactive: boolean;
+    public get Inactive() { return this.inactive; }
+    public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
-
-
-    private inactive : boolean;
-    public get Inactive() : boolean {
-        return this.inactive;
-    }
-    public set Inactive(v : boolean) {
-        this.inactive = v;
-        this.MarkAsDirty("Inactive")
-    }
-
+       
+	 
 
     public OldEntityPM: ScreenSectionPM;
-
+		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
         this.IsDirty = true;
-
+		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ScreenSection");
-
+           
         }
 	 }
     }
@@ -101,4 +97,4 @@ export class ScreenSectionPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

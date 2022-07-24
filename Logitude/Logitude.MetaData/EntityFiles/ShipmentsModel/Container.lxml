@@ -15289,7 +15289,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;ShipmentNumber&quot;"
-    DefaultText="&quot;Shipment No.&quot;"
+    DefaultText="&quot;Shipment&quot;"
     ListFieldLable="&quot;ShipmentNumberListLable&quot;"
     ListLableDefaultText="&quot;Shipment No.&quot;"
     IsNullable="false"

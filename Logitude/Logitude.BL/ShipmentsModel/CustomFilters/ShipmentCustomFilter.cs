@@ -708,6 +708,23 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             queryableData = queryableData.Where(d => !string.IsNullOrEmpty(d.MasterShipmentDataId));
                         }
                     }
+
+                    if (item.FieldName == "ViaPortId")
+                    {
+                        string value = item.FieldValue as string;
+
+                        if (queryableData.Count() != 0)
+                        {
+                            queryableData = queryableData.Where(d => 
+                            (!string.IsNullOrEmpty(d.Transshipment1FromPortId) && d.Transshipment1FromPortId == value)
+                            || (!string.IsNullOrEmpty(d.Transshipment1ToPortId) && d.Transshipment1ToPortId == value)
+                            || (!string.IsNullOrEmpty(d.Transshipment2FromPortId) && d.Transshipment2FromPortId == value)
+                            || (!string.IsNullOrEmpty(d.Transshipment2ToPortId) && d.Transshipment2ToPortId == value)
+                            || (!string.IsNullOrEmpty(d.Transshipment3FromPortId) && d.Transshipment3FromPortId == value)
+                            || (!string.IsNullOrEmpty(d.Transshipment3ToPortId) && d.Transshipment3ToPortId == value)
+                            );
+                        }
+                    }
                 }
             }
 

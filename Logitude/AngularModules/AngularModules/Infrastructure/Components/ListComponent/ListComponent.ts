@@ -3834,7 +3834,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 1050;
         logitudeWindow.Height = 700;
-        logitudeWindow.Title = "Multi Print " + this.ObjectTable.DBTableName;
+        logitudeWindow.Title = "Batch Print " + this.ObjectTable.DBTableName;
 
         var windowArgs: any = {};
         windowArgs.QueryCode = this.SelectedQueryCode;
