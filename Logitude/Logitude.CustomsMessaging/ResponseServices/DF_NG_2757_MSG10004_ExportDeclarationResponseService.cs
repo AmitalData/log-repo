@@ -2442,21 +2442,39 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 ex.ExceptionParms.ToList().ForEach(param =>
                 {
-                    param = param.Substring(param.LastIndexOf(".") + 1);
-
-                    res = fieldList.Find(x => x.XmlTag.EndsWith(param) && !string.IsNullOrEmpty(x.FieldNameHeb));
-                    if (res == null && param.StartsWith("Export"))
-                        res = fieldList.Find(x => x.XmlTag.EndsWith(param.Remove(0, 6)) && !string.IsNullOrEmpty(x.FieldNameHeb));
+                    res = GetErrorField(fieldList, param);
 
                     if (res != null)
                         fieldNames.Add(res.FieldNameHeb);
                 });
-
             }
 
             string msg = fieldNames.Count > 0 ? "שגיאה בשדה: " + string.Join(",", fieldNames) : ex.ExeptionDescription;
 
             return msg;
+        }
+
+        private WCOErrorPointerModel GetErrorField(List<WCOErrorPointerModel> fieldList, string fullParam)
+        {
+            WCOErrorPointerModel res;
+
+            if (fullParam.Contains(":"))
+                return null;
+
+            string param = fullParam.Substring(fullParam.LastIndexOf(".") + 1);
+
+            res = fieldList.Find(x => x.XmlTag.EndsWith(param) && !string.IsNullOrEmpty(x.FieldNameHeb));
+            if (res == null && param.StartsWith("Export"))
+                res = fieldList.Find(x => x.XmlTag.EndsWith(param.Remove(0, 6)) && !string.IsNullOrEmpty(x.FieldNameHeb));
+
+            if (res == null && fullParam.Contains("."))
+            {
+                fullParam = fullParam.Substring(0, fullParam.LastIndexOf("."));
+                if (fullParam != null)
+                    return GetErrorField(fieldList, fullParam);
+            }
+
+            return res;
         }
 
         private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, string versionId, DateTime? status_DateTime)
