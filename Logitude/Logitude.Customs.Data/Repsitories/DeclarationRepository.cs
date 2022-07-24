@@ -1030,6 +1030,16 @@ namespace Logitude.Customs.Data.Repsitories
                                   select a.HatraDate);
             return HatraDateQuery.FirstOrDefault().ToString();
         }
+
+        public List<string> GetDeclarationsByCourierHAWBsExpectDecWithHatraDate(List<string> courierHAWBs, int tenant)
+        {
+
+            var q = (from a in context.Declarations
+                     where courierHAWBs.Contains(a.CourierHAWB)
+                     where a.Tenant == tenant && a.HatraDate == null
+                     select a.Id);
+            return q.ToList();
+        }
     }
 
     public class DeclarationPendingBulkFeed

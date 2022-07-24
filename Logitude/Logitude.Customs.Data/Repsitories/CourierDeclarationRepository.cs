@@ -32,7 +32,16 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CourierMasterId == courierMasterId && a.Tenant == tenant
                     select a).Max(rec => rec.SequenceNumeric);
         }
-       
+
+
+        public void FastDeleteMulti(List<string> declarationIds, int tenant, string courierMasterId, out List<string> deletedDeclarationIds)
+        {
+            (context as DbContextBase).DeleteWhere<CourierDeclaration>(rec => declarationIds.Contains(rec.DeclarationId) && rec.Tenant == tenant && rec.CourierMasterId != courierMasterId);
+            deletedDeclarationIds = (from a in context.CourierDeclarations 
+                                     where declarationIds.Contains(a.DeclarationId)
+                                     where a.Tenant == tenant && a.CourierMasterId != courierMasterId
+                                     select a.DeclarationId).ToList();
+        }
 
         public IQueryable<CourierDeclaration> GetByCourierMasterId(int tenant, string courierMasterId)
         {
@@ -109,6 +118,18 @@ namespace Logitude.Customs.Data.Repsitories
                     join s in context.DeclarationCourierStatuses on a.DeclarationId equals s.DeclarationId 
                     where a.CourierMasterId == couriermasterid && a.Tenant == tenant && a.Declaration.HatraDate != null && !s.Delivered 
                     select a).Count();
+        }
+
+        public List<string> GetCourierDeclarationToInsert(List<string> declarationIds, string couriermasterid, int tenant)
+        {
+            var q = (from a in context.CourierDeclarations
+                     where declarationIds.Contains(a.DeclarationId)
+                     where a.Tenant == tenant && a.CourierMasterId == couriermasterid
+                     select a.DeclarationId);
+
+            var containsId= q.ToList();
+            var res = declarationIds.Where(r => !containsId.Contains(r)).ToList();
+            return res;
         }
     }
 

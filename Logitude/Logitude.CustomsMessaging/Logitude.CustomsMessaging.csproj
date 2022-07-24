@@ -570,6 +570,7 @@
     <Compile Include="U2L\Sivug\SivugUpsertService.cs" />
     <Compile Include="UnifreightGateway\AnalyzeQueueMessageService.cs" />
     <Compile Include="UnifreightGateway\CacheManagerService.cs" />
+    <Compile Include="UnifreightGateway\CommMasterCourierService.cs" />
     <Compile Include="UnifreightGateway\CustomsRequestsSheetInProgressService.cs" />
     <Compile Include="UnifreightGateway\InsertImportDeclarationService.cs" />
     <Compile Include="UnifreightGateway\MevakerSendSignedDeclarationService.cs" />
