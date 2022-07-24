@@ -122,7 +122,7 @@
 <div *ngIf="_EntityResourceFinished && EntityPM" style="margin:10px;" class="MediaFill">
     <table>
         <tr>
-            <td *ngIf="IsNewEntity && Direction!='I'" class="AppLeftMenuBackgroundRTL" style="width:150px;">
+            <td *ngIf="IsNewEntity && Direction!='I' && Direction!='E'" class="AppLeftMenuBackgroundRTL" style="width:150px;">
                 <table>
                     <tr> 
                         <td>
@@ -559,7 +559,7 @@
                                             <LogTextBox [ObjectFieldName]="'CargoIdentifierKey2'"
                                                 [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
                                                 [DataContext]="decCargoSplitCargoIdentifierModel"
-                                                [Text]="decCargoSplitCargoIdentifierModel.CargoIdentifierKey2"
+                                                [Text]="decCargoSplitCargoIdentifierModel?.CargoIdentifierKey2"
                                                 [Placeholder]="decCargoSplitCargoIdentifierModel?.SecondCargoIDPlaceholder"
                                                 [HideColumns]="true"></LogTextBox>
 
@@ -575,7 +575,7 @@
                                             <LogTextBox [ObjectFieldName]="'CargoIdentifierKey3'"
                                                 [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
                                                 [DataContext]="decCargoSplitCargoIdentifierModel"
-                                                [Text]="decCargoSplitCargoIdentifierModel.CargoIdentifierKey3"
+                                                [Text]="decCargoSplitCargoIdentifierModel?.CargoIdentifierKey3"
                                                 [Placeholder]="decCargoSplitCargoIdentifierModel?.ThirdCargoIdPlaceholder"
                                                 [HideColumns]="true"></LogTextBox>
 
