@@ -53,6 +53,24 @@ export class CustomizationTabsComponent extends BaseComponent
     {
         const filteredTabs = this.tabs.filter(t=>t.Changeset != 'delete');
         this.orderedTabs = new ObservableCollection(filteredTabs.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 }));
+        this.ReSetOrderTabs();
+    }
+
+
+    private ReSetOrderTabs() {
+         let indexOrder = 0;
+         this.orderedTabs.Collection.forEach((tab) => {
+             this.SetTabIndexOrder(tab, indexOrder++);
+        });
+    }
+
+
+    SetTabIndexOrder(tab: ObjectTableTabPM, indexOrder: number) {
+        if (tab.IndexOrder == indexOrder) return;
+        tab.IndexOrder = indexOrder;
+        this.SetChangeSet(tab);
+        this.isDirty = true;
+
     }
 
     SetWindowArgs(windowArgs: any)
@@ -90,7 +108,7 @@ export class CustomizationTabsComponent extends BaseComponent
         if(!this.isDirty || this.tabs.length == 0)
             return this.CancelClicked();
 
-        const tabsToUpdate = this.tabs.filter(t=>t.Changeset);
+        const tabsToUpdate = this.tabs.filter(t => t.Changeset);
 
         this.CurrentSession.StartBusyIndicatorSaving();
         this.tableTabsService.UpdateTabs(tabsToUpdate)
@@ -108,7 +126,7 @@ export class CustomizationTabsComponent extends BaseComponent
         window.Width = defaultWindowWidth;
         window.Height = defaultWindowHeight;
         window.Title = newTabWindowTitle;
-        window.WindowArgs = {ViewModel: this};
+        window.WindowArgs = { CustomizationMainComponent: this, IsNew:true};
         window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddTabComponent');
 
         window.WindowClosed.subscribe(data=>{
@@ -133,7 +151,7 @@ export class CustomizationTabsComponent extends BaseComponent
         window.Width = defaultWindowWidth;
         window.Height = defaultWindowHeight;
         window.Title = editTabWindowTitle;
-        window.WindowArgs = {ViewModel: this, tab: tab};
+        window.WindowArgs = { CustomizationMainComponent: this, tab: tab};
         window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddTabComponent');
 
         window.WindowClosed.subscribe(data=>{
@@ -145,42 +163,43 @@ export class CustomizationTabsComponent extends BaseComponent
             }
         });
     }
+
+
     DeleteTab(tab: ObjectTableTabPM)
     {
         tab.Changeset = 'delete';
         this.isDirty = true;
         this.LoadTabs();
     }
-    DecOrder(currentTab)
+
+
+    DecOrder(currentTab: ObjectTableTabPM)
     {
         if (currentTab.IndexOrder == 0)
             return;
 
-        const prevTab = this.tabs.find(c => c.IndexOrder == currentTab.IndexOrder - 1);
-        prevTab.IndexOrder = prevTab.IndexOrder + 1;
-        currentTab.IndexOrder = currentTab.IndexOrder - 1;
+        const prevTab: ObjectTableTabPM = this.tabs.find(c => c.IndexOrder == currentTab.IndexOrder - 1);
 
-        prevTab.Changeset = prevTab.Changeset == 'insert' ? 'insert' : 'update';
-        currentTab.Changeset = currentTab.Changeset == 'insert' ? 'insert' : 'update';
-
+        this.SetTabIndexOrder(prevTab, (prevTab.IndexOrder + 1));
+        this.SetTabIndexOrder(currentTab, (currentTab.IndexOrder - 1));
         this.LoadTabs();
-        this.isDirty = true;
     }
+
     IncOrder(currentTab)
     {
         if (currentTab.IndexOrder == this.tabs.length - 1)
             return;
 
         const nextTab = this.tabs.find(c => c.IndexOrder == currentTab.IndexOrder + 1);
-        nextTab.IndexOrder = nextTab.IndexOrder - 1;
-        currentTab.IndexOrder = currentTab.IndexOrder + 1;
-
-
-        nextTab.Changeset = nextTab.Changeset == 'insert' ? 'insert' : 'update';
-        currentTab.Changeset = currentTab.Changeset == 'insert' ? 'insert' : 'update';
-
+        this.SetTabIndexOrder(nextTab, (nextTab.IndexOrder - 1));
+        this.SetTabIndexOrder(currentTab, (currentTab.IndexOrder + 1));
         this.LoadTabs();
-        this.isDirty = true;
+       
     }
 
+
+    public  SetChangeSet(tab) {
+        tab.Changeset = tab.Changeset == 'insert' ? 'insert' : 'update';
+        
+    }
 }

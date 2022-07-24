@@ -322,6 +322,8 @@
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddEditScreenComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddTabComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationTabsComponent.css" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationTabsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefaultExternalAttachmentsComponent.html" />
@@ -1890,6 +1892,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddEditScreenComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddTabComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationTabsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.ts" />

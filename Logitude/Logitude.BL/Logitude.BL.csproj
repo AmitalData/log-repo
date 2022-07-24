@@ -654,7 +654,7 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\ScreenSectionService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\TableTabMappingService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\TableTabModificationService.cs" />
-    <Compile Include="InfrastructureModel\Tools\EntityService\TableTabService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\ObjectTableTabTextCodeService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TasksSchedulerValidator.cs" />
