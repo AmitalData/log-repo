@@ -208,13 +208,14 @@ namespace Logitude.Accounting.BL.Utils
             InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
 
 
-            using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(4)))
+            using (TransactionScope excScope = TransactionFactory.GetTransaction())
             {
-            foreach (var item in interestTransactions)
-            {
-                interestTransactionUpdateService.Update(item,true);
+                foreach (var item in interestTransactions)
+                {
+                    interestTransactionUpdateService.Update(item, true);
+                }
+                excScope.Complete();
             }
-        }
         }
 
         private static InterestTransactionPM CreateInterestTransaction( JournalLinePM line)
