@@ -224,6 +224,7 @@ import { CustomerGroupListService } from './Services/StandardLists/CustomerGroup
 import { MentionListService } from './Services/StandardLists/MentionListService';
 import { MentionPMService } from './Services/StandardPMs/MentionPMService';
 import { CarrierServiceLineListService } from './Services/StandardLists/CarrierServiceLineListService';
+import { WarehouseMenuButtonsHandler } from './Components/MenuButtons/WarehouseMenuButtonsHandler';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -389,6 +390,7 @@ export class ModuleProviders {
             case "TruckerMenuButtonsHandler": { myResult = new TruckerMenuButtonsHandler(); break; }
             case "AirlineMenuButtonsHandler": { myResult = new AirlineMenuButtonsHandler(); break; }
             case "AccountingPartnerMenuButtonsHandler": { myResult = new AccountingPartnerMenuButtonsHandler(); break; }
+            case "WarehouseMenuButtonsHandler": { myResult = new WarehouseMenuButtonsHandler(); break; }
             case "CarrierExtendedListService": { myResult = new CarrierExtendedListService(); break; }
             case "PortExtendedListService": { myResult = new PortExtendedListService(); break; }
             case "PaymentTermDateTypeListService": { myResult = new PaymentTermDateTypeListService(); break; }

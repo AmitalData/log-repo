@@ -166,7 +166,7 @@ namespace WebFreight.Web.ContainerTracking
         private void HandelUpdateManager(ContainerTrackingUpdateManager manager, ContainerTrackingRequest containerTrackingRequest)
         {
             if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
-                FillContainerId(containerTrackingRequest, visionContainerStatus);
+                FillContainerField(containerTrackingRequest, visionContainerStatus);
             var comunicationLog = BuildCommunicationLogUpdateStatus(containerTrackingRequest);
             if (!string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
             {
@@ -290,12 +290,13 @@ namespace WebFreight.Web.ContainerTracking
             };
         }
 
-        private void FillContainerId(ContainerTrackingRequest containerTrackingRequest, VisionContainerStatus containerStatus)
+        private void FillContainerField(ContainerTrackingRequest containerTrackingRequest, VisionContainerStatus containerStatus)
         {
             var shipmentContext = ShipmentsContext.GetContext(containerTrackingRequest.Tenant);
             var container = shipmentContext.Containers.Where(r => r.ShipmentId == containerTrackingRequest.ShipmentId && containerStatus.payload.container_id == r.ContainerNumber).FirstOrDefault();
             if (container == null)
                 return;
+            containerTrackingRequest.ContainerNumber = container.ContainerNumber;
             containerTrackingRequest.ContainerId = container.Id;
         }
 
