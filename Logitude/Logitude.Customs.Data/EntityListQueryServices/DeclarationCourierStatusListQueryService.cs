@@ -193,7 +193,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsAmendment = d.IsAmendment == true ? true : false,
                                                                   CargoDescription = d.CargoDescription,
                                                                   FinalRelease = !d.HatraDate.HasValue,
-
+                                                                  CasualSupplierName =d.CasualSupplierName,
                                                               });
 
 
@@ -304,6 +304,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         DeclarationId = cd.DeclarationId,
                         CourierHawb = cd.Declaration.CourierHAWB,
                         ImporterCode = cd.Declaration.ImporterCode,
+                        CasualSupplierName=cd.Declaration.CasualSupplierName,
                         ImporterName = cd.Declaration.ImporterName != null ? cd.Declaration.ImporterName : (cd.Declaration.ImporterId != null ? cd.Declaration.Importer.FullName : cd.Declaration.ImporterName),
                         CargoDescription = cd.Declaration.CargoDescription,
                         CasualSupplierAddress = cd.Declaration.CasualImporterAddress1 + ", " + cd.Declaration.CasualImporterAddress2,
@@ -335,6 +336,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         CourierPendingReasonList = t2.Key.CourierPendingReasonList,
                         CourierPendingReasonName = t2.Key.CourierPendingReasonName,
                         MissedDocumentStatusCode = t2.Key.MissedDocumentStatusCode,
+                        CasualSupplierName = t2.Key.CasualSupplierName,
                     });
 
 
@@ -372,6 +374,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             {
                 string description = cargoDescriptionF.FieldValue.ToString().ToLower();
                 query2 = query2.Where(x => x.CargoDescription.ToLower().Contains(description));
+            }
+
+            var casualSupplierNameF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CasualSupplierName").FirstOrDefault();
+            if (casualSupplierNameF != null && !string.IsNullOrEmpty(casualSupplierNameF.FieldValue?.ToString()))
+            {
+                string casualSupplierName = casualSupplierNameF.FieldValue.ToString().ToLower();
+                query2 = query2.Where(x => x.CasualSupplierName.ToLower().Contains(casualSupplierName));
             }
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
@@ -478,6 +487,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             {
                 string description = cargoDescriptionF.FieldValue.ToString().ToLower();
                 query2 = query2.Where(x => x.CargoDescription.ToLower().Contains(description));
+            }
+
+            var casualSupplierNameF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CasualSupplierName").FirstOrDefault();
+            if (casualSupplierNameF != null && !string.IsNullOrEmpty(casualSupplierNameF.FieldValue?.ToString()))
+            {
+                string casualSupplierName = casualSupplierNameF.FieldValue.ToString().ToLower();
+                query2 = query2.Where(x => x.CasualSupplierName.ToLower().Contains(casualSupplierName));
             }
 
             query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
