@@ -508,6 +508,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).ToList();
         }
 
+        public bool GetIsEntityHasScheduler(string entityId, int tenant)
+        {
+
+            bool result = (from a in repository.context.TasksSchedulers
+                             where a.Tenant == tenant && a.EntityId == entityId
+                             select a).Any();
+
+            return result;
+
+        }
     }
 
     public class CustomSchedulerHistory

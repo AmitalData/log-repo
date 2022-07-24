@@ -74,7 +74,7 @@ export class DWAskUserFiltersComponent extends DWQueryBuilderBaseComponent imple
             });
         }
     }
-
+        
     RunReport(MyDWQueryData) {
         this.ValidationErrorsList = [];
         this.PageIndex = 0;
@@ -87,7 +87,7 @@ export class DWAskUserFiltersComponent extends DWQueryBuilderBaseComponent imple
         else {
             this.DWQueryData = MyDWQueryData;
         }
-        this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
+        this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);        
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator(this.LoadingMsg);
             this.DWQueryData.ColumnsSort = (AppTool.IsNullOrEmpty(this.DWQueryData.ColumnsSort) || this.DWQueryData.Columns.some(e => e.Name === this.DWQueryData.ColumnsSort.split('[').pop().split(']')[0])) ? this.DWQueryData.ColumnsSort : null;

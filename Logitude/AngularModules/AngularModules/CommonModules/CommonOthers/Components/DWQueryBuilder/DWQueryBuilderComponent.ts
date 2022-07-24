@@ -82,6 +82,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     IsLoadShipmentShipmentComputedFieldsResource: boolean = false;
     IsLoadShipmentShipmentPayableResource: boolean = false;
     IsLoadShipmentChargesTypeResource: boolean = false;
+    BIReportId: string;
     //KPIFeatureToggle: any;
     private ChargesFactMeasurementFields: string[] = ['Gross Weight Per Ton', 'Order Gross Weight', 'Order Gross Weight in Ton',
         'Order Volume', 'Total Volume (CBM)', 'Volumetric Weight', 'Number of Packages', 'Order Number of Packages','Gross Weight (KG)'];
@@ -320,7 +321,8 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     SetWindowArgs(args: any) {
-        this.QID = args.DWQueryId;
+        this.QID = args.DWQueryId
+        this.BIReportId = args.BIReportId;
         this.IsBIReportWorkspace = args.IsBIReportWorkspace;
         this.IsBIReportEditScreen = args.IsBIReportEditScreen;
         this.FolderId = args.FolderId;
@@ -1065,7 +1067,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             this.ShowValidateMessage("Please add Invoice Number column to load the data");
             return;
         }
-
+                
         if (this.SelectedFieldsDataSource.length > 0) {
             this.StartBusyIndicator("Loading ..");
             this.IsPreview = !StopPreview;
@@ -1089,7 +1091,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             });
         }
     }
-
+        
     SampleData: any[] = [];
 
     private IsValidGroupedFactARInvoice() {

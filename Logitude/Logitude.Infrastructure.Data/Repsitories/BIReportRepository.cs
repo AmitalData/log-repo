@@ -24,7 +24,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
         public bool DoesReportExist(string name,string folderId, int tenant)
         {
             return (from a in context.BIReports
-                    where a.Name == name.ToLower() && a.BIReportFolderId == folderId && !a.IsScheduler && a.Tenant == tenant
+                    where a.Name == name.ToLower() && a.BIReportFolderId == folderId && a.Tenant == tenant
                     select a).Any();
         }
 

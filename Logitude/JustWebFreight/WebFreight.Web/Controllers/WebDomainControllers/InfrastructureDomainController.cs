@@ -1753,7 +1753,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 BIReportXMLDataService bIReportXMLDataService = new BIReportXMLDataService();
-                BIReportXMLData QueryData = bIReportXMLDataService.GetByBIReportId(Id, dWQueryId, authToken.Tenant);
+                BIReportXMLData QueryData = bIReportXMLDataService.GetByBIReportId(new BIReportXMLDataServiceArgs { BIReportId = Id, DWQueryId = dWQueryId, Tenant = authToken.Tenant });
                 return Request.CreateResponse(HttpStatusCode.OK, QueryData);
             }
             catch (Exception ex)

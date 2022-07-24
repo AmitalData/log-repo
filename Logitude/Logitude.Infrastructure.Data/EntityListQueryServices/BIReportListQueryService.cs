@@ -23,7 +23,6 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
         private IQueryable<BIReportList> GetIqueryableList(IQueryable<BIReport> iQueryable)
         {
             IQueryable<BIReportList> query = (from a in iQueryable.Include("UpdatedByUser").Include("UpdatedByUser.Contact").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("LastRunDetail")
-                                              where a.IsScheduler == false
                                               select new BIReportList()
                                               {
                                                   Id = a.Id,
