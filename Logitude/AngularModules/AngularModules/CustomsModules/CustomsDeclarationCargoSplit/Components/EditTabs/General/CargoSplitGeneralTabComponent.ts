@@ -529,6 +529,19 @@ export class CargoSplitGeneralTabComponent
 
             //  this.EntityPM.IsDirty = false;
         }
+        switch (this.TransportmodeId) {
+            case 'A':
+                this.isTransportA = true;
+                break;
+            case 'O':
+                this.isTransportO = true;
+                break;
+            case 'L':
+                this.isTransportL = true;
+                break;
+            default:
+                break;
+        }
 
     }
 
@@ -849,6 +862,23 @@ export class CargoSplitGeneralTabComponent
                             errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DidntFindExportCustomFile");
                             this.MessageCustomsFileWindow(errorMessage);
                             return;
+                        }
+                        if (this.EntityPM.IsDirty) {
+                            if (this._LastFetchDeclarationList.Direction == "E" && this._LastFetchDeclarationList.TransportModeForExport =="A" && !this.isTransportA) {
+                                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
+                                this.MessageCustomsFileWindow(errorMessage);
+                                return;
+                            }
+                            if (this._LastFetchDeclarationList.Direction == "E" && this._LastFetchDeclarationList.TransportModeForExport =="O" && !this.isTransportO) {
+                                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
+                                this.MessageCustomsFileWindow(errorMessage);
+                                return;
+                            } 
+                            if (this._LastFetchDeclarationList.Direction == "E" && this._LastFetchDeclarationList.TransportModeForExport =="L" && !this.isTransportL) {
+                                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
+                                this.MessageCustomsFileWindow(errorMessage);
+                                return;
+                            }  
                         }
                         this.CurrentSession.StartBusyIndicator("")
                         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
