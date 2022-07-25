@@ -45,6 +45,10 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
 
     }
 
+    public OnSectionScreenNameChange() {
+        this.ScreenLayoutComponent.Modified = true;
+    }
+
     RemoveSection(section)
     {
         const confirmWindow = new ConfirmWindow();
@@ -66,14 +70,10 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
             return;
 
         section.Section.Inactive = true;
+        section.Section.IsDirty = true;
 
         this.ScreenLayoutComponent.DeleteSectionFields(editedSection);
-
-        const service = new ScreenSectionPMService();
-        service.update(section.Section).subscribe((response: ServiceResponse) =>
-        {
-            SessionLocator.SelectedSession.StopBusyIndicator();
-        });
+        SessionLocator.SelectedSession.StopBusyIndicator();
 
     }
 

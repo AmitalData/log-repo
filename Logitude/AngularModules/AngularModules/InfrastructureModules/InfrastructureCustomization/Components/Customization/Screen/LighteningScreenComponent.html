@@ -75,15 +75,12 @@
                                 </td>
                                 <td style="width: 240px;">
                                     <div style="height: 25px; width: 240px; margin-bottom:3px">
-                                        <LogTextBox *ngIf="(!ScreenLayoutComponent.IsObjectTableFilterEnabled || ScreenLayoutComponent.IsTabsCustomizationEnabled)" [NoObjectField]="true" [ObjectFieldName]="'Name'" [InputType]="'text'" [DataContext]="sectionScreen.Section"
+                                        <LogTextBox (ValueChanged)="OnSectionScreenNameChange()" [NoObjectField]="true" [ObjectFieldName]="'Name'" [InputType]="'text'" [DataContext]="sectionScreen.Section"
                                                     [ObjectTableName]="'sectionScreen'" [HideColumns]="true"></LogTextBox>
-                                        <div *ngIf="!(!ScreenLayoutComponent.IsObjectTableFilterEnabled || ScreenLayoutComponent.IsTabsCustomizationEnabled)" style="padding-top: 8px; color: #1B90CB;">
-                                            <span>{{sectionScreen.Section.Name}}</span>
-                                        </div>
                                     </div>
 
                                 </td>
-                                <td *ngIf="(!ScreenLayoutComponent.IsObjectTableFilterEnabled || ScreenLayoutComponent.IsTabsCustomizationEnabled)" style="width: 50px;">
+                                <td style="width: 50px;">
                                     <IconButton class="section-button" [Name]="'delete'" [IsSmall]="true" (click)="RemoveSection(sectionScreen)" ></IconButton>
                                 </td>
                                 <td><div></div></td>

@@ -23,6 +23,7 @@ import { IScreenLayoutService } from '../../Interface/IScreenLayoutService';
 import { MuiltSectionScreenLayoutService } from '../../ExternalService/MuiltSectionScreenLayoutService';
 import { ClassicScreenLayoutService } from '../../ExternalService/ClassicScreenLayoutService';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 
 
@@ -169,7 +170,6 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.TableScreensCollection.push(screenItem);
         window.Screens.push(screen);
         this.SelectionChanged(screenItem);
-        this.Modified = true;
 
     }
 
@@ -229,12 +229,24 @@ export class ScreenLayoutComponent extends BaseComponent {
     public authHeader;
     OkClicked(CloseWindow: boolean = true) {
 
+        this.screenLayoutService.BuildScreenUpdateArgs();
+
+        if (!this.IsScreenSectionsLengthtValid()) {
+            this.ShowMessageWindow("Section name Field must be less than 100");
+            return;
+        }
+
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
 
-        this.screenLayoutService.BuildScreenUpdateArgs();
         this.MyArgs.ScreenId = this.OldItem.ScreenPM.Id;
         this.MyArgs.ScreenCode = this.OldItem.ScreenPM.Code;
         this.myGeneralService.updateScreenFields(this.MyArgs).subscribe((myResult: ServiceResponse) => {
+
+            if (myResult.HasError) {
+                this.HandleException(myResult);
+                return;
+            }
+
             this.authHeader = new Headers();
             this.authHeader.append('Content-Type', 'application/json');
             this.authHeader.append('Accept', 'application/json');
@@ -255,6 +267,37 @@ export class ScreenLayoutComponent extends BaseComponent {
                 });
             });
         });
+    }
+
+
+
+    IsScreenSectionsLengthtValid() {
+        let isValid = true;
+        let screenSectionMaxLenght = 100;
+        if (!this.MyArgs.ScreenSections || this.MyArgs.ScreenSections.length == 0) return isValid;
+        this.MyArgs.ScreenSections.filter(d => !d.Inactive).forEach((section) => {
+            if (section.Name && section.Name.length > screenSectionMaxLenght) isValid = false;
+        });
+
+        return isValid;
+    }
+
+
+    HandleException(serviceResponse: ServiceResponse) {
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        if (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) {
+            this.ShowMessageWindow(serviceResponse.ErrorsArray[0], "Logitude Message");
+        }
+    }
+
+    public ShowMessageWindow(message: string, title: string = "") {
+
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+        if (!title) return;
+        messageWindow.Title = title;
+
+
     }
 
 
@@ -450,6 +493,9 @@ export class ScreenLayoutComponent extends BaseComponent {
                 this.OnDeleteField(field,editedSection.Section.Number);
             });
         });
+
+        this.Modified = true;
+
     }
 
     OnDeleteField(item, sectionNumber:number=null ) {
@@ -537,6 +583,8 @@ export class ScreenLayoutComponent extends BaseComponent {
         sectionScreen.ScreenRows = this.ScreenRows;
         sectionScreen.IsNew = true;
         this.SectionScreens.push(sectionScreen);
+        this.Modified = true;
+
 
     }
 
