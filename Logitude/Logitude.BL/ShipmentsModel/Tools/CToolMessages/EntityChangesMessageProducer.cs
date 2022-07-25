@@ -8,6 +8,7 @@ using Logitude.Server.Tools.KafkaConfigurations;
 using Logitude.Server.Tools.Messages;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
@@ -106,6 +107,22 @@ namespace Logitude.Server.Tools.CToolWorkflows
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, tenant, null, "ProduceShipmentDocumentUpload", null, null);
+            }
+        }
+
+        public static void ProduceSendEmailMessage(CommunicationLog communicationLog)
+        {
+            try
+            {
+                var sendEmailProducer = new Producer();
+                var serializedSendEmailMessage = JsonConvert.SerializeObject(communicationLog, Formatting.Indented);
+                var result = sendEmailProducer.Produce(KafkaTopics.LookupsTopic, KakaMessageTypes.CommunicationLog, serializedSendEmailMessage);
+                sendEmailProducer.ProducerBuilder.Flush();
+                sendEmailProducer.ProducerBuilder.Dispose();
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, communicationLog.Tenant, null, "ProduceSendEmailMessage", null, null);
             }
         }
 

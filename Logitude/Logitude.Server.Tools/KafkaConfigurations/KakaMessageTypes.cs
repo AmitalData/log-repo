@@ -30,5 +30,6 @@
         public static long Department = 26;
         public static long AuditLog = 27;
         public static long CustomerTeam = 28;
+        public static long CommunicationLog = 29;
     }
 }
