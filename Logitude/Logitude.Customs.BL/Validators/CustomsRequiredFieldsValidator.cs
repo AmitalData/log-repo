@@ -52,13 +52,8 @@ namespace Logitude.Customs.BL.Validators
             }
 
             string isExport = declaration.Direction == "E" ? "E" : "I";
-            var fromCache = declaration.Direction == "E" ? false : true;
-            if (fromCache)
-            {
-                var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
-                declaration = CacheManager.CacheWrapper.Remove(cacheKey) as DeclarationPM;
+            var fromCache =  false ;
 
-            }
 
             DeclarationPaymentQueryService DeclarationPaymentQuery = new DeclarationPaymentQueryService(context);
             DeclarationPaymentPM payment = DeclarationPaymentQuery.GetSingle(declarationId, true, fromCache);
