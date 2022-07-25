@@ -444,7 +444,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             CreatedByUserId: SessionLocator.LoggedUserId,
             BIReportEntityId: this.BIReportEntity['Id'],
             DWQueryId: this.BIReportEntity['DWQueryId'],
-            DWQueryFilterData: this.PageChild_PRREP ? this.PageChild_PRREP.SelectedFiltersDataSource[0] : this.OldReportSchedulerDetails?.DWQueryFilterData,
+            DWQueryFilterData: this.PageChild_PRREP ? this.PageChild_PRREP.SelectedFiltersDataSource[0] : this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
