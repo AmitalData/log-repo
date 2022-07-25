@@ -884,6 +884,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (item.Invoice.DMExtensions != null)
                 {
                     if (item.Invoice.DMExtensions.IsPreferenceDocumentInd != null) supplierInvoicePM.IsPreference = item.Invoice.DMExtensions.IsPreferenceDocumentInd.Value;
+                    supplierInvoicePM.DutyRegimeProtocolCode= GetValueCodeType(item.Invoice.DMExtensions.DutyRegimeProtocolCode);
                     supplierInvoicePM.PreferenceDocumentTypeCode = GetValueCodeType(item.Invoice.DMExtensions.PreferenceDocumentType);
                     //supplierInvoicePM.PaymentTypeCode = GetValueCodeType(item.Invoice.DMExtensions.PaymentDetails.FirstOrDefault().PaymentType);
                     supplierInvoicePM.InvoiceAmount = GetValueAmountType(item.Invoice.DMExtensions.InvoiceAmount);
@@ -984,22 +985,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 foreach (var governmentAgencyGoodsItem in item.GovernmentAgencyGoodsItem)
                 {
                     SupplierInvoiceItemPM supplierInvoiceItemPM = new SupplierInvoiceItemPM();
-                    //SupplierInvoiceItemPM supplierInvoiceItemPMOrg = new SupplierInvoiceItemPM();
-
-                    //supplierInvoiceItemPMOrg = declarationPMOrg.SupplierInvoices.FirstOrDefault(x=>x.DeclarationId == )
-
+                    
                     supplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Insert;
                     supplierInvoiceItemPM.DeclarationId = declarationId;
                     supplierInvoiceItemPM.SequenceNumeric = (int)governmentAgencyGoodsItem.SequenceNumeric;
                     supplierInvoiceItemPM.OriginCountryCode = GetValueCodeType(governmentAgencyGoodsItem.Origin.CountryCode);
-                    //if (item.Invoice.DMExtensions.InvoiceAmount != null) supplierInvoiceItemPM.ItemPriceCurrencyCode = item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
-
+                    supplierInvoiceItemPM.ClaimReasonCode = GetValueCodeType(governmentAgencyGoodsItem.DMExtensions.ClaimReasonCode);
                     supplierInvoiceItemPM.Tenant = tenant;
-                    //if (governmentAgencyGoodsItem.Commodity.DMExtensions != null)
-                    //{
-                    //    supplierInvoiceItemPM.TradeAgreementCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.DMExtensions.DutyRegimeCode);
-
-                    //}
                     if (governmentAgencyGoodsItem.Commodity.Classification != null || governmentAgencyGoodsItem.Commodity.Classification.Count() > 0)
                     {
                         var classification = governmentAgencyGoodsItem.Commodity.Classification.FirstOrDefault(x => x != null && GetValueCodeType(x.IdentificationTypeCode) == "SSO");
@@ -1015,6 +1007,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             supplierInvoiceItemPM.ClassificationCode = GetValueIDType(classification2.ID).Replace("/", "");
                         }
+                        supplierInvoiceItemPM.DutyRegimeProtocolCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.DutyRegimeProtocolCode);
+                        supplierInvoiceItemPM.TradeAgreementCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.DutyRegimeCode);
+                        supplierInvoiceItemPM.ClassificationTypeCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].IdentificationTypeCode);
+                        
+
                     }
 
                     if (governmentAgencyGoodsItem.GovernmentProcedure != null && governmentAgencyGoodsItem.GovernmentProcedure.Count() > 0)
@@ -1080,8 +1077,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             supplierInvoiceItemPM.SupplierInvoiceItemsConDeclars.Add(supplierInvoiceItemsConDeclarPM);
                         }
                     }
-                    //if (governmentAgencyGoodsItem.Manufacturer != null)
-                    //    supplierInvoiceItemPM.ManufactureIdentifier = GetValueIDType(governmentAgencyGoodsItem.Manufacturer.ID);
+                    
 
                     if (governmentAgencyGoodsItem.DMExtensions != null)
                     {
@@ -1182,9 +1178,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //if (governmentAgencyGoodsItem.DMExtensions.DeferredPurchaseTax != null) supplierInvoiceItemPM.DeferredPurchaseTax = governmentAgencyGoodsItem.DMExtensions.DeferredPurchaseTax.Value;
                     //AdditionalDocument**********
                     supplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsMods(governmentAgencyGoodsItem, declaration, declarationId, tenant);
-
+                    supplierInvoiceItemPM.SupplierInvoiceItemsPrices = GetSupplierInvoiceItemsPrices(governmentAgencyGoodsItem, declaration, declarationId, tenant);
+                    supplierInvoiceItemPM.SuppInvoiceItemsAbachStatements = GetSupplierInvoiceItemsAbachStatements(governmentAgencyGoodsItem, declaration, declarationId, tenant);
                     // supplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvioceItemCertificats(supplierInvoicePM, supplierInvoiceItemPM);
-
+                    supplierInvoiceItemPM.SupplierInvoiceItemsSerialNums = GetSupplierInvoiceItemsSerialNums(governmentAgencyGoodsItem, declaration, declarationId, tenant);
+                    supplierInvoiceItemPM.SupplierInvoiceItemsProdIdents = GetSupplierInvoiceItemsProdIdents(governmentAgencyGoodsItem, declaration, declarationId, tenant);
+                    supplierInvoiceItemPM.SupplierInvoiceItemsDescripts = GetSupplierInvoiceItemsDescript(governmentAgencyGoodsItem, declaration, declarationId, tenant);
+                    supplierInvoiceItemPM.SupplierInvoiceItemLevies = GetSupplierInvoiceItemLevy(governmentAgencyGoodsItem, declaration, declarationId, tenant);
                     supplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvioceItemCertificats(governmentAgencyGoodsItem, declaration, declarationId, tenant);
 
                     if (supplierInvoicePMPMOrg != null)
@@ -1228,6 +1228,135 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
             return supplierInvoiceItemsModPMs;
+        }
+
+        private List<SupplierInvoiceItemsPricePM> GetSupplierInvoiceItemsPrices(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
+        {
+            List<SupplierInvoiceItemsPricePM> SupplierInvoiceItemsPricePM = new List<SupplierInvoiceItemsPricePM>();
+            //SupplierInvoiceItemsPriceQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvoiceItemsPriceQueryService(tenant);
+            //supplierInvoiceItemsPricePMS = supplierInvoiceItemsPriceQueryService.GetSupplierInvoiceItemsPricesForSupplierInvoiceWithSpecificKeys(decIdOrg, _OrgSupplierInvoicePM.InvoiceCounterKey);
+
+            if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.ValuationAdjustment != null)
+           {
+               foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
+               {
+                  SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
+                  supplierInvoiceItemsPrice.DeclarationId = declarationId;
+                  supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
+                  supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
+
+                  supplierInvoiceItemsPrice.AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);
+                  supplierInvoiceItemsPrice.Tenant = tenant;
+                  SupplierInvoiceItemsPricePM.Add(supplierInvoiceItemsPrice);
+               }
+            }
+            return SupplierInvoiceItemsPricePM;
+        }
+        
+
+        private List<SuppInvoiceItemsAbachStatementPM> GetSupplierInvoiceItemsAbachStatements(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
+        {
+            List<SuppInvoiceItemsAbachStatementPM> supplierInvoiceItemsAbachStatementPM = new List<SuppInvoiceItemsAbachStatementPM>();
+           
+
+            if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.Commodity.Classification[0].DangerousGoodsStatement != null)
+            {
+                foreach (var GoodsItemAbachStatement in governmentAgencyGoodsItem.Commodity.Classification[0].DangerousGoodsStatement)
+                {
+                    SuppInvoiceItemsAbachStatementPM supplierInvoiceItemsAbachStatement = new SuppInvoiceItemsAbachStatementPM();
+                    supplierInvoiceItemsAbachStatement.DeclarationId = declarationId;
+                    supplierInvoiceItemsAbachStatement.ChangeSetOp = ChangeSetOperation.Insert;
+                    supplierInvoiceItemsAbachStatement.StatementTypeCode = GetValueIDType(GoodsItemAbachStatement.StatementType);
+                    supplierInvoiceItemsAbachStatement.IsStatementInd = GoodsItemAbachStatement.DangerousGoodsStatementInd.Value;
+                    supplierInvoiceItemsAbachStatement.SequenceNumeric = GoodsItemAbachStatement.SequenceNumeric;
+                    supplierInvoiceItemsAbachStatement.Tenant = tenant;
+                    supplierInvoiceItemsAbachStatementPM.Add(supplierInvoiceItemsAbachStatement);
+                }
+            }
+            return supplierInvoiceItemsAbachStatementPM;
+        }
+
+        private List<SupplierInvoiceItemsSerialNumPM> GetSupplierInvoiceItemsSerialNums(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
+        {
+            List<SupplierInvoiceItemsSerialNumPM> supplierInvoiceItemsSerialNumPM = new List<SupplierInvoiceItemsSerialNumPM>();
+
+
+            if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.Commodity.Classification[0].SerialNumbers != null)
+            {
+                foreach (var GoodsItemSerialNumbers in governmentAgencyGoodsItem.Commodity.Classification[0].SerialNumbers)
+                {
+                    SupplierInvoiceItemsSerialNumPM supplierInvoiceItemsSerialNum = new SupplierInvoiceItemsSerialNumPM();
+                    supplierInvoiceItemsSerialNum.DeclarationId = declarationId;
+                    supplierInvoiceItemsSerialNum.ChangeSetOp = ChangeSetOperation.Insert;
+                  supplierInvoiceItemsSerialNum.TypeCode = GetValueCodeType(GoodsItemSerialNumbers.IdentityQualifierCode);
+                   supplierInvoiceItemsSerialNum.SerialNumber = GetValueIDType(GoodsItemSerialNumbers.ID);
+                    supplierInvoiceItemsSerialNum.Tenant = tenant;
+                    supplierInvoiceItemsSerialNumPM.Add(supplierInvoiceItemsSerialNum);
+                }
+            }
+            return supplierInvoiceItemsSerialNumPM;
+        }
+        private List<SupplierInvoiceItemsProdIdentPM> GetSupplierInvoiceItemsProdIdents(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
+        {
+            List<SupplierInvoiceItemsProdIdentPM> supplierInvoiceItemsProdIdentPM = new List<SupplierInvoiceItemsProdIdentPM>();
+
+
+            if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.Commodity.Classification[0].ProductIdentification != null)
+            {
+                foreach (var GoodsItemProdIdent in governmentAgencyGoodsItem.Commodity.Classification[0].ProductIdentification)
+                {
+                    SupplierInvoiceItemsProdIdentPM supplierInvoiceItemsProdIdent = new SupplierInvoiceItemsProdIdentPM();
+                    supplierInvoiceItemsProdIdent.DeclarationId = declarationId;
+                    supplierInvoiceItemsProdIdent.ChangeSetOp = ChangeSetOperation.Insert;
+                    supplierInvoiceItemsProdIdent.TypeCode = GetValueCodeType(GoodsItemProdIdent.IDTypeCode);
+                    supplierInvoiceItemsProdIdent.Identification = GetValueIDType(GoodsItemProdIdent.ID);
+                    supplierInvoiceItemsProdIdent.Tenant = tenant;
+                    supplierInvoiceItemsProdIdentPM.Add(supplierInvoiceItemsProdIdent);
+                }
+            }
+            return supplierInvoiceItemsProdIdentPM;
+        }
+
+        private List<SupplierInvoiceItemsDescriptPM> GetSupplierInvoiceItemsDescript(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
+        {
+            List<SupplierInvoiceItemsDescriptPM> supplierInvoiceItemsDescriptPM = new List<SupplierInvoiceItemsDescriptPM>();
+
+
+            if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.Commodity.Classification[0].ProductName != null)
+            {
+                foreach (var GoodsItemDescript in governmentAgencyGoodsItem.Commodity.Classification[0].ProductName)
+                {
+                    SupplierInvoiceItemsDescriptPM supplierInvoiceItemsDescript = new SupplierInvoiceItemsDescriptPM();
+                    supplierInvoiceItemsDescript.DeclarationId = declarationId;
+                    supplierInvoiceItemsDescript.ChangeSetOp = ChangeSetOperation.Insert;
+                    supplierInvoiceItemsDescript.TypeCode = GetValueCodeType(GoodsItemDescript.NameQualifierCode);
+                    supplierInvoiceItemsDescript.Description = GetValueTextType(GoodsItemDescript.Name);
+                    supplierInvoiceItemsDescript.Tenant = tenant;
+                    supplierInvoiceItemsDescriptPM.Add(supplierInvoiceItemsDescript);
+                }
+            }
+            return supplierInvoiceItemsDescriptPM;
+        }
+
+        private List<SupplierInvoiceItemsLevyPM> GetSupplierInvoiceItemLevy(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
+        {
+            List<SupplierInvoiceItemsLevyPM> supplierInvoiceItemsLevyPM = new List<SupplierInvoiceItemsLevyPM>();
+
+
+            if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.Commodity.Classification[0].TradeLevyAndExampt != null)
+            {
+                foreach (var GoodsItemLevy in governmentAgencyGoodsItem.Commodity.Classification[0].TradeLevyAndExampt)
+                {
+                    SupplierInvoiceItemsLevyPM supplierInvoiceItemsLevy = new SupplierInvoiceItemsLevyPM();
+                    supplierInvoiceItemsLevy.DeclarationId = declarationId;
+                    supplierInvoiceItemsLevy.ChangeSetOp = ChangeSetOperation.Insert;
+                    supplierInvoiceItemsLevy.TradeLevyExamptCode = GetValueCodeType(GoodsItemLevy.TradeLevyExamptCode);
+                    supplierInvoiceItemsLevy.TradeLevyNumber = GetValueIDType(GoodsItemLevy.TradeLevyNumber);
+                    supplierInvoiceItemsLevy.Tenant = tenant;
+                    supplierInvoiceItemsLevyPM.Add(supplierInvoiceItemsLevy);
+                }
+            }
+            return supplierInvoiceItemsLevyPM;
         }
 
         private List<SupplierInvoiceItemVehiclePM> GetSupplierInvoiceItemVehicles(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
