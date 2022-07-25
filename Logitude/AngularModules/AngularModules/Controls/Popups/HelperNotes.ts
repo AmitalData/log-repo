@@ -8,7 +8,7 @@ import {ShipmentPM} from '../../Shipment/EntityPMs/ShipmentPM';
     selector: "HelperNotes",
     
     templateUrl: './HelperNotes.html',
-    inputs: ['Title', 'EntityTitle', 'Text', 'IconCode', 'IsEnabled', 'ShipmentPM', 'QuotePM'],
+    inputs: ['Title', 'EntityTitle', 'Text', 'IconCode', 'IsEnabled', 'ShipmentPM', 'QuotePM','IsCustom'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -25,6 +25,7 @@ export class HelperNotes implements OnInit, OnDestroy {
     public QuotePM: QuotePM;
     public ShipmentPM: ShipmentPM;
     public IsEnabled: boolean = true;
+    public IsCustom: boolean = false;
     public IconCode: string;
     public IconPath: string;
     public IconOpacity: number = 1;
@@ -241,6 +242,8 @@ export class HelperNotes implements OnInit, OnDestroy {
 
     public NotesList: HelperNoteItem[];
     SetNotesList() {
+        if(this.IsCustom)
+            return;
         if (this.QuotePM) {
             this.BuildQuoteNotesList();
         }
