@@ -17,16 +17,12 @@ const validationMessageOfScreen = 'Please select screen';
 export class AddTabComponent extends BaseComponent {
     dataContext = this;
     args: any;
-    private screensService: ScreenExtendedService = new ScreenExtendedService();
     ValidationErrorsList: any[];
     public TableTab: ObjectTableTabPM;
     objectTable;
     screens: ScreenPM[] = [];
     IsNew: boolean = true;
-
-    prevName: string;
-    prevScreenCode: string;
-    prevScreenName: string;
+    private customizationMainComponent: any;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -40,24 +36,24 @@ export class AddTabComponent extends BaseComponent {
         this.TableTab.ObjectTableName = this.objectTable.Name;
         this.TableTab.Tenant = tab ? tab.Tenant : SessionLocator.Tenant;
         this.TableTab.ObjectTableId = this.objectTable.Id;
-        this.TableTab.Changeset = tab ? 'update' : 'insert';
         this.TableTab.Type = tab?.Type || 'Custom';
         this.TableTab.Name = tab?.Name || tab?.TabNameTextCodeDefaultText;
+        this.TableTab.Changeset = this.IsNew ? "insert" : tab?.Changeset;
 
-        if(tab){
-            this.prevName = tab.Name;
-            this.prevScreenCode = tab.ScreenCode;
-            this.prevScreenName = tab.ScreenName;
-        }
+        this.Name = this.TableTab.Name;
+        this.ScreenCode = this.TableTab.ScreenCode;
+        this.ScreenName = this.TableTab.ScreenName;
+
+
     }
 
 
-
     SetWindowArgs(args: any) {
-        this.args = args.ViewModel;
-        this.objectTable = window.ObjectTables.filter(x => x.Id === this.args.objectTableId)[0];
+        this.customizationMainComponent = args.CustomizationMainComponent;
+        this.IsNew = args.IsNew;
+        this.objectTable = window.ObjectTables.filter(x => x.Id === this.customizationMainComponent.objectTableId)[0];
         this.InitializeTab(args.tab);
-        this.screens = window.Screens.filter(d => d.Type == "LIGHTENING" && d.ObjectTableId == this.args.objectTableId && !d.Inactive );
+        this.screens = window.Screens.filter(d => d.Type == "LIGHTENING" && d.ObjectTableId == this.customizationMainComponent.objectTableId && !d.Inactive );
         this.SetSelectedScreen();
 
 
@@ -70,56 +66,73 @@ export class AddTabComponent extends BaseComponent {
             this.SelectedScreen = this.screens.find(s => s.Code == this.TableTab.ScreenCode);
     }
 
-    get Name() { return this.TableTab ? this.TableTab.Name:""; }
+
+    private name: string;
+    get Name() { return this.name; }
     set Name(newValue: string) {
-        if (this.TableTab.Name != newValue) {
-            this.TableTab.Name = newValue;
+        if (this.name != newValue) {
+            this.name = newValue;
         }
     }
+
+    private screenCode: string;
+    get ScreenCode() { return this.screenCode; }
+    set ScreenCode(newValue: string) {
+        if (this.screenCode != newValue) {
+            this.screenCode = newValue;
+        }
+    }
+
+    private screenName: string;
+    get ScreenName() { return this.screenName; }
+    set ScreenName(newValue: string) {
+        if (this.screenName != newValue) {
+            this.screenName = newValue;
+        }
+    }
+
 
 
     SelectedScreen;
     ScreenChanged(screen: ScreenPM){
         this.SelectedScreen = screen;
-        this.TableTab.ScreenCode = screen?.Code;
-        this.TableTab.ScreenName = screen?.Name;
-
+        this.ScreenCode = screen?.Code;
+        this.ScreenName = screen?.Name;
     }
 
 
 
     SaveButtonClicked() {
         let errors = [];
-
-        if (!this.TableTab.Name)
+        if (!this.Name)
             errors.push(valdationMessageOfName);
 
-        if(!this.TableTab.ScreenCode && this.TableTab.Type == 'Custom')
+
+        if(!this.ScreenCode && this.TableTab.Type == 'Custom')
             errors.push(validationMessageOfScreen);
 
         if(errors.length > 0)
             return this.ValidationErrorsList = errors;
 
+        this.MapTabFields();
+         this.customizationMainComponent.SetChangeSet(this.TableTab);
 
         this.CurrentSession.CloseCurrentWindowData({entity: this.TableTab});
     }
 
-    HandleException() {
+  private  MapTabFields() {
+      this.TableTab.Name = this.Name;
+      this.TableTab.ScreenCode = this.ScreenCode;
+      this.TableTab.ScreenName = this.ScreenName;
 
     }
 
-    CancelButtonClicked() {
-        this.revertChanges();
 
+
+    CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
 
 
-    private revertChanges()
-    {
-        this.TableTab.ScreenCode = this.prevScreenCode;
-        this.TableTab.ScreenName = this.prevScreenName;
-        this.TableTab.Name = this.prevName;
-    }
 }

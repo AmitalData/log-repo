@@ -92,6 +92,11 @@ export class AddEditScreenComponent extends BaseComponent {
             return;
         }
 
+        if (this.Name.length > 200) {
+            this.ValidationErrorsList.push("Name Field must be less than 200");
+            return;
+        }
+
         this.IsEditMode ? this.SubmitScreenChanges() : this.SubmitNewScreen();
     }
 

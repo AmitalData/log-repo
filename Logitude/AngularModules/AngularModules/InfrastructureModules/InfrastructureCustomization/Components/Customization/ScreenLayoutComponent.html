@@ -60,6 +60,14 @@
         overflow: hidden !important;
         text-overflow: ellipsis;
     }
+
+    .Header-with-dots {
+        display: inline-block;
+        max-width: 400px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }
 </style>
 <table style="padding:10px">
 
@@ -75,7 +83,7 @@
                 </tr>
                 <tr>
                     <!-- Left Sidebar -->
-                    <td style="width:206px;border:solid 1px silver">
+                    <td style="width: 230px; border: solid 1px silver">
                         <div class="SimpleGridView MediaFillAbsolute">
                             <div class="SimpleGridViewHeader">
                                 <table>
@@ -122,8 +130,8 @@
 
                         <div *ngIf="(!IsObjectTableFilterEnabled || IsTabsCustomizationEnabled)" class="screen-designer-header">
                             <div class="title">
-                                <span>{{SelectedItem.Name || 'Screen'}}</span>
-                                <IconButton [Name]="'edit'" (click)="EditSelectedScreen()"></IconButton>
+                                <span [attr.title]="SelectedItem.Name"  class="Header-with-dots">{{SelectedItem.Name || 'Screen'}}</span>
+                                <IconButton  style="top:-1px"  [Name]="'edit'" (click)="EditSelectedScreen()"></IconButton>
                             </div>
                             <div class="buttons">
                                 <button class="Button" (click)="NewSectionButtonClick()">New Section</button>
