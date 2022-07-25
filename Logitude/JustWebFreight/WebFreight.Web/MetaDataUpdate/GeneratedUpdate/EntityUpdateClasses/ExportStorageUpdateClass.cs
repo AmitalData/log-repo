@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "fd97c9b024ca0d1b454dbd449e68859c";
+		public const string HashString = "f1014a66f2e2ff89086a99f1a5595548";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2595,16 +2595,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ExportStorageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Q.OpenStorages", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.OpenStorages", NameTextCodeDefaultText = "OpenStorages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportStorageObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ExportStorageTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.AllStorages", DefaultText = @"All Storages",LocalDefaultText = "כל האחסנות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ExportStorageFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Q.AllStorages", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.AllStorages", NameTextCodeDefaultText = "AllStorages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportStorageObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ExportStorageTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.CloseStorages", DefaultText = @"Close Storages",LocalDefaultText = "אחסנות סגורות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ExportStorageFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Q.CloseStorages", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.CloseStorages", NameTextCodeDefaultText = "CloseStorages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportStorageObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ExportStorageTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.CloseStorages", DefaultText = @"Close Storages",LocalDefaultText = "אחסנות סגורות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ExportStorageFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Q.CloseStorages", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.CloseStorages", NameTextCodeDefaultText = "CloseStorages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportStorageObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ExportStorageTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.CancelStorages", DefaultText = @"Cancel Storages",LocalDefaultText = "אחסנות מבוטלות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ExportStorageFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Q.CancelStorages", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.CancelStorages", NameTextCodeDefaultText = "CancelStorages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportStorageObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ExportStorageTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.CancelStorages", DefaultText = @"Cancel Storages",LocalDefaultText = "אחסנות מבוטלות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ExportStorageFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Q.CancelStorages", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.CancelStorages", NameTextCodeDefaultText = "CancelStorages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportStorageObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ExportStorageTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.AllStorages", DefaultText = @"All Storages",LocalDefaultText = "כל האחסנות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ExportStorageFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Q.AllStorages", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.AllStorages", NameTextCodeDefaultText = "AllStorages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportStorageObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -2639,33 +2639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllStoragesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportStorageTextCode_1.Id, NameTextCodeCode = ExportStorageTextCode_1.Code, ObjectTableName = "Customs.ExportStorage", Code = "AllStorages",  QueryGroupCode = "0c30", IndexOrder = 1, Tenant = 0, ObjectTableId = ExportStorageObjectTable.Id, QuerySection = "Customs.ExportStorage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportStorageFeature_1.Id,FeatureUniqeCode= ExportStorageFeature_1.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
-	
-			 QueryColumn AllStoragesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportStorage.OpenDate" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn AllStoragesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ExportStorage.ActionName" , ColumnWidth = 120 }, addedQueryColumns);
-
-			 QueryColumn AllStoragesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ExportStorage.ExporterName" , ColumnWidth = 200 }, addedQueryColumns);
-
-			 QueryColumn AllStoragesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ExportStorage.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn AllStoragesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ExportStorage.StorageNo" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn AllStoragesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.ExportStorage.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn AllStoragesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.ExportStorage.CargoTypeName" , ColumnWidth = 120 }, addedQueryColumns);
-
-			 QueryColumn AllStoragesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.ExportStorage.ShipName" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn AllStoragesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.ExportStorage.CustomStatusName" , ColumnWidth = 120 }, addedQueryColumns);
-
-			 QueryColumn AllStoragesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.ExportStorage.StorageStatus" , ColumnWidth = 120 }, addedQueryColumns);
-
-			 QueryColumn AllStoragesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.ExportStorage.DeclarationStatusTypeName" , ColumnWidth = 175 }, addedQueryColumns);
-  
-	      
-
-			  Query CloseStoragesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportStorageTextCode_2.Id, NameTextCodeCode = ExportStorageTextCode_2.Code, ObjectTableName = "Customs.ExportStorage", Code = "CloseStorages",  QueryGroupCode = "0c30", IndexOrder = 2, Tenant = 0, ObjectTableId = ExportStorageObjectTable.Id, QuerySection = "Customs.ExportStorage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportStorageFeature_2.Id,FeatureUniqeCode= ExportStorageFeature_2.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query CloseStoragesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportStorageTextCode_1.Id, NameTextCodeCode = ExportStorageTextCode_1.Code, ObjectTableName = "Customs.ExportStorage", Code = "CloseStorages",  QueryGroupCode = "0c30", IndexOrder = 1, Tenant = 0, ObjectTableId = ExportStorageObjectTable.Id, QuerySection = "Customs.ExportStorage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportStorageFeature_1.Id,FeatureUniqeCode= ExportStorageFeature_1.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn CloseStoragesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseStoragesQuery.Id,QueryCode = CloseStoragesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportStorage.OpenDate" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -2694,7 +2668,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query CancelStoragesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportStorageTextCode_3.Id, NameTextCodeCode = ExportStorageTextCode_3.Code, ObjectTableName = "Customs.ExportStorage", Code = "CancelStorages",  QueryGroupCode = "0c30", IndexOrder = 3, Tenant = 0, ObjectTableId = ExportStorageObjectTable.Id, QuerySection = "Customs.ExportStorage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportStorageFeature_3.Id,FeatureUniqeCode= ExportStorageFeature_3.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query CancelStoragesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportStorageTextCode_2.Id, NameTextCodeCode = ExportStorageTextCode_2.Code, ObjectTableName = "Customs.ExportStorage", Code = "CancelStorages",  QueryGroupCode = "0c30", IndexOrder = 2, Tenant = 0, ObjectTableId = ExportStorageObjectTable.Id, QuerySection = "Customs.ExportStorage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportStorageFeature_2.Id,FeatureUniqeCode= ExportStorageFeature_2.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn CancelStoragesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelStoragesQuery.Id,QueryCode = CancelStoragesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportStorage.OpenDate" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -2720,6 +2694,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter CancelStoragesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.ExportStorage.StorageStatus", PredefinedValue = "Cancel",PredefinedValue2 = null, QueryId = CancelStoragesQuery.Id,QueryCode = CancelStoragesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+  
+	      
+
+			  Query AllStoragesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportStorageTextCode_3.Id, NameTextCodeCode = ExportStorageTextCode_3.Code, ObjectTableName = "Customs.ExportStorage", Code = "AllStorages",  QueryGroupCode = "0c30", IndexOrder = 3, Tenant = 0, ObjectTableId = ExportStorageObjectTable.Id, QuerySection = "Customs.ExportStorage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportStorageFeature_3.Id,FeatureUniqeCode= ExportStorageFeature_3.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllStoragesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportStorage.OpenDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ExportStorage.ActionName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ExportStorage.ExporterName" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ExportStorage.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ExportStorage.StorageNo" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.ExportStorage.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.ExportStorage.CargoTypeName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.ExportStorage.ShipName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.ExportStorage.CustomStatusName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.ExportStorage.StorageStatus" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.ExportStorage.DeclarationStatusTypeName" , ColumnWidth = 175 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
