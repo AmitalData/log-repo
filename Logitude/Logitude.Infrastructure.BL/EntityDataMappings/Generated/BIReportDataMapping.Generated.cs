@@ -37,8 +37,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         AGGridOptionsXML, 
 	         BIReportFolderId, 
 	         FactTableName, 
-	         LastRunId, 
-	         IsScheduler,
+	         LastRunId,
 	      }
 
 
@@ -65,8 +64,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         LastRunByUserName, 
 	         FactTableName, 
 	         LastRunId, 
-	         AvailableForScheduling, 
-	         IsScheduler,
+	         AvailableForScheduling,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -148,11 +146,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunId))
             {
 				entityPOCO.LastRunId = entityPM.LastRunId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsScheduler))
-            {
-				entityPOCO.IsScheduler = entityPM.IsScheduler;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -241,11 +234,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.LastRunId = entityPOCO.LastRunId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsScheduler))
-            {
-					entityPM.IsScheduler = entityPOCO.IsScheduler;
-            }
-
 		}
 
 		public void PMToOldPM(BIReportPM entityPM, BIReportPM oldEntityPM)
@@ -325,11 +313,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunId))
             {
                 oldEntityPM.LastRunId = entityPM.LastRunId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsScheduler))
-            {
-                oldEntityPM.IsScheduler = entityPM.IsScheduler;
             }
 			
 		}

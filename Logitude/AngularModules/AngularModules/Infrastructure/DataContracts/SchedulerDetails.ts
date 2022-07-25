@@ -37,6 +37,7 @@ export class ReportSchedulerDetails {
     public ReportTemplateType: string;
     public ReportFilterItems: Array<QueryFilterItem>;
     public MainCustomerFieldName: string;
+    public DWQueryFilterData: any;
 }
 
 export class ReportSchedulerRecepients {

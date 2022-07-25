@@ -70,6 +70,8 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
         public List<QueryFilterItem> ReportFilterItems { get; set; }
         [DataMember]
         public string MainCustomerFieldName { get; set; }
+        [DataMember]
+        public DWObjectFieldsDetails DWQueryFilterData { get; set; }
     }
 
     [DataContract(Namespace = "")]

@@ -54,8 +54,6 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.FactTableName).HasColumnName("FactTableName").IsRequired().HasMaxLength(30).IsUnicode(false);
 
             this.Property(t => t.LastRunId).HasColumnName("LastRunId").IsRequired().HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.IsScheduler).HasColumnName("IsScheduler");
         }
     }
 }

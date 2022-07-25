@@ -103,7 +103,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.OldReportSchedulerDetails = myResponse?.Result?.ReportDetails;
 
         if (this.IsBIReport && !this.IsNew) {
-            this.LoadBIReport(myResponse?.Result?.ReportDetails?.BIReportEntityId);
+            this.LoadBIReport(myResponse?.Result?.ReportDetails);
         }
         else if (!this.IsBIReport) {
             this.LoadReportTemplate(myResponse?.Result?.ReportDetails?.ReportTemplateType);
@@ -126,8 +126,9 @@ export class AddEditReportSchedulerComponent implements OnInit {
         });
     }
 
-    LoadBIReport(BIReportEntityId) {
-        this.bIReportPMService.get(BIReportEntityId).subscribe((serviceResponse: ServiceResponse) => {
+    LoadBIReport(ReportDetails) {
+        if (!ReportDetails) return;
+        this.bIReportPMService.get(ReportDetails.BIReportEntityId).subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError) {
                 this.BIReportEntity = serviceResponse.Result;
                 this.RunComponent();
@@ -224,7 +225,9 @@ export class AddEditReportSchedulerComponent implements OnInit {
                     ObjectTableName: 'BIReport',
                     EntityId: this.BIReportEntity['Id'],
                     IsScheduler: true,
-                    IsNewScheduler: this.IsNew
+                    IsNewScheduler: this.IsNew,
+                    SavedFilterItemsData: this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData?.FilterItems,
+                    ParentComponent: this,
                 });
                 this.CurrentSession.StopBusyIndicator();
             });
@@ -337,11 +340,12 @@ export class AddEditReportSchedulerComponent implements OnInit {
             return;
         }
 
-        if (this.IsBIReport && this.IsNew) {
-            this.SaveNewDWQueryData();
-        }
-        else if (this.IsBIReport) {
-            this.SaveBIReportSchedulerDetails(this.BIReportEntity['Id'], this.BIReportEntity['DWQueryId'], true);
+        //if (this.IsBIReport && this.IsNew) { //Don't remove this //Maybe will back it
+        //    this.SaveNewDWQueryData();
+        //}
+        //else if (this.IsBIReport) {
+        if (this.IsBIReport) {
+            this.SaveBIReportSchedulerDetails();
         }
         else {
             this.SaveReportSchedulerDetails();
@@ -355,36 +359,36 @@ export class AddEditReportSchedulerComponent implements OnInit {
         messageWindow.Show(error);
     }
 
-    SaveNewDWQueryData() {
-        this.dWSubQueryPMService.insertDWQueryData(this.PageChild_PRREP?.BIReportXMLData?.DWQueryData).subscribe((myResult: any) => {
-            if (!myResult.HasError) {
-                this.SaveNewBIReport(myResult);
-            }
-            else if (myResult.ErrorsArray && myResult.ErrorsArray.length > 0) {
-                this.ShowErrorWindow(myResult.ErrorsArray[0]);
-            }
-        });
-    }
+    //SaveNewDWQueryData() {  //Don't remove this //Maybe will back it
+    //    this.dWSubQueryPMService.insertDWQueryData(this.PageChild_PRREP?.BIReportXMLData?.DWQueryData).subscribe((myResult: any) => {
+    //        if (!myResult.HasError) {
+    //            this.SaveNewBIReport(myResult);
+    //        }
+    //        else if (myResult.ErrorsArray && myResult.ErrorsArray.length > 0) {
+    //            this.ShowErrorWindow(myResult.ErrorsArray[0]);
+    //        }
+    //    });
+    //}
 
-    private SaveNewBIReport(myResult: any) {
-        this.PageChild_PRREP.EntityPM['Name'] += 'Scheduler';
-        this.PageChild_PRREP.EntityPM['IsScheduler'] = true;
-        this.PageChild_PRREP.EntityPM['DWQueryId'] = myResult.Result.DWQueryId;
-        this.bIReportPMService.insert(this.PageChild_PRREP.EntityPM).subscribe((serviceResponse: ServiceResponse) => {
-            if (!serviceResponse.HasError) {
-                this.SubmitSavingNewBIReport(serviceResponse, myResult);
-            }
-            else if (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) {
-                this.ShowErrorWindow(serviceResponse.ErrorsArray[0]);
-            }
-        });
-    }
+    //private SaveNewBIReport(myResult: any) {
+    //    this.PageChild_PRREP.EntityPM['Name'] += 'Scheduler';
+    //    this.PageChild_PRREP.EntityPM['IsScheduler'] = true;
+    //    this.PageChild_PRREP.EntityPM['DWQueryId'] = myResult.Result.DWQueryId;
+    //    this.bIReportPMService.insert(this.PageChild_PRREP.EntityPM).subscribe((serviceResponse: ServiceResponse) => {
+    //        if (!serviceResponse.HasError) {
+    //            this.SubmitSavingNewBIReport(serviceResponse, myResult);
+    //        }
+    //        else if (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) {
+    //            this.ShowErrorWindow(serviceResponse.ErrorsArray[0]);
+    //        }
+    //    });
+    //}
 
-    private SubmitSavingNewBIReport(serviceResponse: ServiceResponse, myResult: any) {
-        this.PageChild_PRREP.EntityPM['Id'] = serviceResponse.Result.Id;
-        this.PageChild_PRREP.SaveBIReport();
-        this.SaveBIReportSchedulerDetails(serviceResponse.Result.Id, myResult.Result.DWQueryId, false);
-    }
+    //private SubmitSavingNewBIReport(serviceResponse: ServiceResponse, myResult: any) {
+    //    this.PageChild_PRREP.EntityPM['Id'] = serviceResponse.Result.Id;
+    //    this.PageChild_PRREP.SaveBIReport();
+    //    this.SaveBIReportSchedulerDetails(serviceResponse.Result.Id, myResult.Result.DWQueryId, false);
+    //}
 
     private SaveReportSchedulerDetails() {
         const reportSchedulerDetails: ReportSchedulerDetails = {
@@ -395,7 +399,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
             MainCustomerFieldName: this.PageChild_PRREP ? this.PageChild_PRREP.GetReportFilterMainCustomerFieldName() : this.OldReportSchedulerDetails?.MainCustomerFieldName,
             CreatedByUserId: SessionLocator.LoggedUserId,
             BIReportEntityId: null,
-            DWQueryId: null
+            DWQueryId: null,
+            DWQueryFilterData: null,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
@@ -421,15 +426,15 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     private SetNullObjectFieldToNullValue(reportFilterItem) {
-        if (reportFilterItem.FieldValue[0]['@nil'] == 'true')
+        if (AppTool.IsNil(reportFilterItem.FieldValue))
             reportFilterItem.FieldValue = null;
-        if (reportFilterItem.FieldValue2[0]['@nil'] == 'true')
+        if (AppTool.IsNil(reportFilterItem.FieldValue2))
             reportFilterItem.FieldValue2 = null;
-        if (reportFilterItem.FieldValue3[0]['@nil'] == 'true')
+        if (AppTool.IsNil(reportFilterItem.FieldValue3))
             reportFilterItem.FieldValue3 = null;
     }
 
-    private SaveBIReportSchedulerDetails(bIReportEntityId, dWQueryId, isUpdate) {
+    public SaveBIReportSchedulerDetails() {
         const reportSchedulerDetails: ReportSchedulerDetails = {
             ReportFilterItems: [],
             ReportTemplateId: null,
@@ -437,14 +442,11 @@ export class AddEditReportSchedulerComponent implements OnInit {
             Recepients: this.GetAllRecepients(),
             MainCustomerFieldName: null,
             CreatedByUserId: SessionLocator.LoggedUserId,
-            BIReportEntityId: bIReportEntityId,
-            DWQueryId: dWQueryId
+            BIReportEntityId: this.BIReportEntity['Id'],
+            DWQueryId: this.BIReportEntity['DWQueryId'],
+            DWQueryFilterData: this.PageChild_PRREP ? this.PageChild_PRREP.SelectedFiltersDataSource[0] : this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
-
-        if (isUpdate && this.PageChild_PRREP) {
-            this.PageChild_PRREP.SaveBIReportScheduler();
-        }
     }
 
     GetAllRecepients() {

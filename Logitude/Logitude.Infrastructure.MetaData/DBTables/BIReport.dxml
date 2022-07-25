@@ -113,12 +113,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="IsScheduler"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

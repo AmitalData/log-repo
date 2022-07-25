@@ -80,7 +80,10 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     public hasFixedFilter = false;
     public filterButtonTitle = "No available fixed filters"; 
-     
+    public OriginalDWQueryFilterData: any;
+    public SavedFilterItemsData: any;
+    public ParentComponent: any;
+
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -103,7 +106,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                 if (!myResult.HasError) {
                     this.DWQueryData = myResult.Result;
                     if (this.DWQueryData.Filters) {
-                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
+                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters, this.SavedFilterItemsData);
                         var temp = [];
                         temp.push(MyFilter);
                         //temp[0].FilterType = 'Ask User';
@@ -149,7 +152,17 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.BackButtonLable = args['BackButtonLable'] != undefined ? args['BackButtonLable'] : "BI Reports";
         this.IsScheduler = args['IsScheduler'];
         this.IsNewScheduler = args['IsNewScheduler'];
+        this.ParentComponent = args['ParentComponent'];
+        this.SetSavedFilterItemsData(args);
     }
+
+    SetSavedFilterItemsData(args) {
+        this.SavedFilterItemsData = args['SavedFilterItemsData'];
+        this.SavedFilterItemsData?.forEach((filter) => {
+            filter.TextValue = AppTool.IsNil(filter.TextValue) ? null : filter.TextValue;
+        });
+    }
+
     InitializeServices() {
         this._InfrastructureDomainService = new InfrastructureDomainService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
@@ -182,6 +195,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     var result: BIReportXMLData = myResult.Result;
                     this.ReportXML = result;
                     this.BIReportXMLData = result;
+                    this.OriginalDWQueryFilterData = this.IsScheduler ? this.BIReportXMLData.DWQueryData.Filters : this.OriginalDWQueryFilterData;
                     this.EntityPM = result.BIReportPM;
                     this.CanScheduler = this.EntityPM != null ? this.EntityPM.AvailableForScheduling && !this.IsScheduler : false;
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
@@ -712,6 +726,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.DWQueryId = this.DWQueryId;
+        windowArgs.BIReportId = this.EntityId;
         windowArgs.IsBIReportEditScreen = true;
         windowArgs.FactTableName = this.EntityPM.FactTableName;
         windowArgs.IsScheduler = this.IsScheduler;
@@ -725,7 +740,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                 if ((d != null && d != "cancel")) {
                     this.DWQueryData = s.QueryData;
                     if (this.DWQueryData.Filters) {
-                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
+                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters, this.SavedFilterItemsData);
                         var temp = [];
                         temp.push(MyFilter);
                         //temp[0].FilterType = 'Ask User';
@@ -757,6 +772,14 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                 });
         }
     }
+
+    //UpdateFiltersBIReportClicked() {
+    //    this.BIReportXMLData.DWQueryData.Filters = this.OriginalDWQueryFilterData;
+    //    var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.BIReportXMLData.DWQueryData.Filters);
+    //    var temp = [];
+    //    temp.push(MyFilter);
+    //    this.SelectedFiltersDataSource = temp;
+    //}
 
     isPartnersChanged:boolean = false;
     PartnersObslist: EntityPartner[];
