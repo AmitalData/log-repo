@@ -671,7 +671,7 @@ export class CustomsRequestsSheetsComponent
             
             filters.addAdditionalFilter("ObjectTableId2", objectTableId1, null, null, "Equals", false, false, false, "string");
             let EntityId2 = this.entityArgs.EntityPM.Id;
-            filters.addAddit ionalFilter("EntityId2", EntityId2, null, null, "Equals", false, false, false, "string");
+            filters.addAdditionalFilter("EntityId2", EntityId2, null, null, "Equals", false, false, false, "string");
         }
         else {
             if (!AppTool.IsNullOrEmpty(objectTableName) && objectTableName != "Customs.Declaration") {
