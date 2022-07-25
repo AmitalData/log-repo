@@ -394,7 +394,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool HasException { get; set; }
         public bool IsMissingDocument { get; set; }
         public string DocumentsSearchFields { get; set; }
-
+        public string ShipperCountryCode { get; set; }
+        public string ConsigneeCountryCode { get; set; }
         public string ShipperName{ get; set; }
         public string ConsigneeName { get; set; }
         public string ForwarderShipmentNumber { get; set; }

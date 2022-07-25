@@ -297,7 +297,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipperName { get; set; }
         public string ShipperNote { get; set; }
         public string Shipper { get; set; }
-
+        public string ShipperCountryCode { get; set; }
+        public string ConsigneeCountryCode { get; set; }
         public string ConsigneeId { get; set; }
         public string ConsigneeAddressId { get; set; }
         public string ConsigneeContactId { get; set; }

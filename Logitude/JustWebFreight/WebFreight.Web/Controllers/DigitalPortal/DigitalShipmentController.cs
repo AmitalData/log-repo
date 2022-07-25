@@ -31,6 +31,7 @@ using System.Data.SqlClient;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -383,6 +384,37 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
+        public List<TraceEventPM> GetEntityEvents(string entityId, string objectTableName, string partnerType, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            List<TraceEventPM> result = new List<TraceEventPM>();
+
+            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            if (objectTable != null)
+            {
+                string objectTableId = objectTable.Id;
+
+                TraceEventRepository traceEventsRepository = new TraceEventRepository(tenant);
+                TraceEventQuery traceEventQuery = new TraceEventQuery(traceEventsRepository);
+
+                List<TraceEventPM> data = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTableId).ToList();
+
+                if (partnerType == "AG")
+                {
+                    result = data.Where(d => d.IsAgentView).ToList();
+                }
+
+                else
+                {
+                    result = data.Where(d => d.IsCustomerView).ToList();
+                }
+
+            }
+
+            return result.OrderByDescending(s => s.EventDateTime).ToList();
+        }
 
     }
 }
