@@ -38,6 +38,7 @@ using System.Xml;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.CToolWorkflows;
 
 namespace CommunicationWorkerRole
 {
@@ -206,6 +207,12 @@ namespace CommunicationWorkerRole
                                                 AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
                                                     + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
                                             }
+                                        }
+
+                                        // Send Kafka message to CTool
+                                        if (FeatureToggleHelper.HasFeatureToggle("CTL", tenant))
+                                        {
+                                            EntityChangesMessageProducer.ProduceSendEmailMessage(cl);
                                         }
                                     }
                                 }
