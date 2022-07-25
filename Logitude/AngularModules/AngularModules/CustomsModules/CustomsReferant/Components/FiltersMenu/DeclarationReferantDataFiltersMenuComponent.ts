@@ -18,6 +18,8 @@ import { DeclarationReferantDataWebService } from 'Customs/Services/WebServices/
 import { ObjectFieldPMExtendedService } from 'Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { QueriesPMService } from 'Infrastructure/Services/StandardPMs/QueriesPMService';
 import { DepartmentListService } from 'Common/Services/StandardLists/DepartmentListService';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'DeclarationReferantDataFiltersMenuComponent',
@@ -62,6 +64,9 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.itmImportDeclarationReferantDatas = false;
             this.DirectionWidth = 140;
         }
+        this.FilterChangeSubject.pipe(debounceTime(500)).subscribe((res:any)=>{
+            this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
+        });
     }
 
     public OpenQueryThruWorkSpace: boolean = false;
@@ -74,7 +79,7 @@ export class DeclarationReferantDataFiltersMenuComponent
     public QueryCode: string = "Customs.DeclarationReferantData.AllCases";
     public departmentListService: DepartmentListService = new DepartmentListService();
     public userListService: UserListService = new UserListService();
-
+    FilterChangeSubject:Subject<void>=new Subject();
 
     async SetFiltersMenu(args: any) {
         this.OpenQueryThruWorkSpace = true;
@@ -205,6 +210,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             });
         })
     }
+
 
     async GetUser(value) {
         return new Promise<void>((resolve, reject) => {
@@ -497,7 +503,8 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
         this.apiQueryFilters.addAdditionalFilter("ReferantUserName", this.UserNamesListString, null, null, "Equal", true, false, false, "string", true);
         this.apiQueryFilters.addAdditionalFilter("ReferentUserId", this.UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
-        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+       // this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+       this.FilterChangeSubject.next();
         this.apiQueryFiltersChanged = true;
     }
 
@@ -522,7 +529,8 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
         this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
         this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
-        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+        //this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+        this.FilterChangeSubject.next();
         this.apiQueryFiltersChanged = true;
 
     }
@@ -538,7 +546,9 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportModeId")
             this.apiQueryFilters.addAdditionalFilter("TransportModeId", itemValue, null, null, "Equals", false, true, false, "string", (itemValue == "All" ? true : false));
         }
-        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+        //this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+        this.FilterChangeSubject.next();
+
         this.ApplyTransportSelectedStyle();
     }
 
