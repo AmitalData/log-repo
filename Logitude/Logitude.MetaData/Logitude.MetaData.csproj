@@ -108,6 +108,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DBScripts\ShipmentModel\202207210955_FillTransshipmentsRouting.sxml" />
     <None Include="DBScripts\CommonModel\202203291200_AddShipmentOrderDocumentTypes.sxml" />
     <None Include="DBScripts\CommonModel\202206020830_FillHorsesGenderCode.sxml" />
     <None Include="DBScripts\CommonModel\202206191403_UpdateChargesTypesGLAccountLocalName.sxml" />

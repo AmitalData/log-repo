@@ -13,5 +13,6 @@ export class ScreenSectionList {
 		ScreenCode: string;
 		Number: number;
 		NumberOfRows: number;
+		Inactive: boolean;
 	
 }

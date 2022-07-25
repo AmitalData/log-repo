@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
@@ -56,9 +57,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             MapEntity();
         }
 
-
-      
-
         private void GetEntity()
         {
             if (isNewEntity)
@@ -90,6 +88,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             MapDocumentFields();
             MapAccountingClosed();
             MapMainCarriageDates();
+            MapTransshipments();
 
             shipmentPM.IsShipmentComputedFieldChange = false;
             shipmentPM.IsDepositionRequired = entity.IsDepositionRequired;
@@ -119,12 +118,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
         }
 
-    public void Trace(ShipmentTracing shipmentTracing)
+        public void Trace(ShipmentTracing shipmentTracing)
         {
 
         }
-    
-    public void Save()
+
+        public void Save()
         {
             if (isNewEntity)
             {
@@ -223,7 +222,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
         private void MapFirstPickUp()
         {
-            ShipmentPickUpPM firstPickUp = shipmentPM.ShipmentPickUps.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault(); 
+            ShipmentPickUpPM firstPickUp = shipmentPM.ShipmentPickUps.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
             if (firstPickUp == null)
             {
@@ -233,7 +232,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.FirstPickupATD = null;
 
                 entity.PickupTruckerId = null;
-                entity.PickupTruckerNumber  = null;
+                entity.PickupTruckerNumber = null;
                 entity.PickupDriver = null;
                 entity.PickupTrailerNumber = null;
                 entity.PickupNotes = null;
@@ -329,13 +328,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
             else
             {
-                entity.FinalDeliveryATA = shipmentPM.FinalDeliveryATA= finalDelivery.ATA;
-                entity.FinalDeliveryATD = shipmentPM.FinalDeliveryATD= finalDelivery.ATD;
-                entity.FinalDeliveryETA = shipmentPM.FinalDeliveryETA =  finalDelivery.ETA;
+                entity.FinalDeliveryATA = shipmentPM.FinalDeliveryATA = finalDelivery.ATA;
+                entity.FinalDeliveryATD = shipmentPM.FinalDeliveryATD = finalDelivery.ATD;
+                entity.FinalDeliveryETA = shipmentPM.FinalDeliveryETA = finalDelivery.ETA;
                 entity.FinalDeliveryETD = shipmentPM.FinalDeliveryETD = finalDelivery.ETD;
 
 
-      
+
 
                 entity.DeliveryTruckerId = finalDelivery.CarrierId;
                 entity.DeliveryTruckerNumber = finalDelivery.CarrierNumber;
@@ -414,11 +413,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.NumberOfHouses = shipmentPM.NumberOfHouses;
                 entity.ImporterDepositionRequestDetails = shipmentPM.ImporterDepositionRequestDetails;
             }
-        } 
-          private void MapAccountingClosed()
+        }
+        private void MapAccountingClosed()
         {
-            entity.AccountingClosedByUserId = shipmentPM.AccountingClosedByUserId; 
-        } 
+            entity.AccountingClosedByUserId = shipmentPM.AccountingClosedByUserId;
+        }
         private void MapOperationalClosed()
         {
             entity.OperationallyClosedByUserId = shipmentPM.OperationalClosedByUserId;
@@ -486,7 +485,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.NumberOfHouses = shipmentPM.ShipmentConsoleShipments.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
             }
         }
-
         private string GetPortName(string portId)
         {
             string portName = "";
@@ -506,6 +504,50 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 partnerAddressCity = partnerAddress != null ? partnerAddress.City : "";
             }
             return partnerAddressCity;
+        }
+        private void MapTransshipments()
+        {
+            string myResult = null;
+
+            string TS1PortCode = null;
+            string TS2PortCode = null;
+            string TS3PortCode = null;
+
+            if (!string.IsNullOrEmpty(shipmentPM.Transshipment1FromPortId))
+            {
+                PortPM port = PortQuery.GetSinglePort(tenant, shipmentPM.Transshipment1FromPortId, true);
+                TS1PortCode = port.Code;                
+            }
+
+            if (!string.IsNullOrEmpty(shipmentPM.Transshipment2FromPortId))
+            {
+                PortPM port = PortQuery.GetSinglePort(tenant, shipmentPM.Transshipment2FromPortId, true);
+                TS2PortCode = port.Code;
+            }
+
+            if (!string.IsNullOrEmpty(shipmentPM.Transshipment3FromPortId))
+            {
+                PortPM port = PortQuery.GetSinglePort(tenant, shipmentPM.Transshipment3FromPortId, true);
+                TS3PortCode = port.Code;
+            }
+
+            if (TS1PortCode != null)
+            {
+                myResult = TS1PortCode;
+            }
+
+            if (TS2PortCode != null)
+            {
+                myResult = myResult + " , " +TS2PortCode;
+            }
+
+            if (TS3PortCode != null)
+            {
+                myResult = myResult + " , " + TS3PortCode;
+            }
+
+            shipmentPM.Transshipments = myResult;
+            entity.Transshipments = myResult;
         }
     }
 }

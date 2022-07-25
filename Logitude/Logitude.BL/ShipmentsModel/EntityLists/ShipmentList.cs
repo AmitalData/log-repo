@@ -658,5 +658,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string InlandDomesticFromStateName { get; set; }
         public string DigitalPortalSearchFields { get; set; }
         public int? NumberOfTransshipments { get; set; }
+        public string Transshipments { get; set; }
     }
 }

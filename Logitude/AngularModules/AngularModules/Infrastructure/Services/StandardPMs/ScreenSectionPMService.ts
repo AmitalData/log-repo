@@ -29,19 +29,19 @@ export class ScreenSectionPMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/screensections';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/screensections';      
     }
 
-	get(screencode: string, number: number) {
+	get(screencode: string, number: number) {       
 
-		var callTime = new Date();
+		var callTime = new Date();		
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle?' + 'screencode=' + screencode+'&'+'number=' + number, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
-
+				
 						var entity: ScreenSectionPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
@@ -49,33 +49,33 @@ export class ScreenSectionPMService {
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
 						serviceResponse.Result = entity;
-
+              
 						var servertime = response.headers.get('ServerExecutionTime');
 						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ScreenSection", "GetSinglePM", 'screencode=' + screencode+'&'+'number=' + number);
-
+				 
 						return serviceResponse;
 
 					}),
-
+					
 					catchError(ServiceHelper.HandleServiceError));
-		});
+		});                    
 	}
 
 	insert(entityPM: ScreenSectionPM) {
-
-		var callTime = new Date();
-
+ 
+		var callTime = new Date();  
+		
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();
+			var validator: ClassLevelValidator = new ClassLevelValidator();                
 			var errorsArray = validator.Validate("ScreenSection", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: ScreenSectionPM = this.MapJsonToEntityPM(entityPM, false);
-
+				
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
@@ -84,11 +84,11 @@ export class ScreenSectionPMService {
 							if (pm) {
 								var mappedResult: ScreenSectionPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
-							}
+							}						
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ScreenSection", "SaveChanges", "");
-
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ScreenSection", "SaveChanges", "");                    
+												                             
 							return serviceResponse;
 						}),
 
@@ -104,44 +104,54 @@ export class ScreenSectionPMService {
 	}
 
 	update(entityPM: ScreenSectionPM) {
-        // this code should moved to extended
-		var callTime = new Date();
 
+		var callTime = new Date();     
+		
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
+			var validator: ClassLevelValidator = new ClassLevelValidator();               
+			var errorsArray = validator.Validate("ScreenSection", entityPM);
 
 
+			if (errorsArray.length == 0) {
 
 				var mappedEntity: ScreenSectionPM = this.MapJsonToEntityPM(entityPM, false);
-
+				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
-
+                 
 							var pm = response.body;
 							if (pm) {
 								var mappedResult: ScreenSectionPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
-
+							 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ScreenSection", "SaveChanges", "");
-
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ScreenSection", "SaveChanges", "");                    
+					                           
 							return serviceResponse;
 						}),
 
 						catchError(ServiceHelper.HandleServiceError));
+			}
+
+			else {
+				serviceResponse.HasError = true;
+				serviceResponse.ErrorsArray = errorsArray;
+				return of(serviceResponse);
+			}
 		});
 	}
 
-
+   
 
 	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ScreenSectionPM = null) {
 
-
+         
         if (!entityPM) {
-
+            
             entityPM = new ScreenSectionPM();
 			entityPM.DisableMarkAsDirty = true;
         }
@@ -158,7 +168,7 @@ export class ScreenSectionPMService {
                 continue;
             }
                 var property = jsonPMKeys[key];
-
+				
 			  if(customFields.indexOf(property) > -1)
                 {
                 if (jsonPM[property]) {
@@ -169,11 +179,11 @@ export class ScreenSectionPMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-
+                 
             }
-
-
-
+			
+			 
+            
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
@@ -196,7 +206,7 @@ export class ScreenSectionPMService {
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-
+            
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -208,12 +218,12 @@ export class ScreenSectionPMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {
+	  public GetNewEntityPM() {		 
 		    var entityPM: ScreenSectionPM;
 			entityPM = new ScreenSectionPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
-
+		 
 
 }

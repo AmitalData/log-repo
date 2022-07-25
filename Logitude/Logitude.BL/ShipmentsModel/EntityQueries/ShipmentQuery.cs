@@ -12906,6 +12906,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateName = f.InlandDomesticFromStateName,
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
+                               Transshipments = f.Transshipments,
                            };
             return myResult;
         }
@@ -13353,6 +13354,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     InlandDomesticFromStateName = f.InlandDomesticFromStateName,
                     InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                     NumberOfTransshipments = f.NumberOfTransshipments,
+                    Transshipments = f.Transshipments,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
