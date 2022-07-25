@@ -658,7 +658,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
                                                      TaxationDateTime = a.TaxationDateTime,
                                                      CustomerName = a.IsCourierDeclaration ? a.ImporterName : (a.CustomerCard.LocalName != null ? a.CustomerCard.LocalName : a.CustomerCard.EnglishName),
-
+                                                     CargoTypeCode = myJoinConsignment.CargoTypeCode
                                                  });
 
 
