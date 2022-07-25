@@ -165,6 +165,7 @@ export class NewCertificateGoodsItemsSelectionComponent {
         this.ConnectedInvoices = this.ConnectedInvoices.substr(1, this.ConnectedInvoices.length - 1);
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
         this.multiCertificatesService.CreateCertificateForInvoiceItems(this.DeclarationPM.Id, this.DeclarationPM.CustomFileNo, this.AttachmentTypeCode, this.ReqConfirmationTypeCode, this.ResConfirmationTypeCode, this.CertificateNumber, this.CertificateExemptionTypeCode, this.ConnectedInvoiceItems).subscribe((response: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             if (response.HasError) {
