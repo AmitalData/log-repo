@@ -84,7 +84,6 @@ export class AddEditScreenComponent extends BaseComponent {
 
 
     SaveButtonClicked() {
-        this.MapScreenFields();
 
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.Name)) {
@@ -97,6 +96,7 @@ export class AddEditScreenComponent extends BaseComponent {
             return;
         }
 
+        this.MapScreenFields();
         this.IsEditMode ? this.SubmitScreenChanges() : this.SubmitNewScreen();
     }
 
