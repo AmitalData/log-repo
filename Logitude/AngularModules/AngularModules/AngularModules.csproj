@@ -313,6 +313,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateProcessCodeComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\VendorExtendedSearchComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\CargoSeal\DeclarationCargoSealTabComponent.html" />
+    <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Certificate\NewCertificateGoodsItemsSelectionComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
@@ -494,6 +495,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\LoadExcelSupplierInvoice\LoadExcelSupplierInvoicesComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleProviders.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Certificate\NewCertificateGoodsItemsSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.ts" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ExportDeclarationComponent.html" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.ts" />
