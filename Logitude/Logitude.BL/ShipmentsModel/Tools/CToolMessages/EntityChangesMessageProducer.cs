@@ -78,6 +78,37 @@ namespace Logitude.Server.Tools.CToolWorkflows
             }
         }
 
+        public static void ProduceShipmentDocumentUpload(string shipmentId, int tenant)
+        {
+            try
+            {
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+                var shipmentPMString = JsonConvert.SerializeObject(shipmentPM, Formatting.Indented);
+                Dictionary<string, object> shipmentPMDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(shipmentPMString);
+                shipmentPMDictionary.Add("DocumentsFilingPM", GetShipmentDocumentsFilingPM(shipmentPM.ShipmentNumber, tenant));
+                shipmentPMString =  JsonConvert.SerializeObject(shipmentPMDictionary, Formatting.Indented);
+
+                CToolWorkflowMessage ctoolWorkflowMessage = new CToolWorkflowMessage()
+                {
+                    Entity = JsonConvert.DeserializeObject(shipmentPMString),
+                    Changes = new List<PropertyChange>()
+                };
+
+                var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
+
+                var shipmentUpdateMessageProducer = new Producer();
+                var result = shipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic,
+                    KakaMessageTypes.ShipmentUpdate, serializedCToolWorkflowMessage);
+                shipmentUpdateMessageProducer.ProducerBuilder.Flush();
+                shipmentUpdateMessageProducer.ProducerBuilder.Dispose();
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, null, "ProduceShipmentDocumentUpload", null, null);
+            }
+        }
+
         private static List<DocumentsFilingPM> GetShipmentDocumentsFilingPM(string shipmentNumber, int tenant)
         {
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
