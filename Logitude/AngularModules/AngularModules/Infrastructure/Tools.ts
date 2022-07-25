@@ -239,7 +239,7 @@ export class AppTool {
         return myResult;
     }
     public static IsNil(myFieldValue: any) {
-        return myFieldValue[0]['@nil'] == 'true';
+        return myFieldValue && myFieldValue[0] && myFieldValue[0]['@nil'] == 'true';
     }
 
     public static GetNewGuid() {
