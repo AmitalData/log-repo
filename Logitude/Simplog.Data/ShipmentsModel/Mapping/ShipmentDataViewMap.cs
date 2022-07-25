@@ -221,6 +221,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.FreightForwarderName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.FreightForwarderNote).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.ShipperName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.ShipperCountryCode).HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.ConsigneeCountryCode).HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.Shipper).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.ShipperNote).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.ConsigneeName).HasMaxLength(60).IsUnicode(false);
@@ -682,6 +684,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.FreightForwarderName).HasColumnName("FreightForwarderName");
             this.Property(t => t.FreightForwarderNote).HasColumnName("FreightForwarderNote");
             this.Property(t => t.ShipperName).HasColumnName("ShipperName");
+            this.Property(t => t.ShipperCountryCode).HasColumnName("ShipperCountryCode");
+            this.Property(t => t.ConsigneeCountryCode).HasColumnName("ConsigneeCountryCode");
             this.Property(t => t.ShipperNote).HasColumnName("ShipperNote");
             this.Property(t => t.ConsigneeName).HasColumnName("ConsigneeName");
             this.Property(t => t.ConsigneeNote).HasColumnName("ConsigneeNote");

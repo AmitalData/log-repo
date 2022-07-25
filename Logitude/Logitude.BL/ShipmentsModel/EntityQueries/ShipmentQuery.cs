@@ -911,7 +911,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ShipperReference1 = shipment.ShipperReference1;
             shipmentPM.ShipperReference2 = shipment.ShipperReference2;
             shipmentPM.ShipperReference3 = shipment.ShipperReference3;
-
             if (shipment.ShipperId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ShipperId, shipment.Tenant, true);
@@ -12571,6 +12570,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ChargeableWeight = f.ChargeableWeight,
                                GrossWeight = f.GrossWeight,
                                ShipperReference1 = f.ShipperReference1/*, Master = f.Master*/,
+                               ShipperCountryCode = f.ShipperCountryCode,
+                               ConsigneeCountryCode = f.ConsigneeCountryCode,
                                Master = f.Master,
                                OpenReceivablesInLocalCurrency = f.OpenReceivablesInLocalCurrency,
                                OpenReceivablesInProfitCurrency = f.OpenReceivablesInProfitCurrency,
@@ -12955,7 +12956,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CarrierLastStatusCode = f.CarrierLastStatusCode,
                     ShipmentViewId = f.Id,
                     Id = f.Id,
-                    Shipper = f.ShipperName, 
+                    Shipper = f.ShipperName,
+                    ShipperCountryCode = f.ShipperCountryCode,
+                    ConsigneeCountryCode = f.ConsigneeCountryCode,
                     Consignee = f.ConsigneeName,
                     DirectionId = f.DirectionId,
                     DirectionName = f.DirectionName,

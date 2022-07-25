@@ -259,6 +259,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                              FNAReason = f.FNAReason,
                              FinalArrivalDate = f.FinalArrivalDate,
                              Shipper = f.ShipperName,
+                             ShipperCountryCode = f.ShipperCountryCode,
+                             ConsigneeCountryCode = f.ConsigneeCountryCode,
                              Consignee = f.ConsigneeName,
                              ShipperReference1 = f.ShipperReference1,
                              ShipperReference2 = f.ShipperReference2,

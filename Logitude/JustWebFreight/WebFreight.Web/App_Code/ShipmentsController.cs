@@ -930,6 +930,8 @@ namespace WebFreight.Web
                              FinalArrivalDate = f.FinalArrivalDate,
                              Shipper = f.ShipperName,
                              Consignee = f.ConsigneeName,
+                             ShipperCountryCode = f.ShipperCountryCode,
+                             ConsigneeCountryCode = f.ConsigneeCountryCode,
                              ShipperReference1 = f.ShipperReference1,
                              ShipperReference2 = f.ShipperReference2,
                              ConsigneeReference1 = f.ConsigneeReference1,

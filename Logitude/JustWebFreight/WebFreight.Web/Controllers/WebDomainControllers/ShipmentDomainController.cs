@@ -1315,6 +1315,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                       ShipmentType = !string.IsNullOrEmpty(f.ShipmentTypeName) ? f.ShipmentTypeName + " " + f.ShipmentLevelName : f.ShipmentLevelName,
                                                       CreateDateTime = f.CreateDateTime,
                                                       Shipper = f.ShipperName,
+                                                      ShipperCountryCode = f.ShipperCountryCode,
+                                                      ConsigneeCountryCode = f.ConsigneeCountryCode,
                                                       Consignee = f.ConsigneeName,
                                                       DirectionId = f.DirectionId,
                                                       DirectionName = f.DirectionName,

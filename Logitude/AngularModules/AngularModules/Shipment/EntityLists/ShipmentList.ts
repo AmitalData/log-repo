@@ -72,6 +72,7 @@ export class ShipmentList {
 		AMSBL: string;
 		House: string;
 		ShipmentType: string;
+		ShipmentTypeName: string;
 		ShipmentTypeId: string;
 		FollowUpType: string;
 		FollowUpTypeId: string;
@@ -338,6 +339,8 @@ export class ShipmentList {
 		HasException: boolean;
 		IsMissingDocument: boolean;
 		DocumentsSearchFields: string;
+		ShipperCountryCode: string;
+		ConsigneeCountryCode: string;
 		ShipperName: string;
 		ConsigneeName: string;
 		ForwarderShipmentNumber: string;
