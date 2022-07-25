@@ -165,7 +165,6 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.TableScreensCollection.push(screenItem);
         window.Screens.push(screen);
         this.SelectionChanged(screenItem);
-        this.Modified = true;
 
     }
 
@@ -225,8 +224,13 @@ export class ScreenLayoutComponent extends BaseComponent {
     public authHeader;
     OkClicked(CloseWindow: boolean = true) {
 
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
 
+        if (this.IsScreenSectionLenghtNotValid()) {
+            this.ValidationErrorsList.push("Section name Field must be less than 100");
+            return;
+        }
+
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
         this.screenLayoutService.BuildScreenUpdateArgs();
         this.MyArgs.ScreenId = this.OldItem.ScreenPM.Id;
         this.MyArgs.ScreenCode = this.OldItem.ScreenPM.Code;
@@ -250,6 +254,12 @@ export class ScreenLayoutComponent extends BaseComponent {
                     window.Screens = myScreensResult;
                 });
             });
+        });
+    }
+    IsScreenSectionLenghtNotValid() {
+        if (!this.MyArgs.ScreenSections || this.MyArgs.ScreenSections.length == 0) return false;
+        this.MyArgs.ScreenSections.forEach((section) => {
+            if (section.Name && section.length > 100) return true;
         });
     }
 
@@ -446,6 +456,9 @@ export class ScreenLayoutComponent extends BaseComponent {
                 this.OnDeleteField(field,editedSection.Section.Number);
             });
         });
+
+        this.Modified = true;
+
     }
 
     OnDeleteField(item, sectionNumber:number=null ) {
@@ -533,6 +546,8 @@ export class ScreenLayoutComponent extends BaseComponent {
         sectionScreen.ScreenRows = this.ScreenRows;
         sectionScreen.IsNew = true;
         this.SectionScreens.push(sectionScreen);
+        this.Modified = true;
+
 
     }
 

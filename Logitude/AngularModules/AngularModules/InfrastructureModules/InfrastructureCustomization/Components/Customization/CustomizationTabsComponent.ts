@@ -83,13 +83,14 @@ export class CustomizationTabsComponent extends BaseComponent
     }
 
     GetTabs = () => this.tabs = window.ObjectTableTabs.filter(a => a.ObjectTableId == this.objectTableId) || [];
-    CancelClicked = () => this.CurrentSession.CloseCurrentWindow();
+    CancelClicked = () => this.GetAllTabsAndCloseWindow(false);
     IsCopied = (a: any) => this.tabs.map(t => t.OriginalTabCode).includes(a.Code);
     PushTabs = (newTableTabs: any) => this.tabs = this.tabs.concat(newTableTabs)
 
-    GetAllTabsAndCloseWindow()
+    GetAllTabsAndCloseWindow(isRunBusyIndicator: boolean = true)
     {
-        this.CurrentSession.StartBusyIndicatorLoading();
+        if (isRunBusyIndicator) this.CurrentSession.StartBusyIndicatorLoading();
+       
         this.loginService.CurrentTenant = SessionLocator.Tenant;
         this.loginService.GetObjectTableTabs().subscribe((tabs: any) =>
         {

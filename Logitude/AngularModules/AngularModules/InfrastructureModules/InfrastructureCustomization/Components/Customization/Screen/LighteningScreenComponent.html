@@ -75,7 +75,7 @@
                                 </td>
                                 <td style="width: 240px;">
                                     <div style="height: 25px; width: 240px; margin-bottom:3px">
-                                        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Name'" [InputType]="'text'" [DataContext]="sectionScreen.Section"
+                                        <LogTextBox (ValueChanged)="OnSectionScreenNameChange()" [NoObjectField]="true" [ObjectFieldName]="'Name'" [InputType]="'text'" [DataContext]="sectionScreen.Section"
                                                     [ObjectTableName]="'sectionScreen'" [HideColumns]="true"></LogTextBox>
                                     </div>
 
