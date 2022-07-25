@@ -307,7 +307,14 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                         {
                             List<string> declarationIds = repo.GetDeclarationsByCourierHAWBsExpectDecWithHatraDate(list100, ResolvedTenant());
                             CheckCourierDeclarationToDelete(declarationIds);
-                            allDeclarationIds.AddRange(declarationIds);
+                            if (allDeclarationIds == null)
+                            {
+                                allDeclarationIds = declarationIds;
+                            }
+                            else
+                            {
+                                allDeclarationIds.AddRange(declarationIds);
+                            }
                         });
                     }
                     if (allDeclarationIds != null && allDeclarationIds.Count() > 0)
@@ -318,6 +325,14 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                         {
                             List<string> declarationIds = repo1.GetCourierDeclarationToInsert(list100, _CourierMasterPM.Id, ResolvedTenant());
                             allDeclarationIdsToInsert.AddRange(declarationIds);
+                            if (allDeclarationIdsToInsert == null)
+                            {
+                                allDeclarationIdsToInsert = declarationIds;
+                            }
+                            else
+                            {
+                                allDeclarationIdsToInsert.AddRange(declarationIds);
+                            }
 
                         });
                     }
@@ -326,7 +341,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                     {
                         toSendTask = true;
                         var repo1 = new CourierDeclarationRepository(_context);
-                        allDeclarationIds.ChunkBy(100)
+                        allDeclarationIdsToInsert.ChunkBy(100)
                         .ForEach(list100 =>
                         {
                             CheckCourierDeclarationToInsert(list100);
