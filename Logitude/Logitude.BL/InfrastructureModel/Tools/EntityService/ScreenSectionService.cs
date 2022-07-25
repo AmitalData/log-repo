@@ -58,11 +58,17 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleScreenSection(theEntityPm.ScreenCode , theEntityPm.Number);
             if (this.Poco == null) return;
-            ScreenSectionMapping.MapEntity(theEntityPm, Poco, isNewEntity);
+            if (IsSectionDeleted()) this.Poco.Inactive = true;
+            else ScreenSectionMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
 
+
+        private bool IsSectionDeleted()
+        {
+            return (this.Poco.Inactive != this.entityPM.Inactive && this.entityPM.Inactive == true); 
+        }
 
         public void Update(List<ScreenSectionPM> screenSections)
         {
