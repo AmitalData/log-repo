@@ -238,7 +238,7 @@
                                         </div>
                                         <div id="noteAria" style="position:relative">
                                             <div class="noteDiv" id="noteButton" onclick="showHideNote()">
-                                                <img data-bind="attr: { src: noteSRC }" />
+                                                <img width="25px" height="20px" data-bind="attr: { src: noteSRC }" />
                                             </div>
                                             <div id="noteDetilsid" class="noteDetils" style="display:none" >
                                                 <div style="line-height: 25px;color: #1B90CB;font-size: 14px; padding: 6px 0px 0px 6px;">Notes</div>
