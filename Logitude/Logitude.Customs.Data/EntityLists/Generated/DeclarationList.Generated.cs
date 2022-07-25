@@ -428,6 +428,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsExportClosed  { get; set; }
        [DataMember]
        public string DeclarationTypeName  { get; set; }
+       [DataMember]
+       public string CargoTypeCode  { get; set; }
    }
 
 }
