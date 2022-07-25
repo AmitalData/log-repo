@@ -77,22 +77,41 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
             MustAdmin();
 
             
-            string email=UnifreightListsUtil.GetValue(ref dic, "EMAIL");
+            string unifreightUser=UnifreightListsUtil.GetValue(ref dic, "USER");
+            string email = UnifreightListsUtil.GetValue(ref dic, "EMAIL");
             //UnifreightListsUtil.GetValue(ref dic, "tenant");
             MyGenericResponseObj.Stage = "check";
-            if (string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(unifreightUser)  && string.IsNullOrWhiteSpace(email))
             {
-                throw new Exception("email is must");
+            
+                throw new Exception("user or email is must");
             }
 
             ContactRepository contactRep = new ContactRepository();
-
-
-            var contact = contactRep.GetSingleContactByEmail(email, ResolvedTenant(), true);
-            if (contact?.Id == null)
+            string UserContactId = "";
+            Simplog.Data.CommonDataModel.EntityPOCOs.Contact contact =null;
+            if (!string.IsNullOrWhiteSpace(unifreightUser))
             {
-                throw new Exception($"contact {email} is missing in tenant  {ResolvedTenant()}");
+                var userRepository = new UserRepository();
+                var user =userRepository.GetSingleUserByCode(unifreightUser, ResolvedTenant(), true);
+                if (!string.IsNullOrWhiteSpace(user?.Id))    
+                {
+                    contact = contactRep.GetSingleContactByIdAndTenant(user?.Id, ResolvedTenant(), true);
+                }
+                
             }
+            
+            
+            if (contact==null && !string.IsNullOrWhiteSpace(email))
+            {
+                contact = contactRep.GetSingleContactByEmail(email, ResolvedTenant(), true);
+
+            }
+            if (contact == null)
+            {
+                throw new Exception($"contact nt found for {email} / {unifreightUser}");
+            }
+
             if (contact.InActive)
             {
                 throw new Exception($"contact {email} InActive in tenant  {ResolvedTenant()}");
@@ -107,7 +126,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                 
             string token = AuthenticationUtil.GenerateToken();
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
-            AuthenticationToken authentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = email, Password = email, Token = token };
+            AuthenticationToken authentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = contact.Email, Password = contact.Email, Token = token };
             authenticationTokenRepository.Add(authentication);
                 
             authenticationTokenRepository.SubmitChanges();
