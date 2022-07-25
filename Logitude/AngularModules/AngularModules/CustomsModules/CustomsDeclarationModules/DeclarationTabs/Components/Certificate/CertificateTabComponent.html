@@ -462,15 +462,15 @@
                                                 </td>
                                                 <td style="width:5px"></td>
                                                 <td style="width:75px;">
-                                                    <button *ngIf="IsVisible" (click)="CreateMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Create' | TextCodeTranslationPipe}}</button>
+                                                    <button *ngIf="IsVisible && dataCount>0" (click)="CreateMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Create' | TextCodeTranslationPipe}}</button>
                                                 </td>
                                                 <!-- <td style="width:5px"></td>-->
                                                 <td style="width:75px;">
-                                                    <button *ngIf="IsVisible" (click)="MoveMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Move' | TextCodeTranslationPipe}}</button>
+                                                    <button *ngIf="IsVisible && dataCount>0" (click)="MoveMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Move' | TextCodeTranslationPipe}}</button>
                                                 </td>
                                                 <!--   <td style="width:5px"></td>-->
                                                 <td style="width:90px">
-                                                    <div *ngIf="IsVisible" style="width: 100%;text-align:center;  height:30px;">
+                                                    <div *ngIf="IsVisible && dataCount>0" style="width: 100%;text-align:center;  height:30px;">
                                                         <div class="DisbleBox">
 
                                                             {{SelectedItemsCountText}}

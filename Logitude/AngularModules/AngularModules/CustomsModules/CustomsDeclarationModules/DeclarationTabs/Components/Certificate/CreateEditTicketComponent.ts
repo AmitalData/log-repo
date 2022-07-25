@@ -635,10 +635,11 @@ export class CreateEditTicketComponent extends BaseComponent {
         this.certificateTicke.oldCertificateNumber = this.oldCertificateNumber;
         this.certificateTicke.oldResConfirmation = this.oldResConfirmation;
         this.certificateTicke.IsAllSelected = this.IsAllSelected;
-
+        this.certificateTicke.SearchFields=this.Parent.SearchText;
         this.certificateTicke.ExternalCertificatCode = this.ticket.ExternalCertificatCode;// Itzik :  Response.ExternalCertificatCode  from  UnifreightCertificateCallbackAction
 
         this.certificateTicke.SelectedItems = [];
+        
         //if (!this.certificateTicke.IsAllSelected) {
         if (!AppTool.IsNullOrEmpty(this.connectedItems) && this.connectedItems.length > 0) {
 
