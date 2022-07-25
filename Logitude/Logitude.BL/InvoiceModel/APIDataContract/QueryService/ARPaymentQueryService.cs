@@ -77,7 +77,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
               entity.BankAccountId=  GetBankAccountIdByNumber(entity.BankAccountNumber, entity.Tenant);
             }
-             if( entity.AccountingPaymentMethodCode =="BT" && entity.ARPaymentBankTranfers.Count > 0)
+             if( entity.AccountingPaymentMethodCode =="BT" && entity.ARPaymentBankTranfers?.Count > 0)
             {
                 entity.BankAccountId = entity.ARPaymentBankTranfers.Where(d=> d.LineNumber ==1).Select(d => d.BankAccountId).First();
             }

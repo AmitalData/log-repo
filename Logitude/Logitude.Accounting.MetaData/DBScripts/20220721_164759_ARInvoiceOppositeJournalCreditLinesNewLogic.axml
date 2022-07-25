@@ -195,4 +195,5 @@ AND InterestReportId is NOT null
 AND NOT (ARInvoices.BillToGLAccountId is NOT null AND BillToGLAccount.ChartOfAccountsTypeCode = '6')
      ]]>
  </Sql>
+
 </Script>

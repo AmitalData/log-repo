@@ -83,6 +83,7 @@
     <None Include="DBScripts\202206201239_UpdateLedgerTransactionsGLAccountIfInvNotMultiCurrency.sxml" />
     <Content Include="DBScripts\202206211132_UpdateCancelledARInvoicesWithCorrectBillToGlAccount.axml" />
     <Content Include="DBScripts\202206281132_CreateNewInterestsTransactionsForAutoCredit ARInvoice.axml" />
+    <Content Include="DBScripts\20220721_164759_ARInvoiceOppositeJournalCreditLinesNewLogic.axml" />
     <Content Include="DBScripts\202206231132_RemoveInterestTransAndAddOppInterestsForAccountingEntities.axml" />
     <None Include="DBScripts\202206151132_RemoveInterestTransAndAddOppInterestsForDraftARPayments.sxml" />
     <Content Include="DBScripts\202206021039_RemoveInterestTransAndAddOppInterestsIfLedgerNotCreated.axml" />
