@@ -444,9 +444,21 @@ export class AddEditReportSchedulerComponent implements OnInit {
             CreatedByUserId: SessionLocator.LoggedUserId,
             BIReportEntityId: this.BIReportEntity['Id'],
             DWQueryId: this.BIReportEntity['DWQueryId'],
-            DWQueryFilterData: this.PageChild_PRREP ? this.PageChild_PRREP.SelectedFiltersDataSource[0] : this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData,
+            DWQueryFilterData: this.PageChild_PRREP ? this.PageChild_PRREP.SelectedFiltersDataSource[0] : this.GetOriginalSelectedFilters(),
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
+    }
+
+    GetOriginalSelectedFilters() {
+        let filterTextValue = this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData?.TextValue;
+        if (this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData?.TextValue) {
+            this.PageChild_RETASK.EntityPM.SchedulerDetailsData.ReportDetails.DWQueryFilterData.TextValue = AppTool.IsNil(filterTextValue) ? null : filterTextValue;
+        }
+        this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData?.FilterItems?.forEach((filter) => {
+            filter.TextValue = AppTool.IsNil(filter.TextValue) ? null : filter.TextValue;
+        });
+
+        return this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData;
     }
 
     GetAllRecepients() {
