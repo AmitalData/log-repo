@@ -192,7 +192,7 @@ namespace Logitude.Server.Tools
                 if (loggedUser == null)
                 {
                     string systenEmail = "system@tenant" + tenant + ".com";
-                    User systemUser = userRepository.GetSingleUserByEmail(systenEmail, tenant, false);
+                    User systemUser = userRepository.GetSingleUserByEmail(systenEmail, tenant, true);
                     if (systemUser != null)
                         communicationParams.LoggingUserId = systemUser.Id;
                 }
