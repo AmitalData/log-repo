@@ -324,7 +324,6 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                         .ForEach(list100 =>
                         {
                             List<string> declarationIds = repo1.GetCourierDeclarationToInsert(list100, _CourierMasterPM.Id, ResolvedTenant());
-                            allDeclarationIdsToInsert.AddRange(declarationIds);
                             if (allDeclarationIdsToInsert == null)
                             {
                                 allDeclarationIdsToInsert = declarationIds;
