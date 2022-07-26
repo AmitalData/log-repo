@@ -5693,10 +5693,10 @@ User/Pass",
                 watch.Start();
                 var shipmentPM = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant, true);
                 ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, $"system@tenant{tenant}.com");
-                var numberOfContainer = 0;
+                var numberOfContainer = shipmentPM.ShipmentPackages.Where(a=>  a.ContainerEntityId == null && a.ContainerNumber != null).Count();
                 try
                 {
-                    numberOfContainer = AddContainers(shipmentsContext, shipmentPM);
+                    AddContainers(shipmentsContext, shipmentPM);
                     numberOfShipmentsDone++;
                     numberOfContainerCreated += numberOfContainer;
                     logs.Add($"{shipmentPM.ShipmentNumber},{numberOfContainer},False,,");
@@ -5714,7 +5714,8 @@ User/Pass",
                 numberOfShipmentsRemaining--;
                 NumberOfDoneShipments.Text = numberOfShipmentsDone + "";
                 NumberOfShipmentsFail.Text = numberOfShipmentsFail + "";
-
+                if (numberOfContainer == 0)
+                    numberOfContainer = 1;
                 var totalMinuts = watch.ElapsedMilliseconds/ numberOfContainer / 1000.0 / 60.0 * (ContainerCount - numberOfContainerCreated);
                 var minuts = Math.Floor(totalMinuts);
                 var sec = Convert.ToInt32(totalMinuts % 1 * 60);

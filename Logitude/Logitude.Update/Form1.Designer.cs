@@ -175,6 +175,9 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.OI_textBox = new System.Windows.Forms.TextBox();
             this.UpdateEntity = new System.Windows.Forms.Button();
@@ -243,6 +246,7 @@
             this.button51 = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.OpenContainerLogFile = new System.Windows.Forms.Button();
             this.loglable = new System.Windows.Forms.Label();
             this.ShipmentContainerLog = new System.Windows.Forms.RichTextBox();
             this.PanelShipmentResults = new System.Windows.Forms.Panel();
@@ -264,12 +268,8 @@
             this.label15 = new System.Windows.Forms.Label();
             this.StopCreateContainer = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.OpenContainerLogFile = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.OITimer = new System.Windows.Forms.Timer(this.components);
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -673,12 +673,6 @@
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripProgressBar1
-            // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
-            // 
-
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
@@ -895,7 +889,7 @@
             this.checkBox1.Location = new System.Drawing.Point(522, 23);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(85, 17);
+            this.checkBox1.Size = new System.Drawing.Size(84, 17);
             this.checkBox1.TabIndex = 18;
             this.checkBox1.Text = "Save to disk";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -1672,7 +1666,7 @@
             this.cbxOldUpdateCode.Location = new System.Drawing.Point(431, 350);
             this.cbxOldUpdateCode.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbxOldUpdateCode.Name = "cbxOldUpdateCode";
-            this.cbxOldUpdateCode.Size = new System.Drawing.Size(103, 17);
+            this.cbxOldUpdateCode.Size = new System.Drawing.Size(102, 17);
             this.cbxOldUpdateCode.TabIndex = 99;
             this.cbxOldUpdateCode.Text = "Run Old Update";
             this.cbxOldUpdateCode.UseVisualStyleBackColor = true;
@@ -1928,12 +1922,37 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(747, 321);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(41, 13);
+            this.label24.TabIndex = 116;
+            this.label24.Text = "label24";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(746, 269);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(45, 13);
+            this.label22.TabIndex = 115;
+            this.label22.Text = "Output:";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(794, 266);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(137, 20);
+            this.textBox4.TabIndex = 114;
+            // 
             // label19
             // 
             this.label19.AutoSize = true;
             this.label19.Location = new System.Drawing.Point(744, 240);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(44, 13);
+            this.label19.Size = new System.Drawing.Size(45, 13);
             this.label19.TabIndex = 113;
             this.label19.Text = "Tenant:";
             // 
@@ -1946,10 +1965,10 @@
             // 
             // UpdateEntity
             // 
-            this.UpdateEntity.Location = new System.Drawing.Point(747, 128);
+            this.UpdateEntity.Location = new System.Drawing.Point(996, 157);
             this.UpdateEntity.Margin = new System.Windows.Forms.Padding(2);
             this.UpdateEntity.Name = "UpdateEntity";
-            this.UpdateEntity.Size = new System.Drawing.Size(184, 42);
+            this.UpdateEntity.Size = new System.Drawing.Size(245, 52);
             this.UpdateEntity.TabIndex = 111;
             this.UpdateEntity.Text = "Update Entity";
             this.UpdateEntity.UseVisualStyleBackColor = true;
@@ -1995,7 +2014,7 @@
             this.UploadTimeZonesLabel.Location = new System.Drawing.Point(6, 226);
             this.UploadTimeZonesLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.UploadTimeZonesLabel.Name = "UploadTimeZonesLabel";
-            this.UploadTimeZonesLabel.Size = new System.Drawing.Size(16, 13);
+            this.UploadTimeZonesLabel.Size = new System.Drawing.Size(19, 13);
             this.UploadTimeZonesLabel.TabIndex = 108;
             this.UploadTimeZonesLabel.Text = "...";
             // 
@@ -2068,7 +2087,7 @@
             this.linkLabel3.Location = new System.Drawing.Point(162, 42);
             this.linkLabel3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(19, 13);
+            this.linkLabel3.Size = new System.Drawing.Size(20, 13);
             this.linkLabel3.TabIndex = 81;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "(?)";
@@ -2089,7 +2108,7 @@
             this.label10.Location = new System.Drawing.Point(12, 42);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(40, 13);
+            this.label10.Size = new System.Drawing.Size(43, 13);
             this.label10.TabIndex = 80;
             this.label10.Text = "tenant:";
             // 
@@ -2131,7 +2150,7 @@
             this.updateBluesnapTransactionsLabel.Location = new System.Drawing.Point(212, 573);
             this.updateBluesnapTransactionsLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.updateBluesnapTransactionsLabel.Name = "updateBluesnapTransactionsLabel";
-            this.updateBluesnapTransactionsLabel.Size = new System.Drawing.Size(16, 13);
+            this.updateBluesnapTransactionsLabel.Size = new System.Drawing.Size(19, 13);
             this.updateBluesnapTransactionsLabel.TabIndex = 101;
             this.updateBluesnapTransactionsLabel.Text = "...";
             // 
@@ -2168,7 +2187,7 @@
             this.linkLabel2.Location = new System.Drawing.Point(162, 42);
             this.linkLabel2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(19, 13);
+            this.linkLabel2.Size = new System.Drawing.Size(20, 13);
             this.linkLabel2.TabIndex = 81;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "(?)";
@@ -2200,7 +2219,7 @@
             this.label8.Location = new System.Drawing.Point(12, 42);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(40, 13);
+            this.label8.Size = new System.Drawing.Size(43, 13);
             this.label8.TabIndex = 80;
             this.label8.Text = "tenant:";
             // 
@@ -2345,7 +2364,7 @@
             this.AirlineLogosCheckBox.Location = new System.Drawing.Point(73, 83);
             this.AirlineLogosCheckBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.AirlineLogosCheckBox.Name = "AirlineLogosCheckBox";
-            this.AirlineLogosCheckBox.Size = new System.Drawing.Size(118, 17);
+            this.AirlineLogosCheckBox.Size = new System.Drawing.Size(123, 17);
             this.AirlineLogosCheckBox.TabIndex = 106;
             this.AirlineLogosCheckBox.Text = "Apply for all tenants";
             this.AirlineLogosCheckBox.UseVisualStyleBackColor = true;
@@ -2356,7 +2375,7 @@
             this.UpdateLogosLabel.Location = new System.Drawing.Point(128, 101);
             this.UpdateLogosLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.UpdateLogosLabel.Name = "UpdateLogosLabel";
-            this.UpdateLogosLabel.Size = new System.Drawing.Size(19, 13);
+            this.UpdateLogosLabel.Size = new System.Drawing.Size(23, 13);
             this.UpdateLogosLabel.TabIndex = 105;
             this.UpdateLogosLabel.Text = "....";
             // 
@@ -2366,7 +2385,7 @@
             this.label6.Location = new System.Drawing.Point(389, 30);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(223, 13);
+            this.label6.Size = new System.Drawing.Size(218, 13);
             this.label6.TabIndex = 104;
             this.label6.Text = "ex: C:\\Users\\SAMARA\\Desktop\\AirlineLogos";
             // 
@@ -2384,7 +2403,7 @@
             this.label5.Location = new System.Drawing.Point(20, 30);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.Size = new System.Drawing.Size(48, 13);
             this.label5.TabIndex = 102;
             this.label5.Text = "File path";
             // 
@@ -2479,7 +2498,7 @@
             this.linkLabel1.Location = new System.Drawing.Point(157, 61);
             this.linkLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(19, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(20, 13);
             this.linkLabel1.TabIndex = 81;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "(?)";
@@ -2511,7 +2530,7 @@
             this.label2.Location = new System.Drawing.Point(12, 61);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 13);
+            this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 80;
             this.label2.Text = "tenant:";
             // 
@@ -2546,7 +2565,7 @@
             this.label14.Location = new System.Drawing.Point(214, 144);
             this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(57, 13);
+            this.label14.Size = new System.Drawing.Size(58, 13);
             this.label14.TabIndex = 10;
             this.label14.Text = "Completed";
             this.label14.Visible = false;
@@ -2558,7 +2577,7 @@
             this.label13.Location = new System.Drawing.Point(214, 102);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(57, 13);
+            this.label13.Size = new System.Drawing.Size(58, 13);
             this.label13.TabIndex = 9;
             this.label13.Text = "Completed";
             this.label13.Visible = false;
@@ -2580,7 +2599,7 @@
             this.label12.Location = new System.Drawing.Point(10, 50);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(82, 13);
+            this.label12.Size = new System.Drawing.Size(81, 13);
             this.label12.TabIndex = 7;
             this.label12.Text = "Document Date";
             // 
@@ -2684,12 +2703,22 @@
             this.groupBox4.Location = new System.Drawing.Point(6, 5);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(1008, 544);
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox4.Size = new System.Drawing.Size(1008, 544);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Craete Contaners for old shipments";
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
+            // 
+            // OpenContainerLogFile
+            // 
+            this.OpenContainerLogFile.Location = new System.Drawing.Point(912, 499);
+            this.OpenContainerLogFile.Name = "OpenContainerLogFile";
+            this.OpenContainerLogFile.Size = new System.Drawing.Size(75, 23);
+            this.OpenContainerLogFile.TabIndex = 1;
+            this.OpenContainerLogFile.Text = "Open log";
+            this.OpenContainerLogFile.UseVisualStyleBackColor = true;
+            this.OpenContainerLogFile.Click += new System.EventHandler(this.OpenContainerLogFile_Click);
             // 
             // loglable
             // 
@@ -2723,16 +2752,17 @@
             this.PanelShipmentResults.Location = new System.Drawing.Point(290, 7);
             this.PanelShipmentResults.Margin = new System.Windows.Forms.Padding(2);
             this.PanelShipmentResults.Name = "PanelShipmentResults";
-            this.PanelShipmentResults.Size = new System.Drawing.Size(460, 126);
+            this.PanelShipmentResults.Size = new System.Drawing.Size(707, 169);
             this.PanelShipmentResults.TabIndex = 8;
             this.PanelShipmentResults.Visible = false;
-            this.PanelShipmentResults.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint); 
+            this.PanelShipmentResults.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
             // CraeteContainerProgressBar
             // 
-            this.CraeteContainerProgressBar.Location = new System.Drawing.Point(11, 105);
+            this.CraeteContainerProgressBar.Location = new System.Drawing.Point(12, 106);
             this.CraeteContainerProgressBar.Margin = new System.Windows.Forms.Padding(2);
             this.CraeteContainerProgressBar.Name = "CraeteContainerProgressBar";
-            this.CraeteContainerProgressBar.Size = new System.Drawing.Size(447, 19);
+            this.CraeteContainerProgressBar.Size = new System.Drawing.Size(693, 23);
             this.CraeteContainerProgressBar.TabIndex = 8;
             // 
             // NumberOfShipmentsFail
@@ -2751,7 +2781,7 @@
             this.label20.Location = new System.Drawing.Point(9, 54);
             this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(81, 13);
+            this.label20.Size = new System.Drawing.Size(82, 13);
             this.label20.TabIndex = 6;
             this.label20.Text = "Fail Shipments :";
             this.label20.Click += new System.EventHandler(this.label20_Click);
@@ -2762,7 +2792,7 @@
             this.EstimatedDoneTime.Location = new System.Drawing.Point(113, 79);
             this.EstimatedDoneTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.EstimatedDoneTime.Name = "EstimatedDoneTime";
-            this.EstimatedDoneTime.Size = new System.Drawing.Size(68, 13);
+            this.EstimatedDoneTime.Size = new System.Drawing.Size(71, 13);
             this.EstimatedDoneTime.TabIndex = 5;
             this.EstimatedDoneTime.Text = "Calculating...";
             // 
@@ -2772,7 +2802,7 @@
             this.label23.Location = new System.Drawing.Point(9, 79);
             this.label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(81, 13);
+            this.label23.Size = new System.Drawing.Size(84, 13);
             this.label23.TabIndex = 4;
             this.label23.Text = "Estimated time :";
             // 
@@ -2802,7 +2832,7 @@
             this.NumberOfShipments.Location = new System.Drawing.Point(113, 9);
             this.NumberOfShipments.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.NumberOfShipments.Name = "NumberOfShipments";
-            this.NumberOfShipments.Size = new System.Drawing.Size(68, 13);
+            this.NumberOfShipments.Size = new System.Drawing.Size(71, 13);
             this.NumberOfShipments.TabIndex = 1;
             this.NumberOfShipments.Text = "Calculating...";
             // 
@@ -2812,7 +2842,7 @@
             this.label18.Location = new System.Drawing.Point(9, 9);
             this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(116, 13);
+            this.label18.Size = new System.Drawing.Size(118, 13);
             this.label18.TabIndex = 0;
             this.label18.Text = "Number Of Shipments :";
             // 
@@ -2849,7 +2879,7 @@
             this.label17.Location = new System.Drawing.Point(4, 85);
             this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(46, 13);
+            this.label17.Size = new System.Drawing.Size(45, 13);
             this.label17.TabIndex = 4;
             this.label17.Text = "To Date";
             // 
@@ -2859,7 +2889,7 @@
             this.label16.Location = new System.Drawing.Point(4, 53);
             this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(56, 13);
+            this.label16.Size = new System.Drawing.Size(57, 13);
             this.label16.TabIndex = 2;
             this.label16.Text = "From Date";
             // 
@@ -2892,66 +2922,17 @@
             this.StopCreateContainer.Text = "Stop";
             this.StopCreateContainer.UseVisualStyleBackColor = true;
             this.StopCreateContainer.Click += new System.EventHandler(this.StopCreateContainer_Click);
-            //
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // OITimer
             // 
             this.OITimer.Enabled = true;
             this.OITimer.Interval = 1000;
             this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
-            //
-            // contextMenuStrip1
-            //
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // textBox4
-            //
-            this.textBox4.Location = new System.Drawing.Point(794, 266);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(137, 20);
-            this.textBox4.TabIndex = 114;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(746, 269);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(42, 13);
-            this.label22.TabIndex = 115;
-            this.label22.Text = "Output:";
-            // 
-            // OpenContainerLogFile
-            //
-            this.OpenContainerLogFile.Location = new System.Drawing.Point(912, 499);
-            this.OpenContainerLogFile.Name = "OpenContainerLogFile";
-            this.OpenContainerLogFile.Size = new System.Drawing.Size(75, 23);
-            this.OpenContainerLogFile.TabIndex = 1;
-            this.OpenContainerLogFile.Text = "Open log";
-            this.OpenContainerLogFile.UseVisualStyleBackColor = true;
-            this.OpenContainerLogFile.Click += new System.EventHandler(this.OpenContainerLogFile_Click);
-            //
-            // UpdateEntity
-            // 
-            this.UpdateEntity.Location = new System.Drawing.Point(996, 157);
-            this.UpdateEntity.Name = "UpdateEntity";
-            this.UpdateEntity.Size = new System.Drawing.Size(245, 52);
-            this.UpdateEntity.TabIndex = 111;
-            this.UpdateEntity.Text = "Update Entity";
-            this.UpdateEntity.UseVisualStyleBackColor = true;
-            this.UpdateEntity.Click += new System.EventHandler(this.UpdateEntity_Click);
-            this.CraeteContainerProgressBar.Location = new System.Drawing.Point(15, 129);
-            this.CraeteContainerProgressBar.Name = "CraeteContainerProgressBar";
-            this.CraeteContainerProgressBar.Size = new System.Drawing.Size(596, 23);
-            this.CraeteContainerProgressBar.TabIndex = 8;
-            //
-            // label24
-            //
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(747, 321);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(41, 13);
-            this.label24.TabIndex = 116;
-            this.label24.Text = "label24";
             // 
             // Form1
             // 
