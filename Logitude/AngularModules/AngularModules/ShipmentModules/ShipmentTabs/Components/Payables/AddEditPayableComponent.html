@@ -414,33 +414,37 @@
                         </td>
                     </tr>
 
-                    <tr style="height: 5px;" *ngIf="!DataContext.IsByContainerType">
+                    <tr style="height: 10px;">
                         <td>
                             <div></div>
                         </td>
                     </tr>
 
-
-                    <tr>
+                    <tr [style.height]="!DataContext.IsByContainerType ? '100%':'100px'">
                         <td>
-                            <table>
-                                <tr style="height: 1px;">
-                                    <td class="SectionTitle">Additional Fields</td>
-                                </tr>
+                            <div [class.ScrollViewer]="DataContext.IsByContainerType">
+                                <div [class.ScrollContent]="DataContext.IsByContainerType">
+                                    <table>
+                                        <tr style="height: 1px;">
+                                            <td class="SectionTitle">Additional Fields</td>
+                                        </tr>
 
-                                <tr>
-                                    <td>
-                                        <div>
-                                            <div class="LocationDirective" #Child></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr style="height:10px;"><td></td></tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <div class="LocationDirective" #Child></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr style="height:10px;"><td></td></tr>
 
-                            </table>
+
+                                    </table>
+                                </div>
+                            </div>
                         </td>
                     </tr>
-           
+
                     <!-- Summary -->
                     <tr style="height: 105px;" *ngIf="!DataContext.IsByContainerType">
                         <td>
