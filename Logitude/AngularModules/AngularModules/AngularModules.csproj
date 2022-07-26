@@ -487,6 +487,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\FiltersMenu\CourierDeclarationFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\ModuleSharedPrimeNG.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\FiltersMenu\DeclarationCargoSplitFiltersMenuComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\CloseDeclaration\Documents\ExportDeclarationClosingDataCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\CloseDeclaration\ExportDeclarationClosingDataComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />

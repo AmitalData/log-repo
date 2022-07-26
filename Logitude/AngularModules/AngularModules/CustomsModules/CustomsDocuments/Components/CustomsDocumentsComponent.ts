@@ -288,7 +288,7 @@ export class CustomsDocumentsComponent
             this.CustomsDocumentsTicketViewModels = [];
         }
         //
-        if (this.ParentEntityCode_args == "DeclarationCancellation") {
+        if (this.ParentEntityCode_args == "DeclarationCancellation" || this.ParentEntityCode_args == "ExportDeclarationClosingData") {
             if (this.reload_cancelDoc && !this.RefreshDocsScreen) {
                 this.reload_cancelDoc = false; return;
             }
