@@ -24,7 +24,7 @@ namespace Logitude.Server.Tools.CToolWorkflows
         {
             try
             {
-                if (FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
                 {
                     CToolWorkflowMessage ctoolWorkflowMessage = new CToolWorkflowMessage()
                     {
@@ -51,7 +51,7 @@ namespace Logitude.Server.Tools.CToolWorkflows
         {
             try
             {
-                if (FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
                 {
                     var shipmentPMString = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
                     Dictionary<string, object> shipmentPMDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(shipmentPMString);
@@ -154,7 +154,7 @@ namespace Logitude.Server.Tools.CToolWorkflows
         {
             try
             {
-                if (FeatureToggleHelper.HasFeatureToggle("CTL", containerPm.Tenant))
+                if (containerPm != null && FeatureToggleHelper.HasFeatureToggle("CTL", containerPm.Tenant))
                 {
                     CToolWorkflowMessage ctoolWorkflowMessage = new CToolWorkflowMessage()
                     {
@@ -181,7 +181,7 @@ namespace Logitude.Server.Tools.CToolWorkflows
         {
             try
             {
-                if (FeatureToggleHelper.HasFeatureToggle("CTL", containerPm.Tenant))
+                if (containerPm != null && FeatureToggleHelper.HasFeatureToggle("CTL", containerPm.Tenant))
                 {
                     var containerPMString = JsonConvert.SerializeObject(containerPm, Formatting.Indented);
 
