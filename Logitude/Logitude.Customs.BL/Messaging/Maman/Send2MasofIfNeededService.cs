@@ -17,11 +17,17 @@ namespace Logitude.Customs.BL.Messaging.Maman
 {
     public class Send2MasofIfNeededService
     {
+
+        [ThreadStatic]
+        public static bool SuppressSend=false;
         public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM,bool forceSend=false)
         {
             try
             {
-
+                if (SuppressSend==true)
+                {
+                    return;
+                }
                 if (!drityEntityPM.IsCourierDeclaration)
                 {
                     return;
