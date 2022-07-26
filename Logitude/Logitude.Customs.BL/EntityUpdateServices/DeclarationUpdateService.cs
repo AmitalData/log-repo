@@ -3029,10 +3029,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public void UpdateHataraStatusByContarization(DeclarationPM entityPM, Declaration entityPOCO)
         {
-            ICustomContext context = MainContext as CustomContext;
+            
             if (entityPM.Direction == "E")
             {
-                entityPM?.Consignments.ForEach(x =>
+                ICustomContext context = MainContext as CustomContext;
+                ConsignmentQueryService consignmentQueryService = new ConsignmentQueryService(context);
+                var list = consignmentQueryService.GetConsgnmentByDeclarationId(entityPM.Id, entityPM.Tenant);
+                list?.ForEach(x =>
                 {
                     if (!string.IsNullOrEmpty(x.ExportContainerizationID))
                     {
@@ -3043,7 +3046,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         ContainerizationUpdateService containerizationUpdateService = new ContainerizationUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         containerizationUpdateService.Update(containerization, true);
                     }
-
 
                 });       
             }
