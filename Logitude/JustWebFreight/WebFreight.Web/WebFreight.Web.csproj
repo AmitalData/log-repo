@@ -192,9 +192,6 @@
     <Reference Include="itextsharp.xtra, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\..\packages\itextsharp.xtra.5.5.13\lib\itextsharp.xtra.dll</HintPath>
     </Reference>
-    <Reference Include="Logitude.Infrastructure.Data">
-      <HintPath>..\..\Logitude.Infrastructure.Data\bin\Debug\Logitude.Infrastructure.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Marvin.JsonPatch, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Marvin.JsonPatch.2.2.0\lib\net45\Marvin.JsonPatch.dll</HintPath>
     </Reference>
@@ -7564,6 +7561,10 @@
     <ProjectReference Include="..\..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
       <Project>{bd959ab6-4476-48b3-aa4d-cfd7ed120e55}</Project>
       <Name>Logitude.Infrastructure.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{b02e4d92-9226-4f3f-990f-66c7f66e9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
