@@ -115,7 +115,11 @@ namespace Logitude.Server.Tools.CToolWorkflows
             try
             {
                 var sendEmailProducer = new Producer();
-                var serializedSendEmailMessage = JsonConvert.SerializeObject(communicationLog, Formatting.Indented);
+                var serializedSendEmailMessage = JsonConvert.SerializeObject(communicationLog, Formatting.Indented,
+                    new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
                 var result = sendEmailProducer.Produce(KafkaTopics.LookupsTopic, KakaMessageTypes.CommunicationLog, serializedSendEmailMessage);
                 sendEmailProducer.ProducerBuilder.Flush();
                 sendEmailProducer.ProducerBuilder.Dispose();
