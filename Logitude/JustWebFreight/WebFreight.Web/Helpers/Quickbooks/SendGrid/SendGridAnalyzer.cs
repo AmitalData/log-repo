@@ -1,4 +1,6 @@
-﻿using Logitude.Server.Tools.QueueService;
+﻿using Logitude.Server.Tools.CToolWorkflows;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -182,6 +184,11 @@ namespace WebFreight.Web.Helpers.SendGrid
 
                                     commLogrepository.Update(currentLog);
                                     commLogrepository.SubmitChanges();
+
+                                    if (FeatureToggleHelper.HasFeatureToggle("CTL", currentLog.Tenant))
+                                    {
+                                        EntityChangesMessageProducer.ProduceSendEmailMessage(currentLog);
+                                    }
                                 }
                             }
                         }
@@ -249,6 +256,11 @@ namespace WebFreight.Web.Helpers.SendGrid
 
                             myCommunicationLogRepository.Update(commLog);
                             myCommunicationLogRepository.SubmitChanges();
+
+                            if (FeatureToggleHelper.HasFeatureToggle("CTL", commLog.Tenant))
+                            {
+                                EntityChangesMessageProducer.ProduceSendEmailMessage(commLog);
+                            }
                         }
                     }
                 }
