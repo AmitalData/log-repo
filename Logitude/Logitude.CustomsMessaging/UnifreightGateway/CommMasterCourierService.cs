@@ -277,7 +277,12 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                 }
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.UnifreightLeadingFile) && string.IsNullOrWhiteSpace(_CourierMasterPM.UnifreightLeadingFile)) _CourierMasterPM.UnifreightLeadingFile = _LogitudeMasterCourier.UnifreightLeadingFile;
 
+                myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
+                AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
                 _context = CustomContext.GetContext(ResolvedTenant());
+                this._CourierMasterPM = myQueryService.GetSingleByAirlineAWBs(_CourierMasterPM.AirlineId, _CourierMasterPM.HAWB, _CourierMasterPM.MAWB, ResolvedTenant());
+                
                 bool toSendTask = false;
                 if (_LOGIMASTERCOUR.WAYBILLS != null && _LOGIMASTERCOUR.WAYBILLS.Count() > 0)
                 {
@@ -295,6 +300,8 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                     var repo = new DeclarationRepository(_context);
                     List<string> allDeclarationIds = null;
                     List<string> allDeclarationIdsToInsert = null;
+                    List<string> allDeletedDeclarationIds = null;
+                    List<string> deletedDeclarationIds = null;
                     List<string> courierHAWBs = _LOGIMASTERCOUR.WAYBILLS.Select(r => r.wb).ToList();
                     if (courierHAWBs != null && courierHAWBs.Count() > 0)
                     {
@@ -302,7 +309,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                         .ForEach(list100 =>
                         {
                             List<string> declarationIds = repo.GetDeclarationsByCourierHAWBsExpectDecWithHatraDate(list100, ResolvedTenant());
-                            CheckCourierDeclarationToDelete(declarationIds);
+                            CheckCourierDeclarationToDelete(declarationIds, out deletedDeclarationIds);
                             if (allDeclarationIds == null)
                             {
                                 allDeclarationIds = declarationIds;
@@ -311,8 +318,26 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                             {
                                 allDeclarationIds.AddRange(declarationIds);
                             }
+                            if (deletedDeclarationIds != null && deletedDeclarationIds.Count() > 0)
+                            {
+                                if (allDeletedDeclarationIds == null)
+                                {
+                                    allDeletedDeclarationIds = deletedDeclarationIds;
+                                }
+                                else
+                                {
+                                    allDeletedDeclarationIds.AddRange(deletedDeclarationIds);
+                                }
+                            }
                         });
                     }
+
+                    if (allDeletedDeclarationIds != null && allDeletedDeclarationIds.Count() > 0)
+                    {
+                        AppendLogLine("try to UpdateDeclarationCourierStatus CourierDeclaration with Diferent Master");
+                        UpdateDeclarationCourierStatus(deletedDeclarationIds);
+                    }
+
                     if (allDeclarationIds != null && allDeclarationIds.Count() > 0)
                     {
                         var repo1 = new CourierDeclarationRepository(_context);
@@ -349,10 +374,8 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                 if (toSendTask == true)
                 {
                     myCourierMasterUpdateService.toSendTask = true;
+                    myCourierMasterUpdateService.OpenUnifreighTask(_CourierMasterPM, "LMC2U", "RSH", true, "");
                 }
-                myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
-
-                AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
                 MyGenericResponseObj.Stage = "Done All ";
                 MyGenericResponseObj.ApplicationId = this._CourierMasterPM.Id;
@@ -446,22 +469,16 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
             }
         }
 
-        private void CheckCourierDeclarationToDelete(List<string> declarationIds)
+        private void CheckCourierDeclarationToDelete(List<string> declarationIds, out List<string> deletedDeclarationIds)
         {
+            deletedDeclarationIds = null;
             if (_CourierMasterPM != null)
             {
                 var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), _CourierMasterPM.Tenant);
-                List<string> deletedDeclarationIds;
                 AppendLogLine("try to delete CourierDeclaration with Diferent Master");
                 try
                 {
                     myCourierDeclarationUpdateService.FastTotalDeleteComposition(declarationIds, _CourierMasterPM.Tenant, _CourierMasterPM.Id, out deletedDeclarationIds);
-
-                    if (deletedDeclarationIds != null && deletedDeclarationIds.Count() > 0)
-                    {
-                        AppendLogLine("try to UpdateDeclarationCourierStatus CourierDeclaration with Diferent Master");
-                        UpdateDeclarationCourierStatus(deletedDeclarationIds);
-                    }
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -482,7 +499,6 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
             try
             {
                 int tenant = _CourierMasterPM.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 var messagingService = new DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService();

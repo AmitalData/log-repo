@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using System.Diagnostics;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -36,11 +37,13 @@ namespace Logitude.Customs.Data.Repsitories
 
         public void FastDeleteMulti(List<string> declarationIds, int tenant, string courierMasterId, out List<string> deletedDeclarationIds)
         {
-            (context as DbContextBase).DeleteWhere<CourierDeclaration>(rec => declarationIds.Contains(rec.DeclarationId) && rec.Tenant == tenant && rec.CourierMasterId != courierMasterId);
-            deletedDeclarationIds = (from a in context.CourierDeclarations 
-                                     where declarationIds.Contains(a.DeclarationId)
-                                     where a.Tenant == tenant && a.CourierMasterId != courierMasterId
-                                     select a.DeclarationId).ToList();
+            var q = (from a in context.CourierDeclarations
+                     where declarationIds.Contains(a.DeclarationId)
+                     where a.Tenant == tenant && a.CourierMasterId != courierMasterId
+                     select a.DeclarationId);
+            deletedDeclarationIds = q.ToList();
+            List<string> declarationIdsDel = q.ToList();
+            (context as DbContextBase).DeleteWhere<CourierDeclaration>(rec => declarationIdsDel.Contains(rec.DeclarationId));
         }
 
         public IQueryable<CourierDeclaration> GetByCourierMasterId(int tenant, string courierMasterId)
