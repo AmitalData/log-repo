@@ -255,8 +255,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(tenant);
 
 
-                            var rabbitPublishService = new RabbitPublishService();
-                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode,5);
+                            //var rabbitPublishService = new RabbitPublishService();
+                            RabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode,5);
 
 
 
