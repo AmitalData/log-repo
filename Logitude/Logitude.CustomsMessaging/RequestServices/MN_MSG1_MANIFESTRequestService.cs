@@ -82,15 +82,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
             this.MyRequestSheetParam.RequestDescription = "מסר מניפסט";
 
-            EventContextTagModel myEventContextTagModel = new EventContextTagModel()
-            {
-                CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
-                EventCode = "MNS",
-                EventRemarks = "Manifest Sent ",
-                StatusDateTime = DateTime.Now,
-            };
-            string loggingUserId = AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant);
-            RaiseEvent(_DeclarationPM, loggingUserId, myEventContextTagModel);
+
             //this._DeclarationPM.CurrentContextTag = myInsertEventContextTagModel;
             _DeclarationPM.ManifestCargoStatusCode = "4";
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
