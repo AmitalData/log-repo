@@ -79,7 +79,16 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
             
             string unifreightUser=UnifreightListsUtil.GetValue(ref dic, "USER");
             string email = UnifreightListsUtil.GetValue(ref dic, "EMAIL");
-            //UnifreightListsUtil.GetValue(ref dic, "tenant");
+            string tenant = UnifreightListsUtil.GetValue(ref dic, "TENANT");
+            if (string.IsNullOrWhiteSpace(tenant))
+            {
+                throw new Exception("tenant is must");
+            }
+            int itenant = -99;
+            if (!int.TryParse(tenant, out itenant))
+            {
+                throw new Exception("tenant(INT) is must ");
+            }    
             MyGenericResponseObj.Stage = "check";
             if (string.IsNullOrWhiteSpace(unifreightUser)  && string.IsNullOrWhiteSpace(email))
             {
@@ -93,10 +102,10 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
             if (!string.IsNullOrWhiteSpace(unifreightUser))
             {
                 var userRepository = new UserRepository();
-                var user =userRepository.GetSingleUserByCode(unifreightUser, ResolvedTenant(), true);
+                var user =userRepository.GetSingleUserByCode(unifreightUser, itenant, true);
                 if (!string.IsNullOrWhiteSpace(user?.Id))    
                 {
-                    contact = contactRep.GetSingleContactByIdAndTenant(user?.Id, ResolvedTenant(), true);
+                    contact = contactRep.GetSingleContactByIdAndTenant(user?.Id, itenant, true);
                 }
                 
             }
@@ -104,17 +113,17 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
             
             if (contact==null && !string.IsNullOrWhiteSpace(email))
             {
-                contact = contactRep.GetSingleContactByEmail(email, ResolvedTenant(), true);
+                contact = contactRep.GetSingleContactByEmail(email, itenant, true);
 
             }
             if (contact == null)
             {
-                throw new Exception($"contact nt found for {email} / {unifreightUser}");
+                throw new Exception($"contact not found for {email} / {unifreightUser}");
             }
 
             if (contact.InActive)
             {
-                throw new Exception($"contact {email} InActive in tenant  {ResolvedTenant()}");
+                throw new Exception($"contact {email} InActive in tenant  {itenant}");
             }
 
 
@@ -142,13 +151,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
 
         }
 
-        protected override int ResolvedTenant()
-        {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
-            return authToken.Tenant;
-        }
+        
         private static void MustAdmin()
         {
             //string token = HttpContext.Current.Request.Headers["Token"];
