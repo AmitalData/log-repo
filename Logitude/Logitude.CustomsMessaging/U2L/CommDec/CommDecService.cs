@@ -136,7 +136,11 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
               ref string MoreParams,
               out string MessageOut, out string customFileNo, out string decId, out string courierMasterID)
         {
-            _PBId = PBId;
+            try
+            {
+                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = true;
+
+                _PBId = PBId;
             _tenant = tenant;
             customFileNo = "";
             MessageOut = "";
@@ -209,7 +213,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     return;
                 }
             }
-            
+
 
             MyGenericResponseObj.Stage = "GetSingleB4Upsert";
             if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.CustomFileNo))
@@ -316,7 +320,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                 AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
-
+                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
                 this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
                 {
                     MyCourierMasterPM = _CourierMasterPM,
@@ -724,6 +728,11 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
         }
+            finally
+            {
+                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
+            }
+}
 
         private void CalcInternalTransitionSite()
 
@@ -1353,7 +1362,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                     currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
                                 }
 
-                                if(_MyDeclarationPM.PaymentDate.HasValue)
+                                if (_MyDeclarationPM.PaymentDate.HasValue)
                                     currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
 
                                 if (prevVal != currvVal)
