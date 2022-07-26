@@ -277,10 +277,6 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                 }
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.UnifreightLeadingFile) && string.IsNullOrWhiteSpace(_CourierMasterPM.UnifreightLeadingFile)) _CourierMasterPM.UnifreightLeadingFile = _LogitudeMasterCourier.UnifreightLeadingFile;
 
-                myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
-
-                AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-
                 _context = CustomContext.GetContext(ResolvedTenant());
                 bool toSendTask = false;
                 if (_LOGIMASTERCOUR.WAYBILLS != null && _LOGIMASTERCOUR.WAYBILLS.Count() > 0)
@@ -349,12 +345,14 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
 
                     MyGenericResponseObj.Stage = "Done Connecting Declarations To Master By WayBill";
 
-                    if(toSendTask == true)
-                    {
-                        myCourierMasterUpdateService.toSendTask = true;
-                        myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
-                    }
                 }
+                if (toSendTask == true)
+                {
+                    myCourierMasterUpdateService.toSendTask = true;
+                }
+                myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
+
+                AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
                 MyGenericResponseObj.Stage = "Done All ";
                 MyGenericResponseObj.ApplicationId = this._CourierMasterPM.Id;
