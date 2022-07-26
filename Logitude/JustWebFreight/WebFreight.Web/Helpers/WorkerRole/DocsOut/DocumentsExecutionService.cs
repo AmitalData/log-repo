@@ -58,7 +58,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                     }
                     else
                     {
-                        ExceptionHandler.HandleException(new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DateTime.Now, 0, null, "WorkerRole Monitor", null, null);
+                        ExceptionHandler.HandleException(new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DateTime.Now, 0, null, "WorkerRole Monitor", null,  System.Environment.MachineName);
                         UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {Exception= new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });                      
                         queueService.Complete();
                     }
@@ -71,7 +71,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 {
                     excep = exception;
                     ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
-                    ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Aggr Catch ExecuteDocumentsExecutionQueue", null, null);
+                    ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Aggr Catch ExecuteDocumentsExecutionQueue", null, System.Environment.MachineName);
                 }
                 try
                 {
@@ -81,14 +81,14 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 catch (Exception ex)
                 {
 
-                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside Aggr catch exception while running UpdateDocumentsExecutionLog", null);
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside Aggr catch exception while running UpdateDocumentsExecutionLog", System.Environment.MachineName);
                 }
                 Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
             catch (Exception exception)
             {
                 ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
-                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", null, null);
+                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", null,  System.Environment.MachineName);
                 try
                 {
                     UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
@@ -97,7 +97,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 catch (Exception ex)
                 {
                    
-                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside catch exception while running UpdateDocumentsExecutionLog", null);
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Doc WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside catch exception while running UpdateDocumentsExecutionLog", System.Environment.MachineName);
                 }
 
                     Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));

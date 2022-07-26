@@ -64,7 +64,7 @@ namespace CommunicationWorkerRole
                                 pops1.MaxLines = 0;
                                 pops1.MessageNumber = pops1.MessageCount;
                                 pops1.Retrieve();
-                               
+
                                 string messageText = pops1.MessageText.Replace("&amp;", "&");
                                 AutoSignupEmail auotsignupEmail = new AutoSignupEmail()
                                 {
@@ -83,7 +83,7 @@ namespace CommunicationWorkerRole
                                 pops1.Delete();
                                 pops1.Disconnect();
                                 pops1.Connected = false;
-                                
+
                                 Thread.Sleep(sleeptime);//(120000); // 5 minutes300000
                             }
 
@@ -98,7 +98,14 @@ namespace CommunicationWorkerRole
                         {
 
                             ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "AutoSignUpWorkerRole : Run() Method", null);
-                            pops1.Disconnect();
+                            try
+                            {
+                                pops1.Disconnect();
+                            }
+                            catch (Exception exp)
+                            {
+                                ExceptionHandler.HandleException(exp, DateTime.Now, 0, "", "AutoSignUp WorkerRole Monitor", "AutoSignUpWorkerRole : Run() Method", System.Environment.MachineName);                       
+                            } 
                             pops1.Connected = false;
 
                             Thread.Sleep(sleeptime);
