@@ -2951,7 +2951,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string HouseMasterNewConcurrencyGUID { get; set; }
         public bool IsPODReceived { get; set; }
         public DateTime? PODReceivedDate { get; set; }
-        public bool IsPODUpdatedFromWR{ get; set; }
+        public bool IsDocsKPIsUpdatedFromWR{ get; set; }
         public string UnassignedShipperAddressId { get; set; }
         public string UnassignedConsigneeAddressId { get; set; }
         public bool HasUnassignedData { get; set; }

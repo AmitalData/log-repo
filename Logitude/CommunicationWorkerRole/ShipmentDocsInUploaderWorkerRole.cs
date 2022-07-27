@@ -213,6 +213,7 @@ namespace CommunicationWorkerRole
                 this.HandleShipmentFields(shipmentDocsField, isReceived, receivedDate);
             }
 
+            shipmentPM.IsDocsKPIsUpdatedFromWR = true;
             ShipmentService shipmentService = new ShipmentService(shipmentContext, shipmentPM, receivedBy.Email);
             shipmentService.ShipmentDocsFieldFromWorkerRole = shipmentDocsField;
             shipmentService.Update(true);
@@ -233,12 +234,10 @@ namespace CommunicationWorkerRole
         {
             if(documentCode == DocumentsCodes.POD)
             {
-                //shipmentPM.IsPODUpdatedFromWR = receivedDate != shipmentDocsField.PODReceivedDate;
                 shipmentDocsField.IsPODReceived = isReceived;
                 shipmentDocsField.PODReceivedDate = receivedDate;
                 shipmentPM.IsPODReceived = isReceived; // to be removed when Phoenix finish 
-                shipmentPM.PODReceivedDate = receivedDate; // to be removed when Phoenix finish
-                shipmentPM.IsPODUpdatedFromWR = true;
+                shipmentPM.PODReceivedDate = receivedDate; // to be removed when Phoenix finish                
             }
 
             else if (documentCode == DocumentsCodes.CommercialInvoice)
