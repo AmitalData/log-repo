@@ -1492,33 +1492,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateShipmentOperationalClose(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (entityPM.IsOperationalClosed && !entityPoco.IsOperationalClosed)
-            {
-                OperationalCloseValidator operationalCloseValidator = new OperationalCloseValidator(entityPM);
-                string errorMessage = operationalCloseValidator.StartValidating();
+            if ((!entityPM.IsOperationalClosed || entityPoco.IsOperationalClosed) && entityPM.ShipmentLevelCode == "C") return;
+            OperationalCloseValidator operationalCloseValidator = new OperationalCloseValidator(entityPM, entityPoco);
+            string errorMessage = operationalCloseValidator.StartValidating();
 
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    throw new ApplicationException(errorMessage.TrimStart(','));
-                }
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                throw new ApplicationException(errorMessage.TrimStart(','));
             }
         }
         private static void ValidateShipmentAccountingClose(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (entityPM.IsAccountingClosed && !entityPoco.IsAccountingClosed)
+            if ((!entityPM.IsAccountingClosed || entityPoco.IsAccountingClosed) && entityPM.ShipmentLevelCode == "C") return;
+
+            if (AccountingClosedChangedFromHouse(entityPM, entityPoco))
             {
-                AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(entityPM.Tenant);
-                AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(entityPM.Tenant);
+                var errorMsg = "House shipments cannot be accounting closed. They can only be closed by closing the connected Master shipment";
+                throw new ApplicationException(errorMsg);
+            }
 
-                bool hasOpenPayables = CheckOpenPayables(entityPM, accountingSetting);
-                bool hasOpenReceivables = CheckOpenReceivables(entityPM.ShipmentReceivables);
+            AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(entityPM.Tenant);
+            AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(entityPM.Tenant);
 
-                if (hasOpenPayables || hasOpenReceivables)
-                {
-                    ValidateAcocuntingCloseDueToShipmentLevel(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
-                }
+            bool hasOpenPayables = CheckOpenPayables(entityPM, accountingSetting);
+            bool hasOpenReceivables = CheckOpenReceivables(entityPM.ShipmentReceivables);
+
+            if (hasOpenPayables || hasOpenReceivables)
+            {
+                ValidateAcocuntingCloseDueToShipmentLevel(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
             }
         }
+
+        private static bool AccountingClosedChangedFromHouse(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            return entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster && (entityPoco.IsAccountingClosed != entityPM.IsAccountingClosed);
+        }
+
         private static bool CheckOpenPayables(ShipmentPM entityPM, AccountingSetting accountingSetting)
         {
             bool hasOpenPayables = false;
@@ -1689,13 +1698,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
     public class OperationalCloseValidator
     {
         private ShipmentPM shipmentPM;
+        private readonly Shipment entityPoco;
         private IRulesValidator ruleValidator;
         private int tenant;
         private ObjectFieldRepository objectFieldRepository;
         private ShipmentQuery shipmentQuery;
-        public OperationalCloseValidator(ShipmentPM shipmentPM)
+        public OperationalCloseValidator(ShipmentPM shipmentPM, Shipment entityPoco)
         {
             this.shipmentPM = shipmentPM;
+            this.entityPoco = entityPoco;
             this.tenant = shipmentPM.Tenant;
             this.objectFieldRepository = new ObjectFieldRepository(tenant);
             this.shipmentQuery = new ShipmentQuery(tenant);
@@ -1738,8 +1749,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
 
+            if (OperationalClosedChangedFromHouse())
+            {
+                var errorMsg = "House shipments cannot be operationally closed. They can only be closed by closing the connected Master shipment";
+                errorMessage = string.IsNullOrEmpty(errorMessage) ? errorMsg : errorMessage + ", " + errorMsg;
+            }
+
             return errorMessage;
         }
+
+        private bool OperationalClosedChangedFromHouse()
+        {
+            return shipmentPM.ShipmentLevelCode == "H" && !shipmentPM.IsHouseUpdatedByMaster && (entityPoco.IsOperationalClosed != shipmentPM.IsOperationalClosed);
+        }
+
         private string ValidateShipment(ShipmentPM shipment)
         {
             List<ObjectTableRuleField> requiredFields = ruleValidator.ValidateAllRequiredFieldRules(shipment, "Shipment", tenant);
@@ -1844,12 +1867,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
 
-            foreach (ByPckageType masterItem in  masterGroup)
+            foreach (ByPckageType masterItem in masterGroup)
             {
                 PackageType packageType = packageTypes.Where(f => f.Id == masterItem.PackageTypeId).FirstOrDefault();
                 if (packageType != null)
                 {
-                    LineData line  = new LineData();
+                    LineData line = new LineData();
                     line.LineLabel = packageType.EnglishName;
                     line.HouseValue = 0;
                     line.MasterValue = masterItem.Quantity;
@@ -1859,11 +1882,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             }
 
             foreach (ShipmentPackagePM houseItem in houseShipmentsPackaes.OrderBy(d => d.ShipmentId))
-            { 
+            {
                 PackageType packageType = packageTypes.Where(p => p.Id == houseItem.PackageTypeId).FirstOrDefault();
                 if (packageType != null)
                 {
-                    LineData line  = new LineData();
+                    LineData line = new LineData();
                     line.ShipmentNumber = houseItem.ShipmentNumber;
                     line.LineLabel = packageType.EnglishName;
 
@@ -1880,14 +1903,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     if (masterItem != null)
                     {
                         List<ShipmentPackagePM> temp = new List<ShipmentPackagePM>();
-                        foreach(ShipmentPackagePM p in  shipmentPM.ShipmentPackages)
+                        foreach (ShipmentPackagePM p in shipmentPM.ShipmentPackages)
                         {
                             if (p != masterItem)
                                 temp.Add(p);
                         }
                         shipmentPM.ShipmentPackages = temp;
                         line.MasterStringValue = string.IsNullOrEmpty(masterItem.ContainerNumber) ? "- - -" : masterItem.ContainerNumber;
-                        line.IsEquals = (line.HouseStringValue == line.MasterStringValue);                        
+                        line.IsEquals = (line.HouseStringValue == line.MasterStringValue);
                     }
                     else
                     {
