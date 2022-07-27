@@ -2694,6 +2694,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
             });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCBUDCSMC",
+                InOut = InOutEnum.I.ToString(),
+                Description = "עדכון שטרי מטען בלדר בקישור לטיסה",
+                DcaPrefixName = "UCBUDCSMC_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+            });
+
 
             all.Add(new InterfaceManagementDetails()
             {
@@ -2941,7 +2956,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //InterfaceType = "C",
-            });            
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "DCACCFII",
+                InOut = InOutEnum.I.ToString(),
+                Description = "יצירת אישור לפרטי מכס שסומנו",
+                DcaPrefixName = "DCACCFII_OUT",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //InterfaceType = "C",
+            });
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "UCADPE",

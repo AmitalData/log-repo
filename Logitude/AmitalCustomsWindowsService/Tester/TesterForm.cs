@@ -329,6 +329,7 @@ namespace AmitalCustomsWindowsService.Tester
 
 
 
+            clsTester.GetPointer();
             clsTester.FeatureToggle();
 
             var sw = Stopwatch.StartNew();
@@ -1201,28 +1202,23 @@ namespace AmitalCustomsWindowsService.Tester
 
         }
 
-        private void _TBID_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void testPooledPublishToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
 
 
-               
 
 
-                var message = Encoding.UTF8.GetBytes(Get("CorrelationId", "ExternalId", "body"));
-               
 
-                string InterfaceTypeCode = "ucbud2lt";
-                String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(1);
-                rabbitMQCode = "itziktest_" + rabbitMQCode;
 
-                var rabbitPublishService = new RabbitPublishService();
-                rabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
+            var message = Encoding.UTF8.GetBytes(Get("CorrelationId", "ExternalId", "body"));
+
+
+            string InterfaceTypeCode = "ucbud2lt";
+            String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(1);
+            rabbitMQCode = "itziktest_" + rabbitMQCode;
+
+            //var rabbitPublishService = new RabbitPublishService();
+            RabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
 
 
 

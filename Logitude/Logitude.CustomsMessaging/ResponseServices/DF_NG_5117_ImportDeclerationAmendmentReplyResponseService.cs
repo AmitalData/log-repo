@@ -717,7 +717,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
                     }
-                    if (customResponse.Response.Declaration != null)
+                    if (customResponse.Response.Declaration != null && (_MyDeclarationPM.AmendmentStatus == "6" || _MyDeclarationPM.AmendmentStatus == "3"))
                     {
                         DF_NG_2754_MSG10004_ImportDeclarationResponseService dF_NG_2754_MSG10004_ImportDeclarationResponseService = new DF_NG_2754_MSG10004_ImportDeclarationResponseService();
 

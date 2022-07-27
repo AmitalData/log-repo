@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using System.Diagnostics;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -32,7 +33,18 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CourierMasterId == courierMasterId && a.Tenant == tenant
                     select a).Max(rec => rec.SequenceNumeric);
         }
-       
+
+
+        public void FastDeleteMulti(List<string> declarationIds, int tenant, string courierMasterId, out List<string> deletedDeclarationIds)
+        {
+            var q = (from a in context.CourierDeclarations
+                     where declarationIds.Contains(a.DeclarationId)
+                     where a.Tenant == tenant && a.CourierMasterId != courierMasterId
+                     select a.DeclarationId);
+            deletedDeclarationIds = q.ToList();
+            List<string> declarationIdsDel = q.ToList();
+            (context as DbContextBase).DeleteWhere<CourierDeclaration>(rec => declarationIdsDel.Contains(rec.DeclarationId));
+        }
 
         public IQueryable<CourierDeclaration> GetByCourierMasterId(int tenant, string courierMasterId)
         {
@@ -109,6 +121,18 @@ namespace Logitude.Customs.Data.Repsitories
                     join s in context.DeclarationCourierStatuses on a.DeclarationId equals s.DeclarationId 
                     where a.CourierMasterId == couriermasterid && a.Tenant == tenant && a.Declaration.HatraDate != null && !s.Delivered 
                     select a).Count();
+        }
+
+        public List<string> GetCourierDeclarationToInsert(List<string> declarationIds, string couriermasterid, int tenant)
+        {
+            var q = (from a in context.CourierDeclarations
+                     where declarationIds.Contains(a.DeclarationId)
+                     where a.Tenant == tenant && a.CourierMasterId == couriermasterid
+                     select a.DeclarationId);
+
+            var containsId= q.ToList();
+            var res = declarationIds.Where(r => !containsId.Contains(r)).ToList();
+            return res;
         }
     }
 

@@ -136,196 +136,200 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
               ref string MoreParams,
               out string MessageOut, out string customFileNo, out string decId, out string courierMasterID)
         {
-            _PBId = PBId;
-            _tenant = tenant;
-            customFileNo = "";
-            MessageOut = "";
-            decId = "";
-            courierMasterID = "";
-            _Stopwatch = Stopwatch.StartNew();
-            MyCommunicationsParams.Subject = "CommDecService ";
-            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
-            DeserilazeObject(xmlLOGICOMMDEC);
-            AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            //bool SuppressECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.SuppressECommDecInsertService"]);
-            bool useECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.UseECommDecInsertService"]);
-            //CheckIntegrity();
-            AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            MyGenericResponseObj.Stage = "GetContext";
-            MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
-            _context = CustomContext.GetContext(_tenant);
-            amitalContext = AmitalContext.GetContext(_tenant);
-            var myQueryService = new DeclarationQueryService(_context);
-            MyGenericResponseObj.EnglishDescription = "Update Declaration Integrator";
-            ICustomContext dbContext = CustomContext.GetContext(_tenant);
-            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), _tenant);
-
-            if (!String.IsNullOrWhiteSpace(MoreParams))
+            
+            try
             {
-                AppendLogLine("MoreParams: " + MoreParams);
-                var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
-                AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
-                mode = UnifreightListsUtil.GetValue(ref unifreightListsParams, "MODE");
-                AppendLogLine("mode: " + mode);
-                if (mode == "UPDATE_MASTER_COURIER")
+                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = true;
+                _PBId = PBId;
+                _tenant = tenant;
+                customFileNo = "";
+                MessageOut = "";
+                decId = "";
+                courierMasterID = "";
+                _Stopwatch = Stopwatch.StartNew();
+                MyCommunicationsParams.Subject = "CommDecService ";
+                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
+                DeserilazeObject(xmlLOGICOMMDEC);
+                AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                //bool SuppressECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.SuppressECommDecInsertService"]);
+                bool useECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.UseECommDecInsertService"]);
+                //CheckIntegrity();
+                AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                MyGenericResponseObj.Stage = "GetContext";
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+                _context = CustomContext.GetContext(_tenant);
+                amitalContext = AmitalContext.GetContext(_tenant);
+                var myQueryService = new DeclarationQueryService(_context);
+                MyGenericResponseObj.EnglishDescription = "Update Declaration Integrator";
+                ICustomContext dbContext = CustomContext.GetContext(_tenant);
+                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), _tenant);
+
+                if (!String.IsNullOrWhiteSpace(MoreParams))
                 {
-                    MyGenericResponseObj.Stage = "GetSingleB4Upsert";
-                    if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.CustomFileNo))
+                    AppendLogLine("MoreParams: " + MoreParams);
+                    var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
+                    AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
+                    mode = UnifreightListsUtil.GetValue(ref unifreightListsParams, "MODE");
+                    AppendLogLine("mode: " + mode);
+                    if (mode == "UPDATE_MASTER_COURIER")
                     {
-                        string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
-                        if (!String.IsNullOrWhiteSpace(existId))
+                        MyGenericResponseObj.Stage = "GetSingleB4Upsert";
+                        if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.CustomFileNo))
                         {
-                            this._MyDeclarationPM = myQueryService.GetSingle(existId, true, false);
-                            AppendLogLine("GetSingleB4Upsert:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                            if (this._MyDeclarationPM != null)
+                            string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
+                            if (!String.IsNullOrWhiteSpace(existId))
+                            {
+                                this._MyDeclarationPM = myQueryService.GetSingle(existId, true, false);
+                                AppendLogLine("GetSingleB4Upsert:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                                if (this._MyDeclarationPM != null)
+                                {
+                                    CheckMasterToUpdate(MoreParams, Curruser);
+                                    AppendLogLine("Updated declaration " + this._MyDeclarationPM.CustomFileNo);
+
+                                }
+                            }
+                            else
+                            {
+                                if (useECommDecInsertService)
+                                {
+
+
+                                    /// INSERT !!!
+                                    MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
+                                    var eCommDecInsertService = new ECommDecInsertService();
+                                    eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
+                      ref MoreParams,
+                      out MessageOut, out customFileNo, out decId, out courierMasterID);
+                                    return;
+                                }
+
+                            }
+                        }
+                        AppendLogLine("Updating Master Courier Only " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                        MyGenericResponseObj.Stage = "Done Updating Master Courier Only ";
+                        if (this._MyDeclarationPM != null) MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.Id;
+                        MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+                        MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+                        return;
+                    }
+                }
+
+
+                MyGenericResponseObj.Stage = "GetSingleB4Upsert";
+                if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.CustomFileNo))
+                {
+                    string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
+                    if (!String.IsNullOrWhiteSpace(existId))
+                    {
+                        this._MyDeclarationPM = myQueryService.GetSingle(existId, true, false);
+                        AppendLogLine("GetSingleB4Upsert:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        if (this._MyDeclarationPM != null)
+                        {
+                            if (!declarationUpdateService.CheckIfUpdatingAllowed(this._MyDeclarationPM))
                             {
                                 CheckMasterToUpdate(MoreParams, Curruser);
-                                AppendLogLine("Updated declaration " + this._MyDeclarationPM.CustomFileNo);
-
-                            }
-                        }
-                        else
-                        {
-                            if (useECommDecInsertService)
-                            {
-
-
-                                /// INSERT !!!
-                                MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
-                                var eCommDecInsertService = new ECommDecInsertService();
-                                eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
-                  ref MoreParams,
-                  out MessageOut, out customFileNo, out decId, out courierMasterID);
+                                AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                                 return;
                             }
-
                         }
                     }
-                    AppendLogLine("Updating Master Courier Only " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
-                    MyGenericResponseObj.Stage = "Done Updating Master Courier Only ";
-                    if (this._MyDeclarationPM != null) MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.Id;
-                    MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
-                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
-                    return;
-                }
-            }
-            
-
-            MyGenericResponseObj.Stage = "GetSingleB4Upsert";
-            if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.CustomFileNo))
-            {
-                string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
-                if (!String.IsNullOrWhiteSpace(existId))
-                {
-                    this._MyDeclarationPM = myQueryService.GetSingle(existId, true, false);
-                    AppendLogLine("GetSingleB4Upsert:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                    if (this._MyDeclarationPM != null)
+                    else
                     {
-                        if (!declarationUpdateService.CheckIfUpdatingAllowed(this._MyDeclarationPM))
+                        if (useECommDecInsertService)
                         {
-                            CheckMasterToUpdate(MoreParams, Curruser);
-                            AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                            //INSERT !!!
+                            MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
+                            var eCommDecInsertService = new ECommDecInsertService();
+                            eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
+              ref MoreParams,
+              out MessageOut, out customFileNo, out decId, out courierMasterID);
                             return;
                         }
                     }
                 }
-                else
+                if (this._MyDeclarationPM == null) _IsNewDeclaration = true;
+
+                MyGenericResponseObj.Stage = "DeclarationUpsert";
+                string xmlLOGICUSTFILE = xmlLOGICOMMDEC;
+                xmlLOGICUSTFILE = xmlLOGICUSTFILE.Replace("LOGICOMMDEC", "LOGICUSTFILE");
+                xmlLOGICUSTFILE = xmlLOGICUSTFILE.Replace("LogitudeCommDecFile", "LogitudeCustomsFile");
+                DeclarationUpsertService myDeclarationUpsertService = new DeclarationUpsertService();
+                try
                 {
-                    if (useECommDecInsertService)
-                    {
-                        //INSERT !!!
-                        MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
-                        var eCommDecInsertService = new ECommDecInsertService();
-                        eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
-          ref MoreParams,
-          out MessageOut, out customFileNo, out decId, out courierMasterID);
-                        return;
-                    }
+                    var upsertParam = "CommDecService";
+                    ///myDeclarationUpsertService.suppressNewTrans = true;
+                    myDeclarationUpsertService.ProccessGenericRequest(xmlLOGICUSTFILE, ref upsertParam, out MessageOut);
                 }
-            }
-            if (this._MyDeclarationPM == null) _IsNewDeclaration = true;
+                catch (DbEntityValidationException ex)
+                {
+                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                    AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                    AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                    return;
+                }
+                catch (Exception e)
+                {
+                    AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                    AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                    return;
+                }
+                if (!String.IsNullOrWhiteSpace(MyGenericResponseObj.StatusType.ToString()) && MyGenericResponseObj.StatusType != GenericResponseObj.StatusEnum.Success)
+                {
+                    AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                    return;
+                }
 
-            MyGenericResponseObj.Stage = "DeclarationUpsert";
-            string xmlLOGICUSTFILE = xmlLOGICOMMDEC;
-            xmlLOGICUSTFILE = xmlLOGICUSTFILE.Replace("LOGICOMMDEC", "LOGICUSTFILE");
-            xmlLOGICUSTFILE = xmlLOGICUSTFILE.Replace("LogitudeCommDecFile", "LogitudeCustomsFile");
-            DeclarationUpsertService myDeclarationUpsertService = new DeclarationUpsertService();
-            try
-            {
-                var upsertParam = "CommDecService";
-                ///myDeclarationUpsertService.suppressNewTrans = true;
-                myDeclarationUpsertService.ProccessGenericRequest(xmlLOGICUSTFILE, ref upsertParam, out MessageOut);
-            }
-            catch (DbEntityValidationException ex)
-            {
-                var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
-                AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                return;
-            }
-            catch (Exception e)
-            {
-                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
-                AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                return;
-            }
-            if (!String.IsNullOrWhiteSpace(MyGenericResponseObj.StatusType.ToString()) && MyGenericResponseObj.StatusType != GenericResponseObj.StatusEnum.Success)
-            {
-                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
-                return;
-            }
-
-            if (MessageOut != "")
-            {
-                AppendLogLine("Declaration Upsert Error :" + MessageOut + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
-                return;
+                if (MessageOut != "")
+                {
+                    AppendLogLine("Declaration Upsert Error :" + MessageOut + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                    return;
 
             }
             //Delete Supplier Invoice
 
-            if (String.IsNullOrWhiteSpace(_LogitudeCommDecFile.Id))
-            {
-                string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
-                _LogitudeCommDecFile.Id = existId;
-            }
+                if (String.IsNullOrWhiteSpace(_LogitudeCommDecFile.Id))
+                {
+                    string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
+                    _LogitudeCommDecFile.Id = existId;
+                }
 
-            //Delete Supplier Invoice
-
-            if (mode == "1" || mode == "2")
-            {
                 //Delete Supplier Invoice
-                MyGenericResponseObj.Stage = "GetSingle - To delete";
-                _context = CustomContext.GetContext(ResolvedTenant());
-                var myQueryService2 = new DeclarationQueryService(_context);
-                this._MyDeclarationPM = myQueryService2.GetSingle(this._LogitudeCommDecFile.Id, true, false);
-                if (this._MyDeclarationPM == null)
+
+                if (mode == "1" || mode == "2")
                 {
-                    throw new BusinessErrorException("LOGITUDEFILE is " + this._LogitudeCommDecFile.Id + " but not found");
+                    //Delete Supplier Invoice
+                    MyGenericResponseObj.Stage = "GetSingle - To delete";
+                    _context = CustomContext.GetContext(ResolvedTenant());
+                    var myQueryService2 = new DeclarationQueryService(_context);
+                    this._MyDeclarationPM = myQueryService2.GetSingle(this._LogitudeCommDecFile.Id, true, false);
+                    if (this._MyDeclarationPM == null)
+                    {
+                        throw new BusinessErrorException("LOGITUDEFILE is " + this._LogitudeCommDecFile.Id + " but not found");
+                    }
+                    AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    ICustomContext dbContext2 = CustomContext.GetContext(ResolvedTenant());
+                    DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
+                    this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    this._MyDeclarationPM.MarkAsChanged = true;
+
+                    DeclarationUpdateService.DeclarationSupplierInvoicesFastDelete(_MyDeclarationPM, dbContext2);
+                    dbContext2 = CustomContext.GetContext(ResolvedTenant());
+                    DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
+
+                    AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
+
+                    this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
+                    {
+                        MyCourierMasterPM = _CourierMasterPM,
+                        MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
+                    };
+                    DeclarationUpdateService.Update(this._MyDeclarationPM, true);
+                    AppendLogLine("Update:MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
                 }
-                AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                ICustomContext dbContext2 = CustomContext.GetContext(ResolvedTenant());
-                DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
-                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                this._MyDeclarationPM.MarkAsChanged = true;
-
-                DeclarationUpdateService.DeclarationSupplierInvoicesFastDelete(_MyDeclarationPM, dbContext2);
-                dbContext2 = CustomContext.GetContext(ResolvedTenant());
-                DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
-
-                AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
-
-                this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
-                {
-                    MyCourierMasterPM = _CourierMasterPM,
-                    MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
-                };
-                DeclarationUpdateService.Update(this._MyDeclarationPM, true);
-                AppendLogLine("Update:MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-
-            }
 
 
             /////////////////////////////////////////////////////////////
@@ -341,270 +345,270 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
-            this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            CheckMasterToUpdate(MoreParams, Curruser);
-            if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.TaxationDateTime))
-            {
-                this._MyDeclarationPM.TaxationDateTime = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.TaxationDateTime, "LogitudeCommDecFile.TaxationDateTime"); // moran 22.1.17 - AMI-58777
-            }
+                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                CheckMasterToUpdate(MoreParams, Curruser);
+                if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.TaxationDateTime))
+                {
+                    this._MyDeclarationPM.TaxationDateTime = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.TaxationDateTime, "LogitudeCommDecFile.TaxationDateTime"); // moran 22.1.17 - AMI-58777
+                }
 
-            if (!string.IsNullOrWhiteSpace(this._LogitudeCommDecFile.TransferImporterId)) // moran 22.3.17 - AMI-59830
-            {
-                if (_LogitudeCommDecFile.TransferImporterId.Length > 9)
+                if (!string.IsNullOrWhiteSpace(this._LogitudeCommDecFile.TransferImporterId)) // moran 22.3.17 - AMI-59830
                 {
-                    this._MyDeclarationPM.EntitleImporterId = TranslateClient(_LogitudeCommDecFile.TransferImporterId.Substring(0, 9));
-                    this._MyDeclarationPM.EntitleImporterCode = _LogitudeCommDecFile.TransferImporterId.Substring(0, 9);
-                }
-                else
-                {
-                    this._MyDeclarationPM.EntitleImporterId = TranslateClient(_LogitudeCommDecFile.TransferImporterId);
-                    this._MyDeclarationPM.EntitleImporterCode = _LogitudeCommDecFile.TransferImporterId;
-                }
-                if (!string.IsNullOrWhiteSpace(this._LogitudeCommDecFile.ImporterEntitlementTypeCode))
-                {
-                    EntitlementTypeQueryService entitlementTypeQueryService = new EntitlementTypeQueryService(this._MyDeclarationPM.Tenant);
-                    EntitlementTypePM entitlementType = entitlementTypeQueryService.GetSingle(this._LogitudeCommDecFile.ImporterEntitlementTypeCode, false, false);
-                    if (entitlementType != null)
+                    if (_LogitudeCommDecFile.TransferImporterId.Length > 9)
                     {
-                        this._MyDeclarationPM.ImporterEntitlementTypeCode = entitlementType.Code;
-                        this._MyDeclarationPM.ImporterEntitlementTypeName = entitlementType.LocalName;
-                    }
-                }
-            }
-
-            if (this._MyDeclarationPM.Consignments.Count == 1) // moran 11.1.17 - AMI-59265 - moved before creating invoices
-            {
-                if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
-                {
-                    this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
-                }
-
-                if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.ManifestNumber))
-                {
-                    this._MyDeclarationPM.Consignments[0].ManifestNumber = _LogitudeCommDecFile.ManifestNumber;
-                }
-
-                string loadingPortCode = null;
-                if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.LoadingPortCode))
-                {
-                    loadingPortCode = TranslateloadPort(_LogitudeCommDecFile.LoadingPortCode);
-                }
-                if (!String.IsNullOrWhiteSpace(loadingPortCode)) this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
-
-                if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryCode))
-                {
-                    string countryCode = "";
-                    if (_LogitudeCommDecFile.OriginCountryCode.Length > 2)
-                    {
-                        countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryCode);
+                        this._MyDeclarationPM.EntitleImporterId = TranslateClient(_LogitudeCommDecFile.TransferImporterId.Substring(0, 9));
+                        this._MyDeclarationPM.EntitleImporterCode = _LogitudeCommDecFile.TransferImporterId.Substring(0, 9);
                     }
                     else
                     {
-                        countryCode = _LogitudeCommDecFile.OriginCountryCode;
+                        this._MyDeclarationPM.EntitleImporterId = TranslateClient(_LogitudeCommDecFile.TransferImporterId);
+                        this._MyDeclarationPM.EntitleImporterCode = _LogitudeCommDecFile.TransferImporterId;
                     }
-                    if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
+                    if (!string.IsNullOrWhiteSpace(this._LogitudeCommDecFile.ImporterEntitlementTypeCode))
+                    {
+                        EntitlementTypeQueryService entitlementTypeQueryService = new EntitlementTypeQueryService(this._MyDeclarationPM.Tenant);
+                        EntitlementTypePM entitlementType = entitlementTypeQueryService.GetSingle(this._LogitudeCommDecFile.ImporterEntitlementTypeCode, false, false);
+                        if (entitlementType != null)
+                        {
+                            this._MyDeclarationPM.ImporterEntitlementTypeCode = entitlementType.Code;
+                            this._MyDeclarationPM.ImporterEntitlementTypeName = entitlementType.LocalName;
+                        }
+                    }
                 }
-                else
+
+                if (this._MyDeclarationPM.Consignments.Count == 1) // moran 11.1.17 - AMI-59265 - moved before creating invoices
                 {
-                    //                    this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
-                }
+                    if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
+                    {
+                        this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                    }
+
+                    if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.ManifestNumber))
+                    {
+                        this._MyDeclarationPM.Consignments[0].ManifestNumber = _LogitudeCommDecFile.ManifestNumber;
+                    }
+
+                    string loadingPortCode = null;
+                    if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.LoadingPortCode))
+                    {
+                        loadingPortCode = TranslateloadPort(_LogitudeCommDecFile.LoadingPortCode);
+                    }
+                    if (!String.IsNullOrWhiteSpace(loadingPortCode)) this._MyDeclarationPM.Consignments[0].LoadingPortCode = loadingPortCode;
+
+                    if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryCode))
+                    {
+                        string countryCode = "";
+                        if (_LogitudeCommDecFile.OriginCountryCode.Length > 2)
+                        {
+                            countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryCode);
+                        }
+                        else
+                        {
+                            countryCode = _LogitudeCommDecFile.OriginCountryCode;
+                        }
+                        if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
+                    }
+                    else
+                    {
+                        //                    this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
+                    }
 
                 if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.CargoDescription)) this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
                 //this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ManifestDate, "LogitudeCommDecFile.ManifestDate");
                 if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime)) this._MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
 
-                if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryId))
-                {
-                    string countryCode = "";
-                    if (_LogitudeCommDecFile.OriginCountryId.Length > 2)
+                    if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryId))
                     {
-                        countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryId);
+                        string countryCode = "";
+                        if (_LogitudeCommDecFile.OriginCountryId.Length > 2)
+                        {
+                            countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryId);
+                        }
+                        else
+                        {
+                            countryCode = _LogitudeCommDecFile.OriginCountryId;
+                        }
+                        if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
                     }
-                    else
-                    {
-                        countryCode = _LogitudeCommDecFile.OriginCountryId;
-                    }
-                    if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
-                }
-                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.WarehouseId)) this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeCommDecFile.WarehouseId);
+                    if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.WarehouseId)) this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeCommDecFile.WarehouseId);
 
-                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode))
-
-                {
-
-                    if (this._CourierMasterPM == null)
+                    if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode))
 
                     {
 
-                        var myCourierMasterQueryService = new CourierMasterQueryService(_context);
-
-                        _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(this._MyDeclarationPM.Id, ResolvedTenant());
-
-                    }
-
-                    if (_CourierMasterPM != null)
-
-                    {
-
-                        CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
-
-                        CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
-
-                        if (customsAirline != null)
+                        if (this._CourierMasterPM == null)
 
                         {
 
-                            if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode)) this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
+                            var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+
+                            _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(this._MyDeclarationPM.Id, ResolvedTenant());
+
+                        }
+
+                        if (_CourierMasterPM != null)
+
+                        {
+
+                            CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
+
+                            CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
+
+                            if (customsAirline != null)
+
+                            {
+
+                                if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode)) this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
+
+                            }
 
                         }
 
                     }
-
+                    if (this._LogitudeCommDecFile.PACKAGES != null && this._LogitudeCommDecFile.PACKAGES.Count() > 0)
+                    {
+                        var myConsignmentPackageUpdateService = new ConsignmentPackageUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
+                        DeleteConsignmentPackages(myConsignmentPackageUpdateService);
+                        this._MyDeclarationPM.Consignments[0].ConsignmentPackages = GetConsignmentPackages(this._LogitudeCommDecFile.PACKAGES);
+                    }
                 }
-                if (this._LogitudeCommDecFile.PACKAGES != null && this._LogitudeCommDecFile.PACKAGES.Count() > 0)
+                else
                 {
-                    var myConsignmentPackageUpdateService = new ConsignmentPackageUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
-                    DeleteConsignmentPackages(myConsignmentPackageUpdateService);
-                    this._MyDeclarationPM.Consignments[0].ConsignmentPackages = GetConsignmentPackages(this._LogitudeCommDecFile.PACKAGES);
+                    MyGenericResponseObj.Message = "Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update";
+                    AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
                 }
-            }
-            else
-            {
-                MyGenericResponseObj.Message = "Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update";
-                AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
-            }
 
 
-            if (_CourierMasterPM != null)
-            {
-                courierMasterID = _CourierMasterPM.Id;
-            }
-            if (this._LogitudeCommDecFile.INVOICE != null)
-            {
-                if (this._LogitudeCommDecFile.INVOICE.Count() > 0)
+                if (_CourierMasterPM != null)
                 {
+                    courierMasterID = _CourierMasterPM.Id;
+                }
+                if (this._LogitudeCommDecFile.INVOICE != null)
+                {
+                    if (this._LogitudeCommDecFile.INVOICE.Count() > 0)
+                    {
 
-                    string defValue = GetDefault("ISRAEL", "CGG_BUILD_UNIT", "NON", "NON", _tenant);
-                    if (defValue == "Y")
-                    {
-                        _IsBuildItemsUnit = true;
-                    }
-                    if (this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() == 0)
-                    {
-                        this._MyDeclarationPM.SupplierInvoices = new List<SupplierInvoicePM>();
-                    }
-                    /*
-                    else if (this._MyDeclarationPM.SupplierInvoices.Count() > 1)
-                    {
-                        AppendLogLine("Declaration has More than one Invoice, Invoice will not be Updated..");
-                        return;
-                    }
-                    else
-                    {
-                    
-                        if (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().SupplierInvoiceItems != null && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().SupplierInvoiceItems.Count() > 1)
+                        string defValue = GetDefault("ISRAEL", "CGG_BUILD_UNIT", "NON", "NON", _tenant);
+                        if (defValue == "Y")
                         {
-                            AppendLogLine("Declaration has More than one Invoice item, Invoice will not be Updated..");
+                            _IsBuildItemsUnit = true;
+                        }
+                        if (this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() == 0)
+                        {
+                            this._MyDeclarationPM.SupplierInvoices = new List<SupplierInvoicePM>();
+                        }
+                        /*
+                        else if (this._MyDeclarationPM.SupplierInvoices.Count() > 1)
+                        {
+                            AppendLogLine("Declaration has More than one Invoice, Invoice will not be Updated..");
                             return;
                         }
-                        if (this._LogitudeCommDecFile.INVOICE != null)
+                        else
                         {
-                            if(this._LogitudeCommDecFile.INVOICE.Count() > 1)
+
+                            if (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().SupplierInvoiceItems != null && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().SupplierInvoiceItems.Count() > 1)
                             {
-                                AppendLogLine("More than one Invoice received in the message, Invoice will not be Updated..");
+                                AppendLogLine("Declaration has More than one Invoice item, Invoice will not be Updated..");
                                 return;
                             }
-                            if (this._LogitudeCommDecFile.INVOICE.FirstOrDefault().INVOICEITEMS != null && this._LogitudeCommDecFile.INVOICE.FirstOrDefault().INVOICEITEMS.Count() > 1)
+                            if (this._LogitudeCommDecFile.INVOICE != null)
                             {
-                                AppendLogLine("More than one Invoice item received in the message, Invoice will not be Updated..");
-                                return;
-                            }
-                        }
-                    }
-                    */
-                    foreach (var itemINVOICE in this._LogitudeCommDecFile.INVOICE)
-                    {
-                        this._INVOICE = itemINVOICE;
-                        MyCommunicationsParams.Tenant = _tenant;
-                        MyGenericResponseObj.Stage = "Upsert " + this._INVOICE.INVOICENUMBER;
-                        InvoiceInsert();
-
-                        MyGenericResponseObj.Stage = "Done " + this._INVOICE.INVOICENUMBER;
-                    }
-                    AppendLogLine("InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                    if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0) // moran 8.10.15 - Task 16452
-                    {
-                        this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().IsPrimarySupplierInvoice = true;
-                    }
-                    AppendLogLine("Update:InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                }
-            }
-
-            AppendLogLine("Importer Code: " + this._MyDeclarationPM.ImporterCode);
-
-            if (this._LogitudeCommDecFile.CustomsDocuments != null && this._LogitudeCommDecFile.CustomsDocuments.Where(d => d.Blocked != "1").Count() > 0) // moran 2.6.16 - AMI-56624
-            {
-                var myCustomsDocumentQueryService = new CustomsDocumentQueryService(dbContext);
-                var myCustomsDocumentPointerUpdateService = new CustomsDocumentPointerUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-
-                foreach (var customsDocument in this._LogitudeCommDecFile.CustomsDocuments)
-                {
-                    if (customsDocument.Blocked != "1")
-                    {
-                        DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(_MyDeclarationPM.Tenant);
-                        DocumentsFilingPM documentIn = documentsFilingQuery.GetSinglePM(customsDocument.COM_ID, _MyDeclarationPM.Tenant);
-                        if (documentIn != null)
-                        {
-                            CustomsDocumentsTicketPM customsDocumentsTicketPM = new CustomsDocumentsTicketPM();
-                            customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Insert;
-                            customsDocumentsTicketPM.Tenant = _MyDeclarationPM.Tenant;
-                            customsDocumentsTicketPM.DocumentsFilingId = customsDocument.COM_ID;
-                            customsDocumentsTicketPM.DocumentTypeCode = customsDocument.DocumentTypeCode;
-                            myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
-
-                            CustomsDocumentPointerPM customsDocumentPointerPM = new CustomsDocumentPointerPM();
-                            customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Insert;
-
-                            // Create Document Pointer (every document pointer has a ticket)
-                            customsDocumentPointerPM.Tenant = _MyDeclarationPM.Tenant;
-                            customsDocumentPointerPM.CustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
-                            customsDocumentPointerPM.ParentEntityCode = "Declaration";
-                            customsDocumentPointerPM.ParentEntityId = _MyDeclarationPM.Id;
-                            if (customsDocument.Entname == "SI")
-                            {
-                                customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
-                                customsDocumentPointerPM.Child1EntityId = "1"; // customsDocument.Key_2;
-                            }
-                            if (customsDocument.Entname == "CI")
-                            {
-
-                                customsDocumentPointerPM.Child2EntityCode = "SupplierInvoiceItem";
-                                customsDocumentPointerPM.Child2EntityId = "1"; //customsDocument.Key_3;
-                            }
-                            customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
-                            myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
-
-                            var myDocumentId = myCustomsDocumentQueryService.GetSingle(customsDocument.COM_ID, true, false);
-                            if (myDocumentId == null)
-                            {
-                                var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                                CustomsDocumentPM customsDocumentPM = new CustomsDocumentPM();
-                                customsDocumentPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                                customsDocumentPM.DocumentsFilingId = customsDocument.COM_ID;
-                                customsDocumentPM.DocumentTypeCode = customsDocument.DocumentTypeCode;
-                                customsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
-                                customsDocumentPM.Tenant = _MyDeclarationPM.Tenant;
-                                foreach (CustomsDocumentMetaDataValuePM value in customsDocumentPM.CustomsDocumentMetaDataValues)
+                                if(this._LogitudeCommDecFile.INVOICE.Count() > 1)
                                 {
-                                    value.ChangeSetOp = ChangeSetOperation.Insert;
+                                    AppendLogLine("More than one Invoice received in the message, Invoice will not be Updated..");
+                                    return;
                                 }
-                                myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+                                if (this._LogitudeCommDecFile.INVOICE.FirstOrDefault().INVOICEITEMS != null && this._LogitudeCommDecFile.INVOICE.FirstOrDefault().INVOICEITEMS.Count() > 1)
+                                {
+                                    AppendLogLine("More than one Invoice item received in the message, Invoice will not be Updated..");
+                                    return;
+                                }
+                            }
+                        }
+                        */
+                        foreach (var itemINVOICE in this._LogitudeCommDecFile.INVOICE)
+                        {
+                            this._INVOICE = itemINVOICE;
+                            MyCommunicationsParams.Tenant = _tenant;
+                            MyGenericResponseObj.Stage = "Upsert " + this._INVOICE.INVOICENUMBER;
+                            InvoiceInsert();
+
+                            MyGenericResponseObj.Stage = "Done " + this._INVOICE.INVOICENUMBER;
+                        }
+                        AppendLogLine("InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0) // moran 8.10.15 - Task 16452
+                        {
+                            this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().IsPrimarySupplierInvoice = true;
+                        }
+                        AppendLogLine("Update:InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    }
+                }
+
+                AppendLogLine("Importer Code: " + this._MyDeclarationPM.ImporterCode);
+
+                if (this._LogitudeCommDecFile.CustomsDocuments != null && this._LogitudeCommDecFile.CustomsDocuments.Where(d => d.Blocked != "1").Count() > 0) // moran 2.6.16 - AMI-56624
+                {
+                    var myCustomsDocumentQueryService = new CustomsDocumentQueryService(dbContext);
+                    var myCustomsDocumentPointerUpdateService = new CustomsDocumentPointerUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                    var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+
+                    foreach (var customsDocument in this._LogitudeCommDecFile.CustomsDocuments)
+                    {
+                        if (customsDocument.Blocked != "1")
+                        {
+                            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(_MyDeclarationPM.Tenant);
+                            DocumentsFilingPM documentIn = documentsFilingQuery.GetSinglePM(customsDocument.COM_ID, _MyDeclarationPM.Tenant);
+                            if (documentIn != null)
+                            {
+                                CustomsDocumentsTicketPM customsDocumentsTicketPM = new CustomsDocumentsTicketPM();
+                                customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Insert;
+                                customsDocumentsTicketPM.Tenant = _MyDeclarationPM.Tenant;
+                                customsDocumentsTicketPM.DocumentsFilingId = customsDocument.COM_ID;
+                                customsDocumentsTicketPM.DocumentTypeCode = customsDocument.DocumentTypeCode;
+                                myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
+
+                                CustomsDocumentPointerPM customsDocumentPointerPM = new CustomsDocumentPointerPM();
+                                customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Insert;
+
+                                // Create Document Pointer (every document pointer has a ticket)
+                                customsDocumentPointerPM.Tenant = _MyDeclarationPM.Tenant;
+                                customsDocumentPointerPM.CustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
+                                customsDocumentPointerPM.ParentEntityCode = "Declaration";
+                                customsDocumentPointerPM.ParentEntityId = _MyDeclarationPM.Id;
+                                if (customsDocument.Entname == "SI")
+                                {
+                                    customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
+                                    customsDocumentPointerPM.Child1EntityId = "1"; // customsDocument.Key_2;
+                                }
+                                if (customsDocument.Entname == "CI")
+                                {
+
+                                    customsDocumentPointerPM.Child2EntityCode = "SupplierInvoiceItem";
+                                    customsDocumentPointerPM.Child2EntityId = "1"; //customsDocument.Key_3;
+                                }
+                                customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
+                                myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
+
+                                var myDocumentId = myCustomsDocumentQueryService.GetSingle(customsDocument.COM_ID, true, false);
+                                if (myDocumentId == null)
+                                {
+                                    var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                                    CustomsDocumentPM customsDocumentPM = new CustomsDocumentPM();
+                                    customsDocumentPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                                    customsDocumentPM.DocumentsFilingId = customsDocument.COM_ID;
+                                    customsDocumentPM.DocumentTypeCode = customsDocument.DocumentTypeCode;
+                                    customsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
+                                    customsDocumentPM.Tenant = _MyDeclarationPM.Tenant;
+                                    foreach (CustomsDocumentMetaDataValuePM value in customsDocumentPM.CustomsDocumentMetaDataValues)
+                                    {
+                                        value.ChangeSetOp = ChangeSetOperation.Insert;
+                                    }
+                                    myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+                                }
                             }
                         }
                     }
                 }
-            }
 
             this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
             if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
@@ -649,80 +653,88 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
             }
 
-            _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
+                _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
 
-            if (this._MyDeclarationPM.ProcedureCurrentCode == "4000020")
-            {
-                this._MyDeclarationPM.ExcludeConsignment = true;
-            }
-
-            declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
-            if (this.IsProcedureCurrentCodeChanged) declarationUpdateService.IsProcedureCurrentCodeChanged = true;
-
-            this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
-            {
-                MyCourierMasterPM = _CourierMasterPM,
-                MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
-            };
-            declarationUpdateService.Update(this._MyDeclarationPM, true);
-
-
-            string defValueB = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _MyDeclarationPM.Tenant);
-
-            // if (!string.IsNullOrEmpty(defValueB) && defValueB == "B")
-            // {
-            AppendLogLine("update UpdateLOGITUDE_FILE");
-
-            var repo = new CFIFILEMRepository(_MyDeclarationPM.Tenant);
-            var res = repo.UpdateLOGITUDE_FILE(_MyDeclarationPM.Tenant, Convert.ToInt64(_MyDeclarationPM.CustomFileNo), _MyDeclarationPM.Id);
-            repo.SubmitChanges();
-            //  }
-
-            customFileNo = _MyDeclarationPM.CustomFileNo;
-            decId = _MyDeclarationPM.Id;
-            AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            string val = "";
-            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"]))
-            {
-                val = ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"].ToString();
-            }
-            if (val != "1")
-            {
-                if (this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments[0].ConsignmentPackages != null && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode == "VN") // moran 8.3.16 - AMI-55751 - if vehicle
+                if (this._MyDeclarationPM.ProcedureCurrentCode == "4000020")
                 {
-                    MyGenericResponseObj.Stage = "Send Declaration Request";
-                    string user = _MyDeclarationPM.CreatedByUserId;
-                    if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
-
-                    GenericRequestParams requestParams = new GenericRequestParams()
-                    {
-                        Tenant = _MyDeclarationPM.Tenant,
-                        LoggingUserId = user,
-                        AppicationId = _MyDeclarationPM.Id,
-                        InterfaceTypeCode = "2750",
-                        LoggingEntityId = _MyDeclarationPM.Id,
-                        LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                        LoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
-
-                        RequestName = "Declaration Request",
-                        ResponseName = "Declaration Response",
-                        RequestVIA = SendRequestVIA.WebServiceBatch,
-                    };
-
-                    SBQMessageService.
-                        CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
-
-                    AppendLogLine("Declaration Request:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    this._MyDeclarationPM.ExcludeConsignment = true;
                 }
+
+                declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
+                if (this.IsProcedureCurrentCodeChanged) declarationUpdateService.IsProcedureCurrentCodeChanged = true;
+                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
+                this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
+                {
+                    MyCourierMasterPM = _CourierMasterPM,
+                    MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
+                };
+                declarationUpdateService.Update(this._MyDeclarationPM, true);
+
+
+                string defValueB = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _MyDeclarationPM.Tenant);
+
+                // if (!string.IsNullOrEmpty(defValueB) && defValueB == "B")
+                // {
+                AppendLogLine("update UpdateLOGITUDE_FILE");
+
+                var repo = new CFIFILEMRepository(_MyDeclarationPM.Tenant);
+                var res = repo.UpdateLOGITUDE_FILE(_MyDeclarationPM.Tenant, Convert.ToInt64(_MyDeclarationPM.CustomFileNo), _MyDeclarationPM.Id);
+                repo.SubmitChanges();
+                //  }
+
+                customFileNo = _MyDeclarationPM.CustomFileNo;
+                decId = _MyDeclarationPM.Id;
+                AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                string val = "";
+                if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"]))
+                {
+                    val = ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"].ToString();
+                }
+                if (val != "1")
+                {
+                    if (this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments[0].ConsignmentPackages != null && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode == "VN") // moran 8.3.16 - AMI-55751 - if vehicle
+                    {
+                        MyGenericResponseObj.Stage = "Send Declaration Request";
+                        string user = _MyDeclarationPM.CreatedByUserId;
+                        if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
+
+                        GenericRequestParams requestParams = new GenericRequestParams()
+                        {
+                            Tenant = _MyDeclarationPM.Tenant,
+                            LoggingUserId = user,
+                            AppicationId = _MyDeclarationPM.Id,
+                            InterfaceTypeCode = "2750",
+                            LoggingEntityId = _MyDeclarationPM.Id,
+                            LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                            LoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+
+                            RequestName = "Declaration Request",
+                            ResponseName = "Declaration Response",
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                        };
+
+                        SBQMessageService.
+                            CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
+
+                        AppendLogLine("Declaration Request:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    }
+                }
+                else
+                {
+                    AppendLogLine("Declaration Request will not be Sent due to permission issues");
+                }
+                MyGenericResponseObj.Stage = "Done All ";
+                MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.Id;
+                MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+
+
             }
-            else
+            finally
             {
-                AppendLogLine("Declaration Request will not be Sent due to permission issues");
+                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
             }
-            MyGenericResponseObj.Stage = "Done All ";
-            MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.Id;
-            MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
-            MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+
         }
 
         private void CalcInternalTransitionSite()

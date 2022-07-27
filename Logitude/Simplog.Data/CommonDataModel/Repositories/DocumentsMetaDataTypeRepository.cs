@@ -42,8 +42,26 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return d;
         }
 
-        public DocumentsMetaDataType GetSingleDocumentsMetaDataTypeByCode(string code, int tenant)
+        public DocumentsMetaDataType GetSingleDocumentsMetaDataTypeByCode(string code, int tenant, bool fromCache = false)
         {
+
+            if (fromCache)
+            {
+
+                string entityKeyString = $"GetSingleDocumentsMetaDataTypeByCode({code},{tenant})";
+                DocumentsMetaDataType myres = CacheManager.GetOrInsertNewObject<DocumentsMetaDataType>(entityKeyString, () =>
+                {
+
+
+                    return (from a in context.DocumentsMetaDataTypes
+                            where a.Code == code && a.Tenant == tenant
+                            select a).FirstOrDefault();
+
+                }
+                );
+                return myres;
+            }
+
             DocumentsMetaDataType d = (from a in context.DocumentsMetaDataTypes
                                        where a.Code == code && a.Tenant == tenant
                                        select a).FirstOrDefault();
