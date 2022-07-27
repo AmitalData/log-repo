@@ -95,6 +95,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             iHousePM.IsCancelled = initializer.EntityPM.IsCancelled;
             iHousePM.CancelledDate = this.initializer.EntityPM.CancelledDate;
             iHousePM.IsOperationalClosed = this.initializer.EntityPM.IsOperationalClosed;
+            iHousePM.IsHouseUpdatedByMaster = true;
             iHousePM.OperationalClosedByUserId = this.initializer.EntityPM.OperationalClosedByUserId;
             iHousePM.OperationalCloseDate = this.initializer.EntityPM.OperationalCloseDate;
             iHousePM.FirstOperationalCloseDate = this.initializer.EntityPM.FirstOperationalCloseDate;

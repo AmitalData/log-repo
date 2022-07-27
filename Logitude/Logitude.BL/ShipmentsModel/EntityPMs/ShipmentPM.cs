@@ -263,6 +263,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MAWBStackNumber { get; set; }
 
         public bool IsOperationalClosed { get; set; }
+        public bool IsHouseUpdatedByMaster { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field1 { get; set; }
