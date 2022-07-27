@@ -436,7 +436,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<CustomAgentList> GetIQueryableEntityList(IQueryable<CustomAgent> iQueryable)
         {
-            //int Tenant = iQueryable.Select(s => s.Tenant).FirstOrDefault();
             IQueryable<CustomAgentList> result = (from a in iQueryable.Include("Card")
                                                   select new CustomAgentList()
                                                   {
@@ -460,7 +459,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                       CountryId = a.Card.CountryId,
                                                       CountryCode = a.Card.CountryCode,
                                                       CountryName = a.Card.CountryName,
-                                                      PaymentTermEnglishName = "",
                                                       ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
                                                       PaymentMethodCode = a.Card.SATPaymentMethodCode,
                                                       ExternalId2 = a.Card.ExternalId2,
@@ -484,6 +482,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                       Field8 = a.Field8,
                                                       Field9 = a.Field9,
                                                       Field10 = a.Field10,
+                                                      PaymentTermEnglishName = a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : null,
                                                   });
 
 

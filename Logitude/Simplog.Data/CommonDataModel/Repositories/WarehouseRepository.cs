@@ -28,7 +28,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Warehouse GetSingleWarehouse(string id,int tenant = 0)
         {
-            return (from a in context.Warehouses.Include("Card")
+            return (from a in context.Warehouses.Include("Card").Include("Card.PaymentTerm")
                     where a.Id == id
                     select a).FirstOrDefault();
         }
