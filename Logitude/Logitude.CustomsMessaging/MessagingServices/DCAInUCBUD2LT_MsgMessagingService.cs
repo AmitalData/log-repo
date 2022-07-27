@@ -252,7 +252,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                             var rabbitPublishService = new RabbitPublishService();
-                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode,8);
+                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode,5);
                         }
                         catch (Exception)
                         {
