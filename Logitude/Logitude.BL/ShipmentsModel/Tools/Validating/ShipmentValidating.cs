@@ -175,7 +175,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateConcurrencyGUID(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (!entityPM.IsUpdatedByChampAnalyzer)
+            if (!entityPM.IsUpdatedByChampAnalyzer && !entityPM.IsDocsKPIsUpdatedFromWR)
             {
                 if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
                 {

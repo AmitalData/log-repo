@@ -229,7 +229,7 @@ namespace CommunicationWorkerRole
             ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
             shipmentPM.IsPODReceived = isPODReceived;
             shipmentPM.PODReceivedDate = podReceivedDate;
-            shipmentPM.IsPODUpdatedFromWR = true;
+            shipmentPM.IsDocsKPIsUpdatedFromWR = true;
             ShipmentService shipmentService = new ShipmentService(shipmentRepository.context, shipmentPM, pODReceivedBy.Email);
             shipmentService.Update(true);
         }

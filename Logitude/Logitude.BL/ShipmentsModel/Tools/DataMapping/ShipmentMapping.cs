@@ -537,8 +537,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.PrivateLabelIncludePickup = entityPM.PrivateLabelIncludePickup;
             entityPoco.PrivateLabelIncludeDelivery = entityPM.PrivateLabelIncludeDelivery;
             entityPoco.RequestedFlightDate = entityPM.RequestedFlightDate;
-            entityPoco.IsPODReceived = entityPM.IsPODReceived;
-            entityPoco.PODReceivedDate = entityPM.PODReceivedDate;
+            //entityPoco.IsPODReceived = entityPM.IsPODReceived;
+            //entityPoco.PODReceivedDate = entityPM.PODReceivedDate;
             entityPoco.HasUnassignedData = entityPM.HasUnassignedData;
             entityPoco.IsShipmentOrder = entityPM.IsShipmentOrder;
             entityPoco.FirstPickupFullAddress = entityPM.FirstPickupFullAddress;
