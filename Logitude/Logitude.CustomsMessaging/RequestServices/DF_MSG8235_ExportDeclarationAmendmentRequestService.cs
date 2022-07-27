@@ -817,6 +817,24 @@ namespace Logitude.CustomsMessaging.RequestServices
                     declarationDMExtensionsAdditionalDocumentList.Add(declarationDMExtensionsAdditionalDocument);
                 }
             }
+
+            if(isExportClose || declarationPM.IsExportClosed)
+            {
+                var closingDataDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declarationPM.Id, ParentEntityCode = "ExportDeclarationClosingData" }, declarationPM.Tenant);
+
+                foreach (var closingDataDocumentPM in closingDataDocumentPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(closingDataDocumentPM.CustomsDocId))
+                    {
+                        var declarationDMExtensionsAdditionalDocument = new DeclarationAdditionalDocument();
+                        declarationDMExtensionsAdditionalDocument.DMExtensions = new DeclarationAdditionalDocumentDMExtensions();
+                        declarationDMExtensionsAdditionalDocument.DMExtensions.ExternalAttachmentID = new ExternalAttachmentIDType();
+                        declarationDMExtensionsAdditionalDocument.DMExtensions.ExternalAttachmentID.Value = closingDataDocumentPM.ExternalAttachmentId;
+
+                        declarationDMExtensionsAdditionalDocumentList.Add(declarationDMExtensionsAdditionalDocument);
+                    }
+                }
+            }
             return declarationDMExtensionsAdditionalDocumentList.ToArray();
         }
 

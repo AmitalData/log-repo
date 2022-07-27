@@ -247,12 +247,32 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.EntityPM.IsDirty = true;
         }
     }
-    
+
+    ViewDocumentsComponent() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.DecPM;
+        //windowArgs.ObjectTableName = "Customs.DeclarationCancellation";
+        windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
+        windowArgs.EntityParentPM = "ExportDeclarationClosingData";
+        //    windowArgs.SkipCtor = this.SkipCtor;
+        windowArgs.IsFromStandAloneScreen = true;
+        var windowTitle = "Customs.Declaration.TH.Documents";
+
+        var logWindow = new LogitudeWindow();
+        logWindow.IsHideHeader = true;
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        //logWindow.WindowClosed.subscribe(($event: any) => this.SkipCtor = true);
+        logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+    }
 
     SendButtonClicked(event: CustomSendOptionsArgs) {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-            var msg = " שדה תאריך טעינה שדה חובה";
+            var msg = " שדה תםריך טעינה שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
