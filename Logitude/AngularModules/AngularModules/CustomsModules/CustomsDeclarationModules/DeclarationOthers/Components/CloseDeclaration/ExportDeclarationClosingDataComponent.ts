@@ -90,6 +90,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if (id != null) {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
+                
                 this.EntityPM = response.Result;
 
                 if(this.EntityPM)
@@ -106,6 +107,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.FinalSecondCargoId = '';
                     this.FinalThirdCargoId = '';
                 }
+                
+               
+                
 
                 /*this.EntityPM = new ExportDeclarationClosingDataPM();
                 this.EntityPM.DeclarationId = id;
@@ -205,7 +209,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         }
     }
 
-    get FinalCargoTypeCode() { return this.EntityPM ? this.EntityPM.FinalCargoTypeCode : null; }
+    get FinalCargoTypeCode() { 
+        if(AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode) && this.DecPM.Direction=='E' && this.DecPM.TransportModeId=='A'  ){
+               return "1"
+         }
+        return this.EntityPM ? this.EntityPM.FinalCargoTypeCode : null; }
     set FinalCargoTypeCode(value: string) {
         if (this.EntityPM.FinalCargoTypeCode != value) {
             this.EntityPM.FinalCargoTypeCode = value;
@@ -213,8 +221,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         }
     }
 
-    get FinalManifestNumber() { return this.EntityPM ? this.EntityPM.FinalManifestNumber : null; }
+    get FinalManifestNumber() { 
+        if(AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction=='E' && this.DecPM.TransportModeId=='A' && !AppTool.IsNullOrEmpty(this.EntityPM.MAIN_AWB) ){
+           return  this.EntityPM ? this.EntityPM.MAIN_AWB: null;
+        }
+        return this.EntityPM ? this.EntityPM.FinalManifestNumber : null; }
     set FinalManifestNumber(value: string) {
+        
         if (this.EntityPM.FinalManifestNumber != value) {
             this.EntityPM.FinalManifestNumber = value;
             this.EntityPM.IsDirty = true;
@@ -234,7 +247,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.EntityPM.IsDirty = true;
         }
     }
-
+    
 
     SendButtonClicked(event: CustomSendOptionsArgs) {
 
