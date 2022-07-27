@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "8b78064a70ec7d8014d56b1e914960b7";
+		public const string HashString = "46f469d81a49f0b094755f979f3f4f3c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2093,6 +2093,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralONoDetailsForActualFreightAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NoDetailsForActualFreightAmount", DefaultText = "Not have amount Actual freight Actual details for supplier",LocalDefaultText = @"אין פרטי מחיר הובלה בפועל ליצואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralODeclarationStatClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeclarationStatClosed", DefaultText = "Declaration closed with closed status",LocalDefaultText = @"הצהרה נסגרה עם סטאטוס סגור", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsReleaseGoodsOCasualSupplierName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ReleaseGoods.O.CasualSupplierName", DefaultText = "CasualSupplierName",LocalDefaultText = @"ספק", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

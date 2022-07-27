@@ -143,10 +143,11 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             
             return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password, 
                 RequestedHeartbeat = TimeSpan.FromSeconds(300),
-                
+                RequestedConnectionTimeout = new TimeSpan(0, 0, 60)
+
             });
         }
-        public static ConnectionFactory GetConnectionFactory(bool tryFromAppSettings)
+        public static ConnectionFactory GetConnectionFactory(bool tryFromAppSettings=true)
         {
             //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);

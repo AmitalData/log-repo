@@ -333,7 +333,18 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return currentObjectTables.Concat(zeroObjectTables).AsQueryable<ObjectTablePM>();
         }
+
         public static List<ObjectTablePM> GetObjectTablesWithTenantZero(int tenant)
+        {
+            string entityKeyString = $"GetObjectTablesWithTenantZero({tenant})";
+            List<ObjectTablePM> myres = CacheManager.GetOrInsertNewObject<List<ObjectTablePM>>(entityKeyString, () => {
+
+                
+                return GetObjectTablesWithTenantZeroBadCache(tenant);
+            });
+            return myres;
+        }
+        static List<ObjectTablePM> GetObjectTablesWithTenantZeroBadCache(int tenant)
         {
             
             string listName = "tenantzerotextobjecttablepms";
