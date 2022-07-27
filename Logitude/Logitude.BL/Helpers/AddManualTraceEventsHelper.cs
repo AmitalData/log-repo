@@ -119,6 +119,7 @@ namespace Logitude.BL.Helpers
                 if (shipmentPM != null && !args.IsAutomation)
                 {
                     ShipmentService shipmentService = new ShipmentService(ShipmentsContext.GetContext(tenant), shipmentPM, SecurityUtility.GetAuthenticatedUser(tenant));
+                    shipmentService.isFromEventTrace = true;
                     shipmentService.Update();
                 }
             }

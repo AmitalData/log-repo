@@ -66,7 +66,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.allEntityStatuses = entityStatusRepository.GetEntityStatusByTenantAndObjectTableId(tenant, objectTableId).ToList();
         }
 
-        public void BeginTracing()
+        public void BeginTracing(bool isEventAddedManually = false)
         {
             if (!entityPM.IsHybrid)
             {
@@ -246,7 +246,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.TraceAccruals();
                 this.TraceBookingArrangement();
                 this.TraceFollowUpDates();
-                this.TracePODReceived();
+                if (!isEventAddedManually) this.TracePODReceived();
             }
         }
 
