@@ -288,7 +288,7 @@ export class CustomsDocumentsComponent
             this.CustomsDocumentsTicketViewModels = [];
         }
         //
-        if (this.ParentEntityCode_args == "DeclarationCancellation" || this.ParentEntityCode_args == "ExportDeclarationClosingData") {
+        if (this.ParentEntityCode_args == "DeclarationCancellation") {
             if (this.reload_cancelDoc && !this.RefreshDocsScreen) {
                 this.reload_cancelDoc = false; return;
             }
@@ -297,11 +297,13 @@ export class CustomsDocumentsComponent
         }
     
 
-     //  if (!this.DontClear) {
-            if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
+      
+        if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
+            if (this.ParentEntityCode_args != "ExportDeclarationClosingData" || !this.DontClear) {
                 this.CustomsDocumentsTicketViewModels = [];
                 this.StaticCustomsDocumentsTicketViewModels = [];
-                }
+            }
+        }
                 for (var i = 0; i < tickets.length; i++) {
                     var customsDocumentsTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(tickets[i], this.MetadataValues, false, this.IsDisplayOnly,
                         this.EntityPM, this.ObjectTableName, this.iCustomsDocumentsController);
@@ -309,7 +311,6 @@ export class CustomsDocumentsComponent
                     this.CustomsDocumentsTicketViewModels.push(customsDocumentsTicketViewModel);
                     this.StaticCustomsDocumentsTicketViewModels.push(customsDocumentsTicketViewModel);
                 }
-           // }
 
 
         
