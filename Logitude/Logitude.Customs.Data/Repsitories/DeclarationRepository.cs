@@ -969,7 +969,23 @@ namespace Logitude.Customs.Data.Repsitories
             return res2;
         }
 
-       
+        public string GetHatraDateForDecId(string decId, int tenant)
+        {
+            var HatraDateQuery = (from a in context.Declarations
+                                  where a.Id == decId && a.Tenant == tenant
+                                  select a.HatraDate);
+            return HatraDateQuery.FirstOrDefault().ToString();
+        }
+
+        public List<string> GetDeclarationsByCourierHAWBsExpectDecWithHatraDate(List<string> courierHAWBs, int tenant)
+        {
+
+            var q = (from a in context.Declarations
+                     where courierHAWBs.Contains(a.CourierHAWB)
+                     where a.Tenant == tenant && a.HatraDate == null
+                     select a.Id);
+            return q.ToList();
+        }
 
 
         public DeclarationConsignments GetDeclarationConsignment(string exportFile)
@@ -1052,23 +1068,17 @@ namespace Logitude.Customs.Data.Repsitories
         public string Id { get; set; }
     }
 
-        public string GetHatraDateForDecId(string decId, int tenant)
-        {
-            var HatraDateQuery = (from a in context.Declarations
-                                  where a.Id == decId && a.Tenant == tenant
-                                  select a.HatraDate);
-            return HatraDateQuery.FirstOrDefault().ToString();
-        }
+    public class ConsignmentPackagesShort
+    {
+        public string PackageTypeCode { get; set; }
+        public string DeclarationId { get; set; }
+        public int Quantity { get; set; }
+    }
 
-        public List<string> GetDeclarationsByCourierHAWBsExpectDecWithHatraDate(List<string> courierHAWBs, int tenant)
-        {
-
-            var q = (from a in context.Declarations
-                     where courierHAWBs.Contains(a.CourierHAWB)
-                     where a.Tenant == tenant && a.HatraDate == null
-                     select a.Id);
-            return q.ToList();
-        }
+    public class DeclarationConsignments
+    {
+        public List<ConsignmentPackagesShort> ConsignmentPackages { get; set; }
+        public Consignment Consignment { get; set; }
     }
 
 

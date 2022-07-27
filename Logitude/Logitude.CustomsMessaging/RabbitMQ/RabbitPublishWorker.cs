@@ -202,7 +202,7 @@ InterfaceTypeCode: rabbitQueue.InterfaceTypeCode,
 
                 }
 
-                var factory = RabbitmqHelper.GetConnectionFactory();
+                var factory = RabbitmqHelper.GetConnectionFactory(true);
                 _connection = factory.CreateConnection();
 
             }

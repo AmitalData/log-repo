@@ -291,10 +291,6 @@
       <Project>{89132340-6f21-4ce1-8de4-1ca45e2cd9f3}</Project>
       <Name>Logitude.Customs.Def</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logitude.CustomsMessaging\Logitude.CustomsMessaging.csproj">
-      <Project>{7994d6f2-00a7-4c0d-a7d3-fd7d5304b665}</Project>
-      <Name>Logitude.CustomsMessaging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>

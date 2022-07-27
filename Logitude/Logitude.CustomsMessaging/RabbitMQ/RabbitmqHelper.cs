@@ -147,7 +147,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
 
             });
         }
-        public static ConnectionFactory GetConnectionFactory(bool tryFromAppSettings)
+        public static ConnectionFactory GetConnectionFactory(bool tryFromAppSettings=true)
         {
             //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);

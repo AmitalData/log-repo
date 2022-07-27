@@ -169,8 +169,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             string InterfaceTypeCode = "uw2l";
                             String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(tenant);
 
-                            //var rabbitPublishService = new RabbitPublishService();
-                            RabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, 9);
+                            var rabbitPublishService = new RabbitPublishService();
+                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, 9);
 
                         }
                         catch (System.Exception)
