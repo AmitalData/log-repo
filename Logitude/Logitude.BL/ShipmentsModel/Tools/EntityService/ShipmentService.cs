@@ -114,6 +114,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ComputingPartnerTableRepository computingPartnerTableRepository;
         private ComputingPartnerTranslationRepository computingPartnerTranslationRepository;
         public ShipmentDocsField ShipmentDocsFieldFromWorkerRole;
+        public bool isFromEventTrace;
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
             UpdateByEmail = serviceContextUser;
@@ -486,7 +487,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
-                        shipmentTracing.BeginTracing();
+                        shipmentTracing.BeginTracing(isFromEventTrace);
                         isEntityStatusUpdated = oldEntityStatusId != entityPM.StatusId ? true : false;
                     }
 
