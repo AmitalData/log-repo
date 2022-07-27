@@ -244,7 +244,7 @@
                 <table>
                     <tr style="padding-top: 40px;">
                         <td style="width: 70%;">
-                            <button class="Button" (click)="ViewDocumentsComponent()" style="margin-right: 10px; width: 57px;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
+                            <button class="Button" (click)="ViewDocumentsComponent()" [disabled]="DeclarationIsClosed" style="margin-right: 10px; width: 57px;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
                         </td>
                         <td>
                             <table>
