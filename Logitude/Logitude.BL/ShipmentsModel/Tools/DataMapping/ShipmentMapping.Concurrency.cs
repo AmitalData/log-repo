@@ -45,10 +45,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     {
                         MapConcurrencyFields_OCINS(entityPM, entityPoco, entityMasterData);
                     }
+
                     else if (entityPM.IsUpdatedVizionAnalyzer)
                     {
                         MapConcurrencyFields_VZN(entityPM, entityPoco, entityMasterData);
                     }
+
+                    if (entityPM.IsDocsKPIsUpdatedFromWR)
+                    {
+                        MapConcurrencyFields_DocsIn(entityPM, entityPoco, entityMasterData);
+                    }
+
                     else
                     {
                         MapConcurrencyFields_OnEdited(entityPM, entityPoco, entityMasterData);
@@ -80,7 +87,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 }
             }
         }
-
         private static void MapConcurrencyFields_Champ(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
         {
             entityPoco.IsFSRSent = entityPM.IsFSRSent;
@@ -311,6 +317,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.OnForwardingETA = GetConcurrencyFieldValue_Date(entityPM.OnForwardingETA_Original, entityPM.OnForwardingETA, entityPoco.OnForwardingETA);
                 entityPoco.OnForwardingETD = GetConcurrencyFieldValue_Date(entityPM.OnForwardingETD_Original, entityPM.OnForwardingETD, entityPoco.OnForwardingETD);
             }
+        }
+        private static void MapConcurrencyFields_DocsIn(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
+        {
+            entityPoco.IsPODReceived = entityPM.IsPODReceived;
+            entityPoco.PODReceivedDate = entityPM.PODReceivedDate;
         }
         private static void MapCalculatedFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
         {
