@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Logitude.CustomsMessaging.RabbitMQ
@@ -13,7 +14,8 @@ namespace Logitude.CustomsMessaging.RabbitMQ
     public class RabbitPublishService
     {
 
-        public void Publish(byte[] message, string communicationLogId,
+        static Semaphore _SemaphoreObject = new Semaphore(initialCount: 10, maximumCount: 10, name: "RabbitPublishService");
+        public  bool Publish(byte[] message, string communicationLogId,
     string InterfaceTypeCode,
     string rabbitMQCode, int messagePriority)
         {
@@ -35,61 +37,107 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             {
                 messagePriority = 9;
             }
+
+
+
             //var args = new Dictionary<string, object>();
             bool usePooledRabbitMQPublisher = !String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["RabbitMQPublisherUsePooled"]);
             if (usePooledRabbitMQPublisher)
             {
-                
-                var channel = PooledRabbitMQPublisher.Instance.Get();
-                bool haveExc=false;
-                try
+                if (true)
                 {
-                    BasicPublish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, messagePriority, channel);
-                    
-                    Logger.LogMe($"PooledRabbitMQPublisher:{PooledRabbitMQPolicy.GetCounter()}", false, rabbitMQCode);
-                }
-                catch (Exception ex)
-                {
-                    haveExc = true;
-                    try
+                    //SingletonRabbitMQPublisher.Instance
+                    //    .PoolPublish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, messagePriority);
+                    RabbitPublishWorker.DoOne(new RabbitQueue()
                     {
-                        
-                        channel?.Dispose();
-                        
-                    }
-                    catch (Exception)
-                    {
+                        message = message,
+                        communicationLogId = communicationLogId,
+                        InterfaceTypeCode = InterfaceTypeCode,
+                        rabbitMQCode = rabbitMQCode,
+                        messagePriority = messagePriority
+                    });
+                    Thread.Sleep(50);
 
-                        ///throw;
-                    }
-                    throw ex;
                 }
-                finally
+                else
                 {
-                    if (!haveExc)
-                    {
-                        PooledRabbitMQPublisher.Instance.Return(channel);
-                    }
-                    
+                    PoolPublish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, messagePriority);
                 }
+
+
             }
             else
             {
-                var factory = RabbitmqHelper.GetConnectionFactory(true);
-
-                using (var connection = factory.CreateConnection())
-                using (var channel = connection.CreateModel())
+                //bool isSignalled = _SemaphoreObject.WaitOne(TimeSpan.FromSeconds(30));
+                //if (!isSignalled)
+                //{
+                //    throw new Exception("RabbitPublishService.semaphoreObject.WaitOne 10 sec");
+                //}
+                try
                 {
-                    BasicPublish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, messagePriority, channel);
-                    Logger.LogMe($"regelarRabbitMQPublisher", false, rabbitMQCode);
+                    var factory = RabbitmqHelper.GetConnectionFactory(true);
+
+                    using (var connection = factory.CreateConnection())
+                    using (var channel = connection.CreateModel())
+                    {
+                        BasicPublish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, messagePriority, channel);
+                        Logger.LogMe($"regelarRabbitMQPublisher", false, rabbitMQCode);
+                    }
+                    Thread.Sleep(100);//better slowly dispose connection than crash!!
+                }
+                finally
+                {
+                    //_SemaphoreObject.Release();
+                }
+            }
+            return true;
+
+        }
+
+        private static void PoolPublish(byte[] message, string communicationLogId, string InterfaceTypeCode, string rabbitMQCode, int messagePriority)
+        {
+            bool pool = true;
+            IModel channel = null;
+            channel = PooledRabbitMQPublisher.Instance.Get();
+
+            //var 
+            bool haveExc = false;
+            try
+            {
+                BasicPublish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, messagePriority, channel);
+
+                Logger.LogMe($"PooledRabbitMQPublisher:{PooledRabbitMQPolicy.GetCounter()}", false, rabbitMQCode);
+            }
+            catch (Exception ex)
+            {
+                haveExc = true;
+                try
+                {
+
+                    channel?.Dispose();
+
+                }
+                catch (Exception)
+                {
+
+                    ///throw;
+                }
+                throw ex;
+            }
+            finally
+            {
+                //if (!haveExc)
+                {
+                    PooledRabbitMQPublisher.Instance.Return(channel);
+
                 }
 
             }
         }
 
-        private static void BasicPublish(byte[] message, string communicationLogId, string InterfaceTypeCode, string rabbitMQCode, int messagePriority, IModel channel)
+        public static void BasicPublish(byte[] message, string communicationLogId, string InterfaceTypeCode, string rabbitMQCode, int messagePriority, IModel channel)
         {
-            channel.BasicQos(0, 5, true);
+            //channel.BasicQos(0, 5, true);
 
 
             RabbitmqHelper.DeclareQueue(channel, rabbitMQCode, true);
@@ -106,14 +154,17 @@ namespace Logitude.CustomsMessaging.RabbitMQ
 
 
             channel.BasicPublish(exchange: "",
+                mandatory: false,
                                          routingKey: rabbitMQCode,
                                          basicProperties: prop,
                                          body: message);
+
+
             Debug.WriteLine($"RABBITMQ.BasicPublish {rabbitMQCode}");
         }
 
-        private void PublishOld(byte[] message, string communicationLogId, 
-            string InterfaceTypeCode, 
+        private void PublishOld(byte[] message, string communicationLogId,
+            string InterfaceTypeCode,
             string rabbitMQCode, int messagePriority)
         {
 
@@ -136,7 +187,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             }
             var args = new Dictionary<string, object>();
 
-            
+
             var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: true);
 
             using (var connection = factory.CreateConnection())
@@ -144,10 +195,10 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             {
                 channel.BasicQos(0, 5, true);
 
-            
+
                 RabbitmqHelper.DeclareQueue(channel, rabbitMQCode, true);
 
-                    
+
                 var header = new Dictionary<string, object>();
                 header.Add("InterfaceTypeCode", InterfaceTypeCode);
                 var prop = channel.CreateBasicProperties();
@@ -156,18 +207,18 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                 prop.DeliveryMode = 2; //persistent
                 prop.Headers = header;
                 prop.Priority = (byte)messagePriority;
-                
+
 
                 channel.BasicPublish(exchange: "",
                                              routingKey: rabbitMQCode,
                                              basicProperties: prop,
                                              body: message);
-                Debug.WriteLine($"RABBITMQ.BasicPublish {  rabbitMQCode }");
+                Debug.WriteLine($"RABBITMQ.BasicPublish {rabbitMQCode}");
 
             }
         }
 
 
-        
+
     }
 }
