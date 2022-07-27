@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "1c74a6cbbdb43986de7c87fb02f2a247";
+		public const string HashString = "fc3c9835ab295fec54ee9278cb5b606f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -19627,6 +19627,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOChangeCargoId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangeCargoId", DefaultText = "Changed carge ID on save will be disconnected",LocalDefaultText = @"שונו מזהה המטען בשמירה יבוצע ניתוק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationODocumentAndDocumentWithDifferentCustomsReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentAndDocumentWithDifferentCustomsReference", DefaultText = "A document and a document with a different customs reference",LocalDefaultText = @"לא ניתן לקשר מסמך עם סימוכין מכס שונה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONoDeclarationWithTransportTypeSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoDeclarationWithTransportTypeSelected", DefaultText = "No declaration with transport type selected",LocalDefaultText = @"אין הצהרה עם סוג הובלה נבחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
