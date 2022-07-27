@@ -244,6 +244,7 @@
     <Compile Include="Communications.cs" />
     <Compile Include="Contracts\IUpdateOpenDeclarationInCourierMasterService.cs" />
     <Compile Include="FTP\SFTPDeleteTempFilesService.cs" />
+    <Compile Include="Helpers\SqlBulkInsert.cs" />
     <Compile Include="KafkaConfigurations\KakaMessageTypes.cs" />
     <Compile Include="ContainerAccessor.cs" />
     <Compile Include="Contracts\GenericResponse.cs">

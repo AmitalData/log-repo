@@ -629,14 +629,14 @@ namespace AmitalCustomsWindowsService.Tester
             // sendToolStripMenuItem
             // 
             this.sendToolStripMenuItem.Name = "sendToolStripMenuItem";
-            this.sendToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.sendToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sendToolStripMenuItem.Text = "Send";
             this.sendToolStripMenuItem.Click += new System.EventHandler(this.sendToolStripMenuItem_Click);
             // 
             // recivedToolStripMenuItem
             // 
             this.recivedToolStripMenuItem.Name = "recivedToolStripMenuItem";
-            this.recivedToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.recivedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.recivedToolStripMenuItem.Text = "Recived";
             this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
             // 
@@ -732,7 +732,6 @@ namespace AmitalCustomsWindowsService.Tester
             this._TBID.Name = "_TBID";
             this._TBID.Size = new System.Drawing.Size(281, 20);
             this._TBID.TabIndex = 6;
-            this._TBID.TextChanged += new System.EventHandler(this._TBID_TextChanged);
             // 
             // label3
             // 
@@ -772,7 +771,6 @@ namespace AmitalCustomsWindowsService.Tester
             this._CBInterfaceID.Name = "_CBInterfaceID";
             this._CBInterfaceID.Size = new System.Drawing.Size(125, 21);
             this._CBInterfaceID.TabIndex = 3;
-            this._CBInterfaceID.SelectedIndexChanged += new System.EventHandler(this._CBInterfaceID_SelectedIndexChanged);
             // 
             // Interface
             // 
