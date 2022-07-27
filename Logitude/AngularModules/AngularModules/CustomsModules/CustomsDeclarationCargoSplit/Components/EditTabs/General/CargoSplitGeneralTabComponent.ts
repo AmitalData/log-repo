@@ -44,9 +44,7 @@ import { stringify } from 'querystring';
 import { DecCargoSplitConComponent } from '../DecCargoSplitConComponent';
 
 import { DeclarationListService } from 'Customs/Services/StandardLists/DeclarationListService';
-
-//import {DecCargoSplitConComponent} from '../DecCargoSplitConComponent';
-
+ 
 @Component({
 
     templateUrl: './CargoSplitGeneralTabComponent.html',
@@ -113,7 +111,10 @@ export class CargoSplitGeneralTabComponent
     public XrayItems: XRayAvailableItem[] = [];
 
     SelectedDateTime: Date;
-
+    
+    DirectionE:boolean = false;
+    DirectionI:boolean = true;
+    IsFromDeclaration:boolean = false;
 
     _InputParam: EntityArgs;
     msgDeleteScreen = TextCodeTranslator.Translate("Customs.DeclarationCargoSplit.O.ScreenDeleteIsContinue");
@@ -126,8 +127,8 @@ export class CargoSplitGeneralTabComponent
     private CurrentSession = SessionLocator.SelectedSession;
 
     constructor(private EntityResourceService: EntityResourceService) {
-        super();        
-        this.EntityPM = new DeclarationCargoSplitPM();
+        super();
+      this.EntityPM = new DeclarationCargoSplitPM();
         //this.ItemsList = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         //this.entityArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
@@ -168,6 +169,10 @@ export class CargoSplitGeneralTabComponent
 
     IsExportDeclaration: boolean = false;
     GetFileData() {
+        if(this.Direction=="E")     {
+            this.DirectionE = true;
+            this.DirectionI = false;
+        }
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) return;
         this.CurrentSession.StartBusyIndicator("")
         this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
@@ -182,7 +187,7 @@ export class CargoSplitGeneralTabComponent
                     this.NoConnectedConsignmentEnableField();
                 } else {
                     if (this._LastFetchDeclarationList.Direction == "E") {
-                        this.isExportConsignmentFetched = true;
+                        this.IsExportDeclaration = true;
                         this.AddItem();
                     }
                     this.CurrentSession.StartBusyIndicator("")
@@ -196,6 +201,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     Init() {
+        
         if(this.EntityPM.Direction == "E") 
         {
             this.IsImportDeclaration = false;
@@ -210,7 +216,7 @@ export class CargoSplitGeneralTabComponent
         //}
         //if (this.EntityPM == null)this.EntityPM = this.entityArgs.EntityPM;
         //this.ObjectTableName = this.entityArgs.ObjectTableName;
-
+        this.decCargoSplitCargoIdentifierModel= new DecCargoSplitCargoIdentifierModel(null);
     }
 
     SetDisplayFields(ResponseStatusCode: string) {
@@ -369,13 +375,14 @@ export class CargoSplitGeneralTabComponent
         this.RequestDate = DateTool.GetDateByDay(+0);
         this.EntityPM.IsDirty = false
     }
-
+ 
     SetWindowArgs(winArg: any) {
         if (winArg.CurrentEntity instanceof DeclarationCargoSplitPM) this.EntityPM = winArg.CurrentEntity;
         if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
             this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
             this.Direction = winArg.Direction;
+            this.IsFromDeclaration = true;
             this.RequestDate = DateTool.GetDateByDay(+0);
             this.Direction = winArg.Direction;
             //this.CustomFileNoTextChanged(winArg.CustomFileNo);
@@ -394,7 +401,7 @@ export class CargoSplitGeneralTabComponent
         if (this.IsDisplayOnly != true && winArg.IsDisplayOnly == true) {
             this.IsDisplayOnly = winArg.IsDisplayOnly;
         }
-
+    
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers)) {
             for (let conItem of this.EntityPM.DecCargoSplitCargoIdentifiers) {
                 var item = new DecCargoSplitCargoIdentifierModel(conItem);
@@ -492,11 +499,26 @@ export class CargoSplitGeneralTabComponent
         this.PrevTransportmodeId = this.TransportmodeId;
         if (this.TransportmodeId != value) {
             this.TransportmodeId = value;
+            if(this.TransportmodeId=="A"){
+                this.isTransportO = false;
+                this.isTransportL = false;
+                this.isTransportA = true;
+            }
+            else if(this.TransportmodeId=="O"){
+                this.isTransportO = true;
+                this.isTransportL = false;
+                this.isTransportA = false;
+            }
+            else{
+                this.isTransportO = false;
+                this.isTransportL = true;
+                this.isTransportA = false;
+            }
         }
         if (this.EntityPM.IsDirty) {
-            this.isTransportO = false;
-            this.isTransportL = false;
-            this.isTransportA = false;
+            // this.isTransportO = false;
+            // this.isTransportL = false;
+            // this.isTransportA = false;
             if (this.PrevTransportmodeId != null) {
                 let confirmWindow = new ConfirmWindow();
                 confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.RecallClientsForCutoms");
@@ -510,7 +532,6 @@ export class CargoSplitGeneralTabComponent
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     // this.TransportmodeId = value;
                     confirmWindow.Yes ? this.DeleteValueScreen() : this.TransportmodeId = this.PrevTransportmodeId;
-
                     switch (this.TransportmodeId) {
                         case 'A':
                             this.isTransportA = true;
@@ -522,7 +543,7 @@ export class CargoSplitGeneralTabComponent
                             this.isTransportL = true;
                             break;
                         default:
-                            break;
+                            break; 
                     }
                 });
             }
@@ -547,6 +568,19 @@ export class CargoSplitGeneralTabComponent
 
     air; ocean; land;
     DirectionModeClicked(value: string) {
+        if(this.DirectionI){
+
+            this.DirectionI=false;
+            this.DirectionE= true;
+            this.isTransportA = false;
+            this.isTransportO = false;
+            this.isTransportL = false;
+        }
+        else{
+
+            this.DirectionE=false;
+            this.DirectionI= true;
+        }
         if (this.EntityPM.IsDirty) {            
             let confirmWindow = new ConfirmWindow();
             confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.RecallClientsForCutoms");
@@ -575,7 +609,7 @@ export class CargoSplitGeneralTabComponent
             this.SetDisable(value);
         }
 
-        this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent).RefreshTabs(this.IsExportDeclaration ? 'E' : 'I'))
+        this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent)?.RefreshTabs(this.IsExportDeclaration ? 'E' : 'I'))
 
 
     }
@@ -625,7 +659,7 @@ export class CargoSplitGeneralTabComponent
             this._LastFetchConsignmentPMList = null;
             this.NoConnectedConsignmentEnableField();
             this.AddTab(null);
-        }
+        } 
         this.EntityPM.IsDirty = false;
     }
     DeleteTabs(tab: LogTab) {
@@ -708,7 +742,7 @@ export class CargoSplitGeneralTabComponent
             }
         }
         this.TabIndex = (ArrayTool.Max(this.Tabs, "Code"));
-
+        this.EntityPM.Direction=this.DirectionE?"E":"I";
         var Tab: DecCargoSplitConPM = new DecCargoSplitConPM(this.EntityPM);
         Tab.DeclarationCargoSplitId = this.EntityPM.Id;
         Tab.Tenant = this.EntityPM.Tenant;
@@ -742,7 +776,7 @@ export class CargoSplitGeneralTabComponent
         this.Tabs.push(tab);
 
         // select the tab
-        this.SelectedTab = tab;
+        this.SelectedTab = tab; 
     }
 
     DeleteTab(tab: LogTab) {
@@ -799,7 +833,7 @@ export class CargoSplitGeneralTabComponent
                 //this.EntityPM.RemoveDecCargoSplitCon(tab.EntityPM);
                 //this.Tabs.splice(index, 1)
                 if (this.Tabs[index].ComponentReference != null) {
-                    this.Tabs[index].ComponentReference.RefreshTabs(direction);
+                    this.Tabs[index].ComponentReference?.RefreshTabs(direction);
                 }
             }
         }
@@ -863,19 +897,20 @@ export class CargoSplitGeneralTabComponent
                             this.MessageCustomsFileWindow(errorMessage);
                             return;
                         }
-                        if (this.EntityPM.IsDirty) {
+                       
+                        if (!this.IsFromDeclaration && this.IsNewEntity) {
                             if (this._LastFetchDeclarationList.Direction == "E" && this._LastFetchDeclarationList.TransportModeForExport =="A" && !this.isTransportA) {
-                                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
+                                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.NoDeclarationWithTransportTypeSelected");
                                 this.MessageCustomsFileWindow(errorMessage);
                                 return;
                             }
                             if (this._LastFetchDeclarationList.Direction == "E" && this._LastFetchDeclarationList.TransportModeForExport =="O" && !this.isTransportO) {
-                                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
+                                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.NoDeclarationWithTransportTypeSelected");
                                 this.MessageCustomsFileWindow(errorMessage);
                                 return;
                             } 
                             if (this._LastFetchDeclarationList.Direction == "E" && this._LastFetchDeclarationList.TransportModeForExport =="L" && !this.isTransportL) {
-                                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
+                                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.NoDeclarationWithTransportTypeSelected");
                                 this.MessageCustomsFileWindow(errorMessage);
                                 return;
                             }  
@@ -1240,12 +1275,14 @@ export class CargoSplitGeneralTabComponent
             if (item.includes("DeclarationCargoSplitId")) errors.splice(index, 1);
         });
         if (this.IsExportDeclaration) {
-            if (AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoTypeCode)) {
-                errors.push("מזהה מטען מפוצל- חובה להזין סוג מזהה מטען");
-            }
-            if (AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey1)) {
-                errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען רםשון");
-            }
+            if(this.EntityPM?.DecCargoSplitCargoIdentifiers.length>0){
+               if (AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoTypeCode)) {
+                   errors.push("מזהה מטען מפוצל- חובה להזין סוג מזהה מטען");
+               }
+               if (AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey1)) {
+                   errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען רםשון");
+               }
+           }
             errors.push.apply(errors, this.decCargoSplitCargoIdentifierModel.CheckRequired());
 
         }
@@ -1547,11 +1584,11 @@ export class XRayAvailableItem {
 }
 
 export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
-    public EntityPM: DecCargoSplitCargoIdentifierPM;
-
+    public EntityPMDecCargo: DecCargoSplitCargoIdentifierPM;
     constructor(line: DecCargoSplitCargoIdentifierPM) {
         super();
-        this.EntityPM = line;
+        this.EntityPMDecCargo = line? line : new DecCargoSplitCargoIdentifierPM(this.EntityPM);
+        
         if (this.CargoTypeCode != null) {
             this.ChangeCargoIdentifireType();
         }
@@ -1605,6 +1642,7 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
     public ThirdCargoIdPlaceholder: string = " ";
 
     ChangeCargoIdentifireType() {
+        
         var service = new CargoIdentifireTypeListService();
         service.getSingleFromCache(this.CargoTypeCode).subscribe((response: any) => {
             if (response != null) {
@@ -1618,24 +1656,24 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
     }
 
     //#region Properties
-    public get CargoTypeCode() { return this.EntityPM.CargoTypeCode; }
-    public set CargoTypeCode(newValue: string) { this.EntityPM.CargoTypeCode = newValue; }
+    public get CargoTypeCode() { return this.EntityPMDecCargo.CargoTypeCode; }
+    public set CargoTypeCode(newValue: string) { this.EntityPMDecCargo.CargoTypeCode = newValue; }
 
-    public get CargoIdentifierKey1() { return this.EntityPM.CargoIdentifierKey1; }
+    public get CargoIdentifierKey1() { return this.EntityPMDecCargo.CargoIdentifierKey1; }
     public set CargoIdentifierKey1(newValue: string) {
-        this.EntityPM.CargoIdentifierKey1 = newValue;
+        this.EntityPMDecCargo.CargoIdentifierKey1 = newValue;
         this.setRequired();
     }
 
-    public get CargoIdentifierKey2() { return this.EntityPM.CargoIdentifierKey2; }
+    public get CargoIdentifierKey2() { return this.EntityPMDecCargo.CargoIdentifierKey2; }
     public set CargoIdentifierKey2(newValue: string) {
-        this.EntityPM.CargoIdentifierKey2 = newValue;
+        this.EntityPMDecCargo.CargoIdentifierKey2 = newValue;
         this.setRequired();
     }
 
-    public get CargoIdentifierKey3() { return this.EntityPM.CargoIdentifierKey3; }
+    public get CargoIdentifierKey3() { return this.EntityPMDecCargo.CargoIdentifierKey3; }
     public set CargoIdentifierKey3(newValue: string) {
-        this.EntityPM.CargoIdentifierKey3 = newValue;
+        this.EntityPMDecCargo.CargoIdentifierKey3 = newValue;
         this.setRequired();
     }
 
