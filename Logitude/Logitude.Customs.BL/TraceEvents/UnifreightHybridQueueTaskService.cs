@@ -116,7 +116,9 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
 
-                FolderName = "ExternalTasksQueue",
+                FolderName = 
+                //"ExternalTasksQueue",
+                "ExportStorageStatus"
             };
           
 
@@ -145,7 +147,8 @@ namespace Logitude.Customs.BL.TraceEvents
 
             Communications.
                           SendCommunicationLogMessageToQueue(
-                          queueName: "externaltasksqueue" + _CommunicationModel.Tenant + 1,
+                          //queueName: "externaltasksqueue" + _CommunicationModel.Tenant + 1,
+                          queueName: "ExportStorageStatus".ToLower() + _CommunicationModel.Tenant + 1,
                           communicationLogId: communicationLogId,
                           tenant: _CommunicationsParams.Tenant,
                           queueParameters: null,
