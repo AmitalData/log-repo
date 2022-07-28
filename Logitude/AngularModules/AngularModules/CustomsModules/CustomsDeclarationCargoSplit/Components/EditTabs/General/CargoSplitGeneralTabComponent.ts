@@ -237,14 +237,18 @@ export class CargoSplitGeneralTabComponent
             this.UIProperties.SetEnabled("SecondCargoID", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ThirdCargoID", this.ObjectTableName, false);
             this.OKButtonEnabled = false;
-            if (this.ResponseStatusCode != "3") {
-                this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, false);
-                this.SendButtonEnabled = false;
-            }
-            else {
-                this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, true);
-                this.SendButtonEnabled = true;
-            }
+            // if (this.ResponseStatusCode != "3") {
+            this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, false);
+            //this.ObjectTableName = "Customs.DecCargoSplitCargoIdentifier"
+            //this.UIProperties.SetEnabled("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", false);
+
+            this.SendButtonEnabled = false;
+            // }
+           
+            // else {
+            //     this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, true);
+            //     this.SendButtonEnabled = true;
+            // }
         }
         else {
             this.UIProperties.SetEnabled("CustomFileNo", this.ObjectTableName, true);
