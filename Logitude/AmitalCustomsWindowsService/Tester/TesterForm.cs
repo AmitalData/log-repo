@@ -1217,8 +1217,8 @@ namespace AmitalCustomsWindowsService.Tester
             String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(1);
             rabbitMQCode = "itziktest_" + rabbitMQCode;
 
-            //var rabbitPublishService = new RabbitPublishService();
-            RabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
+            var rabbitPublishService = new RabbitPublishService();
+            rabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
 
 
 
