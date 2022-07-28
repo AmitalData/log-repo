@@ -1050,6 +1050,14 @@ namespace Logitude.Customs.Data.Repsitories
             
             return res;
         }
+        public string GetDeclarationByDeclarationNum(string decNumber,int tenant)
+        {
+            var query =(from a 
+                        in context.Declarations
+                        where a.DeclarationNumber == decNumber && a.Tenant== tenant
+                        select a.Id).FirstOrDefault();
+            return query;
+        }
     }
 
 

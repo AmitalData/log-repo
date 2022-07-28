@@ -2200,6 +2200,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.GetHatraDateForDecId(decId, tenant);
         }
+        public string GetDeclarationByDeclarationNum(string decNumber,int tenant)
+        {
+            return repository.GetDeclarationByDeclarationNum(decNumber, tenant);
+        }
 
     }
 }
