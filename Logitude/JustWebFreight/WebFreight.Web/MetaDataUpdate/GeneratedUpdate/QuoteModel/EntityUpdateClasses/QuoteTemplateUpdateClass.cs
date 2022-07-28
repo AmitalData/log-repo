@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateUpdateClass
    {  		
-		public const string HashString = "cccfd70e06a118f4f3ac7e3fe3b7f87d";
+		public const string HashString = "e0548af620f39f6f6a4b6f189623fda5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1423,6 +1423,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 		   Feature QuoteTemplateFeature_ENABLEDFORCUSTOMERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ENABLEDFORCUSTOMERS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.EnabledForCustomers", NameTextCodeDefaultText = @"Enabled For Customers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteTemplateObjectTable);
 
 		   Feature QuoteTemplateFeature_FROMLIBRARY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FROMLIBRARY", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.FromLibrary", NameTextCodeDefaultText = @"Add From Library" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteTemplateObjectTable);
+
+		   Feature QuoteTemplateFeature_SPLITCHARGEGROUP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SPLITCHARGEGROUP", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.SPLITCHARGEGROUP", NameTextCodeDefaultText = @"Split by Quote Charge Group" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteTemplateObjectTable);
 
    
 	    

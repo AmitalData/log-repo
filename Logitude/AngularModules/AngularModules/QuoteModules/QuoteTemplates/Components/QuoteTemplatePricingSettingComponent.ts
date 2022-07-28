@@ -83,7 +83,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         if (FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) this.ShowTotalPerContinerLink = true;
         if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) this.DisplayRegoinalTax = true;
 
-        this.CanSplitByQuoteCharge = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SCG")[0]? true : false;
+        this.CanSplitByQuoteCharge = FeatureLocator.HasFeaturePermession("QuoteTemplate", "SPLITCHARGEGROUP");
 
     }
 
