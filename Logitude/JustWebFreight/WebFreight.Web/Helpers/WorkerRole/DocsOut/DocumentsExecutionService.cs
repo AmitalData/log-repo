@@ -125,10 +125,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
 
                 DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
                 documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
-                if (!(childObjectTableName == "APInvoice" && string.IsNullOrWhiteSpace(exportDocumentArgs.EntityId))) 
-                {
-                    RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
-                }
+                RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();
             }
