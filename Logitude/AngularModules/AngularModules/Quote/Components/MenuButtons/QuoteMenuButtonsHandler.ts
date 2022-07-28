@@ -22,6 +22,7 @@ import {NewShipmentComponentArgs} from '../../../Shipment/Args';
 import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainService';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuoteDomainService} from '../../../Quote/Services/QuoteDomainService';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 export class QuoteMenuButtonsHandler {
     public EntityPM: QuotePM;
@@ -967,6 +968,36 @@ export class QuoteMenuButtonsHandler {
 
     private IsRunQuotation: boolean = false;
     private RunQuotationScreen() {
+        var isAmitalCloudEnvironment = this.CheckAmitalCloudEnviroment();
+        if (isAmitalCloudEnvironment) {
+            this.RunQuotationScreenCloud();
+        }
+        else {
+            this.RunQuotationScreenLogitude();
+        }
+    }
+
+    CheckAmitalCloudEnviroment() {
+        var amitalEnvironment = "amitalstorage";
+        var isAmitalCloudEnvironment = false;
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == amitalEnvironment) {
+            isAmitalCloudEnvironment = true;
+        }
+        return isAmitalCloudEnvironment;
+    }
+
+    RunQuotationScreenLogitude() {
+        if (this.EntityPM && this.EntityPM.IsDirty) {
+            this.Validate();
+            if (this.isValid) {
+                this.IsRunQuotation = true;
+                this.entityArgs.EditComponent.SaveChanges();
+            }
+        } else {
+            this.OpenQuotationWindow();
+        }
+    }
+    RunQuotationScreenCloud() {
         if (this.EntityPM.QuoteTypeCode == "A") {
             this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
             this.CheckUpdateQuantities();
