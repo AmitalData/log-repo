@@ -135,7 +135,15 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                 
             string token = AuthenticationUtil.GenerateToken();
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(itenant);
-            AuthenticationToken authentication = new AuthenticationToken() { Tenant= itenant, CreateDate = DateTime.Now, Email = contact.Email, Password = contact.Email, Token = token };
+            AuthenticationToken authentication = new AuthenticationToken()
+            {
+                Tenant = itenant,
+                CreateDate = DateTime.Now,
+                ExpirationDate = DateTime.Now.AddDays(1),
+                Email = contact.Email,
+                Password = contact.Email,
+                Token = token
+            };
             authenticationTokenRepository.Add(authentication);
                 
             authenticationTokenRepository.SubmitChanges();
