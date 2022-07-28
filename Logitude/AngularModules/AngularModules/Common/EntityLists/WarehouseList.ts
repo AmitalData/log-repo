@@ -66,5 +66,6 @@ export class WarehouseList {
 		Field8: string;
 		Field9: string;
 		Field10: string;
+		PaymentTermEnglishName: string;
 	
 }

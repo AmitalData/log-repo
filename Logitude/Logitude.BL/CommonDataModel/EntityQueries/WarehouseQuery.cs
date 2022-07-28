@@ -375,7 +375,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Field8 = a.Field8,
                                                     Field9 = a.Field9,
                                                     Field10 = a.Field10,
-
+                                                    PaymentTermEnglishName = a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : "",
                                                 });
 
 

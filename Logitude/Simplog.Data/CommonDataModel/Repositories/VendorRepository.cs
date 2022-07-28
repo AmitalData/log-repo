@@ -39,7 +39,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Vendor GetSingleVendor(string id, int tenant)
         {
-            return (from record in context.Vendors.Include("Card") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.Vendors.Include("Card").Include("Card.PaymentTerm") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
         public Vendor GetSingleVendorByCode(string code,int tenant)

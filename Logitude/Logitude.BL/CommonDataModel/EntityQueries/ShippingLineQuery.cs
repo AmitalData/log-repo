@@ -414,7 +414,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<ShippingLineList> GetIQueryableEntityList(IQueryable<ShippingLine> iQueryable)
         {
-            IQueryable<ShippingLineList> result = (from a in iQueryable.Include("Card").Include("ShippingAgent")
+            IQueryable<ShippingLineList> result = (from a in iQueryable.Include("Card").Include("ShippingAgent").Include("Card.PaymentTerm")
                                                    select   new ShippingLineList()
                                                    {
                                                        Code = a.Card.Code,
@@ -442,7 +442,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        CountryCode = a.Card.CountryCode,
                                                        CountryName = a.Card.CountryName,
                                                        ShippingAgentEnglishName = a.ShippingAgent != null ? (a.ShippingAgent.Card != null ? a.ShippingAgent.Card.EnglishName : "") : "",
-                                                       PaymentTermEnglishName = "",
                                                        ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
                                                        PaymentMethodCode = a.Card.SATPaymentMethodCode,
                                                        ExternalId2 = a.Card.ExternalId2,
@@ -463,6 +462,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                                        RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                        SATReceptorName = a.Card.SATCustomerName,
+                                                       PaymentTermEnglishName = a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : null,
                                                    });
 
 

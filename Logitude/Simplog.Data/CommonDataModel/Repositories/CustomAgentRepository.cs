@@ -37,7 +37,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
         public CustomAgent GetSingleCustomAgent(string id, int tenant)
         {
-            return (from record in context.CustomAgents.Include("Card") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.CustomAgents.Include("Card").Include("Card.PaymentTerm") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
         public CustomAgent GetSingleCustomAgentByCode(int tenant, string code)
         {

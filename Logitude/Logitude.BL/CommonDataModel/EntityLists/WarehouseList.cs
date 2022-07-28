@@ -68,5 +68,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string Field8 { get; set; }
         public string Field9 { get; set; }
         public string Field10 { get; set; }
+        public string PaymentTermEnglishName { get; set; }
     }
 }
