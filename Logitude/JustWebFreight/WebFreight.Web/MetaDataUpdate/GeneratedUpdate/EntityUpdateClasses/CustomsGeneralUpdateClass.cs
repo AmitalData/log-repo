@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "16fec2c50ce6f70cd3da20d896a43c01";
+		public const string HashString = "0adcc5d75283025aae0b0e9d405747cc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2097,6 +2097,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralORequiredFieldsOrAlert = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.RequiredFieldsOrAlert", DefaultText = "Required Fields Or Alert",LocalDefaultText = @"שדות חובה/התראה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsReleaseGoodsOCasualSupplierName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ReleaseGoods.O.CasualSupplierName", DefaultText = "CasualSupplierName",LocalDefaultText = @"ספק", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOHappinessConstraints = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.HappinessConstraints", DefaultText = "happiness constraint",LocalDefaultText = @"אילוץ אושר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
