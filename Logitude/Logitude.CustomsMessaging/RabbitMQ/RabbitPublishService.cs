@@ -68,7 +68,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             }
             else
             {
-<<<<<<<<< Temporary merge branch 1
+
                 //bool isSignalled = _SemaphoreObject.WaitOne(TimeSpan.FromSeconds(30));
                 //if (!isSignalled)
                 //{

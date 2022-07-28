@@ -320,7 +320,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                     AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
-
+                    Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
                     this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
                     {
                         MyCourierMasterPM = _CourierMasterPM,
