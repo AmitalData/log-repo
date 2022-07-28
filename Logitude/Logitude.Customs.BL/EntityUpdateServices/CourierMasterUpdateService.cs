@@ -38,7 +38,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class CourierMasterUpdateService
     {
-        private Boolean toSendTask = false;
+        public Boolean toSendTask = false;
         private Boolean toSetDeclarationChanged = false;
         private AmitalContext _AmitalContext;
 
@@ -736,7 +736,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return setDeclarationsList;
         }
 
-        private void OpenUnifreighTask(CourierMasterPM dirtyCourierMasterPM, string taskType, string status, bool raiseStatus, string xmlStatus)
+        public void OpenUnifreighTask(CourierMasterPM dirtyCourierMasterPM, string taskType, string status, bool raiseStatus, string xmlStatus)
         {
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;

@@ -136,10 +136,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
               ref string MoreParams,
               out string MessageOut, out string customFileNo, out string decId, out string courierMasterID)
         {
+            
             try
             {
                 Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = true;
-
                 _PBId = PBId;
                 _tenant = tenant;
                 customFileNo = "";
@@ -286,8 +286,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     AppendLogLine("Declaration Upsert Error :" + MessageOut + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                     return;
 
-                }
-                //Delete Supplier Invoice
+            }
+            //Delete Supplier Invoice
 
                 if (String.IsNullOrWhiteSpace(_LogitudeCommDecFile.Id))
                 {
@@ -320,7 +320,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                     AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
-                    Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
+
                     this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
                     {
                         MyCourierMasterPM = _CourierMasterPM,
@@ -332,18 +332,18 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
 
 
-                /////////////////////////////////////////////////////////////
-                _context = CustomContext.GetContext(_tenant);
-                MyGenericResponseObj.Stage = "GetSingle";
-                myQueryService = new DeclarationQueryService(_context);
-                this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeCommDecFile.Id, true, false);
-                if (this._MyDeclarationPM == null)
-                {
-                    AppendLogLine("Declaration Get Single Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
-                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                    throw new BusinessErrorException("LOGITUDE FILE is " + this._LogitudeCommDecFile.Id + " but not found");
-                }
-                AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+            /////////////////////////////////////////////////////////////
+            _context = CustomContext.GetContext(_tenant);
+            MyGenericResponseObj.Stage = "GetSingle";
+            myQueryService = new DeclarationQueryService(_context);
+            this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeCommDecFile.Id, true, false);
+            if (this._MyDeclarationPM == null)
+            {
+                AppendLogLine("Declaration Get Single Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                throw new BusinessErrorException("LOGITUDE FILE is " + this._LogitudeCommDecFile.Id + " but not found");
+            }
+            AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
                 this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 CheckMasterToUpdate(MoreParams, Curruser);
@@ -413,9 +413,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         //                    this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
                     }
 
-                    if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.CargoDescription)) this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
-                    //this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ManifestDate, "LogitudeCommDecFile.ManifestDate");
-                    if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime)) this._MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.CargoDescription)) this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
+                //this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ManifestDate, "LogitudeCommDecFile.ManifestDate");
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime)) this._MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
 
                     if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryId))
                     {
@@ -610,48 +610,48 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                 }
 
-                this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
-                if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
+            this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
+            if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
+            {
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                MyGenericResponseObj.Message = "customFile.LogitudeCustomsFile.Length !=1 !!!";
+            }
+            else
+            {
+                this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
+                if (_MyDeclarationPM.IsCourierDeclaration == true)
                 {
-                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                    MyGenericResponseObj.Message = "customFile.LogitudeCustomsFile.Length !=1 !!!";
-                }
-                else
-                {
-                    this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
-                    if (_MyDeclarationPM.IsCourierDeclaration == true)
+                    UpdateNoIdUnder150();
+                    CalcIsAutonomy();
+                    CalcProcedureCurrentCode();
+                    CalcInternalTransitionSite();
+                    myDeclarationUpsertService.UpdateTrucker();
+                    if (this.IsAutonomy)
                     {
-                        UpdateNoIdUnder150();
-                        CalcIsAutonomy();
-                        CalcProcedureCurrentCode();
-                        CalcInternalTransitionSite();
-                        myDeclarationUpsertService.UpdateTrucker();
-                        if (this.IsAutonomy)
-                        {
-                            UpdateDeclarationPending("901");
-                        }
-                        if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
-                        {
-                            currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
-                            if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        }
-                        if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ShopId != _LogitudeCommDecFile.shopId)
-                        {
-                            UpdateShop();
-                        }
-                        if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _LogitudeCommDecFile.LastMileServiceType)
-                        {
-                            currentDeclarationCourierStatusPM.LastMileServiceType = _LogitudeCommDecFile.LastMileServiceType;
-                            if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        }
-                        if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
-                        {
-                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                            _currentDeclarationCourierStatusPM = currentDeclarationCourierStatusPM;
-                        }
+                        UpdateDeclarationPending("901");
+                    }
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
+                    {
+                        currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
+                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ShopId != _LogitudeCommDecFile.shopId)
+                    {
+                        UpdateShop();
+                    }
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _LogitudeCommDecFile.LastMileServiceType)
+                    {
+                        currentDeclarationCourierStatusPM.LastMileServiceType = _LogitudeCommDecFile.LastMileServiceType;
+                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                        _currentDeclarationCourierStatusPM = currentDeclarationCourierStatusPM;
                     }
                 }
+            }
 
                 _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
 
@@ -662,7 +662,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                 declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
                 if (this.IsProcedureCurrentCodeChanged) declarationUpdateService.IsProcedureCurrentCodeChanged = true;
-
+                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
                 this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
                 {
                     MyCourierMasterPM = _CourierMasterPM,
@@ -727,11 +727,14 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.Id;
                 MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+
+
             }
             finally
             {
                 Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
             }
+
         }
 
         private void CalcInternalTransitionSite()
@@ -1362,7 +1365,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                     currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
                                 }
 
-                                if (_MyDeclarationPM.PaymentDate.HasValue)
+                                if(_MyDeclarationPM.PaymentDate.HasValue)
                                     currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
 
                                 if (prevVal != currvVal)

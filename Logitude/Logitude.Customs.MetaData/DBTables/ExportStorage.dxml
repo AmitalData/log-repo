@@ -11,7 +11,7 @@
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
-  </Column>
+  </Column> 
   <Column
     Name="Tenant"
     Type="int">

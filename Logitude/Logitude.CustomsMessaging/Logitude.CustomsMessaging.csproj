@@ -210,6 +210,7 @@
     <Compile Include="MessagingServices\DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
+    <Compile Include="MessagingServices\DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2715SendNow_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2715_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService.cs" />
@@ -427,6 +428,7 @@
     <Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\LG_NG_8410_LogisticActionRequestMessageResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendDelayForm_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchUpdateDeclarationCourierStatusMasterChanged_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCADPE_MsgResponseService.cs" />
     <Compile Include="ResponseServices\CreateCertificateForInvoiceItemsBatchUCB_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UpdateAllCertificateBatchUCB_MsgResponseService.cs" />
@@ -601,6 +603,7 @@
     <Compile Include="U2L\Sivug\SivugUpsertService.cs" />
     <Compile Include="UnifreightGateway\AnalyzeQueueMessageService.cs" />
     <Compile Include="UnifreightGateway\CacheManagerService.cs" />
+    <Compile Include="UnifreightGateway\CommMasterCourierService.cs" />
     <Compile Include="UnifreightGateway\CustomsRequestsSheetInProgressService.cs" />
     <Compile Include="UnifreightGateway\ExportCloudSSOService.cs" />
     <Compile Include="UnifreightGateway\InsertImportDeclarationService.cs" />

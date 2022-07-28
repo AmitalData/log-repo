@@ -249,8 +249,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
-                CustomsSettingQueryService settingService = new CustomsSettingQueryService(_MyDeclarationPM.Tenant);
-                CustomsSettingPM setting = settingService.GetSettingByTenantN(_MyDeclarationPM.Tenant);
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(ResolvedTenant());
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(ResolvedTenant());
                 this._MyDeclarationPM.MarkAsChanged = true; // moran 2.6.15 - Task 13803
 
                 MyGenericResponseObj.Stage = "Mapping";
@@ -339,7 +339,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CasualImporterCountry))
                             {
                                 string countryCode = "";
-                                if (_AmitalCustomsFile.CasualImporterCountry.Length > 2 && setting.IsConnectedToUniFreight)
+                                if (_AmitalCustomsFile.CasualImporterCountry.Length > 2 && setting != null && setting.IsConnectedToUniFreight)
                                 {
                                     countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _AmitalCustomsFile.CasualImporterCountry);
                                 }
@@ -561,7 +561,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     {
                         //this._MyDeclarationPM.Consignments[0].OriginCountryCode = _AmitalCustomsFile.OriginCountryCode;
                         string countryCode = "";
-                        if (_AmitalCustomsFile.OriginCountryCode.Length > 2 && setting.IsConnectedToUniFreight)
+                        if (_AmitalCustomsFile.OriginCountryCode.Length > 2 && setting != null  && setting.IsConnectedToUniFreight)
                         {
                             countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _AmitalCustomsFile.OriginCountryCode);
                         }
@@ -633,7 +633,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                         var packingType = new PackingTypeRepository(ResolvedTenant());
                         var myPackingType = packingType.GetSingle(_AmitalCustomsFile.PackageTypeCode);
-                        if (myPackingType == null && setting.IsConnectedToUniFreight)
+                        if (myPackingType == null && setting != null && setting.IsConnectedToUniFreight)
                         {
                             string PackageTypeCode = "";
                             PackageTypeCode = GetTranslationL2P("IIGC", "CTBPACKTYPE", _AmitalCustomsFile.PackageTypeCode);

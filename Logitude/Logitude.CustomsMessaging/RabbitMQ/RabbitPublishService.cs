@@ -15,7 +15,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
     {
 
         static Semaphore _SemaphoreObject = new Semaphore(initialCount: 10, maximumCount: 10, name: "RabbitPublishService");
-        public static bool Publish(byte[] message, string communicationLogId,
+        public  bool Publish(byte[] message, string communicationLogId,
     string InterfaceTypeCode,
     string rabbitMQCode, int messagePriority)
         {
@@ -68,9 +68,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             }
             else
             {
-
-                var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: true);
-
+<<<<<<<<< Temporary merge branch 1
                 //bool isSignalled = _SemaphoreObject.WaitOne(TimeSpan.FromSeconds(30));
                 //if (!isSignalled)
                 //{
@@ -78,9 +76,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                 //}
                 try
                 {
-                    //var factory = RabbitmqHelper.GetConnectionFactory();
-                    //var factory = RabbitmqHelper.GetConnectionFactory(tryFromAppSettings: true);
-
+                    var factory = RabbitmqHelper.GetConnectionFactory(true);
 
                     using (var connection = factory.CreateConnection())
                     using (var channel = connection.CreateModel())
@@ -99,11 +95,11 @@ namespace Logitude.CustomsMessaging.RabbitMQ
 
         }
 
-        private  static void PoolPublish(byte[] message, string communicationLogId, string InterfaceTypeCode, string rabbitMQCode, int messagePriority)
+        private static void PoolPublish(byte[] message, string communicationLogId, string InterfaceTypeCode, string rabbitMQCode, int messagePriority)
         {
             bool pool = true;
             IModel channel = null;
-                channel = PooledRabbitMQPublisher.Instance.Get();
+            channel = PooledRabbitMQPublisher.Instance.Get();
 
             //var 
             bool haveExc = false;
@@ -145,7 +141,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             //channel.BasicQos(0, 5, true);
 
 
-           RabbitmqHelper.DeclareQueue(channel, rabbitMQCode, true);
+            RabbitmqHelper.DeclareQueue(channel, rabbitMQCode, true);
 
 
             var header = new Dictionary<string, object>();
@@ -164,12 +160,12 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                                          basicProperties: prop,
                                          body: message);
 
-            
+
             Debug.WriteLine($"RABBITMQ.BasicPublish {rabbitMQCode}");
         }
 
-        private void PublishOld(byte[] message, string communicationLogId, 
-            string InterfaceTypeCode, 
+        private void PublishOld(byte[] message, string communicationLogId,
+            string InterfaceTypeCode,
             string rabbitMQCode, int messagePriority)
         {
 
@@ -218,11 +214,12 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                                              routingKey: rabbitMQCode,
                                              basicProperties: prop,
                                              body: message);
-                Debug.WriteLine($"RABBITMQ.BasicPublish {  rabbitMQCode }");
+                Debug.WriteLine($"RABBITMQ.BasicPublish {rabbitMQCode}");
+
             }
         }
 
 
-        
+
     }
 }
