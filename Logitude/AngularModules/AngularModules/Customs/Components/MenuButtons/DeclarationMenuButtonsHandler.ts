@@ -1334,7 +1334,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.ShowCloseButton = true;
             logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
-                if($event!="0") {
+                if($event!="0" && $event!="cancel") {
                    this.OpenScreenContainerizationByFilter($event);
                 }
             });
