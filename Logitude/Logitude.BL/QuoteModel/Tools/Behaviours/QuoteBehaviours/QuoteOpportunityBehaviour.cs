@@ -113,8 +113,6 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours.QuoteBehaviours
 
         private void UpdateQuoteConnectedToOpportunityField()
         {
-            entityPM.ConnectedToOpportunity = false;
-
             if (!this.UpdateOpportunity())
             {
                 return;
