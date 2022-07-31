@@ -709,7 +709,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (FeatureToggleHelper.HasFeatureToggle("CTL", theEntityPm.Tenant) &&
                 theEntityPm.ObjectTableId.Equals(ObjectTableQuery.GetObjectTableByCode("Shipment", theEntityPm.Tenant)?.Id) &&
                 theEntityPm.HasFile.Equals(true) &&
-                theEntityPm.DirectionCode == "I")
+                theEntityPm.DirectionCode == "I" && 
+                !theEntityPm.FromCTool)
             {
                 //AddKafkaQueueMessage(theEntityPm, "CToolShipmentsUpdate");
                 EntityChangesMessageProducer.ProduceShipmentDocumentUpload(theEntityPm.EntityId, theEntityPm.Tenant);

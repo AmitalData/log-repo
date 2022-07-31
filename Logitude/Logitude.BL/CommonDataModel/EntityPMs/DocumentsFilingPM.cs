@@ -172,5 +172,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsAgentSharedInDirect { get; set; }
         public bool IsAgentSharedInMaster { get; set; }
 
+        public bool FromCTool { get; set; }
     }
 }
