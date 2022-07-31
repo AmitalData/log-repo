@@ -60,7 +60,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
-            EntityChangesMessageProducer.ProduceContainerCreateMessage(containerPoco, containerPm);
+            if (this.containerPm != null && !this.containerPm.FromCTool)
+            {
+                EntityChangesMessageProducer.ProduceContainerCreateMessage(containerPoco, containerPm);
+            }
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
             MapShipmentConcurrencyFields();
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
@@ -104,7 +107,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
 
-            EntityChangesMessageProducer.ProduceContainerUpdateMessage(containerPocoCopy, containerPMCopy);
+            if (this.containerPm != null && !this.containerPm.FromCTool)
+            {
+                EntityChangesMessageProducer.ProduceContainerUpdateMessage(containerPocoCopy, containerPMCopy);
+            }
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
             MapShipmentConcurrencyFields();
 

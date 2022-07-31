@@ -2984,6 +2984,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string InlandDomesticFromFax { get; set; }
         public int? NumberOfTransshipments { get; set; }
         public string Transshipments { get; set; }
+
+        public bool FromCTool { get; set; }
     }
 
     public class TransshipmentLeg
@@ -3006,6 +3008,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }
         public DateTime? ATA { get; set; }
-        public string CarrierTypeName { get; set; }        
+        public string CarrierTypeName { get; set; }
     }
 }

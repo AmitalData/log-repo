@@ -366,7 +366,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 BuildAgentSharedManifest();
 
                 SendAutomaticallyOceanOnsightsRequest();
-                if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
+                if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com" &&
+                    this.entityPM != null && !this.entityPM.FromCTool)
                 {
                     EntityChangesMessageProducer.ProduceShipmentCreateMessage(entityPoco, entityPM);
                     //AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
@@ -397,7 +398,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 initializer.IsUpdateFromUpdateTool = isFromUpdateTool;
 
                 #region
-
                 this.isNewEntity = false;
                 this.calculateProfit = false;
                 this.calculatePayables = false;
@@ -625,7 +625,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 //{
                 //AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
                 //}
-                EntityChangesMessageProducer.ProduceShipmentUpdateMessage(shipmentPocoCopy, shipmentPMCopy);
+                if (this.entityPM != null && !this.entityPM.FromCTool)
+                {
+                    EntityChangesMessageProducer.ProduceShipmentUpdateMessage(shipmentPocoCopy, shipmentPMCopy);
+                }
 
                 scope.Complete();
                 #endregion
