@@ -110,9 +110,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var declarationNumber = claimsRelatedEntitiy.claimEntityID.ToString();
                 string declarationID = declarationQueryService.GetDeclarationByDeclarationNum(declarationNumber, requestParams.Tenant);
 
-
-                var tapagQueryService = new TapagQueryService(context);
-                var tapagPM = tapagQueryService.GetSingleByTapagNumber(_MyClaimPM.Id, requestParams.Tenant);
+                
 
                 var myTapagConnectionTableUpdateService = new TapagConnectionTableUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                 TapagConnectionTablePM tapagConnectionTablePM = new TapagConnectionTablePM();
@@ -120,7 +118,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 tapagConnectionTablePM.TapagId = _MyClaimPM.Id;
                 tapagConnectionTablePM.DeclarationId = declarationID;
                 tapagConnectionTablePM.Tenant = requestParams.Tenant;
-                tapagConnectionTablePM.CustomsTapagFile = tapagPM.TapagNumber;
+                tapagConnectionTablePM.CustomsTapagFile = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.fileNumber;
                 tapagConnectionTablePM.CustomsNumeral = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.numeral;
                 tapagConnectionTablePM.RequestFileNumber = claimsRelatedEntitiy.ClaimReferentialData?.claimRequestNumber.ToString();
 

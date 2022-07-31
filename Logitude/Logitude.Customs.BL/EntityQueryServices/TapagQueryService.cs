@@ -189,14 +189,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
         }
-        public Tapag GetSingleByTapagNumber(string tapagId, int tenant)
-        {
-            var query=(from a 
-                       in context.Tapags 
-                       where a.Tenant == tenant && a.Id == tapagId
-                       select a).FirstOrDefault();
-            return query;
-
-        }
+       
     }
 }
