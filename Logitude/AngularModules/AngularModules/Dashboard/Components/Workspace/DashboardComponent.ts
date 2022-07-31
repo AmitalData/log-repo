@@ -20,8 +20,9 @@ import {LastFilterClass} from '../../../Infrastructure/Utilities/LastFilterClass
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import * as React from 'react';
-// import DashboardDesigner from 'D:/Projects/DashBoard/src/features/Dashboard/DashboardDesigner'
-import Test from 'D:/Projects/DashBoard/src/features/Dashboard/TestComponent/dd'
+
+
+
 import * as ReactDOM from 'react-dom';
 
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
@@ -84,7 +85,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
     }
 
     renderNewDashboard(){
-        ReactDOM.render(React.createElement(Test),this.reactDashboradContainer.nativeElement)
+        //ReactDOM.render(React.createElement<DashboardDesigner>('DashboardDesigner'),this.reactDashboradContainer.nativeElement)
     }
     ngOnDestroy() {
         if (this.ActivityStatusPage != null) {
