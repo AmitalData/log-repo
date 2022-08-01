@@ -6,28 +6,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools; 
+using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
-   
-   public partial class ConfirmationTypeDataMapping: IMapping<ConfirmationTypePM, ConfirmationType>
-   {
 
+    public partial class ConfirmationTypeDataMapping : IMapping<ConfirmationTypePM, ConfirmationType>
+    {
         public void CustomPMToPOCO(ConfirmationTypePM entityPM, ConfirmationType entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+                entityPOCO.Code = entityPM.Code;
         }
 
         public void CustomPOCOToPM(ConfirmationTypePM entityPM, ConfirmationType entityPOCO)
         {
             //throw new NotImplementedException();
         }
-   }
-
-
+    }
 }
-   
