@@ -32,7 +32,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsSimulatorVisible: boolean = false; 
     public IsVisionRequestStatus: boolean = false;
-    public IsSharedLogisticsActivated: boolean = false;
+    public NotesSharedWithCustomerActivated: boolean = false;
 
     ShareDocumentsViaEmailDocumentTypeCode = "SDVE"; 
     public documentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
@@ -43,7 +43,8 @@ export class ShipmentHelperComponent implements OnDestroy {
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
         this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
         this.IsVisionRequestStatus = FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus");
-
+        this.NotesSharedWithCustomerActivated = SessionLocator.TenantPM.IsSharedLogisticsActivated && FeatureLocator.HasFeaturePermession("Shipment", "NOTESSHAREDWITHCUSTOMER");
+        
         this.EntityPM = this.entityArgs.EntityPM;
 
         if (this.EntityPM) {
@@ -61,7 +62,6 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator") && this.EntityPM.ShipmentTypeId == "FCLD";
 
         }
-        this.IsSharedLogisticsActivated = SessionLocator.TenantPM.IsSharedLogisticsActivated;
     }
 
     private SaveCompletedEvent: any = null;
