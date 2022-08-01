@@ -292,6 +292,13 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
             IsCustomTemplate: true
         });
         this.columns.push({
+            FieldName: 'CustomerReference2',
+            DataTypeCode: 'String',
+            Display: 'My Reference',
+            Styles: { width: '100px' },
+            IsCustomTemplate: true
+        });
+        this.columns.push({
             FieldName: this.SourceEntity.Id,
             DataTypeCode: 'String',
             Display: '',
