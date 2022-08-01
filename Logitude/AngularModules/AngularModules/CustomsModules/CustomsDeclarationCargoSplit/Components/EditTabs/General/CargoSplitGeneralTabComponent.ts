@@ -1650,11 +1650,13 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
         var service = new CargoIdentifireTypeListService();
         service.getSingleFromCache(this.CargoTypeCode).subscribe((response: any) => {
             if (response != null) {
+                if (response.Result != null) {
                 this.ManifestNumberPlaceholder = response.Result.CargoIdentifierKey1Name;
                 this.SecondCargoIDPlaceholder = response.Result.CargoIdentifierKey2Name ?? '';
                 this.ThirdCargoIdPlaceholder = response.Result.CargoIdentifierKey3Name ?? '';
                 this.CargoIdentifireType = response.Result;
                 this.setRequired();
+                }
             }
         });
     }
