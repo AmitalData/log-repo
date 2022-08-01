@@ -65,6 +65,9 @@ export class EditShipmentButtonListTemplate {
         if (AppTool.IsNullOrEmpty(this.rowData['ForwarderShipmentNumber']) && this.fieldName == "EditShipmentButtonListTemplate" + "All Shipments") {
             this.ShowButtons = false;
         }
+
+        this.ShowButtons = this.rowData['DirectionId'].toLowerCase() == "e" ? false : this.ShowButtons;
+
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
         //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe((myResult:any) => {
