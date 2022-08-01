@@ -219,6 +219,15 @@ export class NewContainerizationComponent extends BaseComponent {
         var ProcFilter = new FilterItem("ProcedureCurrentName", 'אסמבלי', null, null, "Contains", false, false, false, "string", false);
         filters.AdditionalFilters.push(ProcFilter);
         filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
+
+
+        if(this.entityPM.Id!=null){
+             var connectDec =SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.ConnectedDeclarations
+             connectDec =connectDec.substring(0, connectDec.length - 1);
+             filters.addAdditionalFilter("Id", connectDec, null, null, "Exclude", false, false, false, "string", false, true);
+        }
+
+
         if (this.selectedValue != 'All') {
             var ModeFilter = new FilterItem("TransportModeId", this.selectedValue, null, null, "Equals", false, false, false, "string", false);
             filters.AdditionalFilters.push(ModeFilter);

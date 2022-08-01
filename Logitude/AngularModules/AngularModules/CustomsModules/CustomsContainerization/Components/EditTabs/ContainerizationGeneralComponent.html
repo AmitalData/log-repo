@@ -104,7 +104,7 @@
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
                                 <div class="RightCenter">
-                                    <span>{{item.CargoTypeName}}</span>
+                                    <span [ngStyle]="{'color': this.EntityPM.CargoTypeCode!=item.CargoTypeCode ? 'red' : null }">{{item.CargoTypeName}}</span>
                                 </div>
                             </log-cell-template>
                         </ng-template>
@@ -116,12 +116,12 @@
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
                                 <div class="RightCenter">
-                                    <span>{{item.ManifestNumber}}</span>
+                                    <span [ngStyle]="{'color': this.EntityPM.ManifestNumber!=item.ManifestNumber ? 'red' : null }">{{item.ManifestNumber}}</span>
                                 </div>
                             </log-cell-template>
                         </ng-template>
                     </log-column>
-
+                   
 
                     <!-- SecondCargoID -->
                     <log-column [header]="'Customs.Declaration.F.SecondCargoID' | TextCodeTranslationPipe"
@@ -130,7 +130,7 @@
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
                                 <div class="RightCenter">
-                                    <span>{{item.SecondCargoID}}</span>
+                                    <span [ngStyle]="{'color': this.EntityPM.SecondCargoID!=item.SecondCargoID ? 'red' : null }">{{item.SecondCargoID}}</span>
                                 </div>
                             </log-cell-template>
                         </ng-template>
@@ -144,7 +144,7 @@
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
                                 <div class="RightCenter">
-                                    <span>{{item.ThirdCargoID}}</span>
+                                    <span [ngStyle]="{'color': this.EntityPM.ThirdCargoID!=item.ThirdCargoID ? 'red' : null }">{{item.ThirdCargoID}}</span>
                                 </div>
                             </log-cell-template>
                         </ng-template>
