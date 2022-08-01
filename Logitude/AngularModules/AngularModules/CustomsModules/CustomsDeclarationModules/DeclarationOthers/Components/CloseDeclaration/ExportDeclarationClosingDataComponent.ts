@@ -244,7 +244,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.FillValidationErrors("Errors");
         }
         else {
-            if (this.EntityPM.IsDirty) {
+           // if (this.EntityPM.IsDirty) {
                 if (this.IsNew) {
                     this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
 
@@ -254,17 +254,17 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         }
                     });
                 } else {
-                    this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                     this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
 
                         if (!response.HasError) {
                             this.SendAmendmentCloseDeclaration(event);
                         }
                     });
                 }
-            }
-            else {
-                this.SendAmendmentCloseDeclaration(event);
-            }
+           // }
+            //else {
+            //    this.SendAmendmentCloseDeclaration(event);
+            //}
         }
     }
 
