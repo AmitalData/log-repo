@@ -271,16 +271,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         this.UIProperties.SetEnabled("ShipperId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ConsigneeId", this.ObjectTableName, isScreenEnabled);
 
-        if (!AppTool.IsNullOrEmpty(this.DefaultCustomerId)) {
-            if (!AppTool.IsNullOrEmpty(this.ShipperId) && isScreenEnabled) {
-                this.UIProperties.SetEnabled("ShipperId", this.ObjectTableName, false);
-                this.IsAddShipperEnabled = false;
-            }
-            if (!AppTool.IsNullOrEmpty(this.ConsigneeId) && isScreenEnabled) {
-                this.UIProperties.SetEnabled("ConsigneeId", this.ObjectTableName, false);
-                this.IsAddConsigneeEnabled = false;
-            }
-        }
+        
 
         // Shipper
         this.UIProperties.SetEnabled("ShipperAddressId", this.ObjectTableName, isScreenEnabled);
