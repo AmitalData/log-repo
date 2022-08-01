@@ -1406,6 +1406,11 @@ export class ContainerPM {
     public set HasTransshipments(newValue: boolean) { if (this.hasTransshipments != newValue) { this.hasTransshipments = newValue; this.MarkAsDirty("HasTransshipments"); } }
        
 	 
+    private fromCTool: boolean;
+    public get FromCTool() { return this.fromCTool; }
+    public set FromCTool(newValue: boolean) { if (this.fromCTool != newValue) { this.fromCTool = newValue; this.MarkAsDirty("FromCTool"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		
