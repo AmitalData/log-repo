@@ -93,8 +93,8 @@ Feature: Automations Creation and Updating for Set Fields Value Result
         And inactive the automation
         When update automation
         Then the automation should updated successfully
-
-    Scenario: Automation OnUpdate with set field value result and one of the ANY conditions is not fit
+              
+    Scenario: set field value Automation OnUpdate with one of the ANY conditions is not fit
         Given the user logged in
         And the user navigates to automations menu
         And the user select "Shipments" as entity
@@ -140,7 +140,7 @@ Feature: Automations Creation and Updating for Set Fields Value Result
         When update automation
         Then the automation should updated successfully
 
-    Scenario: Automation OnUpdate with set field value result and no condition of the Any conditions is fit
+    Scenario: set field value Automation OnUpdate with no condition of the Any conditions is fit
         Given the user logged in
         And the user navigates to automations menu
         And the user select "Shipments" as entity
@@ -186,7 +186,7 @@ Feature: Automations Creation and Updating for Set Fields Value Result
         When update automation
         Then the automation should updated successfully
 
-    Scenario: Automation OnUpdate with set field value result and one of the All conditions is not fit
+    Scenario: set field value Automation OnUpdate with one of the All conditions is not fit
         Given the user logged in
         And the user navigates to automations menu
         And the user select "Shipments" as entity
