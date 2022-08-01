@@ -56,6 +56,7 @@ using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web;
 using Logitude.BL.ShipmentsModel.Tools.ExternalService;
+using Logitude.BL.ShipmentsModel.EntityLists;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -115,6 +116,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ComputingPartnerTranslationRepository computingPartnerTranslationRepository;
         public ShipmentDocsField ShipmentDocsFieldFromWorkerRole;
         public bool isFromEventTrace;
+        public ShipmentService(IShipmentsContext objectContext, int tenant)
+        {
+            this.objectContext = objectContext;
+            this.myCommonContext = CommonDataContext.GetContext(tenant);
+            this.myAddressRepository = new AddressRepository(this.myCommonContext);
+        }
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
             UpdateByEmail = serviceContextUser;
@@ -7868,6 +7875,191 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             else
             {
                 entityPM.NumberOfTransshipments = null;
+            }
+        }
+
+        public void BuildShipmentListWithTimeLine(List<ShipmentList> entityLists, int tenant)
+        {
+            foreach (var item in entityLists)
+            {
+                this.FillShipmnetTimeLine(item, tenant);
+            }
+        }
+
+        private void FillShipmnetTimeLine(ShipmentList shipment, int tenant)
+        {
+            var shipmentPickUpDeliveries = (from a in objectContext.ShipmentPickUpDeliveries where a.ShipmentId == shipment.Id select a);
+            TimeLineData timeLineData = new TimeLineData();
+            this.FillMainCarraigeFromTimeLine(timeLineData, shipment);
+            this.FillMainCarraigeToTimeLine(timeLineData, shipment);
+            this.FillPickUpTimeLine(timeLineData, shipment, shipmentPickUpDeliveries);
+            this.FillDeliveryTimeLine(timeLineData, shipment, shipmentPickUpDeliveries);
+            shipment.TimeLineData = timeLineData;
+        }
+
+        private void FillMainCarraigeFromTimeLine(TimeLineData timeLineData, ShipmentList shipment)
+        {
+
+            timeLineData.MainCarriageFrom = new TimeLineStop()
+            {
+                City = shipment.MainCarriageFromCity,
+                CountryCode = shipment.MainCarriageFromCountryCode,
+                Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
+                DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
+            };
+        }
+        private void FillMainCarraigeToTimeLine(TimeLineData timeLineData, ShipmentList shipment)
+        {
+            timeLineData.MainCarriageTo = new TimeLineStop()
+            {
+                City = shipment.MainCarriageToCity,
+                CountryCode = shipment.MainCarriageToCountryCode,
+                Date = shipment.MainCarriageATA != null ? shipment.MainCarriageATA : shipment.MainCarriageETA,
+                DateType = shipment.MainCarriageATA != null ? "Actual" : (shipment.MainCarriageETA != null ? "Estimated" : null),
+            };
+        }
+        private void FillPickUpTimeLine(TimeLineData timeLineData, ShipmentList item, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
+        {
+            var firstPickup = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            if (firstPickup == null)
+            {
+                return;
+            }
+
+            int tenant = firstPickup.Tenant;
+            timeLineData.Pickup = new TimeLineStop()
+            {
+                City = "",
+                CountryCode = "",
+                Date = firstPickup.ATD != null ? firstPickup.ATD : firstPickup.ETD,
+                DateType = firstPickup.ATD != null ? "Actual" : (firstPickup.ETD != null ? "Estimated" : null),
+            };
+
+            this.FillPickUpCityAndCountry(timeLineData, firstPickup, tenant);
+        }
+        private void FillPickUpCityAndCountry(TimeLineData timeLineData, ShipmentPickUpDelivery firstPickup, int tenant)
+        {
+            switch (firstPickup.PickUpDeliveryFromTypeCode)
+            {
+                case "PART":
+                    {
+                        if (!string.IsNullOrEmpty(firstPickup.FromPartnerCardId))
+                        {
+                            if (!string.IsNullOrEmpty(firstPickup.FromAddressId))
+                            {
+                                Address myPartnerAddress = myAddressRepository.GetSingleAddress(firstPickup.FromAddressId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    timeLineData.Pickup.City = myPartnerAddress.City;
+                                    timeLineData.Pickup.CountryCode = myPartnerAddress.Country?.Code;
+                                }
+                            }
+                            else
+                            {
+                                Address myPartnerAddress = myAddressRepository.GetMainAddressByCardId(firstPickup.FromPartnerCardId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    timeLineData.Pickup.City = myPartnerAddress.City;
+                                    timeLineData.Pickup.CountryCode = myPartnerAddress.Country?.Code;
+                                }
+                            }
+                        }
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        if (!string.IsNullOrEmpty(firstPickup.FromPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, firstPickup.FromPortId, true);
+                            if (myPort != null)
+                            {
+                                timeLineData.Pickup.City = myPort.EnglishName;
+                                timeLineData.Pickup.CountryCode = myPort.CountryCode;
+                            }
+                        }
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        timeLineData.Pickup.City = firstPickup.FromAddressCity;
+                        timeLineData.Pickup.CountryCode = firstPickup.FromAddressCountry?.Code;
+                        break;
+                    }
+            }
+        }
+        private void FillDeliveryTimeLine(TimeLineData timeLineData, ShipmentList item, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
+        {
+            var finalDelivery = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            if (finalDelivery == null)
+            {
+                return;
+            }
+
+            int tenant = finalDelivery.Tenant;
+            timeLineData.Delivery = new TimeLineStop()
+            {
+                City = "",
+                CountryCode = "",
+                Date = finalDelivery.ATA != null ? finalDelivery.ATA : finalDelivery.ETA,
+                DateType = finalDelivery.ATA != null ? "Actual" : (finalDelivery.ETA != null ? "Estimated" : null),
+            };
+
+            this.FillDeliveryCityAndCountry(timeLineData, finalDelivery, tenant);
+        }
+        private void FillDeliveryCityAndCountry(TimeLineData timeLineData, ShipmentPickUpDelivery finalDelivery, int tenant)
+        {
+            switch (finalDelivery.PickUpDeliveryToTypeCode)
+            {
+                case "PART":
+                    {
+                        if (!string.IsNullOrEmpty(finalDelivery.ToPartnerCardId))
+                        {
+                            if (!string.IsNullOrEmpty(finalDelivery.ToAddressId))
+                            {
+                                Address myPartnerAddress = myAddressRepository.GetSingleAddress(finalDelivery.ToAddressId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    timeLineData.Delivery.City = myPartnerAddress.City;
+                                    timeLineData.Delivery.CountryCode = myPartnerAddress.Country?.Code;
+                                }
+                            }
+                            else
+                            {
+                                Address myPartnerAddress = myAddressRepository.GetMainAddressByCardId(finalDelivery.ToPartnerCardId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    timeLineData.Delivery.City = myPartnerAddress.City;
+                                    timeLineData.Delivery.CountryCode = myPartnerAddress.Country?.Code;
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        if (!string.IsNullOrEmpty(finalDelivery.ToPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, finalDelivery.ToPortId, true);
+                            if (myPort != null)
+                            {
+                                timeLineData.Delivery.City = myPort.EnglishName;
+                                timeLineData.Delivery.CountryCode = myPort.CountryCode;
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        timeLineData.Delivery.City = finalDelivery.ToAddressCity;
+                        timeLineData.Delivery.CountryCode = finalDelivery.ToAddressCountry?.Code;
+                        break;
+                    }
             }
         }
     }

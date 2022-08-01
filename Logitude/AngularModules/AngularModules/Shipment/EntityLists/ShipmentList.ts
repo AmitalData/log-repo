@@ -258,6 +258,8 @@ export class ShipmentList {
 		ShipperReference1: string;
 		ShipperReference2: string;
 		ShipperReference3: string;
+		ShipperCountryCode: string;
+		ConsigneeCountryCode: string;
 		Consignee: string;
 		ConsigneeReference1: string;
 		ConsigneeReference2: string;
@@ -339,8 +341,6 @@ export class ShipmentList {
 		HasException: boolean;
 		IsMissingDocument: boolean;
 		DocumentsSearchFields: string;
-		ShipperCountryCode: string;
-		ConsigneeCountryCode: string;
 		ShipperName: string;
 		ConsigneeName: string;
 		ForwarderShipmentNumber: string;
@@ -567,5 +567,14 @@ export class ShipmentList {
 		DigitalPortalSearchFields: string;
 		NumberOfTransshipments: number;
 		Transshipments: string;
+		TimeLineData: string;
+		Pickup: string;
+		MainCarriageFrom: string;
+		MainCarriageTo: string;
+		Delivery: string;
+		CountryCode: string;
+		City: string;
+		Date: Date;
+		DateType: string;
 	
 }

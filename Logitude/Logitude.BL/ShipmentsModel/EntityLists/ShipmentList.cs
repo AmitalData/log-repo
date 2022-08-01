@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.ShipmentsModel.EntityLists
@@ -667,12 +666,14 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
     }
     public class TimeLineData
     {
-        public List<TimeLineStop> Stops { get; set; }
+        public TimeLineStop Pickup { get; set; }
+        public TimeLineStop MainCarriageFrom { get; set; }
+        public TimeLineStop MainCarriageTo { get; set; }
+        public TimeLineStop Delivery { get; set; }
     }
 
     public class TimeLineStop
     {
-        public string LegName { get; set; }
         public string CountryCode { get; set; }
         public string City { get; set; }
         public DateTime? Date { get; set; }

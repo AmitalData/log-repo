@@ -1533,6 +1533,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (myContact != null)
                 {
                     shipmentPM.AccountManagerUserName = myContact.EnglishName;
+                    shipmentPM.AccountManagerUserEmail = myContact.Email;
                 }
             }
 
@@ -12475,6 +12476,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var myResult = from f in shipments
                            select new ShipmentList()
                            {
+                               LastUpdateDate = f.LastUpdateDate,
                                MainCarriageFromAddressId = f.MainCarriageFromAddressId,
                                MainCarriageToAddressId = f.MainCarriageToAddressId,
                                ToCountryCode = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationCountryCode) ? f.MainCarriageFinalDestinationCountryCode : f.ToPortCountryCode,
