@@ -20,6 +20,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
     public class DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService :
         ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2757_MSG10004_ExportDeclarationResponse, GenericRequestParams>
     {
+
+
         DeclarationPM _MyDeclarationPM;
         public bool _IsSubmitDeclarationResponse { get; set; }
         decimal? vat = 0;
