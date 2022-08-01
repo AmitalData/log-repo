@@ -440,6 +440,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                                                                                                                                     //var mySupplierInvoiceItemsTaxesModificationUpdateService = new SupplierInvoiceItemsTaxesModUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
+
             var mySupplierInvoiceItemsPriceUpdateService = new SupplierInvoiceItemsPriceUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
             var mySupplierInvoiceItemsLevyUpdateService = new SupplierInvoiceItemsLevyUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
             var mySupplierInvoiceItemsDescriptUpdateService = new SupplierInvoiceItemsDescriptUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
