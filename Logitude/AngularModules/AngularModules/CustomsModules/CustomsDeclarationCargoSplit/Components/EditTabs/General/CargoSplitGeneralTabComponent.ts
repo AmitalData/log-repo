@@ -216,7 +216,7 @@ export class CargoSplitGeneralTabComponent
         //}
         //if (this.EntityPM == null)this.EntityPM = this.entityArgs.EntityPM;
         //this.ObjectTableName = this.entityArgs.ObjectTableName;
-        this.decCargoSplitCargoIdentifierModel= new DecCargoSplitCargoIdentifierModel(null);
+        this.AddItem();
     }
 
     SetDisplayFields(ResponseStatusCode: string) {
@@ -418,7 +418,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     AddItem() {
-        if (!this.IsDisplayOnly) {
+        if (!this.IsDisplayOnly) { 
             var counter: number = 0;
             if (this.EntityPM.DecCargoSplitCargoIdentifiers.length > 0) {
 
@@ -1051,7 +1051,8 @@ export class CargoSplitGeneralTabComponent
 
     get RequestRemarks() { return this.EntityPM != null ? this.EntityPM.RequestRemarks : null; }
     set RequestRemarks(value: string) { this.EntityPM.RequestRemarks = value; }
-    //get ImporterCode() { return this.SelectedTab != null ? this.SelectedTab.EntityPM.ImporterCode : null; }
+
+    //get ImporterCode() { return this.SelectedTab != null ? this.SelectedTab.EntityPM.ImporterCode : null; } 
     //set ImporterCode(value: string) {
 
     //    this.SelectedTab.EntityPM.ImporterCode = value;
@@ -1243,12 +1244,12 @@ export class CargoSplitGeneralTabComponent
         this.EntityPM.Tenant = SessionLocator.Tenant;
         var errors = [];
         this.FillValidationErrorList.emit(errors);
-        this.ValidationErrorsList = [];
+        this.ValidationErrorsList = []; 
 
         Validator.TryValidateObject(this.EntityPM, "Customs.DeclarationCargoSplit", errors);
 
         if (this.EntityPM.DecCargoSplitCons == null || this.EntityPM.DecCargoSplitCons.length < 1) {
-            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבוםן םחד"));
+            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבואן אחד"));
         } else {
             this.Tabs.forEach((consignment) => {
                 Validator.TryValidateObject(consignment.EntityPM, "Customs.DecCargoSplitCon", errors);
@@ -1284,7 +1285,7 @@ export class CargoSplitGeneralTabComponent
                    errors.push("מזהה מטען מפוצל- חובה להזין סוג מזהה מטען");
                }
                if (AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey1)) {
-                   errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען רםשון");
+                   errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען ראשון");
                }
            }
             errors.push.apply(errors, this.decCargoSplitCargoIdentifierModel.CheckRequired());
@@ -1460,7 +1461,7 @@ export class CargoSplitGeneralTabComponent
         }
 
         if (this.Tabs == null || this.Tabs.length < 1) {
-            errors.push("חובה להזין נתונים לפחות ליבוםן םחד");
+            errors.push("חובה להזין נתונים לפחות ליבואן אחד");
         }
         for (let tab of this.Tabs) {
             if (AppTool.IsNullOrEmpty(tab.EntityPM.ImporterCode)) {
@@ -1551,11 +1552,11 @@ export class CargoSplitGeneralTabComponent
 
         for (let tab of this.Tabs) {
             if (tab.EntityPM.DecCargoSplitConsItems == null || tab.EntityPM.DecCargoSplitConsItems.length < 1) {
-                errors.push("חובה להזין נתוני םריזות");
+                errors.push("חובה להזין נתוני אריזות");
             }
             for (let item of tab.EntityPM.DecCargoSplitConsItems) {
                 if (item.DecCargoSplitConsPackDets == null || item.DecCargoSplitConsPackDets.length < 1) {
-                    errors.push("קיימות םריזות ללם פירוט");
+                    errors.push("קיימות אריזות ללא פירוט");
                     break;
                 }
                 for (let pack of item.DecCargoSplitConsPackDets) {
@@ -1646,7 +1647,6 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
     public ThirdCargoIdPlaceholder: string = " ";
 
     ChangeCargoIdentifireType() {
-        
         var service = new CargoIdentifireTypeListService();
         service.getSingleFromCache(this.CargoTypeCode).subscribe((response: any) => {
             if (response != null) {
@@ -1660,6 +1660,7 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
     }
 
     //#region Properties
+
     public get CargoTypeCode() { return this.EntityPMDecCargo.CargoTypeCode; }
     public set CargoTypeCode(newValue: string) { this.EntityPMDecCargo.CargoTypeCode = newValue; }
 
