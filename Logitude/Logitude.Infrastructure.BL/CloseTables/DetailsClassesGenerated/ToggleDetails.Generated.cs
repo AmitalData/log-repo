@@ -559,14 +559,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Name = "Split by Quote Charge Group", 
-                Code = "SCG", 
-                SearchFields = "SCG,Split by Quote Charge Group,Quote Template", 
-                Description = "Allow Tenant to Use Split by Quote Charge Group in Quote Template", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Code = "ARN", 
                 Name = "Aging Report Get From GLAccountAgingData", 
                 Description = "Aging Report Get From GLAccountAgingData, new method new way", 

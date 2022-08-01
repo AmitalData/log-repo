@@ -2692,5 +2692,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SPLITCHARGEGROUP&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;QuoteTemplate.Features.SPLITCHARGEGROUP&quot;"
+      FeatureDefaultText="&quot;Split by Quote Charge Group&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
