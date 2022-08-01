@@ -3622,6 +3622,7 @@
     <Content Include="Monitoring\CheckFailedJournals.aspx" />
     <Content Include="Monitoring\CargoBuild.aspx" />
     <Content Include="Monitoring\CargoShipmentsWaiting.aspx" />
+    <Content Include="Monitoring\CheckJournalsWithoutTransactions.aspx" />
     <Content Include="Monitoring\CustomerTenantAccessMonitoring.aspx" />
     <Content Include="Monitoring\CustomerTenantAccessRequestMonitoring.aspx" />
     <Content Include="Monitoring\DeclarationApprovalRequestMonitoring.aspx" />
@@ -5789,6 +5790,13 @@
     </Compile>
     <Compile Include="Monitoring\CargoShipmentsWaiting.aspx.designer.cs">
       <DependentUpon>CargoShipmentsWaiting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\CheckJournalsWithoutTransactions.aspx.cs">
+      <DependentUpon>CheckJournalsWithoutTransactions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CheckJournalsWithoutTransactions.aspx.designer.cs">
+      <DependentUpon>CheckJournalsWithoutTransactions.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\CustomerTenantAccessMonitoring.aspx.cs">
       <DependentUpon>CustomerTenantAccessMonitoring.aspx</DependentUpon>
