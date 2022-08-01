@@ -421,7 +421,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    async SaveEntityChanges() {
+    async SaveEntityChanges(DontClose: boolean = false) {
         this.logger.sendError('start SaveEntityChange', 'entityPM: ' + JSON.stringify(this.entityPM));
         const isInsert: boolean = !this.entityPM.Id;
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
@@ -436,7 +436,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
         this.logger.sendError('after save', 'res: ', JSON.stringify(res));
 
-        SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
+        if (!DontClose)
+            SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
+
         SessionLocator.SelectedSession.StopBusyIndicator();
         return res;
     }
@@ -562,7 +564,14 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    ViewDocumentsComponent() {
+    async ViewDocumentsComponent() {
+
+        //save entity
+        this.submit = true;
+        //this.SaveEntityChanges(true);
+        const entity: LogisticActionRequestPM = await this.SaveEntityChanges(true);
+        this.entityPM.Id = entity.Id;
+
         var windowArgs: any = {};
         windowArgs.EntityPM = this.entityPM;
         windowArgs.ObjectTableName = this.ObjectTableName;

@@ -19361,6 +19361,7 @@
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
+
     PMPropertyPath="&quot;IsExportDeclarationAmendments&quot;"
     ListPropertyPath="&quot;IsExportDeclarationAmendments&quot;"
     DisplayInLookUpIndex="0"
