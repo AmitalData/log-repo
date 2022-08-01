@@ -218,6 +218,14 @@ namespace Logitude.Accounting.Data.Repositories
             return q;
         }
 
+        public IQueryable<Journal> GetJournalsWithoutTransactionsForToday()
+        {
+            var q = (from a in context.Journals
+                     where (a.IsLedgerCreated == false)
+                     select a);
+            return q;
+        }
+        
         public IQueryable<Journal> GetQueryablePending2ApproveOrdered(int tenant)
         {
             var q = (from a in context.Journals
