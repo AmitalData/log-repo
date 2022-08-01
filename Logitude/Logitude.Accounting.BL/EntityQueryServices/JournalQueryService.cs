@@ -154,6 +154,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     select j).Any();
         }
 
+        public bool GetJournalsWithoutTransactionsForToday()
+        {
+            DateTime startDateTime = DateTime.Today; //Today at 00:00:00
+            DateTime endDateTime = DateTime.Now - new TimeSpan(0, 5, 0);
+            var journalsWithoutTransactions = repository.GetJournalsWithoutTransactionsForToday();
+            return (from j in journalsWithoutTransactions
+                    where (j.CreateDate >= startDateTime && j.CreateDate <= endDateTime)
+                    select j).Any();
+        }
+
         public bool GetAnyPendingApproved(IQueryable<string> GLAccountIDList, int tenant)
         {
             
