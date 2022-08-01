@@ -12475,6 +12475,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var myResult = from f in shipments
                            select new ShipmentList()
                            {
+                               MainCarriageFromAddressId = f.MainCarriageFromAddressId,
+                               MainCarriageToAddressId = f.MainCarriageToAddressId,
+                               ToCountryCode = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationCountryCode) ? f.MainCarriageFinalDestinationCountryCode : f.ToPortCountryCode,
+                               FromCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.FromPortCountryCode : f.MainCarriageFromPortCountryCode,
+                               MainCarriageFromCity = f.MainCarriageFromCity,
+                               MainCarriageFromCountryCode = f.MainCarriageFromCountryCode,
+                               MainCarriageToCity = f.MainCarriageToCity,
+                               MainCarriageToCountryCode = f.MainCarriageToCountryCode,
                                Tenant = f.Tenant,
                                ChargeableWeightUnitCode = f.ChargeableWeightUnitCode,
                                CarrierLastStatusDate = f.CarrierLastStatusDate,

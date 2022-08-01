@@ -32,6 +32,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Data.CommonDataModel;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -69,8 +70,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
                 int tenant = authToken.Tenant;
                 bool isFullTextSearch = false;
                 TenantRepository myTenantRepository = new TenantRepository(tenant);
@@ -83,6 +82,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     ObjectTableName = "Shipment",
                     PageIndex = filters.PageIndex,
+
                     PageSize = filters.PageSize,
                     QuerySection = "Shipments",
                     SortByColumnName = filters.SortBy,
@@ -174,7 +174,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 List<SqlParameter> parameters = new List<SqlParameter>();
                 string loggedUserEmail = authToken.Email;
                 string loggedContactId = null;
-                if (isFullTextSearch)//Ayman,Ihab and Rabaia
+                if (isFullTextSearch)
                 {
                     var SearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
                     List<string> ShipmentIds = new List<string>();
@@ -188,12 +188,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                 }
 
-
-
                 ShipmentAPiHelper.AddFilters(queryOperations, tenant);
-
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-
                 TenantQuery tenantQuery = new TenantQuery(tenant);
                 TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
                 GenericFilter genericFilter = new GenericFilter();
@@ -219,15 +215,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 int skippedShipments = queryOperations.PageIndex;
 
                 ShipmentQuery myShipmentQuery = new ShipmentQuery(shipmentRepository);
-                var sss = IQueryableExtensions.ToTraceString(shipments);
                 var entityLists = myShipmentQuery.GetIQueryableShipmentList(shipments, tenant);
-
                 entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);
-                //if (ShipmentIds != null && ShipmentIds.Count > 0)
-                //{
-                //    entityLists = entityLists.Where(a => ShipmentIds.Contains(a.Id));
-                //}
-                // var MySql = ((System.Data.Objects.ObjectQuery)entityLists).ToTraceString();
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
                     PropertyInfo propInfo = typeof(ShipmentList).GetProperty(queryOperations.SortByColumnName);
@@ -292,7 +281,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 ServiceResponse response = new ServiceResponse();
-
                 int count = 0;
                 if (filters.GetCount && string.IsNullOrEmpty(SearchFilterAsWhere))
                 {
@@ -300,21 +288,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
                 entityLists = System.Data.Entity.QueryableExtensions.Skip(entityLists, () => skippedShipments);
                 entityLists = System.Data.Entity.QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
-                //entityLists = entityLists.Skip(skippedShipments);
-                //entityLists = entityLists.Take(queryOperations.PageSize);
                 List<ShipmentList> listQuery;
-                //string loggedUserEmail = authToken.Email;
-                //string loggedContactId = null;
-                //ContactQuery contactQuery = new ContactQuery(tenant);
-                //ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
-                //if (loggedContact != null)
-                //{
-                //    loggedContactId = loggedContact.Id;
-                //} 
-                if (isFullTextSearch)//Ayman,Ihab and Rabaia
+                if (isFullTextSearch)
                 {
                     TraceStringValues MySql;
-                    MySql = IQueryableExtensions.ToTraceString<ShipmentList>(entityLists);//.ToString().Replace("\r\n", "").ToLower();
+                    MySql = IQueryableExtensions.ToTraceString<ShipmentList>(entityLists);
                     if (!string.IsNullOrEmpty(SearchFilterAsWhere) && MySql.TSQL.ToLower().Contains("where"))
                     {
                         var regex = new Regex(Regex.Escape("WHERE"), RegexOptions.IgnoreCase);
@@ -322,24 +300,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         var regex1 = new Regex(Regex.Escape("WHERE [Project1].[row_number] > "), RegexOptions.IgnoreCase);
                         MySql.TSQL = regex1.Replace(MySql.TSQL, "WHERE [Project1].[row_number] > 0 --", 1);
-                        //MySql = MySql.Replace("where ", SearchFilterAsWhere + " and ");
                     }
-                    //parameters.Concat();
+
                     foreach (var item in MySql.TSQLParams)
                     {
                         parameters.Add(new SqlParameter(item.Name, item.Value));
                     }
                     IShipmentsContext context = ShipmentsContext.GetContext(tenant);
                     ShipmentsContext activeContext = context.GetActiveDbContext() as ShipmentsContext;
-                    //var mylistQuery = activeContext.Database.SqlQuery<ShipmentDataView>(MySql.TSQL, parameters.ToArray()).AsQueryable();
                     listQuery = activeContext.Database.SqlQuery<ShipmentList>(MySql.TSQL, parameters.ToArray()).ToList();
-                    //listQuery = myShipmentQuery.GetIQueryableShipmentList(mylistQuery1.AsQueryable(), tenant).ToList(); 
                 }
                 else
                 {
                     listQuery = entityLists.ToList();
                 }
 
+                this.BuildShipmentListWithTimeLine(listQuery, tenant);
                 response.Result = listQuery;
                 if (filters.GetCount && !string.IsNullOrEmpty(SearchFilterAsWhere))
                 {
@@ -351,17 +327,211 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 if (filters.GetCount)
                 {
                     reponseMessage.Headers.Add("TotalCount", count.ToString());
-
                 }
-
                 return reponseMessage;
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
 
+        ICommonDataContext commonContext;
+        AddressRepository addressRepository;
+        IShipmentsContext shipmentContext;
+        private void BuildShipmentListWithTimeLine(List<ShipmentList> entityLists, int tenant)
+        {
+            shipmentContext = ShipmentsContext.GetContext(tenant);
+            commonContext = CommonDataContext.GetContext(tenant);
+            addressRepository = new AddressRepository(commonContext);
+            foreach (var item in entityLists)
+            {
+                this.FillShipmnetTimeLine(item, tenant);
+            }
+        }
+
+        private void FillShipmnetTimeLine(ShipmentList shipment, int tenant)
+        {
+            var shipmentPickUpDeliveries = (from a in shipmentContext.ShipmentPickUpDeliveries where a.ShipmentId == shipment.Id select a);
+            TimeLineData timeLineData = new TimeLineData();
+            timeLineData.Stops = new List<TimeLineStop>();
+            this.FillMainCarraigeFromTimeLine(timeLineData, shipment);
+            this.FillMainCarraigeToTimeLine(timeLineData, shipment);
+            this.FillPickUpTimeLine(timeLineData, shipment, shipmentPickUpDeliveries);
+            this.FillDeliveryTimeLine(timeLineData, shipment, shipmentPickUpDeliveries);
+            shipment.TimeLineData = timeLineData;
+        }
+
+        private void FillMainCarraigeFromTimeLine(TimeLineData timeLineData, ShipmentList shipment)
+        {
+
+            var mainCarriageFrom = new TimeLineStop()
+            {
+                LegName = "MainCarriageFrom",
+                City = shipment.MainCarriageFromCity,
+                CountryCode = shipment.MainCarriageFromCountryCode,
+                Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
+                DateType = shipment.MainCarriageATD != null ? "Actual" : "Estimated",
+            };
+            timeLineData.Stops.Add(mainCarriageFrom);
+        }
+        private void FillMainCarraigeToTimeLine(TimeLineData timeLineData, ShipmentList shipment)
+        {
+            var mainCarriageTo = new TimeLineStop()
+            {
+                LegName = "MainCarriageTo",
+                City = shipment.MainCarriageToCity,
+                CountryCode = shipment.MainCarriageToCountryCode,
+                Date = shipment.MainCarriageATA != null ? shipment.MainCarriageATA : shipment.MainCarriageETA,
+                DateType = shipment.MainCarriageATA != null ? "Actual" : "Estimated",
+            };
+
+            timeLineData.Stops.Add(mainCarriageTo);
+        }
+        private void FillPickUpTimeLine(TimeLineData timeLineData, ShipmentList item, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
+        {
+            var firstPickup = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            if (firstPickup == null)
+            {
+                return;
+            }
+            int tenant = firstPickup.Tenant;
+            var pickup = new TimeLineStop()
+            {
+                LegName = "Pickup",
+                City = "",
+                CountryCode = "",
+                Date = firstPickup.ATD != null ? firstPickup.ATD : firstPickup.ETD,
+                DateType = firstPickup.ATD != null ? "Actual" : "Estimated",
+            };
+            this.FillPickUpCityAndCountry(pickup, firstPickup, tenant);
+            timeLineData.Stops.Add(pickup);
+        }
+        private void FillPickUpCityAndCountry(TimeLineStop timeLineData, ShipmentPickUpDelivery firstPickup, int tenant)
+        {
+            switch (firstPickup.PickUpDeliveryFromTypeCode)
+            {
+                case "PART":
+                    {
+                        if (!string.IsNullOrEmpty(firstPickup.FromPartnerCardId))
+                        {
+                            if (!string.IsNullOrEmpty(firstPickup.FromAddressId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(firstPickup.FromAddressId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    timeLineData.City = myPartnerAddress.City;
+                                    timeLineData.CountryCode = myPartnerAddress.Country?.Code;
+                                }
+                            }
+                            else
+                            {
+                                Address myPartnerAddress = addressRepository.GetMainAddressByCardId(firstPickup.FromPartnerCardId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    timeLineData.City = myPartnerAddress.City;
+                                    timeLineData.CountryCode = myPartnerAddress.Country?.Code;
+                                }
+                            }
+                        }
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        if (!string.IsNullOrEmpty(firstPickup.FromPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, firstPickup.FromPortId, true);
+                            if (myPort != null)
+                            {
+                                timeLineData.City = myPort.EnglishName;
+                                timeLineData.CountryCode = myPort.CountryCode;
+                            }
+                        }
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        timeLineData.City = firstPickup.FromAddressCity;
+                        timeLineData.CountryCode = firstPickup.FromAddressCountry?.Code;
+                        break;
+                    }
+            }
+        }
+        private void FillDeliveryTimeLine(TimeLineData timeLineData, ShipmentList item, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
+        {
+            var finalDelivery = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            if (finalDelivery == null)
+            {
+                return;
+            }
+            int tenant = finalDelivery.Tenant;
+            var delivery = new TimeLineStop()
+            {
+                LegName = "Delivery",
+                City = "",
+                CountryCode = "",
+                Date = finalDelivery.ATD != null ? finalDelivery.ATD : finalDelivery.ETD,
+                DateType = finalDelivery.ATD != null ? "Actual" : "Estimated",
+            };
+            this.FillDeliveryCityAndCountry(delivery, finalDelivery, tenant);
+            timeLineData.Stops.Add(delivery);
+
+        }
+        private void FillDeliveryCityAndCountry(TimeLineStop timeLineData, ShipmentPickUpDelivery finalDelivery, int tenant)
+        {
+            switch (finalDelivery.PickUpDeliveryToTypeCode)
+            {
+                case "PART":
+                    {
+                        if (!string.IsNullOrEmpty(finalDelivery.ToPartnerCardId))
+                        {
+                            if (!string.IsNullOrEmpty(finalDelivery.ToAddressId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(finalDelivery.ToAddressId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    timeLineData.City = myPartnerAddress.City;
+                                    timeLineData.CountryCode = myPartnerAddress.Country?.Code;
+                                }
+                            }
+                            else
+                            {
+                                Address myPartnerAddress = addressRepository.GetMainAddressByCardId(finalDelivery.ToPartnerCardId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    timeLineData.City = myPartnerAddress.City;
+                                    timeLineData.CountryCode = myPartnerAddress.Country?.Code;
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        if (!string.IsNullOrEmpty(finalDelivery.ToPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, finalDelivery.ToPortId, true);
+                            if (myPort != null)
+                            {
+                                timeLineData.City = myPort.EnglishName;
+                                timeLineData.CountryCode = myPort.CountryCode;
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        timeLineData.City = finalDelivery.ToAddressCity;
+                        timeLineData.CountryCode = finalDelivery.ToAddressCountry?.Code;
+                        break;
+                    }
+            }
         }
 
         [HttpGet]
