@@ -102040,7 +102040,7 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
-    CopyToDW="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
