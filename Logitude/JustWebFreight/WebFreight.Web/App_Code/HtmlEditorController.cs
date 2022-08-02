@@ -260,7 +260,11 @@ namespace WebFreight.Web.App_Code
                 string reslut = "";
                 string htmlString = filter.HtmlString;
                 if (string.IsNullOrEmpty(htmlString)) htmlString = "";
-                htmlString = htmlString.Replace("\"", "'");
+             
+                if(!FeatureToggleHelper.HasFeatureToggle("HDF", authToken.Tenant))
+                {
+                    htmlString = htmlString.Replace("\"", "'");
+                }
                 htmlString = htmlEditorHelper.FixPageBreakInlineStyle(htmlString);
 
                 byte[] htmlDataFile = GetBytes(htmlString);
