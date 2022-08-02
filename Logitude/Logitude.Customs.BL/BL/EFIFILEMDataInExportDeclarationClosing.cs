@@ -26,7 +26,6 @@ namespace Logitude.Customs.BL.BL
                 entityPM.DeclarationId = dec.Id;
                 entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                 entityPM.Tenant = tenant;
-               
                 entityPM = SetEFIFILEMData(declarationid, tenant, entityPM, dec);
             }
 
