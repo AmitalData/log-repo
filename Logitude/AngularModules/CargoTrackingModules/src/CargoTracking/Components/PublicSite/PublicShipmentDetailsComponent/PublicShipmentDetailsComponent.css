@@ -656,3 +656,11 @@ ul.line-list li.tick {
     }
 }
 
+.FlipImgDiagonal {
+    transform: rotate(225deg) !important;
+}
+.circle-image .direction-icon {
+    position: relative;
+    bottom: -30px;
+    transform: rotate(45deg);
+}

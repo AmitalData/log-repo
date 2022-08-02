@@ -616,3 +616,17 @@ li a {
     display: inline;
     margin-left: 10px
 }
+
+.FlipImgVert {
+    transform: rotate(180deg);
+}
+
+.FlipImgDiagonal {
+    transform: rotate(225deg) !important;
+}
+
+.direction-icon {
+    position: relative;
+    bottom: -30px;
+    transform: rotate(45deg);
+}
