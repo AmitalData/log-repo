@@ -3,7 +3,7 @@ Feature: Automations Creation and Updating for Follow Up Result
     The user creates Automations on update,and edit it from the Automations Module,and test the automation from shipment side.
 
     #follow up result
-    Scenario: FU Creation automation when conditions of ALL area are fit
+    Scenario: FU Creation when conditions of ALL area are fit
         Given the user logged in
         And the user navigates to automations menu
         And the user select "Shipments" as entity
@@ -94,7 +94,7 @@ Feature: Automations Creation and Updating for Follow Up Result
         When update automation
         Then the automation should updated successfully
 
-    Scenario: FU Creation automation when one of the ANY conditions is not fit
+    Scenario: FU Creation when one of the ANY conditions is not fit
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And the user add automation "OnUpdate" with automation detailes as following
@@ -139,7 +139,7 @@ Feature: Automations Creation and Updating for Follow Up Result
         When update automation
         Then the automation should updated successfully
 
-    Scenario: FU Creation automation when no condition of the Any conditions is fit
+    Scenario: FU Creation when no condition of the Any conditions is fit
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And the user add automation "OnUpdate" with automation detailes as following
@@ -184,7 +184,7 @@ Feature: Automations Creation and Updating for Follow Up Result
         When update automation
         Then the automation should updated successfully
 
-    Scenario: FU Creation automation when one of the All conditions is not fit
+    Scenario: FU Creation when one of the All conditions is not fit
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And the user add automation "OnUpdate" with automation detailes as following
