@@ -598,7 +598,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //    ServerSideSortable: true
         //});
         this.columns.push({
-            FieldName: 'CustomerReference2',
+            FieldName: 'CustomerReference3',
             DataTypeCode: 'String',
             Display: 'Reference #',
             Styles: { width: '108px' },
@@ -606,7 +606,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/CustomReferenceListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: "CustomerReference2"
+            SortByName: "CustomerReference3"
         });
 
         this.columns.push({
