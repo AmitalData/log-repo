@@ -109,8 +109,15 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.FinalThirdCargoId = '';
                 }
                 
-               
-                
+                if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A' && !AppTool.IsNullOrEmpty(this.EntityPM.MAIN_AWB)) {
+                    this.EntityPM.IsDirty = true;
+                    this.EntityPM ? this.EntityPM.FinalManifestNumber = this.EntityPM.MAIN_AWB : null;
+                }
+
+                if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A') {
+                    this.EntityPM.IsDirty = true;
+                    this.EntityPM.FinalCargoTypeCode = "1";
+                }
 
                 /*this.EntityPM = new ExportDeclarationClosingDataPM();
                 this.EntityPM.DeclarationId = id;
@@ -211,10 +218,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     get FinalCargoTypeCode() { 
-        if(AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode) && this.DecPM.Direction=='E' && this.DecPM.TransportModeId=='A'  ){
-               return "1"
-         }
-        return this.EntityPM ? this.EntityPM.FinalCargoTypeCode : null; }
+
+      return this.EntityPM ? this.EntityPM.FinalCargoTypeCode : null; }
     set FinalCargoTypeCode(value: string) {
         if (this.EntityPM.FinalCargoTypeCode != value) {
             this.EntityPM.FinalCargoTypeCode = value;
@@ -222,14 +227,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         }
     }
 
-    get FinalManifestNumber() { 
-        if(AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction=='E' && this.DecPM.TransportModeId=='A' && !AppTool.IsNullOrEmpty(this.EntityPM.MAIN_AWB) ){
-           return  this.EntityPM ? this.EntityPM.MAIN_AWB: null;
-        }
-        return this.EntityPM ? this.EntityPM.FinalManifestNumber : null; }
+    get FinalManifestNumber() {
+    
+        return this.EntityPM ? this.EntityPM.FinalManifestNumber : null;
+    }
+
     set FinalManifestNumber(value: string) {
-        
-        if (this.EntityPM.FinalManifestNumber != value) {
+         if (this.EntityPM.FinalManifestNumber != value) {
             this.EntityPM.FinalManifestNumber = value;
             this.EntityPM.IsDirty = true;
         }
@@ -274,14 +278,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         this.entityArgs.SkipCtor = false;
     }
     SendButtonClicked(event: CustomSendOptionsArgs) {
-
         if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
             var msg = " שדה תאריך טעינה שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
         else {
-           // if (this.EntityPM.IsDirty) {
+            if (this.EntityPM.IsDirty) {
                 if (this.IsNew) {
                     this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
 
@@ -298,10 +301,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         }
                     });
                 }
-           // }
-            //else {
-            //    this.SendAmendmentCloseDeclaration(event);
-            //}
+            }
+            else {
+                this.SendAmendmentCloseDeclaration(event);
+            }
         }
     }
 
