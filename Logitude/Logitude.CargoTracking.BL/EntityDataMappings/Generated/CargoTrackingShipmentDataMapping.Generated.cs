@@ -139,7 +139,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         InvoicedDone, 
 	         InvoicedNotes, 
 	         InvoicedExceptionReason, 
-	         SHOHouse,
+	         SHOHouse, 
+	         ChargeableWeightInKG,
 	      }
 
 
@@ -281,7 +282,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         InvoicedNotes, 
 	         InvoicedExceptionReason, 
 	         ApprovedByUserName, 
-	         SHOHouse,
+	         SHOHouse, 
+	         ChargeableWeightInKG,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -863,6 +865,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SHOHouse))
             {
 				entityPOCO.SHOHouse = entityPM.SHOHouse;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightInKG))
+            {
+				entityPOCO.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
 			}
 			}
 
@@ -1449,6 +1456,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.SHOHouse = entityPOCO.SHOHouse;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChargeableWeightInKG))
+            {
+					entityPM.ChargeableWeightInKG = entityPOCO.ChargeableWeightInKG;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -2028,6 +2040,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SHOHouse))
             {
                 oldEntityPM.SHOHouse = entityPM.SHOHouse;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightInKG))
+            {
+                oldEntityPM.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
             }
 			
 		}

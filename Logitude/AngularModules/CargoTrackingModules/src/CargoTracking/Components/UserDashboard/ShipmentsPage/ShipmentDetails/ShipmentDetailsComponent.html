@@ -598,6 +598,11 @@
                                     style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                             </div>
                         </div>
+                        <div>
+                            <div class="title">Chargeable Weight</div>
+                            <div style="display:inline" class="description">{{cargoTrackingShipmentPM.ChargeableWeightInKG || 0 }}
+                            </div><span style="display:inline"> KG</span>
+                        </div>
                         <div class="hide-mobile"
                             *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A' && !IsOrderShipment">
                             <div class="title">containers</div>

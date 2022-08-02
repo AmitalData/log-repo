@@ -764,6 +764,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ChargeableWeightInKG"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"
