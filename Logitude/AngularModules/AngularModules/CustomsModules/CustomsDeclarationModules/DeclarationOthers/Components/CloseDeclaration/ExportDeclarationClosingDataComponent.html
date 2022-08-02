@@ -116,7 +116,7 @@
                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'A'  && this.EntityPM.MAIN_AWB === null? '' :'FinalManifestNumber'" [InputType]="'text'"
+                                    <LogTextBox [ObjectFieldName]="'FinalManifestNumber'" [InputType]="'text'"
                                         [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [Placeholder]="DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O' ? '' : 'XXX-XXXXXXXX'"
                                         [HideColumns]="true" [Text]="FinalManifestNumber"></LogTextBox>
                                 </td>
