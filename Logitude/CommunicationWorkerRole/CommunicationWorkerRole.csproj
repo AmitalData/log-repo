@@ -394,6 +394,7 @@
     <Compile Include="EntityMapping\ShipmentOrderPmToAmMapping.cs" />
     <Compile Include="CargoTrackingImporterApprovalReceivedWR.cs" />
     <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
+    <Compile Include="OpportunityStageChangingWorkerRole.cs" />
     <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />
     <Compile Include="Services\ContainerTraking\RequestContainerStatusService.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
