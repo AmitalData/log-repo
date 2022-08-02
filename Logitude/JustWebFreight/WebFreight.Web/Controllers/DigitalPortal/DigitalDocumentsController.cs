@@ -129,7 +129,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         string myFileName = isExternalURL ? item.FileName : item.CalculatedFileName;
                         string myFileExtension = item.FileExtension;
                         DocumentOutCopy documentOutCopy = null;
-
+                        var invoiceDocument = invoices.Where(d => d.Id == item.ChildEntityId).FirstOrDefault();
                         if (item.DirectionCode == "O" && item.DocumentId == null)
                         {
                             List<DocumentOutCopy> myCopies = allcopies.Where(d => d.DocumentOutId == item.Id).ToList();
@@ -191,6 +191,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             IsDigitallySigned = item.IsDigitallySigned,
                             Reference = item.ChildEntityReference,
                             ReceivedDate = item.ReceivedDate,
+                            PrintDate = invoiceDocument?.PrintDate,
+                            IsPrinted = invoiceDocument?.IsPrinted,
                         });
                     }
                 }

@@ -32,7 +32,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.CommonDataModel;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
@@ -47,10 +46,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
-
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -71,6 +67,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                string shipmentLevelCodeValue = "";
+                string partnerTypeName = "";
+                var partnerTypeValue = FixFilter(filters.Filter2Value);
+                var partnerTypeId = FixFilter(filters.Filter1Value);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckSharedContactAuthentication(tenant, partnerTypeId);
                 bool isFullTextSearch = false;
                 var myTenantRepository = new TenantRepository(tenant);
                 var myTenant = myTenantRepository.GetSingleTenant(tenant);
@@ -89,11 +91,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     SortDirectin = filters.SortDirection,
                     QueryFilterItems = new List<QueryFilterItem>(),
                 };
-
-                string shipmentLevelCodeValue = "";
-                string partnerTypeName = "";
-                var partnerTypeValue = FixFilter(filters.Filter2Value);
-                var partnerTypeId = FixFilter(filters.Filter1Value);
 
                 if (partnerTypeValue == "CS")
                 {
