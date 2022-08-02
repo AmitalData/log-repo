@@ -109,7 +109,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             }
 
             IQueryable<QuoteList> result = from f in iQueryable.Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard").Include("MoveType").Include("ShipmentSubType")
-                                                               .Include("ShipperCard").Include("CustomerCard").Include("ValidByType").Include("ConsigneeNotImporterCard")
+                                                               .Include("ShipperCard").Include("CustomerCard").Include("ValidByType").Include("ConsigneeNotImporterCard").Include("ShipperNotExporterCard")
                                            select new QuoteList()
                                            {
                                                IsClosed = f.IsClosed,
@@ -284,6 +284,11 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                ConsigneeNotImporterId = f.ConsigneeNotImporterId,
                                                ConsigneeNotImporterName = f.ConsigneeNotImporterCard != null ? f.ConsigneeNotImporterCard.EnglishName : null,
                                                ConsigneeNotImporterNote = f.ConsigneeNotImporterCard != null ? f.ConsigneeNotImporterCard.Notes : null,
+                                               ShipperNotExporterAddressId = f.ShipperNotExporterAddressId,
+                                               ShipperNotExporterContactId = f.ShipperNotExporterContactId,
+                                               ShipperNotExporterId = f.ShipperNotExporterId,
+                                               ShipperNotExporterName = f.ShipperNotExporterCard != null ? f.ShipperNotExporterCard.EnglishName : null,
+                                               ShipperNotExporterNote = f.ShipperNotExporterCard != null ? f.ShipperNotExporterCard.Notes : null,
                                                NumberOfFollowUps = f.NumberOfFollowUps,
                                                CustomerId = f.CustomerId,
                                                IsDangerous = f.IsDangerous,
@@ -1723,7 +1728,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             #region ConsigneeNotImporter
             this.SetConsigneeNotImporterDetails(entityPM, entityPOCO, addressRepository);
-           
+
+            #endregion
+
+            #region ShipperNotExporter
+            this.SetShipperNotExporterDetails(entityPM, entityPOCO, addressRepository);
+
             #endregion
 
             #region Shipper
@@ -2603,6 +2613,28 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPM.ConsigneeNotImporterAddressId = address.Id;
         }
 
+        private void SetShipperNotExporterDetails(QuotePM entityPM, Quote entityPOCO, AddressRepository addressRepository)
+        {
+            if (entityPOCO.ShipperNotExporterId == null)
+            {
+                return;
+            }
+            entityPM.ShipperNotExporterId = entityPOCO.ShipperNotExporterId;
+            entityPM.ShipperNotExporterAddressId = entityPOCO.ShipperNotExporterAddressId;
+            entityPM.ShipperNotExporterContactId = entityPOCO.ShipperNotExporterContactId;
+
+            Card loadedCard = CardRepository.GetSingleCard(entityPOCO.ShipperNotExporterId, entityPOCO.Tenant, true);
+            entityPM.ShipperNotExporterName = loadedCard.EnglishName;
+            entityPM.ShipperNotExporterNote = loadedCard.Notes;
+
+            Address address = addressRepository.GetMainAddressByCardId(entityPOCO.FreelancerId, entityPOCO.Tenant);
+            if (address == null)
+            {
+                return;
+            }
+            entityPM.ShipperNotExporterAddressId = address.Id;
+        }
+        
         private string GetSummaryMarkup(QuotePM quoteEntityPM)
         {
             double? summaryCostAmount = 0;

@@ -176,6 +176,10 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.NotifyReference2 = entityPM.NotifyReference2;
             entityPoco.NotifyAddressId = entityPM.NotifyAddressId;
             entityPoco.NotifyContactId = entityPM.NotifyContactId;
+            entityPoco.ShipperNotExporterReference = entityPM.ShipperNotExporterReference;
+            entityPoco.ShipperNotExporterId = entityPM.ShipperNotExporterId;
+            entityPoco.ShipperNotExporterAddressId = entityPM.ShipperNotExporterAddressId;
+            entityPoco.ShipperNotExporterContactId = entityPM.ShipperNotExporterContactId;
             entityPoco.ConsigneeNotImporterId = entityPM.ConsigneeNotImporterId;
             entityPoco.ConsigneeNotImporterReference = entityPM.ConsigneeNotImporterReference;
             entityPoco.ConsigneeNotImporterAddressId = entityPM.ConsigneeNotImporterAddressId;
@@ -261,6 +265,14 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             #endregion
 
             #region Partners
+            if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
+            {
+                Card myCard = CardRepository.GetSingleCard(entityPM.ShipperNotExporterId, tenant, true);
+                if (myCard != null)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
+                }
+            }
             if (!string.IsNullOrEmpty(entityPM.ConsigneeNotImporterId))
             {
                 Card myCard = CardRepository.GetSingleCard(entityPM.ConsigneeNotImporterId, tenant, true);

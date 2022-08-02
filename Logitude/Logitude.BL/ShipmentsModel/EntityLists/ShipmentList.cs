@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.ShipmentsModel.EntityLists
-{
+{ 
     public class ShipmentList
     {
         public string Id { get; set; }
@@ -662,5 +662,22 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string DigitalPortalSearchFields { get; set; }
         public int? NumberOfTransshipments { get; set; }
         public string Transshipments { get; set; }
+        public TimeLineData TimeLineData { get; set; }
+    }
+
+    public class TimeLineData
+    {
+        public TimeLineStop Pickup { get; set; }
+        public TimeLineStop MainCarriageFrom { get; set; }
+        public TimeLineStop MainCarriageTo { get; set; }
+        public TimeLineStop Delivery { get; set; }
+    }
+
+    public class TimeLineStop
+    {
+        public string CountryCode { get; set; }
+        public string City { get; set; }
+        public DateTime? Date { get; set; }
+        public string DateType { get; set; }
     }
 }

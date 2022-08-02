@@ -567,5 +567,14 @@ export class ShipmentList {
 		DigitalPortalSearchFields: string;
 		NumberOfTransshipments: number;
 		Transshipments: string;
+		TimeLineData: string;
+		Pickup: string;
+		MainCarriageFrom: string;
+		MainCarriageTo: string;
+		Delivery: string;
+		CountryCode: string;
+		City: string;
+		Date: Date;
+		DateType: string;
 	
 }

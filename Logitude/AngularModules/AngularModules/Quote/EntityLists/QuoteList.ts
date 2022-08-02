@@ -184,6 +184,11 @@ export class QuoteList {
 		ConsigneeNotImporterContactId: string;
 		ConsigneeNotImporterName: string;
 		ConsigneeNotImporterNote: string;
+		ShipperNotExporterId: string;
+		ShipperNotExporterAddressId: string;
+		ShipperNotExporterContactId: string;
+		ShipperNotExporterName: string;
+		ShipperNotExporterNote: string;
 		NumberOfFollowUps: number;
 		IsDangerous: boolean;
 		QuoteHTMLDocumentId: string;

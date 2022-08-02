@@ -32,6 +32,8 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Data.CommonDataModel;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -42,7 +44,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
-
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
@@ -69,17 +70,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
                 int tenant = authToken.Tenant;
                 bool isFullTextSearch = false;
-                TenantRepository myTenantRepository = new TenantRepository(tenant);
-                Tenant myTenant = myTenantRepository.GetSingleTenant(tenant);
+                var myTenantRepository = new TenantRepository(tenant);
+                var myTenant = myTenantRepository.GetSingleTenant(tenant);
                 if (myTenant != null)
                 {
                     isFullTextSearch = myTenant.IsFullTextSearchEnabled;
                 }
-                QueryOperations queryOperations = new QueryOperations()
+
+                var queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "Shipment",
                     PageIndex = filters.PageIndex,
@@ -90,13 +90,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     QueryFilterItems = new List<QueryFilterItem>(),
                 };
 
-
                 string shipmentLevelCodeValue = "";
                 string partnerTypeName = "";
-                var partnerTypeValue = filters.Filter2Value;
-                var partnerTypeId = filters.Filter1Value;
-                if (partnerTypeValue == "null" || partnerTypeValue == "undefined") partnerTypeValue = null;
-                if (partnerTypeId == "null" || partnerTypeId == "undefined") partnerTypeId = null;
+                var partnerTypeValue = FixFilter(filters.Filter2Value);
+                var partnerTypeId = FixFilter(filters.Filter1Value);
 
                 if (partnerTypeValue == "CS")
                 {
@@ -111,11 +108,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (!string.IsNullOrEmpty(partnerTypeId))
                     queryOperations.SetFilter(partnerTypeName, partnerTypeId, false, "Equals", null, false);
+
                 if (!string.IsNullOrEmpty(shipmentLevelCodeValue))
                     queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InList", null, false);
 
-                List<ObjectField> ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
-                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
+                var filterProperties = filters.GetType().GetProperties().ToList();
 
                 for (int i = 1; i <= 10; i++)
                 {
@@ -140,7 +138,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
                         }
                         else
+                        {
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                        }
                     }
                 }
 
@@ -170,11 +170,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                     }
                 }
+
                 string SearchFilterAsWhere = "";
                 List<SqlParameter> parameters = new List<SqlParameter>();
                 string loggedUserEmail = authToken.Email;
-                string loggedContactId = null;
-                if (isFullTextSearch)//Ayman,Ihab and Rabaia
+                if (isFullTextSearch)
                 {
                     var SearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
                     List<string> ShipmentIds = new List<string>();
@@ -188,12 +188,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                 }
 
-
-
                 ShipmentAPiHelper.AddFilters(queryOperations, tenant);
-
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-
                 TenantQuery tenantQuery = new TenantQuery(tenant);
                 TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
                 GenericFilter genericFilter = new GenericFilter();
@@ -208,26 +204,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     shipments = shipments.Where(a => a.SearchFields.Contains(SearchTerm));
                     queryOperations.QueryFilterItems.Remove(MySearchFilter);
                 }
-                shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
 
+                shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
                 QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
                 shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(nonListQueryOperation, shipments);
                 int skippedShipments = queryOperations.PageIndex;
-
-                ShipmentQuery myShipmentQuery = new ShipmentQuery(shipmentRepository);
-                var sss = IQueryableExtensions.ToTraceString(shipments);
+                var myShipmentQuery = new ShipmentQuery(shipmentRepository);
                 var entityLists = myShipmentQuery.GetIQueryableShipmentList(shipments, tenant);
+                entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
 
-                entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);
-                //if (ShipmentIds != null && ShipmentIds.Count > 0)
-                //{
-                //    entityLists = entityLists.Where(a => ShipmentIds.Contains(a.Id));
-                //}
-                // var MySql = ((System.Data.Objects.ObjectQuery)entityLists).ToTraceString();
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
                     PropertyInfo propInfo = typeof(ShipmentList).GetProperty(queryOperations.SortByColumnName);
@@ -291,30 +279,20 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
                 }
 
-                ServiceResponse response = new ServiceResponse();
-
+                var response = new ServiceResponse();
                 int count = 0;
                 if (filters.GetCount && string.IsNullOrEmpty(SearchFilterAsWhere))
                 {
                     response.Count = entityLists.Count();
                 }
+
                 entityLists = System.Data.Entity.QueryableExtensions.Skip(entityLists, () => skippedShipments);
                 entityLists = System.Data.Entity.QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
-                //entityLists = entityLists.Skip(skippedShipments);
-                //entityLists = entityLists.Take(queryOperations.PageSize);
                 List<ShipmentList> listQuery;
-                //string loggedUserEmail = authToken.Email;
-                //string loggedContactId = null;
-                //ContactQuery contactQuery = new ContactQuery(tenant);
-                //ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
-                //if (loggedContact != null)
-                //{
-                //    loggedContactId = loggedContact.Id;
-                //} 
-                if (isFullTextSearch)//Ayman,Ihab and Rabaia
+                if (isFullTextSearch)
                 {
                     TraceStringValues MySql;
-                    MySql = IQueryableExtensions.ToTraceString<ShipmentList>(entityLists);//.ToString().Replace("\r\n", "").ToLower();
+                    MySql = IQueryableExtensions.ToTraceString<ShipmentList>(entityLists);
                     if (!string.IsNullOrEmpty(SearchFilterAsWhere) && MySql.TSQL.ToLower().Contains("where"))
                     {
                         var regex = new Regex(Regex.Escape("WHERE"), RegexOptions.IgnoreCase);
@@ -322,46 +300,56 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         var regex1 = new Regex(Regex.Escape("WHERE [Project1].[row_number] > "), RegexOptions.IgnoreCase);
                         MySql.TSQL = regex1.Replace(MySql.TSQL, "WHERE [Project1].[row_number] > 0 --", 1);
-                        //MySql = MySql.Replace("where ", SearchFilterAsWhere + " and ");
                     }
-                    //parameters.Concat();
+
                     foreach (var item in MySql.TSQLParams)
                     {
                         parameters.Add(new SqlParameter(item.Name, item.Value));
                     }
+
                     IShipmentsContext context = ShipmentsContext.GetContext(tenant);
                     ShipmentsContext activeContext = context.GetActiveDbContext() as ShipmentsContext;
-                    //var mylistQuery = activeContext.Database.SqlQuery<ShipmentDataView>(MySql.TSQL, parameters.ToArray()).AsQueryable();
                     listQuery = activeContext.Database.SqlQuery<ShipmentList>(MySql.TSQL, parameters.ToArray()).ToList();
-                    //listQuery = myShipmentQuery.GetIQueryableShipmentList(mylistQuery1.AsQueryable(), tenant).ToList(); 
                 }
                 else
                 {
                     listQuery = entityLists.ToList();
                 }
 
+                ShipmentService service = new ShipmentService(tenant);
+                service.BuildShipmentListWithTimeLine(listQuery, tenant);
                 response.Result = listQuery;
                 if (filters.GetCount && !string.IsNullOrEmpty(SearchFilterAsWhere))
                 {
                     response.Count = listQuery.Count();
                 }
+
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 if (filters.GetCount)
                 {
                     reponseMessage.Headers.Add("TotalCount", count.ToString());
-
                 }
 
                 return reponseMessage;
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
 
+        private string FixFilter(string filter)
+        {
+            string myResult = filter;
+
+            if (!string.IsNullOrWhiteSpace(myResult) && myResult.ToLower().Equals("all"))
+            {
+                myResult = null;
+            }
+
+            return myResult;
         }
 
         [HttpGet]
@@ -386,30 +374,24 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         public List<TraceEventPM> GetEntityEvents(string entityId, string objectTableName, string partnerType, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-
-            List<TraceEventPM> result = new List<TraceEventPM>();
-
-            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
-            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            var result = new List<TraceEventPM>();
+            var objectTabelRepository = new ObjectTableRepository(tenant);
+            var objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
             if (objectTable != null)
             {
-                string objectTableId = objectTable.Id;
-
-                TraceEventRepository traceEventsRepository = new TraceEventRepository(tenant);
-                TraceEventQuery traceEventQuery = new TraceEventQuery(traceEventsRepository);
-
-                List<TraceEventPM> data = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTableId).ToList();
+                var objectTableId = objectTable.Id;
+                var traceEventsRepository = new TraceEventRepository(tenant);
+                var traceEventQuery = new TraceEventQuery(traceEventsRepository);
+                var data = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTableId).ToList();
 
                 if (partnerType == "AG")
                 {
                     result = data.Where(d => d.IsAgentView).ToList();
                 }
-
                 else
                 {
                     result = data.Where(d => d.IsCustomerView).ToList();
                 }
-
             }
 
             return result.OrderByDescending(s => s.EventDateTime).ToList();

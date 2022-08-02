@@ -2066,6 +2066,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public string AccountManagerUserId { get; set; }
         public string AccountManagerUserName { get; set; }
+        public string AccountManagerUserEmail { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ManifestReason { get; set; }

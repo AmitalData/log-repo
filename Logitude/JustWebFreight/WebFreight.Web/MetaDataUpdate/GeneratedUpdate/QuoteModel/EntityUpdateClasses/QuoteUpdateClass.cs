@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteUpdateClass
    {  		
-		public const string HashString = "a15e2ae2af28c8da9b4c9779d32eb4e9";
+		public const string HashString = "1079faf851489f20acfb377062720960";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16973,6 +16973,263 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipperNotExporterContactId",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Contact",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  true,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShipperNotExporterContactId",
+					  						ListPropertyPath =  "ShipperNotExporterContactId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Quote",
+					  						ValidForQuerySection2 =  "QuoteFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "ShipperNotExporterContactId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShipperNotExporterContactId",
+					  						DefaultText =  "Shipper Not Exporter's Contact",
+					  						ShortFieldLable =  "ShipperNotExporterContactId",
+					  						ShortFieldLableDefaultText =  "Shipper Not Exporter",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "ShipperNotExporterContactId",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipperNotExporterAddressId",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Address",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  true,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShipperNotExporterAddressId",
+					  						ListPropertyPath =  "ShipperNotExporterAddressId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Quote",
+					  						ValidForQuerySection2 =  "QuoteFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "ShipperNotExporterAddressId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShipperNotExporterAddressId",
+					  						DefaultText =  "Shipper Not Exporter's Address",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "ShipperNotExporterAddressId",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipperNotExporterId",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Card",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  true,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShipperNotExporterId",
+					  						ListPropertyPath =  "ShipperNotExporterId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Quote",
+					  						ValidForQuerySection2 =  "QuoteFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "ShipperNotExporterId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShipperNotExporterId",
+					  						DefaultText =  "Shipper Not Exporter",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "ShipperNotExporterId",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipperNotExporterReference",
+					  						ObjectTableName =  "Quote",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  50,
+					  						IsRequired =  false,
+					  						CopyToDW =  true,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShipperNotExporterReference",
+					  						ListPropertyPath =  "ShipperNotExporterReference",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Quote",
+					  						ValidForQuerySection2 =  "QuoteFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "ShipperNotExporterReference",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShipperNotExporterReference",
+					  						DefaultText =  "Shipper Not Exporter Reference",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "ShipperNotExporterReference",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -19007,6 +19264,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
  		   TextCode QuoteTextCode_QuoteFPackageTypeQuantityShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.F.PackageTypeQuantity.Short", DefaultText = "Quantity",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteTextCode_QuoteSGenerateSalesLocalCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.GenerateSalesLocalCharges", DefaultText = "Generate Sales Local Charges",LocalDefaultText = @"Generate Sales Local Charges", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOOverviewShipperNotExporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Overview.ShipperNotExporter", DefaultText = "Shipper Not Exporter",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteShipperNotExporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.ShipperNotExporter", DefaultText = "Shipper Not Exporter",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersAddShipperNotExporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.AddShipperNotExporter", DefaultText = "Add Shipper Not Exporter",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersEditShipperNotExporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.EditShipperNotExporter", DefaultText = "Edit Shipper Not Exporter",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBPartnersAddShipperNotExporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Partners.AddShipperNotExporter", DefaultText = "Add Shipper Not Exporter",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
