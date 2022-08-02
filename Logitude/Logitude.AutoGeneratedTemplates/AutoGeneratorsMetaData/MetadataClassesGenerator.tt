@@ -652,7 +652,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 					 <#+
 		   foreach (XAttribute p in field.Attributes())
 				{  
-					if(p.Name != "Id" && p.Name != "ObjectFieldNotRequired" && p.Name != "IsForeignKey" && p.Name != "ForeignEntity"&& p.Name != "NavigationPropertyName"&& p.Name != "IsPrimaryKey"&& p.Name != "Order" && p.Name != "IsNullable" && p.Name != "HasDataBaseField"&& p.Name != "HasPMField" && p.Name != "AssociationName" && p.Name != "ThisKey" && p.Name != "OtherKey" && p.Name != "IsComposition" && p.Name != "NoMetaDataField" && p.Name != "GenerateInList" 
+					if(p.Name != "Id" && p.Name != "ObjectFieldNotRequired" && p.Name != "IsPrimaryKey"&& p.Name != "Order" && p.Name != "IsNullable" && p.Name != "HasDataBaseField"&& p.Name != "HasPMField" && p.Name != "AssociationName" && p.Name != "IsComposition" && p.Name != "NoMetaDataField" && p.Name != "GenerateInList" 
 					&& p.Name != "IsSpellCheckedFullFieldLable" && p.Name != "IsSpellCheckedHelpLocalDefaultText" && p.Name != "IsSpellCheckedShortLocalDefaultText" && p.Name != "IsSpellCheckedListLocalDefaultText"
 					&& p.Name != "IsChecked" && p.Name != "IsDeleted" && p.Name != "IsNew" && p.Name != "IsRequiered"  && p.Name != "LookUpTableId" && p.Name != "DontBuildRelationOnDB" && p.Name != "ShortName" && p.Name != "OldNames"
 					&& p.Name != "FullNameTextCodeId"
@@ -666,7 +666,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 					if(!string.IsNullOrEmpty(p.Value.Trim('"')))
 					{
 					   var propValue = p.Value.Replace("\n",@"\n");
-					   if(propValue.StartsWith("\"") && propValue.EndsWith("\"") && p.Name.ToString().Contains("DefaultText"))
+					   if((propValue.StartsWith("\"") && propValue.EndsWith("\"") && p.Name.ToString().Contains("DefaultText")) || p.Name == "ForeignEntity" || p.Name == "NavigationPropertyName" || p.Name == "ThisKey" || p.Name == "OtherKey")
 					   {
                         //&quot;Allows recording AR Payments in negative amounts using payment method &quot;Offset&quot;&quot;
 					     //propValue =  (!propValue.Trim('"').Contains("\"")? "@":"") + '"'  + propValue.Trim('"').Replace("\"",  "''") + '"';

@@ -96,6 +96,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.ListTextCodeCode = objectFieldPM.ListTextCodeCode;
             objectField.AdditionalQuerySections = objectFieldPM.AdditionalQuerySections;
 
+            objectField.LeftKey = objectFieldPM.LeftKey;
+            objectField.RightKey = objectFieldPM.RightKey;
+            objectField.IsForeignKey = objectFieldPM.IsForeignKey;
+            objectField.ForeignEntity = objectFieldPM.ForeignEntity;
+            objectField.NavigationPropertyName = objectFieldPM.NavigationPropertyName;
+
 
             if (objectFieldModification != null)
             {

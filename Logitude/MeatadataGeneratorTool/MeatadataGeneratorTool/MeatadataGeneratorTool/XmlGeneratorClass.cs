@@ -1308,11 +1308,11 @@ namespace MeatadataGeneratorTool
 
                 SetAttribute("IsNullable", f.IsNullable.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsForeignKey", f.IsForeignKey.ToString().ToLower(), fieldElement, null);
-                SetAttribute("ForeignEntity", f.ForeignEntity, fieldElement, null);
+                SetAttribute("ForeignEntity", GetStringValue(f.ForeignEntity), fieldElement, null);
 
                 SetAttribute("DontBuildRelationOnDB", f.DontBuildRelationOnDB.ToString().ToLower(), fieldElement, null);
 
-                SetAttribute("NavigationPropertyName", f.NavigationPropertyName, fieldElement, null);
+                SetAttribute("NavigationPropertyName", GetStringValue(f.NavigationPropertyName), fieldElement, null);
 
                 SetAttribute("IsPrimaryKey", f.IsPrimaryKey.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayInList", f.DisplayInList.ToString().ToLower(), fieldElement, null);
@@ -1519,7 +1519,7 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("Code", GetStringValue(f.Code), ScreenElement, null);
                 }
-              
+
 
                 SetAttribute("NumberOfColumns", "2", ScreenElement, null);
                 SetAttribute("NumberOfRows", "1", ScreenElement, null);

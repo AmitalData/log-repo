@@ -64,6 +64,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ShortNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.AdditionalQuerySections).HasMaxLength(200).IsUnicode(false);
 
+            this.Property(t => t.LeftKey).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.RightKey).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.IsForeignKey);
+            this.Property(t => t.ForeignEntity).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.NavigationPropertyName).HasMaxLength(100).IsUnicode(false);
 
 
             // Table & Column Mappings
@@ -149,6 +154,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ShortNameTextCodeCode).HasColumnName("ShortNameTextCodeCode");
             this.Property(t => t.AdditionalQuerySections).HasColumnName("AdditionalQuerySections");
 
+            this.Property(t => t.LeftKey).HasColumnName("LeftKey");
+            this.Property(t => t.RightKey).HasColumnName("RightKey");
+            this.Property(t => t.IsForeignKey).HasColumnName("IsForeignKey");
+            this.Property(t => t.ForeignEntity).HasColumnName("ForeignEntity");
+            this.Property(t => t.NavigationPropertyName).HasColumnName("NavigationPropertyName");
             
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
