@@ -528,11 +528,11 @@ namespace Logitude.Server.Tools
         }
 
 
-        public static void AddEmailCommunicationLogQueue(EmailCommunicationParams communicationParams, int tenant)
+        public static string AddEmailCommunicationLogQueue(EmailCommunicationParams communicationParams, int tenant)
         {
             if (!string.IsNullOrEmpty(communicationParams.To) && communicationParams.To.Contains("system@tenant"))
             {
-                return;
+                return string.Empty;
             }
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             DocumentRepository documentRepository = new DocumentRepository(commonContext);
@@ -620,7 +620,8 @@ namespace Logitude.Server.Tools
 
 			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
 			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", commLog.Tenant.ToString() } }, commLog.Tenant);
-		}
+            return commLog.Id;
+        }
 
     }
 
