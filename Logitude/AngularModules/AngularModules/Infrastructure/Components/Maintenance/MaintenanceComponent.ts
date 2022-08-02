@@ -523,6 +523,7 @@ export class MaintenanceComponent {
                     item.ObjectTableName = "Customs.CustomsRequiredField";
                     item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item)); 
+
                 }
             });
 
@@ -1386,7 +1387,7 @@ export class MaintenanceComponent {
                 }
                 case "MRCF": {
                     var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Title = "קליטת קובץ אישורים מאיקאה להצהרה";
+                    logitudeWindow.Title = "קליטת קובץ םישורים מםיקםה להצהרה";
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 600;
                     logitudeWindow.Width = 700;
@@ -1430,7 +1431,7 @@ export class MaintenanceComponent {
                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                         confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
                         confirmWindow.ShowNoButton
-                        confirmWindow.Show("לעדכן נתוני יבואנים/יצואנים במערכת?");
+                        confirmWindow.Show("לעדכן נתוני יבוםנים/יצוםנים במערכת?");
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
 
@@ -1688,7 +1689,7 @@ export class MaintenanceComponent {
                     //LogitudeViewModel = UnifreightMassageHandler·;
                     //LogitudeCommandId = CreateInvoiceCommand·;
                     //formtitle = הצהרת יבום"
-                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
+                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבום"}';
 
                     var objParams = JSON.parse(json);
                     objParams.Requset = new Array();
