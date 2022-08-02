@@ -205,6 +205,12 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string ConsigneeNotImporterName { get; set; }
         public string ConsigneeNotImporterNote { get; set; }
 
+        public string ShipperNotExporterId { get; set; }
+        public string ShipperNotExporterAddressId { get; set; }
+        public string ShipperNotExporterContactId { get; set; }
+        public string ShipperNotExporterName { get; set; }
+        public string ShipperNotExporterNote { get; set; }
+
         public int? NumberOfFollowUps { get; set; }
         public bool IsDangerous { get; set; }
 

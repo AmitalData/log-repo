@@ -37,6 +37,15 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public virtual Contact ConsigneeNotImporterContact { get; set; }
         public virtual Card ConsigneeNotImporterCard { get; set; }
 
+        public string ShipperNotExporterId { get; set; }
+        public string ShipperNotExporterAddressId { get; set; }
+        public string ShipperNotExporterContactId { get; set; }
+        public string ShipperNotExporterReference { get; set; }
+        public virtual Address ShipperNotExporterAddress { get; set; }
+        public virtual Contact ShipperNotExporterContact { get; set; }
+        public virtual Card ShipperNotExporterCard { get; set; }
+
+
         public string QuoteCustomerTypeCode { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }

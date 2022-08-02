@@ -64,7 +64,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpGet]
-        [Route("DigitalShipment/GetByFilters")]
         public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
         {
             try
@@ -93,8 +92,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 string shipmentLevelCodeValue = "";
                 string partnerTypeName = "";
-                var partnerTypeValue = this.FixFilter(filters.Filter2Value);
-                var partnerTypeId = this.FixFilter(filters.Filter1Value);
+                var partnerTypeValue = FixFilter(filters.Filter2Value);
+                var partnerTypeId = FixFilter(filters.Filter1Value);
 
                 if (partnerTypeValue == "CS")
                 {
@@ -171,6 +170,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                     }
                 }
+
                 string SearchFilterAsWhere = "";
                 List<SqlParameter> parameters = new List<SqlParameter>();
                 string loggedUserEmail = authToken.Email;
@@ -306,6 +306,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         parameters.Add(new SqlParameter(item.Name, item.Value));
                     }
+
                     IShipmentsContext context = ShipmentsContext.GetContext(tenant);
                     ShipmentsContext activeContext = context.GetActiveDbContext() as ShipmentsContext;
                     listQuery = activeContext.Database.SqlQuery<ShipmentList>(MySql.TSQL, parameters.ToArray()).ToList();
@@ -315,8 +316,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     listQuery = entityLists.ToList();
                 }
 
-                IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
-                ShipmentService service = new ShipmentService(objectContext, tenant);
+                ShipmentService service = new ShipmentService(tenant);
                 service.BuildShipmentListWithTimeLine(listQuery, tenant);
                 response.Result = listQuery;
                 if (filters.GetCount && !string.IsNullOrEmpty(SearchFilterAsWhere))
@@ -344,18 +344,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             string myResult = filter;
 
-            if (myResult != null)
+            if (!string.IsNullOrWhiteSpace(myResult) && myResult.ToLower().Equals("all"))
             {
-                switch (myResult.ToLower())
-                {
-                    case "all":
-                    case "null":
-                    case "undefined":
-                        {
-                            myResult = null;
-                            break;
-                        }
-                }
+                myResult = null;
             }
 
             return myResult;

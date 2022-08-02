@@ -664,6 +664,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipments { get; set; }
         public TimeLineData TimeLineData { get; set; }
     }
+
     public class TimeLineData
     {
         public TimeLineStop Pickup { get; set; }

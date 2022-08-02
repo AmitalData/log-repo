@@ -1281,6 +1281,12 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 this.EntityPM.ConsigneeNotImporterContactId = this.CustomerContactId;
                 break;
             }
+            case "SNE": {
+                this.EntityPM.ShipperNotExporterId = this.CustomerId;
+                this.EntityPM.ShipperNotExporterAddressId = this.CustomerAddressId;
+                this.EntityPM.ShipperNotExporterContactId = this.CustomerContactId;
+                break;
+            }
             case "OTH": {
 
                 break;
@@ -3289,6 +3295,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     AgentCopyIsEnabled: boolean = false;
     NotifyCopyIsEnabled: boolean = false;
     ConsigneeNotImporterCopyIsEnabled: boolean = false;
+    ShipperNotExporterCopyIsEnabled: boolean = false;
     MainCarriageCopyIsEnabled: boolean = false;
     ChargesTypesCopyIsEnabled: boolean = false;
     CopyCostIsChecked: boolean = false;
@@ -3416,6 +3423,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.ConsigneeNotImporterCopyIsChecked = true;
         }
 
+        if (!AppTool.IsNullOrEmpty(this.sourceEntityPM.ShipperNotExporterId)) {
+            this.ShipperNotExporterCopyIsEnabled = true;
+            this.ShipperNotExporterCopyIsChecked = true;
+        }
+
         // Routing
         if (this.QuoteSetting) {
             this.MainCarriageCopyIsEnabled = true;
@@ -3531,6 +3543,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             case "CNI":
                 {
                     this.CustomerAddressId = myQuote.ConsigneeNotImporterAddressId;
+                    break;
+                }
+            case "SNE":
+                {
+                    this.CustomerAddressId = myQuote.ShipperNotExporterAddressId;
                     break;
                 }
             case "OTH": {
@@ -3650,6 +3667,24 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
 
             if (this.EntityPM.QuoteCustomerTypeCode == "CNI") {
                 this.EntityPM.CustomerId = this.sourceEntityPM.ConsigneeNotImporterId;
+            }
+        }
+    }
+
+    private shipperNotExporterCopyIsChecked: boolean = false;
+    get ShipperNotExporterCopyIsChecked() { return this.shipperNotExporterCopyIsChecked; }
+    set ShipperNotExporterCopyIsChecked(newValue: boolean) {
+        if (this.shipperNotExporterCopyIsChecked != newValue) {
+            this.shipperNotExporterCopyIsChecked = newValue;
+
+            this.EntityPM.ShipperNotExporterId = !newValue ? null : this.sourceEntityPM.ShipperNotExporterId;
+            this.EntityPM.ShipperNotExporterName = !newValue ? null : this.sourceEntityPM.ShipperNotExporterName;
+            this.EntityPM.ShipperNotExporterNote = !newValue ? null : this.sourceEntityPM.ShipperNotExporterNote;
+            this.EntityPM.ShipperNotExporterAddressId = !newValue ? null : this.sourceEntityPM.ShipperNotExporterAddressId;
+            this.EntityPM.ShipperNotExporterContactId = !newValue ? null : this.sourceEntityPM.ShipperNotExporterContactId;
+
+            if (this.EntityPM.QuoteCustomerTypeCode == "CNI") {
+                this.EntityPM.CustomerId = this.sourceEntityPM.ShipperNotExporterId;
             }
         }
     }

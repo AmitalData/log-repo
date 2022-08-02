@@ -116,9 +116,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ComputingPartnerTranslationRepository computingPartnerTranslationRepository;
         public ShipmentDocsField ShipmentDocsFieldFromWorkerRole;
         public bool isFromEventTrace;
-        public ShipmentService(IShipmentsContext objectContext, int tenant)
+        public ShipmentService(int tenant)
         {
-            this.objectContext = objectContext;
+            this.objectContext = ShipmentsContext.GetContext(tenant);
             this.myCommonContext = CommonDataContext.GetContext(tenant);
             this.myAddressRepository = new AddressRepository(this.myCommonContext);
         }

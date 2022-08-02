@@ -376,6 +376,23 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public bool IsSaleCurrencySameAsCost { get; set; }
         public bool IsMultiCurrency { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipperNotExporterId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipperNotExporterAddressId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipperNotExporterContactId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipperNotExporterName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipperNotExporterNote { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipperNotExporterReference { get; set; }
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ConsigneeNotImporterId { get; set; }

@@ -535,6 +535,11 @@ export class QuoteUtilities {
         shipmentPM.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
 
         //Partners
+        shipmentPM.ShipperNotExporterId = entityPM.ShipperNotExporterId;
+        shipmentPM.ShipperNotExporterContactId = entityPM.ShipperNotExporterContactId;
+        shipmentPM.ShipperNotExporterName = entityPM.ShipperNotExporterName;
+        shipmentPM.ShipperNotExporterNote = entityPM.ShipperNotExporterNote;
+        shipmentPM.ShipperNotExporterReference1 = entityPM.ShipperNotExporterReference;
 
         shipmentPM.ConsigneeNotImporterId = entityPM.ConsigneeNotImporterId;
         shipmentPM.ConsigneeNotImporterContactId = entityPM.ConsigneeNotImporterContactId;

@@ -68,6 +68,14 @@ namespace Logitude.BL.QuoteModel
                 Name = "Consignee Not Importer", 
                 ShowInLOV = true, 
 			});
+			 
+            all.Add(new QuoteCustomerTypeDetails()
+            {    
+                SearchFields = "SNE,Shipper Not Exporter,True,", 
+                Name = "Shipper Not Exporter", 
+                Code = "SNE", 
+                ShowInLOV = true, 
+			});
 			
             return all;
        }

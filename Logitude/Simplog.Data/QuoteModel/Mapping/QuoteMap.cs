@@ -150,6 +150,10 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ConsigneeNotImporterAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ConsigneeNotImporterContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterContactId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterAddressId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterReference).HasMaxLength(50).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Quotes");
@@ -354,6 +358,10 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ConsigneeNotImporterAddressId).HasColumnName("ConsigneeNotImporterAddressId");
             this.Property(t => t.ConsigneeNotImporterContactId).HasColumnName("ConsigneeNotImporterContactId");
             this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
+            this.Property(t => t.ShipperNotExporterAddressId).HasColumnName("ShipperNotExporterAddressId");
+            this.Property(t => t.ShipperNotExporterContactId).HasColumnName("ShipperNotExporterContactId");
+            this.Property(t => t.ShipperNotExporterReference).HasColumnName("ShipperNotExporterReference");
+
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
@@ -416,7 +424,9 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.ConsigneeNotImporterAddress).WithMany().HasForeignKey(d => d.ConsigneeNotImporterAddressId);
             this.HasOptional(t => t.ConsigneeNotImporterCard).WithMany().HasForeignKey(d => d.ConsigneeNotImporterId);
             this.HasOptional(t => t.ConsigneeNotImporterContact).WithMany().HasForeignKey(d => d.ConsigneeNotImporterContactId);
-
+            this.HasOptional(t => t.ShipperNotExporterAddress).WithMany().HasForeignKey(d => d.ShipperNotExporterAddressId);
+            this.HasOptional(t => t.ShipperNotExporterCard).WithMany().HasForeignKey(d => d.ShipperNotExporterId);
+            this.HasOptional(t => t.ShipperNotExporterContact).WithMany().HasForeignKey(d => d.ShipperNotExporterContactId);
         }
     }
 }

@@ -1281,11 +1281,46 @@ export class QuotePM {
             this.MarkAsDirty("ConsigneeNotImporterReference");
         }
     }
+
+
+    private shipperNotExporterId: string;
+    public get ShipperNotExporterId() { return this.shipperNotExporterId; }
+    public set ShipperNotExporterId(newValue: string) { if (this.shipperNotExporterId != newValue) { this.shipperNotExporterId = newValue; this.MarkAsDirty("ShipperNotExporterId"); } }
+
+
+    private shipperNotExporterAddressId: string;
+    public get ShipperNotExporterAddressId() { return this.shipperNotExporterAddressId; }
+    public set ShipperNotExporterAddressId(newValue: string) { if (this.shipperNotExporterAddressId != newValue) { this.shipperNotExporterAddressId = newValue; this.MarkAsDirty("ShipperNotExporterAddressId"); } }
+
+
+    private shipperNotExporterContactId: string;
+    public get ShipperNotExporterContactId() { return this.shipperNotExporterContactId; }
+    public set ShipperNotExporterContactId(newValue: string) { if (this.shipperNotExporterContactId != newValue) { this.shipperNotExporterContactId = newValue; this.MarkAsDirty("ShipperNotExporterContactId"); } }
+
+
+    private shipperNotExporterName: string;
+    public get ShipperNotExporterName() { return this.shipperNotExporterName; }
+    public set ShipperNotExporterName(newValue: string) { if (this.shipperNotExporterName != newValue) { this.shipperNotExporterName = newValue; this.MarkAsDirty("ShipperNotExporterName"); } }
+
+
+    private shipperNotExporterNote: string;
+    public get ShipperNotExporterNote() { return this.shipperNotExporterNote; }
+    public set ShipperNotExporterNote(newValue: string) { if (this.shipperNotExporterNote != newValue) { this.shipperNotExporterNote = newValue; this.MarkAsDirty("ShipperNotExporterNote"); } }
+
+
+    private shipperNotExporterReference: string;
+    public get ShipperNotExporterReference() { return this.shipperNotExporterReference; }
+    public set ShipperNotExporterReference(newValue: string) {
+        if (this.shipperNotExporterReference != newValue) {
+            this.shipperNotExporterReference = newValue;
+            this.MarkAsDirty("ShipperNotExporterReference");
+        }
+    }
+
     private dontExportQuotationsToIntegratedSystem: boolean;
     public get DontExportQuotationsToIntegratedSystem() { return this.dontExportQuotationsToIntegratedSystem; }
     public set DontExportQuotationsToIntegratedSystem(newValue: boolean) { if (this.dontExportQuotationsToIntegratedSystem != newValue) { this.dontExportQuotationsToIntegratedSystem = newValue; this.MarkAsDirty("DontExportQuotationsToIntegratedSystem"); } }
        
-	 
     private quotationSections: string;
     public get QuotationSections() { return this.quotationSections; }
     public set QuotationSections(newValue: string) { if (this.quotationSections != newValue) { this.quotationSections = newValue; this.MarkAsDirty("QuotationSections"); } }
