@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "1adbea79f14dcac56462fd005d082ec9";
+		public const string HashString = "9152bfc5eb024415d2588d0f14e94abb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5651,10 +5651,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CasualSupplierName",
 					  						DefaultText =  "Casual Supplier Name",
-					  						FullLocalDefaultText =  "ספק",
+					  						FullLocalDefaultText =  "שם ספק",
 					  						ListFieldLable =  "CasualSupplierNameListLable",
 					  						ListLableDefaultText =  "Casual Supplier Name",
-					  						ListLocalDefaultText =  "ספק",
+					  						ListLocalDefaultText =  "שם ספק",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
