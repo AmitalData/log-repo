@@ -613,6 +613,31 @@ export class ObjectFieldPM {
     public set AdditionalQuerySections(newValue: string) { if (this.additionalQuerySections != newValue) { this.additionalQuerySections = newValue; this.MarkAsDirty("AdditionalQuerySections"); } }
        
 	 
+    private leftKey: string;
+    public get LeftKey() { return this.leftKey; }
+    public set LeftKey(newValue: string) { if (this.leftKey != newValue) { this.leftKey = newValue; this.MarkAsDirty("LeftKey"); } }
+       
+	 
+    private rightKey: string;
+    public get RightKey() { return this.rightKey; }
+    public set RightKey(newValue: string) { if (this.rightKey != newValue) { this.rightKey = newValue; this.MarkAsDirty("RightKey"); } }
+       
+	 
+    private isForeignKey: boolean;
+    public get IsForeignKey() { return this.isForeignKey; }
+    public set IsForeignKey(newValue: boolean) { if (this.isForeignKey != newValue) { this.isForeignKey = newValue; this.MarkAsDirty("IsForeignKey"); } }
+       
+	 
+    private foreignEntity: string;
+    public get ForeignEntity() { return this.foreignEntity; }
+    public set ForeignEntity(newValue: string) { if (this.foreignEntity != newValue) { this.foreignEntity = newValue; this.MarkAsDirty("ForeignEntity"); } }
+       
+	 
+    private navigationPropertyName: string;
+    public get NavigationPropertyName() { return this.navigationPropertyName; }
+    public set NavigationPropertyName(newValue: string) { if (this.navigationPropertyName != newValue) { this.navigationPropertyName = newValue; this.MarkAsDirty("NavigationPropertyName"); } }
+       
+	 
 
     public OldEntityPM: ObjectFieldPM;
 		

@@ -80,7 +80,11 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string ShortNameTextCodeCode { get; set; }
         public string HelpTextCodeCode { get; set; }
         public string AdditionalQuerySections { get; set; }
+        public string LeftKey { get; set; }
+        public string RightKey { get; set; }
+        public bool IsForeignKey { get; set; }
+        public string ForeignEntity { get; set; }
+        public string NavigationPropertyName { get; set; }
 
-        
     }
 }

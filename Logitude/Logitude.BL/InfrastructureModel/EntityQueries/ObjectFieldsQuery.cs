@@ -140,8 +140,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              RecordType =a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              AdditionalQuerySections = a.AdditionalQuerySections,
-
-                                             
+                                             LeftKey = a.LeftKey,
+                                             RightKey = a.RightKey,
+                                             IsForeignKey = a.IsForeignKey,
+                                             ForeignEntity = a.ForeignEntity,
+                                             NavigationPropertyName = a.NavigationPropertyName,
+                                   
 
                                          }).FirstOrDefault();
 
@@ -241,7 +245,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      ShortNameTextCodeCode = a.ShortNameTextCodeCode,
                                                      HelpTextCodeCode = a.HelpTextCodeCode,
                                                      AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                     LeftKey = a.LeftKey,
+                                                     RightKey = a.RightKey,
+                                                     IsForeignKey = a.IsForeignKey,
+                                                     ForeignEntity = a.ForeignEntity,
+                                                     NavigationPropertyName = a.NavigationPropertyName,
 
                                                  };
             return result;
@@ -349,7 +357,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     HelpTextCodeCode = a.HelpTextCodeCode,
                                                     ListTextCodeCode = a.ListTextCodeCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
 
                                                 }).ToList();
 
@@ -472,6 +484,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
                                                 }).ToList();
 
             return objectFields;
@@ -586,7 +603,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              FieldCode = a.FieldCode,
                                              AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                             LeftKey = a.LeftKey,
+                                             RightKey = a.RightKey,
+                                             IsForeignKey = a.IsForeignKey,
+                                             ForeignEntity = a.ForeignEntity,
+                                             NavigationPropertyName = a.NavigationPropertyName,
 
                                          }).FirstOrDefault();
 
@@ -703,7 +724,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
 
                                                 }).OrderBy(o => o.FieldName).ToList();
 
@@ -822,7 +847,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              FieldCode = a.FieldCode,
                                              AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                             LeftKey = a.LeftKey,
+                                             RightKey = a.RightKey,
+                                             IsForeignKey = a.IsForeignKey,
+                                             ForeignEntity = a.ForeignEntity,
+                                             NavigationPropertyName = a.NavigationPropertyName,
 
                                          }).FirstOrDefault();
             if (mod != null)
@@ -945,7 +974,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
 
                                                 }).ToList();
 
@@ -1060,7 +1093,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
 
                                                 }).ToList();
             return objectfields;
@@ -1173,7 +1210,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                         FieldCode = a.FieldCode,
                         AdditionalQuerySections = a.AdditionalQuerySections,
-
+                        LeftKey = a.LeftKey,
+                        RightKey = a.RightKey,
+                        IsForeignKey = a.IsForeignKey,
+                        ForeignEntity = a.ForeignEntity,
+                        NavigationPropertyName = a.NavigationPropertyName,
 
                     }).ToList();
         }
@@ -1286,7 +1327,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
 
                                                 }).ToList();
             return objectfields;
@@ -1396,7 +1441,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.ObjectField.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.ObjectField.FieldCode,
                                                     AdditionalQuerySections = a.ObjectField.AdditionalQuerySections,
-
+                                                    LeftKey = a.ObjectField.LeftKey,
+                                                    RightKey = a.ObjectField.RightKey,
+                                                    IsForeignKey = a.ObjectField.IsForeignKey,
+                                                    ForeignEntity = a.ObjectField.ForeignEntity,
+                                                    NavigationPropertyName = a.ObjectField.NavigationPropertyName,
                                                 }).ToList();
 
 
@@ -1510,7 +1559,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                               FieldCode = a.FieldCode,
                               AdditionalQuerySections = a.AdditionalQuerySections,
-
+                              LeftKey = a.LeftKey,
+                              RightKey = a.RightKey,
+                              IsForeignKey = a.IsForeignKey,
+                              ForeignEntity = a.ForeignEntity,
+                              NavigationPropertyName = a.NavigationPropertyName,
 
                           });
             return result;
@@ -1623,7 +1676,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
 
                                                 });
 
@@ -1737,7 +1794,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
 
                                                 }).ToList();
 
@@ -1965,7 +2026,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
 
                                                 }).ToList();
 
@@ -2552,7 +2617,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              FieldCode = a.FieldCode,
                                              AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                             LeftKey = a.LeftKey,
+                                             RightKey = a.RightKey,
+                                             IsForeignKey = a.IsForeignKey,
+                                             ForeignEntity = a.ForeignEntity,
+                                             NavigationPropertyName = a.NavigationPropertyName,
                                          }).FirstOrDefault();
 
             return objectField;
@@ -2594,7 +2663,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     FieldCode = a.FieldCode,
                                                     CustomPickListCode =a.CustomPickListCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
 
                                                 }).ToList();
 
@@ -2710,7 +2783,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                                    LeftKey = a.LeftKey,
+                                                    RightKey = a.RightKey,
+                                                    IsForeignKey = a.IsForeignKey,
+                                                    ForeignEntity = a.ForeignEntity,
+                                                    NavigationPropertyName = a.NavigationPropertyName,
 
                                                 }).ToList();
             return objectfields;
@@ -2826,7 +2903,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
 
                                              AdditionalQuerySections = a.AdditionalQuerySections,
-
+                                             LeftKey = a.LeftKey,
+                                             RightKey = a.RightKey,
+                                             IsForeignKey = a.IsForeignKey,
+                                             ForeignEntity = a.ForeignEntity,
+                                             NavigationPropertyName = a.NavigationPropertyName,
 
                                          }).FirstOrDefault();
 

@@ -134,6 +134,13 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string AdditionalQuerySections { get; set; }
 
 
+        public string ThisKey { get; set; }
+        public string OtherKey { get; set; }
+        public bool IsForeignKey { get; set; }
+        public string ForeignEntity { get; set; }
+        public string NavigationPropertyName { get; set; }
+
+
         
 
     }

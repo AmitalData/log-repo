@@ -618,6 +618,11 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.RecordType = objectFieldDetails.RecordType;
                 newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
 
+                newObjectField.LeftKey = objectFieldDetails.ThisKey;
+                newObjectField.RightKey = objectFieldDetails.OtherKey;
+                newObjectField.IsForeignKey = objectFieldDetails.IsForeignKey;
+                newObjectField.ForeignEntity = objectFieldDetails.IsForeignKey ? objectFieldDetails.ForeignEntity : objectFieldDetails.IsMulti ? objectFieldDetails.MultiTableName : null;
+                newObjectField.NavigationPropertyName = objectFieldDetails.NavigationPropertyName;
 
 
                 if (newObjectField.IsCustomFilter)
@@ -714,6 +719,11 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
                 updatedObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
 
+                updatedObjectField.LeftKey = objectFieldDetails.ThisKey;
+                updatedObjectField.RightKey = objectFieldDetails.OtherKey;
+                updatedObjectField.IsForeignKey = objectFieldDetails.IsForeignKey;
+                updatedObjectField.ForeignEntity = objectFieldDetails.IsForeignKey ? objectFieldDetails.ForeignEntity : objectFieldDetails.IsMulti ? objectFieldDetails.MultiTableName : null;
+                updatedObjectField.NavigationPropertyName = objectFieldDetails.NavigationPropertyName;
 
 
 
@@ -1260,6 +1270,11 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.RecordType = objectFieldDetails.RecordType;
                 newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
 
+                newObjectField.LeftKey = objectFieldDetails.ThisKey;
+                newObjectField.RightKey = objectFieldDetails.OtherKey;
+                newObjectField.IsForeignKey = objectFieldDetails.IsForeignKey;
+                newObjectField.ForeignEntity = objectFieldDetails.IsForeignKey ? objectFieldDetails.ForeignEntity : objectFieldDetails.IsMulti ? objectFieldDetails.MultiTableName : null;
+                newObjectField.NavigationPropertyName = objectFieldDetails.NavigationPropertyName;
 
                 if (newObjectField.IsCustomFilter)
                 {
@@ -1355,7 +1370,11 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
                 updatedObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
 
-
+                updatedObjectField.LeftKey = objectFieldDetails.ThisKey;
+                updatedObjectField.RightKey = objectFieldDetails.OtherKey;
+                updatedObjectField.IsForeignKey = objectFieldDetails.IsForeignKey;
+                updatedObjectField.ForeignEntity = objectFieldDetails.IsForeignKey ? objectFieldDetails.ForeignEntity : objectFieldDetails.IsMulti ? objectFieldDetails.MultiTableName : null;
+                updatedObjectField.NavigationPropertyName = objectFieldDetails.NavigationPropertyName;
 
                 if (string.IsNullOrEmpty(objectFieldDetails.Code))
                 {
@@ -1851,6 +1870,11 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.RecordType = objectFieldDetails.RecordType;
             newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
 
+            newObjectField.LeftKey = objectFieldDetails.ThisKey;
+            newObjectField.RightKey = objectFieldDetails.OtherKey;
+            newObjectField.IsForeignKey = objectFieldDetails.IsForeignKey;
+            newObjectField.ForeignEntity = objectFieldDetails.IsForeignKey ? objectFieldDetails.ForeignEntity : objectFieldDetails.IsMulti ? objectFieldDetails.MultiTableName : null;
+            newObjectField.NavigationPropertyName = objectFieldDetails.NavigationPropertyName;
 
             if (newObjectField.IsCustomFilter)
             {

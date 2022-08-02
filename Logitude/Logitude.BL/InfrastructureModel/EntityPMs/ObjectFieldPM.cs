@@ -151,6 +151,11 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string AdditionalQuerySections { get; set; }
 
 
+        public string LeftKey { get; set; }
+        public string RightKey { get; set; }
+        public bool IsForeignKey { get; set; }
+        public string ForeignEntity { get; set; }
+        public string NavigationPropertyName { get; set; }
 
     }
 }
