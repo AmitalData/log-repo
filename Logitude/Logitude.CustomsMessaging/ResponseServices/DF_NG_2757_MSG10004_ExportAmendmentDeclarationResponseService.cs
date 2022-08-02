@@ -1223,7 +1223,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             
             if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
            {
-               foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount.Take(governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount.Length - 1))
+               foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
                {
                   SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
                   supplierInvoiceItemsPrice.DeclarationId = declarationId;
