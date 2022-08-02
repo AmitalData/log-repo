@@ -6804,6 +6804,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CasualSupplierName&quot;"
     ListPropertyPath="&quot;CasualSupplierName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6914,6 +6915,11 @@
         QueryCode="&quot;BulkFeedPending&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;CourierPendingReasonName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;BulkFeedPending&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;CasualSupplierName&quot;"
         ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />

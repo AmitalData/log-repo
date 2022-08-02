@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "4b4707c1bc1ad13cce1338c2e69db85d";
+		public const string HashString = "1adbea79f14dcac56462fd005d082ec9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5632,6 +5632,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CasualSupplierName",
 					  						ListPropertyPath =  "CasualSupplierName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5721,6 +5722,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn BulkFeedPendingQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationCourierStatus.CasualImporterCity" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn BulkFeedPendingQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierPendingReasonName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn BulkFeedPendingQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BulkFeedPendingQuery.Id,QueryCode = BulkFeedPendingQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationCourierStatus.CasualSupplierName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
