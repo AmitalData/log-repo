@@ -1224,15 +1224,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
            {
                foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
-               {
-                  SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
-                  supplierInvoiceItemsPrice.DeclarationId = declarationId;
-                  supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
-                  supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
+                {
+                    if (GetValueCodeType(GoodsItemAmount.AmountType) != "1")
+                    {
+                        SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
+                        supplierInvoiceItemsPrice.DeclarationId = declarationId;
+                        supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
+                        supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
 
-                  supplierInvoiceItemsPrice.AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);
-                  supplierInvoiceItemsPrice.Tenant = tenant;
-                  SupplierInvoiceItemsPricePM.Add(supplierInvoiceItemsPrice);
+                        supplierInvoiceItemsPrice.AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);
+                        supplierInvoiceItemsPrice.Tenant = tenant;
+                        SupplierInvoiceItemsPricePM.Add(supplierInvoiceItemsPrice);
+                    }
                }
             }
             return SupplierInvoiceItemsPricePM;
