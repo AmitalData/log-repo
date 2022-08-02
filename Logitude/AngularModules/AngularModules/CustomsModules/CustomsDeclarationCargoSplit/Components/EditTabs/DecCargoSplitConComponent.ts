@@ -381,20 +381,28 @@ export class DecCargoSplitConComponent extends BaseComponent {
 
             var item: DecCargoSplitConsItemPM = new DecCargoSplitConsItemPM(this.EntityPM);
 
-            item.DeclarationCargoSplitId = this.EntityPM.DeclarationCargoSplitId;
-            item.Tenant = this.EntityPM.Tenant;
-            item.DecCargoSplitConsLineNo = this.EntityPM.LineNumber;
-            item.ItemLine = counter;
+                    item.DeclarationCargoSplitId = this.EntityPM.DeclarationCargoSplitId;
+                    item.Tenant = this.EntityPM.Tenant;
+                    item.DecCargoSplitConsLineNo = this.EntityPM.LineNumber;
+                    item.ItemLine = counter;        
             if (this.ParentCargoConsinmentItemList != null && this.ParentCargoConsinmentItemList[0] != null) {
-                item.ParentCargoConsinmentItem = this.ParentCargoConsinmentItemList[0];
+                
+                    item.ParentCargoConsinmentItem = this.ParentCargoConsinmentItemList[0].SequenceNumeric;
+                    if(this.DeclarationDirection == "E"){
+                    item.GrossMassMeasure = this.ParentCargoConsinmentItemList[0].GrossMassMeasure;
+                    item.CargoDescription = this.ParentCargoConsinmentItemList[0].MarksNumbers;
+
+                }
+
             }
+            
             if (!this.EntityPM.DecCargoSplitConsItems.includes(item)) {
                 this.EntityPM.AddDecCargoSplitConsItem(item);
                 var line = new DecCargoSplitConsItemModel(item);
                 this.ItemsList.Insert(line);
             }
-
         }
+        
 
     }
 
@@ -504,9 +512,13 @@ export class DecCargoSplitConComponent extends BaseComponent {
 
     }
 
-    ParentCargoConsinmentItemSelectionChanged(item, value) {
-        if (item != null) {
-            item.ParentCargoConsinmentItem = value;
+    ParentCargoConsinmentItemSelectionChanged(currentItem, selectedValue) {
+        if (currentItem != null) {
+            var selectedItem = this.ParentCargoConsinmentItemList.filter(t => t.SequenceNumeric == selectedValue)[0];
+                    currentItem.ParentCargoConsinmentItem = selectedItem.SequenceNumeric;
+                    currentItem.GrossMassMeasure = selectedItem.GrossMassMeasure;
+                    currentItem.CargoDescription = selectedItem.MarksNumbers;
+ 
         }
     }
 
