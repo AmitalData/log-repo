@@ -367,8 +367,8 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { this.PartnerIndex = 1; this.FullCode = "Consignee"; break }
             case "AGENT": { this.PartnerIndex = 2; this.FullCode = "Agent"; break }
             case "NOTFY": { this.PartnerIndex = 3; this.FullCode = "Notify"; break }
-            case "SHPNT": { this.PartnerIndex = 4; this.FullCode = "ConsigneeNotImporter"; break }
-            case "CONNT": { this.PartnerIndex = 5; this.FullCode = "ShipperNotExporter"; break }
+            case "CONNT": { this.PartnerIndex = 4; this.FullCode = "ConsigneeNotImporter"; break }
+            case "SHPNT ": { this.PartnerIndex = 5; this.FullCode = "ShipperNotExporter"; break }
 
         }
 
