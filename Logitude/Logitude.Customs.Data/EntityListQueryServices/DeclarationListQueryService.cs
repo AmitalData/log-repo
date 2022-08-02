@@ -25,6 +25,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     public partial class DeclarationListQueryService
     {
+
+        static bool isExport = false;
+
 #if false
         private IQueryable<DeclarationList> GetIqueryableList_old(IQueryable<Declaration> iQueryable)
         {
@@ -165,7 +168,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     CourierPendingReasonName = tablecode1 != null ? tablecode1.LocalName : "רשימה"
                 }
                    );
-            
+
             */
 
             var qJoin =
@@ -286,6 +289,22 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 //q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
             }
 
+
+
+            var qConsignmentLoadingPort = (from a in context.Consignments
+                                           where a.LoadingPortCode != null
+                                           select a).GroupBy(x => x.DeclarationId)
+                              .Select(g => new
+                              {
+                                  DeclarationId = g.Key,
+                                  LoadingPortCode = g.ToList().FirstOrDefault()
+
+                              }).Select(y=> new {y.DeclarationId,y.LoadingPortCode.LoadingPortCode});
+                            
+            if (!isExport)
+            {
+                qConsignmentLoadingPort = qConsignmentLoadingPort.Where(x => x.DeclarationId == "-1");
+            }
 
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                  //.Include("CreatedByUser.Contact")
@@ -506,11 +525,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      FOBValueNIS = a.FOBValueNIS,
                                                      FOBValueDollar = a.FOBValueDollar,
 
-                                                     AmendmentStatusName=myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName: null
+                                                     AmendmentStatusName = myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName: null,
+                                                     //LoadingPortName = myJoinLoadingPort.LoadingPortCode != null ? myJoinLoadingPort.LoadingPortCode:null
 
                                                  });
 
-
+           
+            isExport = false;
                 return query;
         }
 
@@ -553,6 +574,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 iQueryable = iQueryable.Where(x => query1.Contains(x.Id));
             }
 
+            var filter2 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "Direction");
+            if (filter2 != null)
+            {
+                if (filter2.FieldValue.ToString()=="E"&& filter2.Operator== "Equal")
+                {
+                    isExport = true; 
+                }
+           
+            }
+            
             return iQueryable;
         }
         /*
