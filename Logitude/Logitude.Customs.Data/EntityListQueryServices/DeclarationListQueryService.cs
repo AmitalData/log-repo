@@ -289,18 +289,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 //q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
             }
 
+            var qConsignmentLoadingPort =
+                  (from cons in context.Consignments
+                   group cons by new { cons.DeclarationId }
+                       into newgroup
+                   select new
+                   {
+                       newgroup.Key.DeclarationId,
+                       cons = newgroup.GroupBy(x => x.LoadingPortCode).Select(grp => grp.FirstOrDefault()),
+                   });
 
 
-            var qConsignmentLoadingPort = (from a in context.Consignments
-                                           where a.LoadingPortCode != null
-                                           select a).GroupBy(x => x.DeclarationId)
-                              .Select(g => new
-                              {
-                                  DeclarationId = g.Key,
-                                  LoadingPortCode = g.ToList().FirstOrDefault()
-
-                              }).Select(y=> new {y.DeclarationId,y.LoadingPortCode.LoadingPortCode});
-                            
             if (!isExport)
             {
                 qConsignmentLoadingPort = qConsignmentLoadingPort.Where(x => x.DeclarationId == "-1");
@@ -326,11 +325,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  into originalDeclarations
                                                  from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
 
+                                                 join consJoin in qConsignmentLoadingPort
+                                                           on a.Id equals consJoin.DeclarationId
+                                                           into ConsignmentLoadingPortJoin
+                                                 from myJoinConsignmentLoadingPort in ConsignmentLoadingPortJoin.DefaultIfEmpty()
+
                                                  join AmendmentRequestStatus in context.AmendmentRequestStatuses
                                                             on a.AmendmentStatus equals AmendmentRequestStatus.Code
                                                             into qStatusAmendJoin
                                                  from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
-
+                                                
                                                      /*
                                                      join pr in qCourierPendingReasonLocalName
                                                      on a.Id equals pr.DeclarationID into leftjoinCourierPendingReasonLocalName
@@ -526,8 +530,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      FOBValueDollar = a.FOBValueDollar,
 
                                                      AmendmentStatusName = myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName: null,
-                                                     //LoadingPortName = myJoinLoadingPort.LoadingPortCode != null ? myJoinLoadingPort.LoadingPortCode:null
-
+                                                     LoadingPortName = myJoinConsignmentLoadingPort.cons.FirstOrDefault().InternationalSite.LocalName,
                                                  });
 
            
