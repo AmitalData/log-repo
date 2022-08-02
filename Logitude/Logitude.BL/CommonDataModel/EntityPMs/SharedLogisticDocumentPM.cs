@@ -19,5 +19,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string FileName { get; set; }
         public string Reference { get; set; }
         public bool IsDigitallySigned { get; set; }
+        public bool? IsPrinted { get; set; }
+        public DateTime? ReceivedDate { get; set; }
+        public DateTime? PrintDate { get; set; }
     }
 }

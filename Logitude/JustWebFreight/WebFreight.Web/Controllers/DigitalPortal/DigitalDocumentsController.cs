@@ -27,9 +27,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
-
             List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
-
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             Shipment shipment = shipmentRepository.GetSingleShipment(entityId, tenant);
 
@@ -65,10 +63,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                     }
                 }
+
                 if (!exists)
                 {
                     throw new AutenticationException("Sorry! you are not authorized to read data!");
                 }
+
                 return exists;
             }
             return true;
@@ -79,19 +79,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string shipmentLevelCode = shipment.ShipmentLevelCode;
             ARInvoiceRepository arInvoiceReps = new ARInvoiceRepository(tenant);
             List<ARInvoice> invoices = arInvoiceReps.GetInvoicesByShipmentIdAndBillToId(entityId, shipment.CustomerId, tenant);
-
             List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
-
             ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
             DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
             List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
             Uploader uploader = new Uploader();
+
             if (partnerType == "AG")
             {
                 myDocumentFilings = uploader.GetAgentDocuments(myDocumentFilings, shipmentLevelCode, tenant);
             }
-
             else if (partnerType == "CS")
             {
                 myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
@@ -114,7 +112,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     continue;
                 }
-
                 else
                 {
                     bool addDocument = true;
@@ -132,7 +129,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         string myFileName = isExternalURL ? item.FileName : item.CalculatedFileName;
                         string myFileExtension = item.FileExtension;
                         DocumentOutCopy documentOutCopy = null;
-
+                        var invoiceDocument = invoices.Where(d => d.Id == item.ChildEntityId).FirstOrDefault();
                         if (item.DirectionCode == "O" && item.DocumentId == null)
                         {
                             List<DocumentOutCopy> myCopies = allcopies.Where(d => d.DocumentOutId == item.Id).ToList();
@@ -152,7 +149,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                         {
                                             myFileName = myDocument.FileName ?? documentOutCopy.DocumentTypeCopy.Name;
                                         }
-
                                         else
                                         {
                                             myFileName = !string.IsNullOrEmpty(myDocument.CalculatedFileName) ? myDocument.CalculatedFileName : myDocument.FileName;
@@ -176,7 +172,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             encodedUrl = WebUtility.UrlEncode(encodedUrl);
                             url = "../WebPages/CorrespondenceDownloadpage.aspx?id=" + encodedUrl;
                         }
-
                         else
                         {
                             string myPrefix = (item.DirectionCode == "I") ? "DocIn:" : "DocOut:";
@@ -195,6 +190,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             FileExtension = myFileExtension,
                             IsDigitallySigned = item.IsDigitallySigned,
                             Reference = item.ChildEntityReference,
+                            ReceivedDate = item.ReceivedDate,
+                            PrintDate = invoiceDocument?.PrintDate,
+                            IsPrinted = invoiceDocument?.IsPrinted,
                         });
                     }
                 }
@@ -202,6 +200,5 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return output;
         }
-
     }
 }
