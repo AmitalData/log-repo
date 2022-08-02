@@ -1,33 +1,33 @@
 declare var window: any;
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ValidationSummary } from '../../../../Controls/All/ValidationSummary';
-import { Validator } from '../../../../Infrastructure/Validators/Validator';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import { AppTool } from '../../../../Infrastructure/Tools';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ValidationSummary} from '../../../../Controls/All/ValidationSummary';
+import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import {AppTool} from '../../../../Infrastructure/Tools';
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
-import { CustomsRequiredFieldList } from '../../../../Customs/EntityLists/CustomsRequiredFieldList';
+import {CustomsRequiredFieldList} from '../../../../Customs/EntityLists/CustomsRequiredFieldList';
 import { CustomsRequierdFieldsWebService } from '../../../../Customs/Services/WebServices/CustomsRequierdFieldsWebService';
 
 
 
 @Component({
-
-    selector: 'RequiredFieldsComponent',
-    templateUrl: 'RequiredFieldsComponent.html',
+    
+    selector: 'ExportRequiredFieldsComponent',
+    templateUrl: 'ExportRequiredFieldsComponent.html',
 })
 
-export class RequiredFieldsComponent extends BaseComponent {
-    public DataContext: RequiredFieldsComponent = this;
+export class ExportRequiredFieldsComponent extends BaseComponent {
+    public DataContext: ExportRequiredFieldsComponent = this;
     public ObjectTableName: string = "Customs.CustomsRequiredField";
     public ValidationErrorsList: string[];
 
@@ -50,9 +50,8 @@ export class RequiredFieldsComponent extends BaseComponent {
         //this.BuildTablesList();
     }
     GetCustomsObjectTables() {
-        this.customsRequierdFieldsWebService.GetSomeObjectTables().subscribe((response: ServiceResponse) => {
+        this.customsRequierdFieldsWebService.GetSomeExportObjectTables().subscribe((response: ServiceResponse) => {
             var res = response.Result;
-            console.log("[Response] customsRequierdFieldsWebService.GetSomeObjectTables: ", res);
             if (!AppTool.IsNullOrEmpty(res)) {
                 this.TablesList = [];
                 this.TablesList = res;
@@ -72,8 +71,8 @@ export class RequiredFieldsComponent extends BaseComponent {
         //this.TablesList.push({ Name: "table number 7" });
         this.TablesList.forEach((el) => {
             if (el.Name == "Customs.Declaration") {
-                el["TranslatedName"] = TextCodeTranslator.Translate("Customs.Declaration.O.Declarations");
-            }
+                el["TranslatedName"] =   TextCodeTranslator.Translate("Customs.Declaration.O.Declarations");
+}
             else {
                 el["TranslatedName"] = TextCodeTranslator.TranslateTable(el.Name);
 
@@ -92,7 +91,7 @@ export class RequiredFieldsComponent extends BaseComponent {
                 SelectedObjectTableName: this.SelectedTable.Name,
                 SelectedObjectFields: this.FieldsList,
             }
-            window.Show("./CustomsModules/CustomsMaintenance/Components/RequiredFields/AddEditRequiredFieldsComponent");
+            window.Show("./CustomsModules/CustomsMaintenance/Components/RequiredFields/AddEditExportRequiredFieldsComponent");
             window.WindowClosed.subscribe(($event: any) => {
                 this.TableNameClicked(this.SelectedTable);
             });
@@ -120,14 +119,11 @@ export class RequiredFieldsComponent extends BaseComponent {
     TableNameClicked(table: any) {
         if (!AppTool.IsNullOrEmpty(table)) {
             this.SelectedTable = table;
-
             this._EntityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((res: any) => {
-                this.customsRequierdFieldsWebService.GetCustomsRequiredFieldListsByObjectTable(table.Id)
+                this.customsRequierdFieldsWebService.GetExportCustomsRequiredFieldListsByObjectTable(table.Id)
                     .subscribe((response: ServiceResponse) => {
                         var res = response.Result;
                         this.IsNoFields = false;
-
-                        console.log("[Response] GetCustomsRequiredFieldListsByObjectTable: ", res);
                         if (!AppTool.IsNullOrEmpty(res)) {
                             this.FieldsList = [];
                             this.FieldsList = res;
@@ -139,7 +135,7 @@ export class RequiredFieldsComponent extends BaseComponent {
                             }
 
                         }
-                    });
+                });
             });
 
 
@@ -155,10 +151,13 @@ export class RequiredFieldsComponent extends BaseComponent {
         this.FieldsList.forEach((field) => {
             var objectField = window.ObjectFields.find(x => x.FieldCode == field.ObjectfieldCode);
             field.ObjectFieldName = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode);
-            if (field.IsImport) {
-                field.ObjectFieldName = field.ObjectFieldName + "(יבוא)";
+            if (field.IsExport) {
+                field.ObjectFieldName=  field.ObjectFieldName + " (חובה)";
             }
-            if(field.IsExport){
+            if (field.WarningExport) {
+                field.ObjectFieldName=  field.ObjectFieldName + " (התראה)";
+            }
+            if (field.IsImport) {
                 this.FieldsList.splice(this.FieldsList.indexOf(field),1);
             }
         });

@@ -10,6 +10,7 @@ import { LogisticActionRequestService } from 'Customs/Services/Others/LogisticAc
 import { AppTool } from "../../Infrastructure/Tools";
 @Injectable()
 
+
 export class LogisticActionRequestValidator {
 
     private _LogisticActionRequestPM: LogisticActionRequestPM;

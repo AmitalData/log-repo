@@ -46,23 +46,21 @@
 
 
 
-                    <log-column [header]="'חובה ליבוא'" [width]="'65'" [Alignment]="'right'">
+                    <log-column [header]="'התראה ליצוא'" [width]="'80'" [Alignment]="'right'">
                         <ng-template let-item>
                             <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
-                                <!--{{ item.Active }}-->
-                                <CheckBox (Checked)="item.IsImport=$event;  CheckBoxChanged($event, item)" [IsChecked]="item.IsImport"></CheckBox>
+                                <CheckBox  (Checked)="item.WarningExport=$event;  CheckBoxChanged($event, item,'WarningExport')" [IsChecked]="item.WarningExport"></CheckBox>
                             </log-cell-template>
                         </ng-template>
                     </log-column>
 
-                    <!--<log-column [header]="'פעיל'" [width]="'45'" [Alignment]="'right'">
-        <ng-template let-item>
-            <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
-                 <CheckBox (Checked)="CheckBoxChanged($event, item)" [IsChecked]="item.Active"></CheckBox>
-            </log-cell-template>
-        </ng-template>
-    </log-column>-->
-
+                    <log-column [header]="'חובה ליצוא'" [width]="'65'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
+                                <CheckBox  (Checked)="item.IsExport=$event; CheckBoxChanged($event, item,'IsExport')" [IsChecked]="item.IsExport"></CheckBox>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
                 </logitude-edit-grid>
             </div>
         </td>

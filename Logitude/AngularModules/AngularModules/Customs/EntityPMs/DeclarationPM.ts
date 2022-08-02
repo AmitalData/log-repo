@@ -1374,6 +1374,16 @@ export class DeclarationPM {
     public set IsSubmitDeclaration(newValue: boolean) { if (this.isSubmitDeclaration != newValue) { this.isSubmitDeclaration = newValue; this.MarkAsDirty("IsSubmitDeclaration"); } }
        
 	 
+    private exportTaxationDateTime: Date;
+    public get ExportTaxationDateTime() { return this.exportTaxationDateTime; }
+    public set ExportTaxationDateTime(newValue: Date) { if (this.exportTaxationDateTime != newValue) { this.exportTaxationDateTime = newValue; this.MarkAsDirty("ExportTaxationDateTime"); } }
+       
+	 
+    private exporterImporterCode: string;
+    public get ExporterImporterCode() { return this.exporterImporterCode; }
+    public set ExporterImporterCode(newValue: string) { if (this.exporterImporterCode != newValue) { this.exporterImporterCode = newValue; this.MarkAsDirty("ExporterImporterCode"); } }
+       
+	 
     private amedmentType: string;
     public get AmedmentType() { return this.amedmentType; }
     public set AmedmentType(newValue: string) { if (this.amedmentType != newValue) { this.amedmentType = newValue; this.MarkAsDirty("AmedmentType"); } }
@@ -1394,9 +1404,14 @@ export class DeclarationPM {
     public set ExportClosedErrorXML(newValue: string) { if (this.exportClosedErrorXML != newValue) { this.exportClosedErrorXML = newValue; this.MarkAsDirty("ExportClosedErrorXML"); } }
        
 	 
-    private isExportDeclarationAmendments: boolean;
-    public get IsExportDeclarationAmendments() { return this.isExportDeclarationAmendments; }
-    public set IsExportDeclarationAmendments(newValue: boolean) { if (this.isExportDeclarationAmendments != newValue) { this.isExportDeclarationAmendments = newValue; this.MarkAsDirty("IsExportDeclarationAmendments"); } }
+    private declarationOfficeHandlerCode: string;
+    public get DeclarationOfficeHandlerCode() { return this.declarationOfficeHandlerCode; }
+    public set DeclarationOfficeHandlerCode(newValue: string) { if (this.declarationOfficeHandlerCode != newValue) { this.declarationOfficeHandlerCode = newValue; this.MarkAsDirty("DeclarationOfficeHandlerCode"); } }
+       
+	 
+    private transferExporterCode: string;
+    public get TransferExporterCode() { return this.transferExporterCode; }
+    public set TransferExporterCode(newValue: string) { if (this.transferExporterCode != newValue) { this.transferExporterCode = newValue; this.MarkAsDirty("TransferExporterCode"); } }
        
 	 
 

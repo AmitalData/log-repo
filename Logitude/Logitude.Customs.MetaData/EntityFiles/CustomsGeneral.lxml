@@ -5428,6 +5428,12 @@
       LocalDefaultText="&quot;תהליך סגירה עם סטאטוס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.O.RequiredFieldsOrAlert&quot;"
+      DefaultText="&quot;Required Fields Or Alert&quot;"
+      LocalDefaultText="&quot;שדות חובה/התראה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
