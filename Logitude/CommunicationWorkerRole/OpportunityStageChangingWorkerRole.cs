@@ -18,7 +18,7 @@ namespace CommunicationWorkerRole
         private int tenant;
         private string stageName;
         private string clientId;
-
+        private string logitudeTrackingId;
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -56,8 +56,9 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
+                    logitudeTrackingId = "UA-25875416-1";
                     MapQueueResponse(queueResponse);
-                    Send();
+                    SendToGoogleAnalytics();
                     queueService.Complete();
                 }
                 catch (Exception ex)
@@ -79,27 +80,11 @@ namespace CommunicationWorkerRole
             stageName = queueResponse.MessageValues["StageName"].ToString();
             clientId = queueResponse.MessageValues["ClientId"].ToString();
         }
-        private void Send()
+        private void SendToGoogleAnalytics()
         {
+            string postDataString = this.BuildPostDataString();
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://www.google-analytics.com/collect");
             request.Method = "POST";
-
-            Dictionary<string, string> postData = new Dictionary<string, string>
-                           {
-                               { "v", "1" },
-                               { "tid", "UA-25875416-1" },
-                               { "cid", clientId },
-                               { "t", "event" },
-                               { "ec", "crm" },
-                               { "ea", "update" },
-                               { "cd3", stageName },
-                               { "el", "Stage" },
-                               //{ "ni", "1" },
-                           };
-
-            var postDataString = postData.Aggregate("", (data, next) => string.Format("{0}&{1}={2}", data, next.Key,
-                                                             HttpUtility.UrlEncode(next.Value))).TrimEnd('&');
-
             request.ContentLength = Encoding.UTF8.GetByteCount(postDataString);
             using (var writer = new StreamWriter(request.GetRequestStream()))
             {
@@ -119,6 +104,24 @@ namespace CommunicationWorkerRole
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "Google Analytics tracking failed", "", null);
             }
+        }
+
+        private string BuildPostDataString()
+        {
+            Dictionary<string, string> postData = new Dictionary<string, string>
+                           {
+                               { "v", "1" },
+                               { "tid", logitudeTrackingId },
+                               { "cid", clientId },
+                               { "t", "event" },
+                               { "ec", "crm" },
+                               { "ea", "update" },
+                               { "cd3", stageName },
+                               { "el", "Stage" },
+                           };
+
+            return postData.Aggregate("", (data, next) => string.Format("{0}&{1}={2}", data, next.Key,
+                                                             HttpUtility.UrlEncode(next.Value))).TrimEnd('&');
         }
     }
 }
