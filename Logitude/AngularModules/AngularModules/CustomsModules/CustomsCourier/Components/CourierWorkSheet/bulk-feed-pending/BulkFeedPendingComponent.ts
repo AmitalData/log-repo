@@ -573,6 +573,15 @@ export class BulkFeedPendingComponent extends BaseComponent {
       ServerSideSortable: true,
       SortByName: 'CourierPendingReasonName'
     });
+    this.columns.push({
+      FieldName: 'CasualSupplierName',
+      DataTypeCode: 'String',
+      Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CasualSupplierName"),
+      Styles: { width: '105px' },
+      IsCustomTemplate: true,
+      ServerSideSortable: true,
+      SortByName: 'CasualSupplierName'
+    });
   }
 
 
