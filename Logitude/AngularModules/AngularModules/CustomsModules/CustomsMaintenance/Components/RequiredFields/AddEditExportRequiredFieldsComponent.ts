@@ -68,8 +68,7 @@ export class AddEditExportRequiredFieldsComponent extends BaseComponent {
         var objectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         var objectFields: any[] = window.ObjectFields.filter(x => x.ObjectTableId == objectTable.Id && (!x.IsMulti && x.FieldName != "ImporterId" && x.FieldName != "TransferImporterId" && x.FieldName != "EntitleImporterId"));
         if (objectTable.Name == "Customs.Declaration") {
-            objectFields = objectFields.filter(x => x.AdditionalQuerySections == "Customs.ExportDeclaration");
-            objectFields = objectFields.filter(x => x.FieldName != "DeclarationNumber");
+            objectFields = objectFields.filter(x => x.DisplayInRequiredFields);
         }
 
 
