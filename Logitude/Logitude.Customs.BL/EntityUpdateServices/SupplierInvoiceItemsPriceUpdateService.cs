@@ -25,7 +25,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.InvoiceItemLineNumber = entityParentPM.LineNumber;
             int lastKey = 0;
 
-            if (entityParentPM.SupplierInvoiceItemsMods.Count > 0)
+            if (entityParentPM.SupplierInvoiceItemsPrices.Count > 0)
             {
                 lastKey = entityParentPM.SupplierInvoiceItemsPrices.Max(d => d.LineNumber);
             }
