@@ -435,7 +435,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
             var mySupplierInvoiceItemVehicleModUpdateService = new SupplierInvoiceItemVehicleModUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 20.10.15 - Task 17209 
             var mySupplierInvoiceItemModVehicleUpdateService = new SupplierInvoiceItemModVehicleUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
-                                                                                                                                                                    //var mySupplierInvoiceItemsTaxesModificationUpdateService = new SupplierInvoiceItemsTaxesModUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+            var mySupplierInvoiceItemsPriceUpdateService = new SupplierInvoiceItemsPriceUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424
+            var mySupplierInvoiceItemsLevyUpdateService = new SupplierInvoiceItemsLevyUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424
+            var mySupplierInvoiceItemsDescriptUpdateService = new SupplierInvoiceItemsDescriptUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424
+            var mySupplierInvoiceItemsProdIdentUpdateService = new SupplierInvoiceItemsProdIdentUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424
+            var mySupplierInvoiceItemsSerialNumUpdateService = new SupplierInvoiceItemsSerialNumUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424
+            var mySuppInvoiceItemsAbachStatementUpdateService = new SuppInvoiceItemsAbachStatementUpdateService(context, new Dictionary<string, IContext>(), tenant);                                                                                                       //var mySupplierInvoiceItemsTaxesModificationUpdateService = new SupplierInvoiceItemsTaxesModUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
             var myDeclarationKeys = new DeclarationKeys { Id = declarationPM.Id };
@@ -443,6 +448,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             mySupplierInvoiceItemVehicleModUpdateService.FastDeleteComposition(myDeclarationKeys);
             mySupplierInvoiceItemsTaxUpdateService.FastDeleteComposition(myDeclarationKeys);
             mySupplierInvoiceItemModVehicleUpdateService.FastDeleteComposition(myDeclarationKeys);
+            mySupplierInvoiceItemsPriceUpdateService.FastDeleteComposition(myDeclarationKeys);
+            mySupplierInvoiceItemsLevyUpdateService.FastDeleteComposition(myDeclarationKeys);
+            mySupplierInvoiceItemsDescriptUpdateService.FastDeleteComposition(myDeclarationKeys);
+            mySupplierInvoiceItemsProdIdentUpdateService.FastDeleteComposition(myDeclarationKeys);
+            mySupplierInvoiceItemsSerialNumUpdateService.FastDeleteComposition(myDeclarationKeys);
+            mySuppInvoiceItemsAbachStatementUpdateService.FastDeleteComposition(myDeclarationKeys);
 
             (context as DbContextBase).SaveChanges();
         }
