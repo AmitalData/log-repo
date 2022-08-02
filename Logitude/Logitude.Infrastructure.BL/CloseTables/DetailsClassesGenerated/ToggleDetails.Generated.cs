@@ -676,6 +676,14 @@ namespace Logitude.Infrastructure.BL
                 Description = "Activate Customer Nested Of Card In Html Editor", 
                 SearchFields = "CCR,Activate Customer Nested Of Card In Html Editor", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "HDF", 
+                Name = "HTML Editor Style Fixed", 
+                SearchFields = "HDF , HTML Editor Style Fixed", 
+                Description = "HTML Editor Style Fixed", 
+			});
 			
             return all;
        }
