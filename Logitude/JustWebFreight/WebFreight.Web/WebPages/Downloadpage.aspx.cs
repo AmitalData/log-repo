@@ -679,14 +679,14 @@ ExceptionInErrorLog.ToString()
                 HttpContext.Current.Response.Clear();
                 //HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
                 //HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + DocumentName);
-
-
+                var ANSI = Encoding.GetEncoding("Windows-1252");
+                byte[] INIDatainANSI = Encoding.Convert(Encoding.UTF8, ANSI, INIDatainByte);
                 Dictionary<string, byte[]> files = new Dictionary<string, byte[]>();
                 //files.Add(BMKdocumentName.Split('.')[0] + "." + "zip", CompressionFile(BMKdocumentName, BMKDatainByte));
                 files.Add(BMKdocumentName.Split('.')[0] + "." + "txt", BMKDatainByte);
 
 
-                files.Add(INIdocumentName, INIDatainByte);
+                files.Add(INIdocumentName, INIDatainANSI);
                 _DatainByte = CompressionFileData(files);
                 HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
 
