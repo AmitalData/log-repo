@@ -55,7 +55,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     r.LastMileStatusCode,
                     r.IsClosedForFollowUp,
                     r.CourierPendingReasonList,
-
+                    r.ImporterAddress,
+                    r.CasualImporterTel
 
 
                 });
@@ -109,28 +110,28 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                                                     });
 
 
-                var group3 = (from d in MyContext.Declarations
+                var group3 = (from //d in MyContext.Declarations
 
-                              join dec in q on d.Id equals dec.DeclarationId into qjoinDeclarations
-                              from myJoinDeclaration in qjoinDeclarations.DefaultIfEmpty()
+                               dec in q /*on d.Id equals dec.DeclarationId into qjoinDeclarations
+                              from myJoinDeclaration in qjoinDeclarations.DefaultIfEmpty()*/
 
                               join recConsignment in qConsignmentCargoDescription
-                                                     on d.Id equals recConsignment.DeclarationId into qjoinConsignments
+                                                     on dec.DeclarationId equals recConsignment.DeclarationId into qjoinConsignments
                               from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
 
                               join recSupplierInvoices in qSupplierInvoice
-                                                     on d.Id equals recSupplierInvoices.DeclarationId into qjoinSupplierInvoice
+                                                     on dec.DeclarationId equals recSupplierInvoices.DeclarationId into qjoinSupplierInvoice
                               from myJoinqSupplierInvoice in qjoinSupplierInvoice.DefaultIfEmpty()
 
                               join recSupplierInvoicesItems in qSupplierInvoiceItem
-                                                   on d.Id equals recSupplierInvoicesItems.DeclarationId into qjoinSupplierInvoiceItem
+                                                   on dec.DeclarationId equals recSupplierInvoicesItems.DeclarationId into qjoinSupplierInvoiceItem
                               from myJoinqSupplierInvoiceItem in qjoinSupplierInvoiceItem.DefaultIfEmpty()
 
                               select new
                               {
-                                  declaration = d.Id,
-                                  ImporterAddress = d.ImporterAddress,
-                                  CasualImportelTel = d.CasualImporterTel,
+                                  declaration = dec.DeclarationId,
+                                  ImporterAddress = dec.ImporterAddress,
+                                  CasualImportelTel = dec.CasualImporterTel,
                                   CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
                                   InvoiceCurrencyTypeCode = myJoinqSupplierInvoice != null ? myJoinqSupplierInvoice.InvoiceCurrencyTypeCode : null,
                                   InvoiceQuantity = myJoinqSupplierInvoiceItem != null ? myJoinqSupplierInvoiceItem.InvoiceQuantity : null,
@@ -326,8 +327,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     newrow[0] = $"{r.AirlineId}-{r.MAWB}";
                     //newrow[1] = r.CourierHawb;
                     newrow[1] = r.MasterHAWB;
-                    newrow[2] = isExtendedReport?dicConPackages.ContainsKey(r.DeclarationId)?  dicConPackages[r.DeclarationId].GrossMassMeasure: "0":r.MasterGrossMassMeasure;
-                    newrow[3] = isExtendedReport?dicConPackages.ContainsKey(r.DeclarationId) ? dicConPackages[r.DeclarationId].PackageQuantity : "0":r.MasterPackageQuantity;
+                    newrow[2] = isExtendedReport?dicConPackages.ContainsKey(r.DeclarationId)?  dicConPackages[r.DeclarationId].GrossMassMeasure: "0":r.MasterGrossMassMeasure.ToString();
+                    newrow[3] = isExtendedReport?dicConPackages.ContainsKey(r.DeclarationId) ? dicConPackages[r.DeclarationId].PackageQuantity : "0":r.MasterPackageQuantity.ToString();
                     newrow[4] = ((object)r.MasterCreateDateTime) ?? DBNull.Value;
                     newrow[5] = r.MasterGatewayPortCode;
                     newrow[6] = ((object)r.MasterEstimatedArrivalDate) ?? DBNull.Value;
