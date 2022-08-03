@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;c95f&quot;"
+  Code="&quot;f67c&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -802,6 +802,11 @@
       Name="&quot;Activate Customer Nested Of Card In Html Editor&quot;"
       Description="&quot;Activate Customer Nested Of Card In Html Editor&quot;"
       SearchFields="&quot;CCR,Activate Customer Nested Of Card In Html Editor&quot;" />
+    <Record
+      Code="&quot;HDF&quot;"
+      Name="&quot;HTML Editor Style Fixed&quot;"
+      SearchFields="&quot;HDF , HTML Editor Style Fixed&quot;"
+      Description="&quot;HTML Editor Style Fixed&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
