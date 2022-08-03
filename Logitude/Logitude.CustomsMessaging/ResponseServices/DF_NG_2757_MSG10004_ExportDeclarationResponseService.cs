@@ -232,10 +232,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
             {
-                this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
-                this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                this.MyResponseData.Succeeded = true;
-                this.MyResponseData.HasException = false;
                 if (!string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 {
                     _MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
@@ -245,6 +241,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                     }
                 }
+
+                this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = false;
+
                 return;
 
             }
@@ -2438,28 +2440,47 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private string GetExceptionMsg(UnifreightIIG.Common.ExportDeclarationServiceReference.Exception ex)
         {
             List<string> fieldNames = new List<string>();
-            var fieldList = WCO.Instance.CreateDB().GetCopyList();
+            WCOTypeEnum wCOTypeEnum = _MyDeclarationPM?.Direction == "E" ? WCOTypeEnum.WCO_EX : WCOTypeEnum.WCO;
+            var fieldList = WCO.Instance.CreateDB(wCOTypeEnum).GetCopyList();
             WCOErrorPointerModel res;
 
             if (ex.ExceptionParms != null)
             {
                 ex.ExceptionParms.ToList().ForEach(param =>
                 {
-                    param = param.Substring(param.LastIndexOf(".") + 1);
-
-                    res = fieldList.Find(x => x.XmlTag.EndsWith(param) && !string.IsNullOrEmpty(x.FieldNameHeb));
-                    if (res == null && param.StartsWith("Export"))
-                        res = fieldList.Find(x => x.XmlTag.EndsWith(param.Remove(0, 6)) && !string.IsNullOrEmpty(x.FieldNameHeb));
+                    res = GetErrorField(fieldList, param);
 
                     if (res != null)
                         fieldNames.Add(res.FieldNameHeb);
                 });
-
             }
 
             string msg = fieldNames.Count > 0 ? "שגיאה בשדה: " + string.Join(",", fieldNames) : ex.ExeptionDescription;
 
             return msg;
+        }
+
+        private WCOErrorPointerModel GetErrorField(List<WCOErrorPointerModel> fieldList, string fullParam)
+        {
+            WCOErrorPointerModel res;
+
+            if (fullParam.Contains(":"))
+                return null;
+
+            string param = fullParam.Substring(fullParam.LastIndexOf(".") + 1);
+
+            res = fieldList.Find(x => x.XmlTag.EndsWith(param) && !string.IsNullOrEmpty(x.FieldNameHeb));
+            if (res == null && param.StartsWith("Export"))
+                res = fieldList.Find(x => x.XmlTag.EndsWith(param.Remove(0, 6)) && !string.IsNullOrEmpty(x.FieldNameHeb));
+
+            if (res == null && fullParam.Contains("."))
+            {
+                fullParam = fullParam.Substring(0, fullParam.LastIndexOf("."));
+                if (fullParam != null)
+                    return GetErrorField(fieldList, fullParam);
+            }
+
+            return res;
         }
 
         private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, string versionId, DateTime? status_DateTime)
