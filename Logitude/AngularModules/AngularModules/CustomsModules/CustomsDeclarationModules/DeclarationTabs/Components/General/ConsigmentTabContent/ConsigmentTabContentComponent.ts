@@ -356,6 +356,7 @@ export class ConsigmentTabContentComponent
         this.UIProperties.SetEnabled("LoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ExportLoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("CargoTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("CargoTypeCodeForExport", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ThirdCargoID", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("CargoDate", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ManifestDate", this.ObjectTableName, !this.IsDisplayOnly);
@@ -431,6 +432,11 @@ export class ConsigmentTabContentComponent
         this.SetTipsInsideCargoIdentifires(newValue);
         if (newValue == "17")
             this.LoadCouriersVat();        
+    }
+
+    public get CargoTypeCodeForExport() { return this.EntityPM ? this.EntityPM.CargoTypeCode : null; }
+    public set CargoTypeCodeForExport(newValue: string) {
+        this.EntityPM.CargoTypeCode = newValue;
     }
 
     public get CargoDescription() { return this.EntityPM ? this.EntityPM.CargoDescription : null; }
@@ -541,6 +547,9 @@ export class ConsigmentTabContentComponent
 
     public get StorageSiteCode() { return this.EntityPM ? this.EntityPM.StorageSiteCode : null; }
     public set StorageSiteCode(newValue: string) { this.EntityPM.StorageSiteCode = newValue; }
+
+    public get StorageSiteCodeExport() { return this.EntityPM ? this.EntityPM.StorageSiteCode : null; }
+    public set StorageSiteCodeExport(newValue: string) { this.EntityPM.StorageSiteCode = newValue; }
 
     public get LoadingPortCode() { return this.EntityPM ? this.EntityPM.LoadingPortCode : null; }
     public set LoadingPortCode(newValue: string) { this.EntityPM.LoadingPortCode = newValue; }

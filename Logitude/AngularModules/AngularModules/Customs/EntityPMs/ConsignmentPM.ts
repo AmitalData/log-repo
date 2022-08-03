@@ -275,6 +275,15 @@ export class ConsignmentPM {
     private exportContainerizationID: string;
     public get ExportContainerizationID() { return this.exportContainerizationID; }
     public set ExportContainerizationID(newValue: string) { if (this.exportContainerizationID != newValue) { this.exportContainerizationID = newValue; this.MarkAsDirty("ExportContainerizationID"); } }
+
+    private cargoTypeCodeForExport: string;
+    public get CargoTypeCodeForExport() { return this.cargoTypeCodeForExport; }
+    public set CargoTypeCodeForExport(newValue: string) { if (this.cargoTypeCodeForExport != newValue) { this.cargoTypeCodeForExport = newValue; this.MarkAsDirty("CargoTypeCodeForExport"); } }
+       
+	 
+    private storageSiteCodeExport: string;
+    public get StorageSiteCodeExport() { return this.storageSiteCodeExport; }
+    public set StorageSiteCodeExport(newValue: string) { if (this.storageSiteCodeExport != newValue) { this.storageSiteCodeExport = newValue; this.MarkAsDirty("StorageSiteCodeExport"); } }
        
 	 
 
@@ -317,4 +326,4 @@ export class ConsignmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
