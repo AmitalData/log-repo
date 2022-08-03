@@ -193,6 +193,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             ReceivedDate = item.ReceivedDate,
                             PrintDate = invoiceDocument?.PrintDate,
                             IsPrinted = invoiceDocument?.IsPrinted,
+                            DirectionCode = item.DirectionCode,
                         });
                     }
                 }

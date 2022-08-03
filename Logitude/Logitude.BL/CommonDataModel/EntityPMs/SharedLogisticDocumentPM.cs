@@ -22,5 +22,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool? IsPrinted { get; set; }
         public DateTime? ReceivedDate { get; set; }
         public DateTime? PrintDate { get; set; }
+        public string DirectionCode { get; set; }
     }
 }
