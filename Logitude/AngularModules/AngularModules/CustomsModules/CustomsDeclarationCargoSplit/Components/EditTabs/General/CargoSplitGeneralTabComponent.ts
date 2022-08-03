@@ -535,15 +535,23 @@ export class CargoSplitGeneralTabComponent
 
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     // this.TransportmodeId = value;
-                    confirmWindow.Yes ? this.DeleteValueScreen() : this.TransportmodeId = this.PrevTransportmodeId;
+                    confirmWindow.Yes?this.DeleteValueScreen() : this.TransportmodeId = this.PrevTransportmodeId;
                     switch (this.TransportmodeId) {
                         case 'A':
                             this.isTransportA = true;
+                            this.isTransportO = false;
+                            this.isTransportL = false
+
                             break;
                         case 'O':
+                            this.isTransportA = false;
                             this.isTransportO = true;
+                            this.isTransportL = false;
+
                             break;
                         case 'L':
+                            this.isTransportA = false;
+                            this.isTransportO = false;
                             this.isTransportL = true;
                             break;
                         default:
@@ -553,19 +561,6 @@ export class CargoSplitGeneralTabComponent
             }
 
             //  this.EntityPM.IsDirty = false;
-        }
-        switch (this.TransportmodeId) {
-            case 'A':
-                this.isTransportA = true;
-                break;
-            case 'O':
-                this.isTransportO = true;
-                break;
-            case 'L':
-                this.isTransportL = true;
-                break;
-            default:
-                break;
         }
 
     }
