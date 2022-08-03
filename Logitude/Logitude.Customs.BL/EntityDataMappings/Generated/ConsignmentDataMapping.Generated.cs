@@ -88,7 +88,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ShipCode, 
 	         ConsignmentType, 
 	         DeliverySiteCode, 
-	         ExportStoragesId,
+	         ExportStoragesId, 
+	         CargoTypeCodeForExport, 
+	         StorageSiteCodeExport,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -897,6 +897,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cargoTypeCodeForExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoTypeCodeForExport  
+	   {
+	    
+	     get
+		{
+		   return cargoTypeCodeForExport;
+		 }
+		 set
+		 {
+		   if(cargoTypeCodeForExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTypeCodeForExport",OldValue=cargoTypeCodeForExport,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cargoTypeCodeForExport=value;
+		   }
+			
+		 }
+	   }
+	  private string storageSiteCodeExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageSiteCodeExport  
+	   {
+	    
+	     get
+		{
+		   return storageSiteCodeExport;
+		 }
+		 set
+		 {
+		   if(storageSiteCodeExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageSiteCodeExport",OldValue=storageSiteCodeExport,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageSiteCodeExport=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

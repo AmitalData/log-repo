@@ -272,6 +272,16 @@ export class ConsignmentPM {
     public set ExportStoragesId(newValue: string) { if (this.exportStoragesId != newValue) { this.exportStoragesId = newValue; this.MarkAsDirty("ExportStoragesId"); } }
        
 	 
+    private cargoTypeCodeForExport: string;
+    public get CargoTypeCodeForExport() { return this.cargoTypeCodeForExport; }
+    public set CargoTypeCodeForExport(newValue: string) { if (this.cargoTypeCodeForExport != newValue) { this.cargoTypeCodeForExport = newValue; this.MarkAsDirty("CargoTypeCodeForExport"); } }
+       
+	 
+    private storageSiteCodeExport: string;
+    public get StorageSiteCodeExport() { return this.storageSiteCodeExport; }
+    public set StorageSiteCodeExport(newValue: string) { if (this.storageSiteCodeExport != newValue) { this.storageSiteCodeExport = newValue; this.MarkAsDirty("StorageSiteCodeExport"); } }
+       
+	 
 
     public OldEntityPM: ConsignmentPM;
 	
