@@ -4260,7 +4260,8 @@ namespace WebFreight.Web.ReportsWebServices
 
         private void AddPayments(IInvoiceContext invoiceCotnext, int tenant, InvoiceDataProvider invoiceDataProvider, string invoiceId)
         {
-            var payments = invoiceCotnext.ARInvoicePayments.Include("ARPayment").Include("ARPayment.AccountingPaymentMethod").Where(e => e.ARInvoiceId == invoiceId && e.Tenant == tenant).ToList();
+            var payments = invoiceCotnext.ARInvoicePayments.Include("ARPayment").Include("ARPayment.AccountingPaymentMethod").Include("ARPayment.PaymentCurrency")
+                .Where(e => e.ARInvoiceId == invoiceId && e.Tenant == tenant).ToList();
             invoiceDataProvider.Payments = new List<Payment>();
             foreach (var payment in payments)
             {
@@ -4275,7 +4276,10 @@ namespace WebFreight.Web.ReportsWebServices
                 PaymentDate = payment.ARPayment?.ValueDate,
                 PaymentMethod = payment.ARPayment?.AccountingPaymentMethod?.Name,
                 PaymentNumber = payment.ARPayment?.PaymentNo,
-                PaymentReferenceNumber = payment.ARPayment?.ChequeOrPaymentRef
+                PaymentReferenceNumber = payment.ARPayment?.ChequeOrPaymentRef,
+                BankName = payment.ARPayment?.Bank,
+                PaymentAmount = payment.ARPayment?.AmountInPaymentCurrency,
+                PaymentCurrency = payment.ARPayment?.PaymentCurrency?.Code,
             };
         }
 
