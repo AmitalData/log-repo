@@ -5692,5 +5692,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;AllowDelayForm&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.AllowDelayForm&quot;"
+      FeatureDefaultText="&quot;AllowDelayForm&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

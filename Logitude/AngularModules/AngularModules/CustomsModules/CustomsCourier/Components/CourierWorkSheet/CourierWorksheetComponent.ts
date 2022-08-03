@@ -122,7 +122,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() CustomBackFromEditevent = new EventEmitter();
-
+    public DelayFormVisibility: boolean = false;
     public IsDisplayOnly: boolean = false;
     public IsSendDocumentsFromQueueButton: boolean = false;
     public DisplayOnlyMessage: string = "";
@@ -154,6 +154,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.GetIsSendDocumentsFromQueueButton();
         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
         this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
+
+        this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
+        
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
