@@ -291,6 +291,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             var qConsignmentLoadingPort =
                   (from cons in context.Consignments
+                   where cons.LoadingPortCode != null
                    group cons by new { cons.DeclarationId }
                        into newgroup
                    select new
