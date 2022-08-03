@@ -3148,6 +3148,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private double? chargeableWeightInKG ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? ChargeableWeightInKG  
+	   {
+	    
+	     get
+		{
+		   return chargeableWeightInKG;
+		 }
+		 set
+		 {
+		   if(chargeableWeightInKG != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargeableWeightInKG",OldValue=chargeableWeightInKG,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   chargeableWeightInKG=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -171,6 +171,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                WarehouseLegExpectedEntryDate = shipment.WarehouseLegExpectedEntryDate,
                                                                IsOperationalClosed = shipment.IsOperationalClosed,
                                                                SHOHouse = shipment.SHOHouse,
+                                                               ChargeableWeightInKG = shipment.ChargeableWeightInKG
                                                                
                                                            });
             return query;
