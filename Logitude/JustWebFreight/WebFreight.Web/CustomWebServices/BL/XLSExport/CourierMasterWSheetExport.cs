@@ -61,8 +61,14 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 });
             ;
 
-            Boolean isExtendedReport = true;
- 
+            Boolean isExtendedReport = false;
+            FeatureQuery featureQuery = new FeatureQuery();
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+            var feature = features.Features.FirstOrDefault(x => x.Code == "ExportMasterExtended");
+            if (feature != null)
+            {
+                isExtendedReport = true;
+            }
             var group2 = (from d in MyContext.DeclarationPendings
                           join c in q
                           on d.DeclarationID equals c.DeclarationId
