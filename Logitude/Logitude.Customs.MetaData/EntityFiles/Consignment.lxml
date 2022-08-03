@@ -38,7 +38,7 @@
   ParentTableName="Declaration"
   LocalDefaultText="&quot;משגור&quot;"
   DefaultText="&quot;Consignment&quot;"
-  Code="&quot;65eb&quot;"
+  Code="&quot;16e9&quot;"
   Name="&quot;Customs.Consignment Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
