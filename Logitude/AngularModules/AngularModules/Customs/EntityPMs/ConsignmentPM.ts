@@ -272,10 +272,6 @@ export class ConsignmentPM {
     public set ExportStoragesId(newValue: string) { if (this.exportStoragesId != newValue) { this.exportStoragesId = newValue; this.MarkAsDirty("ExportStoragesId"); } }
        
 	 
-    private exportContainerizationID: string;
-    public get ExportContainerizationID() { return this.exportContainerizationID; }
-    public set ExportContainerizationID(newValue: string) { if (this.exportContainerizationID != newValue) { this.exportContainerizationID = newValue; this.MarkAsDirty("ExportContainerizationID"); } }
-
     private cargoTypeCodeForExport: string;
     public get CargoTypeCodeForExport() { return this.cargoTypeCodeForExport; }
     public set CargoTypeCodeForExport(newValue: string) { if (this.cargoTypeCodeForExport != newValue) { this.cargoTypeCodeForExport = newValue; this.MarkAsDirty("CargoTypeCodeForExport"); } }
@@ -284,6 +280,11 @@ export class ConsignmentPM {
     private storageSiteCodeExport: string;
     public get StorageSiteCodeExport() { return this.storageSiteCodeExport; }
     public set StorageSiteCodeExport(newValue: string) { if (this.storageSiteCodeExport != newValue) { this.storageSiteCodeExport = newValue; this.MarkAsDirty("StorageSiteCodeExport"); } }
+       
+	 
+    private exportContainerizationID: string;
+    public get ExportContainerizationID() { return this.exportContainerizationID; }
+    public set ExportContainerizationID(newValue: string) { if (this.exportContainerizationID != newValue) { this.exportContainerizationID = newValue; this.MarkAsDirty("ExportContainerizationID"); } }
        
 	 
 
@@ -326,4 +327,4 @@ export class ConsignmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
