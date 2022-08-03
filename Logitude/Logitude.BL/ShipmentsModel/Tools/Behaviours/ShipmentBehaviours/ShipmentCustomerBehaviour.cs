@@ -15,14 +15,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
     public class ShipmentCustomerBehaviour : IServiceBehaviour
     {
         private ShipmentPM entityPM;
-        private Shipment entityPOCO;
         private ShipmentServiceInitializer initializer;
 
         public void Handle(IServiceInitializer initializer)
         {
             this.initializer = (ShipmentServiceInitializer)initializer;
             this.entityPM = this.initializer.EntityPM;
-            this.entityPOCO = this.initializer.EntityPOCO;
 
             this.HandleBehaviour();
         }
@@ -272,7 +270,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.CustomerContactId = entityPM.ShipperContactId;
                 entityPM.CustomerAddressId = entityPM.ShipperAddressId;
                 entityPM.CustomerReference1 = entityPM.ShipperReference1;
-                entityPM.CustomerReference2 = entityPM.IsHybrid ? entityPOCO?.CustomerReference2 : entityPM.ShipperReference2;
+                entityPM.CustomerReference2 = entityPM.ShipperReference2;
                 //entityPM.CustomerReference3 = entityPM.ShipperReference3;
             }
         }
@@ -289,7 +287,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerContactId = entityPM.ConsigneeContactId;
             entityPM.CustomerAddressId = entityPM.ConsigneeAddressId;
             entityPM.CustomerReference1 = entityPM.ConsigneeReference1;
-            entityPM.CustomerReference2 = entityPM.IsHybrid ? entityPOCO?.CustomerReference2 : entityPM.ConsigneeReference2;
+            entityPM.CustomerReference2 = entityPM.ConsigneeReference2;
             //entityPM.CustomerReference3 = entityPM.ConsigneeReference3;
         }
 
@@ -300,7 +298,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerContactId = entityPM.AgentContactId;
             entityPM.CustomerAddressId = entityPM.AgentAddressId;
             entityPM.CustomerReference1 = entityPM.AgentReference1;
-            entityPM.CustomerReference2 = entityPM.IsHybrid ? entityPOCO?.CustomerReference2 : entityPM.AgentReference2;
+            entityPM.CustomerReference2 = entityPM.AgentReference2;
             //entityPM.CustomerReference3 = null;
         }
 
@@ -344,7 +342,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerContactId = entityPM.Notify1ContactId;
             entityPM.CustomerAddressId = entityPM.Notify1AddressId;
             entityPM.CustomerReference1 = entityPM.Notify1Reference;
-            entityPM.CustomerReference2 = entityPM.IsHybrid ? entityPOCO?.CustomerReference2 : entityPM.Notify1Reference2;
+            entityPM.CustomerReference2 = entityPM.Notify1Reference2;
             //entityPM.CustomerReference3 = null;
         }
 
@@ -367,7 +365,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.ShipperNotExporterAddressId;
             entityPM.CustomerReference1 = entityPM.ShipperNotExporterReference;
             entityPM.CustomerReference1 = entityPM.ShipperNotExporterReference1;
-            entityPM.CustomerReference2 = entityPM.IsHybrid ? entityPOCO?.CustomerReference2 : entityPM.ShipperNotExporterReference2;
+            entityPM.CustomerReference2 = entityPM.ShipperNotExporterReference2;
             //entityPM.CustomerReference3 = null;
         }
 
