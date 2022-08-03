@@ -19,7 +19,7 @@ namespace Logitude.Customs.BL.TraceEvents
 {
     public class AmitalEventTracer
     {
-        public const bool UseHybrid_When_NotIsConnectedToUniFreight = false;
+        public const bool UseHybrid_When_NotIsConnectedToUniFreight = true;
 
         public static void CreateTraceEvent(AmitalEventTracerModel myAmitalEventTracer, bool suppressSendToUniFreight = false, bool suppress_RAISE_EVENT = false, bool iscustomUser = false)
         {
