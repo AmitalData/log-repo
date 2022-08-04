@@ -152,6 +152,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string PaymentChequeStatus  { get; set; }
        [DataMember]
        public string JournalCreatedByUser  { get; set; }
+       [DataMember]
+       public string AccountLocalName  { get; set; }
    }
 
 }
