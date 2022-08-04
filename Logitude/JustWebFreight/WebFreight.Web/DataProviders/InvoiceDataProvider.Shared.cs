@@ -695,6 +695,9 @@ namespace WebFreight.Web.DataProviders
         public string PaymentNumber { get; set; }
         public string PaymentReferenceNumber { get; set; }
         public DateTime? PaymentDate { get; set; }
+        public string BankName { get; set; }
+        public string PaymentCurrency { get; set; }
+        public double? PaymentAmount { get; set; }
     }
     public class SAT
     {
