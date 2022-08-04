@@ -658,7 +658,10 @@ export class CargoTrackingShipmentMappedPM {
     public get ConnectedShipmentsNumbers() { return this.connectedShipmentsNumbers; }
     public set ConnectedShipmentsNumbers(newValue: string) { if (this.connectedShipmentsNumbers != newValue) { this.connectedShipmentsNumbers = newValue; this.MarkAsDirty("ConnectedShipmentsNumbers"); } }
 
-
+    private chargeableWeightInKG: number;
+    public get ChargeableWeightInKG() { return this.chargeableWeightInKG; }
+    public set ChargeableWeightInKG(newValue: number) { if (this.chargeableWeightInKG != newValue) { this.chargeableWeightInKG = newValue; this.MarkAsDirty("ChargeableWeightInKG"); } }
+     
 
 
     public OldEntityPM: CargoTrackingShipmentMappedPM;
