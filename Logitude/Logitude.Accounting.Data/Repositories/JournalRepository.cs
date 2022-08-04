@@ -220,8 +220,9 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<Journal> GetJournalsWithoutTransactionsForToday()
         {
+            string approvedJournalStatus = "2";
             var q = (from a in context.Journals
-                     where (a.IsLedgerCreated == false)
+                     where (a.IsLedgerCreated == false && a.StatusCode == approvedJournalStatus)
                      select a);
             return q;
         }
