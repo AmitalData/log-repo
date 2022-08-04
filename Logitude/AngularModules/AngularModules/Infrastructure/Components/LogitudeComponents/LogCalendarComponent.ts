@@ -196,7 +196,7 @@ export class LogCalendarComponent implements OnInit {
         date.setUTCFullYear(year);
         date.setUTCMonth(month);
         date.setUTCDate(day);
-        date.setUTCHours(hour);
+        date.setUTCHours(this.GetTimezoneOffsetHours());
         date.setUTCMinutes(minute);
         date.setUTCSeconds(second);
         date.setUTCMilliseconds(0);
@@ -208,11 +208,17 @@ export class LogCalendarComponent implements OnInit {
         today.setUTCFullYear(today.getFullYear());
         today.setUTCMonth(today.getMonth());
         today.setUTCDate(today.getDate());
-        today.setUTCHours(0);
+        today.setUTCHours(this.GetTimezoneOffsetHours());
         today.setUTCMinutes(0);
         today.setUTCSeconds(0);
 
         return today;
+    }
+
+
+    GetTimezoneOffsetHours() {
+        let timezoneOffsetHours = new Date().getTimezoneOffset() / 60;
+        return timezoneOffsetHours;
     }
 }
 
