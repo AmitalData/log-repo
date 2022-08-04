@@ -63,7 +63,7 @@ export class CargoSplitGeneralTabComponent
         this.entityPM = val;
         this.BuildTabs();
     }
-
+ 
 
     public ObjectTableName: string = "Customs.DeclarationCargoSplit";
     public TabsItemsSource: TabItem[] = [];
@@ -88,6 +88,7 @@ export class CargoSplitGeneralTabComponent
     OKButtonEnabled: boolean = true;
     TabIndex: number;
     IsImportDeclaration: boolean = true;
+    public isTransportSelected: boolean;
     public isDirection: boolean = true;
     public isTransportA: boolean = false;
     public isTransportO: boolean = false;
@@ -168,7 +169,7 @@ export class CargoSplitGeneralTabComponent
 
 
     IsExportDeclaration: boolean = false;
-    GetFileData() {
+    GetFileData() {        
         if(this.Direction=="E")     {
             this.DirectionE = true;
             this.DirectionI = false;
@@ -217,8 +218,19 @@ export class CargoSplitGeneralTabComponent
         //if (this.EntityPM == null)this.EntityPM = this.entityArgs.EntityPM;
         //this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.AddItem();
+        this.setRequired();
     }
+    setRequired() {
+        if(this.IsExportDeclaration){
+    
 
+        this.UIProperties.SetRequired("CustomFileNo", "Customs.DeclarationCargoSplit", (AppTool.IsNullOrEmpty(this.CustomFileNo)));
+        
+        }
+        else{
+            this.UIProperties.SetRequired("CustomFileNo", "Customs.DeclarationCargoSplit", false);
+        }
+    }
     SetDisplayFields(ResponseStatusCode: string) {
         this.UIProperties.SetEnabled("RequestNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ResponseStatusCode", this.ObjectTableName, false);
@@ -276,7 +288,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     public SetTabArgs(args: any, valdationErrorList: any[] = null) {
-
+    
         if (args.EntityPM instanceof DeclarationCargoSplitPM) this.EntityPM = args.EntityPM;
         this.IsNewEntity = args.IsNewEntity;
         if (this.IsDisplayOnly != true && args.IsDisplayOnly == true) {
@@ -380,7 +392,7 @@ export class CargoSplitGeneralTabComponent
         this.EntityPM.IsDirty = false
     }
  
-    SetWindowArgs(winArg: any) {
+    SetWindowArgs(winArg: any) {        
         if (winArg.CurrentEntity instanceof DeclarationCargoSplitPM) this.EntityPM = winArg.CurrentEntity;
         if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
             this.IsNewEntity = true;
@@ -500,6 +512,7 @@ export class CargoSplitGeneralTabComponent
     TransportmodeId = "NoValue";
     PrevTransportmodeId = "";
     TransportModeClicked(value: string) {
+        this.isTransportSelected = false
         this.PrevTransportmodeId = this.TransportmodeId;
         if (this.TransportmodeId != value) {
             this.TransportmodeId = value;
@@ -562,21 +575,24 @@ export class CargoSplitGeneralTabComponent
 
             //  this.EntityPM.IsDirty = false;
         }
-
+        
     }
 
     air; ocean; land;
     DirectionModeClicked(value: string) {
+        this.isTransportSelected = false
+        debugger
         if(this.DirectionI){
+            
 
             this.DirectionI=false;
             this.DirectionE= true;
             this.isTransportA = false;
             this.isTransportO = false;
             this.isTransportL = false;
+            this.isTransportSelected = true
         }
         else{
-
             this.DirectionE=false;
             this.DirectionI= true;
         }
@@ -609,8 +625,7 @@ export class CargoSplitGeneralTabComponent
         }
 
         this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent)?.RefreshTabs(this.IsExportDeclaration ? 'E' : 'I'))
-
-
+        this.setRequired();
     }
     SetDisable(value) {
         value == "Import" ? this.IsImportDeclaration = true : this.IsImportDeclaration = false;
@@ -661,6 +676,7 @@ export class CargoSplitGeneralTabComponent
             this.NoConnectedConsignmentEnableField();
             this.AddTab(null);
         } 
+        this.setRequired();
         this.EntityPM.IsDirty = false;
     }
     DeleteTabs(tab: LogTab) {
@@ -727,7 +743,7 @@ export class CargoSplitGeneralTabComponent
     }
 
     AddTab(event) {
-
+        
         if (this.IsDisplayOnly) {
             return;
         }
@@ -851,6 +867,8 @@ export class CargoSplitGeneralTabComponent
     }
 
     CustomFileNoTextChanged(searchtext) {
+        this.setRequired();
+        
         this.Tabs.forEach(x => (x.ComponentReference as DecCargoSplitConComponent)?.RefreshTabs(this.IsExportDeclaration ? 'E' : 'I'))
         var errorMessage = "";
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
@@ -1243,9 +1261,12 @@ export class CargoSplitGeneralTabComponent
         var errors = [];
         this.FillValidationErrorList.emit(errors);
         this.ValidationErrorsList = []; 
+        if (AppTool.IsNullOrEmpty(this.CustomFileNo) && this.IsExportDeclaration) {
+            errors.push("תיק עמילות/מכס שדה חובה");
+        }
 
         Validator.TryValidateObject(this.EntityPM, "Customs.DeclarationCargoSplit", errors);
-
+        
         if (this.EntityPM.DecCargoSplitCons == null || this.EntityPM.DecCargoSplitCons.length < 1) {
             errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבואן אחד"));
         } else {

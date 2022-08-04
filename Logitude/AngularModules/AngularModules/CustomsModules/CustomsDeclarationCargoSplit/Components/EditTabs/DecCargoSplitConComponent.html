@@ -102,7 +102,12 @@
                     <tr>
                         <td class="TabTitleRow">{{'Customs.Declaration.O.ConsignmentPackages' | TextCodeTranslationPipe}}</td>
                         <td style="width: 25px;height: 20px;">
-                            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="AddItem()" style="float:left;"></IconButton></div>
+                            <div>
+                                
+                             <IconButton [IsEnabled]="!IsDisplayOnly && (DeclarationDirection !='E' || (ParentCargoConsinmentItemList != null && DeclarationDirection =='E'))" 
+                                [IsSmall]="true" [Name]="'Add'" (click)="AddItem()" style="float:left;">
+                            </IconButton>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -145,7 +150,7 @@
                                                         </div>
                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                             <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 90px; cursor:pointer;" #selectControl (change)="ParentCargoConsinmentItemSelectionChanged(item,selectControl.value)">
-                                                                <option *ngFor="let c of ParentCargoConsinmentItemList" [selected]="c.SequenceNumeric==item.ParentCargoConsinmentItem.SequenceNumeric">{{c.SequenceNumeric}}</option>
+                                                                <option *ngFor="let c of ParentCargoConsinmentItemList" [selected]="c?.SequenceNumeric==item.ParentCargoConsinmentItem?.SequenceNumeric">{{c?.SequenceNumeric}}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -199,7 +204,7 @@
                                         <ng-template let-item>
                                             <log-cell-template [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span>{{item.RequestReasonName}}</span>
+                                                    <span>{{item.RequestReasonName}}</span> 
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogLov [ObjectFieldName]="'RequestReasonCode'"
