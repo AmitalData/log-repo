@@ -285,6 +285,8 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<GLAccount>().Property(x => x.PostponedChequesCommission).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<GLAccount>().Property(x => x.InterestOpenBalance).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.PeriodPast).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period5).HasPrecision(16, 2);

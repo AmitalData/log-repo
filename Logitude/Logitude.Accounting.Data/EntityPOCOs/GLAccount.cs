@@ -180,6 +180,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool ActiveForInterestCreditInvoice { get; set; }
         [Column("InterestCreditLimit")]
 	    public decimal? InterestCreditLimit { get; set; }
+        [Column("InterestOpenBalance")]
+        public decimal? InterestOpenBalance { get; set; }
         [Column("NameForPrintingCheques")]
 	    public string NameForPrintingCheques { get; set; }
         [Column("Smallcashbook")]
