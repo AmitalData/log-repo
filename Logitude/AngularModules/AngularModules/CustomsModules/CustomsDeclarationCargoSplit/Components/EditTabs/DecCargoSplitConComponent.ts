@@ -115,6 +115,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
                 this.SetClosedDeclarationCargoSplitScreesn(res.IsClosed);
             })
         );
+        this.DeclarationDirection = this.EntityPM.EntityParentPM.direction;
         this.PreceduralFilterItems = new ApiQueryFilters();
         if (!AppTool.IsNullOrEmpty(this.EntityPM) && this.EntityPM.EntityParentPM.direction == "E") {
             this.PreceduralFilterItems.addAdditionalFilter("Code", "1000000,8000000,4000000", null, null, "InListExact", false, false, false, "string", false, true);
@@ -365,6 +366,10 @@ export class DecCargoSplitConComponent extends BaseComponent {
     }
 
     AddItem() {
+
+        if(this.ParentCargoConsinmentItemList == null &&  (this.DeclarationDirection =="E" || this.EntityPM.EntityParentPM.direction == "E"))
+            return;
+
         if (!this.IsDisplayOnly) {
             var counter: number = 0;
             if (this.EntityPM.DecCargoSplitConsItems.length > 0) {
@@ -385,17 +390,20 @@ export class DecCargoSplitConComponent extends BaseComponent {
                     item.Tenant = this.EntityPM.Tenant;
                     item.DecCargoSplitConsLineNo = this.EntityPM.LineNumber;
                     item.ItemLine = counter;        
+
             if (this.ParentCargoConsinmentItemList != null && this.ParentCargoConsinmentItemList[0] != null) {
                 
-                    item.ParentCargoConsinmentItem = this.ParentCargoConsinmentItemList[0].SequenceNumeric;
+                    item.ParentCargoConsinmentItem = this.ParentCargoConsinmentItemList[0]?.SequenceNumeric;
                     if(this.DeclarationDirection == "E"){
-                    item.GrossMassMeasure = this.ParentCargoConsinmentItemList[0].GrossMassMeasure;
-                    item.CargoDescription = this.ParentCargoConsinmentItemList[0].MarksNumbers;
+                            
+                        item.GrossMassMeasure = this.ParentCargoConsinmentItemList[0].GrossMassMeasure;
+                        item.CargoDescription = this.ParentCargoConsinmentItemList[0].MarksNumbers;
+                        item.RequestReasonCode = item.EntityParentPM.entityParentPM?.requestReason;
 
                 }
 
             }
-            
+        
             if (!this.EntityPM.DecCargoSplitConsItems.includes(item)) {
                 this.EntityPM.AddDecCargoSplitConsItem(item);
                 var line = new DecCargoSplitConsItemModel(item);
@@ -518,7 +526,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
                     currentItem.ParentCargoConsinmentItem = selectedItem.SequenceNumeric;
                     currentItem.GrossMassMeasure = selectedItem.GrossMassMeasure;
                     currentItem.CargoDescription = selectedItem.MarksNumbers;
- 
+
         }
     }
 
