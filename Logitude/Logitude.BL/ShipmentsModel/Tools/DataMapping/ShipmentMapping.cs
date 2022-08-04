@@ -2048,7 +2048,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.CustomerAddressId = entityPM.CustomerAddressId;
             entityPoco.CustomerContactId = entityPM.CustomerContactId;
             entityPoco.CustomerReference1 = entityPM.CustomerReference1;
-            entityPoco.CustomerReference2 = entityPM.IsHybrid ? entityPoco.CustomerReference2 : entityPM.CustomerReference2;
+            entityPoco.CustomerReference2 = entityPM.CustomerReference2;
             entityPoco.CustomerReference3 = entityPM.CustomerReference3;
 
             entityPoco.FreightForwarderId = entityPM.FreightForwarderId;
