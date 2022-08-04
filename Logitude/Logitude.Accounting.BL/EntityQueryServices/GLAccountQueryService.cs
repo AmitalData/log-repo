@@ -1112,7 +1112,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             b110s = (from a in context.GLAccounts
                      join c in context.ChartOfAccounts on a.ChartOfAccountsId equals c.Id
 
-                     where a.Inactive == false && a.Tenant == tenant
+                     where a.Tenant == tenant
 
                      select new B110Data()
                                     {
