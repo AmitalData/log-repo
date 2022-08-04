@@ -20,6 +20,8 @@ import {LastFilterClass} from '../../../Infrastructure/Utilities/LastFilterClass
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import * as React from 'react';
+import Dashboard from 'logitude-dashboard-library';
+
 
 
 
@@ -29,7 +31,7 @@ declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
     selector: 'DashBoard',
-    
+    styleUrls:['dashboard.scss'],
     templateUrl: './DashBoardComponent.html',
     encapsulation: ViewEncapsulation.None,
 })
@@ -85,7 +87,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
     }
 
     renderNewDashboard(){
-        //ReactDOM.render(React.createElement<DashboardDesigner>('DashboardDesigner'),this.reactDashboradContainer.nativeElement)
+        ReactDOM.render(React.createElement(Dashboard),this.reactDashboradContainer.nativeElement)
     }
     ngOnDestroy() {
         if (this.ActivityStatusPage != null) {

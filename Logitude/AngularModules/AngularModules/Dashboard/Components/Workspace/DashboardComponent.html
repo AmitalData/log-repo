@@ -55,12 +55,17 @@
    .hide{
     display: none;
    }
+   .new-dashboard{
+    width: 100%;
+    height: 100%;
+    padding: 10px 0px 0px 0px;
+   }
 </style>
-<div>
-    <div style="display:flex">
-        <button class="Button headerButtons" [ngClass]="{'selectedButton':!showNewDashboard}" (click)="showNewDashboard = false">clasis</button>
-        <button class="Button headerButtons" [ngClass]="{'selectedButton':showNewDashboard}" (click)="showNewDashboard = true">new</button>
-    </div>
+<div class="CellStretch">
+    <ul class="PagesMenu">
+        <li [ngClass]="{'SelectedPageMenu':!showNewDashboard}" (click)="showNewDashboard = false">Classic Dashboard</li>
+        <li [ngClass]="{'SelectedPageMenu':showNewDashboard}" (click)="showNewDashboard = true">Custom Dashboards</li>
+    </ul>
     <div [ngClass]="{'hide':showNewDashboard}">
         <div *ngIf="isNotMoreDetails" style="width:100%;height:100%">
             <table>
@@ -580,8 +585,8 @@
             </table>
         </div>
     </div>
-    <div [ngClass]="{'hide':!showNewDashboard}">
-        <div #reactDashboradContainer>
+    <div class="CellStretch" [ngClass]="{'hide':!showNewDashboard}">
+        <div class="CellStretch" class="new-dashboard" #reactDashboradContainer>
 
         </div>
     </div>
