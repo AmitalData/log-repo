@@ -291,13 +291,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             var qConsignmentLoadingPort =
                   (from cons in context.Consignments
-                   where cons.LoadingPortCode != null
+                   where cons.ExportLoadingPortCode != null
                    group cons by new { cons.DeclarationId }
                        into newgroup
                    select new
                    {
                        newgroup.Key.DeclarationId,
-                       cons = newgroup.GroupBy(x => x.LoadingPortCode).Select(grp => grp.FirstOrDefault()),
+                       cons = newgroup.GroupBy(x => x.ExportLoadingPortCode).Select(grp => grp.FirstOrDefault()),
                    });
 
 
@@ -531,7 +531,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      FOBValueDollar = a.FOBValueDollar,
 
                                                      AmendmentStatusName = myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName: null,
-                                                     LoadingPortName = myJoinConsignmentLoadingPort.cons.FirstOrDefault().InternationalSite.LocalName,
+                                                     LoadingPortName = myJoinConsignmentLoadingPort.cons.FirstOrDefault().ExportLoadingPort.LocalName,
                                                  });
 
            
