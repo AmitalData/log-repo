@@ -188,6 +188,7 @@ export class LoginComponent implements OnInit {
 
         this.SelectedCompany = this.TenantList.find(d => d.Tenant == 6);
         this.ContinueClicked()
+
     }
 
 
