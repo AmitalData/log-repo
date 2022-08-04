@@ -2395,7 +2395,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             List<string> cardIdsList = totalList.Select(s => s.CardId).ToList();
             cardIdsList = cardIdsList.Distinct().ToList();
-            List<CardEntityClass> allCardData = (from d in commonContext.Cards.Include("PaymentTerm").Include("PartnerType")
+            List<CardEntityClass> allCardData = (from d in commonContext.Cards.Include("PaymentTerm").Include("PartnerType").Include("SalesmanUser").Include("SalesmanUser.Contact")
                                                  where d.Tenant == tenant && cardIdsList.Contains(d.Id)
                                                  select new CardEntityClass
                                                  {
@@ -2404,13 +2404,14 @@ namespace WebFreight.Web.ReportsWebServices
                                                      PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
                                                      CardCode = d.Code,         
                                                      CardTypeName = d.PartnerType == null ? null : d.PartnerType.Name,
+                                                     Salesman = d.SalesmanUser == null ? null : (d.SalesmanUser.Contact == null ? null : d.SalesmanUser.Contact.EnglishName),
                                                  }).ToList();
 
             List<string> partnersIdsFromTheTotalList = totalList.Select(s => s.PartnerId).ToList();
             partnersIdsFromTheTotalList = partnersIdsFromTheTotalList.Distinct().ToList();
 
             List<CardEntityClass> partnersDataAsCards= (from d in commonContext.Cards.Include("PaymentTerm").Include("PartnerType")
-                                                  where d.Tenant == tenant && partnersIdsFromTheTotalList.Contains(d.Id)
+                                                        where d.Tenant == tenant && partnersIdsFromTheTotalList.Contains(d.Id)
                                                   select new CardEntityClass
                                                   {
                                                       Id = d.Id,
@@ -2437,8 +2438,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             foreach (string cardId in cardIdsList)
-            {
-                
+            {                
                 AgedAccountsReceivableDataProvider.AgedAccountsReceivable acountsRecored = new AgedAccountsReceivableDataProvider.AgedAccountsReceivable();
 
                 double? currentsum = 0;
@@ -2486,28 +2486,25 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (currencyType == "profit")
                 {
-                    //if (currencyRate != 0)
-                    //{
-                        currentsum = (currentDueItems.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
-                        sum1_30 = (Due1_30Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
-                        sum31_60 = (Due31_60Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
-                        sum61_90 = (Due61_90Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
-                        sum91_120 = (Due91_120Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
-                        over120 = (over120Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    currentsum = (currentDueItems.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    sum1_30 = (Due1_30Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    sum31_60 = (Due31_60Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    sum61_90 = (Due61_90Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    sum91_120 = (Due91_120Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    over120 = (over120Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
 
-                        sum1_15 = (Due1_15Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
-                        sum16_30 = (Due16_30Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
-                        sum1_24 = (Due1_24Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
-                        sum25_30 = (Due25_30Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    sum1_15 = (Due1_15Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    sum16_30 = (Due16_30Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    sum1_24 = (Due1_24Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    sum25_30 = (Due25_30Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
 
-                        sum31_45 = (Due31_45Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
-                        sum46_60 = (Due46_60Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    sum31_45 = (Due31_45Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                    sum46_60 = (Due46_60Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
 
-                        sum61_75 = Due61_75Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
-                        sum76_90 = Due76_90Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
-                        sum91_105 = Due91_105Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
-                        sum106_120 = Due106_120Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
-                    //}
+                    sum61_75 = Due61_75Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
+                    sum76_90 = Due76_90Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
+                    sum91_105 = Due91_105Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
+                    sum106_120 = Due106_120Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
                 }
 
                 else
@@ -2540,9 +2537,11 @@ namespace WebFreight.Web.ReportsWebServices
                     acountsRecored.CustomerName = cardEntity.Name;
                     acountsRecored.CardCode = cardEntity.CardCode;
                     acountsRecored.CardTypeName = cardEntity.CardTypeName;
+                    acountsRecored.Salesman = cardEntity.Salesman;
                 }
 
-                foreach(string partnerId in partnersIdsFromTheTotalList) {
+                foreach(string partnerId in partnersIdsFromTheTotalList) 
+                {
                     List<AgingStatemantDataItem> partnersSharedToSameCustomer = tempList.Where(d => d.PartnerId == partnerId).ToList();
                     if (partnersSharedToSameCustomer.Count != 0)
                     {
@@ -2553,6 +2552,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }     
                     }               
                 }
+
                 acountsRecored.CurrentDue = currentsum;
                 acountsRecored.DaysPastDue1_30 = sum1_30;
                 acountsRecored.DaysPastDue31_60 = sum31_60;
@@ -13200,6 +13200,7 @@ namespace WebFreight.Web.ReportsWebServices
         public string PaymentTerm { get; set; }
         public string CardCode { get; set; }
         public string CardTypeName { get; set; }
+        public string Salesman { get; set; }
     }
 
     public class AgingStatemantDataItem
