@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td style="width:100%;">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="'true'"></ValidationSummary>
@@ -23,10 +23,10 @@
             <table>
                 <tr>
                     <td>
-                        <LogCalendar style="float:left;margin-right:15px;" [ToggleOpened]="'true'" [SelectedDate]="SelectedFromDate" (SelectedDateChanged)="OnSelectedFromDateChanged($event)"></LogCalendar>
+                        <LogCalendar style="float:left;margin-right:15px;"  [UseTimezoneOffSetHours]="'true'" [ToggleOpened]="'true'" [SelectedDate]="SelectedFromDate" (SelectedDateChanged)="OnSelectedFromDateChanged($event)"></LogCalendar>
                     </td>
                     <td>
-                        <LogCalendar style="float:left;" [ToggleOpened]="'true'" [SelectedDate]="SelectedToDate" (SelectedDateChanged)="OnSelectedToDateChanged($event)"></LogCalendar>
+                        <LogCalendar style="float:left;"  [UseTimezoneOffSetHours]="'true'" [ToggleOpened]="'true'" [SelectedDate]="SelectedToDate" (SelectedDateChanged)="OnSelectedToDateChanged($event)"></LogCalendar>
                     </td>
                 </tr>
             </table>
