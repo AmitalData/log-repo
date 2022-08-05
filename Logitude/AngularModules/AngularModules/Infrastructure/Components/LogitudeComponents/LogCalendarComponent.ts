@@ -181,6 +181,7 @@ export class LogCalendarComponent implements OnInit {
 
 
         this.SelectedDate = this.GetDate(day.year, day.month, day.Day, selectedHour, selectedMinute, selectedSecond);
+
         this.SelectedDateChanged.emit({ SelectedDate: this.SelectedDate, Suffix: null });
     }
 
