@@ -56,6 +56,17 @@ export class MainMenuComponent {
         //     tasksAppItem.QuerySection = null;
         //     this.MainMenuItems.push(tasksAppItem);
         // }
+
+
+        var workflowItem = new MainMenuItem("General.MH.Workflow", AppTool.GetMainMenuIconCode("General.MH.Depositions"));
+        workflowItem.IndexOfOrder = 100;
+        workflowItem.ObjectTableId = null;
+        workflowItem.HtmlView = null;
+        workflowItem.ObjectTableName = null;
+        workflowItem.QuerySection = null;
+        this.MainMenuItems.push(workflowItem);
+
+
         // Layout Direction
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         var defaultStatus: string = LastFilterClass.GetFilterValue("Simplog.Infrastructure.Views.MenuView", "Sidebar");
@@ -326,6 +337,10 @@ export class MainMenuComponent {
                     }
                     case "General.MH.TasksApp": {
                         myComponentPath = "./TasksApp/Components/TasksAppComponent";
+                        break;
+                    }
+                    case "General.MH.Workflow": {
+                        myComponentPath = "./Workflow/Components/LogitudeWorkflowComponent";
                         break;
                     }
                     case "General.MH.Quotes": {

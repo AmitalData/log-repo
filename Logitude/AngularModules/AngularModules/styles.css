@@ -30,3 +30,6 @@
 @import "node_modules/primeicons/primeicons.css";
 @import "node_modules/quill/dist/quill.snow.css"; */
 
+
+@import "~logitude-workflow/node_modules/primeflex/primeflex.css";
+@import "~logitude-workflow/dist/index.css";

@@ -353,7 +353,7 @@ export class LoginComponent implements OnInit {
             var getTokens = "getTokens";
             if (logitudeTokensService.hasOwnProperty(getTokens)) {
                 logitudeTokensService[getTokens]().then((logitudeTokens: any) => {
-                    if(logitudeTokens){
+                    if (logitudeTokens) {
                         let logitudeTokensJson = JSON.stringify(logitudeTokens);
                         CToolSessionInfo.LogitudeTokensJson = logitudeTokensJson;
                     }
@@ -862,6 +862,25 @@ export class LoginComponent implements OnInit {
                             // ];
 
                             //window.TextCodes = window.TextCodes.concat(additionalTextCodes);
+
+
+                            let workflowTextCode = {
+                                Code: "General.MH.Workflow",
+                                DefaultText: "Workflow",
+                                DefaultTextPlural: null,
+                                InActive: false,
+                                IsSpellChecked: false,
+                                LocalDefaultText: null,
+                                ObjectTableId: "1-1",
+                                ObjectTableName: "General",
+                                SpellCheckDate: null,
+                                SpellCheckedByUserId: null,
+                                SpellCheckedByUserName: null,
+                                Tenant: 0,
+                                TextCodeTypeCode: "MH"
+                            };
+
+                            window.TextCodes.push(workflowTextCode);
 
                             this.IncreaseProgressBar();
                             //25
