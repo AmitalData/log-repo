@@ -49,7 +49,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 
 		private IQueryable<Dashboard> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Dashboard> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 				private IQueryable<Dashboard> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Dashboard> iQueryable, int tenant)
         {
