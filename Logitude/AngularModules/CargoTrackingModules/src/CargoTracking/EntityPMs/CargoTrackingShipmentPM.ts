@@ -704,6 +704,11 @@ export class CargoTrackingShipmentPM {
     public set SHOHouse(newValue: string) { if (this.sHOHouse != newValue) { this.sHOHouse = newValue; this.MarkAsDirty("SHOHouse"); } }
        
 	 
+    private chargeableWeightInKG: number;
+    public get ChargeableWeightInKG() { return this.chargeableWeightInKG; }
+    public set ChargeableWeightInKG(newValue: number) { if (this.chargeableWeightInKG != newValue) { this.chargeableWeightInKG = newValue; this.MarkAsDirty("ChargeableWeightInKG"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

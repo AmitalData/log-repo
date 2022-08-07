@@ -293,6 +293,10 @@
                     <div class="value">{{Shipment.NumberOfPackages!=null?Shipment.NumberOfPackages:0}}</div>
                 </div>
 
+                <div class="field">
+                    <div class="label">Chargeable Weight</div>
+                    <div class="value">{{Shipment.ChargeableWeightInKG!=null?Shipment.ChargeableWeightInKG:0}} KG</div>
+                </div>
 
                 <div class="field" *ngIf="!isShipmentOrder && Shipment.TransportModeId != 'A'">
                     <div class="label">

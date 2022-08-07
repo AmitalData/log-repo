@@ -39,6 +39,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Index Columns='ShipmentDate' />"+
 "  <Index Columns='Tenant' />"+
 "  <Index Columns='SearchFields' />"+
+"  <Index Columns='ReferenceType' />"+
 "</Table>";
 		
 		   return dxmlFile;

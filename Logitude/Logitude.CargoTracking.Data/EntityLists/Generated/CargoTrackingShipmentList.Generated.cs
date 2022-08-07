@@ -308,6 +308,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string InvoicedExceptionReason  { get; set; }
        [DataMember]
        public string SHOHouse  { get; set; }
+       [DataMember]
+       public double? ChargeableWeightInKG  { get; set; }
    }
 
 }

@@ -53,7 +53,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "AssginedToCustomsAgentDate",
                 "GrossWeightUnitCode",
                 "ShipmentTypeId",
-
+                "ChargeableWeightInKG",
                 "ExceptionDate",
                 "ExceptionDescription",
                 "IsOperationalClosed"
