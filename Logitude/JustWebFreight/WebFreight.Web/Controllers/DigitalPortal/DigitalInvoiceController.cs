@@ -175,8 +175,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckDigitalUserAuthentication(tenant, filters.PartnerId);
 
-            SecurityUtility.CheckSharedContactAuthentication(tenant, filters.PartnerId);
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
 
