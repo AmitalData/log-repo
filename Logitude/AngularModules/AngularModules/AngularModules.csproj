@@ -206,6 +206,7 @@
     <Content Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.html" />
+    <Content Include="Common\Components\TariffsTab\TariffsTabComponent.html" />
     <Content Include="Controls\All\GreenButtonComponent.html" />
     <Content Include="Common\Components\Maintenance\Horse\HorseGeneralTabComponent.html" />
     <Content Include="Common\Components\Maintenance\Horse\NewHorseComponent.html" />
@@ -427,6 +428,7 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ServiceLinesTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\TariffsTab\TariffsTabComponent.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />

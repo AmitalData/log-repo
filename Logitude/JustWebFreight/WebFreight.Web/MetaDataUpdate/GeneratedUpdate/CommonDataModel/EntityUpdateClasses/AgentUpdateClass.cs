@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AgentUpdateClass
    {  		
-		public const string HashString = "12f85583c8e0e731d2b1116c3ed5c09e";
+		public const string HashString = "f1fa8c0fbb15b271c687147867f77eb6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3637,6 +3637,120 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ExportLocalCustomerGroupId",
+					  						ObjectTableName =  "Agent",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CustomerGroup",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ExportLocalCustomerGroupId",
+					  						ListPropertyPath =  "ExportLocalCustomerGroupId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ExportLocalCustomerGroupId",
+					  						DefaultText =  "Export Local Customer Group",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ImportLocalCustomerGroupId",
+					  						ObjectTableName =  "Agent",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CustomerGroup",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ImportLocalCustomerGroupId",
+					  						ListPropertyPath =  "ImportLocalCustomerGroupId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ImportLocalCustomerGroupId",
+					  						DefaultText =  "Import Local Customer Group",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -3815,16 +3929,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature AgentSharedLogisticsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDLOGISTICS", ObjectTableId = AgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Agent.Features.SharedLogistics", NameTextCodeDefaultText = "Shared Logistics", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AgentObjectTable);
  
                  
-			   TextCode AgentDocsOutTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = AgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AgentDocsOutFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = AgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Agent.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AgentObjectTable);
+			   TextCode AgentTariffsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Tariffs", DefaultText = "Tariffs",LocalDefaultText = null, ObjectTableId = AgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature AgentTariffsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Agent.Tab.Tariffs", ObjectTableId = AgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentFeatures.AGTR", NameTextCodeDefaultText = "Tariffs", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AgentObjectTable);
  
                  
-			   TextCode AgentDocsInTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = AgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AgentDocsInFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = AgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Agent.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AgentObjectTable);
+			   TextCode AgentDocsOutTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = AgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature AgentDocsOutFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = AgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Agent.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AgentObjectTable);
  
                  
-			   TextCode AgentEventsTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = AgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AgentEventsFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Agent.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AgentObjectTable);
+			   TextCode AgentDocsInTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = AgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature AgentDocsInFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = AgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Agent.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AgentObjectTable);
+ 
+                 
+			   TextCode AgentEventsTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Agent.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = AgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature AgentEventsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Agent.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AgentObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -3832,21 +3950,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGGC",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAgent/Components/EditTabs/AgentGeneralTabComponent", FeatureId = AgentGeneralFeature_TH0.Id,FeatureUniqeCode = AgentGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.AgentGeneralTabControl", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentGeneralTextCode_TH0.Id, TabNameTextCodeCode = AgentGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGBL",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAgent/Components/EditTabs/AgentBillingTabComponent", FeatureId = AgentBillingFeature_TH1.Id,FeatureUniqeCode = AgentBillingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentBillingTextCode_TH1.Id, TabNameTextCodeCode = AgentBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGBL",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAgent/Components/EditTabs/AgentBillingTabComponent", FeatureId = AgentBillingFeature_TH1.Id,FeatureUniqeCode = AgentBillingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentBillingTextCode_TH1.Id, TabNameTextCodeCode = AgentBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id,FeatureUniqeCode = GeneralAccountingFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.AgentAccountingTabControl", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentAccountingTextCode_TH2.Id, TabNameTextCodeCode = AgentAccountingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id,FeatureUniqeCode = GeneralAccountingFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.AgentAccountingTabControl", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentAccountingTextCode_TH2.Id, TabNameTextCodeCode = AgentAccountingTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AgentAddressesFeature_TH3.Id,FeatureUniqeCode = AgentAddressesFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentAddressesTextCode_TH3.Id, TabNameTextCodeCode = AgentAddressesTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AgentAddressesFeature_TH3.Id,FeatureUniqeCode = AgentAddressesFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentAddressesTextCode_TH3.Id, TabNameTextCodeCode = AgentAddressesTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AgentContactsFeature_TH4.Id,FeatureUniqeCode = AgentContactsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentContactsTextCode_TH4.Id, TabNameTextCodeCode = AgentContactsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AgentContactsFeature_TH4.Id,FeatureUniqeCode = AgentContactsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentContactsTextCode_TH4.Id, TabNameTextCodeCode = AgentContactsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGSL",HtmlComponentName = "AgentSharedLogisticsTabComponent",HtmlComponentUrl = "./CommonModules/CommonAgent/Components/EditTabs/AgentSharedLogisticsTabComponent", FeatureId = AgentSharedLogisticsFeature_TH5.Id,FeatureUniqeCode = AgentSharedLogisticsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.AgentSharedLogisticsTabControl", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentSharedLogisticsTextCode_TH5.Id, TabNameTextCodeCode = AgentSharedLogisticsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGSL",HtmlComponentName = "AgentSharedLogisticsTabComponent",HtmlComponentUrl = "./CommonModules/CommonAgent/Components/EditTabs/AgentSharedLogisticsTabComponent", FeatureId = AgentSharedLogisticsFeature_TH5.Id,FeatureUniqeCode = AgentSharedLogisticsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.AgentSharedLogisticsTabControl", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentSharedLogisticsTextCode_TH5.Id, TabNameTextCodeCode = AgentSharedLogisticsTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGDO",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAgent/Components/EditTabs/AgentDocsOutTabComponent", FeatureId = AgentDocsOutFeature_TH6.Id,FeatureUniqeCode = AgentDocsOutFeature_TH6.FeatureUniqeCode, ControlPath = "", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentDocsOutTextCode_TH6.Id, TabNameTextCodeCode = AgentDocsOutTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGTR",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/TariffsTab/TariffsTabComponent", FeatureId = AgentTariffsFeature_TH6.Id,FeatureUniqeCode = AgentTariffsFeature_TH6.FeatureUniqeCode, ControlPath = "./Common/Components/TariffsTab/TariffsTabComponent", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentTariffsTextCode_TH6.Id, TabNameTextCodeCode = AgentTariffsTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAgent/Components/EditTabs/AgentDocsInTabComponent", FeatureId = AgentDocsInFeature_TH7.Id,FeatureUniqeCode = AgentDocsInFeature_TH7.FeatureUniqeCode, ControlPath = "", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentDocsInTextCode_TH7.Id, TabNameTextCodeCode = AgentDocsInTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGDO",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAgent/Components/EditTabs/AgentDocsOutTabComponent", FeatureId = AgentDocsOutFeature_TH7.Id,FeatureUniqeCode = AgentDocsOutFeature_TH7.FeatureUniqeCode, ControlPath = "", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentDocsOutTextCode_TH7.Id, TabNameTextCodeCode = AgentDocsOutTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AgentEventsFeature_TH8.Id,FeatureUniqeCode = AgentEventsFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentEventsTextCode_TH8.Id, TabNameTextCodeCode = AgentEventsTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAgent/Components/EditTabs/AgentDocsInTabComponent", FeatureId = AgentDocsInFeature_TH8.Id,FeatureUniqeCode = AgentDocsInFeature_TH8.FeatureUniqeCode, ControlPath = "", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentDocsInTextCode_TH8.Id, TabNameTextCodeCode = AgentDocsInTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AgentEventsFeature_TH9.Id,FeatureUniqeCode = AgentEventsFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AgentObjectTable.Id, TabNameTextCodeId = AgentEventsTextCode_TH9.Id, TabNameTextCodeCode = AgentEventsTextCode_TH9.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

@@ -41,6 +41,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    where a.Id == id
                                    select new CustomAgentPM()
                                    {
+                                       ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                       ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                        Id = a.Id,
                                        Tenant = a.Tenant,
                                        Code = a.Card.Code,
@@ -136,6 +138,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    where a.Id == id && a.Tenant == tenant
                                    select new CustomAgentPM()
                                    {
+                                       ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                       ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                        Id = a.Id,
                                        Tenant = a.Tenant,
                                        Code = a.Card.Code,
@@ -216,6 +220,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    where a.Id == id && a.Tenant == tenant
                                    select new CustomAgentPM()
                                    {
+                                       ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                       ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                        Id = a.Id,
                                        Tenant = a.Tenant,
                                        Code = a.Card.Code,
@@ -301,6 +307,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      where a.Tenant == tenant
                                                      select new CustomAgentPM()
                                                      {
+                                                         ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                                         ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                                          Id = a.Id,
                                                          Tenant = a.Tenant,
                                                          Code = a.Card.Code,
@@ -361,6 +369,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          where a.Tenant == tenant
                          select new CustomAgentPM()
                          {
+                             ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                             ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                              Id = a.Id,
                              Tenant = a.Tenant,
                              Code = a.Card.Code,

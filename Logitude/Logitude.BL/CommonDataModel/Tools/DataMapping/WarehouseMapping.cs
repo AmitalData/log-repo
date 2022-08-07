@@ -83,6 +83,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.StorageFreeDays = entityPM.StorageFreeDays;
             entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entityCard.SATCustomerName = entityPM.SATReceptorName;
+            entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
+            entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
 
             if (!entityPM.IsFirstContactToAdd)
             {

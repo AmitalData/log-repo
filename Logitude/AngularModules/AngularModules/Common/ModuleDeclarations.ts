@@ -57,6 +57,7 @@ import {CustomsShipperFiltersMenuComponent} from './Components/FiltersMenu/Custo
 import { GLAccountSelectComponent } from './Components/AccountingTab/GLAccountSelectWindow/GLAccountSelectComponent';
 import { NewHorseComponent } from './Components/Maintenance/Horse/NewHorseComponent';
 import { HorseGeneralTabComponent } from './Components/Maintenance/Horse/HorseGeneralTabComponent';
+import { TariffsTabComponent } from './Components/TariffsTab/TariffsTabComponent';
 
 export const Components =
     [
@@ -119,6 +120,7 @@ export const Components =
         TransmissionLogAuditTabComponent,
         NewHorseComponent,
         HorseGeneralTabComponent,
+        TariffsTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -188,6 +190,7 @@ export class ModuleDeclarations {
             case "TransmissionLogAuditTabComponent": { myResult = TransmissionLogAuditTabComponent; break; }
             case "NewHorseComponent": { myResult = NewHorseComponent; break; }
             case "HorseGeneralTabComponent": { myResult = HorseGeneralTabComponent; break; }
+            case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
         }
 
         return myResult;
