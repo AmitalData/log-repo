@@ -1157,6 +1157,7 @@ export class SendDeclarationService implements OnDestroy {
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.Warning = this.ValidationWarning;
         windowArgs.CloseButtonVisibility = true;
+        windowArgs.CancelButtonVisibility = true;
         windowArgs.ComponentHeight = '328px'; // بدك تقيم 72 
         var windowTitle = title;
 
