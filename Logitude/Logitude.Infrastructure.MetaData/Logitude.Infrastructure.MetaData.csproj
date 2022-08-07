@@ -126,6 +126,7 @@
     <None Include="EntityFiles\BIReportsType.lxml" />
     <None Include="EntityFiles\BusinessProcessQueue.lxml" />
     <None Include="EntityFiles\BusinessRole.lxml" />
+    <None Include="EntityFiles\Dashboard.lxml" />
     <None Include="EntityFiles\FeatureToggle.lxml" />
     <None Include="EntityFiles\LastRunDetail.lxml" />
     <None Include="EntityFiles\LBPTeamMember.lxml" />
