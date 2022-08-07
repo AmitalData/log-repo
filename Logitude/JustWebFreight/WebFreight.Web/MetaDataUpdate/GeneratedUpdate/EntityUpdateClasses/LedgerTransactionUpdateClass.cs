@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "6cb9e1efc9c9481011ae4b9e1968ffc9";
+		public const string HashString = "4d43c6550f52190fbc02fee978d2f449";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2960,10 +2960,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OppositeAccountLocalName",
 					  						DefaultText =  "Opposite Account Local Name",
-					  						FullLocalDefaultText =  "חשבון נגדי",
+					  						FullLocalDefaultText =  "שם מקומי של חשבון נגדי",
 					  						ListFieldLable =  "OppositeAccountLocalNameListLable",
 					  						ListLableDefaultText =  "Opposite Account Local Name",
-					  						ListLocalDefaultText =  "חשבון נגדי",
+					  						ListLocalDefaultText =  "שם מקומי של חשבון נגדי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3022,10 +3022,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OppositeAccountDisplayNumber",
 					  						DefaultText =  "Opposite Account Number",
-					  						FullLocalDefaultText =  "חשבון נגדי",
+					  						FullLocalDefaultText =  "מספר לתצוגה חשבון נגדי",
 					  						ListFieldLable =  "OppositeAccountDisplayNumberListLable",
 					  						ListLableDefaultText =  "Opposite Account Number",
-					  						ListLocalDefaultText =  "חשבון נגדי",
+					  						ListLocalDefaultText =  "מספר לתצוגה חשבון נגדי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4058,10 +4058,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountDisplayNumber",
 					  						DefaultText =  "Original Account",
-					  						FullLocalDefaultText =  "חשבון מקורי",
+					  						FullLocalDefaultText =  "מספר כרטיס לתצוגה",
 					  						ListFieldLable =  "AccountDisplayNumberListLable",
 					  						ListLableDefaultText =  "Original Account",
-					  						ListLocalDefaultText =  "חשבון מקורי",
+					  						ListLocalDefaultText =  "מספר כרטיס לתצוגה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4288,10 +4288,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountLocalName",
 					  						DefaultText =  "Account Local Name",
-					  						FullLocalDefaultText =  "שם חשבון מקומי",
+					  						FullLocalDefaultText =  "שם מקומי כרטיס",
 					  						ListFieldLable =  "AccountLocalNameListLable",
 					  						ListLableDefaultText =  "Account Local Name",
-					  						ListLocalDefaultText =  "שם חשבון מקומי",
+					  						ListLocalDefaultText =  "שם מקומי כרטיס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
