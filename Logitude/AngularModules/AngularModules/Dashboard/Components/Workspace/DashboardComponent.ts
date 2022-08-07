@@ -26,6 +26,7 @@ import Dashboard from 'logitude-dashboard-library';
 
 
 import * as ReactDOM from 'react-dom';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
@@ -93,7 +94,7 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
         this.showNewDashboardToggle = true;
     }
     renderNewDashboard(callBack: () => void = undefined){
-        ReactDOM.render(React.createElement(Dashboard),this.reactDashboradContainer.nativeElement,callBack);
+        ReactDOM.render(React.createElement(Dashboard,{token:SessionInfo.Token}),this.reactDashboradContainer.nativeElement,callBack);
     }
     ngOnDestroy() {
         if (this.ActivityStatusPage != null) {
