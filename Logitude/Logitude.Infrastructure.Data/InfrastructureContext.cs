@@ -101,8 +101,11 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new TeamMemberBusinessRoleMap());
 	
             modelBuilder.Configurations.Add(new ToggleMap());
-				
-						 
+            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
+
+
+
+
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
@@ -488,8 +491,14 @@ namespace Logitude.Infrastructure.Data
 	      get; set;
 	 
 	 }
-	  
- }
+        public IDbSet<IndexerWaterMark> IndexerWaterMarks
+        {
+            get; set;
+        }
+
+
+
+    }
 
 
 }

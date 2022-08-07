@@ -106,6 +106,7 @@
     <None Include="DBTables\BIReportsType.dxml" />
     <None Include="DBTables\BusinessProcessQueue.dxml" />
     <None Include="DBTables\BusinessRole.dxml" />
+    <None Include="DBTables\Dashboard.dxml" />
     <None Include="DBTables\ElasticIndexerWaterMarks.dxml" />
     <None Include="DBTables\FeatureToggle.dxml" />
     <None Include="DBTables\LastRunDetail.dxml" />
