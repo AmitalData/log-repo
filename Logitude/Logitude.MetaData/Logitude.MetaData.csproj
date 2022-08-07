@@ -116,6 +116,7 @@
     <None Include="DBScripts\CommonModel\202215031220_AddGeneralGustomerGroups.sxml" />
     <None Include="DBScripts\GlobalModel\202203271236_AddImporterShipmentOrderDocumentsWR.sxml" />
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPInvoicePaymentsNumbers.sxml" />
+    <None Include="DBScripts\CommonModel\202208071040_FillCustomerGroupOnCardLevel.sxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

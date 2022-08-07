@@ -150,8 +150,6 @@ export class CustomerList {
 		IsAutonomy: boolean;
 		BillToId: string;
 		BillToName: string;
-		ImportLocalCustomerGroupId: string;
-		ExportLocalCustomerGroupId: string;
 		SATCustomerName: string;
 	
 }

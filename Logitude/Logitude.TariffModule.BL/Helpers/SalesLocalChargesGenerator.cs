@@ -33,7 +33,7 @@ namespace Logitude.TariffModule.BL.Helpers
         private List<QuotePackage> FCLQuotePackages;
         private string customerGroupExportId;
         private string customerGroupImportId;
-        private Customer customer;
+        private Card card;
         private TariffPricesHelper tariffPricesHelper;
         public SalesLocalChargesGenerator(SalesLocalChargesTariffSearchArgs args, int tenant)
         {
@@ -127,13 +127,13 @@ namespace Logitude.TariffModule.BL.Helpers
 
         private void GetCustomer()
         {
-            CustomerRepository customerRepository = new CustomerRepository(tenant);
-            customer = customerRepository.GetSingleCustomer(quote.CustomerId, tenant);
+            CardRepository cardRepository = new CardRepository(tenant);
+            card = cardRepository.GetSingleCard(quote.CustomerId, tenant);
         }
 
         private void GetCustomerGroupExportId()
         {
-            customerGroupExportId = customer?.ExportLocalCustomerGroupId;
+            customerGroupExportId = card?.ExportLocalCustomerGroupId;
             if (string.IsNullOrEmpty(customerGroupExportId))
             {
                 customerGroupExportId = this.GetGeneralCustomerGroup();
@@ -141,7 +141,7 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private void GetCustomerGroupImportId()
         {
-            customerGroupImportId = customer?.ImportLocalCustomerGroupId;
+            customerGroupImportId = card?.ImportLocalCustomerGroupId;
             if (string.IsNullOrEmpty(customerGroupImportId))
             {
                 customerGroupImportId = this.GetGeneralCustomerGroup();

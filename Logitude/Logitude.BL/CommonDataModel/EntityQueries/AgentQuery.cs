@@ -41,6 +41,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              where a.Id == id && a.Tenant == tenant
                              select new AgentPM()
                              {
+                                 ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                 ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                  Id = a.Id,
                                  Tenant = a.Tenant,
                                  Code = a.Card.Code,
@@ -151,6 +153,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              where a.Card.Code == code && a.Tenant == tenant
                              select new AgentPM()
                              {
+                                 ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                 ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                  Id = a.Id,
                                  Tenant = a.Tenant,
                                  Code = a.Card.Code,
@@ -247,6 +251,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          where a.Tenant == tenant
                                          select new AgentPM()
                                          {
+                                             ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                             ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                              Id = a.Id,
                                              Tenant = a.Tenant,
                                              Code = a.Card.Code,
@@ -317,6 +323,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          where a.Tenant == tenant
                          select new AgentPM()
                          {
+                             ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                             ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                              Id = a.Id,
                              Tenant = a.Tenant,
                              Code = a.Card.Code,

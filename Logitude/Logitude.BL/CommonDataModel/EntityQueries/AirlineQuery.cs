@@ -46,6 +46,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                            where a.Tenant == tenant && a.Card.Code == code
                            select new AirlinePM()
                            {
+                               ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                               ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                AccountingVATSplit = a.Card.AccountingVATSplit,
@@ -152,6 +154,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                            where a.Tenant == tenant && a.ICAO == ICAO
                            select new AirlinePM()
                            {
+                               ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                               ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                AccountingVATSplit = a.Card.AccountingVATSplit,
@@ -256,6 +260,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                            where a.Tenant == tenant && a.Id == id
                            select new AirlinePM()
                            {
+                               ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                               ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                AccountingVATSplit = a.Card.AccountingVATSplit,
@@ -385,6 +391,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              where a.Tenant == tenant
                                              select new AirlinePM()
                                              {
+                                                 ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                                 ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                                  ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                                  PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                                  AccountingVATSplit = a.Card.AccountingVATSplit,
@@ -476,6 +484,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          where a.Tenant == tenant
                          select new AirlinePM()
                          {
+                             ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                             ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                              ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                              PayablesAccountingCard = a.Card.PayablesAccountingCard,
                              AccountingVATSplit = a.Card.AccountingVATSplit,
