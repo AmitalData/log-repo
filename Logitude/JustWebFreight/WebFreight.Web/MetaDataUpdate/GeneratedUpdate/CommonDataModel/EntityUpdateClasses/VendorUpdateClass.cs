@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class VendorUpdateClass
    {  		
-		public const string HashString = "cb795f1660dbf8e656d500be628600b6";
+		public const string HashString = "ba93ad564a6ecf011552b7d523930e06";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2854,6 +2854,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ImportLocalCustomerGroupId",
 					  						ListPropertyPath =  "ImportLocalCustomerGroupId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2910,6 +2911,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExportLocalCustomerGroupId",
 					  						ListPropertyPath =  "ExportLocalCustomerGroupId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3109,19 +3111,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VendorGeneralFeature_TH0.Id,FeatureUniqeCode = VendorGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorGeneralTextCode_TH0.Id, TabNameTextCodeCode = VendorGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VendorBillingFeature_TH1.Id,FeatureUniqeCode = VendorBillingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorBillingTextCode_TH1.Id, TabNameTextCodeCode = VendorBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VendorBillingFeature_TH1.Id,FeatureUniqeCode = VendorBillingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorBillingTextCode_TH1.Id, TabNameTextCodeCode = VendorBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id,FeatureUniqeCode = GeneralAccountingFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.VendorAccountingTabControl", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorAccountingTextCode_TH2.Id, TabNameTextCodeCode = VendorAccountingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id,FeatureUniqeCode = GeneralAccountingFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.VendorAccountingTabControl", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorAccountingTextCode_TH2.Id, TabNameTextCodeCode = VendorAccountingTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VendorAddressesFeature_TH3.Id,FeatureUniqeCode = VendorAddressesFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorAddressesTextCode_TH3.Id, TabNameTextCodeCode = VendorAddressesTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VendorAddressesFeature_TH3.Id,FeatureUniqeCode = VendorAddressesFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorAddressesTextCode_TH3.Id, TabNameTextCodeCode = VendorAddressesTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VendorContactsFeature_TH4.Id,FeatureUniqeCode = VendorContactsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorContactsTextCode_TH4.Id, TabNameTextCodeCode = VendorContactsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VendorContactsFeature_TH4.Id,FeatureUniqeCode = VendorContactsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorContactsTextCode_TH4.Id, TabNameTextCodeCode = VendorContactsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRVD",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/TariffsTab/TariffsTabComponent", FeatureId = VendorTariffsFeature_TH5.Id,FeatureUniqeCode = VendorTariffsFeature_TH5.FeatureUniqeCode, ControlPath = "./Common/Components/TariffsTab/TariffsTabComponent", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorTariffsTextCode_TH5.Id, TabNameTextCodeCode = VendorTariffsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRVD",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/TariffsTab/TariffsTabComponent", FeatureId = VendorTariffsFeature_TH5.Id,FeatureUniqeCode = VendorTariffsFeature_TH5.FeatureUniqeCode, ControlPath = "./Common/Components/TariffsTab/TariffsTabComponent", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorTariffsTextCode_TH5.Id, TabNameTextCodeCode = VendorTariffsTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Vendor/VendorDocsInTabComponent", FeatureId = VendorDocsInFeature_TH6.Id,FeatureUniqeCode = VendorDocsInFeature_TH6.FeatureUniqeCode, ControlPath = "", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorDocsInTextCode_TH6.Id, TabNameTextCodeCode = VendorDocsInTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Vendor/VendorDocsInTabComponent", FeatureId = VendorDocsInFeature_TH6.Id,FeatureUniqeCode = VendorDocsInFeature_TH6.FeatureUniqeCode, ControlPath = "", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorDocsInTextCode_TH6.Id, TabNameTextCodeCode = VendorDocsInTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VendorEventsFeature_TH7.Id,FeatureUniqeCode = VendorEventsFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorEventsTextCode_TH7.Id, TabNameTextCodeCode = VendorEventsTextCode_TH7.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VDEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VendorEventsFeature_TH7.Id,FeatureUniqeCode = VendorEventsFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = VendorObjectTable.Id, TabNameTextCodeId = VendorEventsTextCode_TH7.Id, TabNameTextCodeCode = VendorEventsTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
