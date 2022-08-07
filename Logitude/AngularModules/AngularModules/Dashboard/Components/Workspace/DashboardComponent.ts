@@ -63,7 +63,8 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
     public MoneyInLabel: string = "";
     public dailySpotLightClass: DailySpotlightClass; 
     private CurrentSession = SessionLocator.SelectedSession;
-    showNewDashboard: boolean;
+    showNewDashboardToggle: boolean;
+    isNewDashboardRendered: boolean = false;
     @ViewChild('reactDashboradContainer') reactDashboradContainer:ElementRef;
 
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
@@ -77,17 +78,22 @@ export class DashboardComponent extends BaseComponent implements OnInit ,AfterVi
         this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + this.CurrentSession.GetNewId("TopFiveDashboardLegendId");
     }
     ngAfterViewInit(): void {
-        this.renderNewDashboard();
+        this.renderNewDashboard(this.showClassicDashboard.bind(this));
     }
     
     ngOnInit() {
-        this.showNewDashboard = false;
+        this.showNewDashboardToggle = true;
         this.FillScreen();
         
     }
-
-    renderNewDashboard(){
-        ReactDOM.render(React.createElement(Dashboard),this.reactDashboradContainer.nativeElement)
+    showClassicDashboard(){
+        this.showNewDashboardToggle = false;
+    }
+    showNewDashboard(){
+        this.showNewDashboardToggle = true;
+    }
+    renderNewDashboard(callBack: () => void = undefined){
+        ReactDOM.render(React.createElement(Dashboard),this.reactDashboradContainer.nativeElement,callBack);
     }
     ngOnDestroy() {
         if (this.ActivityStatusPage != null) {

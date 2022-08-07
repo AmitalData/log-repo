@@ -63,10 +63,10 @@
 </style>
 <div class="CellStretch">
     <ul class="PagesMenu">
-        <li [ngClass]="{'SelectedPageMenu':!showNewDashboard}" (click)="showNewDashboard = false">Classic Dashboard</li>
-        <li [ngClass]="{'SelectedPageMenu':showNewDashboard}" (click)="showNewDashboard = true">Custom Dashboards</li>
+        <li [ngClass]="{'SelectedPageMenu':!showNewDashboardToggle}" (click)="showClassicDashboard()">Classic Dashboard</li>
+        <li [ngClass]="{'SelectedPageMenu':showNewDashboardToggle}" (click)="showNewDashboard()">Custom Dashboards</li>
     </ul>
-    <div [ngClass]="{'hide':showNewDashboard}">
+    <div [ngClass]="{'hide':showNewDashboardToggle}">
         <div *ngIf="isNotMoreDetails" style="width:100%;height:100%">
             <table>
                 <tr style="height:10px;width:100%;">
@@ -585,7 +585,7 @@
             </table>
         </div>
     </div>
-    <div class="CellStretch" [ngClass]="{'hide':!showNewDashboard}">
+    <div class="CellStretch" [ngClass]="{'hide':!showNewDashboardToggle}">
         <div class="CellStretch" class="new-dashboard" #reactDashboradContainer>
 
         </div>
