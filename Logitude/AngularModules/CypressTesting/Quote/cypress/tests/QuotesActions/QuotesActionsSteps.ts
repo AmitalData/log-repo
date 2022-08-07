@@ -60,6 +60,16 @@ Then("the quote should update successfully", () => {
 });
 //#endregion
 
+Given("try to fill {string} as transit time", (transitTime) => {
+  QuotesActions.OpenDetailsTab();
+});
+
+Then("the field should be dimmed", () => {
+  QuotesActions.AssertTransitTimeDisabled()
+
+});
+
+
 //#region Set as Sent , Return to Draft , Cancel and Reactivate
 When("{string} action with {string} note", (action, note) => {
   QuotesActions.OpenQuoteAction(action, note);
