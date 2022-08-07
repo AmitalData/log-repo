@@ -1584,6 +1584,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string accountLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountLocalName  
+	   {
+	    
+	     get
+		{
+		   return accountLocalName;
+		 }
+		 set
+		 {
+		   if(accountLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountLocalName",OldValue=accountLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

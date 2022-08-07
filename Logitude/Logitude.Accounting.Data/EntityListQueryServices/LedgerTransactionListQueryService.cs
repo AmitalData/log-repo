@@ -76,11 +76,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            OppositeAccountLocalName = a.OppositeAccount != null ? a.OppositeAccount.LocalName : null,
                                                            OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
                                                            AccountDisplayNumber = a.Account != null ? a.Account.DisplayNumber : null,
+                                                           AccountLocalName = a.Account != null ? a.Account.LocalName : null,
                                                            OriginalAmount = 0,
                                                            CalculatedForeignAmount = a.ForeignAmountCredit != 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
                                                            CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
                                                            JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
-
                                                        });
 
 
