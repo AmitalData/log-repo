@@ -42,7 +42,6 @@ export class PerVendorReportFilterComponent extends BaseComponent {
 
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-    public VendorDependencyFilter1Value: string = 'VD';
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     constructor(public entityListService: EntityListService, private CD: ChangeDetectorRef) {
         super();
