@@ -72,7 +72,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var partnerTypeValue = FixFilter(filters.Filter2Value);
                 var partnerTypeId = FixFilter(filters.Filter1Value);
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckSharedContactAuthentication(tenant, partnerTypeId);
+                SecurityUtility.CheckDigitalUserAuthentication(tenant, partnerTypeId);
                 bool isFullTextSearch = false;
                 var myTenantRepository = new TenantRepository(tenant);
                 var myTenant = myTenantRepository.GetSingleTenant(tenant);

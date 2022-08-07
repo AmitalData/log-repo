@@ -28,9 +28,9 @@ namespace WebFreight.Web.Security
 {
     public class SecurityUtility
     {
-		public static void AuthenticateAPICall(int tenant)
-		{
-			if (LogitudeSettings.WorkEnvironment != "logbox" && LogitudeSettings.WorkEnvironment != "cloud")
+        public static void AuthenticateAPICall(int tenant)
+        {
+            if (LogitudeSettings.WorkEnvironment != "logbox" && LogitudeSettings.WorkEnvironment != "cloud")
             {
                 bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
                 if (!exist)
@@ -38,68 +38,68 @@ namespace WebFreight.Web.Security
                     throw new AutenticationException("API is not activated. Please contact your system administrator");
                 }
             }
-		}
+        }
 
-		private static bool CheckUserTableFeature(string objectTableName, string featureCode, int tenant, bool forceAPIFeaturesCheck)
-		{
-			bool exists = false;
+        private static bool CheckUserTableFeature(string objectTableName, string featureCode, int tenant, bool forceAPIFeaturesCheck)
+        {
+            bool exists = false;
 
-			if (objectTableName.Contains("Customs."))
-			{
+            if (objectTableName.Contains("Customs."))
+            {
 
-			}
-			//if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-			//{
+            }
+            //if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            //{
 
-			//}
+            //}
 
-			string email = null;
-			if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-			{
-				/*string */
-				email = HttpContext.Current.User.Identity.Name;
-			}
-			else
-			{
-				email = AuthenticationUtil.ResolveLoggingUserId(tenant);
-			}
-			ContactInfo contactinfo = GetContactInfo(email, tenant, forceAPIFeaturesCheck);
+            string email = null;
+            if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            {
+                /*string */
+                email = HttpContext.Current.User.Identity.Name;
+            }
+            else
+            {
+                email = AuthenticationUtil.ResolveLoggingUserId(tenant);
+            }
+            ContactInfo contactinfo = GetContactInfo(email, tenant, forceAPIFeaturesCheck);
 
-			if (contactinfo != null)
-			{
-				if (contactinfo.IsLogitudeAdmin)
-				{
-					exists = true;
-				}
+            if (contactinfo != null)
+            {
+                if (contactinfo.IsLogitudeAdmin)
+                {
+                    exists = true;
+                }
 
-				else
-				{
-					ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
-					if (objectTable != null)
-					{
-						foreach (string myRoleId in contactinfo.RolesIds)
-						{
-							Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant, true);
-							if (features.Keys.Contains(featureCode + objectTable.Id))
-							{
-								FeaturePM feature = features[featureCode + objectTable.Id];
-								if (feature != null)
-								{
-									exists = true;
-								}
-							}
-						}
-					}
-				}
-			}
-			//}
+                else
+                {
+                    ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
+                    if (objectTable != null)
+                    {
+                        foreach (string myRoleId in contactinfo.RolesIds)
+                        {
+                            Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant, true);
+                            if (features.Keys.Contains(featureCode + objectTable.Id))
+                            {
+                                FeaturePM feature = features[featureCode + objectTable.Id];
+                                if (feature != null)
+                                {
+                                    exists = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //}
 
-			if (!exists)
-			{
-				return false;
-			}
-			else return true;
-		}
+            if (!exists)
+            {
+                return false;
+            }
+            else return true;
+        }
 
         public static void AuthenticationOnTenant(int tenant)
         {
@@ -107,7 +107,7 @@ namespace WebFreight.Web.Security
             {
                 string email = HttpContext.Current.User.Identity.Name;
 
-                if (HttpContext.Current.Items!=null)
+                if (HttpContext.Current.Items != null)
                 {
                     CheckHttpContextCurrentItems();
                 }
@@ -214,8 +214,8 @@ namespace WebFreight.Web.Security
 
         [ThreadStatic]
         public static bool IsWorkerRoleCall = false;
-       
-        public static void CheckContactFeature(string objectTableName, string featureCode, int tenant,string overrideEmail=null)
+
+        public static void CheckContactFeature(string objectTableName, string featureCode, int tenant, string overrideEmail = null)
         {
             if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
             {
@@ -304,16 +304,16 @@ namespace WebFreight.Web.Security
             //}
 
             string email = null;
-            if (HttpContext.Current!=null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
                 /*string */
                 email = HttpContext.Current.User.Identity.Name;
-            } 
+            }
             else if (AuthenticationUtil.AuthenticatedUserEmail != null)
             {
                 email = AuthenticationUtil.AuthenticatedUserEmail;
             }
-            else if(AuthenticationUtil.AuthenticatedUserEmail != null)
+            else if (AuthenticationUtil.AuthenticatedUserEmail != null)
             {
                 email = AuthenticationUtil.AuthenticatedUserEmail;
             }
@@ -361,8 +361,8 @@ namespace WebFreight.Web.Security
 
         }
 
-	 
-		public static bool CheckTableContactFeature(string objectTableName, string featureCode, int tenant)
+
+        public static bool CheckTableContactFeature(string objectTableName, string featureCode, int tenant)
         {
             if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
             {
@@ -546,7 +546,7 @@ namespace WebFreight.Web.Security
             {
                 myContactInfo = (ContactInfo)CacheManager.CacheWrapper.Get(key);
             }
-			else
+            else
             {
                 if (tenant == 0)
                 {
@@ -648,7 +648,7 @@ namespace WebFreight.Web.Security
                                 PackagesCodes = allPackages,
                             };
                             //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
-                            
+
 
                             CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
@@ -663,7 +663,7 @@ namespace WebFreight.Web.Security
                                 Tenant = authToken.Tenant,
                                 ContactEmail = authToken.Email,
                                 IsApi = authToken.APIToken,
-                                
+
                             };
 
                             //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
@@ -678,18 +678,18 @@ namespace WebFreight.Web.Security
             return myContactInfo;
         }
 
-		public static void AuthenticationOnEntityTenant(string objectTableName, int entityTenant, int authTokenTenant)
-		{
-			//if (HttpContext.Current != null && string.IsNullOrWhiteSpace(overrideEmail))
-			//{
-			//	overrideEmail = HttpContext.Current.User.Identity.Name;
-			//}
+        public static void AuthenticationOnEntityTenant(string objectTableName, int entityTenant, int authTokenTenant)
+        {
+            //if (HttpContext.Current != null && string.IsNullOrWhiteSpace(overrideEmail))
+            //{
+            //	overrideEmail = HttpContext.Current.User.Identity.Name;
+            //}
 
-			if (entityTenant != authTokenTenant)
-				throw new Exception("Sorry! you have no permission to do this operation on Tenant:" + entityTenant + ". Please contact your administrator.");
-			//string errorMessage = "Sorry! you have no permission to do this operation" + Environment.NewLine + "Table:" + objectTableName + Environment.NewLine + "User:" + overrideEmail + Environment.NewLine + "Tenant:" + entityTenant;
+            if (entityTenant != authTokenTenant)
+                throw new Exception("Sorry! you have no permission to do this operation on Tenant:" + entityTenant + ". Please contact your administrator.");
+            //string errorMessage = "Sorry! you have no permission to do this operation" + Environment.NewLine + "Table:" + objectTableName + Environment.NewLine + "User:" + overrideEmail + Environment.NewLine + "Tenant:" + entityTenant;
 
-		}
+        }
         //private static string GetComputingPartnerCode(AuthenticationToken authToken)
         //{
         //    string computingPartnerCode = "";
@@ -901,26 +901,26 @@ namespace WebFreight.Web.Security
             return myResult;
         }
 
-		private static Dictionary<string, FeaturePM> GetFeaturesForRole(string roleId, List<string> allowedPackages, int tenant, bool forceAPIFeaturesCheck = false)
-		{
-			Dictionary<string, FeaturePM> features = null;
+        private static Dictionary<string, FeaturePM> GetFeaturesForRole(string roleId, List<string> allowedPackages, int tenant, bool forceAPIFeaturesCheck = false)
+        {
+            Dictionary<string, FeaturePM> features = null;
             string roleKey = roleId + "_" + tenant;
 
-			if (CacheManager.CacheWrapper.Get(roleKey) == null || forceAPIFeaturesCheck)
-			{
-				FeatureQuery featuresQuery = new FeatureQuery(tenant);
-				List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
-				features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
-				CacheManager.CacheWrapper.Insert(roleKey, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-			}
+            if (CacheManager.CacheWrapper.Get(roleKey) == null || forceAPIFeaturesCheck)
+            {
+                FeatureQuery featuresQuery = new FeatureQuery(tenant);
+                List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
+                features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
+                CacheManager.CacheWrapper.Insert(roleKey, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+            }
 
-			else
-			{
-				features = (Dictionary<string, FeaturePM>)CacheManager.CacheWrapper.Get(roleKey);
-			}
+            else
+            {
+                features = (Dictionary<string, FeaturePM>)CacheManager.CacheWrapper.Get(roleKey);
+            }
 
-			return features;
-		}
+            return features;
+        }
         private static Dictionary<string, FeaturePM> GetFeaturesForRoleNotCached(string roleId, List<string> allowedPackages, int tenant)
         {
             Dictionary<string, FeaturePM> features = null;
@@ -970,6 +970,36 @@ namespace WebFreight.Web.Security
                     throw new AutenticationException("Sorry! you are not authorized to read data!");
                 }
                 return exists;
+            }
+            return true;
+        }
+
+        public static bool CheckDigitalUserAuthentication(int tenant, string partnerId)
+        {
+            if (tenant != 0)
+            {
+                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                {
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                    string email = HttpContext.Current.User.Identity.Name;
+                    ContactRepository contactrep = new ContactRepository(commonDataContext);
+
+                    Contact customerCareContact = contactrep.GetSingleContactByEmail(email, 0);
+                    if (customerCareContact != null)
+                    {
+                        return true;
+                    }
+                    Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+                    if (contact != null)
+                    {
+                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && d.CardId == partnerId).FirstOrDefault();
+                        if (cardContact != null)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                throw new AutenticationException("Sorry! you are not authorized to read data!");
             }
             return true;
         }
@@ -1034,7 +1064,7 @@ namespace WebFreight.Web.Security
             }
         }
 
-        public static void RedirectToHttps(bool IsEndResponse=true)
+        public static void RedirectToHttps(bool IsEndResponse = true)
         {
             bool redirect = false;
 
@@ -1044,8 +1074,8 @@ namespace WebFreight.Web.Security
                 {
 
                     redirect = true;
-                    
-                     
+
+
                     //string ip = HttpContext.Current.Request.UserHostAddress;
                     //if (!string.IsNullOrEmpty(ip))
                     //{
@@ -1074,7 +1104,7 @@ namespace WebFreight.Web.Security
                 if (IsSecureConnection != "true")
                 {
 
-                    string redirectUrl = context.Request.Url.ToString().Replace("http:", "https:").Replace(":81","");
+                    string redirectUrl = context.Request.Url.ToString().Replace("http:", "https:").Replace(":81", "");
                     if (IsEndResponse)
                     {
                         context.Response.Redirect(redirectUrl);
@@ -1138,7 +1168,7 @@ namespace WebFreight.Web.Security
             if (!string.IsNullOrEmpty(email))
             {
                 List<string> allowedPackages = new List<string>();
-                ContactInfo myContactInfo = GetContactInfo(email, tenant,true);
+                ContactInfo myContactInfo = GetContactInfo(email, tenant, true);
                 if (myContactInfo != null)
                 {
                     allowedPackages = myContactInfo.PackagesCodes;
