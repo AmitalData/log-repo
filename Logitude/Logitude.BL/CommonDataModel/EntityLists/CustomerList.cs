@@ -433,12 +433,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string BillToId { get; set; }
         [DataMember]
         public string BillToName { get; set; }
-        [DataMember]
-        public string ImportLocalCustomerGroupId { get; set; }
-        [DataMember]
-        public string ExportLocalCustomerGroupId { get; set; }
+        
         [DataMember]
         public string SATCustomerName { get; set; }
-
     }
 }

@@ -212,5 +212,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ICAO { get; set; }
         public bool AllowUnassignedEntry { get; set; }
         public string SATCustomerName { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ImportLocalCustomerGroupId { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ExportLocalCustomerGroupId { get; set; }
     }
 }

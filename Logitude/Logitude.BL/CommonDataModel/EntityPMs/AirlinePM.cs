@@ -371,5 +371,12 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string SATReceptorName { get; set; }
 
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ImportLocalCustomerGroupId { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ExportLocalCustomerGroupId { get; set; }
     }
 }

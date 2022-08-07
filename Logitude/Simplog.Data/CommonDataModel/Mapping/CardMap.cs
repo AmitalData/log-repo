@@ -61,6 +61,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.GLAccountDisplayNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SATCustomerName).HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.ImportLocalCustomerGroupId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ExportLocalCustomerGroupId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Cards");
@@ -123,6 +125,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
             this.Property(t => t.AccountingVATSplit).HasColumnName("AccountingVATSplit");
             this.Property(t => t.SATCustomerName).HasColumnName("SATCustomerName");
+            this.Property(t => t.ImportLocalCustomerGroupId).HasColumnName("ImportLocalCustomerGroupId");
+            this.Property(t => t.ExportLocalCustomerGroupId).HasColumnName("ExportLocalCustomerGroupId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -150,6 +154,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
             this.HasOptional(t => t.MetodoPago).WithMany().HasForeignKey(d => d.MetodoPagoCode);
             this.HasOptional(t => t.UsoCFDI).WithMany().HasForeignKey(d => d.UsoCFDICode);
+            this.HasOptional(t => t.ImportLocalCustomerGroup).WithMany().HasForeignKey(d => d.ImportLocalCustomerGroupId);
+            this.HasOptional(t => t.ExportLocalCustomerGroup).WithMany().HasForeignKey(d => d.ExportLocalCustomerGroupId);
         }
     }
 }

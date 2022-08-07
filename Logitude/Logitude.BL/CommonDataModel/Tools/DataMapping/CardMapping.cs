@@ -68,6 +68,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.GLAccountDisplayNumber = entityPM.GLAccountDisplayNumber;
             entityPOCO.BillToId = entityPM.BillToId;
             entityPOCO.SATCustomerName = entityPM.SATCustomerName;
+            entityPOCO.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
+            entityPOCO.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
             BuildSearchFields(entityPM, entityPOCO);
         }
 

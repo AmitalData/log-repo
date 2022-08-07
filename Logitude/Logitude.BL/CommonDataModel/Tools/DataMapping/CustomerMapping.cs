@@ -26,8 +26,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 entityCard.CreateDate = entityPM.CreateDate;
                 entityCard.CreatedByUserId = entityPM.CreatedByUserId;
             }
-            entityPOCO.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
-            entityPOCO.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
+
             entityPOCO.LogBoxActivated = entityPM.LogBoxActivated;
             entityPOCO.IsPrivateLabelCustomer = entityPM.IsPrivateLabelCustomer;
             entityPOCO.RankId = entityPM.RankId;
@@ -144,6 +143,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entityCard.IsAutonomy = entityPM.IsAutonomy;
             entityCard.SATCustomerName = entityPM.SATCustomerName;
+            entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
+            entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
+
             if (!entityPM.IsFirstContactToAdd)
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;
