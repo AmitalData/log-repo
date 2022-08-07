@@ -1,7 +1,9 @@
-import { LogitudeWorkflowComponent } from './Components/LogitudeWorkflowComponent';
+import { LogitudeWorkflowComponent } from "./Components/LogitudeWorkflow/LogitudeWorkflowComponent";
+import { NodePropertiesComponent } from './Components/NodeProperties/NodePropertiesComponent';
 
 export const Components = [
-    LogitudeWorkflowComponent
+    LogitudeWorkflowComponent,
+    NodePropertiesComponent
 ];
 
 export class ModuleDeclarations {
@@ -9,6 +11,7 @@ export class ModuleDeclarations {
         var myResult: any = null;
         switch (name) {
             case "LogitudeWorkflowComponent": { myResult = LogitudeWorkflowComponent; break; }
+            case "NodePropertiesComponent": { myResult = NodePropertiesComponent; break; }
         }
         return myResult;
     }

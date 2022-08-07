@@ -1,0 +1,67 @@
+<table>
+    <tr>
+        <td>
+
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+
+                            <tr class="FormFieldRow">
+                                <td style="width:70px;">
+                                    <LogLabel [NoObjectField]="true" [Text]="'Name'" [DataContext]="DataContext">
+                                    </LogLabel>
+                                </td>
+
+                                <td style="width:250px;">
+                                    <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [Text]="Data['name']"
+                                        [HideColumns]="true" [DataContext]="DataContext"
+                                        (ValueChanged)="ChangeName($event)"></LogTextBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Save</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

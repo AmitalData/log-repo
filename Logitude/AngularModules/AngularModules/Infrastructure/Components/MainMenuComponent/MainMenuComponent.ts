@@ -340,7 +340,7 @@ export class MainMenuComponent {
                         break;
                     }
                     case "General.MH.Workflow": {
-                        myComponentPath = "./Workflow/Components/LogitudeWorkflowComponent";
+                        myComponentPath = "./Workflow/Components/LogitudeWorkflow/LogitudeWorkflowComponent";
                         break;
                     }
                     case "General.MH.Quotes": {

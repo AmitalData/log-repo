@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, ViewChild, ViewEncapsulation } from "@angular/core";
-import { BaseComponent } from "../../Infrastructure/Components/LogitudeComponents/BaseComponent";
+import { AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, ViewChild } from "@angular/core";
+import { BaseComponent } from "../../../Infrastructure/Components/LogitudeComponents/BaseComponent";
 import ReactFlowModeler from "logitude-workflow";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 
 const logitudeWorkflowComponentContainer = "LogitudeWorkflowComponentContainer";
 
@@ -54,8 +55,28 @@ export class LogitudeWorkflowComponent extends BaseComponent implements OnChange
 
     private openPropertiesEvent(eventObject: any) {
         if (eventObject) {
-            let name = prompt((eventObject.isNewNode ? "New " : "Edit ") + eventObject.nodeLabel + " Element", (eventObject.nodeData?.name || ""));
-            document.dispatchEvent(new CustomEvent(this.returnPropertiesDataEventKey, { detail: { name: (name || "") } }));
+
+            // let nameFromPrompt = prompt((eventObject.isNewNode ? "New " : "Edit ") + eventObject.nodeLabel + " Element", (eventObject.nodeData?.name || ""));
+            // let name = nameFromPrompt ? nameFromPrompt : (eventObject.nodeData?.name || "");
+            // document.dispatchEvent(new CustomEvent(this.returnPropertiesDataEventKey, { detail: { name: (name || "") } }));
+
+            let nodePropertiesWindow = new LogitudeWindow();
+            nodePropertiesWindow.Width = 600;
+            nodePropertiesWindow.Height = 500;
+            nodePropertiesWindow.RTL = false;
+            nodePropertiesWindow.Title = (eventObject.isNewNode ? "New " : "Edit ") + eventObject.nodeLabel + " Element";
+            let nodePropertiesWindowArgs: any = {};
+            nodePropertiesWindowArgs.Data = JSON.parse(JSON.stringify(eventObject.nodeData));
+            nodePropertiesWindow.WindowArgs = nodePropertiesWindowArgs;
+            let nodePropertiesComponentPath = "./Workflow/Components/NodeProperties/NodePropertiesComponent";
+            nodePropertiesWindow.Show(nodePropertiesComponentPath);
+
+            nodePropertiesWindow.WindowClosed.subscribe((data: any) => {
+                if (data) {
+                    document.dispatchEvent(new CustomEvent(this.returnPropertiesDataEventKey, { detail: data }));
+                }
+            });
+
         }
     }
 
