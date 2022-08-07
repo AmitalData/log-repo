@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {BIReportFolderPM} from './BIReportFolderPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -15,17 +14,15 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class BIFoldersPermissionPM {
+export class DashboardPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	        constructor(_entityParentPM: any) {
-	                  this.EntityParentPM = _entityParentPM;
-                this.UIProperties = new UIProperties(this);
-                this.IsDirty = false;
+	  constructor() {
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
       }
-
-	 
+ 	 
     
     private id: string;
     public get Id() { return this.id; }
@@ -37,47 +34,60 @@ export class BIFoldersPermissionPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private folderId: string;
-    public get FolderId() { return this.folderId; }
-    public set FolderId(newValue: string) { if (this.folderId != newValue) { this.folderId = newValue; this.MarkAsDirty("FolderId"); } }
+    private createDate: Date;
+    public get CreateDate() { return this.createDate; }
+    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
        
 	 
-    private userId: string;
-    public get UserId() { return this.userId; }
-    public set UserId(newValue: string) { if (this.userId != newValue) { this.userId = newValue; this.MarkAsDirty("UserId"); } }
+    private createdByUserId: string;
+    public get CreatedByUserId() { return this.createdByUserId; }
+    public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
+       
+	 
+    private updateDate: Date;
+    public get UpdateDate() { return this.updateDate; }
+    public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
+       
+	 
+    private updatedByUserId: string;
+    public get UpdatedByUserId() { return this.updatedByUserId; }
+    public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
+       
+	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+    private name: string;
+    public get Name() { return this.name; }
+    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
+       
+	 
+    private description: string;
+    public get Description() { return this.description; }
+    public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
        
 	 
 
-    public OldEntityPM: BIFoldersPermissionPM;
-	
-    private entityParentPM: any;
-    public get EntityParentPM() { return this.entityParentPM; }
-    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
-
-    private changeSetOp: string;
-    public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
-
-    public UniqueKey: string;
-	 	
+    public OldEntityPM: DashboardPM;
+		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
         this.IsDirty = true;
-		  if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }	
+		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BIFoldersPermission");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Dashboard");
            
         }
        }
     }
 
-    private MyClone: BIFoldersPermissionPM;
+    private MyClone: DashboardPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);
