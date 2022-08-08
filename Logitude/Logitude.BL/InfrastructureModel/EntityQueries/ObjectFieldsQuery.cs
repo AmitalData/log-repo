@@ -145,6 +145,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              IsForeignKey = a.IsForeignKey,
                                              ForeignEntity = a.ForeignEntity,
                                              NavigationPropertyName = a.NavigationPropertyName,
+                                             DefaultAdditionalFilters = a.DefaultAdditionalFilters,
                                    
 
                                          }).FirstOrDefault();
@@ -2960,6 +2961,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
 
 
+        public string GetDefaultAdditionalFiltersByIdAndTenant(string Id, int tenant)
+        {
+            string defaultAdditionalFilters = (from a in repository.context.ObjectFields
+                                         where a.Tenant == tenant 
+                                         && a.Id == Id
+                                         && a.InActive == false
+                                         select a.DefaultAdditionalFilters).FirstOrDefault();
 
+            return defaultAdditionalFilters;
+        }
     }
 }

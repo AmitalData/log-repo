@@ -638,6 +638,16 @@ export class ObjectFieldPM {
     public set NavigationPropertyName(newValue: string) { if (this.navigationPropertyName != newValue) { this.navigationPropertyName = newValue; this.MarkAsDirty("NavigationPropertyName"); } }
        
 	 
+    private defaultAdditionalFilters: string;
+    public get DefaultAdditionalFilters() { return this.defaultAdditionalFilters; }
+    public set DefaultAdditionalFilters(newValue: string) { if (this.defaultAdditionalFilters != newValue) { this.defaultAdditionalFilters = newValue; this.MarkAsDirty("DefaultAdditionalFilters"); } }
+       
+	 
+    private defaultAdditionalTreeFilters: any;
+    public get DefaultAdditionalTreeFilters() { return this.defaultAdditionalTreeFilters; }
+    public set DefaultAdditionalTreeFilters(newValue: any) { if (this.defaultAdditionalTreeFilters != newValue) { this.defaultAdditionalTreeFilters = newValue; this.MarkAsDirty("DefaultAdditionalTreeFilters"); } }
+       
+	 
 
     public OldEntityPM: ObjectFieldPM;
 		

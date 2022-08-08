@@ -37,6 +37,19 @@ export class ObjectFieldPMExtendedService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
+    GetDefaultAdditionalFiltersById(objectFieldId: string, tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/GetDefaultAdditionalFiltersById" + '?objectFieldId=' + objectFieldId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+            var pmresponse: ServiceResponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ObjectFieldPM = null) {
         if (!entityPM) {
 
