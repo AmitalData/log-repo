@@ -59,16 +59,17 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 SetInterestReportGLAccountFields(entityPM);  
                              
              }
+            CustomerPM customerPM = new CustomerPM();
             if (entityPM.CustomerId != null)
             {
                 CustomerQuery customerQuery = new CustomerQuery(entityPM.Tenant);
-                CustomerPM customerPM = customerQuery.GetBasicSinglePM(entityPM.CustomerId, entityPM.Tenant, true);
+                customerPM = customerQuery.GetBasicSinglePM(entityPM.CustomerId, entityPM.Tenant, true);
                 entityPM.CustomerName = customerPM.EnglishName;
                 entityPM.CustomerLocalName = customerPM.LocalName;
 
             }
            
-            FillSearchFields(entityPM);
+            FillSearchFields(entityPM, customerPM);
 
         }
         private void SetInterestReportGLAccountFields(InterestReportPM interestReport)
@@ -80,6 +81,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 interestReport.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
                 interestReport.CreditAllotmentPercentage = gLAccount.CreditAllotmentPercentage;
                 interestReport.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
+                interestReport.GLAccountDisplayNumber = gLAccount.DisplayNumber;
             }
         }
 
@@ -182,9 +184,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         }
 
-        private void FillSearchFields(InterestReportPM entityPM)
+        private void FillSearchFields(InterestReportPM entityPM, CustomerPM customerPM)
         {
-            entityPM.SearchFields = entityPM.ReportNumber + "," + entityPM.CustomerName + "," + entityPM.CustomerLocalName;
+            entityPM.SearchFields = entityPM.ReportNumber + "," + entityPM.CustomerName + "," + entityPM.CustomerLocalName + "," + entityPM.GLAccountDisplayNumber;
+
+            if (customerPM != null && customerPM.Code != null) {
+                entityPM.SearchFields = entityPM.SearchFields + "," + customerPM.Code;
+            }
         }
 
         private static string GetLoggedContactId(InterestReportPM entityPM)
