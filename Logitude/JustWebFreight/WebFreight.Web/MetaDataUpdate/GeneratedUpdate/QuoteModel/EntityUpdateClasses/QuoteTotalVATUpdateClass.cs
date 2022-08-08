@@ -709,6 +709,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "VatType",
+					  						NavigationPropertyName =  "VatType",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  

@@ -790,5 +790,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string ValidByTypeCode { get; set; }
         public bool? ConnectedToOpportunity { get; set; }
         public string SummaryMarkup { get; set; }
+
+        public double? TotalVATInSalesCurrency { get; set; }
     }
 }

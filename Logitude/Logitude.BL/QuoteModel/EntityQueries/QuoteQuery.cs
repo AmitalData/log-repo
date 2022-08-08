@@ -2588,6 +2588,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             entityPM.TicketId = GetConnectedTicketId(entityPOCO, tenant);
             entityPM.SummaryMarkup = this.GetSummaryMarkup(entityPM);
+            entityPM.TotalVATInSalesCurrency = this.GetSummaryTotalVAT(entityPM);
             return entityPM;
         }
 
@@ -2651,7 +2652,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             }
             return markupPercentage;
         }
-   
+
+        private double? GetSummaryTotalVAT(QuotePM quoteEntityPM)
+        {
+            double? totalVAT = 0;
+            if (quoteEntityPM != null)
+            {
+                totalVAT = MethodHelper.Round(quoteEntityPM.TotalVATs.Sum(a => a.QuoteCurrencyVATAmount), 2);
+            }
+
+            return totalVAT;
+        }
+
+
         private string GetConnectedTicketId(Quote entityPOCO, int tenant)
         {
             #region Ticket
