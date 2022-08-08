@@ -109,20 +109,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var declarationQueryService = new DeclarationQueryService(context);
                 var declarationNumber = claimsRelatedEntitiy.claimEntityID.ToString();
                 string declarationID = declarationQueryService.GetDeclarationByDeclarationNum(declarationNumber, requestParams.Tenant);
-
-                
-
+              
+                var myTapagConnectionTableQueryService = new TapagConnectionTableQueryService(context);
+                var myTapagConnectionTable  = myTapagConnectionTableQueryService.GetSingle(_MyClaimPM.Id, declarationID, true, false);
                 var myTapagConnectionTableUpdateService = new TapagConnectionTableUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                TapagConnectionTablePM tapagConnectionTablePM = new TapagConnectionTablePM();
-                tapagConnectionTablePM.ChangeSetOp = ChangeSetOperation.Insert;
-                tapagConnectionTablePM.TapagId = _MyClaimPM.Id;
-                tapagConnectionTablePM.DeclarationId = declarationID;
-                tapagConnectionTablePM.Tenant = requestParams.Tenant;
-                tapagConnectionTablePM.CustomsTapagFile = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.fileNumber;
-                tapagConnectionTablePM.CustomsNumeral = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.numeral;
-                tapagConnectionTablePM.RequestFileNumber = claimsRelatedEntitiy.ClaimReferentialData?.claimRequestNumber.ToString();
+               
+                if (myTapagConnectionTable != null)
+                {
 
-                myTapagConnectionTableUpdateService.Update(tapagConnectionTablePM, true);
+                    myTapagConnectionTable.ChangeSetOp = ChangeSetOperation.Update;
+                    myTapagConnectionTable.Tenant = requestParams.Tenant;
+                    myTapagConnectionTable.CustomsTapagFile = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.fileNumber;
+                    myTapagConnectionTable.CustomsNumeral = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.numeral;
+                    myTapagConnectionTable.RequestFileNumber = claimsRelatedEntitiy.ClaimReferentialData?.claimRequestNumber.ToString();
+                    myTapagConnectionTableUpdateService.Update(myTapagConnectionTable, true);
+
+                }
+                else
+                {
+                    TapagConnectionTablePM tapagConnectionTablePM = new TapagConnectionTablePM();
+                    tapagConnectionTablePM.ChangeSetOp = ChangeSetOperation.Insert;
+                    tapagConnectionTablePM.TapagId = _MyClaimPM.Id;
+                    tapagConnectionTablePM.DeclarationId = declarationID;
+                    tapagConnectionTablePM.Tenant = requestParams.Tenant;
+                    tapagConnectionTablePM.CustomsTapagFile = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.fileNumber;
+                    tapagConnectionTablePM.CustomsNumeral = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.numeral;
+                    tapagConnectionTablePM.RequestFileNumber = claimsRelatedEntitiy.ClaimReferentialData?.claimRequestNumber.ToString();
+                    myTapagConnectionTableUpdateService.Update(tapagConnectionTablePM, true);
+                }
+              
             }
             myClaimUpdateService.Update(this._MyClaimPM, true);
 
