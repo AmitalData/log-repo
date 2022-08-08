@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "dc0fa895b038a9b190a6ba778bb250f4";
+		public const string HashString = "ea9450cecf627ea9690278717d43ded5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10750,6 +10750,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter VendorAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter VendorAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
   
 	      
 
@@ -10770,6 +10773,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn AllCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 56 }, addedQueryColumns);
 
              AdvancedQueryFilter AllCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter AllCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10797,6 +10803,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.CardCollectorId", PredefinedValue = "#logged-user",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
   
 	      
 
@@ -10823,6 +10832,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter DebetorsCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.LocalBalanceInDue", PredefinedValue = "0",PredefinedValue2 = null, CustomPredefined = false, QueryId = DebetorsCustomersQuery.Id,QueryCode = DebetorsCustomersQuery.UniqueCode, Tenant = 0,Operator = "LargerThan"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter DebetorsCustomersQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = DebetorsCustomersQuery.Id,QueryCode = DebetorsCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
   
 	      
 
@@ -10847,6 +10859,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveCustomersGLAccountsQuery.Id,QueryCode = ActiveCustomersGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveCustomersGLAccountsQuery.Id,QueryCode = ActiveCustomersGLAccountsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
   
 	      
 
@@ -10870,6 +10885,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveCustomersGLAccountQuery.Id,QueryCode = InactiveCustomersGLAccountQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveCustomersGLAccountQuery.Id,QueryCode = InactiveCustomersGLAccountQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -11057,6 +11075,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveVendorsGLAccountsQuery.Id,QueryCode = ActiveVendorsGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveVendorsGLAccountsQuery.Id,QueryCode = ActiveVendorsGLAccountsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
   
 	      
 
@@ -11080,6 +11101,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveVendorsGLAccountQuery.Id,QueryCode = InactiveVendorsGLAccountQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveVendorsGLAccountQuery.Id,QueryCode = InactiveVendorsGLAccountQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
