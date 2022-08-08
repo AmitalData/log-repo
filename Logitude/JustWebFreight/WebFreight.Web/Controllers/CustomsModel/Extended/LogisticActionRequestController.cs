@@ -52,6 +52,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 LogisticActionRequestRepository rep = new LogisticActionRequestRepository(authToken.Tenant);
+                if (cargoIdentifierKey3 == "undefined") cargoIdentifierKey3 = null; 
                 bool exist = rep.GetExistByCargoKey(id, cargoIdentifierKey1, cargoIdentifierKey2, cargoIdentifierKey3, cargoIdentifierType);
                 
                 return Request.CreateResponse(HttpStatusCode.OK, exist);
