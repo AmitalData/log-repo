@@ -1686,8 +1686,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //  supplierInvoiceItemPM.SupplierInvoiceItemModVehicles = GetSupplierInvoiceItemsModVehicles(governmentAgencyGoodsItem.DMExtensions.VehicleValuationAdjustment, supplierInvoiceItemPM);
                 // moran 24.11.15 - Task 17424 <--
 
-                supplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvioceItemCertificats(supplierInvoicePM, supplierInvoiceItemPM);
-
+                    supplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvioceItemCertificats(supplierInvoicePM, supplierInvoiceItemPM);
+               
                 if (governmentAgencyGoodsItem.Commodity == null)
                 {
                     continue;
@@ -1863,11 +1863,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return supplierInvioceItemCertificatPMList;
                 return null;
             }
+            if (this._MyDeclarationPM.Direction == "E")
+            {
+                if (supplierInvioceItemCertificatPMList != null && supplierInvioceItemCertificatPMList.Count > 0)
+                {
+                    foreach (var supplierInvioceItemCertificatPM in supplierInvioceItemCertificatPMList)
+                    {
+                        if (supplierInvioceItemCertificatPM.AttachmentTypeCode == null && supplierInvioceItemCertificatPM.CertificateExemptionTypeCode == null && supplierInvioceItemCertificatPM.CertificateNumber == null&& !certificateCodeListFromErrosXml.Any(x=>x==supplierInvioceItemCertificatPM.ReqConfirmationTypeCode))
+                        {
+                            supplierInvioceItemCertificatPM.ChangeSetOp = ChangeSetOperation.Delete;
+                        }
+
+                    }
+
+                }
+            }
             foreach (var certificateCodeFromErrosXml in certificateCodeListFromErrosXml)
             {
                 //Check if the code exists current SupplierInvioceItemCertificats
                 List<string> entityList = (from a in supplierInvoiceItemPM.SupplierInvioceItemCertificats
-                                           where (a.ReqConfirmationTypeCode == certificateCodeFromErrosXml)
+                                           where (a.ReqConfirmationTypeCode == certificateCodeFromErrosXml&&a.ChangeSetOp!= ChangeSetOperation.Delete)
                                            select a.ReqConfirmationTypeCode).ToList();
 
                 //If it does NOT exist - Add it to SupplierInvioceItemCertificat
