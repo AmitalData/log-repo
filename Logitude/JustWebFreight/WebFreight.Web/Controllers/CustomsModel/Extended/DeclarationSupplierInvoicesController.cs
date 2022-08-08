@@ -905,7 +905,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         {
             var classificationCodes = ReadClassificationCodesFromCsvFile(decodedString);
 
-            List<string> classificationCodesNotValid = null;
+            List<string> classificationCodesNotValid = new List<string>();
             foreach (var item in classificationCodes)
             {
                 var context = CustomContext.GetContext(tenant);
@@ -916,7 +916,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 var classificationCode = re.GetSingle(declarationPM.CustomerCode, item)?.PRAT;
                 if (string.IsNullOrWhiteSpace(classificationCode))
                 {
-                    classificationCodesNotValid.Add(classificationCode);
+                    classificationCodesNotValid.Add(item);
                 }
             }
             return classificationCodesNotValid;

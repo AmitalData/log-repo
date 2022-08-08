@@ -167,14 +167,13 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
                 else {
                     if (myServiceResponse.Result.startsWith("לא נמצא סיווג")) {
                         let messageWindow = new ConfirmWindow();
-                        messageWindow.Width = 300;
-                        messageWindow.Height = 180;
+                        messageWindow.Width = 350;
+                        messageWindow.Height = 250;
                         messageWindow.Title = "יצירת חשבון ספק";
                         messageWindow.YesButtonText = "המשך";
                         messageWindow.ShowCancelButton = true;
                         messageWindow.ShowNoButton = false;
-                        //messageWindow.RTL = true;
-                        messageWindow.ShowErorImage = true;
+                        messageWindow.ShowWarningImage = true;
                         messageWindow.Show(myServiceResponse.Result);
                         messageWindow.WindowClosed.subscribe((event: any) => {
                             if (messageWindow.Yes) {
