@@ -1,9 +1,6 @@
 <style>
-    section{
-        margin-bottom: 40px;
-        width: 100%;
-    }
-    .section-title{
+
+    .section-title {
         font-size: 14px;
         color: #1B90CB;
     }
@@ -11,10 +8,10 @@
 <div *ngIf="EntityPM">
 
     <div *ngIf="!ShowNoFieldsText">
-        <section *ngFor="let screenSection of ScreenSections">
+        <div style="margin-bottom: 40px; width: 100% " *ngFor="let screenSection of ScreenSections">
 
             <table style="width:100%;">
-                <tr *ngIf="screenSection.Title">
+                <tr *ngIf="screenSection.Title && screenSection.ScreenColumns && screenSection.ScreenColumns.length > 0">
                     <td class="section-title">{{screenSection.Title}}</td>
                 </tr>
                 <tr style="height:100%">
@@ -30,7 +27,7 @@
                                 <td *ngIf="!objectField.MultiLine && !objectField.GeneratedComponentPath">
                                     <div *ngIf="objectField.DataTypeCode == 'Boolean'">
                                         <LogCheckBox [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Checked]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM"
-                                                    [HideColumns]="HideColumns">
+                                                     [HideColumns]="HideColumns">
 
                                         </LogCheckBox>
                                     </div>
@@ -53,8 +50,8 @@
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM"
-                                                                [HideColumns]="true"
-                                                                [HideLastColumn]="HideLastColumn">
+                                                                   [HideColumns]="true"
+                                                                   [HideLastColumn]="HideLastColumn">
 
                                                     </LogDatePicker>
                                                 </td>
@@ -63,8 +60,8 @@
                                                 </td>
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [InputType]="'time'" [TimeMode]="12"
-                                                                [HideColumns]="HideColumns"
-                                                                [HideLastColumn]="HideLastColumn">
+                                                                   [HideColumns]="HideColumns"
+                                                                   [HideLastColumn]="HideLastColumn">
 
                                                     </LogDatePicker>
                                                 </td>
@@ -89,12 +86,12 @@
                                     </div>
                                     <div *ngIf="objectField.DataTypeCode == 'PickList'">
                                         <PickList [ObjectFieldName]="objectField.FieldName"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [SelectedValue]="EntityPM[objectField.FieldName]"
-                                                [DataContext]="EntityPM"
-                                                [PlaceHolder]="EntityPM[objectField.FieldName]!=null?EntityPM[objectField.FieldName].Code:''"
-                                                [HideColumns]="HideColumns"
-                                                [HideLastColumn]="HideLastColumn">
+                                                  [ObjectTableName]="ObjectTableName"
+                                                  [SelectedValue]="EntityPM[objectField.FieldName]"
+                                                  [DataContext]="EntityPM"
+                                                  [PlaceHolder]="EntityPM[objectField.FieldName]!=null?EntityPM[objectField.FieldName].Code:''"
+                                                  [HideColumns]="HideColumns"
+                                                  [HideLastColumn]="HideLastColumn">
                                         </PickList>
                                     </div>
 
@@ -118,9 +115,9 @@
                                 <td *ngIf="objectField.GeneratedComponentPath != undefined && objectField.GeneratedComponentPath != null">
                                     <div>
                                         <ObjectFieldComponent [ObjectField]="objectField"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="EntityPM"
-                                                            [IsNewEntityCall]="IsNewEntityCall">
+                                                              [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="EntityPM"
+                                                              [IsNewEntityCall]="IsNewEntityCall">
                                         </ObjectFieldComponent>
                                     </div>
                                 </td>
@@ -141,7 +138,7 @@
                 </tr>
             </table>
 
-        </section>
+        </div>
     </div>
 
     <div *ngIf="ShowNoFieldsText" style="vertical-align: top; font-size: 11px; font-family: Arial; font-style: italic; color: gray;">There are no fields to display.</div>
