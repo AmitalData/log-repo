@@ -79,6 +79,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     IsAutoCredit = item.IsAutoCredit,
                     IsCancelled = item.IsCancelled,
                     InvoiceDate = item.InvoiceDate,
+                    StatusName = item.Status?.Name
                 };
 
                 CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
@@ -87,6 +88,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     entity.InvoiceCurrencyCode = currency.Code;
                 }
+
+                Currency localCurrency = currencyRepository.GetSingleCurrency(item.LocalCurrencyId, tenant);
+                entity.InvoiceLocalCurrencyCode = localCurrency?.Code;
 
                 if (entity.Id == entity.InvoiceNumber)
                 {
