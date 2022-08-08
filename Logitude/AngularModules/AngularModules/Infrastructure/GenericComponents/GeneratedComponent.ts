@@ -11,6 +11,7 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ScreenPM } from 'Infrastructure/EntityPMs/ScreenPM';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { ScreenSectionPM } from 'Infrastructure/EntityPMs/ScreenSectionPM';
+import { TextCodeTranslator } from '../Utilities/TextCodeTranslator';
 
 declare var window: any;
 
@@ -40,7 +41,6 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     private generalTextCode: string = "General.O.General";
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     screenSectionService = new ScreenSectionListService();
-
     private objectTableTab: any;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -200,6 +200,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
             });
     }
 
+
+
     private BuildScreenSection(screen: ScreenPM, section: ScreenSectionPM, screenFields: any, objectFields: any)
     {
         const columns: ScreenColumn[] = [];
@@ -213,6 +215,17 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         }
 
         this.ScreenSections.push(new ScreenSection(section.Number, section.Name, columns));
+    }
+
+
+
+
+    GetTableName(): string {
+        const tab: any = window.ObjectTableTabs.find(d => d.Code == this.entityArgs.SelectedTabCode);
+        if (tab?.TabNameTextCodeDefaultText)
+            return  tab.TabNameTextCodeDefaultText;
+
+        return TextCodeTranslator.Translate(this.generalTextCode);
     }
 
 
