@@ -21,6 +21,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -150,6 +151,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
+            AddCardKafkaQueueMessage();
         }
 
         public void Update(WarehousePM entityPM, bool mapComposition = false)
@@ -202,6 +204,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
+            AddCardKafkaQueueMessage();
         }
 
         private void InitializeComponent()
@@ -614,6 +617,26 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void AddCardKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Card" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
 
         public void Submit()
