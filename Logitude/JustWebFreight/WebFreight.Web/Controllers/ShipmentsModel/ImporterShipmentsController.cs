@@ -1076,13 +1076,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.CustomerReference1 = entityAM.CustomerReference1;
             }
-            if (!string.IsNullOrEmpty(entityAM.ConsigneeReference2))
+            if (!string.IsNullOrEmpty(entityAM.ConsigneeReference2) && string.IsNullOrEmpty(entityPM.ConsigneeReference2))
             {
-                entityPM.ConsigneeReference2 = entityAM.ConsigneeReference2;
+                //entityPM.ConsigneeReference2 = entityAM.ConsigneeReference2;
             }
             if (!string.IsNullOrEmpty(entityAM.CustomerReference2) && string.IsNullOrEmpty(entityPM.CustomerReference2))
             {
-                entityPM.CustomerReference2 = entityAM.CustomerReference2;
+                //entityPM.CustomerReference2 = entityAM.CustomerReference2;
             }
             if (!string.IsNullOrEmpty(entityAM.CustomerReference3))
             {
