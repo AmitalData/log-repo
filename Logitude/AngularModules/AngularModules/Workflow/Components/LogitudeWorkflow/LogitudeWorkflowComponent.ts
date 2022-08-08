@@ -23,7 +23,7 @@ const logitudeWorkflowComponentContainer = "LogitudeWorkflowComponentContainer";
 export class LogitudeWorkflowComponent extends BaseComponent implements OnChanges, AfterViewInit, OnDestroy {
     @ViewChild(logitudeWorkflowComponentContainer, { static: false }) containerRef: ElementRef;
 
-    private returnPropertiesDataEventKey: string;
+    returnPropertiesDataEventKey: string;
 
     constructor() {
         super();
@@ -42,45 +42,68 @@ export class LogitudeWorkflowComponent extends BaseComponent implements OnChange
         ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
     }
 
-    private render() {
-        const props: any = {
+    render() {
+        const props = {
             flow: null,
             openPropertiesEvent: this.openPropertiesEvent,
             exportFlowEvent: this.exportFlowEvent,
             returnPropertiesDataEventKey: this.returnPropertiesDataEventKey
         };
-
         ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
     }
 
-    private openPropertiesEvent(eventObject: any) {
-        if (eventObject) {
 
-            // let nameFromPrompt = prompt((eventObject.isNewNode ? "New " : "Edit ") + eventObject.nodeLabel + " Element", (eventObject.nodeData?.name || ""));
-            // let name = nameFromPrompt ? nameFromPrompt : (eventObject.nodeData?.name || "");
-            // document.dispatchEvent(new CustomEvent(this.returnPropertiesDataEventKey, { detail: { name: (name || "") } }));
-
-            let nodePropertiesWindow = new LogitudeWindow();
-            nodePropertiesWindow.Width = 600;
-            nodePropertiesWindow.Height = 500;
-            nodePropertiesWindow.RTL = false;
-            nodePropertiesWindow.Title = (eventObject.isNewNode ? "New " : "Edit ") + eventObject.nodeLabel + " Element";
-            let nodePropertiesWindowArgs: any = {};
-            nodePropertiesWindowArgs.Data = JSON.parse(JSON.stringify(eventObject.nodeData));
-            nodePropertiesWindow.WindowArgs = nodePropertiesWindowArgs;
-            let nodePropertiesComponentPath = "./Workflow/Components/NodeProperties/NodePropertiesComponent";
-            nodePropertiesWindow.Show(nodePropertiesComponentPath);
-
-            nodePropertiesWindow.WindowClosed.subscribe((data: any) => {
-                if (data) {
-                    document.dispatchEvent(new CustomEvent(this.returnPropertiesDataEventKey, { detail: data }));
-                }
-            });
-
+    openPropertiesEvent = (openPropertiesEventObject: any) => {
+        if (openPropertiesEventObject) {
+            this.handleOpenPropertiesEvent(openPropertiesEventObject);
         }
     }
 
-    private exportFlowEvent(flow: any) {
+    handleOpenPropertiesEvent = (openPropertiesEventObject: any) => {
+        let nodePropertiesComponentPath = this.getNodePropertiesComponentPath(openPropertiesEventObject.nodeType);
+        if (nodePropertiesComponentPath) {
+            let nodePropertiesWindow = this.buildNodePropertiesWindow(openPropertiesEventObject);
+            nodePropertiesWindow.Show(nodePropertiesComponentPath);
+            nodePropertiesWindow.WindowClosed.subscribe((data: any) => { this.handleNodePropertiesWindowClosed(data); });
+        }
+    }
+
+    getNodePropertiesComponentPath = (nodeType: string) => {
+        let nodePropertiesComponentPath = "./Workflow/Components/NodeProperties/";
+        switch (nodeType) {
+            case "conditionNode":
+                return (nodePropertiesComponentPath + "ConditionNodePropertiesComponent");
+            case "loopNode":
+                return (nodePropertiesComponentPath + "LoopNodePropertiesComponent");
+            case "setValueNode":
+                return (nodePropertiesComponentPath + "SetValueNodePropertiesComponent");
+            default:
+                return null;
+        }
+    }
+
+    buildNodePropertiesWindow = (openPropertiesEventObject: any) => {
+        let nodePropertiesWindow = new LogitudeWindow();
+        let nodePropertiesWindowArgs: any = {
+            Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData))
+        };
+
+        nodePropertiesWindow.Width = 600;
+        nodePropertiesWindow.Height = 500;
+        nodePropertiesWindow.RTL = false;
+        nodePropertiesWindow.Title = (openPropertiesEventObject.isNewNode ? "New " : "Edit ") + openPropertiesEventObject.nodeLabel + " Element";
+        nodePropertiesWindow.WindowArgs = nodePropertiesWindowArgs;
+
+        return nodePropertiesWindow;
+    }
+
+    handleNodePropertiesWindowClosed = (data: any) => {
+        if (data) {
+            document.dispatchEvent(new CustomEvent(this.returnPropertiesDataEventKey, { detail: data }));
+        }
+    }
+
+    exportFlowEvent = (flow: any) => {
         console.log(flow);
     }
 }

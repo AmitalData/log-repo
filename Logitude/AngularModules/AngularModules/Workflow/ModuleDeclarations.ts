@@ -1,9 +1,13 @@
 import { LogitudeWorkflowComponent } from "./Components/LogitudeWorkflow/LogitudeWorkflowComponent";
-import { NodePropertiesComponent } from './Components/NodeProperties/NodePropertiesComponent';
+import { ConditionNodePropertiesComponent } from './Components/NodeProperties/ConditionNodePropertiesComponent';
+import { LoopNodePropertiesComponent } from './Components/NodeProperties/LoopNodePropertiesComponent';
+import { SetValueNodePropertiesComponent } from './Components/NodeProperties/SetValueNodePropertiesComponent';
 
 export const Components = [
     LogitudeWorkflowComponent,
-    NodePropertiesComponent
+    ConditionNodePropertiesComponent,
+    LoopNodePropertiesComponent,
+    SetValueNodePropertiesComponent
 ];
 
 export class ModuleDeclarations {
@@ -11,7 +15,9 @@ export class ModuleDeclarations {
         var myResult: any = null;
         switch (name) {
             case "LogitudeWorkflowComponent": { myResult = LogitudeWorkflowComponent; break; }
-            case "NodePropertiesComponent": { myResult = NodePropertiesComponent; break; }
+            case "ConditionNodePropertiesComponent": { myResult = ConditionNodePropertiesComponent; break; }
+            case "LoopNodePropertiesComponent": { myResult = LoopNodePropertiesComponent; break; }
+            case "SetValueNodePropertiesComponent": { myResult = SetValueNodePropertiesComponent; break; }
         }
         return myResult;
     }

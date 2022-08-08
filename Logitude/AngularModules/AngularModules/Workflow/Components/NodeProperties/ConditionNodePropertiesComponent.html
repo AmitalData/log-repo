@@ -14,8 +14,8 @@
                                 </td>
 
                                 <td style="width:250px;">
-                                    <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [Text]="Data['name']"
-                                        [HideColumns]="true" [DataContext]="DataContext"
+                                    <LogTextBox [Text]="Data['name']" [NoObjectField]="true" [IsFreeText]="true"
+                                        [DataContext]="DataContext" [HideColumns]="true"
                                         (ValueChanged)="ChangeName($event)"></LogTextBox>
                                 </td>
 
