@@ -688,6 +688,10 @@ namespace WebFreight.Web.DataProviders
         public string Transhipment2VoyageNo { get; set; }
         public string Transshipment3VesselName { get; set; }
         public string Transhipment3VoyageNo { get; set; }
+        public string PreForwardingFromPortName { get; set; }
+        public string PreForwardingFromPortCode { get; set; }
+        public string PreForwardingToPortName { get; set; }
+        public string PreForwardingToPortCode { get; set; }
     }
     public class Payment
     {

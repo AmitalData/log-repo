@@ -1010,6 +1010,11 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.Transshipment3VesselName = shipment.Transshipment3VesselName;
                     invoicedataprovider.Transhipment3VoyageNo = shipment.Transshipment3CarrierNumber;
 
+                    invoicedataprovider.PreForwardingFromPortName = shipment.PreForwardingFromPortName;
+                    invoicedataprovider.PreForwardingFromPortCode = shipment.PreForwardingFromPortCode;
+                    invoicedataprovider.PreForwardingToPortName = shipment.PreForwardingToPortName;
+                    invoicedataprovider.PreForwardingToPortCode = shipment.PreForwardingToPortCode;
+
                     // Inland + Domestic
                     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
                     {
