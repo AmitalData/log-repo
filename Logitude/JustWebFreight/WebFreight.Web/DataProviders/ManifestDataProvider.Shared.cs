@@ -211,6 +211,7 @@ namespace WebFreight.Web.DataProviders
 
     public class ManifestDetailsClass
     {
+        public string CustomerVatNumber { get; set; }
         public string AMSBL { get; set; }
         public string FileNumber { get; set; } // shipment number.
         public string HAWB { get; set; }
@@ -363,6 +364,7 @@ namespace WebFreight.Web.DataProviders
 
     public class NewManifestDetailsClass
     {
+        public string CustomerVatNumber { get; set; }
         public string PreForwardingFromPort { get; set; }
         public string OnForwardingToPort { get; set; }
         public string OnForwardingFromPort { get; set; }
