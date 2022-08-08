@@ -1261,6 +1261,9 @@ namespace WebFreight.Web.ReportsWebServices
                 #region From to ports
                 manifestDataProvider.DeparturePortCode = master.MainCarriageFromPortCode != null ? master.MainCarriageFromPortCode : "";
                 manifestDataProvider.DestinationPortCode = master.MainCarriageFinalDestinationPortCode != null ? master.MainCarriageFinalDestinationPortCode : "";
+
+                manifestDataProvider.DeparturePortName = master.MainCarriageFromPortName;
+                manifestDataProvider.DestinationPortName = master.MainCarriageFinalDestinationPortName;
                 #endregion
 
                 #region First Delivery | PlaceOfDelivery
