@@ -1370,7 +1370,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 return null;
             }
             var repository = new DepartmentRepository(ResolvedTenant());
-            var myCard = repository.GetSingleDepartmentByCode(amitalDepartmentCode, ResolvedTenant());  //TODO: this function include all 
+            var myCard = repository.GetSingleDepartmentByCode(amitalDepartmentCode, ResolvedTenant(),true);  //TODO: this function include all 
             if (myCard == null)
             {
                 AppendLogLine("amitalDepartmentCode = " + amitalDepartmentCode + " could not translate to Logitude Id");
