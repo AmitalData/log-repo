@@ -40,6 +40,9 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.Data.DataContracts;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
+using System.Text.RegularExpressions;
+using Unifreight.Data.AmitalModel;
+using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -859,7 +862,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage PutSupplierInvioceFromFileRequest(int tenant, string clientId, string partnerId, string declarationId, ImageParameter fileUploadParamerter)
+        public HttpResponseMessage PutSupplierInvioceFromFileRequest(int tenant, string clientId, string partnerId, string declarationId,bool ignoreChecks, ImageParameter fileUploadParamerter)
         {
             try
             {
@@ -869,8 +872,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 {
                     byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
                     string decodedString = Encoding.UTF8.GetString(data);
+
+                    if (!ignoreChecks)
+                    {
+                        List<string> classificationCodesNotValid = GetClassificationCodesNotValid(decodedString, tenant, declarationId);
+                        if (classificationCodesNotValid.Count > 0)
+                        {
+                            var res = "לא נמצא סיווג שמתאים ללקוח בתיק עבור הדגמים: \n";
+                            foreach (var item in classificationCodesNotValid)
+                            {
+                                res += item + "\n";
+                            }
+                            return Request.CreateResponse(HttpStatusCode.OK, res);
+                        }
+                    }
+
                     var messagingService = new DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService();
-                    partnerId = "METRO";
+                    //partnerId = "METRO";
                     var sts = messagingService.CreateCRS(tenant, clientId, partnerId, declarationId, decodedString);
 
                     return Request.CreateResponse(HttpStatusCode.OK, sts);
@@ -882,6 +900,49 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        private List<string> GetClassificationCodesNotValid(string decodedString, int tenant, string declarationId)
+        {
+            var classificationCodes = ReadClassificationCodesFromCsvFile(decodedString);
+
+            List<string> classificationCodesNotValid = new List<string>();
+            foreach (var item in classificationCodes)
+            {
+                var context = CustomContext.GetContext(tenant);
+                var amitalContext = AmitalContext.GetContext(tenant);
+                var declarationQueryService = new DeclarationQueryService(context);
+                DeclarationPM declarationPM = declarationQueryService.GetSingle(declarationId, true, false);
+                var re = new CTBCARMODRepository(amitalContext);
+                var classificationCode = re.GetSingle(declarationPM.CustomerCode, item)?.PRAT;
+                if (string.IsNullOrWhiteSpace(classificationCode))
+                {
+                    classificationCodesNotValid.Add(item);
+                }
+            }
+            return classificationCodesNotValid;
+        }
+
+        private List<string> ReadClassificationCodesFromCsvFile(string decodedString)
+        {
+            var lines = decodedString.Split(new string[] { "\n" }, StringSplitOptions.None).ToList();
+            List<string> classificationCodes = new List<string>();
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (string.IsNullOrWhiteSpace(lines[i])) continue;
+                string[] data = Regex.Split(lines[i], ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+
+                if (string.IsNullOrWhiteSpace(data[7]))
+                {
+                    throw new Exception("ClassificationCode cannot be null");
+                }
+
+                if (!classificationCodes.Contains(data[7]))
+                    classificationCodes.Add(data[7]);
+            }
+            return classificationCodes;
+        }
+
+
 
         //public HttpResponseMessage UpdateInvoiceVendorCommision(SupplierInvoicePM invoicePM)// string declarationId, int counterKey,string invoiceCurrency, decimal invoiceAmount, string vendorId, string customerId)
         //{
