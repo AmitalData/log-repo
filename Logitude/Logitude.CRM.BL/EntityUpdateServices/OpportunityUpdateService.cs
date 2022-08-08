@@ -82,11 +82,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     }
                 }
 
-                if(!string.IsNullOrEmpty(entityPM.StageId))
-                {
-                    AddOpportunityStageChangingQueue(entityPM);
-                }
-
                 decimal? field1 = entityPM.Probability == null ? 0 : Convert.ToDecimal(entityPM.Probability);
                 decimal? field2 = entityPM.NumberOfShipments == null ? 0 : Convert.ToDecimal(entityPM.NumberOfShipments);
                 entityPM.ValueField = field1 * field2 / 100;
