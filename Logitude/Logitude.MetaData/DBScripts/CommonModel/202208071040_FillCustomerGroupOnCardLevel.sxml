@@ -1,31 +1,8 @@
 ﻿<Script DBType="Main" Module="Common" AOT="true" TargetTableName="Customers">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
         
-    declare @Id as varchar(15)
-		declare @ImportId as varchar(15)
-		declare @ExportId as varchar(15)
-
-		BEGIN
-			DECLARE CustomerCursor CURSOR READ_ONLY
-			FOR
-			SELECT Id, ExportLocalCustomerGroupId, ImportLocalCustomerGroupId
-			FROM Customers
-			WHERE (ExportLocalCustomerGroupId is not null or ImportLocalCustomerGroupId is not null) and $LastCounterWhere$ 
-			OPEN CustomerCursor FETCH NEXT FROM CustomerCursor INTO @Id, @ExportId, @ImportId
-			WHILE @@FETCH_STATUS = 0
-			BEGIN
-
-				update Cards set ImportLocalCustomerGroupId = @ImportId,
-				ExportLocalCustomerGroupId = @ExportId
-				where Id = @Id
-
-			FETCH NEXT FROM CustomerCursor INTO  @Id, @ExportId, @ImportId
-			END
-			CLOSE CustomerCursor
-			DEALLOCATE CustomerCursor
-
-		END
+    
 
     ]]>
 </Sql>
