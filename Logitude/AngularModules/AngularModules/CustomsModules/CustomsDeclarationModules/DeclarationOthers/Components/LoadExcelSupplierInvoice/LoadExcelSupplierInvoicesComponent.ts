@@ -10,6 +10,7 @@ import { SupplierInvoiceService } from '../../../../../Customs/Services/Others/S
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { UnifreightController, UnifreightResponseEventArgs } from 'Customs/Controller/UnifreightController';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 declare var attachmentUploader, ResultAsArray: any;
 @Component({
     selector: 'LoadExcelSupplierInvoicesComponent',
@@ -164,8 +165,37 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
                     this.ShowMessage(myServiceResponse.ErrorsArray[0]);
                 }
                 else {
-                    this.CurrentSession.CloseCurrentWindow();
-                    this.ShowMessage(myServiceResponse.Result);
+                    if (myServiceResponse.Result.startsWith("לא נמצא סיווג")) {
+                        let messageWindow = new ConfirmWindow();
+                        messageWindow.Width = 300;
+                        messageWindow.Height = 180;
+                        messageWindow.Title = "יצירת חשבון ספק";
+                        messageWindow.YesButtonText = "המשך";
+                        messageWindow.ShowCancelButton = true;
+                        messageWindow.ShowNoButton = false;
+                        //messageWindow.RTL = true;
+                        messageWindow.ShowErorImage = true;
+                        messageWindow.Show(myServiceResponse.Result);
+                        messageWindow.WindowClosed.subscribe((event: any) => {
+                            if (messageWindow.Yes) {
+                                supplierInvoiceService.PutSupplierInvioceFromFileRequest(this.filterImageParameter, SessionLocator.Tenant, this.CustomerId, this.UnifacePartnerCode, this.DeclarationId, true).subscribe((myServiceResponse1: ServiceResponse) => {
+
+                                    if (myServiceResponse1.HasError) {
+                                        this.ShowMessage(myServiceResponse1.ErrorsArray[0]);
+                                    }
+                                    else {
+                                        this.CurrentSession.CloseCurrentWindow();
+                                        this.ShowMessage(myServiceResponse1.Result);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        this.CurrentSession.CloseCurrentWindow();
+                        this.ShowMessage(myServiceResponse.Result);
+                    }
+                    
                 }
             });
         }
