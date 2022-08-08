@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Common" AOT="true" TargetTableName="Customers">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
         
     declare @Id as varchar(15)
@@ -9,9 +9,9 @@
 		BEGIN
 			DECLARE CustomerCursor CURSOR READ_ONLY
 			FOR
-			SELECT Id, Drop_ExportLocalCustomerGroupId, Drop_ImportLocalCustomerGroupId
+			SELECT Id, ExportLocalCustomerGroupId, ImportLocalCustomerGroupId
 			FROM Customers
-			WHERE (Drop_ExportLocalCustomerGroupId is not null or Drop_ImportLocalCustomerGroupId is not null) and $LastCounterWhere$ 
+			WHERE (ExportLocalCustomerGroupId is not null or ImportLocalCustomerGroupId is not null) and $LastCounterWhere$ 
 			OPEN CustomerCursor FETCH NEXT FROM CustomerCursor INTO @Id, @ExportId, @ImportId
 			WHILE @@FETCH_STATUS = 0
 			BEGIN
