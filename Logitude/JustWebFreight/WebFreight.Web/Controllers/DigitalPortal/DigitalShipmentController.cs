@@ -341,9 +341,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             string myResult = filter;
 
-            if (!string.IsNullOrWhiteSpace(myResult) && myResult.ToLower().Equals("all"))
+            if (myResult != null)
             {
-                myResult = null;
+                switch (myResult.ToLower())
+                {
+                    case "all":
+                    case "null":
+                    case "undefined":
+                        {
+                            myResult = null;
+                            break;
+                        }
+                }
             }
 
             return myResult;
