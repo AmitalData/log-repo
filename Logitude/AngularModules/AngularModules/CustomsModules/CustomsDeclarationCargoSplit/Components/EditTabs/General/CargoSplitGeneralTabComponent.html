@@ -117,17 +117,12 @@
         font-size: 12px;
         color: black;
     }
-    .message{
-        width: 250px;
-        text-align: center;
-        font-size: 15px;
-        color: red;
-        margin-bottom: 15px;
-        border: red solid 3px;
-        border-radius: 5px;
-        margin-right: 30%;
-
+    
+    :host() ::ng-deep .is-required label {
+        border-color: red !important;
+        opacity: 1 !important;
     }
+
 </style>
 
 <div *ngIf="_EntityResourceFinished && EntityPM" style="margin:10px;" class="MediaFill">
@@ -176,14 +171,15 @@
                                             [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                 </tr>
+                                <div>
                                 <tr style="height:30px">
                                     <td  style="vertical-align:top;">
                                         <div style="margin-top:8px">
                                             <div style="position: relative;">
                                                 <div>
-                                                    <RadioButton style="font-size:12px;" [Name]="'air'" [IsChecked]="isTransportA && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('A')" [Text]="'אויר'"></RadioButton>
+                                                    <RadioButton [ngClass]="{'is-required':isTransportSelected && IsExportDeclaration}" [Name]="'air'" [IsChecked]="isTransportA && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('A')" [Text]="'אויר'"></RadioButton>
  
-                                                    <img style="left:30px " class="CenterCenter"
+                                                    <img style="left:-90px " class="CenterCenter"
                                                         src="./Images/TransportModes/A.png" />
                                                 </div>
                                             </div>
@@ -195,9 +191,9 @@
                                         <div style="margin-top:8px">
                                             <div style="position: relative;">
                                                 <div>
-                                                    <RadioButton [Name]="'ocean'" [IsChecked]="isTransportO && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('O')" [Text]="'ים'"></RadioButton>
+                                                    <RadioButton [ngClass]="{'is-required':isTransportSelected && IsExportDeclaration}" [Name]="'ocean'" [IsChecked]="isTransportO && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('O')" [Text]="'ים'"></RadioButton>
 
-                                                    <img style="left:30px" class="CenterCenter"
+                                                    <img style="left:-90px" class="CenterCenter"
                                                         src="./Images/TransportModes/O.png" />
                                                 </div>
                                             </div>
@@ -209,14 +205,16 @@
                                         <div style="margin-top:8px">
                                             <div style="position: relative;">
                                                 <div>
-                                                    <RadioButton [Name]="'land'" [IsChecked]="isTransportL && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('L')" [Text]="'יבשה'"></RadioButton>
-  <img style="left:30px " class="CenterCenter"
+                                                    <RadioButton [ngClass]="{'is-required':isTransportSelected && IsExportDeclaration}" [Name]="'land'" [IsChecked]="isTransportL && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('L')" [Text]="'יבשה'"></RadioButton>
+                                                    <img style="left:-90px " class="CenterCenter"
                                                         src="./Images/TransportModes/I.png" />
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                            </div>
+                                
                                 <tr style="height:150px">
                                     <td>
                                         <div></div>
@@ -232,12 +230,7 @@
             </td>
             <td [class.disabled]="!TransportmodeId" style="width: 700px;">
                 <table>
-                    <tr>
-                        <td>
-                            <div *ngIf="isTransportSelected" class="message">יש לבחור סוג הובלה</div>
-                        </td>
-                        
-                    </tr>
+      
                     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
                         <td colspan="2">
                             <ValidationSummary [ItemsSource]="ErrorsList" [SingleLine]="false"></ValidationSummary>
