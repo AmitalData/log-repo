@@ -35,6 +35,7 @@ using System.Net.Http.Headers;
 using Logitude.Customs.BL.Messaging.ILSWS;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL.BL;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -770,6 +771,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     var amitalContext = AmitalContext.GetContext(tenant);
                     var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
                     var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+
+                    var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
+                    cancelOldCommunicationLogs.CancelOldECTHRDataMaman(tenant, declarationId);
 
                     if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
                     {
