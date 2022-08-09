@@ -41,6 +41,26 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return log;
  
         }
+        public CommunicationLog GetSingleCommunicationLogInProccess(string entityId, int tenant, List<string> subjects)
+        {
+            (commonDataContext as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            DateTime dateTime = DateTime.Now.AddDays(-3);// 
+            var q = (from a in context.CommunicationLogs
+                     where  a.EntityId == entityId && a.CommunicationStatusTypeCode == "W" && subjects.Contains(a.Subject)
+                     select a);
+            q = q.Where(r => r.CreateDate > dateTime);//bad solution - need time !!!
+            var log = q.FirstOrDefault();
+            if (log != null)
+            {
+                log.CommunicationStatusTypeCode = "D";
+                this.Update(log);
+
+                this.SubmitChanges();
+            }
+            return log;
+
+        }
 
         public CommunicationLog GetSingleCommunicationByCorrelationID(int tenant, string correlationID)
         {
