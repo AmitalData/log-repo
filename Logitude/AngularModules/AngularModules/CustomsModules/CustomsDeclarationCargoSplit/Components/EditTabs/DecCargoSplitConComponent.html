@@ -150,6 +150,7 @@
                                                         </div>
                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                             <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 90px; cursor:pointer;" #selectControl (change)="ParentCargoConsinmentItemSelectionChanged(item,selectControl.value)">
+                                                                <option *ngIf="this.ParentCargoConsinmentItemList.length > 1"></option>
                                                                 <option *ngFor="let c of ParentCargoConsinmentItemList" [selected]="c?.SequenceNumeric==item.ParentCargoConsinmentItem?.SequenceNumeric">{{c?.SequenceNumeric}}</option>
                                                             </select>
                                                         </div>

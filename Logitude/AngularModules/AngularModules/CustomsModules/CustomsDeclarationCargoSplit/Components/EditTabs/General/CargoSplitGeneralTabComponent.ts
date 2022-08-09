@@ -44,6 +44,7 @@ import { stringify } from 'querystring';
 import { DecCargoSplitConComponent } from '../DecCargoSplitConComponent';
 
 import { DeclarationListService } from 'Customs/Services/StandardLists/DeclarationListService';
+import { SplitOrMergeReasonListService } from 'Customs/Services/StandardLists/SplitOrMergeReasonListService';
  
 @Component({
 
@@ -88,7 +89,7 @@ export class CargoSplitGeneralTabComponent
     OKButtonEnabled: boolean = true;
     TabIndex: number;
     IsImportDeclaration: boolean = true;
-    public isTransportSelected: boolean;
+    public isTransportSelected: boolean = false;
     public isDirection: boolean = true;
     public isTransportA: boolean = false;
     public isTransportO: boolean = false;
@@ -99,6 +100,7 @@ export class CargoSplitGeneralTabComponent
     private _entityListService: EntityListService;
     declarationCargoSplitPMService: DeclarationCargoSplitPMService = new DeclarationCargoSplitPMService();
     declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
+    splitOrMergeReasonListService: SplitOrMergeReasonListService = new SplitOrMergeReasonListService();
 
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
@@ -580,8 +582,8 @@ export class CargoSplitGeneralTabComponent
 
     air; ocean; land;
     DirectionModeClicked(value: string) {
+
         this.isTransportSelected = false
-        debugger
         if(this.DirectionI){
             
 
@@ -616,6 +618,16 @@ export class CargoSplitGeneralTabComponent
                     this.DeleteValueScreen();
                 }
                 else {
+
+                    if(this.IsExportDeclaration){
+
+                        this.DirectionI=false;
+                        this.DirectionE= true;
+                    }
+                    else{
+                        this.DirectionE=false;
+                        this.DirectionI= true;
+                    }
                     value === "Import" ? this.isDirection = false : this.isDirection = true;
                 }
             });
@@ -639,7 +651,7 @@ export class CargoSplitGeneralTabComponent
         }
     }
 
-    DeleteValueScreen() {   
+    DeleteValueScreen() {  
         var deleteDecCargo = new DecCargoSplitCargoIdentifierModel(null)  ; 
         deleteDecCargo.ChangeCargoIdentifireType()
         this.EntityPM.CustomFileNo = '';
@@ -1047,7 +1059,16 @@ export class CargoSplitGeneralTabComponent
     set RequestNumber(value: string) { this.EntityPM.RequestNumber = value; }
     //public get RequestReason() { return this.EntityPM.RequestReason; }
     get RequestReason() { return this.EntityPM != null ? this.EntityPM.RequestReason : null; }
-    set RequestReason(value: string) { this.EntityPM.RequestReason = value; }
+    set RequestReason(value: string) {
+        if(value != this.EntityPM.RequestReason ){
+         this.EntityPM.RequestReason = value; 
+         this.splitOrMergeReasonListService.getSingle(value).subscribe(res=>{
+            if(res != null){
+                this.EntityPM.RequestReasonName = res.Result.LocalName
+            }
+         });
+        }
+    }
     //public get RequestReasonName() { return this.EntityPM.RequestReasonName; }
     get RequestReasonName() { return this.EntityPM != null ? this.EntityPM.RequestReasonName : null; }
     set RequestReasonName(value: string) { this.EntityPM.RequestReasonName = value; }
