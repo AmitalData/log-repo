@@ -662,7 +662,7 @@
                                                     [Text]="'מזהה מטען'"></LogLabel>
                                             </td>
                                             <td style="width: 105px;">
-                                                <LogLov [ObjectFieldName]="'CargoTypeCode'"
+                                                <LogLov [ObjectFieldName]="'CargoTypeCodeForExport'"
                                                     [ObjectTableName]="'Customs.Consignment'"
                                                     [DataContext]="DataContext" [HideColumns]="true"
                                                     [LookUpTableName]="'Customs.CargoIdentifireType'"
@@ -1093,7 +1093,7 @@
                                                     [Text]="'מזהה מטען'"></LogLabel>
                                             </td>
                                             <td style="width: 105px;">
-                                                <LogLov [ObjectFieldName]="'CargoTypeCode'"
+                                                <LogLov [ObjectFieldName]="'CargoTypeCodeForExport'"
                                                     [ObjectTableName]="'Customs.Consignment'"
                                                     [DataContext]="DataContext" [HideColumns]="true"
                                                     [LookUpTableName]="'Customs.CargoIdentifireType'"
@@ -1333,10 +1333,10 @@
 
                                             <td style="width: 160px;">
 
-                                                <LogLov [ObjectFieldName]="'StorageSiteCode'"
+                                                <LogLov [ObjectFieldName]="'StorageSiteCodeExport'"
                                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                                     [LookUpTableName]="'Customs.DeliverySiteType'"
-                                                    [DisplayMemberPath]="'LocalName'" [SelectedValue]="StorageSiteCode"
+                                                    [DisplayMemberPath]="'LocalName'" [SelectedValue]="StorageSiteCodeExport"
                                                     [HideColumns]="true">
                                                 </LogLov>
                                             </td>
