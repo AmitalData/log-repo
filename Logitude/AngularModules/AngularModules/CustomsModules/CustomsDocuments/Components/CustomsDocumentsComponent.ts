@@ -876,8 +876,9 @@ export class CustomsDocumentsComponent
     }
 
     
-    async BulkUploadDocuments() {        
-        let  documnetUpload: CustomsDocumentTicketViewModel[] = this.getDocumentReadyToUpload(true);
+    async BulkUploadDocuments() {
+
+         let  documnetUpload: CustomsDocumentTicketViewModel[] = this.getDocumentReadyToUpload(true);
 
         if (documnetUpload.length === 0) {
 
@@ -915,20 +916,13 @@ export class CustomsDocumentsComponent
 
     private getDocumentReadyToUpload(exclude87: boolean): CustomsDocumentTicketViewModel[] {
         return this.CustomsDocumentsTicketViewModels.filter((customDocument: CustomsDocumentTicketViewModel) => {
-            // const res =  customDocument.CustomsDocumentMetaDataValuePMs?.filter((value :CustomsDocumentMetaDataValuePM) => {
-            //     const metaDataType: CustomDocumentTypeMetaDataList = customDocument.CustomDocumentTypeMetaDataLists.find(metaDataType => value.MetaDataTypeCode == metaDataType.MetaDataTypeCode);
-            //     return !(!metaDataType?.Mandatory || 
-            //         metaDataType.MetaDataTypeCode === '87' ||
-            //         (value.MetaDataValue || value.MetaDataValue == ''));
-            // });
 
             return customDocument.DocumentsFilingId && AppTool.IsNullOrEmpty( customDocument.CustomsDocId) &&
-           customDocument.CustomsDocumentMetaDataValuePMs &&
-            customDocument.CustomsDocumentMetaDataValuePMs.every((value :CustomsDocumentMetaDataValuePM) => {
-                const metaDataType: CustomDocumentTypeMetaDataList = customDocument.CustomDocumentTypeMetaDataLists.find(metaDataType => value.MetaDataTypeCode == metaDataType.MetaDataTypeCode);
+           customDocument.CustomsDocumentMetaDataValuePMs  &&
+                customDocument.CustomDocumentTypeMetaDataLists.every((metaDataType: CustomDocumentTypeMetaDataList) => {
                 return !metaDataType?.Mandatory || 
                     (metaDataType.MetaDataTypeCode === '87' && exclude87 )||
-                    (value.MetaDataValue || value.MetaDataValue == '');
+                    (metaDataType.ValuesTable || metaDataType.ValuesTable == '');
             });
         });
     }
