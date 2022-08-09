@@ -518,7 +518,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     SetRoutingPortNames(shipment: CargoTrackingShipmentList) {
-        this.RoutingPortNames = shipment.FromPortName + " to " + shipment.ToPortName;
+        this.RoutingPortNames = shipment.FromPortCode + " to " + shipment.ToPortCode;
     }
 
     private InitComponent() {
