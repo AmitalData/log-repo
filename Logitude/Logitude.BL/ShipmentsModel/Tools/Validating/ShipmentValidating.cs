@@ -233,6 +233,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                     else
                     {
+                        ValidateInlandDomesticCasualAddressFields(entityPM);
                         List<DomesticCountry> iDomesticCountries = GetInlandDomesticCountries(entityPM);
 
                         if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
@@ -1522,12 +1523,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidateAcocuntingCloseDueToShipmentLevel(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
             }
         }
-
         private static bool AccountingClosedChangedFromHouse(ShipmentPM entityPM, Shipment entityPoco)
         {
             return entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster && (entityPoco.IsAccountingClosed != entityPM.IsAccountingClosed);
         }
-
         private static bool CheckOpenPayables(ShipmentPM entityPM, AccountingSetting accountingSetting)
         {
             bool hasOpenPayables = false;
@@ -1684,6 +1683,67 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             }
 
             return hasOpenPayables;
+        }
+        private static void ValidateInlandDomesticCasualAddressFields(ShipmentPM entityPM)
+        {
+            ValidateInlandDomesticFromCasualAddress(entityPM);
+            ValidateInlandDomesticToCasualAddress(entityPM);
+        }
+        private static void ValidateInlandDomesticFromCasualAddress(ShipmentPM entityPM)
+        {
+            if (entityPM.InlandDomesticFromTypeCode != "CASL") return;
+
+            Country myCountry = GetInlandDomesticCountry(entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
+            if (myCountry == null) return;
+
+            ValidateInlandDomesticCountryStateRequired(myCountry.IsStateRequired, entityPM.InlandDomesticFromStateId, "From");
+            ValidateInlandDomesticCountryHasCities(myCountry, entityPM.InlandDomesticFromCity, entityPM.IsHybrid);
+        }
+        private static void ValidateInlandDomesticToCasualAddress(ShipmentPM entityPM)
+        {
+            if (entityPM.InlandDomesticToTypeCode != "CASL") return;
+
+            Country myCountry = GetInlandDomesticCountry(entityPM.InlandDomesticToCountryId, entityPM.Tenant);
+            if (myCountry == null) return;
+
+            ValidateInlandDomesticCountryStateRequired(myCountry.IsStateRequired, entityPM.InlandDomesticToStateId, "To");
+            ValidateInlandDomesticCountryHasCities(myCountry, entityPM.InlandDomesticToCity, entityPM.IsHybrid);
+        }
+        private static Country GetInlandDomesticCountry(string countryId, int tenant)
+        {
+            CountryRepository countryRepository = new CountryRepository(tenant);
+            return countryRepository.GetSingleCountry(countryId, tenant);
+        }
+        private static void ValidateInlandDomesticCountryStateRequired(bool isStateRequired, string stateId, string casualAddressCode)
+        {
+            if (isStateRequired && string.IsNullOrEmpty(stateId))
+            {
+                throw new ApplicationException(casualAddressCode + " State is Required");
+            }
+        }
+        private static void ValidateInlandDomesticCountryHasCities(Country myCountry, string city, bool isHybrid)
+        {
+            if (myCountry.HasCitiesList && !isHybrid && !string.IsNullOrEmpty(city))
+            {
+                CountryCityRepository citiesRepository = new CountryCityRepository(myCountry.Tenant);
+                IQueryable<CountryCity> allCities = citiesRepository.GetCountryCitiesByCountry(myCountry.Id, myCountry.Tenant);
+
+                bool isCityExists = CheckIsCityExists(city, allCities);
+
+                if (!isCityExists) throw new ApplicationException("This city doesn't exist in cities table");
+            }
+        }
+        private static bool CheckIsCityExists(string myCity, IQueryable<CountryCity> allCities)
+        {
+            bool isCityExists =
+                 (from d in allCities
+                  where
+                  (d.EnglishName != null && d.EnglishName.ToLower() == myCity.ToLower())
+                  ||
+                  (d.LocalName != null && d.LocalName.ToLower() == myCity.ToLower())
+                  select d).Any();
+
+            return isCityExists;
         }
     }
     public class DomesticCountry
