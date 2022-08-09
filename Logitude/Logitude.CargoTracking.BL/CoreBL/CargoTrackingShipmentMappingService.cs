@@ -328,9 +328,12 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         }
         private void SetCurrentMilstoneFields(Milestone currentMilestone)
         {
-            cargoShipmentPM.CurrentMilestoneCode = currentMilestone.Code;
-            cargoShipmentPM.CurrentMilestoneName = currentMilestone.Name;
-            cargoShipmentPM.CurrentMilestoneDate = currentMilestone.Date;
+            if (currentMilestone != null)
+            {
+                cargoShipmentPM.CurrentMilestoneCode = currentMilestone.Code;
+                cargoShipmentPM.CurrentMilestoneName = currentMilestone.Name;
+                cargoShipmentPM.CurrentMilestoneDate = currentMilestone.Date;
+            }
         }
 
         private void SetCurrentMilestone()
