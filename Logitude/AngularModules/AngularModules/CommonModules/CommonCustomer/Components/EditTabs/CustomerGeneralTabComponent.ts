@@ -1384,10 +1384,8 @@ export class ProductTypeItemClass {
                 }
                 if (flag) {
                     this.entityPM.AddCustomerProductPM(newItem);
+                    if (!this.entityPM.ActivityWatch) this.entityPM.ActivityWatch = true;
                 }
-
-                if (!this.entityPM.ActivityWatch)
-                    this.entityPM.ActivityWatch = true;
             }
             else {
                 var item: CustomerProductPM = this.entityPM.CustomerProducts.filter(d => d.ProductTypeCode == this.Code)[0];
