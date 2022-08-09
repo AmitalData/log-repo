@@ -288,9 +288,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
                 //q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
             }
-
+          
             var qConsignmentLoadingPort =
-                  (from cons in context.Consignments
+                  (from cons in context.Consignments 
                    where cons.ExportLoadingPortCode != null
                    group cons by new { cons.DeclarationId }
                        into newgroup
@@ -303,9 +303,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             if (!isExport)
             {
-                qConsignmentLoadingPort = qConsignmentLoadingPort.Where(x => x.DeclarationId == "-1");
-            }
+                qConsignmentLoadingPort =
+                     (from cons in context.Consignments
+                      where  false && cons.ExportLoadingPortCode != null 
+                      group cons by new { cons.DeclarationId }
+                       into newgroup
+                      select new
+                      {
+                          newgroup.Key.DeclarationId,
+                          cons = newgroup.GroupBy(x => x.ExportLoadingPortCode).Select(grp => grp.FirstOrDefault()),
+                      });
 
+                // qConsignmentLoadingPort.Where(x => x.DeclarationId == "-1");
+            }
+          
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                  //.Include("CreatedByUser.Contact")
                                                  .Include("Importer").Include("EntitleImporter").Include("TransferImporter").Include("ImporterType").Include("TransferImporterType").Include("EntitleImporterType").Include("StorageStatus").Include("FreightPaymentMethod")
@@ -330,7 +341,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                            on a.Id equals consJoin.DeclarationId
                                                            into ConsignmentLoadingPortJoin
                                                  from myJoinConsignmentLoadingPort in ConsignmentLoadingPortJoin.DefaultIfEmpty()
-
+                                                
                                                  join AmendmentRequestStatus in context.AmendmentRequestStatuses
                                                             on a.AmendmentStatus equals AmendmentRequestStatus.Code
                                                             into qStatusAmendJoin
