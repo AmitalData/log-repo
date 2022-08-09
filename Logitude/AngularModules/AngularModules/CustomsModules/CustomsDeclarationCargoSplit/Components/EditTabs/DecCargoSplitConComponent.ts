@@ -231,9 +231,9 @@ export class DecCargoSplitConComponent extends BaseComponent {
             this.UIProperties.SetEnabled("ProcedureCurrentCode", this.ObjectTableName, true);
             this.DisplayOnlyMessageVisibility = false;
         }
-        if (this.DeclarationDirection == "E") {
-            this.UIProperties.SetEnabled("ConditionCode", this.ObjectTableName, false);
-        }
+         if (this.DeclarationDirection == "E") {
+             this.UIProperties.SetEnabled("ConditionCode", this.ObjectTableName, false);
+         }
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
     }
 
@@ -394,8 +394,8 @@ export class DecCargoSplitConComponent extends BaseComponent {
                     item.DeclarationCargoSplitId = this.EntityPM.DeclarationCargoSplitId;
                     item.Tenant = this.EntityPM.Tenant;
                     item.DecCargoSplitConsLineNo = this.EntityPM.LineNumber;
-                    item.ItemLine = counter;        
-
+                    item.ItemLine = counter;
+            
             if (this.ParentCargoConsinmentItemList?.length == 1) {
                 
                     item.ParentCargoConsinmentItem = this.ParentCargoConsinmentItemList[0]?.SequenceNumeric;
@@ -530,6 +530,9 @@ export class DecCargoSplitConComponent extends BaseComponent {
                     currentItem.ParentCargoConsinmentItem = selectedItem?.SequenceNumeric;
                     currentItem.GrossMassMeasure = selectedItem?.GrossMassMeasure;
                     currentItem.CargoDescription = selectedItem?.MarksNumbers;
+                    currentItem.RequestReasonName=this.EntityPM.EntityParentPM?.RequestReasonName;
+
+
 
         }
     }
