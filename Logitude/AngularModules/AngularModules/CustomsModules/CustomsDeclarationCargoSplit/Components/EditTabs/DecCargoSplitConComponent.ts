@@ -233,6 +233,13 @@ export class DecCargoSplitConComponent extends BaseComponent {
         }
          if (this.DeclarationDirection == "E") {
              this.UIProperties.SetEnabled("ConditionCode", this.ObjectTableName, false);
+            if(this.EntityPM.EntityParentPM.responseStatusCode == "1" || this.EntityPM.EntityParentPM.responseStatusCode == "3" || this.EntityPM.EntityParentPM.responseStatusCode == "6"){
+
+                this.IsDisplayOnly = true
+
+            }
+
+
          }
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
     }
