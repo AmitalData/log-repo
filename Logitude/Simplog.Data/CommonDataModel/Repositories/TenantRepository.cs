@@ -117,7 +117,19 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public  Tenant GetSingleTenant(int id)
         {
-            Tenant entity = (from a in context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country").Include("Address.State").Include("CustomerCard") where a.Id == id select a).FirstOrDefault();                      
+            Tenant entity =  context.Tenants
+                                    .Include("PaymentTerm")
+                                    .Include("OtherChargesCurrency")
+                                    .Include("QuoteSaleCurrency")
+                                    .Include("AgentCard")
+                                    .Include("Currency")
+                                    .Include("ProfitCurrency")
+                                    .Include("FreightCurrency")
+                                    .Include("PasswordPolicy")
+                                    .Include("Address.Country")
+                                    .Include("Address.State")
+                                    .Include("CustomerCard")
+                                    .FirstOrDefault(a => a.Id == id);
             return entity;
         }
 
