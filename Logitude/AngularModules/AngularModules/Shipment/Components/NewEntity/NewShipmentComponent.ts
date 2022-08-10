@@ -2433,11 +2433,13 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 else if (myAddressCode == "F") {
                     this.InlandDomesticFromCity = args.CityName;
                     this.InlandDomesticFromCountryId = args.CountryId;
+                    this.EntityPM.InlandDomesticFromStateId = args.StateId;
                 }
 
                 else if (myAddressCode == "T") {
                     this.InlandDomesticToCity = args.CityName;
                     this.InlandDomesticToCountryId = args.CountryId;
+                    this.EntityPM.InlandDomesticToStateId = args.StateId;
                 }
             }
         });
