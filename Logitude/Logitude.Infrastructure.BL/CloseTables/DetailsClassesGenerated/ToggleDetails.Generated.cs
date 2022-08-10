@@ -684,6 +684,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "HDF , HTML Editor Style Fixed", 
                 Description = "HTML Editor Style Fixed", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "VIP", 
+                Name = "Vizion - Pilot Customer", 
+                SearchFields = "VIP,Vizion - Pilot Customer", 
+                Description = "Vizion - Pilot Customer", 
+			});
 			
             return all;
        }
