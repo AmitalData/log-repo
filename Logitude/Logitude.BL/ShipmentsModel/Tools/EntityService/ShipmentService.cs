@@ -7891,7 +7891,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void FillShipmnetTimeLine(ShipmentList shipment, int tenant)
         {
-            var shipmentPickUpDeliveries = (from a in objectContext.ShipmentPickUpDeliveries where a.ShipmentId == shipment.Id select a);
+            var shipmentPickUpDeliveries = (from a in objectContext.ShipmentPickUpDeliveries.Include("FromAddressCountry").Include("ToAddressCountry") where a.ShipmentId == shipment.Id select a);
             TimeLineData timeLineData = new TimeLineData();
             this.FillMainCarraigeFromTimeLine(timeLineData, shipment);
             this.FillMainCarraigeToTimeLine(timeLineData, shipment);
@@ -7905,8 +7905,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             timeLineData.MainCarriageFrom = new TimeLineStop()
             {
-                City = shipment.MainCarriageFromCity,
-                CountryCode = shipment.MainCarriageFromCountryCode,
+                City = shipment.MainCarriageFromPortName,
+                CountryCode = shipment.FromCountryCode,
                 Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
                 DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
             };
@@ -7915,10 +7915,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             timeLineData.MainCarriageTo = new TimeLineStop()
             {
-                City = shipment.MainCarriageToCity,
-                CountryCode = shipment.MainCarriageToCountryCode,
-                Date = shipment.MainCarriageATA != null ? shipment.MainCarriageATA : shipment.MainCarriageETA,
-                DateType = shipment.MainCarriageATA != null ? "Actual" : (shipment.MainCarriageETA != null ? "Estimated" : null),
+                City = shipment.ToPort,
+                CountryCode = shipment.ToCountryCode,
+                Date = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
+                DateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
             };
         }
         private void FillPickUpTimeLine(TimeLineData timeLineData, ShipmentList item, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)

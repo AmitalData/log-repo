@@ -2561,7 +2561,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return result;
         }
-    
+
+        public IQueryable<CustomerList> GetDigitalIQueryableEntityList(IQueryable<CustomersDataView> iQueryable)
+        {
+            IQueryable<CustomerList> result = (from customer in iQueryable
+                                               select new CustomerList()
+                                               {
+                                                   Id = customer.Id,
+                                                   Code = customer.Code,
+                                                   EnglishName = customer.EnglishName,
+                                                   LocalName = customer.LocalName,
+                                               });
+            return result;
+        }
 
         public CustomerList GetSingleCustomerList(string id, int tenant)
         {
