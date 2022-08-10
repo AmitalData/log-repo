@@ -22,6 +22,7 @@ import { AddTabComponent } from './Components/Customization/AddTabComponent';
 import { CustomizationTabsComponent } from './Components/Customization/CustomizationTabsComponent';
 import { LighteningScreenComponent } from './Components/Customization/Screen/LighteningScreenComponent';
 import { ClassicScreenComponent } from './Components/Customization/Screen/ClassicScreenComponent';
+import { TreeFiltersSettingsComponent } from './Components/Customization/TreeFiltersSettingsComponent';
 
 export const Components =
     [
@@ -48,6 +49,7 @@ export const Components =
         AddTabComponent,
         ClassicScreenComponent,
         LighteningScreenComponent,
+        TreeFiltersSettingsComponent,
 
     ];
 export const ControlsComponents =
@@ -55,6 +57,7 @@ export const ControlsComponents =
         ScreenLayoutComponent,
         ClassicScreenComponent,
         LighteningScreenComponent,
+        TreeFiltersSettingsComponent,
 
     ];
 
@@ -88,6 +91,7 @@ export class ModuleDeclarations {
             case "CustomizationTabsComponent": { myResult = CustomizationTabsComponent; break; }
             case "ClassicScreenComponent": { myResult = ClassicScreenComponent; break; }
             case "LighteningScreenComponent": { myResult = LighteningScreenComponent; break; }
+            case "TreeFiltersSettingsComponent": { myResult = TreeFiltersSettingsComponent; break; }
 
 
         }

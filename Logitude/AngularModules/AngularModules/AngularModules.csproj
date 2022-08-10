@@ -33,6 +33,9 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\LoginModules\HtmlHelpers\CSS\kendo.common.min.css">
+      <Link>kendo.common.min.css</Link>
+    </Content>
     <Content Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\BankPageEventsComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\ManageRecoTabComponent.html" />
@@ -306,6 +309,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <Content Include="Images\Arrow-down-s.png" />
     <Content Include="Images\Icons\multi-print.png" />
     <Content Include="Images\Icons\MultiUpdate.png" />
     <Content Include="Images\Icons\WhatsApp.png" />
@@ -326,6 +330,7 @@
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationTabsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\TreeFiltersSettingsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefaultExternalAttachmentsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentType\Tab\DocumentTypeCopyDetailsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.html" />
@@ -1896,6 +1901,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\TreeFiltersSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\ClassicScreenLayoutService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.ts" />

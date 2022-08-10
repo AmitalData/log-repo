@@ -16,6 +16,8 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 import {LoginService} from '../../../../Infrastructure/Services/LoginService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { TreeFilter } from '../../../../Infrastructure/DataContracts/TreeFilter';
+import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 
 
 declare var window: any;
@@ -41,7 +43,12 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     ContolFieldsList2: any[];
     CustomPickListsList: string[];
     loginService: LoginService;
+    DefaultAdditionalTreeFilters: TreeFilter;
+    ShownAdditionalFilters: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
+    AdditionalFiltersData: any;
+    AdditionalFiltersEntities: string[] = [];
+    private objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
     constructor() {
         super();
         this.loginService = new LoginService();
@@ -369,12 +376,14 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
         else {
             this.objectField.DataTypeCode = fieldDataType.Code;
+            this.ShownAdditionalFilters = false;
             switch (fieldDataType.Code) {
                 case "LookUp":
                     {
                         this.ControlField1Visibile = true;
                         this.ControlField2Visibile = true;
                         this.PickListVisibile = false;
+                        this.ShowAdditionalFilters();
                         break;
                     }
                 case "nText":
@@ -430,6 +439,32 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         }
     }
 
+    
+    ShowAdditionalFilters() {
+        this.AdditionalFiltersEntities.push("Shipment");
+        if (this.LookUpTable) {
+            this.AdditionalFiltersEntities.push(this.LookUpTable.Name);
+        }
+        this.LoadDefaultAdditionalFilters();
+    }
+
+    LoadDefaultAdditionalFilters() {
+        if (this.objectField && this.objectField.Id) {
+            this.objectFieldPMExtendedService.GetDefaultAdditionalFiltersById(this.objectField.Id, this.objectField.Tenant).subscribe((serviceResponse: any) => {
+                var result: ServiceResponse = serviceResponse;
+                if (result.HasError) {
+                }
+                else {
+                    this.AdditionalFiltersData = result.Result == null ? null : result.Result.AdditionalFilters;
+                    this.ShownAdditionalFilters = true;
+                }
+            });
+        }
+        else {
+            this.ShownAdditionalFilters = true;
+        }
+    }
+
     public authHeader;
     SaveChanges() {
 
@@ -464,6 +499,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.loginService.AuthHeader = this.authHeader;
             this.loginService.CurrentTenant = SessionLocator.Tenant;
             if (this.IsNew == true) {
+                this.objectField.DefaultAdditionalTreeFilters = this.DefaultAdditionalTreeFilters;
                 this._ObjectFieldPMService.insert(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();

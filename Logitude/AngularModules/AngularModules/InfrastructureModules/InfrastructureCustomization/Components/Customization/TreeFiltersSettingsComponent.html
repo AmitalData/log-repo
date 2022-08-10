@@ -1,0 +1,187 @@
+<style type="text/css">
+    .LinkBtn {
+        text-decoration: underline;
+        float: left;
+        color: blue;
+        font-size: 11px;
+        text-indent: 3px;
+    }
+
+        .LinkBtn:hover {
+            text-decoration: underline;
+            float: left;
+            color: lightskyblue;
+            font-size: 11px;
+            cursor: pointer;
+        }
+    .GroupItem {
+        min-width: 70px;
+        min-height: 65px;
+        /*border-left: 1px solid gray;
+        padding-left: 5px;*/
+        /*padding-right: 5px;
+        border-right: 1px solid gray;*/
+        margin: 5px;
+        display: inline-block;
+    }
+    .OperatorItem {
+        min-width: 45px;
+        min-height: 65px;
+        margin: 5px;
+        display: inline-block;
+
+    }
+
+    .Operator {
+        min-width: 45px;
+        min-height: 20px;
+        margin: 5px;
+        display: inline-block;
+        /*display: table-cell;
+        vertical-align: middle;*/
+    }
+
+    .Filters {
+        /*display: inline-block;*/
+        display: table-cell;
+        border-left: 1px solid gray;
+    }
+    .FilterItem {
+        min-width: 55px;
+        min-height: 20px;
+        margin: 5px;
+        /*height:1px;*/
+    }
+
+</style>
+<table>
+    <tr>
+        <td style="width:6px;">
+            <div></div>
+        </td>
+        <td>
+            <table>
+                <tr style="height: 10px;">
+                    <td style="height: 20px;">
+                        <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                            Optionally, create a filter to limit the records available to users in the lookup field.
+                        </label>
+                    </td>
+                </tr>
+                <tr style="height: 10px;">
+                    <td style="height: 20px;">
+                        <img *ngIf="!ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-right.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
+                        <img *ngIf="ShownAdditionalFiltersSettings" (click)="ShowAdditionalFiltersSettingsClicked()" src="./Images/Arrow-down-s.png" style="padding-left: 12px;height: 10px; cursor: pointer;" />
+                        <label (click)="ShowAdditionalFiltersSettingsClicked()" style="padding-left:10px;text-decoration:underline;cursor:pointer;color: rgb(110, 113, 114);">
+                            Show Filter Settings
+                        </label>
+                    </td>
+                </tr>
+
+                <tr *ngIf="ShownAdditionalFiltersSettings">
+                    <td>
+                        <div class="GroupItem" style="width:620px;">
+                            <div class="OperatorItem">
+                                <div style="display: table-cell;vertical-align: middle;">
+                                    <div class="Operator">
+                                        <ComboBox (SelectedItemChanged)="Changed($event)" [ItemsSource]="AndOrOps" [SelectedItem]="test" [WaterMark]="'And'"></ComboBox>
+                                    </div>
+                                </div>
+
+                                <div class="Filters">
+                                    <div class="FilterItem">
+
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DataSource; let itemIndex =index;">
+                                                <td>
+                                                    <table>
+                                                        <tr class="FormFieldRow">
+                                                            <td style="width: 125px; min-width: 125px; max-width: 125px;">
+                                                                <div style="text-align:left;width:120px">
+                                                                    <ComboBox style="width:100px;" (SelectedItemChanged)="Changed($event)" [ItemsSource]="Entities" [SelectedItem]="test" [WaterMark]="'Table'"></ComboBox>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width: 125px; min-width: 125px; max-width: 125px;">
+                                                                <div style="text-align:left;width:120px">
+                                                                    <ComboBox style="width:100px;" (SelectedItemChanged)="Changed($event)" [ItemsSource]="Entities" [SelectedItem]="test" [WaterMark]="'Field'"></ComboBox>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width: 125px; min-width: 125px; max-width: 125px;">
+                                                                <div style="text-align:left;width:120px">
+                                                                    <ComboBox style="width:100px;" (SelectedItemChanged)="Changed($event)" [ItemsSource]="Entities" [SelectedItem]="test" [WaterMark]="'Equals to'"></ComboBox>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width: 125px; min-width: 125px; max-width: 125px;">
+                                                                <div style="text-align:left;width:120px">
+                                                                    <ComboBox style="width:100px;" (SelectedItemChanged)="Changed($event)" [ItemsSource]="Entities" [SelectedItem]="test" [WaterMark]="'Table'"></ComboBox>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width: 105px; min-width: 105px; max-width: 105px;">
+                                                                <div style="text-align:left;width:100px">
+                                                                    <ComboBox style="width:80px;" (SelectedItemChanged)="Changed($event)" [ItemsSource]="Entities" [SelectedItem]="test" [WaterMark]="'Value'"></ComboBox>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width:100%; min-width: 100%; max-width: 100%; position: relative;">
+                                                                <div (click)="item.DeleteAutomationConditionMethod(item)" style="width: 21px; vertical-align: middle;">
+                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" style="float: right;"></IconButton>
+                                                                </div>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <!--<tr style="height:28px;">
+                                    <td>
+                                        <div *ngIf="DataSource.length > 0" style="margin-top: 10px;margin-left: 6px;">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:1%;"></td>
+                                                    <td style="width:1%;"><span class="LinkBtn" (click)="AddDefaultAdditionalFiltersClicked()">Add Filter</span></td>
+                                                    <td style="width:1%;"></td>
+                                                    <td style="width:10%;"><span class="LinkBtn" (click)="AddGroup(item)">Add Group</span></td>
+                                                    <td style="width:4%;"></td>
+                                                    <td style="width:30%;"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>-->
+                                                        <!--<tr><td colspan="4"></td></tr>-->
+                                                    </table>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr style="height:28px;">
+                                                <td>
+                                                    <div *ngIf="DataSource.length > 0" style="margin-top: 10px;margin-left: 6px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:1%;"></td>
+                                                                <td style="width:1%;"><span class="LinkBtn" (click)="AddDefaultAdditionalFiltersClicked()">Add Filter</span></td>
+                                                                <td style="width:1%;"></td>
+                                                                <td style="width:10%;"><span class="LinkBtn" (click)="AddGroup(item)">Add Group</span></td>
+                                                                <td style="width:4%;"></td>
+                                                                <td style="width:30%;"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td colspan="4"></td></tr>
+            </table>
+        </td>
+    </tr>
+</table>
