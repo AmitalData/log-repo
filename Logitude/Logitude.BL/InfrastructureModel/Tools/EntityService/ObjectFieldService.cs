@@ -19,6 +19,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.QueueService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools;
+using System.Text.Json;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -597,6 +599,20 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 { "EntityId", entityPM.Id },
                 { "Tenant", tenant.ToString()}};
             queueservice.Send(queueMessage, tenant);
+        }
+
+        public TreeFilter GetDefaultAdditionalFiltersByIdAndTenant(string Id, int tenant)
+        {
+            ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
+            string defaultAdditionalFilters = objectFieldQuery.GetDefaultAdditionalFiltersByIdAndTenant(Id, tenant);
+            TreeFilter defaultAdditionalTreeFilters = new TreeFilter();
+            if (!string.IsNullOrEmpty(defaultAdditionalFilters))
+            {
+                
+                defaultAdditionalTreeFilters = JsonSerializer.Deserialize<TreeFilter>(defaultAdditionalFilters);
+            }
+
+            return defaultAdditionalTreeFilters;
         }
     }
 }

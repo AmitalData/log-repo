@@ -1,6 +1,9 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
+using System.Text.Json;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -101,6 +104,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.IsForeignKey = objectFieldPM.IsForeignKey;
             objectField.ForeignEntity = objectFieldPM.ForeignEntity;
             objectField.NavigationPropertyName = objectFieldPM.NavigationPropertyName;
+            objectField.DefaultAdditionalFilters = GetDefaultAdditionalFilters(objectFieldPM);
 
 
             if (objectFieldModification != null)
@@ -117,6 +121,18 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
                 objectField.MaxLength = objectFieldPM.MaxLength;
                 objectField.MinLength = objectFieldPM.MinLength;
             }
+        }
+
+        private static string GetDefaultAdditionalFilters(ObjectFieldPM objectFieldPM)
+        {
+            TreeFilter defaultAdditionalTreeFilters = objectFieldPM.DefaultAdditionalTreeFilters;
+
+            if (defaultAdditionalTreeFilters == null)
+            {
+                return objectFieldPM.DefaultAdditionalFilters;
+            }
+
+            return JsonSerializer.Serialize(defaultAdditionalTreeFilters);
         }
     }
 }
