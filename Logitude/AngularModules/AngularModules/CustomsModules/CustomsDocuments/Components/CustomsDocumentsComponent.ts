@@ -877,7 +877,6 @@ export class CustomsDocumentsComponent
 
     
     async BulkUploadDocuments() {
-
          let  documnetUpload: CustomsDocumentTicketViewModel[] = this.getDocumentReadyToUpload(true);
 
         if (documnetUpload.length === 0) {
@@ -916,14 +915,15 @@ export class CustomsDocumentsComponent
 
     private getDocumentReadyToUpload(exclude87: boolean): CustomsDocumentTicketViewModel[] {
         return this.CustomsDocumentsTicketViewModels.filter((customDocument: CustomsDocumentTicketViewModel) => {
+             return customDocument.DocumentsFilingId && AppTool.IsNullOrEmpty( customDocument.CustomsDocId) &&
+                customDocument.CustomsDocumentMetaDataValuePMs &&
 
-            return customDocument.DocumentsFilingId && AppTool.IsNullOrEmpty( customDocument.CustomsDocId) &&
-           customDocument.CustomsDocumentMetaDataValuePMs  &&
-                customDocument.CustomDocumentTypeMetaDataLists.every((metaDataType: CustomDocumentTypeMetaDataList) => {
-                return !metaDataType?.Mandatory || 
-                    (metaDataType.MetaDataTypeCode === '87' && exclude87 )||
-                    (metaDataType.ValuesTable || metaDataType.ValuesTable == '');
-            });
+                customDocument.CustomDocumentTypeMetaDataLists.every((value: CustomDocumentTypeMetaDataList) => {
+                    const metaDataType: CustomsDocumentMetaDataValuePM = customDocument.CustomsDocumentMetaDataValuePMs.find(metaDataType => value?.MetaDataTypeCode == metaDataType?.MetaDataTypeCode);
+                    return !value?.Mandatory ||
+                        (value?.MetaDataTypeCode === '87' && exclude87) ||
+                        (metaDataType?.MetaDataValue || metaDataType?.MetaDataValue == '');
+                });
         });
     }
 
