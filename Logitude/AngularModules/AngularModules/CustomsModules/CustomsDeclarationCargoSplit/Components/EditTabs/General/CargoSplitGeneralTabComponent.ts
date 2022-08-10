@@ -251,18 +251,10 @@ export class CargoSplitGeneralTabComponent
             this.UIProperties.SetEnabled("SecondCargoID", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ThirdCargoID", this.ObjectTableName, false);
             this.OKButtonEnabled = false;
-            // if (this.ResponseStatusCode != "3") {
             this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, false);
-            //this.ObjectTableName = "Customs.DecCargoSplitCargoIdentifier"
-            //this.UIProperties.SetEnabled("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", false);
 
             this.SendButtonEnabled = false;
-            // }
-           
-            // else {
-            //     this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, true);
-            //     this.SendButtonEnabled = true;
-            // }
+            
         }
         else {
             this.UIProperties.SetEnabled("CustomFileNo", this.ObjectTableName, true);
@@ -1633,7 +1625,8 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
     constructor(line: DecCargoSplitCargoIdentifierPM) {
         super();
         this.EntityPMDecCargo = line? line : new DecCargoSplitCargoIdentifierPM(this.EntityPM);
-        
+        this.SetDisplayFields()
+
         if (this.CargoTypeCode != null) {
             this.ChangeCargoIdentifireType();
         }
@@ -1663,6 +1656,19 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
                 this.UIProperties.SetRequired("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", false);
             }
         }
+        
+    }
+    
+    SetDisplayFields()
+    {
+        
+        if(this.EntityPMDecCargo.EntityParentPM.responseStatusCode == "1" || this.EntityPMDecCargo.EntityParentPM.responseStatusCode == "3" || this.EntityPMDecCargo.EntityParentPM.responseStatusCode == "6")
+            {
+                this.UIProperties.SetEnabled("CargoTypeCode", "Customs.DecCargoSplitCargoIdentifier", false);
+                this.UIProperties.SetEnabled("CargoIdentifierKey1", "Customs.DecCargoSplitCargoIdentifier", false);
+                this.UIProperties.SetEnabled("CargoIdentifierKey2", "Customs.DecCargoSplitCargoIdentifier", false);
+                this.UIProperties.SetEnabled("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", false);
+            }
     }
 
     CheckRequired() {
