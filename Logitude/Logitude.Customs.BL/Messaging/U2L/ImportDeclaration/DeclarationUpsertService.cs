@@ -1431,6 +1431,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     cardRep.SubmitChanges();
 
                     AppendLogLine("Create new Card  = " + amitalCustomerCode + " because could not translate to Logitude Id");
+                    AppendLogLine("  teannt is   = "+ ResolvedTenant());
 
                     //Create a new customer
                     Customer myCustomer = new Customer()
