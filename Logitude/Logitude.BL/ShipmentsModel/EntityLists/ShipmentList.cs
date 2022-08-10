@@ -679,5 +679,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string City { get; set; }
         public DateTime? Date { get; set; }
         public string DateType { get; set; }
+        public bool IsViaPortsDatesFilled { get; set; }
     }
 }
