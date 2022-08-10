@@ -1620,11 +1620,13 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 if (myAddressCode == "F") {
                     this.InlandDomesticFromCity = args.CityName;
                     this.InlandDomesticFromCountryId = args.CountryId;
+                    this.EntityPM.InlandDomesticFromStateId = args.StateId;
                 }
 
                 else if (myAddressCode == "T") {
                     this.InlandDomesticToCity = args.CityName;
                     this.InlandDomesticToCountryId = args.CountryId;
+                    this.EntityPM.InlandDomesticToStateId = args.StateId;
                 }
             }
         });
