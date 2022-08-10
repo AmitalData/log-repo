@@ -156,18 +156,17 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> retencionDRList = new List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR>();
 
             ComprobanteImpuestosResults comprobanteImpuestosResults = sATInvoiceComprobante.GetComprobanteImpuestos(arTotalVats, sATInvoiceComprobante.GetConceptoList().ToArray());
+            FullyPatiallyPaidAmountArgs fullyPatiallyPaidAmountArgs = new FullyPatiallyPaidAmountArgs { InvoiceAmountToPay = invoiceAmountToPay, TotalInvoiceAmount = comprobanteTotalAndSubTotal.Total };
 
             comprobanteImpuestosResults?.ComprobanteImpuestos?.Traslados?.ToList().ForEach(comprobanteImpuestosTraslado =>
             {
-                trasladoDRList.Add(GetNewPagosPagoDoctoRelacionadoImpuestosDRTrasladoDR(comprobanteImpuestosTraslado, relatdCreatedInvoiceValue));
+                trasladoDRList.Add(GetNewPagosPagoDoctoRelacionadoImpuestosDRTrasladoDR(comprobanteImpuestosTraslado, relatdCreatedInvoiceValue, fullyPatiallyPaidAmountArgs));
             });
 
             comprobanteImpuestosResults?.ComprobanteImpuestosRetencionDRs.ToList().ForEach(comprobanteImpuestosRetencion =>
             {
-                retencionDRList.Add(GetNewPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(comprobanteImpuestosRetencion, relatdCreatedInvoiceValue));
+                retencionDRList.Add(GetNewPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(comprobanteImpuestosRetencion, relatdCreatedInvoiceValue, fullyPatiallyPaidAmountArgs));
             });
-
-            MapPaidAmounts(new FullyPatiallyPaidAmountArgs { InvoiceAmountToPay = invoiceAmountToPay, TrasladoDRs = trasladoDRList, RetencionDRs = retencionDRList, TotalInvoiceAmount = comprobanteTotalAndSubTotal.Total });
 
             PagosPagoDoctoRelacionadoImpuestosDR pagosPagoDoctoRelacionadoImpuestosDR = new PagosPagoDoctoRelacionadoImpuestosDR();
             if (trasladoDRList.Count > 0) pagosPagoDoctoRelacionadoImpuestosDR.TrasladosDR = trasladoDRList.ToArray();
@@ -176,15 +175,15 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             return pagosPagoDoctoRelacionadoImpuestosDR;
         }
 
-        private static PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR GetNewPagosPagoDoctoRelacionadoImpuestosDRTrasladoDR(ComprobanteImpuestosTraslado comprobanteImpuestosTraslado, CreditNoteMappedValue relatdCreatedInvoiceValue)
+        private static PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR GetNewPagosPagoDoctoRelacionadoImpuestosDRTrasladoDR(ComprobanteImpuestosTraslado comprobanteImpuestosTraslado, CreditNoteMappedValue relatdCreatedInvoiceValue, FullyPatiallyPaidAmountArgs fullyPatiallyPaidAmountArgs)
         {
-            decimal invoiceTaxAmountToPay = relatdCreatedInvoiceValue == null ? 0 : relatdCreatedInvoiceValue.InvoiceTaxAmountToPay;
-            decimal invoiceAmountToPay = relatdCreatedInvoiceValue == null ? 0 : relatdCreatedInvoiceValue.InvoiceAmountToPay;
+            decimal relatdCreatedInvoiceAmountToPay = relatdCreatedInvoiceValue == null ? 0 : relatdCreatedInvoiceValue.InvoiceAmountToPay;
+            decimal invoiceAmountToPayRatio = GetinvoiceAmountToPayRatio(fullyPatiallyPaidAmountArgs.TotalInvoiceAmount, fullyPatiallyPaidAmountArgs.InvoiceAmountToPay + relatdCreatedInvoiceAmountToPay);
 
             return new PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR
             {
-                BaseDR = comprobanteImpuestosTraslado.Base + (invoiceAmountToPay - invoiceTaxAmountToPay),
-                ImporteDR = comprobanteImpuestosTraslado.Importe + invoiceTaxAmountToPay,
+                BaseDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(comprobanteImpuestosTraslado.Base * invoiceAmountToPayRatio),
+                ImporteDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(comprobanteImpuestosTraslado.Importe * invoiceAmountToPayRatio),
                 ImporteDRSpecified = comprobanteImpuestosTraslado.TipoFactor != "Exento",
                 ImpuestoDR = comprobanteImpuestosTraslado.Impuesto,
                 TasaOCuotaDR = comprobanteImpuestosTraslado.TasaOCuota != null ? Convert.ToDecimal(comprobanteImpuestosTraslado.TasaOCuota) : 0,
@@ -194,34 +193,21 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
         }
 
 
-        private static PagosPagoDoctoRelacionadoImpuestosDRRetencionDR GetNewPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(ComprobanteImpuestosRetencionDR comprobanteImpuestosRetencionDR, CreditNoteMappedValue relatdCreatedInvoiceValue)
+        private static PagosPagoDoctoRelacionadoImpuestosDRRetencionDR GetNewPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(ComprobanteImpuestosRetencionDR comprobanteImpuestosRetencionDR, CreditNoteMappedValue relatdCreatedInvoiceValue, FullyPatiallyPaidAmountArgs fullyPatiallyPaidAmountArgs)
         {
-            decimal invoiceTaxAmountToPay = relatdCreatedInvoiceValue == null ? 0 : relatdCreatedInvoiceValue.InvoiceTaxAmountToPay;
-            decimal invoiceAmountToPay = relatdCreatedInvoiceValue == null ? 0 : relatdCreatedInvoiceValue.InvoiceAmountToPay;
+            decimal relatdCreatedInvoiceAmountToPay = relatdCreatedInvoiceValue == null ? 0 : relatdCreatedInvoiceValue.InvoiceAmountToPay;
+            decimal invoiceAmountToPayRatio = GetinvoiceAmountToPayRatio(fullyPatiallyPaidAmountArgs.TotalInvoiceAmount, fullyPatiallyPaidAmountArgs.InvoiceAmountToPay + relatdCreatedInvoiceAmountToPay);
+
             return new PagosPagoDoctoRelacionadoImpuestosDRRetencionDR
             {
-                ImporteDR = comprobanteImpuestosRetencionDR.Importe + invoiceTaxAmountToPay,
+                ImporteDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(comprobanteImpuestosRetencionDR.Importe * invoiceAmountToPayRatio),
                 ImpuestoDR = comprobanteImpuestosRetencionDR.Impuesto,
-                BaseDR = comprobanteImpuestosRetencionDR.Base + (invoiceAmountToPay - invoiceTaxAmountToPay),
+                BaseDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(comprobanteImpuestosRetencionDR.Base * invoiceAmountToPayRatio),
                 TasaOCuotaDR = comprobanteImpuestosRetencionDR.TasaOCuota != null ? Convert.ToDecimal(comprobanteImpuestosRetencionDR.TasaOCuota) : 0,
                 TipoFactorDR = comprobanteImpuestosRetencionDR.TipoFactor,
             };
         }
 
-        private static void MapPaidAmounts(FullyPatiallyPaidAmountArgs fullyPatiallyPaidAmountArgs)
-        {
-            decimal invoiceAmountToPayRatio = GetinvoiceAmountToPayRatio(fullyPatiallyPaidAmountArgs.TotalInvoiceAmount, fullyPatiallyPaidAmountArgs.InvoiceAmountToPay);
-            fullyPatiallyPaidAmountArgs.TrasladoDRs.ForEach(trasladoDR =>
-            {
-                trasladoDR.BaseDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(trasladoDR.BaseDR * invoiceAmountToPayRatio);
-                trasladoDR.ImporteDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(trasladoDR.ImporteDR * invoiceAmountToPayRatio);
-            });
-            fullyPatiallyPaidAmountArgs.RetencionDRs.ForEach(retencionDR =>
-            {
-                retencionDR.BaseDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(retencionDR.BaseDR * invoiceAmountToPayRatio);
-                retencionDR.ImporteDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(retencionDR.ImporteDR * invoiceAmountToPayRatio);
-            });
-        }
 
         private static decimal GetinvoiceAmountToPayRatio(decimal totalInvoiceAmount, decimal invoiceAmountToPay)
         {
