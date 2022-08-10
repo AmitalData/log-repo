@@ -88,7 +88,7 @@ export class EditRoleFeaturesComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetSelectedAndUnselectedRoleFeatures(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            
+
             if (myResponse.HasError) {
                 this.BuildCollections();
                 this.CurrentSession.StopBusyIndicator();
@@ -100,15 +100,17 @@ export class EditRoleFeaturesComponent {
                 this.Build();
                 return;
             }
-            
+
             if (!this.IsCustomRole) {
                 this.allFeatures = loadedFeatures;
                 this.Build();
+                return;
             }
-             this.myDomainService.GetAllowedFeaturesForRole(this.EntityPM.ParentRoleId).subscribe(roleFeatures=>{
-                if(roleFeatures.HasError){
+
+            this.myDomainService.GetAllowedFeaturesForRole(this.EntityPM.ParentRoleId).subscribe(roleFeatures => {
+                if (roleFeatures.HasError) {
                     this.Build();
-                    return ;
+                    return;
                 }
                 var parentRoleFeaturesDectionary = this.GetRoleFeaturesDectionary(roleFeatures.Result);
                 loadedFeatures.forEach(item => {
@@ -117,11 +119,7 @@ export class EditRoleFeaturesComponent {
                     }
                 });
                 this.Build();
-             });
-                
-            
-
-            
+            });
         });
     }
     Build() {

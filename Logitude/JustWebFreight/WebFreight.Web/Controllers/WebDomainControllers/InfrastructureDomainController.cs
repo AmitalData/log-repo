@@ -382,10 +382,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                FeatureQuery featureQuery = new FeatureQuery(tenant);
-                var result = featureQuery.GetAllowedFeaturesForRole(roleId, tenant, authToken.Email);
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+                List<string> allowedPackages = new List<string>();
+                ContactInfo inf = SecurityUtility.GetContactInfo(authToken.Email, tenant);
+                if (inf != null)
+                {
+                    allowedPackages = inf.PackagesCodes;
+                }
 
+                FeatureQuery featureQuery = new FeatureQuery(tenant);
+                var result = featureQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
