@@ -73,15 +73,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
-                bool isFullTextSearch = false;
-
+                
                 var myTenantRepository = new TenantRepository(authToken.Tenant);
                 var myTenant = myTenantRepository.GetSingleTenant(authToken.Tenant);
-
-                if (myTenant != null)
-                {
-                    isFullTextSearch = myTenant.IsFullTextSearchEnabled;
-                }
 
                 var filters = new ApiQueryFilters()
                 {
@@ -147,27 +141,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                 }
 
-                string SearchFilterAsWhere = "";
-                var parameters = new List<SqlParameter>();
-                string loggedUserEmail = authToken.Email;
-                if (isFullTextSearch)
-                {
-                    var SearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
-                    var ShipmentIds = new List<string>();
-                    parameters.Add(new SqlParameter("@Tenant", authToken.Tenant));
-
-                    if (SearchFilter != null)
-                    {
-                        SearchFilterAsWhere = "Id in (SELECT Id FROM Shipments Where Tenant = @p__linq__0 and Contains(SearchFields,@SearchFields))";
-                        parameters.Add(new SqlParameter("@SearchFields", "\"" + SearchFilter.FieldValue + "*\""));
-                        queryOperations.QueryFilterItems.Remove(SearchFilter);
-                    }
-                }
-
                 ShipmentAPiHelper.AddFilters(queryOperations, authToken.Tenant);
                 var shipmentRepository = new ShipmentRepository(authToken.Tenant);
 
-                var currentTenant = new TenantQuery(authToken.Tenant).GetSinglePM(authToken.Tenant);
                 var customfilters = new ShipmentCustomFilter(authToken.Tenant);
                 IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(authToken.Tenant);
                 var MySearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
@@ -263,7 +239,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var response = new ServiceResponse();
 
-                if (newFilters.GetCount && string.IsNullOrEmpty(SearchFilterAsWhere))
+                if (newFilters.GetCount)
                 {
                     response.Count = entityLists.Count();
                 }
@@ -271,46 +247,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Skip(entityLists, () => queryOperations.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
 
-                List<ShipmentList> listQuery;
-                if (isFullTextSearch)
-                {
-                    TraceStringValues MySql;
-                    MySql = IQueryableExtensions.ToTraceString<ShipmentList>(entityLists);
-                    if (!string.IsNullOrEmpty(SearchFilterAsWhere) && MySql.TSQL.ToLower().Contains("where"))
-                    {
-                        var regex = new Regex(Regex.Escape("WHERE"), RegexOptions.IgnoreCase);
-                        MySql.TSQL = regex.Replace(MySql.TSQL, "WHERE " + SearchFilterAsWhere + " AND ", 1);
-
-                        var regex1 = new Regex(Regex.Escape("WHERE [Project1].[row_number] > "), RegexOptions.IgnoreCase);
-                        MySql.TSQL = regex1.Replace(MySql.TSQL, "WHERE [Project1].[row_number] > 0 --", 1);
-                    }
-
-                    foreach (var item in MySql.TSQLParams)
-                    {
-                        parameters.Add(new SqlParameter(item.Name, item.Value));
-                    }
-
-                    IShipmentsContext context = ShipmentsContext.GetContext(authToken.Tenant);
-                    ShipmentsContext activeContext = context.GetActiveDbContext() as ShipmentsContext;
-                    listQuery = activeContext.Database.SqlQuery<ShipmentList>(MySql.TSQL, parameters.ToArray()).ToList();
-                }
-                else
-                {
-                    listQuery = entityLists.ToList();
-                }
-
+                List<ShipmentList> listQuery = listQuery = entityLists.ToList();
+                
                 var service = new ShipmentService(authToken.Tenant);
+
                 service.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
+
                 response.Result = listQuery;
 
-                if (newFilters.GetCount && !string.IsNullOrEmpty(SearchFilterAsWhere))
-                {
-                    response.Count = listQuery.Count();
-                }
+                //var customFieldResolver = new CustomFieldResolver();
 
-                var customFieldResolver = new CustomFieldResolver();
-
-                customFieldResolver.SetCustomFieldsValues("Shipment", authToken.Tenant, listQuery.Cast<object>().ToList());
+                //customFieldResolver.SetCustomFieldsValues("Shipment", authToken.Tenant, listQuery.Cast<object>().ToList());
 
                 var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
@@ -342,7 +289,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpGet]
-        [Route("DigitalShipment/GetEntityEvents")]
+        //[Route("DigitalShipment/GetEntityEvents")] todo: need to add the param. to the route
         public List<TraceEventPM> GetEntityEvents(string entityId, string objectTableName, string cardType, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
