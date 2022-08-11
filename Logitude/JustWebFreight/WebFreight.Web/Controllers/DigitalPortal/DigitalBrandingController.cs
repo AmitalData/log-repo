@@ -9,12 +9,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalBrandingController : ApiController
     {
+        [HttpGet]
+        [Route("DigitalBranding/GetBrandingDataByDomain")]
         public HttpResponseMessage GetBrandingDataByDomain(string domain)
         {
             try
             {
-                BrandingHelper brandingHelper = new BrandingHelper();
+                var brandingHelper = new BrandingHelper();
+
                 BrandingData brandingData = brandingHelper.GetBrandingDataByDomain(domain);
+
                 return Request.CreateResponse(HttpStatusCode.OK, brandingData);
             }
             catch (Exception ex)
