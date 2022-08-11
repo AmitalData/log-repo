@@ -63,13 +63,20 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
             this.EntityPm = args.EntityPm;
         }
 
-        if (this.EntityPm && this.EntityPM.DirectionId != 'C') {
-            this.IsShownCustomerReference3 = !AppTool.IsNullOrEmpty(this.EntityPm.CustomerReference3);
-        }
+        //if (this.EntityPm && this.EntityPM.DirectionId != 'C') {
+        //    this.IsShownCustomerReference3 = !AppTool.IsNullOrEmpty(this.EntityPm.CustomerReference3);
+        //}
     }
 
     CustomerReferenceChanged: boolean = false;
-    
+
+    public get DirectionId() { return this.EntityPm.DirectionId }
+    public set DirectionId(newValue: string) {
+        if (this.EntityPm.DirectionId != newValue) {
+            this.EntityPm.DirectionId = newValue;
+        }
+    }
+
     public get CustomerReference2() { return this.EntityPm.CustomerReference2 }
     public set CustomerReference2(newValue: string) {
         if (this.EntityPm.CustomerReference2 != newValue) {

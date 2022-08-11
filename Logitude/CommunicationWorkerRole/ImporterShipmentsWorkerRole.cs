@@ -692,6 +692,7 @@ namespace CommunicationWorkerRole
                                                             shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                         }
 
+                                                        shipmentAM.ConsigneeReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.ConsigneeReference2);
                                                         shipmentAM.CustomerReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.CustomerReference2);
                                                         //if (TakeDate)
                                                         //{
@@ -935,6 +936,7 @@ namespace CommunicationWorkerRole
                                                             shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                         }
 
+                                                        shipmentAM.ConsigneeReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.ConsigneeReference2);
                                                         shipmentAM.CustomerReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.CustomerReference2);
                                                         //if (TakeDate)
                                                         //{
