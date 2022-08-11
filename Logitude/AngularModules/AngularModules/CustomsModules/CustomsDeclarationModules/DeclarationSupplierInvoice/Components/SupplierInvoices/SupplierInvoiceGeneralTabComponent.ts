@@ -241,7 +241,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
 
     accumulationFeature: any;
-    IsNotForAccumaltionVisibile: boolean = true;
+    IsNotForAccumaltionVisibile: boolean = false;
     IsAccumulationStateVisibile: boolean = false;
     ParentItems: SupplierInvoiceItemPM[];
     ChildrenItems: SupplierInvoiceItemPM[];
