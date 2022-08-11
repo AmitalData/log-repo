@@ -158,6 +158,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.IsAccumulationStateVisibile = true;
             this.IsNotForAccumaltionVisibile = true;
         }
+        else {
+            this.IsNotForAccumaltionVisibile = false;
+        }
         //this.CurrentSession.SubscriptionAdd(
         //this.CurrentSession.SelectInvoiceItemEvent.subscribe((res) => {
         //    var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
@@ -176,7 +179,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         this.initTradeAgreementFilter();
 
- 
+
     }
     ngOnInit() {
         if (this.allowExport) {
@@ -241,7 +244,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
 
     accumulationFeature: any;
-    IsNotForAccumaltionVisibile: boolean = false;
+    IsNotForAccumaltionVisibile: boolean = true;
     IsAccumulationStateVisibile: boolean = false;
     ParentItems: SupplierInvoiceItemPM[];
     ChildrenItems: SupplierInvoiceItemPM[];
@@ -684,7 +687,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.AddModification("104", paymentCounter, "הובלה בפועל");
         } else {
             Freight104.TypeName = "הובלה בפועל"
-           this.AdjustmentsList.Insert(new ModificationItemModel(Freight104, this, "104"));
+            this.AdjustmentsList.Insert(new ModificationItemModel(Freight104, this, "104"));
         }
 
         if (ExtraPayments160 == null) {
@@ -1159,7 +1162,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         this.setAdjustmentsWarning(newValue);
     }
-    
+
     private async setAdjustmentsWarning(incotermCode: string) {
         if (incotermCode) {
             const filters: ApiQueryFilters = new ApiQueryFilters();
@@ -1168,7 +1171,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             filters.addAdditionalFilter("ENGLISHNAME", incotermCode, null, null, "Contains", false, false, false, "Text", false, false);
             filters.addAdditionalFilter("LeadDocumentTypeName", 'הצהרת יצוא', null, null, "Contains", false, false, false, "Text", false, false);
             const incotemrsFileValidationList: IncotemrsFileValidationList[] = await this.logtuideTableDataService.getDataFromService(this.incotemrsFileValidationListService.getByFilters(filters))
-            
+
             this.isInsurance = incotemrsFileValidationList.some(x => x.IsInsurance)
             this.isFreightCharge = incotemrsFileValidationList.some(x => x.IsFreightCharge)
         } else
@@ -1432,7 +1435,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         var confirm = new ConfirmWindow();
 
         confirm.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateAndOverride");
-        confirm.NoButtonText =  TextCodeTranslator.Translate("Customs.Declaration.O.Update");
+        confirm.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Update");
         confirm.ShowNoButton = true;
         confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.UpdateOrOverride"));
         confirm.WindowClosed.subscribe((event: any) => {
@@ -1452,23 +1455,23 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 confirm.Close();
                 for (let item of this.ItemsSource.Collection) {
                     if (item.InvoiceQuantityType == null) {
-        
+
                         if (item.QunatityTypeCode != null) {
                             var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
                             //var s = item.QunatityTypeCode.split('(');
                             //var st = s[1].split(')');
-        
+
                             item.InvoiceQuantityType = s;
                         }
-        
+
                     }
                 }
-        
-                
+
+
             }
 
         });
-        
+
         if (this.ItemsSource.Collection.length == 500) {
 
             var msg = new MessageWindow();
@@ -3030,7 +3033,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             this.WarningVisiblity = false;
             this.OkVisiblity = false;
             this.IsBlueBorderVisibile = false;
- 
+
         }
 
         else if (this.entityPM.CertificatesStatusCode == "1") {
