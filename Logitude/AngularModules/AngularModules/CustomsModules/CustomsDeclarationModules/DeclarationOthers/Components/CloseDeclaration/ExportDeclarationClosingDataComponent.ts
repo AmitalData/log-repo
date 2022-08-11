@@ -311,7 +311,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
         debugger;
-        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שליחת מסר סגירת הצהרה");
+        this.CurrentSession.StartBusyIndicator("שליחת מסר סגירת הצהרה");
         var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.DeclarationId;
@@ -337,7 +337,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             }
             ).catch((err) => {
 
-                this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.ValidationErrors.push(err);
                this.FillValidationErrors("Errors");
             });
@@ -378,7 +378,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     FillValidationErrors(title: string) {
 
 
-        this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
