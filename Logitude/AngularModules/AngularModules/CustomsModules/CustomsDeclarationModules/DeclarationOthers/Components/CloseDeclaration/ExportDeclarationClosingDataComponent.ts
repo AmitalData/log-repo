@@ -102,12 +102,12 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         this.EntityPM.IsDirty = false;
                     }
 
-                if(this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O'){
-                    this.FinalCargoTypeCode = '37'
-                    this.FinalManifestNumber = ''; 
-                    this.FinalSecondCargoId = '';
-                    this.FinalThirdCargoId = '';
-                }
+                    if(this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O'){
+                        this.FinalCargoTypeCode =this.FinalCargoTypeCode==null ? '37':this.FinalCargoTypeCode
+                        this.FinalManifestNumber =this.FinalManifestNumber==null? '':this.FinalManifestNumber; 
+                        this.FinalSecondCargoId =this.FinalSecondCargoId==null? '':this.FinalSecondCargoId;
+                        this.FinalThirdCargoId = this.FinalThirdCargoId==null?'':this.FinalThirdCargoId;
+                    }
                 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A' && !AppTool.IsNullOrEmpty(this.EntityPM.MAIN_AWB)) {
                     this.EntityPM.IsDirty = true;
