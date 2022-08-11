@@ -34,6 +34,7 @@ using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Threading.Tasks;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -1243,7 +1244,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         try
                         {
-                            DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
+                            DateTime requestDate = DateTime.Now.AddMinutes(5);// CheckIfBlockTime(declarationPM, declarationPaymentPM);
                             declarationPaymentPM.PaymentDate = DateTime.Now;
                             declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
 
@@ -1272,7 +1273,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                                 else
                                 {
-                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, DateTime.Now.AddMinutes(10));
                                 }
 
                                 scopeNewCRS.Complete();
