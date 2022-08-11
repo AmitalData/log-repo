@@ -88,11 +88,13 @@ export class DecCargoSplitConComponent extends BaseComponent {
     ParentCargoConsinmentItemList: any;
     decCargoSplitConExtendedPMService: DecCargoSplitConExtendedPMService;
     DeclarationDirection: string;
+    IsDataFromFile: boolean=true;
     declarationExtendedListService: DeclarationExtendedListService;
     DecCargoSplitConStatusVisibility: boolean;
 
-    RefreshTabs(direction) {
+    RefreshTabs(direction , isDataFromFile) {
         this.DeclarationDirection = direction;
+        this.IsDataFromFile= isDataFromFile;
         this.PreceduralFilterItems = new ApiQueryFilters();
         if (this.DeclarationDirection == "E") {
             this.PreceduralFilterItems.addAdditionalFilter("Code", "1000000,8000000,4000000", null, null, "InListExact", false, false, false, "string", false, true);
@@ -101,7 +103,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
             this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean", false, false);
         }
         this.SetDisplayFields();
-        this.setParentCargoConsinmentItemList(false)
+        this.setParentCargoConsinmentItemList(false);
         
     }
 
@@ -180,10 +182,15 @@ export class DecCargoSplitConComponent extends BaseComponent {
 
     }
     setParentCargoConsinmentItemList(isInsert:boolean=true) {
+
+        if(!(this.EntityPM?.EntityParentPM.direction !="E" &&  this.DeclarationDirection !="E" && this.declarationCargoSplitPM.Direction!="E"))
+            {
+
+        this.ItemsList.Clear();
         if (this.declarationCargoSplitPM != null) {
             this.declarationExtendedListService = new DeclarationExtendedListService();
             this.declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.declarationCargoSplitPM.CustomFileNo).subscribe((response: any) => {
-                if (response.Result != null) {
+                if (response.Result != null &&  this.IsDataFromFile) {
 
                     this.DeclarationDirection = response.Result.Direction;
                     this.decCargoSplitConExtendedPMService = new DecCargoSplitConExtendedPMService();
@@ -191,16 +198,16 @@ export class DecCargoSplitConComponent extends BaseComponent {
                         if (responseCon != null) {
                             this.ParentCargoConsinmentItemList = responseCon.Result;
 
-                            if (!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitConsItems) && !isInsert && this.ItemsList.Length == 0 ) {
+                            if (!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitConsItems) && !isInsert && this.ItemsList.Length == 0  ) {
                                 this.AddItem();
-                            }
+                            } 
                         }
                     });
                     this.SetDisplayFields();
                 }
             });
 
-        }
+        }}
         //this.PreceduralFilterItems = new ApiQueryFilters();
         this.IsClosed = this.declarationCargoSplitPM.IsClosed;
         this.IsDisplayOnly = this.disabeld;
@@ -528,7 +535,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
         //});
 
         //this.CurrentSession.CurrentEditComponent.SaveChanges();
-
+ 
     }
 
     ParentCargoConsinmentItemSelectionChanged(currentItem, selectedValue) {
@@ -551,7 +558,8 @@ export class DecCargoSplitConComponent extends BaseComponent {
             windowArgs.DecCargoSplitConsItemPM = item.EntityPM;
             windowArgs.IsDisplayOnly = this.IsDisplayOnly;
             windowArgs.DeclarationCargoSplitPM = this.declarationCargoSplitPM;
-            windowArgs.DeclarationDirection = this.DeclarationDirection
+            windowArgs.DeclarationDirection = this.DeclarationDirection;
+            windowArgs.IsDataFromFile = this.IsDataFromFile;
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ConsignmentPackages");
 
             var logWindow = new LogitudeWindow();
