@@ -270,6 +270,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpGet]
+        [Route("DigitalShipment/GetShipmentActiveStatuses")]
         public HttpResponseMessage GetShipmentActiveStatuses()
         {
             try
@@ -289,7 +290,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpGet]
-        //[Route("DigitalShipment/GetEntityEvents")] todo: need to add the param. to the route
+        [Route("DigitalShipment/GetEntityEvents")]
         public List<TraceEventPM> GetEntityEvents(string entityId, string objectTableName, string cardType, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
@@ -316,6 +317,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpGet]
+        [Route("DigitalShipment/GetPartnersByFilters")]
         public HttpResponseMessage GetPartnersByFilters([FromUri] DigitalApiQueryFilters filters)
         {
             try

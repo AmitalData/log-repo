@@ -12,7 +12,6 @@ using System.Text;
 using System.Transactions;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Params;
-using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -20,7 +19,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         IGlobalContext globalContext;
         private string templateName;
-        private TenantManagementPM tenantManagementPM { get; set; }
 
         public DigitalPortalResetUserPasswordService()
         {
@@ -30,18 +28,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         public void ResetUserPassword(ResetPasswordParameters resetPasswordParameters, string brandingTenant)
         {
             templateName = resetPasswordParameters.TemplateName;
-            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
+            var tenantManagementQuery = new TenantManagementQuery(0);
             if (!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
-                tenantManagementPM = tenantManagementQuery.GetSinglePM(Int32.Parse(resetPasswordParameters.BrandingTenant));
+            {
+                TenantManagementPM = tenantManagementQuery.GetSinglePM(int.Parse(resetPasswordParameters.BrandingTenant));
+            }
 
             string reqNumber = GetResetRequestNumber();
             EmailMessageParams emailMessageParams = GetEmailMessageParams();
             TenantManagmentPrivateLabelsPM privatelabel = null;
-
-            string customerURL = tenantManagementPM?.CustomerURL;
+            string customerURL = TenantManagementPM?.CustomerURL;
             string path = GetFogotPasswordPagePath(resetPasswordParameters, customerURL, reqNumber);
 
-            EmailBodyArgs emailBodyArgs = new EmailBodyArgs
+            var emailBodyArgs = new EmailBodyArgs
             {
                 PagePath = path,
                 ReqestNumber = reqNumber,
@@ -49,18 +48,24 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             };
 
             EmailBodyResults emailBodyResults = BuildEmailBody(resetPasswordParameters, emailMessageParams, emailBodyArgs);
-            EmailCommunicationLogBuilderArgs emailCommunicationLogBuilderArgs = new EmailCommunicationLogBuilderArgs
+            
+            var emailCommunicationLogBuilderArgs = new EmailCommunicationLogBuilderArgs
             {
                 ResetPasswordParameters = resetPasswordParameters,
                 Result = emailBodyResults.Result,
                 AppMobileEnvironment = resetPasswordParameters.AppEnvironment,
             };
+
             CreateEmailCommunicationLog(emailBodyResults.HtmlTemplate, emailCommunicationLogBuilderArgs, privatelabel);
         }
 
+        #region private 
+
+        private TenantManagementPM TenantManagementPM { get; set; }
+
         private string GetResetRequestNumber()
         {
-            Random random = new Random();
+            var random = new Random();
             string randomNumber = random.Next().ToString().Substring(0, 7);
             string reqNumber = Guid.NewGuid().ToString("N") + randomNumber;
             return reqNumber;
@@ -68,8 +73,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         private EmailMessageParams GetEmailMessageParams()
         {
-            string tenantName = tenantManagementPM != null ? tenantManagementPM.Name : "";
-            string siteUri = tenantManagementPM != null ? tenantManagementPM.CustomerURL : "";
+            string tenantName = TenantManagementPM != null ? TenantManagementPM.Name : "";
+            string siteUri = TenantManagementPM != null ? TenantManagementPM.CustomerURL : "";
             string environment = "Logitude";
             string senderEmail = "no-reply@" + siteUri;
             string teamName = "Digital Portal Team";
@@ -94,12 +99,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 Email = resetPasswordParameters.Email
             };
 
-           
+
             globalContext.PasswordResetRequests.Add(resetRequest);
             globalContext.SaveChanges();
 
-            MessageArgs result = new MessageArgs();
-            StringBuilder HtmlTemplate = new StringBuilder();
+            var result = new MessageArgs();
+            var HtmlTemplate = new StringBuilder();
+
             if (!resetPasswordParameters.IsMobile)
             {
                 if (!string.IsNullOrEmpty(resetPasswordParameters.TemplateName) && !string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
@@ -108,7 +114,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
                 else if (!string.IsNullOrEmpty(emailBodyArgs.BrandingTenant))
                 {
-                    var documenttype = GetDocumentTypeForResetPassword(Int32.Parse(emailBodyArgs.BrandingTenant));
+                    var documenttype = GetDocumentTypeForResetPassword(int.Parse(emailBodyArgs.BrandingTenant));
                     if (documenttype != null)
                     {
                         result = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -122,31 +128,39 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 HtmlTemplate.Append(result.HtmlTemplate);
+
                 if (string.IsNullOrEmpty(result.HtmlTemplate))
                 {
-                    EmailBodyParams emailBodyParams = new EmailBodyParams
+                    var emailBodyParams = new EmailBodyParams
                     {
                         EmailMessageParams = emailMessageParams,
                         PagePath = emailBodyArgs.PagePath,
                         Email = resetPasswordParameters.Email,
                     };
+
                     BuildForgotPasswordEmailBody(HtmlTemplate, emailBodyParams);
                 }
             }
-            
-            EmailBodyResults emailBodyResults = new EmailBodyResults
+
+            var emailBodyResults = new EmailBodyResults
             {
                 HtmlTemplate = HtmlTemplate,
                 Result = result,
             };
+
             return emailBodyResults;
         }
 
         private void CreateEmailCommunicationLog(StringBuilder HtmlTemplate, EmailCommunicationLogBuilderArgs emailCommunicationLogBuilderArgs, TenantManagmentPrivateLabelsPM privatelabel)
         {
             EmailParameters emailParameters = BuildEmailCommunicationLog(emailCommunicationLogBuilderArgs, privatelabel);
-            GlobalContact callContact = globalContext.GlobalContacts.Where(m => m.Email == emailCommunicationLogBuilderArgs.ResetPasswordParameters.Email && m.InActive == false && (m.IsUser == true || m.InternetAccess == true)).FirstOrDefault();
-            EmailCommunicationParams emailParams = new EmailCommunicationParams()
+            GlobalContact callContact = globalContext.GlobalContacts
+                                                     .Where(m => m.Email == emailCommunicationLogBuilderArgs.ResetPasswordParameters.Email
+                                                                 && m.InActive == false
+                                                                 && (m.IsUser == true || m.InternetAccess == true))
+                                                     .FirstOrDefault();
+
+            var emailParams = new EmailCommunicationParams()
             {
                 Subject = emailParameters.Subject,
                 From = emailParameters.From,
@@ -165,23 +179,27 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         private string GetFogotPasswordPagePath(ResetPasswordParameters resetPasswordParameters, string siteUri, string reqNumber)
         {
             string path = siteUri + @"/resetForgotPassword?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber;
+
             if (!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
-                path += "&tenant=" + Int32.Parse(resetPasswordParameters.BrandingTenant);
+            {
+                path += "&tenant=" + int.Parse(resetPasswordParameters.BrandingTenant);
+            }
+
             return path;
         }
 
         private string AddBrandingTenantForPagePath(string pagePath, string brandingTenant)
         {
             string path = pagePath;
-            path += "&tenant=" + Int32.Parse(brandingTenant);
+            path += "&tenant=" + int.Parse(brandingTenant);
             return path;
         }
 
         private EmailParameters BuildEmailCommunicationLog(EmailCommunicationLogBuilderArgs emailCommunicationLogBuilderArgs, TenantManagmentPrivateLabelsPM privatelabel)
         {
-            string tenantName = tenantManagementPM != null ? tenantManagementPM.Name : "";
+            string tenantName = TenantManagementPM != null ? TenantManagementPM.Name : "";
             string envir = "Digital Portal";
-            string fromemail = "no-reply@" + tenantManagementPM.CustomerURL;
+            string fromemail = "no-reply@" + TenantManagementPM.CustomerURL;
             string subject = $"Your {tenantName} {envir} Password";
 
             if (!string.IsNullOrEmpty(emailCommunicationLogBuilderArgs.Result.HtmlTemplate))
@@ -189,7 +207,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 subject = !string.IsNullOrEmpty(emailCommunicationLogBuilderArgs.Result.Subject) ? emailCommunicationLogBuilderArgs.Result.Subject : subject;
                 fromemail = !string.IsNullOrEmpty(emailCommunicationLogBuilderArgs.Result.From) ? emailCommunicationLogBuilderArgs.Result.From : fromemail;
             }
-            EmailParameters emailParameters = new EmailParameters
+
+            var emailParameters = new EmailParameters
             {
                 Subject = subject,
                 From = fromemail,
@@ -219,25 +238,34 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<br /><span  style='font-size:13px;text-align:left'>Please do not reply directly to this message</span>");
             HtmlTemplate.Append("</P>");
+
             if (!emailBodyParams.EmailMessageParams.IsLogBox && LogitudeSettings.WorkEnvironment != "cloud")
             {
                 HtmlTemplate.Append("<p style='font-size:14px;text-align:left'>" + emailBodyParams.EmailMessageParams.Environment + " is the first true online Freight Forwarding software solution developed specifically for the cloud<br/> <img width='258' height='101' src='cid:logo0' /></p>");
             }
+
             HtmlTemplate.Append("");
         }
 
         private DocumentType GetDocumentTypeForResetPassword(int tenant)
         {
             DocumentType documentType = null;
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+
+            using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                 documentType = documentTypeRepository.GetDocumentTypeByCode("SLCRP", tenant);
                 scope.Complete();
             }
-            if (documentType != null && !string.IsNullOrEmpty(documentType.DocumentTypeDefaultHTMLTemplateId)) return documentType;
 
-            else return null;
+            if (documentType != null && !string.IsNullOrEmpty(documentType.DocumentTypeDefaultHTMLTemplateId))
+            {
+                return documentType;
+            }
+
+            return null;
         }
+
+        #endregion private 
     }
 }
