@@ -320,6 +320,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
                         if (this.EntityPM.Direction == "E") {
                             button.DisplayText = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
+                            button.LabelTextCodeCode = "";
+                        
                         }
                     }
                     if (button.EventCode == "Forms") {

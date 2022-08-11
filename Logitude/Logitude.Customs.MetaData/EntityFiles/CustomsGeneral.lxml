@@ -126,6 +126,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -195,6 +196,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -5451,6 +5453,9 @@
       Code="&quot;Customs.General.O.HappinessConstraints&quot;"
       DefaultText="&quot;happiness constraint&quot;"
       LocalDefaultText="&quot;אילוץ אושר&quot;"
+      Code="&quot;Customs.General.O.RequiredFieldsOrAlert&quot;"
+      DefaultText="&quot;Required Fields Or Alert&quot;"
+      LocalDefaultText="&quot;שדות חובה/התראה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
