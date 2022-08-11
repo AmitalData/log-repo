@@ -393,17 +393,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return myResult;
         }
 
-        public List<FeaturePM> GetAllowedFeaturesForRole(string roleId, int tenant, string email)
-        {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contact = contactQuery.GetContactByEmailOnly(email, tenant);
-            if (contact == null)
-                throw new Exception("User not found");
-            var allowedPackages = GetAllPackagesCodes(contact.Id, tenant, false);
-            var features = GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
-            return features;
-        }
-
         public List<FeaturePM> GetAllowedFeaturesForRole(string myRoleId, List<string> allowedPackages, int tenant)
         {
             List<FeaturePM> myResult = new List<FeaturePM>();
