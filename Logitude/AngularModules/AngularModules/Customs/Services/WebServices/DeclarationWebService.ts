@@ -1911,6 +1911,22 @@ export class DeclarationWebService {
         }
     }
 
+    SendPRIVEventPrivacyProtection(declarationID:string,tenant:number,customFileNo:string){
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/SendPRIVEventPrivacyProtection/?tenant=" + tenant + "&declarationId=" + declarationID + "&customFileNo=" + customFileNo, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var res = response;
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
 
     MapJsonToCorrectionView(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationCorrectionView = null) {
 
