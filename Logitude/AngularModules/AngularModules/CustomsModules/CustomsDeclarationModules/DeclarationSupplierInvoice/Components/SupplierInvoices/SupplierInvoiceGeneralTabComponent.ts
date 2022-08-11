@@ -125,6 +125,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     IsValueForCustomsOnlyVisible: boolean = false;
     isInsurance: boolean = false;
     isFreightCharge: boolean = false;
+    TooltipCopy: string 
+    TooltipCertificate: string;
+    TooltipCar: string;
+    TooltipEdit: string;
+
 
     old_currency;
     old_amount;
@@ -181,6 +186,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
     ngOnInit() {
         if (this.allowExport) {
+            this.TooltipCopy = "שכפל שורה";
+            this.TooltipCertificate = "אישורים"
+            this.TooltipCar = "נתוני רכב";
+            this.TooltipEdit = "עריכת פריט";
+
             if (AppTool.IsNullOrEmpty(this.BuyerName) && this.AccountTypeCode != "I04")
                 this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
             else
@@ -1437,7 +1447,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         confirm.ShowNoButton = true;
         confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.UpdateOrOverride"));
         confirm.WindowClosed.subscribe((event: any) => {
-            debugger
+
             if (confirm.Yes) {
                 confirm.Close();
                 for (let item of this.ItemsSource.Collection) {
@@ -3053,7 +3063,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             this.WarningVisiblity = true;
             this.IsBlueBorderVisibile = true;
         }
-
 
         if (this.entityPM.ItemAdditionalStatus) {
             this.ItemAdditionalStatusVisibility = true;
