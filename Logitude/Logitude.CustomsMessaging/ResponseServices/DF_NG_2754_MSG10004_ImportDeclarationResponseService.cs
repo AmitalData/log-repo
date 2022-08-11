@@ -1244,7 +1244,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         try
                         {
-                            DateTime requestDate = DateTime.Now.AddMinutes(5);// CheckIfBlockTime(declarationPM, declarationPaymentPM);
+                            DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
                             declarationPaymentPM.PaymentDate = DateTime.Now;
                             declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
 
@@ -1269,11 +1269,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                     requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
                                     requestParams2755.FutureSendDateTime = requestDate;
-                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+                                    Task.Run(async () => {
+                                        await Task.Delay(TimeSpan.FromSeconds(30));
+                                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+                                    });
                                 }
                                 else
                                 {
-                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, DateTime.Now.AddMinutes(10));
+                                    Task.Run(async () => {
+                                        await Task.Delay(TimeSpan.FromSeconds(30));
+                                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                    });
                                 }
 
                                 scopeNewCRS.Complete();
