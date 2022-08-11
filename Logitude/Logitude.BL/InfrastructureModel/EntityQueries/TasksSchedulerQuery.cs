@@ -512,7 +512,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
 
             bool result = (from a in repository.context.TasksSchedulers
-                             where a.Tenant == tenant && a.EntityId == entityId
+                             where a.Tenant == tenant && a.EntityId == entityId && !a.InActive
                              select a).Any();
 
             return result;
