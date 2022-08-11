@@ -119,9 +119,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 							then ShipperCardForForward.EnglishName	
 						when ForwardingShipmentTable.DirectionId = 'I' AND ForwardingShipmentTable.ShipperId IS NULL 
 							then ForwardingShipmentTable.ShipperName end 
-					) as ForwardingShipperName , 
-					ForwardingShipmentTable.CustomerReference1 as ForwardingCustomerReference1 , 
-					ForwardingShipmentTable.CustomerReference2 as ForwardingCustomerReference2 , 
+					) as ForwardingShipperName ,
+					ForwardingShipmentTable.CustomerReference3 as ForwardingCustomerReference3 ,  
 					ForwardingShipmentTable.FirstPickupETD as ForwardingPickupEstimationDate , 
 					ForwardingShipmentTable.WarehouseLegExpectedEntryDate as ForwardingFromWarehouseEstimationDate , 
 					ForwardingShipmentTable.WarehouseLegRemarks as ForwardingFromWarehouseNotes , 
@@ -199,8 +198,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 							then CustomShipmentTable.ShipperName end
 					) as ForwardingShipperName , 
 					CustomShipmentTable.ShipperName as CustomShipperName , 
-					CustomShipmentTable.CustomerReference1 as CustomCustomerReference1 , 
-					CustomShipmentTable.CustomerReference2 as CustomCustomerReference2 , 
+					CustomShipmentTable.CustomerReference3 as CustomCustomerReference3 , 
 					CustomShipmentTable.FirstPickupETD as CustomPickupEstimationDate , 
 					CustomShipmentTable.WarehouseLegExpectedEntryDate as CustomFromWarehouseEstimationDate , 
 					CustomShipmentTable.WarehouseLegRemarks as CustomFromWarehouseNotes , 

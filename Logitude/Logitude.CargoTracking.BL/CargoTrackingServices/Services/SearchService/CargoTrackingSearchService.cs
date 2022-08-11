@@ -45,15 +45,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     .Builder()
                     .TableRow(tableRow)
                     .DataTable(bulkDataPreperation.InnerDataTable)
-                    .CoulmnName("CustomerReference1")
-                    .Delimiter(',')
-                    .Build());
-
-                AddSplittedData(new SplittedDataArguments
-                    .Builder()
-                    .TableRow(tableRow)
-                    .DataTable(bulkDataPreperation.InnerDataTable)
-                    .CoulmnName("CustomerReference2")
+                    .CoulmnName("CustomerReference3")
                     .Delimiter(',')
                     .Build());
 
@@ -145,16 +137,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 .Builder()
                 .TableRow(tableRow)
                 .DataTable(bulkDataPreperation.InnerDataTable)
-                .CoulmnName("ForwardingCustomerReference1")
-                .Delimiter(',')
-                .ReferenceFromShipmentId(GetStringValue(tableRow["ForwardingIdForCustom"]))
-                .Build());
-
-            AddSplittedData(new SplittedDataArguments
-                .Builder()
-                .TableRow(tableRow)
-                .DataTable(bulkDataPreperation.InnerDataTable)
-                .CoulmnName("ForwardingCustomerReference2")
+                .CoulmnName("ForwardingCustomerReference3")
                 .Delimiter(',')
                 .ReferenceFromShipmentId(GetStringValue(tableRow["ForwardingIdForCustom"]))
                 .Build());
