@@ -43,7 +43,18 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
+        public string GetLastAmendmentIdByCustomFileNo(string customFileNo, int tenant)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
+            var res = (from a in context.Declarations
+                    where a.CustomFileNo == customFileNo 
+                    && a.AmendmentDontDisplayInList == false
+                    && a.Tenant == tenant
+                    select a.Id);
+
+            return res.FirstOrDefault();
+        }
 
         public Declaration GetDeclarationNotAmendmentDontDisplayInList(string id, string amendmentOriginalDeclartation, int tenant)
         {
