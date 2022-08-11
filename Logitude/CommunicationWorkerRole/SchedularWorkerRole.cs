@@ -38,7 +38,7 @@ namespace CommunicationWorkerRole
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "SchedularWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
-            CheckandRescheduleMissingTasks();
+            //CheckandRescheduleMissingTasks();
             StartThreadAliveTesterThread();
             ConnectClient();
             return base.OnStart();
@@ -68,22 +68,32 @@ namespace CommunicationWorkerRole
             List<TasksSchedulerPM> InprogressTasks = TasksSchedulerQuery.GetAllInprogressTasksSchedulerPMs();
             foreach (var Task in InprogressTasks)
             {
-                //var x = Process.GetCurrentProcess().Threads;
-                var TaskThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
-                if (TaskThread == null || !TaskThread.IsAlive)
-                {
-                    //TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
-                    Task.Status = null;
-                    Task.Version = Task.Version + 1;
-                    SchedulerHelper SchedulerHelper = new SchedulerHelper();
-                    SchedulerHelper.AddSchedulerQueue(Task);
-                    var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
-                    LogInfoToDB(Msg, Task);
-                    //service.Update(Task);
-                }
-
+                RescheduleTask(Task);
             }
-            //Thread.Sleep(new TimeSpan(0, 1, 0));
+        }
+
+        private void RescheduleTask(TasksSchedulerPM Task)
+        {
+            DateTime taskLastRunStartTimeUTC = Task.LastRunStartTimeUTC != null ? (DateTime)Task.LastRunStartTimeUTC : DateTime.UtcNow;
+            TimeSpan taskElapsedRunningTime = DateTime.UtcNow - taskLastRunStartTimeUTC;
+            const int maxTaskElapsedRunningTime = 10;
+            if (taskElapsedRunningTime.Minutes < maxTaskElapsedRunningTime)
+            {
+                return;
+            }
+
+            var TaskThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
+            if (TaskThread != null && TaskThread.IsAlive)
+            {
+                return;
+            }
+
+            Task.Status = null;
+            Task.Version = Task.Version + 1;
+            SchedulerHelper SchedulerHelper = new SchedulerHelper();
+            SchedulerHelper.AddSchedulerQueue(Task);
+            var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
+            LogInfoToDB(Msg, Task);
         }
 
         public void LogInfoToDB(string Message, TasksSchedulerPM Task)
