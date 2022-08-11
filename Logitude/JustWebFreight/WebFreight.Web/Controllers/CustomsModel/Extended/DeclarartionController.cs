@@ -89,6 +89,26 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+          
+        public HttpResponseMessage GetLastAmendmentByCustomFileNo(string customFileNo)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                
+                string id = new DeclarationRepository(customContext).GetLastAmendmentIdByCustomFileNo(customFileNo, authToken.Tenant);
+                DeclarationList declaration = new DeclarationListQueryService(customContext).GetSingle(id);
+
+                return Request.CreateResponse(HttpStatusCode.OK, declaration);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetSingleDeclarationByNumber(string declarationByNumber
             , int tenant
