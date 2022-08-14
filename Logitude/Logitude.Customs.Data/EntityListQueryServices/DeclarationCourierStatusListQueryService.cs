@@ -128,6 +128,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   DeclarationStatusTypeName = d.DeclarationStatusType == null ? null : d.DeclarationStatusType.LocalName,
                                                                   HatraDate = d.HatraDate,
                                                                   ImporterCode = d.ImporterCode,
+                                                                  CasualImporterTel = d.CasualImporterTel,
+                                                                  ImporterAddress = d.ImporterAddress,
                                                                   ImporterName = d.ImporterName != null ? d.ImporterName : (d.ImporterId != null ? d.Importer.FullName : d.ImporterName),
                                                                   SortedImporterCode = d.ImporterCode,
                                                                   CustomerName = d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName,
