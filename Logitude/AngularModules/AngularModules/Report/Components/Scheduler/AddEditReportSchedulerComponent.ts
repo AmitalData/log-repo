@@ -226,7 +226,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
                     EntityId: this.BIReportEntity['Id'],
                     IsScheduler: true,
                     IsNewScheduler: this.IsNew,
-                    SavedFilterItemsData: this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData?.FilterItems,
+                    SavedFilterItemsData: this.PageChild_RETASK?.EntityPM?.SchedulerDetailsData?.ReportDetails?.DWQueryFilterData,
                     ParentComponent: this,
                 });
                 this.CurrentSession.StopBusyIndicator();
