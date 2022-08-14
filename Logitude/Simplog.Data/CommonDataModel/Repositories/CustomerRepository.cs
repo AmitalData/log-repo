@@ -30,6 +30,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return context.Customers
                           .Include("Card")
+                          .Include("SalesmanUser")
                           .Include("SalesmanUser.Contact")
                           .Include("AccountManagerUser.Contact")
                           .Include("Card.SharedLogisticsInvitationStatus")
@@ -41,13 +42,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.Customers
                                           .Include("Card")
+                                          .Include("SalesmanUser")
                                           .Include("SalesmanUser.Contact")
                                           .Include("AccountManagerUser.Contact")
                                           .Include("Card.SharedLogisticsInvitationStatus")
                                           .Include("Rank")
                                           .Include("Collector.Contact")
                                           .Include("Classifier.Contact")
-                    where record.Tenant == tenant 
+                                          where record.Tenant == tenant 
                     select record);
         }
 
@@ -63,6 +65,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = context.Customers
                                         .Include("Card")
+                                        .Include("SalesmanUser")
                                         .Include("SalesmanUser.Contact")
                                         .Include("AccountManagerUser.Contact")
                                         .Include("Card.SharedLogisticsInvitationStatus")
@@ -86,6 +89,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 {
                     entity = context.Customers
                                     .Include("Card")
+                                    .Include("SalesmanUser")
                                     .Include("SalesmanUser.Contact")
                                     .Include("AccountManagerUser.Contact")
                                     .Include("Card.SharedLogisticsInvitationStatus")
@@ -155,6 +159,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = context.Customers
                                         .Include("Card")
+                                        .Include("SalesmanUser")
                                         .Include("SalesmanUser.Contact")
                                         .Include("AccountManagerUser.Contact")
                                         .Include("Card.SharedLogisticsInvitationStatus")
@@ -177,6 +182,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 {
                     entity = context.Customers
                                     .Include("Card")
+                                    .Include("SalesmanUser")
                                     .Include("SalesmanUser.Contact")
                                     .Include("AccountManagerUser.Contact")
                                     .Include("Card.SharedLogisticsInvitationStatus")
@@ -260,6 +266,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = context.Customers
                                         .Include("Card")
+                                        .Include("SalesmanUser")
                                         .Include("SalesmanUser.Contact")
                                         .Include("AccountManagerUser.Contact")
                                         .Include("Card.SharedLogisticsInvitationStatus")
@@ -284,6 +291,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 {
                     entity = context.Customers
                                     .Include("Card")
+                                    .Include("SalesmanUser")
                                     .Include("SalesmanUser.Contact")
                                     .Include("AccountManagerUser.Contact")
                                     .Include("Card.SharedLogisticsInvitationStatus")
