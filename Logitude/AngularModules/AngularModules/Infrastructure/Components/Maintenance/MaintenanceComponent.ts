@@ -330,7 +330,7 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Ocean Insights Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-             if (FeatureLocator.HasFeaturePermession("General", "CONTAINERTRACKINGSETTINGS") && SessionLocator.Tenant == 0) {
+            if (FeatureLocator.HasFeaturePermession("General", "CONTAINERTRACKINGSETTINGS") && SessionLocator.Tenant == 0) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
                 item.Icon = "Settings"
@@ -338,10 +338,7 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "ContainerTrackingProvider";
                 item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "ContainerTrackingProvider")[0].Id
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-
-
-             }
-
+            }
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemUserPassword")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
@@ -437,7 +434,6 @@ export class MaintenanceComponent {
                 item.IndexOfOrder = 5;
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.ContainerSettings")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
@@ -447,10 +443,8 @@ export class MaintenanceComponent {
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
 
-           var item = this.AddCustomFieldsMenu(item);
-        
+           var item = this.AddCustomFieldsMenu(item);     
 
-         
             var item1 = new MenusTablePM();
             item1.CategoryTypeCode = "CMS";
             item1.Icon = "Settings"
@@ -508,6 +502,15 @@ export class MaintenanceComponent {
                 item.Icon = "Settings"
                 item.Code = "SUPM";
                 item.ObjectTableName = "Support Mail Boxes";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+
+            if (SessionInfo.LoggedUserPM.IsCustomerCare && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] != null) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "VIZN";
+                item.ObjectTableName = "Vizion - Pilot Customer";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
         }
@@ -1538,6 +1541,15 @@ export class MaintenanceComponent {
                     logWindow.Show('./CommonModules/CommonPartners/Components/Maintenance/UploadPartnersComponent');
                     break;
                 }
+
+                case "VIZN": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = "Vizion - Pilot Customers";
+                    logitudeWindow.Width = 1000;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/Vizion/VizionAutomaticRequestComponent');
+                    break;
+                } 
 
                 default: {
                     if (item.ObjectTableId) {

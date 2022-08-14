@@ -42,7 +42,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
         this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
-        this.IsVisionRequestStatus = FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus");
+        this.IsVisionRequestStatus = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] == null && FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus");
         this.NotesSharedWithCustomerActivated = SessionLocator.TenantPM.IsSharedLogisticsActivated && FeatureLocator.HasFeaturePermession("Shipment", "NOTESSHAREDWITHCUSTOMER");
         
         this.EntityPM = this.entityArgs.EntityPM;

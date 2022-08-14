@@ -26,6 +26,7 @@ import { NewFeatureToggleComponent } from './Components/FeatureToggle/NewFeature
 import { OceanInsightsSettingsComponent } from './Components/OceanInsightsSetting/OceanInsightsSettingsComponent';
 import { NewImageLibraryComponent } from './Components/ImageLibrary/NewImageLibraryComponent';
 import { ImageLibraryGeneralTabComponent } from './Components/ImageLibrary/ImageLibraryGeneralTabComponent';
+import { VizionAutomaticRequestComponent } from './Components/Vizion/VizionAutomaticRequestComponent';
 
 export const Components =
     [
@@ -57,6 +58,7 @@ export const Components =
         OceanInsightsSettingsComponent,
         NewImageLibraryComponent,
         ImageLibraryGeneralTabComponent,
+        VizionAutomaticRequestComponent,
     ];
 
 export class ModuleDeclarations {
@@ -93,6 +95,7 @@ export class ModuleDeclarations {
             case "OceanInsightsSettingsComponent": { myResult = OceanInsightsSettingsComponent; break; }
             case "NewImageLibraryComponent": { myResult = NewImageLibraryComponent; break; }
             case "ImageLibraryGeneralTabComponent": { myResult = ImageLibraryGeneralTabComponent; break; }
+            case "VizionAutomaticRequestComponent": { myResult = VizionAutomaticRequestComponent; break; }
         }
 
         return myResult;
