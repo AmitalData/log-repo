@@ -12,6 +12,7 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -74,10 +75,8 @@ namespace CommunicationWorkerRole
 
         private void RescheduleTask(TasksSchedulerPM Task)
         {
-            DateTime taskLastRunStartTimeUTC = Task.LastRunStartTimeUTC != null ? (DateTime)Task.LastRunStartTimeUTC : DateTime.UtcNow;
-            TimeSpan taskElapsedRunningTime = DateTime.UtcNow - taskLastRunStartTimeUTC;
-            const int maxTaskElapsedRunningTime = 10;
-            if (taskElapsedRunningTime.Minutes < maxTaskElapsedRunningTime)
+            string taskExecutedByServerName = !string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName + '/' + LogitudeSettings.WorkerRoleName : Task.ExecutedByServerName;
+            if(Task.ExecutedByServerName != taskExecutedByServerName)
             {
                 return;
             }
@@ -227,6 +226,7 @@ namespace CommunicationWorkerRole
                                         object[] ArrArgs = args.ToArray();
                                         var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ProcedureCode), ArrArgs) as TaskManagerBase;
                                         Task.Status = "In progress";
+                                        Task.ExecutedByServerName = !string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName + '/' + LogitudeSettings.WorkerRoleName : Task.ExecutedByServerName;
                                         WRItem.Task = Task;
                                         WRItem.queueservice = queueservice;
                                         WRItem.RetryNumber = message.RetryNumber;
