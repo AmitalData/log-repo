@@ -15,6 +15,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             {
                 queryableData = queryableData.Where(d => values.Contains(d.ShipperId) || values.Contains(d.ConsigneeId));
             }
+
             return queryableData;
         }
 
@@ -22,7 +23,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
         {
             string digitalPortalSearchFields = item.FieldValue as string;
             digitalPortalSearchFields = digitalPortalSearchFields.ToLower().Trim();
-            queryableData = queryableData.AsNoTracking().Where(d =>
+            queryableData = queryableData.Where(d =>
              d.ShipperReference1.Contains(digitalPortalSearchFields)
           || d.ShipperReference2.Contains(digitalPortalSearchFields)
           || d.ConsigneeReference1.Contains(digitalPortalSearchFields)
@@ -48,9 +49,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
           || d.ToPortName.ToLower().StartsWith(digitalPortalSearchFields)
           || d.MainCarriageCarrierName.ToLower().StartsWith(digitalPortalSearchFields)
            );
+
             return queryableData;
         }
-
-
     }
 }

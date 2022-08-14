@@ -41,10 +41,12 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         queryableData = DigitalPortalCustomFilter.ApplyDigitalPortalSearchFilter(item, queryableData);
                     }
+
                     if (item.FieldName ==  "ConsigneeShipperIds")
                     {
                         queryableData = DigitalPortalCustomFilter.ApplyShipperConsigneeFilter(item, queryableData);
                     }
+
                     if (item.FieldName == "DigitalQuickSearch")
                     {
                         queryableData = DigitalCustomFilter.ApplyDigitalQuickSearchFilter(item, queryableData);
