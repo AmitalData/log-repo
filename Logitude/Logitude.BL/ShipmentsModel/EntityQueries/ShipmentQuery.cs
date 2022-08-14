@@ -1538,8 +1538,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
-
-
+           
             string str = string.Empty;
             if (shipment.ShipmentType != null)
             {
@@ -2359,6 +2358,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
             }
 
+            CheckInvoicedFields(shipmentPM);
+
             #region Pickups & Deliveries
 
             shipmentPM.ShipmentPickUps = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipment.Id, shipment.Tenant,byLocalName).ToList();
@@ -2644,6 +2645,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             //returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
             return shipmentPM;
+        }
+
+        private void CheckInvoicedFields(ShipmentPM shipmentPM)
+        {
+            shipmentPM.IsPartiallyInvoiced = false;
+            shipmentPM.IsFullInvoiced = false;
+            if(shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
+            {
+                return;
+            }
+            shipmentPM.IsPartiallyInvoiced  = !shipmentPM.ShipmentReceivables.Where(a => a.ARInvoiceId != null && a.ShipmentReceivableLineStatusCode != "ACCT").Any();
+            shipmentPM.IsFullInvoiced = !shipmentPM.IsPartiallyInvoiced;
         }
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)
