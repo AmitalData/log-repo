@@ -886,7 +886,7 @@ export class CustomsDocumentsComponent
             await new Promise<void>(resolve => msg.WindowClosed.subscribe(() => resolve()));
             return;
         }
-
+   
         const orginalDocIsCheck: boolean = await this.checkOrginalDoc(documnetUpload);
 
         if(!orginalDocIsCheck)
@@ -918,10 +918,10 @@ export class CustomsDocumentsComponent
              return customDocument.DocumentsFilingId && AppTool.IsNullOrEmpty( customDocument.CustomsDocId) &&
                 customDocument.CustomsDocumentMetaDataValuePMs &&
 
-                customDocument.CustomDocumentTypeMetaDataLists.every((value: CustomDocumentTypeMetaDataList) => {
+                 customDocument.CustomDocumentTypeMetaDataLists.filter(x => x.DocumentTypeCode == customDocument.DocumentTypeCode).every((value: CustomDocumentTypeMetaDataList) => {
                     const metaDataType: CustomsDocumentMetaDataValuePM = customDocument.CustomsDocumentMetaDataValuePMs.find(metaDataType => value?.MetaDataTypeCode == metaDataType?.MetaDataTypeCode);
                     return !value?.Mandatory ||
-                        (value?.MetaDataTypeCode === '87' && exclude87) ||
+                        (value?.Mandatory && value?.MetaDataTypeCode === '87' && exclude87) ||
                         (metaDataType?.MetaDataValue || metaDataType?.MetaDataValue == '');
                 });
         });
@@ -929,7 +929,7 @@ export class CustomsDocumentsComponent
 
     private async checkOrginalDoc(documnetUpload: CustomsDocumentTicketViewModel[]) {
         let documentsFilingIds: string[] = documnetUpload.reduce((res: string[], customDocument: CustomsDocumentTicketViewModel) => {
-            const haveIsOrginalDoc: boolean = customDocument.CustomDocumentTypeMetaDataLists.some(type => type.MetaDataTypeCode === '87');
+            const haveIsOrginalDoc: boolean = customDocument.CustomDocumentTypeMetaDataLists.filter(x => x.DocumentTypeCode == customDocument.DocumentTypeCode).some(type => type.MetaDataTypeCode === '87' && type.Mandatory);
             const value: CustomsDocumentMetaDataValuePM = customDocument.CustomsDocumentMetaDataValuePMs.find(d => d?.MetaDataTypeCode === '87');
             if(haveIsOrginalDoc && !value?.MetaDataValue)
                 res.push(customDocument.DocumentsFilingId)
