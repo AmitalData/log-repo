@@ -26,7 +26,6 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.CustomFilters;
 using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
 
 
 namespace WebFreight.Web.Controllers.DigitalPortal
@@ -389,7 +388,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
             }
 
-            string documentName = tenant + "_" + docId;
             string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + docId + ":invc:" + entityPM.Id;
             entityPM.ReportUrl = url;
             entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
@@ -410,16 +408,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         private string GetDocumentTypeCodeByInvoiceType(string aRInvoiceTypeCode)
         {
-            string code = "";
+            string code = "999S";
 
             if (aRInvoiceTypeCode == "CI")
             {
                 code = "999CI";
-            }
-
-            else
-            {
-                code = "999S";
             }
 
             return code;
@@ -452,12 +445,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                     }
                 }
+                
                 if (!exists)
                 {
                     throw new AutenticationException("Sorry! you are not authorized to read data!");
                 }
+
                 return exists;
             }
+
             return true;
         }
 
@@ -489,24 +485,29 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                     }
                 }
+
                 if (!exists)
                 {
                     throw new AutenticationException("Sorry! you are not authorized to read data!");
                 }
+
                 return exists;
             }
+
             return true;
         }
         
         private bool GetIsShowAmountLocalCurrencyColumnInSharedLogistics(int tenant)
         {
             bool isShowAmountLocalCurrencyColumnInSharedLogistics = false;
-            SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
-            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
+            var sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
+            var sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
+            
             if (sharedLogisticsSetting != null)
             {
                 isShowAmountLocalCurrencyColumnInSharedLogistics = sharedLogisticsSetting.IsShowAmountLocalCurrency;
             }
+
             return isShowAmountLocalCurrencyColumnInSharedLogistics;
         }
         

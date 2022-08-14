@@ -258,13 +258,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             CustomerRepository customerRepository = new CustomerRepository(commonDataContext);
             Customer customer = customerRepository.GetFirstSingleByName(customerName, tenant);
+            
             if (customer == null)
             {
                 InsertNewCustomer(customerName);
                 customer = customerRepository.GetFirstSingleByName(customerName, tenant);
             }
+
             return customer.Id;
         }
+
         private void InsertNewCustomer(string customerName)
         {
             CustomerService customerService = new CustomerService(commonDataContext, CreateCustomertPM(customerName));

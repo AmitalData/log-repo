@@ -2,14 +2,12 @@
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.ShipmentsModel.EntityLists;
-using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -25,8 +23,6 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
-using System.Text.RegularExpressions;
-using System.Data.SqlClient;
 using WebFreight.Web.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
@@ -35,7 +31,6 @@ using WebFreight.Web.Controllers.DigitalPortal.Models;
 using System.Data.Entity;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.CustomFilters;
-using Logitude.BL.CommonDataModel.BusinessUnitFilters;
 using Logitude.BL.CommonDataModel.EntityLists;
 using System.Reflection;
 
@@ -57,7 +52,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
@@ -73,7 +67,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
-                
+
                 var myTenantRepository = new TenantRepository(authToken.Tenant);
                 var myTenant = myTenantRepository.GetSingleTenant(authToken.Tenant);
 
@@ -187,7 +181,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         if (!objectField.IsCustom)
                         {
-                             switch (objectField.DataTypeCode.ToLower())
+                            switch (objectField.DataTypeCode.ToLower())
                             {
                                 case "text":
                                     {
@@ -224,7 +218,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                         entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
                                         break;
                                     }
-                             }
+                            }
                         }
                         else
                         {
@@ -248,7 +242,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
 
                 List<ShipmentList> listQuery = listQuery = entityLists.ToList();
-                
+
                 var service = new ShipmentService(authToken.Tenant);
 
                 service.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
@@ -339,7 +333,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (!string.IsNullOrEmpty(filters.AdditionalFilters))
                 {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                    var JsonConvert = new JavaScriptSerializer();
                     var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
 
                     foreach (QueryFilterItem filter in filters_list)
@@ -386,17 +380,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
                 };
 
-                var customfilters = new CustomerCustomFilter(authToken.Tenant);
-                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-                var myFilter = new CustomerBusinessUnitFilter(authToken.Tenant);
-                entityPocos = myFilter.RunFilter(entityPocos);
                 entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
                 IQueryable<CustomerList> entityLists = customerQuery.GetDigitalIQueryableEntityList(entityPocos);
                 entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
 
                 if (!string.IsNullOrEmpty(searchvalue))
                 {
-                    CustomerDataSearchService customerDataSearchService = new CustomerDataSearchService();
+                    var customerDataSearchService = new CustomerDataSearchService();
                     entityLists = customerDataSearchService.Run(new CustomerSearchArgs() { SearchText = searchvalue, Tenant = authToken.Tenant, EntityLists = entityLists, SortByColumnName = queryOperations.SortByColumnName, SortDirectin = queryOperations.SortDirectin, PageSize = queryOperations.PageSize, FilterItems = queryOperations.QueryFilterItems }).AsQueryable();
                 }
 

@@ -2571,6 +2571,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    Code = customer.Code,
                                                    EnglishName = customer.EnglishName,
                                                    LocalName = customer.LocalName,
+                                                   Tenant = customer.Tenant
                                                });
             return result;
         }
