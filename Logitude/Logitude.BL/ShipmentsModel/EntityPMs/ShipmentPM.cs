@@ -2987,6 +2987,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipments { get; set; }
 
         public bool FromCTool { get; set; }
+
+        public string SalesmanEmail { get; set; }
+
     }
 
     public class TransshipmentLeg

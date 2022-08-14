@@ -1524,6 +1524,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (myContact != null)
                 {
                     shipmentPM.SalesmanUserName = myContact.EnglishName;
+                    shipmentPM.SalesmanEmail = myContact.Email;
                 }
             }
 
