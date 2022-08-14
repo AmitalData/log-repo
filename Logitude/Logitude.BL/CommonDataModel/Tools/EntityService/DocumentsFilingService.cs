@@ -922,14 +922,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void OpenKPIDocumentUploderQueue(DocumentsFilingPM documentFiling)
         {
-            //if (IsSendingPODDocumentQueue(documentFiling)) {
-            //    IQueueService queueservice = new DbQueueService();
-            //    queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentFiling.Tenant);
-            //    queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentFiling.Id }, { "Tenant", documentFiling.Tenant.ToString() },
-            //                                                     { "IsPODDocumentUploaded", true.ToString() }, { "IsPODDocumentDeleted", false.ToString() }, { "PODRecived", documentFiling.ReceivedDate.ToString() } },
-            //                                                          documentFiling.Tenant, null, null, null, null);
-            //}
-
             if (IsStartingUploadShipmentDocs(documentFiling))
             {
                 IQueueService queueservice = new DbQueueService();
@@ -944,8 +936,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     documentFiling.Tenant, null, null, null, null);
             }
         }
-
-        private bool IsSendingPODDocumentQueue(DocumentsFilingPM documentFiling)
+        private bool IsStartingUploadShipmentDocs(DocumentsFilingPM documentFiling)
         {
             documentFiling.DocumentTypeCode = string.IsNullOrEmpty(documentFiling.DocumentTypeCode) ? this.GetDocumentTypeCodeById(documentFiling.DocumentTypeId) : documentFiling.DocumentTypeCode;
             var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
@@ -953,33 +944,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 return false;
             }
-            if (documentFiling.DocumentTypeCode != "POD")
-            {
-                return false;
-            }
 
             if (!(documentFiling.HasFile && documentFiling.Received))
             {
                 return false;
             }
 
-            return true;
-        }
-        private bool IsStartingUploadShipmentDocs(DocumentsFilingPM documentFiling)
-        {
-            string documentTypeCode = string.IsNullOrEmpty(documentFiling.DocumentTypeCode) ? this.GetDocumentTypeCodeById(documentFiling.DocumentTypeId) : documentFiling.DocumentTypeCode;
-            var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
-            if (shipmentObjectTable?.Name != "Shipment")
-            {
-                return false;
-            }
-
-            if (!(documentFiling.HasFile && documentFiling.Received))
-            {
-                return false;
-            }
-
-            if (!IsDocumentWillUpdateShipment(documentTypeCode))
+            if (!IsDocumentWillUpdateShipment(documentFiling.DocumentTypeCode))
             {
                 return false;
             }
