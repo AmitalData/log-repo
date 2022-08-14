@@ -3882,6 +3882,10 @@ namespace WebFreight.Web.ReportsWebServices
                                 if (myShipment != null)
                                 {
                                     myRecord.MainCarriageATD = myShipment.MainCarriageATD;
+                                    myRecord.MainCarriageETD = myShipment.MainCarriageETD;
+                                    myRecord.MainCarriageATA = myShipment.MainCarriageATA;
+                                    myRecord.MainCarriageETA = myShipment.MainCarriageETA;
+                                    myRecord.FinalMainCarriageATA = myShipment.Transshipment3ATA ?? myShipment.Transshipment2ATA ?? myShipment.Transshipment1ATA  ?? myShipment.MainCarriageATA;
                                     myRecord.Shipper = myShipment.ShipperName;
                                     myRecord.Consignee = myShipment.ConsigneeName;
                                     myRecord.Carrier = myShipment.MainCarriageCarrierName;
