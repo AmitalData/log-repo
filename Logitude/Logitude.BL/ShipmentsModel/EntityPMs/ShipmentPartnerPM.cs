@@ -19,6 +19,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string CountryName { get; set; }
+        public string CountryCode { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
