@@ -153,6 +153,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature customerGroupFeature = tenantFeatures.Where(d => d.Code == "CustomerGroups" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature mentionFeature = tenantFeatures.Where(d => d.Code == "MENTIONS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
+            Feature workflowFeature = tenantFeatures.Where(d => d.Code == "WORKFLOWS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
             #endregion
 
             #region Main Menus
@@ -193,6 +195,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SHOR", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 7, CategoryTypeCode = null, TextCode = "General.MH.ShipmentOrders", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ShipmentOrder").FirstOrDefault().Id, FeatureId = shipmentOrderFeature.Id, FeatureUniqeCode = shipmentOrderFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TAAP", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 31, CategoryTypeCode = null, TextCode = "General.MH.TasksApp", Icon = "DashboardPath", FeatureId = tasksAppFeature.Id, FeatureUniqeCode = tasksAppFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
+
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "WKFW", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 32, CategoryTypeCode = null, TextCode = "General.MH.Workflows", Icon = "DashboardPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "WorkFlow").FirstOrDefault().Id, FeatureId = workflowFeature.Id, FeatureUniqeCode = workflowFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
 
             #endregion
 

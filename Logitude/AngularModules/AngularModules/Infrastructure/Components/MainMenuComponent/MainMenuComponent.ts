@@ -47,25 +47,6 @@ export class MainMenuComponent {
         if(hasCToolToggleFeature === undefined || (hasCToolToggleFeature !== undefined && hasCToolToggleFeature.Inactive)){
             this.MainMenuItems = this.MainMenuItems.filter(m => m.TextCode !== "General.MH.TasksApp");
         }
-        // if (hasCToolToggleFeature) {
-        //     var tasksAppItem = new MainMenuItem("General.MH.TasksApp", AppTool.GetMainMenuIconCode("General.MH.Depositions"));
-        //     tasksAppItem.IndexOfOrder = 100;
-        //     tasksAppItem.ObjectTableId = null;
-        //     tasksAppItem.HtmlView = null;
-        //     tasksAppItem.ObjectTableName = null;
-        //     tasksAppItem.QuerySection = null;
-        //     this.MainMenuItems.push(tasksAppItem);
-        // }
-
-
-        var workflowItem = new MainMenuItem("General.MH.Workflow", AppTool.GetMainMenuIconCode("General.MH.Depositions"));
-        workflowItem.IndexOfOrder = 100;
-        workflowItem.ObjectTableId = null;
-        workflowItem.HtmlView = null;
-        workflowItem.ObjectTableName = null;
-        workflowItem.QuerySection = null;
-        this.MainMenuItems.push(workflowItem);
-
 
         // Layout Direction
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -339,10 +320,10 @@ export class MainMenuComponent {
                         myComponentPath = "./TasksApp/Components/TasksAppComponent";
                         break;
                     }
-                    case "General.MH.Workflow": {
-                        myComponentPath = "./Workflow/Components/LogitudeWorkflow/LogitudeWorkflowComponent";
-                        break;
-                    }
+                    // case "General.MH.Workflow": {
+                    //     myComponentPath = "./Workflow/Components/LogitudeWorkflow/LogitudeWorkflowComponent";
+                    //     break;
+                    // }
                     case "General.MH.Quotes": {
                         ServiceLocator.SendTotangoUserActivity("Quote", "List View");
                         myComponentPath = "./Quote/Components/Workspaces/QuotesComponent";
