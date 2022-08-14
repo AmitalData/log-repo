@@ -9,7 +9,6 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -25,8 +24,6 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
-using System.Text.RegularExpressions;
-using System.Data.SqlClient;
 using WebFreight.Web.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
@@ -73,7 +70,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
-                
+
                 var myTenantRepository = new TenantRepository(authToken.Tenant);
                 var myTenant = myTenantRepository.GetSingleTenant(authToken.Tenant);
 
@@ -187,7 +184,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         if (!objectField.IsCustom)
                         {
-                             switch (objectField.DataTypeCode.ToLower())
+                            switch (objectField.DataTypeCode.ToLower())
                             {
                                 case "text":
                                     {
@@ -224,7 +221,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                         entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
                                         break;
                                     }
-                             }
+                            }
                         }
                         else
                         {
@@ -248,7 +245,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
 
                 List<ShipmentList> listQuery = listQuery = entityLists.ToList();
-                
+
                 var service = new ShipmentService(authToken.Tenant);
 
                 service.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
@@ -486,6 +483,25 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 response.Result = listResult;
                 var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
+        [Route("DigitalShipment/GetDigitalShipmentPartners")]
+        public HttpResponseMessage GetDigitalShipmentPartners(string shipmentId)
+        {
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                var shipmentQuery = new ShipmentQuery(tenant);
+                var partners = shipmentQuery.GetDigitalShipmentPartners(shipmentId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, partners);
             }
             catch (Exception ex)
             {

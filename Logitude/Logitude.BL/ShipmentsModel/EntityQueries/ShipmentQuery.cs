@@ -37,7 +37,7 @@ using Logitude.BL.ShipmentsModel.Tools.Initializers;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
-    public class ShipmentQuery : ShipmentCloudCustomDataDeserializer
+    public partial class ShipmentQuery : ShipmentCloudCustomDataDeserializer
     {
 
         ShipmentRepository repository;
