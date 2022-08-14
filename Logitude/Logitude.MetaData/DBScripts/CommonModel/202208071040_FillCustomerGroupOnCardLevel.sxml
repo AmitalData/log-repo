@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Common" AOT="true" TargetTableName="Customers">
+  <Sql Version="3">
+    <![CDATA[
+        
+    
+
+    ]]>
+</Sql>
+</Script>
+
+

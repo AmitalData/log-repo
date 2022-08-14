@@ -21,6 +21,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalDocumentsController : ApiController
     {
+        [HttpGet]
+        [Route("DigitalDocuments/GetDigitalEntityDocuments")]
         public List<SharedLogisticDocumentPM> GetDigitalEntityDocuments(string entityId, string partnerType, int tenant)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -40,6 +42,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return output.OrderBy(o => o.Name).ToList();
         }
+
+        #region private 
+        
         private bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
         {
             if (tenant != 0)
@@ -73,6 +78,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             return true;
         }
+        
         private List<SharedLogisticDocumentPM> GetShipmentSharedDocuments(Shipment shipment, string partnerType, int tenant, bool isExternalURL)
         {
             string entityId = shipment.Id;
@@ -201,5 +207,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return output;
         }
+
+        #endregion private
     }
 }

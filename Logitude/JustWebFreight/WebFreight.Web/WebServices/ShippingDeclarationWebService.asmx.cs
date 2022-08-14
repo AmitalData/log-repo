@@ -645,7 +645,6 @@ namespace WebFreight.Web.WebServices
                                           select a).FirstOrDefault();
 
                     myDataProvider.ShipperName = shipperClient != null ? shipperClient.EnglishName : "";
-                    myDataProvider.ClientNumber = shipperClient != null ? shipperClient.Code : "";
                     myDataProvider.ShipperVAT = shipperClient != null ? shipperClient.VatNumber : "";
 
                     myDataProvider.ShipperReference = shipment.ShipperReference1;
@@ -3988,6 +3987,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.IRSPlace = customer.IRSPlace;
                 myDataProvider.IRSNumber = customer.IRSNumber;
                 myDataProvider.CustomerName = customer.EnglishName;
+                myDataProvider.ClientNumber = customer.Code;
             }
 
             Address address = addressRepository.GetSingleAddress(shipment.CustomerAddressId, tenant);

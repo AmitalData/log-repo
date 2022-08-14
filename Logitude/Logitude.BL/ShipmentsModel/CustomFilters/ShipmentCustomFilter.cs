@@ -40,7 +40,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     if (item.FieldName == "DigitalPortalSearchFields")
                     {
                         string digitalPortalSearchFields = item.FieldValue as string;
-                        digitalPortalSearchFields = digitalPortalSearchFields.ToLower();
+                        digitalPortalSearchFields = digitalPortalSearchFields.ToLower().Trim();
                         queryableData = queryableData.AsNoTracking().Where(d =>
                          d.ShipperReference1.Contains(digitalPortalSearchFields)
                       || d.ShipperReference2.Contains(digitalPortalSearchFields)

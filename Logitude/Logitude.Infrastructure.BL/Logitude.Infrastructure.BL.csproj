@@ -74,6 +74,7 @@
     <Compile Include="EntityDataMappings\BIReportsTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\BusinessProcessQueueDataMapping.cs" />
     <Compile Include="EntityDataMappings\BusinessRoleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DashboardDataMapping.cs" />
     <Compile Include="EntityDataMappings\FeatureToggleDataMapping.cs" />
     <Compile Include="EntityDataMappings\Generated\BatchTaskExecutionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BatchTaskExecutionStatusDataMapping.Generated.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="EntityDataMappings\Generated\BIReportsTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BusinessProcessQueueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BusinessRoleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DashboardDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FeatureToggleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LastRunDetailDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LBPTeamMemberDataMapping.Generated.cs" />
@@ -108,6 +110,7 @@
     <Compile Include="EntityPMs\Generated\BIReportsTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BusinessProcessQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BusinessRolePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DashboardPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FeatureTogglePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LastRunDetailPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LBPTeamMemberPM.Generated.cs" />
@@ -128,6 +131,7 @@
     <Compile Include="EntityQueryServices\Generated\BIReportsTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BusinessProcessQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BusinessRoleQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DashboardQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FeatureToggleQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LastRunDetailQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LBPTeamMemberQueryService.Generated.cs" />
@@ -143,6 +147,7 @@
     <Compile Include="EntityUpdateServices\BatchTaskExecutionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BIReportFolderUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\BIFoldersPermissionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DashboardUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LastRunDetailUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BIReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BusinessRoleUpdateService.cs" />

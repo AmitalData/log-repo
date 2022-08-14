@@ -19,18 +19,22 @@ Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
         When create quote
         Then the quote should create successfully
 
-    Scenario: Set as Sent to Customer
+    Scenario: Edit quote details tab
         Given the user open the quote
+        Given fill "3:00" as transit time
+        When update quote
+        Then the quote should update successfully
+
+    Scenario: Set as Sent to Customer
         When "Set As Sent" action with "Testing The set as sent to customer" note
         Then quote stage status should be "Sent"
         And following event should appear in events tab
             | Event      | Notes                               |
             | Quote Sent | Testing The set as sent to customer |
 
-    Scenario: Edit quote details tab
-        Given fill "3:00" as transit time
-        When update quote
-        Then the quote should update successfully
+    Scenario: Try Edit quote details tab
+        When try to fill "3:00" as transit time
+        Then the field should be dimmed 
 
     Scenario: Return quote to draft
         When "Return To Draft" action with "Testing The return quote to draft" note

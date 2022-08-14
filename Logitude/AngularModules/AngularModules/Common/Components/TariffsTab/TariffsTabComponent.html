@@ -8,7 +8,7 @@
                         <td style="width:300px; min-width: 300px;">
                             <table>
                                 <tr class="TabTitleRow">
-                                    <td>{{'Customer.TH.Tariffs' | TextCodeTranslationPipe}}</td>
+                                    <td>{{TabHeaderTextCode | TextCodeTranslationPipe}}</td>
                                 </tr>
 
                                 <tr>
@@ -21,12 +21,12 @@
                                                     <LogLabel [ObjectFieldName]="'ImportLocalCustomerGroupId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td style="width:200px;">
+                                                <td style="width:220px;">
                                                     <LogLov [ObjectFieldName]="'ImportLocalCustomerGroupId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'CustomerGroup'"
-                                                            [HideColumns]="true">
+                                                            [SelectedValue]="ImportLocalCustomerGroupId"
+                                                            [LookUpTableName]="'CustomerGroup'">
                                                     </LogLov>
 
                                                 </td>
@@ -42,8 +42,8 @@
                                                     <LogLov [ObjectFieldName]="'ExportLocalCustomerGroupId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'CustomerGroup'"
-                                                            [HideColumns]="true">
+                                                            [SelectedValue]="ExportLocalCustomerGroupId"
+                                                            [LookUpTableName]="'CustomerGroup'">
                                                     </LogLov>
 
                                                 </td>

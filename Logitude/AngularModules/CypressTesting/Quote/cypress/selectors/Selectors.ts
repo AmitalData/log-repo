@@ -11,7 +11,8 @@ export class QuoteSelectors {
      public static readonly QuoteAddCharges = '#AddCharges';
      public static readonly LogLovQuoteCustomerType = "#LogLov_Quote_QuoteCustomerTypeCode"
      public static readonly RoutingRadioButton = "#RoutingRadio0"
-     public static readonly TransitTime = "#Quote_TransitTime"
+     public static readonly TransitTime = "[id='Quote_TransitTime']"
+     public static readonly TextBoxTransitTime ='[id="textboxdiv_Quote_TransitTime"]'
      public static readonly DetailsTab = "#QuoteTHDetails"
      public static readonly QuotePartnersTab = "#QuoteTHPartners"
      public static readonly QuoteSaleCurrencyId = "#Quote_SaleCurrencyId"

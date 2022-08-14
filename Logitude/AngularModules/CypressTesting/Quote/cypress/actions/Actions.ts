@@ -33,8 +33,14 @@ export function OpenQuote(QuoteNumber: string) {
 
 //#region Edit details
 export function EditDetailsTab(transitTime) {
-    cy.Click(QuoteSelectors.DetailsTab, null);
+    OpenDetailsTab()
     cy.FillLogTextBox(QuoteSelectors.TransitTime, transitTime)
+}
+export function OpenDetailsTab(){
+    cy.Click(QuoteSelectors.DetailsTab, null);
+}
+export function AssertTransitTimeDisabled(){
+cy.get (QuoteSelectors.TextBoxTransitTime).should('have.class', 'InputDiv InputDivDisabled')
 }
 //#endregion
 

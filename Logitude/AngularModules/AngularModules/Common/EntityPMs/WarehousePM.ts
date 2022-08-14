@@ -459,11 +459,13 @@ export class WarehousePM {
             }
         }
     }
-    private gLAccountId: string;
+	    //public WarehouseStoragePricings: Array<WarehouseStoragePricingPMPM>= [];
+     private gLAccountId: string;
     public get GLAccountId() { return this.gLAccountId; }
     public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
-	    //public WarehouseStoragePricings: Array<WarehouseStoragePricingPMPM>= [];
-     private gLAccountNumber: string;
+       
+	 
+    private gLAccountNumber: string;
     public get GLAccountNumber() { return this.gLAccountNumber; }
     public set GLAccountNumber(newValue: string) { if (this.gLAccountNumber != newValue) { this.gLAccountNumber = newValue; this.MarkAsDirty("GLAccountNumber"); } }
        
@@ -548,6 +550,16 @@ export class WarehousePM {
     public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
        
 	 
+    private importLocalCustomerGroupId: string;
+    public get ImportLocalCustomerGroupId() { return this.importLocalCustomerGroupId; }
+    public set ImportLocalCustomerGroupId(newValue: string) { if (this.importLocalCustomerGroupId != newValue) { this.importLocalCustomerGroupId = newValue; this.MarkAsDirty("ImportLocalCustomerGroupId"); } }
+       
+	 
+    private exportLocalCustomerGroupId: string;
+    public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
+    public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
+       
+	 
 
     public OldEntityPM: WarehousePM;
 		
@@ -575,4 +587,4 @@ export class WarehousePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

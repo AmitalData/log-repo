@@ -41,6 +41,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      where a.Id == id && a.Tenant == tenant
                                      select new WarehousePM()
                                      {
+                                         ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                         ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                          ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                          PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                          AccountingVATSplit = a.Card.AccountingVATSplit,
@@ -158,6 +160,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      where a.Id == id && a.Tenant == tenant
                                      select new WarehousePM()
                                      {
+                                         ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                         ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                          ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                          PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                          AccountingVATSplit = a.Card.AccountingVATSplit,
@@ -252,6 +256,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                    where a.Tenant == tenant
                    select new WarehousePM()
                    {
+                       ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                       ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                        ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                        PayablesAccountingCard = a.Card.PayablesAccountingCard,
                        AccountingVATSplit = a.Card.AccountingVATSplit,
@@ -388,6 +394,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                            where a.Card.Code == code && a.Tenant == tenant
                            select new WarehousePM()
                            {
+                               ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                               ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                AddedManually = a.AddedManually,

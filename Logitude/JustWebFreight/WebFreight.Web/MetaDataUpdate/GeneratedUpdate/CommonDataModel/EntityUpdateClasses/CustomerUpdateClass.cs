@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "014e3fd0ebc1e68ba4be414a537a57b7";
+		public const string HashString = "b37f8cf971db67aa3cc87031b1f32732";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9752,8 +9752,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportLocalCustomerGroupId",
 					  						DefaultText =  "Export Local Customer Group",
-					  						ListFieldLable =  "ExportLocalCustomerGroupIdListLable",
-					  						ListLableDefaultText =  "Export Local Customer Group",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -9811,8 +9809,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImportLocalCustomerGroupId",
 					  						DefaultText =  "Import Local Customer Group",
-					  						ListFieldLable =  "ImportLocalCustomerGroupIdListLable",
-					  						ListLableDefaultText =  "Import Local Customer Group",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -10391,7 +10387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLST",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerStatisticsTabComponent", FeatureId = CustomerStatisticsFeature_TH3.Id,FeatureUniqeCode = CustomerStatisticsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerStatisticsTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerStatisticsTextCode_TH3.Id, TabNameTextCodeCode = CustomerStatisticsTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TARF",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/TariffsTabComponent", FeatureId = CustomerTariffsFeature_TH4.Id,FeatureUniqeCode = CustomerTariffsFeature_TH4.FeatureUniqeCode, ControlPath = "./CommonModules/CommonCustomer/Components/EditTabs/TariffsTabComponent", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerTariffsTextCode_TH4.Id, TabNameTextCodeCode = CustomerTariffsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TARF",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/TariffsTab/TariffsTabComponent", FeatureId = CustomerTariffsFeature_TH4.Id,FeatureUniqeCode = CustomerTariffsFeature_TH4.FeatureUniqeCode, ControlPath = "./Common/Components/TariffsTab/TariffsTabComponent", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerTariffsTextCode_TH4.Id, TabNameTextCodeCode = CustomerTariffsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLBL",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerBillingTabComponent", FeatureId = CustomerBillingFeature_TH5.Id,FeatureUniqeCode = CustomerBillingFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerBillingTextCode_TH5.Id, TabNameTextCodeCode = CustomerBillingTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    

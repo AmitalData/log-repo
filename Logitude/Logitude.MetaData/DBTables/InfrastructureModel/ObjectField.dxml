@@ -637,6 +637,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DefaultAdditionalFilters"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="FullNameTextCodeId"
     ReferencedTable="TextCodes"

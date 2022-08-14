@@ -18,7 +18,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsCancelled { get; set; }
         public string InvoiceCurrencyId { get; set; }
         public string InvoiceCurrencyCode { get; set; }
-
+        public string InvoiceLocalCurrencyCode { get; set; }
         public double? AmountDue { get; set; }
         public double? AmountInLocalCurrency { get; set; }
         public double? AmountInProfitCurrency { get; set; }

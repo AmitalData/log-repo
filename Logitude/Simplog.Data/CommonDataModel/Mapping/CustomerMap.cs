@@ -51,8 +51,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivationRequestedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LastOpportunitySubject).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.LastOpportunityStatus).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.ImportLocalCustomerGroupId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ExportLocalCustomerGroupId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Customers");
@@ -123,8 +121,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SetAsInactiveByUserId).HasColumnName("SetAsInactiveByUserId");
             this.Property(t => t.ActivationRequestedByUserId).HasColumnName("ActivationRequestedByUserId");
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
-            this.Property(t => t.ImportLocalCustomerGroupId).HasColumnName("ImportLocalCustomerGroupId");
-            this.Property(t => t.ExportLocalCustomerGroupId).HasColumnName("ExportLocalCustomerGroupId");
 
             // Relationships
             this.HasRequired(t => t.Card).WithOptional(t => t.Customer);
@@ -145,9 +141,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.CustomerSize).WithMany().HasForeignKey(d => d.CustomerSizeId);
             this.HasOptional(t => t.ActivatedByUser).WithMany().HasForeignKey(d => d.ActivatedByUserId);
             this.HasOptional(t => t.SetAsInactiveByUser).WithMany().HasForeignKey(d => d.SetAsInactiveByUserId);
-            this.HasOptional(t => t.ActivationRequestedByUser).WithMany().HasForeignKey(d => d.ActivationRequestedByUserId);
-            this.HasOptional(t => t.ImportLocalCustomerGroup).WithMany().HasForeignKey(d => d.ImportLocalCustomerGroupId);
-            this.HasOptional(t => t.ExportLocalCustomerGroup).WithMany().HasForeignKey(d => d.ExportLocalCustomerGroupId);
+            this.HasOptional(t => t.ActivationRequestedByUser).WithMany().HasForeignKey(d => d.ActivationRequestedByUserId);           
 
         }
     }

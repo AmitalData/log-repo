@@ -131,7 +131,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string BillToId { get; set; }
         public double? AccountingPartnerCreditLimit { get; set; }
         public string SATCustomerName { get; set; }
-
-
     }
 }

@@ -567,16 +567,6 @@
     ReferencedTable="CustomerTeams"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ExportLocalCustomerGroupId"
-    ReferencedTable="CustomerGroups"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ImportLocalCustomerGroupId"
-    ReferencedTable="CustomerGroups"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />
   <Index

@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, ComponentFactoryResolver, ComponentRef, OnDestroy, ViewEncapsulation} from '@angular/core'
+import { Component, OnInit, ElementRef, ComponentFactoryResolver, ComponentRef, OnDestroy, ViewEncapsulation, ViewChild, AfterViewInit } from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
@@ -19,17 +19,25 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 import {LastFilterClass} from '../../../Infrastructure/Utilities/LastFilterClass';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import * as React from 'react';
+import Dashboard from 'logitude-dashboard-library';
+
+
+
+
+import * as ReactDOM from 'react-dom';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
     selector: 'DashBoard',
-    
+    styleUrls:['dashboard.scss'],
     templateUrl: './DashBoardComponent.html',
     encapsulation: ViewEncapsulation.None,
 })
 
-export class DashboardComponent extends BaseComponent implements OnInit {
+export class DashboardComponent extends BaseComponent implements OnInit ,AfterViewInit{
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private dashboarddomainservice: DashboardDomainService;
     public TenantPM: TenantPM;
@@ -56,6 +64,10 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public MoneyInLabel: string = "";
     public dailySpotLightClass: DailySpotlightClass; 
     private CurrentSession = SessionLocator.SelectedSession;
+    showNewDashboardToggle: boolean;
+    isNewDashboardRendered: boolean = false;
+    @ViewChild('reactDashboradContainer') reactDashboradContainer:ElementRef;
+
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -66,11 +78,24 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.TopFiveDashboardId = this.TopFiveDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + this.CurrentSession.GetNewId("TopFiveDashboardLegendId");
     }
-
-    ngOnInit() {
-        this.FillScreen();
+    ngAfterViewInit(): void {
+        this.renderNewDashboard(this.showClassicDashboard.bind(this));
     }
-
+    
+    ngOnInit() {
+        this.showNewDashboardToggle = true;
+        this.FillScreen();
+        
+    }
+    showClassicDashboard(){
+        this.showNewDashboardToggle = false;
+    }
+    showNewDashboard(){
+        this.showNewDashboardToggle = true;
+    }
+    renderNewDashboard(callBack: () => void = undefined){
+        ReactDOM.render(React.createElement(Dashboard,{token:SessionInfo.Token,tenant:SessionInfo.LoggedUserTenant,userId:SessionInfo.LoggedUserId}),this.reactDashboradContainer.nativeElement,callBack);
+    }
     ngOnDestroy() {
         if (this.ActivityStatusPage != null) {
             this.ActivityStatusPage.destroy();

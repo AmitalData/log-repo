@@ -109,13 +109,14 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="DBScripts\GlobalModel\AddOpportunityStageChangingBatchService.sxml" />
-    <None Include="DBScripts\ShipmentModel\202207210955_FillTransshipmentsRouting.sxml" />
+    <None Include="DBScripts\ShipmentModel\202207210955_FillTransshipmentsRouting.soxml" />
     <None Include="DBScripts\CommonModel\202203291200_AddShipmentOrderDocumentTypes.sxml" />
     <None Include="DBScripts\CommonModel\202206020830_FillHorsesGenderCode.sxml" />
     <None Include="DBScripts\CommonModel\202206191403_UpdateChargesTypesGLAccountLocalName.sxml" />
     <None Include="DBScripts\CommonModel\202215031220_AddGeneralGustomerGroups.sxml" />
     <None Include="DBScripts\GlobalModel\202203271236_AddImporterShipmentOrderDocumentsWR.sxml" />
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPInvoicePaymentsNumbers.sxml" />
+    <None Include="DBScripts\CommonModel\202208071040_FillCustomerGroupOnCardLevel.sxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +204,9 @@
     <None Include="DBScripts\QuoteModel\202202101211_FillConnectedToQuoteField.sxml" />
     <None Include="DBScripts\QuoteModel\202231032230_FillVATAmountsOnQuoteCharges.sxml" />
     <None Include="DBScripts\ShipmentModel\202204191435_AddHorseNameToShipmentsSearchFields.sxml" />
-    <None Include="DBScripts\ShipmentModel\202205191150_FillShipmentPackagesTypeAndQuantity.sxml" />
+    <None Include="DBScripts\ShipmentModel\202205191150_FillShipmentPackagesTypeAndQuantity.soxml" />
     <None Include="DBScripts\ShipmentModel\202207192359_FillContainersTransshipmentsFields.sxml" />
-    <None Include="DBScripts\ShipmentModel\202207200042_FillShipmentNumberOfTransshipments.sxml" />
+    <None Include="DBScripts\ShipmentModel\202207200042_FillShipmentNumberOfTransshipments.soxml" />
     <None Include="DBScripts\ShipmentModel\202208051503_UpdateContainerSearchFields.soxml" />
     <None Include="DBScripts\ShipmentModel\202205220940_CreateRequestContainerStatusWorkerRole.sxml" />
     <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />

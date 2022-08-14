@@ -4515,9 +4515,10 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append("WinZip");
             stringBuilder.Append("ILS");
             stringBuilder.Append("0");
-            stringBuilder.Append(' ',46);
+            stringBuilder.Append("ריק");
+            stringBuilder.Append(' ', 43);
 
-             stringBuilder.AppendLine();
+            stringBuilder.AppendLine();
             stringBuilder.Append("A100");
             stringBuilder.Append('0', 14);
             stringBuilder.Append("1");
@@ -4680,7 +4681,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 FileName = "INI",
             };
 
-            byte[] bytearray = Encoding.Unicode.GetBytes(file);
+            byte[] bytearray = Encoding.GetEncoding("Windows-1255").GetBytes(file);
             document.FileData = bytearray;
             docService.Create(document, document.FileData, contact.Id);
 

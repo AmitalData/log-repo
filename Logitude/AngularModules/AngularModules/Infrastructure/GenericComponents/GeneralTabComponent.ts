@@ -13,7 +13,7 @@ const generalTabTitleTextCode = 'General.O.General';
 
 export class GeneralTabComponent implements AfterViewInit {
   IsNewEntity: boolean = false;
-  private ObjectTableName: string = null;
+    private ObjectTableName: string = null;
   @ViewChild(ChildDirective) Child: ChildDirective;
     title: string;
 
@@ -37,7 +37,8 @@ export class GeneralTabComponent implements AfterViewInit {
           ScreenCode = "BatchTaskExecutionGeneralTabScreen";
         }
 
-        this.SetTabTitle();
+          this.SetTabTitle();
+          //this.SetTabVisibility();
 
         cmpRef.instance.EntityArgs = this.entityArgs;
         cmpRef.instance.Run(this.entityArgs.EntityPM, this.ObjectTableName, ScreenCode, this.IsNewEntity);
@@ -52,4 +53,17 @@ export class GeneralTabComponent implements AfterViewInit {
 
         this.title = TextCodeTranslator.Translate(generalTabTitleTextCode);
     }
+
+
+    //SetTabVisibility() {
+
+    //    const tab: ObjectTableTabPM = window.ObjectTableTabs.find(d => d.Code == this.entityArgs.SelectedTabCode);
+    //    const objectTableId = window.ObjectTables.filter((x: any) => x.Name === this.entityArgs.ObjectTableName)[0].Id;
+    //    if (!tab || !tab.ScreenCode) return;
+
+    //    let screen: any = window.Screens.filter((x: any) => x.ObjectTableId === objectTableId && x.Code.toLowerCase() == tab.ScreenCode.toLowerCase())[0];
+    //    if (!screen || screen.Type != "LIGHTENING") return;
+    //    this.IsShowTitle = false;
+    //}
+
 }

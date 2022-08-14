@@ -36,34 +36,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         public ShipmentARInvoiceMoneyPM GetDigitalShipmentARInvoicesCharges(string shipmentId, string cardId, int tenant)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
-
+            CheckAuthentication(token, tenant);
             ShipmentRepository rep = new ShipmentRepository(tenant);
             Shipment shipment = rep.GetSingleShipment(shipmentId, tenant);
-
             CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
-
-
-
             ShipmentARInvoiceMoneyPM resultClass = new ShipmentARInvoiceMoneyPM() { Id = "1-1" };
             List<ShipmentARInvoicePM> arInvoices = new List<ShipmentARInvoicePM>();
             List<ARInvoiceChargePM> aRCharges = new List<ARInvoiceChargePM>();
-
             ARInvoiceRepository arInvoiceReps = new ARInvoiceRepository(tenant);
             ARInvoiceLineQuery aRInvoiceLineQuery = new ARInvoiceLineQuery(tenant);
-
             List<ARInvoice> invoices = arInvoiceReps.GetInvoicesByShipmentIdAndBillToId(shipmentId, cardId, tenant);
             List<ARInvoiceLinePM> lines = new List<ARInvoiceLinePM>();
+            CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
+            ARInvoiceStatusRepository aRInvoiceStatusRepository = new ARInvoiceStatusRepository(tenant);
 
             foreach (ARInvoice item in invoices.Where(d => d.IsPrinted))
             {
-                List<ARInvoiceLinePM> itemLines = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(item.Id, tenant).ToList();
+                var itemLines = aRInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(item.Id, tenant).ToList();
                 lines.AddRange(itemLines);
-
                 Currency invoicecurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, item.Tenant, true);
-                ShipmentARInvoicePM entity = new ShipmentARInvoicePM()
+                var entity = new ShipmentARInvoicePM()
                 {
                     Id = item.Id,
                     ShipmentId = shipmentId,
@@ -79,14 +71,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     IsAutoCredit = item.IsAutoCredit,
                     IsCancelled = item.IsCancelled,
                     InvoiceDate = item.InvoiceDate,
+                    StatusName = item.Status?.Name,
                 };
 
-                CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
-                Currency currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant);
+                var currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant);
                 if (currency != null)
                 {
                     entity.InvoiceCurrencyCode = currency.Code;
                 }
+
+                var localCurrency = currencyRepository.GetSingleCurrency(item.LocalCurrencyId, tenant);
+                entity.InvoiceLocalCurrencyCode = localCurrency?.Code;
+
+                entity.StatusName = aRInvoiceStatusRepository.GetSingleARInvoiceStatus(item.StatusCode)?.Name;
 
                 if (entity.Id == entity.InvoiceNumber)
                 {
@@ -96,9 +93,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 arInvoices.Add(entity);
             }
 
-            int myId = 0;
-
-
+            var myId = 0;
             aRCharges = (from d in lines
                          group d by new
                          {
@@ -122,61 +117,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             resultClass.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
             return resultClass;
         }
-        private bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
-        {
-            if (tenant != 0)
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                bool exists = false;
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-                {
-                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                    string email = HttpContext.Current.User.Identity.Name;
-
-                    ContactRepository contactrep = new ContactRepository(commonDataContext);
-                    Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
-
-                    if (contact != null)
-                    {
-                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && (d.CardId == customerId || d.CardId == agentId)).FirstOrDefault();
-                        if (cardContact != null)
-                        {
-                            exists = true;
-
-                        }
-                    }
-                }
-                if (!exists)
-                {
-                    throw new AutenticationException("Sorry! you are not authorized to read data!");
-                }
-                return exists;
-            }
-            return true;
-        }
-        private bool GetIsShowAmountLocalCurrencyColumnInSharedLogistics(int tenant)
-        {
-            bool isShowAmountLocalCurrencyColumnInSharedLogistics = false;
-            SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
-            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
-            if (sharedLogisticsSetting != null)
-            {
-                isShowAmountLocalCurrencyColumnInSharedLogistics = sharedLogisticsSetting.IsShowAmountLocalCurrency;
-            }
-            return isShowAmountLocalCurrencyColumnInSharedLogistics;
-        }
+        
         public List<ARInvoiceList> PostFilteredDigitalARInvoices(int tenant, InvoiceFilters filters)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckDigitalUserAuthentication(tenant, filters.PartnerId);
 
-            SecurityUtility.CheckSharedContactAuthentication(tenant, filters.PartnerId);
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
 
@@ -354,6 +303,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return listQuery;
         }
+        
         public List<ARPaymentList> GetFilteredDigitalARPayments(string arInvoiceId, int tenant)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -412,6 +362,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return result;
         }
+        
         public ARInvoicePM GetSingleDigitalARInvoicePM(string invoiceId, int tenant)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -447,6 +398,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return entityPM;
         }
+
+        #region private 
+
+        private void CheckAuthentication(string token, int tenant)
+        {
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+        }
+
         private string GetDocumentTypeCodeByInvoiceType(string aRInvoiceTypeCode)
         {
             string code = "";
@@ -463,6 +424,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             return code;
         }
+        
         private bool CheckSharedContactAuthenticationForInvoice(string partnerId, int tenant)
         {
             if (tenant != 0)
@@ -498,5 +460,56 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             return true;
         }
+
+        private bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
+        {
+            if (tenant != 0)
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                bool exists = false;
+                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                {
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                    string email = HttpContext.Current.User.Identity.Name;
+
+                    ContactRepository contactrep = new ContactRepository(commonDataContext);
+                    Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+
+                    if (contact != null)
+                    {
+                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && (d.CardId == customerId || d.CardId == agentId)).FirstOrDefault();
+                        if (cardContact != null)
+                        {
+                            exists = true;
+
+                        }
+                    }
+                }
+                if (!exists)
+                {
+                    throw new AutenticationException("Sorry! you are not authorized to read data!");
+                }
+                return exists;
+            }
+            return true;
+        }
+        
+        private bool GetIsShowAmountLocalCurrencyColumnInSharedLogistics(int tenant)
+        {
+            bool isShowAmountLocalCurrencyColumnInSharedLogistics = false;
+            SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
+            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
+            if (sharedLogisticsSetting != null)
+            {
+                isShowAmountLocalCurrencyColumnInSharedLogistics = sharedLogisticsSetting.IsShowAmountLocalCurrency;
+            }
+            return isShowAmountLocalCurrencyColumnInSharedLogistics;
+        }
+        
+        #endregion private
     }
 }

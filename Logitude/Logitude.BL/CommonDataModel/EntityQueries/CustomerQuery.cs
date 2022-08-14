@@ -62,8 +62,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               where a.Tenant == tenant && a.Id == id
                               select new CustomerPM()
                               {
-                                  ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                  ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                  ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                  ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                   BillToId = a.Card.BillToId,
                                   BillToName = a.Card == null ? "" : a.Card.EnglishName,
                                   Id = a.Id,
@@ -230,8 +230,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           where a.Id == id && a.Tenant == tenant
                           select new CustomerPM()
                           {
-                              ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                              ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                              ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                              ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                               BillToId = a.Card.BillToId,
                               BillToName = a.Card.EnglishName,
                               Id = a.Id,
@@ -616,8 +616,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               where a.Tenant == tenant && a.Id == id
                               select new CustomerPM()
                               {
-                                  ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                  ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                  ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                  ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                   BillToId = a.Card.BillToId,
                                   BillToName = a.Card.EnglishName,
                                   Id = a.Id,
@@ -757,8 +757,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           where a.Tenant == tenant && a.Id == id
                           select new CustomerPM()
                           {
-                              ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                              ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                              ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                              ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                               BillToId = a.Card.BillToId,
                               BillToName = a.Card.EnglishName,
                               Id = a.Id,
@@ -1118,8 +1118,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   where a.Tenant == tenant && a.Card.Code == code
                                   select new CustomerPM()
                                   {
-                                      ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                      ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                      ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                      ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                       BillToId = a.Card.BillToId,
                                       BillToName = a.Card.EnglishName,
                                       Id = a.Id,
@@ -1260,8 +1260,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               where a.Card.Code == code && a.Tenant == tenant
                               select new CustomerPM()
                               {
-                                  ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                  ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                  ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                  ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                   BillToId = a.Card.BillToId,
                                   BillToName = a.Card.EnglishName,
                                   Id = a.Id,
@@ -1394,8 +1394,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           where a.Card.Code == code && a.Tenant == tenant
                           select new CustomerPM()
                           {
-                              ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                              ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                              ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                              ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                               BillToId = a.Card.BillToId,
                               BillToName = a.Card.EnglishName,
                               Id = a.Id,
@@ -1605,8 +1605,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   where a.Tenant == tenant && a.Card.VatNumber == vatNumber
                                   select new CustomerPM()
                                   {
-                                      ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                      ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                      ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                      ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                       BillToId = a.Card.BillToId,
                                       BillToName = a.Card.EnglishName,
                                       Id = a.Id,
@@ -1747,8 +1747,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               where a.Card.VatNumber == vatNumber && a.Tenant == tenant
                               select new CustomerPM()
                               {
-                                  ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                  ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                  ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                  ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                   BillToId = a.Card.BillToId,
                                   BillToName = a.Card.EnglishName,
                                   Id = a.Id,
@@ -1881,8 +1881,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           where a.Card.VatNumber == vatNumber && a.Tenant == tenant
                           select new CustomerPM()
                           {
-                              ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                              ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                              ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                              ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                               BillToId = a.Card.BillToId,
                               BillToName = a.Card.EnglishName,
                               Id = a.Id,
@@ -2092,8 +2092,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                where a.Tenant == tenant
                                                select new CustomerPM()
                                                {
-                                                   ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                                   ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                                   ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                                   ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                                    BillToId = a.Card.BillToId,
                                                    BillToName = a.Card.EnglishName,
                                                    Id = a.Id,
@@ -2229,8 +2229,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         where a.Tenant == tenant
                         select new CustomerPM()
                         {
-                            ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                            ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                            ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                            ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                             BillToId = a.Card.BillToId,
                             BillToName = a.Card.EnglishName,
                             Id = a.Id,
@@ -2561,7 +2561,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return result;
         }
-    
+
+        public IQueryable<CustomerList> GetDigitalIQueryableEntityList(IQueryable<CustomersDataView> iQueryable)
+        {
+            IQueryable<CustomerList> result = (from customer in iQueryable
+                                               select new CustomerList()
+                                               {
+                                                   Id = customer.Id,
+                                                   Code = customer.Code,
+                                                   EnglishName = customer.EnglishName,
+                                                   LocalName = customer.LocalName,
+                                               });
+            return result;
+        }
 
         public CustomerList GetSingleCustomerList(string id, int tenant)
         {
@@ -2699,8 +2711,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              IsAutonomy = customer.Card.IsAutonomy,
                                              BillToName = customer.Card.EnglishName,
                                              BillToId = customer.Card.BillToId,
-                                             ImportLocalCustomerGroupId = customer.ImportLocalCustomerGroupId,
-                                             ExportLocalCustomerGroupId = customer.ExportLocalCustomerGroupId,
                                              SATCustomerName = customer.Card.SATCustomerName,
                                          }).FirstOrDefault();
 
@@ -2895,8 +2905,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              IsAutonomy = customer.Card.IsAutonomy,
                                              BillToName = customer.Card.EnglishName,
                                              BillToId = customer.Card.BillToId,
-                                             ImportLocalCustomerGroupId = customer.ImportLocalCustomerGroupId,
-                                             ExportLocalCustomerGroupId = customer.ExportLocalCustomerGroupId,
                                              SATCustomerName = customer.Card.SATCustomerName,
 
                                          }).FirstOrDefault();
@@ -3025,8 +3033,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              IsAutonomy = customer.Card.IsAutonomy,
                                              BillToName = customer.Card.EnglishName,
                                              BillToId = customer.Card.BillToId,
-                                             ImportLocalCustomerGroupId = customer.ImportLocalCustomerGroupId,
-                                             ExportLocalCustomerGroupId = customer.ExportLocalCustomerGroupId,
                                              SATCustomerName = customer.Card.SATCustomerName,
                                          }).FirstOrDefault();
 
@@ -3167,8 +3173,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsAutonomy = a.Card.IsAutonomy,
                         BillToName = a.Card.EnglishName,
                         BillToId = a.Card.BillToId,
-                        ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                        ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                         SATCustomerName = a.Card.SATCustomerName,
                     };
 
@@ -3769,8 +3773,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               where a.Tenant == tenant && a.Id == id
                               select new CustomerPM()
                               {
-                                  ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                  ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                  ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                  ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                   BillToId = a.Card.BillToId,
                                   BillToName = a.Card.EnglishName,
                                   Id = a.Id,
@@ -3925,8 +3929,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           where a.Id == id && a.Tenant == tenant
                           select new CustomerPM()
                           {
-                              ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                              ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                              ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                              ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                               BillToId = a.Card.BillToId,
                               BillToName = a.Card.EnglishName,
                               Id = a.Id,
@@ -4290,8 +4294,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  where a.Card.Code == code && a.Tenant == tenant
                                  select new CustomerPM()
                                  {
-                                     ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                     ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                     ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                     ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                      BillToId = a.Card.BillToId,
                                      BillToName = a.Card.EnglishName,
                                      Id = a.Id,
@@ -4500,8 +4504,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               where a.Tenant == tenant && a.Id == id
                               select new CustomerPM()
                               {
-                                  ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                  ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                  ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                  ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                   BillToId = a.Card.BillToId,
                                   BillToName = a.Card.EnglishName,
                                   Id = a.Id,
@@ -4658,8 +4662,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           where a.Id == id && a.Tenant == tenant
                           select new CustomerPM()
                           {
-                              ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                              ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                              ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                              ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                               BillToId = a.Card.BillToId,
                               BillToName = a.Card.EnglishName,
                               Id = a.Id,
@@ -4811,8 +4815,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  where a.Card.ReceivablesAccountingCard == externalId && a.Tenant == tenant
                                  select new CustomerPM()
                                  {
-                                     ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                     ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                     ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
+                                     ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
                                      BillToId = a.Card.BillToId,
                                      BillToName = a.Card.EnglishName,
                                      Id = a.Id,

@@ -567,6 +567,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                     string volumeUnitCode = shipmentView.VolumeUnitCode != null ? shipmentView.VolumeUnitCode : "";
 
+                    if (shipmentView.CustomerId != null)
+                    {
+                        Card customer = (from a in commonContext.Cards where a.Id == shipmentView.CustomerId select a).FirstOrDefault();
+                        detail.CustomerVatNumber = newDetail.CustomerVatNumber = customer?.VatNumber;
+                    }
+
                     #region Shipper
                     CardPM shipper = cardQuery.GetSinglePM(shipmentView.ShipperId, tenant);
                     CustomerPM shipperPM = customerQuery.GetSinglePM(shipmentView.ShipperId, tenant);
@@ -1255,6 +1261,9 @@ namespace WebFreight.Web.ReportsWebServices
                 #region From to ports
                 manifestDataProvider.DeparturePortCode = master.MainCarriageFromPortCode != null ? master.MainCarriageFromPortCode : "";
                 manifestDataProvider.DestinationPortCode = master.MainCarriageFinalDestinationPortCode != null ? master.MainCarriageFinalDestinationPortCode : "";
+
+                manifestDataProvider.DeparturePortName = master.MainCarriageFromPortName;
+                manifestDataProvider.DestinationPortName = master.MainCarriageFinalDestinationPortName;
                 #endregion
 
                 #region First Delivery | PlaceOfDelivery

@@ -249,6 +249,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       BillToId = a.BillToId,
                                       ICAO = al != null ? al.ICAO : "",
                                       SATCustomerName = a.SATCustomerName,
+                                      ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                      ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
                                   }).FirstOrDefault();
 
 
@@ -346,6 +348,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   BillToId = a.BillToId,
                                   ICAO = al != null ? al.ICAO : "",
                                   SATCustomerName = a.SATCustomerName,
+                                  ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                  ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -753,6 +757,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           CreatedByPartner = a.CreatedByPartner,
                                           BillToId = a.BillToId,
                                           SATCustomerName = a.SATCustomerName,
+                                          ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                          ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
                                       }).FirstOrDefault();
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -842,6 +848,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CreatedByPartner = a.CreatedByPartner,
                                       BillToId = a.BillToId,
                                       SATCustomerName = a.SATCustomerName,
+                                      ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                      ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
                                   }).FirstOrDefault();
                     }
                 }
@@ -921,6 +929,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CreatedByPartner = a.CreatedByPartner,
                                   BillToId = a.BillToId,
                                   SATCustomerName = a.SATCustomerName,
+                                  ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                                  ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
                               }).FirstOrDefault();
                 }
 

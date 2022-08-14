@@ -87,6 +87,7 @@
     <Compile Include="EntityKeys\BIReportsTypeKeys.cs" />
     <Compile Include="EntityKeys\BusinessProcessQueueKeys.cs" />
     <Compile Include="EntityKeys\BusinessRoleKeys.cs" />
+    <Compile Include="EntityKeys\DashboardKeys.cs" />
     <Compile Include="EntityKeys\FeatureToggleKeys.cs" />
     <Compile Include="EntityKeys\LastRunDetailKeys.cs" />
     <Compile Include="EntityKeys\LBPTeamMemberKeys.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="EntityListQueryServices\BIReportsTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessProcessQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessRoleListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DashboardListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FeatureToggleListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionStatusListQueryService.Generated.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="EntityListQueryServices\Generated\BIReportsTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessProcessQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessRoleListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DashboardListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FeatureToggleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LastRunDetailListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LBPTeamMemberListQueryService.Generated.cs" />
@@ -138,6 +141,7 @@
     <Compile Include="EntityLists\Generated\BIReportsTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessProcessQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessRoleList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DashboardList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FeatureToggleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LastRunDetailList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LBPTeamMemberList.Generated.cs" />
@@ -146,6 +150,7 @@
     <Compile Include="EntityLists\Generated\TeamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ToggleList.Generated.cs" />
+    <Compile Include="EntityMapping\DashboardMap.cs" />
     <Compile Include="EntityMapping\IndexerWaterMarkMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionStatusMap.cs" />
@@ -173,6 +178,7 @@
     <Compile Include="EntityPOCOs\BIReportsType.cs" />
     <Compile Include="EntityPOCOs\BusinessProcessQueue.cs" />
     <Compile Include="EntityPOCOs\BusinessRole.cs" />
+    <Compile Include="EntityPOCOs\Dashboard.cs" />
     <Compile Include="EntityPOCOs\FeatureToggle.cs" />
     <Compile Include="EntityPOCOs\IndexerWaterMark.cs" />
     <Compile Include="EntityPOCOs\LastRunDetail.cs" />
@@ -195,6 +201,7 @@
     <Compile Include="Repsitories\BIReportsExecutionLogRepository.cs" />
     <Compile Include="Repsitories\BIReportsTypeRepository.cs" />
     <Compile Include="Repsitories\BusinessProcessQueueRepository.cs" />
+    <Compile Include="Repsitories\DashboardRepository.cs" />
     <Compile Include="Repsitories\ElasticIndexerWaterMarkRepository.cs" />
     <Compile Include="Repsitories\BusinessRoleRepository.cs" />
     <Compile Include="Repsitories\FeatureToggleRepository.cs" />
@@ -207,6 +214,7 @@
     <Compile Include="Repsitories\Generated\BIReportsTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessProcessQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessRoleRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DashboardRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FeatureToggleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LastRunDetailRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LBPTeamMemberRepository.Generated.cs" />

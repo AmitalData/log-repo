@@ -69,7 +69,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsForeignKey);
             this.Property(t => t.ForeignEntity).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.NavigationPropertyName).HasMaxLength(100).IsUnicode(false);
-
+            this.Property(t => t.DefaultAdditionalFilters).IsMaxLength().IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("ObjectFields");
@@ -158,8 +158,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.RightKey).HasColumnName("RightKey");
             this.Property(t => t.IsForeignKey).HasColumnName("IsForeignKey");
             this.Property(t => t.ForeignEntity).HasColumnName("ForeignEntity");
-            this.Property(t => t.NavigationPropertyName).HasColumnName("NavigationPropertyName");
-            
+            this.Property(t => t.NavigationPropertyName).HasColumnName("NavigationPropertyName"); 
+            this.Property(t => t.DefaultAdditionalFilters).HasColumnName("DefaultAdditionalFilters");
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

@@ -3019,8 +3019,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ChargifyAWBStock chargifyAWBStock = new ChargifyAWBStock()
                 {
                     IsAWBStockChecked = isAWBStockChecked,
-                    TotalPrice = totalStocks,
-                    TotalStocks = totalPrice,
+                    TotalPrice = totalPrice,
+                    TotalStocks = totalStocks,
                     Tenant = tenant,
                     UserId = userId
                 };

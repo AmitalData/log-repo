@@ -364,6 +364,11 @@ export class LedgerTransactionPM {
     public set PaymentChequeStatus(newValue: string) { if (this.paymentChequeStatus != newValue) { this.paymentChequeStatus = newValue; this.MarkAsDirty("PaymentChequeStatus"); } }
        
 	 
+    private accountLocalName: string;
+    public get AccountLocalName() { return this.accountLocalName; }
+    public set AccountLocalName(newValue: string) { if (this.accountLocalName != newValue) { this.accountLocalName = newValue; this.MarkAsDirty("AccountLocalName"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

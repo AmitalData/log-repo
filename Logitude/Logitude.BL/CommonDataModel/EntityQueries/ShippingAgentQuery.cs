@@ -41,6 +41,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      where a.Id == id && a.Tenant == tenant
                                      select new ShippingAgentPM()
                                      {
+                                         ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                         ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                          Id = a.Id,
                                          Tenant = a.Tenant,
                                          Code = a.Card.Code,
@@ -144,6 +146,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      where a.Card.Code == code && a.Tenant == tenant
                                      select new ShippingAgentPM()
                                      {
+                                         ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                         ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                          Id = a.Id,
                                          Tenant = a.Tenant,
                                          Code = a.Card.Code,
@@ -232,6 +236,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          where a.Tenant == tenant
                                                          select new ShippingAgentPM()
                                                          {
+                                                             ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                                                             ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                                                              Id = a.Id,
                                                              Tenant = a.Tenant,
                                                              Code = a.Card.Code,
@@ -296,6 +302,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          where a.Tenant == tenant
                          select new ShippingAgentPM()
                          {
+                             ExportLocalCustomerGroupId = a.Card.ExportLocalCustomerGroupId,
+                             ImportLocalCustomerGroupId = a.Card.ImportLocalCustomerGroupId,
                              Id = a.Id,
                              Tenant = a.Tenant,
                              Code = a.Card.Code,
@@ -378,6 +386,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             IQueryable<ShippingAgentList> result = (from a in iQueryable.Include("Card").Include("Card.PaymentTerm").Include("Card.VatType")
                                                     select new ShippingAgentList()
                                                     {
+                                                        
                                                         Code = a.Card.Code,
                                                         EnglishName = a.Card.EnglishName,
                                                         LocalName = a.Card.LocalName,

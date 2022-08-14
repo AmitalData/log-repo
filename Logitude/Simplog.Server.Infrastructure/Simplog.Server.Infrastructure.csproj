@@ -185,6 +185,7 @@
     <Compile Include="DataContracts\CodeProperties.cs" />
     <Compile Include="DataContracts\CustomApiQueryFilters.cs" />
     <Compile Include="DataContracts\CustomFieldClass.cs" />
+    <Compile Include="DataContracts\DigitalApiQueryFilters.cs" />
     <Compile Include="DataContracts\DocumentData.cs" />
     <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
     <Compile Include="DataContracts\MessageFilters.shared.cs" />

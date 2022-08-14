@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
@@ -28,29 +27,35 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Text.RegularExpressions;
 using System.Data.SqlClient;
-using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using WebFreight.Web.Controllers.DigitalPortal.Models;
+using System.Data.Entity;
+using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.CustomFilters;
+using Logitude.BL.CommonDataModel.BusinessUnitFilters;
+using Logitude.BL.CommonDataModel.EntityLists;
+using System.Reflection;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalShipmentController : ApiController
     {
+        [HttpGet]
+        [Route("DigitalShipment/GetSingle")]
         public HttpResponseMessage GetSingle(string id)
         {
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var shipmentQuery = new ShipmentQuery(authToken.Tenant);
+                var shipmentPM = shipmentQuery.GetSinglePM(id, authToken.Tenant);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM); ;
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
             }
 
             catch (Exception ex)
@@ -59,106 +64,74 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-        [HttpGet]
-        public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
+        [HttpPost]
+        [Route("DigitalShipment/GetByFilters")]
+        public HttpResponseMessage GetByFilters(GeneralFilters newFilters)
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string shipmentLevelCodeValue = "";
-                string partnerTypeName = "";
-                var partnerTypeValue = FixFilter(filters.Filter2Value);
-                var partnerTypeId = FixFilter(filters.Filter1Value);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckSharedContactAuthentication(tenant, partnerTypeId);
-                bool isFullTextSearch = false;
-                var myTenantRepository = new TenantRepository(tenant);
-                var myTenant = myTenantRepository.GetSingleTenant(tenant);
-                if (myTenant != null)
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
+                
+                var myTenantRepository = new TenantRepository(authToken.Tenant);
+                var myTenant = myTenantRepository.GetSingleTenant(authToken.Tenant);
+
+                var filters = new ApiQueryFilters()
                 {
-                    isFullTextSearch = myTenant.IsFullTextSearchEnabled;
-                }
+                    Filter1Value = newFilters.CardId,
+                    Filter2Value = newFilters.CardType
+                };
 
                 var queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "Shipment",
-                    PageIndex = filters.PageIndex,
-                    PageSize = filters.PageSize,
+                    PageIndex = newFilters.PageIndex,
+                    PageSize = newFilters.PageSize,
                     QuerySection = "Shipments",
-                    SortByColumnName = filters.SortBy,
-                    SortDirectin = filters.SortDirection,
+                    SortByColumnName = newFilters.SortBy,
+                    SortDirectin = newFilters.SortDirection,
                     QueryFilterItems = new List<QueryFilterItem>(),
                 };
 
-                if (partnerTypeValue == "CS")
+                string partnerTypeName = string.Empty;
+                string shipmentLevelCodeValue = string.Empty;
+
+                if (newFilters.CardType == "CS")
                 {
-                    shipmentLevelCodeValue = "D,H,A"; 
+                    shipmentLevelCodeValue = "D,H,A";
                     partnerTypeName = "CustomerId";
                 }
-                else if (partnerTypeValue == "AG")
+                else if (newFilters.CardType == "AG")
                 {
                     shipmentLevelCodeValue = "D,C";
                     partnerTypeName = "AgentId";
                 }
 
-                if (!string.IsNullOrEmpty(partnerTypeId))
-                    queryOperations.SetFilter(partnerTypeName, partnerTypeId, false, "Equals", null, false);
-
-                if (!string.IsNullOrEmpty(shipmentLevelCodeValue))
-                    queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InList", null, false);
-
-                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
-                var filterProperties = filters.GetType().GetProperties().ToList();
-
-                for (int i = 1; i <= 10; i++)
+                if (!string.IsNullOrEmpty(newFilters.CardId))
                 {
-                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
-                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
-                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
-                    object filterValue2 = null;
-
-                    if (filterNameProp != null)
-                    {
-                        string filterName = filterNameProp.ToString();
-                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-                        ObjectField field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filterName);
-                        if (field != null)
-                        {
-                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-                        }
-                        else
-                        {
-                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
-                        }
-                    }
+                    queryOperations.SetFilter(partnerTypeName, newFilters.CardId, false, "Equals", null, false);
                 }
 
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                if (!string.IsNullOrEmpty(shipmentLevelCodeValue))
                 {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+                    queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InList", null, false);
+                }
 
-                    foreach (QueryFilterItem filter in filters_list)
+                var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", authToken.Tenant);
+
+                if (newFilters.AdditionalFilters.Any())
+                {
+                    foreach (var filter in newFilters.AdditionalFilters)
                     {
-                        ObjectField field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        var field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+
                         if (field != null)
                         {
-
-
-                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                            string valuestring1 = filter.FieldValue?.ToString();
                             object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                            string valuestring2 = filter.FieldValue2?.ToString();
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
                             queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                         }
                         else
@@ -168,31 +141,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                 }
 
-                string SearchFilterAsWhere = "";
-                List<SqlParameter> parameters = new List<SqlParameter>();
-                string loggedUserEmail = authToken.Email;
-                if (isFullTextSearch)
-                {
-                    var SearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
-                    List<string> ShipmentIds = new List<string>();
+                ShipmentAPiHelper.AddFilters(queryOperations, authToken.Tenant);
+                var shipmentRepository = new ShipmentRepository(authToken.Tenant);
 
-                    parameters.Add(new SqlParameter("@Tenant", tenant));
-                    if (SearchFilter != null)
-                    {
-                        SearchFilterAsWhere = "Id in (SELECT Id FROM Shipments Where Tenant = @p__linq__0 and Contains(SearchFields,@SearchFields))";
-                        parameters.Add(new SqlParameter("@SearchFields", "\"" + SearchFilter.FieldValue + "*\""));
-                        queryOperations.QueryFilterItems.Remove(SearchFilter);
-                    }
-                }
-
-                ShipmentAPiHelper.AddFilters(queryOperations, tenant);
-                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                TenantQuery tenantQuery = new TenantQuery(tenant);
-                TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
-                GenericFilter genericFilter = new GenericFilter();
-                GenericSort sortClass = new GenericSort();
-                ShipmentCustomFilter customfilters = new ShipmentCustomFilter(tenant);
-                IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+                var customfilters = new ShipmentCustomFilter(authToken.Tenant);
+                IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(authToken.Tenant);
                 var MySearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
 
                 if (MySearchFilter != null)
@@ -203,30 +156,38 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
-                QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-                QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-                shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(nonListQueryOperation, shipments);
-                int skippedShipments = queryOperations.PageIndex;
+
+                var nonListQueryOperation = new QueryOperations
+                {
+                    QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
+                };
+
+                var listQueryOperation = new QueryOperations
+                {
+                    QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
+                };
+
+                var genericFilter = new GenericFilter();
+
+                shipments = genericFilter.GetFilteredQuery(nonListQueryOperation, shipments);
                 var myShipmentQuery = new ShipmentQuery(shipmentRepository);
-                var entityLists = myShipmentQuery.GetIQueryableShipmentList(shipments, tenant);
+                var entityLists = myShipmentQuery.GetIQueryableShipmentList(shipments, authToken.Tenant);
                 entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
-                    PropertyInfo propInfo = typeof(ShipmentList).GetProperty(queryOperations.SortByColumnName);
-                    List<ObjectField> shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant).ToList();
+                    var propInfo = typeof(ShipmentList).GetProperty(queryOperations.SortByColumnName);
+                    var shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", authToken.Tenant).ToList();
 
-                    ObjectField objectField = (from a in shipmentObjectFields
-                                               where a.FieldName == queryOperations.SortByColumnName
-                                               select a).FirstOrDefault();
+                    var objectField = shipmentObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
 
                     if (objectField != null)
                     {
+                        var sortClass = new GenericSort();
+
                         if (!objectField.IsCustom)
                         {
-                            switch (objectField.DataTypeCode.ToLower())
+                             switch (objectField.DataTypeCode.ToLower())
                             {
                                 case "text":
                                     {
@@ -263,7 +224,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                         entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
                                         break;
                                     }
-                            }
+                             }
                         }
                         else
                         {
@@ -277,57 +238,28 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 var response = new ServiceResponse();
-                int count = 0;
-                if (filters.GetCount && string.IsNullOrEmpty(SearchFilterAsWhere))
+
+                if (newFilters.GetCount)
                 {
                     response.Count = entityLists.Count();
                 }
 
-                entityLists = System.Data.Entity.QueryableExtensions.Skip(entityLists, () => skippedShipments);
-                entityLists = System.Data.Entity.QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
-                List<ShipmentList> listQuery;
-                if (isFullTextSearch)
-                {
-                    TraceStringValues MySql;
-                    MySql = IQueryableExtensions.ToTraceString<ShipmentList>(entityLists);
-                    if (!string.IsNullOrEmpty(SearchFilterAsWhere) && MySql.TSQL.ToLower().Contains("where"))
-                    {
-                        var regex = new Regex(Regex.Escape("WHERE"), RegexOptions.IgnoreCase);
-                        MySql.TSQL = regex.Replace(MySql.TSQL, "WHERE " + SearchFilterAsWhere + " AND ", 1);
+                entityLists = QueryableExtensions.Skip(entityLists, () => queryOperations.PageIndex);
+                entityLists = QueryableExtensions.Take(entityLists, () => queryOperations.PageSize);
 
-                        var regex1 = new Regex(Regex.Escape("WHERE [Project1].[row_number] > "), RegexOptions.IgnoreCase);
-                        MySql.TSQL = regex1.Replace(MySql.TSQL, "WHERE [Project1].[row_number] > 0 --", 1);
-                    }
+                List<ShipmentList> listQuery = listQuery = entityLists.ToList();
+                
+                var service = new ShipmentService(authToken.Tenant);
 
-                    foreach (var item in MySql.TSQLParams)
-                    {
-                        parameters.Add(new SqlParameter(item.Name, item.Value));
-                    }
+                service.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
 
-                    IShipmentsContext context = ShipmentsContext.GetContext(tenant);
-                    ShipmentsContext activeContext = context.GetActiveDbContext() as ShipmentsContext;
-                    listQuery = activeContext.Database.SqlQuery<ShipmentList>(MySql.TSQL, parameters.ToArray()).ToList();
-                }
-                else
-                {
-                    listQuery = entityLists.ToList();
-                }
-
-                ShipmentService service = new ShipmentService(tenant);
-                service.BuildShipmentListWithTimeLine(listQuery, tenant);
                 response.Result = listQuery;
-                if (filters.GetCount && !string.IsNullOrEmpty(SearchFilterAsWhere))
-                {
-                    response.Count = listQuery.Count();
-                }
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
-                customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-                if (filters.GetCount)
-                {
-                    reponseMessage.Headers.Add("TotalCount", count.ToString());
-                }
+                //var customFieldResolver = new CustomFieldResolver();
+
+                //customFieldResolver.SetCustomFieldsValues("Shipment", authToken.Tenant, listQuery.Cast<object>().ToList());
+
+                var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
             }
@@ -337,28 +269,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-        private string FixFilter(string filter)
-        {
-            string myResult = filter;
-
-            if (!string.IsNullOrWhiteSpace(myResult) && myResult.ToLower().Equals("all"))
-            {
-                myResult = null;
-            }
-
-            return myResult;
-        }
-
         [HttpGet]
+        [Route("DigitalShipment/GetShipmentActiveStatuses")]
         public HttpResponseMessage GetShipmentActiveStatuses()
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                EntityStatusQuery entityStatusQuery = new EntityStatusQuery(tenant);
-                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+
+                var entityStatusQuery = new EntityStatusQuery(authToken.Tenant);
+
+                var digitalPortalActiveStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, digitalPortalActiveStatuses);
             }
@@ -368,32 +289,208 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-        public List<TraceEventPM> GetEntityEvents(string entityId, string objectTableName, string partnerType, int tenant)
+        [HttpGet]
+        [Route("DigitalShipment/GetEntityEvents")]
+        public List<TraceEventPM> GetEntityEvents(string entityId, string objectTableName, string cardType, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
+
             var result = new List<TraceEventPM>();
-            var objectTabelRepository = new ObjectTableRepository(tenant);
-            var objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+
+            var objectTable = new ObjectTableRepository(tenant).GetObjectTableByName(objectTableName, 0, true);
+
             if (objectTable != null)
             {
-                var objectTableId = objectTable.Id;
                 var traceEventsRepository = new TraceEventRepository(tenant);
                 var traceEventQuery = new TraceEventQuery(traceEventsRepository);
-                var data = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTableId).ToList();
 
-                if (partnerType == "AG")
+                var dataQuery = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTable.Id);
+
+                var resultQuery = cardType.Equals("AG", StringComparison.InvariantCultureIgnoreCase)
+                                  ? dataQuery.Where(d => d.IsAgentView)
+                                  : dataQuery.Where(d => d.IsCustomerView);
+
+                return resultQuery.OrderByDescending(s => s.EventDateTime).ToList();
+            }
+
+            return result;
+        }
+
+        [HttpGet]
+        [Route("DigitalShipment/GetPartnersByFilters")]
+        public HttpResponseMessage GetPartnersByFilters([FromUri] DigitalApiQueryFilters filters)
+        {
+            try
+            {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                var queryOperations = new QueryOperations()
                 {
-                    result = data.Where(d => d.IsAgentView).ToList();
+                    ObjectTableName = "Customer",
+                    PageIndex = 0,
+                    PageSize = 50,
+                    QuerySection = "Customers",
+                    SortByColumnName = filters.SortBy,
+                    SortDirectin = filters.SortDirection,
+                };
+
+                List<ObjectField> CustomerObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customer", authToken.Tenant);
+
+                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                {
+                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                    foreach (QueryFilterItem filter in filters_list)
+                    {
+                        ObjectField field = CustomerObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filter.FieldValue?.ToString();
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filter.FieldValue2?.ToString();
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                        }
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
+                    }
+                }
+
+                var genericFilter = new GenericFilter();
+
+                var item = queryOperations.QueryFilterItems
+                                          .Where(f => f.FieldName == "CardSearchField")
+                                          .FirstOrDefault();
+
+                queryOperations.QueryFilterItems.Remove(item);
+
+                string searchvalue = !string.IsNullOrEmpty(filters.SearchFields) ? !string.IsNullOrEmpty(filters.SearchFields.ToString()) ? filters.SearchFields.ToString() : null : null;
+                ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+                var customerRepository = new CustomerRepository(MyContext);
+                IQueryable<CustomersDataView> entityPocos = customerRepository.GetCustomersDataViews(authToken.Tenant);
+                var customerQuery = new CustomerQuery(customerRepository);
+
+                var nonListQueryOperation = new QueryOperations
+                {
+                    QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
+                };
+
+                var listQueryOperation = new QueryOperations
+                {
+                    QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
+                };
+
+                var customfilters = new CustomerCustomFilter(authToken.Tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+                var myFilter = new CustomerBusinessUnitFilter(authToken.Tenant);
+                entityPocos = myFilter.RunFilter(entityPocos);
+                entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
+                IQueryable<CustomerList> entityLists = customerQuery.GetDigitalIQueryableEntityList(entityPocos);
+                entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
+
+                if (!string.IsNullOrEmpty(searchvalue))
+                {
+                    CustomerDataSearchService customerDataSearchService = new CustomerDataSearchService();
+                    entityLists = customerDataSearchService.Run(new CustomerSearchArgs() { SearchText = searchvalue, Tenant = authToken.Tenant, EntityLists = entityLists, SortByColumnName = queryOperations.SortByColumnName, SortDirectin = queryOperations.SortDirectin, PageSize = queryOperations.PageSize, FilterItems = queryOperations.QueryFilterItems }).AsQueryable();
+                }
+
+                else if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+                {
+                    PropertyInfo propInfo = typeof(CustomerList).GetProperty(queryOperations.SortByColumnName);
+
+                    ObjectField objectField = CustomerObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
+
+                    if (objectField != null)
+                    {
+                        var sortClass = new GenericSort();
+
+                        if (objectField.IsCustom)
+                        {
+                            entityLists = sortClass.GetSorterQuery<CustomerList, string>(queryOperations, entityLists);
+                        }
+                        else
+                        {
+                            switch (objectField.DataTypeCode.ToLower())
+                            {
+                                case "ntext":
+                                case "text":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CustomerList, string>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "sigdouble":
+                                case "double":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CustomerList, double>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "date":
+                                case "datetime":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CustomerList, DateTime>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "unsinteger":
+                                case "integer":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CustomerList, int>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "boolean":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CustomerList, bool>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "unsdecimal":
+                                case "decimal":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CustomerList, decimal>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        entityLists = entityLists.OrderByDescending(d => d.Code);
+                                        break;
+                                    }
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    result = data.Where(d => d.IsCustomerView).ToList();
+                    entityLists = entityLists.OrderByDescending(d => d.Code);
                 }
+
+                var response = new ServiceResponse();
+
+                if (filters.GetCount)
+                {
+                    response.Count = entityLists.Count();
+                }
+
+                if (!queryOperations.GetAll)
+                {
+                    entityLists = entityLists.Skip(queryOperations.PageIndex);
+                    entityLists = entityLists.Take(queryOperations.PageSize);
+                }
+
+                var listResult = entityLists.ToList();
+                var customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetCustomFieldsValues("Customer", authToken.Tenant, listResult.Cast<object>().ToList());
+                response.Result = listResult;
+                var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                return reponseMessage;
             }
-
-            return result.OrderByDescending(s => s.EventDateTime).ToList();
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
-
     }
 }
-

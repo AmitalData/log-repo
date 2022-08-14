@@ -459,6 +459,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ImportLocalCustomerGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportLocalCustomerGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"
@@ -538,6 +552,16 @@
     ForeignKeyColumn="RegimenFiscalCode"
     ReferencedTable="RegimenFiscals"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ImportLocalCustomerGroupId"
+    ReferencedTable="CustomerGroups"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ExportLocalCustomerGroupId"
+    ReferencedTable="CustomerGroups"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CreateDate" />

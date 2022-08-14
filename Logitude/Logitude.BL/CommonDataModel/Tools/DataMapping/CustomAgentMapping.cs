@@ -57,6 +57,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
             entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entityCard.SATCustomerName = entityPM.SATReceptorName;
+            entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
+            entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
 
             entityPOCO.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
             entityPOCO.Field2 = entityPM.Field2 != null ? entityPM.Field2.Value : null;

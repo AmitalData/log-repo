@@ -148,5 +148,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public string BillToId { get; set; }
         public string SATCustomerName { get; set; }
+
+        public string ImportLocalCustomerGroupId { get; set; }
+        public string ExportLocalCustomerGroupId { get; set; }
+        [ForeignKey("ImportLocalCustomerGroupId")]
+        public virtual CustomerGroup ImportLocalCustomerGroup { get; set; }
+        [ForeignKey("ExportLocalCustomerGroupId")]
+        public virtual CustomerGroup ExportLocalCustomerGroup { get; set; }
     }
 }
