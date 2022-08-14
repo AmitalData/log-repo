@@ -505,12 +505,12 @@ export class MaintenanceComponent {
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
 
-            if (SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.OceanInsightsSettings")) {
+            if (SessionInfo.LoggedUserPM.IsCustomerCare && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] != null) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
                 item.Icon = "Settings"
                 item.Code = "VIZN";
-                item.ObjectTableName = "Vizion - Automatic Requests";
+                item.ObjectTableName = "Vizion - Pilot Customer";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
         }
@@ -1541,6 +1541,15 @@ export class MaintenanceComponent {
                     logWindow.Show('./CommonModules/CommonPartners/Components/Maintenance/UploadPartnersComponent');
                     break;
                 }
+
+                case "VIZN": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = "Vizion - Pilot Customers";
+                    logitudeWindow.Width = 1000;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/Vizion/VizionAutomaticRequestComponent');
+                    break;
+                } 
 
                 default: {
                     if (item.ObjectTableId) {

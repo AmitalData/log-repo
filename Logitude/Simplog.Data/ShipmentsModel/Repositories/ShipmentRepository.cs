@@ -1021,5 +1021,18 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     where a.Tenant == tenant && a.CarrierServiceLineId == serviceLineId
                     select a);
         }
+
+        public IQueryable<Shipment> GetShipmentsWithoutIncludes(int tenant)
+        {
+            return (from record in context.Shipments where record.Tenant == tenant select record);
+        }
+
+        public List<string> GetShipmentsIdsFromShipmentsNumbersList(List<string> shipmentsNumbers)
+        {
+            IQueryable<Shipment> shipments = from a in context.Shipments
+                                             where shipmentsNumbers.Contains(a.ShipmentNumber)
+                                             select a;
+            return shipments.Select(s => s.Id).ToList();
+        }
     }
 }
