@@ -1308,7 +1308,7 @@
 
                                                 </IconButton>
 
-                                                <button class="Button" style="height:18px; width: 18px;right:2px;" id="Edit_Additional" *ngIf="item.ItemAdditionalStatusVisibility" (click)="item.EditItem(item)" tabindex="-1">
+                                                <button class="Button" title={{TooltipEdit}} style="height:18px; width: 18px;right:2px;" id="Edit_Additional" *ngIf="item.ItemAdditionalStatusVisibility" (click)="item.EditItem(item)" tabindex="-1">
                                                     <img class="greenTickImg" src="./Images/Buttons/EditWithGreenTick.png" />
                                                 </button>   
 
@@ -1347,8 +1347,8 @@
                                                 <IconButton style="float:right" [Name]="'Delete'" [IsSmall]="true" [IsEnabled]="!IsReadOnly" (click)="item.DeleteButtonClicked()"></IconButton>
 
                                                 <!--<IconButton style="margin-left:5px; width:20px;" [Name]="'copy'" [IsSmall]="true" (click)="item.CopyLineClicked(item,ItemsSource)" *ngIf="!item.IsParent"></IconButton>-->
-                                                <button id="copy" [class.disabled]="IsDisplayOnly" class="Button" style="float: right;height:18px; width: 20px;right:2px;" *ngIf="!item.IsParent" (click)="item.CopyLineClicked(item,ItemsSource)" tabindex="-1">
-                                                    <img class="greenTickImg" src="./Images/Buttons/copy.png" title={{TooltipCopy}}/>
+                                                <button id="copy" [class.disabled]="IsDisplayOnly" class="Button" title={{TooltipCopy}} style="float: right;height:18px; width: 20px;right:2px;" *ngIf="!item.IsParent" (click)="item.CopyLineClicked(item,ItemsSource)" tabindex="-1">
+                                                    <img class="greenTickImg" src="./Images/Buttons/copy.png"/>
                                                 </button>
 
                                                 <!-- ClasifiedRemarks Info icon and tooltip -->
