@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 else
                 {
 
-                    if (requestParams.LoggingEntityReference == "E")
+                    if (requestParams.LoggingEntityReference == "E"|| requestParams.DeclarationNumber.Substring(2,2)=="98")
                     {
                         var messagingService = new DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService();
                         responseData = messagingService.Send(requestParams);
