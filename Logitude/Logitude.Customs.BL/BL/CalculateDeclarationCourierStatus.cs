@@ -146,6 +146,9 @@ namespace Logitude.Customs.BL.BL
                 var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
                 updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
 
+                var updateDeclarationPending904ExceededGrossMassMeasureService = new UpdateDeclarationPending904ExceededGrossMassMeasureService(declarationPM);
+                updateDeclarationPending904ExceededGrossMassMeasureService.Calc(myDeclarationCourierStatusPM);
+
                 return myDeclarationCourierStatusPM;
 
             }
@@ -659,6 +662,120 @@ namespace Logitude.Customs.BL.BL
                 
             }
 
+        }
+    }
+
+
+    public class UpdateDeclarationPending904ExceededGrossMassMeasureService
+    {
+        private DeclarationPM declarationPM;
+
+        public UpdateDeclarationPending904ExceededGrossMassMeasureService(DeclarationPM declarationPM)
+        {
+            this.declarationPM = declarationPM;
+        }
+        public void Calc(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+            string courierReasonCode = "904";
+            if (myDeclarationCourierStatusPM == null)
+            {
+                return;//not courier 
+            }
+            var declarationPending904PM = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == declarationPM.Id && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
+            
+            string defValue = GetDefault("ISRAEL", "CGO_PENDING_WGT", "NON", "NON");
+            decimal defaultAmount = 0;
+            var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+
+            if (!boolvar)
+            {
+                return;
+            }
+
+            ConsignmentPackageRepository consignmentPackageRepository = new ConsignmentPackageRepository(declarationPM.Tenant);
+            List<ConsignmentPackage> listConPackages = consignmentPackageRepository.GetConsignmentPackagesFilterByMeasureQualifierCode(declarationPM.Id);
+
+            var sumGross = listConPackages.Sum(c => c.GrossMassMeasure);
+
+
+            if (sumGross < defaultAmount)
+            {
+                if (declarationPending904PM != null && declarationPending904PM.Status == "A")
+                {
+                    //UPDATE to solve
+                    declarationPending904PM.Status = "S";
+                    declarationPending904PM.ChangeSetOp = ChangeSetOperation.Update;
+                    if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                    {
+                        myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+
+                }
+
+            }
+            else//invalid 
+            {
+                CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
+                Boolean isActive = courierPendingReasonRepositoryRepository.IsActive(courierReasonCode, myDeclarationCourierStatusPM.Tenant);
+                if (isActive)
+                {
+                    if (declarationPending904PM == null)
+                    {
+
+                        declarationPending904PM = new DeclarationPendingPM()
+                        {
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            DeclarationID = declarationPM.Id,
+                            Tenant = declarationPM.Tenant,
+                            CourierPendingReasonCode = courierReasonCode,
+                            Status = "A",
+                        };
+
+                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPending904PM);
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+
+
+
+                    else
+                    {
+                        if (declarationPending904PM.Status == "S")
+                        {
+                            declarationPending904PM.Status = "A";
+                            declarationPending904PM.ChangeSetOp = ChangeSetOperation.Update;
+                            if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                            {
+                                myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+
+
+                        }
+                    }
+                }
+
+            }
+
+        }
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(declarationPM.Tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
         }
     }
 }
