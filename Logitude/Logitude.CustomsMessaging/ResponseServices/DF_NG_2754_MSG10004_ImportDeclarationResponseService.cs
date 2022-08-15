@@ -34,6 +34,7 @@ using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Threading.Tasks;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -1268,11 +1269,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                     requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
                                     requestParams2755.FutureSendDateTime = requestDate;
-                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+                                    Task.Run(async () => {
+                                        await Task.Delay(TimeSpan.FromSeconds(30));
+                                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+                                    });
                                 }
                                 else
                                 {
-                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                    Task.Run(async () => {
+                                        await Task.Delay(TimeSpan.FromSeconds(30));
+                                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                    });
                                 }
 
                                 scopeNewCRS.Complete();

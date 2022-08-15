@@ -97,6 +97,8 @@ export class DeclarationCourierStatusList {
 	IncoTermCode: string;
 	MissedDocumentStatusCode: string;
 	CasualSupplierName: string;
+	ImporterAddress: string;
+	CasualImporterTel: string;
 	
 }
  

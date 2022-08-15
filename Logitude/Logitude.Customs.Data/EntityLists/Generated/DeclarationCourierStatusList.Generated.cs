@@ -192,6 +192,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string MissedDocumentStatusCode  { get; set; }
        [DataMember]
        public string CasualSupplierName  { get; set; }
+       [DataMember]
+       public string ImporterAddress  { get; set; }
+       [DataMember]
+       public string CasualImporterTel  { get; set; }
    }
 
 }

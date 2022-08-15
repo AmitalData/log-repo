@@ -253,7 +253,7 @@ export class PaymentOrderDeficitComponent extends BaseComponent {
     
 
     NavigateToDeclarationButtonClicked(customFileNo: string) {
-        new DeclarationExtendedListService().GetSingleDeclarationByCustomFileNo(customFileNo).subscribe(async (res: ServiceResponse) => {
+        new DeclarationExtendedListService().GetLastAmendmentByCustomFileNo(customFileNo).subscribe(async (res: ServiceResponse) => {
             const entity: DeclarationPM = res.Result;
             const cmpRef = await SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
             cmpRef.instance.ComponentRef = cmpRef;
