@@ -1189,4 +1189,6 @@ export class ShipmentsForAutomaticRequest {
     ShipmentId: string;
     ShipmentNumber: string;
     NumberOfContainers: string;
+    SentSuccesfully: boolean;
+    ErrorMessage: string;
 }
