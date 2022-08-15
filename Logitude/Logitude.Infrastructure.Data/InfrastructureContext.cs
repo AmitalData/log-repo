@@ -92,6 +92,8 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new LBPTeamMemberMap());
 	
+            modelBuilder.Configurations.Add(new MeasureTypeMap());
+	
             modelBuilder.Configurations.Add(new PriceStepMap());
 	
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
@@ -101,10 +103,13 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new TeamMemberBusinessRoleMap());
 	
             modelBuilder.Configurations.Add(new ToggleMap());
+	
+            modelBuilder.Configurations.Add(new WidgetMap());
+	
+            modelBuilder.Configurations.Add(new WidgetMeasureMap());
+	
+            modelBuilder.Configurations.Add(new WidgetTypeMap());
             modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
-
-
-
 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
@@ -462,6 +467,12 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
+	 public IDbSet<MeasureType> MeasureTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<PriceStep> PriceSteps 
 	 {
 	      get; set;
@@ -491,12 +502,28 @@ namespace Logitude.Infrastructure.Data
 	      get; set;
 	 
 	 }
+	
+	 public IDbSet<Widget> Widgets 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WidgetMeasure> WidgetMeasures 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WidgetType> WidgetTypes 
+	 {
+	      get; set;
+	 
+	 }
         public IDbSet<IndexerWaterMark> IndexerWaterMarks
         {
             get; set;
         }
-
-
 
     }
 

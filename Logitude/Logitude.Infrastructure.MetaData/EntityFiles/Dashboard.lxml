@@ -24,7 +24,7 @@
   EnableAddFromLOV="false"
   IsRestrictable="false"
   IsMain="true"
-  IsAutoComplete="false"
+  IsAutoComplete="true"
   EnableEditFromLOV="false"
   SortingByObjectField="&quot;CreateDate&quot;"
   SortingByDirection="&quot;Descending&quot;"
@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Dashboard&quot;"
-  Code="&quot;8990&quot;"
+  Code="&quot;e1cd&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
@@ -88,6 +88,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -159,6 +160,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -230,6 +232,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CreateDate&quot;"
     ListPropertyPath="&quot;CreateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -302,6 +305,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CreatedByUserId&quot;"
     ListPropertyPath="&quot;CreatedByUserId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -372,6 +376,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdateDate&quot;"
     ListPropertyPath="&quot;UpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -444,6 +449,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdatedByUserId&quot;"
     ListPropertyPath="&quot;UpdatedByUserId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -514,6 +520,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -585,6 +592,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Name&quot;"
     ListPropertyPath="&quot;Name&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -653,6 +661,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Description&quot;"
     ListPropertyPath="&quot;Description&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -694,6 +703,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;DashboardHeaderScreen&quot;"
+    ObjectTableName="&quot;Dashboard&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -722,6 +740,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
