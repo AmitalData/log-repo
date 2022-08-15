@@ -23,28 +23,103 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             InitializeServices(shipmentId, tenant);
             var partners = new List<ShipmentPartnerPM>();
-            var shipment   = shipmentRepository.GetSingleShipment(shipmentId, this.tenant);
+            var shipment = shipmentRepository.GetSingleShipment(shipmentId, this.tenant);
             if (shipment == null)
             {
                 return null;
             }
 
             GetSharedLogisticsSetting();
-            partners.Add(AddShipperPartner(shipment));
-            partners.Add(AddConsigeePartner(shipment));
-            partners.Add(AddAgentPartner(shipment));
-            partners.Add(AddColoaderPartner(shipment));
-            partners.Add(AddConsigneeNotImporterPartner(shipment));
-            partners.Add(AddFreightForwarderPartner(shipment));
-            partners.Add(AddNotify1Partner(shipment));
-            partners.Add(AddNotify2Partner(shipment));
-            partners.Add(AddShipperNotExporterPartner(shipment));
-            partners.Add(AddCustomsAgentExportPartner(shipment));
-            partners.Add(AddCustomsAgentImportPartner(shipment));
-            partners.Add(AddCustomClearancePartner(shipment));
-            partners.Add(AddConsolidatorPartner(shipment));
-            partners.Add(AddReleasingAgentPartner(shipment));
-            partners.Add(AddIssuingCarrierAgentPartner(shipment));
+            var shipper = GetShipperPartner(shipment);
+            if (shipper != null)
+            {
+                partners.Add(shipper);
+            }
+
+            var consigee = GetConsigeePartner(shipment);
+            if (consigee != null)
+            {
+                partners.Add(consigee);
+            }
+
+            var agent = GetAgentPartner(shipment);
+            if (agent != null)
+            {
+                partners.Add(agent);
+            }
+
+            var shipperNotExporter = GetShipperNotExporterPartner(shipment);
+            if (shipperNotExporter != null)
+            {
+                partners.Add(shipperNotExporter);
+            }
+
+            var consigneeNotImporter = GetConsigneeNotImporterPartner(shipment);
+            if (consigneeNotImporter != null)
+            {
+                partners.Add(consigneeNotImporter);
+            }
+
+            var notify1 = GetNotify1Partner(shipment);
+            if (notify1 != null)
+            {
+                partners.Add(notify1);
+            }
+
+            var notify2 = GetNotify2Partner(shipment);
+            if (notify2 != null)
+            {
+                partners.Add(notify2);
+            }
+
+            var freightForwarder = GetFreightForwarderPartner(shipment);
+            if (freightForwarder != null)
+            {
+                partners.Add(freightForwarder);
+            }
+
+            var coloader = GetColoaderPartner(shipment);
+            if (coloader != null)
+            {
+                partners.Add(coloader);
+            }
+
+            var customsAgent = GetCustomsAgentExportPartner(shipment);
+            if (customsAgent != null)
+            {
+                partners.Add(customsAgent);
+            }
+
+            var customsAgentImport = GetCustomsAgentImportPartner(shipment);
+            if (customsAgentImport != null)
+            {
+                partners.Add(customsAgentImport);
+            }
+
+            var customsClearanceImport = GetCustomClearancePartner(shipment);
+            if (customsClearanceImport != null)
+            {
+                partners.Add(customsClearanceImport);
+            }
+
+            var releasingAgent = GetReleasingAgentPartner(shipment);
+            if (releasingAgent != null)
+            {
+                partners.Add(releasingAgent);
+            }
+
+            var issuingCarrier = GetIssuingCarrierAgentPartner(shipment);
+            if (issuingCarrier != null)
+            {
+                partners.Add(issuingCarrier);
+            }
+
+            var consolidator = GetConsolidatorPartner(shipment);
+            if (consolidator != null)
+            {
+                partners.Add(consolidator);
+            }
+
             return partners;
         }
 
@@ -65,7 +140,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
         }
         
-        private ShipmentPartnerPM AddShipperPartner(Shipment shipment)
+        private ShipmentPartnerPM GetShipperPartner(Shipment shipment)
         {
             bool isShipperShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsShipperShared;
             if (string.IsNullOrEmpty(shipment.ShipperId) || !isShipperShared)
@@ -94,7 +169,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
 
-        private ShipmentPartnerPM AddConsigeePartner(Shipment shipment)
+        private ShipmentPartnerPM GetConsigeePartner(Shipment shipment)
         {
             bool isConsigneeShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeShared;
             if (string.IsNullOrEmpty(shipment.ConsigneeId) || !isConsigneeShared)
@@ -126,7 +201,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
        
-        private ShipmentPartnerPM AddAgentPartner(Shipment shipment)
+        private ShipmentPartnerPM GetAgentPartner(Shipment shipment)
         {
             bool isAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsAgentShared;
             if (string.IsNullOrEmpty(shipment.AgentId) || !isAgentShared)
@@ -162,7 +237,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         }
         
-        private ShipmentPartnerPM AddColoaderPartner(Shipment shipment)
+        private ShipmentPartnerPM GetColoaderPartner(Shipment shipment)
         {
             bool isColoaderShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsColoaderShared;
             if (string.IsNullOrEmpty(shipment.ColoaderId) || !isColoaderShared)
@@ -196,7 +271,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
        
-        private ShipmentPartnerPM AddConsigneeNotImporterPartner(Shipment shipment)
+        private ShipmentPartnerPM GetConsigneeNotImporterPartner(Shipment shipment)
         {
             bool isConsigneeNotImporterShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeNotImporterShared;
             if (string.IsNullOrEmpty(shipment.ConsigneeNotImporterId) || !isConsigneeNotImporterShared)
@@ -230,7 +305,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
         
-        private ShipmentPartnerPM AddFreightForwarderPartner(Shipment shipment)
+        private ShipmentPartnerPM GetFreightForwarderPartner(Shipment shipment)
         {
             bool isFreightForwarderShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsFreightForwarderShared;
             if (string.IsNullOrEmpty(shipment.FreightForwarderId) || !isFreightForwarderShared)
@@ -263,10 +338,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
         
-        private ShipmentPartnerPM AddNotify1Partner(Shipment shipment)
+        private ShipmentPartnerPM GetNotify1Partner(Shipment shipment)
         {
             bool isNotify1Shared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsNotify1Shared;
-            if (string.IsNullOrEmpty(shipment.Notify1Id) && !isNotify1Shared)
+            if (string.IsNullOrEmpty(shipment.Notify1Id) || !isNotify1Shared)
             {
                 return null;
             }
@@ -298,7 +373,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
         
-        private ShipmentPartnerPM AddNotify2Partner(Shipment shipment)
+        private ShipmentPartnerPM GetNotify2Partner(Shipment shipment)
         {
             bool isNotify2Shared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsNotify2Shared;
             if (string.IsNullOrEmpty(shipment.Notify2Id) || !isNotify2Shared)
@@ -331,7 +406,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
         
-        private ShipmentPartnerPM AddShipperNotExporterPartner(Shipment shipment)
+        private ShipmentPartnerPM GetShipperNotExporterPartner(Shipment shipment)
         {
             bool isShipperNotExporterShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsShipperNotExporterShared;
             if (string.IsNullOrEmpty(shipment.ShipperNotExporterId) || !isShipperNotExporterShared)
@@ -366,7 +441,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
        
-        private ShipmentPartnerPM AddCustomsAgentExportPartner(Shipment shipment)
+        private ShipmentPartnerPM GetCustomsAgentExportPartner(Shipment shipment)
         {
             bool isCustomsAgentExportShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomsAgentExportShared;
             if (string.IsNullOrEmpty(shipment.CustomAgentExportId) || !isCustomsAgentExportShared)
@@ -400,7 +475,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
         
-        private ShipmentPartnerPM AddCustomsAgentImportPartner(Shipment shipment)
+        private ShipmentPartnerPM GetCustomsAgentImportPartner(Shipment shipment)
         {
             bool isCustomsAgentImportShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomsAgentImportShared;
             if (string.IsNullOrEmpty(shipment.CustomAgentImportId) || !isCustomsAgentImportShared)
@@ -434,7 +509,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
         
-        private ShipmentPartnerPM AddCustomClearancePartner(Shipment shipment)
+        private ShipmentPartnerPM GetCustomClearancePartner(Shipment shipment)
         {
             bool isCustomClearancePoinShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomClearancePoinShared;
             if (string.IsNullOrEmpty(shipment.CustomClearancePointId) || !isCustomClearancePoinShared)
@@ -468,7 +543,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
        
-        private ShipmentPartnerPM AddConsolidatorPartner(Shipment shipment)
+        private ShipmentPartnerPM GetConsolidatorPartner(Shipment shipment)
         {
             bool isConsolidatorShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsolidatorShared;
             if (string.IsNullOrEmpty(shipment.ConsolidatorId) || !isConsolidatorShared)
@@ -502,7 +577,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
         
-        private ShipmentPartnerPM AddReleasingAgentPartner(Shipment shipment)
+        private ShipmentPartnerPM GetReleasingAgentPartner(Shipment shipment)
         {
             bool isReleasingAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsReleasingAgentShared;
             if (string.IsNullOrEmpty(shipment.ReleasingAgentId) || !isReleasingAgentShared)
@@ -537,7 +612,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return item;
         }
         
-        private ShipmentPartnerPM AddIssuingCarrierAgentPartner(Shipment shipment)
+        private ShipmentPartnerPM GetIssuingCarrierAgentPartner(Shipment shipment)
         {
             bool isIssuingCarrierAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsIssuingCarrierAgentShared;
             if (string.IsNullOrEmpty(shipment.IssuingCarrierAgentId) || !isIssuingCarrierAgentShared && shipment.TransportModeId == "A")
