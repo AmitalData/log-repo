@@ -77,9 +77,9 @@ namespace WebFreight.Web.ContainerTracking
                 throw ex;
             }
 
-            
+
             this.AnalyzeData();
-           
+
         }
         private void AnalyzeMessageBody()
         {
@@ -168,12 +168,39 @@ namespace WebFreight.Web.ContainerTracking
             if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
                 FillContainerField(containerTrackingRequest, visionContainerStatus);
             var comunicationLog = BuildCommunicationLogUpdateStatus(containerTrackingRequest);
-            if (!string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
+            if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
+                return;
+            var container = GetContanerPM(containerTrackingRequest);
+            manager.SetContainer(container);
+            MapContainersExternalData(container);
+
+            manager.SetShipment(GetShipmentPM(containerTrackingRequest));
+
+            manager.Update();
+
+        }
+
+        private void MapContainersExternalData(ContainerPM container )
+        {
+            if(container == null)
             {
-                manager.SetContainer(GetContanerPM(containerTrackingRequest));
-                manager.SetShipment(GetShipmentPM(containerTrackingRequest));
-                manager.Update();
+                containerUpdatedFields.ContainersExternal = null;
+                return;
             }
+            var containersExternalDataRepository = new ContainersExternalDataRepository(containerUpdatedFields.ShipmentContext);
+
+            var containersExternalData_DB = containersExternalDataRepository.GetSingleContainersExternalData(container.Id, container.Tenant);
+            if (containersExternalData_DB == null)
+            {
+                containersExternalData_DB = new ContainersExternalData() { Id = container.Id, Tenant = container.Tenant };
+                containerUpdatedFields.ContainersExternal.IsNew = true;
+            }
+            containerUpdatedFields.ContainersExternal.ContainersExternalData_DB = containersExternalData_DB;
+
+            containerUpdatedFields.ContainersExternal.ContainersExternalData_New.Id = container.Id;
+            containerUpdatedFields.ContainersExternal.ContainersExternalData_New.Tenant = container.Tenant;
+
+
         }
 
         private ContainerPM GetContanerPM(ContainerTrackingRequest containerTrackingRequest)
@@ -396,118 +423,118 @@ namespace WebFreight.Web.ContainerTracking
 
     public class ContainerUpdatedFields
     {
-        public int Tenant { get; set; }
-        public IShipmentsContext ShipmentContext { get; set; }
-        public ContainerRepository ContainerRepository { get; set; }
-        public ShipmentPM ShipmentPM { get; set; }
-        public ContainerPM ContainerPM { get; set; }
-        public ContainersExternal ContainersExternal { get; set; }
-        public DateTime? MainCarriageETD { get; set; }
-        public DateTime? MainCarriageETA { get; set; }
-        public DateTime? MainCarriageATD { get; set; }
-        public DateTime? MainCarriageATA { get; set; }
-        public DateTime? EstimatedEmptyPickupDate { get; set; }
-        public DateTime? ActualEmptyPickupDate { get; set; }
-        public DateTime? EstimatedPOLArrival { get; set; }
-        public DateTime? ActualPOLArrival { get; set; }
-        public string EmptyPickupLocation { get; set; }
-        public string DepartureLocation { get; set; }
-        public string DestinationLocation { get; set; }
-        public string CurrentStatus { get; set; }
-        public string CurrentLocation { get; set; }
-        public DateTime? CurrentStatusDate { get; set; }
-        public bool HasContainerException { get; set; }
-        public DateTime? ActualEmptyPickup { get; set; }
-        public DateTime? EstimatedEmptyPickup { get; set; }
-        public string OriginLocation { get; set; }
-        public DateTime? EstimatedOriginPickup { get; set; }
-        public DateTime? ActualOriginPickup { get; set; }
-        public string POLLocation { get; set; }
-        public DateTime? EstimatedPOLLoaded { get; set; }
-        public DateTime? ActualPOLLoaded { get; set; }
-        public DateTime? EstimatedPOLVesselDeparture { get; set; }
-        public DateTime? ActualPOLVesselDeparture { get; set; }
-        public int? TransshipmentCount { get; set; }
-        public string Transshipment1Location { get; set; }
-        public DateTime? EstimatedTrans1VesselArrival { get; set; }
-        public DateTime? ActualTransshipment1VesselArrival { get; set; }
-        public DateTime? EstimatedTransshipment1Discharge { get; set; }
-        public DateTime? ActualTransshipment1Discharge { get; set; }
-        public DateTime? EstimatedTransshipment1Loaded { get; set; }
-        public DateTime? ActualTransshipment1Loaded { get; set; }
-        public DateTime? EstimatedTrans1VesselDeparture { get; set; }
-        public DateTime? ActualTrans1VesselDeparture { get; set; }
-        public string Transshipment2Location { get; set; }
-        public DateTime? EstimatedTrans2VesselArrival { get; set; }
-        public DateTime? ActualTransshipment2VesselArrival { get; set; }
-        public DateTime? EstimatedTransshipment2Discharge { get; set; }
-        public DateTime? ActualTransshipment2Discharge { get; set; }
-        public DateTime? EstimatedTransshipment2Loaded { get; set; }
-        public DateTime? ActualTransshipment2Loaded { get; set; }
-        public DateTime? EstimatedTrans2VesselDeparture { get; set; }
-        public DateTime? ActualTrans2VesselDeparture { get; set; }
-        public string Transshipment3Location { get; set; }
-        public DateTime? EstimatedTrans3VesselArrival { get; set; }
-        public DateTime? ActualTransshipment3VesselArrival { get; set; }
-        public DateTime? EstimatedTransshipment3Discharge { get; set; }
-        public DateTime? ActualTransshipment3Discharge { get; set; }
-        public DateTime? EstimatedTransshipment3Loaded { get; set; }
-        public DateTime? ActualTransshipment3Loaded { get; set; }
-        public DateTime? EstimatedTrans3VesselDeparture { get; set; }
-        public DateTime? ActualTrans3VesselDeparture { get; set; }
-        public string Transshipment4Location { get; set; }
-        public DateTime? EstimatedTrans4VesselArrival { get; set; }
-        public DateTime? ActualTransshipment4VesselArrival { get; set; }
-        public DateTime? EstimatedTransshipment4Discharge { get; set; }
-        public DateTime? ActualTransshipment4Discharge { get; set; }
-        public DateTime? EstimatedTransshipment4Loaded { get; set; }
-        public DateTime? ActualTransshipment4Loaded { get; set; }
-        public DateTime? EstimatedTrans4VesselDeparture { get; set; }
-        public DateTime? ActualTrans4VesselDeparture { get; set; }
-        public string Leg1Vessel { get; set; }
-        public string Leg1VesselId { get; set; }
-        public string Leg1Voyage { get; set; }
-        public string Leg2Vessel { get; set; }
-        public string Leg2VesselId { get; set; }
-        public string Leg2Voyage { get; set; }
-        public string Leg3Vessel { get; set; }
-        public string Leg3VesselId { get; set; }
-        public string Leg3Voyage { get; set; }
-        public string Leg4Vessel { get; set; }
-        public string Leg4VesselId { get; set; }
-        public string Leg4Voyage { get; set; }
-        public string Leg5Vessel { get; set; }
-        public string Leg5VesselId { get; set; }
-        public string Leg5Voyage { get; set; }
-        public string PODLocation { get; set; }
-        public DateTime? EstimatedPODVesselArrival { get; set; }
-        public DateTime? ActualPODVesselArrival { get; set; }
-        public DateTime? EstimatedPODDischarge { get; set; }
-        public DateTime? ActualPODDischarge { get; set; }
-        public DateTime? EstimatedPODDeparture { get; set; }
-        public DateTime? ActualPODDeparture { get; set; }
-        public string DeliveryLocation { get; set; }
-        public DateTime? EstimatedDelivery { get; set; }
-        public DateTime? ActualDelivery { get; set; }
-        public string LIFLocation { get; set; }
-        public DateTime? EstimatedLIFArrival { get; set; }
-        public DateTime? ActualLIFArrival { get; set; }
-        public DateTime? EstimatedOnCarriageDeparture { get; set; }
-        public DateTime? ActualOnCarriageDeparture { get; set; }
-        public DateTime? POLGateIn { get; set; }
-        public DateTime? PODGateOut { get; set; }
-        public string EmptyReturnLocation { get; set; }
-        public DateTime? EstimatedEmptyReturn { get; set; }
-        public DateTime? ActualEmptyReturn { get; set; }
-        public string CustomsReleaseState { get; set; }
-        public DateTime? CustomsReleaseDate { get; set; }
-        public string CarrierReleaseState { get; set; }
-        public DateTime? CarrierReleaseDate { get; set; }
-        public DateTime? AvailablityDate { get; set; }
-        public string AvailabilityLocation { get; set; }
-        public string ContainerStatus { get; set; }
-        public string ShipmentPackageId { get; set; }
-        public DateTime? EventDate { get; set; }
-        public string TrackingSource { get; set; }
+        public int Tenant;
+        public IShipmentsContext ShipmentContext;
+        public ContainerRepository ContainerRepository;
+        public ShipmentPM ShipmentPM;
+        public ContainerPM ContainerPM;
+        public ContainersExternal ContainersExternal;
+        public DateTime? MainCarriageETD;
+        public DateTime? MainCarriageETA;
+        public DateTime? MainCarriageATD;
+        public DateTime? MainCarriageATA;
+        public DateTime? EstimatedEmptyPickupDate;
+        public DateTime? ActualEmptyPickupDate;
+        public DateTime? EstimatedPOLArrival;
+        public DateTime? ActualPOLArrival;
+        public string EmptyPickupLocation;
+        public string DepartureLocation;
+        public string DestinationLocation;
+        public string CurrentStatus;
+        public string CurrentLocation;
+        public DateTime? CurrentStatusDate;
+        public bool HasContainerException;
+        public DateTime? ActualEmptyPickup;
+        public DateTime? EstimatedEmptyPickup;
+        public string OriginLocation;
+        public DateTime? EstimatedOriginPickup;
+        public DateTime? ActualOriginPickup;
+        public string POLLocation;
+        public DateTime? EstimatedPOLLoaded;
+        public DateTime? ActualPOLLoaded;
+        public DateTime? EstimatedPOLVesselDeparture;
+        public DateTime? ActualPOLVesselDeparture;
+        public int? TransshipmentCount;
+        public string Transshipment1Location;
+        public DateTime? EstimatedTrans1VesselArrival;
+        public DateTime? ActualTransshipment1VesselArrival;
+        public DateTime? EstimatedTransshipment1Discharge;
+        public DateTime? ActualTransshipment1Discharge;
+        public DateTime? EstimatedTransshipment1Loaded;
+        public DateTime? ActualTransshipment1Loaded;
+        public DateTime? EstimatedTrans1VesselDeparture;
+        public DateTime? ActualTrans1VesselDeparture;
+        public string Transshipment2Location;
+        public DateTime? EstimatedTrans2VesselArrival;
+        public DateTime? ActualTransshipment2VesselArrival;
+        public DateTime? EstimatedTransshipment2Discharge;
+        public DateTime? ActualTransshipment2Discharge;
+        public DateTime? EstimatedTransshipment2Loaded;
+        public DateTime? ActualTransshipment2Loaded;
+        public DateTime? EstimatedTrans2VesselDeparture;
+        public DateTime? ActualTrans2VesselDeparture;
+        public string Transshipment3Location;
+        public DateTime? EstimatedTrans3VesselArrival;
+        public DateTime? ActualTransshipment3VesselArrival;
+        public DateTime? EstimatedTransshipment3Discharge;
+        public DateTime? ActualTransshipment3Discharge;
+        public DateTime? EstimatedTransshipment3Loaded;
+        public DateTime? ActualTransshipment3Loaded;
+        public DateTime? EstimatedTrans3VesselDeparture;
+        public DateTime? ActualTrans3VesselDeparture;
+        public string Transshipment4Location;
+        public DateTime? EstimatedTrans4VesselArrival;
+        public DateTime? ActualTransshipment4VesselArrival;
+        public DateTime? EstimatedTransshipment4Discharge;
+        public DateTime? ActualTransshipment4Discharge;
+        public DateTime? EstimatedTransshipment4Loaded;
+        public DateTime? ActualTransshipment4Loaded;
+        public DateTime? EstimatedTrans4VesselDeparture;
+        public DateTime? ActualTrans4VesselDeparture;
+        public string Leg1Vessel;
+        public string Leg1VesselId;
+        public string Leg1Voyage;
+        public string Leg2Vessel;
+        public string Leg2VesselId;
+        public string Leg2Voyage;
+        public string Leg3Vessel;
+        public string Leg3VesselId;
+        public string Leg3Voyage;
+        public string Leg4Vessel;
+        public string Leg4VesselId;
+        public string Leg4Voyage;
+        public string Leg5Vessel;
+        public string Leg5VesselId;
+        public string Leg5Voyage;
+        public string PODLocation;
+        public DateTime? EstimatedPODVesselArrival;
+        public DateTime? ActualPODVesselArrival;
+        public DateTime? EstimatedPODDischarge;
+        public DateTime? ActualPODDischarge;
+        public DateTime? EstimatedPODDeparture;
+        public DateTime? ActualPODDeparture;
+        public string DeliveryLocation;
+        public DateTime? EstimatedDelivery;
+        public DateTime? ActualDelivery;
+        public string LIFLocation;
+        public DateTime? EstimatedLIFArrival;
+        public DateTime? ActualLIFArrival;
+        public DateTime? EstimatedOnCarriageDeparture;
+        public DateTime? ActualOnCarriageDeparture;
+        public DateTime? POLGateIn;
+        public DateTime? PODGateOut;
+        public string EmptyReturnLocation;
+        public DateTime? EstimatedEmptyReturn;
+        public DateTime? ActualEmptyReturn;
+        public string CustomsReleaseState;
+        public DateTime? CustomsReleaseDate;
+        public string CarrierReleaseState;
+        public DateTime? CarrierReleaseDate;
+        public DateTime? AvailablityDate;
+        public string AvailabilityLocation;
+        public string ContainerStatus;
+        public string ShipmentPackageId;
+        public DateTime? EventDate;
+        public string TrackingSource;
     }
 }
