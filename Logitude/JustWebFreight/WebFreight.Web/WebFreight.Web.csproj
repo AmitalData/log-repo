@@ -2916,6 +2916,7 @@
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="Helpers\TMMessageBuilderAnalyzer.cs" />
     <Compile Include="Helpers\UploadTariffHelper.cs" />
+    <Compile Include="Helpers\VizionPilotCustomerDataGenerator.cs" />
     <Compile Include="Helpers\Warehouse\WarehouseRelaseService.cs" />
     <Compile Include="Helpers\WorkerRole\BIReportExecutionService.cs" />
     <Compile Include="Helpers\WorkerRole\DocsOut\ARInvoicePrintDetailsService.cs" />

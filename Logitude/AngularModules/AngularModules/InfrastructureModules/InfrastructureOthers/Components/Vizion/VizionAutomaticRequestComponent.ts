@@ -14,10 +14,12 @@ export class VizionAutomaticRequestComponent extends BaseComponent implements On
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public ShipmentsItemsSource: ShipmentsForAutomaticRequest[];
+    public LogsItemsSource: ShipmentsForAutomaticRequest[];
     private vizionService: ShipmentDomainService;
     constructor() {
         super();
         this.ShipmentsItemsSource = [];
+        this.LogsItemsSource = [];
         this.vizionService = new ShipmentDomainService();
     }
 
@@ -67,6 +69,15 @@ export class VizionAutomaticRequestComponent extends BaseComponent implements On
             this.shipmentsNumbersRequestText = value;
         }
     }
+
+    private selectedTabCode: string = "REQ";
+    get SelectedTabCode() { return this.selectedTabCode; }
+    set SelectedTabCode(newValue: string) {
+        if (this.selectedTabCode != newValue) {
+            this.selectedTabCode = newValue;
+        }
+    }    
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -83,7 +94,7 @@ export class VizionAutomaticRequestComponent extends BaseComponent implements On
             this.CurrentSession.StartBusyIndicator("Sending...");
             this.vizionService.SendVizionAutomaticRequests(this.ShipmentsNumbersRequestText).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
-                    
+                    this.LogsItemsSource = response.Result;
                 }
 
                 this.CurrentSession.StopBusyIndicator();
