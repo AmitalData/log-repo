@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Measure Type&quot;"
-  Code="&quot;2cf6&quot;"
+  Code="&quot;bfb9&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -147,7 +147,7 @@
     ObjectTableName="&quot;MeasureType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="100"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -156,7 +156,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="3"
+    SystemMaxLength="100"
     DisplayInList="false"
     IsCustomFilter="false"
     MultiLine="false"
@@ -236,6 +236,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -280,6 +281,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;MeasureTypeHeaderScreen&quot;"
+    ObjectTableName="&quot;MeasureType&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

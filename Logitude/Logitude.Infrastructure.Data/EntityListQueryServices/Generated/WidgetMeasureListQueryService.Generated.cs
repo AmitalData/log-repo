@@ -105,7 +105,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.WidgetId);
+                                query2 = query2.OrderBy(d => d.Id);
                                 break;
                             }
                     }
@@ -114,7 +114,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.WidgetId);
+                query2 = query2.OrderBy(d => d.Id);
             }
 			if(!queryOperations.GetAll)
 			{
