@@ -694,6 +694,7 @@
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\QBOGlobalTaxCalculationStruct.Generated.cs" />
     <Compile Include="InvoiceModel\CoreBL\FullAccountingARPaymentApproveService.cs" />
     <Compile Include="InvoiceModel\CustomFilters\ARInvoiceTypeCustomFilter.cs" />
+    <Compile Include="InvoiceModel\CustomFilters\DigitalPortalCustomFilter.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARPaymentBankTranferList.cs" />
     <Compile Include="InvoiceModel\EntityLists\QBOGlobalTaxCalculationList.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentBankTranferPM.cs" />

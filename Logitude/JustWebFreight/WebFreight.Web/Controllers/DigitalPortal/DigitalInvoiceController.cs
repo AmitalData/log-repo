@@ -124,33 +124,24 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
             SecurityUtility.CheckDigitalUserAuthentication(tenant, filters.PartnerId);
-
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
-
             QueryOperations queryOperations = new QueryOperations();
             queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
             queryOperations.SetFilter("BillToId", filters.PartnerId, false, "Equals", null, false);
-            queryOperations.SetFilter("SearchFields", filters.SearchField, false, "Contains", null, false);
-
+            //queryOperations.SetFilter("SearchFields", filters.SearchField, false, "Contains", null, false);
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
-
             InvoiceCustomFilter customfilters = new InvoiceCustomFilter(tenant);
-
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
             IQueryable<ARInvoice> invoices = aRInvoiceRepository.GetIQueryableInvoices(tenant);
-
             invoices = customfilters.GetFilteredQuery(queryOperations, invoices);
-
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
             invoices = filter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, invoices);
             int skippedShipments = queryOperations.PageIndex;
-
             var query2 = from entity in invoices
                          select new ARInvoiceList()
                          {
@@ -225,25 +216,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                          };
 
             query2 = filter.GetFilteredQuery<ARInvoiceList>(listQueryOperation, query2);
-
             query2 = query2.Where(d => d.StatusCode != "VD");
-
             if (filters.FilterName == "UnpaidInvoices")
             {
                 query2 = query2.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
             }
 
-
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ARInvoiceList).GetProperty(queryOperations.SortByColumnName);
-
                 List<ObjectField> invoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", tenant).ToList();
-
                 ObjectField objectField = (from a in invoiceObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
-
                 if (objectField != null)
                 {
                     switch (objectField.DataTypeCode.ToLower())
@@ -286,7 +271,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                 }
             }
-
             else
             {
                 query2 = query2.OrderByDescending(d => d.InvoiceDate);
@@ -294,12 +278,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             query2 = query2.Skip(0);
             query2 = query2.Take(filters.PageSize);
-
             List<ARInvoiceList> listQuery = query2.ToList();
-
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("ARInvoice", tenant, listQuery.Cast<object>().ToList());
-
             return listQuery;
         }
         
