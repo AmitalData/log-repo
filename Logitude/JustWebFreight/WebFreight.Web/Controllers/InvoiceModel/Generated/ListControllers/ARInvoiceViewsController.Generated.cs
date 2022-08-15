@@ -232,6 +232,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+              
+                MyContext = InvoiceContext.GetSecContext(tenant);
                 ARInvoiceRepository  aRInvoiceRepository = new ARInvoiceRepository(MyContext);
                 IQueryable<ARInvoice> entityPocos = aRInvoiceRepository.GetARInvoices(tenant);
 
