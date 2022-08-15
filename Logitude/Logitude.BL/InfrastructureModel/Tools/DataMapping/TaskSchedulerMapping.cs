@@ -56,6 +56,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.ResultType = TaskSchedulerPM.ResultType;
             TaskScheduler.Format = TaskSchedulerPM.Format;
             TaskScheduler.AdvancedFormat = TaskSchedulerPM.AdvancedFormat;
+            TaskScheduler.ExecutedByServerName = TaskSchedulerPM.ExecutedByServerName;
         }
     }
 }
