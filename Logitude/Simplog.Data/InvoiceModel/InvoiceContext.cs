@@ -42,7 +42,15 @@ namespace Simplog.Data.InvoiceModel
         {
             this.Entry(entity).State = EntityState.Modified;
         }
-
+        public static IInvoiceContext GetSecContext(int tenant)
+        {
+            GlobalDB currentDb;
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
+            InvoiceContext context = new InvoiceContext(connection);
+            return context;
+        }
         public static IInvoiceContext GetContext(int tenant)
         {
             GlobalDB currentDb;
